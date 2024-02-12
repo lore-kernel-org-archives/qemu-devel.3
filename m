@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D85C4829D
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 21:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43794C4829E
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 22:22:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZeHd-00068u-E7; Mon, 12 Feb 2024 16:56:13 -0500
+	id 1rZega-0002ft-Cv; Mon, 12 Feb 2024 17:22:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZeHb-00068R-JN
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 16:56:11 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1rZegW-0002e8-OS
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 17:21:57 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZeHZ-0005z3-Ul
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 16:56:11 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5d8b276979aso2463814a12.2
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 13:56:09 -0800 (PST)
+ id 1rZegV-0001dY-31
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 17:21:56 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6d9f94b9186so3108776b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 14:21:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707774968; x=1708379768; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=GMgxTbShd6YoiVAVVKaYI4ENWNLYFhquA/29o6heTkY=;
- b=DPONxKSG5T27OULSxsbAtH431T2h/yyQhW1wj/6vU5kWUn6KmY429Y7Q20FsQuDmAf
- zZ8ONrszAjI8CRqwVjaidTvrzWMaHG5xj89G3sd4xb/myncgfPTiwV75Eb2pD1tA+6ro
- 6vHfT6dXFRtjmURHoxydHhLwXZ5dZ9xak3Ytc2eksM0G73y8d2BGMPhCVWEn6e/dA5KM
- YShV9WU3OA5UnOWDc1Y9cuxz0NozR1Lc3dCsQnlKyXf/xTDcEbzuB+Tn5mWrv4Ng4G69
- 3yQ3BWtCmgMYqc/4Rt/ioxNYSVaEkr0XPCliE3NzUejuC9k4Ljf9aJ8mgk3egMfKkrOO
- R79g==
+ d=linaro.org; s=google; t=1707776513; x=1708381313; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Cyqff/kE7nGx+lsHGo1/Z4ql3bDv6ArKL+b5MM/Ueic=;
+ b=qUhryDdKt2t7fKO8xvz0fDl/K5IS3glvUmhE9upnxgjljXlPoBEOqbj9ni7XYtdZ5i
+ MQ38Zlbr9QkveLFzgA+oVNzpUQh/BXYZT7X0LAei/kK0uoAkKRxz1+Wa62B/QSd6JJuJ
+ lmcugY+suAXOGO+Ulw+qpfVV473bCufwjlvbGXVS5rYQYrZJDGDI7eY50cqCozyjMKRL
+ L7GEdQYhr4Ecj9k61Q/YBPkkjwYwPltKNDSLwarhO5jpeMGqZoJm3xjgdRtDcfXuu+hD
+ qIU2qcnnmKoDxJfFNIEfmu2lh9V9EA/j3C8O0LHFpMtesTs+ewzAIgoGkGTWIZLMoNLH
+ cRsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707774968; x=1708379768;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GMgxTbShd6YoiVAVVKaYI4ENWNLYFhquA/29o6heTkY=;
- b=XOtezWSelb73DvkiKScDmH7Wve+5/hswAs+R1Pn1WPQZOeLyGad+3WW3wvJgi199mY
- 4BKGXeRmuf05CYFtfafFXlqqQUnQfA7s0xsL3BHZXAz+7YsnmYXE/P30gtqM/d8FZ3CG
- 2YbulMGPbiybACVQs+DYXWM9rMcPqV8EJR4t1dwPNy5T+gYGjZf8OYkmewzleDquSdKZ
- BVHtxj9MR3pZZSWMhFDkebmFpZdJ6to1BISOBk0vLZYwkpuv+ULjgJh3nBlaItBHNV+E
- 4xUTHyTovd0IYLo7Vcuj7iaGItLGQZLO3qvVIGXI9EJjleOXEYywaDDOj/BThPivKJCd
- yR7Q==
-X-Gm-Message-State: AOJu0YzE3rv/wL3Kr9ERfPQisCzZOrywD2qsJ/StVuVQXJeZaQ0tVUXj
- eBOPhlQB/RWUd2ZFqWPGzaB85DmyRiC8zOWDXy27gdSn+j9r0yAT+I8Q8vtkceuOi0TtUCdwEht
- y
-X-Google-Smtp-Source: AGHT+IH/kXowxi9VwRlfstjEvBe/rQjQcmbV4Z+ptB4AAs/pmtAoX5YYvOcDQf5CVVwtGDPYpbkc2w==
-X-Received: by 2002:a05:6a20:d708:b0:19e:aa03:19b0 with SMTP id
- iz8-20020a056a20d70800b0019eaa0319b0mr7450550pzb.0.1707774967760; 
- Mon, 12 Feb 2024 13:56:07 -0800 (PST)
-Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
- by smtp.gmail.com with ESMTPSA id
- fb15-20020a056a002d8f00b006e035133b72sm6031559pfb.134.2024.02.12.13.56.06
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Feb 2024 13:56:07 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] tcg/arm: Fix goto_tb for large translation blocks
-Date: Mon, 12 Feb 2024 11:56:04 -1000
-Message-Id: <20240212215604.27999-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1707776513; x=1708381313;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cyqff/kE7nGx+lsHGo1/Z4ql3bDv6ArKL+b5MM/Ueic=;
+ b=ljZDS/zHMVUQq2JhCxGUzGT4Or0Gc5XvP9aB9yLY7p08BY77zy/QftNleSQPSmMC6l
+ yt6nBUR1eZKmhk4wxpoDBbyqXcrtSOEhL+apFLbDP8BgYUMxpQu+4IxfTR3InDFQHl+o
+ pVLf/O2Ie3a2U9SkPp2y4rGQrrKYZ2PLdhLqnncyQJrPGfKrheT8jf1liOW6zELzCyYf
+ JwdwwXmsBkEUqgWVaVs+6vIrgY/nQkqNb+dp3YI9Gx/ZHKuf9WWzGuAw4jAIXgqFH5UF
+ 5wwehhe7bxaK3UDEqbqf6LJK2qCbOUiuijQdvmTeW3AeoFdCtDHBFGsPIUjGrOd4FAXW
+ sdCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDQ4+2fUx+CmGJkA5ZOzBpDh4h4pj2LD3zjUGC/L1NUxvCIUI+bziPRidODmC5YKkJiril6DitslP25jWdP/3COocbQBw=
+X-Gm-Message-State: AOJu0YzNTiZaOucCezjpe5z4uIaTniqMa3Sj8CFGeMbCTpQmbJSarhpM
+ XnvaGxtj7YZEWlEI4ceVohnIlDn0BUg6E+0mid+32fXdvnlLxQlRmmy2U4BL+66SLxuMAOYlDoD
+ x
+X-Google-Smtp-Source: AGHT+IGXsNneJU0R+ik7q5WQd+sP3pFMmcJnOmoy/gPl9mnTjp42tfKWJfP0sl1YcR8dfz3RZXdgNw==
+X-Received: by 2002:a05:6a00:7508:b0:6e0:9f24:af4a with SMTP id
+ lw8-20020a056a00750800b006e09f24af4amr8080152pfb.7.1707776513149; 
+ Mon, 12 Feb 2024 14:21:53 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbXiplDxvTbjyKNr+PRtaXjn1+/B2r9Nk8gLuPsybfjkUWQTq6brFgTljtVv+Cc4PBpLJ3pxjoeCRm8yNI22kNjrz3lWgvTFvVI4kkRIr/2WbWArPzd4dSmX8am7ETEhpdRUAS6th6umIVTbtA9ez4ZcnEA7qEtIES47svXSh4jMq6
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ x37-20020a056a0018a500b006de11c980e5sm5932251pfh.80.2024.02.12.14.21.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Feb 2024 14:21:52 -0800 (PST)
+Message-ID: <f07f918e-d7b4-41bd-88eb-ddb2bd96dd73@linaro.org>
+Date: Mon, 12 Feb 2024 12:21:49 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] target/ppc: Move add and subf type fixed-point
+ arithmetic instructions to decodetree
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, npiggin@gmail.com
+Cc: harshpb@linux.ibm.com, sbhat@linux.ibm.com
+References: <20240209113532.580983-1-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240209113532.580983-1-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,33 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Correct arithmetic for separating high and low
-on a large negative number.
+On 2/9/24 01:35, Chinmay Rath wrote:
+> +&Z23_tab_cy     rt ra rb cy
+> +@Z23_tab_cy     ...... rt:5 ra:5 rb:5 cy:2 ........ .           &Z23_tab_cy
+...
+> +ADDEX           011111 ..... ..... ..... .. 10101010 -  @Z23_tab_cy
+...
+> +static bool trans_ADDEX(DisasContext *ctx, arg_Z23_tab_cy *a)
+> +{
+> +    gen_op_arith_add(ctx, cpu_gpr[a->rt], cpu_gpr[a->ra], cpu_gpr[a->rb],
+> +                     cpu_ov, cpu_ov32, true, true, false, false);
+> +    return true;
+> +}
 
-Fixes: 79ffece4447 ("tcg/arm: Implement direct branch for goto_tb")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1714
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/arm/tcg-target.c.inc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+CY != 0 is reserved.
 
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index ffd23ef789..6a04c73c76 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1771,9 +1771,9 @@ static void tcg_out_goto_tb(TCGContext *s, int which)
-          * shifted immediate from pc.
-          */
-         int h = -i_disp;
--        int l = h & 0xfff;
-+        int l = -(h & 0xfff);
- 
--        h = encode_imm_nofail(h - l);
-+        h = encode_imm_nofail(h + l);
-         tcg_out_dat_imm(s, COND_AL, ARITH_SUB, TCG_REG_R0, TCG_REG_PC, h);
-         tcg_out_ld32_12(s, COND_AL, TCG_REG_PC, TCG_REG_R0, l);
-     }
--- 
-2.34.1
+While you could diagnose this in trans_ADDEX, it seems cleaner to simply match 00 in the 
+CY field until a future ISA defines something else.  All that is required is a comment in 
+the decodetree entry.
 
+# Z23-form, with CY=0; all other values for CY are reserved.
+# This works out the same as X-form.
+ADDEX    011111 ..... ..... ..... 00 10101010 -   @X
+
+
+r~
 
