@@ -4,69 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EA8C4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 18:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99D7C4829E
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 18:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZb5l-0003eC-Lx; Mon, 12 Feb 2024 13:31:45 -0500
+	id 1rZb5y-0003gE-AX; Mon, 12 Feb 2024 13:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rZb5g-0003dJ-0j
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:31:41 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ id 1rZb5r-0003fr-O0
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:31:51 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rZb5Z-0002rz-Kq
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:31:35 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2cf1fd1cc5bso44279181fa.3
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 10:31:32 -0800 (PST)
+ id 1rZb5q-0002vD-18
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:31:51 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-560c696ccffso7806411a12.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 10:31:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707762690; x=1708367490; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707762708; x=1708367508; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7PtMWUyuGF48T55SkyKDLKq7rMhjpk01/Vrt2XC+FTU=;
- b=NBj/sfR/m4FfXzGzkdwvaPMJLHUWACvjEDjhb8hw75497z4uPPzSXWlBX85zfHw7OR
- KzbOgGC1sveyNKvlU+FQy3oxeZguys2ovIejvSn25f9/sGSVA62XifhWJAqBEhVAny/a
- JJVx0H7pn/1xVUvy4vkb8khobaYC9IPinN/gPDm663uEYjVp2uF0vcq0AeByaDJaHxTL
- NPaRXchVu6yrR9y1JrMSJGUyYeBhZy6w+C/uoGWTTiwwSAqJ2w6gaGL3mF0md3GJMZI5
- U8bC150ZnkRtncO3btGDZwVxw6mRv7wB9w3FkHTV9L+EoIWmHXm+/72zK+PKNMhncNHM
- 4GSA==
+ bh=s8fldLeqquiqzvFhdLfh3UsrHhyviDfZSUyWCtk37W8=;
+ b=Q+UPlklwfuxChju5UjyLnayKq9W5/aniaNPpMFgzb2R2/9T5M3gCGdAYY8nUg2NxnO
+ LJ7/0unwttTaUsXL/qY9cE06+pTvXtfVfTlUwq/mzsvRha7Rrqcx1U4II18K91Oxu8zk
+ B/gnaiaLahJ59sIhbU89xKGAD5z+pYq7CGyNIJ3pyUuXUV3crw96P6ihz36uxgbPPs1S
+ 5+lFGvzLV0sdRtzobN7tZ2lPOn4tSYfFgttclPIEg1rqkdp1s3YA7JX5cDMKrBLeDk/A
+ rFVDfDz8raFsSit62+EWVRPRIGfc1eWmfCZpAdpJWlPqWlJxuqJdNG/JBvttMQ/obRJ1
+ Kjdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707762690; x=1708367490;
+ d=1e100.net; s=20230601; t=1707762708; x=1708367508;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7PtMWUyuGF48T55SkyKDLKq7rMhjpk01/Vrt2XC+FTU=;
- b=E5ZV2yUE+J34av0rGTwjiJ/wBhXz4s0hIshQyQ1iO5pfBRe1/cDmAIk9Ji16pbKLMT
- YQqSBrasrp6xoanYfyEwN0pW2Ub29ToHx3p0q3zR6Q2eTZWQPmqG4tsSZScgfrI/wLHi
- uO/aeNwWTkBStqQ42tqprGpHkJLsweGEM3JN4LcpEg0tQ1TWVriuMGbjwrI2CpqQ+grH
- AgJkDNyYrAO9m1Dy9vPpQQAwYNzFK/2teZKMFBEl8g+rwtaVJJ2PLm9pG9h9ak1I3mGd
- X7N0U7S1+hlJoMRKN6+QGfJEL3vhywaG8bHA33kGRINu+4kIbKcdeXU1H3dGtB1lu+48
- ZQhA==
-X-Gm-Message-State: AOJu0YwOTwZkelXvyz90PKqa9v3mXQp09T8kAHjtetNh51h1K62RMq1W
- P3nxUawJy2sacMCwmz1ZQSGmls1piwi70VDHeKmSEi1IVCBYDFlz/YdCbEQirrKaAM/e4C8dYTb
- V3dhaTD4/X4/sgsx0rs7ECUnal81GvfDCO96JRw==
-X-Google-Smtp-Source: AGHT+IE3nJ9c6r4RrX4HhHOI1Rm+I07CKk/d2vjzZFQStJqIpOTMeWDklKfmYBQ/qvan1aMn66O/OozajJdyL832h90=
-X-Received: by 2002:a05:651c:b21:b0:2d0:ff21:2a13 with SMTP id
- b33-20020a05651c0b2100b002d0ff212a13mr2071357ljr.32.1707762690377; Mon, 12
- Feb 2024 10:31:30 -0800 (PST)
+ bh=s8fldLeqquiqzvFhdLfh3UsrHhyviDfZSUyWCtk37W8=;
+ b=hiABQcZ6US7iOFPFk84Xu2K0a1n+8PYQDUIX9GO1TF4V4awJ6kBLNboUrVN2ILwII7
+ Zt2vqAFvXqBxsJKAxLebSBrxftde95S6nO9bQ9G7feZPeIei8PyKOgY5NTYpI6CpRgV6
+ DJc5zZLZq/cdchqRNn0EAf4n/mdAB50tDQj6l8bc8XcbjWV7g1btsy6Z50Y6kkFqdlhd
+ 3RFuh35aCYyb4ORiKRK5+Ms7LrQ+TAMgkTvVWWLwEfYcSJTJ7l7Y1IUUfsz5f/WibhDt
+ sYUtokvqEM8XfVVdQVGeIVpzxWrpj2KRykihGYAOdcTXeFe3HfAfJng09qJTd5nXJUre
+ R9ug==
+X-Gm-Message-State: AOJu0Yx+wMNHUZ5NETOge3AhEvwQ9B/Eu+G4Gn29BNaYZoTKyt4tlQaM
+ eFfvFb9W6wZgpgh2fD9WDsIZkMSU6O6HIiNYOT9Ig6awly2wbrOXzs/jbwhilUUs/+JVN4aShZi
+ lIHKW8YDx+6gyTAvXf09jE+8k/ij0SqhPMDAX6olTOQqIZ8W0
+X-Google-Smtp-Source: AGHT+IGiO6oAQfJ6DPL7tgY/d4XE7rfkhcllviQmznpNY9U1hageaNa9VoKA/LD4uLro6Nuj6nwybqEVfaAI9f/eAjg=
+X-Received: by 2002:a05:6402:22e3:b0:561:ea13:d3ff with SMTP id
+ dn3-20020a05640222e300b00561ea13d3ffmr93846edb.10.1707762708623; Mon, 12 Feb
+ 2024 10:31:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20240209194734.3424785-1-alex.bennee@linaro.org>
-In-Reply-To: <20240209194734.3424785-1-alex.bennee@linaro.org>
+References: <20240209140505.2536635-1-berrange@redhat.com>
+In-Reply-To: <20240209140505.2536635-1-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Feb 2024 18:31:19 +0000
-Message-ID: <CAFEAcA9rSjhZoruxTvaeLas2a7AFju3ZAAOLqzfHhxhqBuQmcA@mail.gmail.com>
-Subject: Re: [PULL 00/10] testing, doc and gdbstub updates
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 12 Feb 2024 18:31:37 +0000
+Message-ID: <CAFEAcA9cSPNOMFpMFFQ-bZqqj4OMGNYBLTyEShwhXTte_E8n9A@mail.gmail.com>
+Subject: Re: [PULL 00/17] Misc fixes patches
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Hyman Huang <yong.huang@smartx.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,33 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 Feb 2024 at 19:49, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
+On Fri, 9 Feb 2024 at 14:07, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
 >
-> The following changes since commit 5d1fc614413b10dd94858b07a1b2e26b1aa029=
-6c:
+> The following changes since commit 9e34f127f419b3941b36dfdfac79640dc81e97=
+e2:
 >
->   Merge tag 'migration-staging-pull-request' of https://gitlab.com/peterx=
-/qemu into staging (2024-02-09 11:22:20 +0000)
+>   Merge tag 'pull-request-2024-02-06' of https://gitlab.com/thuth/qemu in=
+to staging (2024-02-08 11:59:28 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-updates-090224=
--1
+>   https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
 >
-> for you to fetch changes up to 86b75667e04b49a0b75f061f589b3fbec3fb78f1:
+> for you to fetch changes up to d87b258b75498d3e8563ec8ebaaf67efc27be945:
 >
->   tests/tcg: Add the syscall catchpoint gdbstub test (2024-02-09 17:52:40=
- +0000)
+>   tests: Add case for LUKS volume with detached header (2024-02-09 12:50:=
+38 +0000)
 >
 > ----------------------------------------------------------------
-> testing, doc and gdbstub updates:
->
->   - add sqlite3 to openSUSE image
->   - mark CRIS as deprecated
->   - re-enable the TCG plugin tests
->   - use select for semihosting
->   - implement syscall catching in gdbstub
+>  - LUKS support for detached headers
+>  - Update x86 CPU model docs and script
+>  - Add missing close of chardev QIOChannel
+>  - More trace events o nTKS handshake
+>  - Drop unsafe VNC constants
+>  - Increase NOFILE limit during startup
 >
 
 
