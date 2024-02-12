@@ -4,70 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3FA9C4829C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 16:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63E58C48297
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 16:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZZGv-0001pn-8X; Mon, 12 Feb 2024 11:35:09 -0500
+	id 1rZZIE-0003pL-3Z; Mon, 12 Feb 2024 11:36:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rZZGs-0001oO-61; Mon, 12 Feb 2024 11:35:06 -0500
-Received: from zproxy3.enst.fr ([137.194.2.222])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZZI9-0003nL-KR
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 11:36:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rZZGo-0005QE-H1; Mon, 12 Feb 2024 11:35:04 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id BFA8CA05A3;
- Mon, 12 Feb 2024 17:34:58 +0100 (CET)
-Received: from zproxy3.enst.fr ([IPv6:::1])
- by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id WgX8N4b8V3_B; Mon, 12 Feb 2024 17:34:58 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 475CAA056F;
- Mon, 12 Feb 2024 17:34:58 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 475CAA056F
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1707755698;
- bh=tDuvgN94LTs349m7HZdr3iifrkazFs5Y7mCnx8rIHEM=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=1UQXaI3Qi9wXzHTvqSwS7PA9CrfzfO6faiPzZcpruVnZqzFwVOYrqpraVG2JBFcKi
- DHeOkAnGTH8hR66QRgAb88BBvosI3Eb6uI/yTk8jYNYUs0s4zIOCw1Oe9ua/5SvodD
- pF5NkW62MvwnxiFydVgABpQJWFvA8xfPcVYUd/XM=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy3.enst.fr ([IPv6:::1])
- by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id OQacUv1X5wql; Mon, 12 Feb 2024 17:34:58 +0100 (CET)
-Received: from localhost.localdomain (74.0.125.80.rev.sfr.net [80.125.0.74])
- by zproxy3.enst.fr (Postfix) with ESMTPSA id 094FFA0562;
- Mon, 12 Feb 2024 17:34:58 +0100 (CET)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH 2/2] tests/qtest: Check that EXTI fan-in irqs are correctly
- connected
-Date: Mon, 12 Feb 2024 17:31:19 +0100
-Message-ID: <20240212163446.227802-3-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240212163446.227802-1-ines.varhol@telecom-paris.fr>
-References: <20240212163446.227802-1-ines.varhol@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rZZI7-0005o4-V8
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 11:36:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707755782;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=48oA5tRdvShoGmS5n9L33tMrwd5YbVad5gdD5mRpFcc=;
+ b=an4bR7dgHnA1wIUzcigGJcu8zLD4Vxe0kULj0sizIwITfXP0adV/6JDM6UO6PlBABl5u06
+ NJWuUgC/bPMO7Ar7Xjw/1XGbQQkh2VERkCqHGGwYXZ2r4ezInKFi0B0A8cQetfuJDOEClM
+ 1P0QCfSTRTmK/1czfgKn+4t6/Xjvfpw=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-391-o0IgO1s7NSOKZFTGtfRHxA-1; Mon, 12 Feb 2024 11:36:21 -0500
+X-MC-Unique: o0IgO1s7NSOKZFTGtfRHxA-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3bff4204b94so4261873b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 08:36:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707755780; x=1708360580;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=48oA5tRdvShoGmS5n9L33tMrwd5YbVad5gdD5mRpFcc=;
+ b=M4utIDvFo4aV317Kaa1sRipKD0I7Nswp4CNyyIVky0v267h/c5FW48gOtnpD8pfQrC
+ FK58FOwi6hDTKeFvoFkAnSAmlXlLllB1eEMxZ421fDUFEZtrnL+mlTwtkq2r0OnKVvEp
+ 1w5LUkX/3ExTms/DRkn8jpbiiroRIXSLp1ZueAe/tdlhvL20Q1BKKPRoORk6mGcir+y1
+ zJh6Ye9cOGZTCfbnYOaGiJGYLuRFhhPBoz/eq+d/yO49/lbLmPaoOHTpYljJbzjd/77O
+ Y+ViPKa/BmuW4bKXI0KcVoK8NWvckb3gGOkEjNXrk/DJCMhP4EmrTeq0+n9ryT+FUEtB
+ fg0A==
+X-Gm-Message-State: AOJu0YwC4yCa2zjlPaCoEbkeO0cwe/aG/XcJC3Rf78hs8lJ7c+NLEqIa
+ r7jzTXcKxXJWZbZFr+G/ULI9YHWWcdusvBDUFZn6Xt51RbdTGeoOz4dfCwd7UPA8GF8OxCSEXjS
+ NSQM04g89uKP8udROtZq3VPXgjaCDGhO2TvMFCQk0KaxvTJce/+3E
+X-Received: by 2002:a05:6808:398f:b0:3bf:cd51:b8d4 with SMTP id
+ gq15-20020a056808398f00b003bfcd51b8d4mr12588584oib.11.1707755780660; 
+ Mon, 12 Feb 2024 08:36:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHycwl9oFi4PWicP52sx16qqOEkhPusHwJJW4W9Y66PfzdtDTkaqxLjP7u3aN/GBKxUahH+0g==
+X-Received: by 2002:a05:6808:398f:b0:3bf:cd51:b8d4 with SMTP id
+ gq15-20020a056808398f00b003bfcd51b8d4mr12588571oib.11.1707755780460; 
+ Mon, 12 Feb 2024 08:36:20 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUf7eT5CviPXcWp2xieVbUladSAb2BBenB5SIKQktO1toVzuFzHUVRLXze5kzbyj0iE1xutA3sDBT45wK7e9fHIflmKC7NlVAGdPfLcyxpoJ/+DlF4p7tmuWzd/bIYwytpLj11P7Xaum/NQrAXfjB1Lxjt44HoBbV1GiZh3jmcMMQOd6PmhDleYnds5MxEqrihapF2HY1D39aYKDFi/OfNkIWx2exH3d3uZrOKJR4ibvthegPEvJU2Y2DF7FKUTzZ3cx+7eklJtxPivdI1rSwxCBuGJH+KKVDfaNYsEnTmyYAiF8HGsZzFEzu7TP6DWrR3T/h1NCEYCBXg=
+Received: from ?IPV6:2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891?
+ ([2a01:cb19:853d:fa00:c28a:3e3d:34f3:3891])
+ by smtp.gmail.com with ESMTPSA id
+ o10-20020a05620a110a00b00783b6da58a9sm2170981qkk.39.2024.02.12.08.36.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Feb 2024 08:36:20 -0800 (PST)
+Message-ID: <9a0c596f-ba81-4f77-96cc-9efb49e04786@redhat.com>
+Date: Mon, 12 Feb 2024 17:36:15 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.222;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy3.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/14] memory: Add Error** argument to .log_global*()
+ handlers
+Content-Language: en-US
+To: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240207133347.1115903-1-clg@redhat.com>
+ <20240207133347.1115903-4-clg@redhat.com> <ZcRrJIrInupeanqB@x1n>
+ <c9c45081-4874-4c89-b283-1b19d21ee670@redhat.com>
+ <8343df56-d6a4-42e7-9140-9610fd140e9d@nvidia.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <8343df56-d6a4-42e7-9140-9610fd140e9d@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,140 +114,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a QTest that verifies each input line of a specific
-EXTI OR gate can influence the output line.
+On 2/12/24 09:43, Avihai Horon wrote:
+> Hi Cedric,
+> 
+> On 09/02/2024 12:14, Cédric Le Goater wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> On 2/8/24 06:48, Peter Xu wrote:
+>>> On Wed, Feb 07, 2024 at 02:33:36PM +0100, Cédric Le Goater wrote:
+>>>> @@ -2936,14 +2940,14 @@ void memory_global_dirty_log_start(unsigned int flags)
+>>>>       trace_global_dirty_changed(global_dirty_tracking);
+>>>>
+>>>>       if (!old_flags) {
+>>>> -        MEMORY_LISTENER_CALL_GLOBAL(log_global_start, Forward);
+>>>> +        MEMORY_LISTENER_CALL_GLOBAL(log_global_start, Forward, errp);
+>>>>           memory_region_transaction_begin();
+>>>>           memory_region_update_pending = true;
+>>>>           memory_region_transaction_commit();
+>>>>       }
+>>>>   }
+>>>>
+>>>> -static void memory_global_dirty_log_do_stop(unsigned int flags)
+>>>> +static void memory_global_dirty_log_do_stop(unsigned int flags, Error **errp)
+>>>>   {
+>>>>       assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
+>>>>       assert((global_dirty_tracking & flags) == flags);
+>>>> @@ -2955,7 +2959,7 @@ static void memory_global_dirty_log_do_stop(unsigned int flags)
+>>>>           memory_region_transaction_begin();
+>>>>           memory_region_update_pending = true;
+>>>>           memory_region_transaction_commit();
+>>>> -        MEMORY_LISTENER_CALL_GLOBAL(log_global_stop, Reverse);
+>>>> +        MEMORY_LISTENER_CALL_GLOBAL(log_global_stop, Reverse, errp);
+>>>>       }
+>>>>   }
+>>>
+>>> I'm a little bit surprised to see that MEMORY_LISTENER_CALL_GLOBAL()
+>>> already allows >2 args, with the ability to conditionally pass over errp
+>>> with such oneliner change; even if all callers were only using 2 args
+>>> before this patch..
+>> yes. The proposal takes the easy path.
+>>
+>> Should we change all memory listener global handlers :
+>>
+>>   begin
+>>   commit
+>>   log_global_after_sync
+>>   log_global_start
+>>   log_global_stop
+>>
+>> to take an extra Error **errp argument ?
+>>
+>> I think we should distinguish begin + commit handlers from the log_global_*
+>> with a new macro. In which case, we could also change the handler to return
+>> a bool and fail at the first error in MEMORY_LISTENER_CALL_GLOBAL(...).
+> 
+> I think we must fail at first error in any case. Otherwise, if two handlers error and call error_setg() with errp, the second handler will assert IIUC.
 
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
----
- tests/qtest/stm32l4x5_exti-test.c | 97 +++++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+Good point. I will respin with a new MEMORY_LISTENER_CALL_GLOBAL_ERR macro
+exiting the loop at first error.
 
-diff --git a/tests/qtest/stm32l4x5_exti-test.c b/tests/qtest/stm32l4x5_ex=
-ti-test.c
-index c390077713..276b7adc7a 100644
---- a/tests/qtest/stm32l4x5_exti-test.c
-+++ b/tests/qtest/stm32l4x5_exti-test.c
-@@ -31,6 +31,11 @@
-=20
- #define EXTI0_IRQ 6
- #define EXTI1_IRQ 7
-+#define EXTI5_IRQ 23
-+#define EXTI6_IRQ 23
-+#define EXTI7_IRQ 23
-+#define EXTI8_IRQ 23
-+#define EXTI9_IRQ 23
- #define EXTI35_IRQ 1
-=20
- static void enable_nvic_irq(unsigned int n)
-@@ -499,6 +504,96 @@ static void test_interrupt(void)
-     g_assert_false(check_nvic_pending(EXTI1_IRQ));
- }
-=20
-+static void test_orred_interrupts(void)
-+{
-+    /*
-+     * For lines EXTI5..9 (fanned-in to NVIC irq 23),
-+     * test that rising the line pends interrupt
-+     * 23 in NVIC.
-+     */
-+    enable_nvic_irq(EXTI5_IRQ);
-+    /* Check that there are no interrupts already pending in PR */
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    /* Check that this specific interrupt isn't pending in NVIC */
-+    g_assert_false(check_nvic_pending(EXTI5_IRQ));
-+
-+    /* Enable interrupt lines EXTI[5..9] */
-+    exti_writel(EXTI_IMR1, (0x1F << 5));
-+
-+    /* Configure interrupt on rising edge */
-+    exti_writel(EXTI_RTSR1, (0x1F << 5));
-+
-+    /* Simulate rising edge from GPIO line 7 */
-+    exti_set_irq(7, 1);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << 7);
-+    g_assert_true(check_nvic_pending(EXTI7_IRQ));
-+
-+    /* Clear the pending bit in PR */
-+    exti_writel(EXTI_PR1, 1 << 7);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_true(check_nvic_pending(EXTI7_IRQ));
-+
-+    /* Clean NVIC */
-+    unpend_nvic_irq(EXTI7_IRQ);
-+    g_assert_false(check_nvic_pending(EXTI7_IRQ));
-+
-+    /* Simulate rising edge from GPIO line 6 */
-+    exti_set_irq(6, 1);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << 6);
-+    g_assert_true(check_nvic_pending(EXTI6_IRQ));
-+
-+    /* Clear the pending bit in PR */
-+    exti_writel(EXTI_PR1, 1 << 6);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_true(check_nvic_pending(EXTI6_IRQ));
-+
-+    /* Clean NVIC */
-+    unpend_nvic_irq(EXTI6_IRQ);
-+    g_assert_false(check_nvic_pending(EXTI6_IRQ));
-+
-+    /* Simulate rising edge from GPIO line 5 */
-+    exti_set_irq(5, 1);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << 5);
-+    g_assert_true(check_nvic_pending(EXTI5_IRQ));
-+
-+    /* Clear the pending bit in PR */
-+    exti_writel(EXTI_PR1, 1 << 5);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_true(check_nvic_pending(EXTI5_IRQ));
-+
-+    /* Clean NVIC */
-+    unpend_nvic_irq(EXTI5_IRQ);
-+    g_assert_false(check_nvic_pending(EXTI5_IRQ));
-+
-+    /* Simulate rising edge from GPIO line 8 */
-+    exti_set_irq(8, 1);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << 8);
-+    g_assert_true(check_nvic_pending(EXTI8_IRQ));
-+
-+    /* Clear the pending bit in PR */
-+    exti_writel(EXTI_PR1, 1 << 8);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_true(check_nvic_pending(EXTI8_IRQ));
-+
-+    /* Clean NVIC */
-+    unpend_nvic_irq(EXTI8_IRQ);
-+    g_assert_false(check_nvic_pending(EXTI8_IRQ));
-+
-+    /* Simulate rising edge from GPIO line 9 */
-+    exti_set_irq(9, 1);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << 9);
-+    g_assert_true(check_nvic_pending(EXTI9_IRQ));
-+
-+    /* Clear the pending bit in PR */
-+    exti_writel(EXTI_PR1, 1 << 9);
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    g_assert_true(check_nvic_pending(EXTI9_IRQ));
-+
-+    /* Clean NVIC */
-+    unpend_nvic_irq(EXTI9_IRQ);
-+    g_assert_false(check_nvic_pending(EXTI9_IRQ));
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -515,6 +610,8 @@ int main(int argc, char **argv)
-     qtest_add_func("stm32l4x5/exti/masked_interrupt", test_masked_interr=
-upt);
-     qtest_add_func("stm32l4x5/exti/interrupt", test_interrupt);
-     qtest_add_func("stm32l4x5/exti/test_edge_selector", test_edge_select=
-or);
-+    qtest_add_func("stm32l4x5/exti/test_orred_interrupts",
-+                   test_orred_interrupts);
-=20
-     qtest_start("-machine b-l475e-iot01a");
-     ret =3D g_test_run();
---=20
-2.43.0
+Thanks,
+
+C.
 
 
