@@ -4,76 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915BBC4829E
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 18:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EA8C4829E
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Feb 2024 18:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZb3d-0002G7-H2; Mon, 12 Feb 2024 13:29:33 -0500
+	id 1rZb5l-0003eC-Lx; Mon, 12 Feb 2024 13:31:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rZb3b-0002Fv-Rp
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:29:31 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1rZb5g-0003dJ-0j
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:31:41 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rZb3Y-0002O8-Vf
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:29:31 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-55f279dca99so5351086a12.3
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 10:29:28 -0800 (PST)
+ id 1rZb5Z-0002rz-Kq
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 13:31:35 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2cf1fd1cc5bso44279181fa.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 10:31:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707762567; x=1708367367; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9xLjl+NAhigim4DSxsx1oZoTyBV1WrlW4DUoRdXd5Rc=;
- b=mRFf6mjkzZCGlqcDWYRjFpgxw/LTjvkqh2CjSTcCtxa8nrIuvm0SLZOx96JnxWKeAI
- HBPW8NG1BfKIw1NVpyc99w5a5Rrf0UkJCozr8JcxL8GpCDM0XNpBDYvQFX82etkYlFLx
- QYo8pFTPy76s0f9MuWJ3jG5a70GUQwRN1F9apjpt5sL+ZfvQQbIhQ8DbSnjeT37GqSA2
- p+SBPLtZmDYSuQSeF8q4UHhkXlhnCdbT6SebSqTMUFJ6zODkWIHtwjPvXQ5r+RMCEePt
- E2O+bxn1lVNg51b65RWfRmzVAAVCmvQIHaObjO+CausHMcg/2fdKdIqjDyn85csmNVWj
- uE6A==
+ d=linaro.org; s=google; t=1707762690; x=1708367490; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7PtMWUyuGF48T55SkyKDLKq7rMhjpk01/Vrt2XC+FTU=;
+ b=NBj/sfR/m4FfXzGzkdwvaPMJLHUWACvjEDjhb8hw75497z4uPPzSXWlBX85zfHw7OR
+ KzbOgGC1sveyNKvlU+FQy3oxeZguys2ovIejvSn25f9/sGSVA62XifhWJAqBEhVAny/a
+ JJVx0H7pn/1xVUvy4vkb8khobaYC9IPinN/gPDm663uEYjVp2uF0vcq0AeByaDJaHxTL
+ NPaRXchVu6yrR9y1JrMSJGUyYeBhZy6w+C/uoGWTTiwwSAqJ2w6gaGL3mF0md3GJMZI5
+ U8bC150ZnkRtncO3btGDZwVxw6mRv7wB9w3FkHTV9L+EoIWmHXm+/72zK+PKNMhncNHM
+ 4GSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707762567; x=1708367367;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9xLjl+NAhigim4DSxsx1oZoTyBV1WrlW4DUoRdXd5Rc=;
- b=B0EucKuY/GXt/w+Wo0bc+TA6e64W8dni0Kp7Qt8lPruNObMG5Yq5NHsfUdPC2DbxFZ
- KC3JI7F+LNoOetdvG+IkVIpfsJINf2r/KUGf1/42mksnbIYfoSDyI0ilJGOd1/0KD3ww
- KY2wRiwdNeKHCybZgQjK8Bk+sgNa+5FSvKGymBUyvIBkKIZCwEQ6nWNyvgf1d6oMqoDL
- 6obfJbDiwKtozfaA2v5Tt8IGoK/a8m3FCjTKWatBIM5XfqM+G/2swVadnQcD9Xd5ikKP
- 9ECJGcFRlooiw9V+WU1Fb0W0HHJm33WbU/vmfqJQTq5tosFmQzTUoisbxZN062EQyhbK
- N+0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUToGPdNkgttqXhPWx8GW69NkxAQA4V42hucaPL7jBljFX0Kq7zX/ESAW+OioqDaCMEjWuzRzeVVpQR0wKsIdwVAFDEOSQ=
-X-Gm-Message-State: AOJu0YwFyaJkoNxoF3yP5wjbU1ewIhX/H09A20DEe7j7h7yDQvMkyC1X
- 7QFRSAcN2eT1X9i6FqjUh8tU4SnysjCYwswxBFF3adM+JCml2lPNKonXLnTKh6luE7OnbrjKCyV
- XoDKL1Xfr9/hJiRvFZ+4GV4KsBFpKrAjK8Y+EYQ==
-X-Google-Smtp-Source: AGHT+IFWFU6sN1MpMrK0TW7s54Jomcl/2yPYJ3xKY5HwQjAujlVosoVxOxyUjzCSokbVJags+NVHGn9tiZNR6rqNlj4=
-X-Received: by 2002:aa7:cd67:0:b0:561:eb77:865a with SMTP id
- ca7-20020aa7cd67000000b00561eb77865amr22144edb.8.1707762567377; Mon, 12 Feb
- 2024 10:29:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707762690; x=1708367490;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7PtMWUyuGF48T55SkyKDLKq7rMhjpk01/Vrt2XC+FTU=;
+ b=E5ZV2yUE+J34av0rGTwjiJ/wBhXz4s0hIshQyQ1iO5pfBRe1/cDmAIk9Ji16pbKLMT
+ YQqSBrasrp6xoanYfyEwN0pW2Ub29ToHx3p0q3zR6Q2eTZWQPmqG4tsSZScgfrI/wLHi
+ uO/aeNwWTkBStqQ42tqprGpHkJLsweGEM3JN4LcpEg0tQ1TWVriuMGbjwrI2CpqQ+grH
+ AgJkDNyYrAO9m1Dy9vPpQQAwYNzFK/2teZKMFBEl8g+rwtaVJJ2PLm9pG9h9ak1I3mGd
+ X7N0U7S1+hlJoMRKN6+QGfJEL3vhywaG8bHA33kGRINu+4kIbKcdeXU1H3dGtB1lu+48
+ ZQhA==
+X-Gm-Message-State: AOJu0YwOTwZkelXvyz90PKqa9v3mXQp09T8kAHjtetNh51h1K62RMq1W
+ P3nxUawJy2sacMCwmz1ZQSGmls1piwi70VDHeKmSEi1IVCBYDFlz/YdCbEQirrKaAM/e4C8dYTb
+ V3dhaTD4/X4/sgsx0rs7ECUnal81GvfDCO96JRw==
+X-Google-Smtp-Source: AGHT+IE3nJ9c6r4RrX4HhHOI1Rm+I07CKk/d2vjzZFQStJqIpOTMeWDklKfmYBQ/qvan1aMn66O/OozajJdyL832h90=
+X-Received: by 2002:a05:651c:b21:b0:2d0:ff21:2a13 with SMTP id
+ b33-20020a05651c0b2100b002d0ff212a13mr2071357ljr.32.1707762690377; Mon, 12
+ Feb 2024 10:31:30 -0800 (PST)
 MIME-Version: 1.0
-References: <87y1c7ogze.fsf@suse.de>
- <CAFEAcA_BPf4LSh-JF1NVVVdaLoKgUcsnGeP7sHt-f73r4zyh7g@mail.gmail.com>
- <ZbjT5OYpzNJjkMw9@x1n> <87wmrqbjnl.fsf@suse.de> <ZbnG3qkMBPdsQxan@x1n>
- <878r45lkeb.fsf@suse.de> <ZbsIYKJ5fYG6zsVi@x1n> <87y1c4ib03.fsf@suse.de>
- <ZbwuSM7LjWCsa_VB@x1n>
- <CAFEAcA-h6BDiY4G1uBymcmmnzagHTvhevb1wXPzwBOwZYM338Q@mail.gmail.com>
- <ZcBOZPhEq0gNHFzY@x1n>
-In-Reply-To: <ZcBOZPhEq0gNHFzY@x1n>
+References: <20240209194734.3424785-1-alex.bennee@linaro.org>
+In-Reply-To: <20240209194734.3424785-1-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Feb 2024 18:29:15 +0000
-Message-ID: <CAFEAcA_gsgPGFp1DeyGWPZ=WVBsZVWNix+cJ1T11TZXE8XKd8w@mail.gmail.com>
-Subject: Re: [PULL 06/15] tests/qtest/migration: Don't use -cpu max for aarch64
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, 
- Eric Auger <eric.auger@redhat.com>
+Date: Mon, 12 Feb 2024 18:31:19 +0000
+Message-ID: <CAFEAcA9rSjhZoruxTvaeLas2a7AFju3ZAAOLqzfHhxhqBuQmcA@mail.gmail.com>
+Subject: Re: [PULL 00/10] testing, doc and gdbstub updates
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,39 +89,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 5 Feb 2024 at 02:56, Peter Xu <peterx@redhat.com> wrote:
-> Thanks, but then this is pretty sad.  I'm surprised aarch64 doesn't have
-> such requirement to allow some VM config to run across all kinds of hosts.
-
-It just hasn't been anything that anybody so far has wanted
-enough to put the necessary kernel-side work into. (There are
-also some tricky issues surrounding errata workarounds that
-the guest needs to do: you need to have some way of telling the
-guest "the vCPU looks like it's type X but you need to do
-errata workarounds ABC for CPU type Y, not the ones for X".)
-
-> > The difference is just that we provide different cross-version migration
-> > compatibility support levels for the two cases. (Strictly speaking, I'm
-> > not sure we strongly support migration compat for 'max' on KVM either --
-> > for instance you probably need to be doing a migration on the same host
-> > CPU type and the same host kernel version. It's just that the definition
-> > of "max" on KVM is less QEMU-dependent and more host-kernel-dependent, so
-> > in your particular situation running the test cases you're less likely to
-> > see any possible breakage.)
+On Fri, 9 Feb 2024 at 19:49, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
 >
-> Yes we don't have issue for the current CI on KVM compatibilities, but QEMU
-> does matter for sure.
+> The following changes since commit 5d1fc614413b10dd94858b07a1b2e26b1aa029=
+6c:
 >
-> Then we can either (1) add code as Fabiano suggested to choose different
-> cpu model by adding hack code in qtest, or (2) we simply not support
-> aarch64 on cross binary test like most of the rest of the arch, but only
-> support x86, until any arch can provide a stable CPU that support all
-> config of hosts (we can document it in the CI file).
+>   Merge tag 'migration-staging-pull-request' of https://gitlab.com/peterx=
+/qemu into staging (2024-02-09 11:22:20 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-updates-090224=
+-1
+>
+> for you to fetch changes up to 86b75667e04b49a0b75f061f589b3fbec3fb78f1:
+>
+>   tests/tcg: Add the syscall catchpoint gdbstub test (2024-02-09 17:52:40=
+ +0000)
+>
+> ----------------------------------------------------------------
+> testing, doc and gdbstub updates:
+>
+>   - add sqlite3 to openSUSE image
+>   - mark CRIS as deprecated
+>   - re-enable the TCG plugin tests
+>   - use select for semihosting
+>   - implement syscall catching in gdbstub
+>
 
-That seems a bit pessimistic. How about "always only test with TCG" ?
-That will defend the migration compat on all the device models etc,
-which is the bit we're most likely to break by accident.
 
-thanks
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
 -- PMM
 
