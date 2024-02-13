@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC88C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 09:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E62C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 09:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZp6q-0005Vj-40; Tue, 13 Feb 2024 04:29:48 -0500
+	id 1rZp8w-0006mA-E0; Tue, 13 Feb 2024 04:31:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rZp6o-0005VY-OF
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:29:46 -0500
+ id 1rZp8v-0006lz-1I
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:31:57 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rZp6n-0006Or-BR
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:29:46 -0500
+ id 1rZp8t-0006mf-HD
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:31:56 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TYwt24f3xz6J9vB;
- Tue, 13 Feb 2024 17:25:46 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TYwww2TkPz6F97k;
+ Tue, 13 Feb 2024 17:28:16 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id EA8F714163D;
- Tue, 13 Feb 2024 17:29:42 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id BEA021413D4;
+ Tue, 13 Feb 2024 17:31:53 +0800 (CST)
 Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
  (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 13 Feb
- 2024 09:29:42 +0000
-Date: Tue, 13 Feb 2024 09:29:41 +0000
+ 2024 09:31:53 +0000
+Date: Tue, 13 Feb 2024 09:31:52 +0000
 To: fan <nifan.cxl@gmail.com>
 CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
  <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
  <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
  <nifan@outlook.com>, <jim.harris@samsung.com>, "Fan Ni" <fan.ni@samsung.com>
-Subject: Re: [PATCH v3 8/9] hw/cxl/events: Add qmp interfaces to add/release
- dynamic capacity extents
-Message-ID: <20240213092941.00000ad3@Huawei.com>
-In-Reply-To: <ZcUotSCiFYEceShP@debian>
+Subject: Re: [PATCH v3 9/9] hw/mem/cxl_type3: Add dpa range validation for
+ accesses to dc regions
+Message-ID: <20240213093152.000017d5@Huawei.com>
+In-Reply-To: <ZcZ3LU9bM20Lomce@debian>
 References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <20231107180907.553451-9-nifan.cxl@gmail.com>
- <20240124165004.00003228@Huawei.com> <ZcUotSCiFYEceShP@debian>
+ <20231107180907.553451-10-nifan.cxl@gmail.com>
+ <20240124165815.00007e46@Huawei.com> <ZcZ3LU9bM20Lomce@debian>
 Organization: Huawei Technologies Research and Development (UK) Ltd.
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
@@ -77,37 +77,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-> > >  #endif
-> > > diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-> > > index d778487b7e..4f8cb3215d 100644
-> > > --- a/include/hw/cxl/cxl_events.h
-> > > +++ b/include/hw/cxl/cxl_events.h
-> > > @@ -166,4 +166,19 @@ typedef struct CXLEventMemoryModule {
-> > >      uint8_t reserved[0x3d];
-> > >  } QEMU_PACKED CXLEventMemoryModule;
-> > >  
+> > > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > > index 43cea3d818..4ec65a751a 100644
+> > > --- a/hw/mem/cxl_type3.c
+> > > +++ b/hw/mem/cxl_type3.c  
+> >   
 > > > +/*
-> > > + * CXL r3.0 section Table 8-47: Dynamic Capacity Event Record
-> > > + * All fields little endian.
+> > > + * Check whether a DPA range [dpa, dpa + len) has been backed with DC extents.
+> > > + * Used when validating read/write to dc regions
 > > > + */
-> > > +typedef struct CXLEventDynamicCapacity {
-> > > +    CXLEventRecordHdr hdr;
-> > > +    uint8_t type;
-> > > +    uint8_t reserved1;
-> > > +    uint16_t host_id;
-> > > +    uint8_t updated_region_id;
-> > > +    uint8_t reserved2[3];
-> > > +    uint8_t dynamic_capacity_extent[0x28]; /* defined in cxl_device.h */  
+> > > +bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+> > > +                                  uint64_t len)
+> > > +{
+> > > +    CXLDCDRegion *region;
+> > > +    uint64_t nbits;
+> > > +    long nr;
+> > > +
+> > > +    region = cxl_find_dc_region(ct3d, dpa, len);
+> > > +    if (!region) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    nr = (dpa - region->base) / region->block_size;
+> > > +    nbits = DIV_ROUND_UP(len, region->block_size);
+> > > +    return find_next_zero_bit(region->blk_bitmap, nr + nbits, nr) == nr + nbits;  
+> > I'm not sure how this works... Is it taking a size or an end point?
 > > 
-> > Can't we use that definition here?  
+> > Linux equivalent takes size, so I'd expect
+> > 
+> >     return find_next_zero_bit(region->blk_bitmap, nbits, nr);
+> > Perhaps a comment would avoid any future confusion on this.
+> >   
 > 
-> REPLY: 
+> My understanding is that the size is the size of the bitmap, which is
+> also end of the range to check, not the length of the range to check.
 > 
-> I leave it as it is to avoid include cxl_device.h to cxl_extent.h.
+> The function find_next_zero_bit(bitmap, size, offset) checks the bitmap range
+> [offset, size) to find the next unset bit, for the above test, we want to
+> check range [nr, nr + nbits), so the arguments passed to the function
+> should be right.
 > 
-> Do you think we need to include the file and use the definition here?
-
-I don't feel strongly either way.
+> In the definition of the function, whenever offset >= size, it returns size
+> because size is the end of the range, So if we pass nbits and nr
+> to the function and nr >= nbits, which can be common, meaning (dpa-region_base)
+> \> len, the function will always return true; that is not what we want.  
+> 
+> To sum up, the second parameter of the function should always be the end
+> of the range to check, for our case, it is nr + nbits.
+Ok. Thanks for the explanation. That sounds good to me
 
 Jonathan
 
