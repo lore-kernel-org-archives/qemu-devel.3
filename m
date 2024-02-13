@@ -4,176 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6833CC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 10:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19191C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 10:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZqSD-0001IQ-Sc; Tue, 13 Feb 2024 05:55:57 -0500
+	id 1rZqVX-0002t9-B9; Tue, 13 Feb 2024 05:59:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1rZqSB-0001H5-O9
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:55:55 -0500
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqVU-0002si-MM
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:59:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1rZqS9-0005QH-E1
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:55:55 -0500
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41DAFJs1019790; Tue, 13 Feb 2024 10:55:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=E2Wc0V9NNXDCpAbHaL+nY1466i4bgw0ZKPPLIMNOqKA=;
- b=I8X3pWqj14zJDSYbnhwHDzNpkkbQUlw0vgwYtnTe9Apu1cgAdlLBXRs/3yLAWE3S3g5h
- hnGmOS7kiNdciJ0em2SpGFkjUXqgjttN5a4TnpFFWj5r41jkQYVg2ne9f830bpIZqwH/
- 66x3X2kFEmpmrqvM6AGePt9WAJ/XPRSvMuwwkic0Tt/9XI9mxwwel9baNbnRVHnOemTk
- D2B7PcQsWUGCA75HPPEQACwUPBCwDFAojB3CBKoznm3IKNe1cREaWk6ilD+Fp/PU+HZP
- yu5sNm2lBPyqAOOQ1F1jIEWoo90RtvQOXvurBeEBsSlCmlugx3BC1ojGp3zPj+iCTazp BA== 
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w86gqg2sw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Feb 2024 10:55:48 +0000
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41D9o2W3015037; Tue, 13 Feb 2024 10:55:47 GMT
-Received: from nam11-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam11lp2168.outbound.protection.outlook.com [104.47.58.168])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3w5yk6w5jg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Feb 2024 10:55:47 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=esVH6KTS4fA2whOHj2eEgo9XE8N6vRfjVHkswkupkC1iAop/5vWYxf276Dk+FtWQcQ6w+t3ZTrDCnU08tGQcOhonBGLFIUtJA+uIbolUBEPFd2O5b4nQHJ2GDpe+z6KvHk0v5SQdVvhZfqkvsrig2V/xXvpLp4h0CW33I93EXI/iDI86kQKLmC0BJYSBq1yJ0n884rqqTTbu2y//YpqD2wRDTk3MdnAXKzyieUpWb/c/ua2/dhfUeIwErLp+lcTUVkzWieB+zHNXC9FWssCXIB5LhUJFZWkAA/6BEVH36oecY8yVWMs9L6gJYE4LovVZpRF90TNnPtQfake84xMOsg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E2Wc0V9NNXDCpAbHaL+nY1466i4bgw0ZKPPLIMNOqKA=;
- b=aM+3OWfiIExrfQu+az2DjynYZj7NFv2IVnJb0sxM4WKVjV8mHNPNiyBmb9NrCMzq7Iaf28Bj97lVG7oPgYjB7rppoOii+32fSw6QHh7lo2BCzAXu7C/NmS9LmIGdUTVpg+/6SLjQB2hVfC34W7zPfk3ehyzUxn+pfP3+BDPL8g5CQCqLJh5Q3tqwjch/inGSwukaMyLJxtwCv45zuRkrenb2ucIRICnVFcYZfcjGOW4GTjwr5PTUFCXFhrU/uJFx/w8UxZyJmEBTnpk8VuWMOB/28/o2EBvtYsosyGQa4vZjmk3KWShE4uXNeQg6hKKY0WIZXuBM0Zh3bLCAH6PSMQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E2Wc0V9NNXDCpAbHaL+nY1466i4bgw0ZKPPLIMNOqKA=;
- b=jAyAPksy16prUFC65OVdD8ihvgQKV/ubkaSLd44Xk5h6FEJbCDFGfjqrjjF4LNQUzVeujxSGg6tZQZpz38zvzsuf9+GMlXMrtm+Ie43ZjvqNsy/xNZnCTgwUjX/iCkbDzQBS6qgaSNhVWXBtUcZ3/ZHFWNKe89ecqEJ3jUGUx/U=
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
- by CYYPR10MB7625.namprd10.prod.outlook.com (2603:10b6:930:c0::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.35; Tue, 13 Feb
- 2024 10:55:45 +0000
-Received: from PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::3356:4cc1:701e:dde3]) by PH0PR10MB5893.namprd10.prod.outlook.com
- ([fe80::3356:4cc1:701e:dde3%4]) with mapi id 15.20.7270.036; Tue, 13 Feb 2024
- 10:55:45 +0000
-Message-ID: <72642921-98d4-4c4f-8117-868d2ae29eb0@oracle.com>
-Date: Tue, 13 Feb 2024 10:55:35 +0000
-Subject: Re: [PATCH rfcv2 18/18] intel_iommu: Block migration if cap is updated
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- yi.y.sun@intel.com, chao.p.peng@intel.com,
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqVT-00061f-7t
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:59:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707821958;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+WEniuVO/K44jckRuF1F76Eoxoe96Z6mlPzpyvMtF24=;
+ b=PXGe8phE9lWSUFuF3i8A0MEGG63/nEfIcY42ssyQkTLFluQVJ1ycvD93Gs1jk8/WPy6FBk
+ uNNQPv3fzrn1U5H1UNT0eYVrvvzCd5yS9lDGsjpKNzPgI1gU/y76cywg1WCy1KcGjY1s4e
+ Y3OnK/9c7MFPxX59F8xeu0FD95caduI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-XazDG0q3P-ys6dDI1JIxCw-1; Tue, 13 Feb 2024 05:59:16 -0500
+X-MC-Unique: XazDG0q3P-ys6dDI1JIxCw-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a381d3277a9so184847466b.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 02:59:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707821956; x=1708426756;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+WEniuVO/K44jckRuF1F76Eoxoe96Z6mlPzpyvMtF24=;
+ b=lqiHz1pqh5YB4pPhA46o2Sy5FTSNNU0Lyss1m6xNFj6Quwjy8z9BsSNfrBdJ+Q2E/N
+ h4v/4wHdJtHtXevBqUJttW7pkKnQak4Wcnr16+ja7JPsNPtPclUhrpo4R+Rwr905IdmN
+ WdoDdCqs/nnDyhnd4PzE81xGNai2Sed4/dWu4ayxJMAIMQ0W9JIv+iJTlLHxIJ3Gk8Bz
+ lF6WUoOUeFq/mIJDOKv5EA3OMq9SI5zf6Qh38acamswgt5KcfSKwrMSborbEIUpC7Taj
+ Q290T32Enc5a7uUpwROMKbgYOpc9VDESdlQttt093zXG+aiBxolYe0wbZmUICewMEcFy
+ B4ng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlNGTVg04qJvX7KI36oLNA8DUZXyooKChMH15d0Nly7X92C/LTinIzolhTs6o6/ftcOJRlZJf7QVJEVpItE0G7Rs0N1Bk=
+X-Gm-Message-State: AOJu0Yz58PdqKoDs8zW5QT9CvtBRw/Kj/g2EzpYpbYb2KsNDN3Qj9g+Q
+ R4Kztk8T/q3kvCcv9d3k2T9xLQAViwX3E+i6omNrR9QTAXDMmPWwoOhLNTEjUNZlu4Nb4aPPJFy
+ dcjBA2yb4G0A5uM9SKWTZyXhvyDLh04AoDnrA1Drv+f7/Nomd+Pea
+X-Received: by 2002:a17:906:4a4f:b0:a2f:1077:68d with SMTP id
+ a15-20020a1709064a4f00b00a2f1077068dmr6430904ejv.39.1707821955761; 
+ Tue, 13 Feb 2024 02:59:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVHCKp1UhWEaF1FMJKRxaVwgVB/BcqMPg/7Il7J0FjddPhUQTdwiLUp962anMmtuj2+6bMKA==
+X-Received: by 2002:a17:906:4a4f:b0:a2f:1077:68d with SMTP id
+ a15-20020a1709064a4f00b00a2f1077068dmr6430870ejv.39.1707821955140; 
+ Tue, 13 Feb 2024 02:59:15 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUINgSuJBgOXJzVQ95MflHzELbcCyQsk5t6WJ2sPG8xaGR1sc9PgaucafIze3S5/n/24xvXvRUe+JGFS84jsd9p8RM+YGogwQf5ghuxf+IPD05aqrpnLTfikkmJHJnjCtWdn0zOr58koo0ZEor308NDbD4V+XOGsVi5ijsyajBV6qx/Z04bS+RND5HTPJN2gUQMOJdNQOYrmn68pBd1YA9QTb9/sL6iRyHAUra6jGshxy8bhzylKTH0kd0VSU8kDD2JgdnV9zU+rKfP5Y9nY/WfslMn6tcYrH6dQKEqg5nCrUZ6g4JPlQM24NAOvyBgqaGbdTDxbgrd8pD8m3C5AIQJe0kLxmEK30ttdKiAbTZ/rd0Z/5bqCr7qYdnlZ5X8G9HT6fPIdOdPFnMaaIFpyQnnpUMW8TV/RpWdhg==
+Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
+ a6-20020a1709065f8600b00a370a76d3a0sm1172055eju.123.2024.02.13.02.59.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 02:59:14 -0800 (PST)
+Date: Tue, 13 Feb 2024 05:59:01 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
- <20240201072818.327930-19-zhenzhong.duan@intel.com>
-From: Joao Martins <joao.m.martins@oracle.com>
-In-Reply-To: <20240201072818.327930-19-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P265CA0434.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:e::14) To PH0PR10MB5893.namprd10.prod.outlook.com
- (2603:10b6:510:149::11)
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v3 5/7] pcie_sriov: Validate NumVFs
+Message-ID: <20240213055345-mutt-send-email-mst@kernel.org>
+References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
+ <20240212-reuse-v3-5-8017b689ce7f@daynix.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|CYYPR10MB7625:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8fb4dadc-86e1-401e-60b8-08dc2c825433
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xu5SakWGEM5cL3EhAR4WwGdggnZYf9HBVJ3yJjnqNFZFyPsOcTSr6N1bcnkmxmXKd8jhYH3ASU6CYZJjr9KL5KdlunNvr7+7P1xLfnRL0vM4Yfqf7KzvtLZp2Kxd9OFvbTDqqXA5yO7tqGVYDus6fLcCCmyupx3OI77/zHkj9MV8TAqWYwxtGG5+xKNlQhBuPnV62I4zzno3CS9Ybo2BuXcypJVbvRo/H5TXoq0RVLb08All+E9HdhdxMVlKWA7hmiiHPraNQzrvD6eNjQ5XoAITqrTRUMAPyvgiVpU3x281VZh62N9mK64n96Sqe8exs1KUWa0ZfM1M5ZRP+WvS2ae6vefGhbhtKJ4Ol9qMJ9Esl7kVSuyMkvXaUb2HXFnDJ0dy8SFGsoIxUAU5cZFps1l4m6G4A+PYAOc4UXgtBelsrL3mle44Pm6gnj4ByNO260xLisaovrPc7pCmLsNueRrcg4yqhJqHr6fJS6/kOAMiEGNrJ2TEvRMuMLDkHHvTTkBZzzG/uC5mX3NrIy4B1z+hKb939Haky9D0pF8O8zjb5HO111lwsKbVQz7RCMwC
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(396003)(376002)(346002)(136003)(366004)(39860400002)(230922051799003)(1800799012)(64100799003)(451199024)(186009)(2906002)(6506007)(36756003)(6486002)(6512007)(15650500001)(53546011)(6666004)(316002)(478600001)(41300700001)(2616005)(26005)(66946007)(83380400001)(4326008)(66476007)(8936002)(8676002)(66556008)(54906003)(31696002)(5660300002)(7416002)(38100700002)(86362001)(31686004);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VjBVWm9LK0UxeWFxTjJIOCtVTjJyU0tPM25Wdk5NRFZMdzR2U29oTzZmNzlx?=
- =?utf-8?B?K1AyakJ3SWhxbTA5R0dLY09WSjF3VUhUS1dxRXFVVGxXUnhPMzNDbExGaWJl?=
- =?utf-8?B?b1UvL1VCeEF1QUw1OEZxWmNMYk9jMUR6eTByQlFkTVV2TlRGUFVWc3JocS9p?=
- =?utf-8?B?YThweXBVQi91SW9oYlB4V3k2RGVlWWlGL0FlOUVsenRic2tNMytQL25jSkt2?=
- =?utf-8?B?N2EyZVprZXhlZGNyd2RXRkM3WnkwVnVTT0VuWXNQWnFObXdIUDZSNFBYSmt1?=
- =?utf-8?B?TkQ4UkxzMEF2bkkvSWRQWEY1MEdLTGtaMHhEclQ1cytEK0hxaEVNT2d5UlY4?=
- =?utf-8?B?ZHYrcFhwUFpxTUNBUHNpV0tuN2twQ2FWSFpla2lYNU1vTEV3ZVlFdDJ1RXEw?=
- =?utf-8?B?b0MybmRCSVFsM2p0d3RwL0NhMlMwVkp3ZEkyREtNbGJZMHRHK1hIZ0ZCcDNM?=
- =?utf-8?B?NXdQSmM4Ry9XYlhOT0tuMVhuYjlveGplS1NNK0dCNUlJVGlCOHRTWWdKR21a?=
- =?utf-8?B?UHpuVW9QRVV0Ym1qVXVZWkNDa3R3TTRjR0hWdElmZW94NjNBTkJZQW4yWTNm?=
- =?utf-8?B?ZGNtTUhROUdRRlQ3aFBpck9yd1c2ckV0WWRBQmJmQkc1MHQyTkVVRVBSTXBD?=
- =?utf-8?B?cFR3dHMzS2IvWlBpcFRkVDhGMTY3eTlsdW56RE1kMnBXbVRzK2twQnp1TERM?=
- =?utf-8?B?UDNXWWpKTXAxZnpTa3dCOGJhL2NJK2RNODFlN2FhQnVYbFFlVE5IOGVyV3Fp?=
- =?utf-8?B?eEI3T0dyMVVxN0xadFNMZ1FTdndYN2FPWEVtVWRDSHVpMGd1MVdJVW1pdndJ?=
- =?utf-8?B?eXYwbXBBUEl5N0wxY0VoaTNBQWpDbHk5YzFNbisxTVNUVnpZWnhGM1c2YVl1?=
- =?utf-8?B?SmowcjIwanI3aElydHVWczFjMVlrelpxdk9KaWZRTmN6K0dWRkRkVlYrY1pR?=
- =?utf-8?B?TFNBMGZDc1RrOVN2d00wR0x1MnpkN1VzWlgyUXhXeWRWNnVZM0grQ0JGeGMz?=
- =?utf-8?B?cmk5VWVNcjNyOWhFZFFySlhJa3NnWU4zay9RQWtxZWltdkNzWWRQY2wvNk90?=
- =?utf-8?B?bVI0T2lCQ0huS0hMVWJTTVRaRWVVcmtVcUFKSFY3QnZQRlYwYnNFZ21jRHhm?=
- =?utf-8?B?TU4yS3QvYXNDc1IzRjhqdllzaGhwWEVTK1NKQjE2VUtOK1NnNDdGOG5lL0Rw?=
- =?utf-8?B?WlpFYmlzVHdJUkNKdlA5TWZZM2JCZ0JkM3JoVmorNTlRUFQrTjFnK2UrK3Fk?=
- =?utf-8?B?OStNTldWMWh1SExyU2dONXBKQjZmY0t1bHdIOUorN05oN0ovckZDSUhBZ3oz?=
- =?utf-8?B?R0F0eTYrUk81Nk1tOFpmUDFXL0hjSjhBU2NaRjQ5WEVhOUh1WGpkdm5mNEJQ?=
- =?utf-8?B?MExXVkYxdnd5SVRFYjBuL3RUa3ZMT0pFQWZWMllQSU5WQkVXcGIvcHFCQXI0?=
- =?utf-8?B?NFdNekx3cXRlMWp1TW5CUHpxUi8zSzB2VjIzbFZjT1BVNnZRazB6aCtqVnQ4?=
- =?utf-8?B?REE0T0JRN3JRSkJlV2IzS2dOcE9VV1FaNVdFSS8zc3BKQnluQm9vUUxHL2Z4?=
- =?utf-8?B?WlRhRVNOOUlLb0FvYVJOejc0N29TUWFUWllQdzZvdjFzOWsrcVg3Znp2Vktq?=
- =?utf-8?B?U3Ftb1lXUjcreHg2cE84cGdrVVByS2VvVzlvZlRkb3dmNVlrYVJYdUdSK01t?=
- =?utf-8?B?d1VDS1d1aUtNWmVIQzlTMFIwYnJtOFlhSkxXM0FMeVNrM3V5OTBHeWlwMkNj?=
- =?utf-8?B?VjI0a2hGb3ZISTFvNWN6N1crMjFuUHZxYkZDcEVod3hBMENQS0VlNURvTHJa?=
- =?utf-8?B?Q2xiVnhDckQwNEZPTWluL05Xa2dyblU5NTE4cUpqTHZvb1ROK1AzcnQ2cjhM?=
- =?utf-8?B?WmdkblhtKzN2d09MS1VCc3VubnNlQVNwMlNCcEdna0l0aG81ZnY1ZWRIMVVp?=
- =?utf-8?B?dmVrT0xNbkVQazFJeWNMRFVjNFU2SGJJTXJ2ZFZOSEoza0RLQ1I2VUFzTHEx?=
- =?utf-8?B?d0ZBanE2OEhJTFRNM1NpQ2pEdEwzc3ZxVGFGb3o0RGlIY25OUUR0dFdrSmRF?=
- =?utf-8?B?YUM0Um5xYVZiKzB6SVNMK29ybit6Y1c1dVlmUzcwTVlHVXY2eG95TkVTQzFx?=
- =?utf-8?B?SStJRVd4NndNdWkycDNOYmJvNG1SUjFyMnNyMGtaUjhITk1YNHBTKzlkN3Iw?=
- =?utf-8?B?Ync9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 6v8M+NwPNlrUJMKN+LXIVjNWBNCRWPtwDUgz1HDBOrYfLa5SAFpFh43D/srfPBb43ug6TAnfv5OiTX0o8QAOKSx5CdZ0LCfLVsumJghOI7wzs3JJn1jEqUvUd+QOR7ERV5Bnha7zJY/dCDJ1y36WJ4VgFsr1AO8o3fs7ab/GlGDMxoUXVZnT0G/bO9FsFkPFbUeLDqTHQ/zi/YCuO6wFPiWa3UgWXx4z99T4yobKvC4ZbooWaZX7AcB79kFHEsS7YACOxuzY+C5B5yYAgdnnkvMyNsZRN3xEUQV5feFc1cuvEj9+ZSdH14lsVyaMSiiawf3VsEq5tGILA8nu49pGBfcVljmi67Xisyz2PgOD/BhcaYeTaHm5xWdrWVa8wUkL4tzejmWPzHlFlkNKspsjuJVuKGTyNBiuy5TDrpwJ3PKx+WP6M/ShXlsYuGcpxtxOLuC+HJJ1v16A6ICEatGzKuQ0UeufLM8+ts4ZxkR2NDFroFhUYSxODTdHXf4nvZmDApP5h/Ip5iRPt7hVAre0Cjo2k0ZJ3q977xqBX4lw7rbvMBDLMZpWvlosVS1P0s+knrEX8VRqIQ54fup5cguVA6SJeojjrVrESLlK2gvOGb0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8fb4dadc-86e1-401e-60b8-08dc2c825433
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2024 10:55:45.3462 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ij/4SlLK5UiXrT8mgAnqV2EgW34iil0GCakya/UAiOCFLdkuXSr8QhgRatFuF51XMj8dmPrij+7Ld/XFOSsgf3lsiOrkRU5YvYJy5QRqZeM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR10MB7625
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-13_05,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- spamscore=0
- mlxlogscore=999 bulkscore=0 phishscore=0 mlxscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402130085
-X-Proofpoint-GUID: xITa5C418mb_NNjlreEjdrTSOMLV_UKh
-X-Proofpoint-ORIG-GUID: xITa5C418mb_NNjlreEjdrTSOMLV_UKh
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240212-reuse-v3-5-8017b689ce7f@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -190,58 +111,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/02/2024 07:28, Zhenzhong Duan wrote:
-> When there is VFIO device and vIOMMU cap/ecap is updated based on host
-> IOMMU cap/ecap, migration should be blocked.
+On Mon, Feb 12, 2024 at 07:20:33PM +0900, Akihiko Odaki wrote:
+> The guest may write NumVFs greater than TotalVFs and that can lead
+> to buffer overflow in VF implementations.
 > 
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-Is this really needed considering migration with vIOMMU is already blocked anyways?
-
+> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  hw/i386/intel_iommu.c | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
+>  hw/pci/pcie_sriov.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 72cc8b2c71..7f9ff653b2 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -39,6 +39,7 @@
->  #include "hw/i386/apic_internal.h"
->  #include "kvm/kvm_i386.h"
->  #include "migration/vmstate.h"
-> +#include "migration/blocker.h"
->  #include "trace.h"
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index a1fe65f5d801..da209b7f47fd 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
 >  
->  #define S_AW_BITS (VTD_MGAW_FROM_CAP(s->cap) + 1)
-> @@ -3829,6 +3830,8 @@ static int vtd_check_legacy_hdev(IntelIOMMUState *s,
->      return 0;
->  }
->  
-> +static Error *vtd_mig_blocker;
-> +
->  static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
->                                    IOMMUFDDevice *idev,
->                                    Error **errp)
-> @@ -3860,8 +3863,17 @@ static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
->          tmp_cap |= VTD_CAP_MGAW(host_mgaw + 1);
->      }
->  
-> -    s->cap = tmp_cap;
-> -    return 0;
-> +    if (s->cap != tmp_cap) {
-> +        if (vtd_mig_blocker == NULL) {
-> +            error_setg(&vtd_mig_blocker,
-> +                       "cap/ecap update from host IOMMU block migration");
-> +            ret = migrate_add_blocker(&vtd_mig_blocker, errp);
-> +        }
-> +        if (!ret) {
-> +            s->cap = tmp_cap;
-> +        }
+>      assert(sriov_cap > 0);
+>      num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
+> +        return;
 > +    }
-> +    return ret;
->  }
+
+Indeed:
+     The results are undefined if NumVFs is set to a value greater than TotalVFs.
+
+However I note that hw/nvme/ctrl.c will still poke at NumVFs.
+
+Since it's undefined, I propose a simpler hack and just force it
+to PCI_SRIOV_TOTAL_VF. This way everyone can just assume it's ok.
+
+
 >  
->  static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
+>      dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+>  
+> 
+> -- 
+> 2.43.0
 
 
