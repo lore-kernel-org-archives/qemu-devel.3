@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE44C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A083AC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZntk-0000PF-44; Tue, 13 Feb 2024 03:12:12 -0500
+	id 1rZnu2-0000VU-GR; Tue, 13 Feb 2024 03:12:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZnth-0000O5-QI
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:12:09 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZnu1-0000VC-9i
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:12:29 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZntf-0000hg-20
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:12:09 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-410c804e933so15073135e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 00:12:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZntr-0000jV-Mi
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:12:29 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5119da22560so87544e87.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 00:12:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707811925; x=1708416725; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SNdTU2HlcU5s/z0+DB1v8IvSjqtCtnO33Hovm2ZRDRI=;
- b=jrTJd1y0UofU/Cyckn8d6gfeJ9WI3AyZ4531Cyi/cREb/kIvzdv5n5XqYyHx99HBKP
- IW3tKJP0Gg5VEmuDFJf6+m8Vefils3FJZppYWGzg4PCpYEKagIt8WOUxYYolaemBKK+0
- 8E4bLvTHRIws9wR088RXD1cosH/LypSnChcuQLYESmfe1vUCYMCUCH/reMrxbi6YL/0g
- 3RrHQWvV0QZZGBO5njgsn2OLFpRxNevjAkabC7dBJhhBPyw+MvJ/j6qucqfvw2uGGmx3
- ZI7wMwEMQGzdWYbDULkv0JzwaLV4JzpPZOef/yZo8mxrnQJ7dQhP4AqkbDstg3D1AGfM
- 4ojw==
+ d=linaro.org; s=google; t=1707811938; x=1708416738; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N8pdPclv//gTPDxcO4OPrK97h1/L6R/pG9BlhZPSR0A=;
+ b=Rbu1YKDeqQD9sBjTW/ETdKbKUallfiWhwgfPuyA0bdDbljU0JjEf3gvbwxAtZRVNPA
+ AxF3MJyXakXsH3+V/TreGeQF8YA6K6uqrXAjo4mt5rPvOWfTMxYFDzis0n3TCWwgrP6X
+ pnuAeF4Llm4q7Uok8TjPm5pvoOj8oLJzComTaWEMj7NPb0PHRtgSSjn81oNzfCR2gfq1
+ Q6Z+3kJZwgHSEgov8sA57piK2g36l4uMtv6Hv+H3IIuIuzks6xnsyLRHclvRkhqVXuy9
+ pgqXurnH/IjsXr4QR4hJlulsKEQekPCNn2E183FjcpiAK0kyjY22TasIFIpTSry098k6
+ 5njA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707811925; x=1708416725;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SNdTU2HlcU5s/z0+DB1v8IvSjqtCtnO33Hovm2ZRDRI=;
- b=PMp6xmEt0civXq+Fsc/eYCCyIeeGwLOjpphZ11NPSjzeHCn0IkycBSx/v7ucS7k+UG
- 0RHPGYWrY+gBhDa6fWjpPPwGqxHPfD9BafRVLrPKjZZm/e1PD3xj5t0Al3MslxJ+s0qY
- h/XruzWb5MEzEo64ULKgjUiZcxgXVu9Wk88I/GX+y+X/XtT/dyliOAJwi1VBvZLxBocw
- pRdZLWRCZHG8gjerVC6n5xT6caJrGcl8NhiKRE34kybiJK/BbkX+yHHlVk3zkztDZMg1
- Zj5sPUfKZoD5paL4ZP9/2Y9Ju9H9Vlt06QvnMGUjay4MdWNBHVVoqZTR2pLI2x8JAhNa
- AmbA==
-X-Gm-Message-State: AOJu0Yxgpoi4slbsTVfaU4uCJ7A8Frd5QteFuXXtZ1W6ttFCsD/B/Jzv
- B5mZ0oq/m+HAw2aTPnolhDxN10VMbxYdU1oWAgOnXs7d/Q9D8A0/6mJmYnwn7FTCKvtYbq6e8Iz
- o
-X-Google-Smtp-Source: AGHT+IErYvGS/TOlD26uNe6u+vDsFpKpcoqX7Szq0/AlPxktXD6cFutM/M4S/Btgzy7NEELn7Wi2ug==
-X-Received: by 2002:a05:600c:35d6:b0:410:bb99:af83 with SMTP id
- r22-20020a05600c35d600b00410bb99af83mr4869569wmq.23.1707811925007; 
- Tue, 13 Feb 2024 00:12:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707811938; x=1708416738;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=N8pdPclv//gTPDxcO4OPrK97h1/L6R/pG9BlhZPSR0A=;
+ b=spIWxgov0lc1rRFeUDDL2autCoWWHrPylyKBNPhvz1ja4FM5tKDWGfPP8LEX1wril+
+ GjuVUAFC+Wu/5J4rS+MJSbwtym3qZdPvzQUlpUpZmN1i1MGpw6n+7xU4qnja4n+GaMK+
+ chA/C5aIJQy21AZha9+VdlEzSHi/A2lVW0uQbvCigMD8P+fd04WNQtb00MzLftXZrPpR
+ Wzasik6uolfVRZwLuk4D3UZHRVWkLC0+A4SI24TOkV4wa//v12ODWmFcUsKV8+HgIwLV
+ b5zl1l+u1/VJqGuYks67nZx1HWuIDkWQTVaVpY/qTDleG8KHqrIsu3LTnqBRS0bMJ30K
+ DglA==
+X-Gm-Message-State: AOJu0Yyqqhol8XGrJnRhrr7kO9HheDEMvZ0B/rqvfXx5lugzFkMJDkWy
+ EjxZflQtOPv6HfU3Z39ctPAhwaIm9ulU4HTcIm8LN79yIvObOvI0TsFjHQMr12EMrQbVqayHMxO
+ W
+X-Google-Smtp-Source: AGHT+IFmPU0pAHKuf4PnM3ilzQKASgSCvcRoSruPyctlHb2aTB6CDLtAlTay4rSJFbigJkEQhVXHmw==
+X-Received: by 2002:a19:8c0e:0:b0:511:9ca1:12ee with SMTP id
+ o14-20020a198c0e000000b005119ca112eemr511914lfd.51.1707811937613; 
+ Tue, 13 Feb 2024 00:12:17 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjyWtWroj3K6+6Zu0pzKH2TyHoGYRVKhqorsEmjbCZW7clzgCibkXPWOTS8EmzF0xQNv4sgJBWbnBDHB+OAEqIEOS5enI6IZsO/KNpC/HY2NVlFTwiIU/lupgySWWVcEcvOnmJ7ynG28tlHzLJ+F40R9jhBSH1y5UauBEr6BwDXXyZauc2p/iueLMWCD+QCiuc3SZFiNlPXZUGkY3JnPrvyk+E2P75Qxuazzkx7qRdrZFTShMb2BFFhUEt6xmOqjdyTPyZZrbqGbQ+QzEvwPLtrLsWiCo=
+ AJvYcCV5O8aKJAF8ta5d8oV1lTUbDj+XjaNQOCUHaQvFKpq/cHbV+NItK3hFig8zdYJsjduZfp+Qu1J2YwdhTBtQJ1FfBi56lMPjVIZnw6Zf2+NdRYI0fiCrISCu7fhmqjq4yB7GS2+QT1VxrsrfVyxA9vQ4XA3yHALEapzOwY6Q9FjFW3wkOMUsQjOi/emBD77maZWbA4V8pOMScEo6LA6r99CV+X0CZvel7uPZssxi1TYFwLgYaCV+5WAvYN+i8m2Pn/M0gsP/LuHOidW78zeap7hZur6Zg6hGEOWoGCY1+bil388JbZJP8k/06YPYrJM/NM9dFpXOz119QTBuGV0Mob73zoINJa5xSKrMjw==
 Received: from m1x-phil.lan ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- jz15-20020a05600c580f00b004101f27737asm10808681wmb.29.2024.02.13.00.12.03
+ s8-20020a7bc388000000b00410bca333b7sm6493537wmj.27.2024.02.13.00.12.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 13 Feb 2024 00:12:04 -0800 (PST)
+ Tue, 13 Feb 2024 00:12:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -65,16 +66,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  John Snow <jsnow@redhat.com>, qemu-arm@nongnu.org,
  "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/9] hw/ide/ahci: Housekeeping
-Date: Tue, 13 Feb 2024 09:11:51 +0100
-Message-ID: <20240213081201.78951-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paul Burton <paulburton@kernel.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PATCH 2/9] hw/ide/ahci: Expose AHCIPCIState structure
+Date: Tue, 13 Feb 2024 09:11:53 +0100
+Message-ID: <20240213081201.78951-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240213081201.78951-1-philmd@linaro.org>
+References: <20240213081201.78951-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,39 +102,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Split 'ahci.h' as sysbus / pci
-- Inline ahci_get_num_ports()
-- Directly use AHCIState::ports instead of SysbusAHCIState::num_ports
+In order to be able to QOM-embed a structure, we need
+its full definition. Move it from "ahci_internal.h"
+to the new "hw/ide/ahci-pci.h" header.
 
-Philippe Mathieu-Daudé (9):
-  hw/i386/q35: Use DEVICE() cast macro with PCIDevice object
-  hw/ide/ahci: Expose AHCIPCIState structure
-  hw/ide/ahci: Rename AHCI PCI function as 'pdev'
-  hw/ide/ahci: Inline ahci_get_num_ports()
-  hw/ide/ahci: Pass AHCI context to ahci_ide_create_devs()
-  hw/ide/ahci: Convert AHCIState::ports to unsigned
-  hw/ide/ahci: Do not pass 'ports' argument to ahci_realize()
-  hw/ide/ahci: Remove SysbusAHCIState::num_ports field
-  hw/ide/ahci: Move SysBus definitions to 'ahci-sysbus.h'
-
- hw/ide/ahci_internal.h         | 10 +--------
- include/hw/arm/allwinner-a10.h |  2 +-
- include/hw/arm/allwinner-r40.h |  2 +-
- include/hw/arm/xlnx-zynqmp.h   |  2 +-
- include/hw/ide/ahci-pci.h      | 22 ++++++++++++++++++++
- include/hw/ide/ahci-sysbus.h   | 35 +++++++++++++++++++++++++++++++
- include/hw/ide/ahci.h          | 38 +++-------------------------------
- hw/arm/highbank.c              |  2 +-
- hw/arm/sbsa-ref.c              |  1 +
- hw/i386/pc_q35.c               | 19 ++++++++++-------
- hw/ide/ahci-allwinner.c        |  3 +--
- hw/ide/ahci.c                  | 29 +++++++++-----------------
- hw/ide/ich.c                   |  4 +++-
- hw/mips/boston.c               | 14 +++++++------
- 14 files changed, 99 insertions(+), 84 deletions(-)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ide/ahci_internal.h    |  8 --------
+ include/hw/ide/ahci-pci.h | 22 ++++++++++++++++++++++
+ include/hw/ide/ahci.h     |  3 ---
+ hw/i386/pc_q35.c          |  2 +-
+ hw/ide/ahci.c             |  1 +
+ hw/ide/ich.c              |  1 +
+ hw/mips/boston.c          |  2 +-
+ 7 files changed, 26 insertions(+), 13 deletions(-)
  create mode 100644 include/hw/ide/ahci-pci.h
- create mode 100644 include/hw/ide/ahci-sysbus.h
 
+diff --git a/hw/ide/ahci_internal.h b/hw/ide/ahci_internal.h
+index c244bbd8be..4dc2805d21 100644
+--- a/hw/ide/ahci_internal.h
++++ b/hw/ide/ahci_internal.h
+@@ -324,14 +324,6 @@ struct AHCIDevice {
+     MemReentrancyGuard mem_reentrancy_guard;
+ };
+ 
+-struct AHCIPCIState {
+-    /*< private >*/
+-    PCIDevice parent_obj;
+-    /*< public >*/
+-
+-    AHCIState ahci;
+-};
+-
+ extern const VMStateDescription vmstate_ahci;
+ 
+ #define VMSTATE_AHCI(_field, _state) {                               \
+diff --git a/include/hw/ide/ahci-pci.h b/include/hw/ide/ahci-pci.h
+new file mode 100644
+index 0000000000..c2ee616962
+--- /dev/null
++++ b/include/hw/ide/ahci-pci.h
+@@ -0,0 +1,22 @@
++/*
++ * QEMU AHCI Emulation (PCI devices)
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef HW_IDE_AHCI_PCI_H
++#define HW_IDE_AHCI_PCI_H
++
++#include "qom/object.h"
++#include "hw/ide/ahci.h"
++#include "hw/pci/pci_device.h"
++
++#define TYPE_ICH9_AHCI "ich9-ahci"
++OBJECT_DECLARE_SIMPLE_TYPE(AHCIPCIState, ICH9_AHCI)
++
++struct AHCIPCIState {
++    PCIDevice parent_obj;
++
++    AHCIState ahci;
++};
++
++#endif
+diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
+index 210e5e734c..6818d02063 100644
+--- a/include/hw/ide/ahci.h
++++ b/include/hw/ide/ahci.h
+@@ -52,9 +52,6 @@ typedef struct AHCIState {
+ } AHCIState;
+ 
+ 
+-#define TYPE_ICH9_AHCI "ich9-ahci"
+-OBJECT_DECLARE_SIMPLE_TYPE(AHCIPCIState, ICH9_AHCI)
+-
+ int32_t ahci_get_num_ports(PCIDevice *dev);
+ void ahci_ide_create_devs(PCIDevice *dev, DriveInfo **hd);
+ 
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 33a4413708..ace8d3839a 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -47,7 +47,7 @@
+ #include "hw/display/ramfb.h"
+ #include "hw/firmware/smbios.h"
+ #include "hw/ide/pci.h"
+-#include "hw/ide/ahci.h"
++#include "hw/ide/ahci-pci.h"
+ #include "hw/intc/ioapic.h"
+ #include "hw/southbridge/ich9.h"
+ #include "hw/usb.h"
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 0eb83a6d46..aa9381a7b2 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -36,6 +36,7 @@
+ #include "sysemu/dma.h"
+ #include "hw/ide/internal.h"
+ #include "hw/ide/pci.h"
++#include "hw/ide/ahci-pci.h"
+ #include "ahci_internal.h"
+ 
+ #include "trace.h"
+diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+index 49f8eb8a7d..d190012a95 100644
+--- a/hw/ide/ich.c
++++ b/hw/ide/ich.c
+@@ -69,6 +69,7 @@
+ #include "hw/isa/isa.h"
+ #include "sysemu/dma.h"
+ #include "hw/ide/pci.h"
++#include "hw/ide/ahci-pci.h"
+ #include "ahci_internal.h"
+ 
+ #define ICH9_MSI_CAP_OFFSET     0x80
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index 4e11ff6cd6..cbcefdd693 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -24,7 +24,7 @@
+ #include "hw/boards.h"
+ #include "hw/char/serial.h"
+ #include "hw/ide/pci.h"
+-#include "hw/ide/ahci.h"
++#include "hw/ide/ahci-pci.h"
+ #include "hw/loader.h"
+ #include "hw/loader-fit.h"
+ #include "hw/mips/bootloader.h"
 -- 
 2.41.0
 
