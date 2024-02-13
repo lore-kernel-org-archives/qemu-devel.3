@@ -4,73 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E89C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41BAC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZxXT-0006ea-G9; Tue, 13 Feb 2024 13:29:51 -0500
+	id 1rZxXi-0006ie-GT; Tue, 13 Feb 2024 13:30:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rZxXR-0006eO-NN
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:29:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rZxXQ-0001r3-3p
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:29:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707848987;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DscdrCDEILIfcHZ5zn4fM+ulztQdQb55b4XjcXiZaTk=;
- b=ZZjwWR/qJ+JVy6igYPWaEsj2Vo8JPQYJm2klzFv/exnremQB0OQkMtF5EYWcDaD+ZbI4Yy
- kUwrtbO5gTcxpG95pkR5PEP/FPZ+Zp6xqhVfgOoFq0S84NkxFJzJvhGXuzJXUXxm/4utWx
- Piiqn8RThvaRArF3zHtmGHuVpQOMwn0=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-ROirourNM5eZmg_rc4prAg-1; Tue, 13 Feb 2024 13:29:45 -0500
-X-MC-Unique: ROirourNM5eZmg_rc4prAg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 811BD863061;
- Tue, 13 Feb 2024 18:29:45 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.101])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 663BD40CD15F;
- Tue, 13 Feb 2024 18:29:42 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, jean-philippe@linaro.org, mst@redhat.com,
- peter.maydell@linaro.org, clg@redhat.com, zhenzhong.duan@intel.com,
- yanghliu@redhat.com
-Cc: alex.williamson@redhat.com,
-	jasowang@redhat.com
-Subject: [PATCH v4 1/4] virtio-iommu: Add an option to define the input range
- width
-Date: Tue, 13 Feb 2024 19:28:28 +0100
-Message-ID: <20240213182933.825268-2-eric.auger@redhat.com>
-In-Reply-To: <20240213182933.825268-1-eric.auger@redhat.com>
-References: <20240213182933.825268-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZxXh-0006iD-3E
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:30:05 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZxXf-0001v7-Di
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:30:04 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6e10746c6f4so145010b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:30:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707849002; x=1708453802; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7hNp6J5yi58PBR0PvGLHykylmlUjV9R+ng9U9iQiFpE=;
+ b=F6z0gHpGYbU+nRCBWb/Sk0TIHb+V06WsdAr1AZZwJT6s+LUho4FWkQbCxSGkowwPn/
+ KEjEl1SPIhruSIekKlMK5ihU4EMbndrkNlffkPYS9LNojUw2iERp4aSFlglqIcdjDh37
+ xnIGp9ynZbYnUZJ0btgYw3ZjSzx1zi7c+ozj6IRvJ26E5lERjSA/TyN3qrJ/v5TSk7XC
+ 46uxKK0cndfxD2XeiCVIecyIuRe8PgcIoFR7GYeXc+R6F3sp3nGkGD59ZcLfNZSMDk/T
+ SeFhZhP6XoTi8+bBUdKL8sNqfX2b88Fmf6qsoR5v6D10uQ3xKuO/STmTRg87oz+Xomhg
+ Maaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707849002; x=1708453802;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7hNp6J5yi58PBR0PvGLHykylmlUjV9R+ng9U9iQiFpE=;
+ b=od0BrdPlyqKa1wsbqRQzjl+4OoUEh8aTiZBuigzWd/xUJR8meAVd3aNSpwVYzQY08q
+ f0FY7LTZsa7cpT4OIy9DKf0V9c2bH74KkSVRrWuFiMDFPpL0OFevFTGJPoxKwHf2A6uS
+ A1iQvaYjXcEe8xsETA9bVg3X62D+xoy6YecowN9cyUFh2goEQzN6kM+V7vX+58btwwrV
+ Rnea3nOuXEPTP0iBEClN1YBRCm9JeG5BgY1iZgepa0sHrGujzXUTXcouCrUh3i0KoNbW
+ nbAiWvKm80wOGu9fk75aJE7q5wMWba5nXZlQMn/A33bYkOG+iXFgyyXGUdYzeGIO2+VC
+ KsuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7q9XZcIPXqHU7fBfJA+mv20VdCvl5NwGLCFqQ/NhTNT8JMLJ2r+od/17NomCM2hIksrH8NXqId7MSWWWZzCfXVbwk7k0=
+X-Gm-Message-State: AOJu0YyYaYtAvMghJ4Rt9cW6J8CPpfziJT+1VqQa+UA/fNBe/BBBwFxu
+ vv/GOkVoP8DDXGFCeSqm7aUTigbyVfndO8R/hzGDucVCNyReTJoHFON65v5ASgyE4HVI1cJZOIM
+ D
+X-Google-Smtp-Source: AGHT+IExdHNA/KzG7hfX2bxz2cZbMjr7n3xgDDXkBX4sgcPQ2abEn7q20dFNAMV58ugUAa0Rq0ICWA==
+X-Received: by 2002:a05:6a20:9f05:b0:19e:9a59:20df with SMTP id
+ mk5-20020a056a209f0500b0019e9a5920dfmr556919pzb.9.1707849001758; 
+ Tue, 13 Feb 2024 10:30:01 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8/SBQG53VdVBSBPKF0Yu+KGbKQGF54CN/HmWtUTiWX1wrSbnCiL5gHc494Vf6o08gE7wrFct8kntmKCp2q4jCm+inkRY=
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ s25-20020a639259000000b005dc4a7994b9sm2650173pgn.60.2024.02.13.10.30.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 10:30:01 -0800 (PST)
+Message-ID: <e7e8863c-8fd8-44b7-8596-323eb9319080@linaro.org>
+Date: Tue, 13 Feb 2024 08:29:58 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 06/18] plugins: define qemu_plugin_u64
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
+ <20240213094009.150349-7-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240213094009.150349-7-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,62 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-aw-bits is a new option that allows to set the bit width of
-the input address range. This value will be used as a default for
-the device config input_range.end. By default it is set to 64 bits
-which is the current value.
+On 2/12/24 23:39, Pierrick Bouvier wrote:
+> +uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
+> +{
+> +    uint64_t total = 0;
+> +    for (int i = 0; i < qemu_plugin_num_vcpus(); ++i) {
+> +        total += qemu_plugin_u64_get(entry, i);
+> +    }
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Avoid complex loop bounds whenever possible.
 
----
+   for (int i = 0, n = qemu_plugin_num_vcpus(); i < n; ++i)
 
-v1 -> v2:
-- Check the aw-bits value is within [32,64]
----
- include/hw/virtio/virtio-iommu.h | 1 +
- hw/virtio/virtio-iommu.c         | 7 ++++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+or
 
-diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-index 781ebaea8f..5fbe4677c2 100644
---- a/include/hw/virtio/virtio-iommu.h
-+++ b/include/hw/virtio/virtio-iommu.h
-@@ -66,6 +66,7 @@ struct VirtIOIOMMU {
-     bool boot_bypass;
-     Notifier machine_done;
-     bool granule_frozen;
-+    uint8_t aw_bits;
- };
- 
- #endif
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 8a4bd933c6..666c41fe64 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -1314,7 +1314,11 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-      */
-     s->config.bypass = s->boot_bypass;
-     s->config.page_size_mask = qemu_target_page_mask();
--    s->config.input_range.end = UINT64_MAX;
-+    if (s->aw_bits < 32 || s->aw_bits > 64) {
-+        error_setg(errp, "aw-bits must be within [32,64]");
-+    }
-+    s->config.input_range.end =
-+        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;
-     s->config.domain_range.end = UINT32_MAX;
-     s->config.probe_size = VIOMMU_PROBE_SIZE;
- 
-@@ -1522,6 +1526,7 @@ static Property virtio_iommu_properties[] = {
-     DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
-                      TYPE_PCI_BUS, PCIBus *),
-     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-+    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--- 
-2.41.0
+   for (int i = qemu_plugin_num_vcpus() - 1; i >= 0; --i)
 
+With that,
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
