@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3C3C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01BCC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZxxy-0002sx-AJ; Tue, 13 Feb 2024 13:57:14 -0500
+	id 1rZy7d-0005za-8v; Tue, 13 Feb 2024 14:07:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1rZxxw-0002s2-8s; Tue, 13 Feb 2024 13:57:12 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rZy7Z-0005x0-Qd
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:07:10 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1rZxxu-0006rO-N7; Tue, 13 Feb 2024 13:57:12 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a3be744df3fso495423066b.0; 
- Tue, 13 Feb 2024 10:57:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rZy7X-0000Bk-UP
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:07:09 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so189530266b.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 11:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707850629; x=1708455429; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707851224; x=1708456024; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RhqeHO5t4PwMad9GTfrLwGYu6j7b1NEzmXwWfKjwiFY=;
- b=Ix4Vlhaa6FJFCJ4W5Q4+1l9ACjQgE4X2KgdS3wConISKimcOBbgmf4XQGyYuESZ27r
- 89y/FZFhrz7jjOslvOXn8ZB1bhlZ2kb86HsEL1SPEtpiKLSt9zXEpPXNHYBwBrrITh2I
- FhCQgCYu4hF9J6u6eRo+1oAhI4miJF3qs9UZvq9EHEXrzhzRBXwhLz47yUy2p8GUkfeu
- CcTve9giRnu5FZ9dF6agBpKkxyrBD3fqiVAQp+qjDVHhQGA0Qrf7utpDaoXwYwWLDf9X
- fDnwVvQSBtvyU+EAr+9WwmrgYoqJvW7uP7Hb65Aw8yMUrvoIlwXkGw+mU31/1wieeQEK
- SVug==
+ bh=Hzjt7uRp4YurEkm37kV+ZwNKR8f+l2xXJvaxFgIpTX8=;
+ b=FpLw/pfIlzrWJISZc0TQguD8PkLxsjq+ZamG52Y6u9gdyfYpmiM/7GU86MFxrR00y2
+ 4BdamPA11/NiQ449xy9CC4rsjjggJejRXpWKfwX2iZ8DlnCbXS+Jm1IQgcNL1aAkZqVA
+ xOJtH3aQAruEWlpg/Eu4qf1vQGWb3e0F8Alr27Wn5sImcyILJG0FuG8WVbC3Zpabn1oI
+ AAsQ7Rnlx7kgUrQrrv1CVOQKtf1/E7vE1BNH4rAhCuebyT9ZazQXiRkhrAne4L2aGDk2
+ RWjqCnFjT7mrLTS6ulA1bWcWGzvSniAFD2lA+V4cbGb/MEDISo9rom+gpMi8sEs+55/G
+ JWXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707850629; x=1708455429;
+ d=1e100.net; s=20230601; t=1707851224; x=1708456024;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RhqeHO5t4PwMad9GTfrLwGYu6j7b1NEzmXwWfKjwiFY=;
- b=kbQfi5O5tOqWTOFb8DbS6V7hneoZItwxtytRULR1S3269+KrrT779NgT1WMPVcRX+g
- raifUgIMB+QzZ6j0Dlg9BGIKsdBYLEe7sIQBgBl1Ky0IHOWPYHnTPbRre1Tp4o6nDMtL
- bBN8W/GeFI19OEq535vfCLcENeasYwqST9PnBzO91OJnn1WOTi7H1aA+RUSMuidtOAIx
- /zN5OGBdD5K1X5C25LBvLMYh+MHMua6ft3eE6XutMVSeXLDxhyntxrUW+35xKMpGVce9
- 93tBNW5ny7GCLYI5YrokJU88Jy+z/V0JbLBVtewKY0XPnE3kTAub10B6Kn41jQC410o2
- jn3g==
+ bh=Hzjt7uRp4YurEkm37kV+ZwNKR8f+l2xXJvaxFgIpTX8=;
+ b=XUNngBcYXCna/Y56mWYvImXF5B+vfrQZBURzEYCJiMwRgtH4kgezVUNuGwCjCRVxxa
+ ZQGcWVpqJop5T5ORcb1p1gGa5FDHAeTHen3+aXK39Egnv0oGwnBYr3X+wErTpLXV0hFZ
+ gr36ONV6Z6zwb9oDHG2jHEhqBitoDBSa0X8+53yNCPp3lw/nrO96ycQrO41MuMk+R+uJ
+ VTcXZ0dZp4XGy2bizjOmfRo3KtIpq7rsBtELUJ6ch6FyWN3zefvTbff7GdA46HmE0fwW
+ v+r2aP3OeVEUw+an9ij9Wb35mGLTuACR2ULDKaI+KzQcBF5zq1KZhgP1vCdJgreuksPu
+ VAHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMFFMPa/uksd7Vvs4flC3scmitdMXR7nmmJmJaSBGu/kIgpiNNLLqKU7im8FYxkMWsO60P4pG5q+VxVHFrBndpNUUBhNxLJMPe8+gsUhovkJ3SLIwH+eU0Pm7TN8En
-X-Gm-Message-State: AOJu0YywKQa1nrZsu+qniFEinpY53dwlN3vdv/xRXoutb4X+CN3V3MO5
- QPb6o82PijWnamYNCrN3N1/W/rkZZGg2+ex1Qmd33rpnmqX/EN3/
-X-Google-Smtp-Source: AGHT+IEGamCwOpUvCdsKk6XCql4tDLiuUw56UJf9MgO/5R727wHNErRbwEFxkm4e7hVKTHPh+ESSKg==
-X-Received: by 2002:a17:906:ff4f:b0:a3c:1046:93dd with SMTP id
- zo15-20020a170906ff4f00b00a3c104693ddmr151525ejb.31.1707850628786; 
- Tue, 13 Feb 2024 10:57:08 -0800 (PST)
+ AJvYcCXuKyiGYOM80Bh2WAt+zLyeFW4bmhaIH/cj1kQi2akVVee/eirhSJBW/4kyqvoQeQVVDg1aR2aFlvg9MwgGZJSp5Zg5Df0=
+X-Gm-Message-State: AOJu0YzOnkRu4WdLAXOYcodxECxHYmEjAqNqtdw22J8sSHMU6B8S7HuH
+ 9575XDilKp1b9bPutHOTbFlXV7P4Dm/YBS3lW4rlvhCxuAXSdNqH
+X-Google-Smtp-Source: AGHT+IEIHGvAJs8fDtOD8A48lj/jvmvYRRjNxlr59LUPmhj1+lZKlU/IvcS5qGmYv37Fi9dudmqJFQ==
+X-Received: by 2002:a17:906:b48:b0:a3c:a3eb:6109 with SMTP id
+ v8-20020a1709060b4800b00a3ca3eb6109mr198518ejg.14.1707851224389; 
+ Tue, 13 Feb 2024 11:07:04 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/jI6AmCpcLYb567jBF/P4fxU99mcI6783glvhrVJZbDFLCJtZuXw9Y1rhZCa1necuCLJMVr7PvM4+Bb5//1JjA4XyX1FsfGmapyRgX3ERqhn1aMBAhKB4X1CYqmvqRVYoS9LhgUpQATC4eymS/W46Kybd0NTtQBozqUH8PgJhgUaYb0GxYj1JOjU9MJd8h2n15E2RV9i8ija1agI62PsiObNn7XnKAbLiOnHRXfGd9rPmcgcd/qN1jo7o/944WZLRwsiMf0rJ0uucx6JC/iCS1FVVfZZKxhLfXE7cN7fFlMAg0SkM8wU=
+ AJvYcCXuhcqxUBLv959x8dT41mjB3NkI1iHiyNzrLQ9BtZ15d11aaOvLdKEQ6JacHLRcMS6Y7SPioTYfmuRr6TCMqDWgJNR4xRumzB+PhHn23ONFcnCc/DvJNLAJVg==
 Received: from [127.0.0.1] (dynamic-089-012-064-238.89.12.pool.telefonica.de.
  [89.12.64.238]) by smtp.gmail.com with ESMTPSA id
- y22-20020a170906471600b00a3d21455aedsm370902ejq.127.2024.02.13.10.57.08
+ w22-20020a170906481600b00a3c5661c646sm1557646ejq.148.2024.02.13.11.07.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 10:57:08 -0800 (PST)
-Date: Tue, 13 Feb 2024 18:57:05 +0000
+ Tue, 13 Feb 2024 11:07:04 -0800 (PST)
+Date: Tue, 13 Feb 2024 19:07:02 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_4/7=5D_hw/i386/acpi=3A_Declare_?=
- =?US-ASCII?Q?pc=5Fmadt=5Fcpu=5Fentry=28=29_in_=27acpi-common=2Eh=27?=
-In-Reply-To: <20240213120153.90930-5-philmd@linaro.org>
-References: <20240213120153.90930-1-philmd@linaro.org>
- <20240213120153.90930-5-philmd@linaro.org>
-Message-ID: <35DAA6EC-1C6D-4F36-A595-A7F720D63C20@gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+CC: philmd@linaro.org, balaton@eik.bme.hu
+Subject: Re: [PATCH v3 6/9] isa: extract FDC37M81X to a separate file
+In-Reply-To: <20240213155005.109954-7-pbonzini@redhat.com>
+References: <20240213155005.109954-1-pbonzini@redhat.com>
+ <20240213155005.109954-7-pbonzini@redhat.com>
+Message-ID: <110B8B05-6247-4BD3-B129-E1268184A5E8@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,75 +99,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 13=2E Februar 2024 12:01:49 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
-philmd@linaro=2Eorg>:
->Since pc_madt_cpu_entry() is only used by:
-> - hw/i386/acpi-build=2Ec   // single call
-> - hw/i386/acpi-common=2Ec  // definition
->there is no need to expose it outside of hw/i386/=2E
->Declare it in "acpi-common=2Eh"=2E
->acpi-build=2Ec doesn't need "hw/i386/pc=2Eh" anymore=2E
+Am 13=2E Februar 2024 15:50:01 UTC schrieb Paolo Bonzini <pbonzini@redhat=
+=2Ecom>:
+>isa-superio=2Ec currently defines a SuperIO chip that is not used
+>by any other user of the file=2E  Extract the chip to a separate file=2E
 >
->Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->---
-> hw/i386/acpi-common=2Eh | 3 +++
-> include/hw/i386/pc=2Eh  | 4 ----
-> hw/i386/acpi-common=2Ec | 1 -
-> 3 files changed, 3 insertions(+), 5 deletions(-)
->
->diff --git a/hw/i386/acpi-common=2Eh b/hw/i386/acpi-common=2Eh
->index b3c56ee014=2E=2Ee305aaac15 100644
->--- a/hw/i386/acpi-common=2Eh
->+++ b/hw/i386/acpi-common=2Eh
->@@ -1,12 +1,15 @@
-> #ifndef HW_I386_ACPI_COMMON_H
-> #define HW_I386_ACPI_COMMON_H
->=20
->+#include "hw/boards=2Eh"
-> #include "hw/acpi/bios-linker-loader=2Eh"
-> #include "hw/i386/x86=2Eh"
->=20
-> /* Default IOAPIC ID */
-> #define ACPI_BUILD_IOAPIC_ID 0x0
->=20
->+void pc_madt_cpu_entry(int uid, const CPUArchIdList *apic_ids,
+>Reviewed-by: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
 
-Since the function is apparently not pc but rather x86-specific: Does it m=
-ake sense to rename the function as well, e=2Eg=2E to x86_madt_cpu_entry()?
+I think in v2 Zoltan only pointed out a typo in the commit message (which =
+is now fixed) but didn't add an R-b tag so far=2E
 
 Best regards,
 Bernhard
 
->+                       GArray *entry, bool force_enabled);
-> void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
->                      X86MachineState *x86ms,
->                      const char *oem_id, const char *oem_table_id);
->diff --git a/include/hw/i386/pc=2Eh b/include/hw/i386/pc=2Eh
->index f9fc42c2be=2E=2Ece442372ac 100644
->--- a/include/hw/i386/pc=2Eh
->+++ b/include/hw/i386/pc=2Eh
->@@ -199,10 +199,6 @@ bool pc_system_ovmf_table_find(const char *entry, ui=
-nt8_t **data,
->                                int *data_len);
-> void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+>Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>Signed-off-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
+>---
+> hw/isa/fdc37m81x-superio=2Ec | 32 ++++++++++++++++++++++++++++++++
+> hw/isa/isa-superio=2Ec       | 18 ------------------
+> hw/isa/Kconfig             |  4 ++++
+> hw/isa/meson=2Ebuild         |  1 +
+> hw/mips/Kconfig            |  2 +-
+> 5 files changed, 38 insertions(+), 19 deletions(-)
+> create mode 100644 hw/isa/fdc37m81x-superio=2Ec
+>
+>diff --git a/hw/isa/fdc37m81x-superio=2Ec b/hw/isa/fdc37m81x-superio=2Ec
+>new file mode 100644
+>index 00000000000=2E=2E55e91fbca17
+>--- /dev/null
+>+++ b/hw/isa/fdc37m81x-superio=2Ec
+>@@ -0,0 +1,32 @@
+>+/*
+>+ * SMS FDC37M817 Super I/O
+>+ *
+>+ * Copyright (c) 2018 Philippe Mathieu-Daud=C3=A9
+>+ *
+>+ * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter=2E
+>+ * See the COPYING file in the top-level directory=2E
+>+ * SPDX-License-Identifier: GPL-2=2E0-or-later
+>+ */
+>+
+>+#include "qemu/osdep=2Eh"
+>+#include "hw/isa/superio=2Eh"
+>+
+>+static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+>+{
+>+    ISASuperIOClass *sc =3D ISA_SUPERIO_CLASS(klass);
+>+
+>+    sc->serial=2Ecount =3D 2; /* NS16C550A */
+>+    sc->parallel=2Ecount =3D 1;
+>+    sc->floppy=2Ecount =3D 1; /* SMSC 82077AA Compatible */
+>+    sc->ide=2Ecount =3D 0;
+>+}
+>+
+>+static const TypeInfo types[] =3D {
+>+    {
+>+        =2Ename          =3D TYPE_FDC37M81X_SUPERIO,
+>+        =2Eparent        =3D TYPE_ISA_SUPERIO,
+>+        =2Eclass_init    =3D fdc37m81x_class_init,
+>+    },
+>+};
+>+
+>+DEFINE_TYPES(types)
+>diff --git a/hw/isa/isa-superio=2Ec b/hw/isa/isa-superio=2Ec
+>index 98d50844f71=2E=2Ea8c8c58ef7f 100644
+>--- a/hw/isa/isa-superio=2Ec
+>+++ b/hw/isa/isa-superio=2Ec
+>@@ -190,27 +190,9 @@ static const TypeInfo isa_superio_type_info =3D {
+>     =2Einstance_size =3D sizeof(ISASuperIODevice),
+> };
 >=20
->-/* hw/i386/acpi-common=2Ec */
->-void pc_madt_cpu_entry(int uid, const CPUArchIdList *apic_ids,
->-                       GArray *entry, bool force_enabled);
+>-/* SMS FDC37M817 Super I/O */
+>-static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+>-{
+>-    ISASuperIOClass *sc =3D ISA_SUPERIO_CLASS(klass);
 >-
-> /* sgx=2Ec */
-> void pc_machine_init_sgx_epc(PCMachineState *pcms);
+>-    sc->serial=2Ecount =3D 2; /* NS16C550A */
+>-    sc->parallel=2Ecount =3D 1;
+>-    sc->floppy=2Ecount =3D 1; /* SMSC 82077AA Compatible */
+>-    sc->ide=2Ecount =3D 0;
+>-}
+>-
+>-static const TypeInfo fdc37m81x_type_info =3D {
+>-    =2Ename          =3D TYPE_FDC37M81X_SUPERIO,
+>-    =2Eparent        =3D TYPE_ISA_SUPERIO,
+>-    =2Eclass_init    =3D fdc37m81x_class_init,
+>-};
+>-
+> static void isa_superio_register_types(void)
+> {
+>     type_register_static(&isa_superio_type_info);
+>-    type_register_static(&fdc37m81x_type_info);
+> }
 >=20
->diff --git a/hw/i386/acpi-common=2Ec b/hw/i386/acpi-common=2Ec
->index 43dc23f7e0=2E=2Ef1a11f833a 100644
->--- a/hw/i386/acpi-common=2Ec
->+++ b/hw/i386/acpi-common=2Ec
->@@ -27,7 +27,6 @@
-> #include "hw/acpi/acpi=2Eh"
-> #include "hw/acpi/aml-build=2Eh"
-> #include "hw/acpi/utils=2Eh"
->-#include "hw/i386/pc=2Eh"
-> #include "target/i386/cpu=2Eh"
+> type_init(isa_superio_register_types)
+>diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
+>index 5df3c09cd51=2E=2E73c6470805c 100644
+>--- a/hw/isa/Kconfig
+>+++ b/hw/isa/Kconfig
+>@@ -23,6 +23,10 @@ config ISA_SUPERIO
+>     # Some users of ISA_SUPERIO do not use it
+>     #select IDE_ISA
 >=20
-> #include "acpi-build=2Eh"
+>+config FDC37M81X
+>+    bool
+>+    select ISA_SUPERIO
+>+
+> config PC87312
+>     bool
+>     select ISA_SUPERIO
+>diff --git a/hw/isa/meson=2Ebuild b/hw/isa/meson=2Ebuild
+>index 2ab99ce0c6b=2E=2Ef650b395071 100644
+>--- a/hw/isa/meson=2Ebuild
+>+++ b/hw/isa/meson=2Ebuild
+>@@ -4,6 +4,7 @@ system_ss=2Eadd(when: 'CONFIG_ISA_BUS', if_true: files('i=
+sa-bus=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_ISA_SUPERIO', if_true: files('isa-superio=
+=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_PC87312', if_true: files('pc87312=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_PIIX', if_true: files('piix=2Ec'))
+>+system_ss=2Eadd(when: 'CONFIG_FDC37M81X', if_true: files('fdc37m81x-supe=
+rio=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_SMC37C669', if_true: files('smc37c669-supe=
+rio=2Ec'))
+> system_ss=2Eadd(when: 'CONFIG_VT82C686', if_true: files('vt82c686=2Ec'))
+>=20
+>diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+>index afcfb2b8eca=2E=2Ee57db4f6412 100644
+>--- a/hw/mips/Kconfig
+>+++ b/hw/mips/Kconfig
+>@@ -1,7 +1,7 @@
+> config MALTA
+>     bool
+>+    select FDC37M81X
+>     select GT64120
+>-    select ISA_SUPERIO
+>     select PIIX
+>=20
+> config MIPSSIM
 
