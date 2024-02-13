@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9DCC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20B47C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZzXB-0002or-0M; Tue, 13 Feb 2024 15:37:41 -0500
+	id 1rZzZe-0003of-Uw; Tue, 13 Feb 2024 15:40:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZzXA-0002oQ-0S; Tue, 13 Feb 2024 15:37:40 -0500
+ id 1rZzZd-0003o9-GT; Tue, 13 Feb 2024 15:40:13 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZzX7-0000Gi-A6; Tue, 13 Feb 2024 15:37:39 -0500
+ id 1rZzZc-0000bs-1S; Tue, 13 Feb 2024 15:40:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
  List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=VWgNZZV5747UVPixH+kIDMzLzwXhz+mNLpeXEeCXAyA=; b=C0gsGu08BLlKyVXa3U7oXapcXG
- xOYYrEyupzTQPqADd/xE+t7Niy+XmR6SsWpPo+gMW1Q9NdJmraZ3cKh0S+NnQ67epc6hWs0/AXBiu
- TZyo2vOk3dxhzK16i1NwfAnWj0bA+WVUqupBPO31pyZHexBEnqX6n9Hhv5lfrUkZa6+2E1cwwioif
- X/lErIH7THQ7nYYVpDG3EwfGO9aMLynEjdnzqbBTBJLQP9SvJNxHQ3QEMX9Bsk8UMN/HNCcA8qkQ1
- BZSNPTrtmGrubnhD7UC1TeR4AYfp7vCDqUwkyuK56+g7M/6+GSr/aMDef2SnThP6+Tur+feaB6O8J
- BIX0q65iwa+cM40aPjnLeFSArd8YewzA/aMmT9LyF7FeQ648qxdWuJtGjzm2NVu1k3cl2TBXiFO9K
- DVvSmP7Y/UQXcgiEQQw7mPoxZ/aU+HtpNViDdmlc/a0nLkPH30Sut2UlqvLT3sF6pb2vPdJ3/+uQW
- 45xM+wWoiq+YuaEbBrd87sUXa0bpHITx6rwjOcQxbX94F/dI2Uy9RjVtb4oZvFQSoR+6qsD1IzAXn
- K3qr9FlpGdeR76SxS+jScs4P60i/wVAdkKDcQbdrJ5t363X+zZO6xnnMKb0TdjmmbQYXj41nQ6U3J
- xKL/62lALdDRWMX0wm3HEZCKNtuNAm4O8hyLSwGXY=;
+ bh=Bk6iRFyuOwlH6wQqrOmWUpUI3qlmUwxJqgibp8FUm4Q=; b=QMvGyb7Mw7YDLXc4faGSiXOm/T
+ Bz/a+TPUOdQso2YQdAF3lTqbfGLJm/7uYJ3JUjwYUlqP7YvBqldvSr1A6o7ajAX1Ux394XHsQiS2S
+ 3zQv4VuAky7oXd/nWLHARbVTUJi74N7mScHDUQHQG5HWsJZDVMLxCNaB/wwtMO5ROYbn3uOMZu/qY
+ tuSWsZ/QP4k0idkAgVt26DSLdm3zizZDSdhhiSGprewAR/gPJosKrrdXA+biyHI0PUGFXu6QQj6GI
+ GW1MkxU4ti3hp8zf6yOQDA+jaV3L9TfAbcTJV+Fhs3NGwf24DvFk27QcDqB7Vp1Ap6I7qp4gXsXx7
+ dkHXjpvA9lMQjTveUPmeRrVNjVyUwJnbxOfvVbAMZJsov0ctUzOOfXHqjYewLWXXRxgPM6RAAIlFk
+ 9/k4yryxJF8pbN0ZP9QtwhOF/rbcacdayK8aVamOuZo2SzQPHxdZu5KMYlr+YSSlGazuwNxDnaHAE
+ 3M8Vr+xT2/iXrp9BzWhjWoWt4WjF9EfDOzW8MHVCqK/JDJvaDaguY/WA3PKx+3FDUBQl6kNP6QapW
+ z1ucFCAVMj+vGf7lCw7zmuTU1eqaSmoCivWiXqjhl4ZwAhUCEs8KvsWPY/P2JyyjV4zD8Cz9gr6My
+ jIEWODWmXn6v/kALg1t4UFqPH8sFToF4fSb5R1rck=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZzWF-0009P2-Fx; Tue, 13 Feb 2024 20:36:47 +0000
-Message-ID: <7936e66b-8353-412b-a90a-6425fafea333@ilande.co.uk>
-Date: Tue, 13 Feb 2024 20:37:19 +0000
+ id 1rZzYo-0009RS-Ec; Tue, 13 Feb 2024 20:39:26 +0000
+Message-ID: <e23e92a6-9904-463b-b7af-d08945ca0a4f@ilande.co.uk>
+Date: Tue, 13 Feb 2024 20:40:00 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Bernhard Beschow
@@ -49,12 +50,12 @@ Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Bernhard Beschow
  Richard Henderson <richard.henderson@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>, "Michael S. Tsirkin" <mst@redhat.com>,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
  Fabien Chouteau <chouteau@adacore.com>,
  Frederic Konrad <konrad.frederic@yahoo.fr>,
  Artyom Tarasenko <atar4qemu@gmail.com>
 References: <20240213130341.1793-1-philmd@linaro.org>
- <20240213130341.1793-11-philmd@linaro.org>
-Content-Language: en-US
+ <20240213130341.1793-12-philmd@linaro.org>
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
@@ -80,13 +81,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20240213130341.1793-11-philmd@linaro.org>
+In-Reply-To: <20240213130341.1793-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v4 10/12] hw/sparc/leon3: Pass DeviceState opaque argument
- to leon3_set_pil_in()
+Subject: Re: [PATCH v4 11/12] hw/sparc/leon3: Initialize GPIO before realizing
+ CPU devices
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -114,61 +115,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/02/2024 13:03, Philippe Mathieu-Daudé wrote:
 
-> By passing a DeviceState context to a QDev IRQ handler,
-> we can simplify and use qdev_init_gpio_in_named() instead
-> of qdev_init_gpio_in_named_with_opaque().
-> 
-> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Inline cpu_create() in order to call
+> qdev_init_gpio_in_named_with_opaque()
+> before the CPU is realized.
+
+Note that with the previous new patch included in the series, 
+qdev_init_gpio_in_named_with_opaque() should be replaced by
+qdev_init_gpio_in_named() in the commit message above instead.
+
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->   hw/sparc/leon3.c | 10 ++++------
->   1 file changed, 4 insertions(+), 6 deletions(-)
+>   hw/sparc/leon3.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-> index 0df5fc949d..d2be900988 100644
+> index d2be900988..d0ff4a2892 100644
 > --- a/hw/sparc/leon3.c
 > +++ b/hw/sparc/leon3.c
-> @@ -175,9 +175,10 @@ static void leon3_irq_ack(CPUSPARCState *env, int intno)
->    */
->   static void leon3_set_pil_in(void *opaque, int n, int level)
->   {
-> -    CPUSPARCState *env = opaque;
-> +    DeviceState *cpu = opaque;
-> +    CPUState *cs = CPU(cpu);
-> +    CPUSPARCState *env = cpu_env(cs);
->       uint32_t pil_in = level;
-> -    CPUState *cs;
+> @@ -233,7 +233,9 @@ static void leon3_generic_hw_init(MachineState *machine)
+>       APBPnp *apb_pnp;
 >   
->       assert(env != NULL);
+>       /* Init CPU */
+> -    cpu = SPARC_CPU(cpu_create(machine->cpu_type));
+> +    cpu = SPARC_CPU(object_new(machine->cpu_type));
+> +    qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
+> +    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
+>       env = &cpu->env;
 >   
-> @@ -193,7 +194,6 @@ static void leon3_set_pil_in(void *opaque, int n, int level)
->   
->                   env->interrupt_index = TT_EXTINT | i;
->                   if (old_interrupt != env->interrupt_index) {
-> -                    cs = env_cpu(env);
->                       trace_leon3_set_irq(i);
->                       cpu_interrupt(cs, CPU_INTERRUPT_HARD);
->                   }
-> @@ -201,7 +201,6 @@ static void leon3_set_pil_in(void *opaque, int n, int level)
->               }
->           }
->       } else if (!env->pil_in && (env->interrupt_index & ~15) == TT_EXTINT) {
-> -        cs = env_cpu(env);
->           trace_leon3_reset_irq(env->interrupt_index & 15);
->           env->interrupt_index = 0;
->           cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-> @@ -261,8 +260,7 @@ static void leon3_generic_hw_init(MachineState *machine)
+>       cpu_sparc_set_id(env, 0);
+> @@ -260,7 +262,6 @@ static void leon3_generic_hw_init(MachineState *machine)
 >   
 >       /* Allocate IRQ manager */
 >       irqmpdev = qdev_new(TYPE_GRLIB_IRQMP);
-> -    qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
-> -                                        env, "pil", 1);
-> +    qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
+> -    qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
 >       sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
 >       sysbus_mmio_map(SYS_BUS_DEVICE(irqmpdev), 0, LEON3_IRQMP_OFFSET);
 >       qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", 0,
-
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
