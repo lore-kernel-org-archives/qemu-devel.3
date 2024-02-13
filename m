@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0F59C4829F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A87C4C4829A
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:12:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZz0N-0004E0-5a; Tue, 13 Feb 2024 15:03:47 -0500
+	id 1rZyzt-0003Y2-N0; Tue, 13 Feb 2024 15:03:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyyw-0002Ym-Pj
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:02:21 -0500
+ id 1rZyy8-0001tJ-Gk
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:01:34 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyyv-00023o-AE
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:02:18 -0500
+ id 1rZyy5-0001su-UR
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:01:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=EA5YnaUP3gDHF5AaE9uZujarI/GD/Dg9Sof51XT/n9E=; b=HlRioVnoEYONPiOoQoc9nRxgJT
- 70Fg7A6wb37KXLbD64BYULEbKAsdmhLIKfwJyjHEwpk7K2cmFTb6OtzdU4Oy1vlpm3abvbURR8cDn
- RwYnKTuZyQo+Q0GsdV3yd4DwW44Zpz2pdVQ1d9/i8yB/sHWPBfYETjJtWwyrU3gLswcNlpp4jyapm
- OHNIR9Jddujp0R5ak3/QCe3T6AuJQwS13hC4r/UEZj1aX57q+bEd3EzNZBZOojVjuISP43VmV7aIr
- /yBxWhOzvHWvC/fddrgFPwL2jmkPK+vUu1W13hhKfMbP2sDWBUiXu0asSfPbAPgnDqITTdmo4e4Wf
- EA+UNpaUPYGExmDnHkRxr68tiSjdX8NC3qjNES87Ymrd0Ua83iYpNy8dG1xxI3PqAsioFLEwfAwKp
- LHcq7xKYHg5yOyBjbeJbFCR79uqVleew++dhvH3vUhRvZd8Y75CcDUnnVexACR2RyVVisg9+4A5TY
- F7701FJ/Hm8IzrJWyzpUjUAmZmKtOABs8n0Dk2Tk9hUnATUP1zkLe/AxpJfmfQd/CcLb0/jM7ZujW
- y7TWHQ8lq5TBG+KHXebNxBZtd5WZMGuwnLO55p+LT2f/ZugeK0N5SO6T+7fZgpdX3L6nrHAeN7fy4
- cNZAufW9D+BCnAq3sB9fSioO4GBw0TaTwdeBWbzK4=;
+ bh=eJ1paP8kPRvhyZEgQSLmYnxE9wIiYP8JdAt5y+q0tAc=; b=kqaz/UC/I7sJibyd6dqU9JPSbc
+ QZO2glXTsiw8OwbELYWRBLZVGZw2TzQO6byCNBzxJzW90BRl06PmldY0gk8UoW9yLqy3HO6QdDJLX
+ KG1UhBLIn1K9BHaRY05/6b1G8JKqdyhYBSHh7TYgFQUbHbgYsD/pTbQXVEE/t9KL3zQoCkYMJYdi3
+ iDHfTRj2srhJ/Yp7iR2tTr7osoHn/IjW+xNP5tX3jYZktLQfyWyzYwZ/4ep+7eZIBG+baH0nfdfbW
+ sEQTJoBre2yGEZ0oQXQqE+rMAF4jswNYs0s8f0nqS66VLICoOaEDCzGnmjnGr0cJlyKtHv5cojYAc
+ EeSBMJRPpBUSdY586awvIZ2rWO/AxUxLFXvZCjv/8ZJRLMu4hWb2iPPEdHOyeZQa17g/gvvhQHPOk
+ FPKpBH6L7g/nJYrBOaQ5f5XJCPUdHSMd2BG/dXf0ZeYtiXQx+SH/qmJ/S+LDlG3gYRanopuCd8y4M
+ oqn+dK8p1bfcUOKvNUO6J9oHlxPTil1evE5HwN3Yqw4yHQEXcwya3hl6/BfixtfSZx03H9oVJ1/Qq
+ KNwElBKGLgvjtMvdUA4CNAf1BJhTGQlLghj0I+bUHsA/U3dTxGk3MjnyJbcJfXzUD2z9EbYHyM+TQ
+ vsTEzjgPAQW4foF6Zbk70Uy6RTfol7AbMDx2xfv1U=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZygd-0008m4-El; Tue, 13 Feb 2024 19:43:26 +0000
+ id 1rZyh9-0008m4-PK; Tue, 13 Feb 2024 19:43:59 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:40:19 +0000
-Message-Id: <20240213194052.1162753-56-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Feb 2024 19:40:31 +0000
+Message-Id: <20240213194052.1162753-68-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
@@ -53,7 +53,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 55/88] esp.c: always use esp_do_dma() in pdma_cb()
+Subject: [PULL 67/88] esp.c: replace get_cmd() with esp_do_nodma()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -79,37 +79,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is now only a single implementation contained within esp_do_dma() so
-call it directly.
+Now that the esp_do_nodma() state machine correctly handles incoming FIFO
+data, all remaining users of get_cmd() can be replaced with esp_do_nodma()
+and the get_cmd() function removed completely.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Tested-by: Helge Deller <deller@gmx.de>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240112125420.514425-56-mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240112125420.514425-68-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ hw/scsi/esp.c | 54 ++++-----------------------------------------------
+ 1 file changed, 4 insertions(+), 50 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index c6e5ddd537..bdbdb209f7 100644
+index 5bb8cc4ea7..277eb8647b 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -807,13 +807,7 @@ static void esp_do_nodma(ESPState *s)
+@@ -257,40 +257,6 @@ static int esp_select(ESPState *s)
+ static void esp_do_dma(ESPState *s);
+ static void esp_do_nodma(ESPState *s);
  
- static void esp_pdma_cb(ESPState *s)
- {
--    switch (s->pdma_cb) {
--    case DO_DMA_PDMA_CB:
--        esp_do_dma(s);
--        break;
--    default:
--        g_assert_not_reached();
+-static uint32_t get_cmd(ESPState *s, uint32_t maxlen)
+-{
+-    uint8_t buf[ESP_CMDFIFO_SZ];
+-    uint32_t dmalen, n;
+-    int target;
+-
+-    target = s->wregs[ESP_WBUSID] & BUSID_DID;
+-    if (s->dma) {
+-        dmalen = MIN(esp_get_tc(s), maxlen);
+-        if (dmalen == 0) {
+-            return 0;
+-        }
+-        if (s->dma_memory_read) {
+-            s->dma_memory_read(s->dma_opaque, buf, dmalen);
+-            dmalen = MIN(fifo8_num_free(&s->cmdfifo), dmalen);
+-            fifo8_push_all(&s->cmdfifo, buf, dmalen);
+-            esp_set_tc(s, esp_get_tc(s) - dmalen);
+-        } else {
+-            return 0;
+-        }
+-    } else {
+-        dmalen = MIN(fifo8_num_used(&s->fifo), maxlen);
+-        if (dmalen == 0) {
+-            return 0;
+-        }
+-        n = esp_fifo_pop_buf(&s->fifo, buf, dmalen);
+-        n = MIN(fifo8_num_free(&s->cmdfifo), n);
+-        fifo8_push_all(&s->cmdfifo, buf, n);
 -    }
-+    esp_do_dma(s);
+-    trace_esp_get_cmd(dmalen, target);
+-
+-    return dmalen;
+-}
+-
+ static void do_command_phase(ESPState *s)
+ {
+     uint32_t cmdlen;
+@@ -376,10 +342,7 @@ static void handle_satn(ESPState *s)
+     if (s->dma) {
+         esp_do_dma(s);
+     } else {
+-        if (get_cmd(s, ESP_CMDFIFO_SZ)) {
+-            s->cmdfifo_cdb_offset = 1;
+-            do_cmd(s);
+-        }
++        esp_do_nodma(s);
+     }
  }
  
- void esp_command_complete(SCSIRequest *req, size_t resid)
+@@ -401,9 +364,7 @@ static void handle_s_without_atn(ESPState *s)
+     if (s->dma) {
+         esp_do_dma(s);
+     } else {
+-        if (get_cmd(s, ESP_CMDFIFO_SZ)) {
+-            do_cmd(s);
+-        }
++        esp_do_nodma(s);
+     }
+ }
+ 
+@@ -425,14 +386,7 @@ static void handle_satn_stop(ESPState *s)
+     if (s->dma) {
+         esp_do_dma(s);
+     } else {
+-        if (get_cmd(s, 1)) {
+-            trace_esp_handle_satn_stop(fifo8_num_used(&s->cmdfifo));
+-
+-            /* Raise command completion interrupt */
+-            s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
+-            s->rregs[ESP_RSEQ] = SEQ_MO;
+-            esp_raise_irq(s);
+-        }
++        esp_do_nodma(s);
+     }
+ }
+ 
+@@ -770,7 +724,7 @@ static void esp_do_nodma(ESPState *s)
+             break;
+ 
+         case CMD_SELATNS:
+-            if (fifo8_num_used(&s->cmdfifo) == 1) {
++            if (fifo8_num_used(&s->cmdfifo) >= 1) {
+                 /* First byte received, stop in message out phase */
+                 s->cmdfifo_cdb_offset = 1;
+ 
 -- 
 2.39.2
 
