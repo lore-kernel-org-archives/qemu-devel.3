@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222E7C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78556C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZxTm-0004Dm-2o; Tue, 13 Feb 2024 13:26:02 -0500
+	id 1rZxVZ-0005ie-KB; Tue, 13 Feb 2024 13:27:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZxTk-0004DW-DR
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:26:00 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZxVX-0005iK-R8
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:27:51 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZxTj-0001Ow-13
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:26:00 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZxVW-0001cv-6c
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:27:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707848756;
+ s=mimecast20190719; t=1707848869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+nqqqkK7Edd+F0BT+njm1E1WmvYQolIVHsq3uCkftJI=;
- b=FvrIiAYZXbGgRq+tz7VCKPn5VEbUKtusK2Nh0J5TzINjprs9vyt3oe4QmH6AQwLDX+wEoR
- fd/EvlYTo0uApoPT4YSpqwhRIZYW6RPO+mY9E3ooCMUqnWxwO+ouAdrMLThlm4Oz6HtubV
- aN1Ta8UhfUQNzBV9MGUEvGu7aGasE7w=
+ bh=7RzS2fspJypRYRKafMjtg5g86BMTn3re/VdYRuucRVY=;
+ b=Tgv/RMU/2ipAKILv4pqwC4eVl9Ek1UwutEidZAFPllA2HbEoQ4dgHevgvXT7OfLHVeLigg
+ m/YcdEKByYGz74Z5EWbk8rKuuaoKx3/0+PVa8UfTenH5JmStmb0z5AhH7IoWOIkQ3descN
+ PW9n38kdtw9j09+Fn6qu0PFbgQWADLM=
 Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
  [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-uCnn4mx9MeC8SzeHdOUmLg-1; Tue, 13 Feb 2024 13:25:54 -0500
-X-MC-Unique: uCnn4mx9MeC8SzeHdOUmLg-1
+ us-mta-552-odFxEg7LPTi6nYfh4WDZIQ-1; Tue, 13 Feb 2024 13:27:47 -0500
+X-MC-Unique: odFxEg7LPTi6nYfh4WDZIQ-1
 Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2d08eacba7aso49236751fa.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:25:54 -0800 (PST)
+ 38308e7fff4ca-2d0e2988d49so8850061fa.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:27:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707848753; x=1708453553;
+ d=1e100.net; s=20230601; t=1707848866; x=1708453666;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
+ :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+nqqqkK7Edd+F0BT+njm1E1WmvYQolIVHsq3uCkftJI=;
- b=DJkAx/YiHxKlAlQ7nC9TmBYz9Bcwo09gP93v/5grLPcozNahDjzpG2muGWB5rhjfWQ
- vupIxY0BY1qE8ODPTsqw5liB2asahaiedG0aOdCmtLzXpUj+SxTzK78di2B4305Eh5yZ
- Ujc788Z79JsIi8uskYRPrUi8HyPmcqW0otyCXylbFnSOFMw4HPVcPCWRQWJUZ9yDaRRl
- xoJcBm4oX74nGO70AAsSjSjiZgZDRJ6ZPRKyTwYgNXXngx39xO0pn9E4pU346IbIgbmE
- 5K3wc8z++RL9cW5nzil4Lb07QQTI2FNNSN7OYCN58KHwKGf6SOQBCQ62cYxqEfsihvCj
- IFyg==
-X-Gm-Message-State: AOJu0YzjEa2+gAlSSZ9wQPckRz+EWzY4tJU1WkX/4b9rbSf7qnbWjGIp
- e7syEEvrARgCoow4k0/HrkRWpZbZSHJKkZCemv+w5GRmdJkuDgvWDs0au4ZtFFxagj+0DCI7dT9
- AjTjE9qm+v+u11mgVUcfnkLqOsGDUJ6EEi3HDFV4Hfl7xNd5fyifA
-X-Received: by 2002:a05:651c:a0a:b0:2d0:f265:3f13 with SMTP id
- k10-20020a05651c0a0a00b002d0f2653f13mr449546ljq.26.1707848752923; 
- Tue, 13 Feb 2024 10:25:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHT06QdFBqx4LaQ/yLqBq3TcOfAHYxofFL9RZ/OUzuawWD4hQiJl+H2bD8BMKh44e/6UJ7OEQ==
-X-Received: by 2002:a05:651c:a0a:b0:2d0:f265:3f13 with SMTP id
- k10-20020a05651c0a0a00b002d0f2653f13mr449534ljq.26.1707848752573; 
- Tue, 13 Feb 2024 10:25:52 -0800 (PST)
+ bh=7RzS2fspJypRYRKafMjtg5g86BMTn3re/VdYRuucRVY=;
+ b=IhYwLzjVl9PX5H8+T/b3YQbtLzZ2dTAfr0XuCzwb+uMk57AEkECgfGqCgv4SQzXLdr
+ GefbV3Sv26dAZERc+bt65XS4NMHcQNM/S/q1hM5EjPFLm9/g31uhj/yCOxOVEY8eR500
+ wKp2hOWNiqIetH/wYVn5DxHRQECTMTZ44u97q2d8EXK1zWe6zibMHug9Pb46m8PQv3GG
+ 0wBJMkQpZ1eS/ZCE4HHSUdEr85Q4+vrAxsyLi/a98O31KqoiM62610lMvsmL1TZQCneY
+ cXTNS2thft4zQE/qiN8Rfa2cP8kArgZhTJ84Z3BTK8qWLutZA4+cAUdBdgMHHfRO/bsb
+ lZxw==
+X-Gm-Message-State: AOJu0Yxyl4QhQUF3R9ci+nLSelX9qdpG5YJrm3vtcV0xP7Pobzqsidyz
+ LDTrrLztVIqhFKAXv2WxHifEa/QwnLwMwzUoGsjJz9xZdklh7qcrzyadCkGlP8UleWtyD0KkbIu
+ uejK3pHVHYR4kzH1eN2BD733QxRmc/SRuHge8xB/6EWwDKUIBQ53o
+X-Received: by 2002:a05:651c:3ca:b0:2d0:b10e:26c2 with SMTP id
+ f10-20020a05651c03ca00b002d0b10e26c2mr287099ljp.30.1707848866396; 
+ Tue, 13 Feb 2024 10:27:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFARuKF6rofQhXeWZgssorBw+dvSbDOrMppNcITXQZIMj2DtX2VYHAQS6lFM76ZDqYuoGbdQ==
+X-Received: by 2002:a05:651c:3ca:b0:2d0:b10e:26c2 with SMTP id
+ f10-20020a05651c03ca00b002d0b10e26c2mr287088ljp.30.1707848865985; 
+ Tue, 13 Feb 2024 10:27:45 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzzOcd+dos23pz0ypViXz7qAWVJtOy+EMktFXnkVjEy2X2/SOVyKEVjxitj4Wt0GlAU7/kexmRIhMNWtdllxQ4rojS7cTITkQ/uhuGlzpO2/nEsdOZ6wsa8Hs2w6AUB5BPwoFgGTGH1ucgHiFAHOS01jBizrRQxNAJA/sKT6uOIt29Lk5BqoXHkK12akFqwcp+CCDBfU9oGvRTp7yg+Q==
+ AJvYcCV8lek6TzAT2LRidgyiGnuduHUijKL6F0YTNtNWUxYAuBZShCFa2ntKhggvYQS+B8CO2quSqPr4WVHclwYj3DKqEHxrf3ezSUwgvdI/peD7PkJ54BrE7ICu58p5GQ4VRzfx5otAd4ayr9c9ifwm+QgpKo7JL2Rg75j6MJgHLfiE3zg1ZvQGPr1EsnIi7SfUvwb7oL5QOrd0ViWvZVFMeg==
 Received: from ?IPV6:2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e?
  (p200300d82f3c3f007177eb0cd3d24b0e.dip0.t-ipconnect.de.
  [2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e])
  by smtp.gmail.com with ESMTPSA id
- p7-20020a05600c358700b004107219c664sm12589960wmq.32.2024.02.13.10.25.51
+ y7-20020a1c4b07000000b00411acd60bd7sm3438373wma.44.2024.02.13.10.27.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 10:25:52 -0800 (PST)
-Message-ID: <6df3cad1-8dec-4db8-96c1-7c4298f3d31d@redhat.com>
-Date: Tue, 13 Feb 2024 19:25:51 +0100
+ Tue, 13 Feb 2024 10:27:45 -0800 (PST)
+Message-ID: <35a8c2e1-e20c-4d68-b7b7-0bd488bc3ac9@redhat.com>
+Date: Tue, 13 Feb 2024 19:27:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 01/15] libvhost-user: Fix msg_region->userspace_addr
- computation
+Subject: Re: [PATCH v1 00/15] libvhost-user: support more memslots and cleanup
+ memslot handling code
+Content-Language: en-US
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
@@ -81,9 +82,7 @@ Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
  Germano Veit Michel <germano@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>
 References: <20240202215332.118728-1-david@redhat.com>
- <20240202215332.118728-2-david@redhat.com>
- <20240213123223-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
+ <20240213123259-mutt-send-email-mst@kernel.org>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -130,9 +129,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240213123223-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240213123259-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -158,20 +157,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.02.24 18:32, Michael S. Tsirkin wrote:
-> On Fri, Feb 02, 2024 at 10:53:18PM +0100, David Hildenbrand wrote:
->> We barely had mmap_offset set in the past. With virtio-mem and
->> dynamic-memslots that will change.
->>
->> In vu_add_mem_reg() and vu_set_mem_table_exec_postcopy(), we are
->> performing pointer arithmetics, which is wrong.
+On 13.02.24 18:33, Michael S. Tsirkin wrote:
+> On Fri, Feb 02, 2024 at 10:53:17PM +0100, David Hildenbrand wrote:
+>> This series adds support for more memslots (509) to libvhost-user, to
+>> make it fully compatible with virtio-mem that uses up to 256 memslots
+>> accross all memory devices in "dynamic-memslot" mode (more details
+>> in patch #3).
 > 
-> Wrong how? I suspect you mean arithmetic on void * pointers is not portable?
+> 
+> Breaks build on some systems. E.g.
+> https://gitlab.com/mstredhat/qemu/-/jobs/6163591599
+> 
+> 
 
-You are absolutely right, no idea how I concluded that we might have a 
-different pointer size here.
+./subprojects/libvhost-user/libvhost-user.c:369:27: error: comparison of 
+integer expressions of different signedness: ‘long int’ and ‘unsigned 
+int’ [-Werror=sign-compare]
+   369 |     if (!ret && fs.f_type == HUGETLBFS_MAGIC) {
+       |                           ^~
 
-I'll either convert this patch into a cleanup or drop it for v2, thanks!
+So easy to fix in v2, thanks!
 
 -- 
 Cheers,
