@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66769C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49676C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZygR-0008BC-6C; Tue, 13 Feb 2024 14:43:11 -0500
+	id 1rZyp7-0006yW-FD; Tue, 13 Feb 2024 14:52:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZygO-0007y7-Uh
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:43:08 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZygN-0006T7-FO
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:43:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=cwET+lM8NWpH3LaH5ZhywFZDErG/NIsZyk1qq6PTdLM=; b=Ufr8RSccRMJMgycphDnEnF9Us2
- IeIPddI9AhHABPSEO42rkXEZ1xOOX5YZSTrbGDxYiqADSmnkARMXeML4uhHMAWdUb7Mo3cH4/+VCa
- f95v5y5gaPqTyq0mVNVVD1BuYyYj40Hxp2egAEwcu3bBLiX+2VD8nQoWT0hPepu5gYsxJ2ivx2rVh
- vycZiEnOV0UvX1fTD3WSxNiEWOknxn4jbS9iY3FLAjc/PpF0W+00ZMna6iBhLBX1N4vcaL/ViQrK3
- 9RiDNQLWim34YhtaPWVsi3zX56jI5zQ1TAggFTVczGdE5IWKnS3M3ldxlXnPaLgk1xhqQoia3MFOJ
- XH5G6L0zNGzK73MOiiAWQVA64Mv/MJzc5QuhwIviorXKh/sP0916B2v9fjW+pCiXZLKAEyQF2A20x
- cHXQQiyeGRw6bnXdrJ7qFVtRWHEx8XKWgP66QvRuSAiqvPTBNlHlyEOadKJfZzgPpmouKtXTI6e80
- S23uPwn/ghgQfy0ShJlttBNv6n+jWFccNQ5VYlCL6cYUqO4DqX7b7disIShPYqELNVZ+tL9+O99fN
- xfscGgs7xINGm9s6Cz3lRtoyGG76fxo9Q48xtl8pePC07IPCG//piZJdNvMyINkm6xl8fw5TmNoMl
- 7FHwRXHyQ07r1YkrwkOEcsduyioOrQ3OmlajNGO6Y=;
-Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyfR-0008m4-Pp; Tue, 13 Feb 2024 19:42:13 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: peter.maydell@linaro.org,
-	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:39:57 +0000
-Message-Id: <20240213194052.1162753-34-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
-References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZyp5-0006y9-O6
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:52:07 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZyp3-0008Qw-Hv
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:52:07 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-59a1896b45eso1924324eaf.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 11:52:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707853924; x=1708458724; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+0JkGZyhnmDg6vZHgvKkEql+8YmPfYmVR2dGbwCzWjE=;
+ b=coDLi8KpdmiKV6VN9gzxAbtRDcpvnfkW7qIYfooXZzCpYW+3eFNlweAe64FaDUrBzE
+ 4cKv5PNkVopQw/piveDmoN+0yW7luWiLrPpcbFykwq9/UItFHoSPt22BB1s/gqAolppB
+ FwJ7SW891m1fyHtUCYE/ZOArBWcGAmgdIQLdoa1xRsSk1nAqupfNn0GmRsjTIm0mIC31
+ jG/yIYdx2c2RRs5gWbtw1e5gKMfyCdsuwhbiv2w/AyBp1hR+ElTP/9G4cB6YDhbp6UZc
+ uDpT+cGXH1uj00YxRyeInHXHazuvZqCQz0j2U8yxEEm9/aY+ULAruDsPPICcegbUqAQ9
+ bRng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707853924; x=1708458724;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+0JkGZyhnmDg6vZHgvKkEql+8YmPfYmVR2dGbwCzWjE=;
+ b=NJVpUjd2qWbFo4hOcw7yt/nxF1ZDeq2km2Ewpqk3RiShQKGzMIBHDMnR03byFxbTZL
+ c5wRQrMHYiywCHFqVAqE/owHqPLEhRZS819T7rdeP3RV1p7vyqTBUWN/VQiz6okruVOC
+ 2Pxsrj2QMdG/AQakj7W1nk2nIdddpiPX1YVLgZHWHHtMN3Ixozufa2m7HC+k0VMrcwlH
+ P2Xw0H7cYTAoBKKAILNDbSP/3tWfKcvUiNVm/0BbTme1WDBdyw/OMuSzw7qDudtwIOwE
+ DXpsek3LfALJvX6DLdWudM9oThdLyzAQ1ENLiD25Pv+I0QCI8R9mr2z5pWa5Yj2yjDah
+ X0vg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXaOhBhrhVyWYotFIomUuWiJ5W3j96l/601ob+f+l3FgDv9mTEhLU6kI+oTL4VP4WFmCDlZhgmZ1d+KnjwTwsohshRa8Yo=
+X-Gm-Message-State: AOJu0YyxSvzqBNelQ+mNVLT4NKUejLfVklhm605LTVYS2gj93W73J5p7
+ WpvvwmNnOd3/rXDuP8Rqhsk/EnIJElkX60YKML2uigY/NM3DDTc1l70SVw1zuzs=
+X-Google-Smtp-Source: AGHT+IGP5U/du8a5ouUQo3lotega7+iC25epOx04LtKS98w9VDTGWUn4d0PIcPm0qI8Yh8+dsA4D/Q==
+X-Received: by 2002:a05:6358:2c8e:b0:179:1f8b:445a with SMTP id
+ l14-20020a0563582c8e00b001791f8b445amr351305rwm.22.1707853924088; 
+ Tue, 13 Feb 2024 11:52:04 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOFsQVUEi3y9QfCvFnU/VcuFWnVY6wnf4BnOTVQk7Cs44AB3tO8v9R8VT4Slur9CO+1/R2nTVhIO/vZ/megJziRdPP6Dc=
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ w12-20020a056a0014cc00b006e04c3b3b5esm7756420pfu.163.2024.02.13.11.52.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 11:52:03 -0800 (PST)
+Message-ID: <927ab2ee-32f7-4a58-a95c-afdb8fbefb6f@linaro.org>
+Date: Tue, 13 Feb 2024 09:52:00 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 33/88] esp.c: copy logic for do_cmd transfers from
- do_dma_pdma_cb() to esp_do_dma()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 21/33] linux-user: Split out mmap_h_eq_g
+Content-Language: en-US
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+References: <20240102015808.132373-1-richard.henderson@linaro.org>
+ <20240102015808.132373-22-richard.henderson@linaro.org>
+ <3f75hcwrqjos5mnrm3yknx2c7ae5pvh6bofbpvfsjbxiinrnnq@wmyrvxma4uki>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <3f75hcwrqjos5mnrm3yknx2c7ae5pvh6bofbpvfsjbxiinrnnq@wmyrvxma4uki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,43 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is so that PDMA transfers can be performend by esp_do_dma() as well as
-do_dma_pdma_cb().
+On 1/29/24 05:12, Ilya Leoshkevich wrote:
+> On Tue, Jan 02, 2024 at 12:57:56PM +1100, Richard Henderson wrote:
+>> Move the MAX_FIXED_NOREPLACE check for reserved_va earlier.
+>> Move the computation of host_prot earlier.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   linux-user/mmap.c | 66 +++++++++++++++++++++++++++++++++++++----------
+>>   1 file changed, 53 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+>> index 42eb3eb2b4..00003b8329 100644
+>> --- a/linux-user/mmap.c
+>> +++ b/linux-user/mmap.c
+>> @@ -527,6 +527,31 @@ static abi_long mmap_end(abi_ulong start, abi_ulong last,
+>>       return start;
+>>   }
+>>   
+>> +/*
+>> + * Special case host page size == target page size,
+>> + * where there are no edge conditions.
+>> + */
+>> +static abi_long mmap_h_eq_g(abi_ulong start, abi_ulong len,
+>> +                            int host_prot, int flags, int page_flags,
+>> +                            int fd, off_t offset)
+>> +{
+>> +    void *p, *want_p = g2h_untagged(start);
+>> +    abi_ulong last;
+>> +
+>> +    p = mmap(want_p, len, host_prot, flags, fd, offset);
+>> +    if (p == MAP_FAILED) {
+>> +        return -1;
+>> +    }
+>> +    if ((flags & MAP_FIXED_NOREPLACE) && p != want_p) {
+> 
+> Should we munmap() here?
+> I've seen this situation in some of the previous patches as well, but
+> there we were about to exit, and here the program may continue
+> running.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Tested-by: Helge Deller <deller@gmx.de>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240112125420.514425-34-mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/scsi/esp.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+Yes, when the host kernel does not support MAP_FIXED_NOREPLACE.
+Which is rare these days, admittedly.  I'll comment as well.
 
-diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 65b4baab83..14284ef54a 100644
---- a/hw/scsi/esp.c
-+++ b/hw/scsi/esp.c
-@@ -656,9 +656,18 @@ static void esp_do_dma(ESPState *s)
-             fifo8_push_all(&s->cmdfifo, buf, len);
-             esp_set_tc(s, esp_get_tc(s) - len);
-         } else {
-+            n = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            n = MIN(fifo8_num_free(&s->cmdfifo), n);
-+            fifo8_push_all(&s->cmdfifo, buf, n);
-+            esp_set_tc(s, esp_get_tc(s) - n);
-+
-             esp_set_pdma_cb(s, DO_DMA_PDMA_CB);
-             esp_raise_drq(s);
--            return;
-+
-+            /* Ensure we have received complete command after SATN and stop */
-+            if (esp_get_tc(s) || fifo8_is_empty(&s->cmdfifo)) {
-+                return;
-+            }
-         }
-         trace_esp_handle_ti_cmd(cmdlen);
-         s->ti_size = 0;
--- 
-2.39.2
+
+r~
 
 
