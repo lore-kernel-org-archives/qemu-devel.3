@@ -4,98 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19191C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 10:59:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04081C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZqVX-0002t9-B9; Tue, 13 Feb 2024 05:59:23 -0500
+	id 1rZqXF-00044W-4G; Tue, 13 Feb 2024 06:01:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqVU-0002si-MM
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:59:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZqXD-00044A-5r
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:01:07 -0500
+Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqVT-00061f-7t
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:59:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707821958;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+WEniuVO/K44jckRuF1F76Eoxoe96Z6mlPzpyvMtF24=;
- b=PXGe8phE9lWSUFuF3i8A0MEGG63/nEfIcY42ssyQkTLFluQVJ1ycvD93Gs1jk8/WPy6FBk
- uNNQPv3fzrn1U5H1UNT0eYVrvvzCd5yS9lDGsjpKNzPgI1gU/y76cywg1WCy1KcGjY1s4e
- Y3OnK/9c7MFPxX59F8xeu0FD95caduI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-XazDG0q3P-ys6dDI1JIxCw-1; Tue, 13 Feb 2024 05:59:16 -0500
-X-MC-Unique: XazDG0q3P-ys6dDI1JIxCw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a381d3277a9so184847466b.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 02:59:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707821956; x=1708426756;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+WEniuVO/K44jckRuF1F76Eoxoe96Z6mlPzpyvMtF24=;
- b=lqiHz1pqh5YB4pPhA46o2Sy5FTSNNU0Lyss1m6xNFj6Quwjy8z9BsSNfrBdJ+Q2E/N
- h4v/4wHdJtHtXevBqUJttW7pkKnQak4Wcnr16+ja7JPsNPtPclUhrpo4R+Rwr905IdmN
- WdoDdCqs/nnDyhnd4PzE81xGNai2Sed4/dWu4ayxJMAIMQ0W9JIv+iJTlLHxIJ3Gk8Bz
- lF6WUoOUeFq/mIJDOKv5EA3OMq9SI5zf6Qh38acamswgt5KcfSKwrMSborbEIUpC7Taj
- Q290T32Enc5a7uUpwROMKbgYOpc9VDESdlQttt093zXG+aiBxolYe0wbZmUICewMEcFy
- B4ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlNGTVg04qJvX7KI36oLNA8DUZXyooKChMH15d0Nly7X92C/LTinIzolhTs6o6/ftcOJRlZJf7QVJEVpItE0G7Rs0N1Bk=
-X-Gm-Message-State: AOJu0Yz58PdqKoDs8zW5QT9CvtBRw/Kj/g2EzpYpbYb2KsNDN3Qj9g+Q
- R4Kztk8T/q3kvCcv9d3k2T9xLQAViwX3E+i6omNrR9QTAXDMmPWwoOhLNTEjUNZlu4Nb4aPPJFy
- dcjBA2yb4G0A5uM9SKWTZyXhvyDLh04AoDnrA1Drv+f7/Nomd+Pea
-X-Received: by 2002:a17:906:4a4f:b0:a2f:1077:68d with SMTP id
- a15-20020a1709064a4f00b00a2f1077068dmr6430904ejv.39.1707821955761; 
- Tue, 13 Feb 2024 02:59:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGVHCKp1UhWEaF1FMJKRxaVwgVB/BcqMPg/7Il7J0FjddPhUQTdwiLUp962anMmtuj2+6bMKA==
-X-Received: by 2002:a17:906:4a4f:b0:a2f:1077:68d with SMTP id
- a15-20020a1709064a4f00b00a2f1077068dmr6430870ejv.39.1707821955140; 
- Tue, 13 Feb 2024 02:59:15 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUINgSuJBgOXJzVQ95MflHzELbcCyQsk5t6WJ2sPG8xaGR1sc9PgaucafIze3S5/n/24xvXvRUe+JGFS84jsd9p8RM+YGogwQf5ghuxf+IPD05aqrpnLTfikkmJHJnjCtWdn0zOr58koo0ZEor308NDbD4V+XOGsVi5ijsyajBV6qx/Z04bS+RND5HTPJN2gUQMOJdNQOYrmn68pBd1YA9QTb9/sL6iRyHAUra6jGshxy8bhzylKTH0kd0VSU8kDD2JgdnV9zU+rKfP5Y9nY/WfslMn6tcYrH6dQKEqg5nCrUZ6g4JPlQM24NAOvyBgqaGbdTDxbgrd8pD8m3C5AIQJe0kLxmEK30ttdKiAbTZ/rd0Z/5bqCr7qYdnlZ5X8G9HT6fPIdOdPFnMaaIFpyQnnpUMW8TV/RpWdhg==
-Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
- a6-20020a1709065f8600b00a370a76d3a0sm1172055eju.123.2024.02.13.02.59.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 02:59:14 -0800 (PST)
-Date: Tue, 13 Feb 2024 05:59:01 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v3 5/7] pcie_sriov: Validate NumVFs
-Message-ID: <20240213055345-mutt-send-email-mst@kernel.org>
-References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
- <20240212-reuse-v3-5-8017b689ce7f@daynix.com>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZqX8-0006ZM-0B
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:01:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+ t=1707822055; x=1708426855; i=deller@gmx.de;
+ bh=qfwTPC6Qr+gCCLIefPdVA8Iq+L8d2vdQwItSQ1qKEEM=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+ In-Reply-To;
+ b=Wic0zEoFmw/JoZPxVdMkbIyNIPeCiZJGb52kHTsdMSZgwNFI/bCEdTM02HCRV+BN
+ 4fEvPSAIVHIHRaV+06VE/YkW3Cms7d8ry7huwT7lGnTI9BVYeYHCojeNjKIyU/qrR
+ Uj6pT4X/x03GyMFYhAFcaiwAx1hdyI+PgJ2WOjTNi7+BIKJmCNA9liYlKfSKvVckp
+ 5MUGq0EajW0JeQJdxgIbOuYpXxqKiDMp2A7tpXFktiT8ilIYvTuVeI7WIuZaZMQhg
+ alz9ETLRZ+L9hTtSLTmpDVWGC+kgtKzKZCqHe1rEWn3rzl37CAWHowpesg3cg6f4u
+ UUYs02uvN+bRFxaxfw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([94.134.153.170]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIwzA-1rFPy92lyM-00KTby; Tue, 13
+ Feb 2024 12:00:55 +0100
+Message-ID: <ebcf7d0b-17d8-409d-a07b-0399d7071eac@gmx.de>
+Date: Tue, 13 Feb 2024 12:00:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240212-reuse-v3-5-8017b689ce7f@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/12] Hppa64 patches
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: deller@kernel.org, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>
+References: <20240211122909.5807-1-deller@kernel.org>
+ <CAFEAcA-4ck9Ro-9x13veOqL-165i7q8w17HP7KDN_5uNj2RVEg@mail.gmail.com>
+ <71756c3b-467d-4416-884d-e4aeed3482ba@gmx.de>
+ <CAFEAcA_CQ6PKHyvg9qKeWDJpkbTu8rv=TCm3GemJmKQCrjPNuA@mail.gmail.com>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
+ HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
+ r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
+ CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
+ 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
+ dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
+ Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
+ GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
+ aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
+ 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
+ ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+ FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
+ uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
+ uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
+ REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
+ qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
+ iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
+ gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
+ Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
+ qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
+ 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
+ dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
+ rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
+ UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
+ eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
+ ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
+ dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
+ lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
+ 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
+ xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
+ wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
+ fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
+ Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
+ l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
+ RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
+ BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
+ Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
+ XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
+ MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
+ FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
+ 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
+ ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
+In-Reply-To: <CAFEAcA_CQ6PKHyvg9qKeWDJpkbTu8rv=TCm3GemJmKQCrjPNuA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:IWxEsFDYBcvdc+jrYeN2QeATeNH7ZYe6ZEFBsEkpTp1+9f2JDZg
+ nudr7C/fA9+IJASBGKdwUtPt7EzSxpTRBrSRo75Dw28rmvVHev892xBBK8GRxLnb0eAC7MI
+ FUTvpobKYCY8j/8XXyGw6eR+0V8Dp1zFt6Rb19pxTY+HylDR2g+GVVRFtFJwLpygF5AM/8C
+ YwDYr1tZzaYDFf2bvkgVw==
+UI-OutboundReport: notjunk:1;M01:P0:NOa3vcXTFlo=;r10lpqIqt53RB2oPoZI/syzHXc/
+ mvPO0nldlCsoEoqXC1FXRyRSnLihNqdR6cmgqGc0sdJZ+scjBmURRo0Gpdd7aw8xcyyhu+ubi
+ MDALwXRz+aVLvKznHm7AWH1mMuyShvloXzBHryupdhnEcmd9zejcoXKhBcN8ttNbGOw+R1Tz2
+ 3f5Papz0O2h0QArev/NBXJW2SKRaCnhLJGMYhTM0/L5s27xjD4Rtva7b+/O0M/myW1JaWFfT/
+ +6cbz3psOC9UxZSEAltf4K9oFrUVPgEhjzQXPeL3nZr3IMwam1r6MbgEHDYx+KT44AUYoX4KD
+ dTOBdkyYMGZul/tiH3Rf1nk1ua1AMgYoy8w83kxBi7v0qnyh88fTbZugaZK1+I1uJB+2aqtd1
+ bHyCMGRLJk82S9twmSn0bbJcHrqcaxBImYKQJlgRU0nhMw9ZVtiL7f1FgobjZU1NO2cZjnBCR
+ wJge7Jfy89r8X3pcFGAt22eDuOYv3k4Hk/O0xZBXmSsLy/M6zLBGvqfhYtGH+N5pt0AH2UWCj
+ PhvRkxzMFpDatWF8mjbVRxxkXDuAKFbk0Pcphluk3L8vmmYlAsfx4dBm+iBe9602YTIO1rUoK
+ JHhlhW2//i+lrAO4QmkDVyIr/RW8W603F8E0LeM2gkhH9f/hBKbCJX+iSA3SDnQ1BRPfG6Io0
+ mT8JditpUIHH5tES+EiRr2L2pkuudpOGrXsYpjjbFR2Ob37uioQRlfx5g1d6fjdZEUjq6cKkM
+ ZguH+VshCHcd2Vi4HQxUmvCdYWFcEA+qFJj6bxEcfAgJSP+yquPfmAERhyllDlRAY/7xMU3x4
+ Ho2jLglFYOcOkANZFLSre2AliPjEo5d3Ythh80t1puyRc=
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,42 +136,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 12, 2024 at 07:20:33PM +0900, Akihiko Odaki wrote:
-> The guest may write NumVFs greater than TotalVFs and that can lead
-> to buffer overflow in VF implementations.
-> 
-> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/pci/pcie_sriov.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index a1fe65f5d801..da209b7f47fd 100644
-> --- a/hw/pci/pcie_sriov.c
-> +++ b/hw/pci/pcie_sriov.c
-> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
->  
->      assert(sriov_cap > 0);
->      num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-> +        return;
-> +    }
+On 2/13/24 10:10, Peter Maydell wrote:
+> On Mon, 12 Feb 2024 at 23:04, Helge Deller <deller@gmx.de> wrote:
+>>
+>> On 2/12/24 22:16, Peter Maydell wrote:
+>>> This fails "make check", eg:
+>>> https://gitlab.com/qemu-project/qemu/-/jobs/6154451100
+>>>
+>>> because when the qom-test etc tests run qemu-system-hppa, it
+>>> barfs with "qemu-system-hppa: no firmware provided".
+>>>
+>>> That kind of firmware check needs to not fire when
+>>> using the qtest accel.
+>>
+>> Ok. But how do people usually work around this kind of issue?
+>> Test if the qtest accel is in use?
+>> Ignore if the firmware can't be loaded?
+>> Any hint would be great!
+>
+> There's a qtest_enabled() function -- see eg hw/mips/malta.c
+> for an example of skipping the "fail on no firmware" check
+> when it's enabled. (There are a bunch of others in the tree too.)
 
-Indeed:
-     The results are undefined if NumVFs is set to a value greater than TotalVFs.
-
-However I note that hw/nvme/ctrl.c will still poke at NumVFs.
-
-Since it's undefined, I propose a simpler hack and just force it
-to PCI_SRIOV_TOTAL_VF. This way everyone can just assume it's ok.
-
-
->  
->      dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
->  
-> 
-> -- 
-> 2.43.0
-
+Yes, I found that....
+I've used that function in the latest pull request which I sent...
+Thanks!
+Helge
 
