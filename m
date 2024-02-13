@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4777DC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E67C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZv3k-0002uB-QO; Tue, 13 Feb 2024 10:51:00 -0500
+	id 1rZv3t-0003Cs-8c; Tue, 13 Feb 2024 10:51:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv3g-0002jO-Q8
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:50:57 -0500
+ id 1rZv3r-00036D-AW
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv3b-0005V7-O6
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:50:55 -0500
+ id 1rZv3p-0005Y6-TK
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707839441;
+ s=mimecast20190719; t=1707839465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BbG1UcNnrJXHseB/1jw2t7pVf1ZGHlpH133WcB15Tq4=;
- b=Yc7AP2/YK/vBwlxI4lfVHk6kXWs33kpt4xMwvtACtNljKn34roYtSDa8oq/VDuVlK9QsSO
- WBGp/sCBHeDXFj2hOv7/5F3I7rd26SqeCiR/WnNEeIX6HwFDAkw35T2kL2J4Hh7UNdQsAy
- aTCG+zZGk49KV/QLJpEfjjW39W6b8KQ=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Eavu1uG4NtuHo7emg9gUb4sqremIQ+v3v3eAdA8Z7IY=;
+ b=G3tabbd7p0MPFURhGsK2ypBYIZ+nzPowoG3qFnqdKWSlIChZdjkp/Z6SYSyeDy9ljJbSpA
+ tYBpdf6/WSqZ5kIuEfrM2SGPeb34w9JTNzYn9eC2aKUE9qC4ViOpG1vVmgRz9Mo/bqxbDz
+ X90U1doESVMUsw45tzFFX1vlLDm8djM=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-WyfZAwalPZ6VgEcqCDPlaA-1; Tue, 13 Feb 2024 10:50:39 -0500
-X-MC-Unique: WyfZAwalPZ6VgEcqCDPlaA-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-68c4f2aca5dso80529716d6.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:50:39 -0800 (PST)
+ us-mta-255-8mqifFFlNxad4Kr-i8f2aA-1; Tue, 13 Feb 2024 10:51:03 -0500
+X-MC-Unique: 8mqifFFlNxad4Kr-i8f2aA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a26f2da3c7bso236703966b.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:51:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707839437; x=1708444237;
+ d=1e100.net; s=20230601; t=1707839460; x=1708444260;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BbG1UcNnrJXHseB/1jw2t7pVf1ZGHlpH133WcB15Tq4=;
- b=UYXvD/Q3wHsZCvdz01i7W4PCFHui/oQ7mUxY9bNydXaeNuhrr4A3z6xaKLwIIrQdQ9
- a5o7fap6DtAWDhTdv/MMbWWuBm/4ioHow7XyhZdUjoUk2vA1FVqqh+9rhPD+ysRQXf14
- 7QT9w8xK9BSE87JIffKnnUTHHXqc6IEgkzEOGi6+14gGgfBaJaiJXo4t0O6ZqLriV0DP
- p9yiP2UVNhKc2onX7xCmPlgZVtUewUBcSRxtnMUJ38swX8T5BqcX0YQZY0fS+vYNxAvE
- p0gD3+DjIEx+zKEdL4+kUzLg2ZrOkTNlnLGTwOO+tET2irnH0ByfTjwNuWvFQvBXq52S
- v19w==
-X-Gm-Message-State: AOJu0Yz+1+jB3pa4hB/WhFQLl9SDdBlc5xP/XQrJYerU9Z0TjGUdi7Yh
- 91CFZPc6iZoL2sJzG+riDt3IzSoSKv0u2yCBqrDFtJjNTS3e3AFNB8az0fwTiyzlpNTQRizqESL
- 2fGW++3xmqnBm668616u5h0jAXOuWIEcEpMHK6TPDfq1s7p8FXmY8t+RNAIPloRNTqv/vx+KhjW
- k1B3+1d82MHmyYk1vd0QwGtQ9WFRggJZ6pl7Le
-X-Received: by 2002:a0c:f54d:0:b0:68c:8bee:a617 with SMTP id
- p13-20020a0cf54d000000b0068c8beea617mr9217066qvm.39.1707839437616; 
- Tue, 13 Feb 2024 07:50:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IExqNDqol1z+aASmo8b3qMSL9/Ycr9wPupvHUTzeSKUmlx2T9HgV7QGf34J6kGGO2pITzwURw==
-X-Received: by 2002:a0c:f54d:0:b0:68c:8bee:a617 with SMTP id
- p13-20020a0cf54d000000b0068c8beea617mr9217049qvm.39.1707839437304; 
- Tue, 13 Feb 2024 07:50:37 -0800 (PST)
+ bh=Eavu1uG4NtuHo7emg9gUb4sqremIQ+v3v3eAdA8Z7IY=;
+ b=YutwIuYRLlApkZduAEGtzNM0lJ9FCOyfSGY6ZPV/K2tgqBGRm/GLimLEGTx13JNgUz
+ fu/VbNR3By8R/urmYzC1NdhZfgykEVHmzGjNp3ctiI526LG2anUUcd2ulyGOiaLkYXRP
+ i9Xfva8QJB81K1AQczW5Yic+/u2p633HSZ6HhG5NEwPs47Am29rCqEHKkEyL+Q38mgSE
+ qNVlEF0WtRT1ncMvhcHNLtB4LVgyQ00YviraS7ro8QujlphoNPksMED4D9p13CrZogIQ
+ iaizUSOOJ6tQRx1+3icGS9+D3AZTNE4bpkXmqu6cqQAJ4pdletKHb1GX8d8ratV/Yfvj
+ XHXg==
+X-Gm-Message-State: AOJu0YxeTN/sqNDAocxO07fPZXEUHm7it10DjfSI2WcMSKcDdF2/pPf3
+ gR+w1O+m04OsI5fE1TPi2Y1K/XpkrHIpGOC5xTZNzkml4nGxRznltV4BSGzAiE/NwMLWKiX0Vkp
+ skVJJWru65m0/lghvZ216ktVs+HeFdbinocDdfx5i2Q/sqtd2qLv60605a+HvK+VRPFMrKnEWYc
+ L4QUZblZhD1es46c6/R6vfn7BBBIqt52wsCqrC
+X-Received: by 2002:a17:906:f1cb:b0:a3c:af7e:1660 with SMTP id
+ gx11-20020a170906f1cb00b00a3caf7e1660mr3774306ejb.22.1707839459776; 
+ Tue, 13 Feb 2024 07:50:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF21+/tB4MY0SeAlJaY4+dS6tUEeNd1XKqx1b24Zd4H9TBnCuZGK048x2V4e0FgIv6VuGvM2Q==
+X-Received: by 2002:a17:906:f1cb:b0:a3c:af7e:1660 with SMTP id
+ gx11-20020a170906f1cb00b00a3caf7e1660mr3774289ejb.22.1707839459412; 
+ Tue, 13 Feb 2024 07:50:59 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSSduA+98Mzjn18XeFAseyv/CK3WGQZpcStXqrp+DggPxqKojLLe7nSSjucA+R8MOvrQoPI6VaPg5CGm/Tj0HLkU7Wh/cTVo/LV7ke0MhE4lr7jc25mGGTvrbUjr3vK8LZw2Rl+P0HoZmPJMp7x1Flr9h7
+ AJvYcCW2sycnd3A6AsTvrCGK0SaRelCQ1dHZ7BNqYk+XgAFn9zomryny6k0/3pEk6KeoFi3jtGpo0++9dxuDl6sp1gwCuLlVO52yhSKpV8VSEh3fpR8OE9Ll
 Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
  by smtp.gmail.com with ESMTPSA id
- lx15-20020a0562145f0f00b0068ee9aeacefsm601825qvb.146.2024.02.13.07.50.22
+ tz3-20020a170907c78300b00a3d243d0aa0sm165278ejc.31.2024.02.13.07.50.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 07:50:24 -0800 (PST)
+ Tue, 13 Feb 2024 07:50:52 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, shentey@gmail.com, balaton@eik.bme.hu,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 2/9] isa: clean up Kconfig selections for ISA_SUPERIO
-Date: Tue, 13 Feb 2024 16:49:57 +0100
-Message-ID: <20240213155005.109954-3-pbonzini@redhat.com>
+Cc: philmd@linaro.org,
+	shentey@gmail.com,
+	balaton@eik.bme.hu
+Subject: [PATCH v3 5/9] isa: specify instance_size in isa_superio_type_info
+Date: Tue, 13 Feb 2024 16:50:00 +0100
+Message-ID: <20240213155005.109954-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240213155005.109954-1-pbonzini@redhat.com>
 References: <20240213155005.109954-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -105,67 +107,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All users of ISA_SUPERIO include a floppy disk controller, serial port
-and parallel port via the automatic creation mechanism of isa-superio.c.
+Right now all subclasses of TYPE_ISA_SUPERIO have to specify an instance_size,
+because the ISASuperIODevice struct adds fields to ISADevice but the type does
+not include the increased instance size.  Failure to do so results in an access
+past the bounds of struct ISADevice as soon as isa_superio_realize is called.
+Fix this by specifying the instance_size already in the superclass.
 
-Select the symbol and remove it from the dependents.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: 4c3119a6e3 ("hw/isa/superio: Factor out the parallel code from pc87312.c")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/isa/Kconfig | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ hw/isa/isa-superio.c       | 2 +-
+ hw/isa/smc37c669-superio.c | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
-index 040a18c0709..7884179d08b 100644
---- a/hw/isa/Kconfig
-+++ b/hw/isa/Kconfig
-@@ -17,7 +17,11 @@ config ISA_SUPERIO
-     bool
-     select ISA_BUS
-     select PCKBD
-+    select PARALLEL
-+    select SERIAL_ISA
-     select FDC_ISA
-+    # Some users of ISA_SUPERIO do not use it
-+    #select IDE_ISA
+diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
+index e06a548c682..98d50844f71 100644
+--- a/hw/isa/isa-superio.c
++++ b/hw/isa/isa-superio.c
+@@ -187,6 +187,7 @@ static const TypeInfo isa_superio_type_info = {
+     .abstract = true,
+     .class_size = sizeof(ISASuperIOClass),
+     .class_init = isa_superio_class_init,
++    .instance_size = sizeof(ISASuperIODevice),
+ };
  
- config PC87312
-     bool
-@@ -26,9 +30,6 @@ config PC87312
-     select I8254
-     select I8257
-     select MC146818RTC
--    select SERIAL_ISA
--    select PARALLEL
--    select FDC_ISA
-     select IDE_ISA
+ /* SMS FDC37M817 Super I/O */
+@@ -203,7 +204,6 @@ static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+ static const TypeInfo fdc37m81x_type_info = {
+     .name          = TYPE_FDC37M81X_SUPERIO,
+     .parent        = TYPE_ISA_SUPERIO,
+-    .instance_size = sizeof(ISASuperIODevice),
+     .class_init    = fdc37m81x_class_init,
+ };
  
- config PIIX
-@@ -49,8 +50,6 @@ config VT82C686
-     select ISA_SUPERIO
-     select ACPI
-     select ACPI_SMBUS
--    select SERIAL_ISA
--    select FDC_ISA
-     select USB_UHCI
-     select APM
-     select I8254
-@@ -58,14 +57,10 @@ config VT82C686
-     select I8259
-     select IDE_VIA
-     select MC146818RTC
--    select PARALLEL
- 
- config SMC37C669
-     bool
-     select ISA_SUPERIO
--    select SERIAL_ISA
--    select PARALLEL
--    select FDC_ISA
- 
- config LPC_ICH9
-     bool
+diff --git a/hw/isa/smc37c669-superio.c b/hw/isa/smc37c669-superio.c
+index 388e2ed9371..d2e58c9a895 100644
+--- a/hw/isa/smc37c669-superio.c
++++ b/hw/isa/smc37c669-superio.c
+@@ -85,7 +85,6 @@ static void smc37c669_class_init(ObjectClass *klass, void *data)
+ static const TypeInfo smc37c669_type_info = {
+     .name          = TYPE_SMC37C669_SUPERIO,
+     .parent        = TYPE_ISA_SUPERIO,
+-    .instance_size = sizeof(ISASuperIODevice),
+     .class_size    = sizeof(ISASuperIOClass),
+     .class_init    = smc37c669_class_init,
+ };
 -- 
 2.43.0
 
