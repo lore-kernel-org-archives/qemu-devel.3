@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E67C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43ED0C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZv3t-0003Cs-8c; Tue, 13 Feb 2024 10:51:09 -0500
+	id 1rZv3j-0002qg-Tj; Tue, 13 Feb 2024 10:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv3r-00036D-AW
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:07 -0500
+ id 1rZv3e-0002hv-Ni
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:50:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv3p-0005Y6-TK
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:07 -0500
+ id 1rZv3b-0005Vo-Nq
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:50:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707839465;
+ s=mimecast20190719; t=1707839448;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Eavu1uG4NtuHo7emg9gUb4sqremIQ+v3v3eAdA8Z7IY=;
- b=G3tabbd7p0MPFURhGsK2ypBYIZ+nzPowoG3qFnqdKWSlIChZdjkp/Z6SYSyeDy9ljJbSpA
- tYBpdf6/WSqZ5kIuEfrM2SGPeb34w9JTNzYn9eC2aKUE9qC4ViOpG1vVmgRz9Mo/bqxbDz
- X90U1doESVMUsw45tzFFX1vlLDm8djM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mC2nbMoxIBuABmRhVbve0jC38/PoAQ5rTGQURWt/4Kk=;
+ b=MhOyJOE4TrmhSNP9POB0F1avakD6WJiCZ0zAiwFop7BQuYIStIWbQif1gfHB+RStR80ctd
+ mkycoo9BF7JiyVRtGej5fosN0IidJw/K9dqJItZ82aNxY6VEIzZxYKweyhRqWF8SYL1Ukp
+ AZDBlk0eFQTcbXEU5eyff3BMAOGaW88=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-255-8mqifFFlNxad4Kr-i8f2aA-1; Tue, 13 Feb 2024 10:51:03 -0500
-X-MC-Unique: 8mqifFFlNxad4Kr-i8f2aA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a26f2da3c7bso236703966b.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:51:03 -0800 (PST)
+ us-mta-473-Ms1QCywhMXim4tu-K0sAqQ-1; Tue, 13 Feb 2024 10:50:46 -0500
+X-MC-Unique: Ms1QCywhMXim4tu-K0sAqQ-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-785a91f4c28so532294385a.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:50:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707839460; x=1708444260;
+ d=1e100.net; s=20230601; t=1707839443; x=1708444243;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Eavu1uG4NtuHo7emg9gUb4sqremIQ+v3v3eAdA8Z7IY=;
- b=YutwIuYRLlApkZduAEGtzNM0lJ9FCOyfSGY6ZPV/K2tgqBGRm/GLimLEGTx13JNgUz
- fu/VbNR3By8R/urmYzC1NdhZfgykEVHmzGjNp3ctiI526LG2anUUcd2ulyGOiaLkYXRP
- i9Xfva8QJB81K1AQczW5Yic+/u2p633HSZ6HhG5NEwPs47Am29rCqEHKkEyL+Q38mgSE
- qNVlEF0WtRT1ncMvhcHNLtB4LVgyQ00YviraS7ro8QujlphoNPksMED4D9p13CrZogIQ
- iaizUSOOJ6tQRx1+3icGS9+D3AZTNE4bpkXmqu6cqQAJ4pdletKHb1GX8d8ratV/Yfvj
- XHXg==
-X-Gm-Message-State: AOJu0YxeTN/sqNDAocxO07fPZXEUHm7it10DjfSI2WcMSKcDdF2/pPf3
- gR+w1O+m04OsI5fE1TPi2Y1K/XpkrHIpGOC5xTZNzkml4nGxRznltV4BSGzAiE/NwMLWKiX0Vkp
- skVJJWru65m0/lghvZ216ktVs+HeFdbinocDdfx5i2Q/sqtd2qLv60605a+HvK+VRPFMrKnEWYc
- L4QUZblZhD1es46c6/R6vfn7BBBIqt52wsCqrC
-X-Received: by 2002:a17:906:f1cb:b0:a3c:af7e:1660 with SMTP id
- gx11-20020a170906f1cb00b00a3caf7e1660mr3774306ejb.22.1707839459776; 
- Tue, 13 Feb 2024 07:50:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF21+/tB4MY0SeAlJaY4+dS6tUEeNd1XKqx1b24Zd4H9TBnCuZGK048x2V4e0FgIv6VuGvM2Q==
-X-Received: by 2002:a17:906:f1cb:b0:a3c:af7e:1660 with SMTP id
- gx11-20020a170906f1cb00b00a3caf7e1660mr3774289ejb.22.1707839459412; 
- Tue, 13 Feb 2024 07:50:59 -0800 (PST)
+ bh=mC2nbMoxIBuABmRhVbve0jC38/PoAQ5rTGQURWt/4Kk=;
+ b=YmWKNXb7STmKiGh/yTVRxylY2uvqhGmcY/XYSqISTVV5MBq6GTwAH4cvjuFplzRnPJ
+ QWF4Qt2E/jmtm1TvOJppMP9VZPAlw7PUufXGS5gESEmcYXcs++FDJCOKlp0/rgNSUr8J
+ 24aPWb+uvtQTrQErU5BvrNqsGAd/BQoEByPMQcRc7l/GPrwVrNkYylGQi3x3TVZ6t/Hv
+ CFbChc7H560wzNbyQzFEwnQamHDa3tgN8xxXiUGNNO9UDA/Gl/Tj4xxtAUdYqhnmyYvU
+ Co3uIuzyNVS2mQrjRIP2jAOanQssaJZT2MyGw8uSmlizuzYm7k36gW8NHVDygs5C0wS5
+ 1APA==
+X-Gm-Message-State: AOJu0YwqwcL0hsaA3ALOfxklOs4dj5NDoC0RQ45XNMIot3DNd22F+2As
+ JWp2SY6zA/N2QTF/AfUqx73u4ZqBnZtbreXb0QCOFYkYSH2yNbzNX2MB/UWs9bH8RL1TRyL6flJ
+ UsBUsvyoiLxqNMgQJGrsDRl7EZDKo2EoJMIcsjKROv0srVeW7TxuUBf6ZdtC5R2ECjCrp444JVm
+ vRZTedIwvP5o6QgvH2oee4oBUg/yoN86lpnkKb
+X-Received: by 2002:a05:6214:4104:b0:68c:bcc4:f312 with SMTP id
+ kc4-20020a056214410400b0068cbcc4f312mr14643052qvb.61.1707839443551; 
+ Tue, 13 Feb 2024 07:50:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNYk404EhQ+ABXoqyXKpF1QNsktTDQ/gHnTLUL8uOzERQmiTOxJt/iybmwjgmsNccGoiF6XQ==
+X-Received: by 2002:a05:6214:4104:b0:68c:bcc4:f312 with SMTP id
+ kc4-20020a056214410400b0068cbcc4f312mr14643026qvb.61.1707839443234; 
+ Tue, 13 Feb 2024 07:50:43 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2sycnd3A6AsTvrCGK0SaRelCQ1dHZ7BNqYk+XgAFn9zomryny6k0/3pEk6KeoFi3jtGpo0++9dxuDl6sp1gwCuLlVO52yhSKpV8VSEh3fpR8OE9Ll
+ AJvYcCVgAWEVNFtpPKkSk7WJnwQSwY0/5fKbfcC6rfmB66Z0UIOaV7a+XIlMdIesJPB/Vwq+G28rRBhsKt72kxHsVZvxZvA8l0E5m0pU3KxYLfVtHDEjQwIn
 Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
  by smtp.gmail.com with ESMTPSA id
- tz3-20020a170907c78300b00a3d243d0aa0sm165278ejc.31.2024.02.13.07.50.51
+ x9-20020ad440c9000000b0068ccba4896asm1366913qvp.47.2024.02.13.07.50.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 07:50:52 -0800 (PST)
+ Tue, 13 Feb 2024 07:50:39 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	shentey@gmail.com,
 	balaton@eik.bme.hu
-Subject: [PATCH v3 5/9] isa: specify instance_size in isa_superio_type_info
-Date: Tue, 13 Feb 2024 16:50:00 +0100
-Message-ID: <20240213155005.109954-6-pbonzini@redhat.com>
+Subject: [PATCH v3 3/9] hw/mips/Kconfig: Remove ISA dependencies from MIPSsim
+ board
+Date: Tue, 13 Feb 2024 16:49:58 +0100
+Message-ID: <20240213155005.109954-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240213155005.109954-1-pbonzini@redhat.com>
 References: <20240213155005.109954-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -107,53 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now all subclasses of TYPE_ISA_SUPERIO have to specify an instance_size,
-because the ISASuperIODevice struct adds fields to ISADevice but the type does
-not include the increased instance size.  Failure to do so results in an access
-past the bounds of struct ISADevice as soon as isa_superio_realize is called.
-Fix this by specifying the instance_size already in the superclass.
+From: Bernhard Beschow <shentey@gmail.com>
 
-Fixes: 4c3119a6e3 ("hw/isa/superio: Factor out the parallel code from pc87312.c")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+The board doesn't have a working ISA bus, only some I/O space.
+Selecting ISA_BUS and including hw/isa/isa.h is not necessary.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <20230109204124.102592-3-shentey@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/isa/isa-superio.c       | 2 +-
- hw/isa/smc37c669-superio.c | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ hw/mips/mipssim.c | 7 +++++--
+ hw/mips/Kconfig   | 3 +--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
-index e06a548c682..98d50844f71 100644
---- a/hw/isa/isa-superio.c
-+++ b/hw/isa/isa-superio.c
-@@ -187,6 +187,7 @@ static const TypeInfo isa_superio_type_info = {
-     .abstract = true,
-     .class_size = sizeof(ISASuperIOClass),
-     .class_init = isa_superio_class_init,
-+    .instance_size = sizeof(ISASuperIODevice),
- };
+diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
+index 16af31648e2..a12427b6c8a 100644
+--- a/hw/mips/mipssim.c
++++ b/hw/mips/mipssim.c
+@@ -31,7 +31,6 @@
+ #include "hw/clock.h"
+ #include "hw/mips/mips.h"
+ #include "hw/char/serial.h"
+-#include "hw/isa/isa.h"
+ #include "net/net.h"
+ #include "sysemu/sysemu.h"
+ #include "hw/boards.h"
+@@ -206,7 +205,11 @@ mips_mipssim_init(MachineState *machine)
+     cpu_mips_irq_init_cpu(cpu);
+     cpu_mips_clock_init(cpu);
  
- /* SMS FDC37M817 Super I/O */
-@@ -203,7 +204,6 @@ static void fdc37m81x_class_init(ObjectClass *klass, void *data)
- static const TypeInfo fdc37m81x_type_info = {
-     .name          = TYPE_FDC37M81X_SUPERIO,
-     .parent        = TYPE_ISA_SUPERIO,
--    .instance_size = sizeof(ISASuperIODevice),
-     .class_init    = fdc37m81x_class_init,
- };
+-    /* Register 64 KB of ISA IO space at 0x1fd00000. */
++    /*
++     * Register 64 KB of ISA IO space at 0x1fd00000.  But without interrupts
++     * (except for the hardcoded serial port interrupt) -device cannot work,
++     * so do not expose the ISA bus to the user.
++     */
+     memory_region_init_alias(isa, NULL, "isa_mmio",
+                              get_system_io(), 0, 0x00010000);
+     memory_region_add_subregion(get_system_memory(), 0x1fd00000, isa);
+diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
+index ab61af209a0..afcfb2b8eca 100644
+--- a/hw/mips/Kconfig
++++ b/hw/mips/Kconfig
+@@ -6,8 +6,7 @@ config MALTA
  
-diff --git a/hw/isa/smc37c669-superio.c b/hw/isa/smc37c669-superio.c
-index 388e2ed9371..d2e58c9a895 100644
---- a/hw/isa/smc37c669-superio.c
-+++ b/hw/isa/smc37c669-superio.c
-@@ -85,7 +85,6 @@ static void smc37c669_class_init(ObjectClass *klass, void *data)
- static const TypeInfo smc37c669_type_info = {
-     .name          = TYPE_SMC37C669_SUPERIO,
-     .parent        = TYPE_ISA_SUPERIO,
--    .instance_size = sizeof(ISASuperIODevice),
-     .class_size    = sizeof(ISASuperIOClass),
-     .class_init    = smc37c669_class_init,
- };
+ config MIPSSIM
+     bool
+-    select ISA_BUS
+-    select SERIAL_ISA
++    select SERIAL
+     select MIPSNET
+ 
+ config JAZZ
 -- 
 2.43.0
 
