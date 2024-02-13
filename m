@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785BAC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84560C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZrjP-0002a6-V4; Tue, 13 Feb 2024 07:17:47 -0500
+	id 1rZrsQ-0005wb-LZ; Tue, 13 Feb 2024 07:27:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZrjL-0002XX-IL
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:17:45 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1rZrsO-0005vR-6U
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:27:04 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZrjJ-0005AE-M8
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:17:43 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso34180815ad.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:17:41 -0800 (PST)
+ id 1rZrsM-00073P-An
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:27:03 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2907a17fa34so3198470a91.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:27:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707826660; x=1708431460;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707827220; x=1708432020;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SXrE7j4odyf4d+oxwoJT1kvPsBQn7TpPvBpLvOWp9Wc=;
- b=NgsXnMzC5VVysQYqINSOblga5Ve6ZoIAhW9mIwTVA3wHGIcgPCuyBa0Oxwm9u8dfbr
- u3XS56Ay+bp79EmcBQslDDJA/MfWIDxlZrF4YpmxZnJvuGdMgSRw0QEN1E3B8xrMcawt
- znq8Mbc2p5/jvubw0QDse27bHlO/du1b/ryT7XbKB4sO2ZEbejsK6RD6UJkIjoXfSp78
- Eccotgcv4zgQe9L7t4SqARFy9OIRegUWirmmst/ONqy+2HzEkr4mt9k4zgsTP9AgzQue
- hfcWCutY4s7N6dkY6Yfc0cB9gfABhdXw30efmp+r5/R+Yvs6SLBg5oGDgjiLO7JgH7Co
- JLkg==
+ bh=CbU2hgNRqQas1DZqBQYeN1tcHMhEa9TA6WKts3aui8Q=;
+ b=cKt4dvJ1oJFM1pup/gDNpUxv4ZFTUw55om8DtMXnYpfi0sXtfgZ5M35Yfqh+YyK3BI
+ 06614WWrb/ppgMBhEz4R9b5T/+OsGS2d29/Hq6i9agSPWNIXzZjMH/U9FgxYw+QbvKkv
+ UOIRek8Ih33kXIjMzwiOurhnnc16aw37sqw01IgsmmwwuhcmL1DSbvLcnRQa6jdIU3YF
+ rtJfvGqKeuYmASwq1017JmMbV75SyqBECAs2pVF9alsqOzpRjcKY7D6H3Aa3TB3nfRUI
+ BhnPqpLGcYES2+GJzpmumYFsVRxc900YjhTpzF3dQJUFKm2s66iCgYiulEfCzxODUTTd
+ PDNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707826660; x=1708431460;
+ d=1e100.net; s=20230601; t=1707827220; x=1708432020;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SXrE7j4odyf4d+oxwoJT1kvPsBQn7TpPvBpLvOWp9Wc=;
- b=Oi+QHHfXr7H9NbwKKLO75NUpwGpP5GGuJsZcLsdb3M/mHLoap24FOWlYAnb4cy5gU8
- CF2HcaTnEf9PKxotUP4Mq2EhCJV6pqrooGYVP5NP275Xi367RPb521iBV0vmxkVhwl12
- PRBpuH+PwzgKHsKYXTxsGv+wY1qF700KGNIN34gNEumiJJlE2U/KhqerrIYkZjXY5qb/
- Ea3BVBIGE3gn5Osyaa93I8sZ9IdBL7sZSkuHMRU5KU3ZEvqV0ULiotoRjCHpPfjE3VeI
- /ErPlN1aiuF1lA2MGr6iNqBAofNtsZpBJbNVcKS8Iy3zO6gQ54mXZ0gEUPRvrl/GhB16
- QNvw==
-X-Gm-Message-State: AOJu0Yy4Urp/jC06UJXEbfC5VeznWmUxyieb6zDZAjg6MErp17YLtywp
- mUDAjV3sB6AIS/PJWDRn2Ez0m7RlzNZjvIQZiJYuRd0eRa0kRVsuWBLRAcrzLKM=
-X-Google-Smtp-Source: AGHT+IFdfL0zCbNK/Tw6qbcVDZWFQTb9MR/Pm9MJmAbI6st+GSOZGPgLtUp0j4cOzJTdthvL5zTo3A==
-X-Received: by 2002:a17:903:24e:b0:1d9:b423:7a9 with SMTP id
- j14-20020a170903024e00b001d9b42307a9mr12077942plh.24.1707826660239; 
- Tue, 13 Feb 2024 04:17:40 -0800 (PST)
+ bh=CbU2hgNRqQas1DZqBQYeN1tcHMhEa9TA6WKts3aui8Q=;
+ b=PQG2soAWcjX0E9zXIFxOWk1znw2uuJwqmcvuxPQrnPtphNTk65S8yI8C1OP5c/tAce
+ a+y6nOAKFCEm+sIX4gHfhjznUSlhELNg92zOWSJYSTom/zBpcREU6IoMR6/oxF/7J31B
+ WukuVk0FOpc1belvLgsOKoalBe1rn5acZtnH55sTlaQVarhPkU+fL71na2+k6LasQEuF
+ 4ILOd7tkKv5IoZ3AE7csBEukBteqWEITktBXfvWPVJ04VII+my9XBAedIehWIYtXEw2l
+ SwHhcf3nOxR5mG+FAzl2S0NUBh7xDySSbvJRNlI4PuMh7IKN87wkvffpMkqSMzQfsJcq
+ 21Aw==
+X-Gm-Message-State: AOJu0Yxz7KpuFTFAhMDiV/lZT5K9UoVgpfsplLDo/f6rVBjWfUZ6Awhf
+ rQQO++oXIy3GSQc2R06zTLDsm0O/bnYvMMrA278TWKViWYLgmazNPQDGIwRbt6c=
+X-Google-Smtp-Source: AGHT+IHy+1hneSCEEMqtK7mRqxtZrX/jRWJS75QwxTuuTZZr0VYUQ1m8/oyA9GVuVm1Cf+g8yguUrw==
+X-Received: by 2002:a17:90a:bc94:b0:298:95b5:6570 with SMTP id
+ x20-20020a17090abc9400b0029895b56570mr2949745pjr.12.1707827220367; 
+ Tue, 13 Feb 2024 04:27:00 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXV1XOoI3m/hcMJLh8QKKyC056jIOOb0Khx7Jr+NUGc4xxpBJ3rF+IEpMWgjSJRmIoZlKsEt9P+j0g1o3c9Z9qx+DQTZ+/d4LvUGXeHKkMlar1O3yznI42TnSxujl3gDbAu+w3MqT52mloJIPixRncYbmv0gEYJZVGon1oL+JS8N1uBeanZJjnPt1q/Ts8/fP48/ltXQPZ9juC03jhIpWeJiIP2Yf83z7T+1YbH75x7xqtQ32z6bfxGzwrnhUv+dDnlPlaGTIZzHImrf3b6VHHicEOLmR916MKo6bQKCJkExBjL5c5quVzLj3+ac6/3DrueIZu/VxqAKL99oK0czNWQMvjdcgkNcCx+iuDiCgVzF75xv4RmN1/LfCFvbzOrgR3gCj1QNjUpgWKpw0J/Rv2ih96H+oTT9RfagA==
+ AJvYcCWHp7GywnPvhXyTsCmux2Ch64Tj9K4p/05r7dZ/g1AH3xx0y3YX2oJIUn16RD3SPnToPdrvqZxnyNmsVtZoQ2WQTS+sLyHCD4m4xcIvd8TnhDqEjm7PsDNdPWKPNaKcWoCxuVU/EL2I6dQSOKfaLA40MrPFYNw7cYuFXLdyRVetsaTQUzCU2Le0hXhFj2ZzYhFHvizWI8R/a/lMDx8cRN2575vgcz4/kQL4GKqGn+TkZd7sEG+sVF4a1GcBwrJqDgxWkkJ+mbMulmnDTRUxJ4YWLMuiwyysSqOHloi5txjjshndo4FCrS4jOE4D1sFLtaXZjJe7JhEy4mGpG417tsQDu/i0LQixt2MklU5CJGrVlPLnQiTyNE3xflP5vLxZc72qyBGDX+NidAMqKeElis2KDsWCg9KAv2+utNkLpkj7uLeGknWo4ZPeiksyNeCGabx5RJL5P3EFErgctHt1GRE=
 Received: from [157.82.207.134] ([157.82.207.134])
  by smtp.gmail.com with ESMTPSA id
- x13-20020a170902ec8d00b001d944bf2d83sm1987555plg.7.2024.02.13.04.17.37
+ md23-20020a17090b23d700b00298c5ee3159sm162213pjb.49.2024.02.13.04.26.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 04:17:39 -0800 (PST)
-Message-ID: <fce960cf-a482-4c09-83d0-0881d4e0fb29@daynix.com>
-Date: Tue, 13 Feb 2024 21:17:36 +0900
+ Tue, 13 Feb 2024 04:27:00 -0800 (PST)
+Message-ID: <d128206e-e8b5-4928-85e6-8062155fbf68@daynix.com>
+Date: Tue, 13 Feb 2024 21:26:56 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 6/7] pcie_sriov: Reuse SR-IOV VF device instances
 Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+To: minwoo.im@samsung.com, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -76,17 +76,20 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
  Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
- <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
- <20240213060116-mutt-send-email-mst@kernel.org>
+ Klaus Jensen <its@irrelevant.dk>,
+ "minwoo.im.dev@gmail.com" <minwoo.im.dev@gmail.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>
+References: <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
+ <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
+ <CGME20240212102210epcas2p4346c0dfc475ecee9f359d634eba46783@epcms2p8>
+ <20240213085108epcms2p86672b5f11b0b4a22244256b85c66721c@epcms2p8>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240213060116-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240213085108epcms2p86672b5f11b0b4a22244256b85c66721c@epcms2p8>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,8 +111,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/13 20:01, Michael S. Tsirkin wrote:
-> On Mon, Feb 12, 2024 at 07:20:34PM +0900, Akihiko Odaki wrote:
+On 2024/02/13 17:51, Minwoo Im wrote:
+>> -----Original Message-----
+>> From: qemu-block-bounces+minwoo.im.dev=gmail.com@nongnu.org <qemu-block-
+>> bounces+minwoo.im.dev=gmail.com@nongnu.org> On Behalf Of Akihiko Odaki
+>> Sent: Monday, February 12, 2024 7:21 PM
+>> To: Philippe Mathieu-Daudé <philmd@linaro.org>; Michael S. Tsirkin
+>> <mst@redhat.com>; Marcel Apfelbaum <marcel.apfelbaum@gmail.com>; Alex
+>> Williamson <alex.williamson@redhat.com>; Cédric Le Goater <clg@redhat.com>;
+>> Paolo Bonzini <pbonzini@redhat.com>; Daniel P. Berrangé <berrange@redhat.com>;
+>> Eduardo Habkost <eduardo@habkost.net>; Sriram Yagnaraman
+>> <sriram.yagnaraman@est.tech>; Jason Wang <jasowang@redhat.com>; Keith Busch
+>> <kbusch@kernel.org>; Klaus Jensen <its@irrelevant.dk>
+>> Cc: qemu-devel@nongnu.org; qemu-block@nongnu.org; Akihiko Odaki
+>> <akihiko.odaki@daynix.com>
+>> Subject: [PATCH v3 6/7] pcie_sriov: Reuse SR-IOV VF device instances
+>>
 >> Disable SR-IOV VF devices by reusing code to power down PCI devices
 >> instead of removing them when the guest requests to disable VFs. This
 >> allows to realize devices and report VF realization errors at PF
@@ -117,15 +134,34 @@ On 2024/02/13 20:01, Michael S. Tsirkin wrote:
 >>
 >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > 
-> It is simpler for sure, but I am worried that all of these
-> unused VFs will consume lots of resources even if never
-> enabled. Thoughts?
+> Hello Akihiko,
+> 
+> I think this patch fixes the issue reported in [1].  The latest master branch
+> also causes an object-related assertion error when we enable VF(s) and disable
+> through sysfs over and over again (at least twice).  But this issue is also
+> fixed with your patch.
+> 
+> **
+> ERROR:../qom/object.c:753:object_finalize: assertion failed: (obj->parent == NULL)
+> Bail out! ERROR:../qom/object.c:753:object_finalize: assertion failed: (obj->parent == NULL)
 
-My rationale behind this change is that the resources should be 
-allocated when the PF is realized to ensure the resources are available 
-when the guest requests to enable VFs.
+I'll note that in the next version.
 
-When it is necessary to allocate resources dynamically, the conventional 
-hotplug mechanism should be used instead since the SR-IOV interface is 
-not designed to report resource allocation errors.
+> 
+> Klaus,
+> 
+> If this patchset is applied, I think [1] can be dropped.  What do you think?
+
+[1] should be kept. This patchset fixes use-after-free but double free 
+[1] fixes still occurs.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Thanks,
+> 
+> [1] https://lore.kernel.org/qemu-devel/20240109022953epcms2p54550dcfc9f831a515206513ae98e7511@epcms2p5/
+> 
+
 
