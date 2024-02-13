@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69AEC4829A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BFCC48260
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 09:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZpHe-0001F6-LO; Tue, 13 Feb 2024 04:40:58 -0500
+	id 1rZpHK-0000wz-1c; Tue, 13 Feb 2024 04:40:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rZpHc-0001Dx-4t
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:56 -0500
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ id 1rZpHI-0000wZ-FU
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:36 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rZpHa-0000Ei-E8
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:55 -0500
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2d0a4e1789cso49138081fa.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 01:40:54 -0800 (PST)
+ id 1rZpHG-0000Cz-Jm
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:36 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d10ad20955so3688701fa.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 01:40:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707817252; x=1708422052; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0LuglNIxMpcc450MgwB+/bbbw1CGJEy0QfnhDLLQmYA=;
- b=Zgbr7kANLtHQLmbyRvRDAG9Rdjsts9y1KFtyQn3hcWl7dMbI33H+lQe5BXqKmkJX6L
- yfYVa/vWe/9DMH8MfQFBPGO0o8rKqADfy2k4P//IOUgKVK17nJ2E4reAdLAUBqzSd4rR
- sGj2ECE8sDLzT/KT3B4sla+MkzEtgYxpl3aY6rffcrVqJjpUZCE2TlXS1lXLD75vk9NJ
- 7sMuPc4Jfd2kZ1rbVrh1r+Bb7wiKeO+uKxcch4PlO61Xx+lt1AlyKEPcGSwEcypkXtzJ
- aPBLG0yDNVG/EhcNJUxFkI6TaEKwhLXu2fC8x693QLgwjfelLwV34k+33+EMO7OvV1oB
- cTKg==
+ d=linaro.org; s=google; t=1707817231; x=1708422031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ExynNq4o+XvjZwIaKCFSMiMrKDyKce0QXhW5+pGWl3w=;
+ b=faI0IbUqiKdP/OiQOWLoYm4uk1i3/StoTg0obFaV9/2MK6al+CGMDreFi1WHQBBIDr
+ PEqG5Lx7hY+DlgNuXnHBB66JwOruSVhe7wyi30JAECvwBH4XxYJfFzXYa58+AyoQovcK
+ JEbRMxI2aOokYn+NT61hFooZVp+1HL43b3aqDGqCqNxJsmEo/WPkbzWXtqB57hl1wH8f
+ iKkY3lFrhmwd8hDdQUAMAbqJw4hQZnuLAOVYKv++2ggqk80cLk8uiStgyNKS+5LBteZE
+ UxjQussJQayuOQfvHmdXt4S+c/JwZ/IDedR0RN4iKJuiM3nWP9dxfVTdSAWP3aGZxtZ8
+ /i8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707817252; x=1708422052;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0LuglNIxMpcc450MgwB+/bbbw1CGJEy0QfnhDLLQmYA=;
- b=emwVzVQO5Hp89wWiWXJ2EZH6rN64eeCZ57yES7LSYY4uzQCzU9Gib4kTFWfH4lE1m8
- hIa+ta8U9yJbxXbCBAoDcRhH6nwkeQTyPxbho+sqsuIoj4TzxhI21lM4+RpArGF/WML4
- N012OReCBTxyS42YabBCNM8pabBwiYGmBYDPH2C6sNjH4KaWDm5UbUxcCdKQFs4I14JG
- mthbUCxkReTqlHtFeTHLH1bd7modENKgV5zgsFkUMiQKuyyx/lJjiwbzR1pQxdqdI45U
- Epvemj+NPPZCkDIgQ0eFDgZ8Q03OaBL8rRLzu8Kc3HOCLfQtxyBPDLH1MBb9aPO8U5bZ
- Vc5Q==
-X-Gm-Message-State: AOJu0Yx+CFycZSCLTBy6Anvc+al0c/MmC3Ck/tfBJC1Gu224tWvbNF22
- Y57Py60nGdQuNic43mPk1Sp9/ZbhHCwDLpq/C4pIB6U0XCfpVEE8CryPqH5wpzr4XkbQa/fvPr4
- a
-X-Google-Smtp-Source: AGHT+IHb5OlReVwsqM9Ce8fBduVqUieJdWw9/dHr3FyzhnSzEjwCRlezlDmvUxRjaceFk0Y6vlysWA==
-X-Received: by 2002:a2e:90c3:0:b0:2d0:8eff:286a with SMTP id
- o3-20020a2e90c3000000b002d08eff286amr5711960ljg.40.1707817252422; 
- Tue, 13 Feb 2024 01:40:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707817231; x=1708422031;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ExynNq4o+XvjZwIaKCFSMiMrKDyKce0QXhW5+pGWl3w=;
+ b=vp6uRVyeGMLDIIZ3q21hG0ch07cPJPd105nSK8xSziFu9qWAT7ItZ4JL8OHbNZpIlN
+ wMbz2qIdppeo+WGlM0sOjdPdVLrzYVQlBN7By8a/ZZxqlpDM15LufljmfM0kPXKRgPHM
+ VJEVWSCh55uTOtvSv995i+p1FxCT3NEV92HbMX7zxEpJQYQyKZhN+HAm1jbqhSZ89/uQ
+ 7oGGA7mtyjZnXr9FETFhgKi/6deu/auZPS82pkfz/+KiIBtB476/VJqaVG66LQyNFRRq
+ 6qMFwnSHROW7nyLmhLYy/2S3qf1vAwDuA12vwnH5dBlfQmifsfqPxwlJjr0Xv1xHX9kX
+ nEdg==
+X-Gm-Message-State: AOJu0Yy5lBPL9t6fvzFzi5A9FNunY11PGOkH8t1aZCfw3lDN9POuES0P
+ r5ZY7egVhQPdoz9212YYbrkXLQl4vZpzGuO1yawqdkt6hLO4qJNfjHgZo3hFaLxV/CQ3o+O+sXY
+ y
+X-Google-Smtp-Source: AGHT+IHwp3wCbCja/Y/pO4+oXx326UYthbEKVfBeaQHWXyiXe+UvekxOYTNv1gOBT1g5YGwRd05/1Q==
+X-Received: by 2002:a2e:8216:0:b0:2d0:cce1:f0a8 with SMTP id
+ w22-20020a2e8216000000b002d0cce1f0a8mr5804845ljg.1.1707817231406; 
+ Tue, 13 Feb 2024 01:40:31 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWn7y5+L/t77jcZLWD5M3etn0ob+uBjo6PBehIQV2hC4Oy5KM5+kRVqQXWcNjHFItGf3iaYhiytsdLipI3y3oRy9awFsf5BH/h7wcCGQcxWzQWZEoRDC1F8NAdKUKPHmP0A4DgKBtaB/7FDYxlphposuHpeOigm5259KuIPgnt6loIIbJImL90/arp9NypanvEDNz0uVtJBopUdwMh2qNqy79g3n/1NSDU/kYvYfPbLdVCI8Obm6PhYEt6XwLSAyGq0wDeFAmDJQtH5lCp5whvm5N/tsKKijdax00FD6iMvJXp838LIu4rDp0uHe+EyeBV31XKB2ihw/3c78bna3oPB1TUmBg==
+ AJvYcCXSpzDmiGjChTqQTx8KFCuTfe4t5W2Xkao9+h8DxvsVKFNSZNozPALMf4sy1LoiZa2kmHxVCJQKIH8kUI8Roo1nMEtMIKjQkio7AbDcI45VBEROs15lvuMBYkGrsoQeQDF2Kfxr6ls1xE6JEmR6cHYYD8LCoYuH0z/pfmGjd5LJ9BU+Ak+F3iwh2iZII0BEzmxVaJh2Saah4DAD8fkgBOn3PT/6gK5UuutF7LangJq+LNrubhKbkJh+a1bZtja7eDqfpZihPf1BACw325E+u1Xan1v6KeZ9rOSOFXyj2MwUDyvz/+qAtBdWmEVbsni1xCCTzmjKBGoAPNGbYtVtpXIH09xO1Q==
 Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- cc19-20020a5d5c13000000b0033b728190c1sm8550261wrb.79.2024.02.13.01.40.49
+ cc19-20020a5d5c13000000b0033b728190c1sm8550261wrb.79.2024.02.13.01.40.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 01:40:52 -0800 (PST)
+ Tue, 13 Feb 2024 01:40:30 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -72,16 +71,15 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 06/18] plugins: define qemu_plugin_u64
-Date: Tue, 13 Feb 2024 13:39:56 +0400
-Message-ID: <20240213094009.150349-7-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 00/18] TCG Plugin inline operation enhancement
+Date: Tue, 13 Feb 2024 13:39:50 +0400
+Message-ID: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
-References: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,156 +102,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Additionally to the scoreboard, we define a qemu_plugin_u64, which is a
-simple struct holding a pointer to a scoreboard, and a given offset.
-This allows to have a scoreboard containing structs, without having to
-bring offset to operate on a specific field.
+This series adds a new thread-safe API to declare inline operation
+inside plugins. As well, it removes the existing non thread-safe API,
+and migrates all existing plugins to use it.
 
-Since most of the plugins are simply collecting a sum of per-cpu values,
-qemu_plugin_u64 directly support this operation as well.
+Tested on Linux (user, system) for i386, x86_64 and aarch64.
 
-All inline operations defined later will use a qemu_plugin_u64 as input.
+To give some context, this a long term series of work around plugins,
+with the goal to be able to do basic operations in a more performant and
+accurate way. This will mean to add more inline operations and
+conditional callbacks.
 
-New functions:
-- qemu_plugin_u64_add
-- qemu_plugin_u64_get
-- qemu_plugin_u64_set
-- qemu_plugin_u64_sum
-New macros:
-- qemu_plugin_scoreboard_u64
-- qemu_plugin_scoreboard_u64_in_struct
+One final target of this work is to implement a plugin that implements
+the icount=auto feature, and allow QEMU to run at a given "frequency"
+based on number of instructions executed, without QEMU needing to keep
+track of this.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/qemu/qemu-plugin.h   | 52 ++++++++++++++++++++++++++++++++++++
- plugins/api.c                | 33 +++++++++++++++++++++++
- plugins/qemu-plugins.symbols |  4 +++
- 3 files changed, 89 insertions(+)
+Another final target is to be able to detect control flow changes in an
+efficient and elegant way, by combining inline operation and conditional
+callbacks.
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 0994935d4a2..a48586ef0c1 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -225,6 +225,17 @@ struct qemu_plugin_insn;
- /** struct qemu_plugin_scoreboard - Opaque handle for a scoreboard */
- struct qemu_plugin_scoreboard;
- 
-+/**
-+ * typedef qemu_plugin_u64 - uint64_t member of an entry in a scoreboard
-+ *
-+ * This field allows to access a specific uint64_t member in one given entry,
-+ * located at a specified offset. Inline operations expect this as entry.
-+ */
-+typedef struct {
-+    struct qemu_plugin_scoreboard *score;
-+    size_t offset;
-+} qemu_plugin_u64;
-+
- /**
-  * enum qemu_plugin_cb_flags - type of callback
-  *
-@@ -785,4 +796,45 @@ QEMU_PLUGIN_API
- void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
-                                   unsigned int vcpu_index);
- 
-+/* Macros to define a qemu_plugin_u64 */
-+#define qemu_plugin_scoreboard_u64(score) \
-+    (qemu_plugin_u64) {score, 0}
-+#define qemu_plugin_scoreboard_u64_in_struct(score, type, member) \
-+    (qemu_plugin_u64) {score, offsetof(type, member)}
-+
-+/**
-+ * qemu_plugin_u64_add() - add a value to a qemu_plugin_u64 for a given vcpu
-+ * @entry: entry to query
-+ * @vcpu_index: entry index
-+ * @added: value to add
-+ */
-+QEMU_PLUGIN_API
-+void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t added);
-+
-+/**
-+ * qemu_plugin_u64_get() - get value of a qemu_plugin_u64 for a given vcpu
-+ * @entry: entry to query
-+ * @vcpu_index: entry index
-+ */
-+QEMU_PLUGIN_API
-+uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry, unsigned int vcpu_index);
-+
-+/**
-+ * qemu_plugin_u64_set() - set value of a qemu_plugin_u64 for a given vcpu
-+ * @entry: entry to query
-+ * @vcpu_index: entry index
-+ * @val: new value
-+ */
-+QEMU_PLUGIN_API
-+void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t val);
-+
-+/**
-+ * qemu_plugin_u64_sum() - return sum of all vcpu entries in a scoreboard
-+ * @entry: entry to sum
-+ */
-+QEMU_PLUGIN_API
-+uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
-+
- #endif /* QEMU_QEMU_PLUGIN_H */
-diff --git a/plugins/api.c b/plugins/api.c
-index 76fbca685f4..15edad6769b 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -541,3 +541,36 @@ void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
-     return base_ptr + vcpu_index * g_array_get_element_size(score->data);
- }
- 
-+static uint64_t *plugin_u64_address(qemu_plugin_u64 entry,
-+                                    unsigned int vcpu_index)
-+{
-+    char *ptr = qemu_plugin_scoreboard_find(entry.score, vcpu_index);
-+    return (uint64_t *)(ptr + entry.offset);
-+}
-+
-+void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t added)
-+{
-+    *plugin_u64_address(entry, vcpu_index) += added;
-+}
-+
-+uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry,
-+                             unsigned int vcpu_index)
-+{
-+    return *plugin_u64_address(entry, vcpu_index);
-+}
-+
-+void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
-+                         uint64_t val)
-+{
-+    *plugin_u64_address(entry, vcpu_index) = val;
-+}
-+
-+uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
-+{
-+    uint64_t total = 0;
-+    for (int i = 0; i < qemu_plugin_num_vcpus(); ++i) {
-+        total += qemu_plugin_u64_get(entry, i);
-+    }
-+    return total;
-+}
-diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
-index 3f93e7d6b13..6204453d0fd 100644
---- a/plugins/qemu-plugins.symbols
-+++ b/plugins/qemu-plugins.symbols
-@@ -44,6 +44,10 @@
-   qemu_plugin_tb_get_insn;
-   qemu_plugin_tb_n_insns;
-   qemu_plugin_tb_vaddr;
-+  qemu_plugin_u64_add;
-+  qemu_plugin_u64_get;
-+  qemu_plugin_u64_set;
-+  qemu_plugin_u64_sum;
-   qemu_plugin_uninstall;
-   qemu_plugin_vcpu_for_each;
- };
+v2
+--
+
+Implement scoreboard API (cpu local storage), so plugins don't have to deal
+with how many cpus are used.
+
+Since plugins have been modified again, I didn't transfer any reviewed-by on
+those commits.
+
+v3
+--
+
+- introduce qemu_plugin_num_vcpus (how many cpus were initialized)
+- fix order of plugin init/idle/resume callbacks
+- scoreboard:
+  - renamed qemu_plugin_u64_t -> qemu_plugin_u64
+  - some functions rename for scoreboard api
+  - qemu_plugin_u64 has only value based function (vs address before)
+- various cleanup thanks to review of previous series
+
+v4
+--
+
+- split scoreboard/qemu_plugin_u64 patches
+- use list instead of hash table to keep track of scoreboards
+- remove immediate in tcg code gen
+
+Based-on: 20240122145610.413836-1-alex.bennee@linaro.org
+
+ Version number: 4
+ Branches:
+          base:  plugin_registers_v3_20240122145610.413836-1-alex.bennee@linaro.org
+          topic: plugin_inline_per_vcpu
+
+Pierrick Bouvier (18):
+  plugins: remove previous n_vcpus functions from API
+  plugins: add qemu_plugin_num_vcpus function
+  plugins: fix order of init/idle/resume callback
+  cpu: call plugin init hook asynchronously
+  plugins: scoreboard API
+  plugins: define qemu_plugin_u64
+  docs/devel: plugins can trigger a tb flush
+  plugins: implement inline operation relative to cpu_index
+  plugins: add inline operation per vcpu
+  tests/plugin: add test plugin for inline operations
+  tests/plugin/mem: migrate to new per_vcpu API
+  tests/plugin/insn: migrate to new per_vcpu API
+  tests/plugin/bb: migrate to new per_vcpu API
+  contrib/plugins/hotblocks: migrate to new per_vcpu API
+  contrib/plugins/howvec: migrate to new per_vcpu API
+  plugins: remove non per_vcpu inline operation from API
+  plugins: cleanup codepath for previous inline operation
+  MAINTAINERS: Add myself as reviewer for TCG Plugins
+
+ MAINTAINERS                     |   1 +
+ docs/devel/multi-thread-tcg.rst |   1 +
+ include/qemu/plugin.h           |   7 ++
+ include/qemu/qemu-plugin.h      | 151 ++++++++++++++++++++------
+ plugins/plugin.h                |  23 ++--
+ accel/tcg/plugin-gen.c          |  69 +++++++++---
+ contrib/plugins/cache.c         |   2 +-
+ contrib/plugins/hotblocks.c     |  50 +++++----
+ contrib/plugins/howvec.c        |  53 ++++++---
+ hw/core/cpu-common.c            |   9 +-
+ plugins/api.c                   | 121 +++++++++++++--------
+ plugins/core.c                  |  94 ++++++++++++++--
+ tests/plugin/bb.c               |  63 +++++------
+ tests/plugin/inline.c           | 186 ++++++++++++++++++++++++++++++++
+ tests/plugin/insn.c             | 106 +++++++++---------
+ tests/plugin/mem.c              |  40 ++++---
+ plugins/qemu-plugins.symbols    |  16 ++-
+ tests/plugin/meson.build        |   2 +-
+ 18 files changed, 737 insertions(+), 257 deletions(-)
+ create mode 100644 tests/plugin/inline.c
+
 -- 
 2.43.0
 
