@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BFCC48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5B0C48BC4
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 09:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZpHK-0000wz-1c; Tue, 13 Feb 2024 04:40:38 -0500
+	id 1rZpHQ-00014m-GM; Tue, 13 Feb 2024 04:40:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rZpHI-0000wZ-FU
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:36 -0500
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ id 1rZpHO-00012E-V1
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:42 -0500
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rZpHG-0000Cz-Jm
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:36 -0500
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2d10ad20955so3688701fa.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 01:40:33 -0800 (PST)
+ id 1rZpHN-0000DO-8t
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:40:42 -0500
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d0e2adfeefso41934911fa.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 01:40:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707817231; x=1708422031; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ExynNq4o+XvjZwIaKCFSMiMrKDyKce0QXhW5+pGWl3w=;
- b=faI0IbUqiKdP/OiQOWLoYm4uk1i3/StoTg0obFaV9/2MK6al+CGMDreFi1WHQBBIDr
- PEqG5Lx7hY+DlgNuXnHBB66JwOruSVhe7wyi30JAECvwBH4XxYJfFzXYa58+AyoQovcK
- JEbRMxI2aOokYn+NT61hFooZVp+1HL43b3aqDGqCqNxJsmEo/WPkbzWXtqB57hl1wH8f
- iKkY3lFrhmwd8hDdQUAMAbqJw4hQZnuLAOVYKv++2ggqk80cLk8uiStgyNKS+5LBteZE
- UxjQussJQayuOQfvHmdXt4S+c/JwZ/IDedR0RN4iKJuiM3nWP9dxfVTdSAWP3aGZxtZ8
- /i8A==
+ d=linaro.org; s=google; t=1707817238; x=1708422038; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tr3Be+F/pb6UoTGk/xigsw32PICcW54rqyyS4zJsi9I=;
+ b=kW7B4rIsdzCg86mF8yIUte+XlsF7qMMO8pte19yPK0dm/dRhqGNUU9NH/9K3e8xo1e
+ 1hHs2+qMxPyAgO269xnBu8VGZUAV+srggyU2TvZZF3bhRsNj034bWkMFuX9n5GFjM8YY
+ P+/eExWYaVnsHKOiR8G8sldXldCbi4iYMPrDhE+tmDb6VyjGVo5svhUzZ0Y0+bK4/0d4
+ MdwfaT9wRZ/RRpsZMG05db9WRkYrsbAX9h/2AS9zoCXGOJAfhCBDdUUiM12nVLPj8CXw
+ 7kNAxC4k0sLhYRlzboBzxp1QTPvxfyNF2WvvqdAdDiglp0rbkAZ3JgVb8klMWkBc2N89
+ cwZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707817231; x=1708422031;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ExynNq4o+XvjZwIaKCFSMiMrKDyKce0QXhW5+pGWl3w=;
- b=vp6uRVyeGMLDIIZ3q21hG0ch07cPJPd105nSK8xSziFu9qWAT7ItZ4JL8OHbNZpIlN
- wMbz2qIdppeo+WGlM0sOjdPdVLrzYVQlBN7By8a/ZZxqlpDM15LufljmfM0kPXKRgPHM
- VJEVWSCh55uTOtvSv995i+p1FxCT3NEV92HbMX7zxEpJQYQyKZhN+HAm1jbqhSZ89/uQ
- 7oGGA7mtyjZnXr9FETFhgKi/6deu/auZPS82pkfz/+KiIBtB476/VJqaVG66LQyNFRRq
- 6qMFwnSHROW7nyLmhLYy/2S3qf1vAwDuA12vwnH5dBlfQmifsfqPxwlJjr0Xv1xHX9kX
- nEdg==
-X-Gm-Message-State: AOJu0Yy5lBPL9t6fvzFzi5A9FNunY11PGOkH8t1aZCfw3lDN9POuES0P
- r5ZY7egVhQPdoz9212YYbrkXLQl4vZpzGuO1yawqdkt6hLO4qJNfjHgZo3hFaLxV/CQ3o+O+sXY
- y
-X-Google-Smtp-Source: AGHT+IHwp3wCbCja/Y/pO4+oXx326UYthbEKVfBeaQHWXyiXe+UvekxOYTNv1gOBT1g5YGwRd05/1Q==
-X-Received: by 2002:a2e:8216:0:b0:2d0:cce1:f0a8 with SMTP id
- w22-20020a2e8216000000b002d0cce1f0a8mr5804845ljg.1.1707817231406; 
- Tue, 13 Feb 2024 01:40:31 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707817238; x=1708422038;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tr3Be+F/pb6UoTGk/xigsw32PICcW54rqyyS4zJsi9I=;
+ b=AsTH0yJdn0JgyhNO1TM8FGS5PqDG5ecVZrLBsKmamvQRW0r8gGKKz2BpFwYdfodOA1
+ hdRBxRFt6NX3IINXpofSS12YVBEfRJtoZuzTlvH1izrzRnMCuhBleyenqb0V4TKwmSaB
+ IupZuVYOe3Ws78p82f2GBHNaduYu1npsV01XiZUvi6NFBb8mQJX6PLVnK0wzun1cZdx8
+ o3m0UQir6u9AGGeHsPl9T/FteCwhArr1vBLkROWlnqkKKvmtCofP4Murgho8nCuWhN6J
+ YvHoMFa9QQWmaoGZOCHWZB8ur6lhOBlQlkiX02qe7zkFM87mwnBCGwwsFcwH6b2iUmKz
+ 5r7w==
+X-Gm-Message-State: AOJu0YzcS9SZfLgnXq1nNd83fjJJf5BxE+0QrJTU62VD95lFWPy2PtGY
+ oXXoUOzjLTV/K8oKe6sC87T2NNvn9Kuehb9+96oEDuy74A4YdzyfwRdu6/JchrnBs4zJ7s7mkdg
+ l
+X-Google-Smtp-Source: AGHT+IHr7DhJaXcnqT88/IhKgqB6pNUDAWyOGiTzYJfuP74AoCb0MjzNw1tBQs0T61tGGFC//VegsA==
+X-Received: by 2002:a2e:b5a7:0:b0:2d0:d40c:e83b with SMTP id
+ f7-20020a2eb5a7000000b002d0d40ce83bmr5510414ljn.30.1707817238531; 
+ Tue, 13 Feb 2024 01:40:38 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSpzDmiGjChTqQTx8KFCuTfe4t5W2Xkao9+h8DxvsVKFNSZNozPALMf4sy1LoiZa2kmHxVCJQKIH8kUI8Roo1nMEtMIKjQkio7AbDcI45VBEROs15lvuMBYkGrsoQeQDF2Kfxr6ls1xE6JEmR6cHYYD8LCoYuH0z/pfmGjd5LJ9BU+Ak+F3iwh2iZII0BEzmxVaJh2Saah4DAD8fkgBOn3PT/6gK5UuutF7LangJq+LNrubhKbkJh+a1bZtja7eDqfpZihPf1BACw325E+u1Xan1v6KeZ9rOSOFXyj2MwUDyvz/+qAtBdWmEVbsni1xCCTzmjKBGoAPNGbYtVtpXIH09xO1Q==
+ AJvYcCVhsbef9t/X5AxL6Tl6B24s9WHqvyksnAG0y0rfdBUUcKOZWPNzPKl9176x5IwDlZJeI/RoRBPgGJI3pwfwF7UxcmuPKtd1ZTfWF2cUFVFRj6uuYJE5gDVAAqbsWW1erjwsa7Tt5pO56JTRHdRInnW/mSAw/OvxkNztNY7X9C8ewwFy68JrVs5iUOsTs90MoqKS1+fUMXw7j9qG0IipPns3ZzcrDd7DxzXDTqKq6nVqXLBTYgRZQ73g9anvmfFrEqXdrsggyRCjJOGx5c4E3aNqMC4GVwC+NKjOPflGPB7yxUJVYCp2J5U07urSLL3k+jQZQq+VXkEaE7O+wGMyE8Dju5DiFA==
 Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- cc19-20020a5d5c13000000b0033b728190c1sm8550261wrb.79.2024.02.13.01.40.28
+ cc19-20020a5d5c13000000b0033b728190c1sm8550261wrb.79.2024.02.13.01.40.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 01:40:30 -0800 (PST)
+ Tue, 13 Feb 2024 01:40:38 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -71,15 +72,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 00/18] TCG Plugin inline operation enhancement
-Date: Tue, 13 Feb 2024 13:39:50 +0400
-Message-ID: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 02/18] plugins: add qemu_plugin_num_vcpus function
+Date: Tue, 13 Feb 2024 13:39:52 +0400
+Message-ID: <20240213094009.150349-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
+References: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,101 +104,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a new thread-safe API to declare inline operation
-inside plugins. As well, it removes the existing non thread-safe API,
-and migrates all existing plugins to use it.
+We now keep track of how many vcpus were started. This way, a plugin can
+easily query number of any vcpus at any point of execution, which
+unifies user and system mode workflows.
 
-Tested on Linux (user, system) for i386, x86_64 and aarch64.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/qemu/qemu-plugin.h   | 3 +++
+ plugins/plugin.h             | 4 ++++
+ plugins/api.c                | 5 +++++
+ plugins/core.c               | 6 ++++++
+ plugins/qemu-plugins.symbols | 1 +
+ 5 files changed, 19 insertions(+)
 
-To give some context, this a long term series of work around plugins,
-with the goal to be able to do basic operations in a more performant and
-accurate way. This will mean to add more inline operations and
-conditional callbacks.
-
-One final target of this work is to implement a plugin that implements
-the icount=auto feature, and allow QEMU to run at a given "frequency"
-based on number of instructions executed, without QEMU needing to keep
-track of this.
-
-Another final target is to be able to detect control flow changes in an
-efficient and elegant way, by combining inline operation and conditional
-callbacks.
-
-v2
---
-
-Implement scoreboard API (cpu local storage), so plugins don't have to deal
-with how many cpus are used.
-
-Since plugins have been modified again, I didn't transfer any reviewed-by on
-those commits.
-
-v3
---
-
-- introduce qemu_plugin_num_vcpus (how many cpus were initialized)
-- fix order of plugin init/idle/resume callbacks
-- scoreboard:
-  - renamed qemu_plugin_u64_t -> qemu_plugin_u64
-  - some functions rename for scoreboard api
-  - qemu_plugin_u64 has only value based function (vs address before)
-- various cleanup thanks to review of previous series
-
-v4
---
-
-- split scoreboard/qemu_plugin_u64 patches
-- use list instead of hash table to keep track of scoreboards
-- remove immediate in tcg code gen
-
-Based-on: 20240122145610.413836-1-alex.bennee@linaro.org
-
- Version number: 4
- Branches:
-          base:  plugin_registers_v3_20240122145610.413836-1-alex.bennee@linaro.org
-          topic: plugin_inline_per_vcpu
-
-Pierrick Bouvier (18):
-  plugins: remove previous n_vcpus functions from API
-  plugins: add qemu_plugin_num_vcpus function
-  plugins: fix order of init/idle/resume callback
-  cpu: call plugin init hook asynchronously
-  plugins: scoreboard API
-  plugins: define qemu_plugin_u64
-  docs/devel: plugins can trigger a tb flush
-  plugins: implement inline operation relative to cpu_index
-  plugins: add inline operation per vcpu
-  tests/plugin: add test plugin for inline operations
-  tests/plugin/mem: migrate to new per_vcpu API
-  tests/plugin/insn: migrate to new per_vcpu API
-  tests/plugin/bb: migrate to new per_vcpu API
-  contrib/plugins/hotblocks: migrate to new per_vcpu API
-  contrib/plugins/howvec: migrate to new per_vcpu API
-  plugins: remove non per_vcpu inline operation from API
-  plugins: cleanup codepath for previous inline operation
-  MAINTAINERS: Add myself as reviewer for TCG Plugins
-
- MAINTAINERS                     |   1 +
- docs/devel/multi-thread-tcg.rst |   1 +
- include/qemu/plugin.h           |   7 ++
- include/qemu/qemu-plugin.h      | 151 ++++++++++++++++++++------
- plugins/plugin.h                |  23 ++--
- accel/tcg/plugin-gen.c          |  69 +++++++++---
- contrib/plugins/cache.c         |   2 +-
- contrib/plugins/hotblocks.c     |  50 +++++----
- contrib/plugins/howvec.c        |  53 ++++++---
- hw/core/cpu-common.c            |   9 +-
- plugins/api.c                   | 121 +++++++++++++--------
- plugins/core.c                  |  94 ++++++++++++++--
- tests/plugin/bb.c               |  63 +++++------
- tests/plugin/inline.c           | 186 ++++++++++++++++++++++++++++++++
- tests/plugin/insn.c             | 106 +++++++++---------
- tests/plugin/mem.c              |  40 ++++---
- plugins/qemu-plugins.symbols    |  16 ++-
- tests/plugin/meson.build        |   2 +-
- 18 files changed, 737 insertions(+), 257 deletions(-)
- create mode 100644 tests/plugin/inline.c
-
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 0e506ee644d..e94ae4d2abb 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -646,6 +646,9 @@ QEMU_PLUGIN_API
+ void qemu_plugin_register_atexit_cb(qemu_plugin_id_t id,
+                                     qemu_plugin_udata_cb_t cb, void *userdata);
+ 
++/* returns how many vcpus were started at this point */
++int qemu_plugin_num_vcpus(void);
++
+ /**
+  * qemu_plugin_outs() - output string via QEMU's logging system
+  * @string: a string
+diff --git a/plugins/plugin.h b/plugins/plugin.h
+index 90f3f324ab6..00b3509f708 100644
+--- a/plugins/plugin.h
++++ b/plugins/plugin.h
+@@ -44,6 +44,8 @@ struct qemu_plugin_state {
+      * the code cache is flushed.
+      */
+     struct qht dyn_cb_arr_ht;
++    /* How many vcpus were started */
++    int num_vcpus;
+ };
+ 
+ 
+@@ -97,4 +99,6 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+ 
+ void exec_inline_op(struct qemu_plugin_dyn_cb *cb);
+ 
++int plugin_num_vcpus(void);
++
+ #endif /* PLUGIN_H */
+diff --git a/plugins/api.c b/plugins/api.c
+index 2aaae4e47f3..dbfc5e83729 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -353,6 +353,11 @@ const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
+ #endif
+ }
+ 
++int qemu_plugin_num_vcpus(void)
++{
++    return plugin_num_vcpus();
++}
++
+ /*
+  * Plugin output
+  */
+diff --git a/plugins/core.c b/plugins/core.c
+index 49588285dd0..9e64820ad02 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -214,6 +214,7 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+     bool success;
+ 
+     qemu_rec_mutex_lock(&plugin.lock);
++    plugin.num_vcpus = MAX(plugin.num_vcpus, cpu->cpu_index + 1);
+     plugin_cpu_update__locked(&cpu->cpu_index, NULL, NULL);
+     success = g_hash_table_insert(plugin.cpu_ht, &cpu->cpu_index,
+                                   &cpu->cpu_index);
+@@ -571,3 +572,8 @@ static void __attribute__((__constructor__)) plugin_init(void)
+              QHT_MODE_AUTO_RESIZE);
+     atexit(qemu_plugin_atexit_cb);
+ }
++
++int plugin_num_vcpus(void)
++{
++    return plugin.num_vcpus;
++}
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index 6088dd3714a..27fe97239be 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -17,6 +17,7 @@
+   qemu_plugin_mem_is_sign_extended;
+   qemu_plugin_mem_is_store;
+   qemu_plugin_mem_size_shift;
++  qemu_plugin_num_vcpus;
+   qemu_plugin_outs;
+   qemu_plugin_path_to_binary;
+   qemu_plugin_read_register;
 -- 
 2.43.0
 
