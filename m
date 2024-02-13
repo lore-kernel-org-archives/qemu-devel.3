@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF148C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6301C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:05:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZqYx-0005UJ-UR; Tue, 13 Feb 2024 06:02:55 -0500
+	id 1rZqaj-00073i-Ty; Tue, 13 Feb 2024 06:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_llindhol@quicinc.com>)
- id 1rZqYs-0005Jg-Lz; Tue, 13 Feb 2024 06:02:50 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqah-000728-E2
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:04:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_llindhol@quicinc.com>)
- id 1rZqYo-0006ij-TW; Tue, 13 Feb 2024 06:02:48 -0500
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 41D6wNbK009875; Tue, 13 Feb 2024 11:02:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=
- qcppdkim1; bh=Qlpo+NljcDbJnqJhBaPGBqPEqBm1fmlkOzWknR9lYrc=; b=l0
- L61AIjVmFv56LV6ZQ4rq0H8ldtM6WcLX/hU8gJHHRn2oX3ixN2socmXZNNw18Jv3
- nq0FpKcrpKZ6re9GnV2P7tv8YSOats/nowAyAIXHCt2bOMVFz7wZbYnFGsoPQb7c
- Dvmx00s0C8bM75Y8i21i4qPm6lbPQ3kZe+AwM8ta6H0UqTdQVT+rLegEEtSz6ArN
- cLTcIi6Ez+ZlC/HxkXJXbD4sAk1hw3GIMoItROKlEwjtTEtmRNfkhhEDYz7NYtkZ
- 5rHcH0tJGdEUW2k7zbmbbVArykP1YOYUcNYlzC3gHmzSrf2vE4kak7nHA/6mUUFG
- T8w3p4qn5ijZ/1jRcWBg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com
- [199.106.103.254])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3w7gse2rm5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Feb 2024 11:02:33 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com
- [10.45.79.139])
- by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41DB2XvA019663
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 13 Feb 2024 11:02:33 GMT
-Received: from [10.111.132.144] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 13 Feb
- 2024 03:02:29 -0800
-Message-ID: <eaab2e45-924f-4d9f-89e5-1c0f300e78f7@quicinc.com>
-Date: Tue, 13 Feb 2024 11:02:25 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] hw/ide/ahci: Move SysBus definitions to
- 'ahci-sysbus.h'
-Content-Language: en-GB
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-CC: Richard Henderson <richard.henderson@linaro.org>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,
- John Snow <jsnow@redhat.com>, <qemu-arm@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, <qemu-block@nongnu.org>, Eduardo Habkost
- <eduardo@habkost.net>, Rob Herring <robh@kernel.org>, Peter Maydell
- <peter.maydell@linaro.org>, Radoslaw Biernacki <rad@semihalf.com>, Marcin
- Juszkiewicz <marcin.juszkiewicz@linaro.org>, Beniamino Galvani
- <b.galvani@gmail.com>, Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqaf-0006xg-JM
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:04:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707822281;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7N91lAjYUSFlOt3VaYvlm2zqLY+7pJrej0nvLjkSvFA=;
+ b=f7m0bVpXSRhR3fovcGMEhSkWJvOqaxk3svCN/OriqFucjLhzkIu1kMAjo9XJ8OexSvMsYs
+ CUC3c5wV74cIGlEyflWGRJhmzVvPdFtxQ0XxdQFBxfVNEHj615wQ5KxOBJ43mI6Cs1zG+o
+ RPvdRIaf/mIs/lcQSlf/u+2SAsDCLMA=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-204-EEPUcMv_MaWGtpPBKnY0zg-1; Tue, 13 Feb 2024 06:04:39 -0500
+X-MC-Unique: EEPUcMv_MaWGtpPBKnY0zg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a2f71c83b7eso65760666b.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 03:04:39 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707822278; x=1708427078;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7N91lAjYUSFlOt3VaYvlm2zqLY+7pJrej0nvLjkSvFA=;
+ b=nJ6hM4IX/dFjx4qWggvHVjH4ymMfcs1lEogcBKhqLCACOJl+HdftrN7/s+jzCa3eU/
+ 9207g9diqhsD8iYj6D1++Y63A9oSM4kawdVAkIsXfX2m024FeilCuDak17CJwIZp0aRw
+ D8gB5arrRJdc2eREd1HWoDAekIgmQh3kP6dVXWiTYfbkyqD14Bxc7KbxRaRA0wZgBXdh
+ J0kHPNEYvUtnQIjmvab2szP2x/MxYqzaB3cMZrHdksi8Zf7BUvQYb5ciwqk+1X7Gyn/y
+ 3dpCp1FFPEla1nM/mtueGmrJ+BPCFscOzgFWRLuu3FE8c6nMk12aXfNn71tVkUI7BYiA
+ PFww==
+X-Gm-Message-State: AOJu0YzyItlOPQz/qp57j73uSL3dF4sVLH+RfqExYWdMvTENp4u8ztIs
+ /ZAJEoeeg4f4Xyp+ykY8ZS4GQtaelmk0jSDMDqqSpV7vF1v4UxrEOtEHe1yue9WsGc+TJMzvcCw
+ tuWHiJ0VurpYReCwul9bbee8VaUAax2VEaZodcezc1SRepCDQs0riHqO3jeDb
+X-Received: by 2002:a17:906:3e1a:b0:a3b:fbf8:94ca with SMTP id
+ k26-20020a1709063e1a00b00a3bfbf894camr6202073eji.62.1707822278188; 
+ Tue, 13 Feb 2024 03:04:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFJY2qMWOKR53KItPR1Dt0mNipMQfTiUsey+qbw91T5L68rF7CgsGiby2/YcrwxaJemcDB2KA==
+X-Received: by 2002:a17:906:3e1a:b0:a3b:fbf8:94ca with SMTP id
+ k26-20020a1709063e1a00b00a3bfbf894camr6202055eji.62.1707822277843; 
+ Tue, 13 Feb 2024 03:04:37 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEY839uy/ih3ICWjt4iu9TPBPeOCERzXX8Wvr4nNAXHn6s/PyCEtqiV63f7L98N8TEZy+bqJ0w5h5tZG3IOz2Di7lGJawIujZjX/aGulCju4D+zJBe3y7Pdsl9j+1YIwjW5rNen42I8Cqs1/0+Gy7wLs0djZtmEfEz9n7LZgip4wIPlFPW13FJK3/GYeXlAQDm7/XBRaM585wOi/bLLMqERXoYlfLCCEE/drvxCbDOn0yfkRMjUlRMYON7cXFaeVHz3tg5TZVyByKliAxcQ0za
+Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
+ hb16-20020a170906b89000b00a3c20ceacf1sm1173049ejb.118.2024.02.13.03.04.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 03:04:37 -0800 (PST)
+Date: Tue, 13 Feb 2024 06:04:26 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ John Snow <jsnow@redhat.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH 0/9] hw/ide/ahci: Housekeeping
+Message-ID: <20240213060343-mutt-send-email-mst@kernel.org>
 References: <20240213081201.78951-1-philmd@linaro.org>
- <20240213081201.78951-10-philmd@linaro.org>
-From: Leif Lindholm <quic_llindhol@quicinc.com>
-In-Reply-To: <20240213081201.78951-10-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-GUID: 7kxB3S0C6Cu4reS6_SaNTY5o4DpTTZv6
-X-Proofpoint-ORIG-GUID: 7kxB3S0C6Cu4reS6_SaNTY5o4DpTTZv6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-13_05,2024-02-12_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- suspectscore=0 adultscore=0 spamscore=0 clxscore=1011 phishscore=0
- malwarescore=0 mlxscore=0 bulkscore=0 mlxlogscore=559 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2401310000 definitions=main-2402130086
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_llindhol@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20240213081201.78951-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,207 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-02-13 08:12, Philippe Mathieu-Daud√© wrote:
-> Keep "hw/ide/ahci.h" AHCI-generic.
+On Tue, Feb 13, 2024 at 09:11:51AM +0100, Philippe Mathieu-DaudÈ wrote:
+> - Split 'ahci.h' as sysbus / pci
+> - Inline ahci_get_num_ports()
+> - Directly use AHCIState::ports instead of SysbusAHCIState::num_ports
+
+
+PC part:
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+
+feel free to merge with rest of patches.
+
+
+> Philippe Mathieu-DaudÈ (9):
+>   hw/i386/q35: Use DEVICE() cast macro with PCIDevice object
+>   hw/ide/ahci: Expose AHCIPCIState structure
+>   hw/ide/ahci: Rename AHCI PCI function as 'pdev'
+>   hw/ide/ahci: Inline ahci_get_num_ports()
+>   hw/ide/ahci: Pass AHCI context to ahci_ide_create_devs()
+>   hw/ide/ahci: Convert AHCIState::ports to unsigned
+>   hw/ide/ahci: Do not pass 'ports' argument to ahci_realize()
+>   hw/ide/ahci: Remove SysbusAHCIState::num_ports field
+>   hw/ide/ahci: Move SysBus definitions to 'ahci-sysbus.h'
 > 
-> Signed-off-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
-> ---
->   include/hw/arm/allwinner-a10.h |  2 +-
->   include/hw/arm/allwinner-r40.h |  2 +-
->   include/hw/arm/xlnx-zynqmp.h   |  2 +-
->   include/hw/ide/ahci-sysbus.h   | 35 ++++++++++++++++++++++++++++++++++
->   include/hw/ide/ahci.h          | 29 +---------------------------
->   hw/arm/highbank.c              |  2 +-
->   hw/arm/sbsa-ref.c              |  1 +
-
-Obviously, if the actual functional change happens, I'd be happy for 
-sbsa-ref to keep building, so for that aspect:
-Reviewed-by: Leif Lindholm <quic_llindhol@quicinc.com>
-
-/
-     Leif
-
->   hw/ide/ahci-allwinner.c        |  3 +--
->   hw/ide/ahci.c                  |  1 +
->   9 files changed, 43 insertions(+), 34 deletions(-)
->   create mode 100644 include/hw/ide/ahci-sysbus.h
+>  hw/ide/ahci_internal.h         | 10 +--------
+>  include/hw/arm/allwinner-a10.h |  2 +-
+>  include/hw/arm/allwinner-r40.h |  2 +-
+>  include/hw/arm/xlnx-zynqmp.h   |  2 +-
+>  include/hw/ide/ahci-pci.h      | 22 ++++++++++++++++++++
+>  include/hw/ide/ahci-sysbus.h   | 35 +++++++++++++++++++++++++++++++
+>  include/hw/ide/ahci.h          | 38 +++-------------------------------
+>  hw/arm/highbank.c              |  2 +-
+>  hw/arm/sbsa-ref.c              |  1 +
+>  hw/i386/pc_q35.c               | 19 ++++++++++-------
+>  hw/ide/ahci-allwinner.c        |  3 +--
+>  hw/ide/ahci.c                  | 29 +++++++++-----------------
+>  hw/ide/ich.c                   |  4 +++-
+>  hw/mips/boston.c               | 14 +++++++------
+>  14 files changed, 99 insertions(+), 84 deletions(-)
+>  create mode 100644 include/hw/ide/ahci-pci.h
+>  create mode 100644 include/hw/ide/ahci-sysbus.h
 > 
-> diff --git a/include/hw/arm/allwinner-a10.h b/include/hw/arm/allwinner-a10.h
-> index 2eb83a17ea..67a9a17b86 100644
-> --- a/include/hw/arm/allwinner-a10.h
-> +++ b/include/hw/arm/allwinner-a10.h
-> @@ -5,7 +5,7 @@
->   #include "hw/intc/allwinner-a10-pic.h"
->   #include "hw/net/allwinner_emac.h"
->   #include "hw/sd/allwinner-sdhost.h"
-> -#include "hw/ide/ahci.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   #include "hw/usb/hcd-ohci.h"
->   #include "hw/usb/hcd-ehci.h"
->   #include "hw/rtc/allwinner-rtc.h"
-> diff --git a/include/hw/arm/allwinner-r40.h b/include/hw/arm/allwinner-r40.h
-> index 66c38e7d90..614e74b7ed 100644
-> --- a/include/hw/arm/allwinner-r40.h
-> +++ b/include/hw/arm/allwinner-r40.h
-> @@ -22,7 +22,7 @@
->   
->   #include "qom/object.h"
->   #include "hw/timer/allwinner-a10-pit.h"
-> -#include "hw/ide/ahci.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   #include "hw/intc/arm_gic.h"
->   #include "hw/sd/allwinner-sdhost.h"
->   #include "hw/misc/allwinner-r40-ccu.h"
-> diff --git a/include/hw/arm/xlnx-zynqmp.h b/include/hw/arm/xlnx-zynqmp.h
-> index 96358d51eb..48f7948092 100644
-> --- a/include/hw/arm/xlnx-zynqmp.h
-> +++ b/include/hw/arm/xlnx-zynqmp.h
-> @@ -22,7 +22,7 @@
->   #include "hw/net/cadence_gem.h"
->   #include "hw/char/cadence_uart.h"
->   #include "hw/net/xlnx-zynqmp-can.h"
-> -#include "hw/ide/ahci.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   #include "hw/sd/sdhci.h"
->   #include "hw/ssi/xilinx_spips.h"
->   #include "hw/dma/xlnx_dpdma.h"
-> diff --git a/include/hw/ide/ahci-sysbus.h b/include/hw/ide/ahci-sysbus.h
-> new file mode 100644
-> index 0000000000..7ed6cad496
-> --- /dev/null
-> +++ b/include/hw/ide/ahci-sysbus.h
-> @@ -0,0 +1,35 @@
-> +/*
-> + * QEMU AHCI Emulation (MMIO-mapped devices)
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef HW_IDE_AHCI_SYSBUS_H
-> +#define HW_IDE_AHCI_SYSBUS_H
-> +
-> +#include "qom/object.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/ide/ahci.h"
-> +
-> +#define TYPE_SYSBUS_AHCI "sysbus-ahci"
-> +OBJECT_DECLARE_SIMPLE_TYPE(SysbusAHCIState, SYSBUS_AHCI)
-> +
-> +struct SysbusAHCIState {
-> +    SysBusDevice parent_obj;
-> +
-> +    AHCIState ahci;
-> +};
-> +
-> +#define TYPE_ALLWINNER_AHCI "allwinner-ahci"
-> +OBJECT_DECLARE_SIMPLE_TYPE(AllwinnerAHCIState, ALLWINNER_AHCI)
-> +
-> +#define ALLWINNER_AHCI_MMIO_OFF  0x80
-> +#define ALLWINNER_AHCI_MMIO_SIZE 0x80
-> +
-> +struct AllwinnerAHCIState {
-> +    SysbusAHCIState parent_obj;
-> +
-> +    MemoryRegion mmio;
-> +    uint32_t regs[ALLWINNER_AHCI_MMIO_SIZE/4];
-> +};
-> +
-> +#endif
-> diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
-> index c0b10c2bb4..ba31e75ff9 100644
-> --- a/include/hw/ide/ahci.h
-> +++ b/include/hw/ide/ahci.h
-> @@ -24,8 +24,7 @@
->   #ifndef HW_IDE_AHCI_H
->   #define HW_IDE_AHCI_H
->   
-> -#include "hw/sysbus.h"
-> -#include "qom/object.h"
-> +#include "exec/memory.h"
->   
->   typedef struct AHCIDevice AHCIDevice;
->   
-> @@ -54,30 +53,4 @@ typedef struct AHCIState {
->   
->   void ahci_ide_create_devs(AHCIState *ahci, DriveInfo **hd);
->   
-> -#define TYPE_SYSBUS_AHCI "sysbus-ahci"
-> -OBJECT_DECLARE_SIMPLE_TYPE(SysbusAHCIState, SYSBUS_AHCI)
-> -
-> -struct SysbusAHCIState {
-> -    /*< private >*/
-> -    SysBusDevice parent_obj;
-> -    /*< public >*/
-> -
-> -    AHCIState ahci;
-> -};
-> -
-> -#define TYPE_ALLWINNER_AHCI "allwinner-ahci"
-> -OBJECT_DECLARE_SIMPLE_TYPE(AllwinnerAHCIState, ALLWINNER_AHCI)
-> -
-> -#define ALLWINNER_AHCI_MMIO_OFF  0x80
-> -#define ALLWINNER_AHCI_MMIO_SIZE 0x80
-> -
-> -struct AllwinnerAHCIState {
-> -    /*< private >*/
-> -    SysbusAHCIState parent_obj;
-> -    /*< public >*/
-> -
-> -    MemoryRegion mmio;
-> -    uint32_t regs[ALLWINNER_AHCI_MMIO_SIZE/4];
-> -};
-> -
->   #endif /* HW_IDE_AHCI_H */
-> diff --git a/hw/arm/highbank.c b/hw/arm/highbank.c
-> index 9fdac1cc81..c71b1a8db3 100644
-> --- a/hw/arm/highbank.c
-> +++ b/hw/arm/highbank.c
-> @@ -30,7 +30,7 @@
->   #include "hw/boards.h"
->   #include "qemu/error-report.h"
->   #include "hw/char/pl011.h"
-> -#include "hw/ide/ahci.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   #include "hw/cpu/a9mpcore.h"
->   #include "hw/cpu/a15mpcore.h"
->   #include "qemu/log.h"
-> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> index f2adf30337..5d3a574664 100644
-> --- a/hw/arm/sbsa-ref.c
-> +++ b/hw/arm/sbsa-ref.c
-> @@ -38,6 +38,7 @@
->   #include "hw/boards.h"
->   #include "hw/ide/internal.h"
->   #include "hw/ide/ahci_internal.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   #include "hw/intc/arm_gicv3_common.h"
->   #include "hw/intc/arm_gicv3_its_common.h"
->   #include "hw/loader.h"
-> diff --git a/hw/ide/ahci-allwinner.c b/hw/ide/ahci-allwinner.c
-> index b173121006..9620de8ce8 100644
-> --- a/hw/ide/ahci-allwinner.c
-> +++ b/hw/ide/ahci-allwinner.c
-> @@ -19,9 +19,8 @@
->   #include "qemu/error-report.h"
->   #include "qemu/module.h"
->   #include "sysemu/dma.h"
-> -#include "hw/ide/internal.h"
->   #include "migration/vmstate.h"
-> -#include "ahci_internal.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   
->   #include "trace.h"
->   
-> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-> index 041cc87c11..54c9685495 100644
-> --- a/hw/ide/ahci.c
-> +++ b/hw/ide/ahci.c
-> @@ -37,6 +37,7 @@
->   #include "hw/ide/internal.h"
->   #include "hw/ide/pci.h"
->   #include "hw/ide/ahci-pci.h"
-> +#include "hw/ide/ahci-sysbus.h"
->   #include "ahci_internal.h"
->   
->   #include "trace.h"
+> -- 
+> 2.41.0
 
 
