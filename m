@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813A4C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE5AC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZv9H-0006LQ-Do; Tue, 13 Feb 2024 10:56:43 -0500
+	id 1rZv9Z-0006Ns-0l; Tue, 13 Feb 2024 10:57:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv9F-0006L2-Kt
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:56:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv9E-0006vR-A7
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:56:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707839799;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SxctDiX8kY4Gz+7Kaz/DqaqM25ke4UsXK6uTYvM+c50=;
- b=D13j5wFBKkJNVZA8WnQySr9QHFLP1p+T/u8EiAk/qk25iCLK4eEdaCxsnS1HXOgXWG6MRN
- uER+QR5HKMTOjQS5ws6FxgJWl2lIzxGRYO1koseNxSQsuaiEJfurY7c4w7h45K7qt/cg5H
- XgYF21blAgI06NrUA6GpU0Imr08M//c=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-287-ciXwR073Ozy3p5hAJ_G4Bg-1; Tue, 13 Feb 2024 10:56:38 -0500
-X-MC-Unique: ciXwR073Ozy3p5hAJ_G4Bg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-560f41972easo2528098a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:56:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZv9X-0006N4-4A
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:56:59 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZv9V-0006z0-Bg
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:56:58 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-410ed9f8621so15334125e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:56:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707839815; x=1708444615; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wg1u4oQEQo0c5GRHn3wONODuz+v0GcV405uV7jCTG2s=;
+ b=GG2zy2Ni8BEMAe1sWA49q8FRYm0M6Y+h+3kHneqZIzpjKRtDj42DHjYcISLGM+59+x
+ J8XNxGdB+J+H18gaZ7JZPb5WQLIQSwV0YZG0doXz7K4x85kZqHUx+vQMbuAxd4CM5NWK
+ GGEBigm+8vjrImWaaY4QogBspyOmB5OnJ9UvyqOdLCAGpkhYrFMVNU6R82sTnuyOeOa6
+ 0dyFMyA9JqMns8pQJPGJs1TkJl2Ety+euOqkd7AGvnnOs18J628j5ORKemnys183N+Mc
+ q9c2RnDd5/IFWaS9bidmWfpIz8Qbxkmg/+AKX/iONSgu/D83ypGOBCa5LnMun0xH9jFd
+ 1YQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707839483; x=1708444283;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SxctDiX8kY4Gz+7Kaz/DqaqM25ke4UsXK6uTYvM+c50=;
- b=Sb20iN9HcgeiW07UH9eZzJU95pRu10yGDwjHjRMrxE2W8ChgjGyKrIZUjvaKzbwkse
- HIEEXYxtPPOOBwBq+P4tj/Egfzi9qZIHWrFsHKFkzIu2sIDqI7wOwWktI49Ett5CPAjc
- G2vQI1bum/rwtGfFRTM6rQN4jMyTv46NgM62e8na6XEzsVco/z4s/TdE+so1db8q2Ik+
- 08OR77nOQtxuFFEJ7hoCS0pXviLMX2aJUc6GdsKqiYyaHvpQj5sV3mtRJxwWID2KPb6n
- 9qxsjJNRiqSxGRrwIEPw2OYWSAZ1YKC1Y/PQbY7tTyHLHUdDVYZEC4nUijnj4dMgONHL
- zaFw==
-X-Gm-Message-State: AOJu0YyClhZIQhpV5MmYoG6oWfAHBcrycsHgp+GbvjotjQi+VZ+pCekU
- IVZwwZqWsx+lAL5b5Ho+rPIrGORyiYu5Hu6m0ZnEe/8+aC4vd7dMs+spyxObBdJMAZRlRq0Fdur
- I6k8HVtI/pAgcRkIxAqKorVnD+k3ZDI8BQh6Kn0SXWjGVImzbWFwJQ8aFQEUP86xz7+0HUCKg6m
- mN/eqJIezeu/2ea6JLXMJbab5i2VnovHaeWK1m
-X-Received: by 2002:aa7:d354:0:b0:55f:e9ce:7406 with SMTP id
- m20-20020aa7d354000000b0055fe9ce7406mr27025edr.29.1707839483302; 
- Tue, 13 Feb 2024 07:51:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGNfeSqJ4mQB1iWytrwj0OJZpF2aiVxE62ck/lsHfpl+ws76SQfKAPs9QZhvLDW8yRUdFrkAA==
-X-Received: by 2002:aa7:d354:0:b0:55f:e9ce:7406 with SMTP id
- m20-20020aa7d354000000b0055fe9ce7406mr27010edr.29.1707839483063; 
- Tue, 13 Feb 2024 07:51:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707839815; x=1708444615;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wg1u4oQEQo0c5GRHn3wONODuz+v0GcV405uV7jCTG2s=;
+ b=N06G36YBmPfVPb4xHY/XTiuU+54LSumMz9fqB66GaELulKqWlaaJSCqQUyaY9M5KHE
+ SS9VeIfArXdcNGs+mc1nqcPr1Ih/ukJ23KZGRVVrBqFOHrPBmQlXiOU1qnAQJN+zhpw3
+ UVeWrEn4mLSzK9nrk4tD1fPb+9r3cArslXtMPP7CMqoTGG5dFDhVS83TIvZiWU9U6Qh6
+ wOfnj05WE+L9HDw3F0IAwwwV+7O46efJ5IXCOaG/s5nSWK5Pe8SlVd6gsMA5s1XAN8iw
+ CUlF++QTq7u9N1zQrZHJkM2M2RROVWVRMHJ31dMXUqWhRk7e4nFjnq28sN8Zn1e99iWF
+ zaKA==
+X-Gm-Message-State: AOJu0YxZjdpkT3Y8susMUOZjzo3ch5p21+3WWjzWfv7ejgc9aUIA5i0z
+ 1oBogrtBNR9WXM+9JVmogRzMqI1OSb80KToogWU23Y3GuA1sAD0EJLB/5H+WhtYNYrtGjWgSsgc
+ W
+X-Google-Smtp-Source: AGHT+IGl/kmhL2TIr2ohlKtwdUizgyos+tVay/Q7P+GcFkFf2X9V/aNno2e0Ey/fYsgxNA8HZrnSEw==
+X-Received: by 2002:a05:600c:4e50:b0:410:48dd:c397 with SMTP id
+ e16-20020a05600c4e5000b0041048ddc397mr34578wmq.40.1707839815459; 
+ Tue, 13 Feb 2024 07:56:55 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQ89IsHKKLtWb2YUm7LzvanFQfgAltiTYtB/NtumYfPZebmrXFAawkf8M3vBE1cdy5g1244AObIsAm7qlbPcmxT1x21vrfAPviyIV2oVCl1rgeMnlm
-Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ AJvYcCVN19mr77VppPCFcgbvgH0KzkHapGBDOEuOj8jG40PLfINw0Ghuvj5rD/DPyVebbjCIXshcCn9y9c9iaSwFe1+OruPIRR6jIUTWS1t9UqlOUGrHUobkS/aojm9eVrhT9ZfOmaQOiqE8RXv4oNyLOyjWC8InXV/o/QbGDk6d2cRwYrpbJrKVZneBzU68XWaTtuJhilaJiw==
+Received: from [192.168.69.100] ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- dk21-20020a0564021d9500b0055c85e6d75dsm3858934edb.87.2024.02.13.07.51.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 07:51:16 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	shentey@gmail.com,
-	balaton@eik.bme.hu
-Subject: [PATCH v3 8/9] mips/loongson3_virt: do not require CONFIG_USB
-Date: Tue, 13 Feb 2024 16:50:03 +0100
-Message-ID: <20240213155005.109954-9-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240213155005.109954-1-pbonzini@redhat.com>
-References: <20240213155005.109954-1-pbonzini@redhat.com>
+ dd18-20020a0560001e9200b0033b3d28ef1fsm9835141wrb.65.2024.02.13.07.56.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 07:56:54 -0800 (PST)
+Message-ID: <4f7d9677-ea56-42a3-baee-5cf017f5d212@linaro.org>
+Date: Tue, 13 Feb 2024 16:56:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] tests/qtest: Reorganize common code in ivshmem-test
+Content-Language: en-US
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+Cc: thuth@redhat.com
+References: <20231127052024.435743-1-gustavo.romero@linaro.org>
+ <20231127052024.435743-3-gustavo.romero@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20231127052024.435743-3-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,35 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Once the Kconfig for hw/mips is cleaned up, it will be possible to build a
-binary that does not include any USB host controller and therefore that
-does not include the code guarded by CONFIG_USB.  While the simpler
-creation functions such as usb_create_simple can be inlined, this is not
-true of usb_bus_find().  Remove it, replacing it with a search of the
-single USB bus created by loongson3_virt_devices_init().
+On 27/11/23 06:20, Gustavo Romero wrote:
+> This commit reorganizes the ivshmem-test qtest by moving common structs,
+> functions, and code that can be utilized by other ivshmem qtests into
+> two new files: ivshmem-utils.h and ivshmem-utils.c.
+> 
+> Enum Reg, struct ServerThread, and mktempshm() have been relocated to
+> these new files. Two new functions have been introduced to handle the
+> ivshmem server start/stop: test_ivshmem_server_{start,stop}.
+> 
+> To accommodate the new way for starting/stopping the ivshmem server,
+> struct ServerThread now includes two new members: 'server', previously
+> present but not a member of any struct; and 'status', a new member of a
+> new type, ServerStartStatus, used to track and handle service
+> termination properly.
+> 
+> Additionally, a new function, mktempsocket(), has been added to help
+> create a unix socket filename, similar to what mktempshm() does for the
+> creation of a shm file.
+> 
+> Finally, the ivshmem-test qtest has been adapted to use the new ivhsmem
+> utils. Adjustments in that sense have also been made to meson.build;
+> also 'rt' have been removed as a lib dependency for ivhsmem-test.c.
+> 
+> Two lines unrelated to these changes have had their line indentation
+> also fixed in meson.build.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   tests/qtest/ivshmem-test.c  | 113 ++------------------------
+>   tests/qtest/ivshmem-utils.c | 155 ++++++++++++++++++++++++++++++++++++
+>   tests/qtest/ivshmem-utils.h |  56 +++++++++++++
+>   tests/qtest/meson.build     |   6 +-
+>   4 files changed, 221 insertions(+), 109 deletions(-)
+>   create mode 100644 tests/qtest/ivshmem-utils.c
+>   create mode 100644 tests/qtest/ivshmem-utils.h
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/mips/loongson3_virt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index caedde2df00..bedd3d496bd 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -447,8 +447,9 @@ static inline void loongson3_virt_devices_init(MachineState *machine,
- 
-     if (defaults_enabled() && object_class_by_name("pci-ohci")) {
-         pci_create_simple(pci_bus, -1, "pci-ohci");
--        usb_create_simple(usb_bus_find(-1), "usb-kbd");
--        usb_create_simple(usb_bus_find(-1), "usb-tablet");
-+        Object *usb_bus = object_resolve_path_type("", TYPE_USB_BUS, NULL);
-+        usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
-+        usb_create_simple(USB_BUS(usb_bus), "usb-tablet");
-     }
- 
-     pci_init_nic_devices(pci_bus, mc->default_nic);
--- 
-2.43.0
-
+LGTM!
 
