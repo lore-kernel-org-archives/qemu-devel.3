@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE32C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD3DC4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZyzK-0002pD-U7; Tue, 13 Feb 2024 15:02:45 -0500
+	id 1rZz0F-0003xT-FX; Tue, 13 Feb 2024 15:03:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyy1-0001em-Am
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:01:30 -0500
+ id 1rZyyt-0002XF-OS
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:02:18 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyxx-0001sI-OE
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:01:19 -0500
+ id 1rZyys-00023K-4S
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:02:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=NPacf57cv+s+u41vQHu7kQi06cdjYXiQrL26bSu/Qfs=; b=K9ja7ZNs5XyTu0vHpEj1Kq99Ki
- fTGTVOzCekqHvbhEb8/qi3amU9FzC0gaPjR02e2SjGvxeVGbKg46CKx1E3XJsZWY9FVgG0ypWp0yh
- 0OWIeKSW/YFznA3qmYte2SyKTJRR2lBP/ACZa7tVB2go3i7+cjL2lx1STtSRelGUhDhD9EhycvsOS
- uWpLpc28Cft0DkKQPtTzOQPEAsgkJLv6JjuXwfFNIf1MG8LnPC+LRHIIDCcW3dWBlZ2PFxqToVYiB
- oRfbaDZRke8OKe1tQcAfTJJGemftTfBB/5OYtZZzGXfqAhfO1Z++8YwdNcr7tcLzGBJ9EdfsTiNCY
- pU8095ieJgY78y2pWiSewCyjDRysVLSfCi7O6Cr0Pkz3ym38TRIKOL+BKjtFv96ZPlLUd8oeReSgq
- K2q1+KZZoUfBeNXsEhRcvQxZ4L3XEnQM0elHrtqhDye8b7zir9OIlJ9TjLMg8leHeiwuNICzacovP
- blQH3wiIzhAsGKrxHyZkyJkQM9tgMbXv5N/c19yaGArNLyTp72QY9rSDum6haFKGnwhRR4MnklRVI
- 159fraE1UuR1U6sv4HRSGKP6QQvfAm3wpQ4iyybWyNudBQ4f6+aoSJW2l8Gx6+pjOYs8lGKv9XLpX
- yROX+3RiOomPyg8cduYhrwNawklObgHDa8ofxqMio=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=z8el69Zp6Nc98KrJ5/G461ogfL7GkfD2+gn9nmhlztg=; b=ZBIE8CCt8chDinu5JfusXy3sSh
+ AvCoA+iEw0D4Xp+/DfOf4VOpcb6U2LyVaYXd55naB0i8UdpVHP4bihGfOkYPQGX/D6GfXNUQH8Mxd
+ MCB8MJND2BzGl+wJ70JwoQc1bBfw2eOHYWpQvQ2Kbq4ynbyurVF5h5pUYau/YsFMnqTxGHkGrH7u7
+ pJacq2oax6c6hngMD8JT+mgBg5eHUNHml+JVR+ikx50knn89hb1k7xP3XRRSe+0Wo9Sjt9FNl/gJR
+ D/Jq9gfk6PI7A8VI4tDWSb+QS2h/R58Mek6EYLI6cHhQw8OA5rLmPulN5fFj0AhtcT9fhZCm6uF/3
+ awCiOZBh1dBf4rHw9+Wzya+v0ObfFWzPPgemLfXKHQLMvscfqzbwU7FLxHOR+GaQcxs1T5piyu9m5
+ S+HnhHC706nV++ISvc/KIXRJ4Gipgd0sXVESPJzAU88pybTNS8KFmqKSPb9ovSq3f9n4mtRVbjH/O
+ UEX3u/aAwZRwNXaauGxNuhZMURY66quAF+5vpBGrGir1LZssNaJA2CUGlqsMkYcS90d4YnbPh789q
+ 7hjLFSXLpDybV6cGBJonRpOr4Jmj0WmlvvTbrG2ymflBl5wNyHAw3hbaxNsvxHJp+mkrbAKw48LbR
+ 4ZpcPcxUpigXN/YFZ9+XNU+pDXwZ/gm/6kzlnq9ZY=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyi7-0008m4-2Q; Tue, 13 Feb 2024 19:44:59 +0000
+ id 1rZyhi-0008m4-6A; Tue, 13 Feb 2024 19:44:34 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:40:51 +0000
-Message-Id: <20240213194052.1162753-88-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Feb 2024 19:40:41 +0000
+Message-Id: <20240213194052.1162753-78-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 87/88] esp.c: switch TypeInfo registration to use
- DEFINE_TYPES() macro
+Subject: [PULL 77/88] esp.c: only transfer non-DMA MESSAGE OUT phase data for
+ specific commands
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -81,75 +80,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The use of the DEFINE_TYPES() macro will soon be recommended over the use of
-calling type_init() directly.
+The contents of the FIFO should only be copied to cmdfifo for ESP commands that
+are sending data to the SCSI bus, which are the SEL_* commands and the TI
+command. Otherwise any incoming data should be held in the FIFO as normal.
+
+This fixes booting of NetBSD m68k under the Q800 machine once again.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Tested-by: Helge Deller <deller@gmx.de>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240112125420.514425-88-mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240112125420.514425-78-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 39 +++++++++++++++++----------------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+ hw/scsi/esp.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 04615d8b5f..b8762d5ee0 100644
+index 17e2db442c..d63039af89 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -1549,14 +1549,6 @@ static void sysbus_esp_class_init(ObjectClass *klass, void *data)
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
- }
+@@ -712,14 +712,13 @@ static void esp_do_nodma(ESPState *s)
  
--static const TypeInfo sysbus_esp_info = {
--    .name          = TYPE_SYSBUS_ESP,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_init = sysbus_esp_init,
--    .instance_size = sizeof(SysBusESPState),
--    .class_init    = sysbus_esp_class_init,
--};
+     switch (esp_get_phase(s)) {
+     case STAT_MO:
+-        /* Copy FIFO into cmdfifo */
+-        n = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
+-        n = MIN(fifo8_num_free(&s->cmdfifo), n);
+-        fifo8_push_all(&s->cmdfifo, buf, n);
+-        s->cmdfifo_cdb_offset += n;
 -
- static void esp_finalize(Object *obj)
- {
-     ESPState *s = ESP(obj);
-@@ -1582,19 +1574,22 @@ static void esp_class_init(ObjectClass *klass, void *data)
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
- }
+         switch (s->rregs[ESP_CMD]) {
+         case CMD_SELATN:
++            /* Copy FIFO into cmdfifo */
++            n = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
++            n = MIN(fifo8_num_free(&s->cmdfifo), n);
++            fifo8_push_all(&s->cmdfifo, buf, n);
++
+             if (fifo8_num_used(&s->cmdfifo) >= 1) {
+                 /* First byte received, switch to command phase */
+                 esp_set_phase(s, STAT_CD);
+@@ -734,6 +733,11 @@ static void esp_do_nodma(ESPState *s)
+             break;
  
--static const TypeInfo esp_info = {
--    .name = TYPE_ESP,
--    .parent = TYPE_DEVICE,
--    .instance_init = esp_init,
--    .instance_finalize = esp_finalize,
--    .instance_size = sizeof(ESPState),
--    .class_init = esp_class_init,
-+static const TypeInfo esp_info_types[] = {
-+    {
-+        .name          = TYPE_SYSBUS_ESP,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_init = sysbus_esp_init,
-+        .instance_size = sizeof(SysBusESPState),
-+        .class_init    = sysbus_esp_class_init,
-+    },
-+    {
-+        .name = TYPE_ESP,
-+        .parent = TYPE_DEVICE,
-+        .instance_init = esp_init,
-+        .instance_finalize = esp_finalize,
-+        .instance_size = sizeof(ESPState),
-+        .class_init = esp_class_init,
-+    },
- };
+         case CMD_SELATNS:
++            /* Copy one byte from FIFO into cmdfifo */
++            n = esp_fifo_pop_buf(&s->fifo, buf, 1);
++            n = MIN(fifo8_num_free(&s->cmdfifo), n);
++            fifo8_push_all(&s->cmdfifo, buf, n);
++
+             if (fifo8_num_used(&s->cmdfifo) >= 1) {
+                 /* First byte received, stop in message out phase */
+                 s->rregs[ESP_RSEQ] = SEQ_MO;
+@@ -746,6 +750,11 @@ static void esp_do_nodma(ESPState *s)
+             break;
  
--static void esp_register_types(void)
--{
--    type_register_static(&sysbus_esp_info);
--    type_register_static(&esp_info);
--}
--
--type_init(esp_register_types)
-+DEFINE_TYPES(esp_info_types)
+         case CMD_TI:
++            /* Copy FIFO into cmdfifo */
++            n = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
++            n = MIN(fifo8_num_free(&s->cmdfifo), n);
++            fifo8_push_all(&s->cmdfifo, buf, n);
++
+             /* ATN remains asserted until FIFO empty */
+             s->cmdfifo_cdb_offset = fifo8_num_used(&s->cmdfifo);
+             esp_set_phase(s, STAT_CD);
 -- 
 2.39.2
 
