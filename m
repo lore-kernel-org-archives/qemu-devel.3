@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A211AC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 16:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 837D6C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 16:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZvum-0002G4-Aj; Tue, 13 Feb 2024 11:45:48 -0500
+	id 1rZvxr-0003Vb-D9; Tue, 13 Feb 2024 11:48:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZvuU-0002Fe-1A
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:45:30 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1rZvxq-0003TM-3j
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:48:58 -0500
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZvuS-0007xS-FY
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:45:29 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5cf2d73a183so3739188a12.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:45:27 -0800 (PST)
+ id 1rZvxo-00005N-P9
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:48:57 -0500
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-599fc25071bso3041061eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:48:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707842726; x=1708447526; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707842935; x=1708447735; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UQaVpM5FQtoOL28pduYAu14hUalCH0DhN6OR4enHrIU=;
- b=pL/fiVtVQp2hYGEZXUNiqKxm9tiZR+4PRQ1neQyh9VYEDtRB35y1FwWJZML8/iLz7d
- izkRNE/jlBz1E+SOqc6nEyY5ok/5gsMBMkbtSn2AnK/b4TYITIaaCAGY9nTgoE8PsQ45
- VQgEaNB1LKSIAcbDDGNaFYZZblNsDzTOPSEoLE0ZJoKDqG3SuVBZZ4HULu3b9EOGgnuq
- csSuCXVeOvv1IjuhGr/rrFO/txBJFC+ZcXOwBPtSzAADvej2RDYGY5dgAarBKlBarYel
- 4NkrbloOgYf58spqcAL1E4cTI33UVIQ0khPR37RYFB92/Zbc/ETXJhmL2JUefAvewbXe
- NZYQ==
+ bh=6ohvMHU/Sl5pqIXnzoEO+FU1rG/Hw4PAlMO/4r6M8/g=;
+ b=lGsQ9kpvl18lwu+qiJS/3Immr2zFyms+ik4jhAcJnKqjlbz7hBvcReLCm977kXQj28
+ anMdMn5p6t2yraVKbNErhpuRifwIP/64YFA+9gr3+rbMnR+QvymmJTXpQNOTR562cW81
+ JqoFm5haCBW1oiRfNs8wLm2HK+U/HkA5D1rX3lFDPFTO+9wZW/B48MxG+9lSbZwJhW1J
+ VcxNUrhEZG0JvpTkjWxpjFXrTfbKVsrYpXEL4jKkxKKCC8AZ4cgVmEyVEFE5VAqUej/y
+ rpghByby/jlG++XzGATv1RmOBr4whYPsqMT/yqfgIkC/EJtml2qCFTOz8fg16g3jZOyY
+ Ul5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707842726; x=1708447526;
+ d=1e100.net; s=20230601; t=1707842935; x=1708447735;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UQaVpM5FQtoOL28pduYAu14hUalCH0DhN6OR4enHrIU=;
- b=cxqMc5K8ZOBTLnV2xFNqz+ie42wjFzcACN31lvhsEPzENtAAxzNFo83I2RdCFSl1L2
- RujNVWRRdFZtH7iRwlbMq6sDxqnkZpZAk71oo177NrR++Jz1HX7p3BuMa+FN//BbBfEC
- /buijrAjl00/I9CqDUbPmllmtVGqq1760+lYPrClssquLv5vmLxWtSAk5+XlwsvZ6jFe
- csi3Fc/Bwci/VdrXnQwuYtpTIMwyr2dNlBim8F8uP2cSoqzyh1WQ9/PbvBl77tvKiKeU
- o5ZDKQaG4Q6i/J7dXM7TUh3933hDUKjZYEnahWgoCyW7sOOsZSH+8QAlH8wgHsIpU9yP
- Ho5A==
+ bh=6ohvMHU/Sl5pqIXnzoEO+FU1rG/Hw4PAlMO/4r6M8/g=;
+ b=M+idtbWVBSRhORH5+0GuQEEu+0jmNbyyvsoptfsIwX/k3Lc93s7a8ut5fwG/xLFulC
+ 8PSUCs04fUNrzURPz2I/GupBsVlb/ZIefRf1PBnbW+/zK7UyYhR/GohUFWL8QYERMxFr
+ 5PRD6RVa7ZQ9KmDPZzd4QKukqibwb3aNXRCDUFo/hMazlQR++CoQfcIE4NndqvMjqKYZ
+ zs8Z61uXxHcuwnGP1kUQy/i1hidNv4KvWxg5nr32XxJyhx9pT6/R6hmLD1N5TsPswfJp
+ OPM+2vg8Z8vJfVPOAxz3Cqb4mHY5b7O45wXAHvIDRlnZO5SQVkFE0mfkC9mqovct9Jr0
+ cv5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUV0jREB4KwZbqeZ5I118V4e4Y1XC2B75OBF6uDpY2EhHJDwPQ8v+F7n0tCvbz3UTrq1XCk9X5N2zl3Ih4AR8heeFxUsvg=
-X-Gm-Message-State: AOJu0Ywg1/nwzZUbPwLBitn9GKC7wvshDtarLw99/PUWnq5FV72koW2l
- VEYT7I8wK3dpEk7KVTTtYy0Ty84BDr1GULqQgLLRcPbjv/RRsUqEagiIQx6EL+0=
-X-Google-Smtp-Source: AGHT+IGExxc0d/7HtaFizunIrH+Xz0AqMeQvj/BoJweZkLqAycy+aA+XAscYl6M7jecbwcwEMtNV9A==
-X-Received: by 2002:a17:90b:1190:b0:296:a76a:9711 with SMTP id
- gk16-20020a17090b119000b00296a76a9711mr15661pjb.12.1707842726352; 
- Tue, 13 Feb 2024 08:45:26 -0800 (PST)
+ AJvYcCX2HxyCFeZ2cR3jRIqkYiohGBp1g8/+Cj8KAriKsveQwA5ovtrpa01ulL1GaBUaEc3Xb+FoMi9KYx53hXAAaN/fareJjHA=
+X-Gm-Message-State: AOJu0Yz1rfApISlrbTXq/oBAE/nJSFGtT2Y9KZFzlhZSs7trJdSO40z7
+ X39rH6jupOExKarcqN7P8kuuz5dxx8geJjazMEUVHWyjYwEQy50P3xrGhbmOzP0=
+X-Google-Smtp-Source: AGHT+IHjpSY9+gMtEyHj/RpBBHdbyJHGNFI4Ng6Lwy+VcPpTyWYuau13e5sAipklyWev9ie4+6R8Yg==
+X-Received: by 2002:a05:6358:724f:b0:178:a555:c312 with SMTP id
+ i15-20020a056358724f00b00178a555c312mr11082112rwa.32.1707842935230; 
+ Tue, 13 Feb 2024 08:48:55 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2lUJtDjOdecCwNG6V9XdcR7Szg40JFnhYe9AMShnv+7i6OIWfP7p4ca60ebAavWfZlFooee0VXXtITJLdCjEiBASxT8U=
+ AJvYcCV2lCnVWpz0EeA8vuJ6RD86bpJmW4vn+lceL7sHKZrMvylBi2WwHiM9dk6gvEtf8i+2g1r+quwgAhzNtEvZBTGAuxd43Fs=
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- ep23-20020a17090ae65700b00298a1d613c4sm1832683pjb.27.2024.02.13.08.45.25
+ k1-20020a628401000000b006dfff453f8esm8010823pfd.75.2024.02.13.08.48.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 08:45:26 -0800 (PST)
-Message-ID: <c9c43380-04fa-4c56-8422-2e5890917c97@linaro.org>
-Date: Tue, 13 Feb 2024 06:45:24 -1000
+ Tue, 13 Feb 2024 08:48:54 -0800 (PST)
+Message-ID: <5fb4676a-88b2-4beb-8fc7-704901194543@linaro.org>
+Date: Tue, 13 Feb 2024 06:48:52 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] hw/ide/ahci: Convert AHCIState::ports to unsigned
+Subject: Re: [PATCH 7/9] hw/ide/ahci: Do not pass 'ports' argument to
+ ahci_realize()
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240213081201.78951-1-philmd@linaro.org>
- <20240213081201.78951-7-philmd@linaro.org>
+ <20240213081201.78951-8-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240213081201.78951-7-philmd@linaro.org>
+In-Reply-To: <20240213081201.78951-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,16 +102,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/12/24 22:11, Philippe Mathieu-Daudé wrote:
-> AHCIState::ports should be unsigned. Besides, we never
-> check it for negative value. It is unlikely it was ever
-> used with more than INT32_MAX ports, so it is safe to
-> convert it to unsigned.
+> Explicitly set AHCIState::ports before calling ahci_realize().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/hw/ide/ahci.h | 2 +-
->   hw/ide/ahci.c         | 4 ++--
->   2 files changed, 3 insertions(+), 3 deletions(-)
+>   hw/ide/ahci_internal.h | 2 +-
+>   hw/ide/ahci.c          | 9 +++++----
+>   hw/ide/ich.c           | 3 ++-
+>   3 files changed, 8 insertions(+), 6 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
