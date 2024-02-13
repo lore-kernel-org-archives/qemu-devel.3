@@ -4,82 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC0EC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9DCC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZzGL-00047x-ES; Tue, 13 Feb 2024 15:20:17 -0500
+	id 1rZzXB-0002or-0M; Tue, 13 Feb 2024 15:37:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rZzGH-00047R-2B; Tue, 13 Feb 2024 15:20:13 -0500
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1rZzGF-0005Vh-84; Tue, 13 Feb 2024 15:20:12 -0500
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-59d84559ffdso273879eaf.0; 
- Tue, 13 Feb 2024 12:20:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707855607; x=1708460407; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DmZZ7Ga7FpA3A3bT/QFQlV8L52+rSQb99NGQB5QTtTc=;
- b=bsL73EUPSs4Equ/rJFPQEYy8gl2K3z7Xlm1b4QKmhqH3TqMu8n9Gm7einrpHM3TMgh
- nokr0x21OZk76k0vb4Etvurx1Y0FBiP1OisF0lSK3MKIgZ0Y6EQ6mFeemAqFMyeYRmF8
- gt+AdtT5QZ3T3yGq9K23RfTSAx4ipj+QOsojNUTXHaZQRBfuTxoKBdyKWC8rGUBEqGXk
- NNnJfp8GSdxBT3YVtIaKjTjTjUeDoPgMQ8mELAZOyglFKqruekKi5We+dut7tndH9aIl
- OzxGDIFfd/mbZJbndQqES8PqrZNNjGIJ21LTFFhmgjeSs7v9tOa6HnvcWA+LZJQ5eche
- +rYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707855607; x=1708460407;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DmZZ7Ga7FpA3A3bT/QFQlV8L52+rSQb99NGQB5QTtTc=;
- b=ncC5hITikVgXzC6wPRjqzA32GZLXUhA21s+wOjUsoUfcTHu3MzcgnUL+G6kwCJ//oh
- wsCFGTS6zrm6BkEnp91PSeHOKNscdpJeFT8ksNOU41yhdmaC/8jXU6TtjuLd1i35jkXA
- jRRsvzsTeAsUH3ZUvxglOidFKXLUlv6sUKnwDun14/5PfVSxfW39axurLsMOneBLM74k
- vJbEmwvukaN7z+G/O/6QsHeMv1eQJm19MGulyp14pz9zksjg0pAz45VOx4BRd9gfdJdH
- UGdTIq6mmBpZNGDfdJpSGfNdVjb1dwIezCpQSBCn+9r2XCM7pUk1CH0rYo8VHa/YaUpd
- gVHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgW7cQ2gxNiJAnm+vcD7RvSyYTzw9r0rNXOrT9jJovToQbsdJLIaMRvl0tNhk8p1FL3gIsryPr3WQB0kXCJ4UBtUKm7MoW6cDT4QxWTMOA2ip3nxGqgIO5vwYt/A==
-X-Gm-Message-State: AOJu0YxPlLjLXIVMM7xmV+MnWqWA2GazhCB+XkJcAAHUVs7ch/6ONXXl
- nryF7KyyC57REzx4hjjHaw4OEVfVTPxHra7+j7nZ8j3D25LUSe5xZKOnudSzfjfr582bD37CiZM
- IpQ3Uns02SarN5o+TNoj0gDUNQac=
-X-Google-Smtp-Source: AGHT+IFH4/8pj+3z6F+yUsbBf4RKv0Q71bJHeMbXYlGJvjHTkKXwGLmZT/leNILw0nZOSbJEVMho+o7wPis1DPB8Al4=
-X-Received: by 2002:a05:6820:5c:b0:59c:b57a:5746 with SMTP id
- v28-20020a056820005c00b0059cb57a5746mr939966oob.4.1707855607674; Tue, 13 Feb
- 2024 12:20:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rZzXA-0002oQ-0S; Tue, 13 Feb 2024 15:37:40 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rZzX7-0000Gi-A6; Tue, 13 Feb 2024 15:37:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=VWgNZZV5747UVPixH+kIDMzLzwXhz+mNLpeXEeCXAyA=; b=C0gsGu08BLlKyVXa3U7oXapcXG
+ xOYYrEyupzTQPqADd/xE+t7Niy+XmR6SsWpPo+gMW1Q9NdJmraZ3cKh0S+NnQ67epc6hWs0/AXBiu
+ TZyo2vOk3dxhzK16i1NwfAnWj0bA+WVUqupBPO31pyZHexBEnqX6n9Hhv5lfrUkZa6+2E1cwwioif
+ X/lErIH7THQ7nYYVpDG3EwfGO9aMLynEjdnzqbBTBJLQP9SvJNxHQ3QEMX9Bsk8UMN/HNCcA8qkQ1
+ BZSNPTrtmGrubnhD7UC1TeR4AYfp7vCDqUwkyuK56+g7M/6+GSr/aMDef2SnThP6+Tur+feaB6O8J
+ BIX0q65iwa+cM40aPjnLeFSArd8YewzA/aMmT9LyF7FeQ648qxdWuJtGjzm2NVu1k3cl2TBXiFO9K
+ DVvSmP7Y/UQXcgiEQQw7mPoxZ/aU+HtpNViDdmlc/a0nLkPH30Sut2UlqvLT3sF6pb2vPdJ3/+uQW
+ 45xM+wWoiq+YuaEbBrd87sUXa0bpHITx6rwjOcQxbX94F/dI2Uy9RjVtb4oZvFQSoR+6qsD1IzAXn
+ K3qr9FlpGdeR76SxS+jScs4P60i/wVAdkKDcQbdrJ5t363X+zZO6xnnMKb0TdjmmbQYXj41nQ6U3J
+ xKL/62lALdDRWMX0wm3HEZCKNtuNAm4O8hyLSwGXY=;
+Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rZzWF-0009P2-Fx; Tue, 13 Feb 2024 20:36:47 +0000
+Message-ID: <7936e66b-8353-412b-a90a-6425fafea333@ilande.co.uk>
+Date: Tue, 13 Feb 2024 20:37:19 +0000
 MIME-Version: 1.0
-References: <20240116190042.1363717-1-stefanha@redhat.com>
- <20240116190042.1363717-4-stefanha@redhat.com>
- <dd0dd672-78d7-4e9b-b501-020cea439fea@tls.msk.ru>
- <3185d4fa-86bf-490e-8d79-5278da1ad9a4@tls.msk.ru>
-In-Reply-To: <3185d4fa-86bf-490e-8d79-5278da1ad9a4@tls.msk.ru>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 13 Feb 2024 15:19:55 -0500
-Message-ID: <CAJSP0QUXW6jB2zUZCH6fj2gs7i-naERb-Sv7eez6Nw+vvHZMtA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] monitor: only run coroutine commands in
- qemu_aio_context
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- qemu-block@nongnu.org, 
- Fiona Ebner <f.ebner@proxmox.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
- envelope-from=stefanha@gmail.com; helo=mail-oo1-xc35.google.com
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Bernhard Beschow
+ <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ Fabien Chouteau <chouteau@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20240213130341.1793-1-philmd@linaro.org>
+ <20240213130341.1793-11-philmd@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240213130341.1793-11-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v4 10/12] hw/sparc/leon3: Pass DeviceState opaque argument
+ to leon3_set_pil_in()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,66 +112,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 3 Feb 2024 at 06:30, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> 03.02.2024 12:01, Michael Tokarev wrote:
-> ...
-> > This change broke something in 7.2. I'm still debugging it, will
-> > come with a follow-up once some more details are found, I'll also
-> > check current master with and without this commit.
-> >
-> > The prob happens with multiple suspend-resume cycles, - with this
-> > change applied, guest does not work as expected after *second*
-> > suspend-resume.
->
-> So, it turned out the prob here exists on master too, and manifests
-> itself the same way on 7.2.9 or on 8.2.1, - in all cases where we
-> have this change applied it works (or breaks) equally.
->
-> A (simple) reproducer so far is a hibernate test, - it fails *only*
-> after suspend-to-ram, but works fine after just hibernate.
->
-> I used just an initrd (with a drive image used for swap -
-> for hibernation space).
->
->   qemu-img create s.img 256M
->   mkswap s.img
->   qemu-system-x86_64 \
->    -serial stdio -vga none -display none -parallel none -net none \
->    -machine q35 \
->    -drive file=s.img,if=ide,format=raw \
->    -m 256 \
->    -monitor unix:ttyS0,server,nowait \
->    -kernel /boot/vmlinuz-6.1.0-15-amd64 \
->    -initrd /boot/initrd.img-6.1.0-15-amd64 \
->    -append "shell=/bin/sh console=ttyS0 root=none"
->
->   There, in the guest (it has busybox only here):
->   # swapon /dev/sda
->   # echo mem > /sys/power/state
->   (system_wakeup on the monitor)
->   # echo disk > /sys/power/state
->
-> The system will hibernate but *not* turn off power, qemu
-> will continue running, while all console messages are the
-> same as when it works fine.  qemu process is spinning up
-> with 100% cpu usage at this stage.
->
-> Without the intermediate suspend-to-ram or without the
-> commit in question, qemu process will exit normally at
-> this stage.
->
-> This is a somewhat patalogical test case, but I see it as an
-> indicator of something else being wrong, like we aren't saving
-> or restoring some state now which we should do.
->
-> The tight loop also suggests we're not having success in there.
+On 13/02/2024 13:03, Philippe Mathieu-Daudé wrote:
 
-I'm unable to reproduce this. QEMU v8.2.0, v8.1.0, and even v7.2.0 all
-spin with 100% CPU usage on my machine. It looks to me like this
-behavior is not a regression caused by this commit.
+> By passing a DeviceState context to a QDev IRQ handler,
+> we can simplify and use qdev_init_gpio_in_named() instead
+> of qdev_init_gpio_in_named_with_opaque().
+> 
+> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/sparc/leon3.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+> index 0df5fc949d..d2be900988 100644
+> --- a/hw/sparc/leon3.c
+> +++ b/hw/sparc/leon3.c
+> @@ -175,9 +175,10 @@ static void leon3_irq_ack(CPUSPARCState *env, int intno)
+>    */
+>   static void leon3_set_pil_in(void *opaque, int n, int level)
+>   {
+> -    CPUSPARCState *env = opaque;
+> +    DeviceState *cpu = opaque;
+> +    CPUState *cs = CPU(cpu);
+> +    CPUSPARCState *env = cpu_env(cs);
+>       uint32_t pil_in = level;
+> -    CPUState *cs;
+>   
+>       assert(env != NULL);
+>   
+> @@ -193,7 +194,6 @@ static void leon3_set_pil_in(void *opaque, int n, int level)
+>   
+>                   env->interrupt_index = TT_EXTINT | i;
+>                   if (old_interrupt != env->interrupt_index) {
+> -                    cs = env_cpu(env);
+>                       trace_leon3_set_irq(i);
+>                       cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>                   }
+> @@ -201,7 +201,6 @@ static void leon3_set_pil_in(void *opaque, int n, int level)
+>               }
+>           }
+>       } else if (!env->pil_in && (env->interrupt_index & ~15) == TT_EXTINT) {
+> -        cs = env_cpu(env);
+>           trace_leon3_reset_irq(env->interrupt_index & 15);
+>           env->interrupt_index = 0;
+>           cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> @@ -261,8 +260,7 @@ static void leon3_generic_hw_init(MachineState *machine)
+>   
+>       /* Allocate IRQ manager */
+>       irqmpdev = qdev_new(TYPE_GRLIB_IRQMP);
+> -    qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
+> -                                        env, "pil", 1);
+> +    qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
+>       sysbus_mmio_map(SYS_BUS_DEVICE(irqmpdev), 0, LEON3_IRQMP_OFFSET);
+>       qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", 0,
 
-Do v7.2.0, v8.1.0, and v8.2.0 terminate QEMU on your machine?
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Stefan
+
+ATB,
+
+Mark.
+
 
