@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB911C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:46:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3722C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZyhL-0002ua-G7; Tue, 13 Feb 2024 14:44:07 -0500
+	id 1rZygx-0001P4-Jz; Tue, 13 Feb 2024 14:43:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyh1-0001rN-1N
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:43:48 -0500
+ id 1rZygp-0000zD-3j
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:43:35 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZygx-0006XX-W8
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:43:45 -0500
+ id 1rZyga-0006Us-OK
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:43:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=6leqQy8il9T0BgowRDTi4peOmLDXSmBsnwCsxoyV74s=; b=sSDiG3lZ5hVUUM33A79WFzrjqs
- WGsrSipasZ8e58J+k/RONQJDWW0uiEXDtF+8c2iy22x+mT+tmY2dfF/TpGj1T/Kdsd5C46PfQ9YI9
- d104tO+HwdkUzpwcEC+XSN5T4yOOAV4LEYiNU4k1pU8XX4bVIBpNQbn5IqWanWCDY60o33NNgcmci
- VCE294afmoy3d5jQj5G7bRI7tMVqdKB9+jCzSZlnZYWPOMqS6yyEpiikXgJv/7tJ6AXTomns7PYYj
- Wt4K03aayvEWBYpe0cq94g77ftKXssOuV3G086x0MicaxofCGTQE3kexYCH5K4XN7uBXdsxpmg4P4
- MFYU8XVOLzyJeQtFMumVe2epQpfd2ZmuI9QpGQWiDFB1Uifes8xzW/nYMRuCwtifSQzK9H/TVhyim
- AHWBjWCIGKKFRun+ZLX+8WeCgd9FLxvjyDSyloHCg4uXCT/xC30B9icZsXIJCTJrlU4jfAaLlS5xl
- lttqlY+No8woUcjyQEfJHC5VCO8KKTTSKDD/Gdsn4zB8Rjlxn766pKP94SC3e1stWNp5o+Ht6WZay
- BOYCqmvTSbqRAh6xD7zIJqxSZiG3YBqICOjBtK4SzoQW9sV8Z8N5sa0DyUyh1wAEh7JBizs/+quYo
- A/1hDZKgByB+HX6/vayK2bpepa1WZxp1uswD0WCmk=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=TJHBiJkh3bmcyNfBAoMhEkxZc4TXoXWWwMTukArRF8A=; b=tgSnx751buvdE4b+9R3TczMsvO
+ rjgRhP/QiJwWDTarFhOfmeOoQ3Mhad2fpzhpJv01MfdExUM+ID4y5fDxY3dsnUalgyXISHC1Eup9V
+ MoYmCicBbu1cZJGgTVbE/aKH0JBDryFsrO4/2q44YG4STEtf5T1MndABFpEJcpudeUwkWHFkZFinJ
+ pjHCyFFjmYdcoDvdEJY3hft1WNh1beYssI3nAMRbTP6I2+HvVMK7oIfdvqULURmxDclO1LdaB61rs
+ 4L6P2pvsgc6q8IT6rlI7KYeP/qyGfoHDtK1biR+8MExLEwCHpUS+/SGESgowjwaYdoEGhz45etTMj
+ rlfHyrMVN4WPEtnpiEUnRPuIW9zDshQ1+sZoZpd7ysIDHqeG5I66EiZDuwPJ9KxYza0Qjx9nMDQHw
+ DdaTo/i6dJwvtyiVSxX5wh2l24fRYecqq+v+qIkjp24PIJRaJV92yT3QxGCuc0BOu7ssN0ozz4o10
+ bqHKU5yVdQYsbvQPthOkM++X/616Tq9F7cgHC9zNy4+7T5T3TYlb147D4QoG4qUoVEqLzvF84jelE
+ ZcpMXh1+v3HTiCU/HP7gYNd2/dV1/Kkl1xs/o+YSob8wgtL9koK3FINQWQTHYkZ8XKIRQGX2OgNXL
+ egRtlvgEwhdsNKUMazQeEgTUNIulUI/yidxwOD0AU=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyg5-0008m4-AU; Tue, 13 Feb 2024 19:42:52 +0000
+ id 1rZyfi-0008m4-2c; Tue, 13 Feb 2024 19:42:30 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:40:09 +0000
-Message-Id: <20240213194052.1162753-46-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Feb 2024 19:40:01 +0000
+Message-Id: <20240213194052.1162753-38-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 45/88] esp.c: remove do_cmd from ESPState
+Subject: [PULL 37/88] esp.c: introduce esp_get_phase() function
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -79,122 +80,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the accumulation of the CDB is handled by SCSI phase, there is no need
-for a separate variable to control it.
+Make use of this new function in all places where the SCSI phase bits are
+manually masked from the ESP_RSTAT register.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Tested-by: Helge Deller <deller@gmx.de>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240112125420.514425-46-mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240112125420.514425-38-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ hw/scsi/esp.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index e679b1c39b..1f7dff4ca6 100644
+index 16cb6c72fd..de8d98082a 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -380,7 +380,6 @@ static void satn_pdma_cb(ESPState *s)
- 
-     if (!esp_get_tc(s) && !fifo8_is_empty(&s->cmdfifo)) {
-         s->cmdfifo_cdb_offset = 1;
--        s->do_cmd = 0;
-         do_cmd(s);
-     }
+@@ -196,6 +196,11 @@ static void esp_set_phase(ESPState *s, uint8_t phase)
+     trace_esp_set_phase(esp_phase_names[phase]);
  }
-@@ -400,13 +399,11 @@ static void handle_satn(ESPState *s)
-     cmdlen = get_cmd(s, ESP_CMDFIFO_SZ);
-     if (cmdlen > 0) {
-         s->cmdfifo_cdb_offset = 1;
--        s->do_cmd = 0;
-         do_cmd(s);
-     } else if (cmdlen == 0) {
-         if (s->dma) {
-             esp_raise_drq(s);
+ 
++static uint8_t esp_get_phase(ESPState *s)
++{
++    return s->rregs[ESP_RSTAT] & 7;
++}
++
+ static uint8_t esp_pdma_read(ESPState *s)
+ {
+     uint8_t val;
+@@ -537,7 +542,7 @@ static void esp_dma_ti_check(ESPState *s)
+ 
+ static void do_dma_pdma_cb(ESPState *s)
+ {
+-    int to_device = ((s->rregs[ESP_RSTAT] & 7) == STAT_DO);
++    int to_device = (esp_get_phase(s) == STAT_DO);
+     uint8_t buf[ESP_CMDFIFO_SZ];
+     int len;
+     uint32_t n;
+@@ -554,7 +559,7 @@ static void do_dma_pdma_cb(ESPState *s)
          }
--        s->do_cmd = 1;
-         /* Target present, but no cmd yet - switch to command phase */
-         s->rregs[ESP_RSEQ] = SEQ_CD;
-         esp_set_phase(s, STAT_CD);
-@@ -428,13 +425,11 @@ static void handle_s_without_atn(ESPState *s)
-     cmdlen = get_cmd(s, ESP_CMDFIFO_SZ);
-     if (cmdlen > 0) {
-         s->cmdfifo_cdb_offset = 0;
--        s->do_cmd = 0;
-         do_cmd(s);
-     } else if (cmdlen == 0) {
-         if (s->dma) {
-             esp_raise_drq(s);
+ 
+         s->ti_size = 0;
+-        if ((s->rregs[ESP_RSTAT] & 7) == STAT_CD) {
++        if (esp_get_phase(s) == STAT_CD) {
+             /* No command received */
+             if (s->cmdfifo_cdb_offset == fifo8_num_used(&s->cmdfifo)) {
+                 return;
+@@ -621,7 +626,7 @@ static void do_dma_pdma_cb(ESPState *s)
+ static void esp_do_dma(ESPState *s)
+ {
+     uint32_t len, cmdlen;
+-    int to_device = ((s->rregs[ESP_RSTAT] & 7) == STAT_DO);
++    int to_device = (esp_get_phase(s) == STAT_DO);
+     uint8_t buf[ESP_CMDFIFO_SZ];
+     int n;
+ 
+@@ -654,7 +659,7 @@ static void esp_do_dma(ESPState *s)
          }
--        s->do_cmd = 1;
-         /* Target present, but no cmd yet - switch to command phase */
-         s->rregs[ESP_RSEQ] = SEQ_CD;
-         esp_set_phase(s, STAT_CD);
-@@ -453,7 +448,6 @@ static void satn_stop_pdma_cb(ESPState *s)
+         trace_esp_handle_ti_cmd(cmdlen);
+         s->ti_size = 0;
+-        if ((s->rregs[ESP_RSTAT] & 7) == STAT_CD) {
++        if (esp_get_phase(s) == STAT_CD) {
+             /* No command received */
+             if (s->cmdfifo_cdb_offset == fifo8_num_used(&s->cmdfifo)) {
+                 return;
+@@ -762,7 +767,7 @@ static void esp_do_dma(ESPState *s)
  
-     if (!esp_get_tc(s) && !fifo8_is_empty(&s->cmdfifo)) {
-         trace_esp_handle_satn_stop(fifo8_num_used(&s->cmdfifo));
--        s->do_cmd = 1;
-         s->cmdfifo_cdb_offset = 1;
-         esp_set_phase(s, STAT_CD);
-         s->rregs[ESP_RSTAT] |= STAT_TC;
-@@ -478,7 +472,6 @@ static void handle_satn_stop(ESPState *s)
-     cmdlen = get_cmd(s, 1);
-     if (cmdlen > 0) {
-         trace_esp_handle_satn_stop(fifo8_num_used(&s->cmdfifo));
--        s->do_cmd = 1;
-         s->cmdfifo_cdb_offset = 1;
-         esp_set_phase(s, STAT_MO);
-         s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
-@@ -488,7 +481,6 @@ static void handle_satn_stop(ESPState *s)
-         if (s->dma) {
-             esp_raise_drq(s);
-         }
--        s->do_cmd = 1;
-         /* Target present, switch to message out phase */
-         s->rregs[ESP_RSEQ] = SEQ_MO;
-         esp_set_phase(s, STAT_MO);
-@@ -567,7 +559,6 @@ static void do_dma_pdma_cb(ESPState *s)
-             }
+ static void esp_do_nodma(ESPState *s)
+ {
+-    int to_device = ((s->rregs[ESP_RSTAT] & 7) == STAT_DO);
++    int to_device = (esp_get_phase(s) == STAT_DO);
+     uint8_t buf[ESP_FIFO_SZ];
+     uint32_t cmdlen;
+     int len, n;
+@@ -776,7 +781,7 @@ static void esp_do_nodma(ESPState *s)
+         cmdlen = fifo8_num_used(&s->cmdfifo);
+         trace_esp_handle_ti_cmd(cmdlen);
+         s->ti_size = 0;
+-        if ((s->rregs[ESP_RSTAT] & 7) == STAT_CD) {
++        if (esp_get_phase(s) == STAT_CD) {
+             /* No command received */
+             if (s->cmdfifo_cdb_offset == fifo8_num_used(&s->cmdfifo)) {
+                 return;
+@@ -856,7 +861,7 @@ static void esp_pdma_cb(ESPState *s)
+ void esp_command_complete(SCSIRequest *req, size_t resid)
+ {
+     ESPState *s = req->hba_private;
+-    int to_device = ((s->rregs[ESP_RSTAT] & 7) == STAT_DO);
++    int to_device = (esp_get_phase(s) == STAT_DO);
  
-             /* Command has been received */
--            s->do_cmd = 0;
-             do_cmd(s);
-         } else {
-             /*
-@@ -669,7 +660,6 @@ static void esp_do_dma(ESPState *s)
-             }
+     trace_esp_command_complete();
  
-             /* Command has been received */
--            s->do_cmd = 0;
-             do_cmd(s);
-         } else {
-             /*
-@@ -805,7 +795,6 @@ static void esp_do_nodma(ESPState *s)
-             }
- 
-             /* Command has been received */
--            s->do_cmd = 0;
-             do_cmd(s);
-         } else {
-             /*
-@@ -949,7 +938,6 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
-     int to_device = (esp_get_phase(s) == STAT_DO);
+@@ -909,7 +914,7 @@ void esp_command_complete(SCSIRequest *req, size_t resid)
+ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+ {
+     ESPState *s = req->hba_private;
+-    int to_device = ((s->rregs[ESP_RSTAT] & 7) == STAT_DO);
++    int to_device = (esp_get_phase(s) == STAT_DO);
      uint32_t dmalen = esp_get_tc(s);
  
--    assert(!s->do_cmd);
-     trace_esp_transfer_data(dmalen, s->ti_size);
-     s->async_len = len;
-     s->async_buf = scsi_req_get_buf(req);
-@@ -1012,7 +1000,6 @@ void esp_hard_reset(ESPState *s)
-     fifo8_reset(&s->fifo);
-     fifo8_reset(&s->cmdfifo);
-     s->dma = 0;
--    s->do_cmd = 0;
-     s->dma_cb = NULL;
- 
-     s->rregs[ESP_CFG1] = 7;
+     assert(!s->do_cmd);
+@@ -1103,7 +1108,7 @@ uint64_t esp_reg_read(ESPState *s, uint32_t saddr)
+             qemu_log_mask(LOG_UNIMP, "esp: PIO data read not implemented\n");
+             s->rregs[ESP_FIFO] = 0;
+         } else {
+-            if ((s->rregs[ESP_RSTAT] & 0x7) == STAT_DI) {
++            if (esp_get_phase(s) == STAT_DI) {
+                 if (s->ti_size) {
+                     esp_do_nodma(s);
+                 } else {
 -- 
 2.39.2
 
