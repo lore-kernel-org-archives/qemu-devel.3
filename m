@@ -4,113 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6D6C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 14:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94CD7C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 14:36:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZtpq-0007Dh-DM; Tue, 13 Feb 2024 09:32:35 -0500
+	id 1rZttN-0001wB-5Q; Tue, 13 Feb 2024 09:36:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
- id 1rZoVh-0006W2-Ml
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:51:25 -0500
-Received: from mailout4.samsung.com ([203.254.224.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im@samsung.com>)
- id 1rZoVc-0007lU-6X
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:51:24 -0500
-Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20240213085110epoutp049a53f8dd0913dc37de5c7798c5daa3a5~zYAfQWxfJ2734227342epoutp04a
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:51:10 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20240213085110epoutp049a53f8dd0913dc37de5c7798c5daa3a5~zYAfQWxfJ2734227342epoutp04a
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1707814270;
- bh=vTDlUID+ylMURWDXEr2PkKAHbiTjjbGicX8quns1Bdc=;
- h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
- b=t7KvqwLl/+QMUC5D32WFuOROMtapkPGaYpCEw9gPjrQ2nRIuqvsCb3UlSCptSUyce
- uLhmejC6/OPWRqtr4ey8d1sdq4AUs+45Xc/Hh+LTlYuuNDeusbaCwt7F9AA35LIr3x
- Wa91QUVesY4sFqe83/x14aiCIr4j9j12gUtuIt+U=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas2p4.samsung.com (KnoxPortal) with ESMTP id
- 20240213085109epcas2p4dac67a8db1fc2ccdfef463c19d078505~zYAecMN4J1781017810epcas2p4y;
- Tue, 13 Feb 2024 08:51:09 +0000 (GMT)
-Received: from epsmges2p1.samsung.com (unknown [182.195.36.69]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4TYw646rPQz4x9Q3; Tue, 13 Feb
- 2024 08:51:08 +0000 (GMT)
-X-AuditID: b6c32a45-3ebfd70000002716-78-65cb2d7cde66
-Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
- epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
- 55.2F.10006.C7D2BC56; Tue, 13 Feb 2024 17:51:08 +0900 (KST)
-Mime-Version: 1.0
-Subject: RE: [PATCH v3 6/7] pcie_sriov: Reuse SR-IOV VF device instances
-From: Minwoo Im <minwoo.im@samsung.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Michael
- S. Tsirkin" <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Sriram
- Yagnaraman <sriram.yagnaraman@est.tech>, Jason Wang <jasowang@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, Minwoo Im
- <minwoo.im@samsung.com>, "minwoo.im.dev@gmail.com" <minwoo.im.dev@gmail.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-block@nongnu.org"
- <qemu-block@nongnu.org>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-In-Reply-To: <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20240213085108epcms2p86672b5f11b0b4a22244256b85c66721c@epcms2p8>
-Date: Tue, 13 Feb 2024 17:51:08 +0900
-X-CMS-MailID: 20240213085108epcms2p86672b5f11b0b4a22244256b85c66721c
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLJsWRmVeSWpSXmKPExsWy7bCmqW6N7ulUg/2zTCw+n1rLbvHtfw+b
- xZs3a5gs5v1Zy2rxfOpSJov9B7+xWiy79JnJYtKha4wWL9tPMFv86uS2eHb6ALPF/1+vWC32
- b/vHarFmhbDFrHftbBbHe3ewWPRuesHkIOhx4u1BVo8Lj84xe+ycdZfdo+PCMSaPczvOs3ts
- WtXJ5nHn2h42jyfXNjN5vN93lc2jb8sqxgCuqGybjNTElNQihdS85PyUzLx0WyXv4HjneFMz
- A0NdQ0sLcyWFvMTcVFslF58AXbfMHKCHlBTKEnNKgUIBicXFSvp2NkX5pSWpChn5xSW2SqkF
- KTkF5gV6xYm5xaV56Xp5qSVWhgYGRqZAhQnZGQuajzIVXBKueL/xOFsD41ehLkZODgkBE4ne
- w22MXYxcHEICOxglNu28yN7FyMHBKyAo8XeHMEiNsICHxMO+LywgYSEBeYkfrwwgwpoS73af
- YQWx2QTUJRqmvmIBGSMisIVVYuGEY2BjmAXSJBq3sECs4pWY0f4UypaW2L58KyOIzSlgJfFy
- YhcTRFxD4seyXmYIW1Ti5uq37DD2+2PzGSFsEYnWe2ehagQlHvzcDRWXktg/fy6UXS3RcPwZ
- 1MwKiV/vH0DVm0v8vr8b7GZeAV+Jx983s4HYLAKqEpN2T2ICOVlCwEXi5Wp+kDCzgLbEsoWv
- mSE+0ZRYv0sfokJZ4sgtFogKPomOw3/ZYR7cMe8J1FJliY+HDkEtlZRYfuk1G4TtIbGhczfL
- BEbFWYhQnoVk1yyEXQsYmVcxiqUWFOempxYbFRjCIzY5P3cTIzhda7nuYJz89oPeIUYmDsZD
- jBIczEoivJdmnEgV4k1JrKxKLcqPLyrNSS0+xGgK9OREZinR5HxgxsgriTc0sTQwMTMzNDcy
- NTBXEue91zo3RUggPbEkNTs1tSC1CKaPiYNTqoHJ08PESLz57N4Yz/DrgZrmFh8nucvEXFty
- ZGqUjrjx00/md4R8GCzP8J5dpGch7nlQ2PThtJu1ek8er3Cs1rKTkRPOzg+2vnzOdTVbe4rw
- frvn3+I33rIurJH8fcDFd5GUqkPwgksyh3SMJp/99aA0+qu8fbjK6vycG8meBruyuV+1X7+f
- 3vCbwW/qB5vrs264TP5WdeT1RGOpOeerv05QTKy8Onnmw1JXmXvbfDgckzum3fVapPR6/tIZ
- bfsyJtw58PG9u3zd/M7wry6V4R9vcH47f/KI4x6+j30XP92ao7Cb78LjKKaeb5nHb9Q8vPZy
- zpZHvIFHf7lybE57ENcQ0m+eujdeaavU94YbvG+PKbEUZyQaajEXFScCAJh6JT5gBAAA
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240212102210epcas2p4346c0dfc475ecee9f359d634eba46783
-References: <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
- <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
- <CGME20240212102210epcas2p4346c0dfc475ecee9f359d634eba46783@epcms2p8>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=minwoo.im@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1rZttL-0001vC-9Q; Tue, 13 Feb 2024 09:36:11 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1rZttG-0007gg-3N; Tue, 13 Feb 2024 09:36:11 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6de3141f041so779398b3a.0; 
+ Tue, 13 Feb 2024 06:36:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1707834963; x=1708439763; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7t1dihOXIwRG3FeUSJ2Hdd72z/vSowiOa+3IV49xtMo=;
+ b=LNQ4BI8GKpBMpDxXFRq1vDli/gQcdgtBoJJjJMuYmXcbm9gZmR/ItTtJtNFFKUjKxH
+ rRlvjs5TGKC5dTtDKxMZQGK+MuRYaEEy19L9aFgwIsqvJ/PtksVWe97NaVaweO3ddUg1
+ nY52RUXLB3zBxBx7+Rft8oPydBzwo1Go8Wd/n4EVPnAo4IsjhrEv5VnlXbkdWiVi1pEp
+ U7wReVf0R9IbhW+t6+45nV8VYCzwfG0FOU7/YBwerG03upTIxo7MU3ZK+hs22kxRdQwv
+ 5h7YkmS/l7fk8FPkWNI2++BUQD8E992mIjp74Jt5lbE3TApD/cnkf5PHMV/jGAS3KGVF
+ fbCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707834963; x=1708439763;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7t1dihOXIwRG3FeUSJ2Hdd72z/vSowiOa+3IV49xtMo=;
+ b=bYhr1aMVaZhkFPR8rV8apItdb6f7fsDY0glTL6aKwJQTNZGk0zCcvUyAGBnU6ySQ+g
+ SadvZqQsVAa6HO8MfPQaFUfogyCZwz1QL3XDVRNmOy6oPR6lqsWXw6b8O1WMbX1XNVvI
+ /pBnuPRhsaI2JPs1jf2dmZK03ljb935W610MQr5yVxZy73qvxLt/nU6E3+rPnKYYTylV
+ Ihw0/6FDnn/fV9slZxtdqeuxZldbM8A1y9cZcJG5vrHnHW0O62XAiNDacq3ZL3qsSSTT
+ OPm2i97Ypgye0Lsvc/ygfI95+Iv3EKIcP5q5gzowl2XU5Qmvu0RvTUoxvIwKoSJY7ua8
+ Kxrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7cEPHNr0YSb2LJIQB+gcT9nWABIreiymnX6oqgVpg0KbE9L7RVJghWpssySFyjhi8doiujnHFdrttXIHtsTGP8rzX1Fo8Hz/uIYR3phASvkQOa2vlI+7YhbI=
+X-Gm-Message-State: AOJu0Yxw3oszCoxqueL8xx+zuBtQl92I8Di0s1+y7gTtsQ1OwJ8D81gJ
+ Mq7JwC0V/Mwx/SEOTEzkYMjAfG4nAkZdSij7Dk5Pyn2+jtoPq2cw
+X-Google-Smtp-Source: AGHT+IGy9hDoYViel8THQI939w4c1rW19XvjAt9mieFFKgDZ6ZznQtt2TMohY7/obWaguvrFEFS8zQ==
+X-Received: by 2002:a05:6a00:26c9:b0:6e0:f287:d744 with SMTP id
+ p9-20020a056a0026c900b006e0f287d744mr2943885pfw.19.1707834962560; 
+ Tue, 13 Feb 2024 06:36:02 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWc0rz2wdReiV0TFaVcz3NbZQxtlYw6HN53RcDrD0Z9HmyWZ5zy5KH1aasgdEfObHbkPJUWyMtnpwaQEfC9wTl0x98m+2YM6kBzZ9CJpIoYO+qIAK5uGYcvOB0=
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ g1-20020aa79dc1000000b006e09aa8c50csm7223066pfq.53.2024.02.13.06.36.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 06:36:01 -0800 (PST)
+Date: Tue, 13 Feb 2024 06:36:00 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+Message-ID: <ce858803-84f8-4fc1-96ac-75914da98905@roeck-us.net>
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <ede43fd1-9005-4f02-9494-73cfd898e3a0@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ede43fd1-9005-4f02-9494-73cfd898e3a0@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 13 Feb 2024 09:32:28 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,44 +99,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: minwoo.im@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> -----Original Message-----
-> From: qemu-block-bounces+minwoo.im.dev=3Dgmail.com=40nongnu.org <qemu-blo=
-ck-
-> bounces+minwoo.im.dev=3Dgmail.com=40nongnu.org> On Behalf Of Akihiko Odak=
-i
-> Sent: Monday, February 12, 2024 7:21 PM
-> To: Philippe Mathieu-Daud=C3=A9=20<philmd=40linaro.org>;=20Michael=20S.=
-=20Tsirkin=0D=0A>=20<mst=40redhat.com>;=20Marcel=20Apfelbaum=20<marcel.apfe=
-lbaum=40gmail.com>;=20Alex=0D=0A>=20Williamson=20<alex.williamson=40redhat.=
-com>;=20C=C3=A9dric=20Le=20Goater=20<clg=40redhat.com>;=0D=0A>=20Paolo=20Bo=
-nzini=20<pbonzini=40redhat.com>;=20Daniel=20P.=20Berrang=C3=A9=20<berrange=
-=40redhat.com>;=0D=0A>=20Eduardo=20Habkost=20<eduardo=40habkost.net>;=20Sri=
-ram=20Yagnaraman=0D=0A>=20<sriram.yagnaraman=40est.tech>;=20Jason=20Wang=20=
-<jasowang=40redhat.com>;=20Keith=20Busch=0D=0A>=20<kbusch=40kernel.org>;=20=
-Klaus=20Jensen=20<its=40irrelevant.dk>=0D=0A>=20Cc:=20qemu-devel=40nongnu.o=
-rg;=20qemu-block=40nongnu.org;=20Akihiko=20Odaki=0D=0A>=20<akihiko.odaki=40=
-daynix.com>=0D=0A>=20Subject:=20=5BPATCH=20v3=206/7=5D=20pcie_sriov:=20Reus=
-e=20SR-IOV=20VF=20device=20instances=0D=0A>=0D=0A>=20Disable=20SR-IOV=20VF=
-=20devices=20by=20reusing=20code=20to=20power=20down=20PCI=20devices=0D=0A>=
-=20instead=20of=20removing=20them=20when=20the=20guest=20requests=20to=20di=
-sable=20VFs.=20This=0D=0A>=20allows=20to=20realize=20devices=20and=20report=
-=20VF=20realization=20errors=20at=20PF=0D=0A>=20realization=20time.=0D=0A>=
-=0D=0A>=20Signed-off-by:=20Akihiko=20Odaki=20<akihiko.odaki=40daynix.com>=
-=0D=0A=0D=0AHello=20Akihiko,=0D=0A=0D=0AI=20think=20this=20patch=20fixes=20=
-the=20issue=20reported=20in=20=5B1=5D.=20=20The=20latest=20master=20branch=
-=0D=0Aalso=20causes=20an=20object-related=20assertion=20error=20when=20we=
-=20enable=20VF(s)=20and=20disable=0D=0Athrough=20sysfs=20over=20and=20over=
-=20again=20(at=20least=20twice).=20=20But=20this=20issue=20is=20also=0D=0Af=
-ixed=20with=20your=20patch.=0D=0A=0D=0A**=0D=0AERROR:../qom/object.c:753:ob=
-ject_finalize:=20assertion=20failed:=20(obj->parent=20=3D=3D=20NULL)=0D=0AB=
-ail=20out=21=20ERROR:../qom/object.c:753:object_finalize:=20assertion=20fai=
-led:=20(obj->parent=20=3D=3D=20NULL)=0D=0A=0D=0AKlaus,=0D=0A=0D=0AIf=20this=
-=20patchset=20is=20applied,=20I=20think=20=5B1=5D=20can=20be=20dropped.=20=
-=20What=20do=20you=20think?=0D=0A=0D=0AThanks,=0D=0A=0D=0A=5B1=5D=20https:/=
-/lore.kernel.org/qemu-devel/20240109022953epcms2p54550dcfc9f831a515206513ae=
-98e7511=40epcms2p5/=0D=0A
+Hi,
+
+On Tue, Feb 13, 2024 at 02:42:29PM +0100, Marcin Juszkiewicz wrote:
+> 
+> > > The one SA1110 machine:
+> > > 
+> > > collie               Sharp SL-5500 (Collie) PDA (SA-1110)
+> > > 
+> > I do test collie.
+> 
+> Can you share kernel/initrd/config? I wanted to boot something at 20th
+> anniversary of buying one but was unable to build anything bootable on
+> either QEMU/collie or physical one.
+> 
+
+You'll find it at
+	https://github.com/groeck/linux-build-test/tree/master/rootfs/arm
+
+Essentially it is collie_defconfig plus some additional configuration
+options (BLK_DEV_INITRD and EABI are essential), and the rootfs is
+rootfs-sa110.cpio.gz. It boots from initrd. I never managed to get it
+booting from flash.
+
+Guenter
 
