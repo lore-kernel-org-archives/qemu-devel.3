@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DAFC48BC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9AAC4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZrWF-0008Cd-NU; Tue, 13 Feb 2024 07:04:15 -0500
+	id 1rZra0-0006wt-Si; Tue, 13 Feb 2024 07:08:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZrVk-0006z8-RB
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:03:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZrVj-0001My-0p
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:03:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707825817;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/Emp4hwnx/ajJ/o3k0+pEA0VlRkyqe3LQtwtBtOGRc4=;
- b=GVzA1rc5BJ5R8GxmpJqns7T5csUL4B9b1+1y7J4XHGFGiSCEJLgtWNPlhtdbsKdMDqzdur
- VoaPrP8ElykeI+XNAqhPboT+CyxlvkkARkpGxXKU9VvPw+B3rfAG0MHyZQIZkOdfY0Cz4X
- w9yqLNMNBp+v8/ybhUsu9bKxeWHFt54=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-3xusIzwwOfiXwvgMyeYUVg-1; Tue, 13 Feb 2024 07:03:36 -0500
-X-MC-Unique: 3xusIzwwOfiXwvgMyeYUVg-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2d0908edbd0so38857801fa.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:03:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rZrZS-0006pc-W4
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:07:31 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rZrZR-0002N0-AM
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:07:30 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6e0a608a36bso1760999b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:07:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707826047; x=1708430847;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AJ1DbwIfMVWDBYdsESCAoEZP3PgsJXdlIovOpw5e8E4=;
+ b=OEj9knA/bSIWJwyXZ136foOMVINkuZNkrfgCqEZ31f7azhGEaNQC30o40jPPAxuSxt
+ d+7+Zsnj4d7WOzzvbJDNNOpOFJMTl7c14IZjBVN3PzJEaSd+W0K6jfCaybA4WOpPL5NC
+ OsuXFAMw76YjDNbq7zmDg9vQUVbICQt9GGZMMiTkFHV6q+hi4tI3DnmMlP54lXm2t5c7
+ S/Jd7tHdnmIUuwwh9Nu/wRCoyOhYZLXsrisfcqucLSJfGfUY5il8HJk2WBeSmB/utPt6
+ BYqSQ2gO3cuEhpWoUHs/aPC3snW2psCQs8b5C9gFpRRFScPNogIx7A9cNrgkasT0gZdY
+ Mxfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707825814; x=1708430614;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/Emp4hwnx/ajJ/o3k0+pEA0VlRkyqe3LQtwtBtOGRc4=;
- b=l6+2rLzwRqpqN/k+BJ2FkxXidhZFMCnJ7unw7J7iuZgZ4oQq3Bgo7VvEzGTf/okmsM
- 62Pm0ISRkT7VENjEIUrUyT5L5TWmnbidhoW1Twkp9G8erVvBg5nFfg5iRVoWBsvin9Z+
- l/dMLljAPLRXxd3qCTIQdpqDhInQUYMEkASyuKpfxTbgDEuuv8nCj/gaPN3fmoIAKBie
- yqtx5arh09vFcMpbwtbJs5bmMHYngRxxuGD+P9stEwJkZXihVParE2BqCOdkx04IJlGj
- /3RF024zGvwj8metLnPJy8A4fb0I4o5UgYRqxxEw0d1Tw9dZ+WYl73LleLprlC4m0Meq
- vZ2w==
-X-Gm-Message-State: AOJu0Yz1sqrcJ+DoM4HOt4cCafBi2eri4cmt1Dg/X8VesdMMIh0QHsFF
- O7QMa53hHUwqKf08mR8jznoG8ksIffjJIUeswMa8PO5rPsov+AgEdwGU36EB36B3L6UlqUFNVh6
- ahA5daZmEuGBonMEExzQhrauGLWACE4U7j3lstszlP8Hn4eqOTunO1j33gXUQ
-X-Received: by 2002:a2e:8682:0:b0:2d1:ca1:760b with SMTP id
- l2-20020a2e8682000000b002d10ca1760bmr975007lji.30.1707825814619; 
- Tue, 13 Feb 2024 04:03:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG/7l8vz8s8vxGl21CFVQherpMsNOGKPQ1FbDzGCAKBfE35G7sSxTIPuUD3v0Vh0713T2QdSA==
-X-Received: by 2002:a2e:8682:0:b0:2d1:ca1:760b with SMTP id
- l2-20020a2e8682000000b002d10ca1760bmr974987lji.30.1707825814274; 
- Tue, 13 Feb 2024 04:03:34 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707826047; x=1708430847;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AJ1DbwIfMVWDBYdsESCAoEZP3PgsJXdlIovOpw5e8E4=;
+ b=k4jE/jCNfS0U7B1hAwuG+saJJnXaJoCebqrrYlMz+lM2la03ePLu/fNA8ikRh2tjJx
+ vBxMhXtYKd7HiBG+MzPZnhp0AUaEVBqPF3ugNHXZ83UkySKaG/puxk7+S/+gUkkoC2Cz
+ gwZdRffJKlHCncRRHtTV+qywmeMB1fhvoC9IAn8FJW3FEe6ezfSAA4Ax1QIK08jXCW5Q
+ /mg56olZ6pIdJMoo+r8491RE02KvF9kFTWL4E4Rrn81qotgFu/OwRBqm/NTb3+zxY6+T
+ apgK0U3L8VpjTKOKdapvytQrxc9tuO2FHO2NDgycOMB5HqcTVZGNX6mMsHvPYacEm3Wk
+ 0SvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXW6TsIVZeKrIyRq7m+utUF6eqKkb20mLsSc2Gc9YXeoieUzArz+omw9xdcaAyQ+HOi/n3k368Zo2gJBkPXQSFFpnsvyGVw3n7fLpEcfQgS0urfGGm11pZf2g==
-Received: from redhat.com ([2a02:14f:17d:5d88:37b3:ce51:18b:36d9])
+ AJvYcCXGXhIxhPOa0Jb5EMVHJ+1r2l4ZssTRCjDfEkExdPclAPszV9yI6kLbJjpCqGsRK3VeU/I5zA1uLixd+Yuyqfv6nqghEHE=
+X-Gm-Message-State: AOJu0YxnwXYD+sPnHfXLUFhfAjn59VpfbtAoIE84yqQSLbTTy9Qy3/lK
+ fDQkHBN7vXx4ETZtSjQUlpF64QC7kLBUWg5DjnRuGsIhxZRC3b3Jf5x5sIxPV4g=
+X-Google-Smtp-Source: AGHT+IHxCELmt6Xjv5f54svCdoCWpz72tZ1GLD3u6QeG1ae5akbyYzlaT60JbwOm9ZnK6Q75VpfVqA==
+X-Received: by 2002:a05:6a21:6802:b0:19e:c1da:cbb7 with SMTP id
+ wr2-20020a056a21680200b0019ec1dacbb7mr12334632pzb.27.1707826047169; 
+ Tue, 13 Feb 2024 04:07:27 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXps6/t44GRiXBmX7YCbjo5g5v9RBYMQoZDsx6EaYh8bl3iORDI9aC6ugkPCtiUyoqjfPuaz7gYghXr/rA1hyqEbLtFzF7Rf/9TdVCWH5kp6g8csdd5QD0K12aoqDc/PUN1p8y2BdJk0gOiVzb+ViNUw5EsACtDn+M4UpH6OsRvK6xbaYMSX70fLksSXADso9KCBfFOkzS4aG8vXh/aRaf4eddqCH82avRG4Hwe5VayrRS0XDzkCeZF+hCrGqFQozhpHnGBh/9kbth98swaJM60WGNQqh6ZnYFp01u/Dpz40EZIRf+6yvwe0nF06U2rLsffMbjp6uohs5oFy9OxFD+Bh84CDr8RxwjMsyyhUyH53WRo8UMNvgQBGjke5rY+LLw2yDkNby0r0PSoTm+w4bLljoN7tGJZABHcYQ==
+Received: from [157.82.207.134] ([157.82.207.134])
  by smtp.gmail.com with ESMTPSA id
- p15-20020a05600c204f00b0041044e130bfsm11364212wmg.33.2024.02.13.04.03.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 04:03:33 -0800 (PST)
-Date: Tue, 13 Feb 2024 07:03:30 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Srujana Challa <schalla@marvell.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Vamsi Krishna Attunuru <vattunuru@marvell.com>,
- Jerin Jacob <jerinj@marvell.com>
-Subject: Re: [EXT] Re: [PATCH] virtio-pci: correctly set virtio pci queue mem
- multiplier
-Message-ID: <20240213070100-mutt-send-email-mst@kernel.org>
-References: <20240212075233.1507612-1-schalla@marvell.com>
- <20240213054513-mutt-send-email-mst@kernel.org>
- <DS0PR18MB5368A9931C4B4E8E8E866066A04F2@DS0PR18MB5368.namprd18.prod.outlook.com>
+ r9-20020aa79ec9000000b006e04dd8876csm7143037pfq.210.2024.02.13.04.07.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 04:07:26 -0800 (PST)
+Message-ID: <0fcdd67e-97cf-47b5-9d6c-c9c19e93deac@daynix.com>
+Date: Tue, 13 Feb 2024 21:07:22 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DS0PR18MB5368A9931C4B4E8E8E866066A04F2@DS0PR18MB5368.namprd18.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/7] hw/pci: Determine if rombar is explicitly enabled
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
+ <20240212-reuse-v3-2-8017b689ce7f@daynix.com>
+ <20240213055006-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240213055006-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,71 +110,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 13, 2024 at 11:50:34AM +0000, Srujana Challa wrote:
-> > Subject: [EXT] Re: [PATCH] virtio-pci: correctly set virtio pci queue mem
-> > multiplier
-> > 
-> > External Email
-> > 
-> > ----------------------------------------------------------------------
-> > On Mon, Feb 12, 2024 at 01:22:33PM +0530, Srujana Challa wrote:
-> > > Currently, virtio_pci_queue_mem_mult function returns 4K when
-> > > VIRTIO_PCI_FLAG_PAGE_PER_VQ is set. But this is not correct when host
-> > > has page size as 64K.
-> > > This patch fixes the same.
-> > >
-> > > Signed-off-by: Srujana Challa <schalla@marvell.com>
-> > 
-> > You can't tweak guest visible values like this without compat machinery. It's
-> > also going to consume a ton more phys memory - can this break any configs?
-> > Why is this a problem? Just with vdpa?
+On 2024/02/13 19:52, Michael S. Tsirkin wrote:
+> On Mon, Feb 12, 2024 at 07:20:30PM +0900, Akihiko Odaki wrote:
+>> vfio determines if rombar is explicitly enabled by inspecting QDict.
+>> Inspecting QDict is not nice because QDict is untyped and depends on the
+>> details on the external interface. Add an infrastructure to determine if
+>> rombar is explicitly enabled to hw/pci.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   include/hw/pci/pci_device.h | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+>> index d3dd0f64b273..7564e9536dbd 100644
+>> --- a/include/hw/pci/pci_device.h
+>> +++ b/include/hw/pci/pci_device.h
+>> @@ -205,6 +205,11 @@ static inline uint16_t pci_get_bdf(PCIDevice *dev)
+>>       return PCI_BUILD_BDF(pci_bus_num(pci_get_bus(dev)), dev->devfn);
+>>   }
+>>   
+>> +static inline bool pci_rom_bar_explicitly_enabled(PCIDevice *dev)
+>> +{
+>> +    return dev->rom_bar > 0;
+>> +}
+>> +
 > 
-> We are observing the issue with vdpa when host has page size of 64K. We haven't
-> verified any other backends. I think, any backend that uses below API would fail
-> if host has page size other than 4K right?
-> And also as per VIRTIO_PCI_FLAG_PAGE_PER_VQ, it should be equal to
-> page_size right?
+> I don't get it. rom_bar is uint32_t if it's set to "-1" is is still >0.
 > 
-> static int virtio_pci_set_host_notifier_mr(DeviceState *d, int n,
->                                            MemoryRegion *mr, bool assign)
-> {
->     VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
->     int offset;
-> 
->     if (n >= VIRTIO_QUEUE_MAX || !virtio_pci_modern(proxy) ||
->         virtio_pci_queue_mem_mult(proxy) != memory_region_size(mr)) {
->         return -1;
->     }
+> How was this patchset tested?
 
-Yes but not everyone uses that right? Plain virtio in software with
-no tricks doesn't care?
-
-
-> > 
-> > > ---
-> > >  hw/virtio/virtio-pci.c | 4 +---
-> > >  1 file changed, 1 insertion(+), 3 deletions(-)
-> > >
-> > > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c index
-> > > e433879542..028df99991 100644
-> > > --- a/hw/virtio/virtio-pci.c
-> > > +++ b/hw/virtio/virtio-pci.c
-> > > @@ -316,12 +316,10 @@ static bool
-> > virtio_pci_ioeventfd_enabled(DeviceState *d)
-> > >      return (proxy->flags & VIRTIO_PCI_FLAG_USE_IOEVENTFD) != 0;  }
-> > >
-> > > -#define QEMU_VIRTIO_PCI_QUEUE_MEM_MULT 0x1000
-> > > -
-> > >  static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy
-> > > *proxy)  {
-> > >      return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
-> > > -        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
-> > > +        qemu_real_host_page_size()  : 4;
-> > >  }
-> > >
-> > >  static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier
-> > > *notifier,
-> > > --
-> > > 2.25.1
-
+I was careless forgot to test v3. I'll revert this line into what v2 had.
 
