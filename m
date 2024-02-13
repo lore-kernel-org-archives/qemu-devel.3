@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A05FC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 17:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34483C4829F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 17:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZwFW-0002Z2-MW; Tue, 13 Feb 2024 12:07:14 -0500
+	id 1rZweY-0001Hs-RA; Tue, 13 Feb 2024 12:33:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZwFU-0002Yp-Qe
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 12:07:12 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZwFQ-0003VN-0h
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 12:07:12 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e0cc8d740cso1916408b3a.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 09:07:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707844024; x=1708448824; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xJ1iAr+G1J+RuMQ/20sRzspXKp5eJ0gOSy1wQERXhdU=;
- b=BzxoNgw2/TVymCsbV8HU8zuZ6GX6903IvPZUHvrl6qLb63N7LLDqUT1hyYnan7iZoY
- PaSKi7NKvqq8yIJrxG1+YR5MRM7eyv7b8Ij10oORZs/lR3lJlb2X1shoArTXlBnPd7vm
- gx8Eshbn2sp+IDCmDasM4fYJQ2eWJtCHwAR4ICMXPDex0er0qbOIpM/C4CbVd0TNq1Lz
- jeJ/gmBctQprAcREzTznbw+xblufKmAH/dgIaB5YEmcVrQMcY9aWwTBD/bH2WsYhORKZ
- oRqqYigushfoQ5FcHXKWxMvwx5Fx1+0CLWXM1pWOmHhCNd1dpsRevNwfBj6NmDFVhBgN
- NXfQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZweX-0001HQ-23
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 12:33:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZweU-0008Kk-Uo
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 12:33:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707845581;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0LZl8D/Ou1vN/RSKYYVj9PvOh7MmXbKnVs5O/8OMRog=;
+ b=OOCWnvs6FftiL2Aq7lU8+FwWo+wg44FdIKJLeAkbTv8FKDu65ZyfFRniahWrbdaRb81wYj
+ gf/I9d7pp8iGXDSfzymPIkFRZ4I/4g1kCAnQz2QXcEwLCRHsOHTy0rmXniqoUTGvKZHE8W
+ iVO4nt8GFrlEOp7dJ7g0U9rCkvj23go=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-28-l3hjPJrqMteiqvNseLInqA-1; Tue, 13 Feb 2024 12:32:58 -0500
+X-MC-Unique: l3hjPJrqMteiqvNseLInqA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33b316fcaecso1734786f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 09:32:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707844024; x=1708448824;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xJ1iAr+G1J+RuMQ/20sRzspXKp5eJ0gOSy1wQERXhdU=;
- b=KVwnT9n16IC3yShIwaZcLvTWeMiXT2YDM7CmAclSX7aKLeORC36SiVrIdW+LFAkWFl
- xYN1v72SOyf5Wq/dWQMQBe1ebQpehny5DRP14pHQx0lnzpl/3tw4fDUBuZvjm9YczAAt
- s+z1qvATzSH+9hCToYoEarU01TwFFOoa/VQJnVF39piDb9WLtspdkKBgciX4QoMfGCc2
- 7wnaJn3rsvTwbd9rIPlyJivonZc0h+9CO9SLmllgzY4cfr1rDUjDbYBj9nPTVyOWOIjF
- DwB5rWbgTLL1JVonk/+UMedkNwc6oo79O0NaLnqufZWVPfuFsr95vRbKeAG9CUBciOig
- J7dw==
-X-Gm-Message-State: AOJu0YwNL20WQFsnaWpQlwwZrTz5yPivcRnQaYTsZziHlnPMdt/P3ybx
- msEqOG55kNcEzt0IS8YCuTgPR4UvHnH2iXo+ZSIMsBMqAttVz01YN6taOLs4F/8=
-X-Google-Smtp-Source: AGHT+IGURZESN3hSIViXG4ddOkg7jAtJG7GHYCjuQUSas1Y0+eNIZ2j67MaHgh28p2Hh5ta3k0qETw==
-X-Received: by 2002:a05:6a20:5105:b0:19e:cd13:eebf with SMTP id
- a5-20020a056a20510500b0019ecd13eebfmr115240pzc.40.1707844023955; 
- Tue, 13 Feb 2024 09:07:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707845577; x=1708450377;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0LZl8D/Ou1vN/RSKYYVj9PvOh7MmXbKnVs5O/8OMRog=;
+ b=YdcWZczQr77dnRm5O7HT2+ia2GR3Z2SS9mZp6NWGG2ZKguZowyazKahVwFfBvXbJHD
+ /A6Jq3BxyKIg0PipScWYK7O70Nk+eAPwAq92cAJA1KJJqLvVRmzv7gujx5/2XW+y+pEK
+ 5XefTz6jick0ZQ9tScMpKXq0tq0cEueXTj2M/HnhiQGLsAnwQ3S5x4DFeXiPFdwc6FsG
+ w6wzqlqTUSP0edKu75ddwiOGRsmD5mE1pPDYgGKT8tRIYJvRsHij/IfwhPaEhgAMx+Rz
+ WBE3p+sMeoNzkBI93hVM0miMkec25FjDRlIGOJL8uknz65yHTPh4MjnnM9sCHwD0YKYB
+ ZpTA==
+X-Gm-Message-State: AOJu0YzbTPMpsjXuqrjFngNXK2cg5i3oUSpSV3FzvNzygWvxoSxsZfeB
+ jbjuPBUuLBGXLQVB8sytwCUZ4H+JC0LRk6MN9kxupZbqMiB4kWt/i9zBk6kIGAWanpGPZzHTMwl
+ qFEuZkDeO56qRlyDuq4twfY/q4b1qXW5sCvGXSgBrxrjBH8v1QdYs
+X-Received: by 2002:a5d:6543:0:b0:33b:178a:6715 with SMTP id
+ z3-20020a5d6543000000b0033b178a6715mr7185346wrv.24.1707845576857; 
+ Tue, 13 Feb 2024 09:32:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGM7geOEeyI7luVrMfxU1nKdXIQhtwN5Qunl7rEbP9RecrC7imkdz6/g70UarL6/Pq5tPHEEA==
+X-Received: by 2002:a5d:6543:0:b0:33b:178a:6715 with SMTP id
+ z3-20020a5d6543000000b0033b178a6715mr7185330wrv.24.1707845576548; 
+ Tue, 13 Feb 2024 09:32:56 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWv+SZgTMMtRkvv77WBzSkN81gPLLPa6QzHFVOuHoB56372UUbGqTTRDKJG3mvTnEMU28FXjMXH3vDxZ1W2bTDblK9+YQ=
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- ei52-20020a056a0080f400b006e0e4b9b7e6sm3542867pfb.212.2024.02.13.09.07.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 09:07:03 -0800 (PST)
-Message-ID: <fb3bf2f5-4405-4b8b-90b3-82052f2e0e88@linaro.org>
-Date: Tue, 13 Feb 2024 07:07:00 -1000
+ AJvYcCXVIRqp74AtWiACZLABnEs9knpsHmm3WbzvBKCkgHVrhIe5EYsU0kvRSF96F9Lx28M2OgP7laiMq7qS7Q+l/bjsdNB7beXpBwTYl79/pp+xazDFZHI8xzpCSflK5sqziJM8ugEqAy9H++YEKwZ/cwu1Ou9dl6OQVyrRfFbIB0a/ZkmLQ4T5xbWACngurmugEvwY33b2DRCFbYAJ8LM0Vg==
+Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
+ y12-20020a056000108c00b0033b40a3f92asm10112904wrw.25.2024.02.13.09.32.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 09:32:55 -0800 (PST)
+Date: Tue, 13 Feb 2024 12:32:52 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Germano Veit Michel <germano@redhat.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>
+Subject: Re: [PATCH v1 01/15] libvhost-user: Fix msg_region->userspace_addr
+ computation
+Message-ID: <20240213123223-mutt-send-email-mst@kernel.org>
+References: <20240202215332.118728-1-david@redhat.com>
+ <20240202215332.118728-2-david@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/12] hw: Strengthen SysBus & QBus API
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240213130341.1793-1-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240213130341.1793-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240202215332.118728-2-david@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,22 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/24 03:03, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (12):
->    hw/ide/ich9: Use AHCIPCIState typedef
->    hw/rx/rx62n: Reduce inclusion of 'qemu/units.h'
->    hw/rx/rx62n: Only call qdev_get_gpio_in() when necessary
->    hw/i386/q35: Realize LPC PCI function before accessing it
->    hw/ppc/prep: Realize ISA bridge before accessing it
->    hw/misc/macio: Realize IDE controller before accessing it
->    hw/sh4/r2d: Realize IDE controller before accessing it
->    hw/sparc/sun4m: Realize DMA controller before accessing it
->    hw/sparc/leon3: Realize GRLIB IRQ controller before accessing it
->    hw/sparc/leon3: Pass DeviceState opaque argument to leon3_set_pil_in()
->    hw/sparc/leon3: Initialize GPIO before realizing CPU devices
->    hw/sparc64/cpu: Initialize GPIO before realizing CPU devices
+On Fri, Feb 02, 2024 at 10:53:18PM +0100, David Hildenbrand wrote:
+> We barely had mmap_offset set in the past. With virtio-mem and
+> dynamic-memslots that will change.
+> 
+> In vu_add_mem_reg() and vu_set_mem_table_exec_postcopy(), we are
+> performing pointer arithmetics, which is wrong.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Wrong how? I suspect you mean arithmetic on void * pointers is not portable?
 
-r~
+> Let's simply
+> use dev_region->mmap_addr instead of "void *mmap_addr".
+> 
+> Fixes: ec94c8e621de ("Support adding individual regions in libvhost-user")
+> Fixes: 9bb38019942c ("vhost+postcopy: Send address back to qemu")
+> Cc: Raphael Norwitz <raphael.norwitz@nutanix.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
+> ---
+>  subprojects/libvhost-user/libvhost-user.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+> index a3b158c671..7e515ed15d 100644
+> --- a/subprojects/libvhost-user/libvhost-user.c
+> +++ b/subprojects/libvhost-user/libvhost-user.c
+> @@ -800,8 +800,8 @@ vu_add_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+>           * Return the address to QEMU so that it can translate the ufd
+>           * fault addresses back.
+>           */
+> -        msg_region->userspace_addr = (uintptr_t)(mmap_addr +
+> -                                                 dev_region->mmap_offset);
+> +        msg_region->userspace_addr = dev_region->mmap_addr +
+> +                                     dev_region->mmap_offset;
+>  
+>          /* Send the message back to qemu with the addresses filled in. */
+>          vmsg->fd_num = 0;
+> @@ -969,8 +969,8 @@ vu_set_mem_table_exec_postcopy(VuDev *dev, VhostUserMsg *vmsg)
+>          /* Return the address to QEMU so that it can translate the ufd
+>           * fault addresses back.
+>           */
+> -        msg_region->userspace_addr = (uintptr_t)(mmap_addr +
+> -                                                 dev_region->mmap_offset);
+> +        msg_region->userspace_addr = dev_region->mmap_addr +
+> +                                     dev_region->mmap_offset;
+>          close(vmsg->fds[i]);
+>      }
+>  
+> -- 
+> 2.43.0
+
 
