@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D64C48BC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74C1C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZv4L-0003zS-B9; Tue, 13 Feb 2024 10:51:37 -0500
+	id 1rZv5M-0001Za-TM; Tue, 13 Feb 2024 10:52:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv48-0003cF-RY
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv45-0005Zy-CC
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707839480;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6fPhdYHmbguZEq4Osn6fTiPYnqI5591O/00HvV3hHMI=;
- b=cNleEEp9/aqyIkLdCVUJ7CLP88NXp8mq7Me3bbeW/FFCe7yFG497vOAeTukhfPeBodqI/P
- 1oQMQBWBBT/BpJALZj6RhGazVx+eD+HjezN1YHnRBG9QOEwxEOJdLlzSyyRSxcQEtkIjyt
- 9GrszEVbHauxCPRbc09Ll7RY8vp//n0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-IY4pRvqEMX6vsWsMMpnMYw-1; Tue, 13 Feb 2024 10:51:19 -0500
-X-MC-Unique: IY4pRvqEMX6vsWsMMpnMYw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a2bffe437b5so291655966b.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:51:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZv5K-0001N7-L7
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:52:38 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZv5J-0005o9-1h
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:52:38 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33cda3dfa06so453920f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:52:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707839555; x=1708444355; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5AxD+0YCMVgkroYfQziax4Z5o2Tig0RRdRnoJR3JtkY=;
+ b=WmMbxwwonlhXPXVoekbf0Gz8IYqfGC/hytzH7JhqLkDLtZwPxxrVqDB3ZHv4Ijdb2h
+ qL6NDcDnF7iOW0SuiVqm119vVL4YqbWbbQViZ9qOl/Y0yfn2YQWGMgTxOdGxK7IJIC+b
+ scVJLUh3hdPFdKSnGK4G6d2BBHfeHZGCd177YB7kCpZuN1WuXGp53g4+8vQnOGKBtoyd
+ GCjGqjvs7gQTskKAdEJemk/mCoY6lG2pf1hQSDIDi51ztBeqJfzMS9ZYBEEgb8MBZcvT
+ rNxtqIYq+pOOCcDN6FO5fHYdKNYo/JEotXHYxBMuqmThIhR/tV8hSwyNHTppmvqeoXxi
+ WH+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707839475; x=1708444275;
+ d=1e100.net; s=20230601; t=1707839555; x=1708444355;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6fPhdYHmbguZEq4Osn6fTiPYnqI5591O/00HvV3hHMI=;
- b=IJZHXi4X47qb29SLbQQbwhbe+6J8Zl5JqUrpvvhGqko3rYys3gUXaMBxok22V8qMyj
- vIw1GHgN19HolZeFvXZDT80PknzLK/N5UmWiAz3X6APT2uYIELiFfsBnEVc2hHkCniF3
- 6rYQwWPXsR6qhiNPc8+LhfQNPG3NZ/cCMbaSeQ7Y5AVCvlORqos6BK86gWdZUSuyi0Fd
- OouLbZL4AyQd6NZVXh1skD+80zCtZSLC+/AclZ1vZOlGU/GA3zyLCk/PTECH/jouvJwl
- BJAfn86uRXdbBm20VYM50q/hQEU3dybdqIEUvc6alGT1wNRFP0gNYwkTnsHjFdgO/TCV
- 5FJQ==
-X-Gm-Message-State: AOJu0Ywd2NIFT0X/d7zZWucPTh2jj6ijk5DzkHQD1p/oVOxEC4n5DYSn
- Tbd0bo1lF1n5tXAXCY8XWhqR5V+2u0NNWyhsfN58gIB1+hT57SdcTeDOx89QpIHWmU/VNt4bev0
- 2fupGl2fL5P2ywCJA4UCKPVqsw4ErbNBy1qhBYoDQ5JFiiHBIRb3cvcJ5ZsuwsQbDKsBsxaYKAC
- oH0Ivbod5pXZQ4HnLcGCeUP8xt2T1db93wECRd
-X-Received: by 2002:a17:906:3489:b0:a3c:e69:a62b with SMTP id
- g9-20020a170906348900b00a3c0e69a62bmr7423847ejb.26.1707839475386; 
- Tue, 13 Feb 2024 07:51:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQBd1Y6ovA7tBVl+fOjZ+1etjg3fzweiF4kylultjC1Gyb+4lY++r2TgnePsAFbczPJxUiog==
-X-Received: by 2002:a17:906:3489:b0:a3c:e69:a62b with SMTP id
- g9-20020a170906348900b00a3c0e69a62bmr7423821ejb.26.1707839474975; 
- Tue, 13 Feb 2024 07:51:14 -0800 (PST)
+ bh=5AxD+0YCMVgkroYfQziax4Z5o2Tig0RRdRnoJR3JtkY=;
+ b=NCFNjUR45yL2pGiBv4HSRoJjnol5AN9ozp8kyknN22ZbKSwf4I1n2/G88VggXhUgPC
+ +rpBk6lRXUNusgYmegM8HrFnRvtwuMgvnHA1TQJpWraFOq2UUijB5sng3ISYmTzIttMi
+ g6qyAwQOm+rfgI8A/cs66ubmiZKQIJD5i/u4R10uZDdDfNgP5ZI4b9vCMZ2PwDrom4RN
+ MAUpshcSdPYqdhlzUEjT3EnKZl9pJbnjbDXlcJAqzRbjwckT2WxBjAsqoWvVOIFFJOqM
+ 91w/iudiNYd8JwbVnbW2uf74oUPWZsPaIpLtjXoUn/J2drUAEUorqksCd7Cfjr440j8F
+ 4iDA==
+X-Gm-Message-State: AOJu0YwpU6KDVQDYD2KodsSq+lZFz8Mm39gcIEDMT4CPSjFPxtNy+eZZ
+ BqWmqKESwoUyc0tSMKds3Tggzk2zNvjf2sq3SVDc/Xej0mUbN6UhJelB0SC0EtowCA79n1bF/1/
+ I
+X-Google-Smtp-Source: AGHT+IHa22S3sJLcemZtEQryKbspcIyw9oRwRWTzoCHKqmgahUGJYvJE8r0ivKuYkMbkkKH/+RkA1Q==
+X-Received: by 2002:adf:f890:0:b0:33a:efe0:5a37 with SMTP id
+ u16-20020adff890000000b0033aefe05a37mr6590934wrp.6.1707839555340; 
+ Tue, 13 Feb 2024 07:52:35 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAO2ky7L46qVqxFe/t281xYd/z49pm+amqHgiomK5VBhzKsURNPjzz3S8yicyOaQvN8dD/F+NCU9RlOs/ToFeFtdFZSc9HDyKPI6K2xbm9WTJuxjwV
-Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ AJvYcCXKjmc1SZJV2956P8PE/PBTQFBMsL/I6B51CYt00/z6NkHA8dPuLoMTxxUAlxZ5JadBoGgrTkUki2f4ZOuZGU4GyguZTh8vpyqdlVFG+bhRx9jhJ79t0szDdH4CT+7QuOuwBlQTD+NaGeFMFYrDMygRMw==
+Received: from m1x-phil.lan ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- s15-20020a17090699cf00b00a3d01eb9bb5sm743523ejn.96.2024.02.13.07.51.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 07:51:08 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ q1-20020adfb181000000b0033b68556c38sm10041274wra.70.2024.02.13.07.52.34
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 13 Feb 2024 07:52:35 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	shentey@gmail.com,
-	balaton@eik.bme.hu
-Subject: [PATCH v3 7/9] mips: allow compiling out CONFIG_MIPS_ITU
-Date: Tue, 13 Feb 2024 16:50:02 +0100
-Message-ID: <20240213155005.109954-8-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240213155005.109954-1-pbonzini@redhat.com>
-References: <20240213155005.109954-1-pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 3/4] hw/arm/stellaris: Add missing QOM 'machine' parent
+Date: Tue, 13 Feb 2024 16:52:13 +0100
+Message-ID: <20240213155214.13619-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240213155214.13619-1-philmd@linaro.org>
+References: <20240213155214.13619-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,169 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-itc_reconfigure() is referenced from TCG, compile out the helpers
-that reference env->itu if CONFIG_MIPS_ITU is not defined.
-This makes it possible to build a QEMU binary that only includes
-boards without a CPS device (only Malta and Boston create one).
+QDev objects created with qdev_new() need to manually add
+their parent relationship with object_property_add_child().
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+This commit plug the devices which aren't part of the SoC;
+they will be plugged into a SoC container in the next one.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/mips/tcg/translate.h         |  1 +
- target/mips/tcg/sysemu_helper.h.inc | 19 +++++++++++++------
- target/mips/tcg/sysemu/cp0_helper.c |  8 ++++++++
- target/mips/tcg/translate.c         | 10 ++++++++++
- 4 files changed, 32 insertions(+), 6 deletions(-)
+ hw/arm/stellaris.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/mips/tcg/translate.h b/target/mips/tcg/translate.h
-index 93a78b81212..d5458f8690d 100644
---- a/target/mips/tcg/translate.h
-+++ b/target/mips/tcg/translate.h
-@@ -9,6 +9,7 @@
- #define TARGET_MIPS_TRANSLATE_H
+diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
+index d3a12fe51c..d9884286b3 100644
+--- a/hw/arm/stellaris.c
++++ b/hw/arm/stellaris.c
+@@ -1271,10 +1271,13 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+                                    &error_fatal);
  
- #include "cpu.h"
-+
- #include "tcg/tcg-op.h"
- #include "exec/translator.h"
- #include "exec/helper-gen.h"
-diff --git a/target/mips/tcg/sysemu_helper.h.inc b/target/mips/tcg/sysemu_helper.h.inc
-index f163af1eac7..92d01c49bf6 100644
---- a/target/mips/tcg/sysemu_helper.h.inc
-+++ b/target/mips/tcg/sysemu_helper.h.inc
-@@ -9,6 +9,8 @@
-  * SPDX-License-Identifier: LGPL-2.1-or-later
-  */
+             ssddev = qdev_new("ssd0323");
++            object_property_add_child(OBJECT(ms), "oled", OBJECT(ssddev));
+             qdev_prop_set_uint8(ssddev, "cs", 1);
+             qdev_realize_and_unref(ssddev, bus, &error_fatal);
  
-+#include CONFIG_DEVICES
-+
- /* CP0 helpers */
- DEF_HELPER_1(mfc0_mvpcontrol, tl, env)
- DEF_HELPER_1(mfc0_mvpconf0, tl, env)
-@@ -31,8 +33,6 @@ DEF_HELPER_1(mftc0_tcschedule, tl, env)
- DEF_HELPER_1(mfc0_tcschefback, tl, env)
- DEF_HELPER_1(mftc0_tcschefback, tl, env)
- DEF_HELPER_1(mfc0_count, tl, env)
--DEF_HELPER_1(mfc0_saar, tl, env)
--DEF_HELPER_1(mfhc0_saar, tl, env)
- DEF_HELPER_1(mftc0_entryhi, tl, env)
- DEF_HELPER_1(mftc0_status, tl, env)
- DEF_HELPER_1(mftc0_cause, tl, env)
-@@ -57,7 +57,6 @@ DEF_HELPER_1(dmfc0_lladdr, tl, env)
- DEF_HELPER_1(dmfc0_maar, tl, env)
- DEF_HELPER_2(dmfc0_watchlo, tl, env, i32)
- DEF_HELPER_2(dmfc0_watchhi, tl, env, i32)
--DEF_HELPER_1(dmfc0_saar, tl, env)
- #endif /* TARGET_MIPS64 */
+             gpio_d_splitter = qdev_new(TYPE_SPLIT_IRQ);
++            object_property_add_child(OBJECT(ms), "splitter",
++                                      OBJECT(gpio_d_splitter));
+             qdev_prop_set_uint32(gpio_d_splitter, "num-lines", 2);
+             qdev_realize_and_unref(gpio_d_splitter, NULL, &error_fatal);
+             qdev_connect_gpio_out(
+@@ -1314,6 +1317,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
+         DeviceState *gpad;
  
- DEF_HELPER_2(mtc0_index, void, env, tl)
-@@ -103,9 +102,6 @@ DEF_HELPER_2(mtc0_srsconf4, void, env, tl)
- DEF_HELPER_2(mtc0_hwrena, void, env, tl)
- DEF_HELPER_2(mtc0_pwctl, void, env, tl)
- DEF_HELPER_2(mtc0_count, void, env, tl)
--DEF_HELPER_2(mtc0_saari, void, env, tl)
--DEF_HELPER_2(mtc0_saar, void, env, tl)
--DEF_HELPER_2(mthc0_saar, void, env, tl)
- DEF_HELPER_2(mtc0_entryhi, void, env, tl)
- DEF_HELPER_2(mttc0_entryhi, void, env, tl)
- DEF_HELPER_2(mtc0_compare, void, env, tl)
-@@ -189,3 +185,14 @@ DEF_HELPER_2(lcsr_drdcsr, i64, env, tl)
- DEF_HELPER_3(lcsr_wrcsr, void, env, tl, tl)
- DEF_HELPER_3(lcsr_dwrcsr, void, env, tl, tl)
- #endif
-+
-+#ifdef CONFIG_MIPS_ITU
-+DEF_HELPER_1(mfc0_saar, tl, env)
-+DEF_HELPER_1(mfhc0_saar, tl, env)
-+DEF_HELPER_2(mtc0_saari, void, env, tl)
-+DEF_HELPER_2(mtc0_saar, void, env, tl)
-+DEF_HELPER_2(mthc0_saar, void, env, tl)
-+#ifdef TARGET_MIPS64
-+DEF_HELPER_1(dmfc0_saar, tl, env)
-+#endif
-+#endif
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index 62f6fb4bf65..dde890adf3f 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -21,6 +21,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include CONFIG_DEVICES
-+
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "cpu.h"
-@@ -371,6 +373,7 @@ target_ulong helper_mfc0_count(CPUMIPSState *env)
-     return (int32_t)cpu_mips_get_count(env);
- }
- 
-+#ifdef CONFIG_MIPS_ITU
- target_ulong helper_mfc0_saar(CPUMIPSState *env)
- {
-     if ((env->CP0_SAARI & 0x3f) < 2) {
-@@ -386,6 +389,7 @@ target_ulong helper_mfhc0_saar(CPUMIPSState *env)
-     }
-     return 0;
- }
-+#endif
- 
- target_ulong helper_mftc0_entryhi(CPUMIPSState *env)
- {
-@@ -514,6 +518,7 @@ target_ulong helper_dmfc0_watchhi(CPUMIPSState *env, uint32_t sel)
-     return env->CP0_WatchHi[sel];
- }
- 
-+#ifdef CONFIG_MIPS_ITU
- target_ulong helper_dmfc0_saar(CPUMIPSState *env)
- {
-     if ((env->CP0_SAARI & 0x3f) < 2) {
-@@ -521,6 +526,7 @@ target_ulong helper_dmfc0_saar(CPUMIPSState *env)
-     }
-     return 0;
- }
-+#endif
- #endif /* TARGET_MIPS64 */
- 
- void helper_mtc0_index(CPUMIPSState *env, target_ulong arg1)
-@@ -1100,6 +1106,7 @@ void helper_mtc0_count(CPUMIPSState *env, target_ulong arg1)
-     cpu_mips_store_count(env, arg1);
- }
- 
-+#ifdef CONFIG_MIPS_ITU
- void helper_mtc0_saari(CPUMIPSState *env, target_ulong arg1)
- {
-     uint32_t target = arg1 & 0x3f;
-@@ -1139,6 +1146,7 @@ void helper_mthc0_saar(CPUMIPSState *env, target_ulong arg1)
+         gpad = qdev_new(TYPE_STELLARIS_GAMEPAD);
++        object_property_add_child(OBJECT(ms), "gamepad", OBJECT(gpad));
+         for (i = 0; i < ARRAY_SIZE(gpad_keycode); i++) {
+             qlist_append_int(gpad_keycode_list, gpad_keycode[i]);
          }
-     }
- }
-+#endif
- 
- void helper_mtc0_entryhi(CPUMIPSState *env, target_ulong arg1)
- {
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 12094cc1e7c..b130222708b 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -49,6 +49,16 @@
- #ifdef CONFIG_USER_ONLY
- STUB_HELPER(cache, TCGv_env env, TCGv val, TCGv_i32 reg)
- #endif
-+#if defined CONFIG_SYSTEM_ONLY && !defined CONFIG_MIPS_ITU
-+STUB_HELPER(mfc0_saar, TCGv ret, TCGv_env env)
-+STUB_HELPER(mfhc0_saar, TCGv ret, TCGv_env env)
-+STUB_HELPER(mtc0_saari, TCGv_env env, TCGv val)
-+STUB_HELPER(mtc0_saar, TCGv_env env, TCGv val)
-+STUB_HELPER(mthc0_saar, TCGv_env env, TCGv val)
-+#ifdef TARGET_MIPS64
-+STUB_HELPER(dmfc0_saar, TCGv ret, TCGv_env env)
-+#endif
-+#endif
- 
- enum {
-     /* indirect opcode tables */
 -- 
-2.43.0
+2.41.0
 
 
