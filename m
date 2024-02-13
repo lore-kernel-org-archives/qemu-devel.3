@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163F8C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12162C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZnkL-0004J2-Cy; Tue, 13 Feb 2024 03:02:29 -0500
+	id 1rZnk4-0004B0-Sm; Tue, 13 Feb 2024 03:02:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnk7-0004Bq-83; Tue, 13 Feb 2024 03:02:18 -0500
+ id 1rZnjp-00045U-LF; Tue, 13 Feb 2024 03:01:59 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnk5-0007Bt-QI; Tue, 13 Feb 2024 03:02:15 -0500
+ id 1rZnjn-00078x-TM; Tue, 13 Feb 2024 03:01:57 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 41FC34CBD3;
- Tue, 13 Feb 2024 11:01:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B19614CBCA;
+ Tue, 13 Feb 2024 11:01:56 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6A8987CF21;
- Tue, 13 Feb 2024 11:01:52 +0300 (MSK)
-Received: (nullmailer pid 160914 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id DA5CD7CF18;
+ Tue, 13 Feb 2024 11:01:51 +0300 (MSK)
+Received: (nullmailer pid 160887 invoked by uid 1000);
  Tue, 13 Feb 2024 08:01:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-trivial@nongnu.org,
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 10/15] iothread: Simplify expression in qemu_in_iothread()
-Date: Tue, 13 Feb 2024 11:01:46 +0300
-Message-Id: <20240213080151.160839-11-mjt@tls.msk.ru>
+Subject: [PULL 01/15] hw/isa/vt82c686: Consolidate the use of
+ device_class_set_parent_realize()
+Date: Tue, 13 Feb 2024 11:01:37 +0300
+Message-Id: <20240213080151.160839-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213080151.160839-1-mjt@tls.msk.ru>
 References: <20240213080151.160839-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,31 +62,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-'a == b ? false : true' is a rather convoluted way of writing 'a != b'.
-Use the more obvious way to write it.
+Use device_class_set_parent_realize() to set parent realize() directly.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- iothread.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/isa/vt82c686.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/iothread.c b/iothread.c
-index 6c1fc8c856..e1e9e04736 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -404,6 +404,5 @@ IOThread *iothread_by_id(const char *id)
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index d3e0f6d01f..a99eae4f63 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -328,8 +328,8 @@ static void via_superio_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
  
- bool qemu_in_iothread(void)
- {
--    return qemu_get_current_aio_context() == qemu_get_aio_context() ?
--                    false : true;
-+    return qemu_get_current_aio_context() != qemu_get_aio_context();
+-    sc->parent_realize = dc->realize;
+-    dc->realize = via_superio_realize;
++    device_class_set_parent_realize(dc, via_superio_realize,
++                                    &sc->parent_realize);
  }
+ 
+ static const TypeInfo via_superio_info = {
 -- 
 2.39.2
 
