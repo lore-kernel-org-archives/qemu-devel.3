@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A67C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B53C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZuqJ-0002v4-FV; Tue, 13 Feb 2024 10:37:07 -0500
+	id 1rZuqP-00032t-Hw; Tue, 13 Feb 2024 10:37:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZuqC-0002tt-Ia
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:37:00 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1rZuqE-0002uN-I7; Tue, 13 Feb 2024 10:37:02 -0500
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZuq8-0002tS-MM
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:36:59 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a3d2587116aso27904666b.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:36:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1rZuqC-0002tk-Ky; Tue, 13 Feb 2024 10:37:02 -0500
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-218642337c9so2881841fac.3; 
+ Tue, 13 Feb 2024 07:36:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707838614; x=1708443414; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nUWmpwH/S6RGkePwrN5rWR3F0YowSCEcNgLh4WXbEww=;
- b=DVPwi21KvIqDQNCYlCc0TPAqYVn1AMr1yZmL9Q+/Dy+2nmzBzy7mjXA6ItvdwkkKk0
- BWaRBGSYgdOhhwG5jNrwQWOK+XPe6f4nsBdYJ3emqYw1E3pBeC1g5IvW/Cg/focqc0Gp
- xkFydlfnM6BHsL1iNJ1ya3QWuXu0VQH2yCc5a3AZUf2q1SzUE2ljosAk6zpgL3hX2c4q
- xcCXQgyaBKd4/Qnev5RKQitWIn5DyGpOo8OASQd2qo4FuKeF/IB5G/oF9kB39Qa70xLF
- 77ji5PKEfAGWXZKg8CUzRAIo8Z27KdAIOPYN0XURS1I88MdEdsNaQAAgzSbX2cMJszD2
- FxLw==
+ d=gmail.com; s=20230601; t=1707838616; x=1708443416; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+ :reply-to; bh=RIY5JGQ893Swhqnl00DbijJIsjOgVQf2gvslS8q3HrA=;
+ b=basTNekECNmNMM0QJ/aQXZ4eGFteAHb7vspSkqxyhg4l8knApHll9xlJcFag0VoTBc
+ ia4UELZdUxXViOWJ37Sxfo0f5oUNO3I71oHhx5ebuV4hTY6IxB3LaaoSIQWcaNqWLZya
+ PDZPP4vbeVA7Fj3ctabj3uJ7VzBq6QXI+Cps+EYVpKsenG9I8lWtCcGSTvqIJOf1C9/s
+ gQiIsrjkqRyrgFrtypYml75wGi+AIWuMEFsSA/cEJkawb8oKccIsGap6PXAWDsYVv0Ft
+ N3ZYLnJZrKCGM7mYq34a3p6pghRdTIiVpfJY7XCScV4c1DpUT7MUldjF/uVyzViKFJEo
+ +0vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707838614; x=1708443414;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nUWmpwH/S6RGkePwrN5rWR3F0YowSCEcNgLh4WXbEww=;
- b=qvIfesOzFpJZwmxxzkLfCdwTVVT7pwgCkj4OwIiQiK/B4C4L7BPPE50z35Tb22kvmW
- MJnCzgQf0ufBNjiMjni/7d9EMwunuYLcUiS7ftYUy3YiZ8b8rksLaauJ6itp19IyBovV
- Ua5nnPTAiq4/vfCHhAuM376a0ePBD6x9pJLrHyzgnnxKRWt/28rg1O81v6iy3T/OLhm+
- sEpEq8cvPXR3t6B72qzxjqF3yr3Er3LprjSqCknWCwXZUVEEeTh/0AbqyMS5MG8OCA0P
- IukMxOrr1xEKqwbN8j+2nTD6rgUd/2u6Z/mbFvq8hkFrh4mvTxswJ1sV0j7x9y5WOiBg
- ph1A==
-X-Gm-Message-State: AOJu0Yx1y2dA4wKlOgjWcqTvjEwTePgO0ewHFoWwGlGJ+5veDjrmMtUA
- +l3jWJSze4GNOimsoGMB5jwbuRYKgyJcXcLTZiCVq+gxS4ctr5dvsNNu0cGlXEs=
-X-Google-Smtp-Source: AGHT+IFOyVhTmbljh/+aY/ndcr2glqGdQLMGDhspVbD8KEoUCyCmXYrwi2YNgb4Gl0HBXmZo5n/leQ==
-X-Received: by 2002:a17:906:e093:b0:a3d:6f4:b5f7 with SMTP id
- gh19-20020a170906e09300b00a3d06f4b5f7mr1291214ejb.49.1707838613805; 
- Tue, 13 Feb 2024 07:36:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707838616; x=1708443416;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RIY5JGQ893Swhqnl00DbijJIsjOgVQf2gvslS8q3HrA=;
+ b=S6/0C2k2eTXIc+CNBcKRxYnlUb9RE7wXJzdg3uZQnYu0yco8U2qZcI3E7K9WOQXuqz
+ 4gCEdqmVoEClrk73r3Lhuxqo+vMQORNkmdEuN3gMIQIeMgorjwXA4/qyGq8dbaVbdr6q
+ rITdkTvkBFxxu+hihMMed5SCWfvZMwMkT/cSEUSheOKBGJiTs21bVE90hZJovyoCYqEg
+ etJxcNITGEQYoPE+eaw6Ey6OWZXuoJvLB58xjqoeewZxzDlRvxMRV9wKloaQZi4e+Od8
+ xypA3l8Qt8bIJzH4fPkIMlDjnkyzsagJtG5sbN4q1+YJKV1/pzW4gKX3rknuKfgk6+qk
+ LPtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWquRUW6WuT4zpjpLyOmsoZ2VANDZqDgjEhkDl7fMH7XUGDYx7Au4jk0xEVEJreMBsspeaJ6CJhCw+lTEByjXfy3Nj9XOw0eo2kDgWBC9GlEdjeJ7VIHITD0iJdIrvv48Afg7S8E0SyD+9To8q1jeX1xnUX/Gx0bOlKegFeXD1C+TTwfhOKtw9rTUclChPdnT2ENkaPJ1IFVYO79ElgNXo=
-Received: from [192.168.69.100] ([176.176.128.243])
+ AJvYcCW3xgh7hGp699oypC/drobi9REUq8r7WTw36pzHDCIRywTM4/kL4tsHGDOEiaiJOvgoHpyv/IFbn1geHrPBP6v+wzv1
+X-Gm-Message-State: AOJu0YzccRvTiiVrHJdNXUpxJrRj0A2Pj4eB/PjCoU4dDsgiZRI2s58g
+ EFX13zbG6HiOLx/q5CmzBDE7RrTUPkxT/F2fbTqBthhXVYynfOuR
+X-Google-Smtp-Source: AGHT+IFa+472yvNq5+GsuFasZU+/8Xjw3xwsIsqaMKno0kfqU0uXpdB27vhvMQ8GxhAhSB0VSh8WFA==
+X-Received: by 2002:a05:6870:b69f:b0:218:d3dc:67de with SMTP id
+ cy31-20020a056870b69f00b00218d3dc67demr13812437oab.22.1707838616535; 
+ Tue, 13 Feb 2024 07:36:56 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9ryLT/C6nC6ffPkb6CJ6bWj8Rbc+ORhMU16wQBSF+23rZMNwXjnzmgdqkTdESikJ5AjwYG439ngcITIMu6aWxH8D8eRCiKfOeeEVFoYWQ0mtqaRu56mW6zJQdBcgH61gDyLeHq4bYqBL03BEpzd19jmlTjOJmnpSYLsT3WoLyDf3CSnK1q+bbCM5KpilpAZ6JHPoVvdBZ4kfknyi8IhPFk7rO3aDA6blEn75vxGY5IubWcZ8G//jyShPg4Qfgb9K4ALMH3sR6ww/SYN5gLH1K3j0mT2YnsvjrjTAFeZt9a6RjkRJ2jnsSYSNPnvsXc/JIae7k3FCHGRgFyILb6JKz3zlxZRSzlu2DpWF6dWG3
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- un6-20020a170907cb8600b00a3cfb02c12bsm824995ejc.79.2024.02.13.07.36.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 07:36:53 -0800 (PST)
-Message-ID: <7e7646e7-85d1-40a4-8e5e-bca2fcaa6ba5@linaro.org>
-Date: Tue, 13 Feb 2024 16:36:51 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/arm/stellaris: Add missing QOM 'SoC' parent
-Content-Language: en-US
+ n5-20020a632705000000b005dc36279d6dsm2560973pgn.73.2024.02.13.07.36.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 07:36:56 -0800 (PST)
+Date: Tue, 13 Feb 2024 07:36:54 -0800
+From: Guenter Roeck <linux@roeck-us.net>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240130190317.25692-1-philmd@linaro.org>
- <20240130190317.25692-5-philmd@linaro.org>
- <CAFEAcA9V7wQr=LEvv2DYT5SabPe2H3+V2RMQPHRVZ8avrse9ww@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9V7wQr=LEvv2DYT5SabPe2H3+V2RMQPHRVZ8avrse9ww@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Aaro Koskinen <aaro.koskinen@iki.fi>,
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+ Tony Lindgren <tony@atomide.com>, linux-omap@vger.kernel.org,
+ Arnd Bergmann <arnd@arndb.de>, Daniel Mack <daniel@zonque.org>,
+ Robert Jarzmik <robert.jarzmik@free.fr>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+Message-ID: <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=groeck7@gmail.com; helo=mail-oa1-x30.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +106,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/2/24 17:46, Peter Maydell wrote:
-> On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> QDev objects created with qdev_new() need to manually add
->> their parent relationship with object_property_add_child().
->>
->> Since we don't model the SoC, just use a QOM container.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
+On Tue, Feb 13, 2024 at 03:14:21PM +0000, Peter Maydell wrote:
+> On Mon, 12 Feb 2024 at 14:36, Guenter Roeck <linux@roeck-us.net> wrote:
+> > On 2/12/24 04:32, Peter Maydell wrote:
+> > > The machines I have in mind are:
+> > >
+> > > PXA2xx machines:
+> > >
+> > > akita                Sharp SL-C1000 (Akita) PDA (PXA270)
+> > > borzoi               Sharp SL-C3100 (Borzoi) PDA (PXA270)
+> > > connex               Gumstix Connex (PXA255)
+> > > mainstone            Mainstone II (PXA27x)
+> > > spitz                Sharp SL-C3000 (Spitz) PDA (PXA270)
+> > > terrier              Sharp SL-C3200 (Terrier) PDA (PXA270)
+> > > tosa                 Sharp SL-6000 (Tosa) PDA (PXA255)
+> > > verdex               Gumstix Verdex Pro XL6P COMs (PXA270)
+> > > z2                   Zipit Z2 (PXA27x)
+> > >
+> > I test akita, borzoi, spitz, and terrier. Upstream Linux removed support
+> > for mainstone, tosa, and z2 from the Linux kernel as of version 6.0, so
+> > I am no longer testing those.
+> >
+> > I never managed to boot connex or verdex.
+> >
+> > > OMAP1 machines:
+> > >
+> > > cheetah              Palm Tungsten|E aka. Cheetah PDA (OMAP310)
+> > > sx1                  Siemens SX1 (OMAP310) V2
+> > > sx1-v1               Siemens SX1 (OMAP310) V1
+> > >
+> > I test sx1. I don't think I ever tried cheetah, and I could not get sx1-v1
+> > to work.
+> >
+> > > OMAP2 machines:
+> > >
+> > > n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
+> > > n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
+> > >
+> > I never managed to get those to boot the Linux kernel.
+> >
+> > > The one SA1110 machine:
+> > >
+> > > collie               Sharp SL-5500 (Collie) PDA (SA-1110)
+> > >
+> > I do test collie.
+> >
+> > All the ones I use still boot the latest Linux kernel.
+> >
+> > > Obviously if we can remove all the machines that used a given
+> > > SoC, that's much more effective than if we just delete one or two.
+> > >
+> > > I don't have any test images for the SA1110 or OMAP1 machines,
+> > > so those are the ones I am most keen to be able to drop.
+> > > I do have test images for a few of the pxa2xx and the OMAP2 machines.
+> > >
+> > I don't mind dropping them, just listing what I use for testing the
+> > Linux kernel. I suspect I may be the only "user" of those boards,
+> > though, both in Linux and qemu.
 > 
-> Ah, this is where the other qdev_new() calls are sorted.
+> Mmm; there's not much point in both QEMU and the kernel
+> maintaining code that nobody's using. Are you considering
+> dropping support for any of these SoC families from the kernel?
 > 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> I wonder if we should add a variant on qdev_new() that
-> you can pass in the parent object to?
+Not me personally. Arnd is the one mostly involved in dropping
+support of obsolete hardware from the kernel.
 
-Yes, this is what we discussed with Markus. In order to
-stop using the "/unattached" container from pre-QOM,
-qdev_new() must take a QOM parent. I tried to do it but hit
-some problem with some odd use in PPC or S390 (discussed
-with Cédric so likely PPC, I need to go back to it).
+> It sounds like between the two of us we do have at least one
+> test image per SoC type if we do keep any of these, but
+> if it isn't going to inconvenience kernel testing I'm
+> inclined to go ahead with deprecate-and-drop for the whole lot.
+> (With QEMU's deprecate-and-drop policy, that would be "announce
+> deprecation now for 9.0, keep in 9.1, remove before 9.2 release
+> at the end of the year".) At a minimum I would like to drop
+> the OMAP1 and OMAP2 boards, as that's the biggest code burden.
+> 
+
+I am copying Arnd, the OMAP1 Linux kernel maintainers, PXA2 maintainers,
+and the Linux omap mailing list for input. Sorry for the noise for those
+who don't care, but I think it is useful to have your voices heard.
+
+Personally I think it very unlikely that anyone is using the latest Linux
+kernel on any of the affected machines, but I may be wrong.
+
+Thanks,
+Guenter
 
