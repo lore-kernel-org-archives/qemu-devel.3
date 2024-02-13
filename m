@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3394C48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2ACC48BC4
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:46:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZyfp-0004nb-2H; Tue, 13 Feb 2024 14:42:33 -0500
+	id 1rZyg6-0006vv-0l; Tue, 13 Feb 2024 14:42:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyfY-0003lo-Vb
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:18 -0500
+ id 1rZyg1-0006GV-PB
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:46 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyfU-0006LF-N9
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:13 -0500
+ id 1rZyg0-0006PJ-91
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=SiPqZDoxN/9au4TtZYiE2hyFQvJj4ZHJhzc5lZsATWs=; b=eXPXS7sQMPFZJGLKn4eThDtCTN
- KKVkH5rCv9OHV9X5TTMeTwLFn4C03QI9yAlEPiCi9eKF9oUZZt1dv4/YdKGEGwoQBFAkWJ/FN4tWA
- ElPmHJv8bKiLsCBU2QVIPDl8wE+VZ8uKeb60NkeCNhGLB4297LwRfMlcDRc/z2jQ81bBfcacqgTXG
- N9Jy0Gf7+eO/Ux9jwb3T5JpaAPq8vPu8qJgVZWafNbwiAAw6jIIW8xa5vNu1Rb6dyTd2fQNpXJh4G
- RQqEFA8DBn4jgml6BKa/ZUC9bfn406cpwNCIjfxZg54Asw9YB4vd2rpev+6Ge4/SZNS2LR9I2pAZ7
- 70eBnp7Wl1QnsZZRIZKLsNvEweBynTyaJK5TzEoM+ioYuMxuXvJBLFGVsJaM9C1DZe1Lo3cTs7Sgg
- 9QVQ3s5JhZU3r5O0ScHFsZKq3NPU/OJprDXTjwnOVoI4schpj1Ykn3gGTQa22625D6Z8YmVSKQoxv
- oohC6+GPCXCpw5XL6ThWdi95FWW+njRNV4grHYCfPB/tr4n6E7T++8r8eQK64k+M0ueeBk3PNQzfM
- OFFzMdR73RAyHi5kLRYhD0YznxXVClS0JBppxSQKoBhLVfKeDIV3mQQ3VNdV/HA1jfOKZ2V2LbBNs
- 0y97J3AhMqnHvt57LpJM0hbwk4LyCYGf/z3wELZqM=;
+ bh=rztxPF2KL8bBXmJOqN6I30ocrg/o4uM0EjWkKsf+Its=; b=iYTOdRchRnUgbERToQ1Z50ELyv
+ jDEoEATzGWGCD2t2BKun9iVWI3uIj/5Ok9YLNlAiALbcYp5D5Lxj2/zTGJljyPUpKbRGn1ZJ1IB2p
+ KYwVqpl38eH7op9qX9L6Xf1wwZNgzetNUtkAAOsWEYh9M/ECLBthHO0/PhH0woVr+FRNXuN5Ga+HX
+ 60G1jiLUD+x/I21M/SEgygPh77woRlTuvsFaEV/OiH/gkCASpVhGWZPnF/hbbSBPq1ioBMjfl9Ke4
+ NGGde7NG52/OqBd7Yk+FVtnarMBpMqywfn4pADcCHYH3o7LgDqMKhiVAZ9ovsWezWIl6KgjaagERL
+ 6Pmyfgt6gE5xAfI0m+wViy9tl3tt+eEzgSO+dhkYsslrl2hHeUBdDP1Ixya2gYYI2TQL1/22KdiwR
+ pl6LLqMTrIvhFm7eN6OyILuN5EfZisrq3Zkmu7Bin5XNZAiOzdDnN8L9WOxzdKpDOMGUivEY3Ypaf
+ ZH9FpQygZHS8E4ZB1dqEpsZqkVOxDp6X2NWOEWKTN8SetKc4fltxf+SwiIvZtpoMYK9YN7dE+mZSM
+ d9FPDJKNtv0bgzAESD3wh6SlnudFWyz1FJxvqlr5hs9UZFNUtneHkLKe5z9F1DnifqtVbfygYbM0p
+ lYZKBV0bdwRIPujRFslTyWacH70xrG43Vo5t3luME=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyec-0008m4-G3; Tue, 13 Feb 2024 19:41:21 +0000
+ id 1rZyf9-0008m4-M3; Tue, 13 Feb 2024 19:41:53 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:39:41 +0000
-Message-Id: <20240213194052.1162753-18-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Feb 2024 19:39:51 +0000
+Message-Id: <20240213194052.1162753-28-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
@@ -53,8 +53,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 17/88] esp.c: don't reset the TC and ESP_RSEQ state when
- executing a SCSI command
+Subject: [PULL 27/88] esp.c: update end of transfer logic at the end of
+ esp_transfer_data()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,33 +80,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need to manually reset these values as the ESP emulation now
-correctly handles them within its existing logic.
+Since esp_dma_done() is called in both cases, and ti_size cannot be zero
+(otherwise esp_command_complete() would have been called instead), replace
+the conditional logic with a single call to esp_dma_done().
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Tested-by: Helge Deller <deller@gmx.de>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240112125420.514425-18-mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240112125420.514425-28-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 3 ---
- 1 file changed, 3 deletions(-)
+ hw/scsi/esp.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index f41b2421f9..a4a1f41a40 100644
+index 96123c5f7d..6b0811d3ce 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -319,10 +319,7 @@ static void do_command_phase(ESPState *s)
-     s->ti_size = datalen;
-     fifo8_reset(&s->cmdfifo);
-     if (datalen != 0) {
--        s->rregs[ESP_RSTAT] = STAT_TC;
--        s->rregs[ESP_RSEQ] = SEQ_CD;
-         s->ti_cmd = 0;
--        esp_set_tc(s, 0);
-         if (datalen > 0) {
-             /*
-              * Switch to DATA IN phase but wait until initial data xfer is
+@@ -925,16 +925,10 @@ void esp_transfer_data(SCSIRequest *req, uint32_t len)
+      */
+ 
+     if (s->ti_cmd == (CMD_TI | CMD_DMA)) {
+-        if (dmalen) {
+-            esp_do_dma(s);
+-        } else if (s->ti_size <= 0) {
+-            /*
+-             * If this was the last part of a DMA transfer then the
+-             * completion interrupt is deferred to here.
+-             */
+-            esp_dma_done(s);
+-            esp_lower_drq(s);
+-        }
++        /* When the SCSI layer returns more data, raise deferred INTR_BS */
++        esp_dma_done(s);
++
++        esp_do_dma(s);
+     } else if (s->ti_cmd == CMD_TI) {
+         esp_do_nodma(s);
+     }
 -- 
 2.39.2
 
