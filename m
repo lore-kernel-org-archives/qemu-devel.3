@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C060C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08E6C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:03:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZnkF-0004EY-9n; Tue, 13 Feb 2024 03:02:23 -0500
+	id 1rZnk4-00049d-GF; Tue, 13 Feb 2024 03:02:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnjx-00047c-2u; Tue, 13 Feb 2024 03:02:07 -0500
+ id 1rZnjs-00046I-RI; Tue, 13 Feb 2024 03:02:01 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnjv-0007AB-KU; Tue, 13 Feb 2024 03:02:04 -0500
+ id 1rZnjr-00079P-6K; Tue, 13 Feb 2024 03:02:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EAF3E4CBCE;
+ by isrv.corpit.ru (Postfix) with ESMTP id BF7944CBCB;
  Tue, 13 Feb 2024 11:01:56 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1DE4D7CF1C;
- Tue, 13 Feb 2024 11:01:52 +0300 (MSK)
-Received: (nullmailer pid 160899 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id E85877CF19;
+ Tue, 13 Feb 2024 11:01:51 +0300 (MSK)
+Received: (nullmailer pid 160890 invoked by uid 1000);
  Tue, 13 Feb 2024 08:01:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-trivial@nongnu.org,
- qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 05/15] hw/smbios: Fix OEM strings table option validation
-Date: Tue, 13 Feb 2024 11:01:41 +0300
-Message-Id: <20240213080151.160839-6-mjt@tls.msk.ru>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 02/15] hw/isa/pc87312: Consolidate the use of
+ device_class_set_parent_realize()
+Date: Tue, 13 Feb 2024 11:01:38 +0300
+Message-Id: <20240213080151.160839-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213080151.160839-1-mjt@tls.msk.ru>
 References: <20240213080151.160839-1-mjt@tls.msk.ru>
@@ -61,47 +62,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-qemu_smbios_type11_opts did not have the list terminator and that
-resulted in out-of-bound memory access. It also needs to have an element
-for the type option.
+Use device_class_set_parent_realize() to set parent realize() directly.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 2d6dcbf93fb0 ("smbios: support setting OEM strings table")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/smbios/smbios.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/isa/pc87312.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index c0c5a81e66..a9048c1342 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -375,6 +375,11 @@ static const QemuOptDesc qemu_smbios_type8_opts[] = {
- };
+diff --git a/hw/isa/pc87312.c b/hw/isa/pc87312.c
+index ee23f3e164..64dd17b537 100644
+--- a/hw/isa/pc87312.c
++++ b/hw/isa/pc87312.c
+@@ -338,10 +338,10 @@ static void pc87312_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
  
- static const QemuOptDesc qemu_smbios_type11_opts[] = {
-+    {
-+        .name = "type",
-+        .type = QEMU_OPT_NUMBER,
-+        .help = "SMBIOS element type",
-+    },
-     {
-         .name = "value",
-         .type = QEMU_OPT_STRING,
-@@ -385,6 +390,7 @@ static const QemuOptDesc qemu_smbios_type11_opts[] = {
-         .type = QEMU_OPT_STRING,
-         .help = "OEM string data from file",
-     },
-+    { /* end of list */ }
- };
+-    sc->parent_realize = dc->realize;
+-    dc->realize = pc87312_realize;
+     dc->reset = pc87312_reset;
+     dc->vmsd = &vmstate_pc87312;
++    device_class_set_parent_realize(dc, pc87312_realize,
++                                    &sc->parent_realize);
+     device_class_set_props(dc, pc87312_properties);
  
- static const QemuOptDesc qemu_smbios_type17_opts[] = {
+     sc->parallel = (ISASuperIOFuncs){
 -- 
 2.39.2
 
