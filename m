@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C85BC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 04:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA03C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 04:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZkH2-00054B-2t; Mon, 12 Feb 2024 23:20:00 -0500
+	id 1rZkZi-0008V5-85; Mon, 12 Feb 2024 23:39:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZkH0-000543-Vl
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 23:19:58 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZkZd-0008SZ-Jq
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 23:39:14 -0500
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZkGz-0002rz-B8
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 23:19:58 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a3566c0309fso471758766b.1
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 20:19:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZkZa-0005zc-F9
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 23:39:11 -0500
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2d107900457so3886111fa.1
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 20:39:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707797995; x=1708402795; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4c+pEmVTR6F0UzIp4J5WPN/yZvO+7j9ZAv4sXZea+Z4=;
- b=hf2T9nCm1lmjHVehaCvpLu2lppp0VtKtaL91CpKxmCTgfOX/6T07/EyZHMZwu5IQFH
- QJXNOPsc4J7H7AgOTSH7PndatcHU1GSYUn8RRCCtgW8DzCHjxr+MNTzXRumwMfai84O6
- pTAPKo7ZFBoffbjy7c63OtHaWP/Lupnuu4mb9sedRe8dPf9SIJY0FXpj2jIxgVyO8xC7
- UAwiMISW4iAUbJ0W3JASMFt4CpwJjSbs8jc/Q/exQ4ehka0F1Y9q4YPpEHfXh/F9biVR
- 8CVZvwpKBoY50zf45WC687vT0m8OvRDdTDw+26y7Wi+RavcgScYSBmkboqloTkeLjWpm
- 4aBw==
+ d=linaro.org; s=google; t=1707799147; x=1708403947; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=o6pxcy83+qY+qqR1JfeBd83QWY3SHzfnMOli7CsxV1g=;
+ b=hl7fXCZXi7maccqm24r5IDkfVPS5OZN0PVEKoLkD30rvSZLDxf4AKtd5oFNqs+wjEP
+ 5zxqrS7fQdG3KjO4FLfL0Qsn1fcpnwx55ABx/qUuHw8A/WVzF0YfnvkN066J3Fxf0RT3
+ ewptUWYlfPB8Rs4VMhqk2mIrYolr5hfCC0rByUggs37qoTI7+obrjTQDlBBG85bhqFEr
+ 1G37k80v1J7uRezQdcE+2ErRTGhm1GSfu4Mn4oepfv6dNSs+3qVT+YGFt7HO/lXLyc5E
+ 7AfNm8UiMTTj4ZBslWM2ZQGL7wTbauvWc7cuPSdphW6oqjlBCx3l58At236ZtARSGlWp
+ auFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707797995; x=1708402795;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4c+pEmVTR6F0UzIp4J5WPN/yZvO+7j9ZAv4sXZea+Z4=;
- b=OTUwwcD3p/mcLML2s7qZ03iiKCWl0KzjRwr2/qGr4PVMIU58eb06+4tsW3x6IArcni
- ddFzbOIeeRCyS391yDi0pmk13biWkNgXVGQt+VFxzQFUeoqHW+yG8EmpSp98rCPGsxg0
- ekEjkwHdENKA9GGPC398fSJKT+1wuuV5CVaVbu0YWZwc1raTsPdsxEXTG4rkEL5i/Dd3
- Pt6sFN5WcIBCGOyHdHDrr1LVvuK0HAM86GOsk4kpm0vQRH8LKGRNEfoJ7WZmeBx39pqS
- ZNXQDEoGFQOVmZ96MZD7AxerrNwIbgOBiErtXhQijmvLcwdwTnnYCLPOyrZAjN3eaaXn
- Bbig==
-X-Gm-Message-State: AOJu0Yx/N01hHkRIeyNySF0vRM3Mgs0HK0dWnplgIqHVl70DvN7fl4nw
- 2UvSII5ZVJLaDiHwlOjEAyY0sb0VtbDt038yBZrs1bp5xZOozNQJXB5Y08FHYAsgWtqppjxr3kB
- 3
-X-Google-Smtp-Source: AGHT+IHTNWLwS5ARg1hXVXiwxaPuD4PD9L4aSzbSlrxZ338G70lnFvgi0mGLwTPjZXkMbK7YOtWWuA==
-X-Received: by 2002:a17:906:5ad8:b0:a3c:9bc7:7a0e with SMTP id
- x24-20020a1709065ad800b00a3c9bc77a0emr3199632ejs.9.1707797995308; 
- Mon, 12 Feb 2024 20:19:55 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707799147; x=1708403947;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=o6pxcy83+qY+qqR1JfeBd83QWY3SHzfnMOli7CsxV1g=;
+ b=kBGkgRva3yf9nGme/hcldu65fQjSICJKdB5B7fYD8NLLYnEwY4vq69U4V84wrHT9ST
+ IY7tgNtJp2Z1tW7yipMBww/J7kz3d+35G9nG8Zu0CUGA5mHqz/NeayeTRZI1ZtGW47iM
+ azde3zLrEzZ+h1yDhgcSooRqPPiXNUaxDH3AnEqkAlM2l7i8UJi7vge5h5VnqNJProo0
+ nl23aWSbYhUfIzVUXpDp1jop7XSTt/aLKOFQXl+kACM9cxHETzCNjBxNkZmCOGWZGqQd
+ eG9rh7Ha2wZHSmz5+R99CSebgq4IiRkkqEv46FxMh7fOSikmrTZfrpuODN1KnmnccDzW
+ kAOw==
+X-Gm-Message-State: AOJu0Yy/9wlUk91tMf8BB0wvqGopvt0ZEkfQepW/PgaM6HM520mvikkJ
+ +wC5tHAKYOnZD+MGLEEW/ABcrmXZTBZZHUZboh+/7X9FqI7vN0UHM7A/xaqxZ+gW0o+wXj2uBhd
+ 9
+X-Google-Smtp-Source: AGHT+IF1YM6VspSFl6mXJhbfidWjAJDV1Te+VtIvos2AAaj+/nyLYm4HDpvbtxFr4APXjlbXOrCXFA==
+X-Received: by 2002:a05:651c:a12:b0:2d1:749:c85f with SMTP id
+ k18-20020a05651c0a1200b002d10749c85fmr526820ljq.47.1707799146683; 
+ Mon, 12 Feb 2024 20:39:06 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUMU9UWbR8rzOiPYzCS+C32rtoQTffTPX9Ensw9MBqKktpZyQcUsi255DsHdZgZL/pizKcvPqLw8GAUWg02CeHw7QdxBBd8mScX8aRK82W3X8htq1wGee7sFwOEf2SDLXZ37bUVhZ0rqmBv5VEeLv4AsBH6U5VILyLMTfHQnqrOV+JjSdkhyYSlvQyMtRTYZNdAVK53KDlaDZnhS/1wNA7Nq+YNevCkK+eSVQ==
+ AJvYcCWelYw+K+czkwcdHJjSKFRz8AzTHcxEzN5x7MjPxiZwA4JRoNdiQl8OQR9ApRI2okuGK/u6ji/kRMcoZak3PUW57zQPM0+ZsIzpNzAhMJP2kZ7wdzk=
 Received: from m1x-phil.lan ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- vi16-20020a170907d41000b00a3ce31d3ffdsm697108ejc.93.2024.02.12.20.19.54
+ em8-20020a056402364800b00561740859b3sm3096177edb.19.2024.02.12.20.39.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 Feb 2024 20:19:54 -0800 (PST)
+ Mon, 12 Feb 2024 20:39:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Bernhard Beschow <shentey@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-trivial@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/i386/q35: Simplify pc_q35_init() since PCI is always
- enabled
-Date: Tue, 13 Feb 2024 05:19:52 +0100
-Message-ID: <20240213041952.58840-1-philmd@linaro.org>
+Subject: [PATCH 1/3] hw/usb: Style cleanup
+Date: Tue, 13 Feb 2024 05:38:57 +0100
+Message-ID: <20240213043859.61019-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240213043859.61019-1-philmd@linaro.org>
+References: <20240213043859.61019-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,94 +96,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can not create the Q35 machine without PCI, so simplify
-pc_q35_init() removing pointless checks.
+We are going to modify these lines, fix their style
+in order to avoid checkpatch.pl warning.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_q35.c | 32 ++++++++++----------------------
- 1 file changed, 10 insertions(+), 22 deletions(-)
+ hw/usb/hcd-ehci.c | 3 ++-
+ hw/usb/hcd-uhci.c | 6 ++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 7ca3f465e0..5923621845 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -130,8 +130,7 @@ static void pc_q35_init(MachineState *machine)
-     ISADevice *rtc_state;
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *system_io = get_system_io();
--    MemoryRegion *pci_memory;
--    MemoryRegion *rom_memory;
-+    MemoryRegion *pci_memory = g_new(MemoryRegion, 1);
-     GSIState *gsi_state;
-     ISABus *isa_bus;
-     int i;
-@@ -143,6 +142,8 @@ static void pc_q35_init(MachineState *machine)
-     bool keep_pci_slot_hpc;
-     uint64_t pci_hole64_size = 0;
+diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+index 870c72cb59..98a2860069 100644
+--- a/hw/usb/hcd-ehci.c
++++ b/hw/usb/hcd-ehci.c
+@@ -1086,8 +1086,9 @@ static void ehci_opreg_write(void *ptr, hwaddr addr,
+     case CONFIGFLAG:
+         val &= 0x1;
+         if (val) {
+-            for(i = 0; i < NB_PORTS; i++)
++            for (i = 0; i < NB_PORTS; i++) {
+                 handle_port_owner_write(s, i, 0);
++            }
+         }
+         break;
  
-+    assert(pcmc->pci_enabled);
-+
-     /* Check whether RAM fits below 4G (leaving 1/2 GByte for IO memory
-      * and 256 Mbytes for PCI Express Enhanced Configuration Access Mapping
-      * also known as MMCFG).
-@@ -189,16 +190,6 @@ static void pc_q35_init(MachineState *machine)
-         kvmclock_create(pcmc->kvmclock_create_always);
-     }
+diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
+index 7d3c026dae..b95b47f6a4 100644
+--- a/hw/usb/hcd-uhci.c
++++ b/hw/usb/hcd-uhci.c
+@@ -457,8 +457,9 @@ static void uhci_port_write(void *opaque, hwaddr addr,
+             int n;
  
--    /* pci enabled */
--    if (pcmc->pci_enabled) {
--        pci_memory = g_new(MemoryRegion, 1);
--        memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
--        rom_memory = pci_memory;
--    } else {
--        pci_memory = NULL;
--        rom_memory = system_memory;
--    }
--
-     pc_guest_info_init(pcms);
- 
-     if (pcmc->smbios_defaults) {
-@@ -212,14 +203,13 @@ static void pc_q35_init(MachineState *machine)
-     /* create pci host bus */
-     phb = OBJECT(qdev_new(TYPE_Q35_HOST_DEVICE));
- 
--    if (pcmc->pci_enabled) {
--        pci_hole64_size = object_property_get_uint(phb,
--                                                   PCI_HOST_PROP_PCI_HOLE64_SIZE,
--                                                   &error_abort);
--    }
-+    pci_hole64_size = object_property_get_uint(phb,
-+                                               PCI_HOST_PROP_PCI_HOLE64_SIZE,
-+                                               &error_abort);
- 
-     /* allocate ram and load rom/bios */
--    pc_memory_init(pcms, system_memory, rom_memory, pci_hole64_size);
-+    memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
-+    pc_memory_init(pcms, system_memory, pci_memory, pci_hole64_size);
- 
-     object_property_add_child(OBJECT(machine), "q35", phb);
-     object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
-@@ -243,7 +233,7 @@ static void pc_q35_init(MachineState *machine)
-     pcms->bus = host_bus;
- 
-     /* irq lines */
--    gsi_state = pc_gsi_create(&x86ms->gsi, pcmc->pci_enabled);
-+    gsi_state = pc_gsi_create(&x86ms->gsi, true);
- 
-     /* create ISA bus */
-     lpc = pci_new_multifunction(PCI_DEVFN(ICH9_LPC_DEV, ICH9_LPC_FUNC),
-@@ -286,9 +276,7 @@ static void pc_q35_init(MachineState *machine)
-         pc_i8259_create(isa_bus, gsi_state->i8259_irq);
-     }
- 
--    if (pcmc->pci_enabled) {
--        ioapic_init_gsi(gsi_state, "q35");
--    }
-+    ioapic_init_gsi(gsi_state, "q35");
- 
-     if (tcg_enabled()) {
-         x86_register_ferr_irq(x86ms->gsi[13]);
+             n = (addr >> 1) & 7;
+-            if (n >= NB_PORTS)
++            if (n >= NB_PORTS) {
+                 return;
++            }
+             port = &s->ports[n];
+             dev = port->port.dev;
+             if (dev && dev->attached) {
+@@ -513,8 +514,9 @@ static uint64_t uhci_port_read(void *opaque, hwaddr addr, unsigned size)
+             UHCIPort *port;
+             int n;
+             n = (addr >> 1) & 7;
+-            if (n >= NB_PORTS)
++            if (n >= NB_PORTS) {
+                 goto read_default;
++            }
+             port = &s->ports[n];
+             val = port->ctrl;
+         }
 -- 
 2.41.0
 
