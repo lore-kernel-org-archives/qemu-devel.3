@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEBCC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 06:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A47FC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 06:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZmi4-0005Qe-3J; Tue, 13 Feb 2024 01:56:04 -0500
+	id 1rZmhw-0005Pl-4b; Tue, 13 Feb 2024 01:55:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZmi1-0005QB-Db
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 01:56:01 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZmhu-0005PE-73
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 01:55:54 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZmi0-0004Sh-1K
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 01:56:01 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-410c59a3e46so14036795e9.3
- for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 22:55:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZmhs-0004S2-Mg
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 01:55:53 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33cdedb40c4so37023f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 22:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707807358; x=1708412158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707807351; x=1708412151; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=w10q3LEjjDMmCluZ9uvKydR8XHU1z3VR1YfuKoqyb3A=;
- b=zLo8CKtZr1uWZJtyqjW7gYBhIUDrBh1EV0vMpwLx6P3xUEvhw9XiJqxTY0ysbYEZPG
- ssGoNb9k//pB2lt8+a5JuHl2gOItPR3NjEw6a7zc2hl1MV+V3fkRKbtRWdz5L7/62E6e
- DnRS/YJA+82wcodLUM/iMXsiFsbk0fHxOCs4vtb501834yj3kSPJI4GgwJESvt8vzIoR
- YYEJn5DUN3//hmhj6/yzd6HO6RFjB7mPBJ7BTqIKMkq2VgFF2/0BFhFGmu06Zcef2egD
- lubdi/m7M943do/PAe7/V4SW4rp0fAK94d24wwiFdu/5GBVI2k/70i2WaR2vOqtn5skR
- 7JCA==
+ bh=qDA115RBNnbaoapaA3ctGFVN7qT4fmp/58Rp9s8Cipo=;
+ b=xiKoTcMsyg690AudgoOrFOGTMzWe7SSvaT/gDxqCq68HDxuVCtdpeX0DIXcTa5Wo7r
+ /ioTGBicgwvbU6VtrjSjoefI2Hu9HK8xzFt+ezwm49heHRaArJsHJOxXjk3zcoBxE9TC
+ MZ8rOnOCRHkOeYuXBUSjSo89kFvDkPklWK1P7mjCrCrJBcw8UkKGeXe093jLnxLuIbs2
+ fQZIRTXFSQHRClPThgJtB52VZd0H23owxz1Vsm+cSa1do+VN/qR1BAL50Gy29jjTZX+1
+ ixsm3lGFR7xvgGD16mwH23vbIQXVw5oJW2NjVok/4nOUbGxQLJLeDb8dldhLtHfv2TVB
+ +9tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707807358; x=1708412158;
+ d=1e100.net; s=20230601; t=1707807351; x=1708412151;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w10q3LEjjDMmCluZ9uvKydR8XHU1z3VR1YfuKoqyb3A=;
- b=jWGmS2lqU3Dy2wZ+t2kYr4265a/mOoPq+q++hkqlwEsdAEkZoYE8ec4oOviwWq2VHc
- xne3BkQG2zGMlMpUNrAnlEQVqper4Ikov3YJ2j4hciO64b/FULxOB1H3B1Hfp39bOt00
- lIb1YJdiW7pHBjSdGTGCfkwnSLoi31aNKu8XE4JKoXGTI7L/4iVOnSfb/Er5fvl0CBse
- Xcys/dDUDCTy1zV3/mFTe8f7wle20+bp6ouWeVS6ngdYwYADEJElMxc/zyUJGwPI7J1H
- 6hudN1wnaacxu9PvWK5Zkr/W/yue+XNoJz3v3t25cyTcxnhqsFfSd1VnEcN/QvtqpkFA
- 2z+g==
-X-Gm-Message-State: AOJu0Yybe7XnhWfdda9/jYypeMv8CnfT+Zuv6xeSeyB63wjMQgxdDMT3
- HrY7Gw7St2TnvNDgZHTq0OLJRuxPyu90hXH1kcNyQgwwJWMRR98hiY/28CBojqU=
-X-Google-Smtp-Source: AGHT+IEYpmQmmK0nT3pmQXmnH2FY7fv/FL+m2/8RZsiK+3EzB6WG9BM2WHCtorZXhBB2dcFTU+x/FA==
-X-Received: by 2002:a05:600c:4f91:b0:410:eba0:6d9a with SMTP id
- n17-20020a05600c4f9100b00410eba06d9amr2716766wmq.11.1707807358637; 
- Mon, 12 Feb 2024 22:55:58 -0800 (PST)
+ bh=qDA115RBNnbaoapaA3ctGFVN7qT4fmp/58Rp9s8Cipo=;
+ b=ZHnyU8ciPEzdaEsDDiikoSkH5y7/N4FJT/p460RMAa2P6b51QU0stBx45mc5eJCn0e
+ mUuh1UCcyJ44Oo0EmuCEkqieVISxZlmJnW93JpoCTYcFAcfo/ukfjRhtc/H3JcCI5vq3
+ Cj8RZ9iSFm3nOy8IRtElqBTlAWMERaU3iY9odBazUSUt6duJNpvHJtoZnzbLwPPjrgJ5
+ Sz8oz7f0a/Nlu87AIuWbxJoZYjnvvA0sfLJ4wzI8gVQpiFkBBcUgGqbzvusYN1epq5X/
+ EgLcGi2eUZMsfdJ9EyUnLppHYxxwl7PlVVmLD1BOF9lEeOIV+BgKRkTQNmlDN6MhKem1
+ gPMA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUxrVI+EnBUZ/dZBnl1oIl+z6ILmk3n6aoQVUR7itRqFTP0lFKxkKX8OQM7zkT48QG6kchgnE+WT/IbDThoSxhK8EOT2M=
+ AJvYcCWOdSvfTFGE5ORHU9JU06Ui1VMg6i+9ig69eNBbK97IOt/kIFITOdV8QWBF3P8NM/zTYcTXkGHsEEzuBEg77ej9OWISZS4=
+X-Gm-Message-State: AOJu0Yw+RHHdOSFcbYbKcjjSXUT4AloRN+cEE/edyAz0+rFUXh0HSxyX
+ +U7fLTzifxx0kLau1b3JoUKHrxEFu2SUjvGNkK1FFQu3UVZkvkUsYNFL90jj6zXrEKI9f3/biZx
+ U
+X-Google-Smtp-Source: AGHT+IGkOiOZsHXLUDz+nAjkXQBDTS55StqrtiSpcY+aed9EzTMCif6T1EEBSZA5wlAs/wISJuWFoQ==
+X-Received: by 2002:adf:f1cf:0:b0:33b:3b00:520d with SMTP id
+ z15-20020adff1cf000000b0033b3b00520dmr5945528wro.51.1707807350893; 
+ Mon, 12 Feb 2024 22:55:50 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcM++vrU7h9PoCNUJVkxq29yWM0l02ky1knR6TRU208g/SF/N+Gg2zWqV9X0VK76Qgy8ikfZoE5ZlOxv7v/89+7K3YJr6/FJai1PW1KRUlvNNNcGEYrtDy+/G6elqZ
 Received: from [192.168.69.100] ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- e27-20020a5d595b000000b0033b80a0d002sm5338566wri.57.2024.02.12.22.55.57
+ e27-20020a5d595b000000b0033b80a0d002sm5338566wri.57.2024.02.12.22.55.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Feb 2024 22:55:58 -0800 (PST)
-Message-ID: <ab447c2a-eb8e-499b-b943-4b7c5dd9412c@linaro.org>
-Date: Tue, 13 Feb 2024 07:55:57 +0100
+ Mon, 12 Feb 2024 22:55:50 -0800 (PST)
+Message-ID: <4c4fda8b-2a0d-46c8-b965-49a4e6533634@linaro.org>
+Date: Tue, 13 Feb 2024 07:55:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/block/tc58128: Don't emit deprecation warning under
- qtest
+Subject: Re: [PATCH] system: Move memory_ldst.c.inc to system
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240206154151.155620-1-peter.maydell@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+References: <20240209000505.B07D04E6049@zero.eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240206154151.155620-1-peter.maydell@linaro.org>
+In-Reply-To: <20240209000505.B07D04E6049@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,16 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/24 16:41, Peter Maydell wrote:
-> Suppress the deprecation warning when we're running under qtest,
-> to avoid "make check" including warning messages in its output.
+On 9/2/24 01:05, BALATON Zoltan wrote:
+> This file is only used by system/physmem.c so move them together.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/block/tc58128.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   memory_ldst.c.inc => system/memory_ldst.c.inc | 0
+>   1 file changed, 0 insertions(+), 0 deletions(-)
+>   rename memory_ldst.c.inc => system/memory_ldst.c.inc (100%)
+> 
+> diff --git a/memory_ldst.c.inc b/system/memory_ldst.c.inc
+> similarity index 100%
+> rename from memory_ldst.c.inc
+> rename to system/memory_ldst.c.inc
 
 Patched queued, thanks.
-
 
 
