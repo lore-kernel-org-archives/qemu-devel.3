@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19E9C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D10C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZnjt-000467-JB; Tue, 13 Feb 2024 03:02:03 -0500
+	id 1rZnkJ-0004J0-83; Tue, 13 Feb 2024 03:02:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnjp-00045L-9Z; Tue, 13 Feb 2024 03:01:57 -0500
+ id 1rZnjw-00047b-FL; Tue, 13 Feb 2024 03:02:07 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnjn-00078v-F8; Tue, 13 Feb 2024 03:01:57 -0500
+ id 1rZnjv-0007A5-35; Tue, 13 Feb 2024 03:02:04 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A93A64CBC9;
+ by isrv.corpit.ru (Postfix) with ESMTP id DB6234CBCD;
  Tue, 13 Feb 2024 11:01:56 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CDA8B7CF17;
- Tue, 13 Feb 2024 11:01:51 +0300 (MSK)
-Received: (nullmailer pid 160883 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 0FF5F7CF1B;
+ Tue, 13 Feb 2024 11:01:52 +0300 (MSK)
+Received: (nullmailer pid 160896 invoked by uid 1000);
  Tue, 13 Feb 2024 08:01:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org
-Subject: [PULL 00/15] Trivial patches for 2024-02-13
-Date: Tue, 13 Feb 2024 11:01:36 +0300
-Message-Id: <20240213080151.160839-1-mjt@tls.msk.ru>
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 04/15] hw/arm/smmuv3: Consolidate the use of
+ device_class_set_parent_realize()
+Date: Tue, 13 Feb 2024 11:01:40 +0300
+Message-Id: <20240213080151.160839-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240213080151.160839-1-mjt@tls.msk.ru>
+References: <20240213080151.160839-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,63 +62,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5005aed8a7e728d028efb40e243ecfc2b4f3df3a:
+From: Zhao Liu <zhao1.liu@intel.com>
 
-  Merge tag 'pull-maintainer-updates-090224-1' of https://gitlab.com/stsquad/qemu into staging (2024-02-12 14:14:10 +0000)
+Use device_class_set_parent_realize() to set parent realize() directly.
 
-are available in the Git repository at:
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ hw/arm/smmuv3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 68eeef3e1d..b3d8642a49 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1857,8 +1857,8 @@ static void smmuv3_class_init(ObjectClass *klass, void *data)
+     dc->vmsd = &vmstate_smmuv3;
+     resettable_class_set_parent_phases(rc, NULL, smmu_reset_hold, NULL,
+                                        &c->parent_phases);
+-    c->parent_realize = dc->realize;
+-    dc->realize = smmu_realize;
++    device_class_set_parent_realize(dc, smmu_realize,
++                                    &c->parent_realize);
+     device_class_set_props(dc, smmuv3_properties);
+ }
+ 
+-- 
+2.39.2
 
-for you to fetch changes up to f6e33708bbb824d493863bc936d3c86fc86f2004:
-
-  monitor/target: Include missing 'exec/memory.h' header (2024-02-13 10:59:25 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2024-02-13
-
-----------------------------------------------------------------
-Akihiko Odaki (2):
-      hw/smbios: Fix OEM strings table option validation
-      hw/smbios: Fix port connector option validation
-
-BALATON Zoltan (2):
-      qemu-options.hx: Add zoom-to-fit to option summary for gtk
-      system: Move memory_ldst.c.inc to system
-
-Kevin Wolf (1):
-      iothread: Simplify expression in qemu_in_iothread()
-
-Markus Armbruster (2):
-      MAINTAINERS: Cover qapi/cxl.json
-      MAINTAINERS: Cover qapi/stats.json
-
-Michael Tokarev (2):
-      qemu-nbd: mention --tls-hostname option in qemu-nbd --help
-      qemu-options.hx: document that tftp=dir is readonly
-
-Philippe Mathieu-Daudé (2):
-      cpu-target: Include missing 'exec/memory.h' header
-      monitor/target: Include missing 'exec/memory.h' header
-
-Zhao Liu (4):
-      hw/isa/vt82c686: Consolidate the use of device_class_set_parent_realize()
-      hw/isa/pc87312: Consolidate the use of device_class_set_parent_realize()
-      hw/intc/s390_flic: Consolidate the use of device_class_set_parent_realize()
-      hw/arm/smmuv3: Consolidate the use of device_class_set_parent_realize()
-
- MAINTAINERS                                   |  2 ++
- cpu-target.c                                  |  1 +
- hw/arm/smmuv3.c                               |  4 ++--
- hw/intc/s390_flic_kvm.c                       |  5 +++--
- hw/isa/pc87312.c                              |  4 ++--
- hw/isa/vt82c686.c                             |  4 ++--
- hw/smbios/smbios.c                            | 12 ++++++++++++
- iothread.c                                    |  3 +--
- monitor/hmp-cmds-target.c                     |  1 +
- qemu-nbd.c                                    |  1 +
- qemu-options.hx                               |  4 +++-
- memory_ldst.c.inc => system/memory_ldst.c.inc |  0
- 12 files changed, 30 insertions(+), 11 deletions(-)
- rename memory_ldst.c.inc => system/memory_ldst.c.inc (100%)
 
