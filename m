@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F9AAC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785BAC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZra0-0006wt-Si; Tue, 13 Feb 2024 07:08:08 -0500
+	id 1rZrjP-0002a6-V4; Tue, 13 Feb 2024 07:17:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZrZS-0006pc-W4
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:07:31 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rZrjL-0002XX-IL
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:17:45 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZrZR-0002N0-AM
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:07:30 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e0a608a36bso1760999b3a.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:07:28 -0800 (PST)
+ id 1rZrjJ-0005AE-M8
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:17:43 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1d93edfa76dso34180815ad.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:17:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707826047; x=1708430847;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707826660; x=1708431460;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=AJ1DbwIfMVWDBYdsESCAoEZP3PgsJXdlIovOpw5e8E4=;
- b=OEj9knA/bSIWJwyXZ136foOMVINkuZNkrfgCqEZ31f7azhGEaNQC30o40jPPAxuSxt
- d+7+Zsnj4d7WOzzvbJDNNOpOFJMTl7c14IZjBVN3PzJEaSd+W0K6jfCaybA4WOpPL5NC
- OsuXFAMw76YjDNbq7zmDg9vQUVbICQt9GGZMMiTkFHV6q+hi4tI3DnmMlP54lXm2t5c7
- S/Jd7tHdnmIUuwwh9Nu/wRCoyOhYZLXsrisfcqucLSJfGfUY5il8HJk2WBeSmB/utPt6
- BYqSQ2gO3cuEhpWoUHs/aPC3snW2psCQs8b5C9gFpRRFScPNogIx7A9cNrgkasT0gZdY
- Mxfg==
+ bh=SXrE7j4odyf4d+oxwoJT1kvPsBQn7TpPvBpLvOWp9Wc=;
+ b=NgsXnMzC5VVysQYqINSOblga5Ve6ZoIAhW9mIwTVA3wHGIcgPCuyBa0Oxwm9u8dfbr
+ u3XS56Ay+bp79EmcBQslDDJA/MfWIDxlZrF4YpmxZnJvuGdMgSRw0QEN1E3B8xrMcawt
+ znq8Mbc2p5/jvubw0QDse27bHlO/du1b/ryT7XbKB4sO2ZEbejsK6RD6UJkIjoXfSp78
+ Eccotgcv4zgQe9L7t4SqARFy9OIRegUWirmmst/ONqy+2HzEkr4mt9k4zgsTP9AgzQue
+ hfcWCutY4s7N6dkY6Yfc0cB9gfABhdXw30efmp+r5/R+Yvs6SLBg5oGDgjiLO7JgH7Co
+ JLkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707826047; x=1708430847;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1707826660; x=1708431460;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AJ1DbwIfMVWDBYdsESCAoEZP3PgsJXdlIovOpw5e8E4=;
- b=k4jE/jCNfS0U7B1hAwuG+saJJnXaJoCebqrrYlMz+lM2la03ePLu/fNA8ikRh2tjJx
- vBxMhXtYKd7HiBG+MzPZnhp0AUaEVBqPF3ugNHXZ83UkySKaG/puxk7+S/+gUkkoC2Cz
- gwZdRffJKlHCncRRHtTV+qywmeMB1fhvoC9IAn8FJW3FEe6ezfSAA4Ax1QIK08jXCW5Q
- /mg56olZ6pIdJMoo+r8491RE02KvF9kFTWL4E4Rrn81qotgFu/OwRBqm/NTb3+zxY6+T
- apgK0U3L8VpjTKOKdapvytQrxc9tuO2FHO2NDgycOMB5HqcTVZGNX6mMsHvPYacEm3Wk
- 0SvA==
+ bh=SXrE7j4odyf4d+oxwoJT1kvPsBQn7TpPvBpLvOWp9Wc=;
+ b=Oi+QHHfXr7H9NbwKKLO75NUpwGpP5GGuJsZcLsdb3M/mHLoap24FOWlYAnb4cy5gU8
+ CF2HcaTnEf9PKxotUP4Mq2EhCJV6pqrooGYVP5NP275Xi367RPb521iBV0vmxkVhwl12
+ PRBpuH+PwzgKHsKYXTxsGv+wY1qF700KGNIN34gNEumiJJlE2U/KhqerrIYkZjXY5qb/
+ Ea3BVBIGE3gn5Osyaa93I8sZ9IdBL7sZSkuHMRU5KU3ZEvqV0ULiotoRjCHpPfjE3VeI
+ /ErPlN1aiuF1lA2MGr6iNqBAofNtsZpBJbNVcKS8Iy3zO6gQ54mXZ0gEUPRvrl/GhB16
+ QNvw==
+X-Gm-Message-State: AOJu0Yy4Urp/jC06UJXEbfC5VeznWmUxyieb6zDZAjg6MErp17YLtywp
+ mUDAjV3sB6AIS/PJWDRn2Ez0m7RlzNZjvIQZiJYuRd0eRa0kRVsuWBLRAcrzLKM=
+X-Google-Smtp-Source: AGHT+IFdfL0zCbNK/Tw6qbcVDZWFQTb9MR/Pm9MJmAbI6st+GSOZGPgLtUp0j4cOzJTdthvL5zTo3A==
+X-Received: by 2002:a17:903:24e:b0:1d9:b423:7a9 with SMTP id
+ j14-20020a170903024e00b001d9b42307a9mr12077942plh.24.1707826660239; 
+ Tue, 13 Feb 2024 04:17:40 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGXhIxhPOa0Jb5EMVHJ+1r2l4ZssTRCjDfEkExdPclAPszV9yI6kLbJjpCqGsRK3VeU/I5zA1uLixd+Yuyqfv6nqghEHE=
-X-Gm-Message-State: AOJu0YxnwXYD+sPnHfXLUFhfAjn59VpfbtAoIE84yqQSLbTTy9Qy3/lK
- fDQkHBN7vXx4ETZtSjQUlpF64QC7kLBUWg5DjnRuGsIhxZRC3b3Jf5x5sIxPV4g=
-X-Google-Smtp-Source: AGHT+IHxCELmt6Xjv5f54svCdoCWpz72tZ1GLD3u6QeG1ae5akbyYzlaT60JbwOm9ZnK6Q75VpfVqA==
-X-Received: by 2002:a05:6a21:6802:b0:19e:c1da:cbb7 with SMTP id
- wr2-20020a056a21680200b0019ec1dacbb7mr12334632pzb.27.1707826047169; 
- Tue, 13 Feb 2024 04:07:27 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXps6/t44GRiXBmX7YCbjo5g5v9RBYMQoZDsx6EaYh8bl3iORDI9aC6ugkPCtiUyoqjfPuaz7gYghXr/rA1hyqEbLtFzF7Rf/9TdVCWH5kp6g8csdd5QD0K12aoqDc/PUN1p8y2BdJk0gOiVzb+ViNUw5EsACtDn+M4UpH6OsRvK6xbaYMSX70fLksSXADso9KCBfFOkzS4aG8vXh/aRaf4eddqCH82avRG4Hwe5VayrRS0XDzkCeZF+hCrGqFQozhpHnGBh/9kbth98swaJM60WGNQqh6ZnYFp01u/Dpz40EZIRf+6yvwe0nF06U2rLsffMbjp6uohs5oFy9OxFD+Bh84CDr8RxwjMsyyhUyH53WRo8UMNvgQBGjke5rY+LLw2yDkNby0r0PSoTm+w4bLljoN7tGJZABHcYQ==
+ AJvYcCXV1XOoI3m/hcMJLh8QKKyC056jIOOb0Khx7Jr+NUGc4xxpBJ3rF+IEpMWgjSJRmIoZlKsEt9P+j0g1o3c9Z9qx+DQTZ+/d4LvUGXeHKkMlar1O3yznI42TnSxujl3gDbAu+w3MqT52mloJIPixRncYbmv0gEYJZVGon1oL+JS8N1uBeanZJjnPt1q/Ts8/fP48/ltXQPZ9juC03jhIpWeJiIP2Yf83z7T+1YbH75x7xqtQ32z6bfxGzwrnhUv+dDnlPlaGTIZzHImrf3b6VHHicEOLmR916MKo6bQKCJkExBjL5c5quVzLj3+ac6/3DrueIZu/VxqAKL99oK0czNWQMvjdcgkNcCx+iuDiCgVzF75xv4RmN1/LfCFvbzOrgR3gCj1QNjUpgWKpw0J/Rv2ih96H+oTT9RfagA==
 Received: from [157.82.207.134] ([157.82.207.134])
  by smtp.gmail.com with ESMTPSA id
- r9-20020aa79ec9000000b006e04dd8876csm7143037pfq.210.2024.02.13.04.07.23
+ x13-20020a170902ec8d00b001d944bf2d83sm1987555plg.7.2024.02.13.04.17.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 04:07:26 -0800 (PST)
-Message-ID: <0fcdd67e-97cf-47b5-9d6c-c9c19e93deac@daynix.com>
-Date: Tue, 13 Feb 2024 21:07:22 +0900
+ Tue, 13 Feb 2024 04:17:39 -0800 (PST)
+Message-ID: <fce960cf-a482-4c09-83d0-0881d4e0fb29@daynix.com>
+Date: Tue, 13 Feb 2024 21:17:36 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/7] hw/pci: Determine if rombar is explicitly enabled
+Subject: Re: [PATCH v3 6/7] pcie_sriov: Reuse SR-IOV VF device instances
+Content-Language: en-US
 To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -80,15 +79,14 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
  qemu-block@nongnu.org
 References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
- <20240212-reuse-v3-2-8017b689ce7f@daynix.com>
- <20240213055006-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
+ <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
+ <20240213060116-mutt-send-email-mst@kernel.org>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240213055006-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240213060116-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -110,35 +108,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/13 19:52, Michael S. Tsirkin wrote:
-> On Mon, Feb 12, 2024 at 07:20:30PM +0900, Akihiko Odaki wrote:
->> vfio determines if rombar is explicitly enabled by inspecting QDict.
->> Inspecting QDict is not nice because QDict is untyped and depends on the
->> details on the external interface. Add an infrastructure to determine if
->> rombar is explicitly enabled to hw/pci.
+On 2024/02/13 20:01, Michael S. Tsirkin wrote:
+> On Mon, Feb 12, 2024 at 07:20:34PM +0900, Akihiko Odaki wrote:
+>> Disable SR-IOV VF devices by reusing code to power down PCI devices
+>> instead of removing them when the guest requests to disable VFs. This
+>> allows to realize devices and report VF realization errors at PF
+>> realization time.
 >>
 >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   include/hw/pci/pci_device.h | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
->> index d3dd0f64b273..7564e9536dbd 100644
->> --- a/include/hw/pci/pci_device.h
->> +++ b/include/hw/pci/pci_device.h
->> @@ -205,6 +205,11 @@ static inline uint16_t pci_get_bdf(PCIDevice *dev)
->>       return PCI_BUILD_BDF(pci_bus_num(pci_get_bus(dev)), dev->devfn);
->>   }
->>   
->> +static inline bool pci_rom_bar_explicitly_enabled(PCIDevice *dev)
->> +{
->> +    return dev->rom_bar > 0;
->> +}
->> +
 > 
-> I don't get it. rom_bar is uint32_t if it's set to "-1" is is still >0.
-> 
-> How was this patchset tested?
+> It is simpler for sure, but I am worried that all of these
+> unused VFs will consume lots of resources even if never
+> enabled. Thoughts?
 
-I was careless forgot to test v3. I'll revert this line into what v2 had.
+My rationale behind this change is that the resources should be 
+allocated when the PF is realized to ensure the resources are available 
+when the guest requests to enable VFs.
+
+When it is necessary to allocate resources dynamically, the conventional 
+hotplug mechanism should be used instead since the SR-IOV interface is 
+not designed to report resource allocation errors.
 
