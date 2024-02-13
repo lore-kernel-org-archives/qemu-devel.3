@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08E6C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E76C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZnk4-00049d-GF; Tue, 13 Feb 2024 03:02:12 -0500
+	id 1rZnkG-0004HQ-DD; Tue, 13 Feb 2024 03:02:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnjs-00046I-RI; Tue, 13 Feb 2024 03:02:01 -0500
+ id 1rZnjt-00046J-1j; Tue, 13 Feb 2024 03:02:01 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rZnjr-00079P-6K; Tue, 13 Feb 2024 03:02:00 -0500
+ id 1rZnjr-00079W-I2; Tue, 13 Feb 2024 03:02:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BF7944CBCB;
+ by isrv.corpit.ru (Postfix) with ESMTP id CD76D4CBCC;
  Tue, 13 Feb 2024 11:01:56 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E85877CF19;
- Tue, 13 Feb 2024 11:01:51 +0300 (MSK)
-Received: (nullmailer pid 160890 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 022527CF1A;
+ Tue, 13 Feb 2024 11:01:52 +0300 (MSK)
+Received: (nullmailer pid 160893 invoked by uid 1000);
  Tue, 13 Feb 2024 08:01:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 02/15] hw/isa/pc87312: Consolidate the use of
+Subject: [PULL 03/15] hw/intc/s390_flic: Consolidate the use of
  device_class_set_parent_realize()
-Date: Tue, 13 Feb 2024 11:01:38 +0300
-Message-Id: <20240213080151.160839-3-mjt@tls.msk.ru>
+Date: Tue, 13 Feb 2024 11:01:39 +0300
+Message-Id: <20240213080151.160839-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213080151.160839-1-mjt@tls.msk.ru>
 References: <20240213080151.160839-1-mjt@tls.msk.ru>
@@ -70,26 +70,26 @@ Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/isa/pc87312.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/intc/s390_flic_kvm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/isa/pc87312.c b/hw/isa/pc87312.c
-index ee23f3e164..64dd17b537 100644
---- a/hw/isa/pc87312.c
-+++ b/hw/isa/pc87312.c
-@@ -338,10 +338,10 @@ static void pc87312_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     ISASuperIOClass *sc = ISA_SUPERIO_CLASS(klass);
+diff --git a/hw/intc/s390_flic_kvm.c b/hw/intc/s390_flic_kvm.c
+index 4d5cbb2a2f..baaa30dcb7 100644
+--- a/hw/intc/s390_flic_kvm.c
++++ b/hw/intc/s390_flic_kvm.c
+@@ -646,9 +646,10 @@ static void kvm_s390_flic_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     S390FLICStateClass *fsc = S390_FLIC_COMMON_CLASS(oc);
++    KVMS390FLICStateClass *kfsc = KVM_S390_FLIC_CLASS(oc);
  
--    sc->parent_realize = dc->realize;
--    dc->realize = pc87312_realize;
-     dc->reset = pc87312_reset;
-     dc->vmsd = &vmstate_pc87312;
-+    device_class_set_parent_realize(dc, pc87312_realize,
-+                                    &sc->parent_realize);
-     device_class_set_props(dc, pc87312_properties);
- 
-     sc->parallel = (ISASuperIOFuncs){
+-    KVM_S390_FLIC_CLASS(oc)->parent_realize = dc->realize;
+-    dc->realize = kvm_s390_flic_realize;
++    device_class_set_parent_realize(dc, kvm_s390_flic_realize,
++                                    &kfsc->parent_realize);
+     dc->vmsd = &kvm_s390_flic_vmstate;
+     dc->reset = kvm_s390_flic_reset;
+     fsc->register_io_adapter = kvm_s390_register_io_adapter;
 -- 
 2.39.2
 
