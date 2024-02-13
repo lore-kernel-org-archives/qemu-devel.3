@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31C6C48BC1
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 10:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13CC0C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 10:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZqBA-0004Nv-1h; Tue, 13 Feb 2024 05:38:20 -0500
+	id 1rZqCG-0005AH-TV; Tue, 13 Feb 2024 05:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rZqB6-0004N2-UU
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:38:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqCE-0005A2-S4
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:39:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rZqB4-0002BE-ND
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:38:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqCD-0002IR-53
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 05:39:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707820694;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1707820763;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0kttHkiSTsszLZqmx06RlazAmG/SduE8/h3JYqH1GYo=;
- b=Fa2HN6lbovZUQoQv0dRprFnwSglDu4QnQjsVyMNn79OqM9vYlRMPHvR2Q0DRTiFjJTNf0d
- qbLwK9tCeFoOBsZRj88cY7zKGarSZjAgz3G+sR/tbQnyRdyqB838ojTl5LSWplamrA7Sjq
- XYyQ2QaqcrDBISIInxrq8C4I31F83TU=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mauRMf5MsEGYigBgnvZFNNtsUxvK3dQyEkLMA3BR3V0=;
+ b=atSo3cewPzFe3q0mPCY/COwQCeqdDbUxTyso97C10x6qXR0usiMr565RG7aUcMPpedcIzg
+ n3pLUpeicCU7hrNU+/JMuXiTGqGSJUN/sM9cJffymBn4EGrm/FylPa3zOHCDDeFqDEI6le
+ m5oiO2Ep9pGfPVQWbU7zyvjzSOYqYFU=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-o0R-RwzAOxSzYhnmrRpyOQ-1; Tue, 13 Feb 2024 05:38:12 -0500
-X-MC-Unique: o0R-RwzAOxSzYhnmrRpyOQ-1
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-6e0df6d6530so4765400a34.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 02:38:12 -0800 (PST)
+ us-mta-612-Riu93T2kPRGITONQM4CfUQ-1; Tue, 13 Feb 2024 05:39:21 -0500
+X-MC-Unique: Riu93T2kPRGITONQM4CfUQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-51156c3208cso3881214e87.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 02:39:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707820691; x=1708425491;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0kttHkiSTsszLZqmx06RlazAmG/SduE8/h3JYqH1GYo=;
- b=gfwEh0Rt6bEOTa1BnQbZo388+OgqX3H4CmBKj6jJaKPnbqeZ1K4xZ9KLBVGjSlIwt8
- b8BrV2akiTbTqTCM0Y3W6SPeJ1HLHcUM1mgcUEMJTSGjtVZtj+s6rV2/rgdFF9xHaixF
- y0qkiNR9qO32KxeAXRy3P0e2XxoNblMl7pmyTgd9Z34spxXIpAjWB0nunzo2zi28n3aX
- K34Sfgqs3Nghrz3BS0/DkMiS9G2fKVajVvUcuo0XCq/OqzW9yyVJ65MgaXEzG7kXxJh4
- D4yM78Qvf7HjgggtUvt83MaT7A9dBhnPt8WNsK/a0/e/1RRBt39FB9vcUlJtkNamcr7E
- w9+A==
-X-Gm-Message-State: AOJu0YxW+dZkS71NhqebiT4psYUjeKuGyFIc9fsH420bMTNedezFqXxy
- vZXmjUizspJguaUR7MjAAmAlI5CrykTQLdJ2iMYCyiRmMLOFvQazAAFknIUfjuKOgKSwrpJdNup
- nUKC6Fre4O22gyPNGRMRAp3oorxv02JPzur7FWMvlEA8g3ZoR06q1
-X-Received: by 2002:a9d:6e95:0:b0:6e2:dde8:890a with SMTP id
- a21-20020a9d6e95000000b006e2dde8890amr7405435otr.14.1707820691759; 
- Tue, 13 Feb 2024 02:38:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHD2u5c1lBRBMofS5t6q6nS8cjFBAdi503Hrg5Dwh/HquQ5GyaSx9tWg5oh+g5hXP3o2GhJwg==
-X-Received: by 2002:a9d:6e95:0:b0:6e2:dde8:890a with SMTP id
- a21-20020a9d6e95000000b006e2dde8890amr7405416otr.14.1707820691530; 
- Tue, 13 Feb 2024 02:38:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707820759; x=1708425559;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mauRMf5MsEGYigBgnvZFNNtsUxvK3dQyEkLMA3BR3V0=;
+ b=k2AsBTbHyaNeBPOKR0Ozxi6VTg1Orti2WPdiNPLCTdyIwmz+Dnnk8LAU4gWwx2pgNw
+ h7A9pJWGg1WGRpFZWjq/i5x94g9HJrXFKIW+iwutU2cc/rFcznoiB10CfgTYpZmjDsyB
+ cRdzGC/1+CNOUj6GGK1v9/MTTHKVvq+RjlY7UjRzr1CuU2bM/Y6P9bRpTGedUJQAAwnK
+ gUegBzlU4bpyNeiFSMW+wie+eYlk5Z3SNsKS8ZP/8j2+RdbDrkTKB4BmK6b7nxUdvNge
+ 8lLjWcC+4hn/pGRIqgYtoaBWdr4LkgbkthSevEmJmRKpOQcYyfXgE8DtKUEgZFGEPcpI
+ mZSQ==
+X-Gm-Message-State: AOJu0Yyixr6RvjB1xSgAGTGdkCqCQJMpmDRwzLUfI4z6FOiRQLVWwaM5
+ do9tZ3JXCY61yomRxnTrBAdODekWo0BtbtWrhzxLbnA0NSlRnzZRzbQ5qqYe4OIKvVLlf1HNT7M
+ QmvxM7/KfitFy6q9AGx3mLi5cZKbj2YERjRETAH+Q6Q5JF7ow55wcn71D2IUk
+X-Received: by 2002:a05:6512:3d20:b0:511:66fb:9f95 with SMTP id
+ d32-20020a0565123d2000b0051166fb9f95mr7633309lfv.3.1707820759221; 
+ Tue, 13 Feb 2024 02:39:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHF5KI+d1EvTs7DqDrb5cGgg86rKva/C7lgAjFzAkwpO9oa5n2Qx6JkeIQYbrddlOlDehw4tQ==
+X-Received: by 2002:a05:6512:3d20:b0:511:66fb:9f95 with SMTP id
+ d32-20020a0565123d2000b0051166fb9f95mr7633289lfv.3.1707820758890; 
+ Tue, 13 Feb 2024 02:39:18 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzifjVKAEhxqC2yLfj5G0+BySeqjThnJ7v42rsgD756rbgWUQjA/rZReR7y9lLd8KAOe70CvoGmFn9xt3VurZbuuH1OdAeVGE61ceoyfD/NbvORtnbQ3+rcbTj8yCH8mFDH3hPFqK/hYxz7GfpKrdTjXJMrDUE5Blyv6UhMg22lc3iZKGhHVE4uFD68UHf7y1gDmdqgN4GC9VmqKEKe/Z9p1zr26sxP7xMTnnjOM/G1MGD4wnkTsVsUv1ZOiLnZDRnzzJVMWgIwJt3LmbH31lOwTgpwRhHoisZUtvj7JCWgix1yMz5PBYfaxi7MqpSsCRV9CYjhoTHlIDNjdHREg==
-Received: from ?IPV6:2a01:e0a:59e:9d80:4685:ff:fe66:ea36?
- ([2a01:e0a:59e:9d80:4685:ff:fe66:ea36])
- by smtp.gmail.com with ESMTPSA id
- om13-20020a0562143d8d00b0068cd7247806sm1140935qvb.121.2024.02.13.02.38.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 02:38:11 -0800 (PST)
-Message-ID: <63c2eb75-6379-4c84-8b83-24392bcf3e35@redhat.com>
-Date: Tue, 13 Feb 2024 11:38:06 +0100
+ AJvYcCVF5QF3vx6xS3nxuGwvRdMf1OG9pdYwo23WxTANAgaUxlE48+N2XAyXh4McYpzfDsjlFjegLgftGg0fSmMPKPCR09L397yVdGpCBp+OpNrWnie1GBbQjIVRDZJSmAmK1PV79nXlpfbFqx3VD1mZGE98NwdDyVNCbipOmzRY+2y6kUidj1404yQNeNufJgjrYiTiyt4s+Skt0nlPTxtlciww
+Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
+ w15-20020a17090633cf00b00a3868b8e78dsm1164832eja.52.2024.02.13.02.39.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 02:39:18 -0800 (PST)
+Date: Tue, 13 Feb 2024 05:39:13 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas@t-8ch.de>
+Cc: Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Subject: Re: [PATCH v6 1/6] linux-headers: drop pvpanic.h
+Message-ID: <20240213053745-mutt-send-email-mst@kernel.org>
+References: <20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de>
+ <20240208-pvpanic-shutdown-v6-1-965580ac057b@t-8ch.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] VIRTIO-IOMMU: Introduce an aw-bits option
-Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, peter.maydell@linaro.org, clg@redhat.com,
- zhenzhong.duan@intel.com, yanghliu@redhat.com, alex.williamson@redhat.com,
- jasowang@redhat.com
-References: <20240208101128.655167-1-eric.auger@redhat.com>
- <20240213053502-mutt-send-email-mst@kernel.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240213053502-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
+In-Reply-To: <20240208-pvpanic-shutdown-v6-1-965580ac057b@t-8ch.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,95 +101,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
-On 2/13/24 11:35, Michael S. Tsirkin wrote:
-> On Thu, Feb 08, 2024 at 11:10:16AM +0100, Eric Auger wrote:
->> In [1] and [2] we attempted to fix a case where a VFIO-PCI device
->> protected with a virtio-iommu is assigned to an x86 guest. On x86
->> the physical IOMMU may have an address width (gaw) of 39 or 48 bits
->> whereas the virtio-iommu exposes a 64b input address space by default.
->> Hence the guest may try to use the full 64b space and DMA MAP
->> failures may be encountered. To work around this issue we endeavoured
->> to pass usable host IOVA regions (excluding the out of range space) from
->> VFIO to the virtio-iommu device so that the virtio-iommu driver can
->> query those latter during the probe request and let the guest iommu
->> kernel subsystem carve them out. 
->>
->> However if there are several devices in the same iommu group,
->> only the reserved regions of the first one are taken into
->> account by the iommu subsystem of the guest. This generally
->> works on baremetal because devices are not going to
->> expose different reserved regions. However in our case, this
->> may prevent from taking into account the host iommu geometry.
->>
->> So the simplest solution to this problem looks to introduce an
->> input address width option, aw-bits, which matches what is
->> done on the intel-iommu. By default, from now on it is set
->> to 39 bits with pc_q35 and 48 with arm virt. This replaces the
->> previous default value of 64b. So we need to introduce a compat
->> for machines older than 9.0 to behave similarly. We use
->> hw_compat_8_2 to acheive that goal.
->>
->> Outstanding series [2] remains useful to let resv regions beeing
->> communicated on time before the probe request.
->>
->> [1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
->>     https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat.com/
->>     - This is merged -
->>
->> [2] [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling for hotplugged devices
->>     https://lore.kernel.org/all/20240117080414.316890-1-eric.auger@redhat.com/
->>     - This is pending for review on the ML -
->>
->> This series can be found at:
->> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v3
->> previous
->> https://github.com/eauger/qemu/tree/virtio-iommu-aw-bits-v2
->>
->> Applied on top of [3]
->> [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default page_size_mask
->> https://lore.kernel.org/all/20240117132039.332273-1-eric.auger@redhat.com/
-> So, I applied this without that patch until we agree whether there are
-> compat issues in that one. Seems to work without or did I miss anything?
-To me it works without compat by checking the input stream version and
-if <= 3 apply the previous default.
+On Thu, Feb 08, 2024 at 09:02:20PM +0100, Thomas Weiﬂschuh wrote:
+> misc/pvpanic.h from the Linux UAPI does not define a Linux UAPI but a
+> qemu device API.
+> 
+> This leads to a weird process when updates to the interface are needed:
+> 1) Change to the specification in the qemu tree
+> 2) Change to the header in the Linux tree
+> 3) Re-import of the header into Qemu.
+> 
+> The kernel prefers to drop the header anyways.
+> 
+> Prepare for the removal from the Linux UAPI headers by moving the
+> contents to the existing pvpanic.h header.
+> 
+> Link: https://lore.kernel.org/lkml/2023110431-pacemaker-pruning-0e4c@gregkh/
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+> Signed-off-by: Thomas Weiﬂschuh <thomas@t-8ch.de>
 
-maybe I miss something but I tested mig between v2 and v3 and that worked
 
-Eric
->
->
->> History:
->> v2 -> v3:
->> - Collected Zhenzhong and C√©dric's R-b + Yanghang's T-b
->> - use &error_abort instead of NULL error handle
->>   on object_property_get_uint() call (C√©dric)
->> - use VTD_HOST_AW_39BIT (C√©dric)
->>
->> v1 -> v2
->> - Limit aw to 48b on ARM
->> - Check aw is within [32,64]
->> - Use hw_compat_8_2
->>
->>
->> Eric Auger (3):
->>   virtio-iommu: Add an option to define the input range width
->>   virtio-iommu: Trace domain range limits as unsigned int
->>   hw: Set virtio-iommu aw-bits default value on pc_q35 and arm virt
->>
->>  include/hw/virtio/virtio-iommu.h | 1 +
->>  hw/arm/virt.c                    | 6 ++++++
->>  hw/core/machine.c                | 5 ++++-
->>  hw/i386/pc.c                     | 6 ++++++
->>  hw/virtio/virtio-iommu.c         | 7 ++++++-
->>  hw/virtio/trace-events           | 2 +-
->>  6 files changed, 24 insertions(+), 3 deletions(-)
->>
->> -- 
->> 2.41.0
+I don't think I agree with greg. The interaction is with hypervisor
+not with userspace but linux does not have a separate
+directory for that and the implications are mostly the same.
+
+
+> ---
+>  hw/misc/pvpanic-isa.c                    | 1 -
+>  hw/misc/pvpanic-pci.c                    | 1 -
+>  hw/misc/pvpanic.c                        | 1 -
+>  include/hw/misc/pvpanic.h                | 3 +++
+>  include/standard-headers/linux/pvpanic.h | 9 ---------
+>  scripts/update-linux-headers.sh          | 3 +--
+>  6 files changed, 4 insertions(+), 14 deletions(-)
+> 
+> diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
+> index ccec50f61bbd..ef438a31fbe9 100644
+> --- a/hw/misc/pvpanic-isa.c
+> +++ b/hw/misc/pvpanic-isa.c
+> @@ -21,7 +21,6 @@
+>  #include "hw/misc/pvpanic.h"
+>  #include "qom/object.h"
+>  #include "hw/isa/isa.h"
+> -#include "standard-headers/linux/pvpanic.h"
+>  #include "hw/acpi/acpi_aml_interface.h"
+>  
+>  OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
+> diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
+> index c01e4ce8646a..01e269b55284 100644
+> --- a/hw/misc/pvpanic-pci.c
+> +++ b/hw/misc/pvpanic-pci.c
+> @@ -21,7 +21,6 @@
+>  #include "hw/misc/pvpanic.h"
+>  #include "qom/object.h"
+>  #include "hw/pci/pci_device.h"
+> -#include "standard-headers/linux/pvpanic.h"
+>  
+>  OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
+>  
+> diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
+> index 1540e9091a45..4915ef256e74 100644
+> --- a/hw/misc/pvpanic.c
+> +++ b/hw/misc/pvpanic.c
+> @@ -21,7 +21,6 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/misc/pvpanic.h"
+>  #include "qom/object.h"
+> -#include "standard-headers/linux/pvpanic.h"
+>  
+>  static void handle_event(int event)
+>  {
+> diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
+> index fab94165d03d..dffca827f77a 100644
+> --- a/include/hw/misc/pvpanic.h
+> +++ b/include/hw/misc/pvpanic.h
+> @@ -18,6 +18,9 @@
+>  #include "exec/memory.h"
+>  #include "qom/object.h"
+>  
+> +#define PVPANIC_PANICKED	(1 << 0)
+> +#define PVPANIC_CRASH_LOADED	(1 << 1)
+> +
+>  #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
+>  #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
+>  
+> diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/linux/pvpanic.h
+> deleted file mode 100644
+> index 54b7485390d3..000000000000
+> --- a/include/standard-headers/linux/pvpanic.h
+> +++ /dev/null
+> @@ -1,9 +0,0 @@
+> -/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+> -
+> -#ifndef __PVPANIC_H__
+> -#define __PVPANIC_H__
+> -
+> -#define PVPANIC_PANICKED	(1 << 0)
+> -#define PVPANIC_CRASH_LOADED	(1 << 1)
+> -
+> -#endif /* __PVPANIC_H__ */
+> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+> index a0006eec6fd1..c4fea51c93fd 100755
+> --- a/scripts/update-linux-headers.sh
+> +++ b/scripts/update-linux-headers.sh
+> @@ -218,8 +218,7 @@ for i in "$tmpdir"/include/linux/*virtio*.h \
+>           "$tmpdir/include/linux/const.h" \
+>           "$tmpdir/include/linux/kernel.h" \
+>           "$tmpdir/include/linux/vhost_types.h" \
+> -         "$tmpdir/include/linux/sysinfo.h" \
+> -         "$tmpdir/include/misc/pvpanic.h"; do
+> +         "$tmpdir/include/linux/sysinfo.h"; do
+>      cp_portable "$i" "$output/include/standard-headers/linux"
+>  done
+>  mkdir -p "$output/include/standard-headers/drm"
+> 
+> -- 
+> 2.43.0
 
 
