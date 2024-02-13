@@ -4,114 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 579F8C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 14:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 840FBC4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 14:30:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZtlW-0003u7-6W; Tue, 13 Feb 2024 09:28:06 -0500
+	id 1rZtnH-0005af-2i; Tue, 13 Feb 2024 09:29:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1rZtlU-0003qo-Fa; Tue, 13 Feb 2024 09:28:05 -0500
-Received: from mail-bn7nam10on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2009::600]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1rZtlS-0005tp-8t; Tue, 13 Feb 2024 09:28:04 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mm/wCeRtSi+PaPVDLMSKbfSwlv7G002RxBWMl+eAcrHlkhtlYDymFN5rzegzbREE9Gx7qJjoPZhDIKhp+QL5QIC6yML52L0GEwx26zkgvrH+x7Jc9iykRe6bX4C9mocoF/Z1XYZam8JzP46fnFqTVXUQAWPao4DEP7sW2WqggIBvCEenKnoH5piawQdhLRTaCBzAXmKqMvA6m5+dfDPl7Vu9b+AhXq9frDgzOZsdVl9TB3cq5+S/+lB9gII1TCwMIaUx8ZmAxEkYL0GB00dewdg2RpJRqICuk/f0u0Q8MrgbJvy+3WmMgvMaSoYq895DFR7Cy0c533GinBD01sVBkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jQcAiDOGEu6vwCcvd8HnK/uRIJNH8uP0qcxXazrUL5E=;
- b=G12ychU5SIRlyxM/3yvbDgZO3MeHfSxfEkbbABg9mE2weTpbvXx1ngv0z+mdWeGblimEoAv2q3BorLyRlyDPuYi8/3hssT9xy3rP9HCtc2rFQdVFGBaajj9wjuw1U7HQkGKsHzi5B/B3KZG+bYOf7R5P0pROOwSvrE1kiAZHMiv68uA2+/xkO7S+klxA8xmAyJYQ7SFk7EThVfhXENvjYbiRliPgGaUr8/oGBIvV+eSetgOYCd7+7z0KV1x07WX+nE5o7asfyDnqiy2eY+RHKLn3R88PYrMXy/OSvyW0onh4728mYmDyxmDY3uWlgKpU4mDwLmhLMhpg9QGibJA/jg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jQcAiDOGEu6vwCcvd8HnK/uRIJNH8uP0qcxXazrUL5E=;
- b=368O4FDWKkWuHxJLb2bjDeL43npod+aEsZk2wrpXrzgO4tEd9dsrgHsCzqSTMT2wuJXa9PWg7DAop+OwK+QFFLoiUAqSnoBaO+cSjuDhMMYdEE/SiKRt/NWhLTyEJ1ehZtbvvfx3xYlr90MjDrmdDxysfKNCEXiECpDXs37n8jc=
-Received: from DM5PR07CA0087.namprd07.prod.outlook.com (2603:10b6:4:ae::16) by
- SJ2PR12MB8873.namprd12.prod.outlook.com (2603:10b6:a03:53d::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.25; Tue, 13 Feb
- 2024 14:27:52 +0000
-Received: from DS2PEPF0000343D.namprd02.prod.outlook.com
- (2603:10b6:4:ae:cafe::5f) by DM5PR07CA0087.outlook.office365.com
- (2603:10b6:4:ae::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.39 via Frontend
- Transport; Tue, 13 Feb 2024 14:27:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- DS2PEPF0000343D.mail.protection.outlook.com (10.167.18.40) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 13 Feb 2024 14:27:52 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 13 Feb
- 2024 08:27:51 -0600
-Received: from luc-work-vm (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Tue, 13 Feb 2024 08:27:50 -0600
-Date: Tue, 13 Feb 2024 15:27:42 +0100
-From: Luc Michel <luc.michel@amd.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-CC: <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>, Richard
- Henderson <richard.henderson@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>, Ani Sinha <anisinha@redhat.com>,
- <qemu-trivial@nongnu.org>
-Subject: Re: [PATCH 0/7] hw/i386: Cleanups around 'hw/i386/pc.h'
-Message-ID: <Zct8Xv9O4uCgpghH@luc-work-vm>
-References: <20240213120153.90930-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rZtnF-0005Zl-8p
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 09:29:53 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rZtnC-000684-UH
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 09:29:52 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5dbf7b74402so2923394a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 06:29:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707834589; x=1708439389;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UvCCkOmtAkWGea6c45GpPu60FEovtNyi55urZOLWW/M=;
+ b=H5FguyeZNmLo3DMjqLhi3GgKiemhIi7sp2Huhi8x7l+WQ40+PfRftH3uCadXS7qTHJ
+ hZQLR47yf5u3YMtxebB0Q+OSel10cRTF+mKGyww+rjBJfokhW8NnCLdTpR2T8wDnLOe4
+ Qet5h57wFXry7kFQOIp9FFvbst2vdQB6h/p6ckeBr/lj62DhfnA3tiJwcggvujbGDSOf
+ hg4eAFilTlna/WmkUT44RLcoKGAIG8QAOxzTS/1YcSmDdsThmWWriQ3gfKOocWMyEGnq
+ uvOyjRhGOcqGhpTPDfTLDzuxSxnM9AjXXMCsVncSLYfDxJb+c/ncpAG48WuhUPvmveKT
+ TEFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707834589; x=1708439389;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UvCCkOmtAkWGea6c45GpPu60FEovtNyi55urZOLWW/M=;
+ b=iK1qzJ+0dxuWi9tZ3auXAlqgda6pL4DIpIhYVr5TufCktmxt8uVk3Mbf7jesV/vP3d
+ J0iIQ0ZOhuL2jRN3D9PDYDSKPQFMWitdh3CEEXYvB+5v88Lmrz+oog++jFxIMLgSSAKQ
+ YGjcI9QpWpzYvVy7CGh1akJ5TfVL6LrQpnJ7e++9vL7nUR4S7W6hUD2leetHhFJOGwrc
+ lhbcVYpN30BTkSery7y4Aly8LPuJm7Ao5Q50viGK8EQLco2qBMD8S6NGgBEDrKeDy94G
+ 3ufWQzBFSf+IUFGl+24JzZbnN0oJPTjhQz+ybR9/fMPk8aRwi8L00efnWlbJAtDbRUfu
+ 1LLA==
+X-Gm-Message-State: AOJu0Yzlx0NxyZHrAg48TlUMUyDAwymD+TLXKPoQ2yV2N7+t3tLS0X+B
+ Yd/PZkVPJG9L7j3h+Ravm5iH5FNP81+vFF7fkygwNtzL/id32nzMXSt7X3PJZUM=
+X-Google-Smtp-Source: AGHT+IHPDwU4lmfpji5Qt+EP95MET5l3c+LRgQX8HvtFSJjkNkm5O0ATDbgruYkA12ZKFE5RZB0s3A==
+X-Received: by 2002:a05:6a20:c88a:b0:19e:a6ea:683a with SMTP id
+ hb10-20020a056a20c88a00b0019ea6ea683amr8633039pzb.50.1707834589309; 
+ Tue, 13 Feb 2024 06:29:49 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVU/YKVOKmLR9PclkDD8DIEOXoYK9Rgt+K0XZcWNF0u6QE7mi+P3qpBKPpGeTZp4agW026fsvokVgHUR+WXlaeGA9lI39Ohi8YFfqmGqyDEWa1ofpEo0V3J+j6QnfplLiR1hPIR7cCHXr1Cfo/WnF26v7mQgKOF/wx0vd1FU/CQATcFIMtFbD4Xeq8wC6QbHRKxiaDGR4xik1KFao84nmLcUgO8kAEhHdkyb2rDXPzDDXFAsoHpR/Ry7GA8urSlfdD6tDAO5HLIj86sJSaAON3mRprEwqn8vjFtAigJEVH8lb79L+G9igsMxLGnKkkkiqUmuwMBrShrwXRqftVzpCiXxj3XeehkUfu8lrAtmsWGP2wpgfTLjzr2/Am6GJpFYPWuNvG61m8N6tRznBJTx2wZ2VJJHtCsSRkxSw==
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ by smtp.gmail.com with ESMTPSA id
+ qc5-20020a17090b288500b00296a686dd17sm425791pjb.56.2024.02.13.06.29.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 06:29:48 -0800 (PST)
+Message-ID: <8e6a48f0-8938-4a18-a74e-25802ef54d50@daynix.com>
+Date: Tue, 13 Feb 2024 23:29:44 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240213120153.90930-1-philmd@linaro.org>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF0000343D:EE_|SJ2PR12MB8873:EE_
-X-MS-Office365-Filtering-Correlation-Id: f1ada664-d539-4131-6b75-08dc2c9ff655
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: q9Te/A3+D+Jv+gLPyX79Ks+ZGVo4Du/6dNjFPH2kElMqw/ZKLdJ70PnfVIc5608U8mn6Z3si5376kPrcj9QRwS3VwNF3i1n9ELjVMqGtT4xJ36SbrF7XdYowpSGPLhD4FrGKNQxECL5Z3GxsaTMRKZXhnvGTq4HWC4j1Ox6s3L2F3YOfCHTMkqBmwvVnPBYmntR4/dlAnr6fsQIpRwC5Zc0d8EhlthcXx8FXtsE9yjOhooN+YOsvkltftEnsEZA3b4sX/m1MpJQYogArlGTY3T1JjkCwsFQmDZl9Rg9V9AhmwhmM16OoZ1zvb/IXQG3eUqrYJLEkg7GrY7uWyp8Z0jiUjsDdDw/y/CkyRZ8XVXPqCxfPi3J6lhYrERm1REeTZzq16USbbA2NYMZeSRBiats0sZnxJkTYydsMKDPsd0t+rRX1eaImRBHcXZUXbdyaJ+bXjeO1HktUgThgPXLK0ukN6rf+DGhzMMofovkJdrPFM/Frp7zW3gy96BEyR7swhrB+NxChaQdjmAwEyti8zE6tbmjao9lMVvBrXZ6J3qiN60H0Y6nfQ9eat6N3/yQ8POWqZpPrXmA0lBpj3lDPc0K0S2RNXOfE4HpuYGCNqeo=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(4636009)(39860400002)(396003)(136003)(346002)(376002)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(82310400011)(36840700001)(46966006)(40470700004)(86362001)(55016003)(33716001)(70586007)(6916009)(8676002)(8936002)(5660300002)(4744005)(4326008)(7416002)(2906002)(44832011)(83380400001)(9686003)(82740400003)(356005)(41300700001)(70206006)(26005)(336012)(478600001)(81166007)(426003)(316002)(6666004)(54906003);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2024 14:27:52.3045 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f1ada664-d539-4131-6b75-08dc2c9ff655
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF0000343D.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8873
-Received-SPF: softfail client-ip=2a01:111:f403:2009::600;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/7] pcie_sriov: Validate NumVFs
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
+ <20240212-reuse-v3-5-8017b689ce7f@daynix.com>
+ <20240213055345-mutt-send-email-mst@kernel.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240213055345-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,34 +109,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13:01 Tue 13 Feb     , Philippe Mathieu-Daudé wrote:
-> Trivial patches removing uses of "hw/i386/pc.h".
+On 2024/02/13 19:59, Michael S. Tsirkin wrote:
+> On Mon, Feb 12, 2024 at 07:20:33PM +0900, Akihiko Odaki wrote:
+>> The guest may write NumVFs greater than TotalVFs and that can lead
+>> to buffer overflow in VF implementations.
+>>
+>> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/pci/pcie_sriov.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+>> index a1fe65f5d801..da209b7f47fd 100644
+>> --- a/hw/pci/pcie_sriov.c
+>> +++ b/hw/pci/pcie_sriov.c
+>> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
+>>   
+>>       assert(sriov_cap > 0);
+>>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+>> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
+>> +        return;
+>> +    }
 > 
-> Philippe Mathieu-Daudé (7):
->   target/i386/monitor: Remove unused 'hw/i386/pc.h' header
->   hw/timer: Move HPET_INTCAP definition to "hpet.h"
->   hw/isa/lpc_ich9: Remove unused 'hw/i386/pc.h'
->   hw/i386/acpi: Declare pc_madt_cpu_entry() in 'acpi-common.h'
->   hw/i386/port92: Add missing 'hw/isa/isa.h' header
->   hw/acpi/cpu_hotplug: Include 'pci_device.h' instead of 'pci.h'
->   hw/acpi/cpu_hotplug: Include 'x86.h' instead of 'pc.h'
+> Indeed:
+>       The results are undefined if NumVFs is set to a value greater than TotalVFs.
 > 
->  hw/i386/acpi-common.h   | 3 +++
->  include/hw/i386/pc.h    | 6 ------
->  include/hw/timer/hpet.h | 2 ++
->  hw/acpi/cpu_hotplug.c   | 4 ++--
->  hw/i386/acpi-common.c   | 1 -
->  hw/i386/port92.c        | 1 +
->  hw/isa/lpc_ich9.c       | 1 -
->  hw/timer/hpet.c         | 1 -
->  target/i386/monitor.c   | 1 -
->  9 files changed, 8 insertions(+), 12 deletions(-)
+> However I note that hw/nvme/ctrl.c will still poke at NumVFs.
 > 
-> --
-> 2.41.0
-> 
-> 
+> Since it's undefined, I propose a simpler hack and just force it
+> to PCI_SRIOV_TOTAL_VF. This way everyone can just assume it's ok.
 
-For the series:
-Reviewed-by: Luc Michel <luc.michel@amd.com>
+It is still not OK to poke at NumVFs as the guest may set a different 
+number anytime though it's undefined if NumVFs is set while VFs are 
+enabled. I think hw/nvme/ctrl.c should be changed to look at 
+exp.sriov_pf.num_vfs, which holds the committed NumVFs value.
 
