@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3157C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 13:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D88EC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 13:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZsTu-00036h-DV; Tue, 13 Feb 2024 08:05:50 -0500
+	id 1rZsSI-0001iu-L2; Tue, 13 Feb 2024 08:04:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZsSe-00020Q-PJ
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:04:37 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZsSD-0001d2-2P
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:04:05 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZsSc-00065V-2X
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:04:32 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d0b4ea773eso56678131fa.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 05:04:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZsS9-00061X-0d
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:04:03 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-411c93e1cd8so2316685e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 05:03:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707829465; x=1708434265; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707829439; x=1708434239; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KjkB+UnEukm/G3HfYj7xftramerJL8Ci1VN86IlC3EQ=;
- b=zLix+y+h6M8Mo5JxlojlTgkM2DJHY2Wp44kxEJBy0913n1yBIHyJBYwC4SAc4f65QV
- m6LV72+hDbyGXapG4PAzHyV1NA6ifEZEj5NZpvSqEUu/hTXmyvQ1TZpBtoa47M3oSyW1
- GVXNR6cNmLmXuxWFvQL8OdVrxAdVGCyhYwb2zaRPyTPRK0kDnQYygjBwq0PcWeZbXdmu
- HrslsdBx+5svjv10dw8C++H0kgfKlMBR1zHAydOliw7Z7e1A0dP0JS5SEucEsGfwKM94
- 02WVFYTj7RbgmOpXgNIIJYXsmWnbGl4nURfOz1dmKv23geqyrPB5EiddQmPs3gYFWcI0
- lpjA==
+ bh=4qIxF6fCwa3/mbXSgbpVLHQdzzP18rWcIr6bIztAwaI=;
+ b=Lu4+GA+3ASVC7t8KFAkw3D7JzHoRTl2653c2mtOHN0yYfDdNmYfUu7V789py2O0Xy3
+ 9dii2az7UQhtv9Fam7tyL3dKwXjPQq1WbdZeTtzj0nVvXWbzqHn+xLnVwAtvakrA3/lV
+ wWYhJJf7/GPWIaL34ND6HfW7pFDPJtc5BeVHwZVKw4TLnTcDJE1s9UliyvthkF4VsSKK
+ /hsj/2fFJX++reICJGFk3S4LzgePlVX+XLKD+5yzdKciUePlYh0biE3jvvRaWDvgk3up
+ W5Dx+ljtJ8ZJiZsxZcfwct37jLXpmiDCKbAFKWwL4gHS8pSQ9iQ0dfVqmRo/39/kYbyx
+ hvZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707829465; x=1708434265;
+ d=1e100.net; s=20230601; t=1707829439; x=1708434239;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KjkB+UnEukm/G3HfYj7xftramerJL8Ci1VN86IlC3EQ=;
- b=MAGHtiiY06O6hdDRaAqLv4dly4TzXq0P523HpCgYCC9+cl3zPLNeR94fWwuvp46Np1
- 6ZnnS6rfxL/07xb5iJwRjh2xPlay+Mdc80WZTy5uL3Wdd1A0uURZmZkf+SRAqMUTjn0S
- vUI8qotxmLwJW5hfSa3siqc3Kggb1v6jYmoAdZgaqOg9sECKfe2fQDGKZzUWDuRosLOf
- cNoDwnjflwXYLrFT1OCnjLPvp5Cm1bNuCUz26rxKo0gGlwRgWvfTrt5rCOQeFqMuI5w3
- PIWcaZwFLbYAoELG++aqK9B0eal2nJOrOOE40bBioExswETWUtqWMw8Mo2Rdq1cfldWx
- gPZQ==
-X-Gm-Message-State: AOJu0YyLMyX3vOEy9TPAg+EFEdLbTU4xXBsVYPQkMmE7gIU5IYKsw0so
- WMT67WK5vYKZ0nEfWAVvWN8xtJfp0QX0yMdYfddRTvQW2h2ZfXLV+L/2jniXKa1ScCaCM70JLOd
- l
-X-Google-Smtp-Source: AGHT+IH92ZgrcfEt1Vda9mY54qHQpfWrywCxyUFucjxJ3e+ERAzOyi98zISrTor7mdA2iT6nQmxOdQ==
-X-Received: by 2002:a2e:a615:0:b0:2d0:698f:1fb with SMTP id
- v21-20020a2ea615000000b002d0698f01fbmr5797890ljp.5.1707829465497; 
- Tue, 13 Feb 2024 05:04:25 -0800 (PST)
+ bh=4qIxF6fCwa3/mbXSgbpVLHQdzzP18rWcIr6bIztAwaI=;
+ b=KvoNSQAvr5qOInOD44gF9eMQO9js/Calerfs7BdorWDZ1KItH7kKBIgXCU9o2S5Bvm
+ 1a09BVShQ7aW3E/y0KYUmXLn9dtKW9KsOH4FKF3JMDDeCc3YAox+3NrLcw7X5pkbWUKj
+ 8HfbW+wWST6odPXjaTCkMG/KiDsShqDK3EPtsA85mkPWr8/505S9N4h16Qc+FMNKn1dy
+ R1JNlHQtLCvNXTJeN1zEk7hbqENV8cMRaA1jDrT2E78VvH9Wt2FctX6J7TpW0FVHwsVT
+ 78C+8OiG04kSkLmkcO3DdsW6HNJxvDZj+plCgYg11BHmkNn/C9b4vhv9E2LD+sAD+1L4
+ /Dbg==
+X-Gm-Message-State: AOJu0YzLCrwzpPDvwvymCA2Mg94cN4YWwM3hNIPRyQxRZYa3r45+x8ds
+ Wr1nqDSSWnuS9w6WURQv7EDfohNSuiwLXEe36HS/igyQdBS/F8MiTFWygPw+0ExF1gHnt8yXylb
+ k
+X-Google-Smtp-Source: AGHT+IF6m0RzViKIjBAUFgJawuW5VXCPtTABNrKyxcHR/4Kx18SMzSxe1FEqkohr3dBv1nRvi4+yiQ==
+X-Received: by 2002:a05:600c:190f:b0:40f:ba02:d172 with SMTP id
+ j15-20020a05600c190f00b0040fba02d172mr2334739wmq.17.1707829438727; 
+ Tue, 13 Feb 2024 05:03:58 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdOCzsYTBBK7kPOb9KwFlrPl9+/2764GRmGdTqaSSS1tmSSaFRTKYDcQ/TzlyIkOItZgmR6vAVlr/SIAXXUHtK6C+mw/6xAT3jrXMK5xvqwnnA2ngWuaYefelaA6dpX4QTRuvhlxfw2OVlvcwzwBNk4NwKX+qifcCgg5iskJRgbgNn54GZjjPe6P/KiuDjhSPIO1Hg/X5lKyAEM1QdFujDcVmxeMVW/hfN4JJvKWXg7N5B09K5855vCsVCEafvJonZh4TY0C8qa7/UKAY8i0KgReY4UHe15nb6SSr85+Tt8eoeJarNtAeUt7YSKwI/X8b1Z6LGJG4=
+ AJvYcCUQZTVhRPf9nMd2cUfZQ0L4uq8DAJV3coX+r83bxHjNbI60JM/eTSaxGCThbSwhTVJG/eJOlMii2utBLJzJ6ehwsJWyIt0ubsj2alxHqhH13qqg0yR652nxCERWCLEQBBUkLJ6+PS95Ff05OMb63evgO2xSOay4PUltXFT0xVynI/dBEvjUblxkeaqy5DhEMD8lX/tGkuqI/bkMA9IeWgqCSXlhyRS5hfPkrMMV16GzkoJQrqR3lQAbGguBSNAw/fu1N2XOT7HH94+MnPFBrc880OMrvGW1R230y/g5ZQhQ6Mkz2VtHj9C5xLUC7gfZYzonbVM1U8jYAuI/FrnJe1sp4TfwW8edMZ5b96QINpVkU8EZbALgytjZDL4G2VIFBoPKTJWRxXm8TSOXLKg=
 Received: from m1x-phil.lan ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- h11-20020a05600c314b00b00411ab6dad65sm2948681wmo.29.2024.02.13.05.04.23
+ ay20-20020a05600c1e1400b00411a6ce0f99sm3368269wmb.24.2024.02.13.05.03.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 13 Feb 2024 05:04:25 -0800 (PST)
+ Tue, 13 Feb 2024 05:03:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Bernhard Beschow <shentey@gmail.com>,
@@ -67,26 +67,27 @@ Cc: Zhao Liu <zhao1.liu@linux.intel.com>, Bernhard Beschow <shentey@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>, "Michael S. Tsirkin" <mst@redhat.com>,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 06/12] hw/misc/macio: Realize IDE controller before
- accessing it
-Date: Tue, 13 Feb 2024 14:03:35 +0100
-Message-ID: <20240213130341.1793-7-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH v4 02/12] hw/rx/rx62n: Reduce inclusion of 'qemu/units.h'
+Date: Tue, 13 Feb 2024 14:03:31 +0100
+Message-ID: <20240213130341.1793-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240213130341.1793-1-philmd@linaro.org>
 References: <20240213130341.1793-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,39 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We should not wire IRQs on unrealized device.
+"qemu/units.h" is not used in the "hw/rx/rx62n.h"
+header, include it in the source where it is.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
 ---
- hw/misc/macio/macio.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/hw/rx/rx62n.h | 1 -
+ hw/rx/rx-gdbsim.c     | 1 +
+ hw/rx/rx62n.c         | 1 +
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/misc/macio/macio.c b/hw/misc/macio/macio.c
-index c9f22f8515..3f449f91c0 100644
---- a/hw/misc/macio/macio.c
-+++ b/hw/misc/macio/macio.c
-@@ -123,14 +123,17 @@ static bool macio_realize_ide(MacIOState *s, MACIOIDEState *ide,
- {
-     SysBusDevice *sbd = SYS_BUS_DEVICE(ide);
+diff --git a/include/hw/rx/rx62n.h b/include/hw/rx/rx62n.h
+index 73ceeb58e5..bcda583ab3 100644
+--- a/include/hw/rx/rx62n.h
++++ b/include/hw/rx/rx62n.h
+@@ -29,7 +29,6 @@
+ #include "hw/timer/renesas_tmr.h"
+ #include "hw/timer/renesas_cmt.h"
+ #include "hw/char/renesas_sci.h"
+-#include "qemu/units.h"
+ #include "qom/object.h"
  
--    sysbus_connect_irq(sbd, 0, irq0);
--    sysbus_connect_irq(sbd, 1, irq1);
-     qdev_prop_set_uint32(DEVICE(ide), "channel", dmaid);
-     object_property_set_link(OBJECT(ide), "dbdma", OBJECT(&s->dbdma),
-                              &error_abort);
-     macio_ide_register_dma(ide);
-+    if (!qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp)) {
-+        return false;
-+    }
-+    sysbus_connect_irq(sbd, 0, irq0);
-+    sysbus_connect_irq(sbd, 1, irq1);
- 
--    return qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp);
-+    return true;
- }
- 
- static void macio_oldworld_realize(PCIDevice *d, Error **errp)
+ #define TYPE_RX62N_MCU "rx62n-mcu"
+diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
+index 47c17026c7..bb4746c556 100644
+--- a/hw/rx/rx-gdbsim.c
++++ b/hw/rx/rx-gdbsim.c
+@@ -20,6 +20,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/guest-random.h"
++#include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "hw/loader.h"
+ #include "hw/rx/rx62n.h"
+diff --git a/hw/rx/rx62n.c b/hw/rx/rx62n.c
+index 4dc44afd9d..d3f61a6837 100644
+--- a/hw/rx/rx62n.c
++++ b/hw/rx/rx62n.c
+@@ -23,6 +23,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "qemu/units.h"
+ #include "hw/rx/rx62n.h"
+ #include "hw/loader.h"
+ #include "hw/sysbus.h"
 -- 
 2.41.0
 
