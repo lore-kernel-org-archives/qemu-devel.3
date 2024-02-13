@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75AD2C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F9FDC4829F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 20:02:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZyxO-0000sU-5W; Tue, 13 Feb 2024 15:00:42 -0500
+	id 1rZyy9-0001XT-6o; Tue, 13 Feb 2024 15:01:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyxD-0000jL-Ml
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:00:33 -0500
+ id 1rZyxt-0001Rg-A0
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:01:13 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyxB-0001j9-N7
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:00:31 -0500
+ id 1rZyxr-0001rs-Na
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 15:01:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=UcLQegnMEj2QqxMcZ4nrFanoPpIbn3t7tK5XSeRX+u0=; b=tyI6Xb+xl6FB2GEljcdfjKOmgA
- sY21XsQfZANUepFTKDv6lAtxfjbLAH6zajmq7mb4ajQJE/dJHpvNcIu5AI8JNTQM+0+dU/CTI8bd7
- kIS1ISy1S/R8Avj0ilqut6kfSt/XENJXygxvokUBKfBSrBiPjRsOlQxcyWdetdURfRrQnBOsi+BaQ
- 5r2NO7p9lLFx7Y1bskIdyYYkQWusLIaNfQQxKdXDDhGuvvmm/UugnDhAbCrekvAAT1YnU3zVUzc4W
- hMIcOdZPd6R9n/f6oGhmz647mv2/upwe8sJpMLb4/AD18DxYQSeH1uDeXEFtOpnWqtXkCUONoDSKo
- b4aDE9/yldEYHO9/q18RZV1MAM0ZIpeAP+xbs8XYGvqTUnVLm92TXwXAJ73sz9zWFKklhJ6Nbm5Bb
- 2MRh9/lSBe2eAtPqS3Y7zXy3f19is2M865YltDaI7aVROtArM4+CB9qlThqhg0ILfs328LGNwcpEp
- uu0TXiQSFYWdZJRkl1fElC1kUPgWEUTnSzelbq66HHLnT4l0Yo20MEeJgmw7hzROONutyt09f9kpf
- f9CfLigx+BgKtEjs0z/77SOk+9eicAHXl/Pn7O5NHg8xpldMUEdi6AWKcrO9D7V7NfiMA0njaOOxv
- LD7grMCJXUN6EBJfZhEuqFL0UV1mb0qj5CX/kbuyU=;
+ bh=c68NltF/sG/5kE0KjHWJUPi/rnJR3fFpkAyJcJORF5A=; b=wpQ4tQHAZpVQ68QkNSO7RzydcU
+ pHBzIvMOj/9bulGnW1JFyHyK397O5paPIfbX1GVYQQzkwYj6z020JtGnYIdFHnc/VfyzMO0SPOJSl
+ R8GCoqu8M4ZoJnwchDiSpFnO97HZ5lKU8fYA0cmOCGUCElhnu1t5ET03nYo1yWSa/AnS5ir5plL+W
+ V+iU2Rgv5M7LBtgejZDGXy3cv8KrrBOpLVa1TBIVaXF0AOc7inlOBlXTeSiyMiUGE373L8haz4B12
+ sozaIxf8ENzbhDtY+wcQGmCTUKZi+LPIKiwsTCUN+LLqvgLNpFkNn50qEoHI5FTUVqhtpAdERml+f
+ KuBgQNix2DHGheJ7kD4vaUmz8ONPOQIU4O2iFvY9libbX01zk201BvH0OZsgMCmT6nggFaSb3V3kI
+ JrQ2BTmQjtkBNwQVpIQ9Ybgi69AknNXNzwhW1W/nKoD0GhgtTJFLKiVVy0BmgYtwzGk8Fug6byI+j
+ zDcg8uv9OjwSpn1PDH0FsnsvCsyUFEnh0EDvITxleu4JmPbqS3bEZtIPHCyxcDJDSZYd8+rTcLsOb
+ k7t8Dp+6ymTHmEj+lTHuH3bTXJBQ2yMZ/RFZq0n8A1lnIaS6tQXP503FcYMzr6ZHVmaNwVO1YciHu
+ z+NJu+2cX9+m5Vsp6N6lOlyK5geZDcatdXNH+AInY=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyhL-0008m4-1Z; Tue, 13 Feb 2024 19:44:10 +0000
+ id 1rZygd-0008m4-3t; Tue, 13 Feb 2024 19:43:23 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:40:34 +0000
-Message-Id: <20240213194052.1162753-71-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Feb 2024 19:40:18 +0000
+Message-Id: <20240213194052.1162753-55-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
@@ -53,8 +53,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 70/88] esp.c: ensure that STAT_INT is cleared when reading
- ESP_RINTR
+Subject: [PULL 54/88] esp.c: move CMD_ICCS command logic to esp_do_dma()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,41 +79,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both esp_raise_irq() and esp_lower_irq() check the STAT_INT bit in ESP_RSTAT
-to ensure that the IRQ is raised or lowered if its state changes. When reading
-ESP_RINTR, esp_lower_irq() was being called *after* ESP_RSTAT had been
-cleared meaning that STAT_INT was already clear, and so if STAT_INT was
-asserted beforehand then the esp_lower_irq() would have no effect.
+The special logic in write_response_pdma_cb() is now no longer required since
+esp_do_dma() can be used as a direct replacement.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Tested-by: Helge Deller <deller@gmx.de>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240112125420.514425-71-mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240112125420.514425-55-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/scsi/esp.c         | 82 ++++++++++++++++++++++++++++++-------------
+ include/hw/scsi/esp.h |  1 -
+ 2 files changed, 57 insertions(+), 26 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 6c62417985..604fb9235d 100644
+index f69b2709fc..c6e5ddd537 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -1127,6 +1127,7 @@ uint64_t esp_reg_read(ESPState *s, uint32_t saddr)
-          */
-         val = s->rregs[ESP_RINTR];
-         s->rregs[ESP_RINTR] = 0;
-+        esp_lower_irq(s);
-         s->rregs[ESP_RSTAT] &= ~STAT_TC;
-         /*
-          * According to the datasheet ESP_RSEQ should be cleared, but as the
-@@ -1137,7 +1138,6 @@ uint64_t esp_reg_read(ESPState *s, uint32_t saddr)
-          *
-          * s->rregs[ESP_RSEQ] = SEQ_0;
-          */
--        esp_lower_irq(s);
+@@ -446,40 +446,23 @@ static void handle_satn_stop(ESPState *s)
+     }
+ }
+ 
+-static void write_response_pdma_cb(ESPState *s)
+-{
+-    esp_set_phase(s, STAT_ST);
+-    s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
+-    s->rregs[ESP_RSEQ] = SEQ_CD;
+-    esp_raise_irq(s);
+-}
+-
+ static void write_response(ESPState *s)
+ {
+     uint8_t buf[2];
+ 
+     trace_esp_write_response(s->status);
+ 
+-    buf[0] = s->status;
+-    buf[1] = 0;
+-
+     if (s->dma) {
+-        if (s->dma_memory_write) {
+-            s->dma_memory_write(s->dma_opaque, buf, 2);
+-            esp_set_phase(s, STAT_ST);
+-            s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
+-            s->rregs[ESP_RSEQ] = SEQ_CD;
+-        } else {
+-            esp_set_pdma_cb(s, WRITE_RESPONSE_PDMA_CB);
+-            esp_raise_drq(s);
+-            return;
+-        }
++        esp_do_dma(s);
+     } else {
++        buf[0] = s->status;
++        buf[1] = 0;
++
+         fifo8_reset(&s->fifo);
+         fifo8_push_all(&s->fifo, buf, 2);
+         s->rregs[ESP_RFLAGS] = 2;
++        esp_raise_irq(s);
+     }
+-    esp_raise_irq(s);
+ }
+ 
+ static void esp_dma_ti_check(ESPState *s)
+@@ -673,6 +656,58 @@ static void esp_do_dma(ESPState *s)
+             esp_dma_ti_check(s);
+         }
          break;
-     case ESP_TCHI:
-         /* Return the unique id if the value has never been written */
++
++    case STAT_ST:
++        switch (s->rregs[ESP_CMD]) {
++        case CMD_ICCS | CMD_DMA:
++            len = MIN(len, 1);
++
++            if (len) {
++                buf[0] = s->status;
++
++                if (s->dma_memory_write) {
++                    s->dma_memory_write(s->dma_opaque, buf, len);
++                    esp_set_tc(s, esp_get_tc(s) - len);
++                } else {
++                    fifo8_push_all(&s->fifo, buf, len);
++                    esp_set_tc(s, esp_get_tc(s) - len);
++                }
++
++                esp_set_phase(s, STAT_MI);
++
++                if (esp_get_tc(s) > 0) {
++                    /* Process any message in phase data */
++                    esp_do_dma(s);
++                }
++            }
++            break;
++        }
++        break;
++
++    case STAT_MI:
++        switch (s->rregs[ESP_CMD]) {
++        case CMD_ICCS | CMD_DMA:
++            len = MIN(len, 1);
++
++            if (len) {
++                buf[0] = 0;
++
++                if (s->dma_memory_write) {
++                    s->dma_memory_write(s->dma_opaque, buf, len);
++                    esp_set_tc(s, esp_get_tc(s) - len);
++                } else {
++                    fifo8_push_all(&s->fifo, buf, len);
++                    esp_set_tc(s, esp_get_tc(s) - len);
++                }
++
++                /* Raise end of command interrupt */
++                s->rregs[ESP_RINTR] |= INTR_BS | INTR_FC;
++                s->rregs[ESP_RSEQ] = SEQ_CD;
++                esp_raise_irq(s);
++            }
++            break;
++        }
++        break;
+     }
+ }
+ 
+@@ -773,9 +808,6 @@ static void esp_do_nodma(ESPState *s)
+ static void esp_pdma_cb(ESPState *s)
+ {
+     switch (s->pdma_cb) {
+-    case WRITE_RESPONSE_PDMA_CB:
+-        write_response_pdma_cb(s);
+-        break;
+     case DO_DMA_PDMA_CB:
+         esp_do_dma(s);
+         break;
+diff --git a/include/hw/scsi/esp.h b/include/hw/scsi/esp.h
+index a4b2ed115c..0207fdd7a6 100644
+--- a/include/hw/scsi/esp.h
++++ b/include/hw/scsi/esp.h
+@@ -152,7 +152,6 @@ struct SysBusESPState {
+ 
+ /* PDMA callbacks */
+ enum pdma_cb {
+-    WRITE_RESPONSE_PDMA_CB = 3,
+     DO_DMA_PDMA_CB = 4
+ };
+ 
 -- 
 2.39.2
 
