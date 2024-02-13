@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32EC2C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F21C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZrVM-00061G-Cr; Tue, 13 Feb 2024 07:03:19 -0500
+	id 1rZrWD-00081l-2s; Tue, 13 Feb 2024 07:04:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZrUW-0005Rj-7h
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:02:37 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZrUr-0005Xs-Bi
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:02:49 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZrUN-00017F-RQ
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:02:19 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33ce2d1882fso31452f8f.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:02:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZrUi-0001B5-VT
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:02:45 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d09bdddfc9so56623291fa.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:02:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707825728; x=1708430528; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707825751; x=1708430551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=am9vw1W4ncVE3TCNY/MXT9+eSWY4vJNOkE0J8mT4o5M=;
- b=OLUDVSX1xMUpbWZ9zk/vqfufb+lWJP/Qbox8o1W43BhI2Hplbk3N8wSFAkV2Grf6jY
- ahP4Ebx9x59w9VE0mSou2Pudlf/ec72/xcPDF95ftx0LflH9foKfdTJfaPoRbHawFMvf
- gK7vG7Ks3xUx9QnFg7j1/RxfGdljMhjcugKLpr6qbMjVm7CDTrf+QQjhSoZL8ZgClv0J
- X4bMb4jNA+bJZOCOXPh6YpyKSrsTqM254D/fbvGs1CQVA8E81ASCwvgZe7C38dbAQwEN
- /GfUJSKzlJWiESvheO1AbFaeFDd2YCZnrDNqYNIJgs3cEfg2sNSFBa+BoV8IEqL/kXKf
- zVPQ==
+ bh=7DXeUhNBegKLVEEbNriXP0M30d34qp+psgJeRCEwOUo=;
+ b=jvw0ArXVumvgMukunOELYqOpZTZG7ErChIPmdbM7QcYz5OdfO6pIG+5OKMIKqsJlVU
+ tS+Zhxk3gSJSjcAeMy/j9uhfgeaesSu/RTrMw675AuaLaHJG5KIQtRxfwn40m6DWLCvD
+ Wl8ZOS32cS6r/hImmf6ZeiFQRZ+h/oZ20ZvW1MXyJg1akKMW3zqrbIG/ZT+JSbf8+Jlm
+ R/VyPjQN8weP8RVIrE3axX/qXMj4PO+Tgp+ZOpLnWoW6iS+C/BaiMXP2C4h5svDny63x
+ f4/9ndpWckVFpPvnWqvpLMVHXOsb3vXj9PLafXEY6DN2Ull8y6kp3icb2qQPHNTIqEzP
+ h/qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707825728; x=1708430528;
+ d=1e100.net; s=20230601; t=1707825751; x=1708430551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=am9vw1W4ncVE3TCNY/MXT9+eSWY4vJNOkE0J8mT4o5M=;
- b=wsu7QVO/2GMUCXrpKFKX2RdvVOGky2erCso7cW9Tr0hzdC6dlhrih6EkrxDL5GxMWX
- arzPgBCkBjh9DOmpR6Q50oREVO581RpLxJvp0QwcPhX+V+OTABeGMa/6IZdTJjbE5XQl
- +Cdk0P6VHOitwxADGvIsXr6uAaT19sU619GolkmtbwdQaCnOCHI5GQiJS+vgAvmETBDQ
- LanGXDmHsoCeijW0iO8KXWE5EBG8iZ1oZgD8VNeIwW5GdHu4VLwzstCkc+EuoA33AkTk
- kEVbtpHvE7coh9U646Ym84VdOob2LUK42rdy+HeFPaMOsj6Y75dOzduE/GAqngYi2Kyd
- 5OyQ==
-X-Gm-Message-State: AOJu0Ywzf5qm8l3FrL3j8RwV1up8/k19UYeFiHS+YSsL/R6I8rgqqk+Y
- CkTnBe0U0H47+LejILf9ekN0OCnvcjH0LuupIncf7dTX7a5194Wt1EPiS+/zD8m38rMJHYKDS+x
- 5
-X-Google-Smtp-Source: AGHT+IHy2g/+Ro2LlkPhrmSYGUif5Fn4NIDKPzAknpGOZKfeoAp9Wz7cGPMGGQKGotR5XSIlZPH1jw==
-X-Received: by 2002:a5d:4f10:0:b0:33c:e2b1:b1e2 with SMTP id
- c16-20020a5d4f10000000b0033ce2b1b1e2mr194860wru.67.1707825727975; 
- Tue, 13 Feb 2024 04:02:07 -0800 (PST)
+ bh=7DXeUhNBegKLVEEbNriXP0M30d34qp+psgJeRCEwOUo=;
+ b=m9DCfMvSezB6K6180QeHx5s8LwFeHhxie3ub2zqfuwf/JbpBXNpH7igjguJLXLxxeq
+ pJGsRfn1e6vF01HFrFCsIIzw8bn2wagM/xta4iqNqyN9Ep3wtH0uOlrDNNy+OF2Szx1i
+ RNenm9vygK7NNFjRZzb9PT1xjkzRHnao133ePfxhb66YlOt+786o5nS7LhkVEZjplw6l
+ 6qqy22TpE9Y6cz8kkN4UegaqyqIxmKokBwa6GOKBS3zdsPfWKilaVNrXnMkg+YN/iMEB
+ EekgabOdKZMyawyNHvDOzqaXs7336DpqN3I3wF09hK3BT7ydCdIO85cvQB+MPOUx/aXn
+ h6Xg==
+X-Gm-Message-State: AOJu0YxBjrF1cayQ2gzQnDmpbBppB4DYUcLoGrYNXqyWTy9nWA8LyQSQ
+ B36bBsrE1KNrDcV+JorYUD52BcJGk+KeZYiajduDpdufOSi4IBHzEOVBfvFHoQLGPEY4/eLX1CM
+ X
+X-Google-Smtp-Source: AGHT+IHU2nOZBzOJiiwvB4NLtKxJFoQG8yRn3Zk8ihyzp3dcyIZLSsiUYCqCOQ4Gbk30iS91t9p+Ew==
+X-Received: by 2002:a2e:a6a6:0:b0:2d0:e730:b7d5 with SMTP id
+ q38-20020a2ea6a6000000b002d0e730b7d5mr4714847lje.1.1707825751449; 
+ Tue, 13 Feb 2024 04:02:31 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHK1yxT4AmZoO1EUrqSSo5e3+Uf+kNrxSXpZbAlqrQDcxJ24bWuYggHvaf8WxCKUGzLMGRyEAJ6TiKiNZI8OF5TB/dg9xvb/EeN8SIKy5CTAowIIkqGqqMK/EkHJ0tcJv/r1fk8IU1+uf3BDY7roMNFrhcLFPGbj+mK58znVtgg3x7xbAKsJgllYr/TWSsqEQsFLQBK79Ry8vq0uwILwo7YIz9hwFQHYi/h/4yaq2TjZvWp51hpswfp8MsfbU+aIJd8YpRY3mH6vcrPm9qA/CKtUuooM4fYZxcJnqPs2H6iM8HlzWTk88PNumBSctavd0weP/Om0c=
+ AJvYcCUTgHRHVSpaiDt7jfmm6dHijKIlCbBc00EwR+Ml31drXthLr324tmsGVqDKspuzIeOLhckqnDgE4QeC9IMSZl0a4DwrcJSzhzf6PU2oiEp52SQ8cHBxZ47ZtDrmpEIscHUaj2E8ZQSNEEDY3cF1gGVk8y+NNx7vUBDlXasXcz5N1XiRz5QectFlfeGP9wnrzc1I3sg0pIWuWI1FpqgwxWJfN+McHEMSLIO1MfWqNncZXWdgs9zMXn0FueDwN/N4Su0I+GDmBBZdLSRwp+vpy//nWHJ5oDaOvHA7zsFMW8vqzJp0j7xoHsTW5U0i18yq3Zo8zBvuzHo=
 Received: from m1x-phil.lan ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- r3-20020adfca83000000b0033cdbe335bcsm1266650wrh.71.2024.02.13.04.02.06
+ o39-20020a05600c512700b00411c3c2fc55sm1308184wms.45.2024.02.13.04.02.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 13 Feb 2024 04:02:07 -0800 (PST)
+ Tue, 13 Feb 2024 04:02:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -69,17 +69,18 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Bernhard Beschow <shentey@gmail.com>, Ani Sinha <anisinha@redhat.com>,
  qemu-trivial@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/7] hw/timer: Move HPET_INTCAP definition to "hpet.h"
-Date: Tue, 13 Feb 2024 13:01:47 +0100
-Message-ID: <20240213120153.90930-3-philmd@linaro.org>
+Subject: [PATCH 6/7] hw/acpi/cpu_hotplug: Include 'pci_device.h' instead of
+ 'pci.h'
+Date: Tue, 13 Feb 2024 13:01:51 +0100
+Message-ID: <20240213120153.90930-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240213120153.90930-1-philmd@linaro.org>
 References: <20240213120153.90930-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HPET_INTCAP is specific to TYPE_HPET, so define it there.
-hpet.c doesn't need to include "hw/i386/pc.h" anymore.
+cpu_hotplug.c only needs the PCI *device* definitions.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h    | 2 --
- include/hw/timer/hpet.h | 2 ++
- hw/timer/hpet.c         | 1 -
- 3 files changed, 2 insertions(+), 3 deletions(-)
+ hw/acpi/cpu_hotplug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index ec0e5efcb2..f9fc42c2be 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -15,8 +15,6 @@
- #include "hw/firmware/smbios.h"
- #include "hw/cxl/cxl.h"
- 
--#define HPET_INTCAP "hpet-intcap"
--
- /**
-  * PCMachineState:
-  * @acpi_dev: link to ACPI PM device that performs ACPI hotplug handling
-diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
-index f04c4d3238..d17a8d4319 100644
---- a/include/hw/timer/hpet.h
-+++ b/include/hw/timer/hpet.h
-@@ -78,6 +78,8 @@ extern struct hpet_fw_config hpet_cfg;
- 
- #define TYPE_HPET "hpet"
- 
-+#define HPET_INTCAP "hpet-intcap"
-+
- static inline bool hpet_find(void)
- {
-     return object_resolve_path_type("", TYPE_HPET, NULL);
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 1672faa4f2..01efe4885d 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -25,7 +25,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/i386/pc.h"
- #include "hw/irq.h"
+diff --git a/hw/acpi/cpu_hotplug.c b/hw/acpi/cpu_hotplug.c
+index 6f78db0ccb..f7fe905e0a 100644
+--- a/hw/acpi/cpu_hotplug.c
++++ b/hw/acpi/cpu_hotplug.c
+@@ -14,7 +14,7 @@
  #include "qapi/error.h"
+ #include "hw/core/cpu.h"
+ #include "hw/i386/pc.h"
+-#include "hw/pci/pci.h"
++#include "hw/pci/pci_device.h"
  #include "qemu/error-report.h"
+ 
+ #define CPU_EJECT_METHOD "CPEJ"
 -- 
 2.41.0
 
