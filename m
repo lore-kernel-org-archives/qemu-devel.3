@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6301C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 461F2C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZqaj-00073i-Ty; Tue, 13 Feb 2024 06:04:45 -0500
+	id 1rZqdM-00019I-Ja; Tue, 13 Feb 2024 06:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqah-000728-E2
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:04:44 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqdL-00011f-9X
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:07:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqaf-0006xg-JM
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:04:42 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqdJ-0007ZH-M3
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:07:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707822281;
+ s=mimecast20190719; t=1707822444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7N91lAjYUSFlOt3VaYvlm2zqLY+7pJrej0nvLjkSvFA=;
- b=f7m0bVpXSRhR3fovcGMEhSkWJvOqaxk3svCN/OriqFucjLhzkIu1kMAjo9XJ8OexSvMsYs
- CUC3c5wV74cIGlEyflWGRJhmzVvPdFtxQ0XxdQFBxfVNEHj615wQ5KxOBJ43mI6Cs1zG+o
- RPvdRIaf/mIs/lcQSlf/u+2SAsDCLMA=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ASyIKhSA4StI4MoNK8wEtVUg822eLHNPBDgnBO1FArQ=;
+ b=h87yuZzw4dlQqctiVbmL5viGWA0S8hnFUrfyrplSuVW1ZQZw144cmvsyjL/Mf7cla5Gful
+ OhJ/QES5PG32UikfXauuVVIux7oWNq7VdrWyPzmWktkGCiYUKEMMmEwL6nIqPoiIRxCXuo
+ /n2JdCbSN0LCoXu501Ev88uYlEwWg5Y=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-204-EEPUcMv_MaWGtpPBKnY0zg-1; Tue, 13 Feb 2024 06:04:39 -0500
-X-MC-Unique: EEPUcMv_MaWGtpPBKnY0zg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a2f71c83b7eso65760666b.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 03:04:39 -0800 (PST)
+ us-mta-8-kV_vhKHJMGWiEFlvY25n6g-1; Tue, 13 Feb 2024 06:07:23 -0500
+X-MC-Unique: kV_vhKHJMGWiEFlvY25n6g-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-560127ce17fso2146294a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 03:07:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707822278; x=1708427078;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7N91lAjYUSFlOt3VaYvlm2zqLY+7pJrej0nvLjkSvFA=;
- b=nJ6hM4IX/dFjx4qWggvHVjH4ymMfcs1lEogcBKhqLCACOJl+HdftrN7/s+jzCa3eU/
- 9207g9diqhsD8iYj6D1++Y63A9oSM4kawdVAkIsXfX2m024FeilCuDak17CJwIZp0aRw
- D8gB5arrRJdc2eREd1HWoDAekIgmQh3kP6dVXWiTYfbkyqD14Bxc7KbxRaRA0wZgBXdh
- J0kHPNEYvUtnQIjmvab2szP2x/MxYqzaB3cMZrHdksi8Zf7BUvQYb5ciwqk+1X7Gyn/y
- 3dpCp1FFPEla1nM/mtueGmrJ+BPCFscOzgFWRLuu3FE8c6nMk12aXfNn71tVkUI7BYiA
- PFww==
-X-Gm-Message-State: AOJu0YzyItlOPQz/qp57j73uSL3dF4sVLH+RfqExYWdMvTENp4u8ztIs
- /ZAJEoeeg4f4Xyp+ykY8ZS4GQtaelmk0jSDMDqqSpV7vF1v4UxrEOtEHe1yue9WsGc+TJMzvcCw
- tuWHiJ0VurpYReCwul9bbee8VaUAax2VEaZodcezc1SRepCDQs0riHqO3jeDb
-X-Received: by 2002:a17:906:3e1a:b0:a3b:fbf8:94ca with SMTP id
- k26-20020a1709063e1a00b00a3bfbf894camr6202073eji.62.1707822278188; 
- Tue, 13 Feb 2024 03:04:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJY2qMWOKR53KItPR1Dt0mNipMQfTiUsey+qbw91T5L68rF7CgsGiby2/YcrwxaJemcDB2KA==
-X-Received: by 2002:a17:906:3e1a:b0:a3b:fbf8:94ca with SMTP id
- k26-20020a1709063e1a00b00a3bfbf894camr6202055eji.62.1707822277843; 
- Tue, 13 Feb 2024 03:04:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707822442; x=1708427242;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ASyIKhSA4StI4MoNK8wEtVUg822eLHNPBDgnBO1FArQ=;
+ b=IQQaNdL/KCW39HoiyM7gVhBqMPsnDsD8J6lX2Zi5Zl18WpTscMVs1Nz6XjZC8Bniff
+ cLS+q2lJxzHbVsviCFeh73eVjrE5ZOsm4YAg3vj2CrpV0o7gfnUFRP1AbC0NUjQHIGl8
+ GWHNOXg3qQSvamrAj4YEnh6B1s8XZndBmfDS3uR24qMGGiFo/rJLvzFyeXcxAzd390dK
+ x0seJKBEZsuZQnDdXHc1oEpkv2sHvCOdEgBWeTGOuDRexTVPlhlsgNP74+Cmpfa/Mc+l
+ DDLokjHdzaEohvgX4TXqmPfhMgkox5RPeA6xWWLrJM5MkCVh9/iC16aBtU4JR5Yg5jXm
+ FCNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEY839uy/ih3ICWjt4iu9TPBPeOCERzXX8Wvr4nNAXHn6s/PyCEtqiV63f7L98N8TEZy+bqJ0w5h5tZG3IOz2Di7lGJawIujZjX/aGulCju4D+zJBe3y7Pdsl9j+1YIwjW5rNen42I8Cqs1/0+Gy7wLs0djZtmEfEz9n7LZgip4wIPlFPW13FJK3/GYeXlAQDm7/XBRaM585wOi/bLLMqERXoYlfLCCEE/drvxCbDOn0yfkRMjUlRMYON7cXFaeVHz3tg5TZVyByKliAxcQ0za
+ AJvYcCV+lk7dHGPu7vWJ7M4dIJ6cyBWLOiphIBAAyuyQUIgHVRv4Q9fyyHxvVTTozwjgSEx7RULb0SylGwv78FQJOjJgh92wmCI=
+X-Gm-Message-State: AOJu0YzWqFr4cxtyFdBpZ5XYT1Tvv43OTi8UDbHjV6bj5fog7d25JXd0
+ w1DvJ9s3kRtKTD5BSk7lzEjHzZ9Ga6RZv+HZIMpXdBTekqA6t0aqIep/VWSq7QX+xwcsQoBWBQi
+ jfM4cT7MpbvUoT/3eUkZxxFPqbAuGi5/Po4ycl/fXzeEjct1LLNHe
+X-Received: by 2002:aa7:c1d9:0:b0:55d:30b2:983e with SMTP id
+ d25-20020aa7c1d9000000b0055d30b2983emr7068115edp.4.1707822442415; 
+ Tue, 13 Feb 2024 03:07:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpL9J72Zpyo1EqmFuRcAPVp895qd1/WbsE1dBiYDua5TMlRGOxJeRl7OvybDDBDeIGeHU7iA==
+X-Received: by 2002:aa7:c1d9:0:b0:55d:30b2:983e with SMTP id
+ d25-20020aa7c1d9000000b0055d30b2983emr7068099edp.4.1707822442046; 
+ Tue, 13 Feb 2024 03:07:22 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUuCy+uNoYo+2JbvOtWGmmBrZepaql9N90vm/DAV0zBOWikdoXUU6f106PBe1Edc18bZglqYY1Ci+R0C4KZbdV5qaCVFq6kcPaiw+gPcO74qB+mBzWZaYck9PuEBid7MXrG3RCDVYFXsShr4GZFNRh8qzNZ2b1UQcvfDc7F3bSNhMriaHPGiwbiVQ5w6HLNbFrVYsptqlCUVCpoeoKRL+d5PVGCRzJNQTCMP9lpgwPnhgdN9ktMwCTAdwU=
 Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
- hb16-20020a170906b89000b00a3c20ceacf1sm1173049ejb.118.2024.02.13.03.04.29
+ c16-20020a056402121000b0056183062ef9sm3011247edw.91.2024.02.13.03.07.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 03:04:37 -0800 (PST)
-Date: Tue, 13 Feb 2024 06:04:26 -0500
+ Tue, 13 Feb 2024 03:07:21 -0800 (PST)
+Date: Tue, 13 Feb 2024 06:07:15 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- John Snow <jsnow@redhat.com>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH 0/9] hw/ide/ahci: Housekeeping
-Message-ID: <20240213060343-mutt-send-email-mst@kernel.org>
-References: <20240213081201.78951-1-philmd@linaro.org>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ jean-philippe@linaro.org, alex.williamson@redhat.com,
+ clg@redhat.com, peter.maydell@linaro.org
+Subject: Re: [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default
+ page_size_mask
+Message-ID: <20240213060544-mutt-send-email-mst@kernel.org>
+References: <20240117132039.332273-1-eric.auger@redhat.com>
+ <20240213044312-mutt-send-email-mst@kernel.org>
+ <6d4b5766-f8e2-4889-827d-01d3509239f7@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240213081201.78951-1-philmd@linaro.org>
+In-Reply-To: <6d4b5766-f8e2-4889-827d-01d3509239f7@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
@@ -105,49 +106,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 13, 2024 at 09:11:51AM +0100, Philippe Mathieu-Daudé wrote:
-> - Split 'ahci.h' as sysbus / pci
-> - Inline ahci_get_num_ports()
-> - Directly use AHCIState::ports instead of SysbusAHCIState::num_ports
-
-
-PC part:
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-feel free to merge with rest of patches.
-
-
-> Philippe Mathieu-Daudé (9):
->   hw/i386/q35: Use DEVICE() cast macro with PCIDevice object
->   hw/ide/ahci: Expose AHCIPCIState structure
->   hw/ide/ahci: Rename AHCI PCI function as 'pdev'
->   hw/ide/ahci: Inline ahci_get_num_ports()
->   hw/ide/ahci: Pass AHCI context to ahci_ide_create_devs()
->   hw/ide/ahci: Convert AHCIState::ports to unsigned
->   hw/ide/ahci: Do not pass 'ports' argument to ahci_realize()
->   hw/ide/ahci: Remove SysbusAHCIState::num_ports field
->   hw/ide/ahci: Move SysBus definitions to 'ahci-sysbus.h'
+On Tue, Feb 13, 2024 at 11:32:13AM +0100, Eric Auger wrote:
+> Hi Michael,
 > 
->  hw/ide/ahci_internal.h         | 10 +--------
->  include/hw/arm/allwinner-a10.h |  2 +-
->  include/hw/arm/allwinner-r40.h |  2 +-
->  include/hw/arm/xlnx-zynqmp.h   |  2 +-
->  include/hw/ide/ahci-pci.h      | 22 ++++++++++++++++++++
->  include/hw/ide/ahci-sysbus.h   | 35 +++++++++++++++++++++++++++++++
->  include/hw/ide/ahci.h          | 38 +++-------------------------------
->  hw/arm/highbank.c              |  2 +-
->  hw/arm/sbsa-ref.c              |  1 +
->  hw/i386/pc_q35.c               | 19 ++++++++++-------
->  hw/ide/ahci-allwinner.c        |  3 +--
->  hw/ide/ahci.c                  | 29 +++++++++-----------------
->  hw/ide/ich.c                   |  4 +++-
->  hw/mips/boston.c               | 14 +++++++------
->  14 files changed, 99 insertions(+), 84 deletions(-)
->  create mode 100644 include/hw/ide/ahci-pci.h
->  create mode 100644 include/hw/ide/ahci-sysbus.h
+> On 2/13/24 10:43, Michael S. Tsirkin wrote:
+> > On Wed, Jan 17, 2024 at 02:20:39PM +0100, Eric Auger wrote:
+> >> We used to set default page_size_mask to qemu_target_page_mask() but
+> >> with VFIO assignment it makes more sense to use the actual host page mask
+> >> instead.
+> >>
+> >> So from now on qemu_real_host_page_mask() will be used as a default.
+> >> To be able to migrate older code, we increase the vmstat version_id
+> >> to 3 and if an older incoming v2 stream is detected we set the previous
+> >> default value.
+> >>
+> >> The new default is well adapted to configs where host and guest have
+> >> the same page size. This allows to fix hotplugging VFIO devices on a
+> >> 64kB guest and a 64kB host. This test case has been failing before
+> >> and even crashing qemu with hw_error("vfio: DMA mapping failed,
+> >> unable to continue") in VFIO common). Indeed the hot-attached VFIO
+> >> device would call memory_region_iommu_set_page_size_mask with 64kB
+> >> mask whereas after the granule was frozen to 4kB on machine init done.
+> >> Now this works. However the new default will prevent 4kB guest on
+> >> 64kB host because the granule will be set to 64kB which would be
+> >> larger than the guest page size. In that situation, the virtio-iommu
+> >> driver fails on viommu_domain_finalise() with
+> >> "granule 0x10000 larger than system page size 0x1000".
+> >>
+> >> The current limitation of global granule in the virtio-iommu
+> >> should be removed and turned into per domain granule. But
+> >> until we get this upgraded, this new default is probably
+> >> better because I don't think anyone is currently interested in
+> >> running a 4kB page size guest with virtio-iommu on a 64kB host.
+> >> However supporting 64kB guest on 64kB host with virtio-iommu and
+> >> VFIO looks a more important feature.
+> >>
+> >> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> >> Tested-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> >> Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> > What about migration compatibility? In particular, cross-version one?
+> > Don't we need compat machinery for this?
+> See below
+> >
+> >> ---
+> >>
+> >> v1 -> v2:
+> >> - fixed 2 typos in the commit msg and added Jean's R-b and T-b
+> >> ---
+> >>  hw/virtio/virtio-iommu.c | 7 +++++--
+> >>  1 file changed, 5 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> >> index 8a4bd933c6..ec2ba11d1d 100644
+> >> --- a/hw/virtio/virtio-iommu.c
+> >> +++ b/hw/virtio/virtio-iommu.c
+> >> @@ -1313,7 +1313,7 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+> >>       * in vfio realize
+> >>       */
+> >>      s->config.bypass = s->boot_bypass;
+> >> -    s->config.page_size_mask = qemu_target_page_mask();
+> >> +    s->config.page_size_mask = qemu_real_host_page_mask();
+> >>      s->config.input_range.end = UINT64_MAX;
+> >>      s->config.domain_range.end = UINT32_MAX;
+> >>      s->config.probe_size = VIOMMU_PROBE_SIZE;
+> >> @@ -1491,13 +1491,16 @@ static int iommu_post_load(void *opaque, int version_id)
+> >>       * still correct.
+> >>       */
+> >>      virtio_iommu_switch_address_space_all(s);
+> >> +    if (version_id <= 2) {
+> >> +        s->config.page_size_mask = qemu_target_page_mask();
+> I tested migration from v2 -> v3 and the above code is overriding the
+> new default by the older one.
 > 
-> -- 
-> 2.41.0
+> Do you have an other concern?
+> 
+> Thanks
+> 
+> Eric
+
+
+
+> >> +    }
+> >>      return 0;
+> >>  }
+> >>  
+> >>  static const VMStateDescription vmstate_virtio_iommu_device = {
+> >>      .name = "virtio-iommu-device",
+> >>      .minimum_version_id = 2,
+> >> -    .version_id = 2,
+> >> +    .version_id = 3,
+> >>      .post_load = iommu_post_load,
+> >>      .fields = (const VMStateField[]) {
+> >>          VMSTATE_GTREE_DIRECT_KEY_V(domains, VirtIOIOMMU, 2,
+
+Oh I missed the version change. But then migration  to older version
+is completely broken isn't it? Old qemu can not handle version_id 3 at
+all.
+
+
+Generally, compat machinery is nicer than the old version hacks.
+
+
+> >> -- 
+> >> 2.41.0
 
 
