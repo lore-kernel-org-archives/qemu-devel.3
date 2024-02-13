@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E526C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 16:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9EEC4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 16:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZvhd-0001s6-0F; Tue, 13 Feb 2024 11:32:13 -0500
+	id 1rZviA-0002FQ-5C; Tue, 13 Feb 2024 11:32:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZvhZ-0001rV-BX
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:32:10 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZvi4-0002Bf-VR
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:32:40 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZvhX-0005Dp-HK
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:32:08 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d94323d547so40016365ad.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:32:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZvi2-0005TV-N7
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:32:39 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-33b66883de9so3189549f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:32:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707841925; x=1708446725; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1707841957; x=1708446757; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gExtqSE0IX7pmHVcVUiR1sDsaiOGFEQlINdHMHbjOWo=;
- b=L1nkkh4vKoQ6mUq0uXKJc7gj4tR/9qBUsEKlUR89yaA8/ZEiGo17VH/mT00jwr429U
- P8PRJCBhVYq7+mJXVtErdmku9WF1RoBr9dQycfUZ059QWp0pxSZ9UNZBSrCDtk0Pkl1M
- 8RfxHlZxvAJMbTe7cZPADlShetWKd2Yat6xeKg4Nca0Sur+zxmKvQslRr+7ngb0ZhbhM
- lcadALYqFcbtuoRIXQc5ArrGH6Fisb37Gmuvx7mxF/zq1QDvc93oFfML+aT7LsqZSfl9
- jNfV3+WWFKcONqTplN2vQxLh2n8vKvu8E7y4TIyEMp8VynFyTib5vIW24RK815SIS0bb
- gheQ==
+ bh=4cdNstmc8vSbFQqZ+QIlOSp9QrHWOJ1pctG8XOlTt1M=;
+ b=XKd5JiAas9JbLR7hgmU5K38mTTl4O7vg+SPAJLP5+ixB59m6vePYNdgT2Ha3Lb6jbg
+ 2FM6qkflw1FQVkW5euk88wl+8DAxOa2zcTION5l8YfQ4SLH2G0YMcmOA3fktBlsw+TTn
+ Yimj4YiSXw/Q0aj8fbW2mcTOn4kRx4UwQ2bgJLC9K5+AmIM/4mmELsmujoSs6ehKrspc
+ BlFmDvDKNJbugCy9H/bU4o0M33DQ6aS2CL9YyAsuVIMZbN/stsmKNYkYFEf0GKgufFFt
+ TdUcg2Hf2eJc+ZTXD7eGtBSW2RcP0OWxPHm1L18afhZ+QH2McFEApeEqn2P20uuNKgA2
+ ue3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707841925; x=1708446725;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1707841957; x=1708446757;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gExtqSE0IX7pmHVcVUiR1sDsaiOGFEQlINdHMHbjOWo=;
- b=CdKiz3w9suWyeXJv593PdfNwZwMXGFcQiAihxedyWnBFmBhuXTEX8vVEx3tI4BHcWm
- AJd2JDTxmoabSMHjBIFTCV0AD8CDMP0r16JmHVonelo7DdZnxbul7HUmhmtM+jpv5TLh
- YN6LxJxhcoYzuFy2EpKuJa94k9cI0n2TkgOUI5yjnokCqLOWscFHesxb97iJbii+7/1J
- FzVkWah4zvsng+sky2z88y95WAH1ThtfcpVbuyg+6Z1SctB+OEdJwU/ICwuc5v+xHnXf
- CjKruE/Fn8/o6uucGbfgJ74/x5hbrmSUjwXWyH2xJ1jS5FVZjs5EM8OJEaXGjtbOpWj8
- PwqQ==
-X-Gm-Message-State: AOJu0YxIR6vTV3eZxWBFjGFzp5HxhvdRe+mmd+KNIHKteVamEugujjq8
- DqyAuQ2RDZpws34BilVSxAccRvb5QuFiP5RWbBIScnRb+a651a+5Wg31+UcuSiA=
-X-Google-Smtp-Source: AGHT+IHB63Blk+AATNFfIKmY+pWejI7S0LIQrnUY5YRVxyQpZ6kXG/NiVXxw44n4di9JEbRe6QZtrA==
-X-Received: by 2002:a17:903:2282:b0:1db:4288:f673 with SMTP id
- b2-20020a170903228200b001db4288f673mr29322plh.6.1707841925292; 
- Tue, 13 Feb 2024 08:32:05 -0800 (PST)
+ bh=4cdNstmc8vSbFQqZ+QIlOSp9QrHWOJ1pctG8XOlTt1M=;
+ b=th29XE25b3HrIWgXR4j87XwWmzTLv8DoluK6LRKfR2FuBDDiahbOF06jaj705LynK2
+ VGUt/qo+WF8Xs/JCCxrkVtNcgCmQ4f9pSvH3bIqWXg7ENSnBEpW+gOIHmNBdxH7Md9JM
+ r/R0kC/L2he1M3kP2t1jXk5jSLjPIVwsFyyB18lIFfoDNePuUIKZNZYebB6Icfi9h0w+
+ Z1uJvmTxuLroRPlWs0vbcRSxqYmL2Q9zUymszlNxDyDPuE18+GtOLOv2/anyrbHdWvwj
+ 3n/LeqQcFHyjE7I5BpSwbPF3/v1ytd9+NubuTV2a1k9wfNvW1B6owb4+4NLwheD04dL1
+ BINg==
+X-Gm-Message-State: AOJu0YzLzh3Esp5KS1mcjr4P1dJSqOu2GdWb0UK0Zy5fOuj9SA4Supyh
+ /YhDXmRfV/7LqKQTPHriAjttaorZegMTdIpQAQ9U4MhKlWcBr6pLzkpL1xylXzIKKmJCiiZxa0S
+ f
+X-Google-Smtp-Source: AGHT+IGzJ1/QEGjwPGtFmQiWlHGgZgdOsUAUZaF0Of4bbiYIKuhYm7Hf05nfF1uoz3qdlMxs1EW6RQ==
+X-Received: by 2002:adf:a3cb:0:b0:33b:4b08:65d6 with SMTP id
+ m11-20020adfa3cb000000b0033b4b0865d6mr6781637wrb.51.1707841956754; 
+ Tue, 13 Feb 2024 08:32:36 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUw/RP/2djEDNdQkPmKZPpKtv6SIqOC0WYvicS6CwmfLxZ3FQV0OrPH6nGyaQqMCJ5m/SGqJNFpO1Hlt308Bu530abJkPU=
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- jx4-20020a170903138400b001d741873e4bsm2288247plb.95.2024.02.13.08.32.04
+ AJvYcCWzagmSLT5WKPTB6NZDxzENFZwAKbZhhtt6LbglguXE8Kn/5aELoYFNOwDSQqhA1DtUUAdvAtAL57m5/n3llaMVD+EV/s6edaZmH00/48U7gTx2HXzF/k8t/iqjaOKqsMa4YPRO77U0VXG/7zdeaTZpIYRrEni2D/RReoNs3qYenISoKTHiv8rQjre80NAfYHHFDfPMMtU/xdn7W1c4rwR57MNdrRCIHSVaC/TMhAMadsi3TnxDrT6gJcfsasvPrtOI8+pqX7BKcwEHsO1UCKZsXuoIz05T1WsXjN8WF3xgiqLDhlTGLdP/Zn4jEwSRssYgjZ4=
+Received: from [192.168.69.100] ([176.176.128.243])
+ by smtp.gmail.com with ESMTPSA id
+ o16-20020a5d58d0000000b0033afe816977sm9887821wrf.66.2024.02.13.08.32.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 08:32:04 -0800 (PST)
-Message-ID: <be91e350-20e4-4c60-908c-c19b0b663bc6@linaro.org>
-Date: Tue, 13 Feb 2024 06:32:03 -1000
+ Tue, 13 Feb 2024 08:32:36 -0800 (PST)
+Message-ID: <2e230b9f-728c-4c25-b58a-a1a9f8dae62e@linaro.org>
+Date: Tue, 13 Feb 2024 17:32:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] hw/ide/ahci: Rename AHCI PCI function as 'pdev'
+Subject: Re: [RFC PATCH 00/11] target/mips: Remove I6500 CPU definition
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240213081201.78951-1-philmd@linaro.org>
- <20240213081201.78951-4-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240213081201.78951-4-philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+References: <20240209090513.9401-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240209090513.9401-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,15 +101,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/24 22:11, Philippe Mathieu-Daudé wrote:
-> We want to access AHCIPCIState::ahci field. In order to keep
-> the code simple (avoiding &ahci->ahci), rename the current
-> 'ahci' variable as 'pdev'
+On 9/2/24 10:05, Philippe Mathieu-Daudé wrote:
+> Alternative to:
+> https://lore.kernel.org/qemu-devel/20240209085347.8446-1-philmd@linaro.org/
+> If the I6500 can not be tested or its support is incomplete,
+> there is no point in wasting energy maintaining it.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   hw/i386/pc_q35.c | 15 ++++++++-------
->   hw/mips/boston.c | 10 +++++-----
->   2 files changed, 13 insertions(+), 12 deletions(-)
+> Philippe Mathieu-Daudé (11):
+>    target/mips: Remove helpers accessing SAAR registers
+>    hw/misc/mips: Reduce itc_reconfigure() scope
+>    target/mips: Remove MIPSITUState::itu field
+>    target/mips: Remove CPUMIPSState::saarp field
+>    hw/misc/mips_itu: Remove MIPSITUState::cpu0 field
+>    hw/misc/mips_itu: Remove MIPSITUState::saar field
+>    target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
+>    target/mips: Remove helpers accessing SAARI register
+>    target/mips: Remove CPUMIPSState::CP0_SAARI field
+>    target/mips: Remove the unused DisasContext::saar field
 
+Patches 1-10 queued (without removing the I6500 CPU).
 
