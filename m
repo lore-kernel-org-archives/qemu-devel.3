@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9EEC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 16:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330A6C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 16:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZviA-0002FQ-5C; Tue, 13 Feb 2024 11:32:48 -0500
+	id 1rZvsK-0000jU-2p; Tue, 13 Feb 2024 11:43:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZvi4-0002Bf-VR
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:32:40 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZvsH-0000ie-NV
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:43:14 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZvi2-0005TV-N7
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:32:39 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33b66883de9so3189549f8f.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:32:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZvsG-0007H7-4L
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 11:43:13 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2907a17fa34so3421722a91.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 08:43:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707841957; x=1708446757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707842590; x=1708447390; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4cdNstmc8vSbFQqZ+QIlOSp9QrHWOJ1pctG8XOlTt1M=;
- b=XKd5JiAas9JbLR7hgmU5K38mTTl4O7vg+SPAJLP5+ixB59m6vePYNdgT2Ha3Lb6jbg
- 2FM6qkflw1FQVkW5euk88wl+8DAxOa2zcTION5l8YfQ4SLH2G0YMcmOA3fktBlsw+TTn
- Yimj4YiSXw/Q0aj8fbW2mcTOn4kRx4UwQ2bgJLC9K5+AmIM/4mmELsmujoSs6ehKrspc
- BlFmDvDKNJbugCy9H/bU4o0M33DQ6aS2CL9YyAsuVIMZbN/stsmKNYkYFEf0GKgufFFt
- TdUcg2Hf2eJc+ZTXD7eGtBSW2RcP0OWxPHm1L18afhZ+QH2McFEApeEqn2P20uuNKgA2
- ue3A==
+ bh=FOwl5k/h1KDqksz2Wse0qLE2glUEserFMJa5leufMzI=;
+ b=TGvnTzqyUPXvkiOoiBvdQhHPISI6NM2PvZnHIV40YGbT4qRTBom3UhfXoWP2G+Mw6m
+ JZ+845HPUHgbulXEuaREfbAwPH9DgnYEMMU80q5eH0crg/5vVhDIeH3itTF0DKGFFWtw
+ M8oMKhQ0nUPdsjTpB8H4TIhnHD39gI7oJDvVanVTKOBRprn8Q2SnpJ++loitRezZ5TP+
+ pvEpwvnL4AcQFhfEac5Zit75yPS/7ZlfBAN5nCB6ibo271neCtPs6Dc7YMdzd39ZMlvG
+ DTDh1apSjI8AjhgEDACEl1FXOx422kwsGVAIqFxa6TMkanXMb00rNJQ87Y9I4s7EEeUG
+ VjnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707841957; x=1708446757;
+ d=1e100.net; s=20230601; t=1707842590; x=1708447390;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4cdNstmc8vSbFQqZ+QIlOSp9QrHWOJ1pctG8XOlTt1M=;
- b=th29XE25b3HrIWgXR4j87XwWmzTLv8DoluK6LRKfR2FuBDDiahbOF06jaj705LynK2
- VGUt/qo+WF8Xs/JCCxrkVtNcgCmQ4f9pSvH3bIqWXg7ENSnBEpW+gOIHmNBdxH7Md9JM
- r/R0kC/L2he1M3kP2t1jXk5jSLjPIVwsFyyB18lIFfoDNePuUIKZNZYebB6Icfi9h0w+
- Z1uJvmTxuLroRPlWs0vbcRSxqYmL2Q9zUymszlNxDyDPuE18+GtOLOv2/anyrbHdWvwj
- 3n/LeqQcFHyjE7I5BpSwbPF3/v1ytd9+NubuTV2a1k9wfNvW1B6owb4+4NLwheD04dL1
- BINg==
-X-Gm-Message-State: AOJu0YzLzh3Esp5KS1mcjr4P1dJSqOu2GdWb0UK0Zy5fOuj9SA4Supyh
- /YhDXmRfV/7LqKQTPHriAjttaorZegMTdIpQAQ9U4MhKlWcBr6pLzkpL1xylXzIKKmJCiiZxa0S
- f
-X-Google-Smtp-Source: AGHT+IGzJ1/QEGjwPGtFmQiWlHGgZgdOsUAUZaF0Of4bbiYIKuhYm7Hf05nfF1uoz3qdlMxs1EW6RQ==
-X-Received: by 2002:adf:a3cb:0:b0:33b:4b08:65d6 with SMTP id
- m11-20020adfa3cb000000b0033b4b0865d6mr6781637wrb.51.1707841956754; 
- Tue, 13 Feb 2024 08:32:36 -0800 (PST)
+ bh=FOwl5k/h1KDqksz2Wse0qLE2glUEserFMJa5leufMzI=;
+ b=Mv7ttzJgqHxplWErm4pCXKZJNTq04E1dkbYlS6KCbvLriXu8cvr6umCWoBDrHEdqxn
+ lTF6w/wj2Af7QUzP/gWHo0hQs2tmK7Xd2ndvN5vxTANdZbbC84AW2ZXDRgJKyIPAgm0H
+ LqQJakuEH6lIe8tMUHr1sWFkCqR1QOXfeYuETwu00LLt9EO6uTp39plPiLy4hA0iwI/4
+ w6SVut3CwDvYHSRDW2xFL8MuWaQrMedvBUMbS8EwZ1YDS9ZSupEzSYiRbJqvaUitSwwR
+ cXuRBxB5dw4jSeUN8/3sJxqaYIHXwPHvAWlCyzVtWl0iz3Xf4ScWP2EY02XrVu78gPNV
+ Mplw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzagmSLT5WKPTB6NZDxzENFZwAKbZhhtt6LbglguXE8Kn/5aELoYFNOwDSQqhA1DtUUAdvAtAL57m5/n3llaMVD+EV/s6edaZmH00/48U7gTx2HXzF/k8t/iqjaOKqsMa4YPRO77U0VXG/7zdeaTZpIYRrEni2D/RReoNs3qYenISoKTHiv8rQjre80NAfYHHFDfPMMtU/xdn7W1c4rwR57MNdrRCIHSVaC/TMhAMadsi3TnxDrT6gJcfsasvPrtOI8+pqX7BKcwEHsO1UCKZsXuoIz05T1WsXjN8WF3xgiqLDhlTGLdP/Zn4jEwSRssYgjZ4=
-Received: from [192.168.69.100] ([176.176.128.243])
- by smtp.gmail.com with ESMTPSA id
- o16-20020a5d58d0000000b0033afe816977sm9887821wrf.66.2024.02.13.08.32.35
+ AJvYcCUz5YZ3x1VlYdGYjNE3KbDaj2rLEUuXRil3g4CGLb3gHjj0RhE177tdOvI64h2/ogL1r63vKYLifpcZ1JaYX/AkBZDI6ow=
+X-Gm-Message-State: AOJu0YyZ/7XMY8UWnJDRamuV2qgqz6wnJd5rBYhs7ajjHecJ5ij1z2zS
+ PLi4C4RtzJIi7kyBWACzqWJX551KiqTV6CY0u+nxfy6L/QRiTP4k0vZ41c01h7I=
+X-Google-Smtp-Source: AGHT+IESkuvKBBexoxW+9Hq5zsnHAmC0FB83EXMYi/fbT7O91erP92WixIqALRxT/gAo4kJ8136ePQ==
+X-Received: by 2002:a17:90b:24f:b0:293:f16d:e53f with SMTP id
+ fz15-20020a17090b024f00b00293f16de53fmr64404pjb.0.1707842590275; 
+ Tue, 13 Feb 2024 08:43:10 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaYWXbC9AHWMMDSpbAVUbaLHORA05uyPGFkRGiLBjsZzO4QlLzvT24sWczkJm7KnwaO/h5jZ8x6EqvNh+hw4+xuaJtZI+vBMo18Mn23BwafnLupi16PJ4iXJhhtgzbacSIH2ckhf6yBWCczZ74KMp81JbpXdoxanW0VbW+SLEMwmAfxH163nUdh2rABaD5OdzC3FyidN0+g7GekWkXaT7SiyEzfux9Z7H2XrYUhCQGVB4V2ZV9ZzIfX44WZ0zMFVqotyJUWHcWPCOyMb8rjjSGX+uznGqzBAdSh+PBzBY0UzdDZZcGFW1Gtrg18qEHz+lvFg==
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ ep23-20020a17090ae65700b00298a1d613c4sm1832683pjb.27.2024.02.13.08.43.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 08:32:36 -0800 (PST)
-Message-ID: <2e230b9f-728c-4c25-b58a-a1a9f8dae62e@linaro.org>
-Date: Tue, 13 Feb 2024 17:32:33 +0100
+ Tue, 13 Feb 2024 08:43:09 -0800 (PST)
+Message-ID: <f2dd89fd-db4c-410a-bcdc-2a117e4f633a@linaro.org>
+Date: Tue, 13 Feb 2024 06:43:05 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/11] target/mips: Remove I6500 CPU definition
+Subject: Re: [PATCH 4/9] hw/ide/ahci: Inline ahci_get_num_ports()
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ John Snow <jsnow@redhat.com>, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-block@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Paul Burton <paulburton@kernel.org>,
  Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-References: <20240209090513.9401-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240209090513.9401-1-philmd@linaro.org>
+References: <20240213081201.78951-1-philmd@linaro.org>
+ <20240213081201.78951-5-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240213081201.78951-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,23 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/24 10:05, Philippe Mathieu-Daudé wrote:
-> Alternative to:
-> https://lore.kernel.org/qemu-devel/20240209085347.8446-1-philmd@linaro.org/
-> If the I6500 can not be tested or its support is incomplete,
-> there is no point in wasting energy maintaining it.
+On 2/12/24 22:11, Philippe Mathieu-Daudé wrote:
+> Introduce the 'ich9' variable and inline ahci_get_num_ports().
 > 
-> Philippe Mathieu-Daudé (11):
->    target/mips: Remove helpers accessing SAAR registers
->    hw/misc/mips: Reduce itc_reconfigure() scope
->    target/mips: Remove MIPSITUState::itu field
->    target/mips: Remove CPUMIPSState::saarp field
->    hw/misc/mips_itu: Remove MIPSITUState::cpu0 field
->    hw/misc/mips_itu: Remove MIPSITUState::saar field
->    target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
->    target/mips: Remove helpers accessing SAARI register
->    target/mips: Remove CPUMIPSState::CP0_SAARI field
->    target/mips: Remove the unused DisasContext::saar field
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/ide/ahci.h | 1 -
+>   hw/i386/pc_q35.c      | 6 ++++--
+>   hw/ide/ahci.c         | 8 --------
+>   hw/mips/boston.c      | 6 ++++--
+>   4 files changed, 8 insertions(+), 13 deletions(-)
 
-Patches 1-10 queued (without removing the I6500 CPU).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+As far as it goes.  But it certainly highlights that
+
+> +        g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
+> +        ide_drive_get(hd, ich9->ahci.ports);
+....
+> +    g_assert(ARRAY_SIZE(hd) == ich9->ahci.ports);
+> +    ide_drive_get(hd, ich9->ahci.ports);
+
+ports is always a constant.  Or perhaps that's only from this PCI usage?
+
+
+r~
+
 
