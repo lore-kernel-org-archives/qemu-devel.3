@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E9ACC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 09:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8416BC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 09:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZpKr-00023F-EH; Tue, 13 Feb 2024 04:44:17 -0500
+	id 1rZpME-00053o-Mw; Tue, 13 Feb 2024 04:45:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZpKh-0001s0-2E
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:44:08 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZpMC-00050B-Hn
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:45:41 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZpKf-0000k6-48
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:44:06 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZpMB-0001IV-73
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 04:45:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707817444;
+ s=mimecast20190719; t=1707817537;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=9kHVkDwBtC5IG302WkC9sPitZi9ffNJvND+yCp6Ty80=;
- b=cvCHlIEgpGDhFB+g5CPvrB3C7v9CzrUix7kCSL4Poy9UQB4SUoKmMNjrbFsP3kvU199GMV
- 9gxvmqp0E53FDMcsVLUTXT18ZqoQjwvK6v51kyONr9FZr5KRaX90n00XP4APam6dFefh+x
- 1Moja8t6b0RODBbYOi5Hc+oXsHZNjB0=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AIh63cKTuiqJ92GuQ+Bw3bsnREs8lDJN+5zWNucNQFk=;
+ b=cUqUthB38CYOl7Xq0K5oS+bnmPeTR/qwGEKdHZsdsTN8pT+graah+UKXOHLkFBZt+MvL94
+ iQW/cwJUwr69iPIxbyg8DcqkXKTq0GAFHfxrhp5jRl61yvCa919do+RjSV9aOsQUVzu6tO
+ wH81/3t9oLuONX0gHds4E3ZoBpJjx/Y=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-k6_2pkoHO_KEQs6uRZJMag-1; Tue, 13 Feb 2024 04:44:02 -0500
-X-MC-Unique: k6_2pkoHO_KEQs6uRZJMag-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-50e91f9d422so2928993e87.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 01:44:02 -0800 (PST)
+ us-mta-674-3WOFeYCRMK6bdzO_QlTzkA-1; Tue, 13 Feb 2024 04:45:35 -0500
+X-MC-Unique: 3WOFeYCRMK6bdzO_QlTzkA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a2f1d0c3389so267819266b.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 01:45:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707817441; x=1708422241;
+ d=1e100.net; s=20230601; t=1707817534; x=1708422334;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9kHVkDwBtC5IG302WkC9sPitZi9ffNJvND+yCp6Ty80=;
- b=rviyup9MQifmyH6G0o5Z1C41nC9+GOCSpwMIvEaDVRUf30HO6mrfVtiRPNVEZWfdX8
- fKYjXXWzgzCWA7Tg97gLHcopJvf947gbUpoDFc44Xox4M7Od86cR67q5wTY0/VIFI4fL
- MANr5KpfhEfc3Y29+LeiYzQi0VwJYUfQc6HhDZZ0S2DvDwOms50WTYsm1fZSRGws8Clf
- w+nlFju3JmS2019M8G0EaCsUeq9QaDjEPFdR6vPqn07VCKoSagdRVX16qJIpWIbt/CAo
- RG/p9mtbKb3e0USGozkSMmTEqRSBHHs/63w1PLhL53My2/QZ+u+yMKXXfS1ux3moNC4J
- wIdg==
+ bh=AIh63cKTuiqJ92GuQ+Bw3bsnREs8lDJN+5zWNucNQFk=;
+ b=iBg6cWQmUefgsIoErZJVf9IMsjEuZ9GlW1f0rWw4dZq046RcJEA749MI3BLp/m679r
+ eE4S9F8Z+D1p+DGtJmG0ZvPN08gVM35FOiJqf006QXOpSHbLeLmJxIHfur79XUGtrQvB
+ V0tLvTiVH4gx/bqgYpJdCLwkS8Y5AQHadjPclWeofKPPj5t/MfNwM+Vyx1p49lNaDYMh
+ KiaW8fSfAV2lW17k55jigao1v9J8Ou4Ofb6cNlrXbxMTXvDqJO3ZS+kcI7tPtmNqaTGc
+ Wg/5aU+Lc6CrkmIuYr7E3OM9XSYv43jf4jLjfO1WmofvRFpl4LS5wyk8lldkCAEzBV/R
+ PaEA==
+X-Gm-Message-State: AOJu0YzryfCi9ErefXZHl1bJHTgq8ikuoGpuigTaAkWw1AUd/2rExMYn
+ mT2McnBM1teMwiAwR0chDGc5ejq3ZMc4uQAX5sELTl/APacK1qMgQ9l+lpIFwlW6UQlLOL+Q2WU
+ D4odxxOkbB9U1Pjv+VhTh2dLBBEp8l+LFIjupDh+BZfZbwfJi/30R
+X-Received: by 2002:a17:906:2885:b0:a38:4a54:bc11 with SMTP id
+ o5-20020a170906288500b00a384a54bc11mr5914233ejd.61.1707817534640; 
+ Tue, 13 Feb 2024 01:45:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGoPtxSPrm/tTaOsp3TNymikWnLsuXUuCrm/VMNmRG8tLKZOtMM3vkOQtWDuISpPFprcSYz0g==
+X-Received: by 2002:a17:906:2885:b0:a38:4a54:bc11 with SMTP id
+ o5-20020a170906288500b00a384a54bc11mr5914224ejd.61.1707817534322; 
+ Tue, 13 Feb 2024 01:45:34 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwxBRyzKjhEBwBWSKcbkquamQXGR3WVWR/EJ62LZgg1DA14I1gj9UL6IDnMpVT7IFzF+nUU9qRjzZ5nsRvRefe7aHndlI=
-X-Gm-Message-State: AOJu0Yw52udiU6vrqVJ39UfMIL+fDV3U4Sd3Gu2wtP4tZ+7vIrd8ZuQK
- VBlFinP/xunQwnyp+eychM8oiZzqZWetMV/ycuLTxKVGjxV546ryVqBwVkWjCy2P04EN92rCdXZ
- nApQffx+hbVr80CGXB65EzkGlnxPnPz2m7vrMDhcwKt7qVPcPWgx2
-X-Received: by 2002:ac2:410a:0:b0:511:5494:dd53 with SMTP id
- b10-20020ac2410a000000b005115494dd53mr6032344lfi.19.1707817441405; 
- Tue, 13 Feb 2024 01:44:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IENnVxBeyRI13BAT8jU9chn94+J4HbBs5af/7Md9fZVlFBTAqO3UXqunc4WmPa17LqiBn12MA==
-X-Received: by 2002:ac2:410a:0:b0:511:5494:dd53 with SMTP id
- b10-20020ac2410a000000b005115494dd53mr6032333lfi.19.1707817441035; 
- Tue, 13 Feb 2024 01:44:01 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMRUtjXopPbZ4JDJ2c4QUq79feUFwhGcnRFmyLQ+wqdlaNyU4MBwp38kSHtdoEqAQ1INt8w07GYv7kNUkAJyA0SIh8ngPZJW7shPUkxluZ0A9zVaFPopb7iQrrtHUZbDZRQXKzvcSRlNB0LWHYpbFIk7KEZYRBHWnb70jpGoihnqp4GAVILkvXZ/oq1fxl93yEXXZktc58oqXO8MbJD8NFFkZZQ728CoTWqBLvS/NcJ0pcDUxLIQ3sp5M=
+ AJvYcCW8S93pShmlgTo4J96YLU6ucpAqm1CPDzmCsgM60SC/uQQ2wYSu+0DPTVDXpeleMfPkbrxv7xP7Euql7zrEVunHBu91qSLYNHtF1dcQXFFu9JB/nbeCu1XzyOCguf84ZtIRzwoQ/+WQ21AHVenSJRrv5o1yFiexuOcHt1xnlcLzkmn25v1rsGpesVKU1IjIdngact3TChTncQs4fGJKm+VK8DYqkA==
 Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
- i10-20020a056512318a00b005118bbf458fsm833779lfe.143.2024.02.13.01.43.58
+ vi10-20020a170907d40a00b00a368d0849adsm1115117ejc.0.2024.02.13.01.45.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 01:44:00 -0800 (PST)
-Date: Tue, 13 Feb 2024 04:43:55 -0500
+ Tue, 13 Feb 2024 01:45:33 -0800 (PST)
+Date: Tue, 13 Feb 2024 04:45:27 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, alex.williamson@redhat.com,
- clg@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default
- page_size_mask
-Message-ID: <20240213044312-mutt-send-email-mst@kernel.org>
-References: <20240117132039.332273-1-eric.auger@redhat.com>
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>,
+ eric.auger@redhat.com, Alex Williamson <alex.williamson@redhat.com>,
+ zhenzhong.duan@intel.com, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Drop myself as VT-d maintainers
+Message-ID: <20240213044501-mutt-send-email-mst@kernel.org>
+References: <20240118091035.48178-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240117132039.332273-1-eric.auger@redhat.com>
+In-Reply-To: <20240118091035.48178-1-peterx@redhat.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
@@ -104,84 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 17, 2024 at 02:20:39PM +0100, Eric Auger wrote:
-> We used to set default page_size_mask to qemu_target_page_mask() but
-> with VFIO assignment it makes more sense to use the actual host page mask
-> instead.
+On Thu, Jan 18, 2024 at 05:10:35PM +0800, peterx@redhat.com wrote:
+> From: Peter Xu <peterx@redhat.com>
 > 
-> So from now on qemu_real_host_page_mask() will be used as a default.
-> To be able to migrate older code, we increase the vmstat version_id
-> to 3 and if an older incoming v2 stream is detected we set the previous
-> default value.
+> Due to my own limitation on bandwidth, I noticed that unfortunately I won't
+> have time to review VT-d patches at least in the near future.  Meanwhile I
+> expect a lot of possibilities could actually happen in this area in the
+> near future.
 > 
-> The new default is well adapted to configs where host and guest have
-> the same page size. This allows to fix hotplugging VFIO devices on a
-> 64kB guest and a 64kB host. This test case has been failing before
-> and even crashing qemu with hw_error("vfio: DMA mapping failed,
-> unable to continue") in VFIO common). Indeed the hot-attached VFIO
-> device would call memory_region_iommu_set_page_size_mask with 64kB
-> mask whereas after the granule was frozen to 4kB on machine init done.
-> Now this works. However the new default will prevent 4kB guest on
-> 64kB host because the granule will be set to 64kB which would be
-> larger than the guest page size. In that situation, the virtio-iommu
-> driver fails on viommu_domain_finalise() with
-> "granule 0x10000 larger than system page size 0x1000".
+> To reflect that reality, I decided to drop myself from the VT-d role.  It
+> shouldn't affect much since we still have Jason around like usual, and
+> Michael on top.  But I assume it'll always be good if anyone would like to
+> fill this role up.
 > 
-> The current limitation of global granule in the virtio-iommu
-> should be removed and turned into per domain granule. But
-> until we get this upgraded, this new default is probably
-> better because I don't think anyone is currently interested in
-> running a 4kB page size guest with virtio-iommu on a 64kB host.
-> However supporting 64kB guest on 64kB host with virtio-iommu and
-> VFIO looks a more important feature.
+> I'll still work on QEMU.  So I suppose anyone can still copy me if one
+> thinks essential.
 > 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Tested-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Jason Wang <jasowang@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-What about migration compatibility? In particular, cross-version one?
-Don't we need compat machinery for this?
+Thanks a lot for your work on VT-d!
+
 
 > ---
+>  MAINTAINERS | 1 -
+>  1 file changed, 1 deletion(-)
 > 
-> v1 -> v2:
-> - fixed 2 typos in the commit msg and added Jean's R-b and T-b
-> ---
->  hw/virtio/virtio-iommu.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> index 8a4bd933c6..ec2ba11d1d 100644
-> --- a/hw/virtio/virtio-iommu.c
-> +++ b/hw/virtio/virtio-iommu.c
-> @@ -1313,7 +1313,7 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
->       * in vfio realize
->       */
->      s->config.bypass = s->boot_bypass;
-> -    s->config.page_size_mask = qemu_target_page_mask();
-> +    s->config.page_size_mask = qemu_real_host_page_mask();
->      s->config.input_range.end = UINT64_MAX;
->      s->config.domain_range.end = UINT32_MAX;
->      s->config.probe_size = VIOMMU_PROBE_SIZE;
-> @@ -1491,13 +1491,16 @@ static int iommu_post_load(void *opaque, int version_id)
->       * still correct.
->       */
->      virtio_iommu_switch_address_space_all(s);
-> +    if (version_id <= 2) {
-> +        s->config.page_size_mask = qemu_target_page_mask();
-> +    }
->      return 0;
->  }
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b406fb20c0..1c85b4bdad 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3606,7 +3606,6 @@ F: tests/uefi-test-tools/
 >  
->  static const VMStateDescription vmstate_virtio_iommu_device = {
->      .name = "virtio-iommu-device",
->      .minimum_version_id = 2,
-> -    .version_id = 2,
-> +    .version_id = 3,
->      .post_load = iommu_post_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_GTREE_DIRECT_KEY_V(domains, VirtIOIOMMU, 2,
+>  VT-d Emulation
+>  M: Michael S. Tsirkin <mst@redhat.com>
+> -M: Peter Xu <peterx@redhat.com>
+>  R: Jason Wang <jasowang@redhat.com>
+>  S: Supported
+>  F: hw/i386/intel_iommu.c
 > -- 
-> 2.41.0
+> 2.43.0
 
 
