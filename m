@@ -4,86 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB544C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8804BC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZxBk-0005Xf-6s; Tue, 13 Feb 2024 13:07:24 -0500
+	id 1rZxDc-0006EA-PX; Tue, 13 Feb 2024 13:09:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZxBh-0005XT-Ok
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:07:21 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZxBf-0006Aa-Db
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:07:20 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e10303de41so580068b3a.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:07:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707847638; x=1708452438; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tMINNeaRKVcULc7gNovgbfB+EP2MT7YGxuZunC/CTLQ=;
- b=lLrWBA6nPs4SawWyTH4PMYo5G1Qar+22ztyHcNQHa8CqRX8pU2534ouB3h11dcxORz
- XKzlP7bGZc1njnNW5bpvrxVoKVTG9MMknWcJcLsjlxzE7A4ViDpF042Ov1UBZm5uvcxd
- tGUZ8X5jWg4OWCx/rD58KWR6/n/BzCd1tfdiIL1nX/5hg6rDUlN4wDctqRlm+uqxKPc+
- 8tATFvs9OvICmRcLmXu/KHtpL3xnwwLgjcsYasRTnhSjVPqOYDtNGSyfohiTbtl3Xof4
- 4xJhQOBAmACBJrgLON3IJZkduYHiu9MsYgyvQZfhilrPHvIiKickBIm0NSd6xTUpMLAM
- PYbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707847638; x=1708452438;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tMINNeaRKVcULc7gNovgbfB+EP2MT7YGxuZunC/CTLQ=;
- b=c/EQjD/8Nc8OKoW8ka56ElZQiOs1rtQO3OTMpShoyfvNMQd2Zqa9r7cs3UbvoeSrG1
- EJYEnIS2qJIcGYa6EL6QiHTWNMe7KcjhXmq1tiI5V3P5uwnseU9plzGfKQVeobWrEwfR
- b9M/EC3Bn/l1ZH20yDxVeRpWFvjK3KQshJPf6s46Rg8CkYgxm+xuaDJRhMAmwgLaiHpK
- daINQFHjkL4pilFKRRpsNhGsdTb+GZbI0s/0vrxPGSjnuz0d2zLdR3SoVLkljYX0oNL4
- A+dENdjVECh/aqj27DrevzL5ZckCWGV1zlYM0d0sXFbUgZTHn4uRbFErp1u6M0wR5I0D
- zjww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVV7NEK85bC9rEf9wC1EwNdtNncFSSPnYpRNQEbqjuqDMvhz84m4cYHTh7rJeBVMVm0c/w1/XsGUF7AmCkd5XAoJA49Z8o=
-X-Gm-Message-State: AOJu0YxaxdFtkJs2qVm5ILj6FkAb/CReNUjDZb/4OvTpYYPdwld9gYes
- ARluof2099pPo45qfUM+AuHT9vavuv31dpiYzhu+VIQb32hA4u4ayNwLq2okNhg=
-X-Google-Smtp-Source: AGHT+IEmUVv9QUEfUKzapY/BvLhH6vz4pqThMntTsYvVKGHLLeGStok+INHFqbQMA2Gzeso42MQLQA==
-X-Received: by 2002:a05:6a00:1394:b0:6e0:a9bc:ef6a with SMTP id
- t20-20020a056a00139400b006e0a9bcef6amr31477pfg.9.1707847637675; 
- Tue, 13 Feb 2024 10:07:17 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnN9QIpRvgoYvSIIC1n0g98af/DQjRN3oz1wSnuen2L6fBS8D8KwkKudXAwoMzlUfuUccxaNQcqiEMymRU4snwXnOvaEA=
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- ko19-20020a056a00461300b006ddc75edd55sm7634246pfb.152.2024.02.13.10.07.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 10:07:17 -0800 (PST)
-Message-ID: <0c74fa06-1dae-4491-8641-63c352544b57@linaro.org>
-Date: Tue, 13 Feb 2024 08:07:14 -1000
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rZxDZ-0006Dt-MQ; Tue, 13 Feb 2024 13:09:17 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rZxDW-0006Y4-Nr; Tue, 13 Feb 2024 13:09:17 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 358724CF45;
+ Tue, 13 Feb 2024 21:09:17 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 42E947DC25;
+ Tue, 13 Feb 2024 21:09:11 +0300 (MSK)
+Message-ID: <675576ad-ef02-4791-8ad5-08d8ab2b710a@tls.msk.ru>
+Date: Tue, 13 Feb 2024 21:09:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/18] plugins: remove previous n_vcpus functions from
- API
+Subject: Re: [PULL 00/12] Hppa64 patches
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
- <20240213094009.150349-2-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240213094009.150349-2-pierrick.bouvier@linaro.org>
+To: deller@kernel.org, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
+ Helge Deller <deller@gmx.de>, qemu-stable <qemu-stable@nongnu.org>
+References: <20240212234723.222847-1-deller@kernel.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240212234723.222847-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,26 +86,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/24 23:39, Pierrick Bouvier wrote:
-> This information is already accessible using qemu_info_t during plugin
-> install.
+13.02.2024 02:47, deller@kernel.org пишет:
+> From: Helge Deller <deller@gmx.de>
 > 
-> We will introduce another function (qemu_plugin_num_vcpus) which
-> represent how many cpus were enabled, by tracking new cpu indexes.
+> The following changes since commit 39a6e4f87e7b75a45b08d6dc8b8b7c2954c87440:
 > 
-> It's a breaking change, so we bump API version.
+>    Merge tag 'pull-qapi-2024-02-03' of https://repo.or.cz/qemu/armbru into staging (2024-02-03 13:31:58 +0000)
 > 
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   include/qemu/qemu-plugin.h   | 10 +++-------
->   plugins/plugin.h             |  2 +-
->   contrib/plugins/cache.c      |  2 +-
->   plugins/api.c                | 30 ------------------------------
->   plugins/qemu-plugins.symbols |  2 --
->   5 files changed, 5 insertions(+), 41 deletions(-)
+> are available in the Git repository at:
+> 
+>    https://github.com/hdeller/qemu-hppa.git tags/hppa64-pull-request
+> 
+> for you to fetch changes up to a9314795f068515ff5925d0f68adf0a3215f6d2d:
+> 
+>    hw/hppa/machine: Load 64-bit firmware on 64-bit machines (2024-02-13 00:44:06 +0100)
+> 
+> ----------------------------------------------------------------
+> target/hppa: Enhancements and fixes
+> 
+> Some enhancements and fixes for the hppa target.
+> 
+> The major change is, that this patchset adds a new SeaBIOS-hppa firmware
+> which is built as 32- and 64-bit firmware.
+> The new 64-bit firmware is necessary to fully support 64-bit operating systems
+> (HP-UX, Linux, NetBSD,...).
+> 
+> ----------------------------------------------------------------
+> 
+> Helge Deller (11):
+>    disas/hppa: Add disassembly for qemu specific instructions
+>    target/hppa: Add "diag 0x101" for console output support
+>    hw/pci-host/astro: Avoid aborting on access failure
+>    hw/pci-host/astro: Implement Hard Fail and Soft Fail mode
+>    lasi: allow access to LAN MAC address registers
+>    target/hppa: Implement do_transaction_failed handler for I/O errors
+>    lasi: Add reset I/O ports for LASI audio and FDC
+>    target/hppa: Allow read-access to PSW with rsm 0,reg instruction
+>    target/hppa: PDC_BTLB_INFO uses 32-bit ints
+>    target/hppa: Update SeaBIOS-hppa to version 16
+>    hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+> 
+> Sven Schnelle (1):
+>    hw/net/tulip: add chip status register values
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Is there anything in there which is relevant for -stable?
+The seabios-hppa update gives quite some hints.
 
+Thanks,
 
-r~
+/mjt
 
