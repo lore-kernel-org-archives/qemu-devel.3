@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC8F0C48BC1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE01C48260
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 12:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZrTP-0002QC-Rg; Tue, 13 Feb 2024 07:01:15 -0500
+	id 1rZrTT-0002ht-NF; Tue, 13 Feb 2024 07:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZrTN-0002N0-CE
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:01:13 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1rZrTR-0002ad-IX
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:01:17 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rZrTJ-0000si-0H
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:01:11 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e0a608a36bso1756553b3a.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:01:08 -0800 (PST)
+ id 1rZrTP-0000uN-Uc
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 07:01:17 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1d7881b1843so38445715ad.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 04:01:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707825667; x=1708430467;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707825674; x=1708430474;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8jQxR7K97R6LngnUG8bs1kowV4iKJWFO0PSS/0Vr5uM=;
- b=bURGLQM/kdn/cOuCpTy6yziFDo/HJHrixg5FUeUGkDichM5NSiIfwSM/m1PIuQ/Srs
- rA7q86KUPrUrzJxLnhtqhMyNUmotPNktn/mjkmrN24I1YpDZ374GCq3cHuTVNuM41dkM
- XtmiwDi1vlT0TTZj8ceYjjv0AKrPoDv57jsBkUkagm7Q4Xet4qFInx84b+tfBGNn+7eA
- 26YlzqoRdUmaO+s7X27Qqf3FRPx43qom6T4dS5DWmmwXDxnOTHBU1TuJi0StPHaGovYH
- 6trgj5pfHTIqniQmgQE65IKgsuSxvdwfdkRE0NRzk5P+mSoh2O7rOO+KKLAuuB7NGiba
- CyNw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=LY24CVC1YBoU/Hz2w0W3aUzItIgVLNe8my76vH7E4TA=;
+ b=S9KmQXpcmIBEeY+EII/fhc1xjEklxUTD3bEPyzVBLOBpNivIIaAgYUbry8zSECt/Z8
+ AfppmJ75h1mBjIQwk4RnRqKX5acIM8DJN0mvrbWCxNT816O7AWzRNvM5WYNRn642O2bx
+ Bw2lpJDrrQsfcVEQ+Ok2aDWoBpy+qCJoGh3Tc+MgVvrHayYYiUi7mtL0dBwKIDNjLUpK
+ OXGK5/LW2hBoc1qziq5e/Sxdgo7ZaX7ou1PNaZFvB3N2JprqF8WZ4Sjc2Er2/61cTc6o
+ Eiw72CC6YQ/D/q8Z5U8LXNDRZRLWxkXPJm4LoXSCN0t1vuOevt22QzLYdq+jknp9gIGb
+ bE6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707825667; x=1708430467;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8jQxR7K97R6LngnUG8bs1kowV4iKJWFO0PSS/0Vr5uM=;
- b=KPIWzomiyTWJBngeP80k5DPRVuD7ektoEG8pI72VK2xunex9WGfiJdytCZym5jynKi
- Ka1KE63f6PO4zeiJTG4QDaBgRCSSLBVhH/nEQai1o1FU7GQA2mo/RXToy/CS5btzD5id
- hi5Ym9hxmB9awfqcvTwxi35rxrbMjKd3lWpOuXcXmK/4xZ4T5d0sQ6vXUMmiLBiMP581
- wtbJVWmgeBZFdGWRxgws0k3SuotMfLTem3E6bIJUTchOhcuIIRenbyrfq2y9vB5Sxoxl
- TaLDLSqymMo6POQd/gi53UCJp3AuSZGpTu3ydDKydlPj8xCzmTMHBI4KtJoYxptu2S+h
- 3ZHg==
-X-Gm-Message-State: AOJu0Yy+NMNm+XmPQ1vm1MiYqMXDOIVfIoDB8XnU1W9uw8LhD0mdHMTq
- Fh4BIJwTP7vZrD9LlBLAku3Q52Fk38swp8D7KEhLghzcK+B50vFWAS2kAMoYO1X19Q6EDZS5TgR
- w
-X-Google-Smtp-Source: AGHT+IFWPUmvrAxoikLOVaKVoZgLtDE2tK5bYT9lH1TLfiJdtFBbigb9Qc4YmNCMjlUaPtdlchopzA==
-X-Received: by 2002:a05:6a00:b4e:b0:6e0:4717:7a0d with SMTP id
- p14-20020a056a000b4e00b006e047177a0dmr12566718pfo.5.1707825665416; 
- Tue, 13 Feb 2024 04:01:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707825674; x=1708430474;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LY24CVC1YBoU/Hz2w0W3aUzItIgVLNe8my76vH7E4TA=;
+ b=pBLVGllBtQJh1AU2c5ZcIy99ISJw1Pry2q4j9A09BilUXa2FDSl+lAMM7cpX700tih
+ ubzoNnHgpiRINyVwsLWlGYQZ+NhwvSH6kgWWJrJ6yfaZ3NbpjrDtotWCmYvzlOmEJiky
+ 8entFAyI9r1+hCB+t7lWPCQZHr8pht2Y71Nx9u36ON/7lLsC6nQbc3Y83fm2Zavl+f4/
+ kKnY5zG/J9/ZRQTMZBqwzIHiWUzy6g/J3VCPOqzVmzdLu9O5AQbKoWtaHWdkYYCpmlzf
+ x3OvufOpIm5+6usb0Nk3hhxk2SvqUrcLvchWrB9h3SqghzY1uMLrSJPXwT0o+sIPxUVc
+ 4Jyw==
+X-Gm-Message-State: AOJu0YxX4/yGoS/I5TXi/4ZNTk0mLsN/EThu4of3vKap0A6z6gvGpCOj
+ VdySmXwFXnk+XpQHLg6+4mtxG4/alk4/R6I77QPOUOrCF8Edtpwipm75b3g1iZP13jD2cyzs5T+
+ o
+X-Google-Smtp-Source: AGHT+IFEPEgeUbLtBoYh+ZGl7O2zr+BI/9Rwjd81YpcoHv8+gSJsZ6/tS/OhtCsTyJHC8Y+rdgk6wg==
+X-Received: by 2002:a17:902:680e:b0:1db:3d36:507b with SMTP id
+ h14-20020a170902680e00b001db3d36507bmr931771plk.44.1707825674241; 
+ Tue, 13 Feb 2024 04:01:14 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCWG3VcipnpAzJOUYxpmQrotKN1wTb35gYDTOF3W047bN1cK55S+i7A6cF0H4cUGscdbpm9ITvI345ojoEIkAKCjguq98o+FyRNxTt6TmovFHtO4I8sNCLUzAAHfD3eLWYCGqPqkB+2uHRz7odGCIrz9dqAskunuetxO3O58L7ZlydkNjr2PBeLaQuC6ckaKQt9VOsbRn67abKU1S2Qqj2aZQbjDFTV8MioLvbZblY+R8hkUg1sm4fIgbX6zbeLi4nTreSuUsYmtLav0
+ AJvYcCWMLEE+IW2DNt92xe60UZtqFhCGVy/DFF5MEMPlcTMZrMhKfDBMRZMvCjBwYQREbQHaU2zaMhgCy3T/ReuLg+0xZefSwg+MgTHiVtjC+9fXeE/nxO+iwxvFzTxoMt1BrV6lUFXX6bvkPB3cilqOeEB9CMbr2r1Piha+gGk16Zec4CMusMjHJxVlwIthspYDt9AJTiLknIqn2BCgNXPrrkLgUhL7NYLqEDubgcbziIyNucs2IMW/hKGUnPWTKhc06mgogzzuwmg5T7tn
 Received: from localhost ([157.82.207.134])
  by smtp.gmail.com with UTF8SMTPSA id
- fd11-20020a056a002e8b00b006dde35245d8sm7170723pfb.58.2024.02.13.04.01.03
+ li15-20020a170903294f00b001d94678a76csm1963784plb.117.2024.02.13.04.01.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 04:01:05 -0800 (PST)
+ Tue, 13 Feb 2024 04:01:13 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v9 0/6] ui/cocoa: Use NSWindow's ability to resize
-Date: Tue, 13 Feb 2024 21:00:54 +0900
-Message-Id: <20240213-cocoa-v9-0-d5a5e1bf0490@daynix.com>
+Date: Tue, 13 Feb 2024 21:00:56 +0900
+Subject: [PATCH v9 2/6] ui/cocoa: Scale with NSView instead of Core
+ Graphics
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPZZy2UC/2XMTQ6DIBCG4asY1qUBrPx01Xs0XSAMlUXFQEM0x
- rsXTUxsu/wm87wzShA9JHStZhQh++RDX4Y6Vch0un8C9rZsxAirKaMUm2CCxo3greS1AtVaVH6
- HCM6PW+f+KLvz6R3itGUzX6+/hcwxxRfl6hYIVdSxm9VT78ezCS+0JrI4MrEzURjXjlFwouGS/
- DF5ZHJnEhNshdNWEiPA8S+2LMsHwptLwQkBAAA=
+Message-Id: <20240213-cocoa-v9-2-d5a5e1bf0490@daynix.com>
+References: <20240213-cocoa-v9-0-d5a5e1bf0490@daynix.com>
+In-Reply-To: <20240213-cocoa-v9-0-d5a5e1bf0490@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Gerd Hoffmann <kraxel@redhat.com>, 
@@ -80,8 +79,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
  Rene Engel <ReneEngel80@emailn.de>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,48 +102,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-V5 -> V6:
-  Rebased.
+Core Graphics is not accelerated and slow.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v9:
-- Split patch "ui/cocoa: Use NSWindow's ability to resize" into patches
-  "ui/cocoa: Let the platform toggle fullscreen", "ui/cocoa: Make window
-  resizable", "ui/cocoa: Call console_select() with the BQL".
-- Added patch "ui/cocoa: Scale with NSView instead of Core Graphics".
-- Rebased.
-- Dropped Tested-by: from patch "ui/cocoa: Use NSWindow's ability to
-  resize".
-- Link to v8: https://lore.kernel.org/r/20231218-cocoa-v8-0-d7fad80c7ef6@daynix.com
+ ui/cocoa.m | 23 +++++++++--------------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-Changes in v8:
-- Split into three patches. (BALATON Zoltan)
-- Removed negative full-screen conditions. (BALATON Zoltan)
-- Converted a C++-style comment to C style.
-- Link to v7: https://lore.kernel.org/r/20231217-cocoa-v7-1-6af21ef75680@daynix.com
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index fe0eb74b0743..cb6090905999 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -496,10 +496,8 @@ - (void) drawRect:(NSRect) rect
+ 
+         [self getRectsBeingDrawn:&rectList count:&rectCount];
+         for (i = 0; i < rectCount; i++) {
+-            clipRect.origin.x = rectList[i].origin.x / cdx;
+-            clipRect.origin.y = (float)h - (rectList[i].origin.y + rectList[i].size.height) / cdy;
+-            clipRect.size.width = rectList[i].size.width / cdx;
+-            clipRect.size.height = rectList[i].size.height / cdy;
++            clipRect = rectList[i];
++            clipRect.origin.y = (float)h - (clipRect.origin.y + clipRect.size.height);
+             clipImageRef = CGImageCreateWithImageInRect(
+                                                         imageRef,
+                                                         clipRect
+@@ -545,6 +543,11 @@ - (void) setContentDimensions
+     }
+ }
+ 
++- (void) updateBounds
++{
++    [self setBoundsSize:NSMakeSize(screen.width, screen.height)];
++}
++
+ - (void) updateUIInfoLocked
+ {
+     /* Must be called with the BQL, i.e. via updateUIInfo */
+@@ -1292,6 +1295,7 @@ - (void)windowDidChangeScreen:(NSNotification *)notification
+ 
+ - (void)windowDidResize:(NSNotification *)notification
+ {
++    [cocoaView updateBounds];
+     [cocoaView updateUIInfo];
+ }
+ 
+@@ -1940,16 +1944,7 @@ static void cocoa_update(DisplayChangeListener *dcl,
+     COCOA_DEBUG("qemu_cocoa: cocoa_update\n");
+ 
+     dispatch_async(dispatch_get_main_queue(), ^{
+-        NSRect rect;
+-        if ([cocoaView cdx] == 1.0) {
+-            rect = NSMakeRect(x, [cocoaView gscreen].height - y - h, w, h);
+-        } else {
+-            rect = NSMakeRect(
+-                x * [cocoaView cdx],
+-                ([cocoaView gscreen].height - y - h) * [cocoaView cdy],
+-                w * [cocoaView cdx],
+-                h * [cocoaView cdy]);
+-        }
++        NSRect rect = NSMakeRect(x, [cocoaView gscreen].height - y - h, w, h);
+         [cocoaView setNeedsDisplayInRect:rect];
+     });
+ }
 
-Changes in v7:
-- Fixed zoom-to-fit option. (Marek Glogowski)
-- Link to v6: https://lore.kernel.org/r/20231211-cocoa-v6-1-49f3be0191f2@daynix.com
-
----
-Akihiko Odaki (6):
-      ui/cocoa: Release specific mouse buttons
-      ui/cocoa: Scale with NSView instead of Core Graphics
-      ui/cocoa: Let the platform toggle fullscreen
-      ui/cocoa: Make window resizable
-      ui/cocoa: Call console_select() with the BQL
-      ui/cocoa: Remove stretch_video flag
-
- ui/cocoa.m | 533 +++++++++++++++++++++++++++++--------------------------------
- 1 file changed, 250 insertions(+), 283 deletions(-)
----
-base-commit: 5005aed8a7e728d028efb40e243ecfc2b4f3df3a
-change-id: 20231211-cocoa-576b8639e9bd
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.43.0
 
 
