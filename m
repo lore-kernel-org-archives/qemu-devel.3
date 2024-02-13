@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F07C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 465EEC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 19:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZyg9-00071N-5M; Tue, 13 Feb 2024 14:42:53 -0500
+	id 1rZyfY-0003V7-OX; Tue, 13 Feb 2024 14:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyg6-0006y3-Fb
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:50 -0500
+ id 1rZyfT-0003KR-SJ
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:11 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyg5-0006Pm-0S
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:50 -0500
+ id 1rZyfR-0006Kq-38
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 14:42:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=m1ImFGpa7DxWE0DTTuWjbOMbJeHgbQNvbOZuqOrXhag=; b=nWFBzRYJlg3ysCW+PlmnbbmF3o
- XWw/ho76lNRnFA9jxEsG8lEqJldFUUHzDyexT1qy9HHtWSD1ynOzkLbz1Y3EO8+2QG09w8xj5g9n8
- 1rlGCdgvBSMlTI4rqpODJ1R+tbboSbxP/Kianex8zH5v/4LS/0lWOnfM0O9qXAgDETmwZP9se7Zsw
- FlIGJhbrpWMr73LfdKVXDx2z5fkscZQQdPIkb8GRKfGawq5ExFLCk+ZkKkHIwsnjIE+afkilo9g8J
- 8fzkoU9PkEObHEvgnDKtGxBEYEMw7O1ml+QMNZGrem1K9Ac10bcnx/516H2o/oeE2mvWK6tZmuo/m
- Bxj28qlipaViiEuRcyaImch1Z4RgLD+JBK5uFhu9G00SShmLhWHmJ4Fh8lGpvtRBMNIzKHsvf/mPy
- izbf+sM4/qzHUQVK/rqD5gM4iZHfhSXXB1l9tn1Upyja8xokaGQWDnWgEHTlvB6d/44nh8D/6t3tr
- ag95aTR/IdP0B1696drk/ffnx9uy+tp+KWNrW+1mqxWjL07pN8clWEMbA4OXUh7GjdAuH0ZAKGcOf
- uuhB/dFG9tvfjmcUbK65248zD59R7swOz4uc/vyQvYtDzis0wTnkmSUQ2rAKx2qgckcY/I1VPrrs6
- CRO4Rls4CkagZKGD8OjSyOiNIubs40rv88no7X9SU=;
+ bh=txS0EkWpqSoeHABEVeI8A4WFbirOC3ILO1uIwpoPXpY=; b=OJF/1Qb7W5/wfqDpp5Kh+7JZt4
+ qkRvskThNGwGkTmu5szXNjFpSBAb585HTbiVsz/uHssPBDzh5deHPBhmiMSBu1g+W1NArec++7J5S
+ TfERCPquBBGW9YPTYF5URfJ5x7SOeBIHaRCl9WUYEAhYzg+VOJ5sRqAxZN1tXy2ToWGJ/5RpL83Fc
+ 8uC9gti1JMWZWmXTqvApeZjigpkPDqIS/dUm+gxZTfLJBoT4RbuSvJUjQHDoSa8QhBojKwDyW7PqW
+ B+RQwc9UiBPYJoCJULfaKWhLlAUOzC9elWpRLLVr8RzZlRxWyvuUnMvOe0rsa0KMB7xNGsi0PGSxz
+ 0T58Rif47ap3VJZpF1ULwnaNvCQ3KC26o7nt51s9tQ8SJYBhwbju6K00ELsH5izH55OTO19CO2csz
+ uLVAJaJ+HkoK5RaTaSp8hX+lT4WIOl6O72+OIo4gDumBR46SRi6agwyT2dZGfvLAqppRKeTVKWkQz
+ 3o4Eoz080/UeeyTv9kCJLKnSR9V3LDdqcK/xRW95607yW1094qlwNfxJg1N/eBIKYWVVeXxxY1ysJ
+ XCGeNSx64uXVTRU2LiMPXTqmTJShZzGKjWvUC6vh/ZDQI4h7E2b4NFzZuA9MsP9tNQ78bnyqZAffY
+ 8UPQC5lG7Cn7Phhxco9zu5AWSgTGccVrE/93nJ3qA=;
 Received: from [2a00:23c4:8bb2:1300:c500:f104:bc51:e670]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rZyfF-0008m4-N5; Tue, 13 Feb 2024 19:41:57 +0000
+ id 1rZyeY-0008m4-TT; Tue, 13 Feb 2024 19:41:18 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Date: Tue, 13 Feb 2024 19:39:53 +0000
-Message-Id: <20240213194052.1162753-30-mark.cave-ayland@ilande.co.uk>
+Date: Tue, 13 Feb 2024 19:39:40 +0000
+Message-Id: <20240213194052.1162753-17-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
 References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
@@ -53,8 +53,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb2:1300:c500:f104:bc51:e670
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PULL 29/88] esp.c: fix premature end of phase logic
- esp_command_complete
+Subject: [PULL 16/88] esp.c: remove MacOS TI workaround that pads FIFO
+ transfers to ESP_FIFO_SZ
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,64 +80,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are two cases here: the first is when the TI command underflows, in which
-case we raise INTR_BS to indicate an early change of phase, and the second is
-when the TI command overflows because the host requested a transfer for more
-data than is available. In the latter case force TC to zero so that the TI
-completion logic executes correctly.
+This workaround is no longer required with the current code and so can be
+removed.
+
+[Note: whilst MacOS itself can boot correctly, removing this hack prevents
+a bootable EMILE CDROM from working. This is caused by a separate bug which
+will be fixed by a subsequent patch]
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Tested-by: Helge Deller <deller@gmx.de>
 Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240112125420.514425-30-mark.cave-ayland@ilande.co.uk>
+Message-Id: <20240112125420.514425-17-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ hw/scsi/esp.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index f20026c3dc..c6151d306e 100644
+index 6fd5c8767a..f41b2421f9 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -887,7 +887,6 @@ void esp_command_complete(SCSIRequest *req, size_t resid)
-         if (s->ti_size != 0) {
-             trace_esp_command_complete_unexpected();
-         }
--        s->ti_size = 0;
-     }
- 
-     s->async_len = 0;
-@@ -897,13 +896,26 @@ void esp_command_complete(SCSIRequest *req, size_t resid)
-     s->status = req->status;
- 
-     /*
--     * If the transfer is finished, switch to status phase. For non-DMA
--     * transfers from the target the last byte is still in the FIFO
-+     * Switch to status phase. For non-DMA transfers from the target the last
-+     * byte is still in the FIFO
-      */
-+    esp_set_phase(s, STAT_ST);
-     if (s->ti_size == 0) {
--        esp_set_phase(s, STAT_ST);
-+        /*
-+         * Transfer complete: force TC to zero just in case a TI command was
-+         * requested for more data than the command returns (Solaris 8 does
-+         * this)
-+         */
-+        esp_set_tc(s, 0);
-         esp_dma_done(s);
--        esp_lower_drq(s);
-+    } else {
-+        /*
-+         * Transfer truncated: raise INTR_BS to indicate early change of
-+         * phase
-+         */
-+        s->rregs[ESP_RINTR] |= INTR_BS;
-+        esp_raise_irq(s);
-+        s->ti_size = 0;
-     }
- 
-     if (s->current_req) {
+@@ -772,18 +772,6 @@ static void esp_do_dma(ESPState *s)
+             s->async_buf += len;
+             s->async_len -= len;
+             s->ti_size -= len;
+-
+-            /*
+-             * MacOS toolbox uses a TI length of 16 bytes for all commands, so
+-             * commands shorter than this must be padded accordingly
+-             */
+-            if (len < esp_get_tc(s) && esp_get_tc(s) <= ESP_FIFO_SZ) {
+-                while (fifo8_num_used(&s->fifo) < ESP_FIFO_SZ) {
+-                    esp_fifo_push(&s->fifo, 0);
+-                    len++;
+-                }
+-            }
+-
+             esp_set_tc(s, esp_get_tc(s) - len);
+             esp_set_pdma_cb(s, DO_DMA_PDMA_CB);
+             esp_raise_drq(s);
 -- 
 2.39.2
 
