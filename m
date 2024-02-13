@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9335C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 13:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D68C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 13:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZt3W-0006Fe-3S; Tue, 13 Feb 2024 08:42:38 -0500
+	id 1rZt8v-0008KB-FE; Tue, 13 Feb 2024 08:48:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rZt3V-0006FQ-8F
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:42:37 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZt8t-0008Jl-8E
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:48:11 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rZt3R-0005jB-DC
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:42:37 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d107ae5288so8382511fa.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 05:42:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZt8r-0006pA-Nh
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 08:48:10 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-339289fead2so2818714f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 05:48:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707831751; x=1708436551; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=xffuTwsj9hhicMrnU9gj0YroPO7MfvKEOdjjRwyDP/w=;
- b=lwWHiohD+wGMawrv2Tt9YCh3v/ru7aLUMzCkbHuT2us/7pSp7pBYBPUyEWvCNp4nDz
- Lt3f6mJAvSsFF0G+6avpW2DMqMLC3M7SRzrm64eFmMmex592AEs6iVLvHuwVOEpSY4m/
- JlqUp6kjcjz6aiVIFJvv1t7V3cdPNmqjIUykjkj12bGncnAPL6pNKFhSp7FbVJVSxeSh
- smizV/Oy5wROcJ7EuEvWFQIPditxTdXHr53cAz5VWx7phmT5qkO1wEoptwlLQPXcvNJ9
- Y1kZq2ZhV8o0vWOp9t5KO1IKP8FYKJpQdEY3Nxw9FdETaZInIAz3IYOboIC4W7I9Brno
- 1p6g==
+ d=linaro.org; s=google; t=1707832088; x=1708436888; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rYsPYkKtZKYw9paQeISojh5ULCuaCONtknUOQ8POPAw=;
+ b=FA4wIeJWGFLWLYI+12PGlKZzA2KZmwXLbPnArReXKNtYdi6rrUizSMhWQKtymMwili
+ yEHncXdDL7n1ycAwkQHGv6G1id4txsZDmkjOsvshPBBQ9HPLY+7dZg5RPCCbS4JXJsvF
+ uyrx682m3aEjlMrm8XJcmpK5dg4qzuNmwYj57MCZatauMH5Mk8WptyxmPggToCrzbkc7
+ gBfKVzpZx/G2gDgJvdpg73b1450/R/PWMZjBXM0NzbrwYJhHvVcZjHnf2GzDtF2Y6W5q
+ hKb7DvHAlSzBEeo6mEGawSLiFD7IsH/UBxJ9KV2OrX+jK4+6kJ2CtMVFL7Xpxqya354i
+ dhpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707831751; x=1708436551;
- h=content-transfer-encoding:in-reply-to:organization:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xffuTwsj9hhicMrnU9gj0YroPO7MfvKEOdjjRwyDP/w=;
- b=O8gvWHfP60rXZ2/8GdEwIm+uZn7IOLprAWV79itimTMpqUg0tSgTjOQTg/DuNghNGu
- 0DIjipK6cMorC/+6bbIDstSpVfNt/WNV8HKgGwwoV3qWQaa11HHBCcce2mP5//jpMCZv
- ykxB0iTv4mYX9P+z1Sh5luvZkVILonafSLyJT2KrC8jj29HVNXdv2+XBYXefXSohrMxS
- Nc8YeA2ERLYxdRj3LMwq9CaatNPKhMLvby3fD0hpBpYXfJlj7fflwnH3wIiC1X/suAZA
- OhsvfnJpWI1eKiy4mkc9mHQePDtd8L2Ib7NQNVHTNLq2+z0kJIArpsmXTvCmyghKnwhj
- fmsA==
+ d=1e100.net; s=20230601; t=1707832088; x=1708436888;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rYsPYkKtZKYw9paQeISojh5ULCuaCONtknUOQ8POPAw=;
+ b=MYZ/ulpIgbqkRl4cs5zsB+knNSJ+beBbdQ5zrrKvq9uk4KvTVovLv+GrZPhniojCII
+ nSrxh21b7BoHyU6/kyfRfbfBb3Gsgd84N10vdgTS2DGzjJ5ibG4U6TcyGRAW7Xb126pl
+ flwTzjCbECmekwCqIUSaeyObbfrDh6fScSNUCWEf4U8he56ZvWWpnYNJ3oTTdMmkc+oA
+ jMVmfDIfYOXhXiX9FtFRq7qb7vghchs6yq/v/U/UDMqX0HFge/o6I/Jx/Vvgm4T+rxjf
+ JrulN4bAVsARXa0fzhFA8LH4h6CkWH1kwtvrJz25b0U62zrBWndsntD55cxobXsRMlWf
+ ERPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuR9XWE3E+j+OvNXh07jbluYFlwY15A40RHp4ZKg+PYwkB4+PxrwZng3Ol3zbasQKfSUBWCYzrqcSZWEe+dA8jHUb6cmI=
-X-Gm-Message-State: AOJu0YyvPefnq6QXp6OwZDT7rlDp4jFqvWrUILS2XYaAmu2sdR/jXhF6
- Ruj2tBMgGDNNt06rjQse4e1S/Pg8c5tr1dxmOs7ofpctyJSq5K+bj209dTM7p/Q=
-X-Google-Smtp-Source: AGHT+IFdrSL2A3MjkgnOmizRNpNSusFcwyGGZmr43BwMJIHQdAtuSsiC2+H7R/+22cZJHrwuVOMr6w==
-X-Received: by 2002:a2e:a0cb:0:b0:2d0:9210:fd57 with SMTP id
- f11-20020a2ea0cb000000b002d09210fd57mr6193990ljm.18.1707831751027; 
- Tue, 13 Feb 2024 05:42:31 -0800 (PST)
+ AJvYcCXvQjm+AvgZB//+MV4NHd88vGF6I0G/5EWnwulo6BmGqwVrM2825FsoN7GC6jDZGtaPsd7NOqRyio4ky1v1x/5ieimNby0=
+X-Gm-Message-State: AOJu0YxmXX2XZvM/AhJEP9dqVUp3bZbTHmtghVa611nOIeW49tGmb7Am
+ Jdruj5ulJHUYassJGLdyai6l63Z70/JT+u1pwYnMewhFhBR0+tWjgb8uhPAnSvQ=
+X-Google-Smtp-Source: AGHT+IHJxmEU8B9mVysEGh+QiucP2DNw/wgNNvluISymIkguEQUEmxI1KyTKSrAW9K/CZEv41z/hlw==
+X-Received: by 2002:a5d:47cb:0:b0:33b:636c:5073 with SMTP id
+ o11-20020a5d47cb000000b0033b636c5073mr9433739wrc.23.1707832088019; 
+ Tue, 13 Feb 2024 05:48:08 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOf7FSTcsr+w1UYF4rBo2gZdNch0CX2b2xGJP7zKUE3VO6vJHGZTFmOSURFA0lQDOEcRk39sZFQWhntjvwIzusr325HYvI6zMph/M2k5b0nCU+BvDwmiSJrbeS72vUPw==
-Received: from [192.168.1.19] (83.8.197.133.ipv4.supernova.orange.pl.
- [83.8.197.133]) by smtp.gmail.com with ESMTPSA id
- n1-20020a2eb781000000b002d0fba14be8sm506581ljo.83.2024.02.13.05.42.30
+ AJvYcCXxyEFUuR8SXhKAXIWoVRZp0YxcTOhJhZ24C79mKVW7iBabv3cc73DfwAyKrLtX4Xz14oL6d/DYi0gBPfJ/EdR+zZ8OAU76GD23SkAYHrOSF+ZuUPNAmsmxUVjD5oH1qCJaTEMglD0sTgMmPWCzfCUZmiy95SegdG5JUvrOYQ3FPz1ygkgw6GR7JaTn9VU15VywEZtMIX7gXOpK/J9AqiLJ5NAj1rQ=
+Received: from [192.168.69.100] ([176.176.128.243])
+ by smtp.gmail.com with ESMTPSA id
+ d16-20020adfa410000000b0033ce1ff5915sm635544wra.89.2024.02.13.05.48.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 05:42:30 -0800 (PST)
-Message-ID: <ede43fd1-9005-4f02-9494-73cfd898e3a0@linaro.org>
-Date: Tue, 13 Feb 2024 14:42:29 +0100
+ Tue, 13 Feb 2024 05:48:07 -0800 (PST)
+Message-ID: <804cd023-fe52-48fb-b606-78ba509fb03b@linaro.org>
+Date: Tue, 13 Feb 2024 14:48:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
-To: Guenter Roeck <linux@roeck-us.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>
-Cc: qemu-arm <qemu-arm@nongnu.org>
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
- <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
-Content-Language: pl-PL, en-GB, en-HK
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+Subject: Re: [PATCH 87/88] esp.c: switch TypeInfo registration to use
+ DEFINE_TYPES() macro
+Content-Language: en-US
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
+ fam@euphon.net, hpoussin@reactos.org, laurent@vivier.eu, thuth@redhat.com,
+ qemu-devel@nongnu.org
+References: <20240112125420.514425-1-mark.cave-ayland@ilande.co.uk>
+ <20240112125420.514425-88-mark.cave-ayland@ilande.co.uk>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240112125420.514425-88-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,48 +100,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 12.02.2024 o 15:36, Guenter Roeck pisze:
+On 12/1/24 13:54, Mark Cave-Ayland wrote:
+> The use of the DEFINE_TYPES() macro will soon be recommended over the use of
+> calling type_init() directly.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>   hw/scsi/esp.c | 39 +++++++++++++++++----------------------
+>   1 file changed, 17 insertions(+), 22 deletions(-)
 
->> The machines I have in mind are:
->>
->> PXA2xx machines:
->>
->> akita                Sharp SL-C1000 (Akita) PDA (PXA270)
->> borzoi               Sharp SL-C3100 (Borzoi) PDA (PXA270)
->> connex               Gumstix Connex (PXA255)
->> mainstone            Mainstone II (PXA27x)
->> spitz                Sharp SL-C3000 (Spitz) PDA (PXA270)
->> terrier              Sharp SL-C3200 (Terrier) PDA (PXA270)
->> tosa                 Sharp SL-6000 (Tosa) PDA (PXA255)
->> verdex               Gumstix Verdex Pro XL6P COMs (PXA270)
->> z2                   Zipit Z2 (PXA27x)
->>
-> I test akita, borzoi, spitz, and terrier. Upstream Linux removed support
-> for mainstone, tosa, and z2 from the Linux kernel as of version 6.0, so
-> I am no longer testing those.
-
-I do wonder are those Zaurus models also boot kernels which QEMU boots. 
-Would love to see someone still using those old palmtops. I put my 
-Zauruses (collie, poodle, c7x0) into drawer long time ago.
-
->> OMAP2 machines:
->>
->> n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
->> n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
->>
-> I never managed to get those to boot the Linux kernel.
-
-They were working in 2008. I was running Maemo and Poky Linux then. 
-Never tried later.
-
->> The one SA1110 machine:
->>
->> collie               Sharp SL-5500 (Collie) PDA (SA-1110)
->>
-> I do test collie.
-
-Can you share kernel/initrd/config? I wanted to boot something at 20th 
-anniversary of buying one but was unable to build anything bootable on 
-either QEMU/collie or physical one.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
