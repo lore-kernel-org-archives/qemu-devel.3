@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413B5C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:52:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4783C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZv3l-0002x7-PF; Tue, 13 Feb 2024 10:51:01 -0500
+	id 1rZv3j-0002pS-LD; Tue, 13 Feb 2024 10:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv3k-0002uC-OX
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rZv3i-0005X5-FM
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:51:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707839457;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ddz/xp+FHATs0HtSax3jhPBsKh0ayriSqzKxrZz01xM=;
- b=cW/0lMNR9VjrZ6vLOdHrmvNHcRoXZhCuYHC2iGHTuRyKub5dFSnjheRD3S6CN39POyJKq+
- hNCA4MqSr+1NRZ3InJwn55UPlooxYMPp8xFHdPgB2OSroR3sFUcxbDu8tk54ZRP/8FmtYl
- IFmL2gI76RPAEXQFpVLiJXXuLu9VbME=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-2Sd7wkKAMeyqTnIpqjcMaw-1; Tue, 13 Feb 2024 10:50:56 -0500
-X-MC-Unique: 2Sd7wkKAMeyqTnIpqjcMaw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d0a7ab562eso27930701fa.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:50:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZv3e-0002gu-6I
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:50:54 -0500
+Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZv3Z-0005VG-0E
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:50:52 -0500
+Received: by mail-qk1-x72e.google.com with SMTP id
+ af79cd13be357-785d5fa8169so170271485a.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:50:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707839443; x=1708444243; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Zr3mehn/xZ0OaAXl/DQ0wynxpLmisZ0EuMbAySZB6LE=;
+ b=GjtP9ldb8OBP6uej/HY6yf6zvh4rSuSp/l+Ze6R19xL55/yAaaDbyiRpHmc+Xszatr
+ HQDC8Ai/6hbjqmPkjVhN4Yo01WJv8yzp4v/HJpsksUtuWyxBsVIntnSKPivDonF7bW3/
+ hB0Qcs7xApspJIPU+JkpZE3jiAbpJEKwycK3ONM8JZvoqftF8VWwJU9INYrnMOI8IEHn
+ AiQxfIzfsIFpLkb97G56wXfWEubNqPlslsiuLHqDWQZxGGLq/24uDtd4r7CLe15PyM+5
+ x1dLHu4XFJGY4qRZGGgY5LjlXeKpjby2EqsR4aOeXOpwJayKAMD8MtpLg69UkbIwZK0T
+ ndaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707839451; x=1708444251;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ddz/xp+FHATs0HtSax3jhPBsKh0ayriSqzKxrZz01xM=;
- b=penwIOCKnV71sv9Usqo1gjQWKkbqZzUXvWwIC/I4PHcNsvVNRW3N2C73TbiXpZqLzI
- rEfO2RQfLw+ov7qvHbarUSXkUluGs+4JGvZLdF+xn1RJwDt0TMQh75iqTgjpaKM74Ocp
- KKL1HME0ZSk5m9ZjB3WoCj/MnCBzVrIr5DI9LvwybIeS/aLx7J50diPwnCzuJUlzk02z
- 3TvApWVucQHiPSusjEt9TPaI5Gx5XgdIiHVGTwGSvsRJsTvQu50+J45rsgzgDW4q0TNQ
- uDYc4eTwBsg/RhZkNts43zMHsCIrbzoiHf1+52N2bT15TwQSjKEUC2LU9Xu6BKUdJXUO
- rsrg==
-X-Gm-Message-State: AOJu0YxbxRL98Ha4VHD5a+jrRP7I83yNBzMEQUAROwwZsr7gT8pojVFG
- Ho2xELSMbEAA1juDNx6/8NGZtCp1Rt1sanbblQ/DEefBQ5gmAXOmSjarFQTc8l59W0x2tSWRFgc
- CcfdffN4AHdj7XUwzdXPBfIpnlr+eSQw6ark7ZeEUQJCQ22RrNqtafiZWy/5tykvlR1kfB1JDZL
- 3W1Bnw7G+Sp6Fjb2jr897LXSU7xBCMVEyog/dR
-X-Received: by 2002:a2e:8e85:0:b0:2d0:77b1:de8a with SMTP id
- z5-20020a2e8e85000000b002d077b1de8amr975291ljk.0.1707839451502; 
- Tue, 13 Feb 2024 07:50:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGap8N//dGr9+/PoifOWtUTu8SAXuDZ92kB+eZhywRh7MxEz7RLOGXaq2Cmj5aSVwuITy4wZw==
-X-Received: by 2002:a2e:8e85:0:b0:2d0:77b1:de8a with SMTP id
- z5-20020a2e8e85000000b002d077b1de8amr975273ljk.0.1707839450976; 
- Tue, 13 Feb 2024 07:50:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707839443; x=1708444243;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Zr3mehn/xZ0OaAXl/DQ0wynxpLmisZ0EuMbAySZB6LE=;
+ b=okFPteRrSNdMyEw/XiWXockA33PzGK+LQlqO8uLdSEcGvmZcRgpgLeI4rqp4sUkokS
+ XJhV8GVoTNSmjjK7eGewi8H/Jhtlyo0C9UDNa+ciqasjBlZlKe3k4mnCa+C3QZG9NYil
+ NZxc9mVwAs8oU+0/sNj0Cls0wW9S2+Y2ERbTdotGRIQ3RTA5AfuN00eJxxVjJWkY0Sdf
+ 3Df1FRcBX+QC/p1cNXiw7M8Wy3PFEba3RQEnuh0Wqmc6gFWQ0wCqI8xTSthc3NesJpAo
+ QqqNKkHy5+VxtAXvPFxNY+avL6cfKxCmUpC31M1ndWU0HDTvUpR9UfDMWIQkcNFUW+x5
+ Z3QQ==
+X-Gm-Message-State: AOJu0YzNxyotBzLq17kbh30ubITOIRvuMZmqwP0cgRJuj7NYERWgioH5
+ BuQkzU3dgJ9As5PBnTIC15aBXOqX7CHFh7ILJDYAeFelkia8B17pL+S7etT7k/4=
+X-Google-Smtp-Source: AGHT+IF6UOZgUGzX72okWIR7sh7LTHdIW6/f0EKYoEKGzQHfAe91/iWMXsqI8Eqi5Kj6pSjbPI5UZw==
+X-Received: by 2002:a05:620a:29d1:b0:785:d69d:ee37 with SMTP id
+ s17-20020a05620a29d100b00785d69dee37mr7280962qkp.29.1707839442907; 
+ Tue, 13 Feb 2024 07:50:42 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFYJtbToZfL+lfLnx/3jhHAg3LpP3jo2EMfjfdaiAFPqsHt0cwLJgpDlNBVavYuyIavIHD+nlREk2D7VeQqypRZU93wwIKQC5hsGYfTwXsIkhOzXS/
-Received: from [192.168.10.118] ([2001:b07:6468:f312:5e2c:eb9a:a8b6:fd3e])
+ AJvYcCU/+2G3j0oDQNyFNmxnxZXAhboCu1hQuAVgyx4cVJcf2kVPi3C2o8ByMJzo3lJmDynPGxBCNOVuHtKM7OqKuWlhAJURtXs4imVqEywBvqz3vgnADyHGlUuQy5bpthIyhICq72PcbTjIGVNspECKe5PftwZRjKyQCSiwDvk7NVZHQGzkN3ZHXmbg/kwkDH64YQRq
+Received: from [192.168.69.100] ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- p7-20020a2e7407000000b002d06d48ddffsm544796ljc.70.2024.02.13.07.50.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 07:50:44 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	shentey@gmail.com,
-	balaton@eik.bme.hu
-Subject: [PATCH v3 4/9] isa: fix ISA_SUPERIO dependencies
-Date: Tue, 13 Feb 2024 16:49:59 +0100
-Message-ID: <20240213155005.109954-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240213155005.109954-1-pbonzini@redhat.com>
-References: <20240213155005.109954-1-pbonzini@redhat.com>
+ x11-20020a05620a0ecb00b007840b13c58esm3058425qkm.63.2024.02.13.07.50.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 07:50:42 -0800 (PST)
+Message-ID: <cde94c81-c3bf-42f3-9bc8-e9214ed84d51@linaro.org>
+Date: Tue, 13 Feb 2024 16:50:39 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] hw/arm/stellaris: Convert I2C controller to
+ Resettable interface
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
+References: <20240130190317.25692-1-philmd@linaro.org>
+ <20240130190317.25692-3-philmd@linaro.org>
+ <CAFEAcA_e3QOvfvJScUgtmjGacKZX1OHyY5a-BWSAhNURyO2Rgg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_e3QOvfvJScUgtmjGacKZX1OHyY5a-BWSAhNURyO2Rgg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
+ envelope-from=philmd@linaro.org; helo=mail-qk1-x72e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ISA_SUPERIO does not provide an ISA bus, so it should not select the symbol:
-instead it requires one.  Among its users, VT82C686 is the only one that
-is a PCI-ISA bridge and does not already select ISA_BUS.
+On 1/2/24 17:24, Peter Maydell wrote:
+> On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/arm/stellaris.c | 9 ++++++---
+>>   1 file changed, 6 insertions(+), 3 deletions(-)
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/isa/Kconfig | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
-index 7884179d08b..5df3c09cd51 100644
---- a/hw/isa/Kconfig
-+++ b/hw/isa/Kconfig
-@@ -15,7 +15,7 @@ config I82378
- 
- config ISA_SUPERIO
-     bool
--    select ISA_BUS
-+    depends on ISA_BUS
-     select PCKBD
-     select PARALLEL
-     select SERIAL_ISA
-@@ -47,6 +47,7 @@ config PIIX
- 
- config VT82C686
-     bool
-+    select ISA_BUS
-     select ISA_SUPERIO
-     select ACPI
-     select ACPI_SMBUS
--- 
-2.43.0
+>> @@ -658,8 +661,6 @@ static void stellaris_i2c_init(Object *obj)
+>>       memory_region_init_io(&s->iomem, obj, &stellaris_i2c_ops, s,
+>>                             "i2c", 0x1000);
+>>       sysbus_init_mmio(sbd, &s->iomem);
+>> -    /* ??? For now we only implement the master interface.  */
+> 
+> I'm not 100%, but I think this comment is a general one,
+> not reset specific, so it should stay in the init function.
+> 
+>> -    stellaris_i2c_reset(s);
+>>   }
+> 
+> I think that the i2c_end_transfer() should be in the
+> "enter" phase, and the clearing of the state fields in
+> "hold", and then the stellaris_i2c_update() call in "exit".
 
+Indeed.
+
+> Though usually we don't bother to do an update in reset
+> if it's just "device has reset and now its outbound IRQ
+> line is not set", so we could alternatively just delete that.
+
+I'll let that as an possible cleanup on top.
+
+Thanks for the review,
+
+Phil.
 
