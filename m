@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A90C8C4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F54DC48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZxbP-0003WQ-9c; Tue, 13 Feb 2024 13:33:55 -0500
+	id 1rZxjw-0006jr-UA; Tue, 13 Feb 2024 13:42:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZxbN-0003W3-NP
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:33:53 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rZxjv-0006jg-9L
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:42:43 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rZxbM-0002xl-4U
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:33:53 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d71cb97937so44737915ad.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:33:51 -0800 (PST)
+ id 1rZxjt-0004LD-PN
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:42:42 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1d95d67ff45so34644515ad.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:42:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707849230; x=1708454030; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707849760; x=1708454560; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WrL3VQadMSDjEv9wzfhB+FnKnd/32KzdGRkWhAuZbwg=;
- b=dZbd9lH4LgtG3gltyJMmXW16r70IRKexHTSiXRwPlQDRiNhsjY0YlJtejyoMH1Hx7y
- aZLpXJ+idDbuVTyTRUkq79l3+XD7uLEbJpwcFVAOPQiF7tswIfAe+gYVIjHQgKUsMKZM
- MSSijOUAYvL+45GVc/r9Gcll89didDwJ7taIRbh8uCdNLPcW43J4uHiIAOGFZ4Ie3WHC
- OuQFH46aAj16/GiZlEj7UdVwLm4IJ29s+RxbzidQfGg3bJzBrU14YrvtsQr4iJ7dzpCX
- ssQWfylON6bi66M9LvcF0AmJa4ps3BmGpu1rIhSQY+1PXP4mSoQQ9ysF2NBfuMEtF5Mn
- xcqw==
+ bh=MkeRKkSoAHSY/hUpon186ZbX0tFP32NPVO08IW35BHE=;
+ b=FULir02BGDRBt8g9ynb7WjnoxaT0X7PuF11B/+5TQuTJZCY9gpAj5v+Qv7Z/ErM6yP
+ ULKyQ8kusaic/+t7qOrueJuPEN9klGYfDxIYdigBCvtPqXilEMXCFteSmfYosS7ExGjF
+ Z6z0927U+G2H6jX/VotaYqzBRly2mOE+nHXVmAwOTx0ZdlFSbyvsJDvcivU2tt86882Z
+ +SrV0SCfSpKyIH9TPpKFDUm4hroPbMA9gXE8H9AYvXdCwWwcmzoZAYR9p2RieUimqdBL
+ snWgrv9R83CgbVzM/a61TILKvdea2eDbFTddsMnUaWPbK3OFCNjZM/eDi95yyCKqSih5
+ kopw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707849230; x=1708454030;
+ d=1e100.net; s=20230601; t=1707849760; x=1708454560;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WrL3VQadMSDjEv9wzfhB+FnKnd/32KzdGRkWhAuZbwg=;
- b=ZQxR38mgTZTPp498kR9KKAEcpHfj71voFXaa43zB0TDU3kgMGLRLVtBsuG0hLrK+Vd
- 89o2aBeyeXMsW4cudqfW5rZ9Sd/1b7gCL9BIodvqHP5CaZo/us2/SlSQ26H5Ri+Fn3nk
- UN22N2kRRciom4e6FJ/xmQIxZip1oPZD2//bbRTMhtRs+sPH+YQ5PAdm2qY4d88UL1Jl
- dMQvkpfPKmk1l3dhGqI8IlnHAD/oV9Vr01uSzBL5Al2jWZQpVy25cGxq9yDtFsnkxCQB
- bhdydphwtq7EGcrn6IXin14Bsbqb6pu6fRSYywDiCLqTMadxcr/4OC4GZZ0cfDArjAFP
- vWmg==
+ bh=MkeRKkSoAHSY/hUpon186ZbX0tFP32NPVO08IW35BHE=;
+ b=aCKTidzVa1QBWJG2nkbh19kiQN7Uk8+p22t/cUrmJloCrnwQDrwilR/q/dEfO+4mID
+ QohK2U5RIDmwUjtEdz5PfAfYX3lWvlvBjZjTU8LTYcfzfO8dlJDPdy7rostpiZi0+mOO
+ Q2NdZ0YiIEAIQRkqaORMZq0X6GGMC13LaVLLYU3osydfBRFb/ArXAQaeFPkuOv9zA2L1
+ tI6ZdOnq6KeokHnOiQ6OvVLppLw4Muvh8fU0iUSDDLwDOwO7eDJeZZsYulO5EHinm+QU
+ dIzJgId1rmK8YiFuZ3pzR1C14ucBezIk5H6e1B/i1rHvNStI0rXFRcHN86VnO8lqyxFO
+ dK9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZfzrHdVTALpPgqCscIqUFyYZv5YEy5tk1ouzZmE+Jj/TIwm/PQWJ6MdvalBrTgFJQmy+5fhN7pjRBCmtGo7QYTSSoViI=
-X-Gm-Message-State: AOJu0YxJEiREbteMy3K4B4ts1QN9S0WlzWq6+s92SZI5ak+0eU3awHi5
- mnk9zwhYBVjD5YlVb+ybg989KuaC2PspXNPMq6eRmtLhgUHQf8EIhDiXhrnKEC0=
-X-Google-Smtp-Source: AGHT+IFlzgCPn502ZZ7afbGsAPHG40fy+y/02Vr+Wadq+YHOs183v8H+e3DCvTWyiem/xcKFZP9G1A==
-X-Received: by 2002:a17:902:aa90:b0:1db:45ac:e55c with SMTP id
- d16-20020a170902aa9000b001db45ace55cmr333925plr.18.1707849230568; 
- Tue, 13 Feb 2024 10:33:50 -0800 (PST)
+ AJvYcCVoMtw3XLUjutX8gJenoqvtBZJ9cMOF6LScT+Rln8JSZDBY4gXImPdnT19tIKf6DGBi1506yw230tZ/BVPcsT2mnV5lAqE=
+X-Gm-Message-State: AOJu0Yy70R4/RXCNFm8mRSpzIyIGbPz6JhZBVouozki7LakN7KDD3l/d
+ Bp0vckZFfSMGkvWZ4gvKdvzdVFayBzO9E5+cWguW64CmifxAIougcd5Am8CyCoY=
+X-Google-Smtp-Source: AGHT+IEKFYdh80/95krlghCr/RPuQOsbmIDJpGKXTWVIydWgG7F9NgNv/PWXNhC+oc0TrubB3OwM5A==
+X-Received: by 2002:a17:902:ec87:b0:1db:3a0d:1cf9 with SMTP id
+ x7-20020a170902ec8700b001db3a0d1cf9mr421811plg.48.1707849759797; 
+ Tue, 13 Feb 2024 10:42:39 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXA5A4dqyWV91Afyi+H0nTcaOcFXWtqwy1dvPRGDy6LF5OmGlj6daSl5x0SdAmiYZRtwzKbc+aFHAqGlkQcjZqoARHfvI=
+ AJvYcCX3IDqIBja1e4UJZwUCtnXUXcTc8bU9vkQBdW3vdVtr3jB5Ih+eflunuT3SVceaqFy5ldJ1fec7V52DXFHhggDTmxtgdWo=
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- jw8-20020a170903278800b001da2f9d04b0sm2409062plb.15.2024.02.13.10.33.49
+ jj19-20020a170903049300b001db5079b705sm233013plb.36.2024.02.13.10.42.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 10:33:50 -0800 (PST)
-Message-ID: <1a60dda0-3a09-41b0-950f-9463d47662a4@linaro.org>
-Date: Tue, 13 Feb 2024 08:33:47 -1000
+ Tue, 13 Feb 2024 10:42:39 -0800 (PST)
+Message-ID: <e8f4bca6-d775-43a6-8882-c7dc22a3e79f@linaro.org>
+Date: Tue, 13 Feb 2024 08:42:36 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/18] docs/devel: plugins can trigger a tb flush
+Subject: Re: [PATCH v4 09/18] plugins: add inline operation per vcpu
 Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 References: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
- <20240213094009.150349-8-pierrick.bouvier@linaro.org>
+ <20240213094009.150349-10-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240213094009.150349-8-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240213094009.150349-10-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,12 +100,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/12/24 23:39, Pierrick Bouvier wrote:
-> When scoreboards need to be reallocated.
+> Extends API with three new functions:
+> qemu_plugin_register_vcpu_{tb, insn, mem}_exec_inline_per_vcpu().
 > 
+> Those functions takes a qemu_plugin_u64_t as input.
+> 
+> This allows to have a thread-safe and type-safe version of inline
+> operations.
+> 
+> Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
 > Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > ---
->   docs/devel/multi-thread-tcg.rst | 1 +
->   1 file changed, 1 insertion(+)
+>   include/qemu/plugin.h        |  1 +
+>   include/qemu/qemu-plugin.h   | 51 +++++++++++++++++++++++++++++++++++-
+>   plugins/plugin.h             |  6 +++++
+>   accel/tcg/plugin-gen.c       |  7 +++++
+>   plugins/api.c                | 37 +++++++++++++++++++++++++-
+>   plugins/core.c               | 23 ++++++++++++++++
+>   plugins/qemu-plugins.symbols |  3 +++
+>   7 files changed, 126 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
