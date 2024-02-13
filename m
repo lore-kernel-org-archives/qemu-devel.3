@@ -4,87 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF4BC48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 222E7C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 18:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZxTv-0004Ed-EV; Tue, 13 Feb 2024 13:26:11 -0500
+	id 1rZxTm-0004Dm-2o; Tue, 13 Feb 2024 13:26:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rZxTt-0004EV-R4
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:26:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZxTk-0004DW-DR
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:26:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rZxTs-0001PV-88
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:26:09 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rZxTj-0001Ow-13
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 13:26:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707848767;
+ s=mimecast20190719; t=1707848756;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CawK4S2AGXaWuzomHre9q0Dv/PxzCRGl9UGew+f3A8c=;
- b=dg63HCa7JIPb+v1BiRMv/VxjprA8Ah0FIZjWyyDEWobnVFAUlyQllE5NPwaybSuXe5Oy6G
- /SXiuBY68RtaeBQ4qjwc/l1bMFx4KFwMtnmJ5AJRugXl5i3eYByjzaQlO9Suyhn9sNDDBu
- 0O591w4/29Qptptix+0vydm5XpN4Nm0=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+nqqqkK7Edd+F0BT+njm1E1WmvYQolIVHsq3uCkftJI=;
+ b=FvrIiAYZXbGgRq+tz7VCKPn5VEbUKtusK2Nh0J5TzINjprs9vyt3oe4QmH6AQwLDX+wEoR
+ fd/EvlYTo0uApoPT4YSpqwhRIZYW6RPO+mY9E3ooCMUqnWxwO+ouAdrMLThlm4Oz6HtubV
+ aN1Ta8UhfUQNzBV9MGUEvGu7aGasE7w=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-331-XyFSIfYyNkifSjaJCHodLQ-1; Tue, 13 Feb 2024 13:26:05 -0500
-X-MC-Unique: XyFSIfYyNkifSjaJCHodLQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-56001d4c9c8so2935687a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:26:05 -0800 (PST)
+ us-mta-126-uCnn4mx9MeC8SzeHdOUmLg-1; Tue, 13 Feb 2024 13:25:54 -0500
+X-MC-Unique: uCnn4mx9MeC8SzeHdOUmLg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2d08eacba7aso49236751fa.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 10:25:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707848764; x=1708453564;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CawK4S2AGXaWuzomHre9q0Dv/PxzCRGl9UGew+f3A8c=;
- b=FfAqI1nbwcNbUSiGRxkpQluhaVDDugZjREYYnuP5eJxAh2xU7p8ujaLtZlXuW0Grt7
- HuSQCUNO7znBV6sKXquEQMJkWtggLG+76oyasj4vcRbR8JXlH73ZXEwM3a6fECBjt2Xm
- HSzLzZJnzbQ4WclY3A//eZSI/+jhwEaXjKy9jD1D2bAhFTg2Vf95c+ZS9xGxjeHyAwXG
- uZxol9Gnu8wEVr3XqmhkOPR9QDGnjKcLu2sfhVDGP5cd3dxgJR0Hpx/URfCNN3D8iqo1
- Z3nDdbUVhFN41QYB9BqQRD7oDmrECiwFOw5YCxKvvKZiVj9VoXtk7CgHH1X51O5GaghH
- 1Naw==
-X-Gm-Message-State: AOJu0YzKrIFCGaqTW3QRiSpEfi3gEqfSvZLU63YxEK+mptXfipuccEqZ
- kDYqlpEMB8LVCjHL2aH/iSxs9eLu0+AvKCwqIwFb5i1WuXsoDBquK41c3fUmKGr2LOPwEtmDEfz
- dcEiPCr2sCwawu1XH1xx9HtC6qRka5w7M/rDyxTbehUF7SqZh/6+8f+FD1UxA1ALdU2ZxYiPBXt
- 8mB8DqOslPlAIHUR3HtxUexDJf4vA=
-X-Received: by 2002:a05:6402:b10:b0:560:1652:e7cb with SMTP id
- bm16-20020a0564020b1000b005601652e7cbmr338995edb.16.1707848764675; 
- Tue, 13 Feb 2024 10:26:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHMX+a1YnKz6vPt1FlRwLekK4uCx5OwtRQlf4B+w3thrDGtVErQ/72XylJ2O23xK99HfGHofeNYRAjBNT5yecg=
-X-Received: by 2002:a05:6402:b10:b0:560:1652:e7cb with SMTP id
- bm16-20020a0564020b1000b005601652e7cbmr338985edb.16.1707848764349; Tue, 13
- Feb 2024 10:26:04 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707848753; x=1708453553;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+nqqqkK7Edd+F0BT+njm1E1WmvYQolIVHsq3uCkftJI=;
+ b=DJkAx/YiHxKlAlQ7nC9TmBYz9Bcwo09gP93v/5grLPcozNahDjzpG2muGWB5rhjfWQ
+ vupIxY0BY1qE8ODPTsqw5liB2asahaiedG0aOdCmtLzXpUj+SxTzK78di2B4305Eh5yZ
+ Ujc788Z79JsIi8uskYRPrUi8HyPmcqW0otyCXylbFnSOFMw4HPVcPCWRQWJUZ9yDaRRl
+ xoJcBm4oX74nGO70AAsSjSjiZgZDRJ6ZPRKyTwYgNXXngx39xO0pn9E4pU346IbIgbmE
+ 5K3wc8z++RL9cW5nzil4Lb07QQTI2FNNSN7OYCN58KHwKGf6SOQBCQ62cYxqEfsihvCj
+ IFyg==
+X-Gm-Message-State: AOJu0YzjEa2+gAlSSZ9wQPckRz+EWzY4tJU1WkX/4b9rbSf7qnbWjGIp
+ e7syEEvrARgCoow4k0/HrkRWpZbZSHJKkZCemv+w5GRmdJkuDgvWDs0au4ZtFFxagj+0DCI7dT9
+ AjTjE9qm+v+u11mgVUcfnkLqOsGDUJ6EEi3HDFV4Hfl7xNd5fyifA
+X-Received: by 2002:a05:651c:a0a:b0:2d0:f265:3f13 with SMTP id
+ k10-20020a05651c0a0a00b002d0f2653f13mr449546ljq.26.1707848752923; 
+ Tue, 13 Feb 2024 10:25:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHT06QdFBqx4LaQ/yLqBq3TcOfAHYxofFL9RZ/OUzuawWD4hQiJl+H2bD8BMKh44e/6UJ7OEQ==
+X-Received: by 2002:a05:651c:a0a:b0:2d0:f265:3f13 with SMTP id
+ k10-20020a05651c0a0a00b002d0f2653f13mr449534ljq.26.1707848752573; 
+ Tue, 13 Feb 2024 10:25:52 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXzzOcd+dos23pz0ypViXz7qAWVJtOy+EMktFXnkVjEy2X2/SOVyKEVjxitj4Wt0GlAU7/kexmRIhMNWtdllxQ4rojS7cTITkQ/uhuGlzpO2/nEsdOZ6wsa8Hs2w6AUB5BPwoFgGTGH1ucgHiFAHOS01jBizrRQxNAJA/sKT6uOIt29Lk5BqoXHkK12akFqwcp+CCDBfU9oGvRTp7yg+Q==
+Received: from ?IPV6:2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e?
+ (p200300d82f3c3f007177eb0cd3d24b0e.dip0.t-ipconnect.de.
+ [2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e])
+ by smtp.gmail.com with ESMTPSA id
+ p7-20020a05600c358700b004107219c664sm12589960wmq.32.2024.02.13.10.25.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 10:25:52 -0800 (PST)
+Message-ID: <6df3cad1-8dec-4db8-96c1-7c4298f3d31d@redhat.com>
+Date: Tue, 13 Feb 2024 19:25:51 +0100
 MIME-Version: 1.0
-References: <20240203080228.2766159-1-armbru@redhat.com>
- <20240203080228.2766159-2-armbru@redhat.com>
- <87mss479ew.fsf@pond.sub.org>
-In-Reply-To: <87mss479ew.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 13 Feb 2024 22:25:52 +0400
-Message-ID: <CAMxuvawGA87bjCG3AMhkKaWMRL8EDThBmVnJ+dYjWNdzM_7wNw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] chardev/parallel: Don't close stdin on inappropriate
- device
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, devel@lists.libvirt.org, 
- eblake@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/15] libvhost-user: Fix msg_region->userspace_addr
+ computation
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Germano Veit Michel <germano@redhat.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>
+References: <20240202215332.118728-1-david@redhat.com>
+ <20240202215332.118728-2-david@redhat.com>
+ <20240213123223-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240213123223-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,151 +158,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 13.02.24 18:32, Michael S. Tsirkin wrote:
+> On Fri, Feb 02, 2024 at 10:53:18PM +0100, David Hildenbrand wrote:
+>> We barely had mmap_offset set in the past. With virtio-mem and
+>> dynamic-memslots that will change.
+>>
+>> In vu_add_mem_reg() and vu_set_mem_table_exec_postcopy(), we are
+>> performing pointer arithmetics, which is wrong.
+> 
+> Wrong how? I suspect you mean arithmetic on void * pointers is not portable?
 
-On Tue, Feb 13, 2024 at 5:58=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Markus Armbruster <armbru@redhat.com> writes:
->
-> > The __linux__ version of qemu_chr_open_pp_fd() tries to claim the
-> > parport device with a PPCLAIM ioctl().  On success, it stores the file
-> > descriptor in the chardev object, and returns success.  On failure, it
-> > closes the file descriptor, and returns failure.
-> >
-> > chardev_new() then passes the Chardev to object_unref().  This duly
-> > calls char_parallel_finalize(), which closes the file descriptor
-> > stored in the chardev object.  Since qemu_chr_open_pp_fd() didn't
-> > store it, it's still zero, so this closes standard input.  Ooopsie.
-> >
-> > To demonstate, add a unit test.  With the bug above unfixed, running
-> > this test closes standard input.  char_hotswap_test() happens to run
-> > next.  It opens a socket, duly gets file descriptor 0, and since it
-> > tests for success with > 0 instead of >=3D 0, it fails.
-> >
-> > The test needs to be conditional exactly like the chardev it tests.
-> > Since the condition is rather complicated, steal the solution from the
-> > serial chardev: define HAVE_CHARDEV_PARALLEL in qemu/osdep.h.  This
-> > also permits simplifying chardev/meson.build a bit.
-> >
-> > The bug fix is easy enough: store the file descriptor, and leave
-> > closing it to char_parallel_finalize().
-> >
-> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
->
-> [...]
->
-> > diff --git a/chardev/char-parallel.c b/chardev/char-parallel.c
-> > index a5164f975a..78697d7522 100644
-> > --- a/chardev/char-parallel.c
-> > +++ b/chardev/char-parallel.c
-> > @@ -164,13 +164,13 @@ static void qemu_chr_open_pp_fd(Chardev *chr,
-> >  {
-> >      ParallelChardev *drv =3D PARALLEL_CHARDEV(chr);
-> >
-> > +    drv->fd =3D fd;
-> > +
-> >      if (ioctl(fd, PPCLAIM) < 0) {
-> >          error_setg_errno(errp, errno, "not a parallel port");
-> > -        close(fd);
-> >          return;
-> >      }
-> >
-> > -    drv->fd =3D fd;
-> >      drv->mode =3D IEEE1284_MODE_COMPAT;
-> >  }
-> >  #endif /* __linux__ */
-> > @@ -238,6 +238,7 @@ static void qemu_chr_open_pp_fd(Chardev *chr,
-> >  }
-> >  #endif
-> >
-> > +#ifdef HAVE_CHARDEV_PARALLEL
-> >  static void qmp_chardev_open_parallel(Chardev *chr,
-> >                                        ChardevBackend *backend,
-> >                                        bool *be_opened,
-> > @@ -306,3 +307,5 @@ static void register_types(void)
-> >  }
-> >
-> >  type_init(register_types);
-> > +
-> > +#endif  /* HAVE_CHARDEV_PARALLEL */
-> > diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-> > index 649fdf64e1..76946e6f90 100644
-> > --- a/tests/unit/test-char.c
-> > +++ b/tests/unit/test-char.c
-> > @@ -1203,6 +1203,24 @@ static void char_serial_test(void)
-> >  }
-> >  #endif
-> >
-> > +#if defined(HAVE_CHARDEV_PARALLEL) && !defined(WIN32)
-> > +static void char_parallel_test(void)
-> > +{
-> > +    QemuOpts *opts;
-> > +    Chardev *chr;
-> > +
-> > +    opts =3D qemu_opts_create(qemu_find_opts("chardev"), "parallel-id"=
-,
-> > +                            1, &error_abort);
-> > +    qemu_opt_set(opts, "backend", "parallel", &error_abort);
-> > +    qemu_opt_set(opts, "path", "/dev/null", &error_abort);
-> > +
-> > +    chr =3D qemu_chr_new_from_opts(opts, NULL, NULL);
-> > +    g_assert_null(chr);
->
-> This is wrong.
->
-> On a Linux host, qemu_chr_new_from_opts() fails, because
-> qemu_chr_open_pp_fd()'s attempt to PPCLAIM fails.
->
-> On a BSD host, it succeeds.
->
-> Proposed fixup appended.  Marc-Andr=C3=A9, is respinning the PR with the
-> fixup okay, or would you prefer a v2?
+You are absolutely right, no idea how I concluded that we might have a 
+different pointer size here.
 
-I am okay with a new PR.
+I'll either convert this patch into a cleanup or drop it for v2, thanks!
 
-thanks
+-- 
+Cheers,
 
->
-> > +
-> > +    qemu_opts_del(opts);
-> > +}
-> > +#endif
-> > +
-> >  #ifndef _WIN32
-> >  static void char_file_fifo_test(void)
-> >  {
-> > @@ -1544,6 +1562,9 @@ int main(int argc, char **argv)
-> >      g_test_add_func("/char/udp", char_udp_test);
-> >  #if defined(HAVE_CHARDEV_SERIAL) && !defined(WIN32)
-> >      g_test_add_func("/char/serial", char_serial_test);
-> > +#endif
-> > +#if defined(HAVE_CHARDEV_PARALLEL) && !defined(WIN32)
-> > +    g_test_add_func("/char/parallel", char_parallel_test);
-> >  #endif
-> >      g_test_add_func("/char/hotswap", char_hotswap_test);
-> >      g_test_add_func("/char/websocket", char_websock_test);
->
-> [...]
->
-> diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-> index e3b783c06b..f273ce5226 100644
-> --- a/tests/unit/test-char.c
-> +++ b/tests/unit/test-char.c
-> @@ -1215,7 +1215,13 @@ static void char_parallel_test(void)
->      qemu_opt_set(opts, "path", "/dev/null", &error_abort);
->
->      chr =3D qemu_chr_new_from_opts(opts, NULL, NULL);
-> +#ifdef __linux__
-> +    /* fails to PPCLAIM, see qemu_chr_open_pp_fd() */
->      g_assert_null(chr);
-> +#else
-> +    g_assert_nonnull(chr);
-> +    object_unparent(OBJECT(chr));
-> +#endif
->
->      qemu_opts_del(opts);
->  }
->
+David / dhildenb
 
 
