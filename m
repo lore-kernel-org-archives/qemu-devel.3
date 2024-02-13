@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FADC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D7BEC4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 08:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZnua-0000vE-N8; Tue, 13 Feb 2024 03:13:04 -0500
+	id 1rZnuM-0000gO-AW; Tue, 13 Feb 2024 03:12:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZnuZ-0000uC-Bv
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:13:03 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZnuK-0000eD-MS
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:12:48 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZnuO-0000uS-8o
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:13:03 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33b2960ff60so2867270f8f.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 00:12:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZnuI-0000tg-Nz
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 03:12:48 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-33cd57b86bfso269414f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 00:12:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707811969; x=1708416769; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707811963; x=1708416763; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3tGBnm3xpKoZJLGDzyHurshmc29aTqyoeNI6UD7GZU8=;
- b=CsjDaSAp9E5pazR+KBsXLlYoc29uzU8c4HU3hkmoRh79x1Nebb1mzWD/BHrWGYfy3D
- Xd+uwTbsZLQdtQ9BUYs/ev3AEOy2ObRcgwj+XrdDux+kvTd7ff4hyoKeyjM+YZh4oxzH
- D0yIAEcgh/8UxQKJDlSv0SiOqm0M+nTdunKduXHR1wGBfgB5Lpyr1L5jUeZdeM8BuShw
- +m1ftiCPvnXmWSWFUDOtFmQH8Yy46vzTJGbuqTebx01t3C+z54gvI/BzcBDH5aG7CUXO
- AzSJISdR032F18nAIP+LGOhti6gll9TT4u763dCQe4IrsWVzUwKj1sDHseC45tnu0NcT
- R/zw==
+ bh=QDigo3VaEMu1N9qxZDm571UBwWnNIeVpjt1aUzhYjcA=;
+ b=r0FN62pCs1kidnhu/2RxxfY2K2doocDlkAMfqzL8V9JEeT6/fdGgiSu2En2lzxoL5/
+ vxyimfZr3v0obT9cguTdr8YXNRyu+ElbQ86Hjy36gnHJiVN1w3mwdlSQ/479D5nbyKlD
+ Wa3zOTeLaN8V/0pE7NnUYWSvcKkPydIjYK3cgX0R+w4mGnpb409jqdKP+EtmZutntKCo
+ iaZKHuUNE5/M8CWKX185oSBrPq9cLVPB48NFtcMX/LZf+BZC+T97BEPlWp4l9JBhMvr1
+ 6XNKiC+Z+VEk9VnJ4SQ/ATZVOeM+2aHxvnx+7M7TTqlndUDHJ9oNvL7UTA7pDask+jhJ
+ /Muw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707811969; x=1708416769;
+ d=1e100.net; s=20230601; t=1707811963; x=1708416763;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3tGBnm3xpKoZJLGDzyHurshmc29aTqyoeNI6UD7GZU8=;
- b=SYDoJ/G3z7YiNXGGXQu5mRPjI1tOhsCKdgyHJYm3q+N/wPtXwYc0xxgsnkGLYNIQl1
- CKWsBjYXKZNVfOQlBB5ixwTRqsz3fWLjX/sSn4DvfFc597/vdbJueVYQGHRbd3tjotrF
- vcUbM/1F6+JLae32UU/98AiyQGPYoLKPCJioYtxhUYEqkHZK1uc+QkB00pW1X43SJsNS
- xIdGXt6pHqlmB8umA1dSiOdbnZ+nAf1xLehyLgeG3oW2Ogba0y8o7Avh2MxP/ifAwnZR
- m6MyLZ06BX7nafiDjbxbqc95LhVnT2EXRVpbA7u1E7NVHHuyBFvsEhn0cl6NMyw6lIbL
- Wlsg==
-X-Gm-Message-State: AOJu0YzpE7008L4TAmb3ioACrBfp972FwO/JyPMkbGzekp2Zex43jKc6
- klPpZHqH/B9buZTKyHPrbB/Gko6Xkwp3Z+OTbl1ExhHbriBUYvxYFBdbUdRq20em4hcdbQ/XOUK
- e
-X-Google-Smtp-Source: AGHT+IHAbjPO3QHRPjiBBcWKK0nCDzc8pkdF8GY8qtKFJR6HBvbG6Vuk5M8pHYFlo4jxz6obYbnDAQ==
-X-Received: by 2002:a5d:4e4a:0:b0:33b:68d2:c5c9 with SMTP id
- r10-20020a5d4e4a000000b0033b68d2c5c9mr1442385wrt.8.1707811969753; 
- Tue, 13 Feb 2024 00:12:49 -0800 (PST)
+ bh=QDigo3VaEMu1N9qxZDm571UBwWnNIeVpjt1aUzhYjcA=;
+ b=NLaypr1M4/ak8oVC6hS+2BAioC+tuMLQNfwjyb8PXuOjkSyQcLIetHdUP7BKigItui
+ Id1IslwN7TVH8645RbkdeRVHkmjWrYH8wAnRF14RmU6yfYB6zDftgCN1RGKzM8SnxXUE
+ 97zLvJ9abA4FKgpesMNHC5vxlTIrd48Hd6689Fzh3zo79O38NOXZYtiLN4qz2wP3al/v
+ A+EroFAa2h1EcL06SYH6qXNQq9Fsu3SkKmp4f3Z9zELCvWdrUcSUrPXOvqAkztEnSRhP
+ AAq31Xd7IpWy4JvGQ2VqxrBFBQQ0EoRH4530WANz+1KS2UavhUTk3wnczXfCKoUG1apL
+ k5Vw==
+X-Gm-Message-State: AOJu0YwqMksjAVvD68oKo8rheY5JSi7zZb1gcN8ia70OgzB8W32bkI4O
+ Qsf7r4zlaXYZZXfQgqxkmA8R87Uz+BrGUocjv+izzdfwY3hgDVSeNHEVmLVp2MkEsKPm/Fkwoo7
+ L
+X-Google-Smtp-Source: AGHT+IEf0sAKjH806V1tAGv1IXhVy/FsJOQAWk4T95MDi2Q0YCVei/0+Fk8Rp55UjppPlI5sqU+Vlg==
+X-Received: by 2002:a5d:6c6d:0:b0:33c:d88b:bc5a with SMTP id
+ r13-20020a5d6c6d000000b0033cd88bbc5amr799050wrz.34.1707811963439; 
+ Tue, 13 Feb 2024 00:12:43 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhv7HcJZUaxKepPaqXlfGBs6Jto0eV0QW/c86+/oleUEDjymNxErcchK8KDSHA0b91m/xVsnaFINko6RqeG82c2ixyk9H9WDfvlw9MHB01+N2/h+AyFjRuTYba8pw8FP4vAY8V/r+RPmr0BasoDggJD7gR9yEIEEiGeJSJ/rOiui/dSh/goC7y/E/YvJRlzBzLPhEVfZQeKgj0HS9FaToXQy4rAu7TgSIJ8CONb1oi0yTIMgN/ZGYlk5Z+0Mllmhrt/bOPc9/NU95UDvn+mq+JeSdm5f0=
+ AJvYcCXSXrtsPG9g3efdKsqit9qYtcUzRvSrnd+k0Pl5vgN0tuKFia2vMbuvE+J4LMwegiPd0NdW0OPllB4VVSIjuV0AO44GPgDHEsh5FyV914eSHTb6E/sVEKPoxnfg3mXRj+7O2IHheBhHqlWNRW+kogul0gT2lbiXd526KuZP6NG9dD/ZL6ClHZvwAhBFr+3G7BqE7vsOQCYp1gYBmM9gnIyB7Ee8HM+lRcL4tY+8wlySq1fvyNHikhlbFMxn31ACmWSK6zJiz/u0uJoPLuc4xsyb0QmCfvc=
 Received: from m1x-phil.lan ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- t24-20020adfa2d8000000b0033b86b38611sm3549752wra.10.2024.02.13.00.12.48
+ v9-20020a5d4b09000000b0033b843786e1sm4085476wrq.51.2024.02.13.00.12.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 13 Feb 2024 00:12:49 -0800 (PST)
+ Tue, 13 Feb 2024 00:12:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -67,18 +67,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-block@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 7/9] hw/ide/ahci: Do not pass 'ports' argument to
- ahci_realize()
-Date: Tue, 13 Feb 2024 09:11:58 +0100
-Message-ID: <20240213081201.78951-8-philmd@linaro.org>
+Subject: [PATCH 6/9] hw/ide/ahci: Convert AHCIState::ports to unsigned
+Date: Tue, 13 Feb 2024 09:11:57 +0100
+Message-ID: <20240213081201.78951-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240213081201.78951-1-philmd@linaro.org>
 References: <20240213081201.78951-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,74 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Explicitly set AHCIState::ports before calling ahci_realize().
+AHCIState::ports should be unsigned. Besides, we never
+check it for negative value. It is unlikely it was ever
+used with more than INT32_MAX ports, so it is safe to
+convert it to unsigned.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ide/ahci_internal.h | 2 +-
- hw/ide/ahci.c          | 9 +++++----
- hw/ide/ich.c           | 3 ++-
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ include/hw/ide/ahci.h | 2 +-
+ hw/ide/ahci.c         | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ide/ahci_internal.h b/hw/ide/ahci_internal.h
-index 4dc2805d21..4e13329bb2 100644
---- a/hw/ide/ahci_internal.h
-+++ b/hw/ide/ahci_internal.h
-@@ -377,7 +377,7 @@ typedef struct SDBFIS {
-     uint32_t payload;
- } QEMU_PACKED SDBFIS;
- 
--void ahci_realize(AHCIState *s, DeviceState *qdev, AddressSpace *as, int ports);
-+void ahci_realize(AHCIState *s, DeviceState *qdev, AddressSpace *as);
- void ahci_init(AHCIState *s, DeviceState *qdev);
- void ahci_uninit(AHCIState *s);
- 
+diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
+index 8cd55b1333..604d3a0994 100644
+--- a/include/hw/ide/ahci.h
++++ b/include/hw/ide/ahci.h
+@@ -46,7 +46,7 @@ typedef struct AHCIState {
+     MemoryRegion idp;       /* Index-Data Pair I/O port space */
+     unsigned idp_offset;    /* Offset of index in I/O port space */
+     uint32_t idp_index;     /* Current IDP index */
+-    int32_t ports;
++    uint32_t ports;
+     qemu_irq irq;
+     AddressSpace *as;
+ } AHCIState;
 diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 2c3306dae4..33f7e83687 100644
+index bac1871a31..2c3306dae4 100644
 --- a/hw/ide/ahci.c
 +++ b/hw/ide/ahci.c
-@@ -1614,14 +1614,14 @@ void ahci_init(AHCIState *s, DeviceState *qdev)
-                           "ahci-idp", 32);
- }
- 
--void ahci_realize(AHCIState *s, DeviceState *qdev, AddressSpace *as, int ports)
-+void ahci_realize(AHCIState *s, DeviceState *qdev, AddressSpace *as)
- {
-     qemu_irq *irqs;
-     int i;
- 
-     s->as = as;
--    s->ports = ports;
--    s->dev = g_new0(AHCIDevice, ports);
-+    assert(s->ports > 0);
-+    s->dev = g_new0(AHCIDevice, s->ports);
-     ahci_reg_init(s);
-     irqs = qemu_allocate_irqs(ahci_irq_set, s, s->ports);
-     for (i = 0; i < s->ports; i++) {
-@@ -1862,7 +1862,8 @@ static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
- {
-     SysbusAHCIState *s = SYSBUS_AHCI(dev);
- 
--    ahci_realize(&s->ahci, dev, &address_space_memory, s->num_ports);
-+    s->ahci.ports = s->num_ports;
-+    ahci_realize(&s->ahci, dev, &address_space_memory);
- }
- 
- static Property sysbus_ahci_properties[] = {
-diff --git a/hw/ide/ich.c b/hw/ide/ich.c
-index d190012a95..122fc7e0ab 100644
---- a/hw/ide/ich.c
-+++ b/hw/ide/ich.c
-@@ -113,7 +113,8 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
-     d = ICH9_AHCI(dev);
-     int ret;
- 
--    ahci_realize(&d->ahci, DEVICE(dev), pci_get_address_space(dev), 6);
-+    d->ahci.ports = 6;
-+    ahci_realize(&d->ahci, DEVICE(dev), pci_get_address_space(dev));
- 
-     pci_config_set_prog_interface(dev->config, AHCI_PROGMODE_MAJOR_REV_1);
- 
+@@ -1819,7 +1819,7 @@ const VMStateDescription vmstate_ahci = {
+     .version_id = 1,
+     .post_load = ahci_state_post_load,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_STRUCT_VARRAY_POINTER_INT32(dev, AHCIState, ports,
++        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(dev, AHCIState, ports,
+                                      vmstate_ahci_device, AHCIDevice),
+         VMSTATE_UINT32(control_regs.cap, AHCIState),
+         VMSTATE_UINT32(control_regs.ghc, AHCIState),
+@@ -1827,7 +1827,7 @@ const VMStateDescription vmstate_ahci = {
+         VMSTATE_UINT32(control_regs.impl, AHCIState),
+         VMSTATE_UINT32(control_regs.version, AHCIState),
+         VMSTATE_UINT32(idp_index, AHCIState),
+-        VMSTATE_INT32_EQUAL(ports, AHCIState, NULL),
++        VMSTATE_UINT32_EQUAL(ports, AHCIState, NULL),
+         VMSTATE_END_OF_LIST()
+     },
+ };
 -- 
 2.41.0
 
