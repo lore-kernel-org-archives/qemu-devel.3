@@ -4,121 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04081C48260
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F898C48260
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 11:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZqXF-00044W-4G; Tue, 13 Feb 2024 06:01:09 -0500
+	id 1rZqYM-0004wN-FP; Tue, 13 Feb 2024 06:02:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZqXD-00044A-5r
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:01:07 -0500
-Received: from mout.gmx.net ([212.227.15.18])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqYJ-0004vm-SN
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:02:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rZqX8-0006ZM-0B
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:01:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
- t=1707822055; x=1708426855; i=deller@gmx.de;
- bh=qfwTPC6Qr+gCCLIefPdVA8Iq+L8d2vdQwItSQ1qKEEM=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
- In-Reply-To;
- b=Wic0zEoFmw/JoZPxVdMkbIyNIPeCiZJGb52kHTsdMSZgwNFI/bCEdTM02HCRV+BN
- 4fEvPSAIVHIHRaV+06VE/YkW3Cms7d8ry7huwT7lGnTI9BVYeYHCojeNjKIyU/qrR
- Uj6pT4X/x03GyMFYhAFcaiwAx1hdyI+PgJ2WOjTNi7+BIKJmCNA9liYlKfSKvVckp
- 5MUGq0EajW0JeQJdxgIbOuYpXxqKiDMp2A7tpXFktiT8ilIYvTuVeI7WIuZaZMQhg
- alz9ETLRZ+L9hTtSLTmpDVWGC+kgtKzKZCqHe1rEWn3rzl37CAWHowpesg3cg6f4u
- UUYs02uvN+bRFxaxfw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([94.134.153.170]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIwzA-1rFPy92lyM-00KTby; Tue, 13
- Feb 2024 12:00:55 +0100
-Message-ID: <ebcf7d0b-17d8-409d-a07b-0399d7071eac@gmx.de>
-Date: Tue, 13 Feb 2024 12:00:54 +0100
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rZqYH-0006eb-EU
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 06:02:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707822132;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fvg1USU9D6+Vh1zMKaghAYWj9Vg+p8rwsAALTyVkhCA=;
+ b=Hn95xT5Yp82JRb/t812Feogbq5a5hmXwr3cEGH1zvxJHL8KlAn02tg0pQv/sQzPxieru4/
+ xa2An6QBknDa1g6wO5yGgEB+D1MJXM7Y9q9IIOOBQnJlxSlvvGNv0dgJegeMiKTAGuRlkf
+ 6UEar2KGgKpMzmRdvYe91GUjUUWz6Ys=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-204-rlxrS5u_Moqd6aAg038uaw-1; Tue, 13 Feb 2024 06:02:11 -0500
+X-MC-Unique: rlxrS5u_Moqd6aAg038uaw-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a3ccb68f284so90350266b.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 03:02:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707822130; x=1708426930;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fvg1USU9D6+Vh1zMKaghAYWj9Vg+p8rwsAALTyVkhCA=;
+ b=RL04flemBadXW/DvD3Z85s7zckQfK2BaOUeCv1FWhZfTIqihHRDtNuPB+nCS9RAAeb
+ TMp8iv+G6bxALG6YhRvQEXRCWfSpCyRXVL5yTMw7OpsEplan+kGxKikZAdSuXU4Id07F
+ dnYB0m8MjVbjQo33eQcm9ezeWb/255VR/Fan7aQsmcLCNa9s8+PyX2c4edHDEcl9bX4U
+ rq/jbEZy8kjX/E3DgYzRB90pjBOKuSFOTHrYsEYyOM38h2xuSg15sgLh98yodOjruyED
+ QcXFWl3q4XcfCgRw9bNfRrLbJr3RuQM8zJGg0JdF6ZLfrMyq00JY1Mau5/EjmKIhidch
+ hk1w==
+X-Gm-Message-State: AOJu0YyOMSzicwvhYpO1CHS5JMPKsObUxbFB2FyFZPvX5zC4qW0LLiw1
+ 8+HltSKYSNg3e6VxnpIQBJP3vb7Y1VKFTMmlJuh/vIKe4/Kgh4gXWX5NMi0ozjPn+0i4ygYN21w
+ rtbH4uewKIH/R89oqvjO2xGUiJG5OOnihxEeckM1f0VT9evp8YURI
+X-Received: by 2002:a17:906:fa99:b0:a3c:369b:a6d5 with SMTP id
+ lt25-20020a170906fa9900b00a3c369ba6d5mr6853354ejb.14.1707822129563; 
+ Tue, 13 Feb 2024 03:02:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFMJF9Jk6nuBUegrBQYD2jnVsZ3sbHqHr6OM3nUEMFuWvHE0WCZ65MnwaXnh3SDFfPhJe6T+g==
+X-Received: by 2002:a17:906:fa99:b0:a3c:369b:a6d5 with SMTP id
+ lt25-20020a170906fa9900b00a3c369ba6d5mr6853319ejb.14.1707822128920; 
+ Tue, 13 Feb 2024 03:02:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqAuUeiveGiUPJNVmOzi+o+7GIwsMn08H1KinSiz4XaM8VyGkZJCBYFthqNLCAqmlE0YtEWcfhOh97MqNXaKccrE1JsyQQIfnSkKw3ZVK6eoxdP+gcDd3SnmVNG5TjRQr9yPBo4pBgN+FbYuVg/gbOt3vWlCU12s0Mq0sDcH7rlx/g8evwugOQFBy/pTMpu1W0xlCnVeb2+iTyoAsgv5XNEHQ8D9nGzKG7C0MYDh20coAX96Xr8S1C4noQlXK0E697JdwoNJw1XvCun+1C07GbQpaUctXRDOOc8JKbk/GtxxP6+Kk6EA3KbMG2hgq07zj0b3h+9C50Uh1T9araKbudGhJC/ZMsSXrUCT0uFMesVltmZrzY0P63g+epc1tzGhM9aCtW3PBe8nXVaiwxT5HGk56XlvinXssz+Q==
+Received: from redhat.com ([2.52.146.238]) by smtp.gmail.com with ESMTPSA id
+ a21-20020a170906191500b00a372132718esm1181762eje.90.2024.02.13.03.02.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 03:02:08 -0800 (PST)
+Date: Tue, 13 Feb 2024 06:01:56 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v3 6/7] pcie_sriov: Reuse SR-IOV VF device instances
+Message-ID: <20240213060116-mutt-send-email-mst@kernel.org>
+References: <20240212-reuse-v3-0-8017b689ce7f@daynix.com>
+ <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/12] Hppa64 patches
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: deller@kernel.org, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>
-References: <20240211122909.5807-1-deller@kernel.org>
- <CAFEAcA-4ck9Ro-9x13veOqL-165i7q8w17HP7KDN_5uNj2RVEg@mail.gmail.com>
- <71756c3b-467d-4416-884d-e4aeed3482ba@gmx.de>
- <CAFEAcA_CQ6PKHyvg9qKeWDJpkbTu8rv=TCm3GemJmKQCrjPNuA@mail.gmail.com>
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <CAFEAcA_CQ6PKHyvg9qKeWDJpkbTu8rv=TCm3GemJmKQCrjPNuA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:IWxEsFDYBcvdc+jrYeN2QeATeNH7ZYe6ZEFBsEkpTp1+9f2JDZg
- nudr7C/fA9+IJASBGKdwUtPt7EzSxpTRBrSRo75Dw28rmvVHev892xBBK8GRxLnb0eAC7MI
- FUTvpobKYCY8j/8XXyGw6eR+0V8Dp1zFt6Rb19pxTY+HylDR2g+GVVRFtFJwLpygF5AM/8C
- YwDYr1tZzaYDFf2bvkgVw==
-UI-OutboundReport: notjunk:1;M01:P0:NOa3vcXTFlo=;r10lpqIqt53RB2oPoZI/syzHXc/
- mvPO0nldlCsoEoqXC1FXRyRSnLihNqdR6cmgqGc0sdJZ+scjBmURRo0Gpdd7aw8xcyyhu+ubi
- MDALwXRz+aVLvKznHm7AWH1mMuyShvloXzBHryupdhnEcmd9zejcoXKhBcN8ttNbGOw+R1Tz2
- 3f5Papz0O2h0QArev/NBXJW2SKRaCnhLJGMYhTM0/L5s27xjD4Rtva7b+/O0M/myW1JaWFfT/
- +6cbz3psOC9UxZSEAltf4K9oFrUVPgEhjzQXPeL3nZr3IMwam1r6MbgEHDYx+KT44AUYoX4KD
- dTOBdkyYMGZul/tiH3Rf1nk1ua1AMgYoy8w83kxBi7v0qnyh88fTbZugaZK1+I1uJB+2aqtd1
- bHyCMGRLJk82S9twmSn0bbJcHrqcaxBImYKQJlgRU0nhMw9ZVtiL7f1FgobjZU1NO2cZjnBCR
- wJge7Jfy89r8X3pcFGAt22eDuOYv3k4Hk/O0xZBXmSsLy/M6zLBGvqfhYtGH+N5pt0AH2UWCj
- PhvRkxzMFpDatWF8mjbVRxxkXDuAKFbk0Pcphluk3L8vmmYlAsfx4dBm+iBe9602YTIO1rUoK
- JHhlhW2//i+lrAO4QmkDVyIr/RW8W603F8E0LeM2gkhH9f/hBKbCJX+iSA3SDnQ1BRPfG6Io0
- mT8JditpUIHH5tES+EiRr2L2pkuudpOGrXsYpjjbFR2Ob37uioQRlfx5g1d6fjdZEUjq6cKkM
- ZguH+VshCHcd2Vi4HQxUmvCdYWFcEA+qFJj6bxEcfAgJSP+yquPfmAERhyllDlRAY/7xMU3x4
- Ho2jLglFYOcOkANZFLSre2AliPjEo5d3Ythh80t1puyRc=
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240212-reuse-v3-6-8017b689ce7f@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -136,30 +110,444 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/24 10:10, Peter Maydell wrote:
-> On Mon, 12 Feb 2024 at 23:04, Helge Deller <deller@gmx.de> wrote:
->>
->> On 2/12/24 22:16, Peter Maydell wrote:
->>> This fails "make check", eg:
->>> https://gitlab.com/qemu-project/qemu/-/jobs/6154451100
->>>
->>> because when the qom-test etc tests run qemu-system-hppa, it
->>> barfs with "qemu-system-hppa: no firmware provided".
->>>
->>> That kind of firmware check needs to not fire when
->>> using the qtest accel.
->>
->> Ok. But how do people usually work around this kind of issue?
->> Test if the qtest accel is in use?
->> Ignore if the firmware can't be loaded?
->> Any hint would be great!
->
-> There's a qtest_enabled() function -- see eg hw/mips/malta.c
-> for an example of skipping the "fail on no firmware" check
-> when it's enabled. (There are a bunch of others in the tree too.)
+On Mon, Feb 12, 2024 at 07:20:34PM +0900, Akihiko Odaki wrote:
+> Disable SR-IOV VF devices by reusing code to power down PCI devices
+> instead of removing them when the guest requests to disable VFs. This
+> allows to realize devices and report VF realization errors at PF
+> realization time.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Yes, I found that....
-I've used that function in the latest pull request which I sent...
-Thanks!
-Helge
+It is simpler for sure, but I am worried that all of these
+unused VFs will consume lots of resources even if never
+enabled. Thoughts?
+
+
+> ---
+>  docs/pcie_sriov.txt         |   8 ++--
+>  include/hw/pci/pci.h        |   2 +-
+>  include/hw/pci/pci_device.h |   2 +-
+>  include/hw/pci/pcie_sriov.h |   6 +--
+>  hw/net/igb.c                |  13 ++++--
+>  hw/nvme/ctrl.c              |  24 +++++++----
+>  hw/pci/pci.c                |  18 ++++----
+>  hw/pci/pci_host.c           |   4 +-
+>  hw/pci/pcie.c               |   4 +-
+>  hw/pci/pcie_sriov.c         | 100 ++++++++++++++++++++------------------------
+>  10 files changed, 97 insertions(+), 84 deletions(-)
+> 
+> diff --git a/docs/pcie_sriov.txt b/docs/pcie_sriov.txt
+> index a47aad0bfab0..ab2142807f79 100644
+> --- a/docs/pcie_sriov.txt
+> +++ b/docs/pcie_sriov.txt
+> @@ -52,9 +52,11 @@ setting up a BAR for a VF.
+>        ...
+>  
+>        /* Add and initialize the SR/IOV capability */
+> -      pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
+> -                       vf_devid, initial_vfs, total_vfs,
+> -                       fun_offset, stride);
+> +      if (!pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
+> +                              vf_devid, initial_vfs, total_vfs,
+> +                              fun_offset, stride, errp)) {
+> +         return;
+> +      }
+>  
+>        /* Set up individual VF BARs (parameters as for normal BARs) */
+>        pcie_sriov_pf_init_vf_bar( ... )
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index fa6313aabc43..fae83b9b723c 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -643,6 +643,6 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
+>  }
+>  
+>  MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+> -void pci_set_power(PCIDevice *pci_dev, bool state);
+> +void pci_set_enabled(PCIDevice *pci_dev, bool state);
+>  
+>  #endif
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index 7564e9536dbd..153e13eaef99 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -56,7 +56,7 @@ typedef struct PCIReqIDCache PCIReqIDCache;
+>  struct PCIDevice {
+>      DeviceState qdev;
+>      bool partially_hotplugged;
+> -    bool has_power;
+> +    bool is_enabled;
+>  
+>      /* PCI config space */
+>      uint8_t *config;
+> diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+> index 095fb0c9edf9..d9a39daccac4 100644
+> --- a/include/hw/pci/pcie_sriov.h
+> +++ b/include/hw/pci/pcie_sriov.h
+> @@ -18,7 +18,6 @@
+>  struct PCIESriovPF {
+>      uint16_t num_vfs;   /* Number of virtual functions created */
+>      uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
+> -    const char *vfname; /* Reference to the device type used for the VFs */
+>      PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+>  };
+>  
+> @@ -27,10 +26,11 @@ struct PCIESriovVF {
+>      uint16_t vf_number; /* Logical VF number of this function */
+>  };
+>  
+> -void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+> +bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>                          const char *vfname, uint16_t vf_dev_id,
+>                          uint16_t init_vfs, uint16_t total_vfs,
+> -                        uint16_t vf_offset, uint16_t vf_stride);
+> +                        uint16_t vf_offset, uint16_t vf_stride,
+> +                        Error **errp);
+>  void pcie_sriov_pf_exit(PCIDevice *dev);
+>  
+>  /* Set up a VF bar in the SR/IOV bar area */
+> diff --git a/hw/net/igb.c b/hw/net/igb.c
+> index 0b5c31a58bba..1079a33d4000 100644
+> --- a/hw/net/igb.c
+> +++ b/hw/net/igb.c
+> @@ -447,9 +447,16 @@ static void igb_pci_realize(PCIDevice *pci_dev, Error **errp)
+>  
+>      pcie_ari_init(pci_dev, 0x150);
+>  
+> -    pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET, TYPE_IGBVF,
+> -        IGB_82576_VF_DEV_ID, IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
+> -        IGB_VF_OFFSET, IGB_VF_STRIDE);
+> +    if (!pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET,
+> +                            TYPE_IGBVF, IGB_82576_VF_DEV_ID,
+> +                            IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
+> +                            IGB_VF_OFFSET, IGB_VF_STRIDE,
+> +                            errp)) {
+> +        pcie_cap_exit(pci_dev);
+> +        igb_cleanup_msix(s);
+> +        msi_uninit(pci_dev);
+> +        return;
+> +    }
+>  
+>      pcie_sriov_pf_init_vf_bar(pci_dev, IGBVF_MMIO_BAR_IDX,
+>          PCI_BASE_ADDRESS_MEM_TYPE_64 | PCI_BASE_ADDRESS_MEM_PREFETCH,
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index f026245d1e9e..f8df622fe590 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -8031,7 +8031,8 @@ static uint64_t nvme_bar_size(unsigned total_queues, unsigned total_irqs,
+>      return bar_size;
+>  }
+>  
+> -static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
+> +static bool nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset,
+> +                            Error **errp)
+>  {
+>      uint16_t vf_dev_id = n->params.use_intel_id ?
+>                           PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME;
+> @@ -8040,12 +8041,17 @@ static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
+>                                        le16_to_cpu(cap->vifrsm),
+>                                        NULL, NULL);
+>  
+> -    pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
+> -                       n->params.sriov_max_vfs, n->params.sriov_max_vfs,
+> -                       NVME_VF_OFFSET, NVME_VF_STRIDE);
+> +    if (!pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
+> +                            n->params.sriov_max_vfs, n->params.sriov_max_vfs,
+> +                            NVME_VF_OFFSET, NVME_VF_STRIDE,
+> +                            errp)) {
+> +        return false;
+> +    }
+>  
+>      pcie_sriov_pf_init_vf_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+>                                PCI_BASE_ADDRESS_MEM_TYPE_64, bar_size);
+> +
+> +    return true;
+>  }
+>  
+>  static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
+> @@ -8124,6 +8130,12 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+>          return false;
+>      }
+>  
+> +    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs &&
+> +        !nvme_init_sriov(n, pci_dev, 0x120, errp)) {
+> +        msix_uninit(pci_dev, &n->bar0, &n->bar0);
+> +        return false;
+> +    }
+> +
+>      nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
+>  
+>      if (n->params.cmb_size_mb) {
+> @@ -8134,10 +8146,6 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+>          nvme_init_pmr(n, pci_dev);
+>      }
+>  
+> -    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
+> -        nvme_init_sriov(n, pci_dev, 0x120);
+> -    }
+> -
+>      return true;
+>  }
+>  
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index d08548d8ffe9..727d812f419f 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -1522,7 +1522,7 @@ static void pci_update_mappings(PCIDevice *d)
+>              continue;
+>  
+>          new_addr = pci_bar_address(d, i, r->type, r->size);
+> -        if (!d->has_power) {
+> +        if (!d->is_enabled) {
+>              new_addr = PCI_BAR_UNMAPPED;
+>          }
+>  
+> @@ -1610,7 +1610,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
+>          pci_update_irq_disabled(d, was_irq_disabled);
+>          memory_region_set_enabled(&d->bus_master_enable_region,
+>                                    (pci_get_word(d->config + PCI_COMMAND)
+> -                                   & PCI_COMMAND_MASTER) && d->has_power);
+> +                                   & PCI_COMMAND_MASTER) && d->is_enabled);
+>      }
+>  
+>      msi_write_config(d, addr, val_in, l);
+> @@ -2179,7 +2179,9 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+>          return;
+>      }
+>  
+> -    pci_set_power(pci_dev, true);
+> +    if (!pci_is_vf(pci_dev)) {
+> +        pci_set_enabled(pci_dev, true);
+> +    }
+>  
+>      pci_dev->msi_trigger = pci_msi_trigger;
+>  }
+> @@ -2835,18 +2837,18 @@ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
+>      return msg;
+>  }
+>  
+> -void pci_set_power(PCIDevice *d, bool state)
+> +void pci_set_enabled(PCIDevice *d, bool state)
+>  {
+> -    if (d->has_power == state) {
+> +    if (d->is_enabled == state) {
+>          return;
+>      }
+>  
+> -    d->has_power = state;
+> +    d->is_enabled = state;
+>      pci_update_mappings(d);
+>      memory_region_set_enabled(&d->bus_master_enable_region,
+>                                (pci_get_word(d->config + PCI_COMMAND)
+> -                               & PCI_COMMAND_MASTER) && d->has_power);
+> -    if (!d->has_power) {
+> +                               & PCI_COMMAND_MASTER) && d->is_enabled);
+> +    if (d->qdev.realized) {
+>          pci_device_reset(d);
+>      }
+>  }
+> diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+> index dfe6fe618401..d7e13d72ce07 100644
+> --- a/hw/pci/pci_host.c
+> +++ b/hw/pci/pci_host.c
+> @@ -86,7 +86,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+>       * allowing direct removal of unexposed functions.
+>       */
+>      if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+> -        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
+> +        !pci_dev->is_enabled || is_pci_dev_ejected(pci_dev)) {
+>          return;
+>      }
+>  
+> @@ -111,7 +111,7 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+>       * allowing direct removal of unexposed functions.
+>       */
+>      if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+> -        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
+> +        !pci_dev->is_enabled || is_pci_dev_ejected(pci_dev)) {
+>          return ~0x0;
+>      }
+>  
+> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+> index 6db0cf69cd8a..f34c157e1fd3 100644
+> --- a/hw/pci/pcie.c
+> +++ b/hw/pci/pcie.c
+> @@ -394,7 +394,9 @@ static void pcie_set_power_device(PCIBus *bus, PCIDevice *dev, void *opaque)
+>  {
+>      bool *power = opaque;
+>  
+> -    pci_set_power(dev, *power);
+> +    if (!pci_is_vf(dev)) {
+> +        pci_set_enabled(dev, *power);
+> +    }
+>  }
+>  
+>  static void pcie_cap_update_power(PCIDevice *hotplug_dev)
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index da209b7f47fd..9ba34cf8f8ed 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -20,15 +20,29 @@
+>  #include "qapi/error.h"
+>  #include "trace.h"
+>  
+> -static PCIDevice *register_vf(PCIDevice *pf, int devfn,
+> -                              const char *name, uint16_t vf_num);
+> -static void unregister_vfs(PCIDevice *dev);
+> +static void unrealize_vfs(PCIDevice *dev, uint16_t total_vfs)
+> +{
+> +    for (uint16_t i = 0; i < total_vfs; i++) {
+> +        Error *err = NULL;
+> +        PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+> +        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
+> +            error_reportf_err(err, "Failed to unplug: ");
+> +        }
+> +        object_unparent(OBJECT(vf));
+> +        object_unref(OBJECT(vf));
+> +    }
+> +    g_free(dev->exp.sriov_pf.vf);
+> +    dev->exp.sriov_pf.vf = NULL;
+> +}
+>  
+> -void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+> +bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>                          const char *vfname, uint16_t vf_dev_id,
+>                          uint16_t init_vfs, uint16_t total_vfs,
+> -                        uint16_t vf_offset, uint16_t vf_stride)
+> +                        uint16_t vf_offset, uint16_t vf_stride,
+> +                        Error **errp)
+>  {
+> +    BusState *bus = qdev_get_parent_bus(&dev->qdev);
+> +    int32_t devfn = dev->devfn + vf_offset;
+>      uint8_t *cfg = dev->config + offset;
+>      uint8_t *wmask;
+>  
+> @@ -36,7 +50,6 @@ void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>                          offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+>      dev->exp.sriov_cap = offset;
+>      dev->exp.sriov_pf.num_vfs = 0;
+> -    dev->exp.sriov_pf.vfname = g_strdup(vfname);
+>      dev->exp.sriov_pf.vf = NULL;
+>  
+>      pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
+> @@ -69,13 +82,35 @@ void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>      pci_set_word(wmask + PCI_SRIOV_SYS_PGSIZE, 0x553);
+>  
+>      qdev_prop_set_bit(&dev->qdev, "multifunction", true);
+> +
+> +    dev->exp.sriov_pf.vf = g_new(PCIDevice *, total_vfs);
+> +
+> +    for (uint16_t i = 0; i < total_vfs; i++) {
+> +        PCIDevice *vf = pci_new(devfn, vfname);
+> +        vf->exp.sriov_vf.pf = dev;
+> +        vf->exp.sriov_vf.vf_number = i;
+> +
+> +        if (!qdev_realize(&vf->qdev, bus, errp)) {
+> +            unrealize_vfs(dev, i);
+> +            return false;
+> +        }
+> +
+> +        /* set vid/did according to sr/iov spec - they are not used */
+> +        pci_config_set_vendor_id(vf->config, 0xffff);
+> +        pci_config_set_device_id(vf->config, 0xffff);
+> +
+> +        dev->exp.sriov_pf.vf[i] = vf;
+> +        devfn += vf_stride;
+> +    }
+> +
+> +    return true;
+>  }
+>  
+>  void pcie_sriov_pf_exit(PCIDevice *dev)
+>  {
+> -    unregister_vfs(dev);
+> -    g_free((char *)dev->exp.sriov_pf.vfname);
+> -    dev->exp.sriov_pf.vfname = NULL;
+> +    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+> +
+> +    unrealize_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+>  }
+>  
+>  void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,
+> @@ -141,38 +176,11 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+>      }
+>  }
+>  
+> -static PCIDevice *register_vf(PCIDevice *pf, int devfn, const char *name,
+> -                              uint16_t vf_num)
+> -{
+> -    PCIDevice *dev = pci_new(devfn, name);
+> -    dev->exp.sriov_vf.pf = pf;
+> -    dev->exp.sriov_vf.vf_number = vf_num;
+> -    PCIBus *bus = pci_get_bus(pf);
+> -    Error *local_err = NULL;
+> -
+> -    qdev_realize(&dev->qdev, &bus->qbus, &local_err);
+> -    if (local_err) {
+> -        error_report_err(local_err);
+> -        return NULL;
+> -    }
+> -
+> -    /* set vid/did according to sr/iov spec - they are not used */
+> -    pci_config_set_vendor_id(dev->config, 0xffff);
+> -    pci_config_set_device_id(dev->config, 0xffff);
+> -
+> -    return dev;
+> -}
+> -
+>  static void register_vfs(PCIDevice *dev)
+>  {
+>      uint16_t num_vfs;
+>      uint16_t i;
+>      uint16_t sriov_cap = dev->exp.sriov_cap;
+> -    uint16_t vf_offset =
+> -        pci_get_word(dev->config + sriov_cap + PCI_SRIOV_VF_OFFSET);
+> -    uint16_t vf_stride =
+> -        pci_get_word(dev->config + sriov_cap + PCI_SRIOV_VF_STRIDE);
+> -    int32_t devfn = dev->devfn + vf_offset;
+>  
+>      assert(sriov_cap > 0);
+>      num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+> @@ -180,18 +188,10 @@ static void register_vfs(PCIDevice *dev)
+>          return;
+>      }
+>  
+> -    dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+> -
+>      trace_sriov_register_vfs(dev->name, PCI_SLOT(dev->devfn),
+>                               PCI_FUNC(dev->devfn), num_vfs);
+>      for (i = 0; i < num_vfs; i++) {
+> -        dev->exp.sriov_pf.vf[i] = register_vf(dev, devfn,
+> -                                              dev->exp.sriov_pf.vfname, i);
+> -        if (!dev->exp.sriov_pf.vf[i]) {
+> -            num_vfs = i;
+> -            break;
+> -        }
+> -        devfn += vf_stride;
+> +        pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
+>      }
+>      dev->exp.sriov_pf.num_vfs = num_vfs;
+>  }
+> @@ -204,16 +204,8 @@ static void unregister_vfs(PCIDevice *dev)
+>      trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
+>                                 PCI_FUNC(dev->devfn), num_vfs);
+>      for (i = 0; i < num_vfs; i++) {
+> -        Error *err = NULL;
+> -        PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+> -        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
+> -            error_reportf_err(err, "Failed to unplug: ");
+> -        }
+> -        object_unparent(OBJECT(vf));
+> -        object_unref(OBJECT(vf));
+> +        pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+>      }
+> -    g_free(dev->exp.sriov_pf.vf);
+> -    dev->exp.sriov_pf.vf = NULL;
+>      dev->exp.sriov_pf.num_vfs = 0;
+>      pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
+>  }
+> 
+> -- 
+> 2.43.0
+
 
