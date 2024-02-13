@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E422BC4829A
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A67C4829A
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 15:37:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZuml-0001mD-TP; Tue, 13 Feb 2024 10:33:27 -0500
+	id 1rZuqJ-0002v4-FV; Tue, 13 Feb 2024 10:37:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rZuml-0001lv-01
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:33:27 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZuqC-0002tt-Ia
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:37:00 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rZumi-0002J3-88
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:33:26 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-411a6ceada8so11988165e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:33:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rZuq8-0002tS-MM
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 10:36:59 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a3d2587116aso27904666b.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 07:36:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1707838402; x=1708443202; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=bwbqkvzZStAy77BzBXccQCCkv+7bHKDBf+Owhox8aSM=;
- b=KZgXjcbQ2yw09d8dzc69bjE+bO5foocWxASTDoJ51V36KRhdzqdlruV/iQuIvdktbc
- OeZpUYpWGL6PKp33UP3qk/MTUOCklMbYROi2QVKWsaedMjlpqS0GG2t6Ul90Y7Y0af95
- K2GZwHa2mLxVXApfdGy42b2gMXhw5swIqt2idbk7zc/76KbXpFk+1wXP0nfJpeGqfx4a
- VdwgTT6GIfza43zWDzhBVJ9bQuoZFHsUIlbszNh4xHMHgwg14lcYA/I/LgjYuRJROii0
- u/ybjx0v3hInRL7KItpWkRZu7H1RU7VfHYB/yIktVwa+YTIUmsf43abxw6TRYrDOk6pu
- yfVQ==
+ d=linaro.org; s=google; t=1707838614; x=1708443414; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nUWmpwH/S6RGkePwrN5rWR3F0YowSCEcNgLh4WXbEww=;
+ b=DVPwi21KvIqDQNCYlCc0TPAqYVn1AMr1yZmL9Q+/Dy+2nmzBzy7mjXA6ItvdwkkKk0
+ BWaRBGSYgdOhhwG5jNrwQWOK+XPe6f4nsBdYJ3emqYw1E3pBeC1g5IvW/Cg/focqc0Gp
+ xkFydlfnM6BHsL1iNJ1ya3QWuXu0VQH2yCc5a3AZUf2q1SzUE2ljosAk6zpgL3hX2c4q
+ xcCXQgyaBKd4/Qnev5RKQitWIn5DyGpOo8OASQd2qo4FuKeF/IB5G/oF9kB39Qa70xLF
+ 77ji5PKEfAGWXZKg8CUzRAIo8Z27KdAIOPYN0XURS1I88MdEdsNaQAAgzSbX2cMJszD2
+ FxLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707838402; x=1708443202;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bwbqkvzZStAy77BzBXccQCCkv+7bHKDBf+Owhox8aSM=;
- b=QmNvzO+Xl2U6GvWrUmv3zdi0/EIUEW2jlWBLQTi72P5kwgYMHKDq21FG0LN536OCwG
- 7TjMFUcIAVJYps2ElS6bqbUAiKeHVFM4xpVplq2ybGfOpQjLOkAOPJ93Y8rB4YMQny/7
- lwWzApCvXurHLMw2o2h9s5mSw750Z/+Oy/oAxjEzRKqBqbdXiz2SCCNsRSQRewyo5JyN
- chciWlGGQOEvF9I4taGrXAeauzqW1oG7TwYcPmnn9UacnMbQ55p2sWV3J0L2fKaGcl5Z
- enQW++MkQntAvh8crhDcBBXCx1rpQfaf6pSl1KCDLfxn8n11f83KezUR+8cONO4EBMeN
- LckA==
+ d=1e100.net; s=20230601; t=1707838614; x=1708443414;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nUWmpwH/S6RGkePwrN5rWR3F0YowSCEcNgLh4WXbEww=;
+ b=qvIfesOzFpJZwmxxzkLfCdwTVVT7pwgCkj4OwIiQiK/B4C4L7BPPE50z35Tb22kvmW
+ MJnCzgQf0ufBNjiMjni/7d9EMwunuYLcUiS7ftYUy3YiZ8b8rksLaauJ6itp19IyBovV
+ Ua5nnPTAiq4/vfCHhAuM376a0ePBD6x9pJLrHyzgnnxKRWt/28rg1O81v6iy3T/OLhm+
+ sEpEq8cvPXR3t6B72qzxjqF3yr3Er3LprjSqCknWCwXZUVEEeTh/0AbqyMS5MG8OCA0P
+ IukMxOrr1xEKqwbN8j+2nTD6rgUd/2u6Z/mbFvq8hkFrh4mvTxswJ1sV0j7x9y5WOiBg
+ ph1A==
+X-Gm-Message-State: AOJu0Yx1y2dA4wKlOgjWcqTvjEwTePgO0ewHFoWwGlGJ+5veDjrmMtUA
+ +l3jWJSze4GNOimsoGMB5jwbuRYKgyJcXcLTZiCVq+gxS4ctr5dvsNNu0cGlXEs=
+X-Google-Smtp-Source: AGHT+IFOyVhTmbljh/+aY/ndcr2glqGdQLMGDhspVbD8KEoUCyCmXYrwi2YNgb4Gl0HBXmZo5n/leQ==
+X-Received: by 2002:a17:906:e093:b0:a3d:6f4:b5f7 with SMTP id
+ gh19-20020a170906e09300b00a3d06f4b5f7mr1291214ejb.49.1707838613805; 
+ Tue, 13 Feb 2024 07:36:53 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFZL5tUlth5tCtIEhv0e3oRKWezwmOkTLbTR6/zEJedyAxfHySXpr7GSNno7IcjpjhiolVRzr4kiZEEHr0mDRg8gSVU9w=
-X-Gm-Message-State: AOJu0YzLujDGGh0yFP4LzZQltKvJ1GuMBKHkS+tINHN/ubKdOK22Ix40
- nPOlS8A9s3mRoTqXwnsXp3ds2bd2Z4MXPUCPrdwA24iEobwggD0dKLfOCZY+/Tk=
-X-Google-Smtp-Source: AGHT+IHLuessQln5KXmW90xkpC9pjyN9ysRkfmVjNOajmqQH26sKGuzogdNdv3bBaAz8kz330rA2hA==
-X-Received: by 2002:a05:600c:46c9:b0:410:7980:72a3 with SMTP id
- q9-20020a05600c46c900b00410798072a3mr7698836wmo.35.1707838402293; 
- Tue, 13 Feb 2024 07:33:22 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8JbHnCfvISp/LNGA9ertrOUL0fa3Whq41gZJHKjREr4jetFRlKEbyjAgc+ae5KPwLIBYTxNwXRro8qxGBImY6KnrNPkWsERiTD8IUyB3PNYglv9OrMm8ZS5gRABabvArurRLVgVKzHDynKBvHqFSeHpFHMHcQaW++TBw4rQof0DFY0FRqFBMsdgstj13NLjhMvyeQQgdK4RJtUp7VHbGcxqNVWBr94kEwV8P1sho+VDEs/LoJMEc/aw/7JjfGoWBlrKSDJ+e3ZqY6MB+Nt/LKfGhhHNurSUWpBhCt
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ AJvYcCWquRUW6WuT4zpjpLyOmsoZ2VANDZqDgjEhkDl7fMH7XUGDYx7Au4jk0xEVEJreMBsspeaJ6CJhCw+lTEByjXfy3Nj9XOw0eo2kDgWBC9GlEdjeJ7VIHITD0iJdIrvv48Afg7S8E0SyD+9To8q1jeX1xnUX/Gx0bOlKegFeXD1C+TTwfhOKtw9rTUclChPdnT2ENkaPJ1IFVYO79ElgNXo=
+Received: from [192.168.69.100] ([176.176.128.243])
  by smtp.gmail.com with ESMTPSA id
- jr6-20020a05600c560600b0041079d336c7sm12069464wmb.39.2024.02.13.07.33.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 07:33:21 -0800 (PST)
-Date: Tue, 13 Feb 2024 16:33:21 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH RFC] target: riscv: Add Svvptc extension support
-Message-ID: <20240213-87d669a3bd421a1b2bc30fc2@orel>
-References: <20240213145308.869874-1-alexghiti@rivosinc.com>
+ un6-20020a170907cb8600b00a3cfb02c12bsm824995ejc.79.2024.02.13.07.36.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 07:36:53 -0800 (PST)
+Message-ID: <7e7646e7-85d1-40a4-8e5e-bca2fcaa6ba5@linaro.org>
+Date: Tue, 13 Feb 2024 16:36:51 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240213145308.869874-1-alexghiti@rivosinc.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x330.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] hw/arm/stellaris: Add missing QOM 'SoC' parent
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240130190317.25692-1-philmd@linaro.org>
+ <20240130190317.25692-5-philmd@linaro.org>
+ <CAFEAcA9V7wQr=LEvv2DYT5SabPe2H3+V2RMQPHRVZ8avrse9ww@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9V7wQr=LEvv2DYT5SabPe2H3+V2RMQPHRVZ8avrse9ww@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,66 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 13, 2024 at 03:53:08PM +0100, Alexandre Ghiti wrote:
-> The Svvptc extension describes a uarch that does not cache invalid TLB
-> entries: that's the case for qemu so there is nothing particular to
-> implement other than the introduction of this extension, which is done
-> here.
+On 1/2/24 17:46, Peter Maydell wrote:
+> On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> QDev objects created with qdev_new() need to manually add
+>> their parent relationship with object_property_add_child().
+>>
+>> Since we don't model the SoC, just use a QOM container.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
 > 
-> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-> ---
+> Ah, this is where the other qdev_new() calls are sorted.
 > 
-> That's an RFC since the extension has not been ratified yet.
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+> I wonder if we should add a variant on qdev_new() that
+> you can pass in the parent object to?
 
-Hi Alex,
-
-No need for the RFC tag. You can add not-yet-ratified extension support
-to QEMU as long as the CPU property is off by default (as you've done)
-and you add it to the riscv_cpu_experimental_exts[] array with an "x-"
-prefix on its property name.
-
-Thanks,
-drew
-
-> 
->  target/riscv/cpu.c     | 2 ++
->  target/riscv/cpu_cfg.h | 1 +
->  2 files changed, 3 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 1b8d001d23..4beb5d0350 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -178,6 +178,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->      ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->      ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
->      ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
-> +    ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_12_0, ext_svvptc),
->      ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
->      ISA_EXT_DATA_ENTRY(xtheadbb, PRIV_VERSION_1_11_0, ext_xtheadbb),
->      ISA_EXT_DATA_ENTRY(xtheadbs, PRIV_VERSION_1_11_0, ext_xtheadbs),
-> @@ -1467,6 +1468,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
->      MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
->      MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
-> +    MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, false),
->  
->      MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
->      MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 833bf58217..c973693b6e 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -77,6 +77,7 @@ struct RISCVCPUConfig {
->      bool ext_svinval;
->      bool ext_svnapot;
->      bool ext_svpbmt;
-> +    bool ext_svvptc;
->      bool ext_zdinx;
->      bool ext_zaamo;
->      bool ext_zacas;
-> -- 
-> 2.39.2
-> 
-> 
+Yes, this is what we discussed with Markus. In order to
+stop using the "/unattached" container from pre-QOM,
+qdev_new() must take a QOM parent. I tried to do it but hit
+some problem with some odd use in PPC or S390 (discussed
+with Cédric so likely PPC, I need to go back to it).
 
