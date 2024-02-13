@@ -4,69 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F09C4829D
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 00:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37194C4829E
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Feb 2024 02:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rZgXA-00082h-Dn; Mon, 12 Feb 2024 19:20:24 -0500
+	id 1rZiQW-0004if-Sp; Mon, 12 Feb 2024 21:21:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1rZgX8-00082X-UX
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 19:20:22 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1rZgX6-00053p-Gm
- for qemu-devel@nongnu.org; Mon, 12 Feb 2024 19:20:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1707783621; x=1739319621;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=rXqBG2xEQQHC3OE/2/MNY2l1cdoK9SxwhRmgdu82Jw0=;
- b=R75BhPGRP6q4lT8GK203on6J/m9kYF5aex1y6lwH7Qa1Evdb6Vxp+6zD
- m/KEj63QwHhFy5+bpchrnURhhsYRNts3IJ+AdBRhqRkN4U/xqH8B+fsZ5
- rgWJKRkUxq5uZv7/dc+wSbrPda9bp3HIdfRHQr728jqJZBtwnTKCfkMyh
- T6Go8vmD9lbibM/j8c3Hs/Vtl/duFjBham8WqQCjAeZvkuhsnyDXqj+Jy
- gh9I/wkA+FY5ryFywYXKkQCBZh8Pq+lKoM4Jnj477rXPPmo7MWLgU75p0
- 9r38timD/kqAXT9OEwZYd1Jmjf/Wi1oS9l69rghgmk7BoFTkV5CbqzziI A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10982"; a="24251020"
-X-IronPort-AV: E=Sophos;i="6.06,155,1705392000"; d="scan'208";a="24251020"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Feb 2024 16:20:15 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10982"; a="935210031"
-X-IronPort-AV: E=Sophos;i="6.06,155,1705392000"; d="scan'208";a="935210031"
-Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.246.113.42])
- ([10.246.113.42])
- by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Feb 2024 16:20:13 -0800
-Message-ID: <fd03964a-0b16-42f3-8572-0a7686beda93@intel.com>
-Date: Mon, 12 Feb 2024 17:20:12 -0700
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZiQV-0004iM-ME
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 21:21:39 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rZiQU-0007yZ-6E
+ for qemu-devel@nongnu.org; Mon, 12 Feb 2024 21:21:39 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6e0507eb60cso2461295b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Feb 2024 18:21:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707790895; x=1708395695; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BzYkBIWK10dkyqgOm0oclP6Z4Ek0OOCRcVEVAcYHx/A=;
+ b=nOuQDXx5nNg+AdATNPPrBAswNVVoolbD1iiPJDFLoiycllK0DtHDV0RWZdFSK8XOkp
+ s5HPWn18rSpKBUzG+4nYYQZcikFs/xwNRFSqL8YWmK63um0aqqKGqcnyCE/26ATShTw0
+ Nwwgmy4UTsh5iJRuW+0NL5Cts3hArsd0zjiGrBG0/dk2EIdq25OxM7l7Dujde/+/sTYw
+ iRBR0HCCpvFR42x4dChQRy+rO4W6FzM48NRQyFhY/iRb8nqaJmOFB2hXjrvWY9SOONIl
+ yrMyq9B0l/jqg3dJcs0OwVZTMBVC+6FGCttzWnf6eDL7twfPYF45ptHp8v7qkhI4RNTX
+ XyLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707790895; x=1708395695;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BzYkBIWK10dkyqgOm0oclP6Z4Ek0OOCRcVEVAcYHx/A=;
+ b=rzX+qWgZTx0EjCHWAsnBqmwugQqH+uCLCgTx4Tk+NAb2OHF2HHitYsuI2W3VoyXxJF
+ EO+x8w3HMoAqrN0WY57l1zsukEU39+k6muJhMy9iWSehZbmpp/uHmZJRAWXDma9zDOU4
+ /ebhj1DnrCglG81iK2s6eRd1eQob8xb02gIwBbbVyjP1zZBLQkSFUefBJCUw4B4FEU0Y
+ C3+qjEe3ZJx60pCFpO4hQ4zZlKRdoKD2KPeLutSNj+NNySVMoCUL5QUvJrtMm1FBWxPm
+ OPVanN3AW1i9Dg8sB3arAiV4b6pvF9hpK1L7EQQJAm19Ewi/yJFQqFHl2UGG3BGnOfPW
+ puBQ==
+X-Gm-Message-State: AOJu0YyE1ioL1IpuTFaJqg/asQ50AiFbQj2RVh+p5UdDJZoz9vq2JQcB
+ QrEmLrNNw7NY6nhoNmyiGEU5Xa+MhOKOmfVukGSxXh0wPuZ7tHGt/Ix0HgDfcQbIEubX0U1RNRV
+ Z
+X-Google-Smtp-Source: AGHT+IGmLu0X+kl8C/TeIx+qrbgLd6j3P+suwU7yXhDsfS6na7RcybVXgoXKM3iRke87F1+Z4ojJoA==
+X-Received: by 2002:a05:6a00:1398:b0:6e0:a3ff:2079 with SMTP id
+ t24-20020a056a00139800b006e0a3ff2079mr12848914pfg.20.1707790894698; 
+ Mon, 12 Feb 2024 18:21:34 -0800 (PST)
+Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
+ by smtp.gmail.com with ESMTPSA id
+ e26-20020a63745a000000b005dc26144d96sm1144354pgn.75.2024.02.12.18.21.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Feb 2024 18:21:34 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH] tcg: Increase width of temp_subindex
+Date: Mon, 12 Feb 2024 16:21:32 -1000
+Message-Id: <20240213022132.116383-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH SET] cxl: add poison event handler
-Content-Language: en-US
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-Cc: Jonathan.Cameron@huawei.com, dan.j.williams@intel.com
-References: <20240209115417.724638-1-ruansy.fnst@fujitsu.com>
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <20240209115417.724638-1-ruansy.fnst@fujitsu.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=dave.jiang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.774,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,45 +91,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We need values 0-3 for TCG_TYPE_I128 on 32-bit hosts.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 43eef72f4109 ("tcg: Add temp allocation for TCGv_i128")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2159
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
 
-On 2/9/24 4:54 AM, Shiyang Ruan wrote:
-> Currently driver only trace cxl events, poison injection on cxl memdev
-> is silent.  OS needs to be notified then it could handle poison range
-> in time.  Per CXL spec, the device error event could be signaled through
-> FW-First and OS-First methods.
-> 
-> This draft patchset adds poison event handler in OS-First method:
->   - qemu:
->     - CXL device report POISON event to OS by MSI by sending GMER after
->       injecting a poison record
->   - CXL driver
->     a. read the POISON event through GMER;
->     b. get POISON list;
->     c. translate DPA to HPA;
->     d. construct a mce instance, then call mce_log() to queue this mce
->        instance;
-> 
-> This patchset includes 2 patches for qemu, 5 patches for cxl driver.
+I feel certain that I made this change back when I introduced TCGv_i128.
+I imagine that something went wrong with a rebase and it got lost.
+Worse, we don't use temp_subindex often, and we usually handle i128
+this value correctly.  It took a quirk of register allocation ordering
+to make an invalid value in temp_subindex lead to a crash.
 
-Hi Ruan,
-Next time please split this out and post as 2 different series. You can have the CXL driver series cover letter reference the QEMU changes. And please add QEMU to subject prefix for the QEMU patches. Thank you!
+---
+ include/tcg/tcg.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Shiyang Ruan (5):
->   cxl/core: correct length of DPA field masks
->   cxl/core: introduce cxl_memdev_dpa_to_hpa()
->   cxl/core: introduce cxl_mem_report_poison()
->   cxl/core: add report option for cxl_mem_get_poison()
->   cxl/core: add poison injection event handler
-> 
->  arch/x86/kernel/cpu/mce/core.c |  1 +
->  drivers/cxl/core/mbox.c        | 82 +++++++++++++++++++++++++++-------
->  drivers/cxl/core/memdev.c      | 16 ++++++-
->  drivers/cxl/core/region.c      |  8 ++--
->  drivers/cxl/core/trace.h       |  6 +--
->  drivers/cxl/cxlmem.h           | 11 ++---
->  drivers/cxl/pci.c              |  4 +-
->  7 files changed, 97 insertions(+), 31 deletions(-)
-> 
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index daf2a5bf9e..451f3fec41 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -412,7 +412,7 @@ typedef struct TCGTemp {
+     unsigned int mem_coherent:1;
+     unsigned int mem_allocated:1;
+     unsigned int temp_allocated:1;
+-    unsigned int temp_subindex:1;
++    unsigned int temp_subindex:2;
+ 
+     int64_t val;
+     struct TCGTemp *mem_base;
+-- 
+2.34.1
+
 
