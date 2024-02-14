@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E78AC4829A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 04:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3141BC4829D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 04:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra6rw-0007nT-Mx; Tue, 13 Feb 2024 23:27:36 -0500
+	id 1ra6rv-0007mq-2Z; Tue, 13 Feb 2024 23:27:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ra6ru-0007mj-Pn
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:34 -0500
-Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
+ id 1ra6rt-0007mF-FS
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:33 -0500
+Received: from mail-il1-x132.google.com ([2607:f8b0:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ra6rt-0004PZ-AL
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:34 -0500
-Received: by mail-io1-xd2d.google.com with SMTP id
- ca18e2360f4ac-7bb5fda069bso244916839f.0
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 20:27:32 -0800 (PST)
+ id 1ra6rr-0004PC-VF
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:33 -0500
+Received: by mail-il1-x132.google.com with SMTP id
+ e9e14a558f8ab-363c2edac5aso18176235ab.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 20:27:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707884851; x=1708489651; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707884850; x=1708489650; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OPvX2LKtyesviXI/k03yDzEPeDwJWxB5cSBazGc5msw=;
- b=fAPVNepZWbyeJOkQzqWXNCVTHAvrTUelk7tnq7xGqtte9TDZwLou+koawj5GHFV0k4
- kSxT3+Jc9W4RMEWJ/dH4a5UZHx1+7x0OlHUsFGa68CaHBOOWM/9zMlASqeGx6+3FSQBv
- 2YsQCrtmNJmdeWPbAywrcllkBL8c9EvqVgHzberD/cxFxcOeLdG3cDNPZNGzS9Xap9Lb
- D+aKlhKmWT+MMX3Sjid7txepb6wxbV/bO9DLS1YAy7g5v6WgYirY+PV/4qPa90QaKvX1
- e0pWYiheptbz0bSCbbNHrYFh5KCkKvWVShpxlbL9UCaPxK4fpXQKluWJ6aW40m5pXKIo
- AwAw==
+ bh=UYU53kj6Z9SDsJEykjfEK2SUz1aqv0gAFOVHSmMyOb4=;
+ b=Dir7074Fyrzmb02Qx/6iGtNjaLrcfpcy5+xKkayYAWR1Y2Ss6O0xhyK4sLC9a1hedx
+ Sx88+Qf4xig1M25f4LJykqfXykFvyteNZR/+y0LMfBzXTeqespNUWyxnnOFUJKOvHkuL
+ dxrzj95ovrDhG7oY62TDfO6mrNlSLHLTLIcJtZ0rxDbnRrxAb1VFfUxuSRjO/y9sRoU0
+ LorMcklBaJGCdyNIw7zpg1qthotS36R2pLv0CP0pRUWsHhxHVcXqBR25vFD0zSnOQcdG
+ swdxBOYmqDhdhxW4oIETAIvS/YRBpFN4smeLxQi3gDeB/TDrmbvlcdWlnxQquKP8cOoQ
+ vxaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707884851; x=1708489651;
+ d=1e100.net; s=20230601; t=1707884850; x=1708489650;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OPvX2LKtyesviXI/k03yDzEPeDwJWxB5cSBazGc5msw=;
- b=ObipmmCZXM8pmkJX5haFmGDtCG2A8JmuR7LmLvhmldo5SMMvcLE0DejesFOmC8JzLC
- 5AbLU+gqruU1PgXxWkfXYifAnLZkOyPCOHgbBpDuxc9RD5GqyV9bY5jxOWh3+A2nmePi
- hf1hbQNmq32R6N6xUotYNo52cDFdOHrZ1FIZ4TFVJpnWLHkRZvPA8I05JS9Dz9Jlvphu
- Bm8yH7wcitpdrq0WLPRcSPYtkDWUzUeDbeQVNTcMF6j0VhF1mK+GN4PN2EgNsW/B2Pjl
- hsMr/2xrJFDiv1Ev2xbnhf2OTeCSIRqRrjVWp889xrbUCVXH7Kxm8RneKO7AN5IYVG2W
- P/jg==
-X-Gm-Message-State: AOJu0YxUalEUF4+Cjc63P+qT+qwOavZfsR5FkzZpYfBIUMjqzXqGypFT
- blmYsT0XRyBq2n6RLdci/UQhUDi97ZS9X+u765TC9nLeIB8r1XtN6SbYu34NYZ8=
-X-Google-Smtp-Source: AGHT+IEMOpqHoa1lQzsx1/PXzjjQzEhsMsO2AtwcbcsF7dQcP+dey90atb+OyWoM6D0cgvDpZrOD1A==
-X-Received: by 2002:a6b:db06:0:b0:7c4:602a:10a0 with SMTP id
- t6-20020a6bdb06000000b007c4602a10a0mr1870777ioc.18.1707884851406; 
- Tue, 13 Feb 2024 20:27:31 -0800 (PST)
+ bh=UYU53kj6Z9SDsJEykjfEK2SUz1aqv0gAFOVHSmMyOb4=;
+ b=lYfK15KmG9xKy3p/rl8KXCZdokLQ9GlM85/8LXQjLsO3PEGXRtxjpcdwAX3mQS9rY7
+ 6iyR6MqWNPXSSh0PIPhXQw6Ob2foU4lflziAY3nn9gtb6W1OcsnCRH6zGu4LH+h13GXQ
+ di4VS6LXofCmjhon9qzfZFOhNmSeEr2ekCti8r5H07QJgn/zQPkY9roQocKrv4glWXI6
+ nOnhvyTzeRijGn1+RUaHhyxJyJoeLg5Qx+GfKNYHyOUndthovHJRFmrAL2diHXACYvds
+ qdRPODWm7aUnaGNWB4bofhr8wr9/BVwxmZl9k11YO+4/lP0mRwDROVqoqNSz6FnX3daO
+ MBlA==
+X-Gm-Message-State: AOJu0YxaYItmxLXhILjSJLwE4Mqhr/GCZI3gwL6Bn6OJTjfCq3aJibu7
+ 7MjWoUCjoLyZb8If+lRjSNjuhZgxkJZXUclnvHSuRQfYYQ7Gb23jE5P5r2Istu8=
+X-Google-Smtp-Source: AGHT+IE6LxDbW2Peq5MGk7c2T77uFIg+giRgNt7VqVbvr/35TXMRXvlfD8Wiyo86/ppTZ146ioZC2Q==
+X-Received: by 2002:a92:d20b:0:b0:363:d953:a129 with SMTP id
+ y11-20020a92d20b000000b00363d953a129mr1990690ily.25.1707884849979; 
+ Tue, 13 Feb 2024 20:27:29 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBUDMD++07WUlvIj14tnf+AlGfmsp8dZhGJwja1/QZMXc0Fbc+rZKOToK05hdivDJH9Gd7+NNRNUvb/hBmP+FVsq8LWkjyzEqQympXik3ekXSZ9yIr54dpsCtvCT+UorqFekQTyU7sUbLxsBWtOWacbG1i4QurQnVZJMC3SE2NQ2uFuJ4n3W//AqcV/eX9eqcwL8Gu+/oWKu8KpgPFuNrItwepc5hY8Jm3f8Hye3whWVRw014aT+zAiO4duTp7qW3UCPJTPbzZodKzkYmyuUnEorKVtIXvVTmG8X7l
+ AJvYcCUokmLNy6+nOMMwX5OBxfY5T6Su0Xi8QdmgcY8t86MGTNtbTt/hZAOYZKiBqFqWdDldjFRXQFjJiiNm2vePA+RR9zzGNX0RRZrvNs/lvsZTKV9XOlhrxKZBOMiajdNS4gXCYDHw6dwB+QIaEIGAgGm26Go2B0oY2jP3RxJjAXj8CUEOaNC/yV8KUNlBDACqmnN0+AYGdatTbs4tO1hYLLuaIswaqPtksYBR0zCfmmvh7/o+xHdlASpfqi9hVEEaA9UWuCyMPQVfTkUxT92cvBcizRuK3nYSKjjNiKl+
 Received: from taylor-ubuntu.hsd1.co.comcast.net
  (c-73-169-12-54.hsd1.co.comcast.net. [73.169.12.54])
  by smtp.gmail.com with ESMTPSA id
- c2-20020a02c9c2000000b004713170def2sm2312305jap.93.2024.02.13.20.27.30
+ c2-20020a02c9c2000000b004713170def2sm2312305jap.93.2024.02.13.20.27.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 20:27:30 -0800 (PST)
+ Tue, 13 Feb 2024 20:27:29 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
  quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
  ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH v3 2/3] Hexagon (target/hexagon) Pass SP explicitly to helpers
+Subject: [PATCH v3 1/3] Hexagon (target/hexagon) Pass P0 explicitly to helpers
  that need it
-Date: Tue, 13 Feb 2024 21:27:25 -0700
-Message-Id: <20240214042726.19290-3-ltaylorsimpson@gmail.com>
+Date: Tue, 13 Feb 2024 21:27:24 -0700
+Message-Id: <20240214042726.19290-2-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240214042726.19290-1-ltaylorsimpson@gmail.com>
 References: <20240214042726.19290-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +100,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than reading SP from the env, pass it explicitly
+Rather than reading P0 from the env, pass it explicitly
 
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 Tested-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hexagon/macros.h          |  2 +-
- target/hexagon/attribs_def.h.inc |  3 ++-
- target/hexagon/hex_common.py     | 11 +++++++++++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ target/hexagon/macros.h      |  4 ++--
+ target/hexagon/hex_common.py | 12 +++++++++++-
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index aedc863fab..feb798c6c0 100644
+index 1376d6ccc1..aedc863fab 100644
 --- a/target/hexagon/macros.h
 +++ b/target/hexagon/macros.h
-@@ -343,7 +343,7 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
- 
- #define fREAD_LR() (env->gpr[HEX_REG_LR])
- 
--#define fREAD_SP() (env->gpr[HEX_REG_SP])
-+#define fREAD_SP() (SP)
- #define fREAD_LC0 (env->gpr[HEX_REG_LC0])
- #define fREAD_LC1 (env->gpr[HEX_REG_LC1])
- #define fREAD_SA0 (env->gpr[HEX_REG_SA0])
-diff --git a/target/hexagon/attribs_def.h.inc b/target/hexagon/attribs_def.h.inc
-index 87942d46f4..9e3a05f882 100644
---- a/target/hexagon/attribs_def.h.inc
-+++ b/target/hexagon/attribs_def.h.inc
 @@ -1,5 +1,5 @@
  /*
 - *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
@@ -135,46 +121,48 @@ index 87942d46f4..9e3a05f882 100644
   *
   *  This program is free software; you can redistribute it and/or modify
   *  it under the terms of the GNU General Public License as published by
-@@ -117,6 +117,7 @@ DEF_ATTRIB(IMPLICIT_READS_P1, "Reads the P1 register", "", "")
- DEF_ATTRIB(IMPLICIT_READS_P2, "Reads the P2 register", "", "")
- DEF_ATTRIB(IMPLICIT_READS_P3, "Reads the P3 register", "", "")
- DEF_ATTRIB(IMPLICIT_WRITES_USR, "May write USR", "", "")
-+DEF_ATTRIB(IMPLICIT_READS_SP, "Reads the SP register", "", "")
- DEF_ATTRIB(COMMUTES, "The operation is communitive", "", "")
- DEF_ATTRIB(DEALLOCRET, "dealloc_return", "", "")
- DEF_ATTRIB(DEALLOCFRAME, "deallocframe", "", "")
+@@ -358,7 +358,7 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
+ #endif
+ #define fREAD_PC() (PC)
+ 
+-#define fREAD_P0() (env->pred[0])
++#define fREAD_P0() (P0)
+ 
+ #define fCHECK_PCALIGN(A)
+ 
 diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 14dcf261b4..b96f67972d 100755
+index 195620c7ec..14dcf261b4 100755
 --- a/target/hexagon/hex_common.py
 +++ b/target/hexagon/hex_common.py
-@@ -101,6 +101,7 @@ def calculate_attribs():
-     add_qemu_macro_attrib('fLSBNEW1', 'A_IMPLICIT_READS_P1')
-     add_qemu_macro_attrib('fLSBNEW1NOT', 'A_IMPLICIT_READS_P1')
-     add_qemu_macro_attrib('fREAD_P3', 'A_IMPLICIT_READS_P3')
-+    add_qemu_macro_attrib('fREAD_SP', 'A_IMPLICIT_READS_SP')
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
  
-     # Recurse down macros, find attributes from sub-macros
-     macroValues = list(macros.values())
-@@ -201,6 +202,10 @@ def need_p0(tag):
-     return "A_IMPLICIT_READS_P0" in attribdict[tag]
+ ##
+-##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+ ##
+ ##  This program is free software; you can redistribute it and/or modify
+ ##  it under the terms of the GNU General Public License as published by
+@@ -197,6 +197,10 @@ def get_tagimms():
+     return dict(zip(tags, list(map(compute_tag_immediates, tags))))
  
  
-+def need_sp(tag):
-+    return "A_IMPLICIT_READS_SP" in attribdict[tag]
++def need_p0(tag):
++    return "A_IMPLICIT_READS_P0" in attribdict[tag]
 +
 +
  def need_slot(tag):
      if (
          "A_CVI_SCATTER" not in attribdict[tag]
-@@ -1128,6 +1133,12 @@ def helper_args(tag, regs, imms):
-             "hex_pred[0]",
-             "uint32_t P0"
+@@ -1118,6 +1122,12 @@ def helper_args(tag, regs, imms):
+             "tcg_constant_tl(ctx->next_PC)",
+             "target_ulong next_PC"
          ))
-+    if need_sp(tag):
++    if need_p0(tag):
 +        args.append(HelperArg(
 +            "i32",
-+            "hex_gpr[HEX_REG_SP]",
-+            "uint32_t SP"
++            "hex_pred[0]",
++            "uint32_t P0"
 +        ))
      if need_slot(tag):
          args.append(HelperArg(
