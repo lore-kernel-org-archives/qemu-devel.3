@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A42C48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CFFC48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDIh-0002sX-2F; Wed, 14 Feb 2024 06:19:39 -0500
+	id 1raDFh-00067c-AX; Wed, 14 Feb 2024 06:16:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDIe-0002Pz-W9
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:19:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDFH-0005PO-Fj
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:16:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDId-00085T-CK
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:19:36 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDFF-0007Np-Il
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:16:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909574;
+ s=mimecast20190719; t=1707909364;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6LsM8D7u878nz29/5qgyEFYwVL8xOaz5pqW5FXboxXM=;
- b=Ktrqfe9qZZGdnLc7kgnSN1tnzRD25A38Ap0obYCrNAUAGv2wjJ5sF8FyHaFhYY7+ccr+qL
- yswwbtwC+Iybuzbmj8MWSp1ocNnANLDfRbDo0TVHmkY1Nshdh/LRsgiHPOcdtvJiF+QUXn
- yOpoeQTusaFvpqPAp0j91bKcGD4obf0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ylEcLLQelxgTT5SRTb3yQG3L55Bz8TDs5AeDEz2G4ss=;
+ b=UEpJTA1gsI9ZVRUnh6zfSXv0qJewIh4aNsdjVLUHskn9IVpssZBWs0PyChepyei8jnxT6Y
+ MSuhX8ETSxeNp+TGGBSJdxpL3XxV5j2O/Sm4qcqE/kJUZe4kVIXJjp6pBEt6rePCfuGYKm
+ 0X8kE3y47DAY0g48ru1kq1CuJ9xynAk=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-CHzqgG5BM_yWN2RUguzeUA-1; Wed, 14 Feb 2024 06:19:32 -0500
-X-MC-Unique: CHzqgG5BM_yWN2RUguzeUA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a27eddc1c27so115450866b.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:19:32 -0800 (PST)
+ us-mta-655-jugRfqSBMeCanekjl0Bcng-1; Wed, 14 Feb 2024 06:16:03 -0500
+X-MC-Unique: jugRfqSBMeCanekjl0Bcng-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5620e5747acso669440a12.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:16:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909268; x=1708514068;
+ d=1e100.net; s=20230601; t=1707909362; x=1708514162;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6LsM8D7u878nz29/5qgyEFYwVL8xOaz5pqW5FXboxXM=;
- b=N1oMK2bA6io++JJ7nI7RPzkxFS4mYWfHHxzRYDMua7V4sFxIa+xkwQ/1SuT20uwVhz
- X4S9ev//dG4o2Dx6TKGyS9Tg8JQTAaH253QPLpkecuxYeatu+8VW+xXs9XueyTmlB2C2
- 2JTymCaK/fa8rHOHufaRHLzGu9bfBrmNdyXZ18HrBKYqcYBa/q3wK9dy5Z0fiKxb1+QL
- PgnXhSxhPg5JS7UPxLhtRB8FM+PSVKh3FOP5PkHtazKtZH7J2tkW5B6fnvHyMASWrvUk
- d1T4wgpHRbW3RWlrHrBtnO15ldZbiKk20WrudcgJqSib9lR/h2TAFbYgSi53jGTt8GbC
- e6wQ==
-X-Gm-Message-State: AOJu0Yw9ie260NojFyk4+1yoccSD9S7qcE0stmuXqYh3dVKaqZ57tBwe
- ZQIN6U3iS8Jwc7FYa3u3wEa8CMnUUFlBUSN/ffYOprPdHfCGh3b7e1zFctpelDMIjhpU8G/xBnE
- /rgGwNEV5RZfnDu0RXRk7gjyj+Z8E4/X8fZEVyvvR/oGL9bSl7omCdSnMqHotefjuoc7W/vPksc
- SFrKiiUGVsqqmDfDBUfhZkFyUVaTAZ2A==
-X-Received: by 2002:a17:906:ae09:b0:a3b:7216:3091 with SMTP id
- le9-20020a170906ae0900b00a3b72163091mr1424060ejb.20.1707909267917; 
- Wed, 14 Feb 2024 03:14:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWzxIveWeX6h8076CJoQaqcXY6Vt6chTMkNlDW/mtgaWKVryZy/PnFAp7sNQVQZC1bJl8P9w==
-X-Received: by 2002:a17:906:ae09:b0:a3b:7216:3091 with SMTP id
- le9-20020a170906ae0900b00a3b72163091mr1424040ejb.20.1707909267642; 
- Wed, 14 Feb 2024 03:14:27 -0800 (PST)
+ bh=ylEcLLQelxgTT5SRTb3yQG3L55Bz8TDs5AeDEz2G4ss=;
+ b=IMZsXPbgt4Tu1dT1MKGk1l82tiH9wDJot1mUTEOcfSnpAGltARkmS/OFvqZTUeRkqV
+ O9wfe5EkZkz/24h2dWS1qTZbSur74gi7nxfNQBEeOBlIKxi9k9pgh0S0ArHVNNlzE9V+
+ e7rDp7CnOq+9wHNAdWoy8Vw6jEtsYQovVupc7hbBqI9Y/fT03UGPEyF4fWtJ9AuMmIFp
+ pRqbttbSD4w6mojiig6RaCxdUHg7YpYKdjAjY9TanL4w3XfBrVpvfQLL6ucFW88+wz99
+ mwZJH0jqR/9Tb7mia3l+xWFuunqgDNOTsECI3TlGbszlBz0+I5M1LVYYwnDJ70f/y1FS
+ /Zyw==
+X-Gm-Message-State: AOJu0YzF6a975+joXY+HuKhmWwR9YLnGdT/vvToa7VrUwttW+phOiiAo
+ Ci8Hn+Nf06N4rIhVyFFmN8/DkRcW1LKzabG5amKp4LGvf9yUd8visGh/rPY4nUb0STx5YYbIg13
+ efMkSFK4DYpRe7kUE5KsMCQ7bp+Hp+rYtkepUPQJGBBSAnNDqKE/zfX3R7eMunn5pqfoc8FhJ58
+ 8gVvNwtYYEVCMzsoocuYxWcqyuDpS7EA==
+X-Received: by 2002:a05:6402:5410:b0:561:5e21:8b89 with SMTP id
+ ev16-20020a056402541000b005615e218b89mr1669576edb.13.1707909362094; 
+ Wed, 14 Feb 2024 03:16:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGnUwzQAgZoc9Y5U/DZp5GdynU0j6oJbT2Ym7gFOc/uY0hNc2e0ipL7dvWlG5LDXc6G8RoaMQ==
+X-Received: by 2002:a05:6402:5410:b0:561:5e21:8b89 with SMTP id
+ ev16-20020a056402541000b005615e218b89mr1669562edb.13.1707909361788; 
+ Wed, 14 Feb 2024 03:16:01 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtEz5+bFRwbiGs+0QLbtvQTBsbhklKzO1xNKGN7UMWJxnu5MP3hesH/CjRva1FiwCeHCk/T/W47DP8y0ZMZSvHAD+tBEccLEEZDF7wxQtzw6DLbP83zQ3CRq/XDQvP75eVYmJhWngdo/NOgJPxxxnmCQyukhpArgrWfGPUX9pVchX/qjKYpm1+TE5BFRRm9MS1I0QOacWTCy0wNVBCdLApdDXR
+ AJvYcCVtSe5S3zQApolxxgTdW5XYX+GyKydWvcWMijuVQ+AQwhvLgtrBWh8eK6uauhNWG1vV6W0zWfI+AuH8iU+XT4PD4z5qd6fEIAh7c0t7BvPovVBz7zcvuBXelKvGSjyn+Q==
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- mm19-20020a1709077a9300b00a3d4d78a769sm404454ejc.1.2024.02.14.03.14.25
+ i23-20020a50d757000000b005621e66c8ddsm710069edj.17.2024.02.14.03.16.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:14:27 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:14:24 -0500
+ Wed, 14 Feb 2024 03:16:01 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:15:59 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PULL 22/60] hw/block/fdc-isa: Move portio_list from FDCtrl to
- FDCtrlISABus
-Message-ID: <271c5bb3780773008a936f424cccf181a11b592c.1707909001.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 52/60] hw/cxl: Update mailbox status registers.
+Message-ID: <202f651469b7a6440577cb6a985cf1eb538ea899.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -82,16 +78,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1707909001.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,70 +102,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-FDCtrl::portio_list isn't used inside FDCtrl context but only inside
-FDCtrlISABus context, so move it there.
+Whilst the reported version was 1 so there should be no changes,
+a couple of fields (where the value 0 was valid) were not
+defined. Make those explicit and update references to be based
+on CXL r3.1.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-Id: <20240114123911.4877-2-shentey@gmail.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240126121636.24611-5-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/block/fdc-internal.h | 2 --
- hw/block/fdc-isa.c      | 4 +++-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ include/hw/cxl/cxl_device.h | 17 ++++++++++-------
+ hw/cxl/cxl-device-utils.c   |  6 +++++-
+ 2 files changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/hw/block/fdc-internal.h b/hw/block/fdc-internal.h
-index 036392e9fc..fef2bfbbf5 100644
---- a/hw/block/fdc-internal.h
-+++ b/hw/block/fdc-internal.h
-@@ -26,7 +26,6 @@
- #define HW_BLOCK_FDC_INTERNAL_H
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 31d2afcd3d..9f51c586d7 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -189,7 +189,7 @@ typedef struct cxl_device_state {
+         };
+     };
  
- #include "exec/memory.h"
--#include "exec/ioport.h"
- #include "hw/block/block.h"
- #include "hw/block/fdc.h"
- #include "qapi/qapi-types-block.h"
-@@ -140,7 +139,6 @@ struct FDCtrl {
-     /* Timers state */
-     uint8_t timer0;
-     uint8_t timer1;
--    PortioList portio_list;
- };
+-    /* mmio for the mailbox registers 8.2.8.4 */
++    /* CXL r3.1 Section 8.2.8.4: Mailbox Registers */
+     struct {
+         MemoryRegion mailbox;
+         uint16_t payload_size;
+@@ -310,39 +310,42 @@ void cxl_initialize_t3_ld_cci(CXLCCI *cci, DeviceState *d,
+ REG64(CXL_DEV_EVENT_STATUS, 0)
+     FIELD(CXL_DEV_EVENT_STATUS, EVENT_STATUS, 0, 32)
  
- extern const FDFormat fd_formats[];
-diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
-index ad0921c7d3..2d8a98ce7d 100644
---- a/hw/block/fdc-isa.c
-+++ b/hw/block/fdc-isa.c
-@@ -42,6 +42,7 @@
- #include "sysemu/block-backend.h"
- #include "sysemu/blockdev.h"
- #include "sysemu/sysemu.h"
-+#include "exec/ioport.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
-@@ -60,6 +61,7 @@ struct FDCtrlISABus {
-     uint32_t irq;
-     uint32_t dma;
-     struct FDCtrl state;
-+    PortioList portio_list;
-     int32_t bootindexA;
-     int32_t bootindexB;
- };
-@@ -91,7 +93,7 @@ static void isabus_fdc_realize(DeviceState *dev, Error **errp)
-     FDCtrl *fdctrl = &isa->state;
-     Error *err = NULL;
+-/* CXL 2.0 8.2.8.4.3 Mailbox Capabilities Register */
++#define CXL_DEV_MAILBOX_VERSION 1
++/* CXL r3.1 Section 8.2.8.4.3: Mailbox Capabilities Register */
+ REG32(CXL_DEV_MAILBOX_CAP, 0)
+     FIELD(CXL_DEV_MAILBOX_CAP, PAYLOAD_SIZE, 0, 5)
+     FIELD(CXL_DEV_MAILBOX_CAP, INT_CAP, 5, 1)
+     FIELD(CXL_DEV_MAILBOX_CAP, BG_INT_CAP, 6, 1)
+     FIELD(CXL_DEV_MAILBOX_CAP, MSI_N, 7, 4)
++    FIELD(CXL_DEV_MAILBOX_CAP, MBOX_READY_TIME, 11, 8)
++    FIELD(CXL_DEV_MAILBOX_CAP, TYPE, 19, 4)
  
--    isa_register_portio_list(isadev, &fdctrl->portio_list,
-+    isa_register_portio_list(isadev, &isa->portio_list,
-                              isa->iobase, fdc_portio_list, fdctrl,
-                              "fdc");
+-/* CXL 2.0 8.2.8.4.4 Mailbox Control Register */
++/* CXL r3.1 Section 8.2.8.4.4: Mailbox Control Register */
+ REG32(CXL_DEV_MAILBOX_CTRL, 4)
+     FIELD(CXL_DEV_MAILBOX_CTRL, DOORBELL, 0, 1)
+     FIELD(CXL_DEV_MAILBOX_CTRL, INT_EN, 1, 1)
+     FIELD(CXL_DEV_MAILBOX_CTRL, BG_INT_EN, 2, 1)
  
+-/* CXL 2.0 8.2.8.4.5 Command Register */
++/* CXL r3.1 Section 8.2.8.4.5: Command Register */
+ REG64(CXL_DEV_MAILBOX_CMD, 8)
+     FIELD(CXL_DEV_MAILBOX_CMD, COMMAND, 0, 8)
+     FIELD(CXL_DEV_MAILBOX_CMD, COMMAND_SET, 8, 8)
+     FIELD(CXL_DEV_MAILBOX_CMD, LENGTH, 16, 20)
+ 
+-/* CXL 2.0 8.2.8.4.6 Mailbox Status Register */
++/* CXL r3.1 Section 8.2.8.4.6: Mailbox Status Register */
+ REG64(CXL_DEV_MAILBOX_STS, 0x10)
+     FIELD(CXL_DEV_MAILBOX_STS, BG_OP, 0, 1)
+     FIELD(CXL_DEV_MAILBOX_STS, ERRNO, 32, 16)
+     FIELD(CXL_DEV_MAILBOX_STS, VENDOR_ERRNO, 48, 16)
+ 
+-/* CXL 2.0 8.2.8.4.7 Background Command Status Register */
++/* CXL r3.1 Section 8.2.8.4.7: Background Command Status Register */
+ REG64(CXL_DEV_BG_CMD_STS, 0x18)
+     FIELD(CXL_DEV_BG_CMD_STS, OP, 0, 16)
+     FIELD(CXL_DEV_BG_CMD_STS, PERCENTAGE_COMP, 16, 7)
+     FIELD(CXL_DEV_BG_CMD_STS, RET_CODE, 32, 16)
+     FIELD(CXL_DEV_BG_CMD_STS, VENDOR_RET_CODE, 48, 16)
+ 
+-/* CXL 2.0 8.2.8.4.8 Command Payload Registers */
++/* CXL r3.1 Section 8.2.8.4.8: Command Payload Registers */
+ REG32(CXL_DEV_CMD_PAYLOAD, 0x20)
+ 
+ REG64(CXL_MEM_DEV_STS, 0)
+diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
+index 40b619ffd9..9df8738f86 100644
+--- a/hw/cxl/cxl-device-utils.c
++++ b/hw/cxl/cxl-device-utils.c
+@@ -366,6 +366,10 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+                      MSI_N, msi_n);
+     cxl_dstate->mbox_msi_n = msi_n;
++    ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
++                     MBOX_READY_TIME, 0); /* Not reported */
++    ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
++                     TYPE, 0); /* Inferred from class code */
+ }
+ 
+ static void memdev_reg_init_common(CXLDeviceState *cxl_dstate)
+@@ -392,7 +396,7 @@ void cxl_device_register_init_t3(CXLType3Dev *ct3d)
+     cxl_device_cap_init(cxl_dstate, DEVICE_STATUS, 1, 2);
+     device_reg_init_common(cxl_dstate);
+ 
+-    cxl_device_cap_init(cxl_dstate, MAILBOX, 2, 1);
++    cxl_device_cap_init(cxl_dstate, MAILBOX, 2, CXL_DEV_MAILBOX_VERSION);
+     mailbox_reg_init_common(cxl_dstate);
+ 
+     cxl_device_cap_init(cxl_dstate, MEMORY_DEVICE, 0x4000, 1);
 -- 
 MST
 
