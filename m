@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0BBC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4EEC48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raAKa-0005eq-G2; Wed, 14 Feb 2024 03:09:24 -0500
+	id 1raB3n-0007cc-UL; Wed, 14 Feb 2024 03:56:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1raAKY-0005eb-Uu
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 03:09:22 -0500
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1raAKX-0005HE-3A
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 03:09:22 -0500
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-7ce55932330so2081388241.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 00:09:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707898160; x=1708502960; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bxBT2htgGo1R/dwAOq36JhJUToR3wrORKfW8BQKnxj0=;
- b=R+uvgnzqPo+0EI+PQdAHFX4BzlfXUwTJmGpNQ4Za0WsLgNMGbLWdrWDEu3LYFVzIOi
- kkUHcaf0mld1fipyIREc61PvFnRc3SjeQIAAWj0/SdE4jcS03zLMsVapuXwraZf0TD6F
- 5tePp/ZM10zgQi5YwgAy9EKg0dqpeu3RFoRiVksSZ4WVrkSu/zWInDDAjp0WTI35P5/s
- fXLFWqurdibnqbW7xsw2wLKALdo3r4/Z8x/fLhA7lSIUyabped8XipDXU+Uy3geQ7/Mw
- mL/msLBTSybu7yA1J2VJPkY3mZm+tzbxe74hnMuiMKwarmBV05PT9aHrWTP8exJaAPaX
- xLcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707898160; x=1708502960;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bxBT2htgGo1R/dwAOq36JhJUToR3wrORKfW8BQKnxj0=;
- b=qlnogM+b1oLTFugn6w23r6IZzhBifr2ZfAzw9BimO0ZpjOZXak2dx0OazkFAGCYB8X
- ZazOJx9SrtnPPewlkhvAyHJHXCOdLJnmgAZqyFugMXp5xAdBmV1LSNjCNBGqf+zSYbXt
- u33aJPpy5vx3XxNXxA1/lu/alC3lVLbfMBd6sNd+ACk8jnEn5Bxfp2v7LilFNc1R0SWO
- nx+jwbuldvB1y37pilSkTxLzWTSvOwHqLPIbGwQPR1AtKaiKGWfNAfofdrSjRmKTZS4m
- hL2bNdwb5bdSSUn30MKMwxxbR319QtBo/CuGOIOG4JOffF3KaOU1S5gVJyMuL/hC2JOF
- 7ZVA==
+ (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
+ id 1raB3l-0007bg-MS; Wed, 14 Feb 2024 03:56:05 -0500
+Received: from sin.source.kernel.org ([145.40.73.55])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
+ id 1raB3g-0007ut-VL; Wed, 14 Feb 2024 03:56:05 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id 3F737CE1C6E;
+ Wed, 14 Feb 2024 08:55:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C7BC433C7;
+ Wed, 14 Feb 2024 08:55:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1707900948;
+ bh=dIEMdbt4uVH+SLcKL2HAfT6xds6Yg5ZGi16KuJ+Ap8c=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=Ix48GOZnRUmmE4lVcPA3k4gNd4WJlJEhRt+G0TYvbqkmKZfINf138KKyTzSyQ5G9O
+ qaIB9G2dzT9FylNpw+ab+WO4VQjWWMBEAzi2tXeje1sQ4eme3C6ebzKSSiyGhgrAZy
+ 8iP49dTxgQ1LhxSUhDib7wBhQ390NnelfxzVCB5wd8JhIVY5W1Y+qZAKLI5m/S2up/
+ 0xTDP5dqUiIJiKee6UiejWp+VeJJd3YRpS4yirFCUA52/d3O4Z2pNZTMNXbEMDPlXk
+ zc41O9H6wsvXAsksRjBqfZL8MYRzw4WvF2bHgR9eXr0ednGYAHxK0CP/wt6gLzbSvc
+ C+JU5QKN+ZhJA==
+Received: by mail-lf1-f43.google.com with SMTP id
+ 2adb3069b0e04-51182f8590bso4485560e87.0; 
+ Wed, 14 Feb 2024 00:55:48 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSZ+HFCtMEMmeW41zbDtAom+6TvPiC0Ncy79PCP4OPOt+MIWaa3u/1KzMwzX5yKYjt/0uGJlf1c/X/qLIpUdwdU7+PuVM=
-X-Gm-Message-State: AOJu0YwNWVz66wJpT6UDv/z/6iyatjWwr3hYPWa70U9xxLxOXlIt/2+W
- 4nChLztIPEv1715f+99LCTUEeCzEjPg3jpeJOHfbJLVm2gk7Kllv4U6bjdFyLV4WZ85pp/g7BWo
- jEPiIU+IVll3d22duBtGhO/1cJ88=
-X-Google-Smtp-Source: AGHT+IHf5R8T+53tJ4cYZs2pUnEboU7MIxrO7QQRzS2EZ6/GIzhzw/15VTwDhGVah8nOZ8m4Y/nNHzF5QiNTkX4MupE=
-X-Received: by 2002:a67:e3ba:0:b0:46e:cb7a:2a3a with SMTP id
- j26-20020a67e3ba000000b0046ecb7a2a3amr1479656vsm.22.1707898159701; Wed, 14
- Feb 2024 00:09:19 -0800 (PST)
+ AJvYcCWPWt/+13Wj9jFFPuiPtFHEFaziyUkoOZLCaeD+7l8wpEZmgKEFayFldtClpSNdGRN9u6lEx1s5H9W1s2FnxXz5DdDUvng=
+X-Gm-Message-State: AOJu0YzCgDB/0nRVGe51GDPXTvtAyAFsbDuc316fCaCvC201Vvb0PYeH
+ XZxMFR7xNwzxcqWBG3WWLSZ+I0RJWUm+c4hYz7tAM5vejONQwZGFYPqAObSOQke1k5e7UM7s4fz
+ vSCjeW2z5OqxUKTWEkHd+SUkxLNk=
+X-Google-Smtp-Source: AGHT+IHvEDDI5F+hLi/GOEGRDBmmGVzlgg4rga3Z58kXUGgAT/3RBmuHN/kuso36uweCwtp4grVIFjgm49jzPiIs8NM=
+X-Received: by 2002:a05:6512:1590:b0:511:a206:8fee with SMTP id
+ bp16-20020a056512159000b00511a2068feemr1676763lfb.64.1707900946712; Wed, 14
+ Feb 2024 00:55:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20231215-dbus-v2-0-1e2e6aa02115@daynix.com>
-In-Reply-To: <20231215-dbus-v2-0-1e2e6aa02115@daynix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 14 Feb 2024 12:09:08 +0400
-Message-ID: <CAJ+F1C+7ecoq1hFdXn3pkNqXkWtXTMMyUP__7KnLp2Uk46Nw_g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] meson: Fixes for dbus modules
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
+References: <20240122143537.233498-1-peter.maydell@linaro.org>
+In-Reply-To: <20240122143537.233498-1-peter.maydell@linaro.org>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Wed, 14 Feb 2024 09:55:35 +0100
+X-Gmail-Original-Message-ID: <CAMj1kXHTcYB0K7f7S6F3SqSye3XAJemTt6qAb8cgmcThYshrWA@mail.gmail.com>
+Message-ID: <CAMj1kXHTcYB0K7f7S6F3SqSye3XAJemTt6qAb8cgmcThYshrWA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] virt: wire up NS EL2 virtual timer IRQ
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-ua1-x930.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=ardb@kernel.org;
+ helo=sin.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,55 +85,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko
+On Mon, 22 Jan 2024 at 15:35, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> This patchset wires up the NS EL2 virtual timer IRQ on the virt
+> board, similarly to what commit 058262e0a8b2 did for the sbsa-ref board.
+>
+> Version 1 was an RFC patchset, originally sent back in autumn:
+> https://patchew.org/QEMU/20230919101240.2569334-1-peter.maydell@linaro.org/
+> The main reason for it being an RFC is that the change, while correct,
+> triggers a bug in EDK2 guest firmware that makes EDK2 assert on bootup.
+> Since the RFC, we've upgraded our in-tree version of the EDK2 binaries
+> to a version that has the fix for that bug, so I think the QEMU side of
+> these patches is ready to go in now.
+>
+> To accommodate users who might still be using older EDK2 binaries,
+> we only expose the IRQ in the DTB and ACPI tables for virt-9.0 and
+> later machine types.
+>
+> If you see in the guest:
+>      ASSERT [ArmTimerDxe] /home/kraxel/projects/qemu/roms/edk2/ArmVirtPkg/Library/ArmVirtTimerFdtClientLib/ArmVirtTimerFdtClientLib.c(72): PropSize == 36 || PropSize == 48
+>
+> then your options are:
+>  * update your EDK2 binaries to edk2-stable202311 or newer
+>  * use the 'virt-8.2' versioned machine type
+>  * not use 'virtualization=on'
+>
+> I'll put something about this into the release notes when this
+> goes into git. (There are other reasons why you probably want a
+> newer EDK2 for AArch64 guests, so this is worth flagging up to our
+> downstream distros who don't take our pre-built firmware binaries.)
+>
+> changes v1->v2:
+>  * the change in DTB and ACPI tables is now tied to the machine version
+>  * handle change of the ARCH_TIMER_*_IRQ values from PPI numbers to INTIDs
+>  * bump the FADT header to indicate ACPI v6.3, since we might be using
+>    a 6.3 feature in the GTDT
+>  * the avocado tests now all pass, because we have updated our copy
+>    of EDK2 in pc-bios/ to a version which has the fix for the bug
+>    which would otherwise cause it to assert on bootup
+>  * patch 2 commit message improved to give details of the EDK2 assert and
+>    state the options for dealing with it (this will also go into the
+>    QEMU release notes)
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (3):
+>   tests/qtest/bios-tables-test: Allow changes to virt GTDT
+>   hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
+>   tests/qtest/bios-tables-tests: Update virt golden reference
+>
 
-On Fri, Dec 15, 2023 at 3:29=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> I found it was failing to build dbus modules when --enable-dbus so here
-> are fixes.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v2:
-> - Updated MAINTAINERS.
-> - Link to v1: https://lore.kernel.org/r/20231215-dbus-v1-0-349e059ac5b2@d=
-aynix.com
->
-> ---
-> Akihiko Odaki (4):
->       Move dbus-display1 out of ui
->       audio: Depend on dbus_display1_dep
->       meson: Explicitly specify dbus-display1.h dependency
->       tests/qtest: Depend on dbus_display1_dep
-
-Can you send a v4 which doesn't move the dbus-display.xml out of
-display/ but has the rest of the dependency fixes and r-b?
-
-thanks
-
->
->  MAINTAINERS                               |  1 +
->  meson.build                               | 21 +++++++++++++++++++++
->  ui/dbus.h                                 |  2 +-
->  audio/dbusaudio.c                         |  2 +-
->  tests/qtest/dbus-display-test.c           |  2 +-
->  audio/meson.build                         |  3 ++-
->  ui/dbus-display1.xml =3D> dbus-display1.xml |  0
->  tests/qtest/meson.build                   |  2 +-
->  ui/meson.build                            | 18 ------------------
->  9 files changed, 28 insertions(+), 23 deletions(-)
-> ---
-> base-commit: 4705fc0c8511d073bee4751c3c974aab2b10a970
-> change-id: 20231215-dbus-86876ecb7b09
->
-> Best regards,
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
 
