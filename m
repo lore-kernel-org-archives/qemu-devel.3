@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EACEC48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BBBC48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raFxX-00009m-3X; Wed, 14 Feb 2024 09:09:59 -0500
+	id 1raGBv-0005xk-Vf; Wed, 14 Feb 2024 09:24:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raFxV-00009U-HZ
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:09:57 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raFxT-0008To-RN
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:09:57 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e11596b2e7so193925b3a.1
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:09:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707919794; x=1708524594;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cMBeqTwCC6IF4gbuPZ/OHy0dN2ULPv5y8QaQs6X4vaw=;
- b=fsDVbJpbuv7Hz7M5xUguhfepOd/Ga+gJ6yOasAGO+Z8RNysgwDbe5keAAOM2mQDd+Q
- xm8y+z7Ub4NDZdyPGa6xRhOE8fGX6jSq0hpjC6XTDQ8Mtb+tFEoqjfcocPXEsc7/dPRJ
- ybyFexCxQl59iE/6IPib6P5Lf45KrR11mOiOIKkIGCDqMqCtjD6P5FZWFjaPfznVSPfg
- ngvOJX3pEqTqYGtKYgmYp5Txh4zuZlzCmnhK03327/hh/O4bKH0y2tUaK7VKmgpv8FgU
- NUVfiByKmcG7cX5lcjkgDjshmQMM/d1b1qcZBYrblCPXd30+VAK0HGJ9r4GYlaFBg1Sd
- +rZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707919794; x=1708524594;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cMBeqTwCC6IF4gbuPZ/OHy0dN2ULPv5y8QaQs6X4vaw=;
- b=UFSlhqvXSy+suCKob0kv33/GBZSd0xPcGMrtp8YvUNO9fgeCKcN21sl+/17o5y52hh
- 4yVQQ+5FnRxIalgAt6irHxHwTdvKG/mUFxxoTve7eKlgWtSoc9jQxNM//wMn5fGDa/Jq
- 6kZiP8HO7Jdhewd2wnvlo5e6nsnoZIAUqAe69Wbqf6w1rs6lK93lH/OxvzNMdp6LauT5
- tFSHzTp3gaK8Xcy5C2q29QxDg3w7zK6SXx87d6Mop6OIiCvqfWBh3OWShXWAXoj/1a2q
- ZXyCpEfAuZLtV57pK1ZIZOfhX7btjqZ1/Y5MJwVUWIWAEpql8Y20hssDzYioeIL7cwzG
- q7lA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUg8OHHIZJVmSnU/ffk4u6hf91PvXEhLzSfkyjJabX7evCIZCjglISHmBM4R+7JYybGY8dAPz3kdA9thz9xJPdAfaeZQao=
-X-Gm-Message-State: AOJu0YzdR6Kzlra0C60d4NMCBp7TRgNiiEFE3cObtiRFydvMzlx5UPNU
- eRJElJqd54qTtLU3JaURPPrLZFuVjMIATum7wt5KplgJvOmhXqdtfbMbdH9b7BE=
-X-Google-Smtp-Source: AGHT+IECDc/sbmAZQeCQvIKuYnf73AleB3PHAFBrG8cN9iDrH4plb9MrjzgaFBp9/Hd1apehD0Exvg==
-X-Received: by 2002:a05:6a00:420e:b0:6e1:158c:3f9a with SMTP id
- cd14-20020a056a00420e00b006e1158c3f9amr775269pfb.3.1707919794138; 
- Wed, 14 Feb 2024 06:09:54 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGHESNdK8gOlGKenJ5BOyp9ZJByZmCeTwK8fCis3ilsxlEV71fDDc+b2OAfVzcO+bdQSJgcMrgrXCqqGWkhRosFNimBCWuIhiNwZ7LOicjYe31QA00SuKKbKLnz34t+oBnanFMemeOsjQDw81NXlF5AMUkfYjLy3ZASlihzNXQzuVq8nMT07vtKx77CO9r12YHNz/4nsueOg1HhBRtDwes3FGuBiEQkGDyR5ZgHgR14h+JRp8il6cn2czTuc9N8EydEjhp0W7KqOnZlbywcsv+D6I2dpSssiyO0j29zOKBTTXgDWoFCbkEhg3Y5XeruXxF17sowjYGLUSZOIOnF3rAi1ZZ322KnYY0adhD/5JxY69Vw+IKHN0bescqKDVE5SghvZRcNCq31AwwGK4XukkpUlRQrk4hrpwh5g==
-Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
- ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with ESMTPSA id
- b18-20020aa78712000000b006dfbecb5027sm9575103pfo.171.2024.02.14.06.09.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Feb 2024 06:09:53 -0800 (PST)
-Message-ID: <c7369ada-96b1-41ad-b141-ff7f1e1dc291@daynix.com>
-Date: Wed, 14 Feb 2024 23:09:50 +0900
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raGBt-0005vb-VA
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:24:50 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raGBr-0003sR-It
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:24:49 -0500
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41EEFwNj020759; Wed, 14 Feb 2024 14:24:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=LasRQeCmntDXXt4fmJUHeblmFqBdFyyiPJcbvCqt2yc=;
+ b=d0USP+SU0JwgOPof6bHRyJizGcaL3S6DvjuJzMJSboh4SyhCGrYEHZe4NUW1QkfyXAaY
+ mvpUEswhrEsHU7TuOrmqqrrgJ+Y6Oeh4SHARkYWk9owTBy4fzFaKvWpd7neSUQAs7F2f
+ bHGfhlsutRCZBtux0zhoNi6/pEGEoVE84CSeclqybqCBg2jUoS+j65+W5RfyVs+T9rSg
+ /L5wlrXEMNF+7M8I/6HjFkIy3vDoLGxbgTNyE4sHFLybCN5g4Al61GuKlBCrcfY4mobn
+ BPZuLRX90JnJP3hrsbod6rpEf2nK99iW5Hs2Bdc2YtjTus6FIF8e3mIx/FSf/fk17TBW Qg== 
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w8wk4u67a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Feb 2024 14:24:43 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41ECqMGd032578; Wed, 14 Feb 2024 14:24:42 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w6kftpkmw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Feb 2024 14:24:42 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41EEOcoZ18875092
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Feb 2024 14:24:40 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 98B912004B;
+ Wed, 14 Feb 2024 14:24:38 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E7A220040;
+ Wed, 14 Feb 2024 14:24:38 +0000 (GMT)
+Received: from [9.155.200.166] (unknown [9.155.200.166])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Feb 2024 14:24:38 +0000 (GMT)
+Message-ID: <85455ef16f33a521e7436ee33ba37371c917cdd3.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 22/33] linux-user: Split out mmap_h_lt_g
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Date: Wed, 14 Feb 2024 15:24:38 +0100
+In-Reply-To: <c959eb04-a929-4fa6-bdf8-f97cebc4d3f3@linaro.org>
+References: <20240102015808.132373-1-richard.henderson@linaro.org>
+ <20240102015808.132373-23-richard.henderson@linaro.org>
+ <ogglz7yhvelvrnmfyhvpx7hjdl5rgl5gh3iioomtagi3mlckcd@qaa6w4javinb>
+ <c959eb04-a929-4fa6-bdf8-f97cebc4d3f3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 9/9] hw/nvme: Refer to dev->exp.sriov_pf.num_vfs
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
- <20240214-reuse-v4-9-89ad093a07f4@daynix.com>
- <20240214015457-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240214015457-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: h5MokO4x7gVMgJbsXZDu7JWsRHvcwGZe
+X-Proofpoint-GUID: h5MokO4x7gVMgJbsXZDu7JWsRHvcwGZe
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-14_06,2024-02-14_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=809 spamscore=0
+ malwarescore=0 suspectscore=0 mlxscore=0 impostorscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402140110
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,59 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/14 16:07, Michael S. Tsirkin wrote:
-> On Wed, Feb 14, 2024 at 02:13:47PM +0900, Akihiko Odaki wrote:
->> NumVFs may not equal to the current effective number of VFs because VF
->> Enable is cleared, NumVFs is set after VF Enable is set, or NumVFs is
->> greater than TotalVFs.
->>
->> Fixes: 11871f53ef8e ("hw/nvme: Add support for the Virtualization Management command")
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> 
-> I don't get what this is saying about VF enable.
-> This code will not trigger on numVFs write when VF enable is set.
-> Generally this commit makes no sense on its own, squash it with
-> the pci core change pls.
+On Tue, 2024-02-13 at 09:54 -1000, Richard Henderson wrote:
+> On 1/29/24 05:26, Ilya Leoshkevich wrote:
+> > On Tue, Jan 02, 2024 at 12:57:57PM +1100, Richard Henderson wrote:
+> > > Work much harder to get alignment and mapping beyond the end
+> > > of the file correct.=C2=A0 Both of which are excercised by our
+> > > test-mmap for alpha (8k pages) on any 4k page host.
+> > >=20
+> > > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> > > ---
+> > > =C2=A0 linux-user/mmap.c | 156 +++++++++++++++++++++++++++++++++++++-=
+-
+> > > -------
+> > > =C2=A0 1 file changed, 125 insertions(+), 31 deletions(-)
+> >=20
+> > [...]
+> >=20
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (fileend_adj) {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v=
+oid *t =3D mmap(p, len - fileend_adj, host_prot,
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 (flags & ~MAP_FIXED_NOREPLACE) |
+> > > MAP_FIXED,
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 fd, offset);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a=
+ssert(t !=3D MAP_FAILED);
+> >=20
+> > Is it possible to recover here? Of course, we are remapping the
+> > memory
+> > we've mapped a few lines earlier, but asserting the syscall result
+> > looks a bit odd.
+> >=20
+>=20
+> Can you think of a failure mode?=C2=A0 I couldn't.
+> That's why I added the assert.
+>=20
+> I suppose there's the always present threat of running out of vmas...
 
-This code is meant to run when it is clearing VF Enable, and its 
-functionality is to change the state of VFs currently enabled so that we 
-can disable them.
+Right, and this should be easy to trigger by using ulimit -v.
 
-However, NumVFs does not necessarily represent VFs currently being 
-enabled, and have a different value in the case described above. Such 
-cases exist even before the earlier patches and this fix is 
-independently meaningful.
+>=20
+>=20
+> r~
+>=20
 
-> 
->> ---
->>   hw/nvme/ctrl.c | 5 ++---
->>   1 file changed, 2 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
->> index f8df622fe590..daedda5d326f 100644
->> --- a/hw/nvme/ctrl.c
->> +++ b/hw/nvme/ctrl.c
->> @@ -8481,7 +8481,7 @@ static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
->>       NvmeSecCtrlEntry *sctrl;
->>       uint16_t sriov_cap = dev->exp.sriov_cap;
->>       uint32_t off = address - sriov_cap;
->> -    int i, num_vfs;
->> +    int i;
->>   
->>       if (!sriov_cap) {
->>           return;
->> @@ -8489,8 +8489,7 @@ static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
->>   
->>       if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
->>           if (!(val & PCI_SRIOV_CTRL_VFE)) {
->> -            num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
->> -            for (i = 0; i < num_vfs; i++) {
->> +            for (i = 0; i < dev->exp.sriov_pf.num_vfs; i++) {
->>                   sctrl = &n->sec_ctrl_list.sec[i];
->>                   nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
->>               }
->>
->> -- 
->> 2.43.0
-> 
 
