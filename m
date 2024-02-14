@@ -4,96 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD489C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B9AC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raGeR-0006FP-GM; Wed, 14 Feb 2024 09:54:19 -0500
+	id 1raGiR-0007YG-MO; Wed, 14 Feb 2024 09:58:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raGeP-0006EL-Uy
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:54:18 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raGeO-0003FS-5v
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:54:17 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5cddc5455aeso3887682a12.1
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:54:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707922453; x=1708527253;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iaJllG92Mbpr+8QyLZfb4eFbcVwYXcvmjpcnX6ZkzvM=;
- b=Be8E+JvSmuCfT8qcfjJ1SQNl6/HAiXoD7oXWeCojIzr2iLqh3+gSoAJ9+q6tFod5zJ
- KiurVcuZWWr3HsBEFPgJpIkd6KiFi76Dv5Ehdl1gUR06fBP6pbHHgP3KKkt3yyINksaC
- h2M5xn4dQ8QT3DHhhaOq/Ec9/gz740gH+53dsIFZIv+Kd08FMVES/N8ZoF3uHYT4tQLj
- RYKAU9fis2RJDzajfU8aXODrHQnQo45gBIUBqwozhFU7l0SQXFZ2fct0oBULyPlWcvi5
- JWdLgz/nq/ZG80fCnrTgVARsO+8DuEjVkARsMQKRpJbfYyjnTItU6CTkghvwyX/4b5ME
- xj6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707922453; x=1708527253;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iaJllG92Mbpr+8QyLZfb4eFbcVwYXcvmjpcnX6ZkzvM=;
- b=ifDg66VuvfzmCnKDhJxO7f+RXwsK14/d+SYjH9eNW3PQwBvZIM4vMGWPeNsAG/2385
- lb6GEm57zQbSfWx+spBtSxLT4UxE2gm2afsZJ27Kbgfsjx0dyf5G0mxFl9ey0FHuXBQN
- Ac6cj8wJDJIUiiOvSxp+vA7aGpsACThYNIjts/i7LUzq9P/oK7lW8EfufCsbxFblDcIc
- ji95g+KH9NlEznfIdOcILIs5P2jctKfMQeie9isvMhomq03XWZ9mgLoMu/FSh0v6A5Vz
- Tj4+EWzZEX5tQHEB6TWx64AF4pduC0k5ssl4gPful5C/B6XMGgktxpCOCK/j/5xD78xy
- 3MPg==
-X-Gm-Message-State: AOJu0Yyqdk5GgLeNbfmb9rApt1E0TlZdQA+O24+E3IgRpoxzJ6HGMgx6
- OWfYwGvNGvkwfKCzu9Gmjzdo1+pnYrbQo4B0kj//8XQ0KyZlwE9MIEC20cnI2Y4=
-X-Google-Smtp-Source: AGHT+IE+tCA0HL4IvokG46MyruLy/PfXbgiLidGyQO7fb/Rl+ssJwlXcfEULA4y/ElsKvLUH1WEVEg==
-X-Received: by 2002:a17:90a:fb58:b0:296:efd0:c19e with SMTP id
- iq24-20020a17090afb5800b00296efd0c19emr2462871pjb.41.1707922453547; 
- Wed, 14 Feb 2024 06:54:13 -0800 (PST)
-Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
- ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with ESMTPSA id
- m6-20020a17090a34c600b00298b9f662ccsm1662234pjf.1.2024.02.14.06.54.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Feb 2024 06:54:13 -0800 (PST)
-Message-ID: <56e83476-f607-482e-a9f2-e473148de839@daynix.com>
-Date: Wed, 14 Feb 2024 23:54:08 +0900
+ (Exim 4.90_1) (envelope-from <arnd@arndb.de>)
+ id 1raGiP-0007Xe-Bb; Wed, 14 Feb 2024 09:58:25 -0500
+Received: from wout2-smtp.messagingengine.com ([64.147.123.25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arnd@arndb.de>)
+ id 1raGiD-0004Cg-Tz; Wed, 14 Feb 2024 09:58:25 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.west.internal (Postfix) with ESMTP id 909EF3200392;
+ Wed, 14 Feb 2024 09:58:10 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+ by compute5.internal (MEProxy); Wed, 14 Feb 2024 09:58:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+ :cc:content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm3; t=1707922690; x=1708009090; bh=uDmfOsg9gU
+ tVPfRB+2sWNwn5yu3xkUXEF+MG27C5Dtc=; b=rjNYeC12XR01H737Y39uCh/un7
+ h+k+7rvPsh/l250F8FM1N97OFbD59aBSu18Bupi7vNc8qYOr4iZo+BGCmTvFgQ4C
+ 2Y5anjFNO4Aj2XOiZXRaKtoAkr2tEsX+Ci5t37PoChOb0HKQhJS+ksD0XpCK4emj
+ j26WnowC0Bqnerz8PANjdwk+jr4WGRU9tBXhHbts73nVyG0icaBA9A7nGES7IMGs
+ WM3l0gVRNm4utZOM6habjtRFzU8PRbWt3BNZJlx4cP5UWmudV7EVv2d5f8do7ezJ
+ 5IYMRuo9aICx32wb8DXw4ayHCC16DRDU2F0y1d4PPc1TmPQw+CcKj0eGbftw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1707922690; x=1708009090; bh=uDmfOsg9gUtVPfRB+2sWNwn5yu3x
+ kUXEF+MG27C5Dtc=; b=pGI2V3GLyNYFup6/YmJUkWU83lP5R3rTwThzRyTCmEjt
+ yBzm3kBcOk6kYYaBD3/dbPOdgUMjnSZUiNUYp00f5JECLcBg0XO/zgbUGAD6roIe
+ JD+JE0omtgMkmGoFiGG1kdhXlbfYssLeQWw3+8yl4/qWiQSXeCxsvUCPEdtCO1iN
+ yh4f3Ra0lRdrRWeu1ez2AuatYX13rI6DITBHPWs6WJMJQ5KLCi138zUHpS/C54T5
+ H/k8hUJDX0tcerKjEdOMCYSF//xfnZAsaG9kMO4+DRVLQopPRGwTJ7vllGkAR8N8
+ Y5Gdgq1i50S9JSnZDy9tb8zrh1YbzasQZEzkqNXRfw==
+X-ME-Sender: <xms:AdXMZTYxcc4dpVQ4ctlSARACqDNe9AgVQYiyBh_cL3wzrsO7p6tPzg>
+ <xme:AdXMZSaUJhJp6ie9-mLwUmrFduJNHYFYMpNE5CjlFa3o3zrRe4hSgLdTl0hzyobyZ
+ ApA1lyFjApBeYfTfNE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudejgdejudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+ ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+ gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
+ ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
+ hnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:AdXMZV-Q7-HjMFByKcFClo-jqyEZyiJe9f25HSLLQFJwrsmsGYRUYA>
+ <xmx:AdXMZZo-LS2PeA2lLmSAAYz_0V7ZwjGrdVfzyMKMzwBDf7J4mzL0YQ>
+ <xmx:AdXMZerHvWACUsNWccPL8vjOEHU5nh2t2YewQHGg2m6Si4nVrLNRag>
+ <xmx:AtXMZUieTMLYWDSgJVKe_O1rwJnlT25wtsGI5ejnXYulQxs0TPVfBQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 6CC73B6008D; Wed, 14 Feb 2024 09:58:09 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/9] pcie_sriov: Validate NumVFs
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
- <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
- <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::530;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Message-Id: <5214dd7c-0472-4ce8-bc41-ad565ddcc7a9@app.fastmail.com>
+In-Reply-To: <20240214012749.GA203324@darkstar.musicnaut.iki.fi>
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+ <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
+ <20240214012749.GA203324@darkstar.musicnaut.iki.fi>
+Date: Wed, 14 Feb 2024 15:57:49 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Aaro Koskinen" <aaro.koskinen@iki.fi>
+Cc: "Guenter Roeck" <linux@roeck-us.net>,
+ "Peter Maydell" <peter.maydell@linaro.org>,
+ "QEMU Developers" <qemu-devel@nongnu.org>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ "Marcin Juszkiewicz" <marcin.juszkiewicz@linaro.org>,
+ "Janusz Krzysztofik" <jmkrzyszt@gmail.com>,
+ "Tony Lindgren" <tony@atomide.com>, Linux-OMAP <linux-omap@vger.kernel.org>,
+ "Daniel Mack" <daniel@zonque.org>, "Robert Jarzmik" <robert.jarzmik@free.fr>, 
+ "Haojian Zhuang" <haojian.zhuang@gmail.com>,
+ "Linus Walleij" <linus.walleij@linaro.org>,
+ "Stefan Lehner" <stefan-lehner@aon.at>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+Content-Type: text/plain
+Received-SPF: pass client-ip=64.147.123.25; envelope-from=arnd@arndb.de;
+ helo=wout2-smtp.messagingengine.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,46 +115,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/14 17:58, Michael Tokarev wrote:
-> 14.02.2024 08:13, Akihiko Odaki wrote:
->> The guest may write NumVFs greater than TotalVFs and that can lead
->> to buffer overflow in VF implementations.
-> 
-> This seems to be stable-worthy (Cc'd), and maybe even CVE-worthy?
+On Wed, Feb 14, 2024, at 02:27, Aaro Koskinen wrote:
+> On Tue, Feb 13, 2024 at 09:11:38PM +0100, Arnd Bergmann wrote:
+>
+> I'm one of the OMAP1 Linux kernel maintainers, and I have Palm TE which
+> I have been using for testing and development (and reporting bugs,
+> regressions) along with those other boards you mentioned.
+>
+> Since I have the real Palm HW, I haven't used QEMU for that particular
+> board. But however I use QEMU SX1 support frequently as it's quickest way
+> to check if OMAP1 is bootable, and if the basic peripherals are working.
+> SX1 is close to Palm/AMS-Delta, and also it's ARMv4T which is rare these
+> days. I think it's useful to keep it in QEMU as long there are hardware
+> that people use.
+>
+> So my wish is to keep at least SX1 support in QEMU as long as ARMv4T
+> supported in the Linux kernel.
 
-Perhaps so. The scope of the bug is limited to emulated SR-IOV devices, 
-and I think nobody use them except for development, but it may be still 
-nice to have a CVE.
+Makes sense. We have a couple of other ARMv4T systems in the kernel
+that are still being tested (ep93xx, at91rm9200, clps71xx, imx1,
+nspire, integrator/ap), but none of the others have any qemu
+support apparently unless you count "-Mintegratorpb -cpu arm925".
+All of these are are using DT or getting there (ep93xx), so we'll
+probably keep them around for a while.
 
-Can anyone help assign a CVE? I don't know the procedure.
+Similarly, we support a couple of ARMv4 (non-T) targets in the
+kernel (footbridge, sa1100, rpc, moxart, gemini), but the only
+one with qemu support here is sa1100/collie.
 
-Regards,
-Akihiko Odaki
+>> >> > > OMAP2 machines:
+>> >> > >
+>> >> > > n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
+>> >> > > n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
+>> >> > >
+>> >> > I never managed to get those to boot the Linux kernel.
+>> 
+>> I think Tony still tests these on both hardware and qemu.
+>> The platform side here is much more modern than any of the
+>> others above since it does use DT and it has enough RAM
+>> to be somewhat usable.
+>
+> I have also these boards (real hardware) and test them frequently with
+> mainline Linux. However, QEMU support I haven't used/needed. I recall it
+> was a bit buggy, and some changes in mainline made the kernel unbootable.
+> Unless Tony needs the support, I guess they are good to go.
 
-> 
-> Thanks,
-> 
-> /mjt
-> 
->> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O 
->> Virtualization (SR/IOV)")
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/pci/pcie_sriov.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
->> index a1fe65f5d801..da209b7f47fd 100644
->> --- a/hw/pci/pcie_sriov.c
->> +++ b/hw/pci/pcie_sriov.c
->> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
->>       assert(sriov_cap > 0);
->>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
->> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + 
->> PCI_SRIOV_TOTAL_VF)) {
->> +        return;
->> +    }
->>       dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
->>
-> 
+Thanks for confirming.
+
+> (Arnd: RAM isn't everything. Some of the OMAP1 boards today are still
+> more useful than N800/N810, even with modern bloaty Linux.)
+
+Obviously RAM isn't everything, but the machines with just 32MB
+or less do seem very small for real workloads, so I admit I
+dismiss them easily. I am curious what you run on those, are
+there any embedded distros that maintain good support for 32MB
+systems on modern kernel/musl/Xorg/..., or are you using
+omething older or highly customized?
+
+     Arnd
 
