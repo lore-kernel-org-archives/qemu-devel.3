@@ -4,47 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0707C4829A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 07:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6CCC4829A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 07:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra9OE-0003Wp-Cs; Wed, 14 Feb 2024 02:09:06 -0500
+	id 1ra9no-0004nE-OR; Wed, 14 Feb 2024 02:35:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=AQUf=JX=kaod.org=clg@ozlabs.org>)
- id 1ra9OC-0003Wb-I0; Wed, 14 Feb 2024 02:09:04 -0500
+ id 1ra9nk-0004kX-Md; Wed, 14 Feb 2024 02:35:28 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=AQUf=JX=kaod.org=clg@ozlabs.org>)
- id 1ra9OA-000876-42; Wed, 14 Feb 2024 02:09:04 -0500
+ id 1ra9ni-0005vi-Hn; Wed, 14 Feb 2024 02:35:28 -0500
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TZTnd6jvSz4wcl;
- Wed, 14 Feb 2024 18:08:53 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TZVN810Kxz4wcs;
+ Wed, 14 Feb 2024 18:35:20 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TZTnb16NMz4wcF;
- Wed, 14 Feb 2024 18:08:50 +1100 (AEDT)
-Message-ID: <cd75772d-e892-4315-b97a-579b593a2cd0@kaod.org>
-Date: Wed, 14 Feb 2024 08:08:46 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TZVN33Vgsz4wcQ;
+ Wed, 14 Feb 2024 18:35:15 +1100 (AEDT)
+Message-ID: <677bba7b-f206-4c9a-8384-d48a6e9f2c85@kaod.org>
+Date: Wed, 14 Feb 2024 08:35:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] hw/arm/stellaris: Add missing QOM 'SoC' parent
+Subject: Re: [PATCH] target/ppc: Fix lxv/stxv MSR facility check
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
-References: <20240130190317.25692-1-philmd@linaro.org>
- <20240130190317.25692-5-philmd@linaro.org>
- <CAFEAcA9V7wQr=LEvv2DYT5SabPe2H3+V2RMQPHRVZ8avrse9ww@mail.gmail.com>
- <7e7646e7-85d1-40a4-8e5e-bca2fcaa6ba5@linaro.org>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Lucas Mateus Castro <lucas.castro@eldorado.org.br>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org, Joel Stanley <joel@jms.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20240213083933.718881-1-npiggin@gmail.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <7e7646e7-85d1-40a4-8e5e-bca2fcaa6ba5@linaro.org>
+In-Reply-To: <20240213083933.718881-1-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -70,37 +66,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/13/24 16:36, Philippe Mathieu-Daudé wrote:
-> On 1/2/24 17:46, Peter Maydell wrote:
->> On Tue, 30 Jan 2024 at 19:03, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>>
->>> QDev objects created with qdev_new() need to manually add
->>> their parent relationship with object_property_add_child().
->>>
->>> Since we don't model the SoC, just use a QOM container.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>
->> Ah, this is where the other qdev_new() calls are sorted.
->>
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->>
->> I wonder if we should add a variant on qdev_new() that
->> you can pass in the parent object to?
+On 2/13/24 09:39, Nicholas Piggin wrote:
+> The move to decodetree flipped the inequality test for the VEC / VSX
+> MSR facility check.
 > 
-> Yes, this is what we discussed with Markus. In order to
-> stop using the "/unattached" container from pre-QOM,
-> qdev_new() must take a QOM parent. I tried to do it but hit
-> some problem with some odd use in PPC or S390 (discussed
-> with Cédric so likely PPC, I need to go back to it).
+> This caused application crashes under Linux, where these facility
+> unavailable interrupts are used for lazy-switching of VEC/VSX register
+> sets. Getting the incorrect interrupt would result in wrong registers
+> being loaded, potentially overwriting live values and/or exposing
+> stale ones.
+> 
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Joel Stanley <joel@jms.id.au>
+> Fixes: 70426b5bb738 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1769
+> Tested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Can you remind what this was about ?
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Tested-by: Cédric Le Goater <clg@kaod.org>
 
+with a RHEL9 image.
 
 Thanks,
 
 C.
 
+
+> ---
+>   target/ppc/translate/vsx-impl.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+> index 6db87ab336..0266f09119 100644
+> --- a/target/ppc/translate/vsx-impl.c.inc
+> +++ b/target/ppc/translate/vsx-impl.c.inc
+> @@ -2268,7 +2268,7 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
+>   
+>   static bool do_lstxv_D(DisasContext *ctx, arg_D *a, bool store, bool paired)
+>   {
+> -    if (paired || a->rt >= 32) {
+> +    if (paired || a->rt < 32) {
+>           REQUIRE_VSX(ctx);
+>       } else {
+>           REQUIRE_VECTOR(ctx);
 
 
