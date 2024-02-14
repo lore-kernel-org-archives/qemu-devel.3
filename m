@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFD0C48BED
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36294C48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDCy-0008K4-UT; Wed, 14 Feb 2024 06:13:45 -0500
+	id 1raDDS-0000IP-It; Wed, 14 Feb 2024 06:14:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDCw-0008JZ-OC
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:13:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDDM-0000Ax-3N
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDCj-0006hF-S5
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:13:42 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDDD-0006mR-7y
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909209;
+ s=mimecast20190719; t=1707909238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CcOxFnO1gTdI8lfHt5M/FhLTBAMA9QOhBRILYrhP/lQ=;
- b=HKLhLGaaz+LhobMgv4btVM42klsB1VSzKUzbGH0vu9S3RNN8JTli2lF3UWzUV0pg5lsVTI
- D5gRty1/enbXnWx8oPz1n0QoTZaj5BASnBNKv8AmtX+0N/oWkCJO3RpHNG0sbE2WZgmVDB
- w8xGW/ElBssYLBh683yz2dihVAmlnYY=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pNWPNdaeH/gm2+Fuc6t0CFL+yHMh3buRTqg9OHqLxYg=;
+ b=LIza2OzcMqIPC4lL1k0LgdnZ+EepkGNFs/dhR6EUvlIIT/ETu41K/QU3RIKirTRzZZG5sj
+ 1Z91VLWyu0RQZXgYOyvzmyJ8ZIWvSX5gKmNnQ2k11x6WrhaPJ4uk2AjeXVxaVkdLASHqR3
+ 6u2Div7+xMae5hNDQMeph1s9S123jrE=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-120-X-7XQUEVPOuFZdiGNTWd8Q-1; Wed, 14 Feb 2024 06:13:27 -0500
-X-MC-Unique: X-7XQUEVPOuFZdiGNTWd8Q-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a2bffe437b5so351894766b.1
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:13:27 -0800 (PST)
+ us-mta-321-VX0J20qoMLmm4FTcaIUzPg-1; Wed, 14 Feb 2024 06:13:57 -0500
+X-MC-Unique: VX0J20qoMLmm4FTcaIUzPg-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-5114f2a1e81so1843829e87.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:13:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909206; x=1708514006;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CcOxFnO1gTdI8lfHt5M/FhLTBAMA9QOhBRILYrhP/lQ=;
- b=nWPcemMBURaYkVm6sUNL38BVkId6zRS1leAPiW8XL5C9mDe6iF0/QLrZTNf18agDpK
- /a+82ZJOCZ3uYcjLsk2lPR4kv1aOw7eD/Zr699JfmLSPs0QeRSsuhJeI8ptLY+C5AuA8
- Zz3ssSJhHBRKtsJ8Ddgo1Q0nxloBYZr0rCU2pNrsTO6QuWuH10KYXRTcfL+Gt2JhaR3p
- AeXGx6bCxK/4c7I19XKAhkNEaDDY6pjmRfHO0+EGIV8tjnSEWZxLp7ISnb7Qb06d+lgG
- FHCnqhKgU0V3SJdmstRJZ6Wfu/fyz30oPqPxCKozIe8bLSF7ZHFQJRGN3xxsGy9chAxn
- J+0Q==
-X-Gm-Message-State: AOJu0YzAdICNBxlmiDay0Rc+Wr8riP54402q93asmNtmE/25YmYVghZW
- A5mj2xqBgh79UpOsgo6GmQqUKsDTqVRiAFGH5oRkAcQplivx2hdNMNYnxaQarBKJp37Tu1PmptX
- bSMaWXPJG1V7BoNRha1/6m/8jpQBXeDCoUtHD2feATgGvhl9txYH821rDd0j4wf88E4YQBsz8lV
- L0iR5OXPlhuvOpREchG4HlRH8HvsLuKA==
-X-Received: by 2002:a17:906:4c57:b0:a3d:60da:19ce with SMTP id
- d23-20020a1709064c5700b00a3d60da19cemr428424ejw.75.1707909205940; 
- Wed, 14 Feb 2024 03:13:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVhpq3EmVa8QnaTWa95febbUL/B3U2YMeDrCGJzeI63er+QW0tt+1mJfnFwccVcln8SUDk/A==
-X-Received: by 2002:a17:906:4c57:b0:a3d:60da:19ce with SMTP id
- d23-20020a1709064c5700b00a3d60da19cemr428403ejw.75.1707909205491; 
- Wed, 14 Feb 2024 03:13:25 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707909235; x=1708514035;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pNWPNdaeH/gm2+Fuc6t0CFL+yHMh3buRTqg9OHqLxYg=;
+ b=JNQIPUrOHKwfhINv48NBjTlrG5kfeUoAuHDsg2hqZiyghSiq8yg/x5k2/NtuAJNJRo
+ N96LfawRc8D7KZBPgbicajYDq1l9CyIsWz6hRnTwQBvOCFAhHqAQjt0B9DAmAe2OovUT
+ 8SW6biJ4UE3w+YAPGc2lxVRer/RtK3pMCG7IZ7DoftD2dB5JlqsBkAKN1zYH17qb5u/d
+ qCtlU/esI90DnfAg38B8lYb4coxrKORjofxQrh0AmonjbTNMhKZJu0tLEYpF6cKF+eoR
+ Kmn4VQV29fqOqR0Q+Bgk2O3uYPQ6CzNaSIrqY4H8MLodaOC5E4cZXJuFbUjiEyH9ekov
+ 9KTg==
+X-Gm-Message-State: AOJu0YxMw4Wd3etzzTERR+567rtF4BoQGv9PzNG7UGm9+wxtSsAey0vx
+ UUQh4KUE7sExp6F4Tw0F4ir8iUybvvelgSUWo2sVnNIIrna6GxFQECWi3ean49jPXohOdZfLd0S
+ VNRnUMBNpx8Ze2wiRyrw+X3QUfdaF41iyJwQD045mghgFYczKm/vmJnzsa7SsV65/ipV/pbxzfG
+ GvqhrKYWQAey0SYLk6jJFCc6dMiRiyRQ==
+X-Received: by 2002:ac2:483c:0:b0:511:8b33:6c72 with SMTP id
+ 28-20020ac2483c000000b005118b336c72mr1559614lft.47.1707909234979; 
+ Wed, 14 Feb 2024 03:13:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHi3EkOzzfe+qbA14LdRGgIHwn+PpD7zGPn8bFLmlyMv/AYtKcMbYZ8mCcEEsrVg7GNH42bAA==
+X-Received: by 2002:ac2:483c:0:b0:511:8b33:6c72 with SMTP id
+ 28-20020ac2483c000000b005118b336c72mr1559603lft.47.1707909234598; 
+ Wed, 14 Feb 2024 03:13:54 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKednTXTqYBX6vp0+2+i1fOggGiJ20MuxVaijoDSPOg19W2FZL5dq4SFU87/GYTQW/huRVGuGOEE7BmBfUBzEPVvC/yJ0Z/X567ZjV8DXcqzlwAxcRIO6E1EvkTfbINDDUqq8tKajWAnfgiuD7EEebjk0j4DEUWFaz6fXnWms85QY=
+ AJvYcCUlfO48icVbYx/2bL46+VoxP/+vh/tCWiXAjqg88ei4dKkXm1N3Eur0KSCSQ7CIzALMkZpOPPNJhvE+7S7vCyMJFLmejnqdXmuly07TRPzPUiSU8ksmp/d8rSzk1ye0/WTD8Au+6B6wB/rcM24761Enxr+cWfl3TmmvIgmKsRSmw/dCgxl7dkMxYuRb8mLyphOvJ7vLRGo8TNQTNKvMt4AdRkypav9TmcZUpsVS
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- rf23-20020a1709076a1700b00a3d2ccea999sm826407ejc.35.2024.02.14.03.13.23
+ fi27-20020a056402551b00b0055edfb81384sm4496217edb.60.2024.02.14.03.13.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:13:24 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:13:22 -0500
+ Wed, 14 Feb 2024 03:13:53 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:13:51 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PULL 03/60] hw/virtio: derive vhost-user-rng from vhost-user-base
-Message-ID: <233412bf7a2b0349aa3b80ab7217e741c8acef3f.1707909001.git.mst@redhat.com>
+ Bui Quang Minh <minhquangbui99@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 12/60] i386/tcg: implement x2APIC registers MSR access
+Message-ID: <b2101358e591c9f0a93739dd3aee72935a79af80.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1707909001.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,421 +106,307 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Bui Quang Minh <minhquangbui99@gmail.com>
 
-Now we can take advantage of our new base class and make
-vhost-user-rng a much simpler boilerplate wrapper. Also as this
-doesn't require any target specific hacks we only need to build the
-stubs once.
+This commit creates apic_register_read/write which are used by both
+apic_mem_read/write for MMIO access and apic_msr_read/write for MSR access.
 
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240104210945.1223134-4-alex.bennee@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+The apic_msr_read/write returns -1 on error, accelerator can use this to
+raise the appropriate exception.
+
+Signed-off-by: Bui Quang Minh <minhquangbui99@gmail.com>
+Message-Id: <20240111154404.5333-2-minhquangbui99@gmail.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/vhost-user-rng.h |  13 +-
- hw/virtio/vhost-user-rng.c         | 294 +++--------------------------
- hw/virtio/meson.build              |   9 +-
- 3 files changed, 31 insertions(+), 285 deletions(-)
+ include/hw/i386/apic.h               |   3 +
+ target/i386/cpu.h                    |   3 +
+ hw/intc/apic.c                       | 122 ++++++++++++++++++++-------
+ target/i386/tcg/sysemu/misc_helper.c |  27 ++++++
+ hw/intc/trace-events                 |   4 +-
+ 5 files changed, 127 insertions(+), 32 deletions(-)
 
-diff --git a/include/hw/virtio/vhost-user-rng.h b/include/hw/virtio/vhost-user-rng.h
-index ddd9f01eea..10868c7de4 100644
---- a/include/hw/virtio/vhost-user-rng.h
-+++ b/include/hw/virtio/vhost-user-rng.h
-@@ -12,22 +12,13 @@
- #include "hw/virtio/virtio.h"
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/vhost-user.h"
--#include "chardev/char-fe.h"
-+#include "hw/virtio/vhost-user-base.h"
+diff --git a/include/hw/i386/apic.h b/include/hw/i386/apic.h
+index bdc15a7a73..ddea4213db 100644
+--- a/include/hw/i386/apic.h
++++ b/include/hw/i386/apic.h
+@@ -18,6 +18,9 @@ void apic_sipi(DeviceState *s);
+ void apic_poll_irq(DeviceState *d);
+ void apic_designate_bsp(DeviceState *d, bool bsp);
+ int apic_get_highest_priority_irr(DeviceState *dev);
++int apic_msr_read(int index, uint64_t *val);
++int apic_msr_write(int index, uint64_t val);
++bool is_x2apic_mode(DeviceState *d);
  
- #define TYPE_VHOST_USER_RNG "vhost-user-rng"
- OBJECT_DECLARE_SIMPLE_TYPE(VHostUserRNG, VHOST_USER_RNG)
+ /* pc.c */
+ DeviceState *cpu_get_current_apic(void);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 6a5b180ccb..afabdeab75 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -545,6 +545,9 @@ typedef enum X86Seg {
+ #define MSR_IA32_VMX_TRUE_ENTRY_CTLS     0x00000490
+ #define MSR_IA32_VMX_VMFUNC             0x00000491
  
- struct VHostUserRNG {
--    /*< private >*/
--    VirtIODevice parent;
--    CharBackend chardev;
--    struct vhost_virtqueue *vhost_vq;
--    struct vhost_dev vhost_dev;
--    VhostUserState vhost_user;
--    VirtQueue *req_vq;
--    bool connected;
--
--    /*< public >*/
-+    VHostUserBase parent_obj;
- };
- 
- #endif /* QEMU_VHOST_USER_RNG_H */
-diff --git a/hw/virtio/vhost-user-rng.c b/hw/virtio/vhost-user-rng.c
-index 24ac1a22c8..01879c863d 100644
---- a/hw/virtio/vhost-user-rng.c
-+++ b/hw/virtio/vhost-user-rng.c
-@@ -3,7 +3,7 @@
-  *
-  * Copyright (c) 2021 Mathieu Poirier <mathieu.poirier@linaro.org>
-  *
-- * Implementation seriously tailored on vhost-user-i2c.c
-+ * Simple wrapper of the generic vhost-user-device.
-  *
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
-@@ -13,297 +13,47 @@
- #include "hw/qdev-properties.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/vhost-user-rng.h"
--#include "qemu/error-report.h"
- #include "standard-headers/linux/virtio_ids.h"
- 
--static const int feature_bits[] = {
--    VIRTIO_F_RING_RESET,
--    VHOST_INVALID_FEATURE_BIT
--};
--
--static void vu_rng_start(VirtIODevice *vdev)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--    BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
--    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
--    int ret;
--    int i;
--
--    if (!k->set_guest_notifiers) {
--        error_report("binding does not support guest notifiers");
--        return;
--    }
--
--    ret = vhost_dev_enable_notifiers(&rng->vhost_dev, vdev);
--    if (ret < 0) {
--        error_report("Error enabling host notifiers: %d", -ret);
--        return;
--    }
--
--    ret = k->set_guest_notifiers(qbus->parent, rng->vhost_dev.nvqs, true);
--    if (ret < 0) {
--        error_report("Error binding guest notifier: %d", -ret);
--        goto err_host_notifiers;
--    }
--
--    rng->vhost_dev.acked_features = vdev->guest_features;
--    ret = vhost_dev_start(&rng->vhost_dev, vdev, true);
--    if (ret < 0) {
--        error_report("Error starting vhost-user-rng: %d", -ret);
--        goto err_guest_notifiers;
--    }
--
--    /*
--     * guest_notifier_mask/pending not used yet, so just unmask
--     * everything here. virtio-pci will do the right thing by
--     * enabling/disabling irqfd.
--     */
--    for (i = 0; i < rng->vhost_dev.nvqs; i++) {
--        vhost_virtqueue_mask(&rng->vhost_dev, vdev, i, false);
--    }
--
--    return;
--
--err_guest_notifiers:
--    k->set_guest_notifiers(qbus->parent, rng->vhost_dev.nvqs, false);
--err_host_notifiers:
--    vhost_dev_disable_notifiers(&rng->vhost_dev, vdev);
--}
--
--static void vu_rng_stop(VirtIODevice *vdev)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--    BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
--    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
--    int ret;
--
--    if (!k->set_guest_notifiers) {
--        return;
--    }
--
--    vhost_dev_stop(&rng->vhost_dev, vdev, true);
--
--    ret = k->set_guest_notifiers(qbus->parent, rng->vhost_dev.nvqs, false);
--    if (ret < 0) {
--        error_report("vhost guest notifier cleanup failed: %d", ret);
--        return;
--    }
--
--    vhost_dev_disable_notifiers(&rng->vhost_dev, vdev);
--}
--
--static void vu_rng_set_status(VirtIODevice *vdev, uint8_t status)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--    bool should_start = virtio_device_should_start(vdev, status);
--
--    if (vhost_dev_is_started(&rng->vhost_dev) == should_start) {
--        return;
--    }
--
--    if (should_start) {
--        vu_rng_start(vdev);
--    } else {
--        vu_rng_stop(vdev);
--    }
--}
--
--static uint64_t vu_rng_get_features(VirtIODevice *vdev,
--                                    uint64_t requested_features, Error **errp)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--
--    return vhost_get_features(&rng->vhost_dev, feature_bits,
--                              requested_features);
--}
--
--static void vu_rng_handle_output(VirtIODevice *vdev, VirtQueue *vq)
--{
--    /*
--     * Not normally called; it's the daemon that handles the queue;
--     * however virtio's cleanup path can call this.
--     */
--}
--
--static void vu_rng_guest_notifier_mask(VirtIODevice *vdev, int idx, bool mask)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--
--    /*
--     * We don't support interrupts, return early if index is set to
--     * VIRTIO_CONFIG_IRQ_IDX.
--     */
--    if (idx == VIRTIO_CONFIG_IRQ_IDX) {
--        return;
--    }
--
--    vhost_virtqueue_mask(&rng->vhost_dev, vdev, idx, mask);
--}
--
--static bool vu_rng_guest_notifier_pending(VirtIODevice *vdev, int idx)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--
--    /*
--     * We don't support interrupts, return early if index is set to
--     * VIRTIO_CONFIG_IRQ_IDX.
--     */
--    if (idx == VIRTIO_CONFIG_IRQ_IDX) {
--        return false;
--    }
--
--    return vhost_virtqueue_pending(&rng->vhost_dev, idx);
--}
--
--static void vu_rng_connect(DeviceState *dev)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--
--    if (rng->connected) {
--        return;
--    }
--
--    rng->connected = true;
--
--    /* restore vhost state */
--    if (virtio_device_started(vdev, vdev->status)) {
--        vu_rng_start(vdev);
--    }
--}
--
--static void vu_rng_disconnect(DeviceState *dev)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--
--    if (!rng->connected) {
--        return;
--    }
--
--    rng->connected = false;
--
--    if (vhost_dev_is_started(&rng->vhost_dev)) {
--        vu_rng_stop(vdev);
--    }
--}
--
--static void vu_rng_event(void *opaque, QEMUChrEvent event)
--{
--    DeviceState *dev = opaque;
--
--    switch (event) {
--    case CHR_EVENT_OPENED:
--        vu_rng_connect(dev);
--        break;
--    case CHR_EVENT_CLOSED:
--        vu_rng_disconnect(dev);
--        break;
--    case CHR_EVENT_BREAK:
--    case CHR_EVENT_MUX_IN:
--    case CHR_EVENT_MUX_OUT:
--        /* Ignore */
--        break;
--    }
--}
--
--static void vu_rng_device_realize(DeviceState *dev, Error **errp)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
--    VHostUserRNG *rng = VHOST_USER_RNG(dev);
--    int ret;
--
--    if (!rng->chardev.chr) {
--        error_setg(errp, "missing chardev");
--        return;
--    }
--
--    if (!vhost_user_init(&rng->vhost_user, &rng->chardev, errp)) {
--        return;
--    }
--
--    virtio_init(vdev, VIRTIO_ID_RNG, 0);
--
--    rng->req_vq = virtio_add_queue(vdev, 4, vu_rng_handle_output);
--    if (!rng->req_vq) {
--        error_setg_errno(errp, -1, "virtio_add_queue() failed");
--        goto virtio_add_queue_failed;
--    }
--
--    rng->vhost_dev.nvqs = 1;
--    rng->vhost_dev.vqs = g_new0(struct vhost_virtqueue, rng->vhost_dev.nvqs);
--    ret = vhost_dev_init(&rng->vhost_dev, &rng->vhost_user,
--                         VHOST_BACKEND_TYPE_USER, 0, errp);
--    if (ret < 0) {
--        error_setg_errno(errp, -ret, "vhost_dev_init() failed");
--        goto vhost_dev_init_failed;
--    }
--
--    qemu_chr_fe_set_handlers(&rng->chardev, NULL, NULL, vu_rng_event, NULL,
--                             dev, NULL, true);
--
--    return;
--
--vhost_dev_init_failed:
--    g_free(rng->vhost_dev.vqs);
--    virtio_delete_queue(rng->req_vq);
--virtio_add_queue_failed:
--    virtio_cleanup(vdev);
--    vhost_user_cleanup(&rng->vhost_user);
--}
--
--static void vu_rng_device_unrealize(DeviceState *dev)
--{
--    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
--    VHostUserRNG *rng = VHOST_USER_RNG(dev);
--    struct vhost_virtqueue *vhost_vqs = rng->vhost_dev.vqs;
--
--    vu_rng_set_status(vdev, 0);
--
--    vhost_dev_cleanup(&rng->vhost_dev);
--    g_free(vhost_vqs);
--    virtio_delete_queue(rng->req_vq);
--    virtio_cleanup(vdev);
--    vhost_user_cleanup(&rng->vhost_user);
--}
--
--static struct vhost_dev *vu_rng_get_vhost(VirtIODevice *vdev)
--{
--    VHostUserRNG *rng = VHOST_USER_RNG(vdev);
--    return &rng->vhost_dev;
--}
--
- static const VMStateDescription vu_rng_vmstate = {
-     .name = "vhost-user-rng",
-     .unmigratable = 1,
- };
- 
--static Property vu_rng_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserRNG, chardev),
-+static Property vrng_properties[] = {
-+    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-+static void vu_rng_base_realize(DeviceState *dev, Error **errp)
-+{
-+    VHostUserBase *vub = VHOST_USER_BASE(dev);
-+    VHostUserBaseClass *vubs = VHOST_USER_BASE_GET_CLASS(dev);
++#define MSR_APIC_START                  0x00000800
++#define MSR_APIC_END                    0x000008ff
 +
-+    /* Fixed for RNG */
-+    vub->virtio_id = VIRTIO_ID_RNG;
-+    vub->num_vqs = 1;
-+    vub->vq_size = 4;
-+
-+    vubs->parent_realize(dev, errp);
-+}
-+
- static void vu_rng_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
--    VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-+    VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
--    device_class_set_props(dc, vu_rng_properties);
-     dc->vmsd = &vu_rng_vmstate;
--    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-+    device_class_set_props(dc, vrng_properties);
-+    device_class_set_parent_realize(dc, vu_rng_base_realize,
-+                                    &vubc->parent_realize);
- 
--    vdc->realize = vu_rng_device_realize;
--    vdc->unrealize = vu_rng_device_unrealize;
--    vdc->get_features = vu_rng_get_features;
--    vdc->set_status = vu_rng_set_status;
--    vdc->guest_notifier_mask = vu_rng_guest_notifier_mask;
--    vdc->guest_notifier_pending = vu_rng_guest_notifier_pending;
--    vdc->get_vhost = vu_rng_get_vhost;
-+    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+ #define XSTATE_FP_BIT                   0
+ #define XSTATE_SSE_BIT                  1
+ #define XSTATE_YMM_BIT                  2
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index ac3d47d231..7a349c0723 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -288,6 +288,13 @@ void apic_deliver_irq(uint8_t dest, uint8_t dest_mode, uint8_t delivery_mode,
+     apic_bus_deliver(deliver_bitmask, delivery_mode, vector_num, trigger_mode);
  }
  
- static const TypeInfo vu_rng_info = {
-     .name = TYPE_VHOST_USER_RNG,
--    .parent = TYPE_VIRTIO_DEVICE,
-+    .parent = TYPE_VHOST_USER_BASE,
-     .instance_size = sizeof(VHostUserRNG),
-     .class_init = vu_rng_class_init,
- };
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 3ccddbe950..4f85e7a9ed 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -18,8 +18,15 @@ if have_vhost
-     # fixme - this really should be generic
-     specific_virtio_ss.add(files('vhost-user.c'))
-     system_virtio_ss.add(files('vhost-user-base.c'))
++bool is_x2apic_mode(DeviceState *dev)
++{
++    APICCommonState *s = APIC(dev);
 +
-+    # MMIO Stubs
-     system_virtio_ss.add(files('vhost-user-device.c'))
-+    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('vhost-user-rng.c'))
++    return s->apicbase & MSR_IA32_APICBASE_EXTD;
++}
 +
-+    # PCI Stubs
-     system_virtio_ss.add(when: 'CONFIG_VIRTIO_PCI', if_true: files('vhost-user-device-pci.c'))
-+    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_RNG'],
-+                         if_true: files('vhost-user-rng-pci.c'))
-   endif
-   if have_vhost_vdpa
-     system_virtio_ss.add(files('vhost-vdpa.c'))
-@@ -37,7 +44,6 @@ specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-us
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_I2C', if_true: files('vhost-user-i2c.c'))
--specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('vhost-user-rng.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_GPIO', if_true: files('vhost-user-gpio.c'))
- specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_GPIO'], if_true: files('vhost-user-gpio-pci.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
-@@ -49,7 +55,6 @@ virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vs
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_BLK', if_true: files('vhost-user-blk-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_I2C', if_true: files('vhost-user-i2c-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input-pci.c'))
--virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('vhost-user-rng-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_SCSI', if_true: files('vhost-user-scsi-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_SCSI', if_true: files('vhost-scsi-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs-pci.c'))
+ static void apic_set_base(APICCommonState *s, uint64_t val)
+ {
+     s->apicbase = (val & 0xfffff000) |
+@@ -636,24 +643,19 @@ static void apic_timer(void *opaque)
+     apic_timer_update(s, s->next_time);
+ }
+ 
+-static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
++static int apic_register_read(int index, uint64_t *value)
+ {
+     DeviceState *dev;
+     APICCommonState *s;
+     uint32_t val;
+-    int index;
+-
+-    if (size < 4) {
+-        return 0;
+-    }
++    int ret = 0;
+ 
+     dev = cpu_get_current_apic();
+     if (!dev) {
+-        return 0;
++        return -1;
+     }
+     s = APIC(dev);
+ 
+-    index = (addr >> 4) & 0xff;
+     switch(index) {
+     case 0x02: /* id */
+         val = s->id << 24;
+@@ -718,12 +720,46 @@ static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
+     default:
+         s->esr |= APIC_ESR_ILLEGAL_ADDRESS;
+         val = 0;
++        ret = -1;
+         break;
+     }
+-    trace_apic_mem_readl(addr, val);
++
++    trace_apic_register_read(index, val);
++    *value = val;
++    return ret;
++}
++
++static uint64_t apic_mem_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val;
++    int index;
++
++    if (size < 4) {
++        return 0;
++    }
++
++    index = (addr >> 4) & 0xff;
++    apic_register_read(index, &val);
++
+     return val;
+ }
+ 
++int apic_msr_read(int index, uint64_t *val)
++{
++    DeviceState *dev;
++
++    dev = cpu_get_current_apic();
++    if (!dev) {
++        return -1;
++    }
++
++    if (!is_x2apic_mode(dev)) {
++        return -1;
++    }
++
++    return apic_register_read(index, val);
++}
++
+ static void apic_send_msi(MSIMessage *msi)
+ {
+     uint64_t addr = msi->address;
+@@ -737,35 +773,18 @@ static void apic_send_msi(MSIMessage *msi)
+     apic_deliver_irq(dest, dest_mode, delivery, vector, trigger_mode);
+ }
+ 
+-static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
+-                           unsigned size)
++static int apic_register_write(int index, uint64_t val)
+ {
+     DeviceState *dev;
+     APICCommonState *s;
+-    int index = (addr >> 4) & 0xff;
+-
+-    if (size < 4) {
+-        return;
+-    }
+-
+-    if (addr > 0xfff || !index) {
+-        /* MSI and MMIO APIC are at the same memory location,
+-         * but actually not on the global bus: MSI is on PCI bus
+-         * APIC is connected directly to the CPU.
+-         * Mapping them on the global bus happens to work because
+-         * MSI registers are reserved in APIC MMIO and vice versa. */
+-        MSIMessage msi = { .address = addr, .data = val };
+-        apic_send_msi(&msi);
+-        return;
+-    }
+ 
+     dev = cpu_get_current_apic();
+     if (!dev) {
+-        return;
++        return -1;
+     }
+     s = APIC(dev);
+ 
+-    trace_apic_mem_writel(addr, val);
++    trace_apic_register_write(index, val);
+ 
+     switch(index) {
+     case 0x02:
+@@ -839,8 +858,51 @@ static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
+         break;
+     default:
+         s->esr |= APIC_ESR_ILLEGAL_ADDRESS;
+-        break;
++        return -1;
+     }
++
++    return 0;
++}
++
++static void apic_mem_write(void *opaque, hwaddr addr, uint64_t val,
++                           unsigned size)
++{
++    int index = (addr >> 4) & 0xff;
++
++    if (size < 4) {
++        return;
++    }
++
++    if (addr > 0xfff || !index) {
++        /*
++         * MSI and MMIO APIC are at the same memory location,
++         * but actually not on the global bus: MSI is on PCI bus
++         * APIC is connected directly to the CPU.
++         * Mapping them on the global bus happens to work because
++         * MSI registers are reserved in APIC MMIO and vice versa.
++         */
++        MSIMessage msi = { .address = addr, .data = val };
++        apic_send_msi(&msi);
++        return;
++    }
++
++    apic_register_write(index, val);
++}
++
++int apic_msr_write(int index, uint64_t val)
++{
++    DeviceState *dev;
++
++    dev = cpu_get_current_apic();
++    if (!dev) {
++        return -1;
++    }
++
++    if (!is_x2apic_mode(dev)) {
++        return -1;
++    }
++
++    return apic_register_write(index, val);
+ }
+ 
+ static void apic_pre_save(APICCommonState *s)
+diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
+index 1ddfc9fe09..1c43a9f4f7 100644
+--- a/target/i386/tcg/sysemu/misc_helper.c
++++ b/target/i386/tcg/sysemu/misc_helper.c
+@@ -25,6 +25,7 @@
+ #include "exec/address-spaces.h"
+ #include "exec/exec-all.h"
+ #include "tcg/helper-tcg.h"
++#include "hw/i386/apic.h"
+ 
+ void helper_outb(CPUX86State *env, uint32_t port, uint32_t data)
+ {
+@@ -289,6 +290,19 @@ void helper_wrmsr(CPUX86State *env)
+         env->msr_bndcfgs = val;
+         cpu_sync_bndcs_hflags(env);
+         break;
++    case MSR_APIC_START ... MSR_APIC_END: {
++        int ret;
++        int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
++
++        bql_lock();
++        ret = apic_msr_write(index, val);
++        bql_unlock();
++        if (ret < 0) {
++            goto error;
++        }
++
++        break;
++    }
+     default:
+         if ((uint32_t)env->regs[R_ECX] >= MSR_MC0_CTL
+             && (uint32_t)env->regs[R_ECX] < MSR_MC0_CTL +
+@@ -455,6 +469,19 @@ void helper_rdmsr(CPUX86State *env)
+         val = (cs->nr_threads * cs->nr_cores) | (cs->nr_cores << 16);
+         break;
+     }
++    case MSR_APIC_START ... MSR_APIC_END: {
++        int ret;
++        int index = (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
++
++        bql_lock();
++        ret = apic_msr_read(index, &val);
++        bql_unlock();
++        if (ret < 0) {
++            raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
++        }
++
++        break;
++    }
+     default:
+         if ((uint32_t)env->regs[R_ECX] >= MSR_MC0_CTL
+             && (uint32_t)env->regs[R_ECX] < MSR_MC0_CTL +
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 36ff71f947..1ef29d0256 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -14,8 +14,8 @@ cpu_get_apic_base(uint64_t val) "0x%016"PRIx64
+ # apic.c
+ apic_local_deliver(int vector, uint32_t lvt) "vector %d delivery mode %d"
+ apic_deliver_irq(uint8_t dest, uint8_t dest_mode, uint8_t delivery_mode, uint8_t vector_num, uint8_t trigger_mode) "dest %d dest_mode %d delivery_mode %d vector %d trigger_mode %d"
+-apic_mem_readl(uint64_t addr, uint32_t val)  "0x%"PRIx64" = 0x%08x"
+-apic_mem_writel(uint64_t addr, uint32_t val) "0x%"PRIx64" = 0x%08x"
++apic_register_read(uint8_t reg, uint64_t val) "register 0x%02x = 0x%"PRIx64
++apic_register_write(uint8_t reg, uint64_t val) "register 0x%02x = 0x%"PRIx64
+ 
+ # ioapic.c
+ ioapic_set_remote_irr(int n) "set remote irr for pin %d"
 -- 
 MST
 
