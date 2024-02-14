@@ -4,100 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 276DAC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 15:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B10AC48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 16:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raHcI-00088M-W3; Wed, 14 Feb 2024 10:56:11 -0500
+	id 1raHgR-0001m8-Dy; Wed, 14 Feb 2024 11:00:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raHcF-00086g-Nm
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 10:56:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raHc1-0001IX-7t
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 10:56:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707926152;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1raHgP-0001l5-ND
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 11:00:25 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1raHgM-0002Rp-Gq
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 11:00:25 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8528C1F810;
+ Wed, 14 Feb 2024 16:00:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707926420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B4MCvdBJA95aMmrClkQ/1mSx4rXDKtFq8xdTOOZiE7A=;
- b=a1Q+Ktu8g4pzhYFwWA0X0Rt2CUe9WRVBVdykJzvOibvFg8h1NKbqQywaoFymOKfAevZqMV
- OdwwA7bARvWeJpTeJCasjdANj5QG0cUBMftse+DytcUvSwPc5l345wTCao0MxMap9pCtDi
- kx8WQn+uBUMYQKu4A6lK8bTriajJPcQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-p49p44DlPvuPKY7Vwbkeng-1; Wed, 14 Feb 2024 10:55:50 -0500
-X-MC-Unique: p49p44DlPvuPKY7Vwbkeng-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-40fd2fe490bso4421505e9.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 07:55:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707926150; x=1708530950;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B4MCvdBJA95aMmrClkQ/1mSx4rXDKtFq8xdTOOZiE7A=;
- b=uGenAi/Pemb8nfWTl6j6FpJaxu3e/9+LMWjnYeLs5sq1b5rK4TbeuglNfXOErfpqmW
- oVkicIOEzbm3bpZqW1CeyDRe3O0qtRReDRE3O0t2fHQ8r8MbR7a9p1lhZi3oaoUXEMah
- GG4L8fJoG7jpmYjcxOi7d3FfgwXmLKv8xaU5rWO2KuRebrasrN/M37bPkii4V3lG8v3v
- bHXWpX+WlxP7YVPJNdIIbVftCAO1arn7A2vfAudAGzcGWj5LUzL5HtqYHyo7bT4wNjlJ
- LXa8U4vdoO5+wHO4S4jjUbbAYOZ/AQehxtnjqzeqoFGQyK2VoaMpjY19KY/hR+jxMR9k
- vCkg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhrHLMPta5x7bODkuJo9V26kOXzlmYwUbyrQOAOyUlBhk5eoknb5x/tAAebuaPq0xWCda2RabJbKe14NOque1Oi1LJ5GI=
-X-Gm-Message-State: AOJu0YwBez+mpSbc3oK41PhzeOV2PexMC16CYtUHKEJRvHU7xzKj9Ed2
- GZPcHJtrYaW2eglugQ/j3pJeUsUZnmz+SDZTGo9t37DrbXhYFKkbu5gy9GlMwC4DA8X+t98Digp
- n6ToCy1S4iZY4/4j8q3v8oQT63ghR/rRROCwhCsH0wJPkc946pvJJ
-X-Received: by 2002:a05:600c:444b:b0:411:f6f7:6b1d with SMTP id
- v11-20020a05600c444b00b00411f6f76b1dmr1214675wmn.17.1707926149893; 
- Wed, 14 Feb 2024 07:55:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHelWmPF1M2uin3qf/7n0uMBuyuZwAgvXCYY7wpAtezKtMyFNXJUSePuuJP1vguUQvRszGCOA==
-X-Received: by 2002:a05:600c:444b:b0:411:f6f7:6b1d with SMTP id
- v11-20020a05600c444b00b00411f6f76b1dmr1214660wmn.17.1707926149486; 
- Wed, 14 Feb 2024 07:55:49 -0800 (PST)
-Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- k19-20020a7bc413000000b00410d897765asm2274648wmi.17.2024.02.14.07.55.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 07:55:49 -0800 (PST)
-Date: Wed, 14 Feb 2024 10:55:43 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v4 5/9] pcie_sriov: Validate NumVFs
-Message-ID: <20240214105534-mutt-send-email-mst@kernel.org>
-References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
- <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
- <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
- <56e83476-f607-482e-a9f2-e473148de839@daynix.com>
- <0282c0e6-1e1b-4960-ad74-3e186062b4d7@tls.msk.ru>
+ bh=i5UeP0KRWPP3TFugAL/CO0C28dDyDFJYvbRK1NCM+l8=;
+ b=btqHFkb/uc6l7PyTLKVc0vLYLlEry9tk0+gbywARF7InOGt2rCDbIkdrvxrPsREb2EK3TN
+ ZO5XUN4bwCpvdvzv9pXROYcIFymPs/vcPzsvDK9tLXERzIV4HOuDQjmqF6I8k8zuPSDN+b
+ tzwpuPAPr3c/1IZp9f2VPoCO5VvgJXk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707926420;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i5UeP0KRWPP3TFugAL/CO0C28dDyDFJYvbRK1NCM+l8=;
+ b=TRORliYwtl/JXBaA/TyFRFVA6bzJ3PqXC6lvS4Ufu/mMCHBiwbtDKJvkCi5RLx8P41KyUh
+ IAyQPZldib7HjdCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1707926420; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i5UeP0KRWPP3TFugAL/CO0C28dDyDFJYvbRK1NCM+l8=;
+ b=btqHFkb/uc6l7PyTLKVc0vLYLlEry9tk0+gbywARF7InOGt2rCDbIkdrvxrPsREb2EK3TN
+ ZO5XUN4bwCpvdvzv9pXROYcIFymPs/vcPzsvDK9tLXERzIV4HOuDQjmqF6I8k8zuPSDN+b
+ tzwpuPAPr3c/1IZp9f2VPoCO5VvgJXk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1707926420;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i5UeP0KRWPP3TFugAL/CO0C28dDyDFJYvbRK1NCM+l8=;
+ b=TRORliYwtl/JXBaA/TyFRFVA6bzJ3PqXC6lvS4Ufu/mMCHBiwbtDKJvkCi5RLx8P41KyUh
+ IAyQPZldib7HjdCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0979B13A6D;
+ Wed, 14 Feb 2024 16:00:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 2lZdMJPjzGUTMAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 14 Feb 2024 16:00:19 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH 13/14] migration: Use migrate_has_error() in
+ close_return_path_on_source()
+In-Reply-To: <4af61bb2-4b21-4560-a7c1-c3fb65f20ff3@redhat.com>
+References: <20240207133347.1115903-1-clg@redhat.com>
+ <20240207133347.1115903-14-clg@redhat.com> <87y1bvayu7.fsf@suse.de>
+ <fbdb9fbc-c3de-4b0a-be1f-2bed405dfd86@redhat.com> <87sf23awjp.fsf@suse.de>
+ <4af61bb2-4b21-4560-a7c1-c3fb65f20ff3@redhat.com>
+Date: Wed, 14 Feb 2024 13:00:17 -0300
+Message-ID: <87zfw3ox2m.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0282c0e6-1e1b-4960-ad74-3e186062b4d7@tls.msk.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="btqHFkb/";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=TRORliYw
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.01 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_DKIM_ARC_DNSWL_HI(-1.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; BAYES_HAM(-3.00)[100.00%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_IN_DNSWL_HI(-0.50)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Rspamd-Queue-Id: 8528C1F810
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,9 +131,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 14, 2024 at 06:53:43PM +0300, Michael Tokarev wrote:
-> Nope, I don't remember how to request a CVE ;)
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
-https://www.qemu.org/contribute/security-process/
+> On 2/8/24 14:57, Fabiano Rosas wrote:
+>> C=C3=A9dric Le Goater <clg@redhat.com> writes:
+>>=20
+>>> On 2/8/24 14:07, Fabiano Rosas wrote:
+>>>> C=C3=A9dric Le Goater <clg@redhat.com> writes:
+>>>>
+>>>>> close_return_path_on_source() retrieves the migration error from the
+>>>>> the QEMUFile '->to_dst_file' to know if a shutdown is required. This
+>>>>> shutdown is required to exit the return-path thread. However, in
+>>>>> migrate_fd_cleanup(), '->to_dst_file' is cleaned up before calling
+>>>>> close_return_path_on_source() and the shutdown is never performed,
+>>>>> leaving the source and destination waiting for an event to occur.
+>>>>>
+>>>>> Avoid relying on '->to_dst_file' and use migrate_has_error() instead.
+>>>>>
+>>>>> Suggested-by: Peter Xu <peterx@redhat.com>
+>>>>> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+>>>>> ---
+>>>>>    migration/migration.c | 3 +--
+>>>>>    1 file changed, 1 insertion(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/migration/migration.c b/migration/migration.c
+>>>>> index d5f705ceef4c925589aa49335969672c0d761fa2..5f55af3d7624750ca416c=
+4177781241b3e291e5d 100644
+>>>>> --- a/migration/migration.c
+>>>>> +++ b/migration/migration.c
+>>>>> @@ -2372,8 +2372,7 @@ static bool close_return_path_on_source(Migrati=
+onState *ms)
+>>>>>         * cause it to unblock if it's stuck waiting for the destinati=
+on.
+>>>>>         */
+>>>>>        WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+>>>>> -        if (ms->to_dst_file && ms->rp_state.from_dst_file &&
+>>>>> -            qemu_file_get_error(ms->to_dst_file)) {
+>>>>> +        if (migrate_has_error(ms) && ms->rp_state.from_dst_file) {
+>>>>>                qemu_file_shutdown(ms->rp_state.from_dst_file);
+>>>>>            }
+>>>>>        }
+>>>>
+>>>> Hm, maybe Peter can help defend this, but this assumes that every
+>>>> function that takes an 'f' and sets the file error also sets
+>>>> migrate_set_error(). I'm not sure we have determined that, have we?
+>>>
+>>> How could we check all the code path ? I agree it is difficult when
+>>> looking at the code :/
+>>=20
+>> It would help if the thing wasn't called 'f' for the most part of the
+>> code to begin with.
+>>=20
+>> Whenever there's a file error at to_dst_file there's the chance that the
+>> rp_state.from_dst_file got stuck. So we cannot ignore the file error.
+>>=20
+>> Would it work if we checked it earlier during cleanup as you did
+>> previously and then set the migration error?
+>
+> Do you mean doing something similar to what is done in
+> source_return_path_thread() ?
+>
+>          if (qemu_file_get_error(s->to_dst_file)) {
+>              qemu_file_get_error_obj(s->to_dst_file, &err);
+>      	    if (err) {
+>          	migrate_set_error(ms, err);
+>          	error_free(err);
+> 	...
+>
+> Yes. That would be safer I think.
 
+Yes, something like that.
+
+I wish we could make that return path cleanup more deterministic, but
+currently it's just: "if something hangs, call shutdown()". We don't
+have a way to detect a hang, we just look at the file error and hope it
+works.
+
+A crucial aspect here is that calling qemu_file_shutdown() itself sets
+the file error. So there's not even a guarantee that an error is
+actually an error.
+
+>
+>
+> Nevertheless, I am struggling to understand how qemu_file_set_error()
+> and migrate_set_error() fit together. I was expecting some kind of
+> synchronization  routine but there isn't it seems. Are they completely
+> orthogonal ? when should we use these routines and when not ?
+
+We're trying to phase out the QEMUFile usage altogether. One thing that
+is getting in the way is this dependency on the qemu_file_*_error
+functions.
+
+While we're not there yet, a good pattern is to find a
+qemu_file_set|get_error() pair and replace it with
+migrate_set|has_error(). Unfortunately the return path does not fit in
+this, because we don't have a matching qemu_file_set_error, it could be
+anywhere. As I said above, we're using that error as a heuristic for: "a
+recvmsg() might be hanging".
+
+>
+> My initial goal was to modify some of the memory handlers (log_global*)
+> and migration handlers to propagate errors at the QMP level and them
+> report to the management layer. This is growing in something bigger
+> and currently, I don't find a good approach to the problem.
+>
+> The last two patches of this series try to fix the return-path thread
+> termination. Let's keep that for after.
+
+I'll try to figure that out. I see you provided a reproducer.
+
+>
+> Thanks,
+>
+> C.
 
