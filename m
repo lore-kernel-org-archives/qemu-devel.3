@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA9EC48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8982EC48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDDC-0008Ts-8y; Wed, 14 Feb 2024 06:13:58 -0500
+	id 1raDFc-00060p-M5; Wed, 14 Feb 2024 06:16:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDD7-0008QF-Aj
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:13:53 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDFZ-0005wY-Pd
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:16:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDD5-0006k7-LF
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:13:53 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDFY-0007WQ-2c
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:16:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909231;
+ s=mimecast20190719; t=1707909383;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t2Py5K1KV4TIQcdeM+IKUI8vM0Fvjo561iUpW9cAFpE=;
- b=cxaMXjEzAxLA77d99dwbMyy3XyHUuLSeZvrqeBd4Rkg4uIQ/dMALLkbiYw+XXqht1MNLbT
- bqisnD5FpJLgU7yOHsVjP9wC/D7C03q1q7gMkZBSYGi8gKIowzChptRYzJxpdzrScro3l4
- JncksV4o4uFT0Jx0mTUNGzUCfiL6L7A=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uWvXvbaJCJDx3gylChFMzTBYNmFWTG/2A3hUdEuwE2s=;
+ b=G5BKpfU+bzfFRHvIL7m2XN1fCvx9k9r2K+K134olAe+6afYc9q9b9s2D5HZKVKdjHLMB2n
+ ssxJ+tSZBRinpZ7XtfdWO4XYM7atdNgS2TogQgFp5mZukvhxHxm1xz5JdAhEF40o/HcjRL
+ Wr9yE/ILZgQRvOt+47HP9a1VNr6KzNY=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-HNCCbDiwNi-ps32gxoOApQ-1; Wed, 14 Feb 2024 06:13:49 -0500
-X-MC-Unique: HNCCbDiwNi-ps32gxoOApQ-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-560f41972easo3123162a12.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:13:49 -0800 (PST)
+ us-mta-550-L6p72Ht8MIa7GdG-gYEKoA-1; Wed, 14 Feb 2024 06:16:22 -0500
+X-MC-Unique: L6p72Ht8MIa7GdG-gYEKoA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a3c3f477eb7so186417066b.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:16:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909228; x=1708514028;
+ d=1e100.net; s=20230601; t=1707909380; x=1708514180;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t2Py5K1KV4TIQcdeM+IKUI8vM0Fvjo561iUpW9cAFpE=;
- b=JgydlApXVxuiatOTCy5t1WQhjVvkH875k7h4Biz2yMvMFSB9tWNjwct/A+kOsM+jpU
- 1hXieic9kmQEk2twkWUY6+HAjsykNtUriWSKbpn3ZECk2ybuo3HqlwX/MSu4/rb6pKwj
- lVcuxismwnGsIrkYTwIDCJAyDLIlH44ZkieThKgfGzlft2JQIt4kVyMrPcFDpbtCJn/8
- alN6X+nO/MRyBd4gunKa2AkgBMjaoYEAZ7XLHNMplXO6MQuovmCEjDDGjtY9Q5tIfxu3
- 26XPKJ16LPD3fUTLYxa7b61PgzDcbZ3tMhDJPixc2nFk0K+YE1854QxeP98cTKkxWuwC
- E1tw==
-X-Gm-Message-State: AOJu0Yyq1+dEVg0SlAiCsG2DXlu8tLQr8+feoxWBWFrC8A4zHxtwWdxY
- +SZBAw/lqVIRQfnvdpAPHET7LWP3Xx9Scdri9zJjH/ECJYrKdv6j9Bcp5o722H/RAW3S7f493n8
- cn5MLw2eJgCxG+d7hGGODCqEuSrJO0PCGtFXlzzjPUaXaqs3l3ZqBRPDwOq9pdrnJ5M4VcXlPKl
- YNq+y0zKyukhV4+1YB8gh7+XW+poOHPQ==
-X-Received: by 2002:aa7:c901:0:b0:561:aed9:37e8 with SMTP id
- b1-20020aa7c901000000b00561aed937e8mr1823343edt.3.1707909228118; 
- Wed, 14 Feb 2024 03:13:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHfKFfhlFDN8YbVpAlvmtN/QzRARAVj3rFSkTefBbyEu7xrJEuDVyBUq9BBKzb69vKJnh8guw==
-X-Received: by 2002:aa7:c901:0:b0:561:aed9:37e8 with SMTP id
- b1-20020aa7c901000000b00561aed937e8mr1823289edt.3.1707909226850; 
- Wed, 14 Feb 2024 03:13:46 -0800 (PST)
+ bh=uWvXvbaJCJDx3gylChFMzTBYNmFWTG/2A3hUdEuwE2s=;
+ b=p3TZC7x6GaHUQkd5sC8d0rIsSMoKsVFiHJRV48RtgsNvGyuSldIZAnVtojo5jJbU4o
+ fUa3IBqpEIQKRVz8F1qjg5deB2DgTNipUy0jBVHCo12ZhQfhTWhi2+CoepRrGJh7dL3g
+ GUYIy9O0yWRAZOC0jx+MREPOKEjovuEQoO6IcsXjz3Mx44Qp9G1RaUEpBVmt5EPhG0xO
+ RB+74v7JtyOKiuTw1f0vvUDw8xpKuUXBafqcudDjFohtMSdTRd6LNwia5jo+F/YjGfVs
+ fARueVkgbtsD2mJNj3mXrgYG2IKPb36ka9RuRGDMrcg7vQ7tWQm8Vc1eZR4HhLGyvr9w
+ mU1A==
+X-Gm-Message-State: AOJu0YzPnQAHIl57H4+r2np5FEw4FVPlJMKfCsTFXEzQ1I7r4K4zEI7n
+ 59eWzkzwSNlq1WxBFAdXjfGTQH1wFML0eV1RT0pEUcVhTFFdlWBUzujMjYbbQoHvi+50EVbTAAb
+ 5dRGQovaVu+q+hKXQuP+JNkG8X+0PMfhxo+ZF4Ngv1zRTTf1fkhcswsrwGUy7ax9Ld0XG3ZI2Zy
+ OcU/mSBUxsKWFjxzZ/fAqm686lxtuD2Q==
+X-Received: by 2002:a17:906:d14f:b0:a3d:1edf:f9c6 with SMTP id
+ br15-20020a170906d14f00b00a3d1edff9c6mr1525267ejb.33.1707909380405; 
+ Wed, 14 Feb 2024 03:16:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGGCOhcF574L1dv+7lkgQaW6VX6fPFKzac6lvta0OO8ZsLFiv/7ZJOyvUvaDBbYC1oLK1573w==
+X-Received: by 2002:a17:906:d14f:b0:a3d:1edf:f9c6 with SMTP id
+ br15-20020a170906d14f00b00a3d1edff9c6mr1525246ejb.33.1707909380001; 
+ Wed, 14 Feb 2024 03:16:20 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyzTL8BmDkFj6R8/MA9LIsDVFmI5VE4YjiqZTYPzhroHU094AfhLPdQgg5DKfFNTWceqfePe/HE09zAxTndq6G82s3g0p5THox7AHX9KHfdYGq3jOMNVPjvjTY9GHDupJU1Gft9/8Q2CHU7GyI8BY+HkhPwDhhTFlUjZdskr+qp37xmZKxmhdmr7V9botVD3LFjNlV0jO8bTd5SiXyAAprPUElu40cS0shyqLh2Q3Q7nN19mM+h1YsRubIHsUGduFBBjvFqSZU5GUUr9XWOchgCD+ARnSqJeZ94UJ+pAuRXHki+HYWo09RsKE=
+ AJvYcCVaHudQaTlihTqrNJfllMBJi68j/BTCrgUJ3HRnpOykh6VzemLlSw1rPU38uubMELGSwYwyOqr9+lxvm8IF6t1rcdtWnQO2a1an7oZh91j9sE07F6/KlNnpu4Kozo4JYj0vWAJ9bBupmH5hDfSz59yrm30+/kGjafy2MO6E3NM=
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- cq9-20020a056402220900b0055ffe74e39dsm4549878edb.85.2024.02.14.03.13.44
+ y8-20020a170906558800b00a3d409ebe5fsm550631ejp.119.2024.02.14.03.16.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:13:46 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:13:43 -0500
+ Wed, 14 Feb 2024 03:16:19 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:16:17 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Leo Yan <leo.yan@linaro.org>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 10/60] hw/virtio: Move vhost-user-input into virtio folder
-Message-ID: <87c7fb7819962e052a69046167949fe266611abf.1707909001.git.mst@redhat.com>
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 58/60] virtio-gpu.c: add resource_destroy class method
+Message-ID: <330399bd8935c9c2100c40e168781f405545d05a.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -111,88 +107,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-vhost-user-input is in the input folder.  On the other hand, the folder
-'hw/virtio' maintains other virtio stubs (e.g. I2C, RNG, GPIO, etc).
+When destroying/unrefing resources, devices such as virtio-gpu-rutabaga
+need to do their own bookkeeping (free rutabaga resources that are
+associated with the virtio_gpu_simple_resource).
 
-This patch moves vhost-user-input into the virtio folder for better code
-organization.  No functionality change.
+This commit adds a class method so that virtio-gpu-rutabaga can override
+it in the next commit.
 
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20231120043721.50555-4-leo.yan@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240104210945.1223134-11-alex.bennee@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <b0a86630c4d601f3a269fd7e08cfefc13bd4e219.1706626470.git.manos.pitsidianakis@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/{input => virtio}/vhost-user-input.c | 0
- MAINTAINERS                             | 2 +-
- hw/input/meson.build                    | 1 -
- hw/virtio/meson.build                   | 4 +++-
- 4 files changed, 4 insertions(+), 3 deletions(-)
- rename hw/{input => virtio}/vhost-user-input.c (100%)
+ include/hw/virtio/virtio-gpu.h |  3 +++
+ hw/display/virtio-gpu.c        | 25 ++++++++++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/hw/input/vhost-user-input.c b/hw/virtio/vhost-user-input.c
-similarity index 100%
-rename from hw/input/vhost-user-input.c
-rename to hw/virtio/vhost-user-input.c
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 66c9e81c55..89f2d31f70 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2290,8 +2290,8 @@ virtio-input
- M: Gerd Hoffmann <kraxel@redhat.com>
- S: Odd Fixes
- F: docs/system/devices/vhost-user-input.rst
--F: hw/input/vhost-user-input.c
- F: hw/input/virtio-input*.c
-+F: hw/virtio/vhost-user-input.c
- F: include/hw/virtio/virtio-input.h
- F: contrib/vhost-user-input/*
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 584ba2ed73..b28e7ef0d2 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -219,6 +219,9 @@ struct VirtIOGPUClass {
+     void (*update_cursor_data)(VirtIOGPU *g,
+                                struct virtio_gpu_scanout *s,
+                                uint32_t resource_id);
++    void (*resource_destroy)(VirtIOGPU *g,
++                             struct virtio_gpu_simple_resource *res,
++                             Error **errp);
+ };
  
-diff --git a/hw/input/meson.build b/hw/input/meson.build
-index 640556bbbc..3cc8ab85f0 100644
---- a/hw/input/meson.build
-+++ b/hw/input/meson.build
-@@ -11,7 +11,6 @@ system_ss.add(when: 'CONFIG_TSC2005', if_true: files('tsc2005.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input-hid.c'))
- system_ss.add(when: 'CONFIG_VIRTIO_INPUT_HOST', if_true: files('virtio-input-host.c'))
--system_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input.c'))
+ struct VirtIOGPUGL {
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 2b73ae585b..1c1ee230b3 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -402,7 +402,8 @@ static void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
+ }
  
- system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_keypad.c'))
- system_ss.add(when: 'CONFIG_TSC210X', if_true: files('tsc210x.c'))
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index af8abae020..d7f18c96e6 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -25,6 +25,7 @@ if have_vhost
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_I2C', if_true: files('vhost-user-i2c.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('vhost-user-rng.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('vhost-user-snd.c'))
-+    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input.c'))
+ static void virtio_gpu_resource_destroy(VirtIOGPU *g,
+-                                        struct virtio_gpu_simple_resource *res)
++                                        struct virtio_gpu_simple_resource *res,
++                                        Error **errp)
+ {
+     int i;
  
-     # PCI Stubs
-     system_virtio_ss.add(when: 'CONFIG_VIRTIO_PCI', if_true: files('vhost-user-device-pci.c'))
-@@ -36,6 +37,8 @@ if have_vhost
-                          if_true: files('vhost-user-rng-pci.c'))
-     system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SND'],
-                          if_true: files('vhost-user-snd-pci.c'))
-+    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_INPUT'],
-+                         if_true: files('vhost-user-input-pci.c'))
-   endif
-   if have_vhost_vdpa
-     system_virtio_ss.add(files('vhost-vdpa.c'))
-@@ -59,7 +62,6 @@ virtio_pci_ss = ss.source_set()
- virtio_pci_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_BLK', if_true: files('vhost-user-blk-pci.c'))
--virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_SCSI', if_true: files('vhost-user-scsi-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_SCSI', if_true: files('vhost-scsi-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs-pci.c'))
+@@ -438,7 +439,11 @@ static void virtio_gpu_resource_unref(VirtIOGPU *g,
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+         return;
+     }
+-    virtio_gpu_resource_destroy(g, res);
++    /*
++     * virtio_gpu_resource_destroy does not set any errors, so pass a NULL errp
++     * to ignore them.
++     */
++    virtio_gpu_resource_destroy(g, res, NULL);
+ }
+ 
+ static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
+@@ -1488,11 +1493,24 @@ static void virtio_gpu_device_unrealize(DeviceState *qdev)
+ static void virtio_gpu_reset_bh(void *opaque)
+ {
+     VirtIOGPU *g = VIRTIO_GPU(opaque);
++    VirtIOGPUClass *vgc = VIRTIO_GPU_GET_CLASS(g);
+     struct virtio_gpu_simple_resource *res, *tmp;
++    uint32_t resource_id;
++    Error *local_err = NULL;
+     int i = 0;
+ 
+     QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+-        virtio_gpu_resource_destroy(g, res);
++        resource_id = res->resource_id;
++        vgc->resource_destroy(g, res, &local_err);
++        if (local_err) {
++            error_append_hint(&local_err, "%s: %s resource_destroy"
++                              "for resource_id = %"PRIu32" failed.\n",
++                              __func__, object_get_typename(OBJECT(g)),
++                              resource_id);
++            /* error_report_err frees the error object for us */
++            error_report_err(local_err);
++            local_err = NULL;
++        }
+     }
+ 
+     for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
+@@ -1632,6 +1650,7 @@ static void virtio_gpu_class_init(ObjectClass *klass, void *data)
+     vgc->handle_ctrl = virtio_gpu_handle_ctrl;
+     vgc->process_cmd = virtio_gpu_simple_process_cmd;
+     vgc->update_cursor_data = virtio_gpu_update_cursor_data;
++    vgc->resource_destroy = virtio_gpu_resource_destroy;
+     vgbc->gl_flushed = virtio_gpu_handle_gl_flushed;
+ 
+     vdc->realize = virtio_gpu_device_realize;
 -- 
 MST
 
