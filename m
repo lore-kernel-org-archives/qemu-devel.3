@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726D4C48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AA5C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raGM1-0003Tw-7m; Wed, 14 Feb 2024 09:35:17 -0500
+	id 1raGVL-00089u-TI; Wed, 14 Feb 2024 09:44:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1raGLz-0003Tf-Vt
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:35:16 -0500
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1raGVI-00089a-QN
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:44:52 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1raGLm-0006Z6-AF
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:35:15 -0500
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-296d24631c0so3357143a91.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:35:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1raGVF-0000eU-5k
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:44:51 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-5cedfc32250so4181256a12.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:44:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1707921301; x=1708526101; darn=nongnu.org;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707921887; x=1708526687;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+sruKy57po/tKs345v1pfh3vS5+/8QXPN7GnVLo0QKM=;
- b=CHhxzOwwWOZh0Ey8gN3wbjezC3uAqQJcanB1kUEvBmW3jwq1i0WlwPKl8cw1VQYPG/
- AmyeqXtS1sqSQ1oy63YIN/Hq23683rPRCIgZYJjoDW8X1NdWIShFnGfiuGBXKFZU7TeH
- gJpOecYQ0SUKiVGsWWJzF406oRJW7WbGZAiTq0EAwmiAxqD/hM0AIgUYqECzeHU6ibti
- LQlSRL/Qn+2qaP3G/s3e6SlU0wkw3hfzeNKTaQ8/y9I7ISmmf0kU0T2FVq/p9mr673Ki
- ezCFL+Kjhds2NNE4nJpA2ufdA8Dc3LdtXRbCWCgxuK5r867qLosSUtwK0cL+eaLlVgC7
- B5jA==
+ bh=KKS3NhySw1ljCjTHObe9XYnucnkmN+u6iqMrLqGjrP4=;
+ b=3aQlvLfBivIVH6JaAUM0QjaH5B28LlYNulW/enlSzHKwGVG6zrcsGnVFBSCTPqhB2i
+ yk13/GhIq1drLMDegwQSAqA+jvwWdQI5CZYSpWy66w67EQvbz2Fp0L2AbqLSdeM+5asS
+ S3k6ZlPEuneV0KOF/Z4IuL/unx9omcdnq3Slt/GLvbayVYsXAno4B5XkkER8854HNQ7V
+ 1IG/g3zBNQoleCzEcx7RDzjYBpJgypNBRthDO4PZbktmyOqGlHaxOyWjyRQEiml8M+1Z
+ HCBuEfrPCeZE51/nx7PAikZZDtY6MaoziYada8ed6prL8qQx/rJg8+H0thtXZ5eaU9Zw
+ 8RDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707921301; x=1708526101;
+ d=1e100.net; s=20230601; t=1707921887; x=1708526687;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+sruKy57po/tKs345v1pfh3vS5+/8QXPN7GnVLo0QKM=;
- b=Igf6TPWqcesOpOCeHptQYYPdBUDqUljpTM3ktvvCh/fMkPNr9W7R7BIxSYHtFy0Dhd
- 5yiP3idVN2qBi/adv1DsVqmoe8+nozAQSXAAxRfDNci+fAONaT4TPwjReJp/gOgdlYAi
- fDtmXaMJa7VDWTT3HJovS1i1GZyZ1Iqu1b3eGMMopjYwfuAaT1Vu7CINBFXoHFT+qjcp
- kQetLFSxA5b/Aw3RIAurH84uQ8GsoKDb2yoZnw2SxIS6esaClDU5VgBqageSEI53f56J
- PDIOodJf5Tst2Z+RtDocBZ+uQXHg9O95EVbm5FYFSJmrZ1HaUlFjdtuOx4AXJfH8VCef
- 4jRA==
+ bh=KKS3NhySw1ljCjTHObe9XYnucnkmN+u6iqMrLqGjrP4=;
+ b=KJyBIJnUCzZgO9HKIGce7aPE0GXV81cSuPM7ZRxCSlbuXWw9iuh4UUdewfLjbvMopL
+ 5p5KxV7LwmI6nQUaZ9X3KMBqYRQb94xqmWirPyYx0lbOAMSo0jk2jSKpPQIc08sO29zD
+ ++R5jgb8S34kAsvk1otjO0r3kYg6en4X39edn8U2bStqJ7h7u9NTD2pXd1b8/mozpNfd
+ UmbA7wBWOauogBFdvbn1MYC3Yuptu92EcstRrF1DHS/NyyFiIy7dML7toOzpOR6ibqsi
+ m/Qrc/dvCkZvHZbUqDDk+9Dsf+ShKK1josq1Tumi4np0cRZvn0dOtI6dDt00M1FEemIu
+ LGgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXS4oJ6WAE05e3jXQsdWf0R7aq+Yt3vGkcZJyk+gNIPMn38UbDv5X3OJ70KXsvrGaqJpXL34eIt/p8XS+mdDnL3JACHGio=
-X-Gm-Message-State: AOJu0YxMeKaIVWoesly+mP3jVYJp1WmA1zJ4DEmwF+W/UgYHKVdFaFyP
- NrgkANgOtTm6ffMP4qrS4mJ0B33U4bBzA2bBRiCipzi5r4XbAHjaJ/zAI4kSimc=
-X-Google-Smtp-Source: AGHT+IGRrnxVHiSWYzsKZ/JjBjikjrY7kevkvhbX8qgzk15JMr52JcSYAbneSJ1ttATYKdbATkiZMg==
-X-Received: by 2002:a17:90b:218c:b0:298:c81d:9e09 with SMTP id
- ku12-20020a17090b218c00b00298c81d9e09mr2299640pjb.46.1707921300401; 
- Wed, 14 Feb 2024 06:35:00 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
+ AJvYcCV4kQKh85/JYCEgXXXbPpDSq3oSH8hEcief+6YxKIPg9rB94nUbACUXf3FjSJB8Zhey6L9ulOJ2BEiQ5lMBnHGgtu3BLAs=
+X-Gm-Message-State: AOJu0YxMN3wUP5TuEwtAliEhqrrGi3OwiFU5xzbb6DwKmeWc93s1OmrP
+ g/+xREDdt+XOKyyPmGxXJucbjRnmgUQGeWv2H3IwBO/Qgk71noSehMYSXZmnXvY=
+X-Google-Smtp-Source: AGHT+IFRhMG1jOXUDBff2HVjeGTk6HyYjtSvzEYKCTSlOV59uAXj5ghYSBUjUTw6eMwViw9axCN0wA==
+X-Received: by 2002:a17:90a:4981:b0:296:286c:4dd6 with SMTP id
+ d1-20020a17090a498100b00296286c4dd6mr2332242pjh.46.1707921887448; 
+ Wed, 14 Feb 2024 06:44:47 -0800 (PST)
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with ESMTPSA id
- rs16-20020a17090b2b9000b00298c633bd5fsm1453553pjb.30.2024.02.14.06.34.57
+ sl13-20020a17090b2e0d00b00296f4fc7e60sm1518387pjb.12.2024.02.14.06.44.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Feb 2024 06:34:59 -0800 (PST)
-Message-ID: <9976110c-0662-478d-8fbd-8a85ca894bfd@ventanamicro.com>
-Date: Wed, 14 Feb 2024 11:34:55 -0300
+ Wed, 14 Feb 2024 06:44:47 -0800 (PST)
+Message-ID: <3e889cd9-0d3e-4d35-ba74-4dc95ca26504@daynix.com>
+Date: Wed, 14 Feb 2024 23:44:42 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/3] Add RISC-V IOPMP support
+Subject: Re: [PATCH v4 6/9] pcie_sriov: Reuse SR-IOV VF device instances
 Content-Language: en-US
-To: Ethan Chen <ethan84@andestech.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- qemu-riscv@nongnu.org
-References: <20240207093444.249112-1-ethan84@andestech.com>
- <20240207093444.249112-3-ethan84@andestech.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240207093444.249112-3-ethan84@andestech.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-6-89ad093a07f4@daynix.com>
+ <20240214024239-mutt-send-email-mst@kernel.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240214024239-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::534;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,1587 +110,492 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/7/24 06:34, Ethan Chen wrote:
-> Support specification Version 1.0.0-draft4 rapid-k model.
-> The specification url:
-> https://github.com/riscv-non-isa/iopmp-spec/blob/main/riscv_iopmp_specification.pdf
+On 2024/02/14 16:54, Michael S. Tsirkin wrote:
+> On Wed, Feb 14, 2024 at 02:13:44PM +0900, Akihiko Odaki wrote:
+>> Disable SR-IOV VF devices by reusing code to power down PCI devices
+>> instead of removing them when the guest requests to disable VFs. This
+>> allows to realize devices and report VF realization errors at PF
+>> realization time.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > 
-> The memory transaction from source devices connected to IOPMP will be
-> checked by IOPMP rule. The method of connecting the source device to
-> IOPMP as follows:
-> For a system bus device, device connects to IOPMP by calling
-> address_space_rw to address space iopmp_sysbus_as with
-> MemTxAttrs.requester_id=SID.
-> For a PCI bus device, device connects to IOPMP when it is on a host
-> bridge with iopmp_setup_pci. PCI bus device has default SID from PCI
-> BDF.
+> This patch does much more than what commit log says.
+> This really needs to be split up with each change you make
+> documented.
+
+I'll split into two patches; one for renaming "power" to "enabled", 
+another for reusing the code for SR-IOV.
+
 > 
-> IOPMP have two optional features need source device support.
-> 1. Partially hit detection: A Source device support IOPMP partially
->     hit detection need to send a transaction_info before transaction
->     start and send a transaction_info with eop after transaction end.
->     IOPMP will additionally check partially hit by transaction_info.
+>> ---
+>>   docs/pcie_sriov.txt         |   8 ++--
+>>   include/hw/pci/pci.h        |   2 +-
+>>   include/hw/pci/pci_device.h |   2 +-
+>>   include/hw/pci/pcie_sriov.h |   6 +--
+>>   hw/net/igb.c                |  13 ++++--
+>>   hw/nvme/ctrl.c              |  24 +++++++----
+>>   hw/pci/pci.c                |  18 ++++----
+>>   hw/pci/pci_host.c           |   4 +-
+>>   hw/pci/pcie.c               |   4 +-
+>>   hw/pci/pcie_sriov.c         | 100 ++++++++++++++++++++------------------------
+>>   10 files changed, 97 insertions(+), 84 deletions(-)
+>>
+>> diff --git a/docs/pcie_sriov.txt b/docs/pcie_sriov.txt
+>> index a47aad0bfab0..ab2142807f79 100644
+>> --- a/docs/pcie_sriov.txt
+>> +++ b/docs/pcie_sriov.txt
+>> @@ -52,9 +52,11 @@ setting up a BAR for a VF.
+>>         ...
+>>   
+>>         /* Add and initialize the SR/IOV capability */
+>> -      pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
+>> -                       vf_devid, initial_vfs, total_vfs,
+>> -                       fun_offset, stride);
+>> +      if (!pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
+>> +                              vf_devid, initial_vfs, total_vfs,
+>> +                              fun_offset, stride, errp)) {
+>> +         return;
+>> +      }
+>>   
+>>         /* Set up individual VF BARs (parameters as for normal BARs) */
+>>         pcie_sriov_pf_init_vf_bar( ... )
+>> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+>> index eaa3fc99d884..442017b4865d 100644
+>> --- a/include/hw/pci/pci.h
+>> +++ b/include/hw/pci/pci.h
+>> @@ -642,6 +642,6 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
+>>   }
+>>   
+>>   MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+>> -void pci_set_power(PCIDevice *pci_dev, bool state);
+>> +void pci_set_enabled(PCIDevice *pci_dev, bool state);
 > 
-> 2. Stall: A Source device support IOPMP stall need to resend the
->     transaction when it gets the MEMTX_IOPMP_STALL result
+> Not a good name. Does this set enabled state? Test whether
+> some kind of set is enabled?
+
+I followed memory_region_set_enabled(), which is called from 
+pci_set_enabled().
+
 > 
-> There are three possible results of a transaction: valid, blocked, and
-> stalled. If a transaction is valid, target address space is
-> downstream_as(system_memory). If a transaction is blocked, it will go
-> to blocked_io_as. The operation of blocked_io_as could be a bus error,
-> a decode error, or it can respond a success with fabricated data
-> depending on IOPMP ERRREACT register value. If a transaction is
-> stalled, it will go to stall_io_as. The operation of stall_io_as does
-> nothing but return a stall result to source device. Source device
-> should retry the transaction if it gets a stall result.
+>>   
+>>   #endif
+>> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+>> index 54fa0676abf1..f5aba8ae2675 100644
+>> --- a/include/hw/pci/pci_device.h
+>> +++ b/include/hw/pci/pci_device.h
+>> @@ -56,7 +56,7 @@ typedef struct PCIReqIDCache PCIReqIDCache;
+>>   struct PCIDevice {
+>>       DeviceState qdev;
+>>       bool partially_hotplugged;
+>> -    bool has_power;
+>> +    bool is_enabled;
+>>   
+>>       /* PCI config space */
+>>       uint8_t *config;
+>> diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+>> index 095fb0c9edf9..d9a39daccac4 100644
+>> --- a/include/hw/pci/pcie_sriov.h
+>> +++ b/include/hw/pci/pcie_sriov.h
+>> @@ -18,7 +18,6 @@
+>>   struct PCIESriovPF {
+>>       uint16_t num_vfs;   /* Number of virtual functions created */
+>>       uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
+>> -    const char *vfname; /* Reference to the device type used for the VFs */
+>>       PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+>>   };
+>>   
+>> @@ -27,10 +26,11 @@ struct PCIESriovVF {
+>>       uint16_t vf_number; /* Logical VF number of this function */
+>>   };
+>>   
+>> -void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>> +bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>>                           const char *vfname, uint16_t vf_dev_id,
+>>                           uint16_t init_vfs, uint16_t total_vfs,
+>> -                        uint16_t vf_offset, uint16_t vf_stride);
+>> +                        uint16_t vf_offset, uint16_t vf_stride,
+>> +                        Error **errp);
 > 
-> Signed-off-by: Ethan Chen <ethan84@andestech.com>
-> ---
->   hw/misc/Kconfig                               |    4 +
->   hw/misc/meson.build                           |    1 +
->   hw/misc/riscv_iopmp.c                         | 1202 +++++++++++++++++
->   hw/misc/trace-events                          |    4 +
->   include/hw/misc/riscv_iopmp.h                 |  187 +++
->   .../hw/misc/riscv_iopmp_transaction_info.h    |   28 +
->   6 files changed, 1426 insertions(+)
->   create mode 100644 hw/misc/riscv_iopmp.c
->   create mode 100644 include/hw/misc/riscv_iopmp.h
->   create mode 100644 include/hw/misc/riscv_iopmp_transaction_info.h
+> Returning false to indicate an error is a bad idea -
+> most APIs we have return 0 on success, < 0 on error.
+> Or just use errp.
+
+I followed a statement in include/qapi/error.h:
+  * - Whenever practical, also return a value that indicates success /
+  *   failure.  This can make the error checking more concise, and can
+  *   avoid useless error object creation and destruction.  Note that
+  *   we still have many functions returning void.  We recommend
+  *   • bool-valued functions return true on success / false on failure,
+  *   • pointer-valued functions return non-null / null pointer, and
+  *   • integer-valued functions return non-negative / negative.
+
 > 
-> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-> index 4fc6b29b43..dd0a2da29b 100644
-> --- a/hw/misc/Kconfig
-> +++ b/hw/misc/Kconfig
-> @@ -206,4 +206,8 @@ config IOSB
->   config XLNX_VERSAL_TRNG
->       bool
->   
-> +config RISCV_IOPMP
-> +    bool
-> +    select STREAM
-> +
->   source macio/Kconfig
-> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> index e4ef1da5a5..74221e48f9 100644
-> --- a/hw/misc/meson.build
-> +++ b/hw/misc/meson.build
-> @@ -35,6 +35,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
->   system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
->   system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
->   system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
-> +specific_ss.add(when: 'CONFIG_RISCV_IOPMP', if_true: files('riscv_iopmp.c'))
->   
->   subdir('macio')
->   
-> diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
-> new file mode 100644
-> index 0000000000..e9d5d171a6
-> --- /dev/null
-> +++ b/hw/misc/riscv_iopmp.c
-> @@ -0,0 +1,1202 @@
-> +/*
-> + * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
-> + *
-> + * Copyright (c) 2023 Andes Tech. Corp.
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License along with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "qapi/error.h"
-> +#include "trace.h"
-> +#include "exec/exec-all.h"
-> +#include "exec/address-spaces.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/misc/riscv_iopmp.h"
-> +#include "memory.h"
-> +#include "hw/irq.h"
-> +#include "hw/registerfields.h"
-> +#include "trace.h"
-> +
-> +#define TYPE_IOPMP_IOMMU_MEMORY_REGION "iopmp-iommu-memory-region"
-> +#define TYPE_IOPMP_TRASACTION_INFO_SINK "iopmp_transaction_info_sink"
-> +
-> +DECLARE_INSTANCE_CHECKER(Iopmp_StreamSink, IOPMP_TRASACTION_INFO_SINK,
-> +                         TYPE_IOPMP_TRASACTION_INFO_SINK)
-> +
-> +#define MEMTX_IOPMP_STALL (1 << 3)
-> +
-> +REG32(VERSION, 0x00)
-> +    FIELD(VERSION, VENDOR, 0, 24)
-> +    FIELD(VERSION, SPECVER , 24, 8)
-> +REG32(IMP, 0x04)
-> +    FIELD(IMP, IMPID, 0, 32)
-> +REG32(HWCFG0, 0x08)
-> +    FIELD(HWCFG0, SID_NUM, 0, 16)
-> +    FIELD(HWCFG0, ENTRY_NUM, 16, 16)
-> +REG32(HWCFG1, 0x0C)
-> +    FIELD(HWCFG1, MODEL, 0, 4)
-> +    FIELD(HWCFG1, TOR_EN, 4, 1)
-> +    FIELD(HWCFG1, SPS_EN, 5, 1)
-> +    FIELD(HWCFG1, USER_CFG_EN, 6, 1)
-> +    FIELD(HWCFG1, PRIENT_PROG, 7, 1)
-> +    FIELD(HWCFG1, SID_TRANSL_EN, 8, 1)
-> +    FIELD(HWCFG1, SID_TRANSL_PROG, 9, 1)
-> +    FIELD(HWCFG1, MD_NUM, 24, 7)
-> +    FIELD(HWCFG1, ENABLE, 31, 1)
-> +REG32(HWCFG2, 0x10)
-> +    FIELD(HWCFG2, PRIO_ENTRY, 0, 16)
-> +    FIELD(HWCFG2, SID_TRANSL, 16, 16)
-> +REG32(ENTRYOFFSET, 0x20)
-> +    FIELD(ENTRYOFFSET, OFFSET, 0, 32)
-> +REG32(ERRREACT, 0x28)
-> +    FIELD(ERRREACT, L, 0, 1)
-> +    FIELD(ERRREACT, IE, 1, 1)
-> +    FIELD(ERRREACT, IP, 2, 1)
-> +    FIELD(ERRREACT, IRE, 4, 1)
-> +    FIELD(ERRREACT, RRE, 5, 3)
-> +    FIELD(ERRREACT, IWE, 8, 1)
-> +    FIELD(ERRREACT, RWE, 9, 3)
-> +    FIELD(ERRREACT, PEE, 28, 1)
-> +    FIELD(ERRREACT, RPE, 29, 3)
-> +REG32(MDSTALL, 0x30)
-> +    FIELD(MDSTALL, EXEMPT, 0, 1)
-> +    FIELD(MDSTALL, MD, 1, 31)
-> +REG32(MDSTALLH, 0x34)
-> +    FIELD(MDSTALLH, MD, 0, 32)
-> +REG32(SIDSCP, 0x38)
-> +    FIELD(SIDSCP, SID, 0, 16)
-> +    FIELD(SIDSCP, OP, 30, 2)
-> +REG32(MDLCK, 0x40)
-> +    FIELD(MDLCK, L, 0, 1)
-> +    FIELD(MDLCK, MD, 1, 31)
-> +REG32(MDLCKH, 0x44)
-> +    FIELD(MDLCKH, MDH, 0, 32)
-> +REG32(MDCFGLCK, 0x48)
-> +    FIELD(MDCFGLCK, L, 0, 1)
-> +    FIELD(MDCFGLCK, F, 1, 7)
-> +REG32(ENTRYLCK, 0x4C)
-> +    FIELD(ENTRYLCK, L, 0, 1)
-> +    FIELD(ENTRYLCK, F, 1, 16)
-> +REG32(ERR_REQADDR, 0x60)
-> +    FIELD(ERR_REQADDR, ADDR, 0, 32)
-> +REG32(ERR_REQADDRH, 0x64)
-> +    FIELD(ERR_REQADDRH, ADDRH, 0, 32)
-> +REG32(ERR_REQSID, 0x68)
-> +    FIELD(ERR_REQSID, SID, 0, 32)
-> +REG32(ERR_REQINFO, 0x6C)
-> +    FIELD(ERR_REQINFO, NO_HIT, 0, 1)
-> +    FIELD(ERR_REQINFO, PAR_HIT, 1, 1)
-> +    FIELD(ERR_REQINFO, TYPE, 8, 3)
-> +    FIELD(ERR_REQINFO, EID, 16, 16)
-> +REG32(MDCFG0, 0x800)
-> +    FIELD(MDCFG0, T, 0, 16)
-> +REG32(SRCMD_EN0, 0x1000)
-> +    FIELD(SRCMD_EN0, L, 0, 1)
-> +    FIELD(SRCMD_EN0, MD, 1, 31)
-> +REG32(SRCMD_ENH0, 0x1004)
-> +    FIELD(SRCMD_ENH0, MDH, 0, 32)
-> +REG32(SRCMD_R0, 0x1008)
-> +    FIELD(SRCMD_R0, MD, 1, 31)
-> +REG32(SRCMD_RH0, 0x100C)
-> +    FIELD(SRCMD_RH0, MDH, 0, 32)
-> +REG32(SRCMD_W0, 0x1010)
-> +    FIELD(SRCMD_W0, MD, 1, 31)
-> +REG32(SRCMD_WH0, 0x1014)
-> +    FIELD(SRCMD_WH0, MDH, 0, 32)
-> +REG32(ENTRY_ADDR0, 0x4000)
-> +    FIELD(ENTRY_ADDR0, ADDR, 0, 32)
-> +REG32(ENTRY_ADDRH0, 0x4004)
-> +    FIELD(ENTRY_ADDRH0, ADDRH, 0, 32)
-> +REG32(ENTRY_CFG0, 0x4008)
-> +    FIELD(ENTRY_CFG0, R, 0, 1)
-> +    FIELD(ENTRY_CFG0, W, 1, 1)
-> +    FIELD(ENTRY_CFG0, X, 2, 1)
-> +    FIELD(ENTRY_CFG0, A, 3, 2)
-> +REG32(ENTRY_USER_CFG0, 0x400C)
-> +    FIELD(ENTRY_USER_CFG0, IM, 0, 32)
-> +
-> +/* Offsets to SRCMD_EN(i) */
-> +#define SRCMD_EN_OFFSET  0x0
-> +#define SRCMD_ENH_OFFSET 0x4
-> +#define SRCMD_R_OFFSET   0x8
-> +#define SRCMD_RH_OFFSET  0xC
-> +#define SRCMD_W_OFFSET   0x10
-> +#define SRCMD_WH_OFFSET  0x14
-> +
-> +/* Offsets to ENTRY_ADDR(i) */
-> +#define ENTRY_ADDR_OFFSET     0x0
-> +#define ENTRY_ADDRH_OFFSET    0x4
-> +#define ENTRY_CFG_OFFSET      0x8
-> +#define ENTRY_USER_CFG_OFFSET 0xC
-> +
-> +static void iopmp_decode_napot(uint64_t a, uint64_t *sa,
-> +                               uint64_t *ea)
-> +{
-> +    /*
-> +     * aaaa...aaa0   8-byte NAPOT range
-> +     * aaaa...aa01   16-byte NAPOT range
-> +     * aaaa...a011   32-byte NAPOT range
-> +     * ...
-> +     * aa01...1111   2^XLEN-byte NAPOT range
-> +     * a011...1111   2^(XLEN+1)-byte NAPOT range
-> +     * 0111...1111   2^(XLEN+2)-byte NAPOT range
-> +     *  1111...1111   Reserved
-> +     */
-> +
-> +    a = (a << 2) | 0x3;
-> +    *sa = a & (a + 1);
-> +    *ea = a | (a + 1);
-> +}
-> +
-> +static void iopmp_update_rule(IopmpState *s, uint32_t entry_index)
-> +{
-> +    uint8_t this_cfg = s->regs.entry[entry_index].cfg_reg;
-> +    uint64_t this_addr = s->regs.entry[entry_index].addr_reg |
-> +                         ((uint64_t)s->regs.entry[entry_index].addrh_reg << 32);
-> +    uint64_t prev_addr = 0u;
-> +    uint64_t sa = 0u;
-> +    uint64_t ea = 0u;
-> +
-> +    if (entry_index >= 1u) {
-> +        prev_addr = s->regs.entry[entry_index - 1].addr_reg |
-> +                    ((uint64_t)s->regs.entry[entry_index - 1].addrh_reg << 32);
-> +    }
-> +
-> +    switch (FIELD_EX32(this_cfg, ENTRY_CFG0, A)) {
-> +    case IOPMP_AMATCH_OFF:
-> +        sa = 0u;
-> +        ea = -1;
-> +        break;
-> +
-> +    case IOPMP_AMATCH_TOR:
-> +        sa = (prev_addr) << 2; /* shift up from [xx:0] to [xx+2:2] */
-> +        ea = ((this_addr) << 2) - 1u;
-> +        if (sa > ea) {
-> +            sa = ea = 0u;
-> +        }
-> +        break;
-> +
-> +    case IOPMP_AMATCH_NA4:
-> +        sa = this_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
-> +        ea = (sa + 4u) - 1u;
-> +        break;
-> +
-> +    case IOPMP_AMATCH_NAPOT:
-> +        iopmp_decode_napot(this_addr, &sa, &ea);
-> +        break;
-> +
-> +    default:
-> +        sa = 0u;
-> +        ea = 0u;
-> +        break;
-> +    }
-> +
-> +    s->entry_addr[entry_index].sa = sa;
-> +    s->entry_addr[entry_index].ea = ea;
-> +}
-> +
-> +static uint64_t iopmp_read(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    IopmpState *s = IOPMP(opaque);
-> +    uint32_t rz = 0;
-> +    uint32_t sid, offset, idx;
-> +
-> +    switch (addr) {
-> +    case A_VERSION ... A_ENTRY_USER_CFG0 + 16 * (IOPMP_MAX_ENTRY_NUM - 1):
-> +        switch (addr) {
-> +        case A_VERSION:
-> +            rz = VENDER_VIRT << R_VERSION_VENDOR_SHIFT |
-> +                 SPECVER_1_0_0_DRAFT4 << R_VERSION_SPECVER_SHIFT;
-> +            break;
-> +        case A_IMP:
-> +            rz = IMPID_1_0_0_DRAFT4_0;
-> +            break;
-> +        case A_HWCFG0:
-> +            rz = s->sid_num << R_HWCFG0_SID_NUM_SHIFT |
-> +                 s->entry_num << R_HWCFG0_ENTRY_NUM_SHIFT;
-> +            break;
-> +        case A_HWCFG1:
-> +            rz = s->model << R_HWCFG1_MODEL_SHIFT |
-> +                 CFG_TOR_EN << R_HWCFG1_TOR_EN_SHIFT |
-> +                 s->sps_en << R_HWCFG1_SPS_EN_SHIFT |
-> +                 CFG_USER_CFG_EN << R_HWCFG1_USER_CFG_EN_SHIFT  |
-> +                 s->prient_prog << R_HWCFG1_PRIENT_PROG_SHIFT  |
-> +                 s->sid_transl_en << R_HWCFG1_SID_TRANSL_EN_SHIFT  |
-> +                 s->sid_transl_prog << R_HWCFG1_SID_TRANSL_PROG_SHIFT  |
-> +                 s->md_num << R_HWCFG1_MD_NUM_SHIFT  |
-> +                 s->enable << R_HWCFG1_ENABLE_SHIFT ;
-> +            break;
-> +        case A_HWCFG2:
-> +            rz = s->prio_entry << R_HWCFG2_PRIO_ENTRY_SHIFT |
-> +                 s->sid_transl << R_HWCFG2_SID_TRANSL_SHIFT;
-> +            break;
-> +        case A_ENTRYOFFSET:
-> +            rz = A_ENTRY_ADDR0;
-> +            break;
-> +        case A_ERRREACT:
-> +            rz = s->regs.errreact;
-> +            break;
-> +        case A_MDSTALL:
-> +            rz = s->regs.mdstall;
-> +            break;
-> +        case A_MDSTALLH:
-> +            rz = s->regs.mdstallh;
-> +            break;
-> +        case A_SIDSCP:
-> +            sid = FIELD_EX32(s->regs.sidscp, SIDSCP, SID);
-> +            if (sid < s->sid_num) {
-> +                rz = sid | (s->sidscp_op[sid]) << R_SIDSCP_OP_SHIFT;
-> +            } else {
-> +                rz = sid | 3 << R_SIDSCP_OP_SHIFT;
-> +            }
-> +            break;
-> +        case A_MDLCK:
-> +            rz = s->regs.mdlck;
-> +            break;
-> +        case A_MDLCKH:
-> +            rz = s->regs.mdlckh;
-> +            break;
-> +        case A_MDCFGLCK:
-> +            rz = s->regs.mdcfglck;
-> +            break;
-> +        case A_ENTRYLCK:
-> +            rz = s->regs.entrylck;
-> +            break;
-> +        case A_ERR_REQADDR:
-> +            rz = s->regs.err_reqaddr & UINT32_MAX;
-> +            break;
-> +        case A_ERR_REQADDRH:
-> +            rz = s->regs.err_reqaddr >> 32;
-> +            break;
-> +        case A_ERR_REQSID:
-> +            rz = s->regs.err_reqsid;
-> +            break;
-> +        case A_ERR_REQINFO:
-> +            rz = s->regs.err_reqinfo;
-> +            break;
-> +
-> +        default:
-> +            if (addr >= A_MDCFG0 &&
-> +                addr < A_MDCFG0 + 4 * (s->md_num - 1)) {
-> +                offset = addr - A_MDCFG0;
-> +                idx = offset >> 2;
-> +                if (idx == 0 && offset == 0) {
-> +                    rz = s->regs.mdcfg[idx];
-> +                } else {
-> +                    /* Only MDCFG0 is implemented in rapid-k model */
-> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                                  __func__, (int)addr);
-> +                }
-> +            } else if (addr >= A_SRCMD_EN0 &&
-> +                       addr < A_SRCMD_WH0 + 32 * (s->sid_num - 1)) {
-> +                offset = addr - A_SRCMD_EN0;
-> +                idx = offset >> 5;
-> +                offset &= 0x1f;
-> +
-> +                switch (offset) {
-> +                case SRCMD_EN_OFFSET:
-> +                    rz = s->regs.srcmd_en[idx];
-> +                    break;
-> +                case SRCMD_ENH_OFFSET:
-> +                    rz = s->regs.srcmd_enh[idx];
-> +                    break;
-> +                case SRCMD_R_OFFSET:
-> +                    rz = s->regs.srcmd_r[idx];
-> +                    break;
-> +                case SRCMD_RH_OFFSET:
-> +                    rz = s->regs.srcmd_rh[idx];
-> +                    break;
-> +                case SRCMD_W_OFFSET:
-> +                    rz = s->regs.srcmd_w[idx];
-> +                    break;
-> +                case SRCMD_WH_OFFSET:
-> +                    rz = s->regs.srcmd_wh[idx];
-> +                    break;
-> +                default:
-> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                        __func__, (int)addr);
-> +                }
-> +            } else if (addr >= A_ENTRY_ADDR0 &&
-> +                       addr < A_ENTRY_USER_CFG0 + 16 * (s->entry_num - 1)) {
-> +                offset = addr - A_ENTRY_ADDR0;
-> +                idx = offset >> 4;
-> +                offset &= 0xf;
-> +
-> +                switch (offset) {
-> +                case ENTRY_ADDR_OFFSET:
-> +                    rz = s->regs.entry[idx].addr_reg;
-> +                    break;
-> +                case ENTRY_ADDRH_OFFSET:
-> +                    rz = s->regs.entry[idx].addrh_reg;
-> +                    break;
-> +                case ENTRY_CFG_OFFSET:
-> +                    rz = s->regs.entry[idx].cfg_reg;
-> +                    break;
-> +                case ENTRY_USER_CFG_OFFSET:
-> +                    /* Does not support user customized permission */
-> +                    rz = 0;
-> +                    break;
-> +                default:
-> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                        __func__, (int)addr);
-> +                    break;
-> +                }
-> +            } else {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                              __func__, (int)addr);
-> +            }
-> +            break;
+> 
+>>   void pcie_sriov_pf_exit(PCIDevice *dev);
+>>   
+>>   /* Set up a VF bar in the SR/IOV bar area */
+>> diff --git a/hw/net/igb.c b/hw/net/igb.c
+>> index 0b5c31a58bba..1079a33d4000 100644
+>> --- a/hw/net/igb.c
+>> +++ b/hw/net/igb.c
+>> @@ -447,9 +447,16 @@ static void igb_pci_realize(PCIDevice *pci_dev, Error **errp)
+>>   
+>>       pcie_ari_init(pci_dev, 0x150);
+>>   
+>> -    pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET, TYPE_IGBVF,
+>> -        IGB_82576_VF_DEV_ID, IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
+>> -        IGB_VF_OFFSET, IGB_VF_STRIDE);
+>> +    if (!pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET,
+>> +                            TYPE_IGBVF, IGB_82576_VF_DEV_ID,
+>> +                            IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
+>> +                            IGB_VF_OFFSET, IGB_VF_STRIDE,
+>> +                            errp)) {
+>> +        pcie_cap_exit(pci_dev);
+>> +        igb_cleanup_msix(s);
+>> +        msi_uninit(pci_dev);
+>> +        return;
+>> +    }
+>>   
+>>       pcie_sriov_pf_init_vf_bar(pci_dev, IGBVF_MMIO_BAR_IDX,
+>>           PCI_BASE_ADDRESS_MEM_TYPE_64 | PCI_BASE_ADDRESS_MEM_PREFETCH,
+>> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+>> index f026245d1e9e..f8df622fe590 100644
+>> --- a/hw/nvme/ctrl.c
+>> +++ b/hw/nvme/ctrl.c
+>> @@ -8031,7 +8031,8 @@ static uint64_t nvme_bar_size(unsigned total_queues, unsigned total_irqs,
+>>       return bar_size;
+>>   }
+>>   
+>> -static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
+>> +static bool nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset,
+>> +                            Error **errp)
+>>   {
+>>       uint16_t vf_dev_id = n->params.use_intel_id ?
+>>                            PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME;
+>> @@ -8040,12 +8041,17 @@ static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
+>>                                         le16_to_cpu(cap->vifrsm),
+>>                                         NULL, NULL);
+>>   
+>> -    pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
+>> -                       n->params.sriov_max_vfs, n->params.sriov_max_vfs,
+>> -                       NVME_VF_OFFSET, NVME_VF_STRIDE);
+>> +    if (!pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
+>> +                            n->params.sriov_max_vfs, n->params.sriov_max_vfs,
+>> +                            NVME_VF_OFFSET, NVME_VF_STRIDE,
+>> +                            errp)) {
+>> +        return false;
+>> +    }
+>>   
+>>       pcie_sriov_pf_init_vf_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+>>                                 PCI_BASE_ADDRESS_MEM_TYPE_64, bar_size);
+>> +
+>> +    return true;
+>>   }
+>>   
+>>   static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
+>> @@ -8124,6 +8130,12 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+>>           return false;
+>>       }
+>>   
+>> +    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs &&
+>> +        !nvme_init_sriov(n, pci_dev, 0x120, errp)) {
+>> +        msix_uninit(pci_dev, &n->bar0, &n->bar0);
+>> +        return false;
+>> +    }
+>> +
+>>       nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
+>>   
+>>       if (n->params.cmb_size_mb) {
+>> @@ -8134,10 +8146,6 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+>>           nvme_init_pmr(n, pci_dev);
+>>       }
+>>   
+>> -    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
+>> -        nvme_init_sriov(n, pci_dev, 0x120);
+>> -    }
+>> -
+>>       return true;
+>>   }
+> 
+> why this change?
 
-Not sure if we need this 'break' since there's already a break right after it.
+I moved nvme_init_sriov() because nvme_init_cmb() does some memory 
+allocation, which will be leaked if we return false after that.
 
-> +        }
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                      __func__, (int)addr);
-> +    }
+nvme_init_sriov() now follows immediately after msix_init(); it already 
+has code to return for error handling so we shouldn't need more than 
+msix_uninit().
 
-IIUC we're doing a nested 'switch' like this:
+> 
+>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>> index 47f38375bb09..838c261c21f0 100644
+>> --- a/hw/pci/pci.c
+>> +++ b/hw/pci/pci.c
+>> @@ -1524,7 +1524,7 @@ static void pci_update_mappings(PCIDevice *d)
+>>               continue;
+>>   
+>>           new_addr = pci_bar_address(d, i, r->type, r->size);
+>> -        if (!d->has_power) {
+>> +        if (!d->is_enabled) {
+>>               new_addr = PCI_BAR_UNMAPPED;
+>>           }
+>>   
+>> @@ -1612,7 +1612,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
+>>           pci_update_irq_disabled(d, was_irq_disabled);
+>>           memory_region_set_enabled(&d->bus_master_enable_region,
+>>                                     (pci_get_word(d->config + PCI_COMMAND)
+>> -                                   & PCI_COMMAND_MASTER) && d->has_power);
+>> +                                   & PCI_COMMAND_MASTER) && d->is_enabled);
+>>       }
+>>   
+>>       msi_write_config(d, addr, val_in, l);
+>> @@ -2154,7 +2154,9 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
+>>           return;
+>>       }
+>>   
+>> -    pci_set_power(pci_dev, true);
+>> +    if (!pci_is_vf(pci_dev)) {
+>> +        pci_set_enabled(pci_dev, true);
+>> +    }
+> 
+> why are you not enabling vfs specifically? seems confusing. you also
+> duplicate this logic in a couple more places. needs a
+> comment at least. Or better, add sane APIs that do this correctly.
+> E.g. keep pci_set_power around?
 
-> +    switch (addr) {
-> +    case A_VERSION ... A_ENTRY_USER_CFG0 + 16 * (IOPMP_MAX_ENTRY_NUM - 1):
-> +        switch (addr) {
-            ( -------- do things ---------)
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                      __func__, (int)addr);
-> +    }
+It makes sense. I'll add pci_set_power(), which calls pci_set_enabled() 
+only for PFs and has a proper comment.
 
-It seems that the first 'switch' isn't doing much - it's just doing a range check on
-'addr' for the second break.
-
-Given that the nested 'switch' is also doing 'addr' range checks and throwing the same
-guest error if add is invalid, can't we remove the first switch?
-
-Or, if we really want an early exit, we can do it in an if:
-
-
-if (addr is *NOT* in A_VERSION ... A_ENTRY_USER_CFG0 + 16 * (IOPMP_MAX_ENTRY_NUM - 1)) {
-     qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-                   __func__, (int)addr);
-     trace_iopmp_read(addr, 0);
-     return 0;
-}
-
-switch (addr) {
-case A_VERSION: /* RO */
-(...)
-
-
-> +    trace_iopmp_read(addr, rz);
-> +    return rz;
-> +}
-> +
-> +static void
-> +iopmp_write(void *opaque, hwaddr addr, uint64_t value, unsigned size)
-> +{
-> +    IopmpState *s = IOPMP(opaque);
-> +    int value_f;
-> +    int reg_f;
-> +    uint32_t sid, op, offset, idx;
-> +    uint32_t value32 = value;
-> +    trace_iopmp_write(addr, value32);
-> +
-> +    switch (addr) {
-> +    case A_VERSION ... A_ENTRY_USER_CFG0 + 16 * (IOPMP_MAX_ENTRY_NUM - 1):
-> +        switch (addr) {
-> +        case A_VERSION: /* RO */
-> +            break;
-> +        case A_IMP: /* RO */
-> +            break;
-> +        case A_HWCFG0: /* RO */
-> +            break;
-> +        case A_HWCFG1:
-> +            if (FIELD_EX32(value32, HWCFG1, PRIENT_PROG)) {
-> +                /* W1C */
-> +                s->prient_prog = 0;
-> +            }
-> +            if (FIELD_EX32(value32, HWCFG1, SID_TRANSL_PROG)) {
-> +                /* W1C */
-> +                s->sid_transl_prog = 0;
-> +            }
-> +            if (FIELD_EX32(value32, HWCFG1, ENABLE)) {
-> +                /* W1S */
-> +                s->enable = 1;
-> +            }
-> +            break;
-> +        case A_HWCFG2:
-> +            if (s->prient_prog) {
-> +                s->prio_entry = FIELD_EX32(value32, HWCFG2, PRIO_ENTRY);
-> +            }
-> +            if (s->sid_transl_en && s->sid_transl_prog) {
-> +                s->sid_transl = FIELD_EX32(value32, HWCFG2, SID_TRANSL);
-> +            }
-> +            break;
-> +        case A_ERRREACT:
-> +            if (!FIELD_EX32(s->regs.errreact, ERRREACT, L)) {
-> +                    s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, L,
-> +                               FIELD_EX32(value32, ERRREACT, L));
-> +                if (FIELD_EX32(value32, ERRREACT, IP)) {
-> +                    s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT,
-> +                                                  IP, 0);
-> +                }
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, IE,
-> +                                        FIELD_EX32(value32, ERRREACT, IE));
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, IRE,
-> +                                        FIELD_EX32(value32, ERRREACT, IRE));
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, RRE,
-> +                                        FIELD_EX32(value32, ERRREACT, RRE));
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, IWE,
-> +                                        FIELD_EX32(value32, ERRREACT, IWE));
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, RWE,
-> +                                        FIELD_EX32(value32, ERRREACT, RWE));
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, PEE,
-> +                                        FIELD_EX32(value32, ERRREACT, PEE));
-> +                s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, RPE,
-> +                                        FIELD_EX32(value32, ERRREACT, RPE));
-> +            } else {
-> +                if (FIELD_EX32(value32, ERRREACT, IP)) {
-> +                    s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT,
-> +                                                  IP, 0);
-> +                }
-> +            }
-> +            break;
-> +        case A_MDSTALL:
-> +            s->regs.mdstall = value32;
-> +            break;
-> +        case A_MDSTALLH:
-> +            s->regs.mdstallh = value32;
-> +            break;
-> +        case A_SIDSCP:
-> +            sid = FIELD_EX32(value32, SIDSCP, SID);
-> +            op = FIELD_EX32(value32, SIDSCP, OP);
-> +            if (sid < s->sid_num && op != SIDSCP_OP_QUERY) {
-> +                s->sidscp_op[sid] = op;
-> +                s->regs.sidscp = value32;
-> +            } else {
-> +                s->regs.sidscp = sid | (0x3 << R_SIDSCP_OP_SHIFT);
-> +            }
-> +            break;
-> +        case A_MDLCK:
-> +            if (!FIELD_EX32(s->regs.mdlck, MDLCK, L)) {
-> +                s->regs.mdlck = value32;
-> +            }
-> +            break;
-> +        case A_MDLCKH:
-> +             if (!FIELD_EX32(s->regs.mdlck, MDLCK, L)) {
-> +                s->regs.mdlckh = value32;
-> +            }
-> +            break;
-> +        case A_MDCFGLCK:
-> +            if (!FIELD_EX32(s->regs.mdcfglck, MDCFGLCK, L)) {
-> +                value_f = FIELD_EX32(value32, MDCFGLCK, F);
-> +                reg_f = FIELD_EX32(s->regs.mdcfglck, MDCFGLCK, F);
-> +                if (value_f > reg_f) {
-> +                    s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, F,
-> +                                                  value_f);
-> +                }
-> +                s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, L,
-> +                           FIELD_EX32(value32, MDCFGLCK, L));
-> +            }
-> +            break;
-> +        case A_ENTRYLCK:
-> +            if (!(FIELD_EX32(s->regs.entrylck, ENTRYLCK, L))) {
-> +                value_f = FIELD_EX32(value32, ENTRYLCK, F);
-> +                reg_f = FIELD_EX32(s->regs.entrylck, ENTRYLCK, F);
-> +                if (value_f > reg_f) {
-> +                    s->regs.entrylck = FIELD_DP32(s->regs.entrylck, ENTRYLCK, F,
-> +                                                  value_f);
-> +                }
-> +                s->regs.entrylck = FIELD_DP32(s->regs.entrylck, ENTRYLCK, L,
-> +                          FIELD_EX32(value32, ENTRYLCK, L));
-> +            }
-> +        case A_ERR_REQADDR: /* RO */
-> +            break;
-> +        case A_ERR_REQADDRH: /* RO */
-> +            break;
-> +        case A_ERR_REQSID: /* RO */
-> +            break;
-> +        case A_ERR_REQINFO: /* RO */
-> +            break;
-> +
-> +        default:
-> +            if (addr >= A_MDCFG0 &&
-> +                addr < A_MDCFG0 + 4 * (s->md_num - 1)) {
-> +                offset = addr - A_MDCFG0;
-> +                idx = offset >> 2;
-> +                /* RO in rapid-k model */
-> +                if (idx > 0) {
-> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                                  __func__, (int)addr);
-> +                }
-> +            } else if (addr >= A_SRCMD_EN0 &&
-> +                       addr < A_SRCMD_WH0 + 32 * (s->sid_num - 1)) {
-> +                offset = addr - A_SRCMD_EN0;
-> +                idx = offset >> 5;
-> +                offset &= 0x1f;
-> +
-> +                if (offset % 4) {
-> +                    qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                                  __func__, (int)addr);
-> +                } else if (FIELD_EX32(s->regs.srcmd_en[idx], SRCMD_EN0, L)
-> +                           == 0) {
-> +
-> +                    switch (offset) {
-> +                    case SRCMD_EN_OFFSET:
-> +                        s->regs.srcmd_en[idx] =
-> +                            FIELD_DP32(s->regs.srcmd_en[idx], SRCMD_EN0, L,
-> +                                       FIELD_EX32(value32, SRCMD_EN0, L));
-> +
-> +                        /* MD field is protected by mdlck */
-> +                        value32 = (value32 & ~s->regs.mdlck) |
-> +                                  (s->regs.srcmd_en[idx] & s->regs.mdlck);
-> +                        s->regs.srcmd_en[idx] =
-> +                            FIELD_DP32(s->regs.srcmd_en[idx], SRCMD_EN0, MD,
-> +                                        FIELD_EX32(value32, SRCMD_EN0, MD));
-> +                        break;
-> +                    case SRCMD_ENH_OFFSET:
-> +                        value32 = (value32 & ~s->regs.mdlckh) |
-> +                                  (s->regs.srcmd_enh[idx] & s->regs.mdlckh);
-> +                        s->regs.srcmd_enh[idx] =
-> +                            FIELD_DP32(s->regs.srcmd_enh[idx], SRCMD_ENH0, MDH,
-> +                                       value32);
-> +                        break;
-> +                    case SRCMD_R_OFFSET:
-> +                        if (s->sps_en) {
-> +                            value32 = (value32 & ~s->regs.mdlck) |
-> +                                      (s->regs.srcmd_r[idx] & s->regs.mdlck);
-> +                            s->regs.srcmd_r[idx] =
-> +                                FIELD_DP32(s->regs.srcmd_r[idx], SRCMD_R0, MD,
-> +                                    FIELD_EX32(value32, SRCMD_R0, MD));
-> +                        }
-> +                        break;
-> +                    case SRCMD_RH_OFFSET:
-> +                        if (s->sps_en) {
-> +                            value32 = (value32 & ~s->regs.mdlckh) |
-> +                                      (s->regs.srcmd_rh[idx] & s->regs.mdlckh);
-> +                            s->regs.srcmd_rh[idx] =
-> +                                FIELD_DP32(s->regs.srcmd_rh[idx], SRCMD_RH0,
-> +                                           MDH, value32);
-> +                        }
-> +                        break;
-> +                    case SRCMD_W_OFFSET:
-> +                        if (s->sps_en) {
-> +                            value32 = (value32 & ~s->regs.mdlck) |
-> +                                      (s->regs.srcmd_w[idx] & s->regs.mdlck);
-> +                            s->regs.srcmd_w[idx] =
-> +                                FIELD_DP32(s->regs.srcmd_w[idx], SRCMD_W0, MD,
-> +                                    FIELD_EX32(value32, SRCMD_W0, MD));
-> +                        }
-> +                        break;
-> +                    case SRCMD_WH_OFFSET:
-> +                        if (s->sps_en) {
-> +                            value32 = (value32 & ~s->regs.mdlckh) |
-> +                                      (s->regs.srcmd_wh[idx] & s->regs.mdlckh);
-> +                            s->regs.srcmd_wh[idx] =
-> +                                FIELD_DP32(s->regs.srcmd_wh[idx], SRCMD_WH0,
-> +                                    MDH, value32);
-> +                        }
-> +                    default:
-> +                        break;
-> +                    }
-> +                }
-> +            } else if (addr >= A_ENTRY_ADDR0 &&
-> +                       addr < A_ENTRY_USER_CFG0 + 16 * (s->entry_num - 1)) {
-> +                offset = addr - A_ENTRY_ADDR0;
-> +                idx = offset >> 4;
-> +                offset &= 0xf;
-> +
-> +                /* index < ENTRYLCK_F is protected */
-> +                if (idx >= FIELD_EX32(s->regs.entrylck, ENTRYLCK, F)) {
-> +                    switch (offset) {
-> +                    case ENTRY_ADDR_OFFSET:
-> +                        s->regs.entry[idx].addr_reg = value32;
-> +                        break;
-> +                    case ENTRY_ADDRH_OFFSET:
-> +                        s->regs.entry[idx].addrh_reg = value32;
-> +                        break;
-> +                    case ENTRY_CFG_OFFSET:
-> +                        s->regs.entry[idx].cfg_reg = value32;
-> +                        break;
-> +                    case ENTRY_USER_CFG_OFFSET:
-> +                        /* Does not support user customized permission */
-> +                        break;
-> +                    default:
-> +                        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n",
-> +                            __func__, (int)addr);
-> +                        break;
-> +                    }
-> +                    iopmp_update_rule(s, idx);
-> +                }
-> +            } else {
-> +                qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n", __func__,
-> +                              (int)addr);
-> +            }
-> +            /* If IOPMP permission of any addr has been changed, */
-> +            /* flush TLB pages. */
-> +            tlb_flush_all_cpus_synced(current_cpu);
-> +            break;
-
-Extra 'break'.
-
-> +        }
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad addr %x\n", __func__,
-> +                      (int)addr);
-> +    }
-> +}
-
-The same comment I did about the nested switch statements in iopmp_read() can be
-done here too - the first switch is just a more complex way of checking if 'addr'
-isn't in that range, while the inner switch is also doing its own range checks. Let's
-keep a single 'switch' or do an early check with an "if".
-
-> +
-> +/* Match entry in memory domain */
-> +static int match_entry_md(IopmpState *s, int md_idx, hwaddr s_addr,
-> +                          hwaddr e_addr, int *entry_idx)
-> +{
-> +    int entry_idx_s, entry_idx_e;
-> +    int result = ENTRY_NO_HIT;
-> +    int i = 0;
-> +    entry_idx_s = md_idx * s->regs.mdcfg[0];
-> +    entry_idx_e = (md_idx + 1) * s->regs.mdcfg[0];
-> +
-> +    if (entry_idx_s >= s->entry_num) {
-> +        return result;
-> +    }
-> +    if (entry_idx_e > s->entry_num) {
-> +        entry_idx_e = s->entry_num;
-> +    }
-> +    i = entry_idx_s;
-> +    while (i < entry_idx_e) {
-> +        if (s_addr >= s->entry_addr[i].sa && s_addr <= s->entry_addr[i].ea) {
-> +            /* check end address */
-> +            if (e_addr >= s->entry_addr[i].sa &&
-> +                e_addr <= s->entry_addr[i].ea) {
-> +                *entry_idx = i;
-> +                return ENTRY_HIT;
-> +            } else if (i >= s->prio_entry) {
-> +                /* record result and continue for non-prio_entry */
-> +                result = ENTRY_PAR_HIT;
-> +                continue;
-> +            } else {
-> +                return ENTRY_PAR_HIT;
-> +            }
-> +        }
-> +        i++;
-> +    }
-> +    return result;
-> +}
-> +
-> +static int match_entry(IopmpState *s, int sid, hwaddr s_addr, hwaddr e_addr,
-> +                       int *match_md_idx, int *match_entry_idx)
-> +{
-> +    int cur_result = ENTRY_NO_HIT;
-> +    int result = ENTRY_NO_HIT;
-> +    /* Remove lock bit */
-> +    uint64_t srcmd_en = ((uint64_t)s->regs.srcmd_en[sid] |
-> +                         ((uint64_t)s->regs.srcmd_enh[sid] << 32)) >> 1;
-> +
-> +    for (int md_idx = 0; md_idx < s->md_num; md_idx++) {
-> +        if (srcmd_en & (1ULL << md_idx)) {
-> +            cur_result = match_entry_md(s, md_idx, s_addr, e_addr,
-> +                                        match_entry_idx);
-> +            if (cur_result == ENTRY_HIT) {
-> +                *match_md_idx = md_idx;
-> +                return cur_result;
-> +            }
-> +            if (cur_result > result) {
-> +                result = cur_result;
-> +            }
-> +        }
-> +    }
-> +    return result;
-> +}
-> +
-> +static bool check_md_stall(IopmpState *s, int md_idx)
-> +{
-> +    uint64_t mdstall = s->regs.mdstall | (uint64_t)s->regs.mdstallh << 32;
-> +    uint64_t md_selected = mdstall & (1 << (md_idx + R_MDSTALL_EXEMPT_SHIFT));
-> +    if (FIELD_EX32(s->regs.mdstall, MDSTALL, EXEMPT)) {
-> +        return !md_selected;
-> +    } else {
-> +        return md_selected;
-> +    }
-> +}
-> +
-> +static inline bool check_sidscp_stall(IopmpState *s, int sid)
-> +{
-> +    return s->sidscp_op[sid] == SIDSCP_OP_STALL;
-> +}
-> +
-> +static void iopmp_error_reaction(IopmpState *s, uint32_t id, hwaddr start,
-> +                                 hwaddr end, uint32_t info)
-> +{
-> +    if (start == s->prev_error_info[id].start_addr &&
-> +        end == s->prev_error_info[id].end_addr &&
-> +        info == s->prev_error_info[id].reqinfo) {
-> +            /* skip following error */
-> +            return;
-> +    }
-> +
-> +    s->prev_error_info[id].start_addr = start;
-> +    s->prev_error_info[id].end_addr = end;
-> +    s->prev_error_info[id].reqinfo = info;
-> +
-> +    if (!FIELD_EX32(s->regs.errreact, ERRREACT, IP)) {
-> +        s->regs.errreact = FIELD_DP32(s->regs.errreact, ERRREACT, IP, 1);
-> +        s->regs.err_reqsid = id;
-> +        s->regs.err_reqaddr = start;
-> +        s->regs.err_reqinfo = info;
-> +
-> +        if (FIELD_EX32(info, ERR_REQINFO, TYPE) == ERR_REQINFO_TYPE_READ
-> +            && FIELD_EX32(s->regs.errreact, ERRREACT, IE) &&
-> +            FIELD_EX32(s->regs.errreact, ERRREACT, IRE)) {
-> +            qemu_set_irq(s->irq, 1);
-> +        }
-> +        if (FIELD_EX32(info, ERR_REQINFO, TYPE) == ERR_REQINFO_TYPE_WRITE &&
-> +            FIELD_EX32(s->regs.errreact, ERRREACT, IE) &&
-> +            FIELD_EX32(s->regs.errreact, ERRREACT, IWE)) {
-> +            qemu_set_irq(s->irq, 1);
-> +        }
-> +    }
-> +}
-> +
-> +static IOMMUTLBEntry iopmp_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
-> +                                     IOMMUAccessFlags flags, int iommu_idx)
-> +{
-> +    bool is_stalled = false;
-> +    int pci_id = 0;
-> +    int sid = iommu_idx;
-> +    IopmpState *s;
-> +    MemoryRegion *mr = MEMORY_REGION(iommu);
-> +    hwaddr start_addr, end_addr;
-> +    int entry_idx = -1;
-> +    int md_idx = -1;
-> +    int result, srcmd_rw;
-> +    uint32_t error_info = 0;
-> +    IOMMUTLBEntry entry = {
-> +        .target_as = NULL,
-> +        .iova = addr,
-> +        .translated_addr = addr,
-> +        .addr_mask = (~(hwaddr)0),
-> +        .perm = IOMMU_NONE,
-> +    };
-> +
-> +    /* Find IOPMP of iommu */
-> +    if (strncmp(mr->name, "riscv-iopmp-sysbus-iommu", 24) != 0) {
-> +        sscanf(mr->name, "riscv-iopmp-pci-iommu%d", &pci_id);
-> +        iopmp_pci_addressspcace *pci_s = container_of(iommu,
-> +                                                      iopmp_pci_addressspcace,
-> +                                                      iommu);
-> +        s = IOPMP(pci_s->iopmp);
-> +        entry.target_as = &s->downstream_as;
-> +        /* If device does not specify sid, use id from pci */
-> +        if (sid == 0) {
-> +            sid = pci_id;
-> +        }
-> +    } else {
-> +        s = IOPMP(container_of(iommu, IopmpState, iommu));
-> +    }
-> +
-> +    if (s->transaction_state[sid].supported) {
-> +        /* get transaction_state if device supported */
-> +        start_addr = s->transaction_state[sid].start_addr;
-> +        end_addr = s->transaction_state[sid].end_addr;
-> +        if (addr > end_addr || addr < start_addr ||
-> +            !s->transaction_state[sid].running) {
-> +            qemu_log_mask(LOG_GUEST_ERROR, "transaction_state error.");
-> +        }
-> +    } else {
-> +        start_addr = addr;
-> +        end_addr = addr;
-> +    }
-> +
-> +    if (!s->enable) {
-> +        /* Bypass IOPMP */
-> +        entry.perm = IOMMU_RW;
-> +        return entry;
-> +    }
-> +
-> +    result = match_entry(s, sid, start_addr, end_addr, &md_idx, &entry_idx);
-> +    if (result == ENTRY_HIT) {
-> +        is_stalled = check_md_stall(s, md_idx) || check_sidscp_stall(s, sid);
-> +        if (is_stalled) {
-> +            entry.target_as = &s->stall_io_as;
-> +            entry.perm = IOMMU_RW;
-> +            return entry;
-> +        }
-> +        entry.perm = s->regs.entry[entry_idx].cfg_reg & 0x7;
-> +        if (s->sps_en) {
-> +            /* SPS extension does not affect x permission */
-> +            if (md_idx <= 31) {
-> +                srcmd_rw = 0x4 | ((s->regs.srcmd_r[sid] >>
-> +                                  (md_idx + R_SRCMD_R0_MD_SHIFT)) & 0x1);
-> +                srcmd_rw |= ((s->regs.srcmd_w[sid] >>
-> +                             (md_idx + R_SRCMD_W0_MD_SHIFT)) & 0x1) << 1;
-> +            } else {
-> +                srcmd_rw = 0x4 | ((s->regs.srcmd_rh[sid] >>
-> +                                  (md_idx + R_SRCMD_R0_MD_SHIFT - 32)) & 0x1);
-> +                srcmd_rw |= ((s->regs.srcmd_wh[sid] >>
-> +                             (md_idx + R_SRCMD_W0_MD_SHIFT - 32)) & 0x1) << 1;
-> +            }
-> +            entry.perm &= srcmd_rw;
-> +        }
-> +        if ((entry.perm & flags) == 0) {
-> +            /* permission denied */
-> +            error_info = FIELD_DP32(error_info, ERR_REQINFO, EID, entry_idx);
-> +            error_info = FIELD_DP32(error_info, ERR_REQINFO, TYPE, (flags - 1));
-> +            iopmp_error_reaction(s, sid, start_addr, end_addr, error_info);
-> +            entry.target_as = &s->blocked_io_as;
-> +            entry.perm = IOMMU_RW;
-> +        } else {
-> +            entry.addr_mask = s->entry_addr[entry_idx].ea -
-> +                              s->entry_addr[entry_idx].sa;
-> +            /* clear error info */
-> +            s->prev_error_info[sid].reqinfo = 0;
-> +            if (s->sid_transl_en) {
-> +                /* pass to next iopmp */
-> +                if (s->next_iommu) {
-> +                    int new_sid = s->sid_transl;
-> +                    IopmpState *next_s = IOPMP(container_of(s->next_iommu,
-> +                                                            IopmpState, iommu));
-> +                    next_s->transaction_state[new_sid].supported = true;
-> +                    while (next_s->transaction_state[new_sid].running) {
-> +                        ;
-> +                    }
-> +                    /* Send transaction info to next IOPMP */
-> +                    qemu_mutex_lock(&next_s->iopmp_transaction_mutex);
-> +                    next_s->transaction_state[new_sid].running = 1;
-> +                    qemu_mutex_unlock(&next_s->iopmp_transaction_mutex);
-> +                    next_s->transaction_state[new_sid].start_addr = start_addr;
-> +                    next_s->transaction_state[new_sid].end_addr = end_addr;
-> +                    /* Get result from next IOPMP */
-> +                    entry = iopmp_translate(s->next_iommu, addr, flags,
-> +                                            s->sid_transl);
-> +
-> +                    /* Finish the transaction */
-> +                    qemu_mutex_lock(&next_s->iopmp_transaction_mutex);
-> +                    next_s->transaction_state[new_sid].running = 0;
-> +                    qemu_mutex_unlock(&next_s->iopmp_transaction_mutex);
-> +
-> +                    return entry;
-> +                } else {
-> +                    qemu_log_mask(LOG_GUEST_ERROR, "Next iopmp is not found.");
-> +                }
-> +            }
-> +        }
-> +    } else {
-> +        if (result == ENTRY_PAR_HIT) {
-> +            error_info = FIELD_DP32(error_info, ERR_REQINFO, PAR_HIT, 1);
-> +            error_info = FIELD_DP32(error_info, ERR_REQINFO, TYPE, (flags - 1));
-> +            iopmp_error_reaction(s, sid, start_addr, end_addr, error_info);
-> +        } else {
-> +            error_info = FIELD_DP32(error_info, ERR_REQINFO, NO_HIT, 1);
-> +            error_info = FIELD_DP32(error_info, ERR_REQINFO, TYPE, (flags - 1));
-> +            iopmp_error_reaction(s, sid, start_addr, end_addr, error_info);
-> +        }
-> +        entry.target_as = &s->blocked_io_as;
-> +        entry.perm = IOMMU_RW;
-> +    }
-> +    return entry;
-> +}
-> +
-> +static const MemoryRegionOps iopmp_ops = {
-> +    .read = iopmp_read,
-> +    .write = iopmp_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid = {.min_access_size = 4, .max_access_size = 4}
-> +};
-> +
-> +static MemTxResult iopmp_block_write(void *opaque, hwaddr addr, uint64_t value,
-> +                                     unsigned size, MemTxAttrs attrs)
-> +{
-> +    IopmpState *s = IOPMP(opaque);
-> +
-> +    switch (FIELD_EX32(s->regs.errreact, ERRREACT, RWE)) {
-> +    case RWE_BUS_ERROR:
-> +        return MEMTX_ERROR;
-> +        break;
-> +    case RWE_DECODE_ERROR:
-> +        return MEMTX_DECODE_ERROR;
-> +        break;
-> +    case RWE_SUCCESS:
-> +        return MEMTX_OK;
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +    return MEMTX_OK;
-> +}
-> +
-> +static MemTxResult iopmp_block_read(void *opaque, hwaddr addr, uint64_t *pdata,
-> +                                    unsigned size, MemTxAttrs attrs)
-> +{
-> +    IopmpState *s = IOPMP(opaque);
-> +
-> +    switch (FIELD_EX32(s->regs.errreact, ERRREACT, RRE)) {
-> +    case RRE_BUS_ERROR:
-> +        return MEMTX_ERROR;
-> +        break;
-> +    case RRE_DECODE_ERROR:
-> +        return MEMTX_DECODE_ERROR;
-> +        break;
-> +    case RRE_SUCCESS_ZEROS:
-> +        *pdata = 0;
-> +        return MEMTX_OK;
-> +        break;
-> +    case RRE_SUCCESS_ONES:
-> +        *pdata = UINT64_MAX;
-> +        return MEMTX_OK;
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +    return MEMTX_OK;
-> +}
-> +
-> +static const MemoryRegionOps iopmp_block_io_ops = {
-> +    .read_with_attrs = iopmp_block_read,
-> +    .write_with_attrs = iopmp_block_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid = {.min_access_size = 1, .max_access_size = 8},
-> +};
-> +
-> +static MemTxResult iopmp_handle_stall(IopmpState *s, hwaddr addr,
-> +                                      MemTxAttrs attrs)
-> +{
-> +    return MEMTX_IOPMP_STALL;
-> +}
-> +
-> +static MemTxResult iopmp_stall_write(void *opaque, hwaddr addr, uint64_t value,
-> +                                     unsigned size, MemTxAttrs attrs)
-> +{
-> +    IopmpState *s = IOPMP(opaque);
-> +
-> +    return iopmp_handle_stall(s, addr, attrs);
-> +}
-> +
-> +static MemTxResult iopmp_stall_read(void *opaque, hwaddr addr, uint64_t *pdata,
-> +                                    unsigned size, MemTxAttrs attrs)
-> +{
-> +    IopmpState *s = IOPMP(opaque);
-> +
-> +    *pdata = 0;
-> +    return iopmp_handle_stall(s, addr, attrs);
-> +}
-> +
-> +static const MemoryRegionOps iopmp_stall_io_ops = {
-> +    .read_with_attrs = iopmp_stall_read,
-> +    .write_with_attrs = iopmp_stall_write,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid = {.min_access_size = 1, .max_access_size = 8},
-> +};
-> +
-> +static void iopmp_realize(DeviceState *dev, Error **errp)
-> +{
-> +    Object *obj = OBJECT(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    IopmpState *s = IOPMP(dev);
-> +    uint64_t size;
-> +
-> +    s->downstream = get_system_memory();
-> +    size = memory_region_size(s->downstream);
-> +    qemu_mutex_init(&s->iopmp_transaction_mutex);
-> +    s->prient_prog = 1;
-> +    s->sid_num = MIN(s->sid_num, IOPMP_MAX_SID_NUM);
-> +    s->md_num = MIN(s->md_num, IOPMP_MAX_MD_NUM);
-> +    s->entry_num = MIN(s->entry_num, IOPMP_MAX_ENTRY_NUM);
-> +
-> +    if (s->sid_transl_en) {
-> +        s->sid_transl_prog = 1;
-> +    }
-> +    if (!s->model_str || strcmp(s->model_str, "rapidk") == 0) {
-> +        /* apply default model */
-> +        s->model = IOPMP_MODEL_RAPIDK;
-> +        s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, F, s->md_num);
-> +        s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, L, 1);
-> +        s->regs.mdcfg[0] = s->k;
-> +    } else {
-> +        qemu_log_mask(LOG_UNIMP, "IOPMP model %s is not supported. "
-> +                      "Vailid values is rapidk.", s->model_str);
-
-typo: 'vailid'
-
-And this seems a reason to error out instead of just logging an error, doesn't it?
-Is there a valid reason to continue if we claim that the IOPMP  model isn't
-supported?
-
-
-> +    }
-> +    memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
-> +                             TYPE_IOPMP_IOMMU_MEMORY_REGION,
-> +                             obj, "riscv-iopmp-sysbus-iommu", UINT64_MAX);
-> +    address_space_init(&s->iopmp_sysbus_as, MEMORY_REGION(&s->iommu), "iommu");
-> +    memory_region_init_io(&s->mmio, obj, &iopmp_ops,
-> +                          s, "iopmp-regs", 0x100000);
-> +    sysbus_init_mmio(sbd, &s->mmio);
-> +    memory_region_init_io(&s->blocked_io, obj, &iopmp_block_io_ops,
-> +                          s, "iopmp-blocked-io", size);
-> +    address_space_init(&s->downstream_as, s->downstream,
-> +                       "iopmp-downstream-as");
-> +    address_space_init(&s->blocked_io_as, &s->blocked_io,
-> +                       "iopmp-blocked-io-as");
-> +
-> +    memory_region_init_io(&s->stall_io, obj, &iopmp_stall_io_ops,
-> +                          s, "iopmp-stall-io", size);
-> +    address_space_init(&s->stall_io_as, &s->stall_io,
-> +                       "iopmp-stall-io-as");
-> +
-> +    object_initialize_child(OBJECT(s), "iopmp_transaction_info",
-> +                            &s->transaction_info_sink,
-> +                            TYPE_IOPMP_TRASACTION_INFO_SINK);
-> +}
-> +
-> +static void iopmp_reset(DeviceState *dev)
-> +{
-> +    IopmpState *s = IOPMP(dev);
-> +
-> +    qemu_set_irq(s->irq, 0);
-> +    memset(&s->regs, 0, sizeof(iopmp_regs));
-> +    memset(&s->entry_addr, 0, IOPMP_MAX_ENTRY_NUM * sizeof(iopmp_addr_t));
-> +    memset(&s->prev_error_info, 0,
-> +           IOPMP_MAX_SID_NUM * sizeof(iopmp_error_info));
-> +    s->regs.errreact = 0;
-> +    s->prient_prog = 1;
-> +
-> +    if (s->model == IOPMP_MODEL_RAPIDK) {
-> +        s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, F, s->md_num);
-> +        s->regs.mdcfglck = FIELD_DP32(s->regs.mdcfglck, MDCFGLCK, L, 1);
-> +        s->regs.mdcfg[0] = s->k;
-> +    }
-> +
-> +    if (s->sid_transl_en) {
-> +        s->sid_transl_prog = 1;
-> +    }
-> +}
-> +
-> +static int iopmp_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
-> +{
-> +    return attrs.requester_id;
-> +}
-> +
-> +static void iopmp_iommu_memory_region_class_init(ObjectClass *klass, void *data)
-> +{
-> +    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
-> +
-> +    imrc->translate = iopmp_translate;
-> +    imrc->attrs_to_index = iopmp_attrs_to_index;
-> +}
-> +
-> +static Property iopmp_property[] = {
-> +    DEFINE_PROP_STRING("model", IopmpState, model_str),
-> +    DEFINE_PROP_BOOL("sps_en", IopmpState, sps_en, false),
-> +    DEFINE_PROP_BOOL("sid_transl_en", IopmpState, sid_transl_en, false),
-> +    DEFINE_PROP_UINT32("k", IopmpState, k, CFG_IOPMP_MODEL_K),
-> +    DEFINE_PROP_UINT32("prio_entry", IopmpState, prio_entry, CFG_PRIO_ENTRY),
-> +    DEFINE_PROP_UINT32("sid_num", IopmpState, sid_num, IOPMP_MAX_SID_NUM),
-> +    DEFINE_PROP_UINT32("md_num", IopmpState, md_num, IOPMP_MAX_MD_NUM),
-> +    DEFINE_PROP_UINT32("entry_num", IopmpState, entry_num, IOPMP_MAX_ENTRY_NUM),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
-> +static void iopmp_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    device_class_set_props(dc, iopmp_property);
-> +    dc->realize = iopmp_realize;
-> +    dc->reset = iopmp_reset;
-> +}
-> +
-> +static void iopmp_init(Object *obj)
-> +{
-> +    IopmpState *s = IOPMP(obj);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-> +
-> +    sysbus_init_irq(sbd, &s->irq);
-> +}
-> +
-> +static const TypeInfo iopmp_info = {
-> +    .name = TYPE_IOPMP,
-> +    .parent = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(IopmpState),
-> +    .instance_init = iopmp_init,
-> +    .class_init = iopmp_class_init,
-> +};
-> +
-> +static const TypeInfo
-> +iopmp_iommu_memory_region_info = {
-> +    .name = TYPE_IOPMP_IOMMU_MEMORY_REGION,
-> +    .parent = TYPE_IOMMU_MEMORY_REGION,
-> +    .class_init = iopmp_iommu_memory_region_class_init,
-> +};
-> +
-> +
-> +void
-> +cascade_iopmp(DeviceState *cur_dev, DeviceState *next_dev)
-> +{
-> +    IopmpState *s = IOPMP(cur_dev);
-> +    IopmpState *next_s = IOPMP(next_dev);
-> +
-> +    s->sid_transl_en = true;
-> +    s->next_iommu = &next_s->iommu;
-> +}
-> +
-> +static AddressSpace *iopmp_find_add_as(PCIBus *bus, void *opaque, int devfn)
-> +{
-> +    IopmpState *s = opaque;
-> +    uint32_t id = PCI_BUILD_BDF(pci_bus_num(bus), devfn) % s->sid_num;
-> +    iopmp_pci_addressspcace *iopmp_pci = s->iopmp_pci[id];
-> +
-> +    if (iopmp_pci == NULL) {
-> +        g_autofree char *name;
-> +        name = g_strdup_printf("riscv-iopmp-pci-iommu%d", id);
-> +        iopmp_pci = g_new0(iopmp_pci_addressspcace, 1);
-> +        iopmp_pci->iopmp = opaque;
-> +        memory_region_init_iommu(&iopmp_pci->iommu,
-> +                                 sizeof(iopmp_pci->iommu),
-> +                                 TYPE_IOPMP_IOMMU_MEMORY_REGION,
-> +                                 OBJECT(s), name, UINT64_MAX);
-> +        address_space_init(&iopmp_pci->as,
-> +                           MEMORY_REGION(&iopmp_pci->iommu), "iommu");
-> +    }
-> +    return &iopmp_pci->as;
-> +}
-> +
-> +static const PCIIOMMUOps iopmp_iommu_ops = {
-> +    .get_address_space = iopmp_find_add_as,
-> +};
-> +
-> +void iopmp_setup_pci(DeviceState *iopmp_dev, PCIBus *bus)
-> +{
-> +    IopmpState *s = IOPMP(iopmp_dev);
-> +    pci_setup_iommu(bus, &iopmp_iommu_ops, s);
-> +}
-> +
-> +static size_t
-> +transaction_info_push(StreamSink *transaction_info_sink, unsigned char *buf,
-> +                    size_t len, bool eop)
-> +{
-> +    Iopmp_StreamSink *ss = IOPMP_TRASACTION_INFO_SINK(transaction_info_sink);
-> +    IopmpState *s = IOPMP(container_of(ss, IopmpState,
-> +                                       transaction_info_sink));
-> +    iopmp_transaction_info signal;
-> +    uint32_t sid = signal.sid;
-> +
-> +    memcpy(&signal, buf, len);
-> +
-> +    if (s->transaction_state[sid].running) {
-> +        if (eop) {
-> +            /* Finish the transaction */
-> +            qemu_mutex_lock(&s->iopmp_transaction_mutex);
-> +            s->transaction_state[sid].running = 0;
-> +            qemu_mutex_unlock(&s->iopmp_transaction_mutex);
-> +            return 1;
-> +        } else {
-> +            /* Transaction is already running */
-> +            return 0;
-> +        }
-> +    } else if (len == sizeof(iopmp_transaction_info)) {
-> +        /* Get the transaction info */
-> +        s->transaction_state[sid].supported = 1;
-> +        qemu_mutex_lock(&s->iopmp_transaction_mutex);
-> +        s->transaction_state[sid].running = 1;
-> +        qemu_mutex_unlock(&s->iopmp_transaction_mutex);
-> +
-> +        s->transaction_state[sid].start_addr = signal.start_addr;
-> +        s->transaction_state[sid].end_addr = signal.end_addr;
-> +        return 1;
-> +    }
-> +    return 0;
-> +}
-> +
-> +static void iopmp_transaction_info_sink_class_init(ObjectClass *klass,
-> +                                                   void *data)
-> +{
-> +    StreamSinkClass *ssc = STREAM_SINK_CLASS(klass);
-> +    ssc->push = transaction_info_push;
-> +}
-> +
-> +static const TypeInfo transaction_info_sink = {
-> +    .name = TYPE_IOPMP_TRASACTION_INFO_SINK,
-> +    .parent = TYPE_OBJECT,
-> +    .instance_size = sizeof(Iopmp_StreamSink),
-> +    .class_init = iopmp_transaction_info_sink_class_init,
-> +    .interfaces = (InterfaceInfo[]) {
-> +        { TYPE_STREAM_SINK },
-> +        { }
-> +    },
-> +};
-> +
-> +static void
-> +iopmp_register_types(void)
-> +{
-> +    type_register_static(&iopmp_info);
-> +    type_register_static(&iopmp_iommu_memory_region_info);
-> +    type_register_static(&transaction_info_sink);
-> +}
-> +
-> +type_init(iopmp_register_types);
-> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-> index 5f5bc92222..bd22286941 100644
-> --- a/hw/misc/trace-events
-> +++ b/hw/misc/trace-events
-> @@ -341,3 +341,7 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
->   # iosb.c
->   iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
->   iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
-> +
-> +# riscv_iopmp.c
-> +iopmp_read(uint64_t addr, uint32_t val) "addr 0x%"PRIx64" val 0x%x"
-> +iopmp_write(uint64_t addr, uint32_t val) "addr 0x%"PRIx64" val 0x%x"
-> diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
-> new file mode 100644
-> index 0000000000..18a71e6f32
-> --- /dev/null
-> +++ b/include/hw/misc/riscv_iopmp.h
-> @@ -0,0 +1,187 @@
-> +/*
-> + * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
-> + *
-> + * Copyright (c) 2023 Andes Tech. Corp.
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License along with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef RISCV_IOPMP_H
-> +#define RISCV_IOPMP_H
-> +
-> +#include "hw/sysbus.h"
-> +#include "qemu/typedefs.h"
-> +#include "memory.h"
-> +#include "hw/stream.h"
-> +#include "hw/misc/riscv_iopmp_transaction_info.h"
-> +#include "hw/pci/pci_bus.h"
-> +
-> +#define TYPE_IOPMP "iopmp"
-> +#define IOPMP(obj) OBJECT_CHECK(IopmpState, (obj), TYPE_IOPMP)
-> +
-> +#define IOPMP_MAX_MD_NUM    63
-> +#define IOPMP_MAX_SID_NUM   256
-> +#define IOPMP_MAX_ENTRY_NUM 512
-> +
-> +#define VENDER_VIRT          0
-> +#define SPECVER_1_0_0_DRAFT4 4
-> +
-> +#define IMPID_1_0_0_DRAFT4_0 10040
-> +
-> +#define RRE_BUS_ERROR       0
-> +#define RRE_DECODE_ERROR    1
-> +#define RRE_SUCCESS_ZEROS   2
-> +#define RRE_SUCCESS_ONES    3
-> +
-> +#define RWE_BUS_ERROR       0
-> +#define RWE_DECODE_ERROR    1
-> +#define RWE_SUCCESS         2
-> +
-> +#define SIDSCP_OP_QUERY    0
-> +#define SIDSCP_OP_STALL    1
-> +#define SIDSCP_OP_NOTSTALL 2
-> +
-> +#define ERR_REQINFO_TYPE_READ  0
-> +#define ERR_REQINFO_TYPE_WRITE 1
-> +#define ERR_REQINFO_TYPE_USER  3
-> +
-> +#define IOPMP_MODEL_FULL       0
-> +#define IOPMP_MODEL_RAPIDK     0x1
-> +#define IOPMP_MODEL_DYNAMICK   0x2
-> +#define IOPMP_MODEL_ISOLATION  0x3
-> +#define IOPMP_MODEL_COMPACTK   0x4
-> +#define CFG_IOPMP_MODEL_K      8
-> +
-> +#define CFG_TOR_EN 1
-> +#define CFG_SPS_EN 0
-> +#define CFG_USER_CFG_EN   0
-> +#define CFG_PROG_PRIENT   1
-> +#define CFG_PRIO_ENTRY    IOPMP_MAX_ENTRY_NUM
-> +#define CFG_SID_TRANSL_EN 0
-> +#define CFG_SID_TRANSL    0
-> +
-> +#define ENTRY_NO_HIT      0
-> +#define ENTRY_PAR_HIT     1
-> +#define ENTRY_HIT         2
-> +
-> +#define AXI_BURST_TYPE_FIX 0
-> +#define AXI_BURST_TYPE_INC 1
-> +
-> +typedef enum {
-> +    IOPMP_AMATCH_OFF,  /* Null (off)                            */
-> +    IOPMP_AMATCH_TOR,  /* Top of Range                          */
-> +    IOPMP_AMATCH_NA4,  /* Naturally aligned four-byte region    */
-> +    IOPMP_AMATCH_NAPOT /* Naturally aligned power-of-two region */
-> +} iopmp_am_t;
-> +
-> +typedef struct {
-> +    uint32_t addr_reg;
-> +    uint32_t addrh_reg;
-> +    uint32_t  cfg_reg;
-> +} iopmp_entry_t;
-> +
-> +typedef struct {
-> +    uint64_t sa;
-> +    uint64_t ea;
-> +} iopmp_addr_t;
-> +
-> +typedef struct {
-> +    uint32_t srcmd_en[IOPMP_MAX_SID_NUM];
-> +    uint32_t srcmd_enh[IOPMP_MAX_SID_NUM];
-> +    uint32_t srcmd_r[IOPMP_MAX_SID_NUM];
-> +    uint32_t srcmd_rh[IOPMP_MAX_SID_NUM];
-> +    uint32_t srcmd_w[IOPMP_MAX_SID_NUM];
-> +    uint32_t srcmd_wh[IOPMP_MAX_SID_NUM];
-> +    uint32_t mdcfg[IOPMP_MAX_MD_NUM];
-> +    iopmp_entry_t entry[IOPMP_MAX_ENTRY_NUM];
-> +    uint32_t mdlck;
-> +    uint32_t mdlckh;
-> +    uint32_t entrylck;
-> +    uint32_t mdcfglck;
-> +    uint32_t arrlck;
-> +    uint32_t mdstall;
-> +    uint32_t mdstallh;
-> +    uint32_t sidscp;
-> +    uint32_t errreact;
-> +    uint64_t err_reqaddr;
-> +    uint32_t err_reqsid;
-> +    uint32_t err_reqinfo;
-> +} iopmp_regs;
-> +
-> +/* To verfiy the same transcation */
-> +typedef struct iopmp_transaction_state {
-> +    bool supported;
-> +    bool running;
-> +    hwaddr start_addr;
-> +    hwaddr end_addr;
-> +} iopmp_transaction_state;
-> +
-> +typedef struct iopmp_error_info {
-> +    uint32_t reqinfo;
-> +    hwaddr start_addr;
-> +    hwaddr end_addr;
-> +} iopmp_error_info;
-> +
-> +typedef struct Iopmp_StreamSink {
-> +    Object parent;
-> +} Iopmp_StreamSink;
-> +
-> +typedef struct iopmp_pci_as {
-> +    void *iopmp;
-> +    IOMMUMemoryRegion iommu;
-> +    AddressSpace as;
-> +} iopmp_pci_addressspcace;
-> +
-> +typedef struct IopmpState {
-> +    SysBusDevice parent_obj;
-> +    iopmp_addr_t entry_addr[IOPMP_MAX_ENTRY_NUM];
-> +    iopmp_transaction_state transaction_state[IOPMP_MAX_SID_NUM];
-> +    QemuMutex iopmp_transaction_mutex;
-> +    iopmp_error_info prev_error_info[IOPMP_MAX_SID_NUM];
-> +    MemoryRegion mmio;
-> +    IOMMUMemoryRegion iommu;
-> +    IOMMUMemoryRegion *next_iommu;
-> +    iopmp_regs regs;
-> +    MemoryRegion *downstream;
-> +    MemoryRegion blocked_io;
-> +    MemoryRegion stall_io;
-> +    char *model_str;
-> +    uint32_t model;
-> +    uint32_t k;
-> +    bool sps_en;
-> +    bool sid_transl_prog;
-> +    bool prient_prog;
-> +    bool sid_transl_en;
-> +    uint32_t sid_transl;
-> +    Iopmp_StreamSink transaction_info_sink;
-> +
-> +    AddressSpace iopmp_sysbus_as;
-> +    iopmp_pci_addressspcace *iopmp_pci[IOPMP_MAX_SID_NUM];
-> +    AddressSpace downstream_as;
-> +    AddressSpace blocked_io_as;
-> +    AddressSpace stall_io_as;
-> +    qemu_irq irq;
-> +    bool enable;
-> +    uint32_t sidscp_op[IOPMP_MAX_SID_NUM];
-> +    uint64_t md_stall_stat;
-> +    uint32_t prio_entry;
-> +
-> +    uint32_t sid_num;
-> +    uint32_t md_num;
-> +    uint32_t entry_num;
-> +} IopmpState;
-> +
-> +void cascade_iopmp(DeviceState *cur_dev, DeviceState *next_dev);
-> +void iopmp_setup_pci(DeviceState *iopmp_dev, PCIBus *bus);
-> +
-> +#endif
-> diff --git a/include/hw/misc/riscv_iopmp_transaction_info.h b/include/hw/misc/riscv_iopmp_transaction_info.h
-> new file mode 100644
-> index 0000000000..fd12fd214c
-> --- /dev/null
-> +++ b/include/hw/misc/riscv_iopmp_transaction_info.h
-> @@ -0,0 +1,28 @@
-> +/*
-> + * QEMU RISC-V IOPMP (Input Output Physical Memory Protection)
-> + *
-> + * Copyright (c) 2023 Andes Tech. Corp.
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License along with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef RISCV_IOPMP_TRANSACTION_INFO_H
-> +#define RISCV_IOPMP_TRANSACTION_INFO_H
-> +
-> +typedef struct {
-> +    uint32_t sid:16;
-> +    uint64_t start_addr;
-> +    uint64_t end_addr;
-> +} iopmp_transaction_info;
-
-I don't think that it's worth a new header just for a single struct. I'd put the
-iopmp_transaction_info in riscv_iopmp.h with the rest.
-
-
-Thanks,
-
-Daniel
-
-> +
-> +#endif
+> 
+>>   
+>>       pci_dev->msi_trigger = pci_msi_trigger;
+>>   }
+>> @@ -2810,18 +2812,18 @@ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
+>>       return msg;
+>>   }
+>>   
+>> -void pci_set_power(PCIDevice *d, bool state)
+>> +void pci_set_enabled(PCIDevice *d, bool state)
+>>   {
+>> -    if (d->has_power == state) {
+>> +    if (d->is_enabled == state) {
+>>           return;
+>>       }
+>>   
+>> -    d->has_power = state;
+>> +    d->is_enabled = state;
+>>       pci_update_mappings(d);
+>>       memory_region_set_enabled(&d->bus_master_enable_region,
+>>                                 (pci_get_word(d->config + PCI_COMMAND)
+>> -                               & PCI_COMMAND_MASTER) && d->has_power);
+>> -    if (!d->has_power) {
+>> +                               & PCI_COMMAND_MASTER) && d->is_enabled);
+>> +    if (d->qdev.realized) {
+>>           pci_device_reset(d);
+>>       }
+>>   }
+>> diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+>> index dfe6fe618401..d7e13d72ce07 100644
+>> --- a/hw/pci/pci_host.c
+>> +++ b/hw/pci/pci_host.c
+>> @@ -86,7 +86,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+>>        * allowing direct removal of unexposed functions.
+>>        */
+>>       if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+>> -        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
+>> +        !pci_dev->is_enabled || is_pci_dev_ejected(pci_dev)) {
+>>           return;
+>>       }
+>>   
+>> @@ -111,7 +111,7 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+>>        * allowing direct removal of unexposed functions.
+>>        */
+>>       if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+>> -        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
+>> +        !pci_dev->is_enabled || is_pci_dev_ejected(pci_dev)) {
+>>           return ~0x0;
+>>       }
+>>   
+>> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+>> index 6db0cf69cd8a..f34c157e1fd3 100644
+>> --- a/hw/pci/pcie.c
+>> +++ b/hw/pci/pcie.c
+>> @@ -394,7 +394,9 @@ static void pcie_set_power_device(PCIBus *bus, PCIDevice *dev, void *opaque)
+>>   {
+>>       bool *power = opaque;
+>>   
+>> -    pci_set_power(dev, *power);
+>> +    if (!pci_is_vf(dev)) {
+>> +        pci_set_enabled(dev, *power);
+>> +    }
+>>   }
+>>   
+>>   static void pcie_cap_update_power(PCIDevice *hotplug_dev)
+>> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+>> index da209b7f47fd..9ba34cf8f8ed 100644
+>> --- a/hw/pci/pcie_sriov.c
+>> +++ b/hw/pci/pcie_sriov.c
+>> @@ -20,15 +20,29 @@
+>>   #include "qapi/error.h"
+>>   #include "trace.h"
+>>   
+>> -static PCIDevice *register_vf(PCIDevice *pf, int devfn,
+>> -                              const char *name, uint16_t vf_num);
+>> -static void unregister_vfs(PCIDevice *dev);
+>> +static void unrealize_vfs(PCIDevice *dev, uint16_t total_vfs)
+>> +{
+>> +    for (uint16_t i = 0; i < total_vfs; i++) {
+>> +        Error *err = NULL;
+>> +        PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+>> +        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
+>> +            error_reportf_err(err, "Failed to unplug: ");
+>> +        }
+>> +        object_unparent(OBJECT(vf));
+>> +        object_unref(OBJECT(vf));
+>> +    }
+>> +    g_free(dev->exp.sriov_pf.vf);
+>> +    dev->exp.sriov_pf.vf = NULL;
+>> +}
+>>   
+>> -void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>> +bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>>                           const char *vfname, uint16_t vf_dev_id,
+>>                           uint16_t init_vfs, uint16_t total_vfs,
+>> -                        uint16_t vf_offset, uint16_t vf_stride)
+>> +                        uint16_t vf_offset, uint16_t vf_stride,
+>> +                        Error **errp)
+>>   {
+>> +    BusState *bus = qdev_get_parent_bus(&dev->qdev);
+>> +    int32_t devfn = dev->devfn + vf_offset;
+>>       uint8_t *cfg = dev->config + offset;
+>>       uint8_t *wmask;
+>>   
+>> @@ -36,7 +50,6 @@ void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>>                           offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+>>       dev->exp.sriov_cap = offset;
+>>       dev->exp.sriov_pf.num_vfs = 0;
+>> -    dev->exp.sriov_pf.vfname = g_strdup(vfname);
+>>       dev->exp.sriov_pf.vf = NULL;
+>>   
+>>       pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
+>> @@ -69,13 +82,35 @@ void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>>       pci_set_word(wmask + PCI_SRIOV_SYS_PGSIZE, 0x553);
+>>   
+>>       qdev_prop_set_bit(&dev->qdev, "multifunction", true);
+>> +
+>> +    dev->exp.sriov_pf.vf = g_new(PCIDevice *, total_vfs);
+>> +
+>> +    for (uint16_t i = 0; i < total_vfs; i++) {
+>> +        PCIDevice *vf = pci_new(devfn, vfname);
+>> +        vf->exp.sriov_vf.pf = dev;
+>> +        vf->exp.sriov_vf.vf_number = i;
+>> +
+>> +        if (!qdev_realize(&vf->qdev, bus, errp)) {
+>> +            unrealize_vfs(dev, i);
+>> +            return false;
+>> +        }
+>> +
+>> +        /* set vid/did according to sr/iov spec - they are not used */
+>> +        pci_config_set_vendor_id(vf->config, 0xffff);
+>> +        pci_config_set_device_id(vf->config, 0xffff);
+>> +
+>> +        dev->exp.sriov_pf.vf[i] = vf;
+>> +        devfn += vf_stride;
+>> +    }
+>> +
+>> +    return true;
+>>   }
+>>   
+>>   void pcie_sriov_pf_exit(PCIDevice *dev)
+>>   {
+>> -    unregister_vfs(dev);
+>> -    g_free((char *)dev->exp.sriov_pf.vfname);
+>> -    dev->exp.sriov_pf.vfname = NULL;
+>> +    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+>> +
+>> +    unrealize_vfs(dev, pci_get_word(cfg + PCI_SRIOV_TOTAL_VF));
+>>   }
+>>   
+>>   void pcie_sriov_pf_init_vf_bar(PCIDevice *dev, int region_num,
+>> @@ -141,38 +176,11 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+>>       }
+>>   }
+>>   
+>> -static PCIDevice *register_vf(PCIDevice *pf, int devfn, const char *name,
+>> -                              uint16_t vf_num)
+>> -{
+>> -    PCIDevice *dev = pci_new(devfn, name);
+>> -    dev->exp.sriov_vf.pf = pf;
+>> -    dev->exp.sriov_vf.vf_number = vf_num;
+>> -    PCIBus *bus = pci_get_bus(pf);
+>> -    Error *local_err = NULL;
+>> -
+>> -    qdev_realize(&dev->qdev, &bus->qbus, &local_err);
+>> -    if (local_err) {
+>> -        error_report_err(local_err);
+>> -        return NULL;
+>> -    }
+>> -
+>> -    /* set vid/did according to sr/iov spec - they are not used */
+>> -    pci_config_set_vendor_id(dev->config, 0xffff);
+>> -    pci_config_set_device_id(dev->config, 0xffff);
+>> -
+>> -    return dev;
+>> -}
+>> -
+>>   static void register_vfs(PCIDevice *dev)
+>>   {
+>>       uint16_t num_vfs;
+>>       uint16_t i;
+>>       uint16_t sriov_cap = dev->exp.sriov_cap;
+>> -    uint16_t vf_offset =
+>> -        pci_get_word(dev->config + sriov_cap + PCI_SRIOV_VF_OFFSET);
+>> -    uint16_t vf_stride =
+>> -        pci_get_word(dev->config + sriov_cap + PCI_SRIOV_VF_STRIDE);
+>> -    int32_t devfn = dev->devfn + vf_offset;
+>>   
+>>       assert(sriov_cap > 0);
+>>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+>> @@ -180,18 +188,10 @@ static void register_vfs(PCIDevice *dev)
+>>           return;
+>>       }
+>>   
+>> -    dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+>> -
+>>       trace_sriov_register_vfs(dev->name, PCI_SLOT(dev->devfn),
+>>                                PCI_FUNC(dev->devfn), num_vfs);
+>>       for (i = 0; i < num_vfs; i++) {
+>> -        dev->exp.sriov_pf.vf[i] = register_vf(dev, devfn,
+>> -                                              dev->exp.sriov_pf.vfname, i);
+>> -        if (!dev->exp.sriov_pf.vf[i]) {
+>> -            num_vfs = i;
+>> -            break;
+>> -        }
+>> -        devfn += vf_stride;
+>> +        pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
+>>       }
+>>       dev->exp.sriov_pf.num_vfs = num_vfs;
+>>   }
+>> @@ -204,16 +204,8 @@ static void unregister_vfs(PCIDevice *dev)
+>>       trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
+>>                                  PCI_FUNC(dev->devfn), num_vfs);
+>>       for (i = 0; i < num_vfs; i++) {
+>> -        Error *err = NULL;
+>> -        PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+>> -        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
+>> -            error_reportf_err(err, "Failed to unplug: ");
+>> -        }
+>> -        object_unparent(OBJECT(vf));
+>> -        object_unref(OBJECT(vf));
+>> +        pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+>>       }
+>> -    g_free(dev->exp.sriov_pf.vf);
+>> -    dev->exp.sriov_pf.vf = NULL;
+>>       dev->exp.sriov_pf.num_vfs = 0;
+>>       pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
+>>   }
+>>
+>> -- 
+>> 2.43.0
+> 
 
