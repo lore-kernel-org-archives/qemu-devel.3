@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A9EC4829F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 06:49:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA70FC4829F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 06:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra959-0004Jn-9E; Wed, 14 Feb 2024 01:49:24 -0500
+	id 1ra95k-0005YM-OT; Wed, 14 Feb 2024 01:50:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ra952-00046Y-5t
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:49:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra95h-0005UG-9P
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:49:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1ra94z-0003cV-6t
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:49:15 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra95g-0003lT-1G
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:49:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707893351;
+ s=mimecast20190719; t=1707893395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x5bCQ3OraJAY0ih2TShmtCxKzNJZ8vPJ29SxVPcI0EQ=;
- b=XHBr9+feqtqMXew63nyCjGWFH350B8C7qQw94/upTmWGYq4zfylz/hBk2hESuYsj5LtOsB
- 5g/6Faf3Njy6p4JCns39OoEjG5DTIiK8TFmkyKil6cBCL50VKe8Q3dwQMfvHF4kyNqLNYb
- Ncan0A1qvRM55P1tTKleEjn/XyXWuWw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k6EBsbajUmDhBEE95oe4vK7VdLZzWXa9YWqUbOfjtsE=;
+ b=QCBRRrD7KId7FiKuxDdEzZGx8piGsmvJZ1TosrpZihfZ+yQhzMueuWaj+Yc2osNxJc1rTj
+ QK/oBIwYR1NrB4ZraZEtcySj98RO7jUnq36+pdaqG8hAwrDsCi71ZbCQ3/hmkmolZ6kr0N
+ fHrPUB7hIiED5s/1x4yBd26AzQ2ghtw=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-qDV7jp8AM_eGhxrcXDny0w-1; Wed, 14 Feb 2024 01:47:52 -0500
-X-MC-Unique: qDV7jp8AM_eGhxrcXDny0w-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EB7B7828CE5;
- Wed, 14 Feb 2024 06:47:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id AC4D514F0;
- Wed, 14 Feb 2024 06:47:51 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7C0ED21E668C; Wed, 14 Feb 2024 07:47:49 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PULL v2 1/4] chardev/parallel: Don't close stdin on inappropriate
- device
-Date: Wed, 14 Feb 2024 07:47:46 +0100
-Message-ID: <20240214064749.1060107-2-armbru@redhat.com>
-In-Reply-To: <20240214064749.1060107-1-armbru@redhat.com>
-References: <20240214064749.1060107-1-armbru@redhat.com>
+ us-mta-597-aO7ZA1k0OfOM5V4qgT5VuQ-1; Wed, 14 Feb 2024 01:49:52 -0500
+X-MC-Unique: aO7ZA1k0OfOM5V4qgT5VuQ-1
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-2196b4d291bso8020539fac.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 22:49:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707893392; x=1708498192;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k6EBsbajUmDhBEE95oe4vK7VdLZzWXa9YWqUbOfjtsE=;
+ b=LStFq5eAEa3ca94cMjBZSeYwr96XpkoxbdTswNF14fjZ05L/25Rfdvq+K5ubfvfXRe
+ qMsm2p/4Ft9i3PbcymI8KfDZ0M66pfN+SzJDeinAeyAT8hBwgrChH9eqpl3QFYTeq7+D
+ clKp8hVwDG1htsvPVs3RAriIcv1XLo0zVW35k6ILWx0ol52yGXjSgWTTkm1WqOTOtol/
+ YRG0q/WVrm2CCIK7kkbVA54QBNX7kXmeFSymNMPO2AwW9qtr5LM8mkjHalReoPIloyT/
+ taJm5fcSsFZmbae2/jksochOPZ9CZ06N0aDrMVRevqz2jh0wcPBRV2B+fV0rSX2xcm9Q
+ Z8Eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSnakVv0OiaMEOfTFUKuE4rUWK1MEw2HMnWWZoC6WyTOJyJFl/bhZR3LeRsh8qfeS6LxKSDIk9hhKEItXUd2joVMHV0+Q=
+X-Gm-Message-State: AOJu0YyLUvGslIOoTRpKfqtHJ5JziSdT7aRz0d8oYZ63atyAA6QuvXbd
+ /ryaRxY4u6b/QWMgqabjZrs2vXXDCieao8nwo21U1SLIkNVdIAcgEwyN86O6+uRWhnUFKKRbMJt
+ GrX3JqbxOdyeEycH9nJeIfcbFQdUVAN99MvukHZOD7OAjC1z8NiL7
+X-Received: by 2002:a05:6871:7825:b0:219:f170:77f with SMTP id
+ oy37-20020a056871782500b00219f170077fmr1963961oac.47.1707893392240; 
+ Tue, 13 Feb 2024 22:49:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH+tQ6IlcF2X2IeRvcAIkT7FWvZKO9+M19GaoD6gXjWLA1s+2SMk6PZRHubepod4E2eaq/h2A==
+X-Received: by 2002:a05:6871:7825:b0:219:f170:77f with SMTP id
+ oy37-20020a056871782500b00219f170077fmr1963944oac.47.1707893391883; 
+ Tue, 13 Feb 2024 22:49:51 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqj1+EkppxCM0JE4cghJ3JzFovGO+8Z93YlNdiKnj0nQenT3umCXrB9tGBfLarSfwE4Taob/KVETc5ifXpbnK5bFX5UeqqCUChS2RBZoWYyOC/CJ7kE89lEQLMWS3/ebSM1rYH8vGHHGw1D5v53xQP20coNTpmG/aW4qxs2nCGnOkY/gM2jtr/6X1h0faKmSgrMu2e8dUkFSbVq+teY+h5dhEQ8RtuoF/UIRbxJ9gl6DTqLsm77Bfki4dtSjsciFowe3O4m7a1vMrsWdYDUlt+EAWVX9wo38QpRPfJETpIjMky6zkr7nCZbpw680PcKSpV6GDuZu+tvnUyw3Mvm71wCItzAVSEsbDWowsmanQ7jpK+OYjgBfvaIFvb/fRxC1eJ0bwMPPfJFxv3OHXtlb2GLdYTw6t9YXi7Yg==
+Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
+ hz10-20020a05687153ca00b0021a714d556asm1035808oac.41.2024.02.13.22.49.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 22:49:50 -0800 (PST)
+Date: Wed, 14 Feb 2024 01:49:43 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v4 2/9] hw/pci: Determine if rombar is explicitly enabled
+Message-ID: <20240214014345-mutt-send-email-mst@kernel.org>
+References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-2-89ad093a07f4@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240214-reuse-v4-2-89ad093a07f4@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,164 +112,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The __linux__ version of qemu_chr_open_pp_fd() tries to claim the
-parport device with a PPCLAIM ioctl().  On success, it stores the file
-descriptor in the chardev object, and returns success.  On failure, it
-closes the file descriptor, and returns failure.
+On Wed, Feb 14, 2024 at 02:13:40PM +0900, Akihiko Odaki wrote:
+> vfio determines if rombar is explicitly enabled by inspecting QDict.
+> Inspecting QDict is not nice because QDict is untyped and depends on the
+> details on the external interface. Add an infrastructure to determine if
+> rombar is explicitly enabled to hw/pci.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-chardev_new() then passes the Chardev to object_unref().  This duly
-calls char_parallel_finalize(), which closes the file descriptor
-stored in the chardev object.  Since qemu_chr_open_pp_fd() didn't
-store it, it's still zero, so this closes standard input.  Ooopsie.
+I frankly don't know what the issue with using qdict is.
+Alex do you want to switch?
 
-To demonstate, add a unit test.  With the bug above unfixed, running
-this test closes standard input.  char_hotswap_test() happens to run
-next.  It opens a socket, duly gets file descriptor 0, and since it
-tests for success with > 0 instead of >= 0, it fails.
-
-The new unit test needs to be conditional exactly like the chardev it
-tests.  Since the condition is rather complicated, steal the solution
-from the serial chardev: define HAVE_CHARDEV_PARALLEL in qemu/osdep.h.
-This also permits simplifying chardev/meson.build a bit.
-
-The bug fix is easy enough: store the file descriptor, and leave
-closing it to char_parallel_finalize().
-
-The next commit will fix char_hotswap_test()'s test for success.
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240203080228.2766159-2-armbru@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-[Test fixed up for BSDs, indentation fixed up, commit message improved]
----
- include/qemu/osdep.h    |  9 ++++++++-
- chardev/char-parallel.c |  7 +++++--
- tests/unit/test-char.c  | 27 +++++++++++++++++++++++++++
- chardev/meson.build     |  4 +---
- 4 files changed, 41 insertions(+), 6 deletions(-)
-
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 7d359dabc4..c7053cdc2b 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -508,11 +508,18 @@ void qemu_anon_ram_free(void *ptr, size_t size);
- 
- #ifdef _WIN32
- #define HAVE_CHARDEV_SERIAL 1
--#elif defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)    \
-+#define HAVE_CHARDEV_PARALLEL 1
-+#else
-+#if defined(__linux__) || defined(__sun__) || defined(__FreeBSD__)   \
-     || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) \
-     || defined(__GLIBC__) || defined(__APPLE__)
- #define HAVE_CHARDEV_SERIAL 1
- #endif
-+#if defined(__linux__) || defined(__FreeBSD__) \
-+    || defined(__FreeBSD_kernel__) || defined(__DragonFly__)
-+#define HAVE_CHARDEV_PARALLEL 1
-+#endif
-+#endif
- 
- #if defined(__HAIKU__)
- #define SIGIO SIGPOLL
-diff --git a/chardev/char-parallel.c b/chardev/char-parallel.c
-index a5164f975a..78697d7522 100644
---- a/chardev/char-parallel.c
-+++ b/chardev/char-parallel.c
-@@ -164,13 +164,13 @@ static void qemu_chr_open_pp_fd(Chardev *chr,
- {
-     ParallelChardev *drv = PARALLEL_CHARDEV(chr);
- 
-+    drv->fd = fd;
-+
-     if (ioctl(fd, PPCLAIM) < 0) {
-         error_setg_errno(errp, errno, "not a parallel port");
--        close(fd);
-         return;
-     }
- 
--    drv->fd = fd;
-     drv->mode = IEEE1284_MODE_COMPAT;
- }
- #endif /* __linux__ */
-@@ -238,6 +238,7 @@ static void qemu_chr_open_pp_fd(Chardev *chr,
- }
- #endif
- 
-+#ifdef HAVE_CHARDEV_PARALLEL
- static void qmp_chardev_open_parallel(Chardev *chr,
-                                       ChardevBackend *backend,
-                                       bool *be_opened,
-@@ -306,3 +307,5 @@ static void register_types(void)
- }
- 
- type_init(register_types);
-+
-+#endif  /* HAVE_CHARDEV_PARALLEL */
-diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-index 649fdf64e1..2aea49c3b6 100644
---- a/tests/unit/test-char.c
-+++ b/tests/unit/test-char.c
-@@ -1203,6 +1203,30 @@ static void char_serial_test(void)
- }
- #endif
- 
-+#if defined(HAVE_CHARDEV_PARALLEL) && !defined(WIN32)
-+static void char_parallel_test(void)
-+{
-+    QemuOpts *opts;
-+    Chardev *chr;
-+
-+    opts = qemu_opts_create(qemu_find_opts("chardev"), "parallel-id",
-+                            1, &error_abort);
-+    qemu_opt_set(opts, "backend", "parallel", &error_abort);
-+    qemu_opt_set(opts, "path", "/dev/null", &error_abort);
-+
-+    chr = qemu_chr_new_from_opts(opts, NULL, NULL);
-+#ifdef __linux__
-+    /* fails to PPCLAIM, see qemu_chr_open_pp_fd() */
-+    g_assert_null(chr);
-+#else
-+    g_assert_nonnull(chr);
-+    object_unparent(OBJECT(chr));
-+#endif
-+
-+    qemu_opts_del(opts);
-+}
-+#endif
-+
- #ifndef _WIN32
- static void char_file_fifo_test(void)
- {
-@@ -1544,6 +1568,9 @@ int main(int argc, char **argv)
-     g_test_add_func("/char/udp", char_udp_test);
- #if defined(HAVE_CHARDEV_SERIAL) && !defined(WIN32)
-     g_test_add_func("/char/serial", char_serial_test);
-+#endif
-+#if defined(HAVE_CHARDEV_PARALLEL) && !defined(WIN32)
-+    g_test_add_func("/char/parallel", char_parallel_test);
- #endif
-     g_test_add_func("/char/hotswap", char_hotswap_test);
-     g_test_add_func("/char/websocket", char_websock_test);
-diff --git a/chardev/meson.build b/chardev/meson.build
-index c80337d15f..70070a8279 100644
---- a/chardev/meson.build
-+++ b/chardev/meson.build
-@@ -21,11 +21,9 @@ if host_os == 'windows'
- else
-   chardev_ss.add(files(
-       'char-fd.c',
-+      'char-parallel.c',
-       'char-pty.c',
-     ), util)
--  if host_os in ['linux', 'gnu/kfreebsd', 'freebsd', 'dragonfly']
--    chardev_ss.add(files('char-parallel.c'))
--  endif
- endif
- 
- chardev_ss = chardev_ss.apply({})
--- 
-2.43.0
+> ---
+>  include/hw/pci/pci_device.h | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> index d3dd0f64b273..54fa0676abf1 100644
+> --- a/include/hw/pci/pci_device.h
+> +++ b/include/hw/pci/pci_device.h
+> @@ -205,6 +205,11 @@ static inline uint16_t pci_get_bdf(PCIDevice *dev)
+>      return PCI_BUILD_BDF(pci_bus_num(pci_get_bus(dev)), dev->devfn);
+>  }
+>  
+> +static inline bool pci_rom_bar_explicitly_enabled(PCIDevice *dev)
+> +{
+> +    return dev->rom_bar && dev->rom_bar != -1;
+> +}
+> +
+>  uint16_t pci_requester_id(PCIDevice *dev);
+>  
+>  /* DMA access functions */
+> 
+> -- 
+> 2.43.0
 
 
