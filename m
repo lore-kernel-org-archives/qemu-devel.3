@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72173C4829D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 04:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F8EC4829D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 04:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra6ws-0002PG-TD; Tue, 13 Feb 2024 23:32:42 -0500
+	id 1ra6wp-00024G-EA; Tue, 13 Feb 2024 23:32:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1ra6wr-0002Go-A0
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:32:41 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1ra6wn-0001vS-AF
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:32:37 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1ra6wp-0006CJ-Kh
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:32:40 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e08dd0fa0bso310846b3a.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 20:32:39 -0800 (PST)
+ id 1ra6wl-0006B4-Uy
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:32:37 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1d746ce7d13so43640005ad.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 20:32:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707885158; x=1708489958;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707885154; x=1708489954;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uDq193jDC/SXS//7zZzp4BuB0pNmGpuo5+lyA6P0aSE=;
- b=jQxyTAuGfc+qgjJsWC6Z1Dcw9s3tAYEGpERzPs2Kg3a2ZM8GetwVTl+BiFN7DZ+3vu
- q19I1HLL0fF3G31LDo2vXfzNC2K2uSNoAX61ZGtu53uN0ZW5BeVzi/Ia0haPKN3JDn77
- ru+cITh/QiloUtN7x0XDX12QuWVPYbNfabuQEIp0t0eIiuhuRY+kz1ms0jXPVtEjwjC2
- jEUHo7bSzqG0IJy/xqRZaJ2vnWuMmg1RLiiAs8JampJCYx9pNZGBGXW8/7zD4uVurRWf
- rFz0cev+2MUyd0H3JhDlAMqMmHpH+h63ybzRgfOrfZguzZrghVlfHi28AQ14uBMr4scd
- Pcog==
+ :reply-to; bh=UHpMCU9+Q+3IXmsSy1dT2hPPsLkN972lqGuEQ2h6qwE=;
+ b=seOW5gaZci5nHI+r2+nDyht/hKs6bw/A0EdOxPy7eRbMTsmnRw01AurBerVpvIop2V
+ /z05HA9D6bi//0R3OmmC6oaj/ckEq+3mRIqu1vxbrhfDaj+/+CyQywr75St8VQriu0By
+ cOYo2PJmpePUUOtc0l20ffsjcuHxWKqQDB1+eNzikYmPLq/uP7PPTudmeOs4lPPbQrDb
+ XsytOE17xzeQhe1WJzTbY9oiI11GqDHDWbC+64SNxNEJWiKJ7RlK2vCUljoF1Exf0NHP
+ /wTMKor/LaFKHuvQUlfXiayVCiIn5zq0ASTRNGsFi70qzU80Q0aqdDQwWZAtcIl0VP8l
+ K3lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707885158; x=1708489958;
+ d=1e100.net; s=20230601; t=1707885154; x=1708489954;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uDq193jDC/SXS//7zZzp4BuB0pNmGpuo5+lyA6P0aSE=;
- b=QckzYVn9lCgDiEcg3LpyRr3232r6zbFMVMpd35e47lC2f/iusAbP1kb+KYm4XXFpqZ
- 89gHarWjofLSzMENlwgBBNRtST3AzlWzArnT+PaNvG6+jKYyENGcnf9FJfKfoshpfNvg
- dOGacgkKexu34MaHvaPl9pkZlQtDdCM7AW9yJi5Z0xFiCDnZ1GBTRKMFaN9Xd1G+ZY98
- qSmCW9Rx0Hgkfxh87sfn00qiqG9fLKujxEGBlIOjqzbSPoUnfPZxYi9muaTECajO8Mij
- zTCS7m9lAPQIWSL8r2di4M+0o2F+5+5MWbTN/wfOvUyW2eZlu+dJ/RMhnId5Pl3aOuiQ
- SiMw==
-X-Gm-Message-State: AOJu0YwyvDlbZrNXV6QEhQySlLAH+VcCoEnc7b0xlLHf1g2xuhDRi+W8
- /wdzj7tAKWGcMDWl7RnQ7hb/8XiHkReddHgyu3Ew4Kz0tk/ai4b4tYfuiyazsCQ=
-X-Google-Smtp-Source: AGHT+IHtmUAPvX+r9pmCfqDX+kZ+KZNATU96SZbneux4+9NdiNaGO0bs9Mm8D7JfsLJA+9AJR83iNQ==
-X-Received: by 2002:a05:6a00:189e:b0:6dd:c23c:ea4f with SMTP id
- x30-20020a056a00189e00b006ddc23cea4fmr1409264pfh.5.1707885158199; 
- Tue, 13 Feb 2024 20:32:38 -0800 (PST)
+ bh=UHpMCU9+Q+3IXmsSy1dT2hPPsLkN972lqGuEQ2h6qwE=;
+ b=Co5YgZ/0nvmdUh01/LvBE/ptPhv716e97uJ/GVuTHXiWedZ/DQdHmrEZhp/NSptCV1
+ wBqbpf7JLAQw4PWRqdDkKf8GTmqoQQYWsbBp9Iw8wkYCfB42f9nInT+1pX7ZchsJ+Qpu
+ qgqod+xLDNa4/E4qwb/RtK5LOiddkPwypc9vILmQTiW9BW6sOXv8843XA2GPNPlv17/C
+ BwBJbEDOUF3mVsz/czfQJruQ/2es6Mn/G0mJTiVG6QJC3slLTPB0EfwtWqIbRRVqSccg
+ ZewVPZz+NkHhirxkHcvFMJ+AC3YNvIJvgLdbP5J2skW99/RIpUP0EUEHse3w0urZ66p8
+ Aymg==
+X-Gm-Message-State: AOJu0YwouxHAC0nNOScxi7+Na7NtDvZn5Fi8AVJcH8pCt+GldEQ/EKeW
+ O8Sm558F0Fp6sg8XcQC/GBYU8dNrVAfbOWDB9tvP6U2RVqCW1++GAgd1xg9SYp5j2KkEMYwFLPu
+ X
+X-Google-Smtp-Source: AGHT+IG+7GyWgJ6Wwh5Hl4KEtfF8vZ/R6pampJ1DsN5le7ItEyPkqwFt+wIAUoFx59U4dtwT4RH+1A==
+X-Received: by 2002:a17:902:ce87:b0:1d9:bc11:66e with SMTP id
+ f7-20020a170902ce8700b001d9bc11066emr1714259plg.37.1707885154549; 
+ Tue, 13 Feb 2024 20:32:34 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2qRDY2a9pATcQK54jRkuEKZuBXkVYK0F0Xo9AkE3JsN/b9Dk77ADZPQaK1VVTGOj0Xi3Km+uBEktiWb/tdTOypKbgPo6U8g4oEyt9drwCE/wyPEnuISswCHZq77DYOO9yvxGtadG795QdUQNE6MGgJJJpvo/JA7TFd+BHsAOwLJO8H4IEXRW7gh5b6GOMX4IcsHcVzdWqskJcS9mCGL7TSiwf72lLc9N/M2Hp7ENunvKJU/PHd95C5awtzRRSgWX1aFZ9HDrG/A1D
+ AJvYcCVjTcZBqpgSaJGz9NDoBkDHizck2k/MID4sQl0Xggkn8C7tQ1Q8dXznKmH6Uqq+7K3ispvAqqHKx4VFLQWLGE361YdTMzDjkL0q245ySC3sY+2cnVKQNUFx9/fb35NBOtyagsCx/sbZ7+WCG8Q5K6hKlEB0/YHZlYxZi2kOid5BLJ3RlJ5S4g4lm+eGk4qVtWFEEvSAZheyu81Qsf5zQVtZT+iaJx0tMXnNUBdpprPl191fuffzzwkxq4eC5fqg3Lz9YCyIu4adgUyv
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- r15-20020a638f4f000000b005dc389409c1sm3165487pgn.93.2024.02.13.20.32.36
+ r3-20020a170903410300b001d70ad0fe79sm966130pld.291.2024.02.13.20.32.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 20:32:37 -0800 (PST)
+ Tue, 13 Feb 2024 20:32:34 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 14 Feb 2024 13:32:05 +0900
-Subject: [PATCH v10 5/6] ui/cocoa: Call console_select() with the BQL
+Date: Wed, 14 Feb 2024 13:32:04 +0900
+Subject: [PATCH v10 4/6] ui/cocoa: Make window resizable
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240214-cocoa-v10-5-c7ffe5d9f08a@daynix.com>
+Message-Id: <20240214-cocoa-v10-4-c7ffe5d9f08a@daynix.com>
 References: <20240214-cocoa-v10-0-c7ffe5d9f08a@daynix.com>
 In-Reply-To: <20240214-cocoa-v10-0-c7ffe5d9f08a@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
@@ -77,8 +78,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
  Rene Engel <ReneEngel80@emailn.de>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,28 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-console_select() can be called anytime so explicitly take the BQL.
+The window will be resizable when zoom-to-fit is on.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- ui/cocoa.m | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ ui/cocoa.m | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/ui/cocoa.m b/ui/cocoa.m
-index a1f54b3ebb9a..aeec3c48859c 100644
+index 518fae26f6f4..a1f54b3ebb9a 100644
 --- a/ui/cocoa.m
 +++ b/ui/cocoa.m
-@@ -1390,7 +1390,9 @@ - (void)zoomToFit:(id) sender
- /* Displays the console on the screen */
- - (void)displayConsole:(id)sender
+@@ -1378,8 +1378,10 @@ - (void)zoomToFit:(id) sender
  {
--    console_select([sender tag]);
-+    with_bql(^{
-+        console_select([sender tag]);
-+    });
- }
+     stretch_video = !stretch_video;
+     if (stretch_video == true) {
++        [normalWindow setStyleMask:[normalWindow styleMask] | NSWindowStyleMaskResizable];
+         [sender setState: NSControlStateValueOn];
+     } else {
++        [normalWindow setStyleMask:[normalWindow styleMask] & ~NSWindowStyleMaskResizable];
+         [cocoaView resizeWindow];
+         [sender setState: NSControlStateValueOff];
+     }
+@@ -2032,6 +2034,7 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
  
- /* Pause the guest */
+     if (opts->u.cocoa.has_zoom_to_fit && opts->u.cocoa.zoom_to_fit) {
+         stretch_video = true;
++        [normalWindow setStyleMask:[normalWindow styleMask] | NSWindowStyleMaskResizable];
+     }
+ 
+     create_initial_menus();
 
 -- 
 2.43.0
