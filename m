@@ -4,47 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDF6C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792FCC48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 09:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raB6n-0000Kn-KR; Wed, 14 Feb 2024 03:59:13 -0500
+	id 1raBF1-0004EJ-St; Wed, 14 Feb 2024 04:07:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1raB6j-0000JD-Pt; Wed, 14 Feb 2024 03:59:09 -0500
+ id 1raBEu-0004Df-Em; Wed, 14 Feb 2024 04:07:37 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1raB6h-00009Y-T8; Wed, 14 Feb 2024 03:59:09 -0500
+ id 1raBEs-0002Nt-Ik; Wed, 14 Feb 2024 04:07:36 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E8E14D247;
- Wed, 14 Feb 2024 11:59:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0FE8A4D250;
+ Wed, 14 Feb 2024 12:07:36 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF9807E83C;
- Wed, 14 Feb 2024 11:58:56 +0300 (MSK)
-Message-ID: <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
-Date: Wed, 14 Feb 2024 11:58:56 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 10D3D7E84B;
+ Wed, 14 Feb 2024 12:07:29 +0300 (MSK)
+Message-ID: <ae1da63a-2bad-427a-84c5-ee1f37155ec5@tls.msk.ru>
+Date: Wed, 14 Feb 2024 12:07:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/9] pcie_sriov: Validate NumVFs
+Subject: Re: [PULL 00/12] Hppa64 patches
 Content-Language: en-US
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+To: Helge Deller <deller@gmx.de>, deller@kernel.org, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Sven Schnelle <svens@stackframe.org>, Jason Wang <jasowang@redhat.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
- <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
+References: <20240212234723.222847-1-deller@kernel.org>
+ <675576ad-ef02-4791-8ad5-08d8ab2b710a@tls.msk.ru>
+ <b3be66b3-d032-4dec-ac47-0c2b41bd95cf@gmx.de>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -70,9 +62,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
+In-Reply-To: <b3be66b3-d032-4dec-ac47-0c2b41bd95cf@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -96,36 +88,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-14.02.2024 08:13, Akihiko Odaki wrote:
-> The guest may write NumVFs greater than TotalVFs and that can lead
-> to buffer overflow in VF implementations.
+13.02.2024 22:16, Helge Deller:
+> On 2/13/24 19:09, Michael Tokarev wrote:
+>> 13.02.2024 02:47, deller@kernel.org:
 
-This seems to be stable-worthy (Cc'd), and maybe even CVE-worthy?
+>>> Helge Deller (11):
+>>>    disas/hppa: Add disassembly for qemu specific instructions
+>>>    target/hppa: Add "diag 0x101" for console output support
+>>>    hw/pci-host/astro: Avoid aborting on access failure
+>>>    hw/pci-host/astro: Implement Hard Fail and Soft Fail mode
+>>>    lasi: allow access to LAN MAC address registers
+>>>    target/hppa: Implement do_transaction_failed handler for I/O errors
+>>>    lasi: Add reset I/O ports for LASI audio and FDC
+>>>    target/hppa: Allow read-access to PSW with rsm 0,reg instruction
+>>>    target/hppa: PDC_BTLB_INFO uses 32-bit ints
+>>>    target/hppa: Update SeaBIOS-hppa to version 16
+>>>    hw/hppa/machine: Load 64-bit firmware on 64-bit machines
+>>>
+>>> Sven Schnelle (1):
+>>>    hw/net/tulip: add chip status register values
+>>
+>> Is there anything in there which is relevant for -stable?
+> 
+> Ideally all patches.
+> At minimum the tulip patch.
+
+Heh.
+
+Ideally there's no bugs and everyone knows everything ;)
+In reality though, you know this area *much* better than
+me, and I rely on your judgement here.
+
+Still the whole lot seems a bit too much here, while some fixes
+in seabios-hppa (so whole new release of it, maybe without the
+separate 64bit firmware variant) looks worth to have.
+
+It's a mix of features and bugfixes, and some features (like
+this tulip thing for example) actually *are* bugfixes :)
 
 Thanks,
 
 /mjt
-
-> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   hw/pci/pcie_sriov.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index a1fe65f5d801..da209b7f47fd 100644
-> --- a/hw/pci/pcie_sriov.c
-> +++ b/hw/pci/pcie_sriov.c
-> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
->   
->       assert(sriov_cap > 0);
->       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-> +        return;
-> +    }
->   
->       dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
->   
-> 
-
 
