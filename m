@@ -4,99 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041F0C4829F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 06:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC854C4829F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 06:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra99d-0007pX-NJ; Wed, 14 Feb 2024 01:54:01 -0500
+	id 1ra9Dn-0000MC-HD; Wed, 14 Feb 2024 01:58:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra99c-0007oz-HB
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:54:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra99b-0004kU-8L
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:54:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707893638;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZlmrBMsdz2unKlsH8bJ0Ni1feO/iQ9Lb0sgQV6Pnd6A=;
- b=S707uWF8YFqbCKkVV3lP5zkkLzHw8UyILa4/KadS1JR4AxNUwuuUa/cUdyxV4LPzzdQfjL
- 3RxMuxJL0gGZXyFhX2I8tthBzZK1EtUmgJJLPsI+nfS4GoD7tgjx++9Is6MCXZVY3x8gAr
- YkzxO3KDgGa4l/Y6eHOPrTqCSZVJuc8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-shO_3N-xNy6r4K9RE9TYlA-1; Wed, 14 Feb 2024 01:53:56 -0500
-X-MC-Unique: shO_3N-xNy6r4K9RE9TYlA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-410422e8cd1so29576305e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 22:53:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ra9Dl-0000Lw-DV
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:58:17 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ra9Dj-0005vZ-Oa
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:58:17 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a3d484a58f6so29809666b.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 22:58:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707893894; x=1708498694; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3TGxlVSnXdE3Z8EQcfcL0AyJBFbksB4NiCVh+ku2kRc=;
+ b=k9j53APo4Sdpf18nhrGEHiXS+bPGahpe+ewyvpTS5ewI/l5VOswhjLTUoR46gU/ZR5
+ ljl9VnRIZLH87cdinFsH383RYpdhnRT31J2eXnqjYfjRyCMpKfHvM9b/bohqEyl1xlqx
+ /RxeWdFlidJGVmYGYlG5QUGGcCd8KI9JFjFzqdKx2GdWWCXG4HuBrqDXixyAn30yefso
+ fvNJDMlWikzOSpDuIFTxUI7CGx03r2cXvXrvEjtfx1uuilaJz3TfTRkXv1Fsc9G/2zaH
+ 78PWEa56V7g0MIPL42ypVw4H3KU2wJ0ZeO18EXliY0bfYfXYnI2GsaOjMWDIcVywKYWU
+ TxAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707893635; x=1708498435;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZlmrBMsdz2unKlsH8bJ0Ni1feO/iQ9Lb0sgQV6Pnd6A=;
- b=H/Dq37xJLAieuJOoCJrkkY+ibeWJ1EItk0PBAHZ4Kbj6otViOqx3QXAuFuEzKDSroP
- shMtYj8u7c97nH+Y9vcfyQbil+wOEal2S/gFPRr+B1fmH+sV2OA4l2FfNT68W9kV2Rnl
- o+QLJIs5WX+0piXgNMfjmOOhWylPCQfInKBlMX2KkQBveWpQCaRi6/7otVeiNP337QMP
- ANwZzIzK1lEeGPXACzgca9J9Y+Dwp7e23JX8wjA0aKCVO8TXuc/SSRVWTbxXX9eebuOp
- 8g21fM3cQ+ybt0PfY1MCPfRzXF98PfJCLyajEw9rBFvcfKmZDhHrv5jUI7bzv5HL5wML
- +4Bw==
+ d=1e100.net; s=20230601; t=1707893894; x=1708498694;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3TGxlVSnXdE3Z8EQcfcL0AyJBFbksB4NiCVh+ku2kRc=;
+ b=f9uLFQzdgHSbJSl4284IJ01oH8IC8XmXKA9XUtaHZ+f00ufwEctkpzwo+8Rink6+ly
+ /FC1DLd++bfalugWNLQIN6QhOlRUm4HK0Y62uKlhvXBG3oeD89NIOEPtnI7OLuJYGy3w
+ mzAwII1F/uS5PhJfVaR+lCpisCmS6pSVDgmRHlet+r0C8GaRVljs1yiMLxAczg9AKn3r
+ i/zL8INzZpKkf7azbu0WAI8QdP5gyxiy7Rl9gPrc5mgAr9X/rTXtOGzLcKZxj6VLqTSP
+ 3OyJVr119nnsdDdyxraWdXedt1CxOLvyruZuq4VCbhdUjkFhtb5KbSQ9RtiCrg/tfvFK
+ 8UAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUs2VQgWwF9TUw9gYrVbSr8MBTV2ZEeLKyzBePmSDC7y7NF10TVmpHOFZ1wcu+N/3Eko6FQVNsrOy0RQuKz6NXgpqU9N6w=
-X-Gm-Message-State: AOJu0Yx8vuIWxO7xhL0X6VH5k6ErNfaG47sR5U3akG6qIxWrlGqOZmey
- RMapptCgBON4+W09Q7LHLHNnZGjQKPja3NrOEM3lsR2l9RiteO15jDbqd7PqF5i/BUzczX+7/7g
- zSl2KmXOiO7cAXcPhvIYt13qyhVygOIdnBFRpSFln/6PDi8iTc1Lm
-X-Received: by 2002:a05:600c:3f90:b0:411:e634:8377 with SMTP id
- fs16-20020a05600c3f9000b00411e6348377mr653055wmb.38.1707893635789; 
- Tue, 13 Feb 2024 22:53:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQiluGHK91IldECEQuGcCw09sGgegGyhkzEgL7UCYLVQ4ccg06zttDduT7tMnuuSY5U2GWUg==
-X-Received: by 2002:a05:600c:3f90:b0:411:e634:8377 with SMTP id
- fs16-20020a05600c3f9000b00411e6348377mr653047wmb.38.1707893635446; 
- Tue, 13 Feb 2024 22:53:55 -0800 (PST)
+ AJvYcCUhoKI2uDYxnrkkqFpx+bV2N+8ZJnbro8i+gaEpTS7pCiVpDHykWLxGUxA3AwdjMKB7qGSP9oXXlQ/RQVbbReJMJy9o1Kg=
+X-Gm-Message-State: AOJu0YznZq2u4cqEGG8dDEb4Zqe6F65cQC5Q4QZwmr6VMA9NvzrJrcfV
+ 4rK85A8NIuscnFxjEWrPEfiA3MLoY9DSDI9oNY3YFXfoFl4I5f4ZeiFxyXBhlNM=
+X-Google-Smtp-Source: AGHT+IFx/48kIRY+VCY3vSlxmN08+9ZmB82AYcL4de3UD1JwEqkhs27GtmZCV4pf5EAZs17jpQSCSg==
+X-Received: by 2002:a17:906:f1c1:b0:a3d:482f:3fc4 with SMTP id
+ gx1-20020a170906f1c100b00a3d482f3fc4mr474615ejb.70.1707893893936; 
+ Tue, 13 Feb 2024 22:58:13 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpJ7KNO141uSIbL/VbipYtq4oA32NjziZ4QbnT3JTQtfX8oURiQSQpsnmUPBrrnMcvmmx8mJRS0tvXzKhzvhupFngNrg9B07xtJecsH1eUZyO0ukz9FX+us3Bn3KiKZ3RlXv+nMXAjMd3uHMdBMhdBW5Au82yCMAseGxBrMFGizW6wiilk0bvIpE5nadQdq58FmtY5UFiVT7iYIgPykTHZ3KJy0MUonG7kBX8LfTLstoawEim4ZxrQFvU09z2bkuxvcm26gpjtd1u+u5thoQcces75Up4yKwoWI/AUi+qtAzYphBVSVY+KRutUejv9sJsqXq/o+Z1kl72FkcHnfrA+OG6SowMVg4EIaa0K1PmmT4rOXUGj6ziceOuJY73vHKPcyww2T3GBDGjOVP9IhkJBdK8fEo/IWEdG3g==
-Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- h21-20020a05600c351500b00411f04e2601sm427840wmq.27.2024.02.13.22.53.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 22:53:54 -0800 (PST)
-Date: Wed, 14 Feb 2024 01:53:51 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v4 8/9] pcie_sriov: Do not reset NumVFs after
- unregistering VFs
-Message-ID: <20240214015322-mutt-send-email-mst@kernel.org>
-References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
- <20240214-reuse-v4-8-89ad093a07f4@daynix.com>
+ AJvYcCXuTQTXNRycCn/2ir9P8ZV147ie2WnBrKndNsjRI15+Pxj1yclss4SEbIbqq8cWEnbE1+9FfKC5EID23i1YmOHkphY7z0sqDd56PhQp0cnSbw4o09SVMwUqkkmvGsbylwcxkknw4n1jkSouhT7HE0ScYFsKZ3DyMqam2OkF9CQ0et20iXQ4HtSoPuymfPJ6+9FtF1PG8qikNxgyPad5diKjes1dSr1h0XtlkYFy7ysL9yjW3wgQSi15+mJPieVyUA1h9119lufKa6GPZ4FD3OPPzvIs4fjTRLPJ5hl+5NaRAC3kpFX4laY=
+Received: from [192.168.69.100] (mau49-h01-176-184-41-88.dsl.sta.abo.bbox.fr.
+ [176.184.41.88]) by smtp.gmail.com with ESMTPSA id
+ ld15-20020a170906f94f00b00a3d5d8ff745sm13645ejb.144.2024.02.13.22.58.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Feb 2024 22:58:13 -0800 (PST)
+Message-ID: <17f737fa-5a2d-4465-9f53-7ef11b6287e4@linaro.org>
+Date: Wed, 14 Feb 2024 07:58:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240214-reuse-v4-8-89ad093a07f4@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] hw/i386/acpi: Declare pc_madt_cpu_entry() in
+ 'acpi-common.h'
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org
+References: <20240213120153.90930-1-philmd@linaro.org>
+ <20240213120153.90930-5-philmd@linaro.org>
+ <35DAA6EC-1C6D-4F36-A595-A7F720D63C20@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <35DAA6EC-1C6D-4F36-A595-A7F720D63C20@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,31 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 14, 2024 at 02:13:46PM +0900, Akihiko Odaki wrote:
-> I couldn't find such a behavior specified.
-
-Is it fixing a bug or just removing unnecessary code?
-Is this guest visible at all?
-
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/pci/pcie_sriov.c | 1 -
->  1 file changed, 1 deletion(-)
+On 13/2/24 19:57, Bernhard Beschow wrote:
 > 
-> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index 9d668b8d6c17..410bc090fc58 100644
-> --- a/hw/pci/pcie_sriov.c
-> +++ b/hw/pci/pcie_sriov.c
-> @@ -209,7 +209,6 @@ static void unregister_vfs(PCIDevice *dev)
->          pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
->      }
->      dev->exp.sriov_pf.num_vfs = 0;
-> -    pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
->  }
->  
->  void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
 > 
-> -- 
-> 2.43.0
+> Am 13. Februar 2024 12:01:49 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> Since pc_madt_cpu_entry() is only used by:
+>> - hw/i386/acpi-build.c   // single call
+>> - hw/i386/acpi-common.c  // definition
+>> there is no need to expose it outside of hw/i386/.
+>> Declare it in "acpi-common.h".
+>> acpi-build.c doesn't need "hw/i386/pc.h" anymore.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> hw/i386/acpi-common.h | 3 +++
+>> include/hw/i386/pc.h  | 4 ----
+>> hw/i386/acpi-common.c | 1 -
+>> 3 files changed, 3 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/hw/i386/acpi-common.h b/hw/i386/acpi-common.h
+>> index b3c56ee014..e305aaac15 100644
+>> --- a/hw/i386/acpi-common.h
+>> +++ b/hw/i386/acpi-common.h
+>> @@ -1,12 +1,15 @@
+>> #ifndef HW_I386_ACPI_COMMON_H
+>> #define HW_I386_ACPI_COMMON_H
+>>
+>> +#include "hw/boards.h"
+>> #include "hw/acpi/bios-linker-loader.h"
+>> #include "hw/i386/x86.h"
+>>
+>> /* Default IOAPIC ID */
+>> #define ACPI_BUILD_IOAPIC_ID 0x0
+>>
+>> +void pc_madt_cpu_entry(int uid, const CPUArchIdList *apic_ids,
+> 
+> Since the function is apparently not pc but rather x86-specific: Does it make sense to rename the function as well, e.g. to x86_madt_cpu_entry()?
 
+I don't know much about ACPI tables. Is it?
+Ani, can you confirm and do you mind posting a cleanup patch on top? :)
+
+Regards,
+
+Phil.
 
