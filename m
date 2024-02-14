@@ -4,107 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEECC48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 18:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7AF7C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 18:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raKOk-0001Ad-3B; Wed, 14 Feb 2024 13:54:22 -0500
+	id 1raKPt-00024g-PS; Wed, 14 Feb 2024 13:55:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1raKOh-0001AH-Lh
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 13:54:20 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1raKOg-0003ZO-5c
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 13:54:19 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6E9FF22107;
- Wed, 14 Feb 2024 18:54:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707936855; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1raKPo-0001zc-29
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 13:55:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1raKPk-0003xX-LP
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 13:55:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707936922;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+JdVB7VaUAbAUP5FQUHlzy/3vRCifwGSDkVDKpCAJt8=;
- b=ma+wBax3ibzouSrTJqC4uGmJMF9bK0rUB+CZ/kyXe9hPApFg4j/wyAvUOVV0/Pc0oeAh6b
- k3JE7OBvaQwmcxxbyNs2xATarN+Sw8KU7fwx88Uv14dVGUY1LvAHZiRXOCNgYKJj4X4U/o
- lWoW+0JVizSDtXyxrSXJ/i49eb3Zq7Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707936855;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+JdVB7VaUAbAUP5FQUHlzy/3vRCifwGSDkVDKpCAJt8=;
- b=oL3X+gjcQq3uAJkmI+7+LduF7pCZY/HHj3mm26nwVdcN+0F6YwybRHdSaGK+G0pfTvMWJY
- i2jySadJjmcz+eBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1707936855; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+JdVB7VaUAbAUP5FQUHlzy/3vRCifwGSDkVDKpCAJt8=;
- b=ma+wBax3ibzouSrTJqC4uGmJMF9bK0rUB+CZ/kyXe9hPApFg4j/wyAvUOVV0/Pc0oeAh6b
- k3JE7OBvaQwmcxxbyNs2xATarN+Sw8KU7fwx88Uv14dVGUY1LvAHZiRXOCNgYKJj4X4U/o
- lWoW+0JVizSDtXyxrSXJ/i49eb3Zq7Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1707936855;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+JdVB7VaUAbAUP5FQUHlzy/3vRCifwGSDkVDKpCAJt8=;
- b=oL3X+gjcQq3uAJkmI+7+LduF7pCZY/HHj3mm26nwVdcN+0F6YwybRHdSaGK+G0pfTvMWJY
- i2jySadJjmcz+eBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EFAB313A72;
- Wed, 14 Feb 2024 18:54:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id K4zpLFYMzWXEWwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 14 Feb 2024 18:54:14 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, berrange@redhat.com
-Subject: Re: [PATCH] ci: Fix again build-previous-qemu
-In-Reply-To: <20240213154901.109780-1-pbonzini@redhat.com>
-References: <20240213154901.109780-1-pbonzini@redhat.com>
-Date: Wed, 14 Feb 2024 15:54:12 -0300
-Message-ID: <87plwyq3l7.fsf@suse.de>
+ bh=4jo0LW7m1DBmoiy10GZeif6FZ1vgGh5n2NzDnz4LTpI=;
+ b=bwOtV3t0k3WqykSXQN1sYeBy2ej3QsgWnqcTwPNm/hJRMN2CPvjmdQf4UMXnz3246JOvBa
+ sqFM04os898vXPkaRT14kKfA+t8yXM71+zNU7bs2q8wIHS1dofgvyEZpm8RI2NForDz086
+ P58GwZzdr0TM91fi7GBF4J7/IRbKTyM=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-DjO4cxY1Nl6-nDswfxl8qg-1; Wed, 14 Feb 2024 13:55:19 -0500
+X-MC-Unique: DjO4cxY1Nl6-nDswfxl8qg-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-dc6b26eef6cso3498325276.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 10:55:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707936919; x=1708541719;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4jo0LW7m1DBmoiy10GZeif6FZ1vgGh5n2NzDnz4LTpI=;
+ b=k+KBHvvllFIGwzBckIbyxJV0SJ1Fxpy3wpS+7lvw4fy74T4OmQs0gGMQ1KHPbEKsWE
+ ByWmGz1pqM1mOs/qig8cnRhesCUF87yWExKl5XfPH4QeGKNUAKFhiO+LAeRc/x97kaZs
+ ADsFqiEGiPGVZqml/q+Sn7sTwS/DVFS5Inlrmv8N5VfzpomXkfb+XQLcqOdcF/LxHx8v
+ oQSzexOssoOoTPip52v6rRDF5tfUi6uq/uFWUuaIUjb5yztIm/P71uZb2kNlOExdwtA+
+ 4VNs5cGR6Spz+RlCONFLYbCCgbg8dqeFL4QRK5eKLjnq5ooU7FU2QJvFlTfDPG93WHXF
+ nVDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJBWOBH7YI5Q64nn/x4Z4X4DyCn/sQKKJvvVgiwBb7YgXNH+GwrYlbR6hliz0HHIQSgIh1WQ/CLTE3Wf5rNPoA7OBhKmc=
+X-Gm-Message-State: AOJu0Yx5Ja/HcL6NWhxoHkDl82ajFPxJWyhvohYKOJh7sppt3XO5Ov0k
+ oblZ8Qgie0cr+k2CiPTx+7rAJv4uKaL5hYJzR0Oba+r1XK3IzvrkR6+iUJJnE4FWkMd/ofzH/kB
+ XHDKev1w48ma7gRyL+08HDdnLAFCCq9z9PMpIo70BkZU9lGzHRHNFXLfOIsWuOAlQfXfEH97HoQ
+ WutMilYJhYkxhVsK0/J4akBdGpTFI=
+X-Received: by 2002:a05:6902:2506:b0:dcc:2bc:652 with SMTP id
+ dt6-20020a056902250600b00dcc02bc0652mr3511099ybb.60.1707936918807; 
+ Wed, 14 Feb 2024 10:55:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbknExzylWMbODTs9Q7nb8GBgfhF28V6VBmHgBR0nyH8oXPxyjAMeLrOLkku/N036Wh0QOl+itZ9XT4LeGGTI=
+X-Received: by 2002:a05:6902:2506:b0:dcc:2bc:652 with SMTP id
+ dt6-20020a056902250600b00dcc02bc0652mr3511082ybb.60.1707936918544; Wed, 14
+ Feb 2024 10:55:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ma+wBax3;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oL3X+gjc
-X-Spamd-Result: default: False [-4.38 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-2.07)[95.44%]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 6E9FF22107
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
+ <1707910082-10243-5-git-send-email-si-wei.liu@oracle.com>
+In-Reply-To: <1707910082-10243-5-git-send-email-si-wei.liu@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Wed, 14 Feb 2024 19:54:42 +0100
+Message-ID: <CAJaqyWd1qPmUn3Z=3SSbWT7rX78zza_mt1y6RQwi+62wFbda-Q@mail.gmail.com>
+Subject: Re: [PATCH 04/12] vdpa: factor out vhost_vdpa_net_get_nc_vdpa
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: jasowang@redhat.com, mst@redhat.com, dtatulea@nvidia.com, 
+ leiyang@redhat.com, yin31149@gmail.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,22 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Wed, Feb 14, 2024 at 1:39=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com> =
+wrote:
+>
+> Introduce new API. No functional change on existing API.
+>
+> Acked-by: Jason Wang <jasowang@redhat.com>
+> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
 
-> The build-previous-qemu job is now trying to fetch from the upstream
-> repository, but the tag is only fetched into FETCH_HEAD:
->
-> $ git remote add upstream https://gitlab.com/qemu-project/qemu 00:00
-> $ git fetch upstream $QEMU_PREV_VERSION 00:02
-> warning: redirecting to https://gitlab.com/qemu-project/qemu.git/
-> From https://gitlab.com/qemu-project/qemu
->  * tag                     v8.2.0     -> FETCH_HEAD
-> $ git checkout $QEMU_PREV_VERSION 00:02
-> error: pathspec v8.2.0 did not match any file(s) known to git
->
-> Fix by fetching the tag into the checkout itself.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+I'm ok with the new function, but doesn't the compiler complain
+because adding a static function is not used?
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  net/vhost-vdpa.c | 13 +++++++++----
+>  1 file changed, 9 insertions(+), 4 deletions(-)
+>
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 06c83b4..4168cad 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -281,13 +281,18 @@ static ssize_t vhost_vdpa_receive(NetClientState *n=
+c, const uint8_t *buf,
+>  }
+>
+>
+> -/** From any vdpa net client, get the netclient of the first queue pair =
+*/
+> -static VhostVDPAState *vhost_vdpa_net_first_nc_vdpa(VhostVDPAState *s)
+> +/** From any vdpa net client, get the netclient of the i-th queue pair *=
+/
+> +static VhostVDPAState *vhost_vdpa_net_get_nc_vdpa(VhostVDPAState *s, int=
+ i)
+>  {
+>      NICState *nic =3D qemu_get_nic(s->nc.peer);
+> -    NetClientState *nc0 =3D qemu_get_peer(nic->ncs, 0);
+> +    NetClientState *nc_i =3D qemu_get_peer(nic->ncs, i);
+> +
+> +    return DO_UPCAST(VhostVDPAState, nc, nc_i);
+> +}
+>
+> -    return DO_UPCAST(VhostVDPAState, nc, nc0);
+> +static VhostVDPAState *vhost_vdpa_net_first_nc_vdpa(VhostVDPAState *s)
+> +{
+> +    return vhost_vdpa_net_get_nc_vdpa(s, 0);
+>  }
+>
+>  static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool ena=
+ble)
+> --
+> 1.8.3.1
+>
+
 
