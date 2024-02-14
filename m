@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4EEC48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDF6C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raB3n-0007cc-UL; Wed, 14 Feb 2024 03:56:07 -0500
+	id 1raB6n-0000Kn-KR; Wed, 14 Feb 2024 03:59:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1raB3l-0007bg-MS; Wed, 14 Feb 2024 03:56:05 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1raB6j-0000JD-Pt; Wed, 14 Feb 2024 03:59:09 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1raB3g-0007ut-VL; Wed, 14 Feb 2024 03:56:05 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 3F737CE1C6E;
- Wed, 14 Feb 2024 08:55:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C7BC433C7;
- Wed, 14 Feb 2024 08:55:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1707900948;
- bh=dIEMdbt4uVH+SLcKL2HAfT6xds6Yg5ZGi16KuJ+Ap8c=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=Ix48GOZnRUmmE4lVcPA3k4gNd4WJlJEhRt+G0TYvbqkmKZfINf138KKyTzSyQ5G9O
- qaIB9G2dzT9FylNpw+ab+WO4VQjWWMBEAzi2tXeje1sQ4eme3C6ebzKSSiyGhgrAZy
- 8iP49dTxgQ1LhxSUhDib7wBhQ390NnelfxzVCB5wd8JhIVY5W1Y+qZAKLI5m/S2up/
- 0xTDP5dqUiIJiKee6UiejWp+VeJJd3YRpS4yirFCUA52/d3O4Z2pNZTMNXbEMDPlXk
- zc41O9H6wsvXAsksRjBqfZL8MYRzw4WvF2bHgR9eXr0ednGYAHxK0CP/wt6gLzbSvc
- C+JU5QKN+ZhJA==
-Received: by mail-lf1-f43.google.com with SMTP id
- 2adb3069b0e04-51182f8590bso4485560e87.0; 
- Wed, 14 Feb 2024 00:55:48 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPWt/+13Wj9jFFPuiPtFHEFaziyUkoOZLCaeD+7l8wpEZmgKEFayFldtClpSNdGRN9u6lEx1s5H9W1s2FnxXz5DdDUvng=
-X-Gm-Message-State: AOJu0YzCgDB/0nRVGe51GDPXTvtAyAFsbDuc316fCaCvC201Vvb0PYeH
- XZxMFR7xNwzxcqWBG3WWLSZ+I0RJWUm+c4hYz7tAM5vejONQwZGFYPqAObSOQke1k5e7UM7s4fz
- vSCjeW2z5OqxUKTWEkHd+SUkxLNk=
-X-Google-Smtp-Source: AGHT+IHvEDDI5F+hLi/GOEGRDBmmGVzlgg4rga3Z58kXUGgAT/3RBmuHN/kuso36uweCwtp4grVIFjgm49jzPiIs8NM=
-X-Received: by 2002:a05:6512:1590:b0:511:a206:8fee with SMTP id
- bp16-20020a056512159000b00511a2068feemr1676763lfb.64.1707900946712; Wed, 14
- Feb 2024 00:55:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1raB6h-00009Y-T8; Wed, 14 Feb 2024 03:59:09 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E8E14D247;
+ Wed, 14 Feb 2024 11:59:04 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id BF9807E83C;
+ Wed, 14 Feb 2024 11:58:56 +0300 (MSK)
+Message-ID: <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
+Date: Wed, 14 Feb 2024 11:58:56 +0300
 MIME-Version: 1.0
-References: <20240122143537.233498-1-peter.maydell@linaro.org>
-In-Reply-To: <20240122143537.233498-1-peter.maydell@linaro.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Wed, 14 Feb 2024 09:55:35 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXHTcYB0K7f7S6F3SqSye3XAJemTt6qAb8cgmcThYshrWA@mail.gmail.com>
-Message-ID: <CAMj1kXHTcYB0K7f7S6F3SqSye3XAJemTt6qAb8cgmcThYshrWA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] virt: wire up NS EL2 virtual timer IRQ
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Leif Lindholm <quic_llindhol@quicinc.com>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=ardb@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/9] pcie_sriov: Validate NumVFs
+Content-Language: en-US
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,56 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jan 2024 at 15:35, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> This patchset wires up the NS EL2 virtual timer IRQ on the virt
-> board, similarly to what commit 058262e0a8b2 did for the sbsa-ref board.
->
-> Version 1 was an RFC patchset, originally sent back in autumn:
-> https://patchew.org/QEMU/20230919101240.2569334-1-peter.maydell@linaro.org/
-> The main reason for it being an RFC is that the change, while correct,
-> triggers a bug in EDK2 guest firmware that makes EDK2 assert on bootup.
-> Since the RFC, we've upgraded our in-tree version of the EDK2 binaries
-> to a version that has the fix for that bug, so I think the QEMU side of
-> these patches is ready to go in now.
->
-> To accommodate users who might still be using older EDK2 binaries,
-> we only expose the IRQ in the DTB and ACPI tables for virt-9.0 and
-> later machine types.
->
-> If you see in the guest:
->      ASSERT [ArmTimerDxe] /home/kraxel/projects/qemu/roms/edk2/ArmVirtPkg/Library/ArmVirtTimerFdtClientLib/ArmVirtTimerFdtClientLib.c(72): PropSize == 36 || PropSize == 48
->
-> then your options are:
->  * update your EDK2 binaries to edk2-stable202311 or newer
->  * use the 'virt-8.2' versioned machine type
->  * not use 'virtualization=on'
->
-> I'll put something about this into the release notes when this
-> goes into git. (There are other reasons why you probably want a
-> newer EDK2 for AArch64 guests, so this is worth flagging up to our
-> downstream distros who don't take our pre-built firmware binaries.)
->
-> changes v1->v2:
->  * the change in DTB and ACPI tables is now tied to the machine version
->  * handle change of the ARCH_TIMER_*_IRQ values from PPI numbers to INTIDs
->  * bump the FADT header to indicate ACPI v6.3, since we might be using
->    a 6.3 feature in the GTDT
->  * the avocado tests now all pass, because we have updated our copy
->    of EDK2 in pc-bios/ to a version which has the fix for the bug
->    which would otherwise cause it to assert on bootup
->  * patch 2 commit message improved to give details of the EDK2 assert and
->    state the options for dealing with it (this will also go into the
->    QEMU release notes)
->
-> thanks
-> -- PMM
->
-> Peter Maydell (3):
->   tests/qtest/bios-tables-test: Allow changes to virt GTDT
->   hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
->   tests/qtest/bios-tables-tests: Update virt golden reference
->
+14.02.2024 08:13, Akihiko Odaki wrote:
+> The guest may write NumVFs greater than TotalVFs and that can lead
+> to buffer overflow in VF implementations.
 
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+This seems to be stable-worthy (Cc'd), and maybe even CVE-worthy?
+
+Thanks,
+
+/mjt
+
+> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   hw/pci/pcie_sriov.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index a1fe65f5d801..da209b7f47fd 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
+>   
+>       assert(sriov_cap > 0);
+>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
+> +        return;
+> +    }
+>   
+>       dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+>   
+> 
+
 
