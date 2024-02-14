@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C57FC4829F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 07:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65625C48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 07:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raA6k-00017h-RK; Wed, 14 Feb 2024 02:55:06 -0500
+	id 1raA6l-00017y-J3; Wed, 14 Feb 2024 02:55:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raA6Q-00013M-8Y
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 02:54:46 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raA6K-0001a0-Al
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 02:54:43 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d751bc0c15so46604165ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 23:54:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707897279; x=1708502079;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=80AktfsBJRLsWlMrFKFy7QPhIsptF3NRTk5FuAv6RUA=;
- b=z2RPdh612YNGXxqQSy5GOyiQ+Y2EKgGwyhaxlmRPmgaPjjSIQxdHKK68yTHxH8Cmdg
- MUDKfzKMrwDFDE+PkbM96ZsfT6K6yqQvqn0QhZbOY7OvS0iyXq4F19CyCkqOMbxokzib
- 8SZz1b9Onp2ZVvcPNGzOwdpBbdqQ0Rl02KD9rbtAjObOfBZM+zTfxOyblTslXdfqBnGg
- nzlUhIER9QMi7Lfk9wmxbZD5dpziNQFwrj14hQuBhrBmXPsJCln2zDYLEY5xuhsR2IkH
- i9o76dglgMz9DYNwCH5MjR0zGK1aFcVljuQ19XfAc/h0Czi2KlUDkUFxcvFXilrOxELe
- nnEg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raA6k-00017L-9G
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 02:55:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raA6h-0001eI-Bk
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 02:55:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707897302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ldvkJHosj+m7dlrgomfSMfHxFZTRq8+oacWsr4paKFo=;
+ b=P353bkUNrSosQLKgy0bddDYySMGlY/FHyDRy10ylV7ajz7xQGwQbiJFSmHip0+ZWhMzsA+
+ 9fXslMW7pV+Gitq9cCjRqsWrFEygirnw3QA4t7x7SU5JEYHJd7cW+Wwb9I33p+lPZehlTE
+ ve2G0wqhEVxQVwmiwiBKpcDIvW/0EjY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-692--Q-8RGnDODSV-oTBbxridg-1; Wed, 14 Feb 2024 02:55:01 -0500
+X-MC-Unique: -Q-8RGnDODSV-oTBbxridg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-410b8e90b4fso18713065e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 23:55:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707897279; x=1708502079;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=80AktfsBJRLsWlMrFKFy7QPhIsptF3NRTk5FuAv6RUA=;
- b=ozmI/9fRDmA4p/taxWq16VMRMbPj/5aC65+8w5GHusT4/FKTUozA3DBmbGJb0NDMnj
- p4a3tnix+fmbI8/6q0qd5EpTF77Y6K2ucawhcp/TfUypenbgfS/Tb2CYHxnK06yJQXZa
- U9rO/iKbi5gC1M4+lInEOUj9LTez6u44sZmDzRjs3ft5XrORo0g9gV9tvNtPhXzPzHTM
- HjQKwo/iKvO3WAxhgZK1TwK0VT1EFIQKJNMyVWAjNNMAFcY5T0ZFsgO6LXDxkPKoA4Sn
- PlvnQewjOQ+szxuVFjgx0ofKiv0db2VmxtV0ZrpmizTQSzcO4iOnoarEpTOJWOLdAJGJ
- a7fQ==
+ d=1e100.net; s=20230601; t=1707897300; x=1708502100;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ldvkJHosj+m7dlrgomfSMfHxFZTRq8+oacWsr4paKFo=;
+ b=U22kULUHU0QCp9OvNogsZ7ebKsGUfcfp591TsH6LZ3Hgxyrg8ZzthJNjYC+ebZ1A2S
+ g7l6cblFn+IgCHaf4qxDwS7YtG5cSFOClH6y/BAZABk5xx2PryKH2k5RsPSgz/vgeRjh
+ SqCRcISzfJQ0GuungDX2A0xVyrfH19cuVxxKFO1RtLYumLDt0uANd1RBTM7jTD2+tzmI
+ BcgyMX4Brtivizrr7W6gWy0Cq9fAfPpCdbZhSxin2G+EhNTY1iZZMkjSY8eTdV3tusVL
+ M4dYbLRhPT5uukRuA31PxoCJEopwA5xcExnImfiWco5+IqdLARBk7xS05/q1rYgoXQcm
+ 2IAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6oQ+CK6bMjsf9qriVlgfqnun6PDix+db542vLc/Fs4KhrwwtM/S1t99cNcW/GVzFzcocgPuZoUfGdhv7Hj5G+sFE9mfs=
-X-Gm-Message-State: AOJu0Yzc3JlnnQInqezBSp7TnKjAQiBXXVAoiLrodZBePZn0XxIxVgh9
- qc5nU25e7fDgy+Pul4oJu0e4IvwsUCp+eWbCPv6PG392LMp8Eemtk+rACVBMXcRnVf1x1Jw9QN1
- e
-X-Google-Smtp-Source: AGHT+IHgWWy56Cfp1PASxFgKAy8q7H2RUWmqdMtLJRfeX0EAgMW4GiWp6crBNsFkchSqbJnQnsPoyw==
-X-Received: by 2002:a17:902:c947:b0:1db:4b08:fbe8 with SMTP id
- i7-20020a170902c94700b001db4b08fbe8mr1890373pla.44.1707897278911; 
- Tue, 13 Feb 2024 23:54:38 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCVi9+BW7Ac7KercGamOm1xP9VPUsx8JPaDhhzGf+dhvmwrPjVTDTxqO71q5PlTGR7WI/8mEf7CZtYKeOfm1MvNlp4mE/Sy4rYQ9TsgrQKE11oETnRNUy8vsJtCftvjdqHU9fdOgsPOt4WX1ikKBTlIOAtNpDjA/Povu8v2NTow2AiKla3pGUvZmqhsA8l4nYEjB518/5nHPW1lVOilDkSgIzLUr9vz7850=
-Received: from [157.82.207.134] ([157.82.207.134])
+ AJvYcCVbs0nw3rUKTHTM2kFc95VGbYH3+DWMpsh2GDTrBtphJ3n2Lfc6QJkM21K5GaMk0QETTJVIV5jNzcEgIuhlXlcimBpux6A=
+X-Gm-Message-State: AOJu0YzNwB1HcqoO6jOHN675HAeBAnLh1hBxHio91SPaE92T1gvUFNzY
+ X0zB3JLKdjuUO1bOy6JGyWheQtgq+oypHVDXCtQdxQIblsRIieuSU5VE2tPLhPcPDaYjDwxudDc
+ wxKft5eDQ9E6Nh+TogJFcgmtmdLCul5HZhf9DwRx20/ql1KijatXB
+X-Received: by 2002:a05:600c:4e86:b0:410:e201:bc55 with SMTP id
+ f6-20020a05600c4e8600b00410e201bc55mr1681911wmq.11.1707897300121; 
+ Tue, 13 Feb 2024 23:55:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFTyif6yhQSokJGUoCCwGcNYodxEkxI5qLLhJM9EByf3Yc8E1I4uZCOYZpedwvAo2WVdFEprg==
+X-Received: by 2002:a05:600c:4e86:b0:410:e201:bc55 with SMTP id
+ f6-20020a05600c4e8600b00410e201bc55mr1681887wmq.11.1707897299790; 
+ Tue, 13 Feb 2024 23:54:59 -0800 (PST)
+Received: from redhat.com ([2a02:14f:1f0:720f:e338:175b:c44e:aa92])
  by smtp.gmail.com with ESMTPSA id
- kg13-20020a170903060d00b001d8d04472absm3182682plb.154.2024.02.13.23.54.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Feb 2024 23:54:38 -0800 (PST)
-Message-ID: <47379759-2a00-4c5f-81ae-30fd9b541ff2@daynix.com>
-Date: Wed, 14 Feb 2024 16:54:35 +0900
+ t9-20020a7bc3c9000000b004107dfa6aebsm1090444wmj.28.2024.02.13.23.54.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Feb 2024 23:54:59 -0800 (PST)
+Date: Wed, 14 Feb 2024 02:54:54 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v4 7/9] pcie_sriov: Release VFs failed to realize
+Message-ID: <20240214025430-mutt-send-email-mst@kernel.org>
+References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-7-89ad093a07f4@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6] util: Move dbus_display1 to util
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org
-References: <20240214-dbus-v6-1-411af2b9289e@daynix.com>
- <CAJ+F1CLw6FCMzz1vmNQTon4zR2ae=O5Er+5kU56xQGgCMp77Gw@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAJ+F1CLw6FCMzz1vmNQTon4zR2ae=O5Er+5kU56xQGgCMp77Gw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240214-reuse-v4-7-89ad093a07f4@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,17 +111,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/14 16:05, Marc-André Lureau wrote:
-> Hi Akihiko
+On Wed, Feb 14, 2024 at 02:13:45PM +0900, Akihiko Odaki wrote:
+> Release VFs failed to realize just as we do in unregister_vfs().
 > 
-> On Wed, Feb 14, 2024 at 9:39 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> Move dbus_display1 from ui to util as it's used not only by ui/dbus but
->> also dbus-display-test.
-> 
-> It doesn't seem like the right place either. So let's focus on what
-> this is fixing.
+> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Ok. Then please have a look at v2, which doesn't use util:
-https://lore.kernel.org/all/20231215-dbus-v2-0-1e2e6aa02115@daynix.com/
+Is this fixing an old bug or a bug introduced by a previous patch?
+
+
+> ---
+>  hw/pci/pcie_sriov.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> index 9ba34cf8f8ed..9d668b8d6c17 100644
+> --- a/hw/pci/pcie_sriov.c
+> +++ b/hw/pci/pcie_sriov.c
+> @@ -91,6 +91,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+>          vf->exp.sriov_vf.vf_number = i;
+>  
+>          if (!qdev_realize(&vf->qdev, bus, errp)) {
+> +            object_unparent(OBJECT(vf));
+> +            object_unref(vf);
+>              unrealize_vfs(dev, i);
+>              return false;
+>          }
+> 
+> -- 
+> 2.43.0
+
 
