@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E1AC4829F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 06:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 041F0C4829F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 06:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra98W-00078d-7X; Wed, 14 Feb 2024 01:52:52 -0500
+	id 1ra99d-0007pX-NJ; Wed, 14 Feb 2024 01:54:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra98U-00078D-Ks
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:52:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra99c-0007oz-HB
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:54:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra98T-0004Zl-9a
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:52:50 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1ra99b-0004kU-8L
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 01:54:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707893568;
+ s=mimecast20190719; t=1707893638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Y3kAxDY63lrLkqUjIa0lfJbeC7ma0135aPiV67YAc6w=;
- b=Rdv2trWWftOgn5/wntmssC7vHbKyrfkPd7hz53CiuBUXBoCchXxfJ3ZWpZXXa21a3+SLXQ
- YPiUA3nQQjLQ7KePZPoLdpfPoEnqDkyE8LruGAJKw0Bu8XPqlvMaocyYNxOIZR60vOWX/C
- sQgxgbSWOcSeUCPvpkGMQzEYyMqNG24=
+ bh=ZlmrBMsdz2unKlsH8bJ0Ni1feO/iQ9Lb0sgQV6Pnd6A=;
+ b=S707uWF8YFqbCKkVV3lP5zkkLzHw8UyILa4/KadS1JR4AxNUwuuUa/cUdyxV4LPzzdQfjL
+ 3RxMuxJL0gGZXyFhX2I8tthBzZK1EtUmgJJLPsI+nfS4GoD7tgjx++9Is6MCXZVY3x8gAr
+ YkzxO3KDgGa4l/Y6eHOPrTqCSZVJuc8=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-354-VKuL06uFMXy3yErEFlwJhA-1; Wed, 14 Feb 2024 01:52:45 -0500
-X-MC-Unique: VKuL06uFMXy3yErEFlwJhA-1
+ us-mta-5-shO_3N-xNy6r4K9RE9TYlA-1; Wed, 14 Feb 2024 01:53:56 -0500
+X-MC-Unique: shO_3N-xNy6r4K9RE9TYlA-1
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-40e435a606aso32500925e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 22:52:44 -0800 (PST)
+ 5b1f17b1804b1-410422e8cd1so29576305e9.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 22:53:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707893564; x=1708498364;
+ d=1e100.net; s=20230601; t=1707893635; x=1708498435;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y3kAxDY63lrLkqUjIa0lfJbeC7ma0135aPiV67YAc6w=;
- b=RQfd05GWFiGsgY72DDGkhr08ATuZafd7bl5xhW5n1rMAkGTiOaVL1Y1q0YcfFwMKsA
- kTk/H5IYVPDvhlSZYMkd8XJ8i/Cb86bfpQP0hQXv/Fg4uWSUyW8zrKtZjCaaVpvsa86Z
- zcs70Abx1OSWYbTAI9jJ30LolpYQH2c1h2v6V8JbbDEPpIjyu8bt5fKXTMB1KHFfebOS
- MvKtZr0RYbliFTB4zqa80JACffTh5lmOCwYRxJt8lm6DQ7lGpi0aW0lpCywBAOXTwq+7
- 8BGdGCa5BDxV9aK2m1TVGIs6vwpS/rKOgBIwrqDke1zRQwieS7rG8qHzep3W7LO52iYG
- Qbcw==
+ bh=ZlmrBMsdz2unKlsH8bJ0Ni1feO/iQ9Lb0sgQV6Pnd6A=;
+ b=H/Dq37xJLAieuJOoCJrkkY+ibeWJ1EItk0PBAHZ4Kbj6otViOqx3QXAuFuEzKDSroP
+ shMtYj8u7c97nH+Y9vcfyQbil+wOEal2S/gFPRr+B1fmH+sV2OA4l2FfNT68W9kV2Rnl
+ o+QLJIs5WX+0piXgNMfjmOOhWylPCQfInKBlMX2KkQBveWpQCaRi6/7otVeiNP337QMP
+ ANwZzIzK1lEeGPXACzgca9J9Y+Dwp7e23JX8wjA0aKCVO8TXuc/SSRVWTbxXX9eebuOp
+ 8g21fM3cQ+ybt0PfY1MCPfRzXF98PfJCLyajEw9rBFvcfKmZDhHrv5jUI7bzv5HL5wML
+ +4Bw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWinpc6rah5IFbzKQqfMGXOY96j03SZ28JzFQu6cUVeTYQKGXQ+/cmE6B14zPiNUBPMaQHgtWtHeGJSNv67Su6bZezsZKE=
-X-Gm-Message-State: AOJu0YxAOnd4phdcqCO0EVXZ+mXt7nDa5rFB1Y6xUf/fivnRakBrXCQt
- e14JwDkayNWU84yvJ5HpvL0TFrX/F1lCPO7qEvPANOihQF7qmuN4Wm0r85HSfpFNvKnDnAvX2yg
- Af3kg2vkRX/atyVa2uG2RnYQ7rEyahqIlEi7z7QriXWLqWmG1R4MQ
-X-Received: by 2002:a05:600c:4f46:b0:411:d253:55dd with SMTP id
- m6-20020a05600c4f4600b00411d25355ddmr1370401wmq.8.1707893564094; 
- Tue, 13 Feb 2024 22:52:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJeESxbJy17miYJXqqlFAfWn1VMSBwQQQOLekF5EmKEjjMK/5fUuOnLt5EnywM+rmO/oJbsg==
-X-Received: by 2002:a05:600c:4f46:b0:411:d253:55dd with SMTP id
- m6-20020a05600c4f4600b00411d25355ddmr1370388wmq.8.1707893563750; 
- Tue, 13 Feb 2024 22:52:43 -0800 (PST)
+ AJvYcCUs2VQgWwF9TUw9gYrVbSr8MBTV2ZEeLKyzBePmSDC7y7NF10TVmpHOFZ1wcu+N/3Eko6FQVNsrOy0RQuKz6NXgpqU9N6w=
+X-Gm-Message-State: AOJu0Yx8vuIWxO7xhL0X6VH5k6ErNfaG47sR5U3akG6qIxWrlGqOZmey
+ RMapptCgBON4+W09Q7LHLHNnZGjQKPja3NrOEM3lsR2l9RiteO15jDbqd7PqF5i/BUzczX+7/7g
+ zSl2KmXOiO7cAXcPhvIYt13qyhVygOIdnBFRpSFln/6PDi8iTc1Lm
+X-Received: by 2002:a05:600c:3f90:b0:411:e634:8377 with SMTP id
+ fs16-20020a05600c3f9000b00411e6348377mr653055wmb.38.1707893635789; 
+ Tue, 13 Feb 2024 22:53:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQiluGHK91IldECEQuGcCw09sGgegGyhkzEgL7UCYLVQ4ccg06zttDduT7tMnuuSY5U2GWUg==
+X-Received: by 2002:a05:600c:3f90:b0:411:e634:8377 with SMTP id
+ fs16-20020a05600c3f9000b00411e6348377mr653047wmb.38.1707893635446; 
+ Tue, 13 Feb 2024 22:53:55 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdsYIpt71qD8spH/0AdR+HH5JOwBkhqaqCEyrTU0H1AoojV1dbdaoI/0nKGg0RAnsmdpH9t0g66QpFExT15T91TyBN/w+kRDH0Xu/uCGtTMuus1ayquLTKWAxeFqhsmCatWeEP0lyc1dme6BaN0JuoYIWhCr15lXzFFibrnLLZGu+rSgewIbWKK4xjY6yPwcrJhMagdaCGByS5BZOv1MoQA7GKzbM+CnNMB424mnFbJaQ20BBshNk5YojwyY281gGBMAC3X/69UZm0rX5CDh/uZnhRrXWvYqxXDs0SFElzIMVGcknR6Qg1XBPmIT6zJrfEJ+um9vINyetcehwh48X0Fs2IrxV5gmxTFgBWkuNn+3eTgTv4qfSZrQPXxdMZVzhiT//SIrvMu/MvyzEMZ1+3wqq5cVPiNsbcrQ==
+ AJvYcCXpJ7KNO141uSIbL/VbipYtq4oA32NjziZ4QbnT3JTQtfX8oURiQSQpsnmUPBrrnMcvmmx8mJRS0tvXzKhzvhupFngNrg9B07xtJecsH1eUZyO0ukz9FX+us3Bn3KiKZ3RlXv+nMXAjMd3uHMdBMhdBW5Au82yCMAseGxBrMFGizW6wiilk0bvIpE5nadQdq58FmtY5UFiVT7iYIgPykTHZ3KJy0MUonG7kBX8LfTLstoawEim4ZxrQFvU09z2bkuxvcm26gpjtd1u+u5thoQcces75Up4yKwoWI/AUi+qtAzYphBVSVY+KRutUejv9sJsqXq/o+Z1kl72FkcHnfrA+OG6SowMVg4EIaa0K1PmmT4rOXUGj6ziceOuJY73vHKPcyww2T3GBDGjOVP9IhkJBdK8fEo/IWEdG3g==
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- ch16-20020a5d5d10000000b0033b58cbf3ebsm11509336wrb.26.2024.02.13.22.52.41
+ h21-20020a05600c351500b00411f04e2601sm427840wmq.27.2024.02.13.22.53.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 22:52:43 -0800 (PST)
-Date: Wed, 14 Feb 2024 01:52:39 -0500
+ Tue, 13 Feb 2024 22:53:54 -0800 (PST)
+Date: Wed, 14 Feb 2024 01:53:51 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
@@ -79,23 +79,24 @@ Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
  Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
  qemu-block@nongnu.org
-Subject: Re: [PATCH v4 5/9] pcie_sriov: Validate NumVFs
-Message-ID: <20240214015107-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v4 8/9] pcie_sriov: Do not reset NumVFs after
+ unregistering VFs
+Message-ID: <20240214015322-mutt-send-email-mst@kernel.org>
 References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
- <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-8-89ad093a07f4@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240214-reuse-v4-8-89ad093a07f4@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,38 +113,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 14, 2024 at 02:13:43PM +0900, Akihiko Odaki wrote:
-> The guest may write NumVFs greater than TotalVFs and that can lead
-> to buffer overflow in VF implementations.
-> 
-> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+On Wed, Feb 14, 2024 at 02:13:46PM +0900, Akihiko Odaki wrote:
+> I couldn't find such a behavior specified.
+
+Is it fixing a bug or just removing unnecessary code?
+Is this guest visible at all?
+
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  hw/pci/pcie_sriov.c | 3 +++
->  1 file changed, 3 insertions(+)
+>  hw/pci/pcie_sriov.c | 1 -
+>  1 file changed, 1 deletion(-)
 > 
 > diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index a1fe65f5d801..da209b7f47fd 100644
+> index 9d668b8d6c17..410bc090fc58 100644
 > --- a/hw/pci/pcie_sriov.c
 > +++ b/hw/pci/pcie_sriov.c
-> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
+> @@ -209,7 +209,6 @@ static void unregister_vfs(PCIDevice *dev)
+>          pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+>      }
+>      dev->exp.sriov_pf.num_vfs = 0;
+> -    pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
+>  }
 >  
->      assert(sriov_cap > 0);
->      num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-> +        return;
-> +    }
-
-
-yes but with your change PCI_SRIOV_NUM_VF no longer reflects the
-number of registered VFs and that might lead to uninitialized
-data read which is not better :(.
-
-How about just forcing the PCI_SRIOV_NUM_VF register to be
-below PCI_SRIOV_TOTAL_VF at all times?
-
->      dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
->  
+>  void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
 > 
 > -- 
 > 2.43.0
