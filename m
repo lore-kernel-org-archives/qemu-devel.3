@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE394C48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0BBC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 08:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raAJ1-0004zA-AX; Wed, 14 Feb 2024 03:07:47 -0500
+	id 1raAKa-0005eq-G2; Wed, 14 Feb 2024 03:09:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1raAJ0-0004z2-Fz
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 03:07:46 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1raAKY-0005eb-Uu
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 03:09:22 -0500
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1raAIy-0004mT-SF
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 03:07:46 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-604a1581cffso48578357b3.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 00:07:44 -0800 (PST)
+ id 1raAKX-0005HE-3A
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 03:09:22 -0500
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-7ce55932330so2081388241.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 00:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707898063; x=1708502863; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707898160; x=1708502960; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Kle6xP7rVSAp5ii5ldQQLPNraAGQveQSP72wimwu2j0=;
- b=i8m36L/MFeby1Rr6OJmNwi/2hkUH4jOi5kywatB/OcuyG7j8rNEO3bFk1pDVe7nZ0h
- f5m06HP+ajj2DkayzyXzn50ggNvZt7W1x1LJEFN+XfxVBNjWvvlLILcRpm80JVsQ3Ciy
- 41Ydr2aWkMxOR6mCwoGT6AB5jAQYYTNDLQbrcTNK8bkxUna5pgKMb+aRotuqaIgUhuv2
- 4aDX1b6Ead4pLE0ZK1vNt23AHBHjuVX+Gj/LQdwRez9vWtxwPQGcTQ/Vh9E4eJTJBDMe
- gs/03QAm30RLU/CW+58NTcN+USIQZoOOOookI7Jd7jSX5yOm1wEnTh8l3JTqT7cEfxZN
- VB3Q==
+ bh=bxBT2htgGo1R/dwAOq36JhJUToR3wrORKfW8BQKnxj0=;
+ b=R+uvgnzqPo+0EI+PQdAHFX4BzlfXUwTJmGpNQ4Za0WsLgNMGbLWdrWDEu3LYFVzIOi
+ kkUHcaf0mld1fipyIREc61PvFnRc3SjeQIAAWj0/SdE4jcS03zLMsVapuXwraZf0TD6F
+ 5tePp/ZM10zgQi5YwgAy9EKg0dqpeu3RFoRiVksSZ4WVrkSu/zWInDDAjp0WTI35P5/s
+ fXLFWqurdibnqbW7xsw2wLKALdo3r4/Z8x/fLhA7lSIUyabped8XipDXU+Uy3geQ7/Mw
+ mL/msLBTSybu7yA1J2VJPkY3mZm+tzbxe74hnMuiMKwarmBV05PT9aHrWTP8exJaAPaX
+ xLcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707898063; x=1708502863;
+ d=1e100.net; s=20230601; t=1707898160; x=1708502960;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Kle6xP7rVSAp5ii5ldQQLPNraAGQveQSP72wimwu2j0=;
- b=VY8K1CqygUdAD9zx+uZSKebKZNae0mjd3xqqh2zglXOpT0BLkA10FFKbuDrMMbiiOD
- mlzgO2TT3a3O6c87/quryOcqYmI3hc3xl5RntcliwIYDgPb2WIUbLxPO2KX2HzkLR5CD
- c+xLsONssbmNXIWfZfIVdlOY8syhSKQrKQVqx5qpvxF4DKbnvvQaXkam5Rj4HFayVxsx
- GBXv02SitUECC1yipVBhQq5TA9NCxKCxymmNIISX8XIXVW0dDdyQhyLxOaoxG2F0lvhQ
- OW/IszTE/sDcyB69keNWQBsuyRtdbABKIX+0t1xTh4x+hh4FvkngeUlEErQRc4D4uGH/
- iOBA==
-X-Gm-Message-State: AOJu0Yyk5bjIedjjdnafzbNZMrFGbLYbNlN+A7qaEjNo0vOOY5lJ08ab
- m5XssaXFDDzF8DIX1jKbs0mleLLofXk5Rlg1vywsR5iOfKLnouDxqoivNmFCJbej7/g785XA9dB
- V93/uJwnaVbSzJL3XfYtJyw9PLCOHo58klqt9kQ==
-X-Google-Smtp-Source: AGHT+IHWvNXjS1P6RXfax08Ul/nFGtZEkU+FbqcS3slXnuisA6V0Y4hDifXuItGcGKW6vINuNyjvoW6kX5CIRouWbEI=
-X-Received: by 2002:a0d:d4d4:0:b0:607:a080:acc5 with SMTP id
- w203-20020a0dd4d4000000b00607a080acc5mr1778623ywd.47.1707898063590; Wed, 14
- Feb 2024 00:07:43 -0800 (PST)
+ bh=bxBT2htgGo1R/dwAOq36JhJUToR3wrORKfW8BQKnxj0=;
+ b=qlnogM+b1oLTFugn6w23r6IZzhBifr2ZfAzw9BimO0ZpjOZXak2dx0OazkFAGCYB8X
+ ZazOJx9SrtnPPewlkhvAyHJHXCOdLJnmgAZqyFugMXp5xAdBmV1LSNjCNBGqf+zSYbXt
+ u33aJPpy5vx3XxNXxA1/lu/alC3lVLbfMBd6sNd+ACk8jnEn5Bxfp2v7LilFNc1R0SWO
+ nx+jwbuldvB1y37pilSkTxLzWTSvOwHqLPIbGwQPR1AtKaiKGWfNAfofdrSjRmKTZS4m
+ hL2bNdwb5bdSSUn30MKMwxxbR319QtBo/CuGOIOG4JOffF3KaOU1S5gVJyMuL/hC2JOF
+ 7ZVA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSZ+HFCtMEMmeW41zbDtAom+6TvPiC0Ncy79PCP4OPOt+MIWaa3u/1KzMwzX5yKYjt/0uGJlf1c/X/qLIpUdwdU7+PuVM=
+X-Gm-Message-State: AOJu0YwNWVz66wJpT6UDv/z/6iyatjWwr3hYPWa70U9xxLxOXlIt/2+W
+ 4nChLztIPEv1715f+99LCTUEeCzEjPg3jpeJOHfbJLVm2gk7Kllv4U6bjdFyLV4WZ85pp/g7BWo
+ jEPiIU+IVll3d22duBtGhO/1cJ88=
+X-Google-Smtp-Source: AGHT+IHf5R8T+53tJ4cYZs2pUnEboU7MIxrO7QQRzS2EZ6/GIzhzw/15VTwDhGVah8nOZ8m4Y/nNHzF5QiNTkX4MupE=
+X-Received: by 2002:a67:e3ba:0:b0:46e:cb7a:2a3a with SMTP id
+ j26-20020a67e3ba000000b0046ecb7a2a3amr1479656vsm.22.1707898159701; Wed, 14
+ Feb 2024 00:09:19 -0800 (PST)
 MIME-Version: 1.0
-References: <20240206140414.1134857-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20240206140414.1134857-1-marcandre.lureau@redhat.com>
+References: <20231215-dbus-v2-0-1e2e6aa02115@daynix.com>
+In-Reply-To: <20231215-dbus-v2-0-1e2e6aa02115@daynix.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 14 Feb 2024 12:07:32 +0400
-Message-ID: <CAJ+F1CKXh3+8dJWfjcFzQbg44+OuozDjT+t2LXkp3N6z+6A7BA@mail.gmail.com>
-Subject: Re: [PATCH] build-sys: add the D-Bus generated header to the
- dependency
-To: qemu-devel@nongnu.org
-Cc: mjt@tls.msk.ru, Gerd Hoffmann <kraxel@redhat.com>
+Date: Wed, 14 Feb 2024 12:09:08 +0400
+Message-ID: <CAJ+F1C+7ecoq1hFdXn3pkNqXkWtXTMMyUP__7KnLp2Uk46Nw_g@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] meson: Fixes for dbus modules
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-ua1-x930.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,58 +95,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Hi Akihiko
 
-On Tue, Feb 6, 2024 at 6:06=E2=80=AFPM <marcandre.lureau@redhat.com> wrote:
+On Fri, Dec 15, 2023 at 3:29=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
 >
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> I found it was failing to build dbus modules when --enable-dbus so here
+> are fixes.
 >
-> Fixes:
->    rm -rf b; cd b
->   ../configure --enable-modules --target-list=3Dx86_64-softmmu
->   ninja qemu-system-x86_64
->
->    In file included from ../ui/dbus-chardev.c:34:
->   ../ui/dbus.h:34:10: fatal error: ui/dbus-display1.h: No such file or di=
-rectory
->      34 | #include "ui/dbus-display1.h"
->         |          ^~~~~~~~~~~~~~~~~~~~
->   compilation terminated.
->
-> See also:
-> https://github.com/mesonbuild/meson/issues/12814
->
-> Reported-by: Tokarev, Michael <mjt@tls.msk.ru>
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-turns out Akihiko sent the same fix earlier:
-https://lore.kernel.org/all/20231215-dbus-v2-0-1e2e6aa02115@daynix.com/
-
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  ui/meson.build | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> Changes in v2:
+> - Updated MAINTAINERS.
+> - Link to v1: https://lore.kernel.org/r/20231215-dbus-v1-0-349e059ac5b2@d=
+aynix.com
 >
-> diff --git a/ui/meson.build b/ui/meson.build
-> index 376e0d771b..fa47360830 100644
-> --- a/ui/meson.build
-> +++ b/ui/meson.build
-> @@ -91,7 +91,9 @@ if dbus_display
->                                            '--c-namespace', 'QemuDBus',
->                                            '--generate-c-code', '@BASENAM=
-E@'])
->    dbus_display1_lib =3D static_library('dbus-display1', dbus_display1, d=
-ependencies: gio)
-> -  dbus_display1_dep =3D declare_dependency(link_with: dbus_display1_lib,=
- include_directories: include_directories('.'))
-> +  dbus_display1_dep =3D declare_dependency(link_with: dbus_display1_lib,
-> +                                         include_directories: include_di=
-rectories('.'),
-> +                                         sources: dbus_display1[0])
->    dbus_ss.add(when: [gio, dbus_display1_dep],
->                if_true: [files(
->                  'dbus-chardev.c',
+> ---
+> Akihiko Odaki (4):
+>       Move dbus-display1 out of ui
+>       audio: Depend on dbus_display1_dep
+>       meson: Explicitly specify dbus-display1.h dependency
+>       tests/qtest: Depend on dbus_display1_dep
+
+Can you send a v4 which doesn't move the dbus-display.xml out of
+display/ but has the rest of the dependency fixes and r-b?
+
+thanks
+
+>
+>  MAINTAINERS                               |  1 +
+>  meson.build                               | 21 +++++++++++++++++++++
+>  ui/dbus.h                                 |  2 +-
+>  audio/dbusaudio.c                         |  2 +-
+>  tests/qtest/dbus-display-test.c           |  2 +-
+>  audio/meson.build                         |  3 ++-
+>  ui/dbus-display1.xml =3D> dbus-display1.xml |  0
+>  tests/qtest/meson.build                   |  2 +-
+>  ui/meson.build                            | 18 ------------------
+>  9 files changed, 28 insertions(+), 23 deletions(-)
+> ---
+> base-commit: 4705fc0c8511d073bee4751c3c974aab2b10a970
+> change-id: 20231215-dbus-86876ecb7b09
+>
+> Best regards,
 > --
-> 2.43.0
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 >
 >
 
