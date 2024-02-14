@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759D2C48BED
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF43EC48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDFH-0005Oe-TH; Wed, 14 Feb 2024 06:16:08 -0500
+	id 1raDFP-0005e4-6a; Wed, 14 Feb 2024 06:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDEV-00045B-DR
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:20 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDF4-0005A2-T8
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDET-0007Ct-8V
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:18 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDF3-0007Jh-IV
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909316;
+ s=mimecast20190719; t=1707909353;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=s0q+66FHFgz+QEw9GXtnbF95xt1ZFxqJmwC/w0RAaIs=;
- b=JJKLqEH7SzhDzkHqqMwMs89/meTiK6iguHSOIPYTi2Mg2EqpUpzNvmVU7RcN+pqco0AaPQ
- 5SUYf6z91T49Lj2eRJVAzs1U2snAa0MHtO7A5dewz1zgk2Nnyxkyk7efyaL9Wc/RriXKJ3
- +QTTh+ClU/BFxEbe+29aj08x0+XwU9I=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K17K/uN0886Kn47U734ewDBEWNLSENKFpu38B+iNS80=;
+ b=YVx+55WJWmrRsvt8TXZZikCC7XyvetD9aQxaVPv1wFBpQt1rLlwm9Mi9rWZFQVEyCtwQBB
+ 2lOVzBg/xlMsaVOvcrE7dDDszB8lkLfZqB4CPjOG+pbTrC9nR6E/oTb1CKMuVQ67DVPLhl
+ mf8QrBTita1bcg3Fk/f+wi/q5AzK+lU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-70-UgnnJRSPMeyfEa5qzf8fjw-1; Wed, 14 Feb 2024 06:15:14 -0500
-X-MC-Unique: UgnnJRSPMeyfEa5qzf8fjw-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5628953d2d8so381928a12.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:15:14 -0800 (PST)
+ us-mta-508-nycbCbexNlOHydhJBBFjhA-1; Wed, 14 Feb 2024 06:15:51 -0500
+X-MC-Unique: nycbCbexNlOHydhJBBFjhA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a2cb0d70d6cso340244066b.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:15:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909313; x=1708514113;
+ d=1e100.net; s=20230601; t=1707909350; x=1708514150;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s0q+66FHFgz+QEw9GXtnbF95xt1ZFxqJmwC/w0RAaIs=;
- b=kYIXfBWuOEz7vqdZ2DazJnUjhiZ+0Zub9hW1wD8egxlxVMDR8+Qc0RYH8E3ZWvrxXJ
- wdx+iJ9IAnJNmKl2LYlTm/PIKqYjrgRScUyLd5thCupsLVPRy2FF51iwSqEgaIkBoPH+
- 07uTWJoKcQGAI989HFVZHTbJ2DzyxE7oJtP2MfkEO5GAxy5Q1g362YweGH/gseELnGO5
- wkA4vSuubfhCJ+E+F8Sh5i9jb4xYCxr4sX4mC86V66Z+jpJgfxAJ/JLShroTgC6dStLl
- Htdhr9mP+PO3ngq54fhsaHeslQSh3mrb9VgkVh8z0DSm6mJqHf2kXqkh8Njje+GAH1Wb
- D7vA==
-X-Gm-Message-State: AOJu0YyZa8P3zaN9RTSCQqyFpKl8TSLttA4rS/03N4tKyBYZUYsYyibR
- +NdOyglA5cl00n/ddz0o/pJ5RIJEy7GSG3Uj9yi31+kugNmBPKT7M3lrHNkLQxtmv8KE3DmXDp4
- iqjXMl0MpPTs9ATolXxUGc1ZdNi5XtRXpB1poP+Cc4io0mXaYy1SDDHa0om5r+HBZ8haidZy7Eh
- YoJNwCzOop8QTpTHTYZI8o7VRcrDQsiQ==
-X-Received: by 2002:aa7:c58f:0:b0:561:b28:e61 with SMTP id
- g15-20020aa7c58f000000b005610b280e61mr1786042edq.31.1707909313095; 
- Wed, 14 Feb 2024 03:15:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEqzxXCXR241gJUj2BY4RTnBbjI5s921dqL7Tz8OSN10EFdJ6l6JCmDYFxoVRUQnkD5adtryA==
-X-Received: by 2002:aa7:c58f:0:b0:561:b28:e61 with SMTP id
- g15-20020aa7c58f000000b005610b280e61mr1786029edq.31.1707909312884; 
- Wed, 14 Feb 2024 03:15:12 -0800 (PST)
+ bh=K17K/uN0886Kn47U734ewDBEWNLSENKFpu38B+iNS80=;
+ b=H3f+SHIvWeCcYIuL4dh493qrNz84M6kC8sVXXQXbCTUtzohWpDK8BRzqifRhJzmvIH
+ FMVxTS1MqAKPQjn/qzvWoF1n2YHcog/blhhs5TMNNvF7lmdBNo6eewut5Fa8p6+iXFg2
+ xFt7wl2Erd1W/0agrIZiFspnCLslwv45eotuKbmY+/qhcHsBGOIpT6hOZytvhwR9zdDA
+ Lk7mLzcu442Z7oDiawFihWMpvqEMNohwFv9BbDi+30NdHfED7SGyc55FtLQVj3cYk43g
+ rSQhW44GzZMyNCR1bVIB14/k7US7pzlrtsJ2NVyjIIU25Be/eMxALM3fj/B5Yd89aEcy
+ 53Gw==
+X-Gm-Message-State: AOJu0YxWZQAmVUydBeKKr1339VPpbR1/PJM3b3oqeUi0Nb9pIo+ysxfb
+ BO1Ef/mHshcjczmvIR0DcMqyHe0ou1JWZPc4LL3joYubSFT9yeNI2pKzMGE5IyU9AQ2HBFN9WmG
+ EGCCJkPn0Yt45F2zBIansKeSA7el1/S9lnttlcDUVnY25/mE3tmXGBNzHliO69hh9LOHy55rwEu
+ avbRXTX5Kt81NFDCgMntVsva5yQ2O0fg==
+X-Received: by 2002:a17:906:a2c9:b0:a3c:8299:9c5f with SMTP id
+ by9-20020a170906a2c900b00a3c82999c5fmr1524904ejb.75.1707909350167; 
+ Wed, 14 Feb 2024 03:15:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE9ro8RzYCRQT3ChPXndgElsvWkD4U4e0zmV+QarAOpok0ZrKscCzCutBzJNvgO0dc7TqTYFQ==
+X-Received: by 2002:a17:906:a2c9:b0:a3c:8299:9c5f with SMTP id
+ by9-20020a170906a2c900b00a3c82999c5fmr1524882ejb.75.1707909349757; 
+ Wed, 14 Feb 2024 03:15:49 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfzL+TzVONdYLKSlGm4tQCq6dNIMqdaljQjLdP5YSdeMoclRZQ7K2l98+htbRpyykZmLFxO0rPzRMgW6VFrECC1i94r4DRnzEPy/HNAH1IE7I+/88b4d4vOuZE1Kof69ZAPygFsL4ofElsJ4P/jJDMLR6VkHGZrnEqoawsEB+CCZWjsQ/Kp8FPSLUUtLBzTKmHdlFBL/GmNuzulX4UafrjrUXrv38y
+ AJvYcCWcX+cy8xzEBOYB9PvKS3QeNB7mqfN3Jy1g9t23D6ICCt4iHIS88MR+WnmWv/H4jDkapfoDTvz8NE7YZcnjvgxgQ2qP5V2agaYw9jClKL027arCX9E0CJM5XCygInKgi50gROFtHLROwG2/aZ6ke3DqJ7voIHo=
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- d6-20020aa7d5c6000000b00563819d224esm346330eds.21.2024.02.14.03.15.11
+ ll5-20020a170907190500b00a3d120e311asm1316390ejc.117.2024.02.14.03.15.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:15:12 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:15:09 -0500
+ Wed, 14 Feb 2024 03:15:49 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:15:47 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Ira Weiny <ira.weiny@intel.com>,
- Huai-Cheng Kuo <hchkuo@avery-design.com.tw>,
- Dave Jiang <dave.jiang@intel.com>, Fan Ni <fan.ni@samsung.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 37/60] cxl/cdat: Handle cdat table build errors
-Message-ID: <c62926f730d08450502d36548e28dd727c998ace.1707909001.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 48/60] tests/acpi: Update DSDT.cxl to reflect change _STA
+ return value.
+Message-ID: <b24a981b9f1c4767aaea815e504a2c7aeb405d72.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,40 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-The callback for building CDAT tables may return negative error codes.
-This was previously unhandled and will result in potentially huge
-allocations later on in ct3_build_cdat()
+_STA will now return 0xB (in common with most other devices)
+rather than not setting the bits to indicate this fake device
+has not been enabled, and self tests haven't passed.
 
-Detect the negative error code and defer cdat building.
-
-Fixes: f5ee7413d592 ("hw/mem/cxl-type3: Add CXL CDAT Data Object Exchange")
-Cc: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240126120132.24248-2-Jonathan.Cameron@huawei.com>
+Message-Id: <20240126120132.24248-13-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-cdat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/q35/DSDT.cxl                | Bin 9713 -> 9714 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
-index 639a2db3e1..24829cf242 100644
---- a/hw/cxl/cxl-cdat.c
-+++ b/hw/cxl/cxl-cdat.c
-@@ -63,7 +63,7 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     cdat->built_buf_len = cdat->build_cdat_table(&cdat->built_buf,
-                                                  cdat->private);
- 
--    if (!cdat->built_buf_len) {
-+    if (cdat->built_buf_len <= 0) {
-         /* Build later as not all data available yet */
-         cdat->to_update = true;
-         return;
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 9ce0f596cc..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/q35/DSDT.cxl",
+diff --git a/tests/data/acpi/q35/DSDT.cxl b/tests/data/acpi/q35/DSDT.cxl
+index 145301c52af9a17242bb306c210f8a7e0f01b827..afcdc0d0ba8e41bb70ac20a78dcc8562ca0cb74b 100644
+GIT binary patch
+delta 64
+zcmez9{mGllCD<k8lPUuP<Nb|X6BX6{S>uD9;-j0~S)C(%d^zGhJY9GlodY}#3=GW~
+UL^$JvLmU~FaB*)wsA#|f0Fwq1RsaA1
+
+delta 63
+zcmez5{n4AtCD<k8qbdUf<M)kR6BX6`SmT48;-j0~Se+w$d^zGhJY9GlodY}#3=GW~
+TL^$GuLmU~FFm67iXutvhh3yhn
+
 -- 
 MST
 
