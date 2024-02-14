@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C7BC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 22:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684C7C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 22:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raNfb-000317-1M; Wed, 14 Feb 2024 17:23:59 -0500
+	id 1raNzC-0001vi-Q2; Wed, 14 Feb 2024 17:44:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1raNfX-0002zf-Eg; Wed, 14 Feb 2024 17:23:55 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <andrea.adami@gmail.com>)
+ id 1raNXg-0001ZJ-NR; Wed, 14 Feb 2024 17:15:48 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1raNfV-0004Mn-1d; Wed, 14 Feb 2024 17:23:54 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e08dd0fa0bso257536b3a.1; 
- Wed, 14 Feb 2024 14:23:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <andrea.adami@gmail.com>)
+ id 1raNXe-0001sL-Vb; Wed, 14 Feb 2024 17:15:48 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-5c229dabbb6so188714a12.0; 
+ Wed, 14 Feb 2024 14:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707949431; x=1708554231; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1707948944; x=1708553744; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fkuI8eX5TD1s1j3VvJ6QWefmEmgPFSztzD62i65A9U0=;
- b=XbOPC/o48W4+gKvCbb5SXbwdDivRYY4VIojnZMkAeEJkI5z08Mr+6V4wBOZxVX7OGm
- YNEKyrivKzaAXA0cgx8k3BEJkWw/3RPwoqpnjs4Q1kQs0m7clscDRdrF6SHdaK2vwq5f
- BeL21uUo4FqhUjDQ9pytHV9zGd2PaVsX941TyPoyfO8CdCC3TdVthLP/fdsSfk8l8B1q
- NPZEE9AZvY78+36938IyccxvId1n55Nk1TVWkGRcvfqkjfPQUEWphfOom4qQd3nvsRdV
- AszVaKihPaNJPFFTs+mTPX23oe8r9PD2yGIkdG0DqfeDHulnt0mAc8W/fORkVBo0U+yN
- GVJw==
+ bh=wKyrozdZpKUAYYjUCslzqK5jqOXXWwotKTLp3TH3Ng8=;
+ b=EzByRGoXRsQG++g5Ik3g03wZwIccQYgw7nbJMCUDLZ7u3YNmv8MuibrJ0xBjnRNLyV
+ OGM8AA0K8YFVfbNLzygQWEE2eWBd/rDCURGgpXOMtAwK5TjbFNt5RP0VH/7P8Fe03O8Y
+ 7zY/f4UeLZUwd5k4Aul5RPV8hcdlqzqCUpYcHrNkoznn23aT6alZvoWjKyLVS1EYzbX6
+ TDyLmCI7ZM3uGqsoc1IS7Yq48U6ZN9edlospbRW1oFSx1AJKGHykpaQ5nd8hHeuof5n2
+ pGG2E1prHxJZn4elaaoPiqqZzejh/ANpk6LgFW3TVcTYtl0NEqnmRY1n/SvfLU4w7vld
+ Vipg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707949431; x=1708554231;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1707948944; x=1708553744;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fkuI8eX5TD1s1j3VvJ6QWefmEmgPFSztzD62i65A9U0=;
- b=J7Yicz0WFFuyzmJ265roVv8HcT4K8QW3627mvhUlZVSKWe1MczCRtqojK32Q2tzs6s
- scPZCak4jN70oehbW2hZ5UVD98OF9nfw3lca6tWlqhgvzErmKcRA/PAaku9zGJfaNwvM
- IoJctCIWY6j/uud+HP/hTI2JW1yeoeS7vG/wLOx64XgKK2qsi6rPcYeljrLrmlScRRZ0
- Qm75wpmwXMQ5ct8TdI4WTSM/kQmjLlSA+PQLnr/hacfUV8ZKLQavGoFnF/4OajLW16iq
- /UbiLd5iofN+RXSl+QalPbDVRDwgy+uOIu04jnPvYy9mBru7bCZLxvzOq6GdLh9UeVcL
- uKOQ==
+ bh=wKyrozdZpKUAYYjUCslzqK5jqOXXWwotKTLp3TH3Ng8=;
+ b=QvYU69JMGK/CvjHse9LZksfxvY4UY95c/tw3JLhkz0yat2TrEwgN7zd3jbRbfpRZMi
+ GJuwC1rLXn6siG6wdKiseDuj/rVSEc+rgu51LOfpWV2TcepAyaHsaI5YwTlnRQUQEgvC
+ 6WaI5re7Tn3f0e8WRp5a8/ZGuGfvHiWe9tb0Bnjs4T5Zv5zyC4xfEjl4JrONAkX/wEJl
+ f3stY/RcxqWiSIqVQNiEXAnVVz8j5iD2ijy9qkp8WeDTMJi/KpvLH34pHCe9xsp2yUNW
+ +5i14IUcH/S7EjLGvOA7xbOo/XGXhyWTfaJbhfRc6X18Ak4/cBeXDlZCtFQHTVPz3qYL
+ 055Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyPn5kZgBF8j95DdXFWgAAmCV3zwIKmfLciZuneiJ/h2aXQ56GaE5f8H4poVSfVRM8MU8b5rXGZbILm24B1xOeil+Bm+g=
-X-Gm-Message-State: AOJu0YznIdiJqw7BPErlrTKquigQI0ENHEP9jMvzlJIY4AsaHspBRLIg
- qXKl5Gwgf27VwaT1VEhGdfnTkuaWOX4/QVT2VfuNNDGNTrDatPgS
-X-Google-Smtp-Source: AGHT+IEt9YGylY1X3+V/PQnQOznmIF0upJUu2HBf2qNI6cej9h9exfO8Ag4FeF+fJJi5y64HQqdsJw==
-X-Received: by 2002:a05:6a00:3d0c:b0:6e0:8a23:65c with SMTP id
- lo12-20020a056a003d0c00b006e08a23065cmr4852772pfb.13.1707949431201; 
- Wed, 14 Feb 2024 14:23:51 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXoxNa8pTwbEiOTBvYkfoF+r1E/Y5S9gLVmEQ4QrIx6FFzf5D4gdPK/3MXAQPPdzeO2NP5egA7DxQBWyQE2Pak+2D5SSMt0sARIKzdvzMBT5sg4K9VOhLUe9SgEyrl/IKDRXbswE+M2qrFl0uNeqRvlQnSYncxW1BhZYGDikgF+U5QJWI9p
-Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
- q2-20020aa79822000000b006e118ff3564sm658035pfl.133.2024.02.14.14.23.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 14:23:50 -0800 (PST)
-From: Minwoo Im <minwoo.im.dev@gmail.com>
-To: Keith Busch <kbusch@kernel.org>,
-	Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Minwoo Im <minwoo.im@samsung.com>, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PATCH 3/3] hw/nvme: Expand VI/VQ resource to uint32
-Date: Thu, 15 Feb 2024 07:23:37 +0900
-Message-Id: <20240214222337.5699-4-minwoo.im.dev@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240214222337.5699-1-minwoo.im.dev@gmail.com>
-References: <20240214222337.5699-1-minwoo.im.dev@gmail.com>
+ AJvYcCVAAAZTbbunxw2DrYWwrqf+VUp9IxJQMrMov5k6dBKQMKqsZqxl37/LDG1TbRkuU0rwvq6hs+P1b8JBMxkAhgoK5jylcfrTTY+fW9yjmIzswYJvpdBtXcEHgmw=
+X-Gm-Message-State: AOJu0YytkOaqwn22H2/XwQ3CZuiegsVzDWoUUqZWODijN5IPWvShXlEP
+ WYh4k57RfNB4uT/TimbCaGqbmDTuR8r+LatMe8s3zsGdgXFzxuQ0VeYz7QTqziDViADkqPtUcmL
+ rAp0LfvUHdDehQH7MfTnHBGvU/zY=
+X-Google-Smtp-Source: AGHT+IF8XOaISlxWHzhOD+q/rFwcHP8bty1nhxQi1CoqlyUcyQ0/MQm7ZirVDOIcQLpXMU0xB1iPz2vCCGHKKnN/Wnw=
+X-Received: by 2002:a17:90a:d318:b0:298:b2d7:77b5 with SMTP id
+ p24-20020a17090ad31800b00298b2d777b5mr57226pju.19.1707948943387; Wed, 14 Feb
+ 2024 14:15:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=minwoo.im.dev@gmail.com; helo=mail-pf1-x42e.google.com
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+ <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
+ <CACRpkdbmJe8ZE7N0p_utWucyw+3mp1Qrb0bQEKcJPmwNFtVA_g@mail.gmail.com>
+ <CALT56yOT_U9jVkhTP=zZu-32B4pta5zaJocn9695N7ari4cFyQ@mail.gmail.com>
+ <4781f6c5-4a0c-4b24-bf8f-5fdc17b074b2@linaro.org>
+In-Reply-To: <4781f6c5-4a0c-4b24-bf8f-5fdc17b074b2@linaro.org>
+From: Andrea Adami <andrea.adami@gmail.com>
+Date: Wed, 14 Feb 2024 23:15:32 +0100
+Message-ID: <CAAQYJAuq03WcC49c6cecEvRzgkQQxB0H3w4RKUz7DsGZG=dXcQ@mail.gmail.com>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: Dmitry Baryshkov <dbaryshkov@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>, 
+ Arnd Bergmann <arnd@arndb.de>, paul.eggleton@linux.intel.com, 
+ Guenter Roeck <linux@roeck-us.net>, Peter Maydell <peter.maydell@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>, 
+ Aaro Koskinen <aaro.koskinen@iki.fi>, Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+ Tony Lindgren <tony@atomide.com>, Linux-OMAP <linux-omap@vger.kernel.org>, 
+ Daniel Mack <daniel@zonque.org>, Robert Jarzmik <robert.jarzmik@free.fr>, 
+ Haojian Zhuang <haojian.zhuang@gmail.com>, Stefan Lehner <stefan-lehner@aon.at>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=andrea.adami@gmail.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -82,6 +92,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 14 Feb 2024 17:44:13 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,66 +107,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im@samsung.com>
+On Wed, Feb 14, 2024 at 2:39=E2=80=AFPM Marcin Juszkiewicz
+<marcin.juszkiewicz@linaro.org> wrote:
+>
+> Most of OpenZaurus/=C3=85ngstr=C3=B6m developers abandoned Zaurus devices=
+ in 2008.
+> Usually in favour of Nokia 770/n800/n810 tablets.
+>
+> Both OpenZaurus and =C3=85ngstr=C3=B6m used own hosting in handhelds.org =
+era.
 
-VI and VQ resources cover queue resources in each VFs in SR-IOV.
-Current maximum I/O queue pair size is 0xffff, we can expand them to
-cover the full number of I/O queue pairs.
+I joined OpenEmbedded in that years and it was the only reliable repository=
+.
+The most recent works for kernel have been committed there, in the
+meta-handheld layer.
+Due to my limited knowledge I could only contribute to finish MTD
+support for Zaurus.
 
-This patch also fixed Identify Secondary Controller List overflow due to
-expand of number of secondary controllers.
+I don't have anymore the devices, in perspective I can only imagine
+Qemu support if any.
+It was fun, thanks to all for your support!
 
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 10 +++++-----
- hw/nvme/nvme.h |  4 ++--
- 2 files changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 8198fd2d8e46..6f3fd96f7572 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -5486,7 +5486,7 @@ static uint16_t nvme_identify_sec_ctrl_list(NvmeCtrl *n, NvmeRequest *req)
- 
-     for (i = 0; i < num_sec_ctrl; i++) {
-         if (n->sec_ctrl_list.sec[i].scid >= min_id) {
--            list.numcntl = num_sec_ctrl - i;
-+            list.numcntl = (num_sec_ctrl - i > 127) ? 127 : num_sec_ctrl - i;
-             memcpy(&list.sec, n->sec_ctrl_list.sec + i,
-                    list.numcntl * sizeof(NvmeSecCtrlEntry));
-             break;
-@@ -8430,10 +8430,10 @@ static Property nvme_props[] = {
-                        params.sriov_vq_flexible, 0),
-     DEFINE_PROP_UINT16("sriov_vi_flexible", NvmeCtrl,
-                        params.sriov_vi_flexible, 0),
--    DEFINE_PROP_UINT8("sriov_max_vi_per_vf", NvmeCtrl,
--                      params.sriov_max_vi_per_vf, 0),
--    DEFINE_PROP_UINT8("sriov_max_vq_per_vf", NvmeCtrl,
--                      params.sriov_max_vq_per_vf, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vi_per_vf", NvmeCtrl,
-+                       params.sriov_max_vi_per_vf, 0),
-+    DEFINE_PROP_UINT32("sriov_max_vq_per_vf", NvmeCtrl,
-+                       params.sriov_max_vq_per_vf, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index db2cda098ebd..d0f4c6c9b7af 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -520,8 +520,8 @@ typedef struct NvmeParams {
-     uint16_t  sriov_max_vfs;
-     uint16_t sriov_vq_flexible;
-     uint16_t sriov_vi_flexible;
--    uint8_t  sriov_max_vq_per_vf;
--    uint8_t  sriov_max_vi_per_vf;
-+    uint32_t  sriov_max_vq_per_vf;
-+    uint32_t  sriov_max_vi_per_vf;
- } NvmeParams;
- 
- typedef struct NvmeCtrl {
--- 
-2.34.1
-
+Cheers
+Andrea Adami
 
