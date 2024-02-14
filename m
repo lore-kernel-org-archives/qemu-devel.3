@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1E50C48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC76C48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDEl-0004I9-Mb; Wed, 14 Feb 2024 06:15:36 -0500
+	id 1raDEC-0003fb-Md; Wed, 14 Feb 2024 06:15:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDET-000424-FX
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:19 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDEA-0003XM-RH
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:58 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDEN-0007BF-T2
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:14 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDE9-0006xy-7V
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909310;
+ s=mimecast20190719; t=1707909295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=V4zjwwSJtTmpywd9ngatCTbsjan0GSdeS1bW++CNE5c=;
- b=Ten86G9uQyJJWl+qSWsgZly9mUOSMTRpjaPw0uih5D7T6e2SPryK22VcClCGWzoJdWuS8O
- v4b4hv/Zu73riE2wiM9XfXgh3/QpOha+VQJg6r8TIZYER4u3DSoiZQ3wc9pUpRZarWLLFg
- MYBKbSYNAqdW7IHIAa8L4P+00hexrdU=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FeqQbjEcpCbjayR7Mh9VjABD+SO9Cb44x6hEWH/bfvY=;
+ b=Vkz5Hb5j31yTbAw1f8/oTcg4qN3j+0J3zi8bBVgCpcTj8KZBVw+r0n5FlG2qqhz5sofcfy
+ L/fg6rVRz9T92XqhvmJbaeXu7RaQvr58joCHBPKz5LeO2foDiqTzKnff/lN0RZmMSqtgK1
+ Fk+lKIQDh9hm44da3yrZDWKr584dpdk=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-aMhTW5HAMz-c5XFm5mradA-1; Wed, 14 Feb 2024 06:15:09 -0500
-X-MC-Unique: aMhTW5HAMz-c5XFm5mradA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a2f71c9f5d2so388493466b.2
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:15:08 -0800 (PST)
+ us-mta-414-qX0cVYV0MYucatKqI55plg-1; Wed, 14 Feb 2024 06:14:54 -0500
+X-MC-Unique: qX0cVYV0MYucatKqI55plg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a2f71c9f5d2so388469666b.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:14:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909307; x=1708514107;
+ d=1e100.net; s=20230601; t=1707909292; x=1708514092;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V4zjwwSJtTmpywd9ngatCTbsjan0GSdeS1bW++CNE5c=;
- b=FQVVC873SrCNR+lVLyz4x381AiAbG/sByY2UbrdFFk8yiKy61WAtxOBREp7ALH7dsM
- loLRGg03gFXrEQCIdKBAItG9iMp28MC8zjG1P/69qWN41IpkEpXmIiUNgk53pT9FCDY9
- N+Y89QXykbmoOHCuHY41KRfhGLLjgZDa3oo5rwgDyCc65DSZreJVVzVvOxKULN19scio
- 89b6DHs71Zb/Oqe9lN45jI6cwdB4i6P3tOXRjemIOXdeiJHPuPMiQgHCwS7ngGbElHRk
- qLJVNyGqwJWpwxNuNawgL1eoTev6StRthrabajNc3VaIcf/7j3PzM4L4ODhpU3uWJiCi
- Srxg==
-X-Gm-Message-State: AOJu0YweGL5PRm6yH9kKpd563+VNOBS0Is9k/3ZTwEN20stWQrdibE/O
- aJVEH5o0FunCExETBzIILgQVP34dGX2+7TxkucuCrebw90y6/H6pgQI7zo17CwPSj2WHqSc6Jfn
- A1I5kR/hx8Twuv/NOTxasHjiPpDdedc/bMyoIAs4mpwWoTmhpy4IWB+m+gbL5ZukZaJxIaqXNeG
- ERAt13gig9orYOIUV5aOT2gX5q+39Saw==
-X-Received: by 2002:a17:906:b7c4:b0:a3d:1df3:4a55 with SMTP id
- fy4-20020a170906b7c400b00a3d1df34a55mr1657573ejb.9.1707909307364; 
- Wed, 14 Feb 2024 03:15:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdajZjxZDO0KZl9LnRp/+jR0soc2A0a+dtsNhxSadlg4yfXqj9h4e62j+ydLWisJYUmQQ7Eg==
-X-Received: by 2002:a17:906:b7c4:b0:a3d:1df3:4a55 with SMTP id
- fy4-20020a170906b7c400b00a3d1df34a55mr1657553ejb.9.1707909307029; 
- Wed, 14 Feb 2024 03:15:07 -0800 (PST)
+ bh=FeqQbjEcpCbjayR7Mh9VjABD+SO9Cb44x6hEWH/bfvY=;
+ b=Ofwd/osKIdS9dScK8ACV0cq1QYSY1pSriGQBV9qAkYko3oT+JFL6gGj9pKb15xrkkO
+ 3fZkhXUNpIh5t90yMXNmXcjlYhyQg8vAPd7BT/uOcFuMC0JcThQMDfrDGlACVL2TjqxV
+ siVxDZN6fTEBwQ+4X+WTO4fmoTj20xWOYOgoaxk4dsFbcKYZcsedOTJa7rWaX+ix7Sgl
+ 7daEdC6mxlX1zwySygVdCRVCTjOjCxQzojqeFPMsW6gdFIs4+nP6bjsCOG9nIO4kT00u
+ Sqh5m7SPkvutPmZ9dEWR4tI7kq1XcxDQt3yiucC/fEg0bg/9dix7FpNhRZRomaBgoJcQ
+ QazQ==
+X-Gm-Message-State: AOJu0Yxrla/cgt/wmBWET0AObJw3v5vJvse9LbJoc7GcSI3spvWvawdP
+ pA76m6oyUzj3+l8OyT5HL84jkzDfN2S1YUJvLpLg3qUSlkFC8D9NAtxjSB2NnyVV1sHbOkkzfa4
+ w57rKWVa6/0SkzN5vVogkTDuZA1BCujoZXSHFUNVYlA5kxQ2if03Y+3iO6g5x2dd/G/cIhsx+kF
+ 3MpCI2ygLQe/HkTlGrL9nMJexusDf43g==
+X-Received: by 2002:a17:906:35c6:b0:a3d:232f:a4f6 with SMTP id
+ p6-20020a17090635c600b00a3d232fa4f6mr1776018ejb.11.1707909292307; 
+ Wed, 14 Feb 2024 03:14:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFhb2V8CS78PyQAJ31vjUL9bYYGJFoRBw3QNnIEbXlTSxHvZhxulMGXEl0gBUC38UL7k6/ZKA==
+X-Received: by 2002:a17:906:35c6:b0:a3d:232f:a4f6 with SMTP id
+ p6-20020a17090635c600b00a3d232fa4f6mr1775998ejb.11.1707909291994; 
+ Wed, 14 Feb 2024 03:14:51 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfGDiMmsd17kQpRV0SD6bRTu6Qn49KjQQNRIIcnAaRvVZI8OOw7RY911ySteoYLh8TNnIU3pE+l/UjUfvO/ieh8mFqMgVG6+ycH2R4Htyozt40OzcPCkW5GGLmPSTUAg==
+ AJvYcCV2hKf72jdrAErus6+SZojSJlW8IYLH6VFNk5ZaP7bvWcBOLJqZEtiTpGvG0nTFpYefp2ED+sI3HqQpdsv8YS5D2aD8HFWyyBxgu1ptrmeFoQUChQbOh9Z/eJ2oj8NC/psG0ZOE9mjT8D4bllk193zPqZJy
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- s8-20020a1709066c8800b00a3be8b717dasm2199419ejr.58.2024.02.14.03.15.05
+ qo12-20020a170907874c00b00a3d061514a6sm1489363ejc.201.2024.02.14.03.14.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:15:06 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:15:04 -0500
+ Wed, 14 Feb 2024 03:14:51 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:14:49 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 35/60] virtio_iommu: Clear IOMMUPciBus pointer cache when
- system reset
-Message-ID: <9a457383ce9d309d4679b079fafb51f0a2d949aa.1707909001.git.mst@redhat.com>
+ Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: [PULL 30/60] hw/char/parallel-isa: Implement relocation and
+ enabling/disabling for TYPE_ISA_PARALLEL
+Message-ID: <1d1afd9ff7264c7ed35f3ca25cc4bf9dd82a6b06.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,52 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-s->iommu_pcibus_by_bus_num is a IOMMUPciBus pointer cache indexed
-by bus number, bus number may not always be a fixed value,
-i.e., guest reboot to different kernel which set bus number with
-different algorithm.
+The real SuperI/O chips emulated by QEMU allow for relocating and enabling or
+disabling their SuperI/O functions via software. So far this is not implemented.
+Prepare for that by adding isa_parallel_set_{enabled,iobase}.
 
-This could lead to endpoint binding to wrong iommu MR in
-virtio_iommu_get_endpoint(), then vfio device setup wrong
-mapping from other device.
-
-Remove the memset in virtio_iommu_device_realize() to avoid
-redundancy with memset in system reset.
-
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Message-Id: <20240125073706.339369-2-zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20240114123911.4877-10-shentey@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/hw/char/parallel-isa.h |  3 +++
+ hw/char/parallel-isa.c         | 14 ++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 8a4bd933c6..86623d55a5 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -1264,6 +1264,8 @@ static void virtio_iommu_system_reset(void *opaque)
+diff --git a/include/hw/char/parallel-isa.h b/include/hw/char/parallel-isa.h
+index 3b783bd08d..5284b2ffec 100644
+--- a/include/hw/char/parallel-isa.h
++++ b/include/hw/char/parallel-isa.h
+@@ -29,4 +29,7 @@ struct ISAParallelState {
+     PortioList portio_list;
+ };
  
-     trace_virtio_iommu_system_reset();
- 
-+    memset(s->iommu_pcibus_by_bus_num, 0, sizeof(s->iommu_pcibus_by_bus_num));
++void isa_parallel_set_iobase(ISADevice *parallel, hwaddr iobase);
++void isa_parallel_set_enabled(ISADevice *parallel, bool enabled);
 +
-     /*
-      * config.bypass is sticky across device reset, but should be restored on
-      * system reset
-@@ -1302,8 +1304,6 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
- 
-     virtio_init(vdev, VIRTIO_ID_IOMMU, sizeof(struct virtio_iommu_config));
- 
--    memset(s->iommu_pcibus_by_bus_num, 0, sizeof(s->iommu_pcibus_by_bus_num));
--
-     s->req_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE,
-                              virtio_iommu_handle_command);
-     s->event_vq = virtio_add_queue(vdev, VIOMMU_DEFAULT_QUEUE_SIZE, NULL);
+ #endif /* HW_PARALLEL_ISA_H */
+diff --git a/hw/char/parallel-isa.c b/hw/char/parallel-isa.c
+index ab0f879998..a5ce6ee13a 100644
+--- a/hw/char/parallel-isa.c
++++ b/hw/char/parallel-isa.c
+@@ -41,3 +41,17 @@ void parallel_hds_isa_init(ISABus *bus, int n)
+         }
+     }
+ }
++
++void isa_parallel_set_iobase(ISADevice *parallel, hwaddr iobase)
++{
++    ISAParallelState *s = ISA_PARALLEL(parallel);
++
++    parallel->ioport_id = iobase;
++    s->iobase = iobase;
++    portio_list_set_address(&s->portio_list, s->iobase);
++}
++
++void isa_parallel_set_enabled(ISADevice *parallel, bool enabled)
++{
++    portio_list_set_enabled(&ISA_PARALLEL(parallel)->portio_list, enabled);
++}
 -- 
 MST
 
