@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32B65C4829A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 01:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC09C4829A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 01:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra41v-000778-7U; Tue, 13 Feb 2024 20:25:43 -0500
+	id 1ra44M-0000lG-Kw; Tue, 13 Feb 2024 20:28:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ra41t-00075t-Bl
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 20:25:41 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ra41r-00014e-Nj
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 20:25:41 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso40229865ad.1
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 17:25:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707873938; x=1708478738; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8A+ZdhxnkDzIAc1RYMXIDcGYuypp6UD3QlbP2p+Il38=;
- b=QH/Poy2MLvsg/8KFEufLR0taJfPu1xQPTUK+cagcWVcxZxmV9ks54/dAvo1ExOKFwz
- OkcejTfFubXrd2UTgPmH2WSadiGNjGBv9NC/4UYGZMyAdaXqfv2J3/jCzN6xvaVv3fhk
- Uj6sBZ4hh5l8/eZxXASTbinKzdT3h8k9AS5nWAFY+c0L6SL4U/oxlPZNAkyuR6ZxQGev
- WVU9fVasIHDVfh8EgGxvfDDTeJYnIJnYyxxZh9efI2//+V+jxR+rtix8epLf7qr7qaSf
- M8+4yVXqjY2GU0Xi5McO7rFvgI0xkMQ4e0eUlE9oFkyOMDQZUx1AErt0ahFL+pHjWOaf
- Pv4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707873938; x=1708478738;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8A+ZdhxnkDzIAc1RYMXIDcGYuypp6UD3QlbP2p+Il38=;
- b=fErBhsdO6IZcufW5bxEBOBXc/SS4CyIgq29Ro+KrYtlyFInJhp6HL2thtXsj7gpn+S
- D/ADQTxbYuF0FEGLs5mS1172oH5B/e201nGvi4nZx31/AWN622nxUcvZiWMiSHEy1dzM
- UxEUhCB6ZV5k5a5E+QtkQ1+CW5ehTEv+hOOm8v0lomkOP6D49/8EuX17FRxKfR0RIuR/
- 6vpEPZrXy8mcRJYc/JtrWSM+zccKvQPdNrWdJvuePqd2L6euORfBGPRtKD9ObOL+AAI4
- R3KfGXVgYWgh/A2MenmOwy1CzpwqcjscBn5TcThYy79OdHx2lhX3TI9MJlpE+y6Wz340
- rIBw==
-X-Gm-Message-State: AOJu0YyEPelOukibUEaQe3M/CKtRKoDbkDcX9Qtk7upGo7a9ytb6E6zI
- 8QsILhiSwgS7z9vbLM2vcacLWSV2K/2+zBvGtOC/thX9MErphqsxGx1Qnd8Xqn81VuK5Mhmf5gu
- V
-X-Google-Smtp-Source: AGHT+IE03+QtV01WIrZEKraUxmIHoXzL7NdprP/ct5FbZDAZgDsh4OhjwQAEF8Tw42E6m/f88LyoMQ==
-X-Received: by 2002:a17:902:7d84:b0:1d9:7121:170e with SMTP id
- a4-20020a1709027d8400b001d97121170emr1317239plm.35.1707873938247; 
- Tue, 13 Feb 2024 17:25:38 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFzPvKwNTRMXM69uBjd/faSb0cPVHmZBeyfUTnkY+RpIf9MYFc3+cboZBdjGVBfucPYFBV9GORelr1ZeziPtiamah8dIjrbK5r/EWIO8KhKds=
-Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
- by smtp.gmail.com with ESMTPSA id
- d11-20020a170902cecb00b001d961f28b0asm2660333plg.270.2024.02.13.17.25.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 17:25:37 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 1/2] tcg: Increase width of temp_subindex
-Date: Tue, 13 Feb 2024 15:25:32 -1000
-Message-Id: <20240214012533.453511-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240214012533.453511-1-richard.henderson@linaro.org>
-References: <20240214012533.453511-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <aaro.koskinen@iki.fi>)
+ id 1ra44H-0000kp-9s; Tue, 13 Feb 2024 20:28:09 -0500
+Received: from lahtoruutu.iki.fi ([2a0b:5c81:1c1::37])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aaro.koskinen@iki.fi>)
+ id 1ra44E-0001Uy-TK; Tue, 13 Feb 2024 20:28:08 -0500
+Received: from darkstar.musicnaut.iki.fi (85-76-160-177-nat.elisa-mobile.fi
+ [85.76.160.177])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits)
+ server-digest SHA256) (No client certificate requested)
+ (Authenticated sender: aaro.koskinen)
+ by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4TZLD71hD6z49PyJ;
+ Wed, 14 Feb 2024 03:27:51 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu; 
+ t=1707874072;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4114BJ6W6i8Bsstwtgpj1rAy65HGfORfmM3A0e8Aa4k=;
+ b=qFSEtE3oeD972ocZ9UxJbiLMfVGTpOdndOtwRw8Kz1jaX1Cp+f9DirjIqCYohMnPbD8G/B
+ fimJ5CVWHO9jTBZERDsMy145V/AToZtUu3vDt+9mMBAEEHVhFy7H7fDs9U9nZRnZTE6YEE
+ /HolOg78Ng0woGsf37RWIx27Sd3P07tzaEieQDx/Gwnso/uRrnsbtHcsNbTrXpUBZniHxD
+ jxBNvKkAVcwF18UNEKq4mGzesMBoa3oJQl8/BS1oMAr+ADhvurh5Epq1mofD/vdm4wnF4C
+ G9CH5PcIWGXx7qN3AAjw4UtWsLHKQoVHYLsRojfhPMQPzbHxG0xg8qjDu/emSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+ s=lahtoruutu; t=1707874072;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4114BJ6W6i8Bsstwtgpj1rAy65HGfORfmM3A0e8Aa4k=;
+ b=TcPn2+J6WWZYMl/Nw1NwxP5KG7gcYjK+SyqxfbWuT8+oa34PrREG0pr01H43zQVnfEpNRQ
+ 6QznGJWRuHzWCOqCUvXl3YxBrWZQDI+er3ZdSyiF5K+62e/Ms1fqymHVPpPfKvB21iBkmS
+ 0SC7upcO2OOH5hK2cwOyln2h2GT5hWar+bf0/cvA3uvTOILdJBUSqI3GuNwRVT8uGkXP15
+ p+Sv0ECvwxlsPaGuo0D69gSBcf4Cjpehqke2cEvrbXbyUL6Y4Riexz07pCryuTQSRiy4gS
+ UPH2Pp1UdnsYeiHf9SHBa98aEf9xkCpMd6UNjl4o29qmIe9YqQuFOQOsVeiFaQ==
+ARC-Authentication-Results: i=1; ORIGINATING;
+ auth=pass smtp.auth=aaro.koskinen smtp.mailfrom=aaro.koskinen@iki.fi
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1707874072; a=rsa-sha256; cv=none;
+ b=sXIVf8RChiAZ7SLD2ivPhWO3VF0xTCe+uQqwok+lOGrLXO8KV5gVQ6iLxu36gccJuGQSaT
+ euTU21km4HU1TljjcjKEddC8s6o0VbrGPiKKYXSeVNQPne1Qc19SP7VTB+0MmBoRX5x/xY
+ DRKDzeuV6/zJMrvZAjVCZGTiY/Z9C8IZjsIvgDz+yzlaDjnOAtmTpd7PYam9pNnOqFbWzR
+ UJTOPzNN2A3TyfACH0V3wOy1CWwSl2wNASBrF4X0cnvys51UFOj4yV89d1Bq1m+pHxAaz/
+ U0aXUGTvMkEFxQlSBUVW5mv7Wo/lTDetoWnHvuojb+KF0uxlBLwIeTBYbgfMEQ==
+Date: Wed, 14 Feb 2024 03:27:49 +0200
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
+ Linux-OMAP <linux-omap@vger.kernel.org>, Daniel Mack <daniel@zonque.org>,
+ Robert Jarzmik <robert.jarzmik@free.fr>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Stefan Lehner <stefan-lehner@aon.at>
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+Message-ID: <20240214012749.GA203324@darkstar.musicnaut.iki.fi>
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+ <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
+Received-SPF: pass client-ip=2a0b:5c81:1c1::37;
+ envelope-from=aaro.koskinen@iki.fi; helo=lahtoruutu.iki.fi
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,33 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need values 0-3 for TCG_TYPE_I128 on 32-bit hosts.
+Hi,
 
-Cc: qemu-stable@nongnu.org
-Fixes: 43eef72f4109 ("tcg: Add temp allocation for TCGv_i128")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2159
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Tested-by: Michael Tokarev <mjt@tls.msk.ru>
----
- include/tcg/tcg.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Feb 13, 2024 at 09:11:38PM +0100, Arnd Bergmann wrote:
+> On Tue, Feb 13, 2024, at 16:36, Guenter Roeck wrote:
+> >> > > OMAP1 machines:
+> >> > >
+> >> > > cheetah              Palm Tungsten|E aka. Cheetah PDA (OMAP310)
+> >> > > sx1                  Siemens SX1 (OMAP310) V2
+> >> > > sx1-v1               Siemens SX1 (OMAP310) V1
+> >> > >
+> >> > I test sx1. I don't think I ever tried cheetah, and I could not get sx1-v1
+> >> > to work.
+> 
+> This is similar. omap1 development is slightly more active
+> than pxa, but then again they have no DT support today and
+> are unlikely to ever get there at this point.
+> 
+> Out of the five machines that are still supported in the
+> kernel, I think three still run on hardware (osk, ams-delta
+> and nokia770), while the other ones were left there only
+> for their qemu support. I don't mind removing them from
+> the kernel as well if they are gone from qemu.
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index daf2a5bf9e..451f3fec41 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -412,7 +412,7 @@ typedef struct TCGTemp {
-     unsigned int mem_coherent:1;
-     unsigned int mem_allocated:1;
-     unsigned int temp_allocated:1;
--    unsigned int temp_subindex:1;
-+    unsigned int temp_subindex:2;
- 
-     int64_t val;
-     struct TCGTemp *mem_base;
--- 
-2.34.1
+I'm one of the OMAP1 Linux kernel maintainers, and I have Palm TE which
+I have been using for testing and development (and reporting bugs,
+regressions) along with those other boards you mentioned.
 
+Since I have the real Palm HW, I haven't used QEMU for that particular
+board. But however I use QEMU SX1 support frequently as it's quickest way
+to check if OMAP1 is bootable, and if the basic peripherals are working.
+SX1 is close to Palm/AMS-Delta, and also it's ARMv4T which is rare these
+days. I think it's useful to keep it in QEMU as long there are hardware
+that people use.
+
+So my wish is to keep at least SX1 support in QEMU as long as ARMv4T
+supported in the Linux kernel.
+
+> >> > > OMAP2 machines:
+> >> > >
+> >> > > n800                 Nokia N800 tablet aka. RX-34 (OMAP2420)
+> >> > > n810                 Nokia N810 tablet aka. RX-44 (OMAP2420)
+> >> > >
+> >> > I never managed to get those to boot the Linux kernel.
+> 
+> I think Tony still tests these on both hardware and qemu.
+> The platform side here is much more modern than any of the
+> others above since it does use DT and it has enough RAM
+> to be somewhat usable.
+
+I have also these boards (real hardware) and test them frequently with
+mainline Linux. However, QEMU support I haven't used/needed. I recall it
+was a bit buggy, and some changes in mainline made the kernel unbootable.
+Unless Tony needs the support, I guess they are good to go.
+
+(Arnd: RAM isn't everything. Some of the OMAP1 boards today are still
+more useful than N800/N810, even with modern bloaty Linux.)
+
+A.
 
