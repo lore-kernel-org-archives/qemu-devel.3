@@ -4,135 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0FAC48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9562AC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raD5o-0004ax-TT; Wed, 14 Feb 2024 06:06:21 -0500
+	id 1raDDB-0008TL-EN; Wed, 14 Feb 2024 06:13:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raD5k-0004Yd-KW
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:06:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDD2-0008Ku-Cw
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:13:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raD5h-0004z7-U7
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:06:16 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDCz-0006jJ-Mg
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:13:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707908770;
+ s=mimecast20190719; t=1707909225;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uxUshFnM5rHy7Qz/vURLJbCFY+VwWnlR3kFTIxVE0tM=;
- b=cZx0U8mjz9xzhL+17G2+qxtzz6M2jZQx4NZVFjB4mx7I+5d33dTeha6o3Uif6KTZz19cJz
- hmnXSBoeSag/XWTdDDoKMcG/Zljw5zffQxS9TYu2MVTf5ftmJTizEZY/U9RJ7jwT7qysO1
- 3G1RPaPzlClAmwAJAc8IXgX8MeGRC48=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=aMCWbZMbJsUeDBMcr0PznqZivp4BA1aEeZXrL0J0rpk=;
+ b=fBDegLE/eGV3aZ0V0cur1zXSP5/yQmDzQ90OAI7Z8J11UrtQwRfvgNsC27IKSjm/bG2owI
+ bhxH0cHhE6Fg4B+kE9z2WEV+k87G8wT+Hn49xL6KfkxQcFVE6PX34YKnheieFl4mnNXlKM
+ jXoZXYJ1qd1oNpsEIPdPX8z+XShbj30=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-pLEf-JHWOYSRkobVmi6esw-1; Wed, 14 Feb 2024 06:06:08 -0500
-X-MC-Unique: pLEf-JHWOYSRkobVmi6esw-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d0ffb02493so24347161fa.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:06:07 -0800 (PST)
+ us-mta-86-t9W0Ej0UNEq64xZ6IZ859g-1; Wed, 14 Feb 2024 06:13:43 -0500
+X-MC-Unique: t9W0Ej0UNEq64xZ6IZ859g-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-51151b8de86so5087003e87.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:13:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707908766; x=1708513566;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uxUshFnM5rHy7Qz/vURLJbCFY+VwWnlR3kFTIxVE0tM=;
- b=KlY9JYZBoxODSHQr1+wKnTikktpMwyt0xwsQ341LlESAH+5HCZu5YEaaHDqOF5LtAl
- tdmZhr/q+zvFySqlU6fH6Ye+M4uW1bUHoVEprex9vXZdvLtqMZ0QdHLI5dS+EOEdcLPe
- FhxVIIFCfSuzdeTOCC61Ca7xrr49LMxr/hWc4gjuViHQvDk/c3tTJ+wM+mRqD6xQxXR0
- FI1WD083wlxhYQSRHDbrBXX/6pnvgXEZ/vIf8y/NCTv/KN1IR31cZpvgMDTPkeS9gJNY
- lsPr9j/N5Md+p32S9/EBYURjN9BiurH4RXh0PI79Kma6c0f+S/2IpOmoEstFjmBwonyR
- Huog==
-X-Gm-Message-State: AOJu0YyyU0cmmdcW/WnCnuRU/+HkHV8HVBCE4Y+FRzqv78yDdMl1/45h
- bAMefYDE4LAB5AcHF1nasf7Aror6b64B1JoDZRPnMfJifnfAp25Uh2HLsGlXbJefOC3Q4Wly5su
- W/NukzHDHtFNTjEywW8Mi03mPY+7mZSF4FiuN2PYWOiC3PE2OLcmI
-X-Received: by 2002:a2e:b60e:0:b0:2d1:788:60ff with SMTP id
- r14-20020a2eb60e000000b002d1078860ffmr1736420ljn.16.1707908766732; 
- Wed, 14 Feb 2024 03:06:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEqh9Euu7ReYM7SAFcUcwhSgK09VL0SUCg9s8LNntTZ0DwqsEzNXZtrDXa70FEYA+gH1ZMjQw==
-X-Received: by 2002:a2e:b60e:0:b0:2d1:788:60ff with SMTP id
- r14-20020a2eb60e000000b002d1078860ffmr1736391ljn.16.1707908766154; 
- Wed, 14 Feb 2024 03:06:06 -0800 (PST)
-Received: from ?IPV6:2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e?
- (p200300d82f3c3f007177eb0cd3d24b0e.dip0.t-ipconnect.de.
- [2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e])
- by smtp.gmail.com with ESMTPSA id
- g7-20020a7bc4c7000000b0041079d336c7sm1589434wmk.39.2024.02.14.03.06.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Feb 2024 03:06:05 -0800 (PST)
-Message-ID: <49e7475d-59b8-4c6b-9d8b-10803ed792de@redhat.com>
-Date: Wed, 14 Feb 2024 12:06:04 +0100
+ d=1e100.net; s=20230601; t=1707909220; x=1708514020;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aMCWbZMbJsUeDBMcr0PznqZivp4BA1aEeZXrL0J0rpk=;
+ b=AePr8Z2BdROTfXxjen227ItDp/xskZZUdbzPVmJih4kID9gY7McbaSeockjPwuEKB1
+ qlMNXjBu/3JQvsarWHPPKb4AzWZuRV7zMFQy0FEfiUgzaZQHa16Fmb/VCGr9fGYYf7j+
+ n+3O+lfE/Y7P92ubAqLOt2w9c9PRcXj0MnkHVTB4O78leXbC8tN/iWgG4WefMGSv90Y4
+ 1EwogK/2pdavgFv7dJc2rvUaTuCIuwRkjIEFiPk4VnL0jYdwMd+T2FWnXhGP86B3mU0U
+ xeM0JCKSsrQ7Uhz84isyXEXXeYC7L8f4Bxg1ksmO9jbbAw0FFbSQo+yyvrjC73ThAHp/
+ JP0A==
+X-Gm-Message-State: AOJu0YwLKo457HPbLNWncad4Hh2/EqJLfVglWcO81ukYqp0EuPlfXEtQ
+ xnGBVfy6oXH52yJ+DXUTGsXulUfTmXp+k3PG6psXnPLgcPr35uUPGbZFp3+JgvFyOyDJUtZGymL
+ hdWsa1RSkmGLISDvDy/cZIGkAIH5hRswS1wV5GJ4dodU8s8foDe9Hx1J5kXLWn7pcMu3JTEjGfd
+ 2+/Al8RzjqJRNVSUVF6pC8/i8+TBuB0g==
+X-Received: by 2002:ac2:4c81:0:b0:511:8d37:4b60 with SMTP id
+ d1-20020ac24c81000000b005118d374b60mr1591085lfl.6.1707909220703; 
+ Wed, 14 Feb 2024 03:13:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcOoL9frDXTu3cZC84nECDCMtgnu8Wt+YvatVp4G7jnVQAfH/np6ZxHTMHajMMDE7K9yKHBw==
+X-Received: by 2002:ac2:4c81:0:b0:511:8d37:4b60 with SMTP id
+ d1-20020ac24c81000000b005118d374b60mr1591071lfl.6.1707909220438; 
+ Wed, 14 Feb 2024 03:13:40 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5gMbGpldpCBiTkSEZMuJhDuOPsH0HWn0WWLfmTrIDv7zIfo6NQA9MCwvbYvGB7JneBEcVMYqvQSDz6GExaTDtotnNWDuCN1T0s4vAylyzt26YLyIUngJJyDKlNkN9ukEV8W7DvgQ+9gUj7w2nfngTEaksIRdxxQ==
+Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
+ y21-20020a170906559500b00a34d0a865ecsm2169280ejp.163.2024.02.14.03.13.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Feb 2024 03:13:39 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:13:37 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Leo Yan <leo.yan@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 08/60] hw/virtio: Support set_config() callback in
+ vhost-user-base
+Message-ID: <a26105dd56a11d5aec618fc5429ae7932d3221c5.1707909001.git.mst@redhat.com>
+References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 00/15] libvhost-user: support more memslots and cleanup
- memslot handling code
-Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Germano Veit Michel <germano@redhat.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>
-References: <20240202215332.118728-1-david@redhat.com>
- <20240213123259-mutt-send-email-mst@kernel.org>
- <35a8c2e1-e20c-4d68-b7b7-0bd488bc3ac9@redhat.com>
- <20240213133708-mutt-send-email-mst@kernel.org>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240213133708-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+In-Reply-To: <cover.1707909001.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -157,51 +107,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.02.24 19:55, Michael S. Tsirkin wrote:
-> On Tue, Feb 13, 2024 at 07:27:44PM +0100, David Hildenbrand wrote:
->> On 13.02.24 18:33, Michael S. Tsirkin wrote:
->>> On Fri, Feb 02, 2024 at 10:53:17PM +0100, David Hildenbrand wrote:
->>>> This series adds support for more memslots (509) to libvhost-user, to
->>>> make it fully compatible with virtio-mem that uses up to 256 memslots
->>>> accross all memory devices in "dynamic-memslot" mode (more details
->>>> in patch #3).
->>>
->>>
->>> Breaks build on some systems. E.g.
->>> https://gitlab.com/mstredhat/qemu/-/jobs/6163591599
->>>
->>>
->>
->> ./subprojects/libvhost-user/libvhost-user.c:369:27: error: comparison of
->> integer expressions of different signedness: ‘long int’ and ‘unsigned int’
->> [-Werror=sign-compare]
->>    369 |     if (!ret && fs.f_type == HUGETLBFS_MAGIC) {
->>        |                           ^~
->>
->> So easy to fix in v2, thanks!
-> 
-> 
-> I think there is another problem around plugins though.
+From: Leo Yan <leo.yan@linaro.org>
 
-There is a wrong checkpatch error:
+The Virtio input device invokes set_config() callback for retrieving
+the event configuration info, but the callback is not supported in
+vhost-user-base.
 
-https://gitlab.com/mstredhat/qemu/-/jobs/6162397277
+This patch adds support set_config() callback in vhost-user-base.
 
-d96f29518232719b0c444ab93913e8515a6cb5c6:100: ERROR: use 
-qemu_real_host_page_size() instead of getpagesize()
-total: 1 errors, 1 warnings, 81 lines checked
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20231120043721.50555-2-leo.yan@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240104210945.1223134-9-alex.bennee@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/virtio/vhost-user-base.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-qemu_real_host_page_size() is not available in libvhost-user. But I 
-could just change that code to not require getpagesize() at all.
-
-
-Apart from that, I don't spot anything libvhost-user related (some qtest 
-timeouts, a "error_setv: Assertion `*errp == NULL' failed."). Did I miss 
-something?
-
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 78cfa9a5bb..a83167191e 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -140,6 +140,22 @@ static void vub_get_config(VirtIODevice *vdev, uint8_t *config)
+     }
+ }
+ 
++static void vub_set_config(VirtIODevice *vdev, const uint8_t *config_data)
++{
++    VHostUserBase *vub = VHOST_USER_BASE(vdev);
++    int ret;
++
++    g_assert(vub->config_size && vub->vhost_user.supports_config == true);
++
++    ret = vhost_dev_set_config(&vub->vhost_dev, config_data,
++                               0, vub->config_size,
++                               VHOST_SET_CONFIG_TYPE_FRONTEND);
++    if (ret) {
++        error_report("vhost guest set device config space failed: %d", ret);
++        return;
++    }
++}
++
+ /*
+  * When the daemon signals an update to the config we just need to
+  * signal the guest as we re-read the config on demand above.
+@@ -337,6 +353,7 @@ static void vub_class_init(ObjectClass *klass, void *data)
+     vdc->unrealize = vub_device_unrealize;
+     vdc->get_features = vub_get_features;
+     vdc->get_config = vub_get_config;
++    vdc->set_config = vub_set_config;
+     vdc->set_status = vub_set_status;
+ }
+ 
 -- 
-Cheers,
-
-David / dhildenb
+MST
 
 
