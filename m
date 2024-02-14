@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4D6C48BED
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 15:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC13C48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 15:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raH0j-0007hR-RF; Wed, 14 Feb 2024 10:17:21 -0500
+	id 1raH1B-00082o-Fa; Wed, 14 Feb 2024 10:17:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raH0h-0007gt-9J
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 10:17:19 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raH19-0007zL-OD
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 10:17:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raH0f-0000LD-9W
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 10:17:18 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raH17-0000QD-3N
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 10:17:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707923836;
+ s=mimecast20190719; t=1707923864;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D5aOVJSEpKei/7ex6EeASiVcKRUD1LDRJrwBUNnZEXU=;
- b=hIgFVXJ5OecC0ZD3+1e6y9Q2ooUxNrE8zCUUp6XF0Lcs4W9B0gocYWQNSzOU8xsOpGW7d2
- Ggn+DZCdKS6ec4N4VoFZr+kHsRDq+c5blKTVOnmtYULwNhS6FPzFjYoi77y58Y1Efdqrca
- YEQFHS8wfd4ETwltkCOXu6k1kFR7Pcg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-lvvM4uYSMBSsSnzfrGQzvg-1; Wed, 14 Feb 2024 10:17:12 -0500
-X-MC-Unique: lvvM4uYSMBSsSnzfrGQzvg-1
+ bh=rxV7qmtkwuVczLTxmNjIfKVqthnX4qcJ3g6F4Fre2ks=;
+ b=fMRTX2kKrMOZZX8/j/6pOeUBGYDSIa0vnaQ3o4wDg+UE5yBFc+Wc1zEpqMSeupn87HSprv
+ NSjMWShXr9FQVVr7kUlL80mHs47YvqDLl3C9peW4G9DOVh91rk9liUE3+LdgvHwheCMKpu
+ 8nDlS4VhGHIcxn7zGraMm/hBejAsgsc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-Q7LVip_nP9qwIh6bjHgeBQ-1; Wed,
+ 14 Feb 2024 10:17:40 -0500
+X-MC-Unique: Q7LVip_nP9qwIh6bjHgeBQ-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3626483F265;
- Wed, 14 Feb 2024 15:17:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7294C3812582;
+ Wed, 14 Feb 2024 15:17:40 +0000 (UTC)
 Received: from t14s.fritz.box (unknown [10.39.194.174])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 525771C02ECA;
- Wed, 14 Feb 2024 15:17:09 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 67A841C066A9;
+ Wed, 14 Feb 2024 15:17:37 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -52,10 +52,9 @@ Cc: David Hildenbrand <david@redhat.com>,
  Germano Veit Michel <germano@redhat.com>,
  Raphael Norwitz <raphael.norwitz@nutanix.com>,
  Raphael Norwitz <raphael@enfabrica.net>
-Subject: [PATCH v2 02/14] libvhost-user: Bump up VHOST_USER_MAX_RAM_SLOTS to
- 509
-Date: Wed, 14 Feb 2024 16:16:49 +0100
-Message-ID: <20240214151701.29906-3-david@redhat.com>
+Subject: [PATCH v2 11/14] libvhost-user: Use most of mmap_offset as fd_offset
+Date: Wed, 14 Feb 2024 16:16:58 +0100
+Message-ID: <20240214151701.29906-12-david@redhat.com>
 In-Reply-To: <20240214151701.29906-1-david@redhat.com>
 References: <20240214151701.29906-1-david@redhat.com>
 MIME-Version: 1.0
@@ -85,58 +84,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's support up to 509 mem slots, just like vhost in the kernel usually
-does and the rust vhost-user implementation recently [1] started doing.
-This is required to properly support memory hotplug, either using
-multiple DIMMs (ACPI supports up to 256) or using virtio-mem.
+In the past, QEMU would create memory regions that could partially cover
+hugetlb pages, making mmap() fail if we would use the mmap_offset as an
+fd_offset. For that reason, we never used the mmap_offset as an offset into
+the fd and instead always mapped the fd from the very start.
 
-The 509 used to be the KVM limit, it supported 512, but 3 were
-used for internal purposes. Currently, KVM supports more than 512, but
-it usually doesn't make use of more than ~260 (i.e., 256 DIMMs + boot
-memory), except when other memory devices like PCI devices with BARs are
-used. So, 509 seems to work well for vhost in the kernel.
+However, that can easily result in us mmap'ing a lot of unnecessary
+parts of an fd, possibly repeatedly.
 
-Details can be found in the QEMU change that made virtio-mem consume
-up to 256 mem slots across all virtio-mem devices. [2]
+QEMU nowadays does not create memory regions that partially cover huge
+pages -- it never really worked with postcopy. QEMU handles merging of
+regions that partially cover huge pages (due to holes in boot memory) since
+2018 in c1ece84e7c93 ("vhost: Huge page align and merge").
 
-509 mem slots implies 509 VMAs/mappings in the worst case (even though,
-in practice with virtio-mem we won't be seeing more than ~260 in most
-setups).
+Let's be a bit careful and not unconditionally convert the
+mmap_offset into an fd_offset. Instead, let's simply detect the hugetlb
+size and pass as much as we can as fd_offset, making sure that we call
+mmap() with a properly aligned offset.
 
-With max_map_count under Linux defaulting to 64k, 509 mem slots
-still correspond to less than 1% of the maximum number of mappings.
-There are plenty left for the application to consume.
+With QEMU and a virtio-mem device that is fully plugged (50GiB using 50
+memslots) the qemu-storage daemon process consumes in the VA space
+1281GiB before this change and 58GiB after this change.
 
-[1] https://github.com/rust-vmm/vhost/pull/224
-[2] https://lore.kernel.org/all/20230926185738.277351-1-david@redhat.com/
+================ Vhost user message ================
+Request: VHOST_USER_ADD_MEM_REG (37)
+Flags:   0x9
+Size:    40
+Fds: 59
+Adding region 4
+    guest_phys_addr: 0x0000000200000000
+    memory_size:     0x0000000040000000
+    userspace_addr:  0x00007fb73bffe000
+    old mmap_offset: 0x0000000080000000
+    fd_offset:       0x0000000080000000
+    new mmap_offset: 0x0000000000000000
+    mmap_addr:       0x00007f02f1bdc000
+Successfully added new region
+================ Vhost user message ================
+Request: VHOST_USER_ADD_MEM_REG (37)
+Flags:   0x9
+Size:    40
+Fds: 59
+Adding region 5
+    guest_phys_addr: 0x0000000240000000
+    memory_size:     0x0000000040000000
+    userspace_addr:  0x00007fb77bffe000
+    old mmap_offset: 0x00000000c0000000
+    fd_offset:       0x00000000c0000000
+    new mmap_offset: 0x0000000000000000
+    mmap_addr:       0x00007f0284000000
+Successfully added new region
 
 Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.h | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 54 ++++++++++++++++++++---
+ 1 file changed, 48 insertions(+), 6 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index c882b4e3a2..deb40e77b3 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -31,10 +31,12 @@
- #define VHOST_MEMORY_BASELINE_NREGIONS 8
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index ef6353d847..55aef5fcc6 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -43,6 +43,8 @@
+ #include <fcntl.h>
+ #include <sys/ioctl.h>
+ #include <linux/vhost.h>
++#include <sys/vfs.h>
++#include <linux/magic.h>
  
- /*
-- * Set a reasonable maximum number of ram slots, which will be supported by
-- * any architecture.
-+ * vhost in the kernel usually supports 509 mem slots. 509 used to be the
-+ * KVM limit, it supported 512, but 3 were used for internal purposes. This
-+ * limit is sufficient to support many DIMMs and virtio-mem in
-+ * "dynamic-memslots" mode.
-  */
--#define VHOST_USER_MAX_RAM_SLOTS 32
-+#define VHOST_USER_MAX_RAM_SLOTS 509
+ #ifdef __NR_userfaultfd
+ #include <linux/userfaultfd.h>
+@@ -281,12 +283,32 @@ vu_remove_all_mem_regs(VuDev *dev)
+     dev->nregions = 0;
+ }
  
- #define VHOST_USER_HDR_SIZE offsetof(VhostUserMsg, payload.u64)
++static size_t
++get_fd_hugepagesize(int fd)
++{
++#if defined(__linux__)
++    struct statfs fs;
++    int ret;
++
++    do {
++        ret = fstatfs(fd, &fs);
++    } while (ret != 0 && errno == EINTR);
++
++    if (!ret && (unsigned int)fs.f_type == HUGETLBFS_MAGIC) {
++        return fs.f_bsize;
++    }
++#endif
++    return 0;
++}
++
+ static void
+ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
+ {
+     const uint64_t start_gpa = msg_region->guest_phys_addr;
+     const uint64_t end_gpa = start_gpa + msg_region->memory_size;
+     int prot = PROT_READ | PROT_WRITE;
++    uint64_t mmap_offset, fd_offset;
++    size_t hugepagesize;
+     VuDevRegion *r;
+     void *mmap_addr;
+     int low = 0;
+@@ -300,7 +322,7 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
+            msg_region->memory_size);
+     DPRINT("    userspace_addr:  0x%016"PRIx64"\n",
+            msg_region->userspace_addr);
+-    DPRINT("    mmap_offset:     0x%016"PRIx64"\n",
++    DPRINT("    old mmap_offset: 0x%016"PRIx64"\n",
+            msg_region->mmap_offset);
  
+     if (dev->postcopy_listening) {
+@@ -335,11 +357,31 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
+     idx = low;
+ 
+     /*
+-     * We don't use offset argument of mmap() since the mapped address has
+-     * to be page aligned, and we use huge pages.
++     * Convert most of msg_region->mmap_offset to fd_offset. In almost all
++     * cases, this will leave us with mmap_offset == 0, mmap()'ing only
++     * what we really need. Only if a memory region would partially cover
++     * hugetlb pages, we'd get mmap_offset != 0, which usually doesn't happen
++     * anymore (i.e., modern QEMU).
++     *
++     * Note that mmap() with hugetlb would fail if the offset into the file
++     * is not aligned to the huge page size.
+      */
+-    mmap_addr = mmap(0, msg_region->memory_size + msg_region->mmap_offset,
+-                     prot, MAP_SHARED | MAP_NORESERVE, fd, 0);
++    hugepagesize = get_fd_hugepagesize(fd);
++    if (hugepagesize) {
++        fd_offset = ALIGN_DOWN(msg_region->mmap_offset, hugepagesize);
++        mmap_offset = msg_region->mmap_offset - fd_offset;
++    } else {
++        fd_offset = msg_region->mmap_offset;
++        mmap_offset = 0;
++    }
++
++    DPRINT("    fd_offset:       0x%016"PRIx64"\n",
++           fd_offset);
++    DPRINT("    new mmap_offset: 0x%016"PRIx64"\n",
++           mmap_offset);
++
++    mmap_addr = mmap(0, msg_region->memory_size + mmap_offset,
++                     prot, MAP_SHARED | MAP_NORESERVE, fd, fd_offset);
+     if (mmap_addr == MAP_FAILED) {
+         vu_panic(dev, "region mmap error: %s", strerror(errno));
+         return;
+@@ -354,7 +396,7 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
+     r->size = msg_region->memory_size;
+     r->qva = msg_region->userspace_addr;
+     r->mmap_addr = (uint64_t)(uintptr_t)mmap_addr;
+-    r->mmap_offset = msg_region->mmap_offset;
++    r->mmap_offset = mmap_offset;
+     dev->nregions++;
+ 
+     if (dev->postcopy_listening) {
 -- 
 2.43.0
 
