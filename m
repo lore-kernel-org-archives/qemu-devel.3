@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378A1C48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 12:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C723C48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 13:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raEdu-00082z-5L; Wed, 14 Feb 2024 07:45:38 -0500
+	id 1raErV-0002kA-4a; Wed, 14 Feb 2024 07:59:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1raEdr-00082U-5E; Wed, 14 Feb 2024 07:45:35 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1raEdp-0004JP-1R; Wed, 14 Feb 2024 07:45:34 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 04CF44D3DE;
- Wed, 14 Feb 2024 15:45:38 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A3E37EC55;
- Wed, 14 Feb 2024 15:45:30 +0300 (MSK)
-Message-ID: <ee7a6521-eaf3-45fe-a9e2-b5f582dc37ca@tls.msk.ru>
-Date: Wed, 14 Feb 2024 15:45:30 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1raErU-0002jy-14
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 07:59:40 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1raErS-0007B6-A9
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 07:59:39 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-55f50cf2021so7257909a12.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 04:59:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707915576; x=1708520376; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oT84rcjoTdIUfoYNGrsbmO2JfMCCnCor0zeOhm+7IZQ=;
+ b=EtI99MHT5SI11BZu/8rfj7JLP0Lve8ffUr3j72dKqLnDBE6b/epgAqiBwecOxPRSbC
+ QFPs/Wn3uTUYk1IxVaotRbDmNbgEkUW14DX4FmfKdi+DbT2WDd/i9kDt0NwsK1XnqY3a
+ VDUM83Lz9Xw9FXUCJ77eKEJDkPJOqvIge38CQaJNQPlMGc3Cq9xlStjoGRmVmO9YdxJF
+ VJ+lWNphMQMSnv5KNqq2hjIGjdxSbsabEF6PDhnfx1ti5QqesPo2Rb2Eiv/H5Ucx+g1S
+ A2ozFSdkweFlumDbkV7MyFl6wZJj/1q21GOTQH40KFfJ3N2oQOwZfT4baFyxdxrHBXpD
+ 6xFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707915576; x=1708520376;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oT84rcjoTdIUfoYNGrsbmO2JfMCCnCor0zeOhm+7IZQ=;
+ b=wNDbTGwj9NEToCvc+idcHprS+tv2cvYIvPRMrMqKIczvFzaKosA7mCbr4an69QrdtC
+ 1Wv/vRpoPXaKGV4Nev3uUd5+Z+hbtU9qorXBPXgPI0AyJAkQcszrkbnZa4MC6sa5VQJk
+ V5azMEzzQ+QOfuNNsdjn5P1zQH1HsOlmOryW6dflUVHYX7z849rM9h4NPyeAw+FmWUqa
+ EJGeSri4xU4QEZRMFZdqooCifTMSik5RbvWrQIy10nrWkmiS0mbxZ+f81btxreLDNJht
+ ZBDSv0XhqwPFjatRd1mzEyu8on7X1CZgp+JkLx6Gz1HgJeE+1j6HECCylnrxd3F/Qu0r
+ 1NEw==
+X-Gm-Message-State: AOJu0YzEr77vi0MMpCuboCzGcegQkVPZoJERTOWhSOKu0vfnDNuqbC6S
+ ZvJWaNPbM0ou4A2lZ8//8Gyd3lbVbTb2TbLt+AemVoZ+J49L1EbZYEidcf/ogbCmeey4Dw03uxt
+ BKxIcKuB5IBX5cE3quRkX7zrjxuBeczZPSBgO7krY5dd4dV6Y
+X-Google-Smtp-Source: AGHT+IFCJO/kh4eRWzwELl16BuAX5HWr5yu3nlZdajZINK3329eD8eV5M3Pl2w4fES4vv7b5WMghm9lkMLd8YdgY8D4=
+X-Received: by 2002:a05:6402:1491:b0:560:ea74:a67a with SMTP id
+ e17-20020a056402149100b00560ea74a67amr2217848edv.17.1707915576694; Wed, 14
+ Feb 2024 04:59:36 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] hw/i386: Cleanups around 'hw/i386/pc.h'
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-trivial@nongnu.org
-References: <20240213120153.90930-1-philmd@linaro.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240213120153.90930-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20240213194052.1162753-1-mark.cave-ayland@ilande.co.uk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 14 Feb 2024 12:59:25 +0000
+Message-ID: <CAFEAcA_xdVGQbFLB8Hh58roM0ySnUgmT7yBmNFs8XD4NLs_owg@mail.gmail.com>
+Subject: Re: [PULL 00/88] qemu-sparc queue 20240213
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,37 +87,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.02.2024 15:01, Philippe Mathieu-Daudé wrote:
-> Trivial patches removing uses of "hw/i386/pc.h".
-> 
-> Philippe Mathieu-Daudé (7):
->    target/i386/monitor: Remove unused 'hw/i386/pc.h' header
->    hw/timer: Move HPET_INTCAP definition to "hpet.h"
->    hw/isa/lpc_ich9: Remove unused 'hw/i386/pc.h'
->    hw/i386/acpi: Declare pc_madt_cpu_entry() in 'acpi-common.h'
->    hw/i386/port92: Add missing 'hw/isa/isa.h' header
->    hw/acpi/cpu_hotplug: Include 'pci_device.h' instead of 'pci.h'
->    hw/acpi/cpu_hotplug: Include 'x86.h' instead of 'pc.h'
-> 
->   hw/i386/acpi-common.h   | 3 +++
->   include/hw/i386/pc.h    | 6 ------
->   include/hw/timer/hpet.h | 2 ++
->   hw/acpi/cpu_hotplug.c   | 4 ++--
->   hw/i386/acpi-common.c   | 1 -
->   hw/i386/port92.c        | 1 +
->   hw/isa/lpc_ich9.c       | 1 -
->   hw/timer/hpet.c         | 1 -
->   target/i386/monitor.c   | 1 -
->   9 files changed, 8 insertions(+), 12 deletions(-)
+On Tue, 13 Feb 2024 at 19:41, Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
+>
+> The following changes since commit bc2e8b18fba33f30f25b7c2d74328493c0a2231d:
+>
+>   Merge tag 'hppa64-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2024-02-13 13:56:46 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/mcayland/qemu.git tags/qemu-sparc-20240213
+>
+> for you to fetch changes up to 78d68f312aec905edcb1dc5549a2c3a6f716605a:
+>
+>   esp.c: add my copyright to the file (2024-02-13 19:37:28 +0000)
+>
+> ----------------------------------------------------------------
+> qemu-sparc queue
+> - This contains the rework of the ESP controller as agreed with Paolo
 
-For the series:
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Applied, thanks.
 
-and picked up for trivial-patches.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
-Thanks,
-
-/mjt
-
+-- PMM
 
