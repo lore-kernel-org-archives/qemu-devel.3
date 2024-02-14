@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E48D2C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31F5C48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDFD-0005FZ-9n; Wed, 14 Feb 2024 06:16:03 -0500
+	id 1raDEp-0004Pj-Ip; Wed, 14 Feb 2024 06:15:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDET-000425-Go
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDEb-00049B-KZ
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDEP-0007CU-Us
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:15 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDEM-000714-Fb
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:15:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909313;
+ s=mimecast20190719; t=1707909308;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZoIzxN4wtVZC8VE/mIbpxC6DW0nDJt+pWpq7gnJFkLU=;
- b=X1K6p7wDT1w7oG7t3AJIBd2eA6UQWeD3y1lgkIOESSVxlZY+IZ8Ju4B/KQznhyQm0+qIOi
- Zp1BvEJGpZA85ivMkFt/d4DZ5gK9IUzwsx4bPcEUK8GRAhkUV0RojIB+EvCTr//dLcPrtW
- JcAU7j3HmrlPfaSG2rrtdF8g6fDMv+I=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=l/GevgLgj9voaDnNnKRlj9zSBAyk98vBx5fEOilPhZE=;
+ b=cSMiMTNLv6PBnfOmoWwJ6OQQb4oMnQvteB/l7oN0M9kunPu8IUdXw6irWvax/d0WsG6gHB
+ PqnWgkpXUkqyCdfEeHrtMlEu8EE1wENva7PXe/MkTlJpRrmpwIpoCfM3/RufR5ufRJRHYM
+ vrxtvID76ngfLg1BSaPsNwlZD9wDihE=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-185-FgGQase3MjqXVq8ItnoeJQ-1; Wed, 14 Feb 2024 06:15:11 -0500
-X-MC-Unique: FgGQase3MjqXVq8ItnoeJQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5611e1da4c6so3589060a12.1
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:15:11 -0800 (PST)
+ us-mta-568-FXBcN5RgMUqEVZLNi2AXLA-1; Wed, 14 Feb 2024 06:15:06 -0500
+X-MC-Unique: FXBcN5RgMUqEVZLNi2AXLA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a3cdd79d960so114110466b.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:15:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909310; x=1708514110;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZoIzxN4wtVZC8VE/mIbpxC6DW0nDJt+pWpq7gnJFkLU=;
- b=OfAa4fvbo8uM7Lv5DbmtAV51J+wIBxwhIT0DmdaPyyaUoTeYQTahIPCroN/iwpVvIA
- wH9W2GECnO16gGVI7jUsvZwPIt2+wPUGwxDtQGf7SWYuZ9LuRK634km1d4x/9956Hb04
- CvHP8jpMq7FghWubGSeehbTHofEUq315iX+YE5rEcjEHGKdiEho7nliqdfbXPCjV9DHD
- xJrnGnGAcUF0q1+cnm4pdd92oX1ASZibkuPyKeInJLTDd5CJ/oARZwEL4te+2E7aHntL
- WHR1R7X7UR2Z3xnGI2UrG2YNRhvRIy7bGjlTPNXZuSyT7meHca/IjoMfTPkFWpMMkj6E
- 41dQ==
-X-Gm-Message-State: AOJu0Yzkfmbm4CEoBVEQRWp48cmk1hKqDrQbfvfZlkvG9hTXbFgs9Kzi
- ehHOSj7oOlpa/OYnqIU1LThAADKgHJpOXrct1s5CLyi4IrNKeyPQQYlNGJQNhWclAGLgE3p2+1t
- EU4Ve1AWuerzrwORuOG4J3DAgFU4dLsGEgpCN2SoMV+sRgjef0BM481GRipQ1MFQ2EbJ8EG/qOk
- ko4+WSIkGRCDuj9Qk04VZMynxNqqjlGQ==
-X-Received: by 2002:aa7:da0a:0:b0:55f:fba9:de8c with SMTP id
- r10-20020aa7da0a000000b0055ffba9de8cmr1705434eds.21.1707909310099; 
- Wed, 14 Feb 2024 03:15:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEJK7n/YA0Gl2lZvV7a0zOZa7QGHzAXexi2mUK7V7/n5DJxtbKMvfS9GTZKGWE8QX9Bj8DZjA==
-X-Received: by 2002:aa7:da0a:0:b0:55f:fba9:de8c with SMTP id
- r10-20020aa7da0a000000b0055ffba9de8cmr1705417eds.21.1707909309829; 
- Wed, 14 Feb 2024 03:15:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707909304; x=1708514104;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l/GevgLgj9voaDnNnKRlj9zSBAyk98vBx5fEOilPhZE=;
+ b=gd+99YZ4PFigqqgn8pOGC6wIfauibDM76aKPkTg9zHGoxjXkCpUU4TfAF0MWmrOaX/
+ m3v1+joR8r+Xciu7WjdE2/L8MVm499xoFOBjQY4bK6TtOrUHu9uGA9+W9pUTnmp848tH
+ LZ33Kng8LqJy7p/J/jhDR4TJHmrxEpsBUMbIX3mx58MVxUfPIPBeErECjV+tJVCBOTai
+ QsgKSKv4QUKOWdjBteeQkfeshxbqt+ntauipCnppCImjxoZ+7xLZwz/e/WKxqiAUZ27j
+ lOzuKpjw6bH9KmkoTLfJh5APiBz1RcS8tpQWjYLMjqyRpzekB2TjLMbPJXiqbxEebRY0
+ r3fg==
+X-Gm-Message-State: AOJu0Ywo65g9Quj8ZTsbuFa0lbcR6HjANfioCz9yK7fTkHmRPF9a7YpZ
+ NpFLai/1oPK9kehm9YAsbUrmmf/WfsDbfRTUUrr7KAZ5Q6UWbDtWs3kC/xuHQqRKyCEDz7xvuJH
+ yt88fuQMG5YIC6DxciKrJsewvHcNUJB6qvizfkPP6rFrIMsTA5zmx7XqwXzVFoSatA8kePPZP4P
+ /D3Qfa4RM3V5cmM9+/D03hC99k+Ue6XQ==
+X-Received: by 2002:a17:907:104a:b0:a38:8ed4:fc82 with SMTP id
+ oy10-20020a170907104a00b00a388ed4fc82mr1396621ejb.15.1707909304478; 
+ Wed, 14 Feb 2024 03:15:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGnhcqC8taT79QS6qLJuk+vLqToWhB/bIZ4y45pBYTwyb5z5c8753J+Z/LOlK1ZbAxjMsWunQ==
+X-Received: by 2002:a17:907:104a:b0:a38:8ed4:fc82 with SMTP id
+ oy10-20020a170907104a00b00a388ed4fc82mr1396598ejb.15.1707909304005; 
+ Wed, 14 Feb 2024 03:15:04 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCU1Fc1dZC9nuJ3DOptBHrZF/BOPp2m65fqkjj9dDxnAFgLD49vdYbYqBeQ7NPghzf/G62ZSSJPw7Ux+a4RNb7PUGWDgXmjyPCKb7fiF8Mjx6cy+ecqr5bwoxmHu0KFPr8JSzWBKJlz9bMGHhUWXjJeCSEC3xg==
+ AJvYcCWr2E1LeWwcIDTJquGh0IR7JfFSYxQ7zC1c/rzMOciSHMkdbtblhrGMgLkOpQCuwPh0+/rUrTZvUOo2puNvavQjY6zNcFhsDdLa3fhisyUguCwAfVkUCJ8pZMzMg1q2e6+hS1ITWG4dY2LWac7c2vJFc5pS94UcJzbuekf/dHY4feipLwp6b1y9T8kG528AEpisM1sbtLGhzdCwPaUBwtD7nA==
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- ca13-20020aa7cd6d000000b005638af177aesm171512edb.53.2024.02.14.03.15.08
+ mm19-20020a1709077a9300b00a3d4d78a769sm404919ejc.1.2024.02.14.03.15.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:15:09 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:15:07 -0500
+ Wed, 14 Feb 2024 03:15:03 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:15:00 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org
-Subject: [PULL 36/60] smmu: Clear SMMUPciBus pointer cache when system reset
-Message-ID: <8a6b3f4dc95a064e88adaca86374108da0ecb38d.1707909001.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 34/60] MAINTAINERS: Drop myself as VT-d maintainers
+Message-ID: <e8058c6d65252d920abf0bee027c455e8ffe41ff.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1707909001.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.504,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +108,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Peter Xu <peterx@redhat.com>
 
-s->smmu_pcibus_by_bus_num is a SMMUPciBus pointer cache indexed
-by bus number, bus number may not always be a fixed value,
-i.e., guest reboot to different kernel which set bus number with
-different algorithm.
+Due to my own limitation on bandwidth, I noticed that unfortunately I won't
+have time to review VT-d patches at least in the near future.  Meanwhile I
+expect a lot of possibilities could actually happen in this area in the
+near future.
 
-This could lead to smmu_iommu_mr() providing the wrong iommu MR.
+To reflect that reality, I decided to drop myself from the VT-d role.  It
+shouldn't affect much since we still have Jason around like usual, and
+Michael on top.  But I assume it'll always be good if anyone would like to
+fill this role up.
 
-Suggested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Message-Id: <20240125073706.339369-3-zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+I'll still work on QEMU.  So I suppose anyone can still copy me if one
+thinks essential.
+
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20240118091035.48178-1-peterx@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/arm/smmu-common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index 9a8ac45431..f58261bb81 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -675,6 +675,8 @@ static void smmu_base_reset_hold(Object *obj)
- {
-     SMMUState *s = ARM_SMMU(obj);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 89f2d31f70..7a1afb40ac 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3630,7 +3630,6 @@ F: tests/uefi-test-tools/
  
-+    memset(s->smmu_pcibus_by_bus_num, 0, sizeof(s->smmu_pcibus_by_bus_num));
-+
-     g_hash_table_remove_all(s->configs);
-     g_hash_table_remove_all(s->iotlb);
- }
+ VT-d Emulation
+ M: Michael S. Tsirkin <mst@redhat.com>
+-M: Peter Xu <peterx@redhat.com>
+ R: Jason Wang <jasowang@redhat.com>
+ S: Supported
+ F: hw/i386/intel_iommu.c
 -- 
 MST
 
