@@ -4,93 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD5BC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EACEC48BC1
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raFXH-00074q-Eg; Wed, 14 Feb 2024 08:42:51 -0500
+	id 1raFxX-00009m-3X; Wed, 14 Feb 2024 09:09:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1raFXF-00071Q-To
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 08:42:49 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1raFxV-00009U-HZ
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:09:57 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1raFXD-0001oi-RN
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 08:42:49 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1d780a392fdso45974825ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 05:42:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1raFxT-0008To-RN
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:09:57 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e11596b2e7so193925b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:09:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1707918166; x=1708522966; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707919794; x=1708524594;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2auo9oBTkUDUdR/b36sittQ3kuxtvCXUg45SfblRYg4=;
- b=gAgIAacckRj2usQ1VCO9X+9Qt2MUCazcvIoemIOhEWfEEaraTkC1zblKeqryF1hHE0
- Q0IMH+zar2guiSUYNFMaqp5zHXNgq5Xi63CrhNdmTm+Om6LpJJbssEkLyeDBgEVtX2ig
- Fkn57aE7K5z9hWivl3gDbgFE1BxqPxf7mtI91loAu01hrvZzBQcNSlLiYmltcES5PHQS
- 9dkY5KM4Lj/rv4EuoOhfca5OJC3qEJmCmZVBdUYsnLVo309bEkyi6z/22istjAAtPuTW
- bM/qM35rp7dz97M+VCWO58ruVKKCiqONh3JAeTHSYkz7lHbSuPgeVOMOTgss9vosQZqQ
- PP3A==
+ bh=cMBeqTwCC6IF4gbuPZ/OHy0dN2ULPv5y8QaQs6X4vaw=;
+ b=fsDVbJpbuv7Hz7M5xUguhfepOd/Ga+gJ6yOasAGO+Z8RNysgwDbe5keAAOM2mQDd+Q
+ xm8y+z7Ub4NDZdyPGa6xRhOE8fGX6jSq0hpjC6XTDQ8Mtb+tFEoqjfcocPXEsc7/dPRJ
+ ybyFexCxQl59iE/6IPib6P5Lf45KrR11mOiOIKkIGCDqMqCtjD6P5FZWFjaPfznVSPfg
+ ngvOJX3pEqTqYGtKYgmYp5Txh4zuZlzCmnhK03327/hh/O4bKH0y2tUaK7VKmgpv8FgU
+ NUVfiByKmcG7cX5lcjkgDjshmQMM/d1b1qcZBYrblCPXd30+VAK0HGJ9r4GYlaFBg1Sd
+ +rZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707918166; x=1708522966;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1707919794; x=1708524594;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2auo9oBTkUDUdR/b36sittQ3kuxtvCXUg45SfblRYg4=;
- b=LeLmmxtht2njIXWTniGQwUchU2sV8RT2vdtXmByy/ekDxRRjFe3TnSeEkzYMFKCSYS
- BeD0nFZJqRRMxLwHjRbgoHUcgYBRFp02aBRArQg9elEdEoc3yY6NAfSO4b5so7duYVAP
- f8g9FKDWaBVmhwx1mkZ+ihOiz3vd7g6U1dZ8tRP9hbZ155Vg35DalXA0A6NtiTUG6UoM
- r8apnDahXJ8FR0NPsnFBfELsCijPes8X/rK9pPAp4X3kmXPK9j3svJdZShk/1rrfrzJu
- s3A/FmUsGw86tj4Uun+Ib4OQGa4x2twD/GIcSNJNkEfXRm0Ue2t9yAl90B8VUonai536
- hM/Q==
+ bh=cMBeqTwCC6IF4gbuPZ/OHy0dN2ULPv5y8QaQs6X4vaw=;
+ b=UFSlhqvXSy+suCKob0kv33/GBZSd0xPcGMrtp8YvUNO9fgeCKcN21sl+/17o5y52hh
+ 4yVQQ+5FnRxIalgAt6irHxHwTdvKG/mUFxxoTve7eKlgWtSoc9jQxNM//wMn5fGDa/Jq
+ 6kZiP8HO7Jdhewd2wnvlo5e6nsnoZIAUqAe69Wbqf6w1rs6lK93lH/OxvzNMdp6LauT5
+ tFSHzTp3gaK8Xcy5C2q29QxDg3w7zK6SXx87d6Mop6OIiCvqfWBh3OWShXWAXoj/1a2q
+ ZXyCpEfAuZLtV57pK1ZIZOfhX7btjqZ1/Y5MJwVUWIWAEpql8Y20hssDzYioeIL7cwzG
+ q7lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7a2XEPKT8qngJ/t5DTCDjbY7/yeKtqq4bvcQykIEqP7UAfc8Ix3AQZN3kJCAsUHrvyP7AIsgX1q5tIUmOJEMqNn8BMS4=
-X-Gm-Message-State: AOJu0YxCXZ24wuR1aS6aoTP5T5mziGKorJHBIkqr8EHKy6HFUnkw97JI
- 1/znZQxcufhMLMj1+Ojz+qRSgP6/cKxTat1zWCFKe7lLwzje33UBQKzBeU/AenQ=
-X-Google-Smtp-Source: AGHT+IF3WHcoOJSuXqOyI7rnv0Sfl4qbYKBmJukdStj8+hStVJcRicoaeV5MlwdkNDbn8O437+GjJg==
-X-Received: by 2002:a17:902:ba82:b0:1d8:ae30:eddd with SMTP id
- k2-20020a170902ba8200b001d8ae30edddmr2766077pls.23.1707918166344; 
- Wed, 14 Feb 2024 05:42:46 -0800 (PST)
+ AJvYcCUg8OHHIZJVmSnU/ffk4u6hf91PvXEhLzSfkyjJabX7evCIZCjglISHmBM4R+7JYybGY8dAPz3kdA9thz9xJPdAfaeZQao=
+X-Gm-Message-State: AOJu0YzdR6Kzlra0C60d4NMCBp7TRgNiiEFE3cObtiRFydvMzlx5UPNU
+ eRJElJqd54qTtLU3JaURPPrLZFuVjMIATum7wt5KplgJvOmhXqdtfbMbdH9b7BE=
+X-Google-Smtp-Source: AGHT+IECDc/sbmAZQeCQvIKuYnf73AleB3PHAFBrG8cN9iDrH4plb9MrjzgaFBp9/Hd1apehD0Exvg==
+X-Received: by 2002:a05:6a00:420e:b0:6e1:158c:3f9a with SMTP id
+ cd14-20020a056a00420e00b006e1158c3f9amr775269pfb.3.1707919794138; 
+ Wed, 14 Feb 2024 06:09:54 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8R7v+1VIIeJqFpwFo5V2JNAYQgjRZfEhxWZP3ewg9dQr8WqTmKLgvQ+yIHs/gedzjDyrcMGII8ycfh5Q7kk9T727kGhDMTW6gSJihvZ3j7yMiyITBigeBoz5KKKZnR+SrkzE9A1BPnd6+vxx7jvr9Bd4pHT4kBZ0gaxu/s3GkRhlmIEoJtLJf4oSO6KXKjJ24Z+eGwW106/FvzydABxAIFW/NqFhA05irY2RlnzbOZ7/Vqz3Safo2gHTshACeg48nNVXJ0hS9SH0rJKe1qV9ilUXRBfTEPutftx94
-Received: from [192.168.68.110] ([177.94.15.159])
+ AJvYcCUGHESNdK8gOlGKenJ5BOyp9ZJByZmCeTwK8fCis3ilsxlEV71fDDc+b2OAfVzcO+bdQSJgcMrgrXCqqGWkhRosFNimBCWuIhiNwZ7LOicjYe31QA00SuKKbKLnz34t+oBnanFMemeOsjQDw81NXlF5AMUkfYjLy3ZASlihzNXQzuVq8nMT07vtKx77CO9r12YHNz/4nsueOg1HhBRtDwes3FGuBiEQkGDyR5ZgHgR14h+JRp8il6cn2czTuc9N8EydEjhp0W7KqOnZlbywcsv+D6I2dpSssiyO0j29zOKBTTXgDWoFCbkEhg3Y5XeruXxF17sowjYGLUSZOIOnF3rAi1ZZ322KnYY0adhD/5JxY69Vw+IKHN0bescqKDVE5SghvZRcNCq31AwwGK4XukkpUlRQrk4hrpwh5g==
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with ESMTPSA id
- c21-20020a170902c1d500b001d9602f3dbesm3718154plc.24.2024.02.14.05.42.43
+ b18-20020aa78712000000b006dfbecb5027sm9575103pfo.171.2024.02.14.06.09.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Feb 2024 05:42:45 -0800 (PST)
-Message-ID: <72350b07-acc5-4ece-b5e2-a3c8e41b80a2@ventanamicro.com>
-Date: Wed, 14 Feb 2024 10:42:42 -0300
+ Wed, 14 Feb 2024 06:09:53 -0800 (PST)
+Message-ID: <c7369ada-96b1-41ad-b141-ff7f1e1dc291@daynix.com>
+Date: Wed, 14 Feb 2024 23:09:50 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] RISC-V: Add Ztso extension
+Subject: Re: [PATCH v4 9/9] hw/nvme: Refer to dev->exp.sriov_pf.num_vfs
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-9-89ad093a07f4@daynix.com>
+ <20240214015457-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Philipp Tomsich
- <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Andrew Jones <ajones@ventanamicro.com>
-References: <20240207122256.902627-1-christoph.muellner@vrull.eu>
- <3da767e4-26f8-4c92-a241-4111c2befdc2@ventanamicro.com>
- <CAEg0e7jXdfViUSaRc2+6WNtTY37_NhbsuxjPMw4YhQ24-HD3tg@mail.gmail.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAEg0e7jXdfViUSaRc2+6WNtTY37_NhbsuxjPMw4YhQ24-HD3tg@mail.gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240214015457-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::431;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,92 +111,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/14/24 10:38, Christoph Müllner wrote:
-> On Wed, Feb 14, 2024 at 2:35 PM Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
+On 2024/02/14 16:07, Michael S. Tsirkin wrote:
+> On Wed, Feb 14, 2024 at 02:13:47PM +0900, Akihiko Odaki wrote:
+>> NumVFs may not equal to the current effective number of VFs because VF
+>> Enable is cleared, NumVFs is set after VF Enable is set, or NumVFs is
+>> greater than TotalVFs.
 >>
->>
->>
->> On 2/7/24 09:22, Christoph Müllner wrote:
->>> The first patch of this series picks up an earlier v2 Ztso patch from Palmer,
->>> which can be found here:
->>>     https://patchwork.kernel.org/project/qemu-devel/patch/20220917072635.11616-1-palmer@rivosinc.com/
->>> This patch did not apply cleanly but the necessary changes were trivial.
->>> There was a request to extend the commit message, which is part of the
->>> posted patch of this series.  As this patch was reviewed a year ago,
->>> I believe it could be merged.
->>>
->>> The second patch simply exposes Ztso via hwprobe.
->>
->> It's also worth mentioning that the second patch relies on:
->>
->> "[PATCH 0/2] linux-user/riscv: Sync hwprobe keys with kernel"
->>
->> To be applied beforehand.
+>> Fixes: 11871f53ef8e ("hw/nvme: Add support for the Virtualization Management command")
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > 
-> Indeed! Therefore, the end of the cover letter contains the following paragraph:
-> """
-> This series is based on today's riscv-to-apply.next with my other series
-> that adds the new hwprobe keys
-> (https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01293.html).
-> """
+> I don't get what this is saying about VF enable.
+> This code will not trigger on numVFs write when VF enable is set.
+> Generally this commit makes no sense on its own, squash it with
+> the pci core change pls.
 
-I guess it's also worth mentioning that I didn't pay enough attention to the
-cover letter :skull:
+This code is meant to run when it is clearing VF Enable, and its 
+functionality is to change the state of VFs currently enabled so that we 
+can disable them.
 
-
-
-Thanks,
-
-Daniel
+However, NumVFs does not necessarily represent VFs currently being 
+enabled, and have a different value in the case described above. Such 
+cases exist even before the earlier patches and this fix is 
+independently meaningful.
 
 > 
-> To ease reviewing and testing for others, I've also created a remote
-> branch on GitHub.
+>> ---
+>>   hw/nvme/ctrl.c | 5 ++---
+>>   1 file changed, 2 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+>> index f8df622fe590..daedda5d326f 100644
+>> --- a/hw/nvme/ctrl.c
+>> +++ b/hw/nvme/ctrl.c
+>> @@ -8481,7 +8481,7 @@ static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
+>>       NvmeSecCtrlEntry *sctrl;
+>>       uint16_t sriov_cap = dev->exp.sriov_cap;
+>>       uint32_t off = address - sriov_cap;
+>> -    int i, num_vfs;
+>> +    int i;
+>>   
+>>       if (!sriov_cap) {
+>>           return;
+>> @@ -8489,8 +8489,7 @@ static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
+>>   
+>>       if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
+>>           if (!(val & PCI_SRIOV_CTRL_VFE)) {
+>> -            num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+>> -            for (i = 0; i < num_vfs; i++) {
+>> +            for (i = 0; i < dev->exp.sriov_pf.num_vfs; i++) {
+>>                   sctrl = &n->sec_ctrl_list.sec[i];
+>>                   nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
+>>               }
+>>
+>> -- 
+>> 2.43.0
 > 
-> Thanks for reviewing!
-> 
->>
->>
->>
->> Thanks,
->>
->> Daniel
->>
->>
->>>
->>> Relevant in this context might be also, that Richard's patch to improve
->>> TCG's memory barrier selection depending on host and guest memory ordering
->>> landed in June 2023:
->>>     https://lore.kernel.org/all/a313b36b-dcc1-f812-ccbd-afed1cbd523b@linaro.org/T/
->>>
->>> The first patch was already sent as part of an RFC series for Ssdtso:
->>>     https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg02962.html
->>> Since I don't want to keep this patch until the ratification of Ssdtso,
->>> I would like to get this merged independent of Ssdtso.
->>>
->>> This series is based on today's riscv-to-apply.next with my other series
->>> that adds the new hwprobe keys
->>> (https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01293.html).
->>>
->>> This series can also be found here:
->>>     https://github.com/cmuellner/qemu/tree/ztso
->>>
->>> Christoph Müllner (1):
->>>     linux-user/riscv: Add Ztso extension to hwprobe
->>>
->>> Palmer Dabbelt (1):
->>>     RISC-V: Add support for Ztso
->>>
->>>    linux-user/syscall.c                    |  3 +++
->>>    target/riscv/cpu.c                      |  2 ++
->>>    target/riscv/cpu_cfg.h                  |  1 +
->>>    target/riscv/insn_trans/trans_rva.c.inc | 11 ++++++++---
->>>    target/riscv/insn_trans/trans_rvi.c.inc | 16 ++++++++++++++--
->>>    target/riscv/insn_trans/trans_rvv.c.inc | 20 ++++++++++++++++++++
->>>    target/riscv/translate.c                |  3 +++
->>>    7 files changed, 51 insertions(+), 5 deletions(-)
->>>
 
