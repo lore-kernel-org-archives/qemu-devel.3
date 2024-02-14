@@ -4,61 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B280C48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 12:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5B2C48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 12:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raEXy-0003Sa-J6; Wed, 14 Feb 2024 07:39:30 -0500
+	id 1raEXw-0003RY-1O; Wed, 14 Feb 2024 07:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1raEXq-0003Oo-4l
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 07:39:22 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1raEXo-0003ME-Eg
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 07:39:20 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1raEXn-0002a4-Fx
+ id 1raEXm-0002Zq-PE
  for qemu-devel@nongnu.org; Wed, 14 Feb 2024 07:39:20 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41EBlbeJ019218; Wed, 14 Feb 2024 12:39:18 GMT
+ 41E8iJjQ005670; Wed, 14 Feb 2024 12:39:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-11-20;
- bh=MwyvA3gq7GPBR5S7Fs2XooWtR7OGtNIfR+fNtKH8n8U=;
- b=gb/xlPRaElYD7w5jXCUwzc8Xm+oXEE39rh9xvQNMEZ5PAOr0CdeTUCY4fzEwH4GU9Bib
- bcgbAT60vVRPnAXWnlh+2gA/OMLwPYr+VxrRF33TxacENh3Mqu4pgu+KbPUFfLlRNsCZ
- Ir4Bxp8NObpXlowS4sZ8Mnciale0P2IoHjxy0VvULc6kdLX35A6IPeInOX29FmZGOhcp
- JM8/zaeKLs49LAavTAVRk610ScHg/6uU4SoHPexZ1SOQR8GbwvogYqVWuLUmzQ4aD0Qm
- mPnlBu2gjFrDHj3ko2jCVn/yglmJOhewQnHlHzWxeaoxoTOciRCzMepftlxCsHduyFt+ KQ== 
+ subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
+ bh=2adgzyL/ZKsQMs8r1z/tF72kUJSLbwoHGCLGlTudDRg=;
+ b=Txc0aioTg5Blv/wXUZecfHi1R2twu8/+w4EoVlUQtHHMiYoAJ2JYyUmYoHkzJYe5+hGJ
+ GCQGf0eznvd3hrmeI1QnF+RzhfZeY6C+ZEY2ixf0RA0MmkNPH+xiMTbj1wfVoJEAh+8w
+ 0qxI+ChpeqiIdcKutMi/wy8Cgk4a4sPMuV7doKKJeCwQWSK8kV13/zGGQ+pvc3k/bD7l
+ lKBMCJPrhXWMc1pR5nNcqeI+82/5THd4endVx2dpDYJG0DV0ymaWZHOnemLHttum+pdK
+ xZkmVPE3TrhvRcnqdGNLQ+9MLvDzBRYp5zeS7fAtYAnklp9p3ipM54JwPtupHqTWV77f 8w== 
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w8varg5d2-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w8rtcgqq4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Feb 2024 12:39:18 +0000
+ Wed, 14 Feb 2024 12:39:16 +0000
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41ECKqpx013766; Wed, 14 Feb 2024 12:39:17 GMT
+ with ESMTP id 41ECKqpw013766; Wed, 14 Feb 2024 12:39:16 GMT
 Received: from ban25x6uut24.us.oracle.com (ban25x6uut24.us.oracle.com
  [10.153.73.24])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3w6apbnn3q-13; Wed, 14 Feb 2024 12:39:17 +0000
+ 3w6apbnn3q-12; Wed, 14 Feb 2024 12:39:15 +0000
 From: Si-Wei Liu <si-wei.liu@oracle.com>
 To: eperezma@redhat.com, jasowang@redhat.com, mst@redhat.com,
  dtatulea@nvidia.com, leiyang@redhat.com, yin31149@gmail.com
 Cc: qemu-devel@nongnu.org
-Subject: [PATCH 12/12] vdpa: fix network breakage after cancelling migration
-Date: Wed, 14 Feb 2024 03:28:02 -0800
-Message-Id: <1707910082-10243-13-git-send-email-si-wei.liu@oracle.com>
+Subject: [PATCH 11/12] vdpa: indicate transitional state for SVQ switching
+Date: Wed, 14 Feb 2024 03:28:01 -0800
+Message-Id: <1707910082-10243-12-git-send-email-si-wei.liu@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
 References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-14_05,2024-02-14_01,2023-05-22_02
@@ -67,18 +63,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  suspectscore=0 mlxscore=0 phishscore=0 bulkscore=0 malwarescore=0
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402140098
-X-Proofpoint-GUID: 7KPI141GI8qmONnyZoY-Wz-43a4XyM8V
-X-Proofpoint-ORIG-GUID: 7KPI141GI8qmONnyZoY-Wz-43a4XyM8V
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=si-wei.liu@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-ORIG-GUID: _mZnw-PCz9yxBI3y1JVJnwX2pg5kGXjU
+X-Proofpoint-GUID: _mZnw-PCz9yxBI3y1JVJnwX2pg5kGXjU
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=si-wei.liu@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,45 +89,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix an issue where cancellation of ongoing migration ends up
-with no network connectivity.
+svq_switching indicates the transitional state whether
+or not SVQ mode switching is in progress, and towards
+which direction. Add the neccessary state around where
+the switching would take place.
 
-When canceling migration, SVQ will be switched back to the
-passthrough mode, but the right call fd is not programed to
-the device and the svq's own call fd is still used. At the
-point of this transitioning period, the shadow_vqs_enabled
-hadn't been set back to false yet, causing the installation
-of call fd inadvertently bypassed.
-
-Fixes: a8ac88585da1 ("vhost: Add Shadow VirtQueue call forwarding capabilities")
-Cc: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
 ---
- hw/virtio/vhost-vdpa.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/vhost-vdpa.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 004110f..dfeca8b 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -1468,7 +1468,15 @@ static int vhost_vdpa_set_vring_call(struct vhost_dev *dev,
- 
-     /* Remember last call fd because we can switch to SVQ anytime. */
-     vhost_svq_set_svq_call_fd(svq, file->fd);
--    if (v->shadow_vqs_enabled) {
-+    /*
-+     * When SVQ is transitioning to off, shadow_vqs_enabled has
-+     * not been set back to false yet, but the underlying call fd
-+     * will have to switch back to the guest notifier to signal the
-+     * passthrough virtqueues. In other situations, SVQ's own call
-+     * fd shall be used to signal the device model.
-+     */
-+    if (v->shadow_vqs_enabled &&
-+        v->shared->svq_switching != SVQ_TSTATE_DISABLING) {
-         return 0;
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 9f25221..96d95b9 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -317,6 +317,8 @@ static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool enable)
+     data_queue_pairs = n->multiqueue ? n->max_queue_pairs : 1;
+     cvq = virtio_vdev_has_feature(vdev, VIRTIO_NET_F_CTRL_VQ) ?
+                                   n->max_ncs - n->max_queue_pairs : 0;
++    v->shared->svq_switching = enable ?
++        SVQ_TSTATE_ENABLING : SVQ_TSTATE_DISABLING;
+     /*
+      * TODO: vhost_net_stop does suspend, get_base and reset. We can be smarter
+      * in the future and resume the device if read-only operations between
+@@ -329,6 +331,7 @@ static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool enable)
+     if (unlikely(r < 0)) {
+         error_report("unable to start vhost net: %s(%d)", g_strerror(-r), -r);
      }
++    v->shared->svq_switching = SVQ_TSTATE_DONE;
+ }
  
+ static void vdpa_net_migration_state_notifier(Notifier *notifier, void *data)
 -- 
 1.8.3.1
 
