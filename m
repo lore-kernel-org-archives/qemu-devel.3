@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433C6C48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B44DC48BED
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 11:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raDDe-0000ki-0u; Wed, 14 Feb 2024 06:14:26 -0500
+	id 1raDDw-0002Cy-AR; Wed, 14 Feb 2024 06:14:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDDc-0000jl-J4
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDDu-00023J-VP
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDDb-0006qU-7X
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:24 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1raDDt-0006tE-3f
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 06:14:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707909262;
+ s=mimecast20190719; t=1707909280;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+7/1YIgENNn6T5ST2SQ++m3V36j5nIhY7SM7UOSEqks=;
- b=W0RHdvjy6E+xaFVfZ7ovjnGzYA+qCCuQ/pe+F21CURcFGPl5aZX9GuacE8WMd7IBLPrHDc
- uKloMnPaVVkFJB80jx78j8hjqAaUjijlWOwRjfqi7FA91xwbEfAP1u+J1Xgi7vBTEzT4lM
- Vysx4MMr+F+sxFPVMll3maSmYbfEGdM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vU/FdZML6DqnPVTmQt+IGMJCQ6FBN1LoDWvbCySz6NY=;
+ b=Y6ioUhoKeQnylojVzZPfAru+lgoRH691ojeDwhtLNKTAxjpduUjgSHxE83z8kfT5TY4o6I
+ gQFrDrEjxWZTERCVJM5cP9DtQuQZrtb/3Tt/DCKIrckcmT3xFsoWXff/r/OqpdHw8tT75e
+ eTKx8ak9mhvVmPsv5tIsY186MwpZlK0=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-427-1ojCe2fGNKqBt0ZrSfiIug-1; Wed, 14 Feb 2024 06:14:20 -0500
-X-MC-Unique: 1ojCe2fGNKqBt0ZrSfiIug-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a3d3e8f1635so32560766b.2
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:14:20 -0800 (PST)
+ us-mta-505-A4d6Ix4JOVGZpYwsRkUo9g-1; Wed, 14 Feb 2024 06:14:39 -0500
+X-MC-Unique: A4d6Ix4JOVGZpYwsRkUo9g-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a3d4881bcf5so30795166b.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 03:14:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707909258; x=1708514058;
+ d=1e100.net; s=20230601; t=1707909277; x=1708514077;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+7/1YIgENNn6T5ST2SQ++m3V36j5nIhY7SM7UOSEqks=;
- b=bgE/Pcqtg8qiBqEP8CbwMsFY22h/Oia11OVZ0R0NS92rL1L/VwaaZV0eQf/imCm7uH
- HxgWCL1HHIVLE2djTapz6+5Eq3/5efgFRhx+Aq93jW4KGhemtjwM9NnnZG0AUL1MUo3F
- sAyi1ayH/+I9N18aDOzzfay4WHhl/T25CtjSGg8oo+E15ZU9BXVQDezox5LGm4Ml1xxY
- S1s4dgAC2CV8fJDk9Vv16TCKHVUzC2Y6QEx5xScMszAe4B3mebwnV+L5CZpylhlD8/eP
- h8ovkci6sGlwAGxhB/C/6TyIo6HPVHqWGJ6sJhqd3WPr9XMFhfbE2UO0I071FEpMWHbv
- ybTQ==
-X-Gm-Message-State: AOJu0Yzq/qydUNZONY7Jucv1GP/ISRJ0518RHLlSU51cqYERXSpO+o2f
- DEZys6ypYV0zhUuTP/0nGyresmGgemLvp3rtzaIVW80aGkaTcbz2croGHV6nbtc3dozmJGewLUF
- X4nbs3uK+IhorlcA1BCXKUJ5mCqbO3Y2gWxhBJzcw60MZ6Z3Hrscqq9nGLwrLYC0bJuQLeMOGU/
- 6OprDBCVTMlSdxPJRnGXY7fCZeAI5a4w==
-X-Received: by 2002:a17:906:4f0b:b0:a3c:7651:209e with SMTP id
- t11-20020a1709064f0b00b00a3c7651209emr1569141eju.19.1707909258776; 
- Wed, 14 Feb 2024 03:14:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFlUivMwdUfkNOyrB5mJPxZRRZyG5wyqR9v0ySHCB/7gj15CNTVQDJcoglSlDT6Sgn8Yt9bTg==
-X-Received: by 2002:a17:906:4f0b:b0:a3c:7651:209e with SMTP id
- t11-20020a1709064f0b00b00a3c7651209emr1569119eju.19.1707909258415; 
- Wed, 14 Feb 2024 03:14:18 -0800 (PST)
+ bh=vU/FdZML6DqnPVTmQt+IGMJCQ6FBN1LoDWvbCySz6NY=;
+ b=GHiUl/3rE2bswuMgZ64/3T8TFvx+MGXXr+YSB+vnpLTqE4R5voFtDihphBhk+d274H
+ YgTpSaX6qF+ysyuPzPWsu9P5XZmr6IYq4/ZkaIbqJsOYvE0wINeyfo+nZ9yZStV4+h1D
+ oFwSxmih0hDJSY75elGzrLWSHnuodJGfKKNldKuo9B2R49FKzdd7lG7eVCpmzmkOTu1v
+ FGbBAgOxR0WppCUHX94wUFzjlubY9+3VYB01DJ9WYiSN+OvWcn/3Ynnvrh+8GSR1K2C7
+ aMGsH33X4c5GiY6t7Wxtdib8zxKc0luy8hED/80LZpDprDMt68BoPMzOlnFR4n5+ICA9
+ v2Wg==
+X-Gm-Message-State: AOJu0YwXAu+dB/k+qEVRaDp3qhbfDsEP8GLhXeOU8t1QFOKzQoSXaJqe
+ DHOop3eQAQsSY2hO55Wwmb8sPhH7T5W6yRU6Y5DIzFdkqG1dk0xm3MHlv5z98+imLTFESUPT/sZ
+ NjZ7GS4EMgLKHrFGWXjo0gd4YSXb9T7m8h1zXC3R4eaWgwWgUQSqNLbu6+yCWkZ12kdWA50vKCo
+ RCBSflbi/v+eU0EKAQbxzs6TeSbbth2Q==
+X-Received: by 2002:a17:906:f10a:b0:a38:1e54:91d7 with SMTP id
+ gv10-20020a170906f10a00b00a381e5491d7mr1526239ejb.56.1707909277451; 
+ Wed, 14 Feb 2024 03:14:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFtPhGzWEUddikie8HWtYEMTgNxvRUm4eZsC0Q1VLwVE43uufPxpTdoyZ2gbOKOj+b70EMOw==
+X-Received: by 2002:a17:906:f10a:b0:a38:1e54:91d7 with SMTP id
+ gv10-20020a170906f10a00b00a381e5491d7mr1526218ejb.56.1707909277058; 
+ Wed, 14 Feb 2024 03:14:37 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBdWKDM7AE3wIqXkW7Xv5fgLZWtnrmO8/iuLtFveztewupLJv6jyYXWfW8OakQbEjqz0R0huLv1Oh2TW12E6FzkyxEIX8oZRwOPR4lj3wk/uGbGbGQt+Kts1Z7wZw0tY2EU/DmCxLBg6ZE/D3eNVgUckJOXC7pz8ZF4LTCzulZWr8eeJyhF/LYeqEO87LubcDq1W43f6uSa685Jnrf5yWwHfJpcCU=
+ AJvYcCXXjXx0XyAXLEFe0Zh5fb9GSpChGhIPxYmW7UY6Ed6F4WS4tidh5vIt2zvTYnmQ1dp/b4XZCHNTxUyZX+U5pvUHlrVXa1xxDpbPYaVPpvxS8KgG38Mi11xoaT5UIGqTtt8Nz1V+g7CdRMDAiFjK7eUcIWvONbkRV3wG8K+BABKodryxNoehyDyjyI5bvEbv
 Received: from redhat.com ([2.52.26.67]) by smtp.gmail.com with ESMTPSA id
- xa7-20020a170907b9c700b00a3d2490799fsm964986ejc.20.2024.02.14.03.14.16
+ ss3-20020a170907c00300b00a3d11908bbcsm1320430ejc.203.2024.02.14.03.14.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 03:14:17 -0800 (PST)
-Date: Wed, 14 Feb 2024 06:14:15 -0500
+ Wed, 14 Feb 2024 03:14:36 -0800 (PST)
+Date: Wed, 14 Feb 2024 06:14:34 -0500
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 19/60] hw/i386/x86: Reverse if statement
-Message-ID: <f22f3a92eb728497dcd0f43e31b9148992db99bd.1707909001.git.mst@redhat.com>
+ Bernhard Beschow <shentey@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 25/60] exec/ioport: Resolve redundant .base attribute in
+ struct MemoryRegionPortio
+Message-ID: <4edee342f81397e8938ba7a80d1908c5103b66c8.1707909001.git.mst@redhat.com>
 References: <cover.1707909001.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -107,36 +108,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bernhard Beschow <shentey@gmail.com>
 
-The if statement currently uses double negation when executing the else branch.
-So swap the branches and simplify the condition to make the code more
-comprehensible.
+portio_list_add_1() creates a MemoryRegionPortioList instance which holds a
+MemoryRegion `mr` and an array of MemoryRegionPortio elements named `ports`.
+Each element in the array gets assigned the same value for its .base attribute.
+The same value also ends up as the .addr attribute of `mr` due to the
+memory_region_add_subregion() call. This means that all .base attributes are
+the same as `mr.addr`.
+
+The only usages of MemoryRegionPortio::base were in portio_read() and
+portio_write(). Both functions get above MemoryRegionPortioList as their
+opaque parameter. In both cases find_portio() can only return one of the
+MemoryRegionPortio elements of the `ports` array. Due to above observation any
+element will have the same .base value equal to `mr.addr` which is also
+accessible.
+
+Hence, `mrpio->mr.addr` is equivalent to `mrp->base` and
+MemoryRegionPortio::base is redundant and can be removed.
 
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-Id: <20240106132546.21248-2-shentey@gmail.com>
+Message-Id: <20240114123911.4877-5-shentey@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/x86.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/exec/ioport.h |  1 -
+ system/ioport.c       | 13 ++++++-------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 3d1bdd334e..505f64f89c 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -520,10 +520,10 @@ static void x86_nmi(NMIState *n, int cpu_index, Error **errp)
-     CPU_FOREACH(cs) {
-         X86CPU *cpu = X86_CPU(cs);
+diff --git a/include/exec/ioport.h b/include/exec/ioport.h
+index e34f668998..95f1dc30d0 100644
+--- a/include/exec/ioport.h
++++ b/include/exec/ioport.h
+@@ -35,7 +35,6 @@ typedef struct MemoryRegionPortio {
+     unsigned size;
+     uint32_t (*read)(void *opaque, uint32_t address);
+     void (*write)(void *opaque, uint32_t address, uint32_t data);
+-    uint32_t base; /* private field */
+ } MemoryRegionPortio;
  
--        if (!cpu->apic_state) {
--            cpu_interrupt(cs, CPU_INTERRUPT_NMI);
--        } else {
-+        if (cpu->apic_state) {
-             apic_deliver_nmi(cpu->apic_state);
-+        } else {
-+            cpu_interrupt(cs, CPU_INTERRUPT_NMI);
+ #define PORTIO_END_OF_LIST() { }
+diff --git a/system/ioport.c b/system/ioport.c
+index 1824aa808c..a59e58b716 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -181,13 +181,13 @@ static uint64_t portio_read(void *opaque, hwaddr addr, unsigned size)
+ 
+     data = ((uint64_t)1 << (size * 8)) - 1;
+     if (mrp) {
+-        data = mrp->read(mrpio->portio_opaque, mrp->base + addr);
++        data = mrp->read(mrpio->portio_opaque, mrpio->mr.addr + addr);
+     } else if (size == 2) {
+         mrp = find_portio(mrpio, addr, 1, false);
+         if (mrp) {
+-            data = mrp->read(mrpio->portio_opaque, mrp->base + addr);
++            data = mrp->read(mrpio->portio_opaque, mrpio->mr.addr + addr);
+             if (addr + 1 < mrp->offset + mrp->len) {
+-                data |= mrp->read(mrpio->portio_opaque, mrp->base + addr + 1) << 8;
++                data |= mrp->read(mrpio->portio_opaque, mrpio->mr.addr + addr + 1) << 8;
+             } else {
+                 data |= 0xff00;
+             }
+@@ -203,13 +203,13 @@ static void portio_write(void *opaque, hwaddr addr, uint64_t data,
+     const MemoryRegionPortio *mrp = find_portio(mrpio, addr, size, true);
+ 
+     if (mrp) {
+-        mrp->write(mrpio->portio_opaque, mrp->base + addr, data);
++        mrp->write(mrpio->portio_opaque, mrpio->mr.addr + addr, data);
+     } else if (size == 2) {
+         mrp = find_portio(mrpio, addr, 1, true);
+         if (mrp) {
+-            mrp->write(mrpio->portio_opaque, mrp->base + addr, data & 0xff);
++            mrp->write(mrpio->portio_opaque, mrpio->mr.addr + addr, data & 0xff);
+             if (addr + 1 < mrp->offset + mrp->len) {
+-                mrp->write(mrpio->portio_opaque, mrp->base + addr + 1, data >> 8);
++                mrp->write(mrpio->portio_opaque, mrpio->mr.addr + addr + 1, data >> 8);
+             }
          }
      }
- }
+@@ -244,7 +244,6 @@ static void portio_list_add_1(PortioList *piolist,
+     /* Adjust the offsets to all be zero-based for the region.  */
+     for (i = 0; i < count; ++i) {
+         mrpio->ports[i].offset -= off_low;
+-        mrpio->ports[i].base = start + off_low;
+     }
+ 
+     /*
 -- 
 MST
 
