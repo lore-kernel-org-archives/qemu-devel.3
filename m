@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74753C48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD489C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raGaP-0002zc-BG; Wed, 14 Feb 2024 09:50:10 -0500
+	id 1raGeR-0006FP-GM; Wed, 14 Feb 2024 09:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raGaL-0002z0-Hb
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:50:05 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1raGeP-0006EL-Uy
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:54:18 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1raGaF-000262-84
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:50:01 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1d71cb97937so53271295ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:49:58 -0800 (PST)
+ id 1raGeO-0003FS-5v
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:54:17 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5cddc5455aeso3887682a12.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:54:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707922197; x=1708526997;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707922453; x=1708527253;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nhHHxRCDs5owoK4TNJv5cS3UjeloKTRO1LjR/xe5zU4=;
- b=b0nfImXRk2BnO2Bffm+MZFT4wpW3kmyEoa0qgHFS/qRn2ETUB3TbPbFSuRm4Q6GFql
- 9UTVTjlviBNrJmtPBaeo31nJsARotueKx6jYTQBrE1zJSpllFwrjxp+DGZ7b9Igh/TwI
- X9Ru1sDpX4WYO4ty1mRtW2Q6hh+Fy9gE9nnIM+SdKyaG1T60OcpHCTTJRsTDhM+TKcxw
- YTeXg8xJkhlZZ54Jk+BIjC7fTe5bdIYm9N67LNBsP0tVt10ncdGyjZ1iDnZx2zpRMz+3
- tRfEZWx2mJxT82UDb3wKo08oV5KFMfRcKV06hwHbQSD6Reme9vSYTQbMYQkAayCVj+Rh
- GuRA==
+ bh=iaJllG92Mbpr+8QyLZfb4eFbcVwYXcvmjpcnX6ZkzvM=;
+ b=Be8E+JvSmuCfT8qcfjJ1SQNl6/HAiXoD7oXWeCojIzr2iLqh3+gSoAJ9+q6tFod5zJ
+ KiurVcuZWWr3HsBEFPgJpIkd6KiFi76Dv5Ehdl1gUR06fBP6pbHHgP3KKkt3yyINksaC
+ h2M5xn4dQ8QT3DHhhaOq/Ec9/gz740gH+53dsIFZIv+Kd08FMVES/N8ZoF3uHYT4tQLj
+ RYKAU9fis2RJDzajfU8aXODrHQnQo45gBIUBqwozhFU7l0SQXFZ2fct0oBULyPlWcvi5
+ JWdLgz/nq/ZG80fCnrTgVARsO+8DuEjVkARsMQKRpJbfYyjnTItU6CTkghvwyX/4b5ME
+ xj6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707922197; x=1708526997;
+ d=1e100.net; s=20230601; t=1707922453; x=1708527253;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nhHHxRCDs5owoK4TNJv5cS3UjeloKTRO1LjR/xe5zU4=;
- b=Csttrb43T2kKEg2V1kJLtyt+/aOlf93jAJ/ppgWzTylepZrj530vn/C6JaF+To2VqM
- I/wiM+uFcWltyZmG95CN+1S0CpVSQ6LOGd4CfVTQfwyniFCniRWCHawep9976GaoDB3R
- VTeAfSZKeMGVs6M12hB0twKJW1E5zcdAGhDblj9NGXfmEmdFN9VfdUqhePblkSFCjnuZ
- Nm+qiZwL8vq99Hx2j0c/PziDCahnwW4YW5TR3IRUu562IMoKZpgRpmgRq4nDGIy8CM+J
- lX95zHzTZP3vZF38531hh5q+7POeDMryzrEvWtOD/45qwCD8ozQPUaisBxOAspIbmgH/
- dM5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVg9KjcpHAgC/gTJ4FeK7oooEA9HaLA7BKDhm7qTJVg/ank3S4iobzBidh/Hg/b++VcRQSCZoWpmv2q7P268A1JonJiCaY=
-X-Gm-Message-State: AOJu0Yw7rKvRRhQWtYa5F7TY1Q5olHsQRP0AnANXZA/WLlwLMY7QfarX
- /JIH6rC1MEjCzAkC+DBAXukch4kOvfylDEl+SIFS3v4j2M+k1P4rUzueGzGkFcY=
-X-Google-Smtp-Source: AGHT+IHNfrq4/OsSPCcThqB5dzfuZtpN7pQfAdMB1lZfyOjh05AaN/2ZZiqQim96qfKu8VU8K6YZuA==
-X-Received: by 2002:a17:902:fc4d:b0:1d9:3938:40bb with SMTP id
- me13-20020a170902fc4d00b001d9393840bbmr4304271plb.20.1707922197649; 
- Wed, 14 Feb 2024 06:49:57 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUH1H2lqGgLik0o8bSvX3TAK9yMUGVv35IWzi7QtG8BsfMZ01be662A2hM0lF75mVqTZfDJUq5McOKVvvjGG5HbJyg7AaCYgfrfjeyLmnXxw0FF79eGtybzLYM/cU4wVaxLPMqphRNUneEhDNA8EVh3/GLpHWaM7bIrUDTe0NFYQ7cItVIBBbsuF5KPY2DbVfAuIxa/lZTe1+THe1gOKnqnE4DCQ31xKZoW0N1xvRrqWdE5IjJEWbWwJrzE5AkcxktbvvsJ2gbftNHguZ3r42WLJjIPICcSTb50seCiKcGKoyTn6A2wYf3Pw2d2Lme1Q5zhB/lXI/wPEH5hnRY+ZjZ/XaxUh3BqBuhT0u5YfXzau0GwDDhr8B3R1IUjKogclet+TO+mg31iBSWVuIYQw+KTg6v3Y+pcrtr5MQ==
+ bh=iaJllG92Mbpr+8QyLZfb4eFbcVwYXcvmjpcnX6ZkzvM=;
+ b=ifDg66VuvfzmCnKDhJxO7f+RXwsK14/d+SYjH9eNW3PQwBvZIM4vMGWPeNsAG/2385
+ lb6GEm57zQbSfWx+spBtSxLT4UxE2gm2afsZJ27Kbgfsjx0dyf5G0mxFl9ey0FHuXBQN
+ Ac6cj8wJDJIUiiOvSxp+vA7aGpsACThYNIjts/i7LUzq9P/oK7lW8EfufCsbxFblDcIc
+ ji95g+KH9NlEznfIdOcILIs5P2jctKfMQeie9isvMhomq03XWZ9mgLoMu/FSh0v6A5Vz
+ Tj4+EWzZEX5tQHEB6TWx64AF4pduC0k5ssl4gPful5C/B6XMGgktxpCOCK/j/5xD78xy
+ 3MPg==
+X-Gm-Message-State: AOJu0Yyqdk5GgLeNbfmb9rApt1E0TlZdQA+O24+E3IgRpoxzJ6HGMgx6
+ OWfYwGvNGvkwfKCzu9Gmjzdo1+pnYrbQo4B0kj//8XQ0KyZlwE9MIEC20cnI2Y4=
+X-Google-Smtp-Source: AGHT+IE+tCA0HL4IvokG46MyruLy/PfXbgiLidGyQO7fb/Rl+ssJwlXcfEULA4y/ElsKvLUH1WEVEg==
+X-Received: by 2002:a17:90a:fb58:b0:296:efd0:c19e with SMTP id
+ iq24-20020a17090afb5800b00296efd0c19emr2462871pjb.41.1707922453547; 
+ Wed, 14 Feb 2024 06:54:13 -0800 (PST)
 Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
  ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with ESMTPSA id
- p6-20020a170902eac600b001db674a6f07sm714721pld.225.2024.02.14.06.49.54
+ m6-20020a17090a34c600b00298b9f662ccsm1662234pjf.1.2024.02.14.06.54.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Feb 2024 06:49:57 -0800 (PST)
-Message-ID: <dbb8562b-6532-45af-a6fe-63bbf9b74a1d@daynix.com>
-Date: Wed, 14 Feb 2024 23:49:52 +0900
+ Wed, 14 Feb 2024 06:54:13 -0800 (PST)
+Message-ID: <56e83476-f607-482e-a9f2-e473148de839@daynix.com>
+Date: Wed, 14 Feb 2024 23:54:08 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 5/9] pcie_sriov: Validate NumVFs
 Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+To: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
@@ -79,17 +76,18 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
  Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
+ Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
 References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
  <20240214-reuse-v4-5-89ad093a07f4@daynix.com>
- <20240214015107-mutt-send-email-mst@kernel.org>
+ <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240214015107-mutt-send-email-mst@kernel.org>
+In-Reply-To: <bd6328d1-6568-4ac1-9be4-293bccc722e3@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::629;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::530;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -111,43 +109,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/14 15:52, Michael S. Tsirkin wrote:
-> On Wed, Feb 14, 2024 at 02:13:43PM +0900, Akihiko Odaki wrote:
+On 2024/02/14 17:58, Michael Tokarev wrote:
+> 14.02.2024 08:13, Akihiko Odaki wrote:
 >> The guest may write NumVFs greater than TotalVFs and that can lead
 >> to buffer overflow in VF implementations.
->>
->> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+> 
+> This seems to be stable-worthy (Cc'd), and maybe even CVE-worthy?
+
+Perhaps so. The scope of the bug is limited to emulated SR-IOV devices, 
+and I think nobody use them except for development, but it may be still 
+nice to have a CVE.
+
+Can anyone help assign a CVE? I don't know the procedure.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Thanks,
+> 
+> /mjt
+> 
+>> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O 
+>> Virtualization (SR/IOV)")
 >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 >> ---
->>   hw/pci/pcie_sriov.c | 3 +++
->>   1 file changed, 3 insertions(+)
+>>   hw/pci/pcie_sriov.c | 3 +++
+>>   1 file changed, 3 insertions(+)
 >>
 >> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
 >> index a1fe65f5d801..da209b7f47fd 100644
 >> --- a/hw/pci/pcie_sriov.c
 >> +++ b/hw/pci/pcie_sriov.c
 >> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
->>   
->>       assert(sriov_cap > 0);
->>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
->> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
->> +        return;
->> +    }
+>>       assert(sriov_cap > 0);
+>>       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+>> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + 
+>> PCI_SRIOV_TOTAL_VF)) {
+>> +        return;
+>> +    }
+>>       dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+>>
 > 
-> 
-> yes but with your change PCI_SRIOV_NUM_VF no longer reflects the
-> number of registered VFs and that might lead to uninitialized
-> data read which is not better :(.
-> 
-> How about just forcing the PCI_SRIOV_NUM_VF register to be
-> below PCI_SRIOV_TOTAL_VF at all times?
-
-PCI_SRIOV_NUM_VF is already divergent from the number of registered VFs. 
-It may have a number greater than the current registered VFs before 
-setting VF Enable.
-
-The guest may also change PCI_SRIOV_NUM_VF while VF Enable is set; the 
-behavior is undefined in such a case but we still accept such a write. A 
-value written in such a case won't be reflected to the actual number of 
-enabled VFs.
 
