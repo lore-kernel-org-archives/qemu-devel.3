@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3141BC4829D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4145C4829A
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 04:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ra6rv-0007mq-2Z; Tue, 13 Feb 2024 23:27:35 -0500
+	id 1ra6ru-0007mh-Fb; Tue, 13 Feb 2024 23:27:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ra6rt-0007mF-FS
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:33 -0500
-Received: from mail-il1-x132.google.com ([2607:f8b0:4864:20::132])
+ id 1ra6rs-0007m6-L3
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:32 -0500
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1ra6rr-0004PC-VF
- for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:33 -0500
-Received: by mail-il1-x132.google.com with SMTP id
- e9e14a558f8ab-363c2edac5aso18176235ab.2
- for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 20:27:31 -0800 (PST)
+ id 1ra6rr-0004Os-Az
+ for qemu-devel@nongnu.org; Tue, 13 Feb 2024 23:27:32 -0500
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-7c488a5afcaso1430139f.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Feb 2024 20:27:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707884850; x=1708489650; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UYU53kj6Z9SDsJEykjfEK2SUz1aqv0gAFOVHSmMyOb4=;
- b=Dir7074Fyrzmb02Qx/6iGtNjaLrcfpcy5+xKkayYAWR1Y2Ss6O0xhyK4sLC9a1hedx
- Sx88+Qf4xig1M25f4LJykqfXykFvyteNZR/+y0LMfBzXTeqespNUWyxnnOFUJKOvHkuL
- dxrzj95ovrDhG7oY62TDfO6mrNlSLHLTLIcJtZ0rxDbnRrxAb1VFfUxuSRjO/y9sRoU0
- LorMcklBaJGCdyNIw7zpg1qthotS36R2pLv0CP0pRUWsHhxHVcXqBR25vFD0zSnOQcdG
- swdxBOYmqDhdhxW4oIETAIvS/YRBpFN4smeLxQi3gDeB/TDrmbvlcdWlnxQquKP8cOoQ
- vxaw==
+ d=gmail.com; s=20230601; t=1707884848; x=1708489648; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fR4Dglf1jFUKRd22MhzxQ9Oec+I2i4IAJu5Bg4Ltrz4=;
+ b=ffgQMxny1K1ausLL6QqwZqYpSDHr0FbRehZ2sPaG3r9HhV12PpteisKUlQHMioh/SD
+ R/bLrH0QyfidAi5yPjFforFUFdegZJKtWIYUaMw8tEmoxNO4dY/qwDZn9STJ3e3cZB4C
+ Nl2PwUl1v6fdrQNhs79yqbAPIYqYlHmpLXwsL7Rlxwd9Hr5goPaM7Xjvw4blv1jm/B1m
+ 5J6MyMPUL5c9b1cySlI9IFbyttciiUW1+k6rD79Brk7BnKkUfzdPSQARs9xyVttItgwf
+ SE8GiTYNIsgVF9dmJpEvNc0Wfx3+Crwm9ZrYCAPeNF3GS8ccm/vBDBObEHyHpNcCxQlU
+ x0mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707884850; x=1708489650;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UYU53kj6Z9SDsJEykjfEK2SUz1aqv0gAFOVHSmMyOb4=;
- b=lYfK15KmG9xKy3p/rl8KXCZdokLQ9GlM85/8LXQjLsO3PEGXRtxjpcdwAX3mQS9rY7
- 6iyR6MqWNPXSSh0PIPhXQw6Ob2foU4lflziAY3nn9gtb6W1OcsnCRH6zGu4LH+h13GXQ
- di4VS6LXofCmjhon9qzfZFOhNmSeEr2ekCti8r5H07QJgn/zQPkY9roQocKrv4glWXI6
- nOnhvyTzeRijGn1+RUaHhyxJyJoeLg5Qx+GfKNYHyOUndthovHJRFmrAL2diHXACYvds
- qdRPODWm7aUnaGNWB4bofhr8wr9/BVwxmZl9k11YO+4/lP0mRwDROVqoqNSz6FnX3daO
- MBlA==
-X-Gm-Message-State: AOJu0YxaYItmxLXhILjSJLwE4Mqhr/GCZI3gwL6Bn6OJTjfCq3aJibu7
- 7MjWoUCjoLyZb8If+lRjSNjuhZgxkJZXUclnvHSuRQfYYQ7Gb23jE5P5r2Istu8=
-X-Google-Smtp-Source: AGHT+IE6LxDbW2Peq5MGk7c2T77uFIg+giRgNt7VqVbvr/35TXMRXvlfD8Wiyo86/ppTZ146ioZC2Q==
-X-Received: by 2002:a92:d20b:0:b0:363:d953:a129 with SMTP id
- y11-20020a92d20b000000b00363d953a129mr1990690ily.25.1707884849979; 
- Tue, 13 Feb 2024 20:27:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707884848; x=1708489648;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fR4Dglf1jFUKRd22MhzxQ9Oec+I2i4IAJu5Bg4Ltrz4=;
+ b=cRpXBCASHOMn5G6m5Sb2rbel9tsMDSRM93L7/nHDNL+RkXnmaWQIxYLlaLB0Jb2aVk
+ SiP8UdEw0AuBzge1AfhQuNc9FF0U1vQdu9JXHG9jf3GzT3IEFNwutw97LzWle5Vc/RoL
+ sZFbOMUqE7RfFHbIBlBuF8m6arFg8kkOu6sFssqS50Mjdp8ndZgc3z5YZPiVagvOzRzQ
+ Vo9vMTgT+lM3wkEjRDkSFpAquixxOqftpHXFEHE++BQ5YZC+VfEBInhOc6sMDJYwRBrk
+ UIvmqbzq1e3Fg3bWwq845AWz0qk1UEczqD5h2XvjQPv4h2Kvh6S65SAFRQANNzC6zrXh
+ bncw==
+X-Gm-Message-State: AOJu0YzEsdtsJ6xo5FHzw7E2MTJuHl7iKW7mlc6XILdxloO8r8kfYOBg
+ fnoQmDvGpr2POKb9T7odU4fnX3aOsd5eqbAa0zSwAPDj+36R3xNexsaKPQk++rY=
+X-Google-Smtp-Source: AGHT+IHDA3xG8RfJ+QiKSDhO/3svMxyMTB2O6TRxGqIIF2HKBDywSSPDQo7K4/1tmiBOBOLDfAHklQ==
+X-Received: by 2002:a6b:7515:0:b0:7c4:5e08:f265 with SMTP id
+ l21-20020a6b7515000000b007c45e08f265mr1787452ioh.13.1707884848655; 
+ Tue, 13 Feb 2024 20:27:28 -0800 (PST)
 X-Forwarded-Encrypted: i=1;
- AJvYcCUokmLNy6+nOMMwX5OBxfY5T6Su0Xi8QdmgcY8t86MGTNtbTt/hZAOYZKiBqFqWdDldjFRXQFjJiiNm2vePA+RR9zzGNX0RRZrvNs/lvsZTKV9XOlhrxKZBOMiajdNS4gXCYDHw6dwB+QIaEIGAgGm26Go2B0oY2jP3RxJjAXj8CUEOaNC/yV8KUNlBDACqmnN0+AYGdatTbs4tO1hYLLuaIswaqPtksYBR0zCfmmvh7/o+xHdlASpfqi9hVEEaA9UWuCyMPQVfTkUxT92cvBcizRuK3nYSKjjNiKl+
+ AJvYcCXZpuyyx5T+KwNp/OixFb43w8nOA/4xCESr+G7EcuqYCvzzNPnbScZOA0v+OuWaAVUP6yPQUGQUAYl8fVlAB1sJ/Bksr1+SM76rwbx0QVX2JZj+YFewnBtQ0Qn/Sq6JM9TuysmXmQVMwDjByGv5NfUUJlou9MN7lyLB2cLPJgP7lttg+LO8WJf/H2Ak8SqN3fm7UUqhKis5a/nfQfgFsVS200HDFKo870RSdwujaRrSyC6Jw9NTkC6XC9L1G2HLLC2CCmFLTFijoqHjircKLODSnRH5ZojMd7q4pym/
 Received: from taylor-ubuntu.hsd1.co.comcast.net
  (c-73-169-12-54.hsd1.co.comcast.net. [73.169.12.54])
  by smtp.gmail.com with ESMTPSA id
- c2-20020a02c9c2000000b004713170def2sm2312305jap.93.2024.02.13.20.27.28
+ c2-20020a02c9c2000000b004713170def2sm2312305jap.93.2024.02.13.20.27.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Feb 2024 20:27:29 -0800 (PST)
+ Tue, 13 Feb 2024 20:27:28 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
  quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
  ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH v3 1/3] Hexagon (target/hexagon) Pass P0 explicitly to helpers
- that need it
-Date: Tue, 13 Feb 2024 21:27:24 -0700
-Message-Id: <20240214042726.19290-2-ltaylorsimpson@gmail.com>
+Subject: [PATCH v3 0/3] Hexagon (target/hexagon) Only pass env to generated
+ helper when needed
+Date: Tue, 13 Feb 2024 21:27:23 -0700
+Message-Id: <20240214042726.19290-1-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240214042726.19290-1-ltaylorsimpson@gmail.com>
-References: <20240214042726.19290-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,73 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than reading P0 from the env, pass it explicitly
+Currently, we pass env to every generated helper.  When the semantics of
+the instruction only depend on the arguments, this is unnecessary and
+adds extra overhead to the helper call.
 
-Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Tested-by: Anton Johansson <anjo@rev.ng>
----
- target/hexagon/macros.h      |  4 ++--
- target/hexagon/hex_common.py | 12 +++++++++++-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+**** Changes in v3 ****
+Update copyright year to 2024
+Mark Reviewed-by/Tested-by: Anton Johansson <anjo@rev.ng>
 
-diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index 1376d6ccc1..aedc863fab 100644
---- a/target/hexagon/macros.h
-+++ b/target/hexagon/macros.h
-@@ -1,5 +1,5 @@
- /*
-- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
-  *
-  *  This program is free software; you can redistribute it and/or modify
-  *  it under the terms of the GNU General Public License as published by
-@@ -358,7 +358,7 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
- #endif
- #define fREAD_PC() (PC)
- 
--#define fREAD_P0() (env->pred[0])
-+#define fREAD_P0() (P0)
- 
- #define fCHECK_PCALIGN(A)
- 
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 195620c7ec..14dcf261b4 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -197,6 +197,10 @@ def get_tagimms():
-     return dict(zip(tags, list(map(compute_tag_immediates, tags))))
- 
- 
-+def need_p0(tag):
-+    return "A_IMPLICIT_READS_P0" in attribdict[tag]
-+
-+
- def need_slot(tag):
-     if (
-         "A_CVI_SCATTER" not in attribdict[tag]
-@@ -1118,6 +1122,12 @@ def helper_args(tag, regs, imms):
-             "tcg_constant_tl(ctx->next_PC)",
-             "target_ulong next_PC"
-         ))
-+    if need_p0(tag):
-+        args.append(HelperArg(
-+            "i32",
-+            "hex_pred[0]",
-+            "uint32_t P0"
-+        ))
-     if need_slot(tag):
-         args.append(HelperArg(
-             "i32",
+**** Changes in v2 ****
+- Separate patches to pass P0 and SP explicitly to helpers that need it
+- Add the TCG_CALL_NO_RWG_SE flag to any non-HVX helpers that
+  don't get ptr to env
+
+
+Taylor Simpson (3):
+  Hexagon (target/hexagon) Pass P0 explicitly to helpers that need it
+  Hexagon (target/hexagon) Pass SP explicitly to helpers that need it
+  Hexagon (target/hexagon) Only pass env to generated helper when needed
+
+ target/hexagon/gen_tcg.h            |  5 +++-
+ target/hexagon/macros.h             |  6 ++--
+ target/hexagon/attribs_def.h.inc    |  3 +-
+ target/hexagon/gen_helper_protos.py | 12 ++++++--
+ target/hexagon/hex_common.py        | 46 +++++++++++++++++++++++++----
+ 5 files changed, 59 insertions(+), 13 deletions(-)
+
 -- 
 2.34.1
 
