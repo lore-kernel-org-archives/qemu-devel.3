@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BBBC48BC1
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20441C48BC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Feb 2024 14:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raGBv-0005xk-Vf; Wed, 14 Feb 2024 09:24:52 -0500
+	id 1raGJA-000113-Tg; Wed, 14 Feb 2024 09:32:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raGBt-0005vb-VA
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:24:50 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raGBr-0003sR-It
- for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:24:49 -0500
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41EEFwNj020759; Wed, 14 Feb 2024 14:24:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=LasRQeCmntDXXt4fmJUHeblmFqBdFyyiPJcbvCqt2yc=;
- b=d0USP+SU0JwgOPof6bHRyJizGcaL3S6DvjuJzMJSboh4SyhCGrYEHZe4NUW1QkfyXAaY
- mvpUEswhrEsHU7TuOrmqqrrgJ+Y6Oeh4SHARkYWk9owTBy4fzFaKvWpd7neSUQAs7F2f
- bHGfhlsutRCZBtux0zhoNi6/pEGEoVE84CSeclqybqCBg2jUoS+j65+W5RfyVs+T9rSg
- /L5wlrXEMNF+7M8I/6HjFkIy3vDoLGxbgTNyE4sHFLybCN5g4Al61GuKlBCrcfY4mobn
- BPZuLRX90JnJP3hrsbod6rpEf2nK99iW5Hs2Bdc2YtjTus6FIF8e3mIx/FSf/fk17TBW Qg== 
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3w8wk4u67a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Feb 2024 14:24:43 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41ECqMGd032578; Wed, 14 Feb 2024 14:24:42 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w6kftpkmw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Feb 2024 14:24:42 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41EEOcoZ18875092
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Feb 2024 14:24:40 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 98B912004B;
- Wed, 14 Feb 2024 14:24:38 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7E7A220040;
- Wed, 14 Feb 2024 14:24:38 +0000 (GMT)
-Received: from [9.155.200.166] (unknown [9.155.200.166])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Feb 2024 14:24:38 +0000 (GMT)
-Message-ID: <85455ef16f33a521e7436ee33ba37371c917cdd3.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 22/33] linux-user: Split out mmap_h_lt_g
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Date: Wed, 14 Feb 2024 15:24:38 +0100
-In-Reply-To: <c959eb04-a929-4fa6-bdf8-f97cebc4d3f3@linaro.org>
-References: <20240102015808.132373-1-richard.henderson@linaro.org>
- <20240102015808.132373-23-richard.henderson@linaro.org>
- <ogglz7yhvelvrnmfyhvpx7hjdl5rgl5gh3iioomtagi3mlckcd@qaa6w4javinb>
- <c959eb04-a929-4fa6-bdf8-f97cebc4d3f3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.3 (3.50.3-1.fc39) 
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1raGJ9-0000zx-6n
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:32:19 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1raGJ7-0005ys-7b
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 09:32:18 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1db4cafbbebso7660305ad.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 06:32:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1707921136; x=1708525936;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OwauHfUyMuoE/Bfmbc+NSS75jLIdX2koeLrr/kSr5WE=;
+ b=V+Y8WJFLW5Lg3kKRoISrGatc1RKxNSaL+q5dUK/35Y/wF7VlQCPJ5v0Qv0cApR/Man
+ ht46ipGgduyXL/XH0BjL/Jyq10SHeNiumA7DAGqROs7TPc8xqd/Oog2gXUE7G30jY30B
+ +GFyHkrrJV7oID07C+4oD6hde0OrTIq3/QNP8m69bJCH5gf0BtI6r/lmI2GdHu4RQTQS
+ QWQ7ZKV3/c9taEqlH6ZhpayoqRYZk4b/FyfIe5jSPb/WaW9/kZKvCcgoc95ImfspTgOJ
+ 9YrKxFaNgGgqvaAZBRy2vO1W/q6+rAJs9/xudA6a1kP3bXYD0XoMz/AkgHOHGyOVhxJo
+ WECA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707921136; x=1708525936;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OwauHfUyMuoE/Bfmbc+NSS75jLIdX2koeLrr/kSr5WE=;
+ b=LtXxUHPe2KSg9VUGUwj4RTdX/NQtBTTHkmo1YlbKWfTwIXA4VAxG6IC5rrXSxkRbm2
+ 1TykuzT5tWmrXsGEGIxLos7N+ofQcSUIeRRv0KWRnHBWFHuQ7nnDC3Q2G98dPwlZLnIf
+ wvwnPMxZ/AZfo/xFmqkEhZ/LzGx07qRirOPtdQSRMgcuW+x4Zjg9GiwfeepXzmaRgJMj
+ Cl2xnVr+dsdKXZk2nFerpe8j1u63dlpEPFTojnK4bQfRfqzHT8aXunACldRWJrLvxolo
+ goAUWnSK8PE/uUhxeolILAjsncm4MqbfXtoDA9ODoA3Xpqw2/TG4pCeNJjFJBeN0EhhW
+ 4HQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvQwM4Kq5AP5Pn1u50Vq96F4YJHdA9ZzEK3LpOR5L1Kc7OFnl93+NFCH7Dw/RMtl4wEMBKn1BMY+I2PxbJVX7oOrPuPTo=
+X-Gm-Message-State: AOJu0YweetPOr7Ou7NNVPvKI2EQa6QVSZxZ9VMpTg+RMRxlFNY/cJi4b
+ e0bq0/RKvoDh1ES4PnR1mwdzOu3Xfrrf4ik71hZyEMgUpxSPtzv4AzeYmZN4XT8=
+X-Google-Smtp-Source: AGHT+IFp8CouJV7JfT11Ul6sXpVDEjZMDnF2l0z8IT9Q4Zqj6cy1yI92rCMep99UNQ4YVJGCbhQBwA==
+X-Received: by 2002:a17:903:493:b0:1d9:b3ef:8331 with SMTP id
+ jj19-20020a170903049300b001d9b3ef8331mr2632730plb.3.1707921135706; 
+ Wed, 14 Feb 2024 06:32:15 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBNBXwMgPHN/pwjzyquIc5n6yWkMNyEc8SEbOglsOHIPjt5wD46yEw/YDj0ZYdzL7/U1pHgxg0PquzbqEpnDmb511lboReIOxQK+L/yWhDPfpkTFQ0xi6jd5/Pn4afpTCgbZ9X1Skn/O97Jn6HK0h4o1kknhhmLu2bISl49bXvKeWj/i6pxEK12ovRDc09NhskjxjlIdts7VW/QBNa5qfQpYx9xc91sIXyCjBqrS9yGbifgxtNk1KAecsZlbJ8q5Z271nrolS16s3D4Lihzy6fiT7hv413qLqfbjoS4q+Pqwalo+qBG+n83AWYTOwVCSvTir8BaFCoOsOPtE7Ay9G4RZxyueJ5c3Ccs5vfCoXPgAP/AG+hfAffsBzs0/CO9Z5+CZ+bzGEQoESBMM47tuSqm6fMEjUigGN+lQ==
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ by smtp.gmail.com with ESMTPSA id
+ l10-20020a170902d04a00b001da2951a788sm3817491pll.304.2024.02.14.06.32.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Feb 2024 06:32:15 -0800 (PST)
+Message-ID: <a20793a9-87b0-4a3d-9032-590502454dd0@daynix.com>
+Date: Wed, 14 Feb 2024 23:32:11 +0900
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: h5MokO4x7gVMgJbsXZDu7JWsRHvcwGZe
-X-Proofpoint-GUID: h5MokO4x7gVMgJbsXZDu7JWsRHvcwGZe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-14_06,2024-02-14_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=809 spamscore=0
- malwarescore=0 suspectscore=0 mlxscore=0 impostorscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402140110
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 8/9] pcie_sriov: Do not reset NumVFs after
+ unregistering VFs
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240214-reuse-v4-0-89ad093a07f4@daynix.com>
+ <20240214-reuse-v4-8-89ad093a07f4@daynix.com>
+ <20240214015322-mutt-send-email-mst@kernel.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240214015322-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,51 +112,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-02-13 at 09:54 -1000, Richard Henderson wrote:
-> On 1/29/24 05:26, Ilya Leoshkevich wrote:
-> > On Tue, Jan 02, 2024 at 12:57:57PM +1100, Richard Henderson wrote:
-> > > Work much harder to get alignment and mapping beyond the end
-> > > of the file correct.=C2=A0 Both of which are excercised by our
-> > > test-mmap for alpha (8k pages) on any 4k page host.
-> > >=20
-> > > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > > ---
-> > > =C2=A0 linux-user/mmap.c | 156 +++++++++++++++++++++++++++++++++++++-=
--
-> > > -------
-> > > =C2=A0 1 file changed, 125 insertions(+), 31 deletions(-)
-> >=20
-> > [...]
-> >=20
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (fileend_adj) {
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v=
-oid *t =3D mmap(p, len - fileend_adj, host_prot,
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 (flags & ~MAP_FIXED_NOREPLACE) |
-> > > MAP_FIXED,
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 fd, offset);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 a=
-ssert(t !=3D MAP_FAILED);
-> >=20
-> > Is it possible to recover here? Of course, we are remapping the
-> > memory
-> > we've mapped a few lines earlier, but asserting the syscall result
-> > looks a bit odd.
-> >=20
->=20
-> Can you think of a failure mode?=C2=A0 I couldn't.
-> That's why I added the assert.
->=20
-> I suppose there's the always present threat of running out of vmas...
+On 2024/02/14 15:53, Michael S. Tsirkin wrote:
+> On Wed, Feb 14, 2024 at 02:13:46PM +0900, Akihiko Odaki wrote:
+>> I couldn't find such a behavior specified.
+> 
+> Is it fixing a bug or just removing unnecessary code?
+> Is this guest visible at all?
 
-Right, and this should be easy to trigger by using ulimit -v.
+My intention is just to remove unnecessary code, but it is 
+guest-visible. The original behavior causes a problem and it should be 
+considered as a bug fix if a guest expects VFs can be restored by 
+setting VF Enable after clearing it, but I don't know such an example.
 
->=20
->=20
-> r~
->=20
-
+> 
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   hw/pci/pcie_sriov.c | 1 -
+>>   1 file changed, 1 deletion(-)
+>>
+>> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+>> index 9d668b8d6c17..410bc090fc58 100644
+>> --- a/hw/pci/pcie_sriov.c
+>> +++ b/hw/pci/pcie_sriov.c
+>> @@ -209,7 +209,6 @@ static void unregister_vfs(PCIDevice *dev)
+>>           pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+>>       }
+>>       dev->exp.sriov_pf.num_vfs = 0;
+>> -    pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
+>>   }
+>>   
+>>   void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+>>
+>> -- 
+>> 2.43.0
+> 
 
