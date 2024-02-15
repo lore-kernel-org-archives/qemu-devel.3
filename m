@@ -4,85 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24095C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 15:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2876AC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 15:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1radDW-0003DG-EJ; Thu, 15 Feb 2024 10:00:03 -0500
+	id 1radFI-00043e-If; Thu, 15 Feb 2024 10:01:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1radDV-0003CR-E6
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:00:01 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1radDR-0001Ep-RR
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:00:01 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41205e19660so6929245e9.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:59:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708009196; x=1708613996; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Scw7mWZwOesiC9kjAItUYQqno2Y53ika4VsIu9enHpk=;
- b=sTLn+1WeFZ/K/cFAFZwmFjbWo7TacSe5ZWjI7J7lv55uXr2T5MZxInaaQoDDqNZ4+3
- Hg5C3tTLtCTCScugUad+nF7IPjm3o0+FyOgmMZaU6ccgJMCiF1QpPppevBkK23BCtaYS
- 2Z9gApOruVpVvWNLkPLIxrbHyQSIz4k4Ep/uwvMmzWA5jqGZ2fyqizv+2f+wrzcopRFh
- k4xSMa/OFnJ+IyUOk8Abinup0VQTZvU1FtKeK8R6K9Ris4hRYbD316SmsnXgf/zxr2Qc
- LqZtGWOR3CgUiqoGJXOBrW0Sp+H43tPdf/iowGrGDTM2SuQ4KUB/CyjPg8OCxdioGQGm
- 8cBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708009196; x=1708613996;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Scw7mWZwOesiC9kjAItUYQqno2Y53ika4VsIu9enHpk=;
- b=RYYbK5XveaAd36QtbB0yGL39P3fq2qtqrOv4aDEGbjdlE4ZQGyeXeVQgtDeNqjf7Y0
- K70dcDh7uHhqe41wy28v0SP5XNQMFsXJdbBfGqftfuJjsHH3GIAVj+c5gH5K/eTU/YSq
- vIaxvUU617e0rtk/DsI2TxB3Vkk3CCvqJqm0y/FURwC/6xyW6S9AHfHt+/j/7YT24d0G
- GP27kmqfc4qqxIZ8mgvQp3w1zVRsqYniu1zcYat5kXc300CblJAND/rR2Elmy5ugbI//
- 6jkm3+0BIShTdFpbkImz9va1iLIRyNbaopMH0MTDZCqaavur5Cabrcf0kDxO+cj5YOuG
- gBMg==
-X-Gm-Message-State: AOJu0YwZMocEL3d9CRSQUw+gRnKCeJXEIt3lKfk1nE407qU5wu2AnI1e
- 6F5++To528eCBqdwJxQ4sH4F8Au9BPjs2RM4KHvTW+5eEKiUjKzdrKNwe2hxHxV5vu5SnxB//wD
- /3U4=
-X-Google-Smtp-Source: AGHT+IFoQjn9MOharayAQZLJaW5gKWNow6jGtGu9nuegCBrS48/wa1dre4Q9Bo7itD8U3wC5uyO0BQ==
-X-Received: by 2002:a05:600c:4f4e:b0:412:943:9dca with SMTP id
- m14-20020a05600c4f4e00b0041209439dcamr1766617wmq.29.1708009195785; 
- Thu, 15 Feb 2024 06:59:55 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.193.50])
- by smtp.gmail.com with ESMTPSA id
- hi11-20020a05600c534b00b00410dd253008sm5274074wmb.42.2024.02.15.06.59.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 06:59:55 -0800 (PST)
-Message-ID: <6b3deedb-2a9d-4ed1-b8a6-5bb43b77b6ff@linaro.org>
-Date: Thu, 15 Feb 2024 15:59:53 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1radFF-00042t-6P
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:01:49 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1radF3-0001mv-ON
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:01:40 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TbJ7t5NSHz6J9fm;
+ Thu, 15 Feb 2024 22:57:30 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5E5D31416EA;
+ Thu, 15 Feb 2024 23:01:33 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.247.231) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 15 Feb 2024 15:01:32 +0000
+To: <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, Gregory
+ Price <gregory.price@memverge.com>, =?UTF-8?q?Alex=20Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Sajjan Rao <sajjanr@gmail.com>, Dimitrios Palyvos
+ <dimitrios.palyvos@zptcorp.com>, <richard.henderson@linaro.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+CC: <linux-cxl@vger.kernel.org>
+Subject: [PATCH 0/3 qemu] tcg/i386: Page tables in MMIO memory fixes (CXL)
+Date: Thu, 15 Feb 2024 15:01:30 +0000
+Message-ID: <20240215150133.2088-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/sparc/leon3: Minor cleanups
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
- Fabien Chouteau <chouteau@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240130113102.6732-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240130113102.6732-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.231]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,17 +66,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/1/24 12:31, Philippe Mathieu-Daudé wrote:
-> Minor cleanups noticed while reviewing Clément series:
-> https://lore.kernel.org/qemu-devel/20240116130213.172358-1-chigot@adacore.com/
-> 
-> Philippe Mathieu-Daudé (2):
->    target/sparc: Provide hint about CPUSPARCState::irq_manager member
->    hw/sparc/leon3: Remove duplicated code
+CXL memory is interleaved at granularities as fine as 64 bytes.
+To emulate this each read and write access undergoes address translation
+similar to that used in physical hardware. This is done using
+cfmws_ops for a memory region per CXL Fixed Memory Window (the PA address
+range in the host that is interleaved across host bridges and beyond.
+The OS programs interleaved decoders in the CXL Root Bridges, switch
+upstream ports and the corresponding decoders CXL type 3 devices who
+have to know the Host PA to Device PA mappings).
 
-Series queued.
+Unfortunately this CXL memory may be used as normal memory and anything
+that can end up in RAM can be placed within it. As Linux has become
+more capable of handling this memory we've started to get quite a few
+bug reports for the QEMU support. However terrible the performance is
+people seem to like running actual software stacks on it :(
+
+This doesn't work for KVM - so for now CXL emulation remains TCG only.
+(unless you are very careful on how it is used!)  I plan to add some
+safety guards at a later date to make it slightly harder for people
+to shoot themselves in the foot + a more limited set of CXL functionality
+that is safe (no interleaving!)
+
+Previously we had some issues with TCG reading instructions from CXL
+memory but that is now all working. This time the issues are around
+the Page Tables being in the CXL memory + DMA buffers being placed in it.
+
+The test setup I've been using is simple 2 way interleave via 2 root
+ports below a single CXL root complex.  After configuration in Linux
+these are mapped to their own Numa Node and
+numactl --membind=1 ls
+followed by powering down the machine is sufficient to hit all the bugs
+addressed in this series.
+
+Thanks to Gregory, Peter and Alex for their help figuring this lot
+out. Note that I've included one patch from Peter without a SoB
+because so far it has only be posted in the discussion thread.
+
+Whilst thread started back at:
+https://lore.kernel.org/all/CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com/
+The QEMU part is from.
+https://lore.kernel.org/all/20240201130438.00001384@Huawei.com/
+
+arm64 equivalent to follow.
+
+Gregory Price (1):
+  target/i386: Enable page walking from MMIO memory
+
+Jonathan Cameron (1):
+  tcg: Avoid double lock if page tables happen to be in mmio memory.
+
+Peter Maydell (1):
+  accel/tcg: Set can_do_io at at start of lookup_tb_ptr helper
+
+ accel/tcg/cpu-exec.c                 |  8 ++++
+ accel/tcg/cputlb.c                   |  9 ++++-
+ target/i386/tcg/sysemu/excp_helper.c | 57 +++++++++++++++-------------
+ 3 files changed, 45 insertions(+), 29 deletions(-)
+
+-- 
+2.39.2
 
 
