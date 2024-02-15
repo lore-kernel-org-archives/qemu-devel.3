@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F0FC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D6CCC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:00:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag0v-00043n-3w; Thu, 15 Feb 2024 12:59:13 -0500
+	id 1rag0h-000310-T2; Thu, 15 Feb 2024 12:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0t-0003wn-AJ
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:11 -0500
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0f-0002uu-6y
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:57 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0q-0001gv-Df
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:11 -0500
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d109e7bed2so15233951fa.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:59:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0d-0001dy-BC
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:56 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41223e0777dso5683345e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019946; x=1708624746; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708019933; x=1708624733; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yChT06qqS/oR/UqktZBd9s/sYDht+XeML6XM2cVxcUo=;
- b=s0LTadxWgdGGcm4OR5WqSXjeZB3fvYXLUVhq9E8nnUdLPqmvAGEAWLR8S3+GY+cju1
- Jub++tGYY6pTMCGPn2WXNAdSH3Ve5YAvEM2Z/aQ2GlZTJcmw4oHL0cKn6LWcbHIXZoWn
- 8eUNA9tLCqrcLML/lOziAxohLVxnJKKXMsdN3lvRDqca0oipj/hdK/dY/JKq1ay4slXk
- 2aZnCtGV0uhvOTwENeaTOLK8wCsO9hdQh6dYunXXno54fvSpRET476MhH14qkD8eCJie
- CETFALxFEUdjInuzbrWniL5iAPPMqA9X2dHOE75p4QA4mPXfjVa2CuktBDEFrf0dmDXe
- 0iuQ==
+ bh=hD8QAEO8EbU5eNO1CRG3i0Yg3oXr277vzzBLMpE0y8U=;
+ b=scyoVn6Ham4tZol/QCpB1xrrnDs/nLkG3EBS7sOoEp9dhb9kSY1TS6/EDoiNAiaW4h
+ bwsKDZdQKMF1ywawiHVSU33SGBuHoVu/QVeY+EnMleVk34UtXyR7aoeczBV7SCSewqQQ
+ 6vetTpj5AQfMUr+lGrWXJw3VRfUceIn8RGgVgIOCu2sDKoRU1fCZSbCxTIz9PPSo/ba6
+ VT5OM2CKTfwGU+cQ0JucKwzig29qOV7H1Y+ZxD7QUvS7Q+b7lHjQUa957zklMIGsE20m
+ NE08a1aKeG7XsnfJGmabR0raWHaYXaxXdJt7CPJDyYdcitxXYGlgR4ZoRASJUcJNfAbS
+ Hc2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019946; x=1708624746;
+ d=1e100.net; s=20230601; t=1708019933; x=1708624733;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yChT06qqS/oR/UqktZBd9s/sYDht+XeML6XM2cVxcUo=;
- b=Se5YTZts8eE9J7fpH3quveXNJw0zlCLJc001BY+1I5dRg+HaLl3U0xQ/Cq+adfnm4+
- 5N7/PFWNwK0EzSd7OzocdFD9HAi2KMspGsLunhKdiZEGzxJfB9wj1VJSALI7MSuEGXKJ
- bfx8fodBXSvz7gZMF3L2nKfKxT5cwf/maC8XVATfT+5PZtIAHYWPiPwHhfrwrmf8EDKB
- N7zqRtIbOzt9yv4C8VTGMb5swFKjRveoaKxtA3p3T0UVWKYU1IxC501VDyQieWuWTFdr
- ROPuQoelR0co+SAHqnxaJ4lLZ533f1EPfQAzY5448dcQNdnB/kO8PvjiwIAV6dHJreLV
- VXUw==
-X-Gm-Message-State: AOJu0YxjUreAaGYjwY2jrOMO9NzPqdiX5ord324kG46SoCIfOFG7p+Ai
- /oie6D5pZtCvEdeKeZJzi8DudBxKgyZ++3+dSPfxFnCqq9pkFFTp87ZgecbgQLcqOmTparXWoMp
- szBA=
-X-Google-Smtp-Source: AGHT+IGwBsc4haTLh6SoDLG3E8Mtd9pOKaLzwuLITPAfFRlaX4T6CgmnZMnyCIp23LF/R4aXEMCfkQ==
-X-Received: by 2002:a2e:7a12:0:b0:2d0:b003:95b7 with SMTP id
- v18-20020a2e7a12000000b002d0b00395b7mr1959454ljc.13.1708019946401; 
- Thu, 15 Feb 2024 09:59:06 -0800 (PST)
+ bh=hD8QAEO8EbU5eNO1CRG3i0Yg3oXr277vzzBLMpE0y8U=;
+ b=K7ywZj2YgT+Qcs6Bj36bqFS2x4HGPcad8GuRRgv+HKPbaYRM6uj1DTMgI005k2FBvw
+ awwicLKW1nVlAsJml1nB6ijs4zt47xS+jQxUueAn0SMcI2Q3qCqPNN+4Na4vMrWL2ZwZ
+ J0KRCsU/j0GcRrGhYrs1vWsFu8PGAPhY+iscJ75MhWUdrdto1bp4j9v7dyd9EEVufGXd
+ R6ZwVXxr1NjEAGPnv+uq/FQz61S9XVxPayZqq+AR9OjvERjFwUGCaGaMZt6F4JWiHB7T
+ +QwizROZGnAMATUN6SNeo3f/yJZLqEzFWQdLbNyNxSPmv4wW+IHHdOocW7ZJx8sB0cbt
+ tj0w==
+X-Gm-Message-State: AOJu0YyRXpCRk94wi96ijAufPy/wXPANNpfk6PPDU6jHUy4uFodCP5PM
+ ypumDp33VRHnHKY0LDPyw6OdqjZRYzLHcXGx1liTOiimUsFkPNYbmGfnCddsemU++aDxzB643Xc
+ BfN4=
+X-Google-Smtp-Source: AGHT+IECSKHevyuxPS2fWdwcWQbw+hobfnQOM4Pz0SZC5xXj2UmIH7I1zf1iIFPf4Kph90jz4Xev/w==
+X-Received: by 2002:a05:600c:46cd:b0:410:cf60:d857 with SMTP id
+ q13-20020a05600c46cd00b00410cf60d857mr1896947wmo.18.1708019933682; 
+ Thu, 15 Feb 2024 09:58:53 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- m22-20020a7bcb96000000b0040fafd84095sm5636762wmi.41.2024.02.15.09.59.04
+ by7-20020a056000098700b0033b684d6d5csm2601836wrb.20.2024.02.15.09.58.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 09:59:05 -0800 (PST)
+ Thu, 15 Feb 2024 09:58:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Huacai Chen <chenhuacai@kernel.org>
-Subject: [PULL 11/56] target/mips: Remove CPUMIPSState::CP0_SAAR[2] field
-Date: Thu, 15 Feb 2024 18:57:05 +0100
-Message-ID: <20240215175752.82828-12-philmd@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PULL 09/56] hw/misc/mips_itu: Remove MIPSITUState::saar field
+Date: Thu, 15 Feb 2024 18:57:03 +0100
+Message-ID: <20240215175752.82828-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +96,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the unused CP0_SAAR[2] registers.
+This field is not set. Remove it along with the dead
+code it was guarding.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240209090513.9401-8-philmd@linaro.org>
+Message-Id: <20240209090513.9401-7-philmd@linaro.org>
 ---
- target/mips/cpu.h            | 1 -
- target/mips/sysemu/machine.c | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ include/hw/misc/mips_itu.h |  3 ---
+ hw/misc/mips_itu.c         | 22 +++-------------------
+ 2 files changed, 3 insertions(+), 22 deletions(-)
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index ef1d9f279c..5e97b5b422 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -749,7 +749,6 @@ typedef struct CPUArchState {
-     int32_t CP0_Count;
-     uint32_t CP0_SAARI;
- #define CP0SAARI_TARGET 0    /*  5..0  */
--    uint64_t CP0_SAAR[2];
- #define CP0SAAR_BASE    12   /* 43..12 */
- #define CP0SAAR_SIZE    1    /*  5..1  */
- #define CP0SAAR_EN      0
-diff --git a/target/mips/sysemu/machine.c b/target/mips/sysemu/machine.c
-index 218f4c3a67..6d1299a89e 100644
---- a/target/mips/sysemu/machine.c
-+++ b/target/mips/sysemu/machine.c
-@@ -282,7 +282,7 @@ const VMStateDescription vmstate_mips_cpu = {
-         VMSTATE_UINT32(env.CP0_BadInstrX, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Count, MIPSCPU),
-         VMSTATE_UINT32(env.CP0_SAARI, MIPSCPU),
--        VMSTATE_UINT64_ARRAY(env.CP0_SAAR, MIPSCPU, 2),
-+        VMSTATE_UNUSED(2 * sizeof(uint64_t)), /* was CP0_SAAR[2] */
-         VMSTATE_UINTTL(env.CP0_EntryHi, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Compare, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Status, MIPSCPU),
+diff --git a/include/hw/misc/mips_itu.h b/include/hw/misc/mips_itu.h
+index de7400c1fe..27c9a1090d 100644
+--- a/include/hw/misc/mips_itu.h
++++ b/include/hw/misc/mips_itu.h
+@@ -70,9 +70,6 @@ struct MIPSITUState {
+ 
+     /* ITU Control Register */
+     uint64_t icr0;
+-
+-    /* SAAR */
+-    uint64_t *saar;
+ };
+ 
+ /* Get ITC Configuration Tag memory region. */
+diff --git a/hw/misc/mips_itu.c b/hw/misc/mips_itu.c
+index 9705efeafe..f8acfb3ee2 100644
+--- a/hw/misc/mips_itu.c
++++ b/hw/misc/mips_itu.c
+@@ -94,12 +94,6 @@ static void itc_reconfigure(MIPSITUState *tag)
+     uint64_t size = (1 * KiB) + (am[1] & ITC_AM1_ADDR_MASK_MASK);
+     bool is_enabled = (am[0] & ITC_AM0_EN_MASK) != 0;
+ 
+-    if (tag->saar) {
+-        address = (tag->saar[0] & 0xFFFFFFFFE000ULL) << 4;
+-        size = 1ULL << ((tag->saar[0] >> 1) & 0x1f);
+-        is_enabled = tag->saar[0] & 1;
+-    }
+-
+     memory_region_transaction_begin();
+     if (!(size & (size - 1))) {
+         memory_region_set_size(mr, size);
+@@ -158,12 +152,7 @@ static inline ITCView get_itc_view(hwaddr addr)
+ static inline int get_cell_stride_shift(const MIPSITUState *s)
+ {
+     /* Minimum interval (for EntryGain = 0) is 128 B */
+-    if (s->saar) {
+-        return 7 + ((s->icr0 >> ITC_ICR0_BLK_GRAIN) &
+-                    ITC_ICR0_BLK_GRAIN_MASK);
+-    } else {
+-        return 7 + (s->ITCAddressMap[1] & ITC_AM1_ENTRY_GRAIN_MASK);
+-    }
++    return 7 + (s->ITCAddressMap[1] & ITC_AM1_ENTRY_GRAIN_MASK);
+ }
+ 
+ static inline ITCStorageCell *get_cell(MIPSITUState *s,
+@@ -535,15 +524,10 @@ static void mips_itu_reset(DeviceState *dev)
+ {
+     MIPSITUState *s = MIPS_ITU(dev);
+ 
+-    if (s->saar) {
+-        s->saar[0] = 0x11 << 1;
+-        s->icr0 = get_num_cells(s) << ITC_ICR0_CELL_NUM;
+-    } else {
+-        s->ITCAddressMap[0] = 0;
+-        s->ITCAddressMap[1] =
++    s->ITCAddressMap[0] = 0;
++    s->ITCAddressMap[1] =
+             ((ITC_STORAGE_ADDRSPACE_SZ - 1) & ITC_AM1_ADDR_MASK_MASK) |
+             (get_num_cells(s) << ITC_AM1_NUMENTRIES_OFS);
+-    }
+     itc_reconfigure(s);
+ 
+     itc_reset_cells(s);
 -- 
 2.41.0
 
