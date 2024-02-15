@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71698C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27B6C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag1a-00064r-EN; Thu, 15 Feb 2024 12:59:55 -0500
+	id 1rag0V-0002Nx-VR; Thu, 15 Feb 2024 12:58:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1P-0004tx-VB
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:44 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0T-0002Gh-IW
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:45 -0500
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1N-0001ou-NG
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:43 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d0e5212559so14438451fa.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:59:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0R-0001aU-GZ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:45 -0500
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d1094b549cso16234121fa.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019979; x=1708624779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708019921; x=1708624721; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+yletPVGxCa3h+9fKZJUuwx/+JgKNE8xagr9A+vDkAQ=;
- b=nXcj+rQMG6vw+E98opsk+Hg+m0ph7Y5vJ78Z88k50ciCUvb3ckWc8bgYIQYGeInMg1
- 8sJgMYPM+1I2mTviW0A19IRVSXnGynd8CmN7pWVmUlaINhyGkJz7GnMjERNCZfeePLkb
- iA/6BpqjdJ8o/LEQaPnjW+/LNKRNy3n+Ud9jFWAREWKmfCmakaquvsFWvM9zYzQzSyxu
- ka6wyQtn4BXFB3D5UPtPAm2WSxRJi2PycXhJMJV8nGffX4DYsFrrHeb6ceH+X9dvgdJI
- ikY4E6f3zwDiQuHaFppf8PZsc9No30OUelFpltwPicGzRoSgIwUSel5z/76UycGxjpP7
- OrIg==
+ bh=g8Q7JMG8zjBMQCOseTC/pxZZVdCkiwcgzQoWO2YHIuA=;
+ b=iLO5hOgoUCOpbTwFk1j/T5TF48CUbqBz1hEGjSNTN1CAQi0WbqRsOiL98u+4nZq2EA
+ EpFeZH7ZJ1tnI7wgk4J/DmPGI5bHzd/yWJQLZc/ED6MYuaMK6tHg2stVZDumIYF4Lpb0
+ zZfdXm2oadS6mEBHuQyjuAAOKaOI0e6ijcCyYvPfi7auhRHfndxwiBt41ZqVB5sXODGP
+ Yrw0iT3qH7PY3Ufy4Lqv5407Dl4wgAc4ed9UxUjm0dH5PWuiumB0Kkci7W9vth9SvbpC
+ syNZVEcaJfLvehkZdsqUxC7SLG+JmOhwPD45m6VoGlEBhe7fXMXJN7hIu+og8gglDWKK
+ ChRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019979; x=1708624779;
+ d=1e100.net; s=20230601; t=1708019921; x=1708624721;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+yletPVGxCa3h+9fKZJUuwx/+JgKNE8xagr9A+vDkAQ=;
- b=uUYj2rIUSw2YHI39EN5PuTd6LhVasdPknQRE8pU/4Gja0ngbsWe0EdLABUobKSnQtW
- TDYo5WTId1DdLjybqHzL/Gscr/ZowZBSSr6Hvg7F4XNja5dbK0VawUAZWd0NWoAhr9M4
- F2JF+qRj5ILmaq4n4g0TuM954VwQnNFxef6UG3OJFgF6BJnOYhGH47HRdkp/tNLHxBs9
- Er79WCaoYmGQ40eF+oneuP80wPCgbcHjucJDhumI+vLQLwbl/Te0RW5pUbZ3e6kzkrpK
- DH+5Uos6R/YiJEEt0x0f5fJqzj/fBDely8oUwHWkSmwRS9hxprb2KGuxw+ytoRoXoX2d
- 3lkw==
-X-Gm-Message-State: AOJu0YyRUQTppSlwLxR1Wm9Y2d5wxU+NxAPNvUXesdqzCOZDPXUJvwGL
- Wr3DuMKIZNKqb/ZS6ZDJDpwmBf3vk20jsY/xCd7C6K9NeYusfrcynGgqdQ9AMHsKasYRMgLg5/U
- NIDM=
-X-Google-Smtp-Source: AGHT+IF66rV3aU3g4fgzulsr7GiHI4mOnV3F/89y5fF2Iq1ZQG9pE1UIZefq13qOMjYnmsnK1ivRBw==
-X-Received: by 2002:a2e:7e0e:0:b0:2d0:9902:16 with SMTP id
- z14-20020a2e7e0e000000b002d099020016mr1744614ljc.17.1708019979263; 
- Thu, 15 Feb 2024 09:59:39 -0800 (PST)
+ bh=g8Q7JMG8zjBMQCOseTC/pxZZVdCkiwcgzQoWO2YHIuA=;
+ b=PbZSFFFe95FgbQfRhU+YMeiUG4JXWxsTLboUApjgMJ2dWujHlB+Z5wws5YmwizNvzk
+ XKiXri+rMr6ovpbH1OOhRKn1j5EahV4NjpdVG8hvuK9jYIWwK8QqcihscCrbOIWWX2dc
+ 91xvpqHpjRDTHbo/Y2jyTfuWrCyo6XZdXAyaih6akhxJcMlPKQZKdJ5SXEzJV2Fn5Rvy
+ 1zIOPKXGxBcCjo3fYUpZUXb1ir/J8mekSwIIUzZKROb5Z7YFs7LlGHl5mKo9VMWk3Mrl
+ lAjqhmewVyhxhzKFBeUa8JNYyQtmv6900zWxKThYMUVl5b8v05N5XguMb+NWfyPRXJtU
+ laBQ==
+X-Gm-Message-State: AOJu0YyF56RdiFm6aJsPj+qI1K9Bct6u8R7+fg0mDHBgSB0kCB0mr73W
+ o79hISJX92KKqwoD1uwPY2wGgwITcrgOioO3TRPSYpuy1KnC6hHRrcqh5JFzKEGlC8ovbo6g9uS
+ o2UY=
+X-Google-Smtp-Source: AGHT+IE3r1xqVuIZgf9E8S42MgxdjYuv9KqdxDYlvvbwJC5je2S/DZixu6yWDGi+pnO8gKs2YFSHtw==
+X-Received: by 2002:a2e:9dc5:0:b0:2d1:788:60ff with SMTP id
+ x5-20020a2e9dc5000000b002d1078860ffmr1968176ljj.16.1708019921454; 
+ Thu, 15 Feb 2024 09:58:41 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- b20-20020a05600c4e1400b00411a595d56bsm2868021wmq.14.2024.02.15.09.59.37
+ j12-20020a05600c190c00b00410bca333b7sm5913132wmq.27.2024.02.15.09.58.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 09:59:38 -0800 (PST)
+ Thu, 15 Feb 2024 09:58:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 16/56] hw/mips/Kconfig: Remove ISA dependencies from MIPSsim
- board
-Date: Thu, 15 Feb 2024 18:57:10 +0100
-Message-ID: <20240215175752.82828-17-philmd@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PULL 07/56] target/mips: Remove CPUMIPSState::saarp field
+Date: Thu, 15 Feb 2024 18:57:01 +0100
+Message-ID: <20240215175752.82828-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,61 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+This field is never set, so remove the unreachable code.
 
-The board doesn't have a working ISA bus, only some I/O space.
-Selecting ISA_BUS and including hw/isa/isa.h is not necessary.
-
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <20230109204124.102592-3-shentey@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240213155005.109954-4-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240209090513.9401-5-philmd@linaro.org>
 ---
- hw/mips/mipssim.c | 7 +++++--
- hw/mips/Kconfig   | 3 +--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ target/mips/cpu.h  | 1 -
+ hw/misc/mips_itu.c | 6 ------
+ 2 files changed, 7 deletions(-)
 
-diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
-index 16af31648e..a12427b6c8 100644
---- a/hw/mips/mipssim.c
-+++ b/hw/mips/mipssim.c
-@@ -31,7 +31,6 @@
- #include "hw/clock.h"
- #include "hw/mips/mips.h"
- #include "hw/char/serial.h"
--#include "hw/isa/isa.h"
- #include "net/net.h"
- #include "sysemu/sysemu.h"
- #include "hw/boards.h"
-@@ -206,7 +205,11 @@ mips_mipssim_init(MachineState *machine)
-     cpu_mips_irq_init_cpu(cpu);
-     cpu_mips_clock_init(cpu);
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index d54e9a4a1c..ef1d9f279c 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1174,7 +1174,6 @@ typedef struct CPUArchState {
+     uint32_t CP0_Status_rw_bitmask; /* Read/write bits in CP0_Status */
+     uint32_t CP0_TCStatus_rw_bitmask; /* Read/write bits in CP0_TCStatus */
+     uint64_t insn_flags; /* Supported instruction set */
+-    int saarp;
  
--    /* Register 64 KB of ISA IO space at 0x1fd00000. */
-+    /*
-+     * Register 64 KB of ISA IO space at 0x1fd00000.  But without interrupts
-+     * (except for the hardcoded serial port interrupt) -device cannot work,
-+     * so do not expose the ISA bus to the user.
-+     */
-     memory_region_init_alias(isa, NULL, "isa_mmio",
-                              get_system_io(), 0, 0x00010000);
-     memory_region_add_subregion(get_system_memory(), 0x1fd00000, isa);
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index ab61af209a..afcfb2b8ec 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -6,8 +6,7 @@ config MALTA
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+diff --git a/hw/misc/mips_itu.c b/hw/misc/mips_itu.c
+index db1220f8e0..d259a88d22 100644
+--- a/hw/misc/mips_itu.c
++++ b/hw/misc/mips_itu.c
+@@ -516,7 +516,6 @@ static void mips_itu_init(Object *obj)
+ static void mips_itu_realize(DeviceState *dev, Error **errp)
+ {
+     MIPSITUState *s = MIPS_ITU(dev);
+-    CPUMIPSState *env;
  
- config MIPSSIM
-     bool
--    select ISA_BUS
--    select SERIAL_ISA
-+    select SERIAL
-     select MIPSNET
+     if (s->num_fifo > ITC_FIFO_NUM_MAX) {
+         error_setg(errp, "Exceed maximum number of FIFO cells: %d",
+@@ -533,11 +532,6 @@ static void mips_itu_realize(DeviceState *dev, Error **errp)
+         return;
+     }
  
- config JAZZ
+-    env = &MIPS_CPU(s->cpu0)->env;
+-    if (env->saarp) {
+-        s->saar = env->CP0_SAAR;
+-    }
+-
+     s->cell = g_new(ITCStorageCell, get_num_cells(s));
+ }
+ 
 -- 
 2.41.0
 
