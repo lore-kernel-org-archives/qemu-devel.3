@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54792C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABEBC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafey-0000n6-Ty; Thu, 15 Feb 2024 12:36:32 -0500
+	id 1rafeT-000853-SU; Thu, 15 Feb 2024 12:36:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeM-0007zE-GL
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:55 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1rafeL-0007yu-74
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:54 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeH-0003yN-9B
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:54 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33934567777so663778f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:48 -0800 (PST)
+ id 1rafeG-0003xe-M9
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:51 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3394b892691so815028f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018547; x=1708623347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018546; x=1708623346; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zrPXjJVkURtLVPskkolIG/BC8kmZaryoEfEKDL7oHWs=;
- b=hAb6csiC/YNfrMelLXU0KsKIYvWu4YWrhyZaDu7IlaHQk3jyVGCrIqobkIGSScuoID
- 4Xaiac5V5LloW32QdWsRAuxOLOeF9sDb6lDNFN7gVoMCovNuYmkkYRnbB1YBacFjf334
- BJmWIIepmdPj+6Z1n0PabByehB3XTWY8ltO/hdDwMHymLnopWCs9ONNuhTSmAq+GkONd
- Qp7Oac0q2x1sS+4J5FBTId6HZxpfWxY/H1ctU8lKZDLX9IZfkTRhFGHxbouos4KBz8XL
- DQcrwQKux2B5MEODQyNtkiW9VKX3Lagl4q4CyLVincrli2u6jXey3NeSq3/oywkm6HKq
- qWZA==
+ :reply-to; bh=YREWR7Kx96bTWJZLqvLF8xpReMnA8ENSRS/qSjx7oF4=;
+ b=yGXncg1EHlxMg3R5p0LyWlvygWkKySa83tYsK1dSiydEevJFhYC/EOMmgZIC63CXOg
+ gBzwFK5qIIA3Ao1Tjp3qKECa8yBkWGpIvQMo1nHxW+xWZjkVgjPlZgeMTp5+WU9I4i0D
+ D0/wQJvsS7VGELSgR4xcj5/lNsFz6XkzSrqoMZ9aWG2v+FUkdOhjVsUFg/aOBuGjMCOk
+ 3s8O+uva3EZYN3q6xKauO0L/fiU67xKBI8b41xVcJKMN2k0NcQPU7yC95T8mbqAiBCqP
+ ePKa/Ym1w4zvnHkNII1jDrWq4A17L8pswKupK+5tm5E5HZtop/SKws1dci5JY4NO/2/P
+ 3tZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018547; x=1708623347;
+ d=1e100.net; s=20230601; t=1708018546; x=1708623346;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zrPXjJVkURtLVPskkolIG/BC8kmZaryoEfEKDL7oHWs=;
- b=eCkYXymX6v+ii2yLkZ9B0j3vOETZZhsSEhgQbAzm1AUN2yQkD6CGrWTwxUp5Ct8TD+
- yFiV+j9CyAmP44tJFCbDA3Gw0aRgQNJe282HmW6pXMPPi9UK8RufVyrHanoTEtYuGLY7
- +qhDZr47y2mbHT5JjBHAZBNWu5DIKS4AC3u9/XVQpSqLeKgxgB2tgKtZ43zaQ+hpcNPD
- h7OIkwBbfeXTJYOrNHc3xfXxdk4Yg22hzTZKsuFpKmCNyMJQJj3FmMjjAgbo0xr/vV5k
- ZkJZDvODIwKgRaJejI8jLKbeTAIJo+WWOwQd65ioiKQsoAkivcDAQ73DlFhZnRwb7gDH
- LwbQ==
-X-Gm-Message-State: AOJu0YyWA4vRTMbUbspjUmYiXxFh9dyMQttdeMcMZyPHvcClHO+3OIZS
- EJLnfsswuvV8ksneG8BJpwuzjSLkwU6Uh6Zike1S64gbT7dZjhXvnC6FGPCk1LFeE8LWdfEobzI
- J
-X-Google-Smtp-Source: AGHT+IH+4z7KfvA4+Rp8ovdIGsmL4BTmfh4RI5M+vOJUnqPXuNm1QWwIBn3Wr9AFL96uLWgUL1LHwg==
-X-Received: by 2002:a5d:4fc1:0:b0:33b:d225:3640 with SMTP id
- h1-20020a5d4fc1000000b0033bd2253640mr1929210wrw.59.1708018547825; 
- Thu, 15 Feb 2024 09:35:47 -0800 (PST)
+ bh=YREWR7Kx96bTWJZLqvLF8xpReMnA8ENSRS/qSjx7oF4=;
+ b=d/0XyRIATKR3ePzbexhgyTZXwUvFLYcR6xXFkAWphFOV/LSLQ6BTJEx9CAV2ZtPT0F
+ 6cnQNMhUT/ujRXqTbU1B0rEiGsRZ0eQMQ+CA14L46/D9aVHtn2FbBAalsIq5UCusR7gR
+ 6PoMuXZ1bCf9SgRBeWM3x8NTbGyz6BRP0zC4p5V5ZtKntKmIx8LfJOfv0ECkv+K4Elnj
+ cUv4KQNsm6cmfjUkseqQ4Ino2svLNmnPHIsXF9BM8WI5qFKimJO/eiQ7NnfCZ/WE/QSx
+ LJqZunxuupRKHx2fqfCEeLwxHauBCJxZgSsMQa5LNPZBtJGWy1GthGZFnhIjzLzDmtqF
+ HFyA==
+X-Gm-Message-State: AOJu0YwzCLOOsPyxenspWU3XmkhGez5DYgNCOuUR3jwObQnuG9KI4/mS
+ XQrmD34Hebqv2FbR3vFKq+VJbUYIyTlmjC9kuyRGSSl5aMbOwMsjWkDs0hv1iDM/Aff4krTBiLC
+ C
+X-Google-Smtp-Source: AGHT+IFUZrnyzY9XSs1uXdIyQnXso/Q1lQxqG4vlozVj8Ea7aaOPCsr8gAoUaowRM61rfFpsmv0KXw==
+X-Received: by 2002:a05:6000:d82:b0:33d:113a:4336 with SMTP id
+ dv2-20020a0560000d8200b0033d113a4336mr1243352wrb.0.1708018546523; 
+ Thu, 15 Feb 2024 09:35:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.47
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:47 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:46 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/35] hw/arm/stellaris: Convert ADC controller to Resettable
- interface
-Date: Thu, 15 Feb 2024 17:35:22 +0000
-Message-Id: <20240215173538.2430599-20-peter.maydell@linaro.org>
+Subject: [PULL 16/35] target/arm: Don't get MDCR_EL2 in pmu_counter_enabled()
+ before checking ARM_FEATURE_PMU
+Date: Thu, 15 Feb 2024 17:35:19 +0000
+Message-Id: <20240215173538.2430599-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,49 +95,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+It doesn't make sense to read the value of MDCR_EL2 on a non-A-profile
+CPU, and in fact if you try to do it we will assert:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240213155214.13619-2-philmd@linaro.org
+#6  0x00007ffff4b95e96 in __GI___assert_fail
+    (assertion=0x5555565a8c70 "!arm_feature(env, ARM_FEATURE_M)", file=0x5555565a6e5c "../../target/arm/helper.c", line=12600, function=0x5555565a9560 <__PRETTY_FUNCTION__.0> "arm_security_space_below_el3") at ./assert/assert.c:101
+#7  0x0000555555ebf412 in arm_security_space_below_el3 (env=0x555557bc8190) at ../../target/arm/helper.c:12600
+#8  0x0000555555ea6f89 in arm_is_el2_enabled (env=0x555557bc8190) at ../../target/arm/cpu.h:2595
+#9  0x0000555555ea942f in arm_mdcr_el2_eff (env=0x555557bc8190) at ../../target/arm/internals.h:1512
+
+We might call pmu_counter_enabled() on an M-profile CPU (for example
+from the migration pre/post hooks in machine.c); this should always
+return false because these CPUs don't set ARM_FEATURE_PMU.
+
+Avoid the assertion by not calling arm_mdcr_el2_eff() before we
+have done the early return for "PMU not present".
+
+This fixes an assertion failure if you try to do a loadvm or
+savevm for an M-profile board.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2155
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240208153346.970021-1-peter.maydell@linaro.org
 ---
- hw/arm/stellaris.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ target/arm/helper.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 34c5a86ac2e..4fa857970b4 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -773,8 +773,9 @@ static void stellaris_adc_trigger(void *opaque, int irq, int level)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 8c1ff16f0d9..7c531ee9cff 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1187,13 +1187,21 @@ static bool pmu_counter_enabled(CPUARMState *env, uint8_t counter)
+     bool enabled, prohibited = false, filtered;
+     bool secure = arm_is_secure(env);
+     int el = arm_current_el(env);
+-    uint64_t mdcr_el2 = arm_mdcr_el2_eff(env);
+-    uint8_t hpmn = mdcr_el2 & MDCR_HPMN;
++    uint64_t mdcr_el2;
++    uint8_t hpmn;
+ 
++    /*
++     * We might be called for M-profile cores where MDCR_EL2 doesn't
++     * exist and arm_mdcr_el2_eff() will assert, so this early-exit check
++     * must be before we read that value.
++     */
+     if (!arm_feature(env, ARM_FEATURE_PMU)) {
+         return false;
      }
- }
  
--static void stellaris_adc_reset(StellarisADCState *s)
-+static void stellaris_adc_reset_hold(Object *obj)
- {
-+    StellarisADCState *s = STELLARIS_ADC(obj);
-     int n;
- 
-     for (n = 0; n < 4; n++) {
-@@ -946,7 +947,6 @@ static void stellaris_adc_init(Object *obj)
-     memory_region_init_io(&s->iomem, obj, &stellaris_adc_ops, s,
-                           "adc", 0x1000);
-     sysbus_init_mmio(sbd, &s->iomem);
--    stellaris_adc_reset(s);
-     qdev_init_gpio_in(dev, stellaris_adc_trigger, 1);
- }
- 
-@@ -1411,7 +1411,9 @@ static const TypeInfo stellaris_i2c_info = {
- static void stellaris_adc_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-+    rc->phases.hold = stellaris_adc_reset_hold;
-     dc->vmsd = &vmstate_stellaris_adc;
- }
- 
++    mdcr_el2 = arm_mdcr_el2_eff(env);
++    hpmn = mdcr_el2 & MDCR_HPMN;
++
+     if (!arm_feature(env, ARM_FEATURE_EL2) ||
+             (counter < hpmn || counter == 31)) {
+         e = env->cp15.c9_pmcr & PMCRE;
 -- 
 2.34.1
 
