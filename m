@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF656C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 19:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29F5C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 19:31:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rahQ6-0001lG-BS; Thu, 15 Feb 2024 14:29:19 -0500
+	id 1rahRw-0004nf-Cb; Thu, 15 Feb 2024 14:31:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rahQ3-0001kY-Od
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:29:16 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rahRM-0004GZ-Hy
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:30:45 -0500
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rahPj-0004iZ-72
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:29:15 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-296cca9169bso1060323a91.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 11:28:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rahRJ-00059F-H7
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:30:34 -0500
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5d8b519e438so1178055a12.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 11:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1708025332; x=1708630132; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hnoQZWyM3IQrdfNlHpKnjwy/1Zr4Y+mdXFsSbK4jOXc=;
- b=CtdvXNJ4VbnpEP0ovK72hVQ2e6ihvnIHCCvhQ5BFEq3My4WXqYYvmIMyN/PtfFL5uN
- FnRnHw+zOcpYl79z4uQZfjUgNYr9NtndKML7XPMcN1fYvONv8ZvV3lbU7s3MViuy4y0g
- Y4Dx27UFdLgDfzVoD3YV17SKPTT+HqBIONrSxcQN84uRsu7JmAYP6EtA9i/WB1i6kMSo
- ZJFmBWtcieSSuPrrqan932hvPB5YjYekqWsljeGq5+uahqoX5tKKTcMmPVfKondu/A40
- 3gEl1DfRTm8fFGe6GnGlJFP4AYQ3y8HmjOJJd9cD66V22N34YmaOErdweeYBh2/szn5e
- 25Fg==
+ d=linaro.org; s=google; t=1708025432; x=1708630232; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=X3jH2JS8Icb9oqLzaU0hfXRD5zoULe7nghMNl44ps/I=;
+ b=rJYRTFyiV/xj8LE3IOe+wpkR9iX98qYscp0Tcws93qkcwHIOUq2A2FNxx0JRqBDSQH
+ s3z3f71XN0H/YtgapeJkcnAnnzJcNXT3xbe/Eux3KT9+XPNRN3Ede8U7Xjf0pUycW4xS
+ w27Q4gbwlo4oQlg1xM/UwKThlXB6yKi4iDCyLNEJW2VQNJVtw6YoANeQ22HhKpSVmBFv
+ 5dolzc+Y2T1rrlOCTEZ5+xM+scAHD1Dh39KPmSo0vR6ygjdOSwJBwHfKn4WfjLveD/sv
+ cz+9BcnJbAFz3qsGa6LXKV0U9W8D4g290oxqTFhQYeg8r2J8u8cHVBt2RXruLuOlK+jI
+ WSSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708025332; x=1708630132;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hnoQZWyM3IQrdfNlHpKnjwy/1Zr4Y+mdXFsSbK4jOXc=;
- b=Pk2gFk7JAV2loiW7tEbus/0417PihjfkUn+T9JmvQJlmrtp/k9/OlgnjMLKo4++03d
- 7GYVBxpt88Ifv6syj9MKehyKSwtF8hLG2mwPC311pQaFPQm3w9lpdh9kLLFSCPAE4L7F
- psH/3Jy6CWbcKfGSd9kdRoH4efyvI0b/pnAOhp7Tla922DtmRTivPlUoxoVZ7Wu7qGrH
- AgiNusZ0JcbElQa3gfcolDlhBsP2aHGBfdra3E+ONgFperzm3j/5F8fgA25sFws7obrU
- boQavF4F5dbkxttzumtnwK5NK1nXTnsjY18yw0xP49zPo111EVEG3b3hyQ9SjZyDqluW
- lEZA==
-X-Gm-Message-State: AOJu0Yxur88s4f7Ztr9yWV6HoQq5sxbuYio4Vr5Lv0MMfkS5rTmkLfa9
- joSEyeAtzUDUQ+H4kNfzM40RpiUX8UmPPQsmMhX4QHPZsVE/Yl5gYmAsFtkZp9VXgnNywt7qImE
- rUN/aw2A2gbldji44is5Z6/NidEbJu5gmV0ZrPjGm3zMMf+1cpamNOhjvJ0O+/cqSri9mA8eJT1
- zFr/6WMaJ57L2Kq4cTq2Egz9kVTuJ/siNJsJNta3lK
-X-Google-Smtp-Source: AGHT+IG5YuTs6vjhF3Bi69Xsf/3ASVE8egLuLKosMtoQKuXI34cy1tP7UDdbE3vL9XaQUz9VElWqJw==
-X-Received: by 2002:a17:90b:154b:b0:299:ed7:24fc with SMTP id
- ig11-20020a17090b154b00b002990ed724fcmr1910269pjb.49.1708025332282; 
- Thu, 15 Feb 2024 11:28:52 -0800 (PST)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- u8-20020a170902a60800b001db5ee73fe9sm1618653plq.114.2024.02.15.11.28.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 11:28:52 -0800 (PST)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: dbarboza@ventanamicro.com, Max Chou <max.chou@sifive.com>,
- Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC PATCH 6/6] accel/tcg: Inline do_st1_mmu function
-Date: Fri, 16 Feb 2024 03:28:17 +0800
-Message-Id: <20240215192823.729209-7-max.chou@sifive.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240215192823.729209-1-max.chou@sifive.com>
-References: <20240215192823.729209-1-max.chou@sifive.com>
+ d=1e100.net; s=20230601; t=1708025432; x=1708630232;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X3jH2JS8Icb9oqLzaU0hfXRD5zoULe7nghMNl44ps/I=;
+ b=cy04g+W6hg+VLO2R8k7vu6lomORy2ojFD0HB/2cZTvlvIzlBQMs1JwYCtFU+V4c9WC
+ tjKbAvrNkmbPN3n8GRcKuYk0Owws4yKQBd6gVM2rbV8EKAlpobI71ySnSVr/ycwqwdme
+ 2ujhslvaheFIW0UFeO0jA72Bo+9u+RAWw9m51Jf0gBgnOUoRkwRBT6+/O1ukVKxRAPAH
+ kgoH2/6v2LPttjFGu3j5aZTYvaV1PPwzKs3ZJbqK0rrOOw7jYKciWqfdeCQBNv8+/lQa
+ AMN6x1DJaxbudRTFkWdLTEeGYyQdlKFIWSq7R/Ky8ii9vZ3hhZbVbyziw0HgW1xYdV2M
+ jwDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUtti3YKNh0yLsKC1jea71S0NFSl5jZWReyR5Mpzte82rk1Weg38ZhviKww4vYMSbMXJOVbAmgpHiohg4o3mEaVcYjE80s=
+X-Gm-Message-State: AOJu0YwhdTYvcmZOQLWfW/eB8H423EN7llSxzWxndniCgsAk3WO8TVWg
+ MBtzJl9wO+Q7qcyAP34liQjOsnQXrkh6tbpyb8yacSx+NbdAVgqJGFT7TgUKjwE=
+X-Google-Smtp-Source: AGHT+IEDsdRsj/u65YHtSoPM/wJajiqBSJQADzhJh3bY129+226WIkRAHHQKkL+Cl/akOsvHw4QzKA==
+X-Received: by 2002:a05:6a21:164e:b0:19e:a1a2:4c53 with SMTP id
+ no14-20020a056a21164e00b0019ea1a24c53mr2996223pzb.1.1708025432121; 
+ Thu, 15 Feb 2024 11:30:32 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ ka19-20020a056a00939300b006e050c8f22bsm1679320pfb.207.2024.02.15.11.30.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 11:30:31 -0800 (PST)
+Message-ID: <4b00b67d-cb3c-4173-bb7f-1ae68cdfbada@linaro.org>
+Date: Thu, 15 Feb 2024 09:30:27 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x102f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] tcg: Avoid double lock if page tables happen to be in
+ mmio memory.
+Content-Language: en-US
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gregory Price <gregory.price@memverge.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Sajjan Rao <sajjanr@gmail.com>,
+ Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: linux-cxl@vger.kernel.org
+References: <20240215150133.2088-1-Jonathan.Cameron@huawei.com>
+ <20240215150133.2088-4-Jonathan.Cameron@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240215150133.2088-4-Jonathan.Cameron@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,28 +105,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- accel/tcg/user-exec.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+On 2/15/24 05:01, Jonathan Cameron wrote:
+> On i386, after fixing the page walking code to work with pages in
+> MMIO memory (specifically CXL emulated interleaved memory),
+> a crash was seen in an interrupt handling path.
+> 
+> Useful part of bt
+> 
+> Peter identified this as being due to the BQL already being
+> held when the page table walker encounters MMIO memory and attempts
+> to take the lock again.  There are other examples of similar paths
+> TCG, so this follows the approach taken in those of simply checking
+> if the lock is already held and if it is, don't take it again.
+> 
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>   accel/tcg/cputlb.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index 047cd2cc0a..3b8d178707 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -2019,6 +2019,7 @@ static uint64_t do_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
+>                                  int mmu_idx, MMUAccessType type, uintptr_t ra)
+>   {
+>       MemoryRegionSection *section;
+> +    bool locked = bql_locked();
+>       MemoryRegion *mr;
+>       hwaddr mr_offset;
+>       MemTxAttrs attrs;
+> @@ -2030,10 +2031,14 @@ static uint64_t do_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
+>       section = io_prepare(&mr_offset, cpu, full->xlat_section, attrs, addr, ra);
+>       mr = section->mr;
+>   
+> -    bql_lock();
+> +    if (!locked) {
+> +        bql_lock();
+> +    }
+>       ret = int_ld_mmio_beN(cpu, full, ret_be, addr, size, mmu_idx,
+>                             type, ra, mr, mr_offset);
+> -    bql_unlock();
+> +    if (!locked) {
+> +        bql_unlock();
+> +    }
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 803c271df11..9ef35a22279 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -1050,8 +1050,9 @@ static Int128 do_ld16_mmu(CPUState *cpu, abi_ptr addr,
-     return ret;
- }
- 
--static void do_st1_mmu(CPUState *cpu, vaddr addr, uint8_t val,
--                       MemOpIdx oi, uintptr_t ra)
-+static inline QEMU_ALWAYS_INLINE void do_st1_mmu(CPUState *cpu, vaddr addr,
-+                                                 uint8_t val, MemOpIdx oi,
-+                                                 uintptr_t ra)
- {
-     void *haddr;
- 
--- 
-2.34.1
+On top of other comments, I'm never keen on this type of test/lock/test/unlock.  When this 
+kind of thing is encountered, it means we should have been using a recursive lock in the 
+first place.
 
+
+r~
 
