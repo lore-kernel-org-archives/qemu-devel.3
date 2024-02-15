@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2165C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3A4C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag2R-0000x2-Uv; Thu, 15 Feb 2024 13:00:48 -0500
+	id 1rag6G-0005FV-5J; Thu, 15 Feb 2024 13:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag2K-00007t-PP
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:41 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag5I-0001w1-6s
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:03:47 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag2F-0002IQ-Vi
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:39 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5600c43caddso1403496a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:00:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag5E-0003BE-OP
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:03:43 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-563bb51c36eso921822a12.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:03:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708020034; x=1708624834; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708020217; x=1708625017; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BXfzEOj0hY/4x5MiiqGGaWqtsIu6euoUBioh29pYX9I=;
- b=xHbrDOkqODeWueV0VkFu97pTrV6wGWnI+WNPWo64qHXEcDBlG8mxeTKsixoglCKYld
- IIYLiaQAgXwSRYIrWLNHdtEaTTcyjlN/ZYEaMzC5dh7LCJEBn5csR3gULM9o00K5cB9B
- wcp1OlyACoAwOj3MUS54PZUhUzzMLYIJUnCADp8hdPq4cc1Wb3Ag4X3/6pNYpSDHIbm+
- lnGCfKSP+pZBOhfP7KnWy5RfOc5DhLJt43Z1MuM8X8Jmfx16OrlC8X6o5s//9/l4aoGv
- paoprbcHKLiX+sfC8g0o34r/AszSCv4ZUdEv0lKIwBU7EddD5U1b985PphsSq0DXmEma
- FFWQ==
+ bh=OBV5qUeSmxg7d8YWWooFsnTAz7bZYxgfHwu1fmOUlCU=;
+ b=mX6wJTbPzF1p33zih82b2xr+rvHG/p8upbcp2+etksbCBn124LuDniBoYQ3U+qzaq6
+ 0fsgDqUvpiwWxIbCeVzq2O4wDWnZQjIYaE8cuXIxHNbP2KkDsHDEAhuH0K6MuSp8mfCl
+ DlaYV/cQ4Z77TarIYiYu8Pby2msS6QjWd54gbWSjB+is8xOLuh3lvsYPW1qMM0cL/XXf
+ eaX66Y94yhrzQ9hfs8rtym1cqWaAv2RkEaRzbeGuu2XPfyrTR+u5/mBgUWXxe/4AuPDe
+ WBxQBJn9MTydZMKD/8iMGtF5Twwz0pkyk4CLlUnZp0XuQFeGi5QH5U+iCiZC4R7oTo8V
+ ydig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708020034; x=1708624834;
+ d=1e100.net; s=20230601; t=1708020217; x=1708625017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BXfzEOj0hY/4x5MiiqGGaWqtsIu6euoUBioh29pYX9I=;
- b=KzCV8eVGp9tmAMAAKt/zKbCzkbe0lzwA3EAE1KEmImxbhK5JJeH+e6qGeCDWl7Vd9N
- KEnTfQ9lAnNx3kQbTealCuHIv5bVUPZ8v/o9Blrv/cuVlbQCMHDEHrZDQRDICYwFUKsC
- 6h8pfy1F11wfLyEZxGAK9liceCegpEpOKcS9MnFEtXOnA0OvyEL8o5mivYyVH47ktq9r
- n/3I6Qu7Fi8zdXDgML8GO87Z5+ztkuCklgcuXSEMdW9rUJqdUmWOj2NoHrTHvGRfi/7m
- iTEfoEJpejyl+RQJ635sIHTxfYPnGn8fGNYZYz/ydVV9QmMwuQgIizgfaDrEaWgOo+sH
- fdyQ==
-X-Gm-Message-State: AOJu0YylHqkVFgCKSo66sbFHFPYK0g3lFMQEocdxxu7OOxPsBY1jDbFy
- lm6eGOX8IwFgsa4xz0xjgvBh1c7cu+vlEK3zNufvgLIl2LV0rdjaGAxKJPep5w7GHMq05ugJsH/
- pda8=
-X-Google-Smtp-Source: AGHT+IEmZriUbrMzuMUn5LRrLeqtXigt31ovYC1bHeAUNfxOATbg3ZOAe9WNcd9RRATdMUwVie99JQ==
-X-Received: by 2002:a17:906:b0d9:b0:a3d:2243:29da with SMTP id
- bk25-20020a170906b0d900b00a3d224329damr1812382ejb.36.1708020033980; 
- Thu, 15 Feb 2024 10:00:33 -0800 (PST)
+ bh=OBV5qUeSmxg7d8YWWooFsnTAz7bZYxgfHwu1fmOUlCU=;
+ b=DHgQKG51Z7bYTMx80p1cjQRhQ4OMi8crZNSTk5HrnZGXduyDs7D44KuoalUdaqyVli
+ M/ZSMr8nk444yBweBgxRDzxUZtu1GeHH26W2UzYg+drvHnYEXGanc/h1iObC8SDhdNEP
+ +Q5oEM3rdWu21YSvxymVCBA1brjBbBPViYwV++VOi8RizE3BBHal5rU/0d+vE2TGgbqF
+ Ct40TDQ1TSR7jgWOkjEqB2t4ORx+SMO5VJ7bU78jiPEhWPvMQOmbOk/MIHFqJkTTo9Fe
+ oDx0QK2ZsuFcrgQ7+P4lqJnM+T9bS8pu5oZEOlKk4VYqgejr9gqkWPq1nt0Eb4K+zXVd
+ wsbg==
+X-Gm-Message-State: AOJu0YyDj3yEDNDR+5qVEwh0YJLopu41wtIwGWtNkprB0k02XA7aDH3b
+ 7AHAAAspNsP7CQaKBzzD8Dx+z5aZtgJiy860ZiJIGqjZhpi4lYp1T7s87848D5a85zxuW5FKpT5
+ Pv0k=
+X-Google-Smtp-Source: AGHT+IEQr/ETKSHifJM4NvzDnH6nB8W920pjx4hXnPS8saZH6joZvwJ+mEFURnJ24x7+S2CN5qIBJA==
+X-Received: by 2002:a17:906:c415:b0:a3d:7d6b:2dc3 with SMTP id
+ u21-20020a170906c41500b00a3d7d6b2dc3mr1755304ejz.73.1708020217134; 
+ Thu, 15 Feb 2024 10:03:37 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- a7-20020a170906670700b00a3d2d81daafsm791088ejp.172.2024.02.15.10.00.31
+ t22-20020a1709063e5600b00a3c091ead20sm784624eji.222.2024.02.15.10.03.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 10:00:32 -0800 (PST)
+ Thu, 15 Feb 2024 10:03:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 24/56] hw/misc/macio: Realize IDE controller before accessing it
-Date: Thu, 15 Feb 2024 18:57:18 +0100
-Message-ID: <20240215175752.82828-25-philmd@linaro.org>
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ John Snow <jsnow@redhat.com>, Paul Burton <paulburton@kernel.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PULL 51/56] hw/ide/ahci: Pass AHCI context to ahci_ide_create_devs()
+Date: Thu, 15 Feb 2024 18:57:45 +0100
+Message-ID: <20240215175752.82828-52-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,42 +100,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We should not wire IRQs on unrealized device.
+Since ahci_ide_create_devs() is not PCI specific, pass
+it an AHCIState argument instead of PCIDevice.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240213130341.1793-7-philmd@linaro.org>
+Message-Id: <20240213081201.78951-6-philmd@linaro.org>
 ---
- hw/misc/macio/macio.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/hw/ide/ahci.h | 2 +-
+ hw/i386/pc_q35.c      | 2 +-
+ hw/ide/ahci.c         | 5 +----
+ hw/mips/boston.c      | 2 +-
+ 4 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/hw/misc/macio/macio.c b/hw/misc/macio/macio.c
-index c9f22f8515..3f449f91c0 100644
---- a/hw/misc/macio/macio.c
-+++ b/hw/misc/macio/macio.c
-@@ -123,14 +123,17 @@ static bool macio_realize_ide(MacIOState *s, MACIOIDEState *ide,
+diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
+index dbef377f3d..8cd55b1333 100644
+--- a/include/hw/ide/ahci.h
++++ b/include/hw/ide/ahci.h
+@@ -52,7 +52,7 @@ typedef struct AHCIState {
+ } AHCIState;
+ 
+ 
+-void ahci_ide_create_devs(PCIDevice *dev, DriveInfo **hd);
++void ahci_ide_create_devs(AHCIState *ahci, DriveInfo **hd);
+ 
+ #define TYPE_SYSBUS_AHCI "sysbus-ahci"
+ OBJECT_DECLARE_SIMPLE_TYPE(SysbusAHCIState, SYSBUS_AHCI)
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 09e12418f9..d346fa3b1d 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -304,7 +304,7 @@ static void pc_q35_init(MachineState *machine)
+         idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
+         g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
+         ide_drive_get(hd, ich9->ahci.ports);
+-        ahci_ide_create_devs(pdev, hd);
++        ahci_ide_create_devs(&ich9->ahci, hd);
+     } else {
+         idebus[0] = idebus[1] = NULL;
+     }
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 8b97c6b0e7..bac1871a31 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -1896,10 +1896,8 @@ static void sysbus_ahci_register_types(void)
+ 
+ type_init(sysbus_ahci_register_types)
+ 
+-void ahci_ide_create_devs(PCIDevice *dev, DriveInfo **hd)
++void ahci_ide_create_devs(AHCIState *ahci, DriveInfo **hd)
  {
-     SysBusDevice *sbd = SYS_BUS_DEVICE(ide);
+-    AHCIPCIState *d = ICH9_AHCI(dev);
+-    AHCIState *ahci = &d->ahci;
+     int i;
  
--    sysbus_connect_irq(sbd, 0, irq0);
--    sysbus_connect_irq(sbd, 1, irq1);
-     qdev_prop_set_uint32(DEVICE(ide), "channel", dmaid);
-     object_property_set_link(OBJECT(ide), "dbdma", OBJECT(&s->dbdma),
-                              &error_abort);
-     macio_ide_register_dma(ide);
-+    if (!qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp)) {
-+        return false;
-+    }
-+    sysbus_connect_irq(sbd, 0, irq0);
-+    sysbus_connect_irq(sbd, 1, irq1);
- 
--    return qdev_realize(DEVICE(ide), BUS(&s->macio_bus), errp);
-+    return true;
+     for (i = 0; i < ahci->ports; i++) {
+@@ -1908,5 +1906,4 @@ void ahci_ide_create_devs(PCIDevice *dev, DriveInfo **hd)
+         }
+         ide_bus_create_drive(&ahci->dev[i].port, 0, hd[i]);
+     }
+-
  }
+diff --git a/hw/mips/boston.c b/hw/mips/boston.c
+index a6c7bc18ff..1b44fb354c 100644
+--- a/hw/mips/boston.c
++++ b/hw/mips/boston.c
+@@ -775,7 +775,7 @@ static void boston_mach_init(MachineState *machine)
+     ich9 = ICH9_AHCI(pdev);
+     g_assert(ARRAY_SIZE(hd) == ich9->ahci.ports);
+     ide_drive_get(hd, ich9->ahci.ports);
+-    ahci_ide_create_devs(pdev, hd);
++    ahci_ide_create_devs(&ich9->ahci, hd);
  
- static void macio_oldworld_realize(PCIDevice *d, Error **errp)
+     if (machine->firmware) {
+         fw_size = load_image_targphys(machine->firmware,
 -- 
 2.41.0
 
