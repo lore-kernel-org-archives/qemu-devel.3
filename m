@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF6BC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 04:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159B2C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 04:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raTFY-0000mK-45; Wed, 14 Feb 2024 23:21:28 -0500
+	id 1raTIY-0001ko-3T; Wed, 14 Feb 2024 23:24:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raTFV-0000lU-JC; Wed, 14 Feb 2024 23:21:25 -0500
-Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
+ id 1raTIW-0001kY-99; Wed, 14 Feb 2024 23:24:32 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raTFT-0006bx-QT; Wed, 14 Feb 2024 23:21:25 -0500
-Received: by mail-ua1-x929.google.com with SMTP id
- a1e0cc1a2514c-7d5fce59261so299627241.3; 
- Wed, 14 Feb 2024 20:21:23 -0800 (PST)
+ id 1raTIT-0007Dn-NP; Wed, 14 Feb 2024 23:24:32 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-7cedcea89a0so331833241.1; 
+ Wed, 14 Feb 2024 20:24:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707970882; x=1708575682; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707971068; x=1708575868; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mX1xFGE5bonQx1Rh1BMmI45pqnyLX/I+ng3Mihv0sN0=;
- b=NWMAjL7nXCIMw27zoxIEC5zpMXdd1k1kRoqasPbrKQiRm6RPU3YrkM+rfE1qF7Wy0t
- nuJuhLWM04df6MDiU/OjkO0AJZ2Gywbm18Qi0I5kmTlP+qtcqpjiW1lQBWWfztSHSvZy
- b9Lb3+W0ttyj0yLOmvBmf4V3EwgFMY1SbI5sI4Gf+vZhzN7jzmyTESqX0MYxmhMeRXIJ
- m4ymuwJhRRmFPnMK+1nNlBKu8cTm2+pXWSQk9e63Z8zN0qHHzMO+6ptKjmp/MsvKjoJF
- TjAxg1N3U2ldOHaVpCgjTVG7bY4JQS78VWDXcpVYW51/qLytATIPDjyRwG9ZerCLXIKR
- f0tg==
+ bh=aThjahPwQG6HU2V/gQbLgZISR8NDcuVOYy+dNVHWhjg=;
+ b=bXsZUAM/sNhnB2+bamGbKAc4eR+b1DBuj3hfdbtgcaaUzqUrmifs3B6ce6nl2Go1iw
+ TCdV7ijbgGYWgL/WulvPycLt2cYimSFT/Yinkw+L+4H4lAg0jEl6kx/pqHBtQJmtDVGI
+ TAso57Y2rM5wGQ8fmSKi2ee2O3QmDIvFrH7KFeQkCrGc2triCZFr9qcXB2oApzDGkCvs
+ LD5BPQUj0r2DFf/fPZM/QLeFv7Is1QtxcVQDQe7EF/x+8T2Te57oxC/j5VBvm40gz1Lz
+ sxbaWaPaY2KauveajmlxYe/orA8BR/eCTZLe0jksos5AFp4ifa+0WHws+2OmnXxa1hft
+ HMXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707970882; x=1708575682;
+ d=1e100.net; s=20230601; t=1707971068; x=1708575868;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mX1xFGE5bonQx1Rh1BMmI45pqnyLX/I+ng3Mihv0sN0=;
- b=uM18XCCFa3FjT6eDTAYwAk9nakbKEQ6kqe88hN65P/4rUAfMxuYy9juQ3GnzJLaggm
- GRXJFx+YGS3l+cPJZLzi+dPHDBwVl/ai6vmeeizCldyxpwIJ2AOEp+337C7FJZRa55JI
- Aj1TF3cY1Jz45q+4pkMlERccIc+4kd/TRfU3N3dpfsYvsrx5A/dV+c/BeF5USPTf2IND
- jn45V5bfxXr56rdBqptWhvOwCwBuJfD8O2lZW+Fik+sUAMEzIE8NVV4tVpKb3TdpmUiZ
- 51f7S7qNw35RmHij0lgHK+Z1xi76cF1DR52W9qn7d9mZU7JOxI62f8DfL8I2lB5wSdiv
- 5N6w==
+ bh=aThjahPwQG6HU2V/gQbLgZISR8NDcuVOYy+dNVHWhjg=;
+ b=Qx/1v+U9qg2Npg1vi+AZtrfSJVpp2mVJPnFL7MZDOQ/sXploJRUo/vG6aWXANfe+xY
+ 58wS2pdJntX/KvLDQ7DPtlcI1QnjFUN9UvBef2pLw3+Xv6ZzB6aNYQHvk7Ccl/0o6B3h
+ eZv/YNoo1YRKdaWXl59YoJ2RVRx3k+ah5r9frTYGX1OavFh58Dl/D8injCf15kiol9Gw
+ aYc9LObel/+YAD/z4t+BHUXJGwF/3mu1RZMPS+lGdQV3LLljjSTDk/FbHzd4xjv60Ytf
+ 4eIBqmdO+Yfo3zRAdM0g0iroSBWfqUQmmnrJdMykko2pWn7/6qfT/AL+1Evsp/KGTMwa
+ /4Zw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVjeE0Q6PhyhcCNBpyzp/zXTAsGc/40E32xTf09NkR3L6TF0y3Twffmlo52gQJvZ9Xg3ekjUzD9Zy7XSRde6/7BuUV0gI=
-X-Gm-Message-State: AOJu0YzJX/Xz5kasmdroaNa6gvIVm+yWAr0oKxZsC4/jR6LjdS/f4Vdl
- qinVfs59PRPOf4M8nKAVpkdmL0OHH6UGqYeOe5UBGwvBNJfCrbgIJGnXtA1wS+myri315X6GxVh
- nuNfDjrr4yYJyG42Out2vlPkLxJ4=
-X-Google-Smtp-Source: AGHT+IF4T1MijZnWCvxIzFrwq9lgNLr0LeTk4HhLPlXpXGXi6yM08cXej2iD0Dnhm1L08ok393wXp3tfxgDtVCKo38A=
-X-Received: by 2002:a1f:e084:0:b0:4bd:5743:5b7f with SMTP id
- x126-20020a1fe084000000b004bd57435b7fmr425563vkg.13.1707970882339; Wed, 14
- Feb 2024 20:21:22 -0800 (PST)
+ AJvYcCVtqQAbTS2WJZ5tX0TX2Q/2mIzFpoAOCajxmq3avmWrJBdc6VaoK3Uo5kUOHa/dzkE8iSq8Ske2eoI9rQUJjOjAKXdMsEC5wZBAED/lKgs6vb1vRmEtO6f989hkZA==
+X-Gm-Message-State: AOJu0YxyXTO24s5LoMtGtre+K+6TzggpLKBERvgVKNN3bIiKWg5ecZC0
+ zuMbkhUlGHvT6UHy5zzhQPOdPjf8cJufTjnoDDSXqWmJ+gH6ic7ApOmSumKGxl9Yp3/osXPBvV0
+ RoyE/bqaUERyE+Ro7mpnBJtOOuCw=
+X-Google-Smtp-Source: AGHT+IET9olgyYCFC0gw5Eod2df3fC1iOheySN/QNIKtpqzYfaoXAASJfsxFhuTMe/wW2UQ6bu8j4cdCOL2DDomIDBI=
+X-Received: by 2002:a67:e8c5:0:b0:46e:d0cd:428d with SMTP id
+ y5-20020a67e8c5000000b0046ed0cd428dmr855230vsn.33.1707971068227; Wed, 14 Feb
+ 2024 20:24:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
- <20240202152154.773253-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20240202152154.773253-4-dbarboza@ventanamicro.com>
+References: <20240204054228.651-1-zhiwei_liu@linux.alibaba.com>
+ <20240204054228.651-3-zhiwei_liu@linux.alibaba.com>
+ <CAKmqyKNGMjLg+JjJZAp+EsmfaWAyT7XiHZzBXZxeghS0hv6REg@mail.gmail.com>
+ <CAEg0e7i6zaEhyfhRFKcTYjkCqRCzJ5eB+0EHUDVA6t-ypL78eg@mail.gmail.com>
+In-Reply-To: <CAEg0e7i6zaEhyfhRFKcTYjkCqRCzJ5eB+0EHUDVA6t-ypL78eg@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 14:20:56 +1000
-Message-ID: <CAKmqyKOnw+0oFTe+EorKXvi+51rrkagXNOwqfYJN10ZYaCH2Xg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] target/riscv: add remaining named features
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
+Date: Thu, 15 Feb 2024 14:24:02 +1000
+Message-ID: <CAKmqyKPgAQ4JaSNRmFfR-=w3daDkag-ORz0Ckn7r1JNmf8X2oA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] target/riscv: Support xtheadmaee for thead-c906
+To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
+Cc: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
+ Alistair.Francis@wdc.com, palmer@dabbelt.com, bin.meng@windriver.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, qemu-riscv@nongnu.org, 
+ bjorn@kernel.org, Philipp Tomsich <philipp.tomsich@vrull.eu>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,178 +96,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 3, 2024 at 1:24=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Mon, Feb 5, 2024 at 6:37=E2=80=AFPM Christoph M=C3=BCllner
+<christoph.muellner@vrull.eu> wrote:
 >
-> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
-> until now, we were implying that they were available.
+> On Mon, Feb 5, 2024 at 3:42=E2=80=AFAM Alistair Francis <alistair23@gmail=
+.com> wrote:
+> >
+> > On Sun, Feb 4, 2024 at 3:44=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.ali=
+baba.com> wrote:
+> > >
+> > > This patch set fix the regression on kernel pointed by Bj=C3=B6rn T=
+=C3=B6pel in
+> > > https://www.mail-archive.com/qemu-devel@nongnu.org/msg1018232.html.
+> > >
+> > > thead-c906 uses some flags in pte [60-63] bits. It has history reason=
+s that
+> > > SVPBMT didn't exist when thead-c906 came to wotrld. We named this fea=
+ture as
+> > > xtheadmaee[1]. this feature is controlled by an custom CSR named mxst=
+atus,
+> > > whose maee field encodes whether enable the pte [60-63] bits.
+> > >
+> > > [1]:https://github.com/T-head-Semi/thead-extension-spec/blob/master/x=
+theadmaee.adoc
+> > >
+> > > Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> > > ---
+> > > v1->v2:
+> > > 1) Remove mxstatus user mode access
+> > > 2) Add reference documentation to the commit log
+> > > ---
+> > >  target/riscv/cpu.c         |  6 ++++
+> > >  target/riscv/cpu.h         |  9 ++++++
+> > >  target/riscv/cpu_bits.h    |  6 ++++
+> > >  target/riscv/cpu_cfg.h     |  4 ++-
+> > >  target/riscv/cpu_helper.c  | 25 ++++++++-------
+> > >  target/riscv/meson.build   |  1 +
+> > >  target/riscv/tcg/tcg-cpu.c |  7 +++-
+> > >  target/riscv/xthead_csr.c  | 65 ++++++++++++++++++++++++++++++++++++=
+++
+> > >  8 files changed, 110 insertions(+), 13 deletions(-)
+> > >  create mode 100644 target/riscv/xthead_csr.c
+> > >
+> > > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > > index 2dcbc9ff32..bfdbb0539a 100644
+> > > --- a/target/riscv/cpu.c
+> > > +++ b/target/riscv/cpu.c
+> > > @@ -171,6 +171,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+> > >      ISA_EXT_DATA_ENTRY(xtheadmemidx, PRIV_VERSION_1_11_0, ext_xthead=
+memidx),
+> > >      ISA_EXT_DATA_ENTRY(xtheadmempair, PRIV_VERSION_1_11_0, ext_xthea=
+dmempair),
+> > >      ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsy=
+nc),
+> > > +    ISA_EXT_DATA_ENTRY(xtheadmaee, PRIV_VERSION_1_11_0, ext_xtheadma=
+ee),
+> > >      ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVe=
+ntanaCondOps),
+> > >
+> > >      DEFINE_PROP_END_OF_LIST(),
+> > > @@ -506,6 +507,7 @@ static void rv64_thead_c906_cpu_init(Object *obj)
+> > >
+> > >      cpu->cfg.mvendorid =3D THEAD_VENDOR_ID;
+> > >  #ifndef CONFIG_USER_ONLY
+> > > +    cpu->cfg.ext_xtheadmaee =3D true;
+> > >      set_satp_mode_max_supported(cpu, VM_1_10_SV39);
+> > >  #endif
+> > >
+> > > @@ -949,6 +951,9 @@ static void riscv_cpu_reset_hold(Object *obj)
+> > >      }
+> > >
+> > >      pmp_unlock_entries(env);
+> > > +    if (riscv_cpu_cfg(env)->ext_xtheadmaee) {
+> > > +        env->th_mxstatus |=3D TH_MXSTATUS_MAEE;
+> > > +    }
+> > >  #endif
+> > >      env->xl =3D riscv_cpu_mxl(env);
+> > >      riscv_cpu_update_mask(env);
+> > > @@ -1439,6 +1444,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_e=
+xts[] =3D {
+> > >      MULTI_EXT_CFG_BOOL("xtheadmemidx", ext_xtheadmemidx, false),
+> > >      MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
+> > >      MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
+> > > +    MULTI_EXT_CFG_BOOL("xtheadmaee", ext_xtheadmaee, false),
+> > >      MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false=
+),
+> > >
+> > >      DEFINE_PROP_END_OF_LIST(),
+> > > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > > index 5f3955c38d..1bacf40355 100644
+> > > --- a/target/riscv/cpu.h
+> > > +++ b/target/riscv/cpu.h
+> > > @@ -412,6 +412,14 @@ struct CPUArchState {
+> > >      target_ulong cur_pmmask;
+> > >      target_ulong cur_pmbase;
+> > >
+> > > +    union {
+> > > +        /* Custom CSR for Xuantie CPU */
+> > > +        struct {
+> > > +#ifndef CONFIG_USER_ONLY
+> > > +            target_ulong th_mxstatus;
+> > > +#endif
+> > > +        };
+> > > +    };
+> > >      /* Fields from here on are preserved across CPU reset. */
+> > >      QEMUTimer *stimer; /* Internal timer for S-mode interrupt */
+> > >      QEMUTimer *vstimer; /* Internal timer for VS-mode interrupt */
+> > > @@ -799,6 +807,7 @@ void riscv_add_satp_mode_properties(Object *obj);
+> > >  bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+> > >
+> > >  /* CSR function table */
+> > > +extern riscv_csr_operations th_csr_ops[CSR_TABLE_SIZE];
+> > >  extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
+> > >
+> > >  extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
+> > > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+> > > index e116f6c252..67ebb1cefe 100644
+> > > --- a/target/riscv/cpu_bits.h
+> > > +++ b/target/riscv/cpu_bits.h
+> > > @@ -897,4 +897,10 @@ typedef enum RISCVException {
+> > >  /* JVT CSR bits */
+> > >  #define JVT_MODE                           0x3F
+> > >  #define JVT_BASE                           (~0x3F)
+> > > +
+> > > +/* Xuantie custom CSRs */
+> > > +#define CSR_TH_MXSTATUS 0x7c0
+> > > +
+> > > +#define TH_MXSTATUS_MAEE_SHIFT  21
+> > > +#define TH_MXSTATUS_MAEE        (0x1 << TH_MXSTATUS_MAEE_SHIFT)
+> > >  #endif
+> > > diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> > > index 780ae6ef17..3735c69fd6 100644
+> > > --- a/target/riscv/cpu_cfg.h
+> > > +++ b/target/riscv/cpu_cfg.h
+> > > @@ -136,6 +136,7 @@ struct RISCVCPUConfig {
+> > >      bool ext_xtheadmemidx;
+> > >      bool ext_xtheadmempair;
+> > >      bool ext_xtheadsync;
+> > > +    bool ext_xtheadmaee;
+> > >      bool ext_XVentanaCondOps;
+> > >
+> > >      uint32_t pmu_mask;
+> > > @@ -176,7 +177,8 @@ static inline bool has_xthead_p(const RISCVCPUCon=
+fig *cfg)
+> > >             cfg->ext_xtheadcondmov ||
+> > >             cfg->ext_xtheadfmemidx || cfg->ext_xtheadfmv ||
+> > >             cfg->ext_xtheadmac || cfg->ext_xtheadmemidx ||
+> > > -           cfg->ext_xtheadmempair || cfg->ext_xtheadsync;
+> > > +           cfg->ext_xtheadmempair || cfg->ext_xtheadsync ||
+> > > +           cfg->ext_xtheadmaee;
+> > >  }
+> > >
+> > >  #define MATERIALISE_EXT_PREDICATE(ext) \
+> > > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> > > index c7cc7eb423..5c1f380276 100644
+> > > --- a/target/riscv/cpu_helper.c
+> > > +++ b/target/riscv/cpu_helper.c
+> > > @@ -812,6 +812,7 @@ static int get_physical_address(CPURISCVState *en=
+v, hwaddr *physical,
+> > >      int napot_bits =3D 0;
+> > >      target_ulong napot_mask;
+> > >
+> > > +    bool skip_pte_check =3D env->th_mxstatus & TH_MXSTATUS_MAEE;
+> > >      /*
+> > >       * Check if we should use the background registers for the two
+> > >       * stage translation. We don't need to check if we actually need
+> > > @@ -974,18 +975,19 @@ restart:
+> > >          if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
+> > >              ppn =3D pte >> PTE_PPN_SHIFT;
+> > >          } else {
+> > > -            if (pte & PTE_RESERVED) {
+> > > -                return TRANSLATE_FAIL;
+> > > -            }
+> > > +            if (!skip_pte_check) {
+> > > +                if (pte & PTE_RESERVED) {
+> > > +                    return TRANSLATE_FAIL;
+> > > +                }
+> > >
+> > > -            if (!pbmte && (pte & PTE_PBMT)) {
+> > > -                return TRANSLATE_FAIL;
+> > > -            }
+> > > +                if (!pbmte && (pte & PTE_PBMT)) {
+> > > +                    return TRANSLATE_FAIL;
+> > > +                }
+> > >
+> > > -            if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+> > > -                return TRANSLATE_FAIL;
+> > > +                if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N=
+)) {
+> > > +                    return TRANSLATE_FAIL;
+> > > +                }
+> > >              }
+> > > -
+> > >              ppn =3D (pte & (target_ulong)PTE_PPN_MASK) >> PTE_PPN_SH=
+IFT;
+> >
+> > Unfortunately we won't be able to take this upstream. This is core
+> > QEMU RISC-V code that is now being changed against the spec. I think
+> > adding the CSR is fine, but we can't take this core change.
+> >
+> > A fix that works for everyone should be supporting the th_mxstatus
+> > CSR, but don't support setting the TH_MXSTATUS_MAEE bit. That way
+> > guests can detect that the bit isn't set and not use the reserved bits
+> > in the PTE. From my understanding the extra PTE bits are related to
+> > cache control in the hardware, which we don't need here
 >
-> We can't do this anymore since named features also has a riscv,isa
-> entry. Let's add them to riscv_cpu_named_features[].
->
-> Instead of adding one bool for each named feature that we'll always
-> implement, i.e. can't be turned off, add a 'ext_always_enabled' bool in
-> cpu->cfg. This bool will be set to 'true' in TCG accel init, and all
-> named features will point to it. This also means that KVM won't see
-> these features as always enable, which is our intention.
->
-> If any accelerator adds support to disable one of these features, we'll
-> have to promote them to regular extensions and allow users to disable it
-> via command line.
->
-> After this patch, here's the riscv,isa from a buildroot using the
-> 'rva22s64' CPU:
->
->  # cat /proc/device-tree/cpus/cpu@0/riscv,isa
-> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
-> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
-> zbs_zkt_ssccptr_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Sounds good! Let me recap the overall plan:
+> * QEMU does not emulate MAEE, but signals that MAEE is not available
+> by setting TH_MXSTATUS_MAEE to 0.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Yep!
+
+> * Consequence: The c906 emulation does not enable any page-base memory
+> attribute mechanism.
+
+Exactly
+
+> * OpenSBI tests the TH_MXSTATUS_MAEE bit (M-mode only) and provides
+> that information to user-space (e.g. DTB).
+
+To the kernel, but yep!
+
+> * The current Linux errata code will be enhanced to not assume MAEE
+> for each core with T-Head vendor ID, but also query the MAEE bit and
+> ensure it is set.
+
+I feel like it should already do that :)
+
+> * Booting on a QEMU c906 will not enable MAEE, but will still boot.
+
+That's the hope
+
+>
+> We never had a complete MAEE implementation upstream, because that's not =
+needed.
+> But until recently we could mess with reserved bits how we want.
+> Now that QEMU is more restrictive about reserved bits in the PTEs, we
+> need to address this in the kernel.
+>
+> The downside is, that the kernel now sees a c906 CPU without MAEE and
+> such a CPU does not exist.
+
+Yeah, that is the downside. But in reality a CPU could exist that
+doesn't allow seeing MAEE, so I don't think it's that insane.
+
+> But that's fine, because this does not require extra code to handle this =
+case.
+> Also, the additional check for the MAEE bit in the kernel errata
+> probing code is likely needed anyway for future T-Head CPUs.
+
+Exactly
+
+>
+> BTW, what was the reason for QEMU to prevent setting reserved bits in PTE=
+s?
+
+I don't have it in front of me, but I thought that is what the spec
+said should happen
 
 Alistair
 
-> ---
->  target/riscv/cpu.c         | 42 +++++++++++++++++++++++++++++++-------
->  target/riscv/cpu_cfg.h     |  6 ++++++
->  target/riscv/tcg/tcg-cpu.c |  2 ++
->  3 files changed, 43 insertions(+), 7 deletions(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 28d3cfa8ce..94843c4f6e 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -101,6 +101,10 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
->      ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
->      ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
-> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_always_enabled=
-),
-> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_always_enabled),
-> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_always_enabled)=
-,
-> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_always_enabled)=
-,
->      ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
->      ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
->      ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
-> @@ -109,6 +113,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause=
-),
->      ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
->      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
-> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_always_enabled),
->      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
->      ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
->      ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-> @@ -170,8 +175,12 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_always_enabled)=
-,
->      ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
-> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_always_ena=
-bled),
->      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_always_enabled)=
-,
-> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_always_enabled)=
-,
->      ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
->      ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
->      ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-> @@ -1512,6 +1521,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimenta=
-l_exts[] =3D {
->      DEFINE_PROP_END_OF_LIST(),
->  };
+> Thanks,
+> Christoph
 >
-> +#define ALWAYS_ENABLED_FEATURE(_name) \
-> +    {.name =3D _name, \
-> +     .offset =3D CPU_CFG_OFFSET(ext_always_enabled), \
-> +     .enabled =3D true}
-> +
->  /*
->   * 'Named features' is the name we give to extensions that we
->   * don't want to expose to users. They are either immutable
-> @@ -1523,6 +1537,23 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_featu=
-res[] =3D {
->      MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
->      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
->
-> +    /*
-> +     * cache-related extensions that are always enabled
-> +     * in TCG since QEMU RISC-V does not have a cache
-> +     * model.
-> +     */
-> +    ALWAYS_ENABLED_FEATURE("za64rs"),
-> +    ALWAYS_ENABLED_FEATURE("ziccif"),
-> +    ALWAYS_ENABLED_FEATURE("ziccrse"),
-> +    ALWAYS_ENABLED_FEATURE("ziccamoa"),
-> +    ALWAYS_ENABLED_FEATURE("zicclsm"),
-> +    ALWAYS_ENABLED_FEATURE("ssccptr"),
-> +
-> +    /* Other named features that TCG always implements */
-> +    ALWAYS_ENABLED_FEATURE("sstvecd"),
-> +    ALWAYS_ENABLED_FEATURE("sstvala"),
-> +    ALWAYS_ENABLED_FEATURE("sscounterenw"),
-> +
->      DEFINE_PROP_END_OF_LIST(),
->  };
->
-> @@ -2116,13 +2147,10 @@ static const PropertyInfo prop_marchid =3D {
->  };
->
->  /*
-> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
-> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
-> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
-> - * all these named features as always enabled.
-> - *
-> - * There's no riscv,isa update for them (nor for zic64b, despite it
-> - * having a cfg offset) at this moment.
-> + * RVA22U64 defines some 'named features' that are cache
-> + * related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
-> + * and Zicclsm. They are always implemented in TCG and
-> + * doesn't need to be manually enabled by the profile.
->   */
->  static RISCVCPUProfile RVA22U64 =3D {
->      .parent =3D NULL,
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 698f926ab1..c5049ec664 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -126,6 +126,12 @@ struct RISCVCPUConfig {
->      bool ext_svade;
->      bool ext_zic64b;
->
-> +    /*
-> +     * Always 'true' boolean for named features
-> +     * TCG always implement/can't be disabled.
-> +     */
-> +    bool ext_always_enabled;
-> +
->      /* Vendor-specific custom extensions */
->      bool ext_xtheadba;
->      bool ext_xtheadbb;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 90861cc065..673097c6e4 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1347,6 +1347,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *c=
-s)
->      RISCVCPU *cpu =3D RISCV_CPU(cs);
->      Object *obj =3D OBJECT(cpu);
->
-> +    cpu->cfg.ext_always_enabled =3D true;
-> +
->      misa_ext_user_opts =3D g_hash_table_new(NULL, g_direct_equal);
->      multi_ext_user_opts =3D g_hash_table_new(NULL, g_direct_equal);
->      riscv_cpu_add_user_properties(obj);
-> --
-> 2.43.0
->
->
+> >
+> > Alistair
+> >
+> > >          }
+> > >
+> > > @@ -998,7 +1000,8 @@ restart:
+> > >          }
+> > >
+> > >          /* Inner PTE, continue walking */
+> > > -        if (pte & (PTE_D | PTE_A | PTE_U | PTE_ATTR)) {
+> > > +        if ((pte & (PTE_D | PTE_A | PTE_U)) ||
+> > > +            (!skip_pte_check && (pte & PTE_ATTR))) {
+> > >              return TRANSLATE_FAIL;
+> > >          }
+> > >          base =3D ppn << PGSHIFT;
+> > > @@ -1012,7 +1015,7 @@ restart:
+> > >          /* Misaligned PPN */
+> > >          return TRANSLATE_FAIL;
+> > >      }
+> > > -    if (!pbmte && (pte & PTE_PBMT)) {
+> > > +    if (!skip_pte_check && !pbmte && (pte & PTE_PBMT)) {
+> > >          /* Reserved without Svpbmt. */
+> > >          return TRANSLATE_FAIL;
+> > >      }
+> > > diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+> > > index a5e0734e7f..d7f675881d 100644
+> > > --- a/target/riscv/meson.build
+> > > +++ b/target/riscv/meson.build
+> > > @@ -12,6 +12,7 @@ riscv_ss.add(files(
+> > >    'cpu.c',
+> > >    'cpu_helper.c',
+> > >    'csr.c',
+> > > +  'xthead_csr.c',
+> > >    'fpu_helper.c',
+> > >    'gdbstub.c',
+> > >    'op_helper.c',
+> > > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> > > index 559bf373f3..4b1184c8ab 100644
+> > > --- a/target/riscv/tcg/tcg-cpu.c
+> > > +++ b/target/riscv/tcg/tcg-cpu.c
+> > > @@ -763,7 +763,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *=
+cpu, Error **errp)
+> > >          cpu->cfg.pmu_mask =3D 0;
+> > >          cpu->pmu_avail_ctrs =3D 0;
+> > >      }
+> > > -
+> > >      /*
+> > >       * Disable isa extensions based on priv spec after we
+> > >       * validated and set everything we need.
+> > > @@ -871,12 +870,18 @@ static void riscv_cpu_validate_profiles(RISCVCP=
+U *cpu)
+> > >      }
+> > >  }
+> > >
+> > > +static inline bool th_csr_p(const RISCVCPUConfig *cfg)
+> > > +{
+> > > +    return cfg->ext_xtheadmaee;
+> > > +}
+> > > +
+> > >  void riscv_tcg_cpu_register_vendor_csr(RISCVCPU *cpu)
+> > >  {
+> > >      static const struct {
+> > >          bool (*guard_func)(const RISCVCPUConfig *);
+> > >          riscv_csr_operations *csr_ops;
+> > >      } vendors[] =3D {
+> > > +        { th_csr_p, th_csr_ops },
+> > >      };
+> > >      for (int i =3D 0; i < ARRAY_SIZE(vendors); ++i) {
+> > >          if (!vendors[i].guard_func(&cpu->cfg)) {
+> > > diff --git a/target/riscv/xthead_csr.c b/target/riscv/xthead_csr.c
+> > > new file mode 100644
+> > > index 0000000000..9f88fa50db
+> > > --- /dev/null
+> > > +++ b/target/riscv/xthead_csr.c
+> > > @@ -0,0 +1,65 @@
+> > > +/*
+> > > + * Xuantie implementation for RISC-V Control and Status Registers.
+> > > + *
+> > > + * Copyright (c) 2024 Alibaba Group. All rights reserved.
+> > > + *
+> > > + * This program is free software; you can redistribute it and/or mod=
+ify it
+> > > + * under the terms and conditions of the GNU General Public License,
+> > > + * version 2 or later, as published by the Free Software Foundation.
+> > > + *
+> > > + * This program is distributed in the hope it will be useful, but WI=
+THOUT
+> > > + * ANY WARRANTY; without even the implied warranty of MERCHANTABILIT=
+Y or
+> > > + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public Lic=
+ense for
+> > > + * more details.
+> > > + *
+> > > + * You should have received a copy of the GNU General Public License=
+ along with
+> > > + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> > > + */
+> > > +
+> > > +
+> > > +#include "qemu/osdep.h"
+> > > +#include "qemu/log.h"
+> > > +#include "cpu.h"
+> > > +#include "tcg/tcg-cpu.h"
+> > > +#include "exec/exec-all.h"
+> > > +#include "exec/tb-flush.h"
+> > > +#include "qapi/error.h"
+> > > +
+> > > +#if !defined(CONFIG_USER_ONLY)
+> > > +static RISCVException th_maee_check(CPURISCVState *env, int csrno)
+> > > +{
+> > > +    if (riscv_cpu_cfg(env)->ext_xtheadmaee) {
+> > > +        return RISCV_EXCP_ILLEGAL_INST;
+> > > +    }
+> > > +    return RISCV_EXCP_NONE;
+> > > +}
+> > > +
+> > > +static RISCVException
+> > > +read_th_mxstatus(CPURISCVState *env, int csrno, target_ulong *val)
+> > > +{
+> > > +    *val =3D env->th_mxstatus;
+> > > +    return RISCV_EXCP_NONE;
+> > > +}
+> > > +
+> > > +static RISCVException
+> > > +write_th_mxstatus(CPURISCVState *env, int csrno, target_ulong val)
+> > > +{
+> > > +    uint64_t mxstatus =3D env->th_mxstatus;
+> > > +    uint64_t mask =3D TH_MXSTATUS_MAEE;
+> > > +
+> > > +    if ((val ^ mxstatus) & TH_MXSTATUS_MAEE) {
+> > > +        tlb_flush(env_cpu(env));
+> > > +    }
+> > > +
+> > > +    mxstatus =3D (mxstatus & ~mask) | (val & mask);
+> > > +    env->th_mxstatus =3D mxstatus;
+> > > +    return RISCV_EXCP_NONE;
+> > > +}
+> > > +#endif
+> > > +
+> > > +riscv_csr_operations th_csr_ops[CSR_TABLE_SIZE] =3D {
+> > > +#if !defined(CONFIG_USER_ONLY)
+> > > +    [CSR_TH_MXSTATUS]     =3D { "th_mxstatus", th_maee_check, read_t=
+h_mxstatus,
+> > > +                                                            write_th=
+_mxstatus},
+> > > +#endif /* !CONFIG_USER_ONLY */
+> > > +};
+> > > --
+> > > 2.25.1
+> > >
+> > >
 
