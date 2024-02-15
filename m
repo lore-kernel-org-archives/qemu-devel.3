@@ -4,76 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED5FC48BEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113FBC48BF0
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:21:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raV6y-0002KF-B2; Thu, 15 Feb 2024 01:20:44 -0500
+	id 1raV6h-0002Ey-EU; Thu, 15 Feb 2024 01:20:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV6s-0002JJ-5U
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:38 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1raV6f-0002EH-64
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:25 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV6q-0005SV-GL
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:37 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1db562438e0so4115615ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:34 -0800 (PST)
+ id 1raV6d-0005Ib-Aj
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:24 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1d91397bd22so3782575ad.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707978034; x=1708582834; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QqsG1I779d9YjbXcffYW5wImE5mXquA1bGyFgIG+R5A=;
- b=u++Z0SWJyJ/Qkfh/aAowtDc8Yiyd3wOUOnq6/Y0U9OY662wVzjZI5XdCkLfdMW25sj
- ibcS0e9H0akrR6JaVnt32Z2/5gs66TK1Rjlc8upbiUXZdMiuR1qdPq3pEGmBrjj/QKlg
- k914j1vHQPBaQ7LGy4imfcv4jMuCNgyxKjG7Jf3zUJeZKEKBGN4rwcWo+2kSgcpwlZqy
- gqp9eKLLEgIQW7Y64q7r4KOfPJEiMqyVHiXK51ZjW4LTeYn3u2V3bQo3xkJaxvCPIvwr
- OIj9iW5ojMOcqvZ23JEzx1R3io5iS+j8gW3wFPzZmjfpXS8R4e7olBzcMz/1ZIHbNBBz
- PwBA==
+ d=linaro.org; s=google; t=1707978021; x=1708582821; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bF+j8FzygWmODSNlRiznLtR6VKAc61eo4z7A0gqLfVk=;
+ b=q5+ecHf1CTkfy/jBmM+krXs6c78WSjpflxe4gVXzakXG38oKcj+DKV6/YsvGM2jNQI
+ K3TDJWc+5LmcyBVSPpYA8gAOyuUP4R4wkMbGjJY8vdlglkGrFELdytO+E1YjyRrtFaGA
+ /N1xvWQz6MWAPKHLFdPnscYLM8zc7YxUWOuy3nVOZd/54fvKUorGhkacTvnSvLDWMRbV
+ qrDMdh2NrIu1F9xjBK2f3Fj1vK9UdW59ramLe9p49ChcYc89a6IU4/BNK5vZhpMM2/RI
+ 0lU+uu0jbPxF9mNx5n21BpxgFwQZvobxyaoCl68RIvVWTBZFIJSnjFbTLv3covJydtjG
+ +p3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707978034; x=1708582834;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QqsG1I779d9YjbXcffYW5wImE5mXquA1bGyFgIG+R5A=;
- b=oFhizmgKcOj/TsvQ00Y6oinMjpvO7a2S+GIJEnf5sd4CinkQFjbRmvqrkAiw9XzIEw
- kkQo9OFxCZv3ZGKug1xRnRQxHFhFRnHqDrj7twBlJr3x6dDSz7+7GKpgRfUuyNPgkCDE
- ioBcxz0suMnlTNYpnaEUmso6L+Cfr/Bc8FBwVyEkIF0BfC2Ndwn639aUJBU+Rqsis6X0
- ddo5zpYOQjS3Z8AXcrQdD1HAmRO8SXtPL9gN8/pa9mScDkJGX+5/ev5UJNmxLJR9vctM
- yg5MEWEhxxKRO3thGIroPpiNVaS3MDItjX5/E4I1ituvV4sY5uyaHIxAGBiCJJS/r8Wz
- aQlw==
-X-Gm-Message-State: AOJu0YyeZeKN1+ij0x0+MR7fujRW13kh982Nq5y+RGQ7SQvAk3shpqT0
- Z3barSwBnIrP7kbEvv8nadUtFIY8i2a5iRUh0eicRqDolQbNC8VdvC/scBFHaFqt8hFohvirCb3
- 2
-X-Google-Smtp-Source: AGHT+IF9A4Oe5yYP2/x8YV3UrRqkWacjyPe1m51pND9X/vptygIIXqJYelNQZ8nxDDH5fW7i4zzcEA==
-X-Received: by 2002:a17:902:e551:b0:1d9:5ef2:abdd with SMTP id
- n17-20020a170902e55100b001d95ef2abddmr1119429plf.0.1707978034007; 
- Wed, 14 Feb 2024 22:20:34 -0800 (PST)
+ d=1e100.net; s=20230601; t=1707978021; x=1708582821;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bF+j8FzygWmODSNlRiznLtR6VKAc61eo4z7A0gqLfVk=;
+ b=Dar0aKWytIg4icLtNdphQO4ACFt0EHGaGOhKpdQmcyH8/TnpuW77nQjlikFa1EUHqn
+ FB1pzhSxeFMIZW+Uf3b5cHDbtB4gTaFH/vUXZK3Ay5pKfYgNpVfFJjkSM0qURSH9F/h8
+ 1bOtzq0u7e4jb3x+2xDg2qzeKdUmyxxa8IHyFbDnI4ieGeZXvhe884cfl2ZHpoAKCD5t
+ /HhvwiV+bORdqu8S9kEyI+VJn7W4jhimrD3tajm+MohT7JDtX3M9Z47Tsogyj4fZbQrM
+ NWV1Qsdobbbmu6Llh1o1wz8ZLU71wi98RdYQcvcbK8wPdqSqgKnhHsSyDhakbIs7HMrh
+ 0Q4A==
+X-Gm-Message-State: AOJu0Yygjmo5SXH+IQReRb23gm/jqN1numS0pbZRON3N6Il3dSUMp+DL
+ cQFedf2/5AR1sq90PjnUXfX+rSzT8aBTKUxMrrCeeDA1YF0rW2/gnY+bUWV1drnPPpi1qO5K91A
+ B
+X-Google-Smtp-Source: AGHT+IFMwVwgwP63RgWEALAgZ2+SY+v23lOsp6rtKV4WOzRs8SQvr5whCTsus4ub2QTt9z/8Vi1TUA==
+X-Received: by 2002:a17:902:ecc1:b0:1d9:bf01:165d with SMTP id
+ a1-20020a170902ecc100b001d9bf01165dmr1053169plh.10.1707978021007; 
+ Wed, 14 Feb 2024 22:20:21 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.32
+ d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.19
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 22:20:33 -0800 (PST)
+ Wed, 14 Feb 2024 22:20:20 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PATCH v4 09/36] linux-user: Remove REAL_HOST_PAGE_ALIGN from mmap.c
-Date: Wed, 14 Feb 2024 20:19:51 -1000
-Message-Id: <20240215062018.795056-10-richard.henderson@linaro.org>
+Subject: [PATCH v4 00/36] linux-user: Improve host and guest page size handling
+Date: Wed, 14 Feb 2024 20:19:42 -1000
+Message-Id: <20240215062018.795056-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240215062018.795056-1-richard.henderson@linaro.org>
-References: <20240215062018.795056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,30 +91,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already have qemu_real_host_page_size() in a local variable.
+Changes for v4:
+  * Split out do_munmap.
+  * Incorporate review feedback.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-10-richard.henderson@linaro.org>
----
- linux-user/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Blurb from v1:
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 4d3c8717b9..53e5486cc8 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -585,7 +585,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
-              * the hosts real pagesize. Additional anonymous maps
-              * will be created beyond EOF.
-              */
--            len = REAL_HOST_PAGE_ALIGN(sb.st_size - offset);
-+            len = ROUND_UP(sb.st_size - offset, host_page_size);
-         }
-     }
- 
+While working on mmap issues for 8.1, I noticed a lot of corner
+cases of host != guest page size that we implement poorly.
+This seems to be particularly visible on Apple M1 with 16k pages,
+more so than Power with 64k pages for some reason.
+
+Objective 1 is to deprecate and (essentially) disable the -p option.
+
+The effect of -p is apparently confusing, so much so that our own
+testsuite misuses it.  One cannot really change the host page size,
+and pretending otherwise means that we don't treat the host memory
+system correctly, and stuff breaks.
+
+I have not yet done the same work for bsd-user.
+
+Objective 2 is to allow the guest page size to change to match the host.
+
+There are corner cases of host != guest page size will fail in odd ways.
+For case of host > guest page size, the issues could be solved with
+softmmu, allowing a non-linear mapping between host and guest addresses
+and also disconnecting host and guest page permissions.
+
+However, host < guest page has issues with SIGBUS which I believe to be
+totally unfixable.  At minimum one would need to monitor changes to all
+files mapped in the address space, but I'm sure there is much more.
+
+But as always the best behaviour is obtained when the host and guest
+page sizes match -- there are no corner cases to contend with.
+
+There are a set of guests which can be configured to use multiple page
+sizes, and therefore software developed for those guests (usually) does
+not hard-code a particular page size.  For those, we can allow the
+page size to vary and let the guest match the host.
+
+I have only changed aarch64, alpha and ppc guests so far, as those
+are both easy to test and, especially for the case of alpha's default
+8k page size, prone to failure.
+
+
+r~
+
+
+Richard Henderson (36):
+  accel/tcg: Remove qemu_host_page_size from page_protect/page_unprotect
+  linux-user: Adjust SVr4 NULL page mapping
+  linux-user: Remove qemu_host_page_{size, mask} in probe_guest_base
+  linux-user: Remove qemu_host_page_size from create_elf_tables
+  linux-user/hppa: Simplify init_guest_commpage
+  linux-user/nios2: Remove qemu_host_page_size from init_guest_commpage
+  linux-user/arm: Remove qemu_host_page_size from init_guest_commpage
+  linux-user: Remove qemu_host_page_{size, mask} from mmap.c
+  linux-user: Remove REAL_HOST_PAGE_ALIGN from mmap.c
+  linux-user: Remove HOST_PAGE_ALIGN from mmap.c
+  migration: Remove qemu_host_page_size
+  hw/tpm: Remove HOST_PAGE_ALIGN from tpm_ppi_init
+  softmmu/physmem: Remove qemu_host_page_size
+  softmmu/physmem: Remove HOST_PAGE_ALIGN
+  linux-user: Remove qemu_host_page_size from main
+  linux-user: Split out target_mmap__locked
+  linux-user: Move some mmap checks outside the lock
+  linux-user: Fix sub-host-page mmap
+  linux-user: Split out mmap_end
+  linux-user: Do early mmap placement only for reserved_va
+  linux-user: Split out do_munmap
+  linux-user: Use do_munmap for target_mmap failure
+  linux-user: Split out mmap_h_eq_g
+  linux-user: Split out mmap_h_lt_g
+  linux-user: Split out mmap_h_gt_g
+  tests/tcg: Remove run-test-mmap-*
+  tests/tcg: Extend file in linux-madvise.c
+  *-user: Deprecate and disable -p pagesize
+  cpu: Remove page_size_init
+  accel/tcg: Disconnect TargetPageDataNode from page size
+  linux-user: Allow TARGET_PAGE_BITS_VARY
+  target/arm: Enable TARGET_PAGE_BITS_VARY for AArch64 user-only
+  linux-user: Bound mmap_min_addr by host page size
+  target/ppc: Enable TARGET_PAGE_BITS_VARY for user-only
+  target/alpha: Enable TARGET_PAGE_BITS_VARY for user-only
+  linux-user: Remove pgb_dynamic alignment assertion
+
+ docs/about/deprecated.rst                 |  10 +
+ docs/user/main.rst                        |   3 -
+ bsd-user/qemu.h                           |   7 +
+ include/exec/cpu-common.h                 |   7 -
+ include/hw/core/cpu.h                     |   2 -
+ target/alpha/cpu-param.h                  |  16 +-
+ target/arm/cpu-param.h                    |   6 +-
+ target/ppc/cpu-param.h                    |   9 +-
+ accel/tcg/translate-all.c                 |   1 -
+ accel/tcg/user-exec.c                     |  31 +-
+ bsd-user/main.c                           |  22 +-
+ cpu-target.c                              |  13 -
+ hw/tpm/tpm_ppi.c                          |   3 +-
+ linux-user/elfload.c                      |  68 +-
+ linux-user/main.c                         |  34 +-
+ linux-user/mmap.c                         | 767 +++++++++++++---------
+ migration/ram.c                           |  22 +-
+ system/physmem.c                          |  17 +-
+ system/vl.c                               |   1 -
+ target/arm/cpu.c                          |  51 +-
+ tests/tcg/multiarch/linux/linux-madvise.c |   2 +
+ tests/tcg/alpha/Makefile.target           |   3 -
+ tests/tcg/arm/Makefile.target             |   3 -
+ tests/tcg/hppa/Makefile.target            |   3 -
+ tests/tcg/i386/Makefile.target            |   3 -
+ tests/tcg/m68k/Makefile.target            |   3 -
+ tests/tcg/multiarch/Makefile.target       |   9 -
+ tests/tcg/ppc/Makefile.target             |  12 -
+ tests/tcg/sh4/Makefile.target             |   3 -
+ tests/tcg/sparc64/Makefile.target         |   6 -
+ 30 files changed, 674 insertions(+), 463 deletions(-)
+ delete mode 100644 tests/tcg/ppc/Makefile.target
+ delete mode 100644 tests/tcg/sparc64/Makefile.target
+
 -- 
 2.34.1
 
