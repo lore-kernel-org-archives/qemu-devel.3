@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE0EC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:18:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2BAC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXsZ-0007qN-Jt; Thu, 15 Feb 2024 04:18:03 -0500
+	id 1raXve-0007tb-Ll; Thu, 15 Feb 2024 04:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1raXsX-0007lz-Gv
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:18:01 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
- id 1raXsV-0001qg-RH
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:18:01 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-296043e44caso520759a91.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 01:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=adacore.com; s=google; t=1707988678; x=1708593478; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8ijxFDjhnIkpAQ3MRe5MDaADGtYJ09Q9Uu0SWLJuAY8=;
- b=kCukTzi7k04T2Re3WGwU3VE5Gs53vnULd2f4aS3PIHrSS3kgS6FFP5YYEnLRX7PeHE
- yhNJIo9P7RmY1PONVcNWseWCmlNfqDlMs2MhiO2BNRKRZqFhPTkE4jwSyyrb9qeA3h1t
- nDYvXkZlUhaVntgMNFyb3wIJ8LFTtYA9MC20gljLQ3M+oTmyqg4PTJvrSk+R6uoGQ+B2
- //oL/fsbKvGKbYsJJffdyyBlUj16CfTVMTADD6kByZCZXOyWwJCaKRhDdcSztGGPj7OY
- Yu78lCvYrTy4FkScwFxdtn9jEWGOwHFjY77TgdG3KLHOigZSYtg+4aB6tud6dFs9iadL
- Zhuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707988678; x=1708593478;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8ijxFDjhnIkpAQ3MRe5MDaADGtYJ09Q9Uu0SWLJuAY8=;
- b=JaEaAt9xu6a41h2ySwgn60y87lK8CBtqoDFRnGgscYRaWr1IfybUNPdrzqDU/uvlRH
- 7QHTNBiU/7IupcVMEI8QuX3znHbr4fHldh6s5N7d5E1yh6babCRk5ukRazDgOy7yV8Wc
- VEDnEmqOO1U+M6ZqWVxNa4RIWAJIKIpeZsjjd+jjiDioXAvkMrA8DhQ57HDPZJi34ARm
- onOmGwawGtGJp+tRj7omTN8j4wViCjZV18QnNQ/lisxZ3/tN4PD+31Np6rI6v2txHySa
- eW5Dt7wSJiSKgxpejWO1EXlhRMZ6Red56dcAubS/new6pZGihdJpF8xxcUdWb/yDRqaR
- 4zWw==
-X-Gm-Message-State: AOJu0Yz0ZNz6acmL5NSLkn00XlK09XRDSlFAQd/8o/NCF1pNkpn/HXzl
- 0qm9OQQsWC+N+U8dIdXlKIPRjtdP7DPljadNqdRvAqUt1nX2mdKs9aKJpWtYkUtus4mNlVMEIQx
- 1Bm0j8AX6vO0YxKZ+zaf72Z9GZO2ZRnBXrohs
-X-Google-Smtp-Source: AGHT+IH/v1kUGNLya2HjchCDP7DledbcCp/gfOWc5OdJ6EEykO6uRbvr6ZZlfdXYg28UVW+RCtrsLtngR2uHLE9hEIY=
-X-Received: by 2002:a17:90b:28d:b0:299:1f80:8c44 with SMTP id
- az13-20020a17090b028d00b002991f808c44mr106457pjb.40.1707988678074; Thu, 15
- Feb 2024 01:17:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1raXvZ-0007jn-Dy
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:21:09 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1raXvU-0002hI-EF
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:21:09 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E43E24D7E5;
+ Thu, 15 Feb 2024 12:21:02 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id BCD707FAD3;
+ Thu, 15 Feb 2024 12:20:53 +0300 (MSK)
+Message-ID: <39efcede-002c-49e6-be36-6637f3cb16fa@tls.msk.ru>
+Date: Thu, 15 Feb 2024 12:20:53 +0300
 MIME-Version: 1.0
-References: <20240131085047.18458-1-chigot@adacore.com>
- <81348d06-49f0-4102-983e-d6cf80e876a1@linaro.org>
-In-Reply-To: <81348d06-49f0-4102-983e-d6cf80e876a1@linaro.org>
-From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Date: Thu, 15 Feb 2024 10:17:46 +0100
-Message-ID: <CAJ307EhF_6_ssOje4HaL6ASiCbtkdA5CY98gtkZfRLcmX4ubiA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] sparc/leon3: Add support for -smp
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Frederic Konrad <konrad.frederic@yahoo.fr>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=chigot@adacore.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/60] virtio,pc,pci: features, cleanups, fixes
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Li Zhijian <lizhijian@fujitsu.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Ira Weiny <ira.weiny@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <cover.1707909001.git.mst@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <cover.1707909001.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,32 +86,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe
+14.02.2024 14:13, Michael S. Tsirkin:
 
-On Thu, Feb 15, 2024 at 10:02=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Hi Cl=C3=A9ment,
->
-> On 31/1/24 09:50, Cl=C3=A9ment Chigot wrote:
->
-> > This series allows leon3 emulations to record up 4 CPUs.
->
-> > Cl=C3=A9ment Chigot (9):
-> >    sparc/grlib: split out the headers for each peripherals
-> >    intc/grlib_irqmp: add ncpus property
-> >    intc/grlib_irqmp: implements the multiprocessor status register
-> >    intc/grlib_irqmp: implements multicore irq
-> >    target/sparc: implement asr17 feature for smp
-> >    leon3: remove SP initialization
-> >    leon3: implement multiprocessor
-> >    leon3: check cpu_id in the tiny bootloader
-> >    MAINTAINERS: replace Fabien by myself as Leon3 maintainer
-> What is your base commit to apply this series?
+> virtio,pc,pci: features, cleanups, fixes
+> 
+> vhost-user-snd support
+> x2APIC mode with TCG support
+> CXL update to r3.1
+> 
+> fixes, cleanups all over the place.
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> 
+> ----------------------------------------------------------------
+> Akihiko Odaki (2):
+>        hw/smbios: Fix OEM strings table option validation
+>        hw/smbios: Fix port connector option validation
+> 
+> Alex Bennée (6):
+>        virtio: split into vhost-user-base and vhost-user-device
+>        hw/virtio: convert vhost-user-base to async shutdown
+>        hw/virtio: derive vhost-user-rng from vhost-user-base
+>        hw/virtio: derive vhost-user-gpio from vhost-user-base
+>        hw/virtio: derive vhost-user-i2c from vhost-user-base
+>        docs/system: add a basic enumeration of vhost-user devices
+> 
+> Andrey Ignatov (1):
+>        vhost-user.rst: Fix vring address description
+> 
+> Bernhard Beschow (14):
+>        hw/i386/x86: Reverse if statement
+>        hw/i386/x86: Fix PIC interrupt handling if APIC is globally disabled
+>        target/i386/cpu: Fix typo in comment
+>        hw/block/fdc-isa: Move portio_list from FDCtrl to FDCtrlISABus
+>        hw/block/fdc-sysbus: Move iomem from FDCtrl to FDCtrlSysBus
+>        hw/char/parallel: Move portio_list from ParallelState to ISAParallelState
+>        exec/ioport: Resolve redundant .base attribute in struct MemoryRegionPortio
+>        exec/ioport: Add portio_list_set_address()
+>        exec/ioport: Add portio_list_set_enabled()
+>        hw/block/fdc-isa: Implement relocation and enabling/disabling for TYPE_ISA_FDC
+>        hw/char/serial-isa: Implement relocation and enabling/disabling for TYPE_ISA_SERIAL
+>        hw/char/parallel-isa: Implement relocation and enabling/disabling for TYPE_ISA_PARALLEL
+>        hw/ppc/pegasos2: Let pegasos2 machine configure SuperI/O functions
+>        hw/isa/vt82c686: Implement relocation and toggling of SuperI/O functions
+> 
+> Bui Quang Minh (7):
+>        i386/tcg: implement x2APIC registers MSR access
+>        apic: add support for x2APIC mode
+>        apic, i386/tcg: add x2apic transitions
+>        intel_iommu: allow Extended Interrupt Mode when using userspace APIC
+>        test: bios-tables-test: prepare IVRS change in ACPI table
+>        amd_iommu: report x2APIC support to the operating system
+>        test: bios-tables-test: add IVRS changed binary
+> 
+> Davidlohr Bueso (1):
+>        hw/cxl/mbox: Remove dead code
+> 
+> Dmitry Osipenko (1):
+>        virtio-gpu: Correct virgl_renderer_resource_get_info() error check
+> 
+> Hyeonggon Yoo (1):
+>        hw/cxl/device: read from register values in mdev_reg_read()
+> 
+> Ira Weiny (2):
+>        cxl/cdat: Handle cdat table build errors
+>        cxl/cdat: Fix header sum value in CDAT checksum
+> 
+> Jonathan Cameron (11):
+>        hw/mem/cxl_type3: Drop handling of failure of g_malloc0() and g_malloc()
+>        hw/pci-bridge/cxl_upstream: Drop g_malloc() failure handling
+>        hw/mem/cxl_type3: Fix potential divide by zero reported by coverity
+>        tests/acpi: Allow update of DSDT.cxl
+>        hw/i386: Fix _STA return value for ACPI0017
+>        tests/acpi: Update DSDT.cxl to reflect change _STA return value.
+>        hw/cxl: Update HDM Decoder capability to version 3
+>        hw/cxl: Update link register definitions.
+>        hw/cxl: Update RAS Capability Definitions for version 3.
+>        hw/cxl: Update mailbox status registers.
+>        hw/cxl: Standardize all references on CXL r3.1 and minor updates
+> 
+> Leo Yan (4):
+>        hw/virtio: Support set_config() callback in vhost-user-base
+>        docs/system: Add vhost-user-input documentation
+>        hw/virtio: Move vhost-user-input into virtio folder
+>        hw/virtio: derive vhost-user-input from vhost-user-base
+> 
+> Li Zhijian (2):
+>        hw/cxl: Pass CXLComponentState to cache_mem_ops
+>        hw/cxl: Pass NULL for a NULL MemoryRegionOps
+> 
+> Manos Pitsidianakis (4):
+>        hw/virtio: add vhost-user-snd and vhost-user-snd-pci devices
+>        hw/display/virtio-gpu.c: use reset_bh class method
+>        virtio-gpu.c: add resource_destroy class method
+>        virtio-gpu-rutabaga.c: override resource_destroy method
+> 
+> Peter Xu (1):
+>        MAINTAINERS: Drop myself as VT-d maintainers
+> 
+> Raphael Norwitz (1):
+>        MAINTAINERS: Switch to my Enfabrica email
+> 
+> Zhenzhong Duan (2):
+>        virtio_iommu: Clear IOMMUPciBus pointer cache when system reset
+>        smmu: Clear SMMUPciBus pointer cache when system reset
+> 
 
-It's commit 11be70677c70fdccd452a3233653949b79e97908
-    Merge tag 'pull-vfio-20240129' of https://github.com/legoater/qemu
-into staging
+ From this list, I'm picking
 
-Cl=C3=A9ment
+  hw/smbios: Fix table option validation (Akihiko Odaki)
+   (already applied to master and picked for -stable)
+
+  virtio_iommu: Clear IOMMUPciBus pointer cache when system reset (Zhenzhong Duan)
+  smmu: Clear SMMUPciBus pointer cache when system reset (Zhenzhong Duan)
+
+  hw/i386: Fix _STA return value for ACPI0017 (Jonathan Cameron)
+    (with 2 surrounding commits for acpi-tables-test)
+
+  cxl/cdat: Handle cdat table build errors (Ira Weiny)
+
+  cxl/cdat: Fix header sum value in CDAT checksum (Ira Weiny)
+
+  hw/cxl/device: read from register values in mdev_reg_read() (Hyeonggon Yoo)
+
+  hw/cxl: Pass CXLComponentState to cache_mem_ops (Li Zhijian)
+   (a basically no-op bugfix just to have correct code)
+
+for stable-8.2 and (almost all) for stable-7.2.  Please let me know
+if these should not go to -stable, or if there are other changes which
+you think should go to stable.
+
+Thanks,
+
+/mjt
 
