@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B12C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 15:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA31C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 15:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1radmM-000696-G6; Thu, 15 Feb 2024 10:36:02 -0500
+	id 1radsX-0000zS-HR; Thu, 15 Feb 2024 10:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1radmL-00068T-8U
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:36:01 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1radmJ-0002mu-MR
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:36:01 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3392b045e0aso608249f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 07:35:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708011358; x=1708616158; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gmJegsZZbC62SRmjMFtg6AwsWREQyOdJx3WRnV4HBfk=;
- b=pJnglQ3AqCvjo7nzdczYSK3c98aY5e50RBDEEJqsaVU+13dH9pEC7cEZJHPW9DEy2k
- 4FJ0J4wBBlx9ZyBFssLxLmxA5ylBFtJLDJNQfe6Rgno3vu3DnKLlzFNjNVHpa3PpY7Yw
- /mj6LuC+q8t4zssGue61R4udD1B6iUsFgB+hvVIt6s6bxnvvE65wbdN4IUWHasmUcM+S
- lqgMZ9MZtZ9u9AxdTHnQKpwGNh4WRqXw5OemNSScZuY1kZdRKQb0xCQmExE89KFrqdJo
- HgYgjZ7I4b+rfZpSq3mOqkDf4PNIK0pFpZ+2APAmP9Zhu3bbZzH5xJgXAw5ensMBpoA0
- 8SJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708011358; x=1708616158;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gmJegsZZbC62SRmjMFtg6AwsWREQyOdJx3WRnV4HBfk=;
- b=sEQJ1EaiMx4JLP+goawPzhD2HO222DhpZFw0nmv8s08Hr01WbsuZqluK9z6TlunWCM
- lVjmkI+Br6LXs+V8ZRCgmWpRc5qCgKllYX00+GXPimIosuS31oG1GPSEdVgZTzS6W1Vd
- HVXbL1qJyybfkDBXyEu86sbathV6keo2hAiqxgg/tOw89MMasgdvjbFug2JCF/ukP38Q
- SX20HAueDZMhEfF5Ajpz+L2eJke7cxMPl/Dxnqv9fhZVL++9yTswRAvtXpdgMZ5JR9LO
- 7QhMvVMeh9QzyJfPcVCsxaB8mIffUqeUOqzv/gHJzUBEsY1fZcEIWsPJs24SFTpKkm6+
- xSrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuwBnXxMARHPozCd/ptdz4KrBhOGA9KT/YstPhPDscsF8RReBH7ek7VmcNv3NXZytl2QqUosM9PzJMSFfX5xNznij2RLo=
-X-Gm-Message-State: AOJu0Yzxme7oF441NVg/iLCd16YCsV76W4DChiUo6Legx2wdHaoGYJQV
- a9vaTreXffzDdLYiVT+c1Vwwfei0VEeWZJtf0uhGnc0Qh3l+V6EIDExNCE+0zHM=
-X-Google-Smtp-Source: AGHT+IEvxrrDOcJUEPsJjczTFwCAHcoFJzYym5fKT30yUx+Q+wKhdyNHztlxYfm6mB3bihdEe+V3cA==
-X-Received: by 2002:a5d:4fc1:0:b0:33b:d225:3640 with SMTP id
- h1-20020a5d4fc1000000b0033bd2253640mr1688604wrw.59.1708011357968; 
- Thu, 15 Feb 2024 07:35:57 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.193.50])
- by smtp.gmail.com with ESMTPSA id
- co16-20020a0560000a1000b0033d0fbaf5d2sm1394986wrb.27.2024.02.15.07.35.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 07:35:57 -0800 (PST)
-Message-ID: <3cd6e296-80eb-4466-9cce-a01b8db9c189@linaro.org>
-Date: Thu, 15 Feb 2024 16:35:56 +0100
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1radsW-0000zI-H7
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:42:24 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1radsU-0004Kr-1j
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:42:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=WWfL28buc7BNdCkbnMwHV1ydiZ9ooBmNTOYNmbkbOfY=; b=DgaOQigT3mXcgWVT4PPQuGW94S
+ LGgBBMtgRdPt8E9oGm4hfWsquHrMasUz2u9NfAYHhlhTfZzgHm9YWum06+NVgRW7r+2G2rdkOiL4G
+ eNhSwhX21L1jhbRZRzkznJ/YM1qTj5LITosf+PpNyy+zUnlphsgvUBE/je3xggA0TCQzmV+2bfXVk
+ G9HYrqq+tySM1SlyzqkHmJzYzXHtFivQXYqyBWhkVZmUpGrBB+mW6HoNWfLblg+Ehdz6AlwHUdfqZ
+ mKLckOaCy3muavkSPNbwa43yBfEOXrn5TqBLlSjzIT91jrJeA0csbjbFwEomzPYHfG+I9RhHGSasg
+ c0l3VUhlyjUeIpKZXgojlLBwG5JXh7+01pzzPaWN8qECf43hdqhKUvN6Gg/rJ0CFuMOoaVfvfK8HU
+ Jgos7YWcaH3eUoPuWPL17ufVMYl0NrhdT/zpcI7er6tDZhSiVGm6Fkh2tPRCRNTAkaEQCgXfixajv
+ DOuju4NtABH5v0l6wf3rEtWlBdTIcQGum5itP3uUfXbr/47+05azLcuYCwvqSUA8FRElPPv7JYEQN
+ GDqLqEhufNIV/qN/mSbnSfohK9eXkT4HXBXFIMXvi6P7VNWtpnHRx9MO/5jKhh0OrC+mvQCSrkA4x
+ VQ7kzwfOy4bCu0A6GpQVPURSJVP8QBbwI5ilRKFUA=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1radrh-0000s7-Ud; Thu, 15 Feb 2024 15:41:38 +0000
+Message-ID: <97fa6541-b468-4752-83c9-4403a2533be9@ilande.co.uk>
+Date: Thu, 15 Feb 2024 15:42:10 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] hw/arm/sbsa-ref: Simplify init since PCIe is always
- enabled
 Content-Language: en-US
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org
-References: <20240215153311.186772-1-marcin.juszkiewicz@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240215153311.186772-1-marcin.juszkiewicz@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20240215144623.76233-1-philmd@linaro.org>
+ <20240215144623.76233-2-philmd@linaro.org>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240215144623.76233-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v5 1/3] hw/sparc/leon3: Pass DeviceState opaque argument
+ to leon3_set_pil_in()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,14 +109,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/2/24 16:33, Marcin Juszkiewicz wrote:
-> There is no point in checking do we have PCIe if first thing after check
-> is adding PCIe card without checking.
+On 15/02/2024 14:46, Philippe Mathieu-Daudé wrote:
+
+> By passing a DeviceState context to a QDev IRQ handler,
+> we can simplify and use qdev_init_gpio_in_named() instead
+> of qdev_init_gpio_in_named_with_opaque().
 > 
-> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/arm/sbsa-ref.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   hw/sparc/leon3.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+> index bea84f3ad6..a15f90e142 100644
+> --- a/hw/sparc/leon3.c
+> +++ b/hw/sparc/leon3.c
+> @@ -202,9 +202,10 @@ static void leon3_irq_ack(CPUSPARCState *env, int intno)
+>    */
+>   static void leon3_set_pil_in(void *opaque, int n, int level)
+>   {
+> -    CPUSPARCState *env = opaque;
+> +    DeviceState *cpu = opaque;
+> +    CPUState *cs = CPU(cpu);
+> +    CPUSPARCState *env = cpu_env(cs);
+>       uint32_t pil_in = level;
+> -    CPUState *cs;
+>   
+>       assert(env != NULL);
+>   
+> @@ -220,7 +221,6 @@ static void leon3_set_pil_in(void *opaque, int n, int level)
+>   
+>                   env->interrupt_index = TT_EXTINT | i;
+>                   if (old_interrupt != env->interrupt_index) {
+> -                    cs = env_cpu(env);
+>                       trace_leon3_set_irq(i);
+>                       cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>                   }
+> @@ -228,7 +228,6 @@ static void leon3_set_pil_in(void *opaque, int n, int level)
+>               }
+>           }
+>       } else if (!env->pil_in && (env->interrupt_index & ~15) == TT_EXTINT) {
+> -        cs = env_cpu(env);
+>           trace_leon3_reset_irq(env->interrupt_index & 15);
+>           env->interrupt_index = 0;
+>           cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> @@ -316,8 +315,7 @@ static void leon3_generic_hw_init(MachineState *machine)
+>           qdev_connect_gpio_out_named(irqmpdev, "grlib-start-cpu", i,
+>                                       qdev_get_gpio_in_named(DEVICE(cpu),
+>                                                              "start_cpu", 0));
+> -        qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
+> -                                            env, "pil", 1);
+> +        qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
+>           qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", i,
+>                                       qdev_get_gpio_in_named(DEVICE(cpu),
+>                                                              "pil", 0));
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
 
 
