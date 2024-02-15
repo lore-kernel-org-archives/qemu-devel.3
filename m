@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1037BC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 20:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31782C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 20:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rai7h-0003aT-At; Thu, 15 Feb 2024 15:14:21 -0500
+	id 1raiEL-0004xa-34; Thu, 15 Feb 2024 15:21:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1rai7f-0003a9-S0; Thu, 15 Feb 2024 15:14:19 -0500
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1raiEJ-0004vm-Dj
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 15:21:11 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1rai7d-0004zv-Ro; Thu, 15 Feb 2024 15:14:19 -0500
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-51178bbb5d9so10523e87.2; 
- Thu, 15 Feb 2024 12:14:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1raiEG-0006RV-5v
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 15:21:11 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1d71cb97937so13116355ad.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 12:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708028055; x=1708632855; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QxExqKLIxTmaSxNlYnPZSVjMIQEFl7DX9ZXUow+7Z+k=;
- b=gqzMCev8+kkr8cj4ffIifoDB28YbIUJeK2Ab1eo9H8ZnlMBTgkPmaMfbgSopGTww71
- Zh1XXBGgbAw3fhnDe1LFqmOfaEeW+3YrZFWNecjq+IiNkfKsgOPcp3sC9vKg4xNw/Dam
- B0QbuSPrIFgKJ40I5t7iBhWzqhtm3fBDiUxjfV4F9r5Fnt8OKti86R+7u4nNuuNlZ4Vc
- e32J27Fg9bmUHkmEL1I/PWxatyaBCTrogEEWMbjMz6VaycyFqkWd1SwJDHO4K0uQlwoc
- 9yzn3NVMxR3Pm5F40SpTVmbZ+GLVsU0hEyAuvDyHr9XktnIF+zHKQtOUd16IlpjZjsvk
- XOzg==
+ d=ventanamicro.com; s=google; t=1708028465; x=1708633265; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=llkySfZMZVR6N0eP5dCv9W52SMF7H6ZoRsxlIERnhpE=;
+ b=X/yk2WuiApHKc063UlB2gauYl4UWubTyWyWgvCEWr57EFiJg5480+usCyeDKTqBEAd
+ pZ836/pU1rghzxSgyyINEbObDZYsWUem0mLlcOR8FNxsOJO3PtYQFEwggC3aWCvio38b
+ Xvvj3U9PqIp8mixDJP+i7tVPzw3lOYH9PQJ6rPa82KL/frTCZklCd3TUoc7LR4Eb6cy3
+ kAMvkz9VMEHHA7+kdZKgtGMjjCemWJCqdtH7JcnTwoSMyWOw7QL+VwRDkRpNp86tGmjy
+ Eey5Xxb9DNoLC80u9L+TPzwhrXJ7j3u1Z0yyUnNnUnm0JMr5sicCHYoIwzfdLnFpDUwY
+ pkiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708028055; x=1708632855;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QxExqKLIxTmaSxNlYnPZSVjMIQEFl7DX9ZXUow+7Z+k=;
- b=pyU+Ztdkhq6CdvZDQBkBuDLpr/aKEvn69CUTfYt1glMh8GbzyNt/psU52hBfjR99Io
- e0YnMWg7cYsZLoYgGja4r7WqiQes/UPcBUVfsNekel6pfKnThfdBlFEav3Z6Ugcdmx7G
- zP5YPC3u+woNBeoB+PxkYh75VZnzhwm81RVJ4ndgTgjGP8tTdMZAa1lvMIkPGkEgGeXD
- rbpjSc6JG94beGSoh8HtNtdQ8S0qwFQvrT6DiGYk8U/cpqNHuMt8EqFD6jUeBEmpzMEy
- Chq3Ygf6EKe+uetORCGeyioxJg9eSHCa5FkFyyrZ0r1g17kh7HPo1OrypLTrZjS02o52
- ieyg==
+ d=1e100.net; s=20230601; t=1708028465; x=1708633265;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=llkySfZMZVR6N0eP5dCv9W52SMF7H6ZoRsxlIERnhpE=;
+ b=DvbQImAWaMNK4u9OFGm4h/oDacXyvICsgxU+lqGU2hbh5F7XDajkOS8Ne/5aJ/a62i
+ KgePoQ54Zm+QVpVPPuDcrB4NhVOl0IftcU3gKIJF/a9k/kdeMxFMFD7lpJ/jny2BJ22i
+ unw9uruc2KQ7IqiSujVcAGV4ERvQTeQBqD0JfJNnmg8wNl7g0KAqLO07cUmHVxgq6zTH
+ NdV3Hu0hKlLl3vJYoSLuxyEExREHqUF1roOZuOEtAD+86SqheNNSvg917cUvdbpCWu3H
+ Pyz3QxrGSH07rW/u29LhsABl6g2UsMla/ctts/jYHlOkUouyawW/Ec33vNhaFYpa8R9R
+ dezA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWURABa2S75x4o7RUIigd5kclaLHt8ecCjw8ZSeKSqSRYxKZ8QdIr3uP69046ftv5EAs7AAiRdwWTKuuPwriV8dalCK+4E9vw==
-X-Gm-Message-State: AOJu0YzpYZm3mzLUJk7hLxWrxETDL1pxwcDK2xIOmIp/gD3B3iTVUAV3
- dYDz9mpmifxiHf7DvkzgqfdnTlUxVrkKrjhSWLp8eVTarrN66XpN
-X-Google-Smtp-Source: AGHT+IG/alztCjVZa71muav968s8Nhey35mxuOJ4g1qtmfCw7F6InTON0hKCBMwV0P+bVDFNFNViiA==
-X-Received: by 2002:a05:6512:401c:b0:511:6268:e66e with SMTP id
- br28-20020a056512401c00b005116268e66emr3135907lfb.38.1708028054905; 
- Thu, 15 Feb 2024 12:14:14 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-077-191-153-037.77.191.pool.telefonica.de.
- [77.191.153.37]) by smtp.gmail.com with ESMTPSA id
- v14-20020a056402174e00b0055ff9299f71sm855754edx.46.2024.02.15.12.14.14
+ AJvYcCX67YmIoJxlfGEutfl2k8bEL21ASrkKA7IRPOC7Ywlnc5fqiR8lker9NqvDZZ5a6xy1OmlaoF2m/sSYsi0YTvSKcr4tDqk=
+X-Gm-Message-State: AOJu0YwJkYWYJK44NGjlcB5lVqJJfiOQxQIXaSWu0bqdVuA/pj7XUZWO
+ m4KllySzGt8UlQmh6I/a2biF7vWsljhbp0kmseQFjQSjCfgSuI1fmWg3FQpqhlpHCMYqukYqzJi
+ 8
+X-Google-Smtp-Source: AGHT+IGWhayL25YlmQRZMb8uxtloNwr5v7vf5rB9gtp3TH9fqSUxWRiHXkP+VegfKOBFKW0dMJEW6Q==
+X-Received: by 2002:a17:903:244d:b0:1db:5d07:f8ea with SMTP id
+ l13-20020a170903244d00b001db5d07f8eamr3240866pls.64.1708028465601; 
+ Thu, 15 Feb 2024 12:21:05 -0800 (PST)
+Received: from ?IPV6:2804:7f0:bdcd:fb00:6501:2693:db52:c621?
+ ([2804:7f0:bdcd:fb00:6501:2693:db52:c621])
+ by smtp.gmail.com with ESMTPSA id
+ b12-20020a170902bd4c00b001db693d89fdsm1651860plx.179.2024.02.15.12.21.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 12:14:14 -0800 (PST)
-Date: Thu, 15 Feb 2024 19:33:43 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-CC: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org
-Subject: Re: [PATCH 0/7] hw/i386: Cleanups around 'hw/i386/pc.h'
-In-Reply-To: <5e872a94-d4ab-4fe4-afe1-ffc952be8116@linaro.org>
-References: <20240213120153.90930-1-philmd@linaro.org>
- <20240213105455-mutt-send-email-mst@kernel.org>
- <5e872a94-d4ab-4fe4-afe1-ffc952be8116@linaro.org>
-Message-ID: <86BE0D60-FDEF-4552-8B9D-34CE03630043@gmail.com>
+ Thu, 15 Feb 2024 12:21:05 -0800 (PST)
+Message-ID: <2d119d74-3a12-4efa-94e1-acebfe4f0742@ventanamicro.com>
+Date: Thu, 15 Feb 2024 17:21:02 -0300
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=shentey@gmail.com; helo=mail-lf1-x12e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/6] accel/tcg: Avoid uncessary call overhead from
+ qemu_plugin_vcpu_mem_cb
+Content-Language: en-US
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240215192823.729209-1-max.chou@sifive.com>
+ <20240215192823.729209-3-max.chou@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240215192823.729209-3-max.chou@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,49 +105,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 13=2E Februar 2024 16:00:26 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
-philmd@linaro=2Eorg>:
->On 13/2/24 16:55, Michael S=2E Tsirkin wrote:
->> On Tue, Feb 13, 2024 at 01:01:45PM +0100, Philippe Mathieu-Daud=C3=A9 w=
-rote:
->>> Trivial patches removing uses of "hw/i386/pc=2Eh"=2E
->>=20
->> How did you test that it's indeed unused?
->
->I put and #error in hw/i386/pc=2Eh and built :)
->(I'm trying to remove the PC dependency on generic devices=2E)
->
->The few generic devices left are not as trivial=2E
->
->>> Philippe Mathieu-Daud=C3=A9 (7):
->>>    target/i386/monitor: Remove unused 'hw/i386/pc=2Eh' header
->>>    hw/timer: Move HPET_INTCAP definition to "hpet=2Eh"
->>>    hw/isa/lpc_ich9: Remove unused 'hw/i386/pc=2Eh'
->>>    hw/i386/acpi: Declare pc_madt_cpu_entry() in 'acpi-common=2Eh'
->>>    hw/i386/port92: Add missing 'hw/isa/isa=2Eh' header
->>>    hw/acpi/cpu_hotplug: Include 'pci_device=2Eh' instead of 'pci=2Eh'
->>>    hw/acpi/cpu_hotplug: Include 'x86=2Eh' instead of 'pc=2Eh'
->>>=20
->>>   hw/i386/acpi-common=2Eh   | 3 +++
->>>   include/hw/i386/pc=2Eh    | 6 ------
->>>   include/hw/timer/hpet=2Eh | 2 ++
->>>   hw/acpi/cpu_hotplug=2Ec   | 4 ++--
->>>   hw/i386/acpi-common=2Ec   | 1 -
->>>   hw/i386/port92=2Ec        | 1 +
+On 2/15/24 16:28, Max Chou wrote:
+> If there are not any QEMU plugin memory callback functions, checking
+> before calling the qemu_plugin_vcpu_mem_cb function can reduce the
+> function call overhead.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
 
-I'd take care of port92 and make it part of all our three south bridge fam=
-ilies (which models the real hardware more closely)=2E
+This was in my TODO list for some time. Thanks for looking it up.
 
-Best regards,
-Bernhard
+Can't we avoid all callbacks, not just qemu_plugin_vcpu_mem_cb, if there's no
+plugin loaded? The performance increase when building with --disable-plugins
+shouldn't be a thing - if the user isn't using plug-ins it should have a
+penalty to it.
 
->>>   hw/isa/lpc_ich9=2Ec       | 1 -
->>>   hw/timer/hpet=2Ec         | 1 -
->>>   target/i386/monitor=2Ec   | 1 -
->>>   9 files changed, 8 insertions(+), 12 deletions(-)
->>>=20
->>> --=20
->>> 2=2E41=2E0
->>=20
->
+Thanks,
+
+Daniel
+
+>   accel/tcg/ldst_common.c.inc | 40 +++++++++++++++++++++++++++----------
+>   1 file changed, 30 insertions(+), 10 deletions(-)
+> 
+> diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
+> index c82048e377e..bf24986c562 100644
+> --- a/accel/tcg/ldst_common.c.inc
+> +++ b/accel/tcg/ldst_common.c.inc
+> @@ -134,7 +134,9 @@ uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr addr, MemOpIdx oi, uintptr_t ra)
+>   
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_UB);
+>       ret = do_ld1_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+> -    plugin_load_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_load_cb(env, addr, oi);
+> +    }
+>       return ret;
+>   }
+>   
+> @@ -145,7 +147,9 @@ uint16_t cpu_ldw_mmu(CPUArchState *env, abi_ptr addr,
+>   
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_16);
+>       ret = do_ld2_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+> -    plugin_load_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_load_cb(env, addr, oi);
+> +    }
+>       return ret;
+>   }
+>   
+> @@ -156,7 +160,9 @@ uint32_t cpu_ldl_mmu(CPUArchState *env, abi_ptr addr,
+>   
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_32);
+>       ret = do_ld4_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+> -    plugin_load_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_load_cb(env, addr, oi);
+> +    }
+>       return ret;
+>   }
+>   
+> @@ -167,7 +173,9 @@ uint64_t cpu_ldq_mmu(CPUArchState *env, abi_ptr addr,
+>   
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_64);
+>       ret = do_ld8_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+> -    plugin_load_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_load_cb(env, addr, oi);
+> +    }
+>       return ret;
+>   }
+>   
+> @@ -178,7 +186,9 @@ Int128 cpu_ld16_mmu(CPUArchState *env, abi_ptr addr,
+>   
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_128);
+>       ret = do_ld16_mmu(env_cpu(env), addr, oi, ra);
+> -    plugin_load_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_load_cb(env, addr, oi);
+> +    }
+>       return ret;
+>   }
+>   
+> @@ -195,7 +205,9 @@ void cpu_stb_mmu(CPUArchState *env, abi_ptr addr, uint8_t val,
+>                    MemOpIdx oi, uintptr_t retaddr)
+>   {
+>       helper_stb_mmu(env, addr, val, oi, retaddr);
+> -    plugin_store_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_store_cb(env, addr, oi);
+> +    }
+>   }
+>   
+>   void cpu_stw_mmu(CPUArchState *env, abi_ptr addr, uint16_t val,
+> @@ -203,7 +215,9 @@ void cpu_stw_mmu(CPUArchState *env, abi_ptr addr, uint16_t val,
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_16);
+>       do_st2_mmu(env_cpu(env), addr, val, oi, retaddr);
+> -    plugin_store_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_store_cb(env, addr, oi);
+> +    }
+>   }
+>   
+>   void cpu_stl_mmu(CPUArchState *env, abi_ptr addr, uint32_t val,
+> @@ -211,7 +225,9 @@ void cpu_stl_mmu(CPUArchState *env, abi_ptr addr, uint32_t val,
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_32);
+>       do_st4_mmu(env_cpu(env), addr, val, oi, retaddr);
+> -    plugin_store_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_store_cb(env, addr, oi);
+> +    }
+>   }
+>   
+>   void cpu_stq_mmu(CPUArchState *env, abi_ptr addr, uint64_t val,
+> @@ -219,7 +235,9 @@ void cpu_stq_mmu(CPUArchState *env, abi_ptr addr, uint64_t val,
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_64);
+>       do_st8_mmu(env_cpu(env), addr, val, oi, retaddr);
+> -    plugin_store_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_store_cb(env, addr, oi);
+> +    }
+>   }
+>   
+>   void cpu_st16_mmu(CPUArchState *env, abi_ptr addr, Int128 val,
+> @@ -227,7 +245,9 @@ void cpu_st16_mmu(CPUArchState *env, abi_ptr addr, Int128 val,
+>   {
+>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_128);
+>       do_st16_mmu(env_cpu(env), addr, val, oi, retaddr);
+> -    plugin_store_cb(env, addr, oi);
+> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+> +        plugin_store_cb(env, addr, oi);
+> +    }
+>   }
+>   
+>   /*
 
