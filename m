@@ -4,87 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027A5C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEF0C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rachB-0001pl-MY; Thu, 15 Feb 2024 09:26:37 -0500
+	id 1raci0-0002fM-7x; Thu, 15 Feb 2024 09:27:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rach9-0001pW-W4
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:26:36 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1racgv-0001MN-MR
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:26:35 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a3d002bc6f7so88424966b.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:26:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708007180; x=1708611980; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ZYdDtSCMTkJNYvAd6MsMMttRe2dw3Q+k4CC2NfImhx0=;
- b=OU0NbRSqWva/98NXoizVExlJpygYzN2T2TbCrtxupyrZab2apP6IXvMorZssmRbGRh
- S0W9gSQZS59mb0V6+DIjA7ve5pK6LdIS5xAJPk5Rp1yMRYkH/v8RGKmH2IDlETaQTKKg
- HNT57QPXuZmoH5dtab5TIlzWhF1qeSbg4S1Jxgv7Zxz0yqUW8+nJSUFvDOUN/hjC+1m7
- egIbsVhFycJYqzpC9NEzFFhRqLTUy50wvctchx4RuuWenBPiurvw1pFzDuKBnFo0ucYk
- hVl4+YJFO0KDiq7sJYwbAbbHUjeQfd3Oz2KDgmA0tDkzIgdeevEbDUQExzVeUS9cQ70i
- ioHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708007180; x=1708611980;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZYdDtSCMTkJNYvAd6MsMMttRe2dw3Q+k4CC2NfImhx0=;
- b=ZtQFz4LwZ3Q7I4scWIghMfFmgDj1yAy5x7/qkjhoxIDGUfx+xuiOnBLAAsBfWwCgqi
- E5RZYbl6pwABsViQxaLwroyU2bFMBlGTUoDFN4/u5hZXsyOSYbOECiMDz2rlK1doKhc2
- SpHR+lSeq1/evkf7+lu7uAG89XVcD0p3nL+VcO3rdkFQnHx3wGD2pwjIXGuIc8wokI7J
- vSUZatW1LjQ6ATqkRBye6mjc49YoVM2v/6jlTm4Z+Avmd3moe5RI/zaQOpy6k/JUbxqp
- u7jtVHjdLV3goLeo7wXg5I2mi1h5uVq2Y2FcaqlTvWCl63mqb3lI6+esU4U2wW6fX5g3
- LRuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8rxQpyptAGQqmr5wbaMWyJWnEjbpkYxXq4JwOVGb2qpI49xxJCRNZ8dw+zFxO5240VZPKjuaOwwZIJ3A0O724/UpjrZQ=
-X-Gm-Message-State: AOJu0Yw9rx7gRJSPs3GKOs5EdM8pqRuPosIbTfAgoAIhfSQ4lTkjy+s2
- hsqxbrS95rC9WuGqQ+SIZrJqeqIbel3nVq7We5nQRvSoebaVzUuLdjql2gT8b74=
-X-Google-Smtp-Source: AGHT+IGJVFoYp+lWudsffHxUYb69f6QjU4yntF2LKwJ6+lGIpI4kiXsKmHVZ00YZ90UFN7UkBv8RJQ==
-X-Received: by 2002:a17:906:40d1:b0:a36:ff9f:4256 with SMTP id
- a17-20020a17090640d100b00a36ff9f4256mr1525420ejk.54.1708007179815; 
- Thu, 15 Feb 2024 06:26:19 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- hw12-20020a170907a0cc00b00a3d5d8ff745sm605393ejc.144.2024.02.15.06.26.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 06:26:19 -0800 (PST)
-Date: Thu, 15 Feb 2024 15:26:18 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Conor Dooley <conor@kernel.org>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com
-Subject: Re: [PATCH v3 3/6] target/riscv: add remaining named features
-Message-ID: <20240215-55440212b4d6cde9feab5d94@orel>
-References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
- <20240202152154.773253-4-dbarboza@ventanamicro.com>
- <20240215-alkaline-saturday-275cd8e3aa39@spud>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rachw-0002f4-W9
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:27:25 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rachu-0001W2-QS
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:27:24 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 889344E602F;
+ Thu, 15 Feb 2024 15:27:18 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 4invbTU6KD2j; Thu, 15 Feb 2024 15:27:16 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 977C04E6013; Thu, 15 Feb 2024 15:27:16 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 944CC7456B4;
+ Thu, 15 Feb 2024 15:27:16 +0100 (CET)
+Date: Thu, 15 Feb 2024 15:27:16 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ shentey@gmail.com
+Subject: Re: [PATCH v3 8/9] mips/loongson3_virt: do not require CONFIG_USB
+In-Reply-To: <47a999a8-a0e0-4995-8f8c-8d18f564c30b@linaro.org>
+Message-ID: <d02bde71-c4b8-4b07-bc40-3b74d37b0738@eik.bme.hu>
+References: <20240213155005.109954-1-pbonzini@redhat.com>
+ <20240213155005.109954-9-pbonzini@redhat.com>
+ <47a999a8-a0e0-4995-8f8c-8d18f564c30b@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240215-alkaline-saturday-275cd8e3aa39@spud>
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1810300859-1708007236=:15691"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,78 +68,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 15, 2024 at 01:33:47PM +0000, Conor Dooley wrote:
-> On Fri, Feb 02, 2024 at 12:21:51PM -0300, Daniel Henrique Barboza wrote:
-> > The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
-> > until now, we were implying that they were available.
-> > 
-> > We can't do this anymore since named features also has a riscv,isa
-> > entry. Let's add them to riscv_cpu_named_features[].
-> > 
-> > Instead of adding one bool for each named feature that we'll always
-> > implement, i.e. can't be turned off, add a 'ext_always_enabled' bool in
-> > cpu->cfg. This bool will be set to 'true' in TCG accel init, and all
-> > named features will point to it. This also means that KVM won't see
-> > these features as always enable, which is our intention.
-> > 
-> > If any accelerator adds support to disable one of these features, we'll
-> > have to promote them to regular extensions and allow users to disable it
-> > via command line.
-> > 
-> > After this patch, here's the riscv,isa from a buildroot using the
-> > 'rva22s64' CPU:
-> 
-> Why does an "rva22s64" cpu have "zicclsm" in it? Isn't zicclsm only
-> present in "u" profiles?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-"s" profiles mandate all the "u" profile mandatory extensions. For example
-6.2.2 says
+--3866299591-1810300859-1708007236=:15691
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-"""
-The RVA22S64 mandatory unprivileged extensions include all the mandatory unprivileged
-extensions in RVA22U64.
-"""
+On Thu, 15 Feb 2024, Philippe Mathieu-Daudé wrote:
+> On 13/2/24 16:50, Paolo Bonzini wrote:
+>> Once the Kconfig for hw/mips is cleaned up, it will be possible to build a
+>> binary that does not include any USB host controller and therefore that
+>> does not include the code guarded by CONFIG_USB.  While the simpler
+>> creation functions such as usb_create_simple can be inlined, this is not
+>> true of usb_bus_find().  Remove it, replacing it with a search of the
+>> single USB bus created by loongson3_virt_devices_init().
+>> 
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   hw/mips/loongson3_virt.c | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+>> index caedde2df00..bedd3d496bd 100644
+>> --- a/hw/mips/loongson3_virt.c
+>> +++ b/hw/mips/loongson3_virt.c
+>> @@ -447,8 +447,9 @@ static inline void 
+>> loongson3_virt_devices_init(MachineState *machine,
+>>         if (defaults_enabled() && object_class_by_name("pci-ohci")) {
+>>           pci_create_simple(pci_bus, -1, "pci-ohci");
+>> -        usb_create_simple(usb_bus_find(-1), "usb-kbd");
+>> -        usb_create_simple(usb_bus_find(-1), "usb-tablet");
+>> +        Object *usb_bus = object_resolve_path_type("", TYPE_USB_BUS, 
+>> NULL);
+>> +        usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
+>> +        usb_create_simple(USB_BUS(usb_bus), "usb-tablet");
+>>       }
+>>         pci_init_nic_devices(pci_bus, mc->default_nic);
+>
+> Can we remove usb_bus_find() completely instead?
+>
+> $ git grep -w usb_bus_find
+> hw/hppa/machine.c:401:        usb_create_simple(usb_bus_find(-1), "usb-kbd");
+> hw/hppa/machine.c:402:        usb_create_simple(usb_bus_find(-1), 
+> "usb-mouse");
+> hw/mips/loongson3_virt.c:450:        usb_create_simple(usb_bus_find(-1), 
+> "usb-kbd");
+> hw/mips/loongson3_virt.c:451:        usb_create_simple(usb_bus_find(-1), 
+> "usb-tablet");
+> hw/ppc/mac_newworld.c:434:            USBBus *usb_bus = usb_bus_find(-1);
+> hw/ppc/sam460ex.c:423:    usb_create_simple(usb_bus_find(-1), "usb-kbd");
+> hw/ppc/sam460ex.c:424:    usb_create_simple(usb_bus_find(-1), "usb-mouse");
+> hw/ppc/spapr.c:3027:            USBBus *usb_bus = usb_bus_find(-1);
+> hw/sh4/r2d.c:315:    usb_create_simple(usb_bus_find(-1), "usb-kbd");
+> hw/usb/bus.c:103:USBBus *usb_bus_find(int busnr)
+> hw/usb/bus.c:669:    USBBus *bus = usb_bus_find(-1 /* any */);
+> include/hw/usb.h:500:USBBus *usb_bus_find(int busnr);
 
-> 
-> >  # cat /proc/device-tree/cpus/cpu@0/riscv,isa
-> > rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
-> > zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
-> > zbs_zkt_ssccptr_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
-> 
-> I want to raise my frustration with the crock we've been given here by
-> RVI. Any "named feature" that just creates a name for something that
-> already is assumed is completely useless, and DT property that is used
-> to communicate it's presence cannot be used - instead the property needs
-> to be inverted - indicating the absence of that named feature.
-> 
-> Without the inversion, software that parses "riscv,isa" cannot make any
-> determination based on the absence of the property - it could be parsing
-> an old DT that does not have the property or it could be parsing the DT
-> of a system that does not support the extension.
+These are all the machines that add devices to a USB bus, there's no other 
+example to do it in a different way currently. We could change this to get 
+the usb bus in a different way but how? We could either peek into the 
+object that owns the usb_bus or try using qdev_get_child_bus() but that 
+needs the name of the bus which might change if other usb hosts are added 
+so neither of these options seem better than this function. What would it 
+bring to remove this function other than more complex or uglier code? I 
+don't mind if you remove it just don't see the benefit in that.
 
-I'm guessing any platform which wants to advertise that it's compliant
-with a profile will update its hardware descriptions to ensure all the
-profile's mandatory extensions are presented. But, I think I understand
-your concern. If somebody is parsing the ISA string as way to determine
-if the platform is compliant with a profile, then they may get a false
-negative due to the ISA string missing a newly named feature. I'm not
-sure how much of a problem that will be in practice, though, since testing
-for profile compliance, just for the sake of it, doesn't seem very useful.
-Software really only needs to know which extensions are available and if
-it's an old feature that got newly named, then software likely already
-has another way of detecting it.
-
-> 
-> This is part of why I deprecated `riscv,isa`. It's the same problem as
-> with "zifencei" et al - does a system with `riscv,isa = "rv64imac"`
-> support fence.i?
-
-Yes, there's a handful of these messy things and the first profiles
-expose them since they're trying to define them. Fingers crossed that
-the next profiles won't have to name old features. FWIW, I at least
-don't see any "This is a new extension name for this feature" notes in
-the RVA23 profile.
-
-Thanks,
-drew
+Regards,
+BALATON Zoltan
+--3866299591-1810300859-1708007236=:15691--
 
