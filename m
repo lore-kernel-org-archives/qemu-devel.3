@@ -4,63 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D6BC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3740BC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:36:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafdN-0007KO-0X; Thu, 15 Feb 2024 12:34:53 -0500
+	id 1rafeF-0007v9-Cs; Thu, 15 Feb 2024 12:35:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rafdG-0007Hc-7j
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:34:47 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rafdA-0003MR-GQ
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:34:45 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TbMXT0fknz6J9bQ;
- Fri, 16 Feb 2024 01:30:33 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 028C1140682;
- Fri, 16 Feb 2024 01:34:36 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 15 Feb
- 2024 17:34:35 +0000
-Date: Thu, 15 Feb 2024 17:34:34 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-devel@nongnu.org>, Gregory Price <gregory.price@memverge.com>, Alex
- =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Sajjan Rao
- <sajjanr@gmail.com>, Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
- <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, "Eduardo
- Habkost" <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 3/3] tcg: Avoid double lock if page tables happen to be
- in mmio memory.
-Message-ID: <20240215173434.00004882@Huawei.com>
-In-Reply-To: <CAFEAcA-rHZe2xF9anKxYFm0zHYc6gV=g9JiXxeZ4E_LoQ7DhSA@mail.gmail.com>
-References: <20240215150133.2088-1-Jonathan.Cameron@huawei.com>
- <20240215150133.2088-4-Jonathan.Cameron@huawei.com>
- <CAFEAcA-rHZe2xF9anKxYFm0zHYc6gV=g9JiXxeZ4E_LoQ7DhSA@mail.gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rafeC-0007ue-QT
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:44 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rafeA-0003tr-61
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:44 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-412345cca4eso1445855e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708018540; x=1708623340; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=gVKVyr54/cu6N23YdS0aTVdm9ZYArOc/LwzJY2KIje8=;
+ b=XhdSZMWg1cIMMEAhCvIyXM3BASqmnACklP0zHYjFZPHnYgP2LpERhG+Jfs2ebK50d/
+ XlszHP0Yk7TpXaG6p6V2KvTnl7kSFvhX6LKzJz/z/hpsiIicnldtb1+pxlWzXTmfccsP
+ rP/0umm3KD1rYRBSwitOxXSaJptyq8Ka5T8MLWNMaowY4V7FgTR32G2DAjpsbh2fCsh2
+ jiYW057w9+SEXklYqwx/m3cGmQC5HTbIuqhWp8EGwdLVD+g+of7kHkdB5YTIbCfMnu1T
+ KxdzvsiIXTKlSpqjw4FsxxTv0mZBSFOv+rCKHWGp7oyyt89ka7qZY7Yx3gwHGoxVLADB
+ 9/nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708018540; x=1708623340;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gVKVyr54/cu6N23YdS0aTVdm9ZYArOc/LwzJY2KIje8=;
+ b=wOB/4bVsuw8zk17Nw7UHEODRSdPFFTIF4IHEevnwzpmfD0TDtJ+1Af1oE73BOQxy1/
+ hKGPBx1kwTFPEUEs86wZ/wt6YMwweYP2bSj/+tFXKjBM+vL50h3GVQHBDfw98MaSxBHz
+ EXv22d4dgCBbZLrXXL9TkBdSOEkYPJxHNIZti3Uib3VaH861oUSbVOQZyQ8m3KCmRwQ0
+ VrBZK223vLZUNCu+aVdv2X6ZMy8rW8R4KWlyfusrh4q5tBPYMZF9nE2bamo8N+BEs1fx
+ +3ubpvDQSfeQynih6si5bAu7hVc+Cc2SZqkw6UKBTunjnklXlEVrcBpki64VuhtEzO5M
+ fFVw==
+X-Gm-Message-State: AOJu0Yw6xBBITObJ7GA5NtOuP5G/x/9rZvB3+akwmR3E68uq50WutWYm
+ /Smfcbf1ki9biBtwEFohh6LLJBMd7IFe+/3Wi3LisXyR8v2V1WufesmOzA99IQfp/cjt3gRyBUJ
+ a
+X-Google-Smtp-Source: AGHT+IHbyFM9SMkLXxq3dbdsQ1X/NiwD+5VWvaOdjPEUycANxr6OGcXQ2l6beEqQvQT3DcKUTXsUUQ==
+X-Received: by 2002:a5d:6dad:0:b0:33b:75d0:9b4b with SMTP id
+ u13-20020a5d6dad000000b0033b75d09b4bmr2401064wrs.50.1708018540624; 
+ Thu, 15 Feb 2024 09:35:40 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.40
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Feb 2024 09:35:40 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 02/35] linux-user/aarch64: Choose SYNC as the preferred MTE mode
+Date: Thu, 15 Feb 2024 17:35:05 +0000
+Message-Id: <20240215173538.2430599-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
+References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,111 +90,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Feb 2024 16:11:26 +0000
-Peter Maydell <peter.maydell@linaro.org> wrote:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-> On Thu, 15 Feb 2024 at 15:03, Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
-> >
-> > On i386, after fixing the page walking code to work with pages in
-> > MMIO memory (specifically CXL emulated interleaved memory),
-> > a crash was seen in an interrupt handling path.
-> >
-> > Useful part of bt  
-> 
-> Did you intend to put in a backtrace here?
-ah. Indeed.
+The API does not generate an error for setting ASYNC | SYNC; that merely
+constrains the selection vs the per-cpu default.  For qemu linux-user,
+choose SYNC as the default.
 
-Forgot that the # at start of a bt is a comment in a git message
-oops.
+Cc: qemu-stable@nongnu.org
+Reported-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20240207025210.8837-2-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ linux-user/aarch64/target_prctl.h | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
-I'll put those back in (hash removed) for v2.
-
-7  0x0000555555ab1929 in bql_lock_impl (file=0x555556049122 "../../accel/tcg/cputlb.c", line=2033) at ../../system/cpus.c:524
-8  bql_lock_impl (file=file@entry=0x555556049122 "../../accel/tcg/cputlb.c", line=line@entry=2033) at ../../system/cpus.c:520
-9  0x0000555555c9f7d6 in do_ld_mmio_beN (cpu=0x5555578e0cb0, full=0x7ffe88012950, ret_be=ret_be@entry=0, addr=19595792376, size=size@entry=8, mmu_idx=4, type=MMU_DATA_LOAD, ra=0) at ../../accel/tcg/cputlb.c:2033
-10 0x0000555555ca0fbd in do_ld_8 (cpu=cpu@entry=0x5555578e0cb0, p=p@entry=0x7ffff4efd1d0, mmu_idx=<optimized out>, type=type@entry=MMU_DATA_LOAD, memop=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:2356
-11 0x0000555555ca341f in do_ld8_mmu (cpu=cpu@entry=0x5555578e0cb0, addr=addr@entry=19595792376, oi=oi@entry=52, ra=0, ra@entry=52, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2439
-12 0x0000555555ca5f59 in cpu_ldq_mmu (ra=52, oi=52, addr=19595792376, env=0x5555578e3470) at ../../accel/tcg/ldst_common.c.inc:169
-13 cpu_ldq_le_mmuidx_ra (env=0x5555578e3470, addr=19595792376, mmu_idx=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/ldst_common.c.inc:301
-14 0x0000555555b4b5fc in ptw_ldq (ra=0, in=0x7ffff4efd320) at ../../target/i386/tcg/sysemu/excp_helper.c:98
-15 ptw_ldq (ra=0, in=0x7ffff4efd320) at ../../target/i386/tcg/sysemu/excp_helper.c:93
-16 mmu_translate (env=env@entry=0x5555578e3470, in=0x7ffff4efd3e0, out=0x7ffff4efd3b0, err=err@entry=0x7ffff4efd3c0, ra=ra@entry=0) at ../../target/i386/tcg/sysemu/excp_helper.c:174
-17 0x0000555555b4c4b3 in get_physical_address (ra=0, err=0x7ffff4efd3c0, out=0x7ffff4efd3b0, mmu_idx=0, access_type=MMU_DATA_LOAD, addr=18446741874686299840, env=0x5555578e3470) at ../../target/i386/tcg/sysemu/excp_helper.c:580
-18 x86_cpu_tlb_fill (cs=0x5555578e0cb0, addr=18446741874686299840, size=<optimized out>, access_type=MMU_DATA_LOAD, mmu_idx=0, probe=<optimized out>, retaddr=0) at ../../target/i386/tcg/sysemu/excp_helper.c:606
-19 0x0000555555ca0ee9 in tlb_fill (retaddr=0, mmu_idx=0, access_type=MMU_DATA_LOAD, size=<optimized out>, addr=18446741874686299840, cpu=0x7ffff4efd540) at ../../accel/tcg/cputlb.c:1315
-20 mmu_lookup1 (cpu=cpu@entry=0x5555578e0cb0, data=data@entry=0x7ffff4efd540, mmu_idx=0, access_type=access_type@entry=MMU_DATA_LOAD, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:1713
-21 0x0000555555ca2c61 in mmu_lookup (cpu=cpu@entry=0x5555578e0cb0, addr=addr@entry=18446741874686299840, oi=oi@entry=32, ra=ra@entry=0, type=type@entry=MMU_DATA_LOAD, l=l@entry=0x7ffff4efd540) at ../../accel/tcg/cputlb.c:1803
-22 0x0000555555ca3165 in do_ld4_mmu (cpu=cpu@entry=0x5555578e0cb0, addr=addr@entry=18446741874686299840, oi=oi@entry=32, ra=ra@entry=0, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2416
-23 0x0000555555ca5ef9 in cpu_ldl_mmu (ra=0, oi=32, addr=18446741874686299840, env=0x5555578e3470) at ../../accel/tcg/ldst_common.c.inc:158
-24 cpu_ldl_le_mmuidx_ra (env=env@entry=0x5555578e3470, addr=addr@entry=18446741874686299840, mmu_idx=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/ldst_common.c.inc:294
-25 0x0000555555bb6cdd in do_interrupt64 (is_hw=1, next_eip=18446744072399775809, error_code=0, is_int=0, intno=236, env=0x5555578e3470) at ../../target/i386/tcg/seg_helper.c:889
-26 do_interrupt_all (cpu=cpu@entry=0x5555578e0cb0, intno=236, is_int=is_int@entry=0, error_code=error_code@entry=0, next_eip=next_eip@entry=0, is_hw=is_hw@entry=1) at ../../target/i386/tcg/seg_helper.c:1130
-27 0x0000555555bb87da in do_interrupt_x86_hardirq (env=env@entry=0x5555578e3470, intno=<optimized out>, is_hw=is_hw@entry=1) at ../../target/i386/tcg/seg_helper.c:1162
-28 0x0000555555b5039c in x86_cpu_exec_interrupt (cs=0x5555578e0cb0, interrupt_request=<optimized out>) at ../../target/i386/tcg/sysemu/seg_helper.c:197
-29 0x0000555555c94480 in cpu_handle_interrupt (last_tb=<synthetic pointer>, cpu=0x5555578e0cb0) at ../../accel/tcg/cpu-exec.c:844
-> 
-> >
-> > Peter identified this as being due to the BQL already being
-> > held when the page table walker encounters MMIO memory and attempts
-> > to take the lock again.  There are other examples of similar paths
-> > TCG, so this follows the approach taken in those of simply checking
-> > if the lock is already held and if it is, don't take it again.
-> >
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > ---
-> >  accel/tcg/cputlb.c | 9 +++++++--
-> >  1 file changed, 7 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> > index 047cd2cc0a..3b8d178707 100644
-> > --- a/accel/tcg/cputlb.c
-> > +++ b/accel/tcg/cputlb.c
-> > @@ -2019,6 +2019,7 @@ static uint64_t do_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
-> >                                 int mmu_idx, MMUAccessType type, uintptr_t ra)
-> >  {
-> >      MemoryRegionSection *section;
-> > +    bool locked = bql_locked();
-> >      MemoryRegion *mr;
-> >      hwaddr mr_offset;
-> >      MemTxAttrs attrs;
-> > @@ -2030,10 +2031,14 @@ static uint64_t do_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
-> >      section = io_prepare(&mr_offset, cpu, full->xlat_section, attrs, addr, ra);
-> >      mr = section->mr;
-> >
-> > -    bql_lock();
-> > +    if (!locked) {
-> > +        bql_lock();
-> > +    }
-> >      ret = int_ld_mmio_beN(cpu, full, ret_be, addr, size, mmu_idx,
-> >                            type, ra, mr, mr_offset);
-> > -    bql_unlock();
-> > +    if (!locked) {
-> > +        bql_unlock();
-> > +    }
-> >
-> >      return ret;
-> >  }  
-> 
-> Can we do this consistently across all four functions
-> do_ld_mmio_beN, do_ld16_mmio_beN, do_st_mmio_leN,
-> do_st16_mmio_leN, please ? It happens that your workload
-> only needs to do an 8-byte load but conceptually the same
-> thing applies in all these cases.
-
-Sure,
-
-Jonathan
-
-
-> 
-> thanks
-> -- PMM
+diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
+index 5067e7d7310..aa8e203c153 100644
+--- a/linux-user/aarch64/target_prctl.h
++++ b/linux-user/aarch64/target_prctl.h
+@@ -173,21 +173,26 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
+ 
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+-        switch (arg2 & PR_MTE_TCF_MASK) {
+-        case PR_MTE_TCF_NONE:
+-        case PR_MTE_TCF_SYNC:
+-        case PR_MTE_TCF_ASYNC:
+-            break;
+-        default:
+-            return -EINVAL;
+-        }
+-
+         /*
+          * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
+-         * Note that the syscall values are consistent with hw.
++         *
++         * The kernel has a per-cpu configuration for the sysadmin,
++         * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
++         * which qemu does not implement.
++         *
++         * Because there is no performance difference between the modes, and
++         * because SYNC is most useful for debugging MTE errors, choose SYNC
++         * as the preferred mode.  With this preference, and the way the API
++         * uses only two bits, there is no way for the program to select
++         * ASYMM mode.
+          */
+-        env->cp15.sctlr_el[1] =
+-            deposit64(env->cp15.sctlr_el[1], 38, 2, arg2 >> PR_MTE_TCF_SHIFT);
++        unsigned tcf = 0;
++        if (arg2 & PR_MTE_TCF_SYNC) {
++            tcf = 1;
++        } else if (arg2 & PR_MTE_TCF_ASYNC) {
++            tcf = 2;
++        }
++        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
+ 
+         /*
+          * Write PR_MTE_TAG to GCR_EL1[Exclude].
+-- 
+2.34.1
 
 
