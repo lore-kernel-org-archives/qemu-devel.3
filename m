@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEA7C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E9A4C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raV7R-00036l-Il; Thu, 15 Feb 2024 01:21:13 -0500
+	id 1raV78-0002OK-25; Thu, 15 Feb 2024 01:20:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV7P-0002w9-2a
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:21:11 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1raV71-0002LP-KO
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:47 -0500
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV7L-0005b6-Pu
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:21:10 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d91397bd22so3785925ad.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:21:07 -0800 (PST)
+ id 1raV6z-0005VQ-M2
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:47 -0500
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-5cddc5455aeso411631a12.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707978066; x=1708582866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707978044; x=1708582844; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iM2DWBTbIODm0qN2yhX9D3hAXXDtYwow0kqtsMcFoQE=;
- b=v4wd6VKy5O2IRTProYWFR0Vcv+WPssRe5SK74jjAA2yPm6ASPm6m6kzj4ZE8ogpUFi
- fsSXfdqzQt9xgKcnUGQPgUEaRKvoJu/B0VIN7/GYhI86gbWiVauGD1o4c396AvTVV2BG
- sW58FAOp1qqxbIrgFHPusCAu7FF7Z1McXjiQL/KtNQ6cKKsD2pHTYd3RuvUQb7UKXr6/
- IHVM0KCMLeBYIv0xMzMuUgxQC4bUjJJpezU0uZCvkg6+ikuEZbUhE0g0sQJUgdNernYK
- 3cDJv8eIa7qdzMDA8PufduinmecsefyLeCT272b2DmEy6FlgYTmKziUIDm51bsx9lShQ
- Qhiw==
+ bh=qzBaOBmrgtVcZmBT0VJjVQXI2NhHPFgQ+IyeqJADkZ4=;
+ b=hMX3/dye6Y3L1T1eAPoMuzPYU25ae4CvShnW2sBb1A99JSfxkzdqbqj7Eeeo1dm0yr
+ SxGgxpoBIJKYNNZMK3Y7yYSOScwEneTuUHdokco+PpCAP538rC02O81ZTTMZm8ABUAdt
+ KWc7xz87Moz7T7Djefvw3meWfkF8ouLDe2H1BpFNy3/J5sRVqYSHE4aqxBHKAaZYLjuM
+ PULxN33iivAgbrw8IxIPqw017lIuf/b5iNdOypgi4EPK2TCMdDdxQUj/kMYNQCt6Q1wJ
+ UqkyaUcOXdUn+8A90nxDR6qdKh6BVMUTJpPHb2JXbwfx9FXR9GkGt51RRN0b2c+PDbIt
+ B5Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707978066; x=1708582866;
+ d=1e100.net; s=20230601; t=1707978044; x=1708582844;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iM2DWBTbIODm0qN2yhX9D3hAXXDtYwow0kqtsMcFoQE=;
- b=cZC1e7gq9OMOAa4Veq62nzlN0UkcZK/TyE9Q6tTJMdLhrmFHryFcop23iKb7qNfH3n
- Yw5GG6rHwQeW4FBQuNXbqyV042eblhsch4y+O5peWQFsmf5K8ahi0G8GzW+l7p5KPRHm
- I2NNG3cUBhq2nEXoTUeFJKa6+PIIrX5c83wZa5u+FIQ5aQ4q0Yjsy6vAjOyKWQ7kC/Dy
- GLv+AHABepgkCcp6i/CTLnWiexdo6XhnfLWJonngsK7nhUGfbGqycvUvB6DGJEc5WM2E
- scnzSBw4l+jJX6JooCcQ7/zjfVr68MI/z8GspALI98qeaKPunUF85sJ580MkI1rzdDfv
- XM2A==
-X-Gm-Message-State: AOJu0YyyoNitrWmZtdfIgCvWrSvZU543IOPDQ6fkQ6fZiKUBXyWYSkRJ
- Oekeu/CHRBS+tDagK6sWvdV7Ji0kYBfktnEbBIcIYz5K+d8hqikXFjia+0LJp33n4W6kTVJNOgo
- v
-X-Google-Smtp-Source: AGHT+IEevPRBMgGW9AzdwAOYT1e4rQc8RU+6HkCg9vJCaNaj6kI1S/o6llW4TwiqCKixriLxZYgSJQ==
-X-Received: by 2002:a17:902:f7c3:b0:1db:75aa:7f6a with SMTP id
- h3-20020a170902f7c300b001db75aa7f6amr751041plw.20.1707978066567; 
- Wed, 14 Feb 2024 22:21:06 -0800 (PST)
+ bh=qzBaOBmrgtVcZmBT0VJjVQXI2NhHPFgQ+IyeqJADkZ4=;
+ b=SPXXMkqPrITOxv+lYGohi4RgIrXhqVr5x6cm50wBL8ZSx/OhdKj+1443PODDzG8ykT
+ YBj/3poWAniEDWlvi38epfOFMF/KW6ysx3UK3/ATUdn4uuysTJLCu9arHr8XCl7DaVuq
+ sM5dC94BbjogQD0/RdR0Ss/B9kRVb2L18GsTQTNKyRq7fsldoqPWvh0SwrIEuMaPjBfm
+ 5lJVHvL/UWbm40LYZ6Icw3tZFNYcBL6cXNSqVos6chGJfXQc2hQH9tOZdOsWrUoMJsIr
+ EqFx+WtsU3VqE451den0oirC6T8YrHDRVfmQgrLkL0nQJI91DmArmu88S7CdNVkjucVS
+ YcfQ==
+X-Gm-Message-State: AOJu0Yx4LoIx6IuarlpxWhbbuwjw/WP2gsNPDVtiRKEF8m1HThT4YDK6
+ ZL6jyZywdWZC/wGrAxof51XBZJlTRTfLWixCM+mIW3ZFX1vwffxKayDDbxXF7mcrXFxdCrfcba7
+ x
+X-Google-Smtp-Source: AGHT+IFQNYiZUtBt+e26S+lBBRCXKS3xSVMZwalPT4mtPAfciuQWBx6Q0Z4GYKmzEd/g+5YeIWggBQ==
+X-Received: by 2002:a17:90a:dd41:b0:296:6a37:c528 with SMTP id
+ u1-20020a17090add4100b002966a37c528mr789257pjv.24.1707978044222; 
+ Wed, 14 Feb 2024 22:20:44 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.21.05
+ d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 22:21:06 -0800 (PST)
+ Wed, 14 Feb 2024 22:20:43 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH v4 31/36] linux-user: Allow TARGET_PAGE_BITS_VARY
-Date: Wed, 14 Feb 2024 20:20:13 -1000
-Message-Id: <20240215062018.795056-32-richard.henderson@linaro.org>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH v4 16/36] linux-user: Split out target_mmap__locked
+Date: Wed, 14 Feb 2024 20:19:58 -1000
+Message-Id: <20240215062018.795056-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215062018.795056-1-richard.henderson@linaro.org>
 References: <20240215062018.795056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,71 +97,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If set, match the host and guest page sizes.
+All "goto fail" may be transformed to "return -1".
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-30-richard.henderson@linaro.org>
+Message-Id: <20240102015808.132373-17-richard.henderson@linaro.org>
 ---
- linux-user/main.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ linux-user/mmap.c | 62 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index bad03f06d3..12bb839982 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -55,6 +55,7 @@
- #include "loader.h"
- #include "user-mmap.h"
- #include "tcg/perf.h"
-+#include "exec/page-vary.h"
- 
- #ifdef CONFIG_SEMIHOSTING
- #include "semihosting/semihost.h"
-@@ -680,6 +681,7 @@ int main(int argc, char **argv, char **envp)
-     int i;
-     int ret;
-     int execfd;
-+    int host_page_size;
-     unsigned long max_reserved_va;
-     bool preserve_argv0;
- 
-@@ -791,6 +793,16 @@ int main(int argc, char **argv, char **envp)
-                                  opt_one_insn_per_tb, &error_abort);
-         ac->init_machine(NULL);
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index d11f758d07..b4c3cc65aa 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -490,9 +490,9 @@ abi_ulong mmap_find_vma(abi_ulong start, abi_ulong size, abi_ulong align)
      }
-+
-+    /*
-+     * Finalize page size before creating CPUs.
-+     * This will do nothing if !TARGET_PAGE_BITS_VARY.
-+     * The most efficient setting is to match the host.
-+     */
-+    host_page_size = qemu_real_host_page_size();
-+    set_preferred_target_page_bits(ctz32(host_page_size));
-+    finalize_target_page_bits();
-+
-     cpu = cpu_create(cpu_type);
-     env = cpu_env(cpu);
-     cpu_reset(cpu);
-@@ -804,8 +816,6 @@ int main(int argc, char **argv, char **envp)
-      */
-     max_reserved_va = MAX_RESERVED_VA(cpu);
-     if (reserved_va != 0) {
--        int host_page_size = qemu_real_host_page_size();
+ }
+ 
+-/* NOTE: all the constants are the HOST ones */
+-abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+-                     int flags, int fd, off_t offset)
++static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
++                                    int target_prot, int flags,
++                                    int fd, off_t offset)
+ {
+     int host_page_size = qemu_real_host_page_size();
+     abi_ulong ret, last, real_start, real_last, retaddr, host_len;
+@@ -500,30 +500,27 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+     int page_flags;
+     off_t host_offset;
+ 
+-    mmap_lock();
+-    trace_target_mmap(start, len, target_prot, flags, fd, offset);
 -
-         if ((reserved_va + 1) % host_page_size) {
-             char *s = size_to_str(host_page_size);
-             fprintf(stderr, "Reserved virtual address not aligned mod %s\n", s);
-@@ -904,7 +914,7 @@ int main(int argc, char **argv, char **envp)
-      * If we're in a chroot with no /proc, fall back to 1 page.
-      */
-     if (mmap_min_addr == 0) {
--        mmap_min_addr = qemu_real_host_page_size();
-+        mmap_min_addr = host_page_size;
-         qemu_log_mask(CPU_LOG_PAGE,
-                       "host mmap_min_addr=0x%lx (fallback)\n",
-                       mmap_min_addr);
+     if (!len) {
+         errno = EINVAL;
+-        goto fail;
++        return -1;
+     }
+ 
+     page_flags = validate_prot_to_pageflags(target_prot);
+     if (!page_flags) {
+         errno = EINVAL;
+-        goto fail;
++        return -1;
+     }
+ 
+     /* Also check for overflows... */
+     len = TARGET_PAGE_ALIGN(len);
+     if (!len) {
+         errno = ENOMEM;
+-        goto fail;
++        return -1;
+     }
+ 
+     if (offset & ~TARGET_PAGE_MASK) {
+         errno = EINVAL;
+-        goto fail;
++        return -1;
+     }
+ 
+     /*
+@@ -553,7 +550,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+         start = mmap_find_vma(real_start, host_len, TARGET_PAGE_SIZE);
+         if (start == (abi_ulong)-1) {
+             errno = ENOMEM;
+-            goto fail;
++            return -1;
+         }
+     }
+ 
+@@ -574,7 +571,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+         struct stat sb;
+ 
+         if (fstat(fd, &sb) == -1) {
+-            goto fail;
++            return -1;
+         }
+ 
+         /* Are we trying to create a map beyond EOF?.  */
+@@ -601,7 +598,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+         p = mmap(g2h_untagged(start), host_len, host_prot,
+                  flags | MAP_FIXED | MAP_ANONYMOUS, -1, 0);
+         if (p == MAP_FAILED) {
+-            goto fail;
++            return -1;
+         }
+         /* update start so that it points to the file position at 'offset' */
+         host_start = (uintptr_t)p;
+@@ -610,7 +607,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+                      flags | MAP_FIXED, fd, host_offset);
+             if (p == MAP_FAILED) {
+                 munmap(g2h_untagged(start), host_len);
+-                goto fail;
++                return -1;
+             }
+             host_start += offset - host_offset;
+         }
+@@ -621,7 +618,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+     } else {
+         if (start & ~TARGET_PAGE_MASK) {
+             errno = EINVAL;
+-            goto fail;
++            return -1;
+         }
+         last = start + len - 1;
+         real_last = ROUND_UP(last, host_page_size) - 1;
+@@ -633,14 +630,14 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+          */
+         if (last < start || !guest_range_valid_untagged(start, len)) {
+             errno = ENOMEM;
+-            goto fail;
++            return -1;
+         }
+ 
+         if (flags & MAP_FIXED_NOREPLACE) {
+             /* Validate that the chosen range is empty. */
+             if (!page_check_range_empty(start, last)) {
+                 errno = EEXIST;
+-                goto fail;
++                return -1;
+             }
+ 
+             /*
+@@ -671,17 +668,17 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+             if ((flags & MAP_TYPE) == MAP_SHARED
+                 && (target_prot & PROT_WRITE)) {
+                 errno = EINVAL;
+-                goto fail;
++                return -1;
+             }
+             retaddr = target_mmap(start, len, target_prot | PROT_WRITE,
+                                   (flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))
+                                   | MAP_PRIVATE | MAP_ANONYMOUS,
+                                   -1, 0);
+             if (retaddr == -1) {
+-                goto fail;
++                return -1;
+             }
+             if (pread(fd, g2h_untagged(start), len, offset) == -1) {
+-                goto fail;
++                return -1;
+             }
+             if (!(target_prot & PROT_WRITE)) {
+                 ret = target_mprotect(start, len, target_prot);
+@@ -696,14 +693,14 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+                 /* one single host page */
+                 if (!mmap_frag(real_start, start, last,
+                                target_prot, flags, fd, offset)) {
+-                    goto fail;
++                    return -1;
+                 }
+                 goto the_end1;
+             }
+             if (!mmap_frag(real_start, start,
+                            real_start + host_page_size - 1,
+                            target_prot, flags, fd, offset)) {
+-                goto fail;
++                return -1;
+             }
+             real_start += host_page_size;
+         }
+@@ -713,7 +710,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+             if (!mmap_frag(real_page, real_page, last,
+                            target_prot, flags, fd,
+                            offset + real_page - start)) {
+-                goto fail;
++                return -1;
+             }
+             real_last -= host_page_size;
+         }
+@@ -739,7 +736,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+                     munmap(p, len1);
+                     errno = EEXIST;
+                 }
+-                goto fail;
++                return -1;
+             }
+             passthrough_start = real_start;
+             passthrough_last = real_last;
+@@ -773,11 +770,22 @@ abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
+             qemu_log_unlock(f);
+         }
+     }
+-    mmap_unlock();
+     return start;
+-fail:
++}
++
++/* NOTE: all the constants are the HOST ones */
++abi_long target_mmap(abi_ulong start, abi_ulong len, int target_prot,
++                     int flags, int fd, off_t offset)
++{
++    abi_long ret;
++
++    trace_target_mmap(start, len, target_prot, flags, fd, offset);
++    mmap_lock();
++
++    ret = target_mmap__locked(start, len, target_prot, flags, fd, offset);
++
+     mmap_unlock();
+-    return -1;
++    return ret;
+ }
+ 
+ static int mmap_reserve_or_unmap(abi_ulong start, abi_ulong len)
 -- 
 2.34.1
 
