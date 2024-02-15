@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7F7C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDDEDC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafKa-000243-Gt; Thu, 15 Feb 2024 12:15:28 -0500
+	id 1rafaF-0005fT-IM; Thu, 15 Feb 2024 12:31:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rafKX-00023D-8a; Thu, 15 Feb 2024 12:15:25 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rafKV-0003fA-A2; Thu, 15 Feb 2024 12:15:24 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1d911c2103aso7235655ad.0; 
- Thu, 15 Feb 2024 09:15:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708017320; x=1708622120; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dh/kb4YIp6n7fig01Q43vy69CS878rHHhStr9zKIkxU=;
- b=m9Ti6yANoS1cZkMclybyZ2Fl1gzGsGT1jts5J8IAvb9dCUozUFHKyrXnzHlz/hImtY
- JzpMmdb3uqTeYCr0YY52adLMKhwodSM5vTmCz1ttIDnYWjYLAL/ckSHv7q0eb+PYMsT7
- gGKdYWjlJDYpR8dvDWri+STLeqz9Gi3kWNVncIY+3ogsKW80qWrS3lwXzOmko0TRoVa4
- zX3RmBV/x7KqTaiaYLbHJO7tjbRawD3fy3V4EQTl/HEaiGbk5vh8npnlk7Edv0Lpbb3K
- z54b0ufoEFrzT97WyDSvDXMDSuhrsbyIzLaFJuFBhO+fbaXdJhGYnITA8px5AoqD/LA+
- 5IBA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rafaE-0005fG-06
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:31:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rafaC-0001mt-3x
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:31:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708018294;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=igWMgTwGPBkK9bOrJU6rM8Vuntt8MRGTwhT4rZto/iQ=;
+ b=Z9l0wtHqyhIOHxHBxjjCJTl8F5MVVR9akkf20jxDUxtTjUhZpGVm9ovTvU4ybwEtdcvykY
+ mbpHWNM0XGwQXCkiFec/lGHOM0B4lcT16rsTjIGW+E6Is6BGUT7yiauxxM+K2+wP9PQ6KT
+ 5sw/9s6eqRrG3dzlh0RcwCS1yfscHvk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-613-bp1XCGVkO9K4V5uJdJdddQ-1; Thu, 15 Feb 2024 12:31:31 -0500
+X-MC-Unique: bp1XCGVkO9K4V5uJdJdddQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-411e24b69f7so5463035e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:31:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708017320; x=1708622120;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dh/kb4YIp6n7fig01Q43vy69CS878rHHhStr9zKIkxU=;
- b=HH/qtUZwHNlan8n7aD53Du5tOx+Av9smqCb7y13VvCMCt7jk9ZZdy+OFfwajWhtUOq
- HCFDxCz+oU/+O664oS8upWMxaT6UefjArqwogftfCP8OIsd+9xhYc2lb7oYG9/79T5s/
- VcCEOZEwjRTvHUtYr1ZGUZliYIcdVeue/yLNz2luFo7dsESS0lPFCeZBNNYU5ISLPXZz
- Pb3yzioESAWeG7X6Rh/WNHHn9fe8szKRZaSjNxKV+qwOqbEKuRrDS72cQMhG/nsluZdN
- MHcWKcSIYE0kKjcmnBNQlr2RMUwN00PaYNSSkVBPHoauoderNNntCPAQaB9YK6tZl7uA
- HA5w==
+ d=1e100.net; s=20230601; t=1708018290; x=1708623090;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=igWMgTwGPBkK9bOrJU6rM8Vuntt8MRGTwhT4rZto/iQ=;
+ b=IMZLJyYD9VO786xBnp7z4Erh+4DvrPZQcE+lWfwGl4jp7/E5DjQNYFft8GpYAbhXc/
+ GP5POxXD1hJ9oxKKnemTZ0fae8AZzel2xNbz/cmKMy5HmCcV+HpnD7VAT6Sikbn7r+vy
+ OIUarXO7iFV+4Xo3TDn+qvkbFZRzgXT0Q+Jne9CN0h7ebZBPQ/E3nXL/aKytQfIrO2k9
+ TzkBMcZw4bIryliSzNOVcB4w4gwsZzrYdgxz0fWkY47a5yQlKcZ8eJhvGGaCiyyCYsZm
+ /atkMD6mEbnwbryWTyt+IIDAUd2ivFUa4VZZ2mfj68+d2Ao0PSAZU+ygPaK/kkBLIZWe
+ Ictg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXcAd+o4RmAFyq8+/ubceLhfRIYdJi2IjiA2sMIcsTzOIOOuwZq120xJoIcLeTs5if84nD3CEkPcOy4kkh1FBwGK0ycgHs=
-X-Gm-Message-State: AOJu0Ywb8ftRfdBZPHk0xM+gDv1NWI04MkRm2r2jgeJcebsIEmTyRIkJ
- svdViNpSWbN00Uj1gUCOY8w7b+f1cvkVPj2NA3QWrvzjLjkV4EQ+lRvmyHIi
-X-Google-Smtp-Source: AGHT+IE78rEe0r0nCiKBsZcn+w8b8KGSNK+Nx3tPb1gjhTih2iYR4jukeJZIbEyrM+8r/LAgtsMilQ==
-X-Received: by 2002:a17:902:c3d2:b0:1d9:841d:2e3b with SMTP id
- j18-20020a170902c3d200b001d9841d2e3bmr2611497plj.21.1708017319481; 
- Thu, 15 Feb 2024 09:15:19 -0800 (PST)
-Received: from wheely.local0.net (123-243-155-241.static.tpgi.com.au.
- [123.243.155.241]) by smtp.gmail.com with ESMTPSA id
- 6-20020a170902ee4600b001d9a40f50c4sm1494731plo.301.2024.02.15.09.15.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:15:18 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Glenn Miles <milesg@linux.vnet.ibm.com>
-Subject: [PATCH] target/ppc: BHRB avoid using host pointer in translated code
-Date: Fri, 16 Feb 2024 03:15:12 +1000
-Message-ID: <20240215171512.800892-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
+ AJvYcCVHDeXCb0QcuPJqECZllPq3acszQDWSKyj0NIKQlZRbrX0zf6pw4sJ7ca/6R0cwbgSQEnSFlxrL49mMX6bGYgiYtcju1o0=
+X-Gm-Message-State: AOJu0YxTD0yg6BquslWNDSp4uwpuuxkPouSPOX/56YjSsQ+dKZ07EcK+
+ HUgP6oiGIT2uXYjPRtNYx/L2elhpBoPRL4FmTtxJTe1YEMTOpsWYRdgyDXeQz9Yn2VhLix0hsg/
+ eqIc8nRNuXFCe+6TtfDR+9Mx/JCeAtjsVK7R7N6C5LVHhQuEYvr6KTJvDf7Ke2FQywHFUWZpgj/
+ eUxGXQrjm2h0kMullXhO6ujWylvsU=
+X-Received: by 2002:a05:600c:1da3:b0:410:d1bd:150e with SMTP id
+ p35-20020a05600c1da300b00410d1bd150emr1830122wms.14.1708018290246; 
+ Thu, 15 Feb 2024 09:31:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+/7h9y/D0zaYiV4WH13zG8Fqp6iYSzHjcRJrP9vQfZRatQLgZoWBnK9BTqVuWL3RWsVAEhmNCahd23A3PIgs=
+X-Received: by 2002:a05:600c:1da3:b0:410:d1bd:150e with SMTP id
+ p35-20020a05600c1da300b00410d1bd150emr1830109wms.14.1708018289922; Thu, 15
+ Feb 2024 09:31:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240213155005.109954-1-pbonzini@redhat.com>
+ <20240213155005.109954-9-pbonzini@redhat.com>
+ <47a999a8-a0e0-4995-8f8c-8d18f564c30b@linaro.org>
+ <d02bde71-c4b8-4b07-bc40-3b74d37b0738@eik.bme.hu>
+In-Reply-To: <d02bde71-c4b8-4b07-bc40-3b74d37b0738@eik.bme.hu>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 15 Feb 2024 18:31:18 +0100
+Message-ID: <CABgObfZ+pjg9mUU+w7ff7e-rw=9H6Kt5i7BzFZxUaiCQtUhgmQ@mail.gmail.com>
+Subject: Re: [PATCH v3 8/9] mips/loongson3_virt: do not require CONFIG_USB
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, shentey@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.772,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,163 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Calculate the BHRB base from arithmetic on the tcg_env target ptr.
+On Thu, Feb 15, 2024 at 3:27=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
+ wrote:
+>
+> On Thu, 15 Feb 2024, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 13/2/24 16:50, Paolo Bonzini wrote:
+> >> Once the Kconfig for hw/mips is cleaned up, it will be possible to bui=
+ld a
+> >> binary that does not include any USB host controller and therefore tha=
+t
+> >> does not include the code guarded by CONFIG_USB.  While the simpler
+> >> creation functions such as usb_create_simple can be inlined, this is n=
+ot
+> >> true of usb_bus_find().  Remove it, replacing it with a search of the
+> >> single USB bus created by loongson3_virt_devices_init().
+> >>
+> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> >> ---
+> >>   hw/mips/loongson3_virt.c | 5 +++--
+> >>   1 file changed, 3 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+> >> index caedde2df00..bedd3d496bd 100644
+> >> --- a/hw/mips/loongson3_virt.c
+> >> +++ b/hw/mips/loongson3_virt.c
+> >> @@ -447,8 +447,9 @@ static inline void
+> >> loongson3_virt_devices_init(MachineState *machine,
+> >>         if (defaults_enabled() && object_class_by_name("pci-ohci")) {
+> >>           pci_create_simple(pci_bus, -1, "pci-ohci");
+> >> -        usb_create_simple(usb_bus_find(-1), "usb-kbd");
+> >> -        usb_create_simple(usb_bus_find(-1), "usb-tablet");
+> >> +        Object *usb_bus =3D object_resolve_path_type("", TYPE_USB_BUS=
+,
+> >> NULL);
+> >> +        usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
+> >> +        usb_create_simple(USB_BUS(usb_bus), "usb-tablet");
+> >>       }
+> >>         pci_init_nic_devices(pci_bus, mc->default_nic);
+> >
+> > Can we remove usb_bus_find() completely instead?
+> >
+> > $ git grep -w usb_bus_find
+> > hw/hppa/machine.c:401:        usb_create_simple(usb_bus_find(-1), "usb-=
+kbd");
+> > hw/hppa/machine.c:402:        usb_create_simple(usb_bus_find(-1),
+> > "usb-mouse");
+> > hw/mips/loongson3_virt.c:450:        usb_create_simple(usb_bus_find(-1)=
+,
+> > "usb-kbd");
+> > hw/mips/loongson3_virt.c:451:        usb_create_simple(usb_bus_find(-1)=
+,
+> > "usb-tablet");
+> > hw/ppc/mac_newworld.c:434:            USBBus *usb_bus =3D usb_bus_find(=
+-1);
+> > hw/ppc/sam460ex.c:423:    usb_create_simple(usb_bus_find(-1), "usb-kbd"=
+);
+> > hw/ppc/sam460ex.c:424:    usb_create_simple(usb_bus_find(-1), "usb-mous=
+e");
+> > hw/ppc/spapr.c:3027:            USBBus *usb_bus =3D usb_bus_find(-1);
+> > hw/sh4/r2d.c:315:    usb_create_simple(usb_bus_find(-1), "usb-kbd");
+> > hw/usb/bus.c:103:USBBus *usb_bus_find(int busnr)
+> > hw/usb/bus.c:669:    USBBus *bus =3D usb_bus_find(-1 /* any */);
+> > include/hw/usb.h:500:USBBus *usb_bus_find(int busnr);
+>
+> These are all the machines that add devices to a USB bus, there's no othe=
+r
+> example to do it in a different way currently. We could change this to ge=
+t
+> the usb bus in a different way but how?
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
-Hi Glenn,
-
-I think I have to squash this into the BHRB series. 32-bit host
-compile shows up a size mismatch warning... I think it's not quite
-right to be using host pointer directly in target code. The change
-of offset and mask to 32-bit is needed due to to seemingly missing
-tl->ptr conversion helpers, but 32-bit is okay for those anyway.
-
-Thanks,
-Nick
-
- target/ppc/cpu.h       |  5 ++---
- target/ppc/cpu_init.c  |  1 -
- target/ppc/machine.c   |  2 +-
- target/ppc/translate.c | 45 +++++++++++++++++++++---------------------
- 4 files changed, 26 insertions(+), 27 deletions(-)
-
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index eaa24f2c95..6b050ea628 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1325,10 +1325,9 @@ struct CPUArchState {
- #ifdef TARGET_PPC64
-     /* Branch History Rolling Buffer (BHRB) resources */
-     target_ulong bhrb_num_entries;
--    target_ulong bhrb_base;
-     target_ulong bhrb_filter;
--    target_ulong bhrb_offset;
--    target_ulong bhrb_offset_mask;
-+    uint32_t bhrb_offset_mask;
-+    uint32_t bhrb_offset;
-     uint64_t bhrb[BHRB_MAX_NUM_ENTRIES];
- #endif
- 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 2494527765..262b1d7852 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6117,7 +6117,6 @@ static void bhrb_init_state(CPUPPCState *env, target_long num_entries_log2)
-             num_entries_log2 = BHRB_MAX_NUM_ENTRIES_LOG2;
-         }
-         env->bhrb_num_entries = 1 << num_entries_log2;
--        env->bhrb_base = (target_long)&env->bhrb[0];
-         env->bhrb_offset_mask = (env->bhrb_num_entries * sizeof(uint64_t)) - 1;
-     }
- }
-diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-index 731dd8df35..3541cd83cd 100644
---- a/target/ppc/machine.c
-+++ b/target/ppc/machine.c
-@@ -724,7 +724,7 @@ static const VMStateDescription vmstate_bhrb = {
-     .minimum_version_id = 1,
-     .needed = bhrb_needed,
-     .fields = (VMStateField[]) {
--        VMSTATE_UINTTL(env.bhrb_offset, PowerPCCPU),
-+        VMSTATE_UINT32(env.bhrb_offset, PowerPCCPU),
-         VMSTATE_UINT64_ARRAY(env.bhrb, PowerPCCPU, BHRB_MAX_NUM_ENTRIES),
-         VMSTATE_END_OF_LIST()
-     }
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 81afc892de..05f0f1ac52 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4167,21 +4167,24 @@ static void gen_rvwinkle(DisasContext *ctx)
- #endif /* defined(CONFIG_USER_ONLY) */
- }
- 
--static inline TCGv gen_write_bhrb(TCGv base, TCGv offset, TCGv mask, TCGv value)
-+static TCGv_i32 gen_write_bhrb(TCGv_i32 offset, TCGv_i32 mask, TCGv_i64 value)
- {
--    TCGv tmp = tcg_temp_new();
-+    TCGv_ptr ptr = tcg_temp_new_ptr();
-+    TCGv_i32 tmp = tcg_temp_new_i32();
- 
--    /* add base and offset to get address of bhrb entry */
--    tcg_gen_add_tl(tmp, base, offset);
-+    /* add base and offset to tcg_env to get address of bhrb entry */
-+    tcg_gen_addi_i32(tmp, offset, offsetof(CPUPPCState, bhrb));
-+    tcg_gen_ext_i32_ptr(ptr, tmp);
-+    tcg_gen_add_ptr(ptr, ptr, tcg_env);
- 
-     /* store value into bhrb at bhrb_offset */
--    tcg_gen_st_i64(value, (TCGv_ptr)tmp, 0);
-+    tcg_gen_st_i64(value, ptr, 0);
- 
-     /* add 8 to current bhrb_offset */
--    tcg_gen_addi_tl(offset, offset, 8);
-+    tcg_gen_addi_i32(offset, offset, 8);
- 
-     /* apply offset mask */
--    tcg_gen_and_tl(offset, offset, mask);
-+    tcg_gen_and_i32(offset, offset, mask);
- 
-     return offset;
- }
-@@ -4193,10 +4196,9 @@ static inline void gen_update_branch_history(DisasContext *ctx,
-                                              target_long inst_type)
- {
- #if defined(TARGET_PPC64)
--    TCGv base;
-     TCGv tmp;
--    TCGv offset;
--    TCGv mask;
-+    TCGv_i32 offset;
-+    TCGv_i32 mask;
-     TCGLabel *no_update;
- 
-     if (ctx->has_cfar) {
-@@ -4216,32 +4218,31 @@ static inline void gen_update_branch_history(DisasContext *ctx,
-     tcg_gen_andi_tl(tmp, tmp, inst_type);
-     tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, 0, no_update);
- 
--    base = tcg_temp_new();
--    offset = tcg_temp_new();
--    mask = tcg_temp_new();
--
--    /* load bhrb base address */
--    tcg_gen_ld_tl(base, tcg_env, offsetof(CPUPPCState, bhrb_base));
-+    offset = tcg_temp_new_i32();
-+    mask = tcg_temp_new_i32();
- 
-     /* load current bhrb_offset */
--    tcg_gen_ld_tl(offset, tcg_env, offsetof(CPUPPCState, bhrb_offset));
-+    tcg_gen_ld_i32(offset, tcg_env, offsetof(CPUPPCState, bhrb_offset));
- 
-     /* load a BHRB offset mask */
--    tcg_gen_ld_tl(mask, tcg_env, offsetof(CPUPPCState, bhrb_offset_mask));
-+    tcg_gen_ld_i32(mask, tcg_env, offsetof(CPUPPCState, bhrb_offset_mask));
- 
--    offset = gen_write_bhrb(base, offset, mask, tcg_constant_i64(nip));
-+    offset = gen_write_bhrb(offset, mask, tcg_constant_i64(nip));
- 
-     /* Also record the target address for XL-Form branches */
-     if (inst_type & BHRB_TYPE_XL_FORM) {
-+        TCGv_i64 t = tcg_temp_new_i64();
-+
-+        tcg_gen_extu_tl_i64(t, target);
- 
-         /* Set the 'T' bit for target entries */
--        tcg_gen_ori_tl(tmp, target, 0x2);
-+        tcg_gen_ori_i64(t, target, 0x2);
- 
--        offset = gen_write_bhrb(base, offset, mask, tmp);
-+        offset = gen_write_bhrb(offset, mask, t);
-     }
- 
-     /* save updated bhrb_offset for next time */
--    tcg_gen_st_tl(offset, tcg_env, offsetof(CPUPPCState, bhrb_offset));
-+    tcg_gen_st_i32(offset, tcg_env, offsetof(CPUPPCState, bhrb_offset));
- 
-     gen_set_label(no_update);
- #endif
--- 
-2.42.0
+We can move object_resolve_type_unambiguous out of
+hw/i386/acpi-build.c to common code and use it, it's overall a
+self-explanatory function.
 
 
