@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C93C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B72DC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXOd-0006DK-Jb; Thu, 15 Feb 2024 03:47:07 -0500
+	id 1raXOp-0006En-V7; Thu, 15 Feb 2024 03:47:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOb-0006Cg-Jt
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:05 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOo-0006EK-1b
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:18 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOZ-0002SW-Io
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:05 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-41211acfcfcso3617885e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 00:47:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOl-0002WX-Rj
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:17 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d09cf00214so7941091fa.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 00:47:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707986822; x=1708591622; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=z3Yvd12ZTKEdeYnpZuZujgW5c5hDdepl6bEEcV+HKcs=;
- b=GjHa2qVfmRH8tR7ZAkL5D0KuUXvgBkK5mzxaSy1gQGe8SrBhZoAgzLkgPqs2d/Wwpa
- f6mgXvIM9RXqeEtGU64ArPK4IBSnLINAqEMJDeItcs+1gzld8B41hmTsOZTEfsTqiM4q
- IvIqxPU/4ckubtz3OSYtEvsBBvo9afID5ixIN1EB5pPdE05Jwj2laHRZDYbSIdbiXBXi
- OfUumhi80MaOeGikOIucb4lfAa1y04Or0WUcHC2ACw/mIuZNgR3wpdLGyQ3Hi1E/9kvq
- 5Friyei9pT0vpVSwsX8X5efcIJcQWN56IywpWDdoUmwTcjHw5zRFnjCq8xRkN7z5gviz
- VXQA==
+ d=linaro.org; s=google; t=1707986833; x=1708591633; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iPHGWBestnNwAg9Qptn9JeQlM+amL1OQhF1dhfpYx/A=;
+ b=fo3Tlt8xfneVhA/AWLeHKFg0jYNCjbnLpUcIeJO/Pt8c6d8DQ9+eXxjjMa2PPxVRfG
+ b+z3hxbw3F1Zekp9SPGgHOd/VnW248daj/2pA/W12KnR3jJLYdhzgbgPN9MEJiTWUioN
+ kbVyrpD6qNf0zJis2cKjbrjTQ7685PFuLbwbXJiLJ8wdJXG7EETwIH8TBQEbI/3EuHvy
+ FxGHfO30u+QUYKHYvCaIvH9AAervIf8K3UzH7aDBmADQ0N+8vbePqAlwf2hAjoXRSock
+ WSgsezHPonkCLpqdGdutRlFVrZ6fjs/wugCHICWgHVEBHxA0P7XQZ3oUxRcwGa0qugHU
+ h7yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707986822; x=1708591622;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=z3Yvd12ZTKEdeYnpZuZujgW5c5hDdepl6bEEcV+HKcs=;
- b=WQ9JMde8xYo9M5BtHMzkZelyvWs9c9/xlvD9HBwrkj8vI3SNOTT4VGEFK+1ZveFybU
- kGQfE6T0F63+kHXoWRds4XJv4/+NTFnov30/8ocXiB8Z787j/08ibKn3KQMxcD3nuqGh
- zxLXLXuMub/DVBRTsGpyNND+QqEKBil2wj/fQ6VFx/FWzH2NvBU2YcIGW5kQBP9znBY2
- 9zoW4TB73GgHa0l+FgyDko+WB+EwHCkp4jESm0hCQrP0yLLeyFDlRO/2BMxp1NFuSpaP
- Ab97n521BulwWlCTLDhh2AuTtniA4KPaHitjNuvWf1ibfVvuHDeVkLVzsfIbYizEMT65
- J5Aw==
+ d=1e100.net; s=20230601; t=1707986833; x=1708591633;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iPHGWBestnNwAg9Qptn9JeQlM+amL1OQhF1dhfpYx/A=;
+ b=TP3uTPtdqMGyIPBWkg3YHR3deoOKKSSWSyUujE61iULwzCD/yMUCDytd1J9SpFH9tW
+ RDRvED8fnm+yrBpS6VLkzQrlTKV8aH0VloCvd5QciJO8P/cLTYt7cuzcMHI+e2YZFCc/
+ K89lBZaOavt+aV8Pj+qk9OX/Vua5aBSZJ5aeJjyg2GRqf9v3rEMFToFIZFZwjXEkV7Uj
+ 1OP8oGmCdFLgv1yihHEIMsQLpe67B7kNqEn8q2E3oSinfrFvuoccwhZxO3xIyPDiYTPN
+ o6c5Z1yVHH/Z4AS9JN2r6EiEgOsB5nvM87wfMdV30+EazMUhx5MRYf+/Sqv6+IANrNGl
+ LyKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhyGNd0tU5SKZxUOtsTtwcs6dyH1WsQsh6JfuNfPIP3w5yiYNM2A7ohsgcaRK9YVXaCndmPKlbxIUX+lTqnUpj5+yiqlk=
-X-Gm-Message-State: AOJu0YxLtXgId/v7jYVJETaBvidV0xrcPrjLSLGVM5dua0AdhWp/6GnU
- moll4lnVcycVl/RYNRJN7aAmJw8bGsNakASsTpsT9l9uRCMOWx7FwQ1y3Zmx+GM=
-X-Google-Smtp-Source: AGHT+IEyaf3wvoSXKVdC0NrXLog5FfzdzhYZBV3l6nkPSCCmhuf5z2GOs3XdT8pHJwWhbc0ZwY4zOQ==
-X-Received: by 2002:a05:600c:3543:b0:411:ebf7:9a69 with SMTP id
- i3-20020a05600c354300b00411ebf79a69mr814356wmq.9.1707986821773; 
- Thu, 15 Feb 2024 00:47:01 -0800 (PST)
+ AJvYcCWOs10D56T6D2v8tPC1TY9azdfRn4zFs96k+uTuOOIDCvGvNpU8hhYanhtHL7T2SQdDMiFeEOg0Po4BYORS1gF+uenYgHw=
+X-Gm-Message-State: AOJu0YxjpyrEcFzn3jt3H19O7L90RpUNHZgy7DXSnef3v86/YzxJesth
+ yC8kxGyYlBwWsHmVGf9/P7PQabzMKF6WR++mYv21AMsGyxA9meV3Qk54N0pL5eU=
+X-Google-Smtp-Source: AGHT+IHl4QalSh5WSC/yVhgjoAoRPac/7NzI+RLuyDxwPBUy9Fh2l65+LlmtMHtfzug1O9RjhqVlsw==
+X-Received: by 2002:a2e:9588:0:b0:2cc:c6e0:fbb with SMTP id
+ w8-20020a2e9588000000b002ccc6e00fbbmr757102ljh.20.1707986832723; 
+ Thu, 15 Feb 2024 00:47:12 -0800 (PST)
 Received: from localhost.localdomain (14.red-88-28-17.dynamicip.rima-tde.net.
  [88.28.17.14]) by smtp.gmail.com with ESMTPSA id
- y5-20020a7bcd85000000b00410ab50f70fsm4250040wmj.15.2024.02.15.00.46.56
+ je14-20020a05600c1f8e00b00411ee1dd5afsm1278813wmb.16.2024.02.15.00.47.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 00:47:01 -0800 (PST)
+ Thu, 15 Feb 2024 00:47:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -77,16 +78,20 @@ Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  Bernhard Beschow <shentey@gmail.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 0/1] target: New binary to prototype heterogeneous machines
-Date: Thu, 15 Feb 2024 09:46:52 +0100
-Message-ID: <20240215084654.56297-1-philmd@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
+Subject: [PATCH v3 1/1] target: Add system emulation aiming to target any
+ architecture
+Date: Thu, 15 Feb 2024 09:46:53 +0100
+Message-ID: <20240215084654.56297-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240215084654.56297-1-philmd@linaro.org>
+References: <20240215084654.56297-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,29 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v2:
-- Run check-qtest instead of check-unit in CI (Alex)
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-Almost 2 years later we got hundreds of cleanups patches
-merged, so we can get this patch in. Building the 'any'
-target has to be explictly requested in ./configure
-target-list argument.
+Add the 'any'-architecture target.
 
-This binary will be use to rework QEMU startup code,
-paving the way toward dynamic machines. It might also
-allow experimenting with multiple TCG target frontends
-and possibly prototyping concurrent HW/SW accelerations.
+- Only consider 64-bit targets
+- Do not use any hardware accelerator (except qtest)
+- For architecture constants, use:
+  . max of supported targets phys/virt address space
+  . max of supported targets MMU modes
+  . min of supported targets variable page bits
 
-The corresponding CI jobs takes <3min!!!
-https://gitlab.com/philmd/qemu/-/jobs/6177909577
-Duration: 2 minutes 50 seconds
+Build as:
 
-v1: https://lore.kernel.org/qemu-devel/20220215002658.60678-1-f4bug@amsat.org/
-v2: https://lore.kernel.org/qemu-devel/20240209152945.25727-1-philmd@linaro.org/
+  $ ../configure --target-list=any-softmmu \
+                 --disable-hvf \
+                 --disable-kvm \
+                 --disable-nvmm \
+                 --disable-tcg \
+                 --disable-whpx \
+                 --disable-xen
 
-Philippe Mathieu-Daudé (1):
-  target: Add system emulation aiming to target any architecture
+Test as:
 
+  $ qemu-system-any -M none,accel=qtest -monitor stdio
+  QEMU 6.2.50 monitor - type 'help' for more information
+  (qemu) info mtree
+  address-space: I/O
+    0000000000000000-000000000000ffff (prio 0, i/o): io
+
+  address-space: memory
+    0000000000000000-ffffffffffffffff (prio 0, i/o): system
+
+  (qemu) info qom-tree
+  /machine (none-machine)
+    /peripheral (container)
+    /peripheral-anon (container)
+    /unattached (container)
+      /io[0] (memory-region)
+      /sysbus (System)
+      /system[0] (memory-region)
+  (qemu) info qtree
+  bus: main-system-bus
+    type System
+  (qemu) info cpus
+  (qemu)
+
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
+---
  configs/devices/any-softmmu/default.mak |  9 +++++++++
  configs/targets/any-softmmu.mak         |  3 +++
  meson.build                             |  6 ++++--
@@ -157,6 +187,240 @@ Philippe Mathieu-Daudé (1):
  create mode 100644 target/any/Kconfig
  create mode 100644 target/any/meson.build
 
+diff --git a/configs/devices/any-softmmu/default.mak b/configs/devices/any-softmmu/default.mak
+new file mode 100644
+index 0000000000..dab0ce770e
+--- /dev/null
++++ b/configs/devices/any-softmmu/default.mak
+@@ -0,0 +1,9 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++CONFIG_ISA_BUS=y
++CONFIG_PCI=y
++CONFIG_PCI_DEVICES=y
++CONFIG_I2C=y
++CONFIG_TPM=y
++CONFIG_NUBUS=y
++CONFIG_VIRTIO=y
+diff --git a/configs/targets/any-softmmu.mak b/configs/targets/any-softmmu.mak
+new file mode 100644
+index 0000000000..2c6cf1edd4
+--- /dev/null
++++ b/configs/targets/any-softmmu.mak
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++TARGET_ARCH=any
+diff --git a/meson.build b/meson.build
+index c1dc83e4c0..f6aee8218b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -46,7 +46,7 @@ qapi_trace_events = []
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+ supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux']
+ supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
+-  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64']
++  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'any']
+ 
+ cpu = host_machine.cpu_family()
+ 
+@@ -3043,7 +3043,9 @@ foreach target : target_dirs
+     if default_targets
+       continue
+     endif
+-    error('No accelerator available for target @0@'.format(target))
++    if 'any-softmmu' not in target_dirs
++      error('No accelerator available for target @0@'.format(target))
++    endif
+   endif
+ 
+   actual_target_dirs += target
+diff --git a/qapi/machine.json b/qapi/machine.json
+index d816c5c02e..8d3dcd5fb4 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -36,7 +36,7 @@
+              'mips64el', 'mipsel', 'nios2', 'or1k', 'ppc',
+              'ppc64', 'riscv32', 'riscv64', 'rx', 's390x', 'sh4',
+              'sh4eb', 'sparc', 'sparc64', 'tricore',
+-             'x86_64', 'xtensa', 'xtensaeb' ] }
++             'x86_64', 'xtensa', 'xtensaeb', 'any' ] }
+ 
+ ##
+ # @CpuS390State:
+diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
+index 8850cb1a14..49bee75610 100644
+--- a/include/sysemu/arch_init.h
++++ b/include/sysemu/arch_init.h
+@@ -4,6 +4,7 @@
+ 
+ enum {
+     QEMU_ARCH_ALL = -1,
++    QEMU_ARCH_ANY = -1,
+     QEMU_ARCH_ALPHA = (1 << 0),
+     QEMU_ARCH_ARM = (1 << 1),
+     QEMU_ARCH_CRIS = (1 << 2),
+diff --git a/target/any/cpu-param.h b/target/any/cpu-param.h
+new file mode 100644
+index 0000000000..42e38ae991
+--- /dev/null
++++ b/target/any/cpu-param.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef ANY_CPU_PARAM_H
++#define ANY_CPU_PARAM_H
++
++#define TARGET_LONG_BITS 64
++
++#define TARGET_PHYS_ADDR_SPACE_BITS 64 /* MAX(targets) */
++#define TARGET_VIRT_ADDR_SPACE_BITS 64 /* MAX(targets) */
++
++#define TARGET_PAGE_BITS_VARY
++#define TARGET_PAGE_BITS_MIN  10 /* MIN(targets)=ARMv5/ARMv6, ignoring AVR */
++
++#endif
+diff --git a/target/any/cpu-qom.h b/target/any/cpu-qom.h
+new file mode 100644
+index 0000000000..18d6a85de9
+--- /dev/null
++++ b/target/any/cpu-qom.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef QEMU_DUMMY_CPU_QOM_H
++#define QEMU_DUMMY_CPU_QOM_H
++
++#include "hw/core/cpu.h"
++#include "qom/object.h"
++
++#define TYPE_DUMMY_CPU "dummy-cpu"
++
++OBJECT_DECLARE_CPU_TYPE(DUMMYCPU, CPUClass, DUMMY_CPU)
++
++#endif
+diff --git a/target/any/cpu.h b/target/any/cpu.h
+new file mode 100644
+index 0000000000..e8abb8891f
+--- /dev/null
++++ b/target/any/cpu.h
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#ifndef TARGET_ANY_CPU_H
++#define TARGET_ANY_CPU_H
++
++#include "cpu-qom.h"
++#include "exec/cpu-defs.h"
++
++#define DUMMY_CPU_TYPE_SUFFIX "-" TYPE_DUMMY_CPU
++#define DUMMY_CPU_TYPE_NAME(name) (name DUMMY_CPU_TYPE_SUFFIX)
++#define CPU_RESOLVING_TYPE TYPE_DUMMY_CPU
++
++struct CPUArchState {
++    /* nothing here */
++};
++
++struct ArchCPU {
++    CPUState parent_obj;
++
++    CPUArchState env;
++};
++
++#include "exec/cpu-all.h" /* FIXME remove once exec/ headers cleaned */
++
++#endif
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index f56df59c94..208625d4d5 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -729,3 +729,23 @@ pages:
+       - public
+   variables:
+     QEMU_JOB_PUBLISH: 1
++
++build-system-any:
++  extends:
++    - .native_build_job_template
++  needs:
++    - job: amd64-alpine-container
++  variables:
++    IMAGE: alpine
++    TARGETS: any-softmmu
++    MAKE_CHECK_ARGS: check-qtest
++    CONFIGURE_ARGS:
++      --disable-tools
++      --disable-hvf
++      --disable-kvm
++      --disable-nvmm
++      --disable-tcg
++      --disable-whpx
++      --disable-xen
++      --with-default-devices
++      --enable-qom-cast-debug
+diff --git a/hw/any/meson.build b/hw/any/meson.build
+new file mode 100644
+index 0000000000..60e1567e53
+--- /dev/null
++++ b/hw/any/meson.build
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++any_ss = ss.source_set()
++
++hw_arch += {'any': any_ss}
+diff --git a/hw/meson.build b/hw/meson.build
+index 463d702683..644eeee938 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -47,6 +47,7 @@ subdir('xenpv')
+ subdir('fsi')
+ 
+ subdir('alpha')
++subdir('any')
+ subdir('arm')
+ subdir('avr')
+ subdir('cris')
+diff --git a/target/Kconfig b/target/Kconfig
+index 83da0bd293..09109c4884 100644
+--- a/target/Kconfig
++++ b/target/Kconfig
+@@ -1,4 +1,5 @@
+ source alpha/Kconfig
++source any/Kconfig
+ source arm/Kconfig
+ source avr/Kconfig
+ source cris/Kconfig
+diff --git a/target/any/Kconfig b/target/any/Kconfig
+new file mode 100644
+index 0000000000..8840d70e55
+--- /dev/null
++++ b/target/any/Kconfig
+@@ -0,0 +1,4 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++config ANY
++    bool
+diff --git a/target/any/meson.build b/target/any/meson.build
+new file mode 100644
+index 0000000000..4f5422d3a3
+--- /dev/null
++++ b/target/any/meson.build
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++any_ss = ss.source_set()
++any_system_ss = ss.source_set()
++
++target_arch += {'any': any_ss}
++target_system_arch += {'any': any_system_ss}
+diff --git a/target/meson.build b/target/meson.build
+index dee2ac47e0..c75b91e1b9 100644
+--- a/target/meson.build
++++ b/target/meson.build
+@@ -1,4 +1,5 @@
+ subdir('alpha')
++subdir('any')
+ subdir('arm')
+ subdir('avr')
+ subdir('cris')
 -- 
 2.41.0
 
