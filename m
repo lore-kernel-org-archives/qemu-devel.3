@@ -4,140 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E25F6C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33C9EC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:38:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raYBH-000847-4W; Thu, 15 Feb 2024 04:37:23 -0500
+	id 1raYBP-00085P-Vt; Thu, 15 Feb 2024 04:37:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raYBG-00083x-FK
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:37:22 -0500
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1raYBO-00085G-HC
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:37:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1raYBF-00068B-15
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:37:22 -0500
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1raYBM-00069A-JH
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:37:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707989840;
+ s=mimecast20190719; t=1707989847;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XIEw1WjJ36L91kydq1ACUsC3+tZQacuGQ32hyl/p3GY=;
- b=JSTTMCBYENvKbxmJ1o6jASdgMffytDJxqME4NVCWpe+9dn7P1ofbXm6eyybOpD0eIF8a2h
- Ywcy6URPkmTXiBa6g38rDeTYM8wNVFmqV8vMU400v1XZfV346W4EMq2TE+uNzqSgxVuy+E
- d7nJh2XfPMtuewctirTxTzv5HDBcxlE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=Gpd4lECPFg6xf2HFCyQKksU/50mjjHc6aADDlYkeaUs=;
+ b=ANFbkz+IloMyl6FElx1kWcuB/KyJNRb2BaofV8O13f9lWh5B8Suk6rxmFopRXT0Uj889MJ
+ 8EQEdHbXbVz88Cs0bMsZ1wu6qUcmjk+SFcIBOlG/2FJxe2PHMDgR/YmdKzQrcOGir5SoLO
+ nDhjYByznl+riC7uLCCiPHAT6csDZOo=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-ldlxrJZdPnSp6J6FGGfjcg-1; Thu, 15 Feb 2024 04:37:17 -0500
-X-MC-Unique: ldlxrJZdPnSp6J6FGGfjcg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33d00a999cdso272594f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 01:37:17 -0800 (PST)
+ us-mta-491-Q7-uEGayPEqfoDrxVV7xzg-1; Thu, 15 Feb 2024 04:37:25 -0500
+X-MC-Unique: Q7-uEGayPEqfoDrxVV7xzg-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-29608f00cbbso556444a91.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 01:37:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707989837; x=1708594637;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XIEw1WjJ36L91kydq1ACUsC3+tZQacuGQ32hyl/p3GY=;
- b=vZzrXzvqsKZzYUxbJmc+OCTYf9rRfwnA5iIDcnPkL8P1Av82C275n4xVm1vAPM0NMC
- FaUt/chP1ttR+3n6Qepqp+YrOCb4wUh4f8o/XUNbo5EQNS6tGKyyX6323Z4UhDh2KnaW
- BMl0DiTk/0KSrwrf5XoLcqF4jjfuBpFb1PV5znkgDN4mDtdrgV5oaDy5Ylrqh2/y/Ehs
- Tj5OwhG94Em9FlXdtTq5GqYXjIsUFnofe9nmDWj+gkhZtmTdbnVaJLpeif8MCYaffYAN
- RKYyjgFY1lcQ9e4tZhSHnMqDNkQlpnfOMnfpN17qYno1W7oUqMbPuH5YDak0HRvbnks2
- xLpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUsn5UCwrKNCdA1cUZ+O+b1XW9eqlhSc3bPsu1jDm3sKg3iYh+EsY9/6DLzAGfR/pADA8U5JOy0lMHB5dqsV7H9FmjtGlQ=
-X-Gm-Message-State: AOJu0Yza5WhE0HljWyzWCV/svH0aVvJHNFNqWfAEOGAwqrnGQhVgf3ua
- 0vaV0lW9MOFjT1uWniI5uEv50/sDZD8ackg4DQ0uPae2PStLcIlX/uYBmEvjrlmJcoeOVTk/R6z
- 91dn9Vnsncq7aWb5dRYjlzzHoj8iNRabX2o5rXbB/lmCZIhJXCLs6
-X-Received: by 2002:adf:f58c:0:b0:33b:649a:19f6 with SMTP id
- f12-20020adff58c000000b0033b649a19f6mr1034514wro.35.1707989836817; 
- Thu, 15 Feb 2024 01:37:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGWrmbSCKue4DV87SJTfW9Yr8zBmIkrCL9di/9AokSM/mjRxRM9VND5BkZb6OaYLE9hDP0M3A==
-X-Received: by 2002:adf:f58c:0:b0:33b:649a:19f6 with SMTP id
- f12-20020adff58c000000b0033b649a19f6mr1034498wro.35.1707989836389; 
- Thu, 15 Feb 2024 01:37:16 -0800 (PST)
-Received: from ?IPV6:2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e?
- (p200300d82f3c3f007177eb0cd3d24b0e.dip0.t-ipconnect.de.
- [2003:d8:2f3c:3f00:7177:eb0c:d3d2:4b0e])
- by smtp.gmail.com with ESMTPSA id
- g11-20020adff3cb000000b0033b1c321070sm1209066wrp.31.2024.02.15.01.37.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 01:37:15 -0800 (PST)
-Message-ID: <c44b25e2-a56d-4965-aad7-b011fae4c6c6@redhat.com>
-Date: Thu, 15 Feb 2024 10:37:14 +0100
+ d=1e100.net; s=20230601; t=1707989844; x=1708594644;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Gpd4lECPFg6xf2HFCyQKksU/50mjjHc6aADDlYkeaUs=;
+ b=KWLH4WggLpTH4OjYIr4Fz+SZl98ZfUfFYtrJFCJl5MwObE30PHrV6oEBf2n4e/4lsp
+ lKBwLITRDUfFYZ0k1aL4H796ohW/5WbUkBebTggKXK04hZMhqz6EXabWs1JeKKgOiyWB
+ WnVu1pjzo4VHmoQkxWf+7b2OO6YhdCJuQcJvMuqHc5h0W7Z1iYKdSqxWxZau53Af9hcx
+ ids0u6ONbZFUpNeo4F86KIZHX18czCYvsLzfMWqDLbndX1DZ8MF8KOy+ZzxWntueNwhj
+ TslRRfoxrYgZYY6xfaFfJhg7FQjHP+JYljaNCoKE4eVkZOmFzXp5rKaOqkdWxOT/GmxW
+ kxMQ==
+X-Gm-Message-State: AOJu0Yw9mnhEeC0hXfCxXvltRYkkHa5FFqZt9QB1f5xLhUxMWyBxy7L5
+ kmokqgcdFJg4Xc01i5zAxk0I4KAld0EDWzt2w3kbEgh4cFm+3jRf0TS/izrGXhJ0hlSU75B/cPH
+ zLcW3elvu+9t/zqpyvGRh2NVnjibWBcAk84Gd2qDTkMZRgGfDD3nHqqrxpUR5HPSF9TMHDzIKqP
+ 4bE1YgIEB8hKdRsjgF2wA/b8Iv+kY=
+X-Received: by 2002:a17:90b:10e:b0:297:22a3:43f2 with SMTP id
+ p14-20020a17090b010e00b0029722a343f2mr1064944pjz.41.1707989844383; 
+ Thu, 15 Feb 2024 01:37:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjkhYBDvsa/o5k2H85fUe/dEOwZCwcUuabyH4HhQAbuuRGEgsFcEdaGBUAS4y4D2U/gpzPO7n9tVMMVaJEXoc=
+X-Received: by 2002:a17:90b:10e:b0:297:22a3:43f2 with SMTP id
+ p14-20020a17090b010e00b0029722a343f2mr1064935pjz.41.1707989844127; Thu, 15
+ Feb 2024 01:37:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/physmem: remove redundant arg reassignment
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>
-References: <20240215091506.1932251-1-manos.pitsidianakis@linaro.org>
-Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240215091506.1932251-1-manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+References: <20240109125614.220293-1-aesteve@redhat.com>
+ <20240109125614.220293-2-aesteve@redhat.com>
+ <87a5off4qe.fsf@draig.linaro.org>
+In-Reply-To: <87a5off4qe.fsf@draig.linaro.org>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Thu, 15 Feb 2024 10:37:12 +0100
+Message-ID: <CADSE00LDa9ebDsnpMUKq8LzezWHZVpfg7K0VV4f8r-_ZjyC+8Q@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] hw/virtio: check owner for removing objects
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, stefanha@gmail.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, marcandre.lureau@gmail.com,
+ kraxel@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000f084990611685fb8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,51 +99,315 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15.02.24 10:15, Manos Pitsidianakis wrote:
-> Arguments `ram_block` are reassigned to local declarations `block`
-> without further use. Remove re-assignment to reduce noise.
-> 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   system/physmem.c | 7 ++-----
->   1 file changed, 2 insertions(+), 5 deletions(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 5e66d9ae36..d4c3bfac65 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -2154,10 +2154,8 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
->    *
->    * Called within RCU critical section.
->    */
-> -void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
-> +void *qemu_map_ram_ptr(RAMBlock *block, ram_addr_t addr)
->   {
-> -    RAMBlock *block = ram_block;
-> -
->       if (block == NULL) {
->           block = qemu_get_ram_block(addr);
->           addr -= block->offset;
-> @@ -2182,10 +2180,9 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
->    *
->    * Called within RCU critical section.
->    */
-> -static void *qemu_ram_ptr_length(RAMBlock *ram_block, ram_addr_t addr,
-> +static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
->                                    hwaddr *size, bool lock)
->   {
-> -    RAMBlock *block = ram_block;
->       if (*size == 0) {
->           return NULL;
->       }
-> 
-> base-commit: 5767815218efd3cbfd409505ed824d5f356044ae
+--000000000000f084990611685fb8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+On Mon, Feb 5, 2024 at 1:57=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
+.org> wrote:
 
--- 
-Cheers,
+> Albert Esteve <aesteve@redhat.com> writes:
+>
+> > Shared objects lack spoofing protection.
+> > For VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE messages
+> > received by the vhost-user interface, any backend was
+> > allowed to remove entries from the shared table just
+> > by knowing the UUID. Only the owner of the entry
+> > shall be allowed to removed their resources
+> > from the table.
+>
+> Was this buggy behaviour on the part of the vhost-user daemon?
+>
 
-David / dhildenb
+Yes, although the feature is not really used yet, and it requires to know
+the UUID to be able to exploit it. But yes, any vhost-user backend could
+remove any entry.
+
+
+>
+> > To fix that, add a check for all
+> > *SHARED_OBJECT_REMOVE messages received.
+> > A vhost device can only remove TYPE_VHOST_DEV
+> > entries that are owned by them, otherwise skip
+> > the removal, and inform the device that the entry
+> > has not been removed in the answer.
+> >
+> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> > Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >  docs/interop/vhost-user.rst |  4 +++-
+> >  hw/virtio/vhost-user.c      | 21 +++++++++++++++++++--
+> >  2 files changed, 22 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> > index 9f1103f85a..60ec2c9d48 100644
+> > --- a/docs/interop/vhost-user.rst
+> > +++ b/docs/interop/vhost-user.rst
+> > @@ -1839,7 +1839,9 @@ is sent by the front-end.
+> >    When the ``VHOST_USER_PROTOCOL_F_SHARED_OBJECT`` protocol
+> >    feature has been successfully negotiated, this message can be
+> submitted
+> >    by the backend to remove themselves from to the virtio-dmabuf shared
+> > -  table API. The shared table will remove the back-end device
+> associated with
+> > +  table API. Only the back-end owning the entry (i.e., the one that
+> first added
+> > +  it) will have permission to remove it. Otherwise, the message is
+> ignored.
+> > +  The shared table will remove the back-end device associated with
+> >    the UUID. If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
+> the
+> >    back-end sets the ``VHOST_USER_NEED_REPLY`` flag, the front-end must
+> respond
+> >    with zero when operation is successfully completed, or non-zero
+> otherwise.
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index f214df804b..1c3f2357be 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -1611,11 +1611,27 @@
+> vhost_user_backend_handle_shared_object_add(struct vhost_dev *dev,
+> >  }
+> >
+> >  static int
+> > -vhost_user_backend_handle_shared_object_remove(VhostUserShared *object=
+)
+> > +vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,
+> > +                                               VhostUserShared *object=
+)
+> >  {
+> >      QemuUUID uuid;
+> >
+> >      memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+> > +    switch (virtio_object_type(&uuid)) {
+> > +    case TYPE_VHOST_DEV:
+>
+> It would be nice if we could add a kdoc annotation to SharedObjectType
+> describing what the various types mean.
+>
+
+I can add it.
+
+
+>
+> > +    {
+> > +        struct vhost_dev *owner =3D virtio_lookup_vhost_device(&uuid);
+> > +        if (owner =3D=3D NULL || dev !=3D owner) {
+>
+> I dev is always set dev !=3D owner should also cover the NULL case.
+>
+
+True, I can remove the NULL case from the condition.
+
+
+> However will we see uuid's that aren't associated with anything?
+>
+
+Theoretically, it shouldn't happen. Dmabufs in the host and the guest are
+aligned,
+and when one buffer is cleaned up it should not be requested anymore, as
+the drivers
+in the guest are aware. But a vhost-user backend could have buggy/malicious
+requests, so worth the check.
+
+
+>
+> > +            /* Not allowed to remove non-owned entries */
+> > +            return 0;
+> > +        }
+> > +        break;
+> > +    }
+> > +    default:
+> > +        /* Not allowed to remove non-owned entries */
+> > +        return 0;
+> > +    }
+> > +
+> >      return virtio_remove_resource(&uuid);
+> >  }
+> >
+> > @@ -1794,7 +1810,8 @@ static gboolean backend_read(QIOChannel *ioc,
+> GIOCondition condition,
+> >          ret =3D vhost_user_backend_handle_shared_object_add(dev,
+> &payload.object);
+> >          break;
+> >      case VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE:
+> > -        ret =3D
+> vhost_user_backend_handle_shared_object_remove(&payload.object);
+> > +        ret =3D vhost_user_backend_handle_shared_object_remove(dev,
+> > +
+>  &payload.object);
+> >          break;
+> >      case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
+> >          ret =3D
+> vhost_user_backend_handle_shared_object_lookup(dev->opaque, ioc,
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+>
+>
+
+--000000000000f084990611685fb8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr" class=3D"gmail_sign=
+ature"><div dir=3D"ltr"><br></div></div></div><br></div><br><div class=3D"g=
+mail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Feb 5, 2024 at 1:=
+57=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org=
+">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.=
+com" target=3D"_blank">aesteve@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Shared objects lack spoofing protection.<br>
+&gt; For VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE messages<br>
+&gt; received by the vhost-user interface, any backend was<br>
+&gt; allowed to remove entries from the shared table just<br>
+&gt; by knowing the UUID. Only the owner of the entry<br>
+&gt; shall be allowed to removed their resources<br>
+&gt; from the table.<br>
+<br>
+Was this buggy behaviour on the part of the vhost-user daemon?<br></blockqu=
+ote><div><br></div><div>Yes, although=C2=A0the feature is not really used y=
+et, and it requires to know</div><div>the UUID to be able to exploit it. Bu=
+t yes, any vhost-user backend could</div><div>remove any entry.</div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; To fix that, add a check for all<br>
+&gt; *SHARED_OBJECT_REMOVE messages received.<br>
+&gt; A vhost device can only remove TYPE_VHOST_DEV<br>
+&gt; entries that are owned by them, otherwise skip<br>
+&gt; the removal, and inform the device that the entry<br>
+&gt; has not been removed in the answer.<br>
+&gt;<br>
+&gt; Signed-off-by: Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.com"=
+ target=3D"_blank">aesteve@redhat.com</a>&gt;<br>
+&gt; Acked-by: Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com" t=
+arget=3D"_blank">stefanha@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/interop/vhost-user.rst |=C2=A0 4 +++-<br>
+&gt;=C2=A0 hw/virtio/vhost-user.c=C2=A0 =C2=A0 =C2=A0 | 21 ++++++++++++++++=
++++--<br>
+&gt;=C2=A0 2 files changed, 22 insertions(+), 3 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst=
+<br>
+&gt; index 9f1103f85a..60ec2c9d48 100644<br>
+&gt; --- a/docs/interop/vhost-user.rst<br>
+&gt; +++ b/docs/interop/vhost-user.rst<br>
+&gt; @@ -1839,7 +1839,9 @@ is sent by the front-end.<br>
+&gt;=C2=A0 =C2=A0 When the ``VHOST_USER_PROTOCOL_F_SHARED_OBJECT`` protocol=
+<br>
+&gt;=C2=A0 =C2=A0 feature has been successfully negotiated, this message ca=
+n be submitted<br>
+&gt;=C2=A0 =C2=A0 by the backend to remove themselves from to the virtio-dm=
+abuf shared<br>
+&gt; -=C2=A0 table API. The shared table will remove the back-end device as=
+sociated with<br>
+&gt; +=C2=A0 table API. Only the back-end owning the entry (i.e., the one t=
+hat first added<br>
+&gt; +=C2=A0 it) will have permission to remove it. Otherwise, the message =
+is ignored.<br>
+&gt; +=C2=A0 The shared table will remove the back-end device associated wi=
+th<br>
+&gt;=C2=A0 =C2=A0 the UUID. If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negot=
+iated, and the<br>
+&gt;=C2=A0 =C2=A0 back-end sets the ``VHOST_USER_NEED_REPLY`` flag, the fro=
+nt-end must respond<br>
+&gt;=C2=A0 =C2=A0 with zero when operation is successfully completed, or no=
+n-zero otherwise.<br>
+&gt; diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c<br>
+&gt; index f214df804b..1c3f2357be 100644<br>
+&gt; --- a/hw/virtio/vhost-user.c<br>
+&gt; +++ b/hw/virtio/vhost-user.c<br>
+&gt; @@ -1611,11 +1611,27 @@ vhost_user_backend_handle_shared_object_add(st=
+ruct vhost_dev *dev,<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 static int<br>
+&gt; -vhost_user_backend_handle_shared_object_remove(VhostUserShared *objec=
+t)<br>
+&gt; +vhost_user_backend_handle_shared_object_remove(struct vhost_dev *dev,=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0VhostUserShared *object)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 QemuUUID uuid;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 memcpy(uuid.data, object-&gt;uuid, sizeof(object-&=
+gt;uuid));<br>
+&gt; +=C2=A0 =C2=A0 switch (virtio_object_type(&amp;uuid)) {<br>
+&gt; +=C2=A0 =C2=A0 case TYPE_VHOST_DEV:<br>
+<br>
+It would be nice if we could add a kdoc annotation to SharedObjectType<br>
+describing what the various types mean.<br></blockquote><div><br></div><div=
+>I can add it.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct vhost_dev *owner =3D virtio_lookup=
+_vhost_device(&amp;uuid);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (owner =3D=3D NULL || dev !=3D owner) =
+{<br>
+<br>
+I dev is always set dev !=3D owner should also cover the NULL case.<br></bl=
+ockquote><div><br></div><div>True, I can remove the NULL case from the cond=
+ition.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">
+However will we see uuid&#39;s that aren&#39;t associated with anything?<br=
+></blockquote><div><br></div><div>Theoretically, it shouldn&#39;t happen. D=
+mabufs in the host and the guest are aligned,</div><div>and when one buffer=
+ is cleaned up it should not be requested anymore, as the drivers</div><div=
+>in the guest are aware. But a vhost-user backend could have buggy/maliciou=
+s</div><div>requests, so worth the check.</div><div>=C2=A0</div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Not allowed to remove no=
+n-owned entries */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 default:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Not allowed to remove non-owned entrie=
+s */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return virtio_remove_resource(&amp;uuid);<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; @@ -1794,7 +1810,8 @@ static gboolean backend_read(QIOChannel *ioc, GI=
+OCondition condition,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vhost_user_backend_handle_sh=
+ared_object_add(dev, &amp;payload.object);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 case VHOST_USER_BACKEND_SHARED_OBJECT_REMOVE:<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vhost_user_backend_handle_shared_=
+object_remove(&amp;payload.object);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vhost_user_backend_handle_shared_=
+object_remove(dev,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&a=
+mp;payload.object);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D vhost_user_backend_handle_sh=
+ared_object_lookup(dev-&gt;opaque, ioc,<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+<br>
+</blockquote></div></div>
+
+--000000000000f084990611685fb8--
 
 
