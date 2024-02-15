@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A529FC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 11:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA02C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 11:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raa7i-0004zl-KV; Thu, 15 Feb 2024 06:41:50 -0500
+	id 1raaK1-0000sC-Aj; Thu, 15 Feb 2024 06:54:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1raa7g-0004zW-Oj
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 06:41:49 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1raaJy-0000ru-Hu
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 06:54:30 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1raa7e-000494-UN
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 06:41:48 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-41202eae372so6034375e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 03:41:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1raaJw-00076r-L6
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 06:54:30 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1d7232dcb3eso5771495ad.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 03:54:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707997304; x=1708602104; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3VTEAKiHQgau8rz6G6SavLxaIz42F4xUZL+SfEwlOHQ=;
- b=zdXpWjsqovE+iBd9F6ZNS/u20qoSiZj5HI4DvtYeLLGzepLNUlLDRe3ir4aXwpQdJ4
- XQy1EX8JLWz9D7lMDG1VYdC4HW3wZRZgS4+fq28VDssZ6Pz36+mOe6dQ8Bne84u/9v9G
- SyZCaavKrafDY2Ns8VlumyIdjZndZu5S2bWXNcMrIF5Ymi+VwVKb37qIMtjvOIsykN21
- yuB4Dr2KAUXLXFYSJ6muEJyrPaeISKIBDkWVb5XjyCN8Y3pDmPNs6g37EdbBhSLkv7ok
- o7phEmLksYMYfq9gfLN4vfAWq4I8Ur4bpSRtFpPiKhurWnECEMRBAeZcC7ueF8rEg8Mz
- YeNw==
+ d=ventanamicro.com; s=google; t=1707998066; x=1708602866; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LKViYHHaJw2R7Cdn+Ssvv26v5ReZYf2UxmLwPR23u/g=;
+ b=nG8zJlyyiMBQBMbHRr6W706yFsZoH+rEUh0AVlgdwYdTWei97daGYkqOAyinUHB2ka
+ SttU33viiCNrSGHf6GBnKV73hHxN/L6huZE80C+MrfOTt+8z6SR5hUrrKVdF9ljaer4I
+ vlyg4NTe4q1phGbGw/tojFkldYbSeH8dkrLGLC5mzSUMHOC7xauAD+aC3P3gNZI10Gd5
+ Qw4yLOzzAnGN/OgFqiAPJVMQigL8s7nNGvNMiydX2xuXNMBlFQSvEWgiD8VhoLKtyZ5P
+ myHP6kG4vubUj44N38K1FZwNZhd1KyhWMx9+BGMC2XotVmfvSXHAAPST+keysmDNVqFg
+ upXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707997304; x=1708602104;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3VTEAKiHQgau8rz6G6SavLxaIz42F4xUZL+SfEwlOHQ=;
- b=O+B6Pk+wiByDIjBa+m/SLnL+eljYVLxbblF1rukQKBE6mbqPdIFVEsIPmLbQZSs/hD
- 2987EO3vIEY4IiU6v5XnxVZwTV31k7teYPCpNDUirkJImligkm71MHbcjr4tsqdVl6SH
- +NeLegfwpYuPHFl5JpjJcelKcw4oQeOR2NNB2u2ZFFZHi6l5qCl8c71zU5sTb6j/HEwJ
- oRii+DwzPwshiUcyKENfDe+HcGIla+ua/JzwgF6vwAT2ugUHnOzYCq4KrsRdhV5XG6X7
- t4LLjB7QvEWKJMKjVnfZ3MqS5nXZ46u7K19yQ63u1fFunTZZosyGHGqZ2lOfjSCEipPf
- sBfg==
-X-Gm-Message-State: AOJu0YyqmvNuSW9G0kp/pJvOOTC0JAR/ut+NPuQPVj/7cHkke36IJdKw
- pchmIxniS90Qgh3ydOnK1Po2pRWYgrJY0MJ+QvCzLTRyZphWJuDiTE35Kl+ls2I=
-X-Google-Smtp-Source: AGHT+IEr4j+Tco+JxwNo7H042Tl5fXVh3rwkBwE3bXXo49rLDNMY26RmtrfuCwfTWDBcTG/V4aVGXA==
-X-Received: by 2002:a05:600c:4503:b0:411:ae8e:5945 with SMTP id
- t3-20020a05600c450300b00411ae8e5945mr1150188wmo.36.1707997304199; 
- Thu, 15 Feb 2024 03:41:44 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- y26-20020a1c4b1a000000b0040fe3147babsm4789207wma.0.2024.02.15.03.41.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 03:41:43 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6328F5F8AD;
- Thu, 15 Feb 2024 11:41:43 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Albert Esteve <aesteve@redhat.com>
-Cc: qemu-devel@nongnu.org,  stefanha@gmail.com,  "Michael S. Tsirkin"
- <mst@redhat.com>,  marcandre.lureau@gmail.com,  kraxel@redhat.com,  Stefan
- Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH v3 2/3] hw/virtio: cleanup shared resources
-In-Reply-To: <CADSE00+fCX_w_CyyRmXTJw3WTY-Z-uM+WkOf+yzLKuffUdOB+w@mail.gmail.com>
- (Albert Esteve's message of "Thu, 15 Feb 2024 10:45:41 +0100")
-References: <20240109125614.220293-1-aesteve@redhat.com>
- <20240109125614.220293-3-aesteve@redhat.com>
- <87le7ymrqg.fsf@draig.linaro.org>
- <CADSE00+fCX_w_CyyRmXTJw3WTY-Z-uM+WkOf+yzLKuffUdOB+w@mail.gmail.com>
-User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Thu, 15 Feb 2024 11:41:43 +0000
-Message-ID: <87jzn66jk8.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1707998066; x=1708602866;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LKViYHHaJw2R7Cdn+Ssvv26v5ReZYf2UxmLwPR23u/g=;
+ b=VXQP/r5fy0fHjTAnwmCOVIToj6cVaj3s3OjYsH91Tiv8YY9xbCrsw/eeoVjWcig1eV
+ zc6h1vS3xFVqEsGgS3jy3UYjCmQ7XxiUXIRin4fK51UXX498C9NIwAIjc8ZuW6iRygdt
+ TbtaU/KbXFF5K9U/5+Bzyd5Bc0j3a3oEcA3hm8QsvaHk+lJzBkPrL71TXM+8lRSkjSwI
+ C0sQRdse5rIaEDqI7PJjmkU1j7cG0azaFDGPWDEsvl+eKH5RJVOFDbuf2xLJJiT08XZa
+ pIFM/IBj6IbL/+Y/UxYhuB1B4P2AVC183chiQIuVfogxcGWMs0HMyCDz7b6n/DdbTWKp
+ CVRA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcq1vziHXmE7Wn6SfKN9zH9vP2sVtbF58tgd4myfaFl7OpFSV9Ag45fBZy3rI8m2XJFspDnRkEilp+bYubwj3li0vBK84=
+X-Gm-Message-State: AOJu0YwYdH1zWNOKQCzgiKrmRwi77AKSTGRGp/hFPgRG5IS2EJyjEmJn
+ EfmOm2J8jS1wBfQBsskLLPyUJfPy6dRPkVQgWqN0r7MKetmqmuWz9qoPKe2Ppio=
+X-Google-Smtp-Source: AGHT+IEg54NZO9vF+D6Sq3u87ZwemWA4LTsUw3eryB9WrP95gTqjXm7+/Ktx5EDSkdecIOzJ+WlFUw==
+X-Received: by 2002:a17:902:b190:b0:1d9:760d:31c7 with SMTP id
+ s16-20020a170902b19000b001d9760d31c7mr1433116plr.29.1707998066248; 
+ Thu, 15 Feb 2024 03:54:26 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ jd22-20020a170903261600b001da2951a788sm582489plb.304.2024.02.15.03.54.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 03:54:25 -0800 (PST)
+Message-ID: <6afa2f70-8daf-4af7-aabd-b642947451fd@ventanamicro.com>
+Date: Thu, 15 Feb 2024 08:54:20 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] RISC-V: Add Ztso extension
+Content-Language: en-US
+To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>,
+ Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Philipp Tomsich
+ <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240207122256.902627-1-christoph.muellner@vrull.eu>
+ <3da767e4-26f8-4c92-a241-4111c2befdc2@ventanamicro.com>
+ <CAEg0e7jXdfViUSaRc2+6WNtTY37_NhbsuxjPMw4YhQ24-HD3tg@mail.gmail.com>
+ <20240214-3d00860c6586b83fb7c5755d@orel>
+ <CAEg0e7jEvECjSSo+b4hJd9Bjg9Hk=nknmxAvDUHCk70caqqTng@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAEg0e7jEvECjSSo+b4hJd9Bjg9Hk=nknmxAvDUHCk70caqqTng@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,95 +106,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Albert Esteve <aesteve@redhat.com> writes:
 
-> On Tue, Feb 6, 2024 at 12:11=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
-aro.org> wrote:
->
->  Albert Esteve <aesteve@redhat.com> writes:
->
->  > Ensure that we cleanup all virtio shared
->  > resources when the vhost devices is cleaned
->  > up (after a hot unplug, or a crash).
->  >
->  > To do so, we add a new function to the virtio_dmabuf
->  > API called `virtio_dmabuf_vhost_cleanup`, which
->  > loop through the table and removes all
->  > resources owned by the vhost device parameter.
->  >
->  > Also, add a test to verify that the new
->  > function in the API behaves as expected.
->  >
->  > Signed-off-by: Albert Esteve <aesteve@redhat.com>
->  > Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
->  > ---
->  >  hw/display/virtio-dmabuf.c        | 22 +++++++++++++++++++++
->  >  hw/virtio/vhost.c                 |  3 +++
->  >  include/hw/virtio/virtio-dmabuf.h | 10 ++++++++++
->  >  tests/unit/test-virtio-dmabuf.c   | 33 +++++++++++++++++++++++++++++++
->  >  4 files changed, 68 insertions(+)
->  >
->  > diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
->  > index 3dba4577ca..6688809777 100644
->  > --- a/hw/display/virtio-dmabuf.c
->  > +++ b/hw/display/virtio-dmabuf.c
->  > @@ -136,6 +136,28 @@ SharedObjectType virtio_object_type(const QemuUUI=
-D *uuid)
->  >      return vso->type;
->  >  }
->  >=20=20
->  > +static bool virtio_dmabuf_resource_is_owned(gpointer key,
->  > +                                            gpointer value,
->  > +                                            gpointer dev)
->  > +{
->  > +    VirtioSharedObject *vso;
->  > +
->  > +    vso =3D (VirtioSharedObject *) value;
->  > +    return vso->type =3D=3D TYPE_VHOST_DEV && vso->value =3D=3D dev;
->
->  It's a bit surprising to see vso->value being an anonymous gpointer
->  rather than the proper type and a bit confusing between value and
->  vso->value.
->
-> It is the signature required for this to be used with `g_hash_table_forea=
-ch_remove`.
-> For the naming, the HashMap stores gpointers, that point to `VirtioShared=
-Object`, and
-> these point to the underlying type (stored at `vso->value`). It may sound=
- a bit confusing,
-> but is a byproduct of the VirtioSharedObject indirection. Not sure which =
-names could be
-> more fit for this, but I'm open to change them.
 
-This is the problem without overloading value and vso->value. I
-appreciate that virtio_dmabuf_resource_is_owned() has to follow the
-signature for g_hash_table_foreach_remove but usually the compare
-function then casts gpointer to the underlying type for any comparison.
+On 2/15/24 06:53, Christoph Müllner wrote:
+> On Wed, Feb 14, 2024 at 5:25 PM Andrew Jones <ajones@ventanamicro.com> wrote:
+>>
+>> On Wed, Feb 14, 2024 at 02:38:34PM +0100, Christoph Müllner wrote:
+>>> On Wed, Feb 14, 2024 at 2:35 PM Daniel Henrique Barboza
+>>> <dbarboza@ventanamicro.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 2/7/24 09:22, Christoph Müllner wrote:
+>>>>> The first patch of this series picks up an earlier v2 Ztso patch from Palmer,
+>>>>> which can be found here:
+>>>>>     https://patchwork.kernel.org/project/qemu-devel/patch/20220917072635.11616-1-palmer@rivosinc.com/
+>>>>> This patch did not apply cleanly but the necessary changes were trivial.
+>>>>> There was a request to extend the commit message, which is part of the
+>>>>> posted patch of this series.  As this patch was reviewed a year ago,
+>>>>> I believe it could be merged.
+>>>>>
+>>>>> The second patch simply exposes Ztso via hwprobe.
+>>>>
+>>>> It's also worth mentioning that the second patch relies on:
+>>>>
+>>>> "[PATCH 0/2] linux-user/riscv: Sync hwprobe keys with kernel"
+>>>>
+>>>> To be applied beforehand.
+>>>
+>>> Indeed! Therefore, the end of the cover letter contains the following paragraph:
+>>> """
+>>> This series is based on today's riscv-to-apply.next with my other series
+>>> that adds the new hwprobe keys
+>>> (https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01293.html).
+>>> """
+>>
+>> I think a line like
+>>
+>> Based-on: 20240207115926.887816-1-christoph.muellner@vrull.eu
+>>
+>> in the cover letter would allow the automated tools to green-light this
+>> series too.
+> 
+> Should I resend?
 
-So something like:
+You can add the "Based-on" line as Drew said in case a second version is needed.
+Don't worry about it.
 
-  typedef struct VirtioSharedObject {
-      SharedObjectType type;
-      union {
-            vhost_dev *dev; /* TYPE_VHOST_DEV */
-            int udma_buf;   /* TYPE_DMABUF */
-      } value;
-  } VirtioSharedObject;
 
-and then you would have:
+Thanks,
 
-  VirtioSharedObject *vso =3D value;
-  if (vso->type =3D=3D TYPE_VHOST_DEV) {
-     vhost_dev *dev =3D dev;
-     return vso->value.dev =3D=3D dev;
-  }
+Daniel
 
-In fact I think you can skip the cast so have:
-
-  VirtioSharedObject *vso =3D value;
-  return vso->type =3D=3D TYPE_VHOST_DEV && vso->value.dev =3D=3D dev;
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+>>
+>> Thanks,
+>> drew
+>>
+>>
+>>>
+>>> To ease reviewing and testing for others, I've also created a remote
+>>> branch on GitHub.
+>>>
+>>> Thanks for reviewing!
+>>>
+>>>>
+>>>>
+>>>>
+>>>> Thanks,
+>>>>
+>>>> Daniel
+>>>>
+>>>>
+>>>>>
+>>>>> Relevant in this context might be also, that Richard's patch to improve
+>>>>> TCG's memory barrier selection depending on host and guest memory ordering
+>>>>> landed in June 2023:
+>>>>>     https://lore.kernel.org/all/a313b36b-dcc1-f812-ccbd-afed1cbd523b@linaro.org/T/
+>>>>>
+>>>>> The first patch was already sent as part of an RFC series for Ssdtso:
+>>>>>     https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg02962.html
+>>>>> Since I don't want to keep this patch until the ratification of Ssdtso,
+>>>>> I would like to get this merged independent of Ssdtso.
+>>>>>
+>>>>> This series is based on today's riscv-to-apply.next with my other series
+>>>>> that adds the new hwprobe keys
+>>>>> (https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg01293.html).
+>>>>>
+>>>>> This series can also be found here:
+>>>>>     https://github.com/cmuellner/qemu/tree/ztso
+>>>>>
+>>>>> Christoph Müllner (1):
+>>>>>     linux-user/riscv: Add Ztso extension to hwprobe
+>>>>>
+>>>>> Palmer Dabbelt (1):
+>>>>>     RISC-V: Add support for Ztso
+>>>>>
+>>>>>    linux-user/syscall.c                    |  3 +++
+>>>>>    target/riscv/cpu.c                      |  2 ++
+>>>>>    target/riscv/cpu_cfg.h                  |  1 +
+>>>>>    target/riscv/insn_trans/trans_rva.c.inc | 11 ++++++++---
+>>>>>    target/riscv/insn_trans/trans_rvi.c.inc | 16 ++++++++++++++--
+>>>>>    target/riscv/insn_trans/trans_rvv.c.inc | 20 ++++++++++++++++++++
+>>>>>    target/riscv/translate.c                |  3 +++
+>>>>>    7 files changed, 51 insertions(+), 5 deletions(-)
+>>>>>
 
