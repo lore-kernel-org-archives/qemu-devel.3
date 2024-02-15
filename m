@@ -4,55 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8A5C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E9FC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ragke-0000Df-MN; Thu, 15 Feb 2024 13:46:28 -0500
+	id 1raglY-0000u2-Ck; Thu, 15 Feb 2024 13:47:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1ragkc-0000CV-95
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:46:26 -0500
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1ragkZ-0004Uf-UP
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:46:26 -0500
-Received: from [10.10.3.121] (unknown [10.10.3.121])
- by mail.ispras.ru (Postfix) with ESMTPS id 3DAED40762DF;
- Thu, 15 Feb 2024 18:46:19 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 3DAED40762DF
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1708022779;
- bh=bbYtPRFuMdaGYrsiQumLSofHRt5QzJKtXqkkIoaM6X0=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=DbtI5ZLWrA1usmLUIpANvVqQJDQKpQI3acKrGXLklrXp5Cvq3+AVBA6Foc3f1RVki
- m4PfvR1hdz2ixuaHgyPHCstJvVEFAr0OkpJU+kV4WJmerFMHPlYpgfJd4KKees9Jql
- 7NFmPJz03tHhC0H9KiUE9ruozUD8sCch7M9f0mXY=
-Date: Thu, 15 Feb 2024 21:46:19 +0300 (MSK)
-From: Alexander Monakov <amonakov@ispras.ru>
-To: Richard Henderson <richard.henderson@linaro.org>
-cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
-Subject: Re: [PATCH v4 09/10] util/bufferiszero: Add simd acceleration for
- aarch64
-In-Reply-To: <6499be56-2002-44b3-9c53-1a1ec2fde53f@linaro.org>
-Message-ID: <1e4d5081-d86b-84f5-20f7-8e48044b751a@ispras.ru>
-References: <20240215081449.848220-1-richard.henderson@linaro.org>
- <20240215081449.848220-10-richard.henderson@linaro.org>
- <1f038576-5121-e84c-8196-ae5f9ca3a75b@ispras.ru>
- <6499be56-2002-44b3-9c53-1a1ec2fde53f@linaro.org>
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1raglX-0000oa-1U
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:47:23 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1raglV-0004jE-0r
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:47:22 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-5d8ddbac4fbso1004409a12.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:47:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708022839; x=1708627639; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3z90p2xOKMarDgjIWEH3zhzvAjpbfMyeAijBDDuA6uE=;
+ b=hPa5N18xUW12jY1ZZYqn11l5WpNDEObhHCBMHCCutSZun/bF7jknfaJBesWmiSDV8i
+ 3bR5er31uJnqNoMTjaxSZAs/ZJyqW+oz/kuR3H//n2t2ympZp3KqSw6fb3ddb1+TnWLP
+ FSLqlY9uXtf4wj09zvfEiPndmeC+ZxfNMULtlKO33dmqQ828YogEhsMS7DOHntxt4cJe
+ ONzgs/JyIRVz9SZ16julNhPENDoJy9lcbEtSK9WiXqoGoddKvGdVGOLsL1L/dWFveWhp
+ 2jfYptKxbMzpEfeq3L9zN3y4+JKDNaz2jVA9HuU6PlIIToJQ1gaPnBvNlLP9P4Zwzcs3
+ uPRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708022839; x=1708627639;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3z90p2xOKMarDgjIWEH3zhzvAjpbfMyeAijBDDuA6uE=;
+ b=UNjh/W9RTaO2oO7qFR5JOVs5aJ3aKm3+mdK2KOP1Wx+rd0c9XTWZREKDQ+dRfeUb9c
+ VMU/M6TqOMmlePoAOh6yJyALADySQIpu7jzsJ4aEH07Zz/T8SMRlNevM5wzs4fXuX7++
+ x4shu83mGDKpyt0QD4QieWAlFujTuiytjyG7PfEiC2zCK1zRL2FRPQ3KGWhuvmd3jqfr
+ t1uFXD0YZRWeOycIWQbjzVwCzvtsyptO6hP9CEOl7tp0eZADILUtzVcRF9q1OgPGnPZg
+ TsFqG4yTlrCeGus8XtW3FT3t/XYkNMhoHP1mXYYNs4sm4z4G40OaFUAhp4CIAPII61AG
+ gY0Q==
+X-Gm-Message-State: AOJu0Yx2RwadCTcqdKN81dOSFsyxWRciDYc+itHJO8hAHJ7DGQUMM9G/
+ d/GyYRnwIZwZRFQOZZUv4+6+8b7bv5FP+bxMbn4YY+hay/yLovWr
+X-Google-Smtp-Source: AGHT+IFYHxcxC5K///xN8TdhvcV0L0S4HqGrm6Owjo8OMKvGaqisRg+RzbGDo9m7iGenBVoNKQmouQ==
+X-Received: by 2002:a05:6a20:d493:b0:19e:3ccd:6f86 with SMTP id
+ im19-20020a056a20d49300b0019e3ccd6f86mr3412887pzb.43.1708022839161; 
+ Thu, 15 Feb 2024 10:47:19 -0800 (PST)
+Received: from debian ([2601:641:300:14de:5279:cdf6:aaf1:e09c])
+ by smtp.gmail.com with ESMTPSA id
+ d128-20020a633686000000b005dc884e9f5bsm1726394pga.38.2024.02.15.10.47.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Feb 2024 10:47:18 -0800 (PST)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Thu, 15 Feb 2024 10:47:16 -0800
+To: shiju.jose@huawei.com
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ jonathan.cameron@huawei.com, tanxiaofei@huawei.com,
+ prime.zeng@hisilicon.com, linuxarm@huawei.com, fan.ni@samsung.com
+Subject: Re: [PATCH v2 2/3] hw/cxl/cxl-mailbox-utils: Add device patrol scrub
+ control feature
+Message-ID: <Zc5cNLH9FS24qXTe@debian>
+References: <20231124135338.1191-1-shiju.jose@huawei.com>
+ <20231124135338.1191-3-shiju.jose@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
- helo=mail.ispras.ru
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231124135338.1191-3-shiju.jose@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,32 +97,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On Thu, 15 Feb 2024, Richard Henderson wrote:
-
-> On 2/14/24 22:47, Alexander Monakov wrote:
-> > 
-> > On Wed, 14 Feb 2024, Richard Henderson wrote:
-> > 
-> >> Because non-embedded aarch64 is expected to have AdvSIMD enabled, merely
-> >> double-check with the compiler flags for __ARM_NEON and don't bother with
-> >> a runtime check.  Otherwise, model the loop after the x86 SSE2 function,
-> >> and use VADDV to reduce the four vector comparisons.
-> > 
-> > I am not very familiar with Neon but I wonder if this couldn't use SHRN
-> > for the final 128b->64b reduction similar to 2022 Glibc optimizations:
-> > https://inbox.sourceware.org/libc-alpha/20220620174628.2820531-1-danilak@google.com/
+On Fri, Nov 24, 2023 at 09:53:36PM +0800, shiju.jose@huawei.com wrote:
+> From: Shiju Jose <shiju.jose@huawei.com>
 > 
-> The reason they use SHRN for memchr is that they have also applied a mask
-> to the comparison so that they can identify which byte contained the match.
-> That is not required here, so any reduction will do.
+> CXL spec 3.1 section 8.2.9.9.11.1 describes the device patrol scrub control
+> feature. The device patrol scrub proactively locates and makes corrections
+> to errors in regular cycle. The patrol scrub control allows the request to
+> configure patrol scrub input configurations.
+> 
+> The patrol scrub control allows the requester to specify the number of
+> hours for which the patrol scrub cycles must be completed, provided that
+> the requested number is not less than the minimum number of hours for the
+> patrol scrub cycle that the device is capable of. In addition, the patrol
+> scrub controls allow the host to disable and enable the feature in case
+> disabling of the feature is needed for other purposes such as
+> performance-aware operations which require the background operations to be
+> turned off.
+> 
+> Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> ---
 
-Right, so we can pick the cheapest reduction method, and if I'm reading
-Neoverse-N1 SOG right, SHRN is marginally cheaper than ADDV (latency 2
-instead of 3), and it should be generally preferable on other cores, no?
+LGTM except for some minor comments inlined.
 
-For that matter, cannot UQXTN (unsigned saturating extract narrow) be
-used in place of CMEQ+ADDV here?
 
-Alexander
+>  hw/cxl/cxl-mailbox-utils.c | 97 +++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 96 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 1bbc9a48a6..5a6f4e4029 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -809,6 +809,7 @@ typedef struct CXLSupportedFeatureEntry {
+>  } QEMU_PACKED CXLSupportedFeatureEntry;
+>  
+>  enum CXL_SUPPORTED_FEATURES_LIST {
+> +    CXL_FEATURE_PATROL_SCRUB = 0,
+>      CXL_FEATURE_MAX
+>  };
+>  
+> @@ -849,6 +850,37 @@ enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
+>      CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MAX
+>  };
+>  
+> +/* CXL r3.1 section 8.2.9.9.11.1: Device Patrol Scrub Control Feature */
+> +static const QemuUUID patrol_scrub_uuid = {
+> +    .data = UUID(0x96dad7d6, 0xfde8, 0x482b, 0xa7, 0x33,
+> +                 0x75, 0x77, 0x4e, 0x06, 0xdb, 0x8a)
+> +};
+> +
+> +#define CXL_MEMDEV_PS_GET_FEATURE_VERSION    0x01
+> +#define CXL_MEMDEV_PS_SET_FEATURE_VERSION    0x01
+> +#define CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT    BIT(0)
+> +#define CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT    BIT(1)
+> +#define CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT    12
+> +#define CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT    1
+> +#define CXL_MEMDEV_PS_ENABLE_DEFAULT    0
+> +
+> +/* CXL memdev patrol scrub control attributes */
+> +struct CXLMemPatrolScrubReadAttrbs {
+> +        uint8_t scrub_cycle_cap;
+> +        uint16_t scrub_cycle;
+> +        uint8_t scrub_flags;
+> +} QEMU_PACKED cxl_memdev_ps_feat_read_attrbs;
+> +
+> +typedef struct CXLMemPatrolScrubWriteAttrbs {
+> +    uint8_t scrub_cycle_hr;
+> +    uint8_t scrub_flags;
+> +} QEMU_PACKED CXLMemPatrolScrubWriteAttrbs;
+> +
+> +typedef struct CXLMemPatrolScrubSetFeature {
+> +        CXLSetFeatureInHeader hdr;
+> +        CXLMemPatrolScrubWriteAttrbs feat_data;
+> +} QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
+> +
+>  /* CXL r3.0 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
+>  static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+>                                               uint8_t *payload_in,
+> @@ -872,7 +904,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+>      uint16_t feat_entries = 0;
+>  
+>      if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
+> -        get_feats_in->start_index > CXL_FEATURE_MAX) {
+> +        get_feats_in->start_index >= CXL_FEATURE_MAX) {
+
+Not totally sure about this, the spec says "...Greater than..." although I
+also think it should be >=. Similar things for the offset usage below.
+
+Fan
+
+>          return CXL_MBOX_INVALID_INPUT;
+>      }
+>      req_entries = (get_feats_in->count -
+> @@ -884,6 +916,31 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+>      entry = 0;
+>      while (entry < req_entries) {
+>          switch (index) {
+> +        case  CXL_FEATURE_PATROL_SCRUB:
+> +            /* Fill supported feature entry for device patrol scrub control */
+> +            get_feats_out->feat_entries[entry] =
+> +                           (struct CXLSupportedFeatureEntry) {
+> +                .uuid = patrol_scrub_uuid,
+> +                .feat_index = index,
+> +                .get_feat_size = sizeof(cxl_memdev_ps_feat_read_attrbs),
+> +                .set_feat_size = sizeof(CXLMemPatrolScrubWriteAttrbs),
+> +                /* Bit[0] : 1, feature attributes changeable */
+> +                .attrb_flags = 0x1,
+> +                .get_feat_version = CXL_MEMDEV_PS_GET_FEATURE_VERSION,
+> +                .set_feat_version = CXL_MEMDEV_PS_SET_FEATURE_VERSION,
+> +                .set_feat_effects = 0,
+> +            };
+> +            feat_entries++;
+> +            /* Set default value for device patrol scrub read attributes */
+> +            cxl_memdev_ps_feat_read_attrbs.scrub_cycle_cap =
+> +                                CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT |
+> +                                CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT;
+> +            cxl_memdev_ps_feat_read_attrbs.scrub_cycle =
+> +                                CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
+> +                                (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
+> +            cxl_memdev_ps_feat_read_attrbs.scrub_flags =
+> +                                CXL_MEMDEV_PS_ENABLE_DEFAULT;
+> +            break;
+>          default:
+>              break;
+>          }
+> @@ -924,6 +981,21 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
+>          return CXL_MBOX_INVALID_INPUT;
+>      }
+>  
+> +    if (qemu_uuid_is_equal(&get_feature->uuid, &patrol_scrub_uuid)) {
+> +        if (get_feature->offset >= sizeof(cxl_memdev_ps_feat_read_attrbs)) {
+> +            return CXL_MBOX_INVALID_INPUT;
+> +        }
+> +        bytes_to_copy = sizeof(cxl_memdev_ps_feat_read_attrbs) -
+> +                                             get_feature->offset;
+> +        bytes_to_copy = (bytes_to_copy > get_feature->count) ?
+> +                               get_feature->count : bytes_to_copy;
+> +        memcpy(payload_out,
+> +               &cxl_memdev_ps_feat_read_attrbs + get_feature->offset,
+> +               bytes_to_copy);
+> +    } else {
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +
+>      *len_out = bytes_to_copy;
+>  
+>      return CXL_MBOX_SUCCESS;
+> @@ -937,6 +1009,29 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>                                             size_t *len_out,
+>                                             CXLCCI *cci)
+>  {
+> +    CXLMemPatrolScrubWriteAttrbs *ps_write_attrbs;
+> +    CXLMemPatrolScrubSetFeature *ps_set_feature;
+> +    CXLSetFeatureInHeader *hdr = (void *)payload_in;
+> +
+> +    if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
+> +        if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION ||
+> +            (hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK) !=
+> +                               CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER) {
+> +            return CXL_MBOX_UNSUPPORTED;
+> +        }
+> +
+> +        ps_set_feature = (void *)payload_in;
+> +        ps_write_attrbs = &ps_set_feature->feat_data;
+> +        cxl_memdev_ps_feat_read_attrbs.scrub_cycle &= ~0xFF;
+> +        cxl_memdev_ps_feat_read_attrbs.scrub_cycle |=
+> +                          ps_write_attrbs->scrub_cycle_hr & 0xFF;
+> +        cxl_memdev_ps_feat_read_attrbs.scrub_flags &= ~0x1;
+> +        cxl_memdev_ps_feat_read_attrbs.scrub_flags |=
+> +                          ps_write_attrbs->scrub_flags & 0x1;
+> +    } else {
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> -- 
+> 2.34.1
+> 
 
