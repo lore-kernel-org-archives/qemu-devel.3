@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD22C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01F22C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafsZ-0003oV-AL; Thu, 15 Feb 2024 12:50:35 -0500
+	id 1raftd-0004di-Vy; Thu, 15 Feb 2024 12:51:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafsX-0003nc-L7
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:50:33 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raftb-0004dN-4i
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:51:39 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafsW-00088V-5t
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:50:33 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-55f279dca99so1986341a12.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:50:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raftZ-00006n-7H
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:51:38 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-411a5b8765bso7151435e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:51:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019430; x=1708624230; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CB9rng1yqc5qKLqPGbyUPs6HKuEouCWc3AXnz3VU8HU=;
- b=dtpQq/XPCX8oA1EJ0jyZ9DYxt+w0umdmgFkfj3WBrJtWR9KrBeX2sNNcIk+E9sQKMb
- Opx5d/BN6wTruWpnomD1DLMyMl0/AyyTDa7MHvVwNfOU/HhZ7v+t94reknBiiL3nRHB+
- mshjRueYBqs0Maw9T20HdUB4zOmmnJxaySkWe0uYRakrW08aAcnUR0dzz/uvq+zx2CkA
- xzAO/6zdQzjADuNnUHEH844meNZNbXq0BB99lM1idvrFwVK+SWUorf9JPej1MGncNItv
- fhIa8Fei83QHjuaiDd+AxUvJuJgZnKR+3YBsy3TAhQ787kniIjk1z+52yCUmAWR344dT
- Absg==
+ d=linaro.org; s=google; t=1708019495; x=1708624295; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oTzsyQOgrjaydu2FFPKjsjrYmE42/gc3kn0BTtwcx6o=;
+ b=fWzgZtYrQKDNIT1zwnpDmfup3KkAHMgJO7MNy6ESirM9f7H18V7tlAUS2iyqrBaU/H
+ CIGpXx3YkAOf34vLLdD1o/j/s56Io0dSYBQ+ff5q5UVRA0e6QDxIaOeVMqdQ47EDf2BL
+ YiWLMOuVhcc9bv+Aa7loxgbiJUecM3cl7RoHLLt5MDyBrMSNc3bHH5theLLc375qSUcF
+ bUia4m8c4LLX63IzncoZh6nmXXESCx5oRdEBtQQBYOpJaC6POj6Wum5Ix35DwrgxUEYu
+ SfGdkkMvncfS8lKfgwE1tijUcpEhNAoeXebFYrAiMaqU/4eFZDCauQcZEWhW55mdZOi2
+ n5dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019430; x=1708624230;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CB9rng1yqc5qKLqPGbyUPs6HKuEouCWc3AXnz3VU8HU=;
- b=ZKrfiz1Fx3kGCYR1+msV7mi1miPdb11CJ2TLcC/CzD4/31SIwg3j8zj22tGQz9ewiR
- hJezJr64F/W+CagcH/1/8acJcuFMVvdQd2qpGE1UvwjaNufKRu39pwALv4ySTzQ6fSI1
- 7y5KpchKroo+2DubfVg6exSLF1SShlwk3J+mB5UjKT0II1eyXY5VuKdeWigcfGgyweB/
- u3cBPkoB+9ur4ICpk6ps4z7yCwaiyNQf2aYPyztx3b6+Mges5Uz04fPjmkxi8v+i4n4u
- Cz1khqVqkhwQl7RfHtfR3cm7m1l+6Y6Kqz7xeQi5Nb4eloN87fen7VgzPqanvgO8fyYd
- 3kgg==
+ d=1e100.net; s=20230601; t=1708019495; x=1708624295;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oTzsyQOgrjaydu2FFPKjsjrYmE42/gc3kn0BTtwcx6o=;
+ b=h2yTlb48M/4YbulsI+y+Z9J+v+oHhRjC12eLAtI1jG03zXZxygvw3HoLBcicHZwTyp
+ 3m5JEW6jfQSRL1a/tHJhXDxnpYAMLKBsjEug0IZ1XZ3UlNJ7UqtolK7aa6mRl2LGK8qk
+ I6Hq7VHeVVylWs04DRaB/ixssthDXyTjZRUXQrLGuzUdkTsfUrUDAUgT1hT8FKtYbsve
+ crAeBq++9uYlDVcJn2acHmrNcMrTge5ZS55VamwFKZLRNSHWZpHMHk1a9F6NM8tw7dso
+ 3J08K6HvI+P/le72druT3q2VjUCMexeUTCGWn9uVGcXxsg3512Au5O35TTmCA3aLooqc
+ ZXWA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKof2vf1h+NC8kvdkbEuqcy4Dk+WY8z1EF+q1ZUf4SJaOiwwljPhrdXrY46XXY0a9iBtMBhLGAtha/JAFCo8qf1r0wXDA=
-X-Gm-Message-State: AOJu0YwE5UhJW0vnEb/tPHcbjDdok6TOgEoC7jIjycmJL6yD46xEozzK
- hMbb0/lq3f0aFy+RJIIM6duBCAvaC9ZWbgFej8f17pzRyKKe4bGv1lsLJt176mpq/MzdfYwI+3e
- UGDRDDsfPn2GmjyRVUyyu9lVNrTqT2jNJR29djQ==
-X-Google-Smtp-Source: AGHT+IEA7RxiA5XaVgzwAXHqZ8KwEnUcfoU/2Wtulf6Nnr+HeFp19NtVBIoUoPvq+gQWOJBHzQQ/PRsVhH+iekyV6Is=
-X-Received: by 2002:a05:6402:1b1a:b0:55f:f94d:cf76 with SMTP id
- by26-20020a0564021b1a00b0055ff94dcf76mr1897552edb.27.1708019430462; Thu, 15
- Feb 2024 09:50:30 -0800 (PST)
+ AJvYcCVHv3l7HwiG9jmm7gUwcdqyK9t1vFNABE33IUoBBdhNAxqtnsOHZLvJ5DC9AsKim1nzrIUfon2b9wyTdwaPi9cT2SdhOA8=
+X-Gm-Message-State: AOJu0YzGvFpOS4m+1sOam+IVi1hTaYSzy85nkLxBq0oKNgqLZ01kBRXo
+ GYng8FXt8n3JmhJC6mgnqtoob3jvNuUAX3750HLL0jAagX4uzR+0B5wiKcYTENCB5pc7ZkD1YP2
+ g5pQ=
+X-Google-Smtp-Source: AGHT+IFtwKRozmx4ZtfZEa+R/OW49HQ0YsoerVY/t0nZaMKiK727zaGkKQEPHRcG/UQlumX+1Gk6yw==
+X-Received: by 2002:a05:600c:4f91:b0:412:17ac:3df1 with SMTP id
+ n17-20020a05600c4f9100b0041217ac3df1mr2365421wmq.14.1708019495671; 
+ Thu, 15 Feb 2024 09:51:35 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.193.50])
+ by smtp.gmail.com with ESMTPSA id
+ s14-20020a05600c044e00b004104bc8d841sm5680826wmb.13.2024.02.15.09.51.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 09:51:35 -0800 (PST)
+Message-ID: <8d661a64-b8ba-4dcd-a6dc-d0b7a203e502@linaro.org>
+Date: Thu, 15 Feb 2024 18:51:33 +0100
 MIME-Version: 1.0
-References: <20240215171512.800892-1-npiggin@gmail.com>
-In-Reply-To: <20240215171512.800892-1-npiggin@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Feb 2024 17:50:19 +0000
-Message-ID: <CAFEAcA_m=xZEh0gS8ttfPiuRGWJrow7A303GiLG44W4LQZ10xw@mail.gmail.com>
-Subject: Re: [PATCH] target/ppc: BHRB avoid using host pointer in translated
- code
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, 
- Glenn Miles <milesg@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/9] mips: do not list individual devices from configs/
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: shentey@gmail.com, balaton@eik.bme.hu
+References: <20240213155005.109954-1-pbonzini@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240213155005.109954-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,27 +96,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Feb 2024 at 17:16, Nicholas Piggin <npiggin@gmail.com> wrote:
->
-> Calculate the BHRB base from arithmetic on the tcg_env target ptr.
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
-> Hi Glenn,
->
-> I think I have to squash this into the BHRB series. 32-bit host
-> compile shows up a size mismatch warning... I think it's not quite
-> right to be using host pointer directly in target code. The change
-> of offset and mask to 32-bit is needed due to to seemingly missing
-> tl->ptr conversion helpers, but 32-bit is okay for those anyway.
+Hi,
 
-There's nothing inherently wrong with it (depending on what the
-pointer is pointing to!), but you need to use the right type.
-target_ulong and the _tl suffix are for the type which
-depends on the size of the target's 'long'. The TCG type which is
-"size of a host pointer" is TCG_TYPE_PTR, and you want the _ptr
-suffix functions and to pass it around with TCGv_ptr.
+On 13/2/24 16:49, Paolo Bonzini wrote:
 
-thanks
--- PMM
+> Bernhard Beschow (1):
+>    hw/mips/Kconfig: Remove ISA dependencies from MIPSsim board
+> 
+> Paolo Bonzini (8):
+
+>    isa: clean up Kconfig selections for ISA_SUPERIO
+>    isa: fix ISA_SUPERIO dependencies
+>    isa: specify instance_size in isa_superio_type_info
+>    isa: extract FDC37M81X to a separate file
+
+I'm a bit reluctant with the USB changes so far, so I'm queuing
+these 5 patches meanwhile.
+
+Regards,
+
+Phil.
 
