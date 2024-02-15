@@ -4,88 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05011C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD0EC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ractv-0004ED-KH; Thu, 15 Feb 2024 09:39:48 -0500
+	id 1racyn-0005dm-QD; Thu, 15 Feb 2024 09:44:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1racti-0004D7-NS
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:39:37 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1ractV-0004g4-8p
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:39:22 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-563cf32e130so308512a12.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:39:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708007959; x=1708612759; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=HFr7FApZYLQRYuCgSuuloiuEEUdNJbVYh1Z1LoYtLFs=;
- b=OxKi5nI+1qvev+C6jP0/q8cgTGHh0s0LTDYeUn83R4CGlxHEUcFcIDQWQPtlFTUmMT
- DExNCsOd7ZLh6+kLVzP/NeG6p04sTF8/0d/U3svQM2qKDRtxNcJ3aWbDM3OLbHpdVKAe
- mnwJUKSjrkWpc5gSTAJ7Ywc8Okx0duZzUScDz6Gfdq72xp/aOUu93k6KvBj4K+t5DuNs
- WCRG50+ITHnyv8HVWV9IN9LxMFy1btVbuacjAv8kUp1Dj3+dbx8KprSDiOy6hbT0lqsf
- ginX7F7jR/Cg+1Ax1TTUTtzwfybeStFRhcgNCi5xKNX7uf2Zm4NX3lsNTf/1woV40qWs
- SuTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708007959; x=1708612759;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HFr7FApZYLQRYuCgSuuloiuEEUdNJbVYh1Z1LoYtLFs=;
- b=FktU56O1/pDfjKd8xPiaQAOTE9v3sxqk7fOisXq13YzcZs1vf24z7IVDy1nhVPyXGr
- HkROTd8104aXBg87TPxhze/ZK5c/0gS+4bkR0smP/5zfpXjXK1MYAGZltnw3ut5hUAa+
- vRDHX1U9vhDmKOIWIrVIK1FFzmcfxmGUREQ5m9noaeAtpylfXBqh/39tkSDsB3XfQs3Y
- WwbgHAHsXS/wu/ecrZ20NfftFeviNKi9yW6FjYaYew4p5ihlVrt9o+Xl9WqdoA0ttWzF
- FUsd4+OQGYwKdxHTWxT/AeRqG6aDlmyJhixnLAC1SynGmyQxggZBpM3iFBWj2xhWUdyL
- 01Fg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6UHDB2Lh616wcu4hOx0nlAGmG+27GqZRcvqnwQNFqInBsjo9J6taDX5CgtTQcCaVpFPunrdWwJ1BXSLv5uwR4qaGj3nI=
-X-Gm-Message-State: AOJu0Yz7nwE4E1df0iF9L7An91BhaxsgODugMyt8b0f9grBkmB1nNzuQ
- M4Nr9fRR4QcHXxX0z8/Fi1pSdo3PU1o08RJrrmMxMKfqRXeSuiHxxnoUtzGjr2IEZsi8TbP64uB
- l
-X-Google-Smtp-Source: AGHT+IEII9ZKI1s3tNnGsjuieKqxLhqlQOfxAhQ4yGp3aQzk1rkdDCjpx4zpYcFk5FOrNjGkw1D5bQ==
-X-Received: by 2002:a05:6402:4285:b0:563:c88b:68b5 with SMTP id
- g5-20020a056402428500b00563c88b68b5mr799964edc.14.1708007959587; 
- Thu, 15 Feb 2024 06:39:19 -0800 (PST)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
- by smtp.gmail.com with ESMTPSA id
- d5-20020a50f685000000b0056384b26771sm630310edn.91.2024.02.15.06.39.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 06:39:19 -0800 (PST)
-Date: Thu, 15 Feb 2024 15:39:18 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Conor Dooley <conor@kernel.org>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-Subject: Re: [PATCH v3 3/6] target/riscv: add remaining named features
-Message-ID: <20240215-e18cdd6d9c622bcaeea2c8f4@orel>
-References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
- <20240202152154.773253-4-dbarboza@ventanamicro.com>
- <20240215-alkaline-saturday-275cd8e3aa39@spud>
- <cb84b02b-eb4b-43e9-82e5-2367ee2a2789@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1racyl-0005cr-8q; Thu, 15 Feb 2024 09:44:47 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1racyi-0006FY-Mm; Thu, 15 Feb 2024 09:44:47 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TbHmz5Pm8z6K8xJ;
+ Thu, 15 Feb 2024 22:41:07 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8412C14136C;
+ Thu, 15 Feb 2024 22:44:35 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 15 Feb
+ 2024 14:44:35 +0000
+Date: Thu, 15 Feb 2024 14:44:34 +0000
+To: Alistair Francis <alistair23@gmail.com>, <marcel.apfelbaum@gmail.com>,
+ <mst@redhat.com>
+CC: <hchkuo@avery-design.com.tw>, <kbusch@kernel.org>, <lukas@wunner.de>,
+ <its@irrelevant.dk>, <wilfred.mallawa@wdc.com>, <cbrowy@avery-design.com>,
+ <qemu-devel@nongnu.org>, <jiewen.yao@intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, <qemu-block@nongnu.org>, Alistair Francis
+ <alistair.francis@wdc.com>
+Subject: Re: [PATCH v4 0/3] Initial support for SPDM Responders
+Message-ID: <20240215144434.00005bf9@Huawei.com>
+In-Reply-To: <20240213024403.1060188-1-alistair.francis@wdc.com>
+References: <20240213024403.1060188-1-alistair.francis@wdc.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cb84b02b-eb4b-43e9-82e5-2367ee2a2789@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,42 +68,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 15, 2024 at 11:13:51AM -0300, Daniel Henrique Barboza wrote:
-...
-> > I want to raise my frustration with the crock we've been given here by
-> > RVI. Any "named feature" that just creates a name for something that
-> > already is assumed is completely useless, and DT property that is used
-> > to communicate it's presence cannot be used - instead the property needs
-> > to be inverted - indicating the absence of that named feature.
-> 
-> Let's say that I'm not the biggest fan of how these profile extensions are being
-> dealt with in the spec :) the text is vague w.r.t whether zicclsm and others
-> are actual extensions, or a 'named feature'( like we're calling here in QEMU)
->
+On Tue, 13 Feb 2024 12:44:00 +1000
+Alistair Francis <alistair23@gmail.com> wrote:
 
-The text is vague, I certainly didn't get it at first, but it's been
-clarified that these "named features" are considered extensions with
-the given names and those extensions are ratified at the time the profile
-in which they first appear is ratified. As I said in my other reply, I
-hope the need to name old features is behind us now that the first
-profiles are done.
+Hi All,
 
-> that is just a glorified way of saying, for example, "zic64b" instead of "all
-> cache blocks have 64 bytes".
+Just wanted to add that back in v2 Klaus Jensen stated:
 
-The note that accompanies "Zic64b" also states that the cache blocks may
-be larger or smaller than 64 bytes. So, when a platform includes this
-"Zic64b" extension in its DT it doesn't mean all blocks are 64 bytes, it
-means they're all compatible with 64 bytes by either using 64-byte sub-
-blocks (when they're bigger) or by sequencing cache ops across multiple
-blocks (when they're smaller). So, while we can derive 'zic64b' from a
-platform which does have all blocks of size 64, some platforms will need
-to explicitly add it to the ISA string when they know they're compatible,
-since they'll be putting other block sizes in the block size descriptions.
+"I have no problem with picking this up for nvme, but I'd rather not take
+ the full series through my tree without reviews/acks from the pci
+ maintainers."
+
+So I'd like to add my request that Michael and/or Marcell takes a look
+when they have time.
+
+I've been carrying more or less the first 2 patches in my CXL staging
+tree for a couple of years (the initial Linux Kernel support that Lukas
+Wunner is now handling was developed against this) and I would love
+to see this upstream. Along with PCI and CXL and NVME usecases this
+is a major part of the Confidential Compute device assignment story
+via PCI/TDISP and CXL equivalent.
+
+It's not changed in significant ways since v2 back in October last year.
 
 Thanks,
-drew
+
+Jonathan
+
+> The Security Protocol and Data Model (SPDM) Specification defines
+> messages, data objects, and sequences for performing message exchanges
+> over a variety of transport and physical media.
+>  - https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_1.3.0.pdf
+> 
+> SPDM currently supports PCIe DOE and MCTP transports, but it can be
+> extended to support others in the future. This series adds
+> support to QEMU to connect to an external SPDM instance.
+> 
+> SPDM support can be added to any QEMU device by exposing a
+> TCP socket to a SPDM server. The server can then implement the SPDM
+> decoding/encoding support, generally using libspdm [1].
+> 
+> This is similar to how the current TPM implementation works and means
+> that the heavy lifting of setting up certificate chains, capabilities,
+> measurements and complex crypto can be done outside QEMU by a well
+> supported and tested library.
+> 
+> This series implements socket support and exposes SPDM for a NVMe device.
+> 
+> 1: https://github.com/DMTF/libspdm
+> 
+> v4:
+>  - Rebase
+> v3:
+>  - Spelling fixes
+>  - Support for SPDM-Utils
+> v2:
+>  - Add cover letter
+>  - A few code fixes based on comments
+>  - Document SPDM-Utils
+>  - A few tweaks and clarifications to the documentation
+> 
+> Alistair Francis (1):
+>   hw/pci: Add all Data Object Types defined in PCIe r6.0
+> 
+> Huai-Cheng Kuo (1):
+>   backends: Initial support for SPDM socket support
+> 
+> Wilfred Mallawa (1):
+>   hw/nvme: Add SPDM over DOE support
+> 
+>  docs/specs/index.rst         |   1 +
+>  docs/specs/spdm.rst          | 122 ++++++++++++++++++++
+>  include/hw/pci/pci_device.h  |   5 +
+>  include/hw/pci/pcie_doe.h    |   5 +
+>  include/sysemu/spdm-socket.h |  44 +++++++
+>  backends/spdm-socket.c       | 216 +++++++++++++++++++++++++++++++++++
+>  hw/nvme/ctrl.c               |  53 +++++++++
+>  backends/Kconfig             |   4 +
+>  backends/meson.build         |   2 +
+>  9 files changed, 452 insertions(+)
+>  create mode 100644 docs/specs/spdm.rst
+>  create mode 100644 include/sysemu/spdm-socket.h
+>  create mode 100644 backends/spdm-socket.c
+> 
+
 
