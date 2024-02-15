@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802EFC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDB10C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 07:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raVJs-0007p3-LM; Thu, 15 Feb 2024 01:34:04 -0500
+	id 1raVmK-0000Mj-EZ; Thu, 15 Feb 2024 02:03:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1raVJq-0007ol-Jn
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:34:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1raVJp-0000r0-2W
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:34:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707978839;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=K+R5rB4jyZa9FVOzgVDgG6bCnOUGXUs1cGlhnCHIUzg=;
- b=X081MzdKqo6mX5uxYkUR5HUvP6VH5gdpawSIz+/7e4p/OZrHw+PeuZT2uMWw1rsAzQKqo7
- XBkqC1B2YgLZrknyosyav6m/wHH8d7+QOm0XnTbBE4IEP4GN6gqCXx1MqG2DHAsyohgDlS
- AdcjVkK/XFtZW2ln8a5ALwO9MzG/zME=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-n5t_GdZBPUGMqdArhKqRyA-1; Thu, 15 Feb 2024 01:33:57 -0500
-X-MC-Unique: n5t_GdZBPUGMqdArhKqRyA-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-dccc49ef73eso683927276.2
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:33:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raVmH-0000Ig-1L
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:03:25 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raVmF-0002AS-1x
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:03:24 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a3d484a58f6so59211866b.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 23:03:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707980601; x=1708585401; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BycY6fTgaNsKgOe9GijKFSG+ms7J8v9gSMc77Psb3OM=;
+ b=tmj2Iq58ZT0JQKjOccoGbtyf67vQhjgxc0NXukICklfwETRn9MnRn3KRzG4Mp8jgu7
+ JTNRZJL1h8TsNnYAJhcMNeXQhZN9tvDYyM6wtXieh74YWXLjwTo7/9w9r4bCsmejIVdg
+ 0nrRr6Yiw/oqLeMwoCF32uKkSuma3/Spvdr+gxH59fG9dcWptE47w5fxYaIvVoJx9a7m
+ F7G5IdS9r9bS7dp6gPVUsMPGov7NO6eujuuFpUtlt2UBIl/ga4XrQU28LKBstgx7MQUR
+ E207KuY9zHXyeAmJlziVOTQUKE/VtqmhbkMiIInjU10eZFiPrvsBOIQLFG/JUiHhNwNu
+ mxcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707978837; x=1708583637;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=K+R5rB4jyZa9FVOzgVDgG6bCnOUGXUs1cGlhnCHIUzg=;
- b=grP699MNXfuAFjyZheKBl0yMWwg/QhW2NN9/P+Pu5Ua1iu6V7ABtVejgRjBSC8Z0TO
- wFdCF3oHOJyTzJsvMO7FnPdg5seujJEq4DcGfAEA/bW6qyTaSK11qiQeIzvmCuBYvdoX
- 9Qp2HX4Lnd6bYTtRiLa4YiHMb+5YSDPf9HeJs427HOa54o4v4tLDHm0zPqNB03AdmNWy
- RhfeNxgnQVNMLjrXcGwPPWsmlCN7OTgfqkRi39DubQlOREuHUbTeiXNRxlT5PofhzqQH
- 9Iib+ozDprOZEkG+JTKJsQZ+RsMYVow1Qf7pxcI3S0HEVzIPmVbKAnRxTI0eyhkhO9Ol
- e3uA==
+ d=1e100.net; s=20230601; t=1707980601; x=1708585401;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BycY6fTgaNsKgOe9GijKFSG+ms7J8v9gSMc77Psb3OM=;
+ b=A7HTe/VmTsCaDRGPtOYrgtLEfJ9wLRR/oynNIX4fe3JjOuGNeihDAtWp8Lp8hLH/0c
+ UCDE5zF/Hi5DyX7ngJcud8eACi/G2ll7wQnMIeTitbTqbzLfy5R5dDXDni4sOtifvdcL
+ jE+TITCu2zjm1M6T2jmOrhA7bZarf5iZx4aiDcOqPb4HZsBL47ZU8vz4CU5WVM9c5Emi
+ pFaJl7/eneOMwhPRJlGRSOWmRAYdcL5DUWg24aCVxVHb5Q63wZNgPcryKNERdJsskS1m
+ lmEc/zZ1utIDWs9S1F43FsyKhcg88JQCM3mFQ1/MLpn9ynbblcYuC3JbGTpZkAkRu20A
+ Z/pA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCFAORBtj9BSWiJorVSj1jvFRu1fl1ACLfg/b5CreO1ROJ9dmVuW/6dkmOejTjdzro7wWrMYvZtJDnfCqjb0zbZEjrItY=
-X-Gm-Message-State: AOJu0YxVrr5nzqhzS4xBzIQS5jTk6cAKUTv3OWlnEhZUbtuJgPCzdNnv
- T5yPZ/QaS4Ff4pdA/uWalzpG9taXmXY+YcO/gC6+h0sPbF+Jihch32TK5OdMjnuqgHfoRNZPzkS
- QtG7vOs1Ratw90IjnVPtQLzh2bW4O3OET6cJy0DnKWtqkbQ8BqHZ1SCHf6u8u8MA/cEFzVqEeqX
- lA83JaSDsPY61lRbHv0LNurWXOJjc=
-X-Received: by 2002:a25:ec05:0:b0:dc7:3265:37a9 with SMTP id
- j5-20020a25ec05000000b00dc7326537a9mr711010ybh.37.1707978836865; 
- Wed, 14 Feb 2024 22:33:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHZIzoDNRhZpQOnJmVsuXuM0249q7zpcR5Koye/GuntJHq94lpnaY5a7QcBQezRPiY8RJQRS/4RwGyBFiAwQR4=
-X-Received: by 2002:a25:ec05:0:b0:dc7:3265:37a9 with SMTP id
- j5-20020a25ec05000000b00dc7326537a9mr711000ybh.37.1707978836596; Wed, 14 Feb
- 2024 22:33:56 -0800 (PST)
+ AJvYcCUlp+KWrPFMO1ghKY+vtfnCK16rGo9eloB8QMR9EL5aiGYMcvMvtICRSx43DVY5LStLBtfsdVXVSLD/Kjw+qF6BjiLTVKo=
+X-Gm-Message-State: AOJu0YzHF6uA3InlqVa4iBk7UUjtDphznYHvwxgq7WjoBmkQQBAzBPaO
+ XvKsqH29s+3pNpesDLUee/ngor3bMz+6glOCzC5u14FaQhxfFkJV5bsqLchE6gFxv7JJ6O/Xfye
+ b
+X-Google-Smtp-Source: AGHT+IEJVjOxUnxYs8g79+rdw1wIaWLp3t7CTsz1I8ZIdeRsQpXy39lGc/Xe7ZrGYt/mZe6/75bXGQ==
+X-Received: by 2002:a17:906:3592:b0:a3d:95c5:4aaf with SMTP id
+ o18-20020a170906359200b00a3d95c54aafmr333468ejb.50.1707980601131; 
+ Wed, 14 Feb 2024 23:03:21 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.193.50])
+ by smtp.gmail.com with ESMTPSA id
+ vk5-20020a170907cbc500b00a3d60daaa72sm253766ejc.41.2024.02.14.23.03.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Feb 2024 23:03:20 -0800 (PST)
+Message-ID: <1bbd0968-e3be-4d8f-a64d-8565ca795fee@linaro.org>
+Date: Thu, 15 Feb 2024 08:03:18 +0100
 MIME-Version: 1.0
-References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
- <1707910082-10243-5-git-send-email-si-wei.liu@oracle.com>
- <CAJaqyWd1qPmUn3Z=3SSbWT7rX78zza_mt1y6RQwi+62wFbda-Q@mail.gmail.com>
- <fdc1ba6f-6e25-42ac-a40f-088501c648ad@oracle.com>
-In-Reply-To: <fdc1ba6f-6e25-42ac-a40f-088501c648ad@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 15 Feb 2024 07:33:20 +0100
-Message-ID: <CAJaqyWcg=b7jf1uzCBds2uzVD9LMpoqX3yO9wr0rMGxfv_kBdw@mail.gmail.com>
-Subject: Re: [PATCH 04/12] vdpa: factor out vhost_vdpa_net_get_nc_vdpa
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: jasowang@redhat.com, mst@redhat.com, dtatulea@nvidia.com, 
- leiyang@redhat.com, yin31149@gmail.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: Remove pgb_dynamic alignment assertion
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, Alexey Sheplyakov <asheplyakov@yandex.ru>
+References: <20240214045413.541677-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240214045413.541677-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,75 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 14, 2024 at 9:59=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
->
->
-> On 2/14/2024 10:54 AM, Eugenio Perez Martin wrote:
-> > On Wed, Feb 14, 2024 at 1:39=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.c=
-om> wrote:
-> >> Introduce new API. No functional change on existing API.
-> >>
-> >> Acked-by: Jason Wang <jasowang@redhat.com>
-> >> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-> > I'm ok with the new function, but doesn't the compiler complain
-> > because adding a static function is not used?
-> Hmmm, which one? vhost_vdpa_net_get_nc_vdpa is used by
-> vhost_vdpa_net_first_nc_vdpa internally, and
-> vhost_vdpa_net_first_nc_vdpa is used by vhost_vdpa_net_cvq_start (Patch
-> 01). I think we should be fine?
->
+On 14/2/24 05:54, Richard Henderson wrote:
+> The assertion was never correct, because the alignment is a composite
+> of the image alignment and SHMLBA.  Even if the alignment didn't match
+> the image an assertion would not be correct -- more appropriate would
+> be an error message about an ill formed image.  But the image cannot
+> be held to SHMLBA under any circumstances.
 
-Ouch, you're totally right.
+Reported-by: Alexey Sheplyakov <asheplyakov@yandex.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-Thanks!
-
-> -Siwei
-> >
-> >> ---
-> >>   net/vhost-vdpa.c | 13 +++++++++----
-> >>   1 file changed, 9 insertions(+), 4 deletions(-)
-> >>
-> >> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> >> index 06c83b4..4168cad 100644
-> >> --- a/net/vhost-vdpa.c
-> >> +++ b/net/vhost-vdpa.c
-> >> @@ -281,13 +281,18 @@ static ssize_t vhost_vdpa_receive(NetClientState=
- *nc, const uint8_t *buf,
-> >>   }
-> >>
-> >>
-> >> -/** From any vdpa net client, get the netclient of the first queue pa=
-ir */
-> >> -static VhostVDPAState *vhost_vdpa_net_first_nc_vdpa(VhostVDPAState *s=
-)
-> >> +/** From any vdpa net client, get the netclient of the i-th queue pai=
-r */
-> >> +static VhostVDPAState *vhost_vdpa_net_get_nc_vdpa(VhostVDPAState *s, =
-int i)
-> >>   {
-> >>       NICState *nic =3D qemu_get_nic(s->nc.peer);
-> >> -    NetClientState *nc0 =3D qemu_get_peer(nic->ncs, 0);
-> >> +    NetClientState *nc_i =3D qemu_get_peer(nic->ncs, i);
-> >> +
-> >> +    return DO_UPCAST(VhostVDPAState, nc, nc_i);
-> >> +}
-> >>
-> >> -    return DO_UPCAST(VhostVDPAState, nc, nc0);
-> >> +static VhostVDPAState *vhost_vdpa_net_first_nc_vdpa(VhostVDPAState *s=
-)
-> >> +{
-> >> +    return vhost_vdpa_net_get_nc_vdpa(s, 0);
-> >>   }
-> >>
-> >>   static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool=
- enable)
-> >> --
-> >> 1.8.3.1
-> >>
->
+> Fixes: ee94743034b ("linux-user: completely re-write init_guest_space")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2157
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   linux-user/elfload.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index f3f1ab4f69..d92d66ca1e 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -3022,8 +3022,6 @@ static void pgb_dynamic(const char *image_name, uintptr_t guest_loaddr,
+>       uintptr_t brk, ret;
+>       PGBAddrs ga;
+>   
+> -    assert(QEMU_IS_ALIGNED(guest_loaddr, align));
+> -
+>       /* Try the identity map first. */
+>       if (pgb_addr_set(&ga, guest_loaddr, guest_hiaddr, true)) {
+>           brk = (uintptr_t)sbrk(0);
 
 
