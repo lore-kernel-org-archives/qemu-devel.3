@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66025C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 21:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EAC2C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 21:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raj6N-0001P5-Up; Thu, 15 Feb 2024 16:17:03 -0500
+	id 1rajH9-0006qP-Rk; Thu, 15 Feb 2024 16:28:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raj6L-0001Oj-RE
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:17:01 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rajH8-0006oT-6z
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:28:10 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raj6K-0000lr-4s
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:17:01 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-59a802ab9fdso25108eaf.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 13:16:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rajH6-0002bJ-Hc
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:28:09 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1d944e8f367so13151515ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 13:28:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708031817; x=1708636617; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1708032487; x=1708637287; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aLIsT3rbTolN5q+VbDJ4IzeLwJ2vj2lgiM32Lz95cns=;
- b=ItLNthA5RY5tywwommuelOBTHx0+exWdVx6NfD8B9xTVwudihdSESZVG6MdAJbkJqP
- uaTCBTsryDLfmGOzZFKJfu19qqLVXxbB1/TB90wGS2tbDzWdgoF3h9HLi20cz4IHSICF
- 5MVWZykrCH0znpgSXgbP8oeUphcb5kKyoMNjOfGo2A8ozE8xQsKBFCVgzEawq4JjYtuZ
- lzNQMz/FV0JkFyv+2yZT8C1tn7sF38mWH7IjIeOjNh/9GUQjnYnrTfUnKvnZjIilml4D
- gWfXPNvlyzUWtGYuGCZz988g7pt2ve2ey/GLWqAK0l36l0GU+v3sTQVRJhsfr/m9AW7E
- vFaQ==
+ bh=u7/HDZ1eKbOlVvi62l3szYM6weqK5/jj7KQZeEDO4wY=;
+ b=Z8RZtunbQRSlDWP/gT5BCtgrNde5FSbs83co1OE+/8lAjDjgMoyuy7aEIrFwCABWte
+ TLJ+shPWLjEa5O87NLTnrqcA/TNlDNBjpN1V815CXfDR9Xx2FQHFhj3Zyuvk1ajfzobe
+ aeXJVNnc13qwxeBOB/U7QywEs5ZFC/lMtSMzxhGW3LDZ13LMIs51skFK17plhcFTTeWe
+ A/6+ZI+ZYNLrQe1dyYB9JoaDGFOIisRbUYSV1ZmgMaUWCDEBzM9U7d7Jn3RDunJBqMOq
+ n5H7xd8VOqu4Sq2Qy1ccuuMOqej7SrSMOs3iuuOiOnpjlcQpET90OzhIh+Y3cRX1SZbh
+ sm2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708031817; x=1708636617;
+ d=1e100.net; s=20230601; t=1708032487; x=1708637287;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aLIsT3rbTolN5q+VbDJ4IzeLwJ2vj2lgiM32Lz95cns=;
- b=nOwA38KvcVyywoXOSW7bPITGT0rpfG0kBG9q4XH2W1az20vvuMXEMIEN4j1ANoaIdD
- yjbsUWKb+caaJWY1tnrzFiw32B7qJ/IxTpMwnViSwquYxZsLi50DJQmvLgIbQqVpCOFc
- Uph+Hb62vFYI3p20yPAaIkCnLsLah8A9YsnhnMZoZ8mgeAf4FqpjWcYP2hbg/Itbrepj
- eF9IVlNZQ6p+lnyTIEx+8jD42qyY/a0fIJZacSjioDhzh6vxmijQYP2H52Hhb0W44rAq
- Cym7CZdMNh6tFZ/cKaTSfWrjsFCRCPmBFMWzlZMlXKG+bt1tWq/BISGv1TCGwfw87G5I
- mGPw==
-X-Gm-Message-State: AOJu0Yw49lR6U6fwDwhS4iBwT9Qd2nZxV+5jIsm57gnq2GVfCHLY49sj
- pBp+K/gaC8Sic9CKqoupSsjTZgFdo0gZqT4Kk+wgRMvtvDtDYL30XMdFbjVSEiOuqPru4loa7qr
- q
-X-Google-Smtp-Source: AGHT+IGhFVzBs+CjuvdcypRc8It+BlAHX5RQJmD41Cxp1ZOCzxbR3g20zvk4d/I5BPUfGyCYgX5PIg==
-X-Received: by 2002:a05:6358:7e54:b0:178:a197:15e with SMTP id
- p20-20020a0563587e5400b00178a197015emr2611302rwm.32.1708031817245; 
- Thu, 15 Feb 2024 13:16:57 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- h21-20020a633855000000b005d66caee3d0sm1873779pgn.22.2024.02.15.13.16.56
+ bh=u7/HDZ1eKbOlVvi62l3szYM6weqK5/jj7KQZeEDO4wY=;
+ b=i+9NUAdwNId9nxNLayf1d34+uUaLd/DdMrCKYx7LSKxLAu6j59i58kcg9OJJrXIiOQ
+ DrnlMUbLsLWD/SvsQ0A7dZ1cXwOaR13+VZ0S7jHSQxpjCgScCs/gKZghhhsF8jZwbrLX
+ tp0x+Aw368QemfrSJCNgnfd8nhOhA+BeB3MZ0C9AaHEhjcIyLuKJhPk6piiOoo7ffTv6
+ D0z8rdMe9a97bn6CLy/kynR10J2GnCnhUUfgA78Ze9Q4HyoAqfD462ojBITGjvbJ2KLy
+ zDeiFUVxDThJ7lHrzCJEiJSr8+m0XVFWS+QExNhOdGWHlyXUgu3YPZZyFDInvziLBB1m
+ v4yw==
+X-Gm-Message-State: AOJu0YztqD/iEykgjLm98kAwdY5mXFCWvlkUx9bZ29zKYMvBdtR3SB5T
+ xuG1Cs4iZrsIr1HQ/tFsbIq76Wi71F/2J+7xXXJdvEIBv6gVX0T8DceFbdtVAdQ=
+X-Google-Smtp-Source: AGHT+IFmyZs0ivzRSwZXIPUaWtokwI7xVE3KlSX4ePG5ikKmY5nNk4nNF3g1uTt18AvurUGaQf82PA==
+X-Received: by 2002:a17:902:c40e:b0:1db:5b41:c5ac with SMTP id
+ k14-20020a170902c40e00b001db5b41c5acmr3596598plk.68.1708032487113; 
+ Thu, 15 Feb 2024 13:28:07 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ ka16-20020a170903335000b001d9ef367c85sm61122plb.104.2024.02.15.13.28.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 13:16:56 -0800 (PST)
-Message-ID: <72d0e01e-ca54-4fc1-805c-b8de7175d64f@linaro.org>
-Date: Thu, 15 Feb 2024 11:16:53 -1000
+ Thu, 15 Feb 2024 13:28:06 -0800 (PST)
+Message-ID: <3713703c-7b60-42cf-92a3-198616382022@ventanamicro.com>
+Date: Thu, 15 Feb 2024 18:28:02 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/10] Optimize buffer_is_zero
+Subject: Re: [PATCH v3 0/6] riscv: named features riscv,isa, 'svade' rework
 Content-Language: en-US
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
-References: <20240215081449.848220-1-richard.henderson@linaro.org>
- <e1260284-cd5d-7a92-d8fc-21c0aface21c@ispras.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <e1260284-cd5d-7a92-d8fc-21c0aface21c@ispras.ru>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, ajones@ventanamicro.com
+References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
+ <CAKmqyKN0UX_PK5Xiar-PdzJrV=S6+LaX8a3So8uahuqC04Wpvw@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAKmqyKN0UX_PK5Xiar-PdzJrV=S6+LaX8a3So8uahuqC04Wpvw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,33 +98,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/14/24 22:57, Alexander Monakov wrote:
-> 
-> On Wed, 14 Feb 2024, Richard Henderson wrote:
-> 
->> v3: https://patchew.org/QEMU/20240206204809.9859-1-amonakov@ispras.ru/
+
+
+On 2/15/24 06:52, Alistair Francis wrote:
+> On Sat, Feb 3, 2024 at 1:23 AM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
 >>
->> Changes for v4:
->>    - Keep separate >= 256 entry point, but only keep constant length
->>      check inline.  This allows the indirect function call to be hidden
->>      and optimized away when the pointer is constant.
+>> Hi,
+>>
+>> In this new version we changed patch 3 as suggested by Alistair in v1
+>> [1]. Instead of creating individual always-true bool for each named
+>> feature, create a bool flag will be always 'true' to be used as config
+>> offset for these named extensions.
+>>
+>> Patches based on riscv-to-apply.next.
+>>
+>> Patches missing acks: patch 3.
+>>
+>> Changes from v2:
+>> - patch 3:
+>>    - 'ext_always_enabled' bool added
+>>    - individual always-enabled named features bools removed
+>> - v2 link: https://lore.kernel.org/qemu-riscv/20240126133101.61344-8-ajones@ventanamicro.com/
+>>
+>>
+>> [1] https://lore.kernel.org/qemu-riscv/20240125195319.329181-1-dbarboza@ventanamicro.com/
+>>
+>> Andrew Jones (3):
+>>    target/riscv: Reset henvcfg to zero
+>>    target/riscv: Gate hardware A/D PTE bit updating
+>>    target/riscv: Promote svade to a normal extension
+>>
+>> Daniel Henrique Barboza (3):
+>>    target/riscv/tcg: set 'mmu' with 'satp' in cpu_set_profile()
+>>    target/riscv: add riscv,isa to named features
+>>    target/riscv: add remaining named features
 > 
-> Sorry, I don't understand this. Most of the improvement (at least in our
-> testing) comes from inlining the byte checks, which often fail and eliminate
-> call overhead entirely. Moving them out-of-line seems to lose most of the
-> speedup the patchset was bringing, doesn't it? Is there some concern I am
-> not seeing?
+> Do you mind rebasing? I feel bad always asking, but I think it's your
+> patches that cause the conflicts :P
 
-What is your benchmarking method?
+:)
 
-It was my guess that most of the improvement came from performing those early byte checks 
-*at all*, and that the overhead of a function call to a small out of line wrapper would be 
-negligible.
-
-By not exposing the function pointer outside the bufferiszero translation unit, the 
-compiler can see when the pointer is never modified for a given host, and then transform 
-the indirect branch to a direct branch.
+I'll re-send based on current riscv-to-apply.next. Thanks,
 
 
-r~
+Daniel
+
+> 
+> Alistair
+> 
+>>
+>>   target/riscv/cpu.c         | 70 +++++++++++++++++++++++++++-----------
+>>   target/riscv/cpu_cfg.h     | 12 +++++--
+>>   target/riscv/cpu_helper.c  | 19 ++++++++---
+>>   target/riscv/csr.c         |  2 +-
+>>   target/riscv/tcg/tcg-cpu.c | 34 +++++++++---------
+>>   5 files changed, 94 insertions(+), 43 deletions(-)
+>>
+>> --
+>> 2.43.0
+>>
+>>
 
