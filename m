@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34366C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3EAC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raff3-0001AB-Mr; Thu, 15 Feb 2024 12:36:37 -0500
+	id 1rafez-0000pm-96; Thu, 15 Feb 2024 12:36:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeU-000865-VX
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:05 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1rafeU-00085e-48
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:02 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeO-00042s-To
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:02 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-411d76c9ce3so9475025e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:55 -0800 (PST)
+ id 1rafeL-000413-EX
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:00 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2d0d799b55cso13873231fa.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018554; x=1708623354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018552; x=1708623352; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ea1kVIAkawEF+lGSnrFK5m7SIyAZKyj+Cf2CTRSeEN0=;
- b=WkMcUzhC+y+/mNo5E5rPuOGqJhCplejqGAf2trAGq0jfM3Ez2ww2XnpJA0cz056DDT
- JYzbP6kVXcbYJEFfw6nBic7jetwYwWQEXTeI/LNM98ZndPa2+D78Je7pI4tr3cbHEkHJ
- 3+YRNi3iSSdqaBQ6w4TTYGaWP4tHKiqj8S1DzSc0w/Il36ZzpxMGsl52u7nDzqIX5JK2
- rJEZDFGWkzJ/jMVJHgYFHoFfp1tZBUvlw4vsrcWpO9eKPim84CGWIs3iNQkYrscTYSoP
- mOuiWz1M34ZghcChHrk5rBTn7iDywYP9OC/ErGF3c7fhS6hLV0krUf1YoZ2Mp0WRaVMQ
- Qq8g==
+ :reply-to; bh=aymWm/ic6X17CiHjurov6BZsHrDsTLcxuJ5B3FGdVYY=;
+ b=zaQouyacFK+5qZX6ILm07IguujCiz9GFWthOfM4ZAMdKaX4eJGK7apydcB7OGdHQV0
+ Sd4yoLUaSLyjtlXC91IQ1lY2n2oR+R3i4dWSFrwMCMKlNOS4xd0EnnTjOcAxl25gDnRz
+ uXB1eUtwsozoLbadxQcFjYlhKRJIPhqK+uILNUT7GpoaQKbidukkkNisfAIuvRa6uEdf
+ WbInfPSHHA4+DRrV1n2Yni0jaoSmkkdKn7TE/FARfHy3Xwtg2wn3rata/sHCkGB4dh5X
+ JWPj6HpzIE3zLnue3bMMWI+5ZQpiEkeYDbDd6irI3bZtqFk6Jx7Q6+mlD4KjtKp/bz1T
+ w5yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018554; x=1708623354;
+ d=1e100.net; s=20230601; t=1708018552; x=1708623352;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ea1kVIAkawEF+lGSnrFK5m7SIyAZKyj+Cf2CTRSeEN0=;
- b=QUDHg/qvXAgx010VybR+1NJp/7HTTM02uTJWrEhtni+AOOxeoUCddQ1N7HEtVJ+vrs
- ZkD/LKsfG3mTFCFq7KnhDO9WaF5OYywQaqcUOjA2LStfwxWFvjqpsy5KvUrWwg2v76cv
- d6RmCI3KuzbK0KCbg8vp1hBgwkln8sTjkbkCAfT18yw0ECSqoIAbmV7xmsYVB3pZ33Km
- uUNxQTzXdpm9UurVQPmyAXMG3aIEX+358KLBH08mClctGUiRvBJVyCMYgyYflGgdXcYb
- oLB/h77lwjqrqp7EgAC3zyQlK8QusdA6CDSQ2aBJYfMBFefJLy2dIyaZS6CZhRaCAFOX
- JzgA==
-X-Gm-Message-State: AOJu0YxU7/qJEHHEKVsodXmoQSrKxu4ZdN4hZP9XSOsWoJZA0W8lCvNp
- AN1Dm93pKQS+tmIEq0Rd69sKh6omPw20CzddFXA/w1dzZpolwThypPCWlaIgAr8Ov8YEGS5c9ws
- O
-X-Google-Smtp-Source: AGHT+IGFY/qaWXAuLiH8aEN7fyKwvR3rpy+UEwb5O/KstR1gSEt4Xcl+qb7NSsZiVUE/qSpkXioejw==
-X-Received: by 2002:adf:ee49:0:b0:33b:4c3b:f7da with SMTP id
- w9-20020adfee49000000b0033b4c3bf7damr1868092wro.62.1708018554305; 
- Thu, 15 Feb 2024 09:35:54 -0800 (PST)
+ bh=aymWm/ic6X17CiHjurov6BZsHrDsTLcxuJ5B3FGdVYY=;
+ b=Dg6HLZ4kclLxnMpiASNUI6qq4eAnV4QqB03jb1Gn2+T1/zPf5wZSCogdS7edXHkCwL
+ ZdBVj0rJnQedBOxpI21JSoOff6CqGfQkqZQMHC8nMO9vemJ0Qmw0eZMb4XCNYEuqwV0+
+ ODAbQPeVQ+adVXnxJRsE64R4tU72xXa3+pYY/ZSu4RdfbPbE6sG+cDJZQCSpLYmu9j5T
+ nDuFAzOGIyl0Pa5MoxkhYXOkGDjWWt4v36HouWqBBLMfVs1o2Y01BdVndhrigsV4pYKF
+ a6YyFoFR8g5gBnbhj1E2HDI6+KtLoUaDUbXfQIboLj5KUJcNl9o9XjTjTfzsT7EOWIxl
+ 4XrA==
+X-Gm-Message-State: AOJu0YyMrCgeD17luBE+uyzvj/KtstPtygDnwIOxrJADVLDyr1s5aXWa
+ 5vwt3b9Mpf9eBN07hI0mOEb5ivm1VLuUlysKZSNpBRh877652puc5tFXMhYqwOylIgswFQUs2fY
+ u
+X-Google-Smtp-Source: AGHT+IGoSeb00t9mwf4gx5NGmoxsNZAXiM5MVOOIE+Hi4NgutEvH79wtQfSconx3cgSW+3E5U+6ftw==
+X-Received: by 2002:a05:651c:151:b0:2d0:d02e:26d8 with SMTP id
+ c17-20020a05651c015100b002d0d02e26d8mr1930077ljd.32.1708018551735; 
+ Thu, 15 Feb 2024 09:35:51 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.53
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:54 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:51 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/35] hw/arm/mps3r: Add remaining devices
-Date: Thu, 15 Feb 2024 17:35:37 +0000
-Message-Id: <20240215173538.2430599-35-peter.maydell@linaro.org>
+Subject: [PULL 28/35] hw/misc/mps2-scc: Factor out which-board conditionals
+Date: Thu, 15 Feb 2024 17:35:31 +0000
+Message-Id: <20240215173538.2430599-29-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,131 +94,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the remaining devices (or unimplemented-device stubs) for
-this board: SPI controllers, SCC, FPGAIO, I2S, RTC, the
-QSPI write-config block, and ethernet.
+The MPS SCC device has a lot of different flavours for the various
+different MPS FPGA images, which look mostly similar but have
+differences in how particular registers are handled.  Currently we
+deal with this with a lot of open-coded checks on scc_partno(), but
+as we add more board types this is getting a bit hard to read.
+
+Factor out the conditions into some functions which we can
+give more descriptive names to.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240206132931.38376-13-peter.maydell@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240206132931.38376-7-peter.maydell@linaro.org
 ---
- hw/arm/mps3r.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ hw/misc/mps2-scc.c | 45 +++++++++++++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
-index 803ed0ffb5c..4d55a6564c6 100644
---- a/hw/arm/mps3r.c
-+++ b/hw/arm/mps3r.c
-@@ -40,7 +40,12 @@
- #include "hw/char/cmsdk-apb-uart.h"
- #include "hw/i2c/arm_sbcon_i2c.h"
- #include "hw/intc/arm_gicv3.h"
-+#include "hw/misc/mps2-scc.h"
-+#include "hw/misc/mps2-fpgaio.h"
- #include "hw/misc/unimp.h"
-+#include "hw/net/lan9118.h"
-+#include "hw/rtc/pl031.h"
-+#include "hw/ssi/pl022.h"
- #include "hw/timer/cmsdk-apb-dualtimer.h"
- #include "hw/watchdog/cmsdk-apb-watchdog.h"
+diff --git a/hw/misc/mps2-scc.c b/hw/misc/mps2-scc.c
+index 6c1b1cd3795..02a80bacd71 100644
+--- a/hw/misc/mps2-scc.c
++++ b/hw/misc/mps2-scc.c
+@@ -59,6 +59,30 @@ static int scc_partno(MPS2SCC *s)
+     return extract32(s->id, 4, 8);
+ }
  
-@@ -105,6 +110,11 @@ struct MPS3RMachineState {
-     CMSDKAPBWatchdog watchdog;
-     CMSDKAPBDualTimer dualtimer;
-     ArmSbconI2CState i2c[5];
-+    PL022State spi[3];
-+    MPS2SCC scc;
-+    MPS2FPGAIO fpgaio;
-+    UnimplementedDeviceState i2s_audio;
-+    PL031State rtc;
-     Clock *clk;
- };
- 
-@@ -178,6 +188,16 @@ static const RAMInfo an536_raminfo[] = {
-     }
- };
- 
-+static const int an536_oscclk[] = {
-+    24000000, /* 24MHz reference for RTC and timers */
-+    50000000, /* 50MHz ACLK */
-+    50000000, /* 50MHz MCLK */
-+    50000000, /* 50MHz GPUCLK */
-+    24576000, /* 24.576MHz AUDCLK */
-+    23750000, /* 23.75MHz HDLCDCLK */
-+    100000000, /* 100MHz DDR4_REF_CLK */
-+};
++/* Is CFG_REG2 present? */
++static bool have_cfg2(MPS2SCC *s)
++{
++    return scc_partno(s) == 0x524 || scc_partno(s) == 0x547;
++}
 +
- static MemoryRegion *mr_for_raminfo(MPS3RMachineState *mms,
-                                     const RAMInfo *raminfo)
- {
-@@ -337,6 +357,7 @@ static void mps3r_common_init(MachineState *machine)
-     MPS3RMachineClass *mmc = MPS3R_MACHINE_GET_CLASS(mms);
-     MemoryRegion *sysmem = get_system_memory();
-     DeviceState *gicdev;
-+    QList *oscclk;
- 
-     mms->clk = clock_new(OBJECT(machine), "CLK");
-     clock_set_hz(mms->clk, CLK_FRQ);
-@@ -480,6 +501,59 @@ static void mps3r_common_init(MachineState *machine)
++/* Is CFG_REG3 present? */
++static bool have_cfg3(MPS2SCC *s)
++{
++    return scc_partno(s) != 0x524 && scc_partno(s) != 0x547;
++}
++
++/* Is CFG_REG5 present? */
++static bool have_cfg5(MPS2SCC *s)
++{
++    return scc_partno(s) == 0x524 || scc_partno(s) == 0x547;
++}
++
++/* Is CFG_REG6 present? */
++static bool have_cfg6(MPS2SCC *s)
++{
++    return scc_partno(s) == 0x524;
++}
++
+ /* Handle a write via the SYS_CFG channel to the specified function/device.
+  * Return false on error (reported to guest via SYS_CFGCTRL ERROR bit).
+  */
+@@ -111,15 +135,13 @@ static uint64_t mps2_scc_read(void *opaque, hwaddr offset, unsigned size)
+         r = s->cfg1;
+         break;
+     case A_CFG2:
+-        if (scc_partno(s) != 0x524 && scc_partno(s) != 0x547) {
+-            /* CFG2 reserved on other boards */
++        if (!have_cfg2(s)) {
+             goto bad_offset;
          }
-     }
- 
-+    for (int i = 0; i < ARRAY_SIZE(mms->spi); i++) {
-+        g_autofree char *s = g_strdup_printf("spi%d", i);
-+        hwaddr baseaddr = 0xe0104000 + i * 0x1000;
-+
-+        object_initialize_child(OBJECT(mms), s, &mms->spi[i], TYPE_PL022);
-+        sysbus_realize(SYS_BUS_DEVICE(&mms->spi[i]), &error_fatal);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&mms->spi[i]), 0, baseaddr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&mms->spi[i]), 0,
-+                           qdev_get_gpio_in(gicdev, 22 + i));
-+    }
-+
-+    object_initialize_child(OBJECT(mms), "scc", &mms->scc, TYPE_MPS2_SCC);
-+    qdev_prop_set_uint32(DEVICE(&mms->scc), "scc-cfg0", 0);
-+    qdev_prop_set_uint32(DEVICE(&mms->scc), "scc-cfg4", 0x2);
-+    qdev_prop_set_uint32(DEVICE(&mms->scc), "scc-aid", 0x00200008);
-+    qdev_prop_set_uint32(DEVICE(&mms->scc), "scc-id", 0x41055360);
-+    oscclk = qlist_new();
-+    for (int i = 0; i < ARRAY_SIZE(an536_oscclk); i++) {
-+        qlist_append_int(oscclk, an536_oscclk[i]);
-+    }
-+    qdev_prop_set_array(DEVICE(&mms->scc), "oscclk", oscclk);
-+    sysbus_realize(SYS_BUS_DEVICE(&mms->scc), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&mms->scc), 0, 0xe0200000);
-+
-+    create_unimplemented_device("i2s-audio", 0xe0201000, 0x1000);
-+
-+    object_initialize_child(OBJECT(mms), "fpgaio", &mms->fpgaio,
-+                            TYPE_MPS2_FPGAIO);
-+    qdev_prop_set_uint32(DEVICE(&mms->fpgaio), "prescale-clk", an536_oscclk[1]);
-+    qdev_prop_set_uint32(DEVICE(&mms->fpgaio), "num-leds", 10);
-+    qdev_prop_set_bit(DEVICE(&mms->fpgaio), "has-switches", true);
-+    qdev_prop_set_bit(DEVICE(&mms->fpgaio), "has-dbgctrl", false);
-+    sysbus_realize(SYS_BUS_DEVICE(&mms->fpgaio), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&mms->fpgaio), 0, 0xe0202000);
-+
-+    create_unimplemented_device("clcd", 0xe0209000, 0x1000);
-+
-+    object_initialize_child(OBJECT(mms), "rtc", &mms->rtc, TYPE_PL031);
-+    sysbus_realize(SYS_BUS_DEVICE(&mms->rtc), &error_fatal);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&mms->rtc), 0, 0xe020a000);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&mms->rtc), 0,
-+                       qdev_get_gpio_in(gicdev, 4));
-+
-+    /*
-+     * In hardware this is a LAN9220; the LAN9118 is software compatible
-+     * except that it doesn't support the checksum-offload feature.
-+     */
-+    lan9118_init(0xe0300000,
-+                 qdev_get_gpio_in(gicdev, 18));
-+
-+    create_unimplemented_device("usb", 0xe0301000, 0x1000);
-+    create_unimplemented_device("qspi-write-config", 0xe0600000, 0x1000);
-+
-     mms->bootinfo.ram_size = machine->ram_size;
-     mms->bootinfo.board_id = -1;
-     mms->bootinfo.loader_start = mmc->loader_start;
+         r = s->cfg2;
+         break;
+     case A_CFG3:
+-        if (scc_partno(s) == 0x524 || scc_partno(s) == 0x547) {
+-            /* CFG3 reserved on AN524 */
++        if (!have_cfg3(s)) {
+             goto bad_offset;
+         }
+         /* These are user-settable DIP switches on the board. We don't
+@@ -131,15 +153,13 @@ static uint64_t mps2_scc_read(void *opaque, hwaddr offset, unsigned size)
+         r = s->cfg4;
+         break;
+     case A_CFG5:
+-        if (scc_partno(s) != 0x524 && scc_partno(s) != 0x547) {
+-            /* CFG5 reserved on other boards */
++        if (!have_cfg5(s)) {
+             goto bad_offset;
+         }
+         r = s->cfg5;
+         break;
+     case A_CFG6:
+-        if (scc_partno(s) != 0x524) {
+-            /* CFG6 reserved on other boards */
++        if (!have_cfg6(s)) {
+             goto bad_offset;
+         }
+         r = s->cfg6;
+@@ -202,24 +222,21 @@ static void mps2_scc_write(void *opaque, hwaddr offset, uint64_t value,
+         }
+         break;
+     case A_CFG2:
+-        if (scc_partno(s) != 0x524 && scc_partno(s) != 0x547) {
+-            /* CFG2 reserved on other boards */
++        if (!have_cfg2(s)) {
+             goto bad_offset;
+         }
+         /* AN524: QSPI Select signal */
+         s->cfg2 = value;
+         break;
+     case A_CFG5:
+-        if (scc_partno(s) != 0x524 && scc_partno(s) != 0x547) {
+-            /* CFG5 reserved on other boards */
++        if (!have_cfg5(s)) {
+             goto bad_offset;
+         }
+         /* AN524: ACLK frequency in Hz */
+         s->cfg5 = value;
+         break;
+     case A_CFG6:
+-        if (scc_partno(s) != 0x524) {
+-            /* CFG6 reserved on other boards */
++        if (!have_cfg6(s)) {
+             goto bad_offset;
+         }
+         /* AN524: Clock divider for BRAM */
 -- 
 2.34.1
 
