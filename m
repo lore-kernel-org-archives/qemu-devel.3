@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3400BC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B11D0C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raffF-0001ur-Ue; Thu, 15 Feb 2024 12:36:50 -0500
+	id 1rafem-0008Mo-GN; Thu, 15 Feb 2024 12:36:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeE-0007vA-9L
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:46 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1rafeG-0007wV-TS
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:49 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeB-0003ug-QE
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:45 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33aeb088324so614875f8f.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:43 -0800 (PST)
+ id 1rafeD-0003vQ-Gw
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:47 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-41222a56492so4858115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018542; x=1708623342; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018543; x=1708623343; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TassmDQS2xUU17ReJTizyCAFvJvV6adrKf1jGt4S91Q=;
- b=aP1bQvU76DgjpXkuwASmRMv9AmvgmcFi5jV5g9wj8G09ZtoMZG8zYTgbR9M4zzNjuR
- KsgnjkE+/YJ4uZMLxJkgg6bErgZrGy0rPBvxDm4nzYGsFfuY3DM6gcdtWOvO9/7kBtOi
- pDcEjSkVLiawz7cTzxnYrhNio6ezNMWT9RvB7ruaBl+D9RThzRwq/NiI6MkVhQbWOi49
- 9oOOnCUCk5BVc2Nq3YrqR8WAnIa8WSOaHm7rUbpDeadAfIBZBi3DJOpGNn4jqr6byHDb
- QND2fN/Rg1zrbieu4Dg5kWq7qC0yk4Rj88eZcZ9lxcZUSSb1fpeWt4CgJgILVHFCGwex
- yI7Q==
+ :reply-to; bh=RikRCXplsLtZPEBuIF7gu6g30mSRA9kA+w/7iCIMGaI=;
+ b=TWBFSrXrB/2QV2GHNp0iNT4isyfSQUk6Y+CRsRIiKZbCcQORuxY8I8+dzsmnaDkeDb
+ L5j1H5ofG4rxFrCCxUNsHUdtvwwqbE++BGlZs3v+zE0NMNYrxekO1UjkUzCePe/sCMYn
+ kc5XjYIdecEJNwR5f5I7roOQ9ibZ4q4R/3W1uDMQRN3JRi0LqonUcztjXhpDXtSH+7qa
+ QT839A98V8AWre2CSCioyZ2xpApcaK6tzaTJeCpe8IAg+w1wEl/b7WZq7V81iXV4EVJn
+ whhWkQM0K0Mw3BUuyOJhezzQkio5iVRGtZrCugOcrUR9/EcHL9ZhRjlrmyovVr8xJqCS
+ gg9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018542; x=1708623342;
+ d=1e100.net; s=20230601; t=1708018543; x=1708623343;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TassmDQS2xUU17ReJTizyCAFvJvV6adrKf1jGt4S91Q=;
- b=VHVNYK9tUYCsl3E71ZRt/lE65nisO+rGWG2MI/SK1fjtKgX2zqslVOpdDd7H7f1n7t
- nLE8V2L4b2qzL0uX2phs6aKEQt0U81Bk90xk82EMRESD3B8lM8tRYifoU+ZieOC7lb6Y
- 4ipPWYD9xisxwSFWVm7FxwGUqlrK2vZBWWZTFnwxqfKXTQ53/oD23LUsKR2ke0rYVK5X
- 2xHWpyO3rhNnveptILe4SxiVT8ZDOFuc+xo4jXrVId+r2orKZ+lEjBphITSDeX9NIn33
- rwV2fuNayNw052CA2OVcn6sAXugKWCkNMzzaxfv1PuLVX7H0ofh8x5uj//0zc8n29UAX
- Axwg==
-X-Gm-Message-State: AOJu0YxK/8OZ9HuscH8OLVJAqqS5MuXPadiM7dAu5k9Y3L9vVX20iBtJ
- tpmlmwT1JVcbKd+9zHXetFVr/izWpS1t6X+btJbkcEeXkZpDMXd8lWfvCMtJ29E/CA5AnsVIImb
- 6
-X-Google-Smtp-Source: AGHT+IH2KdKYe4pEt2pLBe1KuN8io0GpojRcb65weaTjKoN+0lWeVyxbaLhl5xa/wL3tr6ZFK2wHXA==
-X-Received: by 2002:adf:fd43:0:b0:33c:efad:c6a2 with SMTP id
- h3-20020adffd43000000b0033cefadc6a2mr1870678wrs.61.1708018542363; 
- Thu, 15 Feb 2024 09:35:42 -0800 (PST)
+ bh=RikRCXplsLtZPEBuIF7gu6g30mSRA9kA+w/7iCIMGaI=;
+ b=mBjVkTYidPAHFHjPO818IdlzSbW76oI1yNBHWj2JonHx8s1WLYnu4kBNjtTU3CjdZS
+ HWbZ0yJ1HfnX8JZX1CD/Kq/+pnkMBx0BXhEwYPPveXzTf6ALL+qF9DxfbOx8MmibvPVL
+ edSmgbnS8I4m3v9+KrFDI38OOEsv2KcmTYavDlcgP/R6HoqKfod2hZhfGab+wNF4CCij
+ 9/A7QozDwUyXomgnWUe/f0SM3tvhpEejl9Kf+3NDAn8oJOPj+JqZGOMTzZSw04lxmt8U
+ /Y4ylAQhjTp0oyxgHSiXI4xI7VoovsK5cRnPqiM24G30w8mjD+pxZ7K5Hvo4/GvdyEuy
+ 6WIA==
+X-Gm-Message-State: AOJu0YwNcaqVg4DCy9tsm3EpPsLo1h0Dj3eQpLWhtklq4b4Y3F8F5ALz
+ 7ux/fMxwdzAr9jE6cbsFi64ihxm99eDAW6RMXpkt6LtayMsNPXUHwLurYJ9OOzTHZT4ZJtCfLQi
+ w
+X-Google-Smtp-Source: AGHT+IF8niI6gc09EKe1FUnwj28vGUWz/CGNgdDEW6CwDg5DYZpThE2BPhVHleipQwwHAAXkSlTGWQ==
+X-Received: by 2002:a5d:430d:0:b0:33b:302:c08 with SMTP id
+ h13-20020a5d430d000000b0033b03020c08mr2055463wrq.43.1708018543531; 
+ Thu, 15 Feb 2024 09:35:43 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.41
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:42 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:43 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/35] target/arm: Handle mte in do_ldrq, do_ldro
-Date: Thu, 15 Feb 2024 17:35:09 +0000
-Message-Id: <20240215173538.2430599-7-peter.maydell@linaro.org>
+Subject: [PULL 09/35] hw/block/tc58128: Don't emit deprecation warning under
+ qtest
+Date: Thu, 15 Feb 2024 17:35:12 +0000
+Message-Id: <20240215173538.2430599-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,77 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Suppress the deprecation warning when we're running under qtest,
+to avoid "make check" including warning messages in its output.
 
-These functions "use the standard load helpers", but
-fail to clean_data_tbi or populate mtedesc.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20240207025210.8837-6-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240206154151.155620-1-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate-sve.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ hw/block/tc58128.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 508f7b6bbdc..ada05aa5302 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4861,8 +4861,13 @@ static void do_ldrq(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
-     unsigned vsz = vec_full_reg_size(s);
-     TCGv_ptr t_pg;
-     int poff;
-+    uint32_t desc;
+diff --git a/hw/block/tc58128.c b/hw/block/tc58128.c
+index 6944cf58fa4..0984e37417b 100644
+--- a/hw/block/tc58128.c
++++ b/hw/block/tc58128.c
+@@ -202,7 +202,9 @@ static sh7750_io_device tc58128 = {
  
-     /* Load the first quadword using the normal predicated load helpers.  */
-+    if (!s->mte_active[0]) {
-+        addr = clean_data_tbi(s, addr);
+ int tc58128_init(struct SH7750State *s, const char *zone1, const char *zone2)
+ {
+-    warn_report_once("The TC58128 flash device is deprecated");
++    if (!qtest_enabled()) {
++        warn_report_once("The TC58128 flash device is deprecated");
 +    }
-+
-     poff = pred_full_reg_offset(s, pg);
-     if (vsz > 16) {
-         /*
-@@ -4886,7 +4891,8 @@ static void do_ldrq(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
- 
-     gen_helper_gvec_mem *fn
-         = ldr_fns[s->mte_active[0]][s->be_data == MO_BE][dtype][0];
--    fn(tcg_env, t_pg, addr, tcg_constant_i32(simd_desc(16, 16, zt)));
-+    desc = make_svemte_desc(s, 16, 1, dtype_msz(dtype), false, zt);
-+    fn(tcg_env, t_pg, addr, tcg_constant_i32(desc));
- 
-     /* Replicate that first quadword.  */
-     if (vsz > 16) {
-@@ -4929,6 +4935,7 @@ static void do_ldro(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
-     unsigned vsz_r32;
-     TCGv_ptr t_pg;
-     int poff, doff;
-+    uint32_t desc;
- 
-     if (vsz < 32) {
-         /*
-@@ -4941,6 +4948,9 @@ static void do_ldro(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
-     }
- 
-     /* Load the first octaword using the normal predicated load helpers.  */
-+    if (!s->mte_active[0]) {
-+        addr = clean_data_tbi(s, addr);
-+    }
- 
-     poff = pred_full_reg_offset(s, pg);
-     if (vsz > 32) {
-@@ -4965,7 +4975,8 @@ static void do_ldro(DisasContext *s, int zt, int pg, TCGv_i64 addr, int dtype)
- 
-     gen_helper_gvec_mem *fn
-         = ldr_fns[s->mte_active[0]][s->be_data == MO_BE][dtype][0];
--    fn(tcg_env, t_pg, addr, tcg_constant_i32(simd_desc(32, 32, zt)));
-+    desc = make_svemte_desc(s, 32, 1, dtype_msz(dtype), false, zt);
-+    fn(tcg_env, t_pg, addr, tcg_constant_i32(desc));
- 
-     /*
-      * Replicate that first octaword.
+     init_dev(&tc58128_devs[0], zone1);
+     init_dev(&tc58128_devs[1], zone2);
+     return sh7750_register_io_device(s, &tc58128);
 -- 
 2.34.1
 
