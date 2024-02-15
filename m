@@ -4,43 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB84C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 10:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFF5C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 10:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raZ08-0000sm-9r; Thu, 15 Feb 2024 05:29:56 -0500
+	id 1raZ6X-0004hz-48; Thu, 15 Feb 2024 05:36:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1raZ06-0000sY-Pe; Thu, 15 Feb 2024 05:29:54 -0500
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1raZ6U-0004hg-3r
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 05:36:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1raZ04-000265-OZ; Thu, 15 Feb 2024 05:29:54 -0500
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D5DFD48427;
- Thu, 15 Feb 2024 11:29:41 +0100 (CET)
-Message-ID: <ec0f365a-3db1-48b7-906e-7195b8a5c64f@proxmox.com>
-Date: Thu, 15 Feb 2024 11:29:36 +0100
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1raZ6S-00043g-Lq
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 05:36:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707993387;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yFDdE8GidXq283G46e8bcMbdU6Bcjix9irzZSdDTL5E=;
+ b=GkV0Bfwvt7IywR/bCkVIY9nTWsc+A0B1grHF2ffxZMg2LXsMc7k2eimyYOoRazKVQNDub1
+ WkrFsTQ9+mEmz/wlojkZWf78oK7cuM6qjOId0ZE/Aiz4Aq2cnUg7S7IvoV/3stW4+PFjeJ
+ VwuA3dfbIZZVGH6DSiRJnHV2QFMRBWk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-I1Xs_dtZN3K7I4_rthjjoA-1; Thu,
+ 15 Feb 2024 05:36:24 -0500
+X-MC-Unique: I1Xs_dtZN3K7I4_rthjjoA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E5A6629AC039;
+ Thu, 15 Feb 2024 10:36:23 +0000 (UTC)
+Received: from eperezma-thinkpadt480s.rmtes.csb (unknown [10.39.192.139])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9A42E2022AAA;
+ Thu, 15 Feb 2024 10:36:22 +0000 (UTC)
+From: =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Si-Wei Liu <si-wei.liu@oracle.com>,
+ Lei Yang <leiyang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Dragos Tatulea <dtatulea@nvidia.com>
+Subject: [PATCH 2/2] vdpa: trace skipped memory sections
+Date: Thu, 15 Feb 2024 11:36:16 +0100
+Message-ID: <20240215103616.330518-3-eperezma@redhat.com>
+In-Reply-To: <20240215103616.330518-1-eperezma@redhat.com>
+References: <20240215103616.330518-1-eperezma@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: double free or corruption (out) in iscsi virtual machine
-To: M_O_Bz <m_o_bz@163.com>, qemu-block@nongnu.org
-Cc: deepa.srinivasan@oracle.com, qemu-devel@nongnu.org,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@kamp.de
-References: <8b81d02.69e7.18d164d6764.Coremail.m_o_bz@163.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <8b81d02.69e7.18d164d6764.Coremail.m_o_bz@163.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -57,22 +83,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 17.01.24 um 08:23 schrieb M_O_Bz:
-> Basic Info:
-> 1. Issue: I got a " double free or corruption (out)", head for
-> attachment debug.log for details, the debug.log print the backtrace of
-> one virtual machine
-> 2. Reproduce: currently I cann't destribe how to reproduce this bug,
-> because it's in my productive enviroment which include some special stuffs
-> 3. qemu version:  I'm using is qemu-6.0.1
-> 4. qemu ccmdline in short:(checkout detail in the virtual machine log
-> message)
+Sometimes, certain parts are not being skipped in
+vhost_vdpa_listener_region_del, but they are skipped in
+vhost_vdpa_listener_region_add, or vice versa.  The vhost-vdpa code
+expects all parts to maintain their properties, so we're adding a trace
+to help with debugging when any part is skipped.
 
-Hi,
-sounds like it might be the issue fixed by:
-https://github.com/qemu/qemu/commit/5080152e2ef6cde7aa692e29880c62bd54acb750
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+---
+ hw/virtio/trace-events | 1 +
+ hw/virtio/vhost-vdpa.c | 3 +++
+ 2 files changed, 4 insertions(+)
 
-Best Regards,
-Fiona
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 77905d1994..fa2fb6b6d1 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -30,6 +30,7 @@ vhost_user_write(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
+ vhost_user_create_notifier(int idx, void *n) "idx:%d n:%p"
+ 
+ # vhost-vdpa.c
++vhost_vdpa_skipped_memory_section(int is_ram, int is_iommu, int is_protected, int is_ram_device, uint64_t first, uint64_t last, int page_mask) "is_ram=%d, is_iommu=%d, is_protected=%d, is_ram_device=%d iova_min=0x%"PRIx64" iova_last=0x%"PRIx64" page_mask=0x%x"
+ vhost_vdpa_dma_map(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint64_t uaddr, uint8_t perm, uint8_t type) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" uaddr: 0x%"PRIx64" perm: 0x%"PRIx8" type: %"PRIu8
+ vhost_vdpa_dma_unmap(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint8_t type) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" type: %"PRIu8
+ vhost_vdpa_listener_begin_batch(void *v, int fd, uint32_t msg_type, uint8_t type)  "vdpa_shared:%p fd: %d msg_type: %"PRIu32" type: %"PRIu8
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 2b9e5c3d4d..76d300be29 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -55,6 +55,9 @@ static bool vhost_vdpa_listener_skipped_section(MemoryRegionSection *section,
+     bool is_ram_device = memory_region_is_ram_device(section->mr);
+ 
+     if ((!is_ram && !is_iommu) || is_protected || is_ram_device) {
++        trace_vhost_vdpa_skipped_memory_section(is_ram, is_iommu, is_protected,
++                                                is_ram_device, iova_min,
++                                                iova_max, page_mask);
+         return true;
+     }
+ 
+-- 
+2.43.0
 
 
