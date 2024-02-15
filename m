@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C9DC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381C3C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag0O-00026F-PG; Thu, 15 Feb 2024 12:58:40 -0500
+	id 1rag0D-0001j3-SZ; Thu, 15 Feb 2024 12:58:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0H-0001pf-Ep
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:33 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0A-0001hU-PR
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:26 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0D-0001Xm-Sk
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:32 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-411a5b8765bso7195585e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag07-0001Wm-Jl
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:26 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41211097adcso7852645e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019908; x=1708624708; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708019902; x=1708624702; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q3zPvVIMcLhE7BLwqgmHZIk2g3tz5ma+i24zz6Qyo/c=;
- b=W4QhkEQxiPRlxEH5qhQ11n83Bcx417vXOO6suJ9noFNTocaJDAFJCQhhEJGiwoHlJh
- FV6dEfVf7kJCPZnapToNKBD4AKuhmuLsZ+roBexUB1KACZXvnug74YLphH9UYENgU4oy
- Pj9Ma8YvJiFXN0Aadt50LrPKokXw3VHRblbj7czalpZki0RUGR2rzCMYviao3oBbIKv0
- R9p4HNZbps4BhkJhsldt+FF/aqnlGFvCYmGjMuQj5NpR8UkCX8WFR5wjiZ7tS89qsXtx
- 9W/vV6JK0MSznGpv14WQ1LhJVtNnm4NcVeo68LqW/TdTiQ+Txmod2igldmtEDnKjgnM0
- ozYg==
+ bh=lxUYbRglPJnZ4TffGBHIWw40wYoW0NPrXDzHGmrcbes=;
+ b=JZC/gNUp46M0PUNcvyvK9KsxoHL8BZTuhB1azH+bhI7QQQiKdAR4eiGKGX9VwTRvwp
+ Qy62iBZWftc9pDLYELNAkUtdGXzPdbIQLzQNRamNZprUotGG3lmeGcDi8PjLkKr4g61F
+ szcvhjJf9PsbFYH4x7X0F0mv2jk+oyuULOA/1jD0Pic5AL1u5ZN3YHmFXuOjaakbQtPM
+ FBrzrvZ53bdp9rKuxjeaIuyzV1XZ4CvcH9F9+J1PRymvB3AMoTj23hlJkyNhleOuwafR
+ ldsBhsULNkj4K+kEbMpWApYxxbY6vDeAU4edyS/FQggItDdJSaCo7AlR+ZVc6rY4Yizu
+ BCJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019908; x=1708624708;
+ d=1e100.net; s=20230601; t=1708019902; x=1708624702;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q3zPvVIMcLhE7BLwqgmHZIk2g3tz5ma+i24zz6Qyo/c=;
- b=CsDWW0zLP3SahxjwFRVdmt6IyPpBOBChBLUJgDjoQPVm7EMkW3z1wWVCFCHckm8qo5
- HScOvzpxQboWn22ay9nYrF7OSJyb6T8LVWyvePZGsEX0LZ5IuHkXpv8YSgOGGmJQpdT8
- gsbU1/Z4cn8dj9Er90osGNYVamExI8ti3zuY9Xasxxx4fw75f8Tt94iiWEMUrCDasALD
- 6ijRlB3wPlbH3uO/GkNS/YAlIozBApBvOa0jKZHLhWLYHjfgo7ll35EEws7frVIDyNZA
- A96ZL3v1BkUIMq/Xw8hVl4BwiIZerp8YMD3fhYo+l1TN8Hr1PTDNIIxOt+LLD38CXUue
- 51Ew==
-X-Gm-Message-State: AOJu0YyRQzI3B+CYAvoq8QSASjVqp4HRixEle+gYOMVspNOCpVGnhLOh
- WPxPyI1rS+j42WWByFhs8qk5hFXpZb4aPBJBjg2zxlSXLv6FrGY9yl36KXhCJFQtzAqYZ2Y9JkT
- Yoko=
-X-Google-Smtp-Source: AGHT+IGL2MjT2Uac/p5rMCkh0KMIc1OnH5CgBsztWPpWb+qXOWq2gxBqVqGeFvdNTomW3Y6hVW/Gwg==
-X-Received: by 2002:a05:600c:358c:b0:411:e0cd:9916 with SMTP id
- p12-20020a05600c358c00b00411e0cd9916mr5451880wmq.0.1708019907978; 
- Thu, 15 Feb 2024 09:58:27 -0800 (PST)
+ bh=lxUYbRglPJnZ4TffGBHIWw40wYoW0NPrXDzHGmrcbes=;
+ b=hYuOTP3xdRVP9x8jv6hjk/iamXTQsYzlEzxdtcHXj6TcXHRgcC1/Z/pTi6UwNNCgBX
+ moDDoV3Btz8BPqsdCs9mqQ4Le9iGvY7LicWauisWeJMSyTJxzxyRu9HNHha9TnpwzvOR
+ K1PXg+T8Npai1bb1mdySkCbDbzpuPcabd9AFghtJzIdQbK+j6D7nRpvGHsmMrqjvywFN
+ ztFu6o/Kwbh6qlO88xCFB1kkNYtKz/QnQF0oojCEeVzMFlXFtiN5bTfCPQYX0RLceh0U
+ Wqrmv8eC2diNeLSSlWP2JietYixEofM70VLgkeUcp3+Q0pEQD+26MA8F6yDAoLVqYb74
+ 4eJg==
+X-Gm-Message-State: AOJu0Yy/f9Jd3jHym+VjNxsi9ZEXF8mdfCjsctwheNGYInYyZIrd2EhW
+ JuhtACVXlqaOzqbaKSrmzBoAkP/xJjKhbk6Sj/tDI09NSBqQtJBltXSzubCwo16y+AaGhdHcE6n
+ bG6U=
+X-Google-Smtp-Source: AGHT+IF8uYHneZeapaokM+4VZiCxswQW/3MAsk9XWbr1FRvebv75JVIY8pHCMMCdg7369F86NN7pdQ==
+X-Received: by 2002:a5d:49d1:0:b0:33c:e2d9:ad36 with SMTP id
+ t17-20020a5d49d1000000b0033ce2d9ad36mr1967022wrs.20.1708019901832; 
+ Thu, 15 Feb 2024 09:58:21 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- y5-20020a7bcd85000000b00410ab50f70fsm5602288wmj.15.2024.02.15.09.58.26
+ k2-20020adff282000000b0033b8808355fsm2424533wro.28.2024.02.15.09.58.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 09:58:27 -0800 (PST)
+ Thu, 15 Feb 2024 09:58:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 05/56] hw/misc/mips: Reduce itc_reconfigure() scope
-Date: Thu, 15 Feb 2024 18:56:59 +0100
-Message-ID: <20240215175752.82828-6-philmd@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PULL 04/56] target/mips: Remove helpers accessing SAAR registers
+Date: Thu, 15 Feb 2024 18:56:58 +0100
+Message-ID: <20240215175752.82828-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,42 +98,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previous commit removed the MT*C0(SAAR) helpers which
-were the only calls to itc_reconfigure() out of hw/,
-we can reduce its scope and declare it statically.
+DisasContext::saar boolean is never set, so this code
+is not reachable. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240209090513.9401-3-philmd@linaro.org>
+Message-Id: <20240209090513.9401-2-philmd@linaro.org>
 ---
- include/hw/misc/mips_itu.h | 2 --
- hw/misc/mips_itu.c         | 2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ target/mips/tcg/sysemu_helper.h.inc |  5 ---
+ target/mips/tcg/sysemu/cp0_helper.c | 55 -----------------------------
+ target/mips/tcg/translate.c         | 42 ----------------------
+ 3 files changed, 102 deletions(-)
 
-diff --git a/include/hw/misc/mips_itu.h b/include/hw/misc/mips_itu.h
-index 5caed6cc36..3a7330ac07 100644
---- a/include/hw/misc/mips_itu.h
-+++ b/include/hw/misc/mips_itu.h
-@@ -79,6 +79,4 @@ struct MIPSITUState {
- /* Get ITC Configuration Tag memory region. */
- MemoryRegion *mips_itu_get_tag_region(MIPSITUState *itu);
+diff --git a/target/mips/tcg/sysemu_helper.h.inc b/target/mips/tcg/sysemu_helper.h.inc
+index f163af1eac..78f7272208 100644
+--- a/target/mips/tcg/sysemu_helper.h.inc
++++ b/target/mips/tcg/sysemu_helper.h.inc
+@@ -31,8 +31,6 @@ DEF_HELPER_1(mftc0_tcschedule, tl, env)
+ DEF_HELPER_1(mfc0_tcschefback, tl, env)
+ DEF_HELPER_1(mftc0_tcschefback, tl, env)
+ DEF_HELPER_1(mfc0_count, tl, env)
+-DEF_HELPER_1(mfc0_saar, tl, env)
+-DEF_HELPER_1(mfhc0_saar, tl, env)
+ DEF_HELPER_1(mftc0_entryhi, tl, env)
+ DEF_HELPER_1(mftc0_status, tl, env)
+ DEF_HELPER_1(mftc0_cause, tl, env)
+@@ -57,7 +55,6 @@ DEF_HELPER_1(dmfc0_lladdr, tl, env)
+ DEF_HELPER_1(dmfc0_maar, tl, env)
+ DEF_HELPER_2(dmfc0_watchlo, tl, env, i32)
+ DEF_HELPER_2(dmfc0_watchhi, tl, env, i32)
+-DEF_HELPER_1(dmfc0_saar, tl, env)
+ #endif /* TARGET_MIPS64 */
  
--void itc_reconfigure(struct MIPSITUState *tag);
--
- #endif /* MIPS_ITU_H */
-diff --git a/hw/misc/mips_itu.c b/hw/misc/mips_itu.c
-index 37aea0e737..db1220f8e0 100644
---- a/hw/misc/mips_itu.c
-+++ b/hw/misc/mips_itu.c
-@@ -86,7 +86,7 @@ static uint64_t itc_tag_read(void *opaque, hwaddr addr, unsigned size)
-     return tag->ITCAddressMap[index];
+ DEF_HELPER_2(mtc0_index, void, env, tl)
+@@ -104,8 +101,6 @@ DEF_HELPER_2(mtc0_hwrena, void, env, tl)
+ DEF_HELPER_2(mtc0_pwctl, void, env, tl)
+ DEF_HELPER_2(mtc0_count, void, env, tl)
+ DEF_HELPER_2(mtc0_saari, void, env, tl)
+-DEF_HELPER_2(mtc0_saar, void, env, tl)
+-DEF_HELPER_2(mthc0_saar, void, env, tl)
+ DEF_HELPER_2(mtc0_entryhi, void, env, tl)
+ DEF_HELPER_2(mttc0_entryhi, void, env, tl)
+ DEF_HELPER_2(mtc0_compare, void, env, tl)
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index 62f6fb4bf6..f8883a3515 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -371,22 +371,6 @@ target_ulong helper_mfc0_count(CPUMIPSState *env)
+     return (int32_t)cpu_mips_get_count(env);
  }
  
--void itc_reconfigure(MIPSITUState *tag)
-+static void itc_reconfigure(MIPSITUState *tag)
+-target_ulong helper_mfc0_saar(CPUMIPSState *env)
+-{
+-    if ((env->CP0_SAARI & 0x3f) < 2) {
+-        return (int32_t) env->CP0_SAAR[env->CP0_SAARI & 0x3f];
+-    }
+-    return 0;
+-}
+-
+-target_ulong helper_mfhc0_saar(CPUMIPSState *env)
+-{
+-    if ((env->CP0_SAARI & 0x3f) < 2) {
+-        return env->CP0_SAAR[env->CP0_SAARI & 0x3f] >> 32;
+-    }
+-    return 0;
+-}
+-
+ target_ulong helper_mftc0_entryhi(CPUMIPSState *env)
  {
-     uint64_t *am = &tag->ITCAddressMap[0];
-     MemoryRegion *mr = &tag->storage_io;
+     int other_tc = env->CP0_VPEControl & (0xff << CP0VPECo_TargTC);
+@@ -514,13 +498,6 @@ target_ulong helper_dmfc0_watchhi(CPUMIPSState *env, uint32_t sel)
+     return env->CP0_WatchHi[sel];
+ }
+ 
+-target_ulong helper_dmfc0_saar(CPUMIPSState *env)
+-{
+-    if ((env->CP0_SAARI & 0x3f) < 2) {
+-        return env->CP0_SAAR[env->CP0_SAARI & 0x3f];
+-    }
+-    return 0;
+-}
+ #endif /* TARGET_MIPS64 */
+ 
+ void helper_mtc0_index(CPUMIPSState *env, target_ulong arg1)
+@@ -1108,38 +1085,6 @@ void helper_mtc0_saari(CPUMIPSState *env, target_ulong arg1)
+     }
+ }
+ 
+-void helper_mtc0_saar(CPUMIPSState *env, target_ulong arg1)
+-{
+-    uint32_t target = env->CP0_SAARI & 0x3f;
+-    if (target < 2) {
+-        env->CP0_SAAR[target] = arg1 & 0x00000ffffffff03fULL;
+-        switch (target) {
+-        case 0:
+-            if (env->itu) {
+-                itc_reconfigure(env->itu);
+-            }
+-            break;
+-        }
+-    }
+-}
+-
+-void helper_mthc0_saar(CPUMIPSState *env, target_ulong arg1)
+-{
+-    uint32_t target = env->CP0_SAARI & 0x3f;
+-    if (target < 2) {
+-        env->CP0_SAAR[target] =
+-            (((uint64_t) arg1 << 32) & 0x00000fff00000000ULL) |
+-            (env->CP0_SAAR[target] & 0x00000000ffffffffULL);
+-        switch (target) {
+-        case 0:
+-            if (env->itu) {
+-                itc_reconfigure(env->itu);
+-            }
+-            break;
+-        }
+-    }
+-}
+-
+ void helper_mtc0_entryhi(CPUMIPSState *env, target_ulong arg1)
+ {
+     target_ulong old, val, mask;
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 12094cc1e7..173b19a090 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -5151,17 +5151,6 @@ static void gen_mfhc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             goto cp0_unimplemented;
+         }
+         break;
+-    case CP0_REGISTER_09:
+-        switch (sel) {
+-        case CP0_REG09__SAAR:
+-            CP0_CHECK(ctx->saar);
+-            gen_helper_mfhc0_saar(arg, tcg_env);
+-            register_name = "SAAR";
+-            break;
+-        default:
+-            goto cp0_unimplemented;
+-        }
+-        break;
+     case CP0_REGISTER_17:
+         switch (sel) {
+         case CP0_REG17__LLADDR:
+@@ -5252,17 +5241,6 @@ static void gen_mthc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             goto cp0_unimplemented;
+         }
+         break;
+-    case CP0_REGISTER_09:
+-        switch (sel) {
+-        case CP0_REG09__SAAR:
+-            CP0_CHECK(ctx->saar);
+-            gen_helper_mthc0_saar(tcg_env, arg);
+-            register_name = "SAAR";
+-            break;
+-        default:
+-            goto cp0_unimplemented;
+-        }
+-        break;
+     case CP0_REGISTER_17:
+         switch (sel) {
+         case CP0_REG17__LLADDR:
+@@ -5680,11 +5658,6 @@ static void gen_mfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_mfc0_load32(arg, offsetof(CPUMIPSState, CP0_SAARI));
+             register_name = "SAARI";
+             break;
+-        case CP0_REG09__SAAR:
+-            CP0_CHECK(ctx->saar);
+-            gen_helper_mfc0_saar(arg, tcg_env);
+-            register_name = "SAAR";
+-            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -6406,11 +6379,6 @@ static void gen_mtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_helper_mtc0_saari(tcg_env, arg);
+             register_name = "SAARI";
+             break;
+-        case CP0_REG09__SAAR:
+-            CP0_CHECK(ctx->saar);
+-            gen_helper_mtc0_saar(tcg_env, arg);
+-            register_name = "SAAR";
+-            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -7180,11 +7148,6 @@ static void gen_dmfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_mfc0_load32(arg, offsetof(CPUMIPSState, CP0_SAARI));
+             register_name = "SAARI";
+             break;
+-        case CP0_REG09__SAAR:
+-            CP0_CHECK(ctx->saar);
+-            gen_helper_dmfc0_saar(arg, tcg_env);
+-            register_name = "SAAR";
+-            break;
+         default:
+             goto cp0_unimplemented;
+         }
+@@ -7892,11 +7855,6 @@ static void gen_dmtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
+             gen_helper_mtc0_saari(tcg_env, arg);
+             register_name = "SAARI";
+             break;
+-        case CP0_REG09__SAAR:
+-            CP0_CHECK(ctx->saar);
+-            gen_helper_mtc0_saar(tcg_env, arg);
+-            register_name = "SAAR";
+-            break;
+         default:
+             goto cp0_unimplemented;
+         }
 -- 
 2.41.0
 
