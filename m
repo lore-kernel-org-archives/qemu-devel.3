@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB522C48BC4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70076C4829E
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 13:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rabmc-0003hp-5I; Thu, 15 Feb 2024 08:28:10 -0500
+	id 1rabma-0003dO-Ln; Thu, 15 Feb 2024 08:28:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
- id 1raY3f-0004L5-J9; Thu, 15 Feb 2024 04:29:31 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1raWbp-0007Di-E7; Thu, 15 Feb 2024 02:56:41 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ziqiaokong@gmail.com>)
- id 1raY3d-0004GX-OU; Thu, 15 Feb 2024 04:29:31 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3bd4e6a7cb0so484949b6e.3; 
- Thu, 15 Feb 2024 01:29:28 -0800 (PST)
+ id 1raWbl-00063y-NB; Thu, 15 Feb 2024 02:56:40 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-298cc60ee66so476990a91.0; 
+ Wed, 14 Feb 2024 23:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707989367; x=1708594167; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707983794; x=1708588594; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dxETrzZs6v6x2GkrIM8h7gsGJ6oZgwCCQ3ysSkDrvgA=;
- b=bQJSJXh0gJeIwd44ShKTNpwe13mjWOudcWYtufTdZXMIJpwhyKVAXdufS5/AhRXZgE
- YdGfs+dRz9mJdnLN9novQPOrF/dzCxF394O2vhnQtgrrG7DCaUBbwHp2FGWBK5CdvQ+O
- YZ1Psa8aSOKkuUru+YMAOu2O1ACLNBgMMeLYmjwE7Bi9htSX0PHOpzLeVeBItLGX6Ez7
- +R0v5oupxQRlbCOCUyxVKCWzUgC+oII/SLTxtx7PPIVIdJQeg6xBNMNkSZlM4jOEy9PG
- HxyqqUFNHrG3PK+p7g/Pq475AsKrny6HI+ahL1uL2IFGnTlVhk6+I8c1qTUXyva6gEeR
- 8mfw==
+ bh=XYO2qbz/pDx6A7y3WzmycZDMcOwjaWvw8NqRagW+478=;
+ b=LYUvK2T2R/qyaprxkVmlYkK+qoHQPijbX5HCGRTXhNNLwZfXOQEJOVZn8qUKroXRWh
+ 9qNT20UUxZOd+5sOGeTWbFVxXTZdAgtrGbdFe3vyn4/URVOBsEwI5zm66OkmHMsOZmxD
+ XgsAFB1lm30HnPDr1G9En1EviqIXLAdjH462VfCtxWXm2qDM978YOi7gbS7zbD1H9nbz
+ 950ztiM+p3FRFIFkQOSUitN+ZBLnTZ+jGGxPZ9QmHRZzIRUOyoNX61bFkYSmyGJ5pTMW
+ s+4/JN4dvwBxpOUOKhpTUg2865DZ9H+QwugYTMRZEGA7Cv0oXQnRTBYw3PyY1ZtJLjwy
+ Bl8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707989367; x=1708594167;
+ d=1e100.net; s=20230601; t=1707983794; x=1708588594;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=dxETrzZs6v6x2GkrIM8h7gsGJ6oZgwCCQ3ysSkDrvgA=;
- b=DU2uRJ91LdlBsPmrElNbee3sECgR93OgATdRBILBQamsdrfRu3FMlKnnrJ1km5sbpo
- NrMF/X3lQAA5HU3LZBbd87aIYsoIZ0ZLOjcActYXIZVcxEE7KecUOob8pdASEC7kqnPt
- 1M4QYVOsSpITK8/DE6Qxh1PyOufh6hj2lRvu0IO+Zzy5Tq26vjswc3qIWx/z9PwPgVjD
- b0gO0RdK9ea2lUYv+6gagiJRYQ6SQZNBjtkbKPJ58LI0l/XOiO45w4tPa8cXjlrPKRCl
- bjcRguK0W7TmG5irKTw90fifhyHVp//1+avpwiVigy2lZaLU8YGrCPJ66KTsvjZFdT/w
- dBnA==
+ bh=XYO2qbz/pDx6A7y3WzmycZDMcOwjaWvw8NqRagW+478=;
+ b=mbPpjcUY7ZKwIvMPNcJnMISdwRlVWhmS4uM98P2dzkpuEktufkO+RRqSHDjRDqwwyP
+ 7Lh6UqYC8157mD9TZKxw9iEIPjXOGGsG5hvbpds8ItuWxs/FjmTFVP6WCFDCjryxuQHG
+ Bl/uSGsxE3jiQtbDPCV5XRKpt8bxUqzJhgPYHMc7ODY8tshoE5M99qza2SeHAAl3BN4q
+ 8JhQ5tpbOPtbBxof7lTGXlwKMGv6aB6byB2RlfIu4insMkKjrx2J8sZYWne8vuyx1oNo
+ ZYdLeoEkBKC2uguvjuzlcWXmJn+ZEjskuNYi3wXbPUNWBloMy3n6UHCYvc+ed50T0ZJA
+ hjXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVGYI1rSuOj+dFjD5EjTiNg0/f4tRv6PT+ELqm/Xh1Xf7La9R48z7M2c1ok47QwWzmqw+vLbI/FlUPlW5lgCVLW1ufj2hnyag==
-X-Gm-Message-State: AOJu0YxMU3EZyElA7AZbZF4Y9zkKwIrFXIIbBicSwf3wHWOeZiOddgNA
- qGr28QiFUffYTTFY8lExaMKRWHmwXD41N49dSAt4dCv5K+W4pmq5wVdfb9qxOGU=
-X-Google-Smtp-Source: AGHT+IE40YY8qrqqlV0YwaSSw5C8EYB0c0bXjWuiHRjbMYIvgHd1alENPr5yMMZM2IjgpDI4R4EfbQ==
-X-Received: by 2002:a05:6808:1156:b0:3c0:3f3f:16e9 with SMTP id
- u22-20020a056808115600b003c03f3f16e9mr1714490oiu.12.1707989367198; 
- Thu, 15 Feb 2024 01:29:27 -0800 (PST)
+ AJvYcCVMCmS3/fej5SqVeJphFv7+ik5zMU7QAeqou3DbpHFHkT5EQSrmpRhXaVsuB2GD0lwH8gC4HQmytQC0JVvRunZ7P4GAsbiFQA==
+X-Gm-Message-State: AOJu0YyMK6Gczl8doMQJ6aJTClrZuWdYVZeFtJOn/l+Io1wwDdVlERbU
+ 55AjDGQVPdmUj9E2L7J10gvrMlOJWZsBJEYBvQQiS6MTN9dK8d3SDM77NUGosbo=
+X-Google-Smtp-Source: AGHT+IE4vomXlvlrU6mkSJ+lZq68mY92FDA0gfbnGXyF14QefBpyZiozKLnXb23bWI1deNYomqcp0w==
+X-Received: by 2002:a17:90a:6c44:b0:298:db59:b6a7 with SMTP id
+ x62-20020a17090a6c4400b00298db59b6a7mr1172031pjj.34.1707983794348; 
+ Wed, 14 Feb 2024 23:56:34 -0800 (PST)
 Received: from station.lan ([155.69.190.63]) by smtp.gmail.com with ESMTPSA id
- j8-20020aa78d08000000b006e04b47e17asm856838pfe.214.2024.02.15.01.29.25
+ sc7-20020a17090b510700b00296fcb4e668sm2721604pjb.25.2024.02.14.23.56.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 01:29:26 -0800 (PST)
+ Wed, 14 Feb 2024 23:56:34 -0800 (PST)
 From: Ziqiao Kong <ziqiaokong@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Ziqiao Kong <ziqiaokong@gmail.com>, qemu-trivial@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>
 Subject: [PATCH 0/1] Fix tcg assert when decoding "lock cmp"
-Date: Thu, 15 Feb 2024 17:29:08 +0800
-Message-Id: <20240215092908.569947-1-ziqiaokong@gmail.com>
+Date: Thu, 15 Feb 2024 15:56:13 +0800
+Message-Id: <20240215075613.567351-1-ziqiaokong@gmail.com>
 X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=ziqiaokong@gmail.com; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=ziqiaokong@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,9 +91,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Resending this series since it looks like being ignored by the list)
-
-Hello QEMU Developers! I'm from the downstream project Unicorn
+Hello Qemu Developers! I'm from the downstream project Unicorn
 Engine (https://github.com/unicorn-engine/unicorn). I identified a simple
 bug that triggers a tcg assertion in QEMU. Although I used a usermode
 usecase to illustrate the bug, it shall also affect system emulation.
