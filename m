@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31F72C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 20:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5074C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 20:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rai47-0001pn-GV; Thu, 15 Feb 2024 15:10:39 -0500
+	id 1rai5a-0002Zp-PB; Thu, 15 Feb 2024 15:12:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rai43-0001p5-5L
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 15:10:35 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1rai5Z-0002ZR-LK
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 15:12:09 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rai41-0004dW-HQ
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 15:10:34 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1da0cd9c0e5so18292795ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 12:10:33 -0800 (PST)
+ id 1rai5Y-0004pU-5J
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 15:12:09 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1dba177c596so2083345ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 12:12:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708027832; x=1708632632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708027927; x=1708632727; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sBO7s9OnNhTYNTyXX4miScGwOB0NA0FUCfHjizB/i30=;
- b=vTtQM66CQdLIs2iTAre8wQmo71C1566Ab1pVru3Ove/UpPrtWyOp3fAT5IATMj2B6K
- t9EFgM9O6UD4C6nQsroT9xL/Z1/MUmH0qt5L+57U9x0ywAH0S1P7HobWLnL7ZW/rjn/r
- Bwtosi4TlMbzeIsq8+e/dEEqyLMv1+sFqpeKMf9+tLrBB2oInk7Rh88VMQpNgBR5ylAl
- 10A2IjSJ2ttRN5vs1pdeKG+BFo3+9bINBMtKYh3LGCQaERFODxJJOMpgJFcRJJTYLDMX
- G3zEcUAL3omUgLO8S8YovianOGrwvjFkMPDztw0CoyrP2ZpBprr2kqDchWH7ycCeDSVA
- MOsQ==
+ bh=fKfXcfqw4JM+WAdIaGRsAwYOerKOCph/zHVaDnT5h38=;
+ b=Q9Tw+EcLi61fecmNt/vtsTyqPevrGw/jQNFw9CrDgiIsnXO3AG4LoeJVSjc/Ew5txo
+ jUeYcECMvfq2KBbMQNu/teF4td9zWBPLLmECyQOq8IpaEXpcjoUsBDtvEbQ1bN6ddIFj
+ 0Gm8+pLn0AETg9Ozuf8ycCyXn7j9CppQ6fk5Rr7fUAxD6XzmjhYrqm5zR5ovUoLVdOhy
+ +99ZgP87Y8OX3aTwzLEF+xYLQQI7NEwvgqSrw2GE5gVjCOLndHkms6nop+f9ur4GL/V1
+ lYonTQyu/uFZZTe5crrXXq6i/a8fIj+VSylFEipw7fRpg0nnSKqO2P1UeT7KGRDzfbg8
+ lgsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708027832; x=1708632632;
+ d=1e100.net; s=20230601; t=1708027927; x=1708632727;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sBO7s9OnNhTYNTyXX4miScGwOB0NA0FUCfHjizB/i30=;
- b=EKvsnjmMcLeo4wKK9dex+q8bxSZxJ+1ZLyoh5OFsUylg3ZQhEM04srXMb5dxzgSk66
- TdOc8RuVGLvmvpDFDiUDUPgpLj2jBclD3EAtZAJ0NoIGyEUzX+NN6/DqV0giSuR6DhZE
- YvNMO48jotaEC/r5+LBQkPUASXAotk66CMcLKs2GBV1oqIP7Mo65EbARlvHBcH5S5e7G
- PHrH7NGfoDZYAzIpexQjozUYgM4UGNABzx4R1HYl5aiq9eaiTEMFn0L6nlJ//kgDyT69
- vFB7crk6Lgde+WZzTdKj2LOH6bm1MOwiWLRgiAZn5k8s349sxN5SI/pUhTvi3NgHAV6Q
- BknA==
+ bh=fKfXcfqw4JM+WAdIaGRsAwYOerKOCph/zHVaDnT5h38=;
+ b=T4Pjpg4BsgEBDg8phszq+KoRuaemccVBovObXrXC/l5mcOHi55gq7g48SVM1xEb3dQ
+ JLfrYRQA8jGLJCk7MWoeXh6dzPj8PQvcJ31nOHZe4QtqUTb6rr7FGqvQJ8MoTSqZOIrS
+ eqJxyNEJ+x/pPrO6X2+y/pa9S7tqbwU3K8fZOEo/DWXGF2nVMIk574dp187qulPdH38X
+ t0Jp8a1nLobjVmhDzl4JmDRt2+3lAnIdRxY+V04ldiWH3tZll1c1hcmUH3WBRm2lo6MG
+ eNG1neouSHt2NBx7iNyXGDPuO/XPGCOSHREZL9h0K0KWD47HZNlGprjMRNQ7hwaiju13
+ oXlQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTVA8SWoWXTrWGHWaMszggRzEwVGQooRHAo3HIiVPwLjE3+x0Evcerne7lblDGda1+RHM+ZMIaBsbscAsaDwexr8L3734=
-X-Gm-Message-State: AOJu0Yx0+vmLn6wQhRAFmPpE6CVv53E+liXH39Oum3UvL+ITUEj5h4VO
- tPufTywkX+7Kv5likmzrgtyK9BB5enUn6ZXsMQoafOudeYB/E2wf+To9YvSm9zt4hXghZIHQKh+
- p
-X-Google-Smtp-Source: AGHT+IFglSYn1EbmZqN1zLcRz+D/wLFmtEWjEFLtDnvZcFG2xR+kBtOjPH5D7zI/ZbxlRAiXj0tPXQ==
-X-Received: by 2002:a17:902:db04:b0:1d9:ae31:83f1 with SMTP id
- m4-20020a170902db0400b001d9ae3183f1mr3553287plx.18.1708027832108; 
- Thu, 15 Feb 2024 12:10:32 -0800 (PST)
+ AJvYcCXTsJQCKI70jIoKNeyX7v2rX4FpigXGVYyOEyjoGQ9fyMrDCqtZLGmLExx67EvQZI6rWdlRKELSlXB2JONaYY6SG3mDC4w=
+X-Gm-Message-State: AOJu0Yyan7kdQ0xItM1BQR8SCsmdAY4QVTeilxKu+sUFU88gq2e85JkJ
+ khPmb3lNvKgQgGL1K7NiQI4/xvDMARi7M9BkvsJuUYgZTzYj3YaMQwRoGuq0P2ckWjgXFMPsHL/
+ R
+X-Google-Smtp-Source: AGHT+IEV6HbIE9COvHPzu6Ufi52okT4AyG/SxwBex5d/iLY1vwc9pvmzLRFx9J7/uA+2SdMpQ6luDw==
+X-Received: by 2002:a17:903:2311:b0:1d9:b58e:709c with SMTP id
+ d17-20020a170903231100b001d9b58e709cmr4248627plh.4.1708027926634; 
+ Thu, 15 Feb 2024 12:12:06 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- d23-20020a170902729700b001d8a93fa5b1sm1634176pll.131.2024.02.15.12.10.30
+ d23-20020a170902729700b001d8a93fa5b1sm1634176pll.131.2024.02.15.12.12.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 12:10:31 -0800 (PST)
-Message-ID: <4a2b1c91-0f25-4474-ad5c-13d9993a16f5@linaro.org>
-Date: Thu, 15 Feb 2024 10:10:29 -1000
+ Thu, 15 Feb 2024 12:12:06 -0800 (PST)
+Message-ID: <dab5685c-8051-44b6-92c6-a52df9c57eb8@linaro.org>
+Date: Thu, 15 Feb 2024 10:12:04 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 4/6] accel/tcg: Inline cpu_mmu_lookup function
+Subject: Re: [RFC PATCH 5/6] accel/tcg: Inline do_ld1_mmu function
 Content-Language: en-US
 To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: dbarboza@ventanamicro.com, Riku Voipio <riku.voipio@iki.fi>,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20240215192823.729209-1-max.chou@sifive.com>
- <20240215192823.729209-5-max.chou@sifive.com>
+ <20240215192823.729209-6-max.chou@sifive.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240215192823.729209-5-max.chou@sifive.com>
+In-Reply-To: <20240215192823.729209-6-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,31 +104,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/15/24 09:28, Max Chou wrote:
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 > ---
->   accel/tcg/user-exec.c | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
+>   accel/tcg/user-exec.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 > 
 > diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-> index 68b252cb8e8..c5453810eee 100644
+> index c5453810eee..803c271df11 100644
 > --- a/accel/tcg/user-exec.c
 > +++ b/accel/tcg/user-exec.c
-> @@ -942,8 +942,11 @@ void page_reset_target_data(target_ulong start, target_ulong last) { }
+> @@ -963,8 +963,9 @@ static inline QEMU_ALWAYS_INLINE void *cpu_mmu_lookup(CPUState *cpu,
 >   
->   /* The system-mode versions of these helpers are in cputlb.c.  */
+>   #include "ldst_atomicity.c.inc"
 >   
-> -static void *cpu_mmu_lookup(CPUState *cpu, vaddr addr,
-> -                            MemOp mop, uintptr_t ra, MMUAccessType type)
-> +static inline QEMU_ALWAYS_INLINE void *cpu_mmu_lookup(CPUState *cpu,
-> +                                                      vaddr addr,
-> +                                                      MemOp mop,
-> +                                                      uintptr_t ra,
-> +                                                      MMUAccessType type)
+> -static uint8_t do_ld1_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+> -                          uintptr_t ra, MMUAccessType access_type)
+> +static inline QEMU_ALWAYS_INLINE uint8_t do_ld1_mmu(CPUState *cpu, vaddr addr,
+> +                                                    MemOpIdx oi, uintptr_t ra,
+> +                                                    MMUAccessType access_type)
 >   {
->       int a_bits = get_alignment_bits(mop);
->       void *ret;
+>       void *haddr;
+>       uint8_t ret;
 
-This is a large function.  Why does it need to be inlined?
-For this and the next two patches I require evidence, because I don't believe you are 
-attacking the problem correctly.
+I expect the small functions that use this to tail-call into this common function.  I do 
+not believe that inlining helps.  Same with do_st1_mmu.
 
 
 r~
