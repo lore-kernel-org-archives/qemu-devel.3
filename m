@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA94DC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECC3C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag1W-0005fH-KX; Thu, 15 Feb 2024 12:59:50 -0500
+	id 1rag3C-0002u1-O5; Thu, 15 Feb 2024 13:01:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1J-0004lj-9S
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:40 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag2y-0002Yb-6q
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:24 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag13-0001lD-4V
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:23 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-411fc61a03dso9909935e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:59:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag2v-0002TG-VO
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:19 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55ad2a47b7aso1689590a12.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:01:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019959; x=1708624759; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708020075; x=1708624875; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sZSw2YzJ/MkCqct1l1ey2O6+43vCJeEZUqJNCv27UXQ=;
- b=qZ+2VOCFyAL6TebQt2/Cq8snCNo1d5stp7M2EkQofuXexC4QQNx5biV7jWG+1kK/Zr
- bTxqYqj0vHRkhiBWKcIQa0NjoRQbgteHH7tKohkA8eoowGEdSINAihe5JynFKFkOpPTN
- 2aOo3gFVTXE22Lfr2xeaSZOtjT68SSOVNIo4Ygla4cRFFd+gvLDuBMu/3/Hhxf3lS3s0
- I6MHK36hJYTyjKnbErSUuDGOGJzta6Mwmf65aDsIwQx0NkXPDb6RCwhWiFFsZcDM9GwD
- kSKEMNbqQLB2HOJOsEh7EbSCkIPcCBS7M7zYqrFD6bfH/WS7b8YfNUl/P7H+vvRTALR9
- NqNg==
+ bh=k1XGzrffCcMjvoN7zlMmx6bS790MXe4X9nuc6CTe+o8=;
+ b=sHt9HgiAQpzX7eJs1ZoUh99I9nr8gaImXAQIb9xnNzoLzgOgj5wZpEBIwmkoWQ18o4
+ hVla+BJdVxTv1khjmX3CVka6weZJ0sfAAOL0wgbSqciE2vPeO5orO+qypeCaIP1qiY65
+ PqDs/b5FPbnTJXkAhE1hpvb0+77c0AAHJLt1pgmkB+3NiMGxVulwT3N3yIGentbkhMo8
+ 2iJNRdYQxdxfuUjvxKbFr/tOgf8LSNOLDRHf9g/6D2HqEbMypYRYufwoBpbZcJnaUsfh
+ RC8jEGZ6CVBzA7G43e1CMRR/i5h8SLmkFGDz2qZ0I7wzfVqJrQLRVg44ctx3DbuWkHAv
+ LOgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019959; x=1708624759;
+ d=1e100.net; s=20230601; t=1708020075; x=1708624875;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sZSw2YzJ/MkCqct1l1ey2O6+43vCJeEZUqJNCv27UXQ=;
- b=hOp6dUBrlnRPZj0UgA7uCC3WwTlpzcHBuKLWSSA1lErv4W6DP4KfuREH9bxln+XKTo
- 412KosNVoOzcg0Uo6WCMLDHuyB+PUdDDVNSjytkY/H7elyHZLPIY4ce7GpN4/MK62mmN
- Zu7bvvF2aNhNq55E3iPbNPfUjo3DBveYM4sDB1ngQZYFy9DWrhcebDoodCBRmGlEXeep
- bYhgKD+IfGqtRIFhkg6u+LMdmi0mNQQlD+ZJ03EcezOu1g/P4wpypdbHqPg4Uu5eJUNm
- HeXwKZn5sKxRGDQb+MgcI8DGU5QWuESkIJzIKhpALC2bTZrqtY48F/+g3s0z9T4uk1Np
- zloA==
-X-Gm-Message-State: AOJu0YwD7tL52xFQbG87lpy4Jc0oDNOicz89P+icOh/vPyPoNESse/3n
- x38OF67EfgI3+1LNuUdgdOwQO9IWIaNdQFmrCiFZI32lVQY8UiKS/xglk2bztcK2HrOsvuDqzcj
- Bz2g=
-X-Google-Smtp-Source: AGHT+IGKkWrh1EfmpN5uflxPZiFBU+H+iWmUq/ar7QJRtpFMHotjF78s0XNRF/8UGGLjMsZOEdOW/A==
-X-Received: by 2002:a5d:644b:0:b0:33c:e392:14c3 with SMTP id
- d11-20020a5d644b000000b0033ce39214c3mr1887111wrw.47.1708019959294; 
- Thu, 15 Feb 2024 09:59:19 -0800 (PST)
+ bh=k1XGzrffCcMjvoN7zlMmx6bS790MXe4X9nuc6CTe+o8=;
+ b=cOVlcxAzH0m0bYdKByU2f0bl997QaJ9OqfnRrhjpS2XQnbg0+ynFK4ptPXcrE0q65P
+ PiVsZnqt3SA0b86UFFBaZcrNmMWiAeSSti8b0BUYjhxTO2izQZ6txxQMpCKRH+KShhvc
+ 8LBc6bhLVTxqYPGstJ7P49LdGvMkJYVF+wNrA8DNIfl0w3pnqBWzHP+fLlaI18vPNEp5
+ tsJdTmgho7UTmV2eqTNlEwim8UO8f9+I2wULpI9a8TBTVXGoMr/4ADIwCw+22JkKgfMi
+ 1QsqGdC9YNVI1w9knLQO3ElO8fuxOocwqvDKBRRqqDGwpd28+5mmVI2dortIhq9aY/p4
+ eJ+w==
+X-Gm-Message-State: AOJu0YyWSZGENhLzPJrqP4cPbIkeO6qKoxmXDJ0chYE9o85CEdO1pKOI
+ lMrGS556uf9SI8wMJbBK4KMTwGeY50KSfL6MV8h5TlKn0+ygUjCb5cRMo5Sn8uMIZ1pzhclPhgW
+ oOj4=
+X-Google-Smtp-Source: AGHT+IEa4kdqJXxc8uhXxbM/UKeq0kuNnYm9CERkEulyQmRYMz7yb69kgeYceB34SjvhHmBQ9uH6Sg==
+X-Received: by 2002:aa7:dd08:0:b0:563:d32f:5442 with SMTP id
+ i8-20020aa7dd08000000b00563d32f5442mr493928edv.5.1708020075205; 
+ Thu, 15 Feb 2024 10:01:15 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- az7-20020adfe187000000b0033d01fe1f04sm2519246wrb.55.2024.02.15.09.59.17
+ et5-20020a056402378500b00563c63e0a13sm400264edb.49.2024.02.15.10.01.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 09:59:18 -0800 (PST)
+ Thu, 15 Feb 2024 10:01:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Huacai Chen <chenhuacai@kernel.org>
-Subject: [PULL 13/56] target/mips: Remove CPUMIPSState::CP0_SAARI field
-Date: Thu, 15 Feb 2024 18:57:07 +0100
-Message-ID: <20240215175752.82828-14-philmd@linaro.org>
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 30/56] hw/sparc/leon3: Remove duplicate code
+Date: Thu, 15 Feb 2024 18:57:24 +0100
+Message-ID: <20240215175752.82828-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the unused CP0_SAARI register.
+Since commit b04d989054 ("SPARC: Emulation of Leon3") the
+main_cpu_reset() handler sets both pc/npc when the CPU is
+reset, after the machine is realized. It is pointless to
+set it in leon3_generic_hw_init().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240209090513.9401-10-philmd@linaro.org>
+Reviewed-by: Clément Chigot <chigot@adacore.com>
+Message-Id: <20240130113102.6732-3-philmd@linaro.org>
 ---
- target/mips/cpu.h            | 1 -
- target/mips/sysemu/machine.c | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ hw/sparc/leon3.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 5e97b5b422..7329226d39 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -747,7 +747,6 @@ typedef struct CPUArchState {
-  * CP0 Register 9
-  */
-     int32_t CP0_Count;
--    uint32_t CP0_SAARI;
- #define CP0SAARI_TARGET 0    /*  5..0  */
- #define CP0SAAR_BASE    12   /* 43..12 */
- #define CP0SAAR_SIZE    1    /*  5..1  */
-diff --git a/target/mips/sysemu/machine.c b/target/mips/sysemu/machine.c
-index 6d1299a89e..213fd637fc 100644
---- a/target/mips/sysemu/machine.c
-+++ b/target/mips/sysemu/machine.c
-@@ -281,7 +281,7 @@ const VMStateDescription vmstate_mips_cpu = {
-         VMSTATE_UINT32(env.CP0_BadInstrP, MIPSCPU),
-         VMSTATE_UINT32(env.CP0_BadInstrX, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Count, MIPSCPU),
--        VMSTATE_UINT32(env.CP0_SAARI, MIPSCPU),
-+        VMSTATE_UNUSED(sizeof(uint32_t)), /* was CP0_SAARI */
-         VMSTATE_UNUSED(2 * sizeof(uint64_t)), /* was CP0_SAAR[2] */
-         VMSTATE_UINTTL(env.CP0_EntryHi, MIPSCPU),
-         VMSTATE_INT32(env.CP0_Compare, MIPSCPU),
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 2dfb742566..1ae9a37583 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -343,8 +343,6 @@ static void leon3_generic_hw_init(MachineState *machine)
+ 
+             bootloader_entry = memory_region_get_ram_ptr(prom);
+             write_bootloader(env, bootloader_entry, entry);
+-            env->pc = LEON3_PROM_OFFSET;
+-            env->npc = LEON3_PROM_OFFSET + 4;
+             reset_info->entry = LEON3_PROM_OFFSET;
+         }
+     }
 -- 
 2.41.0
 
