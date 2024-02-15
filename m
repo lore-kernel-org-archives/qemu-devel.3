@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E64C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DE2BC48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafeD-0007uw-Iu; Thu, 15 Feb 2024 12:35:45 -0500
+	id 1rafeJ-0007y3-8y; Thu, 15 Feb 2024 12:35:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeB-0007uP-Rn
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:43 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1rafeE-0007vF-Be
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:47 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafe9-0003tW-OQ
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:43 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-410ca9e851bso9059285e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:41 -0800 (PST)
+ id 1rafeB-0003uF-Sq
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:46 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33d01faf711so672934f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018540; x=1708623340; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=RexkiDntXUclc+ODrTpB8ETswJdghZou3AXsBu6yv+A=;
- b=juKtWhss0E+MPglTS7xfkMH4jaHQ+oINFDIIcZHhzRLcMvKipHKr/djLwNRbnuMzjm
- BYA8iJj28bKX++n8wknZqwgVc5KJai/EE2hpsAj+stp0ecnma8omkyuzw6L4BJT2BXuY
- 3IWOLSlujno06TMv9tb43LfOIRA9m444QfYfYvfSP+hg/vozBzX1eMs9qnVPiLhDlFd4
- q8iZJ5ZiFL2p885o6wNsILMzh5Ea5gpeTNuXawbpeyOmwzDi7UoKi1wi5YscS8iDZZ8d
- 9mYNsbFYJWFbDb9VeC3Av6cM7MtLRRtDnGGKJ+LJq8tcEg3cs8+Vq1589IwasadV/3SF
- yUEw==
+ d=linaro.org; s=google; t=1708018541; x=1708623341; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=FZGLvP2QBbpRory229x05hfDcg6lUvjCEqGRpf1etZI=;
+ b=NkqOHMxcUaIEEc7xSxQWD8WbQaI2ucsnkmwDOFefkSWx2Sm8nKX4xnlFAED7g1YPiF
+ UcgHEvEd4xkIUZg+RNhUwRsW4SVlfg9Nyj844PtR5AOPrayMCLAiGziv1X2rBuqNOj3k
+ lRxgH20SSb8/HEFlEKmUTSADGO+hS/UfyiN4sf96t+34fatFx9OG8L3+IZqvXOVA3qVJ
+ mOaYFN3dJpWFzN8HzLsPlV4xj62iqzVjcQQQxnpmsLrhLEGZofnm1e7KPV3CKMVaoCr3
+ FWX315O1C04TU6zxHthvx79Ouv31sD1s2NBfa4kHuVjmx/aVIxyQ61MAkEkrWdAdyUxE
+ H39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018540; x=1708623340;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RexkiDntXUclc+ODrTpB8ETswJdghZou3AXsBu6yv+A=;
- b=PBim1nJa+0+HQE8yGMe+96dtSG3Hq9TkR1MtlU6Uj4MJkWV4bDmlljtTC+gAu/0lHe
- 1hliI9RaNgGqq3teCnBKwrV7EGy7ZMw/+jn2gG8tAI8glBonxOUD5vWc3EBYYhHu8OtD
- gl8xv0RqZB+SGBtw06D5Uk/4ayT/JhRyH4NLZdLlC+2W7MpkcB7D7vfJCnWp1WYpSVOi
- UQgVd+bJkSKQTfwjL+6uVKKLZ4EhPX5wsuVs25DJkclE2ZdRnBU9zvWx/+DN62xV80Oe
- 68QBEigG8gTcwiSk9agPb3EF9eeIS7mocLypgmPbg7EDP0YRo6cCb4qecE9Vw4WzNOEf
- qH3A==
-X-Gm-Message-State: AOJu0YzCHwZGCr3u3uuO/s/fmI6rEpfLIBxAsnxEX+4Fz0KpuhRxZp6m
- ke53I7smK6pnezHBJ+UapQqBeI6H7gU1jbTpxCq5QqZAkXISW37WMd5R0mLXQzdSPWYUI+h5XKO
- Y
-X-Google-Smtp-Source: AGHT+IG3XLhD27PtOby3FDTkllCT7qAJfM1gWyq4jPgQaStNlfmYailMVsFjVG+XCqhhCCfVerBJSA==
-X-Received: by 2002:a5d:40d2:0:b0:33b:7353:b632 with SMTP id
- b18-20020a5d40d2000000b0033b7353b632mr1984551wrq.50.1708018539848; 
- Thu, 15 Feb 2024 09:35:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708018541; x=1708623341;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FZGLvP2QBbpRory229x05hfDcg6lUvjCEqGRpf1etZI=;
+ b=G1ZloWcj6vmSnbDCIOgtzJA0PX12AXDha5GCpm3fFf4WZpcwJrCdu4cHwCM95Hime2
+ l36UiMfbOUSF41Aq3DEsxJxAwx9F2JhukPwF7PkUJlc7mw8gJFXECFwNdYF/QxUbq1ea
+ +sO3y9gZ/Md4AUgn0mVMrNBm4Y1nRuaX1N2enxYYQT7SahvoU1mKwvo91EYecpimaj+R
+ 3CN4ejTOTt98DFc8oEo08IDw2MY2Nl1yKBAmd4uMbhJ+ycYNgNONAAlMzhsEo2bHJWpt
+ JxvvdT30tiVv8AF6J2iEroQBvN/lupcGj2UIt6jZ88KavOtwJmNDbAMgO3KRRSGA6wKI
+ XHsg==
+X-Gm-Message-State: AOJu0Yz3DcWGlnjgzyc9hrI9RHsXkoMRsZtWdKShH1vCRuWK/tjI5ho4
+ h3GsPiOp7Q8d9r6NEglkEkXjrWZ8J4o0BHAEjV4VgZzVQly7Ig7HBP9dKINmOq96RUCCHkNumlF
+ N
+X-Google-Smtp-Source: AGHT+IGc8T78wp5vwzsBwrYYWapQ6hTO4jF8zWwg45jcIuAustKpf11/RE1wzZkhleAq+qP0rEJiLw==
+X-Received: by 2002:a05:6000:1b01:b0:33b:879d:d1c7 with SMTP id
+ f1-20020a0560001b0100b0033b879dd1c7mr1828120wrz.69.1708018541516; 
+ Thu, 15 Feb 2024 09:35:41 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.39
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:39 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:41 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/35] target-arm queue
-Date: Thu, 15 Feb 2024 17:35:03 +0000
-Message-Id: <20240215173538.2430599-1-peter.maydell@linaro.org>
+Subject: [PULL 04/35] target/arm: Adjust and validate mtedesc sizem1
+Date: Thu, 15 Feb 2024 17:35:07 +0000
+Message-Id: <20240215173538.2430599-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
+References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,118 +93,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 5767815218efd3cbfd409505ed824d5f356044ae:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2024-02-14 15:45:52 +0000)
+When we added SVE_MTEDESC_SHIFT, we effectively limited the
+maximum size of MTEDESC.  Adjust SIZEM1 to consume the remaining
+bits (32 - 10 - 5 - 12 == 5).  Assert that the data to be stored
+fits within the field (expecting 8 * 4 - 1 == 31, exact fit).
 
-are available in the Git repository at:
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20240207025210.8837-4-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/internals.h         | 2 +-
+ target/arm/tcg/translate-sve.c | 7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240215
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index fc337fe40e5..50bff445494 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1278,7 +1278,7 @@ FIELD(MTEDESC, TBI,   4, 2)
+ FIELD(MTEDESC, TCMA,  6, 2)
+ FIELD(MTEDESC, WRITE, 8, 1)
+ FIELD(MTEDESC, ALIGN, 9, 3)
+-FIELD(MTEDESC, SIZEM1, 12, SIMD_DATA_BITS - 12)  /* size - 1 */
++FIELD(MTEDESC, SIZEM1, 12, SIMD_DATA_BITS - SVE_MTEDESC_SHIFT - 12)  /* size - 1 */
+ 
+ bool mte_probe(CPUARMState *env, uint32_t desc, uint64_t ptr);
+ uint64_t mte_check(CPUARMState *env, uint32_t desc, uint64_t ptr, uintptr_t ra);
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 7108938251e..a88e523cbab 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -4443,17 +4443,18 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
+ {
+     unsigned vsz = vec_full_reg_size(s);
+     TCGv_ptr t_pg;
++    uint32_t sizem1;
+     int desc = 0;
+ 
+     assert(mte_n >= 1 && mte_n <= 4);
++    sizem1 = (mte_n << dtype_msz(dtype)) - 1;
++    assert(sizem1 <= R_MTEDESC_SIZEM1_MASK >> R_MTEDESC_SIZEM1_SHIFT);
+     if (s->mte_active[0]) {
+-        int msz = dtype_msz(dtype);
+-
+         desc = FIELD_DP32(desc, MTEDESC, MIDX, get_mem_index(s));
+         desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
+         desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
+         desc = FIELD_DP32(desc, MTEDESC, WRITE, is_write);
+-        desc = FIELD_DP32(desc, MTEDESC, SIZEM1, (mte_n << msz) - 1);
++        desc = FIELD_DP32(desc, MTEDESC, SIZEM1, sizem1);
+         desc <<= SVE_MTEDESC_SHIFT;
+     } else {
+         addr = clean_data_tbi(s, addr);
+-- 
+2.34.1
 
-for you to fetch changes up to f780e63fe731b058fe52d43653600d8729a1b5f2:
-
-  docs: Add documentation for the mps3-an536 board (2024-02-15 14:32:39 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/arm/xilinx_zynq: Wire FIQ between CPU <> GIC
- * linux-user/aarch64: Choose SYNC as the preferred MTE mode
- * Fix some errors in SVE/SME handling of MTE tags
- * hw/pci-host/raven.c: Mark raven_io_ops as implementing unaligned accesses
- * hw/block/tc58128: Don't emit deprecation warning under qtest
- * tests/qtest: Fix handling of npcm7xx and GMAC tests
- * hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
- * tests/qtest/npcm7xx_emc-test: Connect all NICs to a backend
- * Don't assert on vmload/vmsave of M-profile CPUs
- * hw/arm/smmuv3: add support for stage 1 access fault
- * hw/arm/stellaris: QOM cleanups
- * Use new CBAR encoding for all v8 CPUs, not all aarch64 CPUs
- * Improve Cortex_R52 IMPDEF sysreg modelling
- * Allow access to SPSR_hyp from hyp mode
- * New board model mps3-an536 (Cortex-R52)
-
-----------------------------------------------------------------
-Luc Michel (1):
-      hw/arm/smmuv3: add support for stage 1 access fault
-
-Nabih Estefan (1):
-      tests/qtest: Fix GMAC test to run on a machine in upstream QEMU
-
-Peter Maydell (22):
-      hw/pci-host/raven.c: Mark raven_io_ops as implementing unaligned accesses
-      hw/block/tc58128: Don't emit deprecation warning under qtest
-      tests/qtest/meson.build: Don't include qtests_npcm7xx in qtests_aarch64
-      tests/qtest/bios-tables-test: Allow changes to virt GTDT
-      hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
-      tests/qtest/bios-tables-tests: Update virt golden reference
-      hw/arm/npcm7xx: Call qemu_configure_nic_device() for GMAC modules
-      tests/qtest/npcm7xx_emc-test: Connect all NICs to a backend
-      target/arm: Don't get MDCR_EL2 in pmu_counter_enabled() before checking ARM_FEATURE_PMU
-      target/arm: Use new CBAR encoding for all v8 CPUs, not all aarch64 CPUs
-      target/arm: The Cortex-R52 has a read-only CBAR
-      target/arm: Add Cortex-R52 IMPDEF sysregs
-      target/arm: Allow access to SPSR_hyp from hyp mode
-      hw/misc/mps2-scc: Fix condition for CFG3 register
-      hw/misc/mps2-scc: Factor out which-board conditionals
-      hw/misc/mps2-scc: Make changes needed for AN536 FPGA image
-      hw/arm/mps3r: Initial skeleton for mps3-an536 board
-      hw/arm/mps3r: Add CPUs, GIC, and per-CPU RAM
-      hw/arm/mps3r: Add UARTs
-      hw/arm/mps3r: Add GPIO, watchdog, dual-timer, I2C devices
-      hw/arm/mps3r: Add remaining devices
-      docs: Add documentation for the mps3-an536 board
-
-Philippe Mathieu-Daudé (5):
-      hw/arm/xilinx_zynq: Wire FIQ between CPU <> GIC
-      hw/arm/stellaris: Convert ADC controller to Resettable interface
-      hw/arm/stellaris: Convert I2C controller to Resettable interface
-      hw/arm/stellaris: Add missing QOM 'machine' parent
-      hw/arm/stellaris: Add missing QOM 'SoC' parent
-
-Richard Henderson (6):
-      linux-user/aarch64: Choose SYNC as the preferred MTE mode
-      target/arm: Fix nregs computation in do_{ld,st}_zpa
-      target/arm: Adjust and validate mtedesc sizem1
-      target/arm: Split out make_svemte_desc
-      target/arm: Handle mte in do_ldrq, do_ldro
-      target/arm: Fix SVE/SME gross MTE suppression checks
-
- MAINTAINERS                             |   3 +-
- docs/system/arm/mps2.rst                |  37 +-
- configs/devices/arm-softmmu/default.mak |   1 +
- hw/arm/smmuv3-internal.h                |   1 +
- include/hw/arm/smmu-common.h            |   1 +
- include/hw/arm/virt.h                   |   2 +
- include/hw/misc/mps2-scc.h              |   1 +
- linux-user/aarch64/target_prctl.h       |  29 +-
- target/arm/internals.h                  |   2 +-
- target/arm/tcg/translate-a64.h          |   2 +
- hw/arm/mps3r.c                          | 640 ++++++++++++++++++++++++++++++++
- hw/arm/npcm7xx.c                        |   1 +
- hw/arm/smmu-common.c                    |  11 +
- hw/arm/smmuv3.c                         |   1 +
- hw/arm/stellaris.c                      |  47 ++-
- hw/arm/virt-acpi-build.c                |  20 +-
- hw/arm/virt.c                           |  60 ++-
- hw/arm/xilinx_zynq.c                    |   2 +
- hw/block/tc58128.c                      |   4 +-
- hw/misc/mps2-scc.c                      | 138 ++++++-
- hw/pci-host/raven.c                     |   1 +
- target/arm/helper.c                     |  14 +-
- target/arm/tcg/cpu32.c                  | 109 ++++++
- target/arm/tcg/op_helper.c              |  43 ++-
- target/arm/tcg/sme_helper.c             |   8 +-
- target/arm/tcg/sve_helper.c             |  12 +-
- target/arm/tcg/translate-sme.c          |  15 +-
- target/arm/tcg/translate-sve.c          |  83 +++--
- target/arm/tcg/translate.c              |  19 +-
- tests/qtest/npcm7xx_emc-test.c          |   5 +-
- tests/qtest/npcm_gmac-test.c            |  84 +----
- hw/arm/Kconfig                          |   5 +
- hw/arm/meson.build                      |   1 +
- tests/data/acpi/virt/FACP               | Bin 276 -> 276 bytes
- tests/data/acpi/virt/GTDT               | Bin 96 -> 104 bytes
- tests/qtest/meson.build                 |   4 +-
- 36 files changed, 1184 insertions(+), 222 deletions(-)
- create mode 100644 hw/arm/mps3r.c
 
