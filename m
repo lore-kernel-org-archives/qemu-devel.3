@@ -4,58 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD0EC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C594C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1racyn-0005dm-QD; Thu, 15 Feb 2024 09:44:49 -0500
+	id 1rad0U-0006h0-Ea; Thu, 15 Feb 2024 09:46:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1racyl-0005cr-8q; Thu, 15 Feb 2024 09:44:47 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1racyi-0006FY-Mm; Thu, 15 Feb 2024 09:44:47 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TbHmz5Pm8z6K8xJ;
- Thu, 15 Feb 2024 22:41:07 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 8412C14136C;
- Thu, 15 Feb 2024 22:44:35 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 15 Feb
- 2024 14:44:35 +0000
-Date: Thu, 15 Feb 2024 14:44:34 +0000
-To: Alistair Francis <alistair23@gmail.com>, <marcel.apfelbaum@gmail.com>,
- <mst@redhat.com>
-CC: <hchkuo@avery-design.com.tw>, <kbusch@kernel.org>, <lukas@wunner.de>,
- <its@irrelevant.dk>, <wilfred.mallawa@wdc.com>, <cbrowy@avery-design.com>,
- <qemu-devel@nongnu.org>, <jiewen.yao@intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, <qemu-block@nongnu.org>, Alistair Francis
- <alistair.francis@wdc.com>
-Subject: Re: [PATCH v4 0/3] Initial support for SPDM Responders
-Message-ID: <20240215144434.00005bf9@Huawei.com>
-In-Reply-To: <20240213024403.1060188-1-alistair.francis@wdc.com>
-References: <20240213024403.1060188-1-alistair.francis@wdc.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad0P-0006gM-RJ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:46:29 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad0O-00071c-7z
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:46:29 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a30e445602cso390696366b.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:46:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708008385; x=1708613185; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xhIBMIkX1ghGSDx6f2nTkZtFRBG5UrUvlZ+ly9AROVY=;
+ b=s4JXEoI8qWX8rSaI8eUqIbC8M8UDCZV6wn/YxNeztGAn3jJRwde5KkogXivWomDj4i
+ FfdRbzqOQCeT21+z7yWDAnkp2Rv1Orsl/cBCcA8hXaOLmucdCSkNofgR1HQzMV5gyNZp
+ nGdctWuu1e11K/c0EiY1SFpqrDNopyb9HYALEJe5kHmp9zR9CLE/XlUb8mgEoGyR894H
+ AuSOz4RWN5q8qHYFnXBxAmt0T9peTurqDPYvFln+Qz6dWqBQBsXTeZnDRNZ4h4+dPJ5o
+ U3vJtW0DtqnHLIVejH7IfGywykI4/I3VzIwKvrRc4Ipnucx8vVDUoydduItDLnuDU51H
+ tgkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708008385; x=1708613185;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xhIBMIkX1ghGSDx6f2nTkZtFRBG5UrUvlZ+ly9AROVY=;
+ b=If2AJislq2557b4te/Y2vKS3JL7HNyaVtRxb7Z1xWUccW0nbirz3/Gzy7rworg24NE
+ VC18yUAcwVbyBoi/E6UFr0SHokjqt+QRkaZiTyaJFIUzgp7+jEHslVwor/oDL300+lJ8
+ KVAmPb3gvlHN4AY0uszSaxFzMfEaFRqtKqBGCPHKfTXsDUQzrMfA6b9HNu3S03HuJAgS
+ XiA3NleaIS+hqrz5rOBd6OvwzIvhKfMa1Hdeb6DvL6upjNgthBK6JmJMyfRqGUFFwa+K
+ Ew8WLOd2BEqcJZJ7lEmM0opRNeOr1uhw3Z/Iag+pa7buLHJdrwrCT/cQrEfiwj094FoT
+ uZSQ==
+X-Gm-Message-State: AOJu0Yxx89WvqKYVLgCkT3zXTW0Vscp4NikZM7JY87ZAD6+ULzq3yafS
+ ah28lMdervQV3NOWq5SoEUjYFvLE7zNyL1+bpxPktqHwaWp8GS10My4XFT4C8sEiBkdFq+1TKrR
+ QMX4=
+X-Google-Smtp-Source: AGHT+IF9hw6qLYVmTcM3Cg371Hf9UmE9mucdwwBxw+TVY6/0BIYNaTUcz2iCkh72Oo+y7rOFhBYpog==
+X-Received: by 2002:a17:907:2d29:b0:a3d:7dca:4c81 with SMTP id
+ gs41-20020a1709072d2900b00a3d7dca4c81mr2797873ejc.18.1708008385544; 
+ Thu, 15 Feb 2024 06:46:25 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.193.50])
+ by smtp.gmail.com with ESMTPSA id
+ kf23-20020a17090776d700b00a3d014fa12esm613750ejc.196.2024.02.15.06.46.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 15 Feb 2024 06:46:25 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 0/3] hw/sparc/leon3: Strengthen SysBus & QBus API
+Date: Thu, 15 Feb 2024 15:46:19 +0100
+Message-ID: <20240215144623.76233-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,93 +91,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Feb 2024 12:44:00 +1000
-Alistair Francis <alistair23@gmail.com> wrote:
+Since v4:
+- Rebased on Leon3 SMP support [1].
+- qdev_init_gpio_in_named( leon3_start_cpu ) without opaque
 
-Hi All,
+This is the rebased patches of v4 [2]. See cover:
 
-Just wanted to add that back in v2 Klaus Jensen stated:
+Hi,
 
-"I have no problem with picking this up for nvme, but I'd rather not take
- the full series through my tree without reviews/acks from the pci
- maintainers."
+This series ensure following is called *before* a
+device is realized:
+- qbus_new()
+- sysbus_init_mmio()
+- qdev_init_gpio_in_named_with_opaque()
 
-So I'd like to add my request that Michael and/or Marcell takes a look
-when they have time.
+and these are called *after* it is:
+- sysbus_mmio_map()
+- sysbus_connect_irq(),
+- qdev_connect_gpio_out()
+- qdev_connect_gpio_out_named()
 
-I've been carrying more or less the first 2 patches in my CXL staging
-tree for a couple of years (the initial Linux Kernel support that Lukas
-Wunner is now handling was developed against this) and I would love
-to see this upstream. Along with PCI and CXL and NVME usecases this
-is a major part of the Confidential Compute device assignment story
-via PCI/TDISP and CXL equivalent.
+[1] https://lore.kernel.org/qemu-devel/20240131085047.18458-1-chigot@adacore.com/
+[2] https://lore.kernel.org/qemu-devel/20240213130341.1793-1-philmd@linaro.org/
 
-It's not changed in significant ways since v2 back in October last year.
+Philippe Mathieu-Daudé (3):
+  hw/sparc/leon3: Pass DeviceState opaque argument to leon3_set_pil_in()
+  hw/sparc/leon3: Pass DeviceState opaque argument to leon3_start_cpu()
+  hw/sparc/leon3: Initialize GPIO before realizing CPU devices
 
-Thanks,
+ hw/sparc/leon3.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-Jonathan
-
-> The Security Protocol and Data Model (SPDM) Specification defines
-> messages, data objects, and sequences for performing message exchanges
-> over a variety of transport and physical media.
->  - https://www.dmtf.org/sites/default/files/standards/documents/DSP0274_1.3.0.pdf
-> 
-> SPDM currently supports PCIe DOE and MCTP transports, but it can be
-> extended to support others in the future. This series adds
-> support to QEMU to connect to an external SPDM instance.
-> 
-> SPDM support can be added to any QEMU device by exposing a
-> TCP socket to a SPDM server. The server can then implement the SPDM
-> decoding/encoding support, generally using libspdm [1].
-> 
-> This is similar to how the current TPM implementation works and means
-> that the heavy lifting of setting up certificate chains, capabilities,
-> measurements and complex crypto can be done outside QEMU by a well
-> supported and tested library.
-> 
-> This series implements socket support and exposes SPDM for a NVMe device.
-> 
-> 1: https://github.com/DMTF/libspdm
-> 
-> v4:
->  - Rebase
-> v3:
->  - Spelling fixes
->  - Support for SPDM-Utils
-> v2:
->  - Add cover letter
->  - A few code fixes based on comments
->  - Document SPDM-Utils
->  - A few tweaks and clarifications to the documentation
-> 
-> Alistair Francis (1):
->   hw/pci: Add all Data Object Types defined in PCIe r6.0
-> 
-> Huai-Cheng Kuo (1):
->   backends: Initial support for SPDM socket support
-> 
-> Wilfred Mallawa (1):
->   hw/nvme: Add SPDM over DOE support
-> 
->  docs/specs/index.rst         |   1 +
->  docs/specs/spdm.rst          | 122 ++++++++++++++++++++
->  include/hw/pci/pci_device.h  |   5 +
->  include/hw/pci/pcie_doe.h    |   5 +
->  include/sysemu/spdm-socket.h |  44 +++++++
->  backends/spdm-socket.c       | 216 +++++++++++++++++++++++++++++++++++
->  hw/nvme/ctrl.c               |  53 +++++++++
->  backends/Kconfig             |   4 +
->  backends/meson.build         |   2 +
->  9 files changed, 452 insertions(+)
->  create mode 100644 docs/specs/spdm.rst
->  create mode 100644 include/sysemu/spdm-socket.h
->  create mode 100644 backends/spdm-socket.c
-> 
+-- 
+2.41.0
 
 
