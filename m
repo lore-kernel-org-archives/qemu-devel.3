@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD876C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0239BC48BEF
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag6B-0004Se-Ac; Thu, 15 Feb 2024 13:04:39 -0500
+	id 1rag2q-000292-Tq; Thu, 15 Feb 2024 13:01:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag5l-0003e6-Jt
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:04:15 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag2d-0001qa-Ic
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:03 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag5i-0003Hn-Mp
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:04:13 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-55f0b2c79cdso1874048a12.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:04:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag2b-0002NV-9M
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:59 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-563d32ee33aso389800a12.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:00:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708020248; x=1708625048; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708020055; x=1708624855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LO7EQ9/NcsUn+L+LcRsaAULB8zo1/K9N0sf9+N40e+k=;
- b=VNNCDr2AE6NqTlGkRxwFkj3qIAcerrb4fHwcFqkKXMANa/hHn/dktJiozLuDAKCMmc
- +AFkYCsaJj86V4yORy3UW/p/x0zrhQD/lGu0X/vfBr1oSKEm8VHE9NalYLUmr106Ga8l
- U2wsXynC+lUYXhTH/465tBNP10rY+kEAY0uil2xBmoTc2hAFLQ2ASygPFLRtJq71x8Tv
- uKTF9pZFpdMGKf3Cm60n5xZjVl+e7M4SVlewar9khidGPgYNBsH09yY9gAUj4wlKYsXN
- xCqduRyrf2nZ+iWFSdnPLYYJIS2EvETaHvkKQpUM7b660SiWmeZB2MiWaBoeZlKkDnsX
- fNmA==
+ bh=wCixPc5ejXKwZhVB9bkkxqa2YbnJN4g2k4IE6KKAtos=;
+ b=lLWAjgXK22LykSCnqz+Y+qSbXQTrmuACIeHqtsiTCmPPjbeufEaNFzBokhVhkXRUnO
+ Y34zX95dSc46+VZpEOAi7xQAlEFT71KdXTu7ydNsrIxwOwUBAnYR9Z88T5CCrkL013xa
+ 09yZgPNfWV1hEwRLjVXTi/PIygdcfUYWi5U6K7OOxLHwD6gc5jgVGZA8SCA2Q9BSG0bc
+ /dxA0aQ5+j2V7gl1STx5den4B340pmfoxM4K4s0s/KONWeWL+R0NYrJFceZaIAMnKwMw
+ s/5M7Tev8dKnz8bYSMWTIOE/BRcfW/edOjosQ9WQofkB2QI6/jj7qR3UrThJCphUEHSX
+ evIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708020248; x=1708625048;
+ d=1e100.net; s=20230601; t=1708020055; x=1708624855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LO7EQ9/NcsUn+L+LcRsaAULB8zo1/K9N0sf9+N40e+k=;
- b=qxPysDDJWLHlzXD5M+a5D2LetxvPZzTI7heHCo0Sgu5WLdVF6yfvE1ylAwoRwffqKX
- KBDmejO7P4S1Kc+/fBzO29oeejm+tbQcwlBH4/5OW16nUMa0vBhg9u+KN0iCfqSo1QOl
- KWa2WPgHtxm/J0Ya3TyQ8FbnEOgomOdZD7tlmUegbvECdw3jtj1Qx5wM/YF24HNqvHCT
- pE9+dlZu1Q4V/+NHCN+eE83ezJztZA2Qxpdfu992EvdnaxhJfOWevhq8EPIcf7FOhr+8
- a4elqN7y0EOjhwEy0ACfuqGlVnarIxYlMJiVK+1n4Y8BTEVHUZX20MS9zj0xWM81iOyU
- +ssw==
-X-Gm-Message-State: AOJu0YwNcHgYecm0EXBEyVcCcRcBm+BGyZyzkQdOOpYibUMUh/ycOpz1
- nv21KsnVTZxSqZAyVyrTXuaaQdCBAI+Z8hZJNj5yK8Jlr08880qo/BI70yC94d5dWG2bxzGIRX1
- +NU8=
-X-Google-Smtp-Source: AGHT+IHRM2YggyuTD9uXyL2qEzE81FSQJlguTaHKu6pmZ7IzMdbIc8X/o1Sz81p9NphAs5cRAVLg4Q==
-X-Received: by 2002:aa7:cf0d:0:b0:55c:d503:764c with SMTP id
- a13-20020aa7cf0d000000b0055cd503764cmr1899966edy.22.1708020248315; 
- Thu, 15 Feb 2024 10:04:08 -0800 (PST)
+ bh=wCixPc5ejXKwZhVB9bkkxqa2YbnJN4g2k4IE6KKAtos=;
+ b=X5cVgKj6lUtT4c82Eqz03/yYNX1XIGUs8sYg41V0yHuLsaFMc0xCJ0oAMq3t+qC50J
+ ojQbrDbW+Pd8Bp+vH5BUTBGZfHIU9upv0pyeEpd0CDSsr+DhgmvfNY0Mocunr4fRMfF2
+ O2qe5QkUJL21oqGLmrfrbDZAQ69LvUc8bkem043dQdUiwFt5t+sWsPydnewZQNOxFKXd
+ FBt1H/c9GTXmJN0DpeQe9yBXmUociET/pac9wvFwqySkmWQnIhYG1/aw2tCmRO3pUf+i
+ U46hXxera6Qv+JXpO/oitFnjFwBUzzhXcbWltsjf9E0TENc59QBGIfswKmHZZ5dr2TDy
+ 5PqQ==
+X-Gm-Message-State: AOJu0YzJLNQwxJ00d6eniSvpT/VftSeT+9H7uHMG/dbL4UKtA+tPkyxr
+ FnkzJdqSUds5FAYS4XEGO/n5ClGG6W0Jdv1lm7Nu4QtJp+xB2+zBo+SKooycr+4q2kcG9EpkJXi
+ zbqo=
+X-Google-Smtp-Source: AGHT+IEGo1l95C6gX8jXmf36kvSMU9RqyIDd79hxzK0LRyd2FFUxkmT0VHHhfT42srN7qBrwNQ7irw==
+X-Received: by 2002:aa7:cfc7:0:b0:561:51a0:2e07 with SMTP id
+ r7-20020aa7cfc7000000b0056151a02e07mr1803461edy.26.1708020055331; 
+ Thu, 15 Feb 2024 10:00:55 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- ec55-20020a0564020d7700b0055c85e6d75dsm772448edb.87.2024.02.15.10.04.06
+ g6-20020aa7c586000000b005619eea3d52sm754712edq.8.2024.02.15.10.00.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 10:04:07 -0800 (PST)
+ Thu, 15 Feb 2024 10:00:54 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>
-Subject: [PULL 56/56] hw/ide/ich9: Use AHCIPCIState typedef
-Date: Thu, 15 Feb 2024 18:57:50 +0100
-Message-ID: <20240215175752.82828-57-philmd@linaro.org>
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 27/56] hw/sparc/sun4m: Realize DMA controller before accessing
+ it
+Date: Thu, 15 Feb 2024 18:57:21 +0100
+Message-ID: <20240215175752.82828-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,47 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU coding style recommend using structure typedefs:
-https://www.qemu.org/docs/master/devel/style.html#typedefs
+We should not wire IRQs on unrealized device.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240208181245.96617-2-philmd@linaro.org>
+Message-Id: <20240213130341.1793-9-philmd@linaro.org>
 ---
- hw/ide/ich.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ hw/sparc/sun4m.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ide/ich.c b/hw/ide/ich.c
-index 122fc7e0ab..3ea793d790 100644
---- a/hw/ide/ich.c
-+++ b/hw/ide/ich.c
-@@ -100,14 +100,14 @@ static void pci_ich9_reset(DeviceState *dev)
+diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
+index e782c8ec7a..d52e6a7213 100644
+--- a/hw/sparc/sun4m.c
++++ b/hw/sparc/sun4m.c
+@@ -312,13 +312,11 @@ static void *sparc32_dma_init(hwaddr dma_base,
+     dma = qdev_new(TYPE_SPARC32_DMA);
+     espdma = SPARC32_ESPDMA_DEVICE(object_resolve_path_component(
+                                    OBJECT(dma), "espdma"));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(espdma), 0, espdma_irq);
  
- static void pci_ich9_ahci_init(Object *obj)
- {
--    struct AHCIPCIState *d = ICH9_AHCI(obj);
-+    AHCIPCIState *d = ICH9_AHCI(obj);
+     esp = SYSBUS_ESP(object_resolve_path_component(OBJECT(espdma), "esp"));
  
-     ahci_init(&d->ahci, DEVICE(obj));
- }
+     ledma = SPARC32_LEDMA_DEVICE(object_resolve_path_component(
+                                  OBJECT(dma), "ledma"));
+-    sysbus_connect_irq(SYS_BUS_DEVICE(ledma), 0, ledma_irq);
  
- static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
- {
--    struct AHCIPCIState *d;
-+    AHCIPCIState *d;
-     int sata_cap_offset;
-     uint8_t *sata_cap;
-     d = ICH9_AHCI(dev);
-@@ -156,7 +156,7 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+     lance = SYSBUS_PCNET(object_resolve_path_component(
+                          OBJECT(ledma), "lance"));
+@@ -332,6 +330,11 @@ static void *sparc32_dma_init(hwaddr dma_base,
+     }
  
- static void pci_ich9_uninit(PCIDevice *dev)
- {
--    struct AHCIPCIState *d;
-+    AHCIPCIState *d;
-     d = ICH9_AHCI(dev);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dma), &error_fatal);
++
++    sysbus_connect_irq(SYS_BUS_DEVICE(espdma), 0, espdma_irq);
++
++    sysbus_connect_irq(SYS_BUS_DEVICE(ledma), 0, ledma_irq);
++
+     sysbus_mmio_map(SYS_BUS_DEVICE(dma), 0, dma_base);
  
-     msi_uninit(dev);
+     sysbus_mmio_map(SYS_BUS_DEVICE(esp), 0, esp_base);
 -- 
 2.41.0
 
