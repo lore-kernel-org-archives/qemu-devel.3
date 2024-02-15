@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E228C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 21:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A033C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 21:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raj0k-0007BZ-DB; Thu, 15 Feb 2024 16:11:14 -0500
+	id 1raj1M-0007RN-R8; Thu, 15 Feb 2024 16:11:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raj0e-00079B-33
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:11:08 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1raj1K-0007Qo-QH
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:11:51 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raj0a-0007oQ-Cj
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:11:07 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1db5212e2f6so10043185ad.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 13:11:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1raj1D-0007yW-OR
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 16:11:50 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d911c2103aso9252445ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 13:11:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708031462; x=1708636262; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1708031501; x=1708636301; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JYmpcyqCqUnt2TBHINI9CdgpeAWXDAQR91/RjVgwq5c=;
- b=KZKkoaALaFmvF1YOMlX7fqti6tWXQxi6Gajmu/PW51thvyeBkBepABMr65SAvZ0AKD
- VZyI9KrCYJqMDkNyFe6o+TlYN5v5Gg0W4M01uF9wD8PZVjQv53REGQ7NC003SXDAgvy/
- cz3e/Si3LuTXl/EUnVsJAJKdLsFekLE135uKZtPfqmaGpWLlzwW//3gKilzX74hIxTrF
- TVkHQUsATDdT1yPG2JITviavubSrP8cpcjnoUr7RwlWykuiS/Fhxt+bW3A9KXlSNQzto
- BtjtfV8EiNHvIzjnF62YcFBZ1wuxtSp4nia6NPypR5jGK3UgLybizXrx/ul5KjV7zHHf
- PyYw==
+ bh=ajcUd7BoGoAErpFwgcsY7Xh78sqBPCqncnr8BhUPTdQ=;
+ b=T5bwO+7YkonyakBojISUeotUK9p3ms5djO5ardn9/4l4hCnLYJgTCd4EhXRCfCnTQh
+ ucoCgPf0+iM7zrxbNDKos1nRHS75in22vK8uPlX7WE00JWyBZalNuCG1DQzeGGEIBR8e
+ 0S4ovpUaSJ9L527QHSCrfzlzhPI8PQH5lzXgFDFHuHwNzVyX8RFo7+Gntl/aLMMDph2w
+ N4TlMQphOuRYDWgCgyd/K5/LCc14Ob/+4fb8Zo5sxW1oTvF9cQNcXaAtjK2ff4sXXgbw
+ MbQrDoKj3/sOMarosz5Dnft9Laj3yb2wn7l5oyH69A4w4HXFU9O7YksKJG6cde/M7tfU
+ TfoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708031462; x=1708636262;
+ d=1e100.net; s=20230601; t=1708031501; x=1708636301;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JYmpcyqCqUnt2TBHINI9CdgpeAWXDAQR91/RjVgwq5c=;
- b=LdwLrHQTxblGPuQQ1tuOrfL/xnrTg9chj5nrlRmRhMYU3j73ByROO+G4zQ9pSh2QuW
- hRhZbf38MsCCgo3jO7CayrZSmA3MYQDwnBamNz/dNDXZx7WbCun7BkbeLEc6vnOG6o1D
- 9wogKymJ9r9/F1ggLT3qwfoFqIyPqdm8iDJyOgkTjkHe13RivgZ6PTZlLkFRmPUJhhy0
- vZPuTQr+JatZqqw9iWDBjov8bbosJBOllsLqmR05lugHPuizUe36NTocP8IWzUvdKGQi
- mt5h7NeLdiNGwVN+LvrjnJVzAoDyBxjMPCioe1Vx2HzrJPwN4N+Lk2zjCFMKVC1vQhDv
- HIrw==
-X-Gm-Message-State: AOJu0Yyqi6dk78bGsEm/2DYnQOmr87EI/9IHnzK1/4wLtaDGnQALkLp5
- lx/4YiKy8IIe8EXz2o5dOe9twsfARqqdtkX8RRnHlWL+85JL/ZW90vH4fNm8qbWsT9tm0eREN7F
- i
-X-Google-Smtp-Source: AGHT+IEXqHnqqHg78VZmepJF61ouiUJEadvbSjKDPq7CRjylhfkugHzpuQwiTzbbtDt45k4W+I1Pjg==
-X-Received: by 2002:a17:902:d48e:b0:1da:1ea9:9a41 with SMTP id
- c14-20020a170902d48e00b001da1ea99a41mr4735957plg.12.1708031462571; 
- Thu, 15 Feb 2024 13:11:02 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- 6-20020a170902c10600b001db2b8b2da7sm1683441pli.122.2024.02.15.13.11.01
+ bh=ajcUd7BoGoAErpFwgcsY7Xh78sqBPCqncnr8BhUPTdQ=;
+ b=ThpnPfgU9L/hYHz51bwtJQn4dXymDeXw9cNZDiuwjGWh5D+AfQYv0TESKE5gSdGnve
+ r8PAnVlMGUXrcXvugQ5wjdlkYXHP21rp3tou1/QlOG3AhAe5ftX3j/0VXzS1KO7ATr4x
+ 845m830GqawAYwRj0fU2rp2jJAcmzqP+9lJMPO2sC06gmdNZYqKwLxiTOaESscBQ+L9p
+ JLi9+rfITsE7D3oBXxAF6FoPvDkK0B3dI9D7/gaim/0JpY7TpJULFrWNbv1VHlBYneQI
+ hQ8Ya6RCOyGNudp4PIkOJxIcDollZXDbq9HVfpSmxpobO64TgJ3xTOw0Mxa1tIO1ehxL
+ ckAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfF2CO+g7UnffUONmLHP6Kx2Iwrp4p1nGhzCfATGl5iYfw6qN7rV+wbvH3/tgyPxyt2pn85gzxToNKOy+gDSZ1X3SU0bM=
+X-Gm-Message-State: AOJu0YzrfRFpjvacgHMShIFXU1A0xrAHUa4ontIrF8BUVUWYqyNJ3/xA
+ W8YLZtStQh9qcczX/yNR+nhs8wNgjotnr+ElSJFw5crRwuYasnQ4PsebhopVfuA=
+X-Google-Smtp-Source: AGHT+IGTsiH3lMbKsM1FK+onm2rLjTE8hFWyKRQTB36EmG30pFNjUzjkOy3BvPFjynIWmtQdDnamlw==
+X-Received: by 2002:a17:903:2593:b0:1d9:9c67:58eb with SMTP id
+ jb19-20020a170903259300b001d99c6758ebmr2880355plb.30.1708031500971; 
+ Thu, 15 Feb 2024 13:11:40 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ v17-20020a170902e8d100b001db3a0c52basm1697480plg.92.2024.02.15.13.11.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 13:11:02 -0800 (PST)
-Message-ID: <5e15fe47-94ce-4d25-a517-d766e70ac853@linaro.org>
-Date: Thu, 15 Feb 2024 11:10:59 -1000
+ Thu, 15 Feb 2024 13:11:40 -0800 (PST)
+Message-ID: <2701c3a3-d9ab-4058-99f6-d542baf293ec@ventanamicro.com>
+Date: Thu, 15 Feb 2024 18:11:36 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/10] util/bufferiszero: Add simd acceleration for
- aarch64
+Subject: Re: [RFC PATCH 3/6] target/riscv: Inline vext_ldst_us and
+ coressponding function for performance
 Content-Language: en-US
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
-References: <20240215081449.848220-1-richard.henderson@linaro.org>
- <20240215081449.848220-10-richard.henderson@linaro.org>
- <1f038576-5121-e84c-8196-ae5f9ca3a75b@ispras.ru>
- <6499be56-2002-44b3-9c53-1a1ec2fde53f@linaro.org>
- <1e4d5081-d86b-84f5-20f7-8e48044b751a@ispras.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <1e4d5081-d86b-84f5-20f7-8e48044b751a@ispras.ru>
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240215192823.729209-1-max.chou@sifive.com>
+ <20240215192823.729209-4-max.chou@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240215192823.729209-4-max.chou@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,22 +103,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/24 08:46, Alexander Monakov wrote:
-> Right, so we can pick the cheapest reduction method, and if I'm reading
-> Neoverse-N1 SOG right, SHRN is marginally cheaper than ADDV (latency 2
-> instead of 3), and it should be generally preferable on other cores, no?
-
-Fair.
-
-> For that matter, cannot UQXTN (unsigned saturating extract narrow) be
-> used in place of CMEQ+ADDV here?
-
-Interesting.  I hadn't thought about using saturation to preserve non-zeroness like that.
-
-Using 1 4-cycle insn instead of 2 2-cycle insns is interesting as well.  I suppose, since 
-it's at the end of the dependency chain, the fact that it is restricted to the V1 pipe 
-matters not at all.
 
 
-r~
+On 2/15/24 16:28, Max Chou wrote:
+> In the vector unit-stride load/store helper functions. the vext_ldst_us
+> function corresponding most of the execution time. Inline the functions
+> can avoid the function call overhead to imperove the helper function
+> performance.
+> 
+> Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+
+The inline is a good idea but I think we can do better. I mentioned in a thread
+last year [1] about the time we're spending in single byte loads/stores, even
+for strided instructions.
+
+E.g. in vext_ldst_stride():
+
+
+     for (i = env->vstart; i < env->vl; i++, env->vstart++) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
+                 /* set masked-off elements to 1s */
+                 vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
+                                   (i + k * max_elems + 1) * esz);
+                 k++;
+                 continue;
+             }
+             target_ulong addr = base + stride * i + (k << log2_esz);
+             ldst_elem(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
+             k++;
+         }
+     }
+
+We're doing single byte load/stores in ldst_elem() when, in this case, we could do
+it in a whole block only once. ARM does something similar in SVE.
+
+I update the gitlab bug https://gitlab.com/qemu-project/qemu/-/issues/2137 with this
+additional info too.
+
+
+
+Thanks,
+
+Daniel
+
+
+[1] https://lore.kernel.org/qemu-riscv/0e54c6c1-2903-7942-eff2-2b8c5e21187e@ventanamicro.com/
+
+
+>   target/riscv/vector_helper.c | 30 ++++++++++++++++--------------
+>   1 file changed, 16 insertions(+), 14 deletions(-)
+> 
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index e8fbb921449..866f77d321d 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -149,25 +149,27 @@ static inline void vext_set_elem_mask(void *v0, int index,
+>   typedef void vext_ldst_elem_fn(CPURISCVState *env, abi_ptr addr,
+>                                  uint32_t idx, void *vd, uintptr_t retaddr);
+>   
+> -#define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)            \
+> -static void NAME(CPURISCVState *env, abi_ptr addr,         \
+> -                 uint32_t idx, void *vd, uintptr_t retaddr)\
+> -{                                                          \
+> -    ETYPE *cur = ((ETYPE *)vd + H(idx));                   \
+> -    *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);      \
+> -}                                                          \
+> +#define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)         \
+> +static inline QEMU_ALWAYS_INLINE                        \
+> +void NAME(CPURISCVState *env, abi_ptr addr,             \
+> +          uint32_t idx, void *vd, uintptr_t retaddr)    \
+> +{                                                       \
+> +    ETYPE *cur = ((ETYPE *)vd + H(idx));                \
+> +    *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);   \
+> +}                                                       \
+>   
+>   GEN_VEXT_LD_ELEM(lde_b, int8_t,  H1, ldsb)
+>   GEN_VEXT_LD_ELEM(lde_h, int16_t, H2, ldsw)
+>   GEN_VEXT_LD_ELEM(lde_w, int32_t, H4, ldl)
+>   GEN_VEXT_LD_ELEM(lde_d, int64_t, H8, ldq)
+>   
+> -#define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)            \
+> -static void NAME(CPURISCVState *env, abi_ptr addr,         \
+> -                 uint32_t idx, void *vd, uintptr_t retaddr)\
+> -{                                                          \
+> -    ETYPE data = *((ETYPE *)vd + H(idx));                  \
+> -    cpu_##STSUF##_data_ra(env, addr, data, retaddr);       \
+> +#define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)         \
+> +static inline QEMU_ALWAYS_INLINE                        \
+> +void NAME(CPURISCVState *env, abi_ptr addr,             \
+> +          uint32_t idx, void *vd, uintptr_t retaddr)    \
+> +{                                                       \
+> +    ETYPE data = *((ETYPE *)vd + H(idx));               \
+> +    cpu_##STSUF##_data_ra(env, addr, data, retaddr);    \
+>   }
+>   
+>   GEN_VEXT_ST_ELEM(ste_b, int8_t,  H1, stb)
+> @@ -289,7 +291,7 @@ GEN_VEXT_ST_STRIDE(vsse64_v, int64_t, ste_d)
+>    */
+>   
+>   /* unmasked unit-stride load and store operation */
+> -static void
+> +static inline QEMU_ALWAYS_INLINE void
+>   vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+>                vext_ldst_elem_fn *ldst_elem, uint32_t log2_esz, uint32_t evl,
+>                uintptr_t ra)
 
