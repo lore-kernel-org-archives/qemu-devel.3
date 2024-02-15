@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122E2C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692B1C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raffD-0001g7-7R; Thu, 15 Feb 2024 12:36:47 -0500
+	id 1rafhL-0002lY-Dr; Thu, 15 Feb 2024 12:38:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeD-0007v0-PP
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1rafhJ-0002YY-LS
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:38:57 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeB-0003tz-Ju
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-40fd2f7ef55so13027525e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:42 -0800 (PST)
+ id 1rafhH-00058j-Tu
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:38:57 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-55a035669d5so1680840a12.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:38:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018541; x=1708623341; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Jpuc9Tf8aoArJF/7uRkO1Qjromk4Edv2+JcubZCRIDM=;
- b=mQmGyjVtPUC98AzeepiSJUWmNQNOMizMN9X4nxaL6zuiQl8kHMDHX4YFzx6slHcftW
- pU10uyFe0z9gw+b2kPYwZYAGS3TqF2Cmjsq8rCV/r92Siaq8lJqHQvMBAwCdevIV8FKP
- 8vyumOcUYYx8weE4fj8TyGSvdaG6nznamplSQQ6mWELKAEgBNm2iJZOJ8KavJX6JH2m9
- XFpy2/35mm68yFVmbUqlJbBTsfZTyhfURPbJvcltXaqgWzFnonO9zMLFegQ/j63rjv8S
- ua1fVouwkBKBaFJjJ/tOc5nzHjfCaHaaUH4FMSk923vjV/dSPaSqhnpi9ogTmdAM/De0
- cdQw==
+ d=linaro.org; s=google; t=1708018734; x=1708623534; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=y6pkeu6jZ6ZmZgRlPDpAqR9EIFF0QvDO6fF2xj7P6ZM=;
+ b=OR25d1etD5qYxZXxfqUtFByVFZy8nF5OpedgBY11dZTwYW7/lyqEgcwdAz/9d4i+d3
+ BisTWDjlqQvTbopjn47r/pFHw7+PfB4D2YP84u1evf9oL5FRDmfIMin5Mc/NUx5my89F
+ ukkr8ISuLkVAz0BGcZDNhkRzA2PnnteaWe9WSdgoao3w2bdLmb9G/NHCAFSkb5MboElx
+ 06o9LuFVTAKpzCHZlGZZ3o2g8eAZwcnlf4CoZe4VS1XJKlJiob4ZmUGwyqhciXhKsGeE
+ rC1MzJCioOk0LMcKt4ogpnXJUhpdF5rKWcytjVXdO+VybQLgyBAgP0f2zAf5STPPbcD7
+ FAEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018541; x=1708623341;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Jpuc9Tf8aoArJF/7uRkO1Qjromk4Edv2+JcubZCRIDM=;
- b=rc/7Qxw59tVJ0ye+OLzYfDa0OyIJqPvqjND0ngyq1RJSWKGj6NeuivZ+lq9M+xoKUK
- B6EGZt9kQXLXA6qzRaCprjvnpod5cN1N4OEnCp8kRz6jcenMf9SofenTIv65TaiEWbYu
- 0j02G2MazLqnrXY0MeHf4C8XjTpLdnrvWQ4S8xe+gAjlPxpS8Q+XcXzEt4Sub8KRMLTp
- lZDdfDRlIHU5xfbg5/3LSnsfcsS+GmxgYPd/nXGsQq85ROr1dkBsCmV5C/TrdLKKjs8S
- ruwrWFNapcqt7zBhmC6YytxERa9JQQNSzudM/CFP2tQHRk59RbD/X+3ax7CqUvoFqDHv
- idDQ==
-X-Gm-Message-State: AOJu0YyIIR1VrNu9MFCP2JLofaUpiuuQu1H2oCQyiOf66n397unG5rvr
- 8anMhiRjVMpAIy6nXbV8A3edmpM6vvuPQ8lSBzYtr0tk4ViYQnr0cQ8IW8lah0jouyvaPRgAo4M
- X
-X-Google-Smtp-Source: AGHT+IGDyVr0f4R6HeZWmsmgyjw+rJ8MB8rq5V1UaZiHAeFS0o/xUQnkJlQ1ZRPVN6SV37LOxEzSNA==
-X-Received: by 2002:a05:6000:69c:b0:33a:f503:30b3 with SMTP id
- bo28-20020a056000069c00b0033af50330b3mr3505909wrb.24.1708018541049; 
- Thu, 15 Feb 2024 09:35:41 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.40
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:40 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 03/35] target/arm: Fix nregs computation in do_{ld,st}_zpa
-Date: Thu, 15 Feb 2024 17:35:06 +0000
-Message-Id: <20240215173538.2430599-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
-References: <20240215173538.2430599-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20230601; t=1708018734; x=1708623534;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=y6pkeu6jZ6ZmZgRlPDpAqR9EIFF0QvDO6fF2xj7P6ZM=;
+ b=nY3K3SV7tRW09XfbxN8OU28Rm6AqETh66nqVJouPi1ooJulw4UoDW1KyK0XVYVLYUF
+ 60MQs6oKDlCOPsaa4mU5Vl0o1mjuw1MlFDL64C3E08+uirrC+nkWacd70z7lkX4t6yAX
+ OkafD/QlU+ngMLe122WZbHD60eedTmo8PCIwKK3aY3UmJ54E0oiX8zIYb4JRsbf4aNbM
+ ITj5ump6Bypi2pIOG6IntRz79t42/Lh2tel7/0OWUKCEl1YVgIHSzqyt9WRcBDwF9r6H
+ mOAt67ns4dTiIFGSsZkyQGNTCIJsUMCfbZjkHefmx+S8FhKFg/nc8jFvWI19fdmtrnde
+ XrpQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYwI4nrlvyr53V3VFW7JGJZHuPzs8gi/LFPjFXJ+lRNcYRIlqR/RhoK6rF7SsT1Qsr1kZAysC+KBT+amNg8GoN/aaEShg=
+X-Gm-Message-State: AOJu0YxPvo3Fne6sK5pyb6bQdSzDd6zPfyjugJl3U7LFMZccLzsuuTKx
+ M4uPdIvShpiKETIUp9qnOAzQ+mfLSpj0MP9/hVx5mIGI1nq88MU+Bk9N3yz/AqJtLrlslVIR5mU
+ KpIgoHGdFy2Cq7cYxgFZgEe4JiFAwitMmalZQ3A==
+X-Google-Smtp-Source: AGHT+IFfjXB1ixHiZHQzDjM2sltSYywaCagw0slZjFwOIQ97z7bkIksMVWDafkhHxhr3zO8Y5I79EAKJ5UyWaE2gxko=
+X-Received: by 2002:a05:6402:2151:b0:563:bd60:5809 with SMTP id
+ bq17-20020a056402215100b00563bd605809mr1431081edb.31.1708018734452; Thu, 15
+ Feb 2024 09:38:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+References: <20240209173103.239994-1-kwolf@redhat.com>
+ <20240212152005.GA879395@fedora>
+In-Reply-To: <20240212152005.GA879395@fedora>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Feb 2024 17:38:43 +0000
+Message-ID: <CAFEAcA_sY5o3yzrWGw5JepTdYOzrfPEHuxDVuXvC+4wDcTizDQ@mail.gmail.com>
+Subject: Re: [PATCH] iotests: Make 144 deterministic again
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, hreitz@redhat.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,81 +91,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On Mon, 12 Feb 2024 at 15:20, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>
+> On Fri, Feb 09, 2024 at 06:31:03PM +0100, Kevin Wolf wrote:
+> > Since commit effd60c8 changed how QMP commands are processed, the order
+> > of the block-commit return value and job events in iotests 144 wasn't
+> > fixed and more and caused the test to fail intermittently.
+> >
+> > Change the test to cache events first and then print them in a
+> > predefined order.
+> >
+> > Waiting three times for JOB_STATUS_CHANGE is a bit uglier than just
+> > waiting for the JOB_STATUS_CHANGE that has "status": "ready", but the
+> > tooling we have doesn't seem to allow the latter easily.
+> >
+> > Fixes: effd60c878176bcaf97fa7ce2b12d04bb8ead6f7
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2126
+> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > ---
+> >  tests/qemu-iotests/144     | 12 +++++++++++-
+> >  tests/qemu-iotests/144.out |  2 +-
+> >  2 files changed, 12 insertions(+), 2 deletions(-)
+>
+> Thank you!
+>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-The field is encoded as [0-3], which is convenient for
-indexing our array of function pointers, but the true
-value is [1-4].  Adjust before calling do_mem_zpa.
+Thanks; I'm applying this directly as a CI fix.
 
-Add an assert, and move the comment re passing ZT to
-the helper back next to the relevant code.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 206adacfb8d ("target/arm: Add mte helpers for sve scalar + int loads")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20240207025210.8837-3-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/translate-sve.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 296e7d1ce22..7108938251e 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4445,11 +4445,7 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
-     TCGv_ptr t_pg;
-     int desc = 0;
- 
--    /*
--     * For e.g. LD4, there are not enough arguments to pass all 4
--     * registers as pointers, so encode the regno into the data field.
--     * For consistency, do this even for LD1.
--     */
-+    assert(mte_n >= 1 && mte_n <= 4);
-     if (s->mte_active[0]) {
-         int msz = dtype_msz(dtype);
- 
-@@ -4463,6 +4459,11 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
-         addr = clean_data_tbi(s, addr);
-     }
- 
-+    /*
-+     * For e.g. LD4, there are not enough arguments to pass all 4
-+     * registers as pointers, so encode the regno into the data field.
-+     * For consistency, do this even for LD1.
-+     */
-     desc = simd_desc(vsz, vsz, zt | desc);
-     t_pg = tcg_temp_new_ptr();
- 
-@@ -4600,7 +4601,7 @@ static void do_ld_zpa(DisasContext *s, int zt, int pg,
-      * accessible via the instruction encoding.
-      */
-     assert(fn != NULL);
--    do_mem_zpa(s, zt, pg, addr, dtype, nreg, false, fn);
-+    do_mem_zpa(s, zt, pg, addr, dtype, nreg + 1, false, fn);
- }
- 
- static bool trans_LD_zprr(DisasContext *s, arg_rprr_load *a)
-@@ -5168,14 +5169,13 @@ static void do_st_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
-     if (nreg == 0) {
-         /* ST1 */
-         fn = fn_single[s->mte_active[0]][be][msz][esz];
--        nreg = 1;
-     } else {
-         /* ST2, ST3, ST4 -- msz == esz, enforced by encoding */
-         assert(msz == esz);
-         fn = fn_multiple[s->mte_active[0]][be][nreg - 1][msz];
-     }
-     assert(fn != NULL);
--    do_mem_zpa(s, zt, pg, addr, msz_dtype(s, msz), nreg, true, fn);
-+    do_mem_zpa(s, zt, pg, addr, msz_dtype(s, msz), nreg + 1, true, fn);
- }
- 
- static bool trans_ST_zprr(DisasContext *s, arg_rprr_store *a)
--- 
-2.34.1
-
+-- PMM
 
