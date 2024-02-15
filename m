@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81431C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 03:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5DDC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 03:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raSfi-000714-R9; Wed, 14 Feb 2024 22:44:26 -0500
+	id 1raShG-0007pk-36; Wed, 14 Feb 2024 22:46:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raSfh-0006zW-9p; Wed, 14 Feb 2024 22:44:25 -0500
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ id 1raSh4-0007oQ-Dh; Wed, 14 Feb 2024 22:45:51 -0500
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raSff-00054U-R7; Wed, 14 Feb 2024 22:44:25 -0500
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-4c03beb85f4so136312e0c.3; 
- Wed, 14 Feb 2024 19:44:22 -0800 (PST)
+ id 1raSh2-0005cP-SR; Wed, 14 Feb 2024 22:45:50 -0500
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-7d5c890c67fso224012241.0; 
+ Wed, 14 Feb 2024 19:45:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707968662; x=1708573462; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707968747; x=1708573547; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xg45U+LGB/3Z91KOOKjGOKytTJWOljhWEztTKfhaMWQ=;
- b=KnhZOX+6e7gGwPEbMvWrA6XnBG3SPmOpuSwMQiKCMg7jJWDFWn/ic7NGDN+gUq+/uP
- Ni+fLFfNMl0iI4x9bTA44n6zc5JwklJYWDjmj+cQrBag/Y4dAgIjof4/dOfcqgtfjwUj
- E9UnPJzgA1CYFaQqoLNvzOmk9o8khaScA725Y/iFXKY15JZyR76K3yByTxUlYR5tIcmr
- A4wE28DpmdzIRYX+5q4cCwUsCmdTh2PCRDF2shma4x5W7Vit+MezAUkWfIw4/zHKXv7P
- WOiUmNOULE+uNukAo8t/YFxLbmFDEpMe5ivVdKEM8nygZXKbslHt2XM4LX6RWnl7usui
- Mm/Q==
+ bh=0eSaavf8wcpJ8uKpNCvzdIVJDO5IsJhxbebNouDxkPE=;
+ b=CqEe1pjaZN+guvLEMsGdmyDNvIo3j8TfqTDFaRykX9cd6m46Cp+0WkNjpCvSFVHXNJ
+ o6qNaNXHCGJt/KnaZBmx7lL4QRrCUxMEGDQTKDDMkvont6CEsxNPcHpnPB3mizo0qtSO
+ lX43IJvEA6lTUldq+q+Rv1aE0ogxR3GvnpxHj/7EAUbJ99LP/9kjY9YzEiDdYvF5lJnn
+ dLls/d1L/Sw754NOb40eUcdH/q2SeTx8CxUq+DtOG3fnMjO1xGMjd+YgD4r40YNAshmH
+ 7G2HwHpH+oKLG9Tp2LsBosawUDFVCfEryr2z/HWsY1NXLS00WChvg+O2RQdE/dW3vhpO
+ hySg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707968662; x=1708573462;
+ d=1e100.net; s=20230601; t=1707968747; x=1708573547;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xg45U+LGB/3Z91KOOKjGOKytTJWOljhWEztTKfhaMWQ=;
- b=FdMW8pGdEcCpPM4XXLI6iVCww32x3sIvR4aIsnSeeuZ578DeI/81S84Mv/wMxrvW/L
- SbIAAncrCHgA/F6anwEH2B0nwp5QpHD39yVOBGokCXkYKPLl1wE2fwox81+MpBjF0xCQ
- QOCgpEAgczOT/WkWQ9nLbSx8xYlCCULkYRvYdGCDY10KlEjyeRqyU6m8tqszvam0e4H0
- kwmicVrCR/uAxgLS0PI9M9fOEQGnz2Jyo79v2VjrIWhpGaWcWkXyYFDcpW7u0orksStT
- DNgXfdTXBn0U3REjeV5oNljW/oEFdapiRLJR19wSQmV3TqgS/M/mooyL2f+z5GmalWEf
- /jyw==
+ bh=0eSaavf8wcpJ8uKpNCvzdIVJDO5IsJhxbebNouDxkPE=;
+ b=e03zuQmXkvGg2QhalqjgyDs+kSoxXegiAGmPctr8KEP2YP6+BKErjgWhH6k8UpfSu9
+ nFSZqrzPFIT6A65etyzSGFE/OYp/R3QGjJdlPq9j//TWcKSa0l03HhT4NnuXL6+0Wt5k
+ 6Qlp1BBOpHvhuupFMjxkvhJiX4+e/QEeSN1IFGKRBBgxK/6mE+KesaD9OC1iAV6A0/QV
+ mGPkLWbnW7tQclvb2HWyUehMbv3Bb5PDu3SJfkyoVbW6rm/fTI3qqDMVn+ozXSzgHuEm
+ r+fsyYz3CRdZ4rCj7KsVmDJgiJdSO1Th5Vns4odCy9B7F4k5aBxsYyMXpVF/P2ca5/Oy
+ SPqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUli0fmHFIIX7YHwhtFnK5BweysLjWm0Q2eY+kDZbpK+WFciBhWQbrfmhiWxUs7puWy96l1C/S2WNDgUrNJRPyBZxZro8E=
-X-Gm-Message-State: AOJu0YyxqOy6aMd+aG2xnrqawMx+XfLbXHcWE3bmj5ynVUldXVglpz+G
- ERaeyVeNrMWgJg1OHdNrrSY6Zlm1iO9H5FMbmm7Oj/eyS1kVK/8isb6ij+qSYITY+2fpy8pK40J
- gb1aLu305Vu+O4wtDWiSjycWdafE=
-X-Google-Smtp-Source: AGHT+IHow7+H5AKYpRNy/Gjnqj7UqYbammXezmkE7A9/5EEoluQdFhHJDBTjDcQysJ05riRi+huNr/U38ZTTsctGQTw=
-X-Received: by 2002:a1f:dd02:0:b0:4c0:1937:d29d with SMTP id
- u2-20020a1fdd02000000b004c01937d29dmr516374vkg.6.1707968662269; Wed, 14 Feb
- 2024 19:44:22 -0800 (PST)
+ AJvYcCXARYGK0UpBbhxSAqWNyTwK32gCoD+q7mIoispiP5kAX4EVSPSi1NF9snOLcmXzaInyx+c7cTVHHIluQz9kHg7r9tifwWw=
+X-Gm-Message-State: AOJu0Yze5Qv1AhaWNwg0R9hq0zObLmZdDz2dknoFY4t9i195jgdUSvDF
+ WlYaCYglTrm+6cVbDmd6t1MFGmEhG9ElTV8inOCkyorZTPvemJLnoc2v9rzkJA4VFYqFhd2oZxJ
+ HiBadsSd6Qlp49YNkQ0xy16XQvN1hfrxf
+X-Google-Smtp-Source: AGHT+IH9XdkF3tRChOnFCQHyXKqwNPKUmtAsRD8E/YceOQoQM5dGi1mi+8quZHvSdoggUjLGfq0Tn0VK/NPMlk788yw=
+X-Received: by 2002:a1f:edc1:0:b0:4c0:2181:81ac with SMTP id
+ l184-20020a1fedc1000000b004c0218181acmr404740vkh.14.1707968747243; Wed, 14
+ Feb 2024 19:45:47 -0800 (PST)
 MIME-Version: 1.0
 References: <20240109145923.37893-1-irina.ryapolova@syntacore.com>
-In-Reply-To: <20240109145923.37893-1-irina.ryapolova@syntacore.com>
+ <20240109145923.37893-2-irina.ryapolova@syntacore.com>
+In-Reply-To: <20240109145923.37893-2-irina.ryapolova@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 13:43:56 +1000
-Message-ID: <CAKmqyKMpdk0p7g_MYANKNy_O5kTqO1j-cwqtxGq4Fftkdpta=g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] target/riscv: FIX xATP_MODE validation
+Date: Thu, 15 Feb 2024 13:45:21 +1000
+Message-ID: <CAKmqyKOqv_2+cRh45v=w=PhasopC=18E6vy9KZEwpmSvQ_2V2w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] target/riscv: UPDATE xATP write CSR
 To: Irina Ryapolova <irina.ryapolova@syntacore.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,20 +93,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 10, 2024 at 1:00=E2=80=AFAM Irina Ryapolova
+On Wed, Jan 10, 2024 at 2:07=E2=80=AFAM Irina Ryapolova
 <irina.ryapolova@syntacore.com> wrote:
 >
-> The SATP register is an SXLEN-bit read/write WARL register. It means that=
- CSR fields are only defined
-> for a subset of bit encodings, but allow any value to be written while gu=
-aranteeing to return a legal
-> value whenever read (See riscv-privileged-20211203, SATP CSR).
->
-> For example on rv64 we are trying to write to SATP CSR val =3D 0x10000000=
-00000000 (SATP_MODE =3D 1 - Reserved for standard use)
-> and after that we are trying to read SATP_CSR. We read from the SATP CSR =
-value =3D 0x1000000000000000, which is not a correct
-> operation (return illegal value).
+> Added xATP_MODE validation for vsatp/hgatp CSRs.
+> The xATP register is an SXLEN-bit read/write WARL register, so
+> the legal value must be returned (See riscv-privileged-20211203, SATP/VSA=
+TP/HGATP CSRs).
 >
 > Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
 > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
@@ -115,31 +109,109 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
-> Changes for v2:
->   -used satp_mode.map instead of satp_mode.supported
-> Changes for v3:
->   -patch formatting corrected
-> ---
->  target/riscv/csr.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  target/riscv/csr.c | 52 ++++++++++++++++++++++++++--------------------
+>  1 file changed, 29 insertions(+), 23 deletions(-)
 >
 > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index fde7ce1a53..735fb27be7 100644
+> index 735fb27be7..6d7a3dd9aa 100644
 > --- a/target/riscv/csr.c
 > +++ b/target/riscv/csr.c
-> @@ -1278,8 +1278,8 @@ static RISCVException read_mstatus(CPURISCVState *e=
-nv, int csrno,
->
->  static bool validate_vm(CPURISCVState *env, target_ulong vm)
->  {
-> -    return (vm & 0xf) <=3D
-> -           satp_mode_max_from_map(riscv_cpu_cfg(env)->satp_mode.map);
-> +    uint64_t mode_supported =3D riscv_cpu_cfg(env)->satp_mode.map;
-> +    return get_field(mode_supported, (1 << vm));
+> @@ -1282,6 +1282,32 @@ static bool validate_vm(CPURISCVState *env, target=
+_ulong vm)
+>      return get_field(mode_supported, (1 << vm));
 >  }
 >
+> +static target_ulong legalize_xatp(CPURISCVState *env, target_ulong old_x=
+atp,
+> +                                  target_ulong val)
+> +{
+> +    target_ulong mask;
+> +    bool vm;
+> +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> +        vm =3D validate_vm(env, get_field(val, SATP32_MODE));
+> +        mask =3D (val ^ old_xatp) & (SATP32_MODE | SATP32_ASID | SATP32_=
+PPN);
+> +    } else {
+> +        vm =3D validate_vm(env, get_field(val, SATP64_MODE));
+> +        mask =3D (val ^ old_xatp) & (SATP64_MODE | SATP64_ASID | SATP64_=
+PPN);
+> +    }
+> +
+> +    if (vm && mask) {
+> +        /*
+> +         * The ISA defines SATP.MODE=3DBare as "no translation", but we =
+still
+> +         * pass these through QEMU's TLB emulation as it improves
+> +         * performance.  Flushing the TLB on SATP writes with paging
+> +         * enabled avoids leaking those invalid cached mappings.
+> +         */
+> +        tlb_flush(env_cpu(env));
+> +        return val;
+> +    }
+> +    return old_xatp;
+> +}
+> +
 >  static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mp=
 p,
+>                                   target_ulong val)
+>  {
+> @@ -2997,31 +3023,11 @@ static RISCVException read_satp(CPURISCVState *en=
+v, int csrno,
+>  static RISCVException write_satp(CPURISCVState *env, int csrno,
+>                                   target_ulong val)
+>  {
+> -    target_ulong mask;
+> -    bool vm;
+> -
+>      if (!riscv_cpu_cfg(env)->mmu) {
+>          return RISCV_EXCP_NONE;
+>      }
+>
+> -    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> -        vm =3D validate_vm(env, get_field(val, SATP32_MODE));
+> -        mask =3D (val ^ env->satp) & (SATP32_MODE | SATP32_ASID | SATP32=
+_PPN);
+> -    } else {
+> -        vm =3D validate_vm(env, get_field(val, SATP64_MODE));
+> -        mask =3D (val ^ env->satp) & (SATP64_MODE | SATP64_ASID | SATP64=
+_PPN);
+> -    }
+> -
+> -    if (vm && mask) {
+> -        /*
+> -         * The ISA defines SATP.MODE=3DBare as "no translation", but we =
+still
+> -         * pass these through QEMU's TLB emulation as it improves
+> -         * performance.  Flushing the TLB on SATP writes with paging
+> -         * enabled avoids leaking those invalid cached mappings.
+> -         */
+> -        tlb_flush(env_cpu(env));
+> -        env->satp =3D val;
+> -    }
+> +    env->satp =3D legalize_xatp(env, env->satp, val);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -3506,7 +3512,7 @@ static RISCVException read_hgatp(CPURISCVState *env=
+, int csrno,
+>  static RISCVException write_hgatp(CPURISCVState *env, int csrno,
+>                                    target_ulong val)
+>  {
+> -    env->hgatp =3D val;
+> +    env->hgatp =3D legalize_xatp(env, env->hgatp, val);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -3772,7 +3778,7 @@ static RISCVException read_vsatp(CPURISCVState *env=
+, int csrno,
+>  static RISCVException write_vsatp(CPURISCVState *env, int csrno,
+>                                    target_ulong val)
+>  {
+> -    env->vsatp =3D val;
+> +    env->vsatp =3D legalize_xatp(env, env->vsatp, val);
+>      return RISCV_EXCP_NONE;
+>  }
+>
 > --
 > 2.25.1
 >
