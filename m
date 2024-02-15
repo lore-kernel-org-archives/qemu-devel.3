@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAD9DC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 03:30:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1A4C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 03:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raSRy-0001dv-52; Wed, 14 Feb 2024 22:30:14 -0500
+	id 1raSVV-0002qo-VO; Wed, 14 Feb 2024 22:33:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raSRw-0001dH-BK; Wed, 14 Feb 2024 22:30:12 -0500
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1raSVU-0002qW-OP
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 22:33:52 -0500
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raSRu-0001Cd-Sh; Wed, 14 Feb 2024 22:30:12 -0500
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-4c02be905beso161658e0c.0; 
- Wed, 14 Feb 2024 19:30:09 -0800 (PST)
+ id 1raSVL-0002Ne-8c
+ for qemu-devel@nongnu.org; Wed, 14 Feb 2024 22:33:52 -0500
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4c02a647ed9so103336e0c.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 19:33:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707967808; x=1708572608; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707968022; x=1708572822; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RNGomPDX6/n0GPJQ2om3EaZPlyvRLiZOS+MVM+WRFv0=;
- b=LV1YdWHSBotaS4iOrtqCHquFaCqloVASduAMXBjb1KEOAn5kAV8Esssdnd9oXgkhuD
- KVz+SjnYaGdLY2vOYQjg2yH6e9RDfUrGYpHsdIzmt/PbFqetNIZEW/VEmww7hl57swAH
- Lezotm9HkCQjdLB1WzltqgKPhI4uAnpi/Hm40cy/k+hRvrj5BBINUO/2Zo+Jn6+QFVrF
- +GSrlP9gH3t0CSVX6zql4nOcmeu4nP6YgPONK9ORHUB3aC3ycuU4wNppj+zm5KX4uKye
- heG/5xatGJrf1Bd2iTm9lPZQpkFfCkUhSDlVE04zfqDFqqUH3zNrbgz1NxmiP/LY2HCE
- qTgQ==
+ bh=o4Se4pHCrR9SN4bNG52JmLnh9/soUUm9hvdPcqRIeQE=;
+ b=aEdF99ycj3CDKXU+68q3JxaS569fytYvtrgxPKoXgRM6yyaXHd2A4BOmmFrPlIZPgJ
+ Qy+23SxcrK+PLKerENUbopKdHK0dsbXV4GNoNVGn48i2QDcU2Vsysw1D5TJ2fvM1MiqU
+ JyvqkCC0JV0uk4ovRmnL1KMBz/MlUuGrg2m4SOkhRJaH/d2I90Xp2TgDgF6a0LQ2WdwX
+ U3JmSSiucdYKxqkzN3JjmrruNfUUP9FyWHbpx/IJ7XZVUFSjHrIB3epMC7+MhVNELvEs
+ nn8qXxHStj7vaIqqb1zZcvfrx0AynXQihKymbtjsvJIOZzoDI+eol0bqwJG3L/du65qv
+ Uvlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707967808; x=1708572608;
+ d=1e100.net; s=20230601; t=1707968022; x=1708572822;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RNGomPDX6/n0GPJQ2om3EaZPlyvRLiZOS+MVM+WRFv0=;
- b=B6hJvjBhoGqb42DrgwofKQ4Pm+FJSjWXA0rem2TBvdwrxIM6H4/LyirGYJ80taKMd7
- JoFuqv+RbFm3iIxJ0+O/LJvtefcy/KcShLHA1jVnlI5SQdpDmioMriMQ34v2Zc1LWXlc
- 0tyZZcaoLbXs5Gdf/ru2j+x2WjVXjHKkRSSyyNzVTyWLYCp5emGKIyQplshyCgaZPefg
- XyUbKvr6LJCa2U3S/7iy8yD15fOcEGGEabfI6mvcG2NHRI2ttTJhtcnMWtv9laQIPAHO
- NQoYFwyF+sqYVo4j0AVVinn3it/BlhI0ZN0pOWbKWq2KEm4WHmuPSay8KuZ1vcS8w8uh
- pU9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXroDL8mFwhAiCBJh3rg0oDeSOvBEhriYeFTFDNCUD2kXaPe3SIkRgaekuFhbF+dPurWLQvPU+UNlrbahaYjb4ZA0smHjMWlPi5JHz/dad9gyJhfpAHs+tijPksSQ==
-X-Gm-Message-State: AOJu0Yxv/ILeICMpItSsnVuAgxnhki/rK7ycZ274WEGSojPDoDHHioSY
- Vx18Sqm7Vvf0pIVBsznDixUWJ6l20Hc8G7KA+RtNHnrS40GJF75MCMiEkXuZ3JbqhibklqpTAOW
- AxWu3i2v/jHAx+jRh5LGCHmusAAU=
-X-Google-Smtp-Source: AGHT+IFZ8hMSNz4RfFWqoGGFdjxly4BAsGYUNRrNST7jzI3O7M8+hAi5i/0dBaSisSFlBRbgtqbGYmJ+Bl4ICF4cMX4=
-X-Received: by 2002:a1f:ccc7:0:b0:4c0:21c4:3a9b with SMTP id
- c190-20020a1fccc7000000b004c021c43a9bmr371309vkg.15.1707967808536; Wed, 14
- Feb 2024 19:30:08 -0800 (PST)
+ bh=o4Se4pHCrR9SN4bNG52JmLnh9/soUUm9hvdPcqRIeQE=;
+ b=oW9CK5yIDkWaYxPHHwokPxVN11ZC1ypKo8qDPqFZCMyjEu/MnDYauQnQ/biAMdGV+e
+ /NLmfYVj3jltVaute9YPgCON0PLU4UjxvryfC3/tk1vQmUtMDEpToJYxtNTwZdm88L4P
+ aYKulxjQv4CGqFtbZmR1zVIT84rrlYq7Qh67y/eepLavfrYFfyQYP0tiyhWZ1HWBIR9G
+ SPBY17Ryj0FNtdUPW6JNGezLPZl9wgdpEr5bH15NaHq2aTTgnN0wQke3SG+4vidM7j/A
+ 1VWJ60Q41oYgZCcMkzpaHiznvG4psM0MVR/uqupMfwZDS3Voy2xWLRMBUyknBe5Vo1OJ
+ iMjA==
+X-Gm-Message-State: AOJu0YwQgqxEh6oy+RcwSJ2TXfYd81n/lgjB3Jm8gRbILHF6n1WLzUF+
+ vVQBjwqPWUzxyCcN229sWUFpCrGef2vYASonxbWrxNBmrhtf9ANgKRS4Ss5TBUoBBnuihD8kvfJ
+ 7/DRUN5ZlWQGbJS25vcyAkNocCOE=
+X-Google-Smtp-Source: AGHT+IGX2n1A0D16SNN5Hfa7M9lnKv4SgpmDXXC7jOWPi8bteUDgTaGDAdzb1uTBJ7KHuvIGnr0aBdwVDkfLfRgFH2s=
+X-Received: by 2002:a1f:ccc4:0:b0:4c0:1cb7:1ba9 with SMTP id
+ c187-20020a1fccc4000000b004c01cb71ba9mr388711vkg.9.1707968021986; Wed, 14 Feb
+ 2024 19:33:41 -0800 (PST)
 MIME-Version: 1.0
-References: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
- <20240116010930.43433-3-jeeheng.sia@starfivetech.com>
-In-Reply-To: <20240116010930.43433-3-jeeheng.sia@starfivetech.com>
+References: <tencent_29796A8EF3E655396E27566AC5CE1103A509@qq.com>
+In-Reply-To: <tencent_29796A8EF3E655396E27566AC5CE1103A509@qq.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 13:29:42 +1000
-Message-ID: <CAKmqyKMNma6GM6xBMH7Ywbb1CxkbyACK0yx+8jYoGqdGd=4AzQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] hw/riscv/virt-acpi-build.c: Generate SPCR table
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Date: Thu, 15 Feb 2024 13:33:16 +1000
+Message-ID: <CAKmqyKMaG6g3Aa5kW-gyiC09yv4V7LzJaDbKvr4_sy854dScWw@mail.gmail.com>
+Subject: Re: Assessment of the difficulty in porting CPU architecture for qemu
+To: =?UTF-8?B?5pa5?= <1584389042@qq.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,85 +89,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 16, 2024 at 11:11=E2=80=AFAM Sia Jee Heng
-<jeeheng.sia@starfivetech.com> wrote:
+On Fri, Nov 17, 2023 at 5:35=E2=80=AFPM =E6=96=B9 <1584389042@qq.com> wrote=
+:
 >
-> Generate Serial Port Console Redirection Table (SPCR) for RISC-V
-> virtual machine.
->
-> Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>  Hello everyone! I am working on implementing a tool to assess the comple=
+xity of CPU architecture porting. It primarily focuses on RISC-V architectu=
+re porting. In fact, the tool may have an average estimate of various archi=
+tecture porting efforts.My focus is on the overall workload and difficulty =
+of transplantation in the past and future,even if a project has already bee=
+n ported.As part of my dataset, I have collected the **qemu** project. **I =
+would like to gather community opinions to support my assessment. I appreci=
+ate your help and response!** Based on scanning tools, the porting complexi=
+ty is determined to be high, with a significant amount of code related to t=
+he CPU architecture in the project.  Is this assessment accurate?Do you hav=
+e any opinions on personnel allocation and consumption time=EF=BC=9F I look=
+ forward to your help and response.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+The people who did the original QEMU RISC-V port aren't involved any more.
+
+You are correct that QEMU is significantly complex to port to a new
+architecture compared to most other userspace software. I think it
+would be similar to other JIT software in that regard.
 
 Alistair
-
-> ---
->  hw/riscv/virt-acpi-build.c | 39 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
->
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 26c7e4482d..7fc5071c84 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -174,6 +174,42 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *ua=
-rt_memmap,
->      aml_append(scope, dev);
->  }
->
-> +/*
-> + * Serial Port Console Redirection Table (SPCR)
-> + * Rev: 1.07
-> + */
-> +
-> +static void
-> +spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
-> +{
-> +    AcpiSpcrData serial =3D {
-> +        .interface_type =3D 0,       /* 16550 compatible */
-> +        .base_addr.id =3D AML_AS_SYSTEM_MEMORY,
-> +        .base_addr.width =3D 32,
-> +        .base_addr.offset =3D 0,
-> +        .base_addr.size =3D 1,
-> +        .base_addr.addr =3D s->memmap[VIRT_UART0].base,
-> +        .interrupt_type =3D (1 << 4),/* Bit[4] RISC-V PLIC/APLIC */
-> +        .pc_interrupt =3D 0,
-> +        .interrupt =3D UART0_IRQ,
-> +        .baud_rate =3D 7,            /* 15200 */
-> +        .parity =3D 0,
-> +        .stop_bits =3D 1,
-> +        .flow_control =3D 0,
-> +        .terminal_type =3D 3,        /* ANSI */
-> +        .language =3D 0,             /* Language */
-> +        .pci_device_id =3D 0xffff,   /* not a PCI device*/
-> +        .pci_vendor_id =3D 0xffff,   /* not a PCI device*/
-> +        .pci_bus =3D 0,
-> +        .pci_device =3D 0,
-> +        .pci_function =3D 0,
-> +        .pci_flags =3D 0,
-> +        .pci_segment =3D 0,
-> +    };
-> +
-> +    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_i=
-d);
-> +}
-> +
->  /* RHCT Node[N] starts at offset 56 */
->  #define RHCT_NODE_ARRAY_OFFSET 56
->
-> @@ -555,6 +591,9 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBu=
-ildTables *tables)
->      acpi_add_table(table_offsets, tables_blob);
->      build_rhct(tables_blob, tables->linker, s);
->
-> +    acpi_add_table(table_offsets, tables_blob);
-> +    spcr_setup(tables_blob, tables->linker, s);
-> +
->      acpi_add_table(table_offsets, tables_blob);
->      {
->          AcpiMcfgInfo mcfg =3D {
-> --
-> 2.34.1
->
->
 
