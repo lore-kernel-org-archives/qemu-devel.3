@@ -4,76 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEA4DC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 12:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD481C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 12:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raapV-00045h-Li; Thu, 15 Feb 2024 07:27:05 -0500
+	id 1raaqb-0004oC-Ru; Thu, 15 Feb 2024 07:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raapP-00044L-Md
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 07:27:01 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raapO-0007KO-2E
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 07:26:59 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33b2960ff60so1048025f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 04:26:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708000013; x=1708604813; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rEgZfWfyRZzPd0HAEgqdaRFFYcUBEa3A75yyd0XKTL0=;
- b=lI3vYymNnqxyDroz7GPa2K9CgiezfXYXhk+ocfa18cauvYdeej9fAL5Fa+zMDXluOG
- Zi3mjbN4QqeiKR85K0JWs7vxfmqAzdZ8dGi7m1H87xW0+V4PgwWU/K7IEqQGhsGkGQLJ
- fE0/GFHWmJPL978CbsPMR6RWGuLBj7LWf0oxQrQaVQYPv6iDa3WtRyrQg4u+9Ptt7W2g
- KJxeYAbVHSXzP68jnZp9zSJWs6YLbsk5YkUZ4Gv6errqQI7KKXXrVCJOpu60RIe6vKX6
- 9KpQ63o0W1vXPqjeOehlujqqIFQv4Hj58OdwKxaGza70VQnrjk+UGuE1N0pFglT44i3T
- fANg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708000013; x=1708604813;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rEgZfWfyRZzPd0HAEgqdaRFFYcUBEa3A75yyd0XKTL0=;
- b=vwo/He4rEh/6bkuMlCMU3FRzaIBmHygwd2otMHwNzVy/kkHOxSac35rzPIbwdzE3zw
- oQloB5zj+W8jOU8zgx3nVGKvkbX7hEEFBhqePh6AnHEff0H0dr8DpLHt0FQ5hW4x6OH2
- 0wqT6TO6hI0fTtEwRdBvvxKChRUd8jMrB9OV4wWVS/DPMOvz+onIpSmQzacknAt5jGIz
- TRWxte08aHBEVXhtsbY+UC5eyQNKk9smYLhutb8KSRvkIPA233jDlcd3kXNtGUu8MbB5
- jf7moDBa7TyqBAONPnHB+GdH0+yKyDFGQo4Ygswc3xVZAHFEh7JFDOSotnlmkKcO3Zje
- j5DA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgy+XkemPiF/jFwqt3Sc418wylFSRb9/NptiBQfXrEtV/qEflh79ghF4FSz9+0fiU1D6VN+QWDP0a1kbUj9ViwwlDth4w=
-X-Gm-Message-State: AOJu0YwORfs4NP2XfqRfFPjLEKl3Y2KofG78mTsgCPEDlk3TW436NLv+
- M5stqjr0c4D9VaxXhKgFt7wjMKC1cKkhCOGrnuqUAuN1EIA09iKxLXj6dG1iUTw0GI406wh+1gi
- Os7U=
-X-Google-Smtp-Source: AGHT+IFo/Aa2MXxgKgrOcx55Npt7D4DKWZf4ZJQzo1Ke6RkYNdlzMMTnsn7zxRiMgTW9x9f2KCt+bw==
-X-Received: by 2002:adf:fd4e:0:b0:33c:df49:9895 with SMTP id
- h14-20020adffd4e000000b0033cdf499895mr4340931wrs.30.1708000013525; 
- Thu, 15 Feb 2024 04:26:53 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.193.50])
- by smtp.gmail.com with ESMTPSA id
- f11-20020a05600c4e8b00b0040fd1629443sm1858791wmq.18.2024.02.15.04.26.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 04:26:53 -0800 (PST)
-Message-ID: <e4b13f26-ff5d-46c4-b720-ec26de3214e1@linaro.org>
-Date: Thu, 15 Feb 2024 13:26:51 +0100
+ (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
+ id 1raaqa-0004ni-Dp
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 07:28:12 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
+ id 1raaqX-0007Za-CY
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 07:28:11 -0500
+Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:378d:0:640:d5c4:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 96B6C60B6B;
+ Thu, 15 Feb 2024 15:28:04 +0300 (MSK)
+Received: from rkhapov-nux.yandex.net (unknown
+ [2a02:6b8:82:604:e806:5ea2:b505:d402])
+ by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 2Sofch4IeOs0-FzOkV0Im; Thu, 15 Feb 2024 15:28:03 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1708000083;
+ bh=mEFQTZA3xDDWv0dTOMpSK63HRSQ/WKgYI6ap4BoICMY=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=rnAfEoz85RG3//AwCBPBdhE3kUx8XF6htrwj7I1hrJqDBn2J0raQceEipTg2rw1SG
+ sj+hQPCZl3fk6ECTZ4XpG/xNKlyDBw4nHUTkAH0scLBkBqoPkJBPyBjUfPzqVpsYb3
+ UT25mU8S+PEvY5ipjTacpCscu0QcimIsVcJUoaTs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Roman Khapov <rkhapov@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ yc-core@yandex-team.ru, Roman Khapov <rkhapov@yandex-team.ru>
+Subject: [PATCH v2 0/2] Field 'reason' for MIGRATION event
+Date: Thu, 15 Feb 2024 17:27:57 +0500
+Message-Id: <20240215122759.1438581-1-rkhapov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/9] leon3: remove SP initialization
-Content-Language: en-US
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-References: <20240131085047.18458-1-chigot@adacore.com>
- <20240131085047.18458-7-chigot@adacore.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240131085047.18458-7-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=rkhapov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -84,7 +63,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -96,17 +74,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/1/24 09:50, Clément Chigot wrote:
-> According to the doc (see §4.2.15 in [1]), the reset operation should
-> not impact %SP.
-> 
-> [1] https://gaisler.com/doc/gr712rc-usermanual.pdf
-> 
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-> ---
->   hw/sparc/leon3.c | 3 ---
->   1 file changed, 3 deletions(-)
+This is resending of series 20240215082659.1378342-1-rkhapov@yandex-team.ru,
+where patch subjects numbers were broken in patch 2/2.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Sometimes, when migration fails, it is hard to find out
+the cause of the problems: you have to grep qemu logs.
+At the same time, there is MIGRATION event, which looks like
+suitable place to hold such error descriptions.
+
+To handle situation like this (maybe one day it will be useful
+for other MIGRATION statuses to have additional 'reason' strings),
+the general optional field 'reason' can be added.
+
+The series proposes next changes:
+
+1. Adding optional 'reason' field of type str into
+   qapi/migration.json MIGRATION event
+
+2. Passing some error description as reason for every place, which
+   sets migration state to MIGRATION_STATUS_FAILED
+
+After the series, MIGRATION event will looks like this:
+{"execute": "qmp_capabilities"}
+{"return": {}}
+{"event": "MIGRATION", "data": {"status": "setup"}}
+{"event": "MIGRATION", "data": {"status": "failed", "reason": "Failed to connect to '/tmp/sock.sock': No such file or directory"}}
+
+Roman Khapov (2):
+  qapi/migration.json: add reason to MIGRATION event
+  migration: add error reason for failed MIGRATION events
+
+ migration/colo.c      |   6 +-
+ migration/migration.c | 128 ++++++++++++++++++++++++++++--------------
+ migration/migration.h |   5 +-
+ migration/multifd.c   |  10 ++--
+ migration/savevm.c    |  24 ++++----
+ qapi/migration.json   |   3 +-
+ 6 files changed, 112 insertions(+), 64 deletions(-)
+
+-- 
+2.34.1
 
 
