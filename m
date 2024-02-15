@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00470C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 05:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132AFC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 05:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raTx9-00038D-Op; Thu, 15 Feb 2024 00:06:31 -0500
+	id 1raTzf-0004K4-Cg; Thu, 15 Feb 2024 00:09:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raTx8-00037I-E3; Thu, 15 Feb 2024 00:06:30 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1raTzd-0004Jp-SA; Thu, 15 Feb 2024 00:09:05 -0500
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raTx6-0001lO-V5; Thu, 15 Feb 2024 00:06:30 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4b7fc7642fcso191414e0c.0; 
- Wed, 14 Feb 2024 21:06:28 -0800 (PST)
+ id 1raTzc-0002hj-9F; Thu, 15 Feb 2024 00:09:05 -0500
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-4c03b2ac77aso173060e0c.3; 
+ Wed, 14 Feb 2024 21:09:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707973587; x=1708578387; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707973743; x=1708578543; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A1rS+gyWI8Z1XzFPCrL+oD+do4dnsDnyP93zrYKLlWE=;
- b=LT7zSmBICKphRjBvIbz74/O0bLu96c2brg9nveu9Jp7EMZzrczAA4UMQnC0Ee6eg6A
- nc6JIChaUpKVm/PIJEBWq75BsWwuKdN+NIhK22T9pb0csSZRAWNDlwQgDApvx/QB9WeJ
- QRFQvzK/1/AbhofZ+fP/HS9nW63TItuCt28svwfpWepWRP4nm0q5Adf4jiL9Ir4oqTjd
- 4W3hrVS+mUO/XuuzjJyXpLYztp8wGQqzqkce7/d7NvffsDnxhdPQx92Y/5hmsyJO6wJ+
- F2b7qlCJaem/RwNgUn9kjzYWPSbcpndp0TeoVw2oPdmTz+Dagz4Nvj9pJSaAAy5llNR1
- trGQ==
+ bh=E0QXOci5ojlbz67bh51lRYP/gmNXm+Dgsqdx6dXKu94=;
+ b=OcaUoRL5XbYKxQqpI/BISoBuofp0XIDWg3lJUTrIO68yoyVUKGCcYbZFF1qM5D08DJ
+ 4RQdbrM0fCeyp9RnJZ+wS9LaM4C+L0lN53Yq4NP7rwuT3l0rxypMuV5dYk7tY/jjEWlr
+ HPaWafia1CUHwPMjPzi6/jEAAJ1zYR/8mYdrNTfHjGneCpxE5hr65nBVFqIJT9bmNZfT
+ yh8ZADke85PORF/PfD3W5aURkkzWjjLEU1c3f2znJnB+kt6zfXsqyNkIKaZf5GZcHXTM
+ 9n9aaQsuW/wWH0xLc3T5og6hvwrj/Nw5RSzeIiY/BBDv6KBgkG8vjdkvoarZd6FF6WbF
+ dapQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707973587; x=1708578387;
+ d=1e100.net; s=20230601; t=1707973743; x=1708578543;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=A1rS+gyWI8Z1XzFPCrL+oD+do4dnsDnyP93zrYKLlWE=;
- b=jJcGyEG++sHeHj1oExHn2BturLTkJwVXBnCLhLtIVRhwoyriD+cyBTP9Xo1Oj3Htqh
- b/r/czwde7z7XzTWN8Q40Uf4X15uVEiDxUPHRWynq+26n6RJwQmPmddEdJWfQniPUcng
- JmcPlBInvWoY7vUiUcYBQiSlS12g5Rmyw08P6fMk9+evF6SWpd5b/8UwzEaN1KINy0HT
- 6wLjApsgRSFw2XKAKFwWIUUmYg+EZCkiE+nkvVhHcWT68GMS4zKov3C8rPo5cumcSkei
- k3vpRpy8vf+6wgnP+ebWQr95y1qWZf0CmRo09iKDimAnwKCOmy7vURT1R9UtRwi9VfK2
- nPvA==
+ bh=E0QXOci5ojlbz67bh51lRYP/gmNXm+Dgsqdx6dXKu94=;
+ b=sYkeQcJP84vwGF5RO/8exW1T7Xo/az1+oJGfwFzrMrp2boxBp8jpBSE3JQBnD4gZ/y
+ waeEO3B/Q/ylrgoILHHmS2ggiPQbS/LGdtz78MtLrOfJpwaFdCHpFJR2z/iYHGl52C1v
+ mR9aaM1Ugu04QQ07NU08gLsufWc3D6PfmZ+buWNVm1pAmeyMHqz09wnuG6XdpLwZjyMx
+ AAY8P5bYZgiUET6JubYp7PkU5BNKr0LrPbQ02IzHw2LPMO79gY0VfSG+x+4k7TGjnToP
+ WxVOUiOCG9TkZAqfK8KS+BqY7zM5FQ0/JEuY2R1RGPGPgLyrao45umGJ4eaBH05l1Hza
+ NliQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpO6xRJJiYjJlLLKiG4lQ03GLE/6eHrj8bZDtKs9xvpNcACQFOrbuLEI6oCYRwAhtsHDOwW3Fjth7C25xlD4MbmjZt7EE=
-X-Gm-Message-State: AOJu0YxtHpOHZ1Y/jliI+Ck2FxKqkPjmUv61XuVkPNWMHW9CImNIVT4S
- 3+6sdiIYM76MOgmTJ4tBdwVjvfjt1JTSF33aguA5k3OoKa0KdA77tPzqN/CSY6x9CJSHi7+GBTE
- 2e6rjLVmUN+c4Z67Zbja0g/Fq+yEXBp12
-X-Google-Smtp-Source: AGHT+IGOxuDOUFR2fcn6QoJH67QXMzQn4YGp/PGwhrJLEp8Byt50gjSL526UrwoV5yJkafkZZKv8eyWwEAB7fVwA/bc=
-X-Received: by 2002:a1f:ec41:0:b0:4c0:2332:5b5e with SMTP id
- k62-20020a1fec41000000b004c023325b5emr672356vkh.0.1707973587426; Wed, 14 Feb
- 2024 21:06:27 -0800 (PST)
+ AJvYcCWIAuTUu+YmgfM5RV9LrrPmrgLlgveucXZiBQEEDDMkjD9jTYxehA86bwu/rL6A2DC7FDAld5rPM1yBQn27YSZmF/dZ4OE=
+X-Gm-Message-State: AOJu0Yx2xAxpiOMJ4D9k1cpYkMB6YQz4F570cdsaBeqVVaglrNReMFgf
+ Pq3qCEvP2Y3WvxaD9DL6MvvcYRVruQ475v06Ah39GQTzVz3oOcyAgMoQCQiXrI0HkiVaym53RJy
+ SHYbZdjSllA8fBoYr8EDgou3BqFc=
+X-Google-Smtp-Source: AGHT+IEWgOWWsYIxX91hhlW07l096EM749G56N1fF/CjOfVS0qOBaPnWPIPr1tICyZzJ4tdXCAePhcDVq36q1e0kink=
+X-Received: by 2002:a1f:4ac5:0:b0:4c0:37a4:dbbd with SMTP id
+ x188-20020a1f4ac5000000b004c037a4dbbdmr397995vka.13.1707973742822; Wed, 14
+ Feb 2024 21:09:02 -0800 (PST)
 MIME-Version: 1.0
 References: <20240213191736.733334-1-dbarboza@ventanamicro.com>
- <20240213191736.733334-3-dbarboza@ventanamicro.com>
-In-Reply-To: <20240213191736.733334-3-dbarboza@ventanamicro.com>
+ <20240213191736.733334-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20240213191736.733334-4-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 15:06:01 +1000
-Message-ID: <CAKmqyKNbKHaUoobB1v77w76Yg=RH3HQKnVYpwj6Uotcc51VkMA@mail.gmail.com>
-Subject: Re: [PATCH 2/6] libqos/virtio.c: fix 'avail_event' offset in
- qvring_init()
+Date: Thu, 15 Feb 2024 15:08:36 +1000
+Message-ID: <CAKmqyKONGMMv3sgxehteA94Lb3nHrsr1bJ5BkUrPprWC1Gdd8Q@mail.gmail.com>
+Subject: Re: [PATCH 3/6] hw/riscv/virt.c: create '/soc/pci@...' fdt node
+ earlier
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
@@ -70,8 +70,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
  pbonzini@redhat.com, ajones@ventanamicro.com, alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,48 +95,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 14, 2024 at 5:18=E2=80=AFAM Daniel Henrique Barboza
+On Wed, Feb 14, 2024 at 5:19=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> In qvring_init() we're writing vq->used->avail_event at "vq->used + 2 +
-> array_size".  The struct pointed by vq->used is, from virtio_ring.h
-> Linux header):
+> Hotplugged FDT nodes will attempt to write this node that, at this
+> moment, is being created only in create_fdt_pcie() during
+> finalize_fdt().
 >
->  *      // A ring of used descriptor heads with free-running index.
->  *      __virtio16 used_flags;
->  *      __virtio16 used_idx;
->  *      struct vring_used_elem used[num];
->  *      __virtio16 avail_event_idx;
+> Create it earlier.
 >
-> So 'flags' is the word right at vq->used. 'idx' is vq->used + 2. We need
-> to skip 'used_idx' by adding + 2 bytes, and then sum the vector size, to
-> reach avail_event_idx. An example on how to properly access this field
-> can be found in qvirtqueue_kick():
->
-> avail_event =3D qvirtio_readw(d, qts, vq->used + 4 +
->                             sizeof(struct vring_used_elem) * vq->size);
->
-> This error was detected when enabling the RISC-V 'virt' libqos machine.
-> The 'idx' test from vhost-user-blk-test.c errors out with a timeout in
-> qvirtio_wait_used_elem(). The timeout happens because when processing
-> the first element, 'avail_event' is read in qvirtqueue_kick() as non-zero
-> because we didn't initialize it properly (and the memory at that point
-> happened to be non-zero). 'idx' is 0.
->
-> All of this makes this condition fail because "idx - avail_event" will
-> overflow and be non-zero:
->
-> /* < 1 because we add elements to avail queue one by one */
-> if ((flags & VRING_USED_F_NO_NOTIFY) =3D=3D 0 &&
->                         (!vq->event || (uint16_t)(idx-avail_event) < 1)) =
-{
->     d->bus->virtqueue_kick(d, vq);
-> }
->
-> As a result the virtqueue is never kicked and we'll timeout waiting for i=
-t.
->
-> Fixes: 1053587c3f ("libqos: Added EVENT_IDX support")
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -144,23 +111,47 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  tests/qtest/libqos/virtio.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  hw/riscv/virt.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
 >
-> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-> index 4f39124eba..82a6e122bf 100644
-> --- a/tests/qtest/libqos/virtio.c
-> +++ b/tests/qtest/libqos/virtio.c
-> @@ -265,7 +265,7 @@ void qvring_init(QTestState *qts, const QGuestAllocat=
-or *alloc, QVirtQueue *vq,
->      /* vq->used->idx */
->      qvirtio_writew(vq->vdev, qts, vq->used + 2, 0);
->      /* vq->used->avail_event */
-> -    qvirtio_writew(vq->vdev, qts, vq->used + 2 +
-> +    qvirtio_writew(vq->vdev, qts, vq->used + 4 +
->                     sizeof(struct vring_used_elem) * vq->size, 0);
->  }
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index fd35c74781..b540f4d3da 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -826,7 +826,6 @@ static void create_fdt_pcie(RISCVVirtState *s, const =
+MemMapEntry *memmap,
 >
+>      name =3D g_strdup_printf("/soc/pci@%lx",
+>          (long) memmap[VIRT_PCIE_ECAM].base);
+> -    qemu_fdt_add_subnode(ms->fdt, name);
+>      qemu_fdt_setprop_cell(ms->fdt, name, "#address-cells",
+>          FDT_PCI_ADDR_CELLS);
+>      qemu_fdt_setprop_cell(ms->fdt, name, "#interrupt-cells",
+> @@ -996,6 +995,7 @@ static void create_fdt(RISCVVirtState *s, const MemMa=
+pEntry *memmap)
+>  {
+>      MachineState *ms =3D MACHINE(s);
+>      uint8_t rng_seed[32];
+> +    g_autofree char *name =3D NULL;
+>
+>      ms->fdt =3D create_device_tree(&s->fdt_size);
+>      if (!ms->fdt) {
+> @@ -1014,6 +1014,13 @@ static void create_fdt(RISCVVirtState *s, const Me=
+mMapEntry *memmap)
+>      qemu_fdt_setprop_cell(ms->fdt, "/soc", "#size-cells", 0x2);
+>      qemu_fdt_setprop_cell(ms->fdt, "/soc", "#address-cells", 0x2);
+>
+> +    /*
+> +     * The "/soc/pci@..." node is needed for PCIE hotplugs
+> +     * that might happen before finalize_fdt().
+> +     */
+> +    name =3D g_strdup_printf("/soc/pci@%lx", (long) memmap[VIRT_PCIE_ECA=
+M].base);
+> +    qemu_fdt_add_subnode(ms->fdt, name);
+> +
+>      qemu_fdt_add_subnode(ms->fdt, "/chosen");
+>
+>      /* Pass seed to RNG */
 > --
 > 2.43.0
 >
