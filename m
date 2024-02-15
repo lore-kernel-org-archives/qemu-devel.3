@@ -4,37 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E2BAC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE9DC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXve-0007tb-Ll; Thu, 15 Feb 2024 04:21:15 -0500
+	id 1raXx4-000289-BN; Thu, 15 Feb 2024 04:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1raXvZ-0007jn-Dy
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:21:09 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1raXx2-00027S-3x; Thu, 15 Feb 2024 04:22:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1raXvU-0002hI-EF
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:21:09 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1raXx0-0002zV-6Z; Thu, 15 Feb 2024 04:22:39 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E43E24D7E5;
- Thu, 15 Feb 2024 12:21:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 997554D7EB;
+ Thu, 15 Feb 2024 12:22:45 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BCD707FAD3;
- Thu, 15 Feb 2024 12:20:53 +0300 (MSK)
-Message-ID: <39efcede-002c-49e6-be36-6637f3cb16fa@tls.msk.ru>
-Date: Thu, 15 Feb 2024 12:20:53 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8DE897FAD6;
+ Thu, 15 Feb 2024 12:22:36 +0300 (MSK)
+Message-ID: <e68ea667-5128-43f2-be19-12bcfb802693@tls.msk.ru>
+Date: Thu, 15 Feb 2024 12:22:36 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/60] virtio,pc,pci: features, cleanups, fixes
+Subject: Re: [PATCH] hw/i386/sgx: Use QDev API
 Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Li Zhijian <lizhijian@fujitsu.com>, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Ira Weiny <ira.weiny@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-References: <cover.1707909001.git.mst@redhat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-trivial@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240213071613.72566-1-philmd@linaro.org>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -60,7 +62,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <cover.1707909001.git.mst@redhat.com>
+In-Reply-To: <20240213071613.72566-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -86,137 +88,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-14.02.2024 14:13, Michael S. Tsirkin:
+13.02.2024 10:16, Philippe Mathieu-Daudé:
+> Prefer the QDev API over the low level QOM one.
+> No logical change intended.
 
-> virtio,pc,pci: features, cleanups, fixes
-> 
-> vhost-user-snd support
-> x2APIC mode with TCG support
-> CXL update to r3.1
-> 
-> fixes, cleanups all over the place.
-> 
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> 
-> ----------------------------------------------------------------
-> Akihiko Odaki (2):
->        hw/smbios: Fix OEM strings table option validation
->        hw/smbios: Fix port connector option validation
-> 
-> Alex Bennée (6):
->        virtio: split into vhost-user-base and vhost-user-device
->        hw/virtio: convert vhost-user-base to async shutdown
->        hw/virtio: derive vhost-user-rng from vhost-user-base
->        hw/virtio: derive vhost-user-gpio from vhost-user-base
->        hw/virtio: derive vhost-user-i2c from vhost-user-base
->        docs/system: add a basic enumeration of vhost-user devices
-> 
-> Andrey Ignatov (1):
->        vhost-user.rst: Fix vring address description
-> 
-> Bernhard Beschow (14):
->        hw/i386/x86: Reverse if statement
->        hw/i386/x86: Fix PIC interrupt handling if APIC is globally disabled
->        target/i386/cpu: Fix typo in comment
->        hw/block/fdc-isa: Move portio_list from FDCtrl to FDCtrlISABus
->        hw/block/fdc-sysbus: Move iomem from FDCtrl to FDCtrlSysBus
->        hw/char/parallel: Move portio_list from ParallelState to ISAParallelState
->        exec/ioport: Resolve redundant .base attribute in struct MemoryRegionPortio
->        exec/ioport: Add portio_list_set_address()
->        exec/ioport: Add portio_list_set_enabled()
->        hw/block/fdc-isa: Implement relocation and enabling/disabling for TYPE_ISA_FDC
->        hw/char/serial-isa: Implement relocation and enabling/disabling for TYPE_ISA_SERIAL
->        hw/char/parallel-isa: Implement relocation and enabling/disabling for TYPE_ISA_PARALLEL
->        hw/ppc/pegasos2: Let pegasos2 machine configure SuperI/O functions
->        hw/isa/vt82c686: Implement relocation and toggling of SuperI/O functions
-> 
-> Bui Quang Minh (7):
->        i386/tcg: implement x2APIC registers MSR access
->        apic: add support for x2APIC mode
->        apic, i386/tcg: add x2apic transitions
->        intel_iommu: allow Extended Interrupt Mode when using userspace APIC
->        test: bios-tables-test: prepare IVRS change in ACPI table
->        amd_iommu: report x2APIC support to the operating system
->        test: bios-tables-test: add IVRS changed binary
-> 
-> Davidlohr Bueso (1):
->        hw/cxl/mbox: Remove dead code
-> 
-> Dmitry Osipenko (1):
->        virtio-gpu: Correct virgl_renderer_resource_get_info() error check
-> 
-> Hyeonggon Yoo (1):
->        hw/cxl/device: read from register values in mdev_reg_read()
-> 
-> Ira Weiny (2):
->        cxl/cdat: Handle cdat table build errors
->        cxl/cdat: Fix header sum value in CDAT checksum
-> 
-> Jonathan Cameron (11):
->        hw/mem/cxl_type3: Drop handling of failure of g_malloc0() and g_malloc()
->        hw/pci-bridge/cxl_upstream: Drop g_malloc() failure handling
->        hw/mem/cxl_type3: Fix potential divide by zero reported by coverity
->        tests/acpi: Allow update of DSDT.cxl
->        hw/i386: Fix _STA return value for ACPI0017
->        tests/acpi: Update DSDT.cxl to reflect change _STA return value.
->        hw/cxl: Update HDM Decoder capability to version 3
->        hw/cxl: Update link register definitions.
->        hw/cxl: Update RAS Capability Definitions for version 3.
->        hw/cxl: Update mailbox status registers.
->        hw/cxl: Standardize all references on CXL r3.1 and minor updates
-> 
-> Leo Yan (4):
->        hw/virtio: Support set_config() callback in vhost-user-base
->        docs/system: Add vhost-user-input documentation
->        hw/virtio: Move vhost-user-input into virtio folder
->        hw/virtio: derive vhost-user-input from vhost-user-base
-> 
-> Li Zhijian (2):
->        hw/cxl: Pass CXLComponentState to cache_mem_ops
->        hw/cxl: Pass NULL for a NULL MemoryRegionOps
-> 
-> Manos Pitsidianakis (4):
->        hw/virtio: add vhost-user-snd and vhost-user-snd-pci devices
->        hw/display/virtio-gpu.c: use reset_bh class method
->        virtio-gpu.c: add resource_destroy class method
->        virtio-gpu-rutabaga.c: override resource_destroy method
-> 
-> Peter Xu (1):
->        MAINTAINERS: Drop myself as VT-d maintainers
-> 
-> Raphael Norwitz (1):
->        MAINTAINERS: Switch to my Enfabrica email
-> 
-> Zhenzhong Duan (2):
->        virtio_iommu: Clear IOMMUPciBus pointer cache when system reset
->        smmu: Clear SMMUPciBus pointer cache when system reset
-> 
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
- From this list, I'm picking
-
-  hw/smbios: Fix table option validation (Akihiko Odaki)
-   (already applied to master and picked for -stable)
-
-  virtio_iommu: Clear IOMMUPciBus pointer cache when system reset (Zhenzhong Duan)
-  smmu: Clear SMMUPciBus pointer cache when system reset (Zhenzhong Duan)
-
-  hw/i386: Fix _STA return value for ACPI0017 (Jonathan Cameron)
-    (with 2 surrounding commits for acpi-tables-test)
-
-  cxl/cdat: Handle cdat table build errors (Ira Weiny)
-
-  cxl/cdat: Fix header sum value in CDAT checksum (Ira Weiny)
-
-  hw/cxl/device: read from register values in mdev_reg_read() (Hyeonggon Yoo)
-
-  hw/cxl: Pass CXLComponentState to cache_mem_ops (Li Zhijian)
-   (a basically no-op bugfix just to have correct code)
-
-for stable-8.2 and (almost all) for stable-7.2.  Please let me know
-if these should not go to -stable, or if there are other changes which
-you think should go to stable.
-
-Thanks,
+Picked up for trivial-patches.
 
 /mjt
 
