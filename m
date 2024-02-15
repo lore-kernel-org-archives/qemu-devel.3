@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C282C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6686C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag01-0001R8-UO; Thu, 15 Feb 2024 12:58:18 -0500
+	id 1rag0N-00021T-Kx; Thu, 15 Feb 2024 12:58:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafzy-0001Kj-Py
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:15 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0H-0001pe-Ej
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:33 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafzw-0001U4-3r
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:14 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2d109e7bed2so15220381fa.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag00-0001Vb-N0
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:33 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-41211097adcso7851755e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019889; x=1708624689; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708019895; x=1708624695; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CUafXRAhN727LPu8aV7JxhjZQNzC7SOPem4FLXSz2oI=;
- b=L8T7thl9epGi8oF1MWrVN2UTh7SuL01GqbFe61kdJ5xegyPRcUFpO2iCM0AaMvW6aR
- IpJkvBI2PjNJ59VPMadvaZKDd4l3Mob18cxzCogqmM/LZ+7xR93vfSfauLp+8w23w9nJ
- UDokqFe+y5Jp/o8u1CcuY23XAJerzSWwVkYUeqOLhm7y8JKjkf/5J+Gqi7M0a38VqFmM
- eOZoltQXMoGfPmx9j0C10BIxELvvgyk58aLraJumT395JvMe2INrp3AH6iFIFz+Liqyt
- EeFc6ILXk9mOV+hWLMtt8SoYjfF61k4DCH0Sks6r4l66R2JIJLRl+xzp9QfsjKaAC2eF
- VJOg==
+ bh=Agls286qrzGsJ1hJI9sraTA4L0NishS8JrZlDzd0umA=;
+ b=PEBm7ceI9Zkgz5uGcjKzBbZdycx+pLIsToFToiqLsmvKBSbpLkwMeeegi4RZIocsUF
+ WJv1RM/RjYTXPf5JfyjG1qTTV0O7CslAGWIR5uH3LQB56LySJLeBEHF4BdflAKr17sCw
+ eIl3U1zjMv/dWjkr1mTL8hcJBnmVFrROeIX0LoIpYhXuIQmR/jGRFZ3kqB/H24WEE4nz
+ 6rNUGpYvRRW6YXLgXrofOvXz43QbU/CrngAxiigdmSk+9S4OfOqX1oJLwglPS/VLjs7x
+ QHgG8YTan02QUSZHJwDxb4l9Oyj2oFQC+sGrbw+kkF8jR5YyHB5Is9a9IvciNmzCYmAv
+ 8xlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019889; x=1708624689;
+ d=1e100.net; s=20230601; t=1708019895; x=1708624695;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CUafXRAhN727LPu8aV7JxhjZQNzC7SOPem4FLXSz2oI=;
- b=hr0jEiGU7Olc5XfJ0w5YO1cNcwrJTDkNTCcvPCpICITaLgbVkxiblnxnvjrY1CeoAQ
- Vqi/U4T4cWTKj6Qlw+VAIZvQzg1RVx9FJy5XW3mkIPQ7Eq6bGJAQUPpmQpCLj9/ZOkW+
- ShuNrUMaEWuY7tGoDCt0+CXEVXETfDGew36Q5zzNe76G32R1zHXv94G//JsDqTAGsFpu
- egs6NGn8yx6azXcQCYSQT8QPy6sx7RpCQ2kDcuvspo0dwqJMM8rkq79lmEvrMUCHVp3q
- DhyuEGNr7gv34lHIqGpXdNJPzhf1xhihEM8avWbOVTyLJGwN3qwqEH3/TBf8UzNAXyrd
- HkUg==
-X-Gm-Message-State: AOJu0Yxf8dYafAI95V48O4cahYb9snzMFQeaWobQoW0HFlwCxM77L6um
- x2gxk+AwvETM1MbtYJXBIDiE0JthUpBetc4FMyOj9CyGQeyFe6IDNKRIl04p/9byRLkMZRAGRzX
- QWNE=
-X-Google-Smtp-Source: AGHT+IElwG4sbsQuHtf8X8jvD18iJYtxlYg3dBQaZnA7a0iAKfwkO8sMLmwjIAXsTUhRce+MufLJQg==
-X-Received: by 2002:a2e:331a:0:b0:2d0:e2aa:24d4 with SMTP id
- d26-20020a2e331a000000b002d0e2aa24d4mr1745440ljc.9.1708019888851; 
- Thu, 15 Feb 2024 09:58:08 -0800 (PST)
+ bh=Agls286qrzGsJ1hJI9sraTA4L0NishS8JrZlDzd0umA=;
+ b=VOZFJSmaMITTlTgQpj/nmKlO+NhvvF8rzjYUYadqJg93t6828aT3lGQAE3698gLpX9
+ BVUE9I/T95Vw1BuY25QiSJN2lgbDNLpyT8SNkjJLzxi9f0YbLu9tS3PqXyXKw7p/rurM
+ 2bqHMTfOL/vqS4wVMLEql6YxaPZcTeBiWWe42Wi7kbQV+cndu9SMFD/HMVMha8sa6/M4
+ EFKk7/NmlML/vM98gpn+p8pqXO6AqwZd2xaqC+Xsgk5EBttycz1xdoBkSAgqtNeYY10H
+ QQybPDeFmdCtMXOwYoS/5rvpuRAC8RIKvd91z2HThebEzh1Uq2WNXgBd7Fy67wpEfpgV
+ SK1g==
+X-Gm-Message-State: AOJu0YzwvD4PCWSnIE0iaJx+TQr2rpCIdH2m+mncp+ngSBgfTT4tN93w
+ rs48z0nogYViJxQVC+jiuZNbOi6WgYpp/6ifGP1O+PwWJrf+8h65DuWpvcf8fhwb5Ze73WBY11g
+ DWAo=
+X-Google-Smtp-Source: AGHT+IFNb/9ECMbxAKPLendWbsSb67EYu/O9JmvIMn90J/gls0XaRrtaHbhgHzJAHcAnR8YpyYNNmg==
+X-Received: by 2002:adf:a446:0:b0:33d:4e5:b1f2 with SMTP id
+ e6-20020adfa446000000b0033d04e5b1f2mr1479996wra.38.1708019895026; 
+ Thu, 15 Feb 2024 09:58:15 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- ba3-20020a0560001c0300b0033b406bc689sm2495039wrb.75.2024.02.15.09.58.07
+ ci3-20020a5d5d83000000b0033d10bd6612sm1315244wrb.81.2024.02.15.09.58.13
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 09:58:08 -0800 (PST)
+ Thu, 15 Feb 2024 09:58:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 02/56] hw/mips: remove unnecessary "select PTIMER"
-Date: Thu, 15 Feb 2024 18:56:56 +0100
-Message-ID: <20240215175752.82828-3-philmd@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Subject: [PULL 03/56] target/mips: Use qemu_irq typedef for CPUMIPSState::irq
+ member
+Date: Thu, 15 Feb 2024 18:56:57 +0100
+Message-ID: <20240215175752.82828-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,31 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+Missed during commit d537cf6c86 ("Unify IRQ handling")
+when qemu_irq typedef was introduced for IRQState.
 
-There is no use of ptimer functions in mips_cps.c or any other related
-code.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240129115811.1039965-1-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240130111111.6372-1-philmd@linaro.org>
 ---
- hw/mips/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ target/mips/cpu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index 505381a0bb..ab61af209a 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -50,7 +50,6 @@ config LOONGSON3V
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index ef26fe03c7..b4788e1af2 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1183,7 +1183,7 @@ typedef struct CPUArchState {
+     CPUMIPSMVPContext *mvp;
+ #if !defined(CONFIG_USER_ONLY)
+     CPUMIPSTLBContext *tlb;
+-    void *irq[8];
++    qemu_irq irq[8];
+     struct MIPSITUState *itu;
+     MemoryRegion *itc_tag; /* ITC Configuration Tags */
  
- config MIPS_CPS
-     bool
--    select PTIMER
-     select MIPS_ITU
- 
- config MIPS_BOSTON
 -- 
 2.41.0
 
