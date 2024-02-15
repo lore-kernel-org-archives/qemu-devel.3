@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A283C48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2129C48BEF
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 07:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raWYw-0004h5-29; Thu, 15 Feb 2024 02:53:42 -0500
+	id 1raWYy-0004hN-Md; Thu, 15 Feb 2024 02:53:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1raWYu-0004gh-UR
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:53:41 -0500
+ id 1raWYx-0004h8-1f
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:53:43 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1raWYt-000538-6K
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:53:40 -0500
+ id 1raWYv-000538-IQ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:53:42 -0500
 Received: from TWMBX02.aspeed.com (192.168.0.25) by TWMBX02.aspeed.com
  (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 15 Feb
  2024 15:53:32 +0800
@@ -28,9 +28,9 @@ Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
  Transport; Thu, 15 Feb 2024 15:53:32 +0800
 To: <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v3 1/2] aspeed: introduce a new UART0 device name
-Date: Thu, 15 Feb 2024 15:53:30 +0800
-Message-ID: <20240215075331.2512428-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 2/2] aspeed: fix hardcode boot address 0
+Date: Thu, 15 Feb 2024 15:53:31 +0800
+Message-ID: <20240215075331.2512428-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240215075331.2512428-1-jamin_lin@aspeedtech.com>
 References: <20240215075331.2512428-1-jamin_lin@aspeedtech.com>
@@ -65,186 +65,100 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed datasheet refers to the UART controllers
-as UART1 - UART13 for the ast10x0, ast2600, ast2500
-and ast2400 SoCs and the Aspeed ast2700 introduces an UART0
-and the UART controllers as UART0 - UART12.
+In the previous design of ASPEED SOCs QEMU model, it set the boot
+address at "0" which was the hardcode setting for ast10x0, ast2600,
+ast2500 and ast2400.
 
-To keep the naming in the QEMU models
-in sync with the datasheet, let's introduce a new  UART0 device name
-and do the required adjustements.
+According to the design of ast2700, it has a bootmcu(riscv-32) which
+is used for executing SPL and initialize DRAM and copy u-boot image
+from SPI/Flash to DRAM at address 0x400000000 at SPL boot stage.
+Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
+
+Currently, qemu not support emulate two CPU architectures
+at the same machine. Therefore, qemu will only support
+to emulate CPU(cortex-a35) side for ast2700 and the boot
+address is "0x4 00000000".
+
+Fixed hardcode boot address "0" for future models using
+a different mapping address.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed.c             | 13 ++++++++-----
- hw/arm/aspeed_ast10x0.c     |  1 +
- hw/arm/aspeed_ast2400.c     |  2 ++
- hw/arm/aspeed_ast2600.c     |  1 +
- hw/arm/aspeed_soc_common.c  | 10 ++++++----
- include/hw/arm/aspeed_soc.h | 17 +++++++++++++++++
- 6 files changed, 35 insertions(+), 9 deletions(-)
+ hw/arm/aspeed.c             | 4 +++-
+ hw/arm/aspeed_ast2400.c     | 4 ++--
+ hw/arm/aspeed_ast2600.c     | 2 +-
+ include/hw/arm/aspeed_soc.h | 2 --
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 09b1e823ba..aa165d583b 100644
+index aa165d583b..9fec245e4e 100644
 --- a/hw/arm/aspeed.c
 +++ b/hw/arm/aspeed.c
-@@ -342,7 +342,7 @@ static void connect_serial_hds_to_uarts(AspeedMachineState *bmc)
-     int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+@@ -289,12 +289,14 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+                                     uint64_t rom_size)
+ {
+     AspeedSoCState *soc = bmc->soc;
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
  
-     aspeed_soc_uart_set_chr(s, uart_chosen, serial_hd(0));
--    for (int i = 1, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
-+    for (int i = 0, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
-         if (uart == uart_chosen) {
-             continue;
-         }
-@@ -1094,7 +1094,7 @@ static char *aspeed_get_bmc_console(Object *obj, Error **errp)
-     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
-     int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
- 
--    return g_strdup_printf("uart%d", uart_chosen - ASPEED_DEV_UART1 + 1);
-+    return g_strdup_printf("uart%d", aspeed_uart_index(uart_chosen));
+     memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
+                            &error_abort);
+     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+                                         &bmc->boot_rom, 1);
+-    write_boot_rom(blk, ASPEED_SOC_SPI_BOOT_ADDR, rom_size, &error_abort);
++    write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT],
++                   rom_size, &error_abort);
  }
  
- static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
-@@ -1103,6 +1103,8 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
-     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(bmc);
-     AspeedSoCClass *sc = ASPEED_SOC_CLASS(object_class_by_name(amc->soc_name));
-     int val;
-+    int uart_first = aspeed_uart_first(sc);
-+    int uart_last = aspeed_uart_last(sc);
- 
-     if (sscanf(value, "uart%u", &val) != 1) {
-         error_setg(errp, "Bad value for \"uart\" property");
-@@ -1110,11 +1112,12 @@ static void aspeed_set_bmc_console(Object *obj, const char *value, Error **errp)
-     }
- 
-     /* The number of UART depends on the SoC */
--    if (val < 1 || val > sc->uarts_num) {
--        error_setg(errp, "\"uart\" should be in range [1 - %d]", sc->uarts_num);
-+    if (val < uart_first || val > uart_last) {
-+        error_setg(errp, "\"uart\" should be in range [%d - %d]",
-+                   uart_first, uart_last);
-         return;
-     }
--    bmc->uart_chosen = ASPEED_DEV_UART1 + val - 1;
-+    bmc->uart_chosen = val + ASPEED_DEV_UART0;
- }
- 
- static void aspeed_machine_class_props_init(ObjectClass *oc)
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index c3b5116a6a..2634e0f654 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -436,6 +436,7 @@ static void aspeed_soc_ast1030_class_init(ObjectClass *klass, void *data)
-     sc->wdts_num = 4;
-     sc->macs_num = 1;
-     sc->uarts_num = 13;
-+    sc->uarts_base = ASPEED_DEV_UART1;
-     sc->irqmap = aspeed_soc_ast1030_irqmap;
-     sc->memmap = aspeed_soc_ast1030_memmap;
-     sc->num_cpus = 1;
+ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
 diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index 8829561bb6..95da85fee0 100644
+index 95da85fee0..d125886207 100644
 --- a/hw/arm/aspeed_ast2400.c
 +++ b/hw/arm/aspeed_ast2400.c
-@@ -523,6 +523,7 @@ static void aspeed_soc_ast2400_class_init(ObjectClass *oc, void *data)
-     sc->wdts_num     = 2;
-     sc->macs_num     = 2;
-     sc->uarts_num    = 5;
-+    sc->uarts_base   = ASPEED_DEV_UART1;
-     sc->irqmap       = aspeed_soc_ast2400_irqmap;
-     sc->memmap       = aspeed_soc_ast2400_memmap;
-     sc->num_cpus     = 1;
-@@ -551,6 +552,7 @@ static void aspeed_soc_ast2500_class_init(ObjectClass *oc, void *data)
-     sc->wdts_num     = 3;
-     sc->macs_num     = 2;
-     sc->uarts_num    = 5;
-+    sc->uarts_base   = ASPEED_DEV_UART1;
-     sc->irqmap       = aspeed_soc_ast2500_irqmap;
-     sc->memmap       = aspeed_soc_ast2500_memmap;
-     sc->num_cpus     = 1;
+@@ -26,7 +26,7 @@
+ #define ASPEED_SOC_IOMEM_SIZE       0x00200000
+ 
+ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  =  ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_IOMEM]  = 0x1E600000,
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+@@ -61,7 +61,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+ };
+ 
+ static const hwaddr aspeed_soc_ast2500_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_IOMEM]  = 0x1E600000,
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
 diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 4ee32ea99d..f74561ecdc 100644
+index f74561ecdc..174be53770 100644
 --- a/hw/arm/aspeed_ast2600.c
 +++ b/hw/arm/aspeed_ast2600.c
-@@ -666,6 +666,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, void *data)
-     sc->wdts_num     = 4;
-     sc->macs_num     = 4;
-     sc->uarts_num    = 13;
-+    sc->uarts_base   = ASPEED_DEV_UART1;
-     sc->irqmap       = aspeed_soc_ast2600_irqmap;
-     sc->memmap       = aspeed_soc_ast2600_memmap;
-     sc->num_cpus     = 2;
-diff --git a/hw/arm/aspeed_soc_common.c b/hw/arm/aspeed_soc_common.c
-index 123a0c432c..95d0c0aba9 100644
---- a/hw/arm/aspeed_soc_common.c
-+++ b/hw/arm/aspeed_soc_common.c
-@@ -36,7 +36,7 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
-     SerialMM *smm;
+@@ -22,7 +22,7 @@
+ #define ASPEED_SOC_DPMCU_SIZE       0x00040000
  
--    for (int i = 0, uart = ASPEED_DEV_UART1; i < sc->uarts_num; i++, uart++) {
-+    for (int i = 0, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
-         smm = &s->uart[i];
- 
-         /* Chardev property is set by the machine. */
-@@ -58,10 +58,12 @@ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp)
- void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr)
- {
-     AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
--    int i = dev - ASPEED_DEV_UART1;
-+    int uart_index = aspeed_uart_index(dev);
-+    int uart_first = aspeed_uart_first(sc);
-+    int index = uart_index - uart_first;
- 
--    g_assert(0 <= i && i < ARRAY_SIZE(s->uart) && i < sc->uarts_num);
--    qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", chr);
-+    g_assert(index < ARRAY_SIZE(s->uart));
-+    qdev_prop_set_chr(DEVICE(&s->uart[index]), "chardev", chr);
- }
- 
- /*
+ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_SRAM]      = 0x10000000,
+     [ASPEED_DEV_DPMCU]     = 0x18000000,
+     /* 0x16000000     0x17FFFFFF : AHB BUS do LPC Bus bridge */
 diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 9d0af84a8c..e1a023be53 100644
+index e1a023be53..c60fac900a 100644
 --- a/include/hw/arm/aspeed_soc.h
 +++ b/include/hw/arm/aspeed_soc.h
-@@ -140,6 +140,7 @@ struct AspeedSoCClass {
-     int wdts_num;
-     int macs_num;
-     int uarts_num;
-+    int uarts_base;
-     const int *irqmap;
-     const hwaddr *memmap;
-     uint32_t num_cpus;
-@@ -151,6 +152,7 @@ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
- enum {
-     ASPEED_DEV_SPI_BOOT,
-     ASPEED_DEV_IOMEM,
-+    ASPEED_DEV_UART0,
-     ASPEED_DEV_UART1,
-     ASPEED_DEV_UART2,
-     ASPEED_DEV_UART3,
-@@ -235,4 +237,19 @@ void aspeed_mmio_map_unimplemented(AspeedSoCState *s, SysBusDevice *dev,
- void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
-                                unsigned int count, int unit0);
+@@ -224,8 +224,6 @@ enum {
+     ASPEED_DEV_FSI2,
+ };
  
-+static inline int aspeed_uart_index(int uart_dev)
-+{
-+    return uart_dev - ASPEED_DEV_UART0;
-+}
-+
-+static inline int aspeed_uart_first(AspeedSoCClass *sc)
-+{
-+    return aspeed_uart_index(sc->uarts_base);
-+}
-+
-+static inline int aspeed_uart_last(AspeedSoCClass *sc)
-+{
-+    return aspeed_uart_first(sc) + sc->uarts_num - 1;
-+}
-+
- #endif /* ASPEED_SOC_H */
+-#define ASPEED_SOC_SPI_BOOT_ADDR 0x0
+-
+ qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
+ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
+ void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr);
 -- 
 2.25.1
 
