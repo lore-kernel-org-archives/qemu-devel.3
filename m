@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA35C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE0EC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:18:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXqo-0002OK-Bd; Thu, 15 Feb 2024 04:16:14 -0500
+	id 1raXsZ-0007qN-Jt; Thu, 15 Feb 2024 04:18:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1raXqn-0002Lv-FF
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:16:13 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1raXsX-0007lz-Gv
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:18:01 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1raXqj-0001XS-5m
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:16:13 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-55a035669d5so899571a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 01:16:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1raXsV-0001qg-RH
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 04:18:01 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-296043e44caso520759a91.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 01:17:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707988567; x=1708593367; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+JQ0Ev2JlvyvJ4uulG5JSOM5ldpWV0pOJnl05fuaHW0=;
- b=XiENvnyJv0SbOHXXCfFSP5b4PYZzSCf3JEtCsk2l3e62dZO3kkVXvgTnvsNB+hYp0d
- mCdeooMoG/i1PpYREgHW0KUhHBGnLTO828QMj2hE/YU4eDiee9ZpcX4kEaIrtso1Y6qD
- nV5W3lk3K97fOwQiO9TFzjtgi9haPbVsGUfO+dxn02jTotXNZHbkQCCYR0PlHOjFsidC
- VqX1SkPi+aww4czRTywPYEYx9CyLGSYE/BG1mmQPfJA920fWmKCq2wxrNZLGJZwmdwdy
- +YWFns7dMMQ7WMzPnUce24gS5tjaI0wzd/4suHiXHuxCKmswJk0SPYldBNyBC5BEl0sb
- ksTA==
+ d=adacore.com; s=google; t=1707988678; x=1708593478; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8ijxFDjhnIkpAQ3MRe5MDaADGtYJ09Q9Uu0SWLJuAY8=;
+ b=kCukTzi7k04T2Re3WGwU3VE5Gs53vnULd2f4aS3PIHrSS3kgS6FFP5YYEnLRX7PeHE
+ yhNJIo9P7RmY1PONVcNWseWCmlNfqDlMs2MhiO2BNRKRZqFhPTkE4jwSyyrb9qeA3h1t
+ nDYvXkZlUhaVntgMNFyb3wIJ8LFTtYA9MC20gljLQ3M+oTmyqg4PTJvrSk+R6uoGQ+B2
+ //oL/fsbKvGKbYsJJffdyyBlUj16CfTVMTADD6kByZCZXOyWwJCaKRhDdcSztGGPj7OY
+ Yu78lCvYrTy4FkScwFxdtn9jEWGOwHFjY77TgdG3KLHOigZSYtg+4aB6tud6dFs9iadL
+ Zhuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707988567; x=1708593367;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+JQ0Ev2JlvyvJ4uulG5JSOM5ldpWV0pOJnl05fuaHW0=;
- b=LeyLdgZI+elVDuUDyKvZpeEMjIRJxQ+MZrbIjJ/zrXO/twfc6VhZdru+VabLFgi6eF
- VWe9wryxF+I+IhTqalFkTt7VN28OaPrAlPaK6l+jlHIlcHbKBYF+uJ774MJu78sbig9x
- 0Hf4qAxNwK3qTI3NV1XK+Nl/7PcZEVx5hAYBAYmoaiQS60WxlbbG3KDreonVB7vcLhkA
- vt3NeiY6VVyCxTSZqBQ57CCMpo95sp8Ilbnuma+GgG8eokQ7WkZF8IZVT/KDAYTStUJw
- OSRsAiMpeZcb9bDmi+6dTIoH3RIvZ/ivq6BAXWxUFvCxfhuTOm823LRzdQDj0X5lAOYD
- 6GBg==
-X-Gm-Message-State: AOJu0YzH23C2Bte1W/+4PHR1miRinTkGMDIovKjK62nNQrvitsqy0DTz
- WfC+SnPJf3gkw2Mm1FzDQYvI4cXOVxjB/67f9ZYdBJb7MYK7A8F+LWTauJX7ThQUcPI3lzrj0gk
- HNf8=
-X-Google-Smtp-Source: AGHT+IF3HL0VxeUHH2AOcyoLXxR3uEMml5BJU2vIPnwsssZCC9hOe/j2qBPxYwdTPIQ/fcRb09AJFg==
-X-Received: by 2002:a17:906:4544:b0:a3d:abd1:7035 with SMTP id
- s4-20020a170906454400b00a3dabd17035mr94260ejq.9.1707988566841; 
- Thu, 15 Feb 2024 01:16:06 -0800 (PST)
-Received: from localhost.localdomain (adsl-101.109.242.224.tellas.gr.
- [109.242.224.101]) by smtp.gmail.com with ESMTPSA id
- zh14-20020a170906880e00b00a3d35bccdf0sm343307ejb.139.2024.02.15.01.16.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 01:16:06 -0800 (PST)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH] system/physmem: remove redundant arg reassignment
-Date: Thu, 15 Feb 2024 11:15:06 +0200
-Message-Id: <20240215091506.1932251-1-manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ d=1e100.net; s=20230601; t=1707988678; x=1708593478;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8ijxFDjhnIkpAQ3MRe5MDaADGtYJ09Q9Uu0SWLJuAY8=;
+ b=JaEaAt9xu6a41h2ySwgn60y87lK8CBtqoDFRnGgscYRaWr1IfybUNPdrzqDU/uvlRH
+ 7QHTNBiU/7IupcVMEI8QuX3znHbr4fHldh6s5N7d5E1yh6babCRk5ukRazDgOy7yV8Wc
+ VEDnEmqOO1U+M6ZqWVxNa4RIWAJIKIpeZsjjd+jjiDioXAvkMrA8DhQ57HDPZJi34ARm
+ onOmGwawGtGJp+tRj7omTN8j4wViCjZV18QnNQ/lisxZ3/tN4PD+31Np6rI6v2txHySa
+ eW5Dt7wSJiSKgxpejWO1EXlhRMZ6Red56dcAubS/new6pZGihdJpF8xxcUdWb/yDRqaR
+ 4zWw==
+X-Gm-Message-State: AOJu0Yz0ZNz6acmL5NSLkn00XlK09XRDSlFAQd/8o/NCF1pNkpn/HXzl
+ 0qm9OQQsWC+N+U8dIdXlKIPRjtdP7DPljadNqdRvAqUt1nX2mdKs9aKJpWtYkUtus4mNlVMEIQx
+ 1Bm0j8AX6vO0YxKZ+zaf72Z9GZO2ZRnBXrohs
+X-Google-Smtp-Source: AGHT+IH/v1kUGNLya2HjchCDP7DledbcCp/gfOWc5OdJ6EEykO6uRbvr6ZZlfdXYg28UVW+RCtrsLtngR2uHLE9hEIY=
+X-Received: by 2002:a17:90b:28d:b0:299:1f80:8c44 with SMTP id
+ az13-20020a17090b028d00b002991f808c44mr106457pjb.40.1707988678074; Thu, 15
+ Feb 2024 01:17:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
+References: <20240131085047.18458-1-chigot@adacore.com>
+ <81348d06-49f0-4102-983e-d6cf80e876a1@linaro.org>
+In-Reply-To: <81348d06-49f0-4102-983e-d6cf80e876a1@linaro.org>
+From: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Date: Thu, 15 Feb 2024 10:17:46 +0100
+Message-ID: <CAJ307EhF_6_ssOje4HaL6ASiCbtkdA5CY98gtkZfRLcmX4ubiA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] sparc/leon3: Add support for -smp
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Frederic Konrad <konrad.frederic@yahoo.fr>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=chigot@adacore.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,45 +92,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arguments `ram_block` are reassigned to local declarations `block`
-without further use. Remove re-assignment to reduce noise.
+Hi Philippe
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- system/physmem.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+On Thu, Feb 15, 2024 at 10:02=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Cl=C3=A9ment,
+>
+> On 31/1/24 09:50, Cl=C3=A9ment Chigot wrote:
+>
+> > This series allows leon3 emulations to record up 4 CPUs.
+>
+> > Cl=C3=A9ment Chigot (9):
+> >    sparc/grlib: split out the headers for each peripherals
+> >    intc/grlib_irqmp: add ncpus property
+> >    intc/grlib_irqmp: implements the multiprocessor status register
+> >    intc/grlib_irqmp: implements multicore irq
+> >    target/sparc: implement asr17 feature for smp
+> >    leon3: remove SP initialization
+> >    leon3: implement multiprocessor
+> >    leon3: check cpu_id in the tiny bootloader
+> >    MAINTAINERS: replace Fabien by myself as Leon3 maintainer
+> What is your base commit to apply this series?
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 5e66d9ae36..d4c3bfac65 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2154,10 +2154,8 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
-  *
-  * Called within RCU critical section.
-  */
--void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
-+void *qemu_map_ram_ptr(RAMBlock *block, ram_addr_t addr)
- {
--    RAMBlock *block = ram_block;
--
-     if (block == NULL) {
-         block = qemu_get_ram_block(addr);
-         addr -= block->offset;
-@@ -2182,10 +2180,9 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
-  *
-  * Called within RCU critical section.
-  */
--static void *qemu_ram_ptr_length(RAMBlock *ram_block, ram_addr_t addr,
-+static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-                                  hwaddr *size, bool lock)
- {
--    RAMBlock *block = ram_block;
-     if (*size == 0) {
-         return NULL;
-     }
+It's commit 11be70677c70fdccd452a3233653949b79e97908
+    Merge tag 'pull-vfio-20240129' of https://github.com/legoater/qemu
+into staging
 
-base-commit: 5767815218efd3cbfd409505ed824d5f356044ae
--- 
-γαῖα πυρί μιχθήτω
-
+Cl=C3=A9ment
 
