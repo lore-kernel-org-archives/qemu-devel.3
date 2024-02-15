@@ -4,85 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A54C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 10:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83FCC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 11:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raZK4-0001rp-7m; Thu, 15 Feb 2024 05:50:32 -0500
+	id 1raZVw-0008GO-TK; Thu, 15 Feb 2024 06:02:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raZK2-0001rF-FL
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 05:50:30 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raZK0-0007WN-V5
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 05:50:30 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-55f279dca99so1213517a12.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 02:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707994227; x=1708599027; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4H6r4N7AivgzoKJ92Ycqsqp3ekwmltnC77Az1yhOAZE=;
- b=o7etBia8kWjlqIX/A2ye3A4ts3U5Sz3PGf7sckHRX01WntWwcK8ZD/iPLaPjR9PjBx
- Iq36jSKcw2rShZU4ag14e1sJN4eNiHlTHE8zf84gfwiULGM+hBbxG6ewcc41lFiiFs2L
- fN0TNS70uIoutPtke4qai+ow9ox1VemfektzuBgw2SDdfOCQJ4awEd/Amid/aOm9FST0
- ZqnXCYiXyl+0bKvhE1RV2RS4QESUvJOUMgm0vh4wzdVpL8zqFS5OsQstkFS5BlUqkGQQ
- e2EpW1I3Fj7u4jqj8dJ+49f5Zih9cAGM64p5Y3cdFboVmKJphtouvWzzah5yQYV5brLO
- TDwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707994227; x=1708599027;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4H6r4N7AivgzoKJ92Ycqsqp3ekwmltnC77Az1yhOAZE=;
- b=GARKowtKXxmc12nZ3V/hjrEJYD27gWqvz0BvSQygve0GpzjF0NZtiKxHKSN4+L3gYb
- 9vpt371MxB4+khH1sNGAz4ewgBiAVArgON43cobO0V5Z2eV6eHTWz3Hg/7q5Hzs+r48R
- i1RKzi92XDUuP9ceXnz3j+KxxF3zEbZQ63Vr/g0Ye9knjEJGpDTGCRPFR0svcdpw7azN
- VOzrGhq7l/YnW3o0OzIw+igg7pVlVLmlNXX9Ved9AOeH+rJwgWbyKJqzi39D3qPfW1qS
- VAMOz3PfAht3k3X9VtAg9IUqkloyoW+I6v+IztLQe96+BbVIACk7mAX/hacJkuBIYjzZ
- q+jg==
-X-Gm-Message-State: AOJu0YyELx3b0IIgysJX9mbqhToKHzRVubTVqef2uyMvVVccEg0Wm/7G
- dGzmVYqVinUs3j0I6j5JwfQQoUVrDZdejYkdIRden21RcpPEpvk5C/uSumG8UHFKrloZ92oFtXm
- 6mxw=
-X-Google-Smtp-Source: AGHT+IFIWGLI2bxH6V6j3QF49PJeGgYOga5fpm+277dSmAlVOWx2QtxOJUS3gE+OZGXmTkKUj+hf+g==
-X-Received: by 2002:aa7:d148:0:b0:563:c54e:f7 with SMTP id
- r8-20020aa7d148000000b00563c54e00f7mr217290edo.17.1707994226761; 
- Thu, 15 Feb 2024 02:50:26 -0800 (PST)
-Received: from localhost.localdomain ([92.88.170.215])
- by smtp.gmail.com with ESMTPSA id
- g13-20020a056402428d00b0055d333a0584sm430757edc.72.2024.02.15.02.50.25
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 02:50:26 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 1/4] hw/ppc/ppc4xx_pci: Remove unused "hw/ppc/ppc.h" header
-Date: Thu, 15 Feb 2024 11:50:13 +0100
-Message-ID: <20240215105017.57748-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240215105017.57748-1-philmd@linaro.org>
-References: <20240215105017.57748-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1raZVu-0008Fw-R0
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 06:02:46 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1raZVq-0003ha-Px
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 06:02:46 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TbBrP2wBhz6F90y;
+ Thu, 15 Feb 2024 18:58:45 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id 57A29141F42;
+ Thu, 15 Feb 2024 19:02:29 +0800 (CST)
+Received: from SecurePC30232.china.huawei.com (10.122.247.234) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 15 Feb 2024 11:02:28 +0000
+To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
+CC: <jonathan.cameron@huawei.com>, <tanxiaofei@huawei.com>,
+ <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>, <shiju.jose@huawei.com>
+Subject: [PATCH v3 2/3] hw/cxl/cxl-mailbox-utils: Add device patrol scrub
+ control feature
+Date: Thu, 15 Feb 2024 19:01:45 +0800
+Message-ID: <20240215110146.1444-3-shiju.jose@huawei.com>
+X-Mailer: git-send-email 2.35.1.windows.2
+In-Reply-To: <20240215110146.1444-1-shiju.jose@huawei.com>
+References: <20240215110146.1444-1-shiju.jose@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.122.247.234]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500006.china.huawei.com (7.191.161.198)
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,42 +66,177 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  <shiju.jose@huawei.com>
+From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- hw/ppc/ppc440_pcix.c | 1 -
- hw/ppc/ppc4xx_pci.c  | 1 -
- 2 files changed, 2 deletions(-)
+From: Shiju Jose <shiju.jose@huawei.com>
 
-diff --git a/hw/ppc/ppc440_pcix.c b/hw/ppc/ppc440_pcix.c
-index df4ee374d0..d84418cb7b 100644
---- a/hw/ppc/ppc440_pcix.c
-+++ b/hw/ppc/ppc440_pcix.c
-@@ -25,7 +25,6 @@
- #include "qemu/module.h"
- #include "qemu/units.h"
- #include "hw/irq.h"
--#include "hw/ppc/ppc.h"
- #include "hw/ppc/ppc4xx.h"
- #include "hw/pci/pci_device.h"
- #include "hw/pci/pci_host.h"
-diff --git a/hw/ppc/ppc4xx_pci.c b/hw/ppc/ppc4xx_pci.c
-index 0a07aab5d1..e4101398c9 100644
---- a/hw/ppc/ppc4xx_pci.c
-+++ b/hw/ppc/ppc4xx_pci.c
-@@ -24,7 +24,6 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "hw/irq.h"
--#include "hw/ppc/ppc.h"
- #include "hw/ppc/ppc4xx.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
+CXL spec 3.1 section 8.2.9.9.11.1 describes the device patrol scrub control
+feature. The device patrol scrub proactively locates and makes corrections
+to errors in regular cycle. The patrol scrub control allows the request to
+configure patrol scrub input configurations.
+
+The patrol scrub control allows the requester to specify the number of
+hours for which the patrol scrub cycles must be completed, provided that
+the requested number is not less than the minimum number of hours for the
+patrol scrub cycle that the device is capable of. In addition, the patrol
+scrub controls allow the host to disable and enable the feature in case
+disabling of the feature is needed for other purposes such as
+performance-aware operations which require the background operations to be
+turned off.
+
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+---
+ hw/cxl/cxl-mailbox-utils.c | 97 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 96 insertions(+), 1 deletion(-)
+
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index f761ac49b5..9557c38dd9 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -997,6 +997,7 @@ typedef struct CXLSupportedFeatureEntry {
+ } QEMU_PACKED CXLSupportedFeatureEntry;
+ 
+ enum CXL_SUPPORTED_FEATURES_LIST {
++    CXL_FEATURE_PATROL_SCRUB = 0,
+     CXL_FEATURE_MAX
+ };
+ 
+@@ -1037,6 +1038,37 @@ enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
+     CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MAX
+ };
+ 
++/* CXL r3.1 section 8.2.9.9.11.1: Device Patrol Scrub Control Feature */
++static const QemuUUID patrol_scrub_uuid = {
++    .data = UUID(0x96dad7d6, 0xfde8, 0x482b, 0xa7, 0x33,
++                 0x75, 0x77, 0x4e, 0x06, 0xdb, 0x8a)
++};
++
++#define CXL_MEMDEV_PS_GET_FEATURE_VERSION    0x01
++#define CXL_MEMDEV_PS_SET_FEATURE_VERSION    0x01
++#define CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT    BIT(0)
++#define CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT    BIT(1)
++#define CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT    12
++#define CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT    1
++#define CXL_MEMDEV_PS_ENABLE_DEFAULT    0
++
++/* CXL memdev patrol scrub control attributes */
++struct CXLMemPatrolScrubReadAttrbs {
++        uint8_t scrub_cycle_cap;
++        uint16_t scrub_cycle;
++        uint8_t scrub_flags;
++} QEMU_PACKED cxl_memdev_ps_feat_read_attrbs;
++
++typedef struct CXLMemPatrolScrubWriteAttrbs {
++    uint8_t scrub_cycle_hr;
++    uint8_t scrub_flags;
++} QEMU_PACKED CXLMemPatrolScrubWriteAttrbs;
++
++typedef struct CXLMemPatrolScrubSetFeature {
++        CXLSetFeatureInHeader hdr;
++        CXLMemPatrolScrubWriteAttrbs feat_data;
++} QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
++
+ /* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
+ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+                                              uint8_t *payload_in,
+@@ -1060,7 +1092,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+     uint16_t feat_entries = 0;
+ 
+     if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
+-        get_feats_in->start_index > CXL_FEATURE_MAX) {
++        get_feats_in->start_index >= CXL_FEATURE_MAX) {
+         return CXL_MBOX_INVALID_INPUT;
+     }
+     req_entries = (get_feats_in->count -
+@@ -1072,6 +1104,31 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
+     entry = 0;
+     while (entry < req_entries) {
+         switch (index) {
++        case  CXL_FEATURE_PATROL_SCRUB:
++            /* Fill supported feature entry for device patrol scrub control */
++            get_feats_out->feat_entries[entry] =
++                           (struct CXLSupportedFeatureEntry) {
++                .uuid = patrol_scrub_uuid,
++                .feat_index = index,
++                .get_feat_size = sizeof(cxl_memdev_ps_feat_read_attrbs),
++                .set_feat_size = sizeof(CXLMemPatrolScrubWriteAttrbs),
++                /* Bit[0] : 1, feature attributes changeable */
++                .attrb_flags = 0x1,
++                .get_feat_version = CXL_MEMDEV_PS_GET_FEATURE_VERSION,
++                .set_feat_version = CXL_MEMDEV_PS_SET_FEATURE_VERSION,
++                .set_feat_effects = 0,
++            };
++            feat_entries++;
++            /* Set default value for device patrol scrub read attributes */
++            cxl_memdev_ps_feat_read_attrbs.scrub_cycle_cap =
++                                CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT |
++                                CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT;
++            cxl_memdev_ps_feat_read_attrbs.scrub_cycle =
++                                CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
++                                (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
++            cxl_memdev_ps_feat_read_attrbs.scrub_flags =
++                                CXL_MEMDEV_PS_ENABLE_DEFAULT;
++            break;
+         default:
+             break;
+         }
+@@ -1112,6 +1169,21 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
+         return CXL_MBOX_INVALID_INPUT;
+     }
+ 
++    if (qemu_uuid_is_equal(&get_feature->uuid, &patrol_scrub_uuid)) {
++        if (get_feature->offset >= sizeof(cxl_memdev_ps_feat_read_attrbs)) {
++            return CXL_MBOX_INVALID_INPUT;
++        }
++        bytes_to_copy = sizeof(cxl_memdev_ps_feat_read_attrbs) -
++                                             get_feature->offset;
++        bytes_to_copy = (bytes_to_copy > get_feature->count) ?
++                               get_feature->count : bytes_to_copy;
++        memcpy(payload_out,
++               &cxl_memdev_ps_feat_read_attrbs + get_feature->offset,
++               bytes_to_copy);
++    } else {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
+     *len_out = bytes_to_copy;
+ 
+     return CXL_MBOX_SUCCESS;
+@@ -1125,6 +1197,29 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+                                            size_t *len_out,
+                                            CXLCCI *cci)
+ {
++    CXLMemPatrolScrubWriteAttrbs *ps_write_attrbs;
++    CXLMemPatrolScrubSetFeature *ps_set_feature;
++    CXLSetFeatureInHeader *hdr = (void *)payload_in;
++
++    if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
++        if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION ||
++            (hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK) !=
++                               CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER) {
++            return CXL_MBOX_UNSUPPORTED;
++        }
++
++        ps_set_feature = (void *)payload_in;
++        ps_write_attrbs = &ps_set_feature->feat_data;
++        cxl_memdev_ps_feat_read_attrbs.scrub_cycle &= ~0xFF;
++        cxl_memdev_ps_feat_read_attrbs.scrub_cycle |=
++                          ps_write_attrbs->scrub_cycle_hr & 0xFF;
++        cxl_memdev_ps_feat_read_attrbs.scrub_flags &= ~0x1;
++        cxl_memdev_ps_feat_read_attrbs.scrub_flags |=
++                          ps_write_attrbs->scrub_flags & 0x1;
++    } else {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++
+     return CXL_MBOX_SUCCESS;
+ }
+ 
 -- 
-2.41.0
+2.34.1
 
 
