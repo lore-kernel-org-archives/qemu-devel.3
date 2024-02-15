@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12FAC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 05:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A8EC48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 05:41:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raUS9-0007nz-DO; Thu, 15 Feb 2024 00:38:33 -0500
+	id 1raUV8-0000S2-Dt; Thu, 15 Feb 2024 00:41:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raUS8-0007nk-13; Thu, 15 Feb 2024 00:38:32 -0500
-Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ id 1raUV1-0000P5-BO; Thu, 15 Feb 2024 00:41:32 -0500
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raUS6-00027L-HZ; Thu, 15 Feb 2024 00:38:31 -0500
-Received: by mail-vs1-xe2f.google.com with SMTP id
- ada2fe7eead31-46d3a2901cdso112230137.2; 
- Wed, 14 Feb 2024 21:38:29 -0800 (PST)
+ id 1raUUz-0002v9-Od; Thu, 15 Feb 2024 00:41:30 -0500
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-7cedcea89a0so362668241.1; 
+ Wed, 14 Feb 2024 21:41:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707975509; x=1708580309; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707975688; x=1708580488; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dl+Dbps6p9wLnWxY4AKOVC0VqOlcbvihkgiP+zbugpY=;
- b=D8+l2b+PqWJkW2kjj2hA2SJcX9PxGgfQYvVMrkL+BnW7dDZQB2ufVLUv0hl444expd
- uV7aKo7tkpuT+K9gdzr1Go3L1Ksu7jhIqau2NJ7RtkgKI550X+dNLbSCnLOYb3tUKBWI
- bOI/A5wCTNAIiofLxFFUbCaeO/TQdOCVto0kqTjOTLH2r2HjlzZNiybVrp9OdpLNvV+N
- RgFCVIRPs7v9AHdyKdMIu0dG2n3qNgrE1bn4BgkeXszBf0upNsWmYxvT0v8Bz1Ceh6Ey
- fes2Jz5O4s3zdJXdVTldreq4I09fjPgf37PhyGuX3e7BUL4i8tyBnJBq/4DhgyDSmco/
- y62g==
+ bh=VxT1ML7xRa8Z95kc9kVylYSdEdc53SdXf07+TWN7eA0=;
+ b=luvfWlv9Hle0v3jRk3Bm8AW/HskAfItDODXW8pl3bYeyTAqjVUeecvRIl4sew8oF5k
+ LqAQUIV89rzjiemJ/22lSTo97LPVvfNbGObawDmktcvktyscJt/NXQt24rCIbRbaSrv0
+ FQ0IZZ65nDO2oAAYPvzaI3nq+xnMe6pdzTWzNL6Bvs4X1SbjqgaHeJJwGlywBqN47OmY
+ d64Dr1PnA+QG0tG5zd4mE9RPNxONhZLS6mJ58MWNeS9mHO+YqyT4J8mTSlvQL8JbXVrn
+ dyNYLft94QEhuv6HbIzktKycjpVqTQU3ZTOeRTWKb9J7K8wmpH9b6vcx9R92qLR42DRH
+ a1aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707975509; x=1708580309;
+ d=1e100.net; s=20230601; t=1707975688; x=1708580488;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dl+Dbps6p9wLnWxY4AKOVC0VqOlcbvihkgiP+zbugpY=;
- b=AJOT3S0PXCWri7mZeUxfOMRHlJbT2Ea9PJYJotFGHKr3cEG4n2XlqmECGekQwDss1z
- btARp6o6QzrTFa24kD7EfPo5mw3k5GOVa8ulfpnX8wKc+sq45HMXVCQJV9Ggx7D2E1lK
- Vl+USyV0K6ORp6zSrGejoZt/add5VWrSlDEG9NjizmA3tnbH1wP51wcMW4RzRBC8qjmc
- fMgqkhCml15Z08fiHiPurHnNdqUtFVsNQ5hxWhajWvui5Mdlh0ksO3KMRemnC2MUf9Kh
- JsGpvKl7ip/zOBB5yqvcwfvQgGaOCf6AnN88wL2QcGzPb7jus9MinG7+E2fWs8cZOL9L
- t8Kw==
+ bh=VxT1ML7xRa8Z95kc9kVylYSdEdc53SdXf07+TWN7eA0=;
+ b=usyQCYUnKPG3gLOxERDzkTjBo+XTB+8eu1+jxHLQaEXmExKPBCo8/qfjs/A2lcvVDK
+ BmZL/9jjlvzYjnu4SyDvPs+oPTQPicBfcoYSeP4/aWaszkAX9mAEQqVkqx8ypZDwjyMP
+ J5yvyXpJeYK3v9o/2EsbfmoqVjZ42h0gt3LKzOsIRHF5AamxjYjhfl8qNw0a92ToWsQs
+ lYTTk4kzwwC0POG/j21vzujmGSWQwXKkHVyt+yPVZW/HUNJoyiFds6TVtUcwrNuUidvm
+ KvMjQJ1+M8O9vdwYvHQ4ZCPvluxV1rx+jJPTfHMDAtnjcEUF1tpBbD6d0f3qbI7PNIT2
+ NugQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUY0DGplZosD14t93EquXffLVMB9HGUUGQUg5AssyeU3aZLSR1PAA/vlI79H9okN0WV96eUT04+46Tt8NNMDRoosRuRWbs=
-X-Gm-Message-State: AOJu0YxuloblY8t+D8Jzli3uJHhee6en829WADady3LcAhyS/ASg53N1
- YVbExcqLjQaqiyhFrmfBd4niewIE/m2e9g8SQNbm5buwHKb7+dMHYMwvXttA1jj4LOzliGkrVyr
- LJcLe7FwcTuwmXb7gQdBalmN23NI=
-X-Google-Smtp-Source: AGHT+IHl73uYZMvRl4XeG5K2+1VCbZEuqxKkYPcQ6LEz61LCvPMqzyJ9PUa3oetOEKGWG8rXpgrs7EDkPV5SZ7YfZB8=
-X-Received: by 2002:a05:6102:f0a:b0:46e:c898:310d with SMTP id
- v10-20020a0561020f0a00b0046ec898310dmr1030057vss.21.1707975509198; Wed, 14
- Feb 2024 21:38:29 -0800 (PST)
+ AJvYcCVq3rI0Upj/ERLgSnG8rAjR77iI0FpWLvNGf65a/1G/eVxwp9QvpeP4SsrlpkQ0OUmHI2NVJRiA8Dz79bI5zf3wRM23d0o=
+X-Gm-Message-State: AOJu0YzLzsYaSmZjIED7m6umDcdyXCPgVweOzVWmruDf0R7z1+uBfmpe
+ o6btkfnRIyfaOUhSoYMhmZmRZvklWUsbRzX/ScnYQb5NZ6jvImUMB2/Uknw3fTc/Ta9DkpJze2C
+ aVe2me5HjyTyVbjvteMOECongllY=
+X-Google-Smtp-Source: AGHT+IGl3p63t387eIcxinUpqFqX1S0Hb5uQf9+L7ySLaoJ8JRMIqoTdRHX0urVbn9ugubuckyJuJe1VnhoDq2ELPjo=
+X-Received: by 2002:a1f:62c3:0:b0:4c0:3621:7ab0 with SMTP id
+ w186-20020a1f62c3000000b004c036217ab0mr553772vkb.15.1707975688242; Wed, 14
+ Feb 2024 21:41:28 -0800 (PST)
 MIME-Version: 1.0
 References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
- <20240202152154.773253-5-dbarboza@ventanamicro.com>
-In-Reply-To: <20240202152154.773253-5-dbarboza@ventanamicro.com>
+ <20240202152154.773253-7-dbarboza@ventanamicro.com>
+In-Reply-To: <20240202152154.773253-7-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 15:38:03 +1000
-Message-ID: <CAKmqyKPwegj6gYUdUrwH8qw99Ueme6KBF-eH88AAe2ZDhsA6Yw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/6] target/riscv: Reset henvcfg to zero
+Date: Thu, 15 Feb 2024 15:41:02 +1000
+Message-ID: <CAKmqyKN+WScEJNiwtQyV5pR0nbjttBPX0sVSmebzw2UeesoROA@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] target/riscv: Promote svade to a normal extension
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,21 +93,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 3, 2024 at 1:23=E2=80=AFAM Daniel Henrique Barboza
+On Sat, Feb 3, 2024 at 1:24=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
 > From: Andrew Jones <ajones@ventanamicro.com>
 >
-> The hypervisor should decide what it wants to enable. Zero all
-> configuration enable bits on reset.
+> Named features are extensions which don't make sense for users to
+> control and are therefore not exposed on the command line. However,
+> svade is an extension which makes sense for users to control, so treat
+> it like a "normal" extension. The default is false, even for the max
+> cpu type, since QEMU has always implemented hardware A/D PTE bit
+> updating, so users must opt into svade (or get it from a CPU type
+> which enables it by default).
 >
-> Also, commit ed67d63798f2 ("target/riscv: Update CSR bits name for
-> svadu extension") missed one reference to 'hade'. Change it now.
->
-> Fixes: 0af3f115e68e ("target/riscv: Add *envcfg.HADE related check in add=
-ress translation")
-> Fixes: ed67d63798f2 ("target/riscv: Update CSR bits name for svadu extens=
-ion")
 > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 
@@ -116,39 +114,73 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c | 3 +--
->  target/riscv/csr.c | 2 +-
->  2 files changed, 2 insertions(+), 3 deletions(-)
+>  target/riscv/cpu.c         | 9 ++-------
+>  target/riscv/tcg/tcg-cpu.c | 6 ++++++
+>  2 files changed, 8 insertions(+), 7 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 94843c4f6e..9045f87481 100644
+> index 50ac7845a8..f036b153a1 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -961,8 +961,7 @@ static void riscv_cpu_reset_hold(Object *obj)
+> @@ -1422,6 +1422,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
 >
->      env->menvcfg =3D (cpu->cfg.ext_svpbmt ? MENVCFG_PBMTE : 0) |
->                     (cpu->cfg.ext_svadu ? MENVCFG_ADUE : 0);
-> -    env->henvcfg =3D (cpu->cfg.ext_svpbmt ? HENVCFG_PBMTE : 0) |
-> -                   (cpu->cfg.ext_svadu ? HENVCFG_ADUE : 0);
-> +    env->henvcfg =3D 0;
+>      MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
+>      MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+> +    MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
+>      MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
+>      MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
+>      MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
+> @@ -1534,7 +1535,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental=
+_exts[] =3D {
+>   * and priv_ver like regular extensions.
+>   */
+>  const RISCVCPUMultiExtConfig riscv_cpu_named_features[] =3D {
+> -    MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
 >
->      /* Initialized default priorities of local interrupts. */
->      for (i =3D 0; i < ARRAY_SIZE(env->miprio); i++) {
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index d9a010387f..93f7bc2cb4 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2115,7 +2115,7 @@ static RISCVException read_henvcfg(CPURISCVState *e=
-nv, int csrno,
 >      /*
->       * henvcfg.pbmte is read_only 0 when menvcfg.pbmte =3D 0
->       * henvcfg.stce is read_only 0 when menvcfg.stce =3D 0
-> -     * henvcfg.hade is read_only 0 when menvcfg.hade =3D 0
-> +     * henvcfg.adue is read_only 0 when menvcfg.adue =3D 0
->       */
->      *val =3D env->henvcfg & (~(HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_AD=
-UE) |
->                             env->menvcfg);
+> @@ -2182,8 +2182,6 @@ static RISCVCPUProfile RVA22U64 =3D {
+>   * Other named features that we already implement: Sstvecd, Sstvala,
+>   * Sscounterenw
+>   *
+> - * Named features that we need to enable: svade
+> - *
+>   * The remaining features/extensions comes from RVA22U64.
+>   */
+>  static RISCVCPUProfile RVA22S64 =3D {
+> @@ -2195,10 +2193,7 @@ static RISCVCPUProfile RVA22S64 =3D {
+>      .ext_offsets =3D {
+>          /* rva22s64 exts */
+>          CPU_CFG_OFFSET(ext_zifencei), CPU_CFG_OFFSET(ext_svpbmt),
+> -        CPU_CFG_OFFSET(ext_svinval),
+> -
+> -        /* rva22s64 named features */
+> -        CPU_CFG_OFFSET(ext_svade),
+> +        CPU_CFG_OFFSET(ext_svinval), CPU_CFG_OFFSET(ext_svade),
+>
+>          RISCV_PROFILE_EXT_LIST_END
+>      }
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 43c32b4a15..9fc64979f1 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -1314,6 +1314,12 @@ static void riscv_init_max_cpu_extensions(Object *=
+obj)
+>          isa_ext_update_enabled(cpu, prop->offset, true);
+>      }
+>
+> +    /*
+> +     * Some extensions can't be added without backward compatibilty conc=
+erns.
+> +     * Disable those, the user can still opt in to them on the command l=
+ine.
+> +     */
+> +    cpu->cfg.ext_svade =3D false;
+> +
+>      /* set vector version */
+>      env->vext_ver =3D VEXT_VERSION_1_00_0;
+>
 > --
 > 2.43.0
 >
