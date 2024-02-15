@@ -4,110 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64028C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C93C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXND-0004yc-Td; Thu, 15 Feb 2024 03:45:39 -0500
+	id 1raXOd-0006DK-Jb; Thu, 15 Feb 2024 03:47:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnd@arndb.de>)
- id 1raXNC-0004yK-6T; Thu, 15 Feb 2024 03:45:38 -0500
-Received: from fout6-smtp.messagingengine.com ([103.168.172.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnd@arndb.de>)
- id 1raXN8-00024k-NP; Thu, 15 Feb 2024 03:45:37 -0500
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailfout.nyi.internal (Postfix) with ESMTP id 8FBFE13800BC;
- Thu, 15 Feb 2024 03:45:32 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
- by compute5.internal (MEProxy); Thu, 15 Feb 2024 03:45:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
- :cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1707986732;
- x=1708073132; bh=nK32Yno8wiK67485X68quq4Ct0mngu1clT9OWAjEztc=; b=
- NA9DyMATG05xs/5vihPTc7l4PiLOWVoc2WYSWY1ob/wtSO7ixGB9/pzS0kfz0QCP
- d+JVVtot/8XsVSyIbTXjaBd3LdbqzK/t2V7y+7c7cSea9Lkdmlxiw+W9+tqGI/dW
- kiIUChyKJA7TBPdrCZLC0j/pNn+MxchBuN6qRoYGEz5S0SncQqm5JKkoLE7/O/Hn
- bFYScGsuRaUNcSXKNu0h4Td9Od+rAyzaC4upyU7JAbpTlKn1RT/FHCqDrtb/odrD
- AwGXlUykPvAgIo9JHWs6qHEdXc/PhNBGJIgXEgcfI1pX7gtr3nOgJh8eFyBak+/p
- xPjzH1MLV7ZgV8JuSOBfhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1707986732; x=
- 1708073132; bh=nK32Yno8wiK67485X68quq4Ct0mngu1clT9OWAjEztc=; b=d
- hJRth0H5m64CnfNsYW3XX/JqpZ0U4m/8Z/Ck/bR4Oe5iW+dD54hgWBunyxpfDaBC
- ELwlog7u+Dp6FlF4qmFyhlBmOoMo7NlGLROv4rX3jeTZtP0TWWS2A8T0h3Eo3cdx
- RyYMhmZKR3A3faMgZUxY7/ISP/1Ko+leLLauZGznMyHW1F84wdi6UQrdagBL5sVe
- ydWegVKnHhlUQSJ+kCplPa8p6puTLdEKlve84t7zH2epD+vx3XQ/Y6ZAP7NVBfC4
- SYUm3qxjwyVdBHfyKSBtKRHfN1VT+WUxbSVAS1XH+nHDM9lBwi4LhEluD1wLIYoo
- A0+tqcTiFieM8x801XeYg==
-X-ME-Sender: <xms:LM_NZYWw57-MfAm4xXakmYXVoFCdc7Q5gI3TFVsaMmK1H5PAajtBqw>
- <xme:LM_NZcnCzzao1pQuXLS5tcklX_MolRXKMSOyNrYUmt6BD7P-8MS12Cn22G8AaetHX
- gKeGi23u_5P2WqFLRM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdeilecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedftehr
- nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
- htvghrnhepgeefjeehvdelvdffieejieejiedvvdfhleeivdelveehjeelteegudektdfg
- jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
- hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:LM_NZcbdItZ1hOn4TBfE5O4HTBpj7owzsHmhTK2kZEVKkI7jfsN94A>
- <xmx:LM_NZXW9g-u2bIGqw2xYmT_ArIHNAJTjoiUgGO1JX0egRvC0PE2CFw>
- <xmx:LM_NZSmNbv2-dSO1kAK4B5uUwEYakB3PfGQ6-ZfYSyItikwtRskoIg>
- <xmx:LM_NZRq4m2kWszPQBriIoM0__WXuSFYQfbeFjzHR8k5t4BXmqlDC4A>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 0876CB6008D; Thu, 15 Feb 2024 03:45:31 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOb-0006Cg-Jt
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:05 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOZ-0002SW-Io
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:05 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-41211acfcfcso3617885e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 00:47:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1707986822; x=1708591622; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=z3Yvd12ZTKEdeYnpZuZujgW5c5hDdepl6bEEcV+HKcs=;
+ b=GjHa2qVfmRH8tR7ZAkL5D0KuUXvgBkK5mzxaSy1gQGe8SrBhZoAgzLkgPqs2d/Wwpa
+ f6mgXvIM9RXqeEtGU64ArPK4IBSnLINAqEMJDeItcs+1gzld8B41hmTsOZTEfsTqiM4q
+ IvIqxPU/4ckubtz3OSYtEvsBBvo9afID5ixIN1EB5pPdE05Jwj2laHRZDYbSIdbiXBXi
+ OfUumhi80MaOeGikOIucb4lfAa1y04Or0WUcHC2ACw/mIuZNgR3wpdLGyQ3Hi1E/9kvq
+ 5Friyei9pT0vpVSwsX8X5efcIJcQWN56IywpWDdoUmwTcjHw5zRFnjCq8xRkN7z5gviz
+ VXQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1707986822; x=1708591622;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z3Yvd12ZTKEdeYnpZuZujgW5c5hDdepl6bEEcV+HKcs=;
+ b=WQ9JMde8xYo9M5BtHMzkZelyvWs9c9/xlvD9HBwrkj8vI3SNOTT4VGEFK+1ZveFybU
+ kGQfE6T0F63+kHXoWRds4XJv4/+NTFnov30/8ocXiB8Z787j/08ibKn3KQMxcD3nuqGh
+ zxLXLXuMub/DVBRTsGpyNND+QqEKBil2wj/fQ6VFx/FWzH2NvBU2YcIGW5kQBP9znBY2
+ 9zoW4TB73GgHa0l+FgyDko+WB+EwHCkp4jESm0hCQrP0yLLeyFDlRO/2BMxp1NFuSpaP
+ Ab97n521BulwWlCTLDhh2AuTtniA4KPaHitjNuvWf1ibfVvuHDeVkLVzsfIbYizEMT65
+ J5Aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhyGNd0tU5SKZxUOtsTtwcs6dyH1WsQsh6JfuNfPIP3w5yiYNM2A7ohsgcaRK9YVXaCndmPKlbxIUX+lTqnUpj5+yiqlk=
+X-Gm-Message-State: AOJu0YxLtXgId/v7jYVJETaBvidV0xrcPrjLSLGVM5dua0AdhWp/6GnU
+ moll4lnVcycVl/RYNRJN7aAmJw8bGsNakASsTpsT9l9uRCMOWx7FwQ1y3Zmx+GM=
+X-Google-Smtp-Source: AGHT+IEyaf3wvoSXKVdC0NrXLog5FfzdzhYZBV3l6nkPSCCmhuf5z2GOs3XdT8pHJwWhbc0ZwY4zOQ==
+X-Received: by 2002:a05:600c:3543:b0:411:ebf7:9a69 with SMTP id
+ i3-20020a05600c354300b00411ebf79a69mr814356wmq.9.1707986821773; 
+ Thu, 15 Feb 2024 00:47:01 -0800 (PST)
+Received: from localhost.localdomain (14.red-88-28-17.dynamicip.rima-tde.net.
+ [88.28.17.14]) by smtp.gmail.com with ESMTPSA id
+ y5-20020a7bcd85000000b00410ab50f70fsm4250040wmj.15.2024.02.15.00.46.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 15 Feb 2024 00:47:01 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
+Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Damien Hedde <dhedde@kalrayinc.com>, Zhao Liu <zhao1.liu@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Amir Gonnen <amir.gonnen@neuroblade.ai>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Luc Michel <luc.michel@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 0/1] target: New binary to prototype heterogeneous machines
+Date: Thu, 15 Feb 2024 09:46:52 +0100
+Message-ID: <20240215084654.56297-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Message-Id: <7c8a5c5b-a94a-4b87-a043-f1e398b55872@app.fastmail.com>
-In-Reply-To: <20240215093113.5c58cabe@aktux>
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
- <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
- <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
- <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
- <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
- <CACRpkdbmJe8ZE7N0p_utWucyw+3mp1Qrb0bQEKcJPmwNFtVA_g@mail.gmail.com>
- <CALT56yOT_U9jVkhTP=zZu-32B4pta5zaJocn9695N7ari4cFyQ@mail.gmail.com>
- <be4038e1-a578-4439-a9bf-e936484c64cc@app.fastmail.com>
- <20240215093113.5c58cabe@aktux>
-Date: Thu, 15 Feb 2024 09:45:11 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Andreas Kemnade" <andreas@kemnade.info>
-Cc: "Dmitry Baryshkov" <dbaryshkov@gmail.com>,
- "Linus Walleij" <linus.walleij@linaro.org>, paul.eggleton@linux.intel.com,
- "Andrea Adami" <andrea.adami@gmail.com>,
- "Guenter Roeck" <linux@roeck-us.net>,
- "Peter Maydell" <peter.maydell@linaro.org>,
- "QEMU Developers" <qemu-devel@nongnu.org>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "Marcin Juszkiewicz" <marcin.juszkiewicz@linaro.org>,
- "Aaro Koskinen" <aaro.koskinen@iki.fi>,
- "Janusz Krzysztofik" <jmkrzyszt@gmail.com>,
- "Tony Lindgren" <tony@atomide.com>, Linux-OMAP <linux-omap@vger.kernel.org>,
- "Daniel Mack" <daniel@zonque.org>, "Robert Jarzmik" <robert.jarzmik@free.fr>, 
- "Haojian Zhuang" <haojian.zhuang@gmail.com>,
- "Stefan Lehner" <stefan-lehner@aon.at>
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=arnd@arndb.de;
- helo=fout6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,88 +109,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 15, 2024, at 09:31, Andreas Kemnade wrote:
-> On Wed, 14 Feb 2024 23:42:58 +0100
-> "Arnd Bergmann" <arnd@arndb.de> wrote:
->> On Wed, Feb 14, 2024, at 13:26, Dmitry Baryshkov wrote:
->> > On Tue, 13 Feb 2024 at 23:22, Linus Walleij <linus.walleij@linaro.o=
-rg> wrote: =20
->> >> On Tue, Feb 13, 2024 at 9:12=E2=80=AFPM Arnd Bergmann <arnd@arndb.=
-de> wrote: =20
->> >> > On Tue, Feb 13, 2024, at 16:36, Guenter Roeck wrote: =20
->> >> > > On Tue, Feb 13, 2024 at 03:14:21PM +0000, Peter Maydell wrote:=
- =20
->> >>
->> >> Andrea Adami and Dmitry Eremin-Solenikov did the work in 2017 to
->> >> modernize it a bit, and Russell helped out. I was under the impres=
-sion
->> >> that they only used real hardware though! =20
->> >
->> > I used both Qemu and actual hardware (having collie, poodle, tosa a=
-nd
->> > c860 that was easy).
->> >
->> > The biggest issue with Zaurus PDAs was that supporting interesting
->> > parts of the platform (PCMCIA, companion chips) required almost
->> > rebootstrapping of the corresponding drivers.
->> > E.g. I had a separate driver for the LoCoMo chip which worked prope=
-rly
->> > with the DT systems.
->> > PCMCIA was a huuuge trouble and it didn't play well at all. The dri=
-ver
->> > must be rewritten to use the component framework. =20
->>=20
->> If we want to actually go there, I think the best option for PCMCIA
->> support is likely to replace the entire "soc_common" pcmcia driver
->> with a simple drivers/pata/ storage driver and no support for
->> other cards. There was a driver until commit 38943cbd25a2
->> ("ata: remove palmld pata driver") that could serve as an
->> template.
->>=20
-> hmm, main usage for PCMCIA/CF in those devices was often something els=
-e,
-> not storage, at least on the IPAQ h2200. Wondering wether that road is
-> actually good. When I was mainly using those devices, I was not good in
-> mainlining things.
+Since v2:
+- Run check-qtest instead of check-unit in CI (Alex)
 
-Do we still support any non-storage CF devices that someone might
-actually use? Do you have a specific example in mind? These are
-the currently supported devices that I see:
+Almost 2 years later we got hundreds of cleanups patches
+merged, so we can get this patch in. Building the 'any'
+target has to be explictly requested in ./configure
+target-list argument.
 
-git grep -B4 -w depends.*PCMCIA | grep "Kconfig-\(config\|menuconfig\)" =
-| grep -v ^drivers/pcmcia
-drivers/ata/Kconfig-config PATA_PCMCIA
-drivers/bluetooth/Kconfig-config BT_HCIDTL1
-drivers/bluetooth/Kconfig-config BT_HCIBT3C
-drivers/bluetooth/Kconfig-config BT_HCIBLUECARD
-drivers/comedi/Kconfig-menuconfig COMEDI_PCMCIA_DRIVERS
-drivers/mmc/host/Kconfig-config MMC_SDRICOH_CS
-drivers/mtd/maps/Kconfig-config MTD_PCMCIA
-drivers/mtd/maps/Kconfig-config MTD_PCMCIA_ANONYMOUS
-drivers/net/arcnet/Kconfig-menuconfig ARCNET
-drivers/net/arcnet/Kconfig-config ARCNET_COM20020_CS
-drivers/net/can/sja1000/Kconfig-config CAN_EMS_PCMCIA
-drivers/net/can/sja1000/Kconfig-config CAN_PEAK_PCMCIA
-drivers/net/can/softing/Kconfig-config CAN_SOFTING_CS
-drivers/net/ethernet/3com/Kconfig-config NET_VENDOR_3COM
-drivers/net/ethernet/3com/Kconfig-config PCMCIA_3C574
-drivers/net/ethernet/3com/Kconfig-config PCMCIA_3C589
-drivers/net/ethernet/8390/Kconfig-config PCMCIA_AXNET
-drivers/net/ethernet/8390/Kconfig-config APNE
-drivers/net/ethernet/8390/Kconfig-config PCMCIA_PCNET
-drivers/net/ethernet/amd/Kconfig-config PCMCIA_NMCLAN
-drivers/net/ethernet/fujitsu/Kconfig-config NET_VENDOR_FUJITSU
-drivers/net/ethernet/fujitsu/Kconfig-config PCMCIA_FMVJ18X
-drivers/net/ethernet/smsc/Kconfig-config PCMCIA_SMC91C92
-drivers/net/ethernet/xircom/Kconfig-config NET_VENDOR_XIRCOM
-drivers/net/ethernet/xircom/Kconfig-config PCMCIA_XIRC2PS
-drivers/parport/Kconfig-config PARPORT_PC_PCMCIA
-drivers/scsi/pcmcia/Kconfig-menuconfig SCSI_LOWLEVEL_PCMCIA
-drivers/ssb/Kconfig-config SSB_PCMCIAHOST_POSSIBLE
-drivers/tty/Kconfig-config IPWIRELESS
-drivers/tty/serial/8250/Kconfig-config SERIAL_8250_CS
-drivers/usb/host/Kconfig-config USB_SL811_CS
-sound/pcmcia/Kconfig-menuconfig SND_PCMCIA
+This binary will be use to rework QEMU startup code,
+paving the way toward dynamic machines. It might also
+allow experimenting with multiple TCG target frontends
+and possibly prototyping concurrent HW/SW accelerations.
 
-     Arnd
+The corresponding CI jobs takes <3min!!!
+https://gitlab.com/philmd/qemu/-/jobs/6177909577
+Duration: 2 minutes 50 seconds
+
+v1: https://lore.kernel.org/qemu-devel/20220215002658.60678-1-f4bug@amsat.org/
+v2: https://lore.kernel.org/qemu-devel/20240209152945.25727-1-philmd@linaro.org/
+
+Philippe Mathieu-Daudé (1):
+  target: Add system emulation aiming to target any architecture
+
+ configs/devices/any-softmmu/default.mak |  9 +++++++++
+ configs/targets/any-softmmu.mak         |  3 +++
+ meson.build                             |  6 ++++--
+ qapi/machine.json                       |  2 +-
+ include/sysemu/arch_init.h              |  1 +
+ target/any/cpu-param.h                  | 13 +++++++++++++
+ target/any/cpu-qom.h                    | 12 ++++++++++++
+ target/any/cpu.h                        | 24 ++++++++++++++++++++++++
+ .gitlab-ci.d/buildtest.yml              | 20 ++++++++++++++++++++
+ hw/any/meson.build                      |  5 +++++
+ hw/meson.build                          |  1 +
+ target/Kconfig                          |  1 +
+ target/any/Kconfig                      |  4 ++++
+ target/any/meson.build                  |  7 +++++++
+ target/meson.build                      |  1 +
+ 15 files changed, 106 insertions(+), 3 deletions(-)
+ create mode 100644 configs/devices/any-softmmu/default.mak
+ create mode 100644 configs/targets/any-softmmu.mak
+ create mode 100644 target/any/cpu-param.h
+ create mode 100644 target/any/cpu-qom.h
+ create mode 100644 target/any/cpu.h
+ create mode 100644 hw/any/meson.build
+ create mode 100644 target/any/Kconfig
+ create mode 100644 target/any/meson.build
+
+-- 
+2.41.0
+
 
