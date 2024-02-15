@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044C1C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 13:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55DAAC48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 13:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rabmb-0003gP-EZ; Thu, 15 Feb 2024 08:28:09 -0500
+	id 1rabn4-0004bU-CV; Thu, 15 Feb 2024 08:28:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andreas@kemnade.info>)
- id 1raX9V-0002E7-UG; Thu, 15 Feb 2024 03:31:30 -0500
-Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andreas@kemnade.info>)
- id 1raX9U-0005lr-Af; Thu, 15 Feb 2024 03:31:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=kemnade.info; s=20220719; h=Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=mdYToYuDmh6OlwRD6Ej97k/1spumBy4m+atUuj+qy98=; b=vKwC6cNZjEDmW0ViWp1hf3tqE9
- yo6U1M34Lj0sObd4osD1B7ykNVCDPgSw1bBmtIYRWlZcAhsxD4pgW/Mdf+p2vb6oEGb/7UwNj7sqs
- AJ2n6XTA7bPq164DfJpODrHHMuLwi4gwJaYLOLMAENs9TCTIxo08ySygVsDKeeZ26XxlaKo1UJmID
- NYtVT5GjUemWScsjCzCyfwUN7WdVg/ftxexJiFvP2tA2K9UBAWBRkoIpz0nx/gb5KXXrZkBUBmEKM
- B1ag33DesNwkdZse+VTfAZzwKerIhD46b22JpcIdkDlrmt8NErdiz4twj2s2CaOu+sLSBl+LGPF/D
- V5YG4V8g==;
-Received: from p2003010777002c001a3da2fffebfd33a.dip0.t-ipconnect.de
- ([2003:107:7700:2c00:1a3d:a2ff:febf:d33a] helo=aktux)
- by mail.andi.de1.cc with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <andreas@kemnade.info>)
- id 1raX9I-009SKj-Ee; Thu, 15 Feb 2024 09:31:16 +0100
-Date: Thu, 15 Feb 2024 09:31:13 +0100
-From: Andreas Kemnade <andreas@kemnade.info>
-To: "Arnd Bergmann" <arnd@arndb.de>
-Cc: "Dmitry Baryshkov" <dbaryshkov@gmail.com>, "Linus Walleij"
- <linus.walleij@linaro.org>, paul.eggleton@linux.intel.com, "Andrea Adami"
- <andrea.adami@gmail.com>, "Guenter Roeck" <linux@roeck-us.net>, "Peter
- Maydell" <peter.maydell@linaro.org>, "QEMU Developers"
- <qemu-devel@nongnu.org>, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "Marcin Juszkiewicz" <marcin.juszkiewicz@linaro.org>, "Aaro Koskinen"
- <aaro.koskinen@iki.fi>, "Janusz Krzysztofik" <jmkrzyszt@gmail.com>, "Tony
- Lindgren" <tony@atomide.com>, Linux-OMAP <linux-omap@vger.kernel.org>,
- "Daniel Mack" <daniel@zonque.org>, "Robert Jarzmik"
- <robert.jarzmik@free.fr>, "Haojian Zhuang" <haojian.zhuang@gmail.com>,
- "Stefan Lehner" <stefan-lehner@aon.at>
-Subject: Re: possible deprecation and removal of some old QEMU Arm machine
- types (pxa2xx, omap, sa1110)
-Message-ID: <20240215093113.5c58cabe@aktux>
-In-Reply-To: <be4038e1-a578-4439-a9bf-e936484c64cc@app.fastmail.com>
-References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
- <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
- <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
- <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
- <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
- <CACRpkdbmJe8ZE7N0p_utWucyw+3mp1Qrb0bQEKcJPmwNFtVA_g@mail.gmail.com>
- <CALT56yOT_U9jVkhTP=zZu-32B4pta5zaJocn9695N7ari4cFyQ@mail.gmail.com>
- <be4038e1-a578-4439-a9bf-e936484c64cc@app.fastmail.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rabn2-0004XR-So
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 08:28:36 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rabn1-0004ni-DJ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 08:28:36 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-562178003a1so1082759a12.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 05:28:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708003713; x=1708608513; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xv9D61ihW9+zNcqu4fMkz7lbwoA5M0MKjWkLl/a3sH4=;
+ b=b1dmyyyu+6CtctGkew9IBvvJvdKHPrnMpvQQCfsPmQJzyONl/gHXaJsR/OyVrKkQB9
+ sIgPOqk1tmtTUyRvU7NHdhEtJEHjJ/Ta+MtT+RpW35EFOLYoA3J12Cp0DpwnFUEb1u5/
+ BTJS88VhGvgOXxQHUtBberzF/fwFdkjUzZh4lRZq4eb8j1WMBblEx1Zr0WF90hzKRGMP
+ 3Md0sVZvO6W7ogvnM6GYI3vHvo00fFnhRklon3sp1SeyTqk35onfnqjljQQ72oMS9lO/
+ QtdDazEM0quOB+5/VZesMHhbmKaPwyTpPa4hcR8WFO+H7zSUiLL4C65naopYxotCqTFo
+ cgzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708003713; x=1708608513;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xv9D61ihW9+zNcqu4fMkz7lbwoA5M0MKjWkLl/a3sH4=;
+ b=A3JZpzjDpriNnEPg2uHEiXwoffICq4OeZcdTmyQdpz9MgvgZIJjm5qxjhnK7X7bzLd
+ zeY9u6qYGvl5kur5RnftVBlUNIrGrXmdDMDSKnOYmBYxJO3Bsx6bK6zyqMaT1ypjdp2W
+ AE7jDDlG5bPVdefutxw2ANuNPcXyMt3qbZaBwbQjspJZERoHVGhg88OgaQaGoR9VpI8i
+ LyeFea/67mwd3x5zjxKsJPquHQPQommZtDeRv4Wt3LIQ6AeJkHAu3Pkis533mrzIsIKA
+ ZaOX97oMPdHDU/gmqbbmEeC1fySbYpZ5FlVKyv12ONEre4znW5vhKM4MpE2Dr9oGUHgO
+ G6aA==
+X-Gm-Message-State: AOJu0YyW+D3/wo/XMHgAZf5YVMRaH8bpZm0qLbe5IvaPb/M/ZXaPqrCK
+ ghX0hCVj9ncM45z/xY+waoPUPBPWON/hKoFDDPUbqU4kvtYdXVbEiN1muIhbDKPbPHUp5CNby2K
+ QAYA=
+X-Google-Smtp-Source: AGHT+IHRZG0uVLMUnAkSkwbNrAkhOBtL58gXaYgZEbJ2Qf+znEYKLmwo0vWWQnl/+hBxPY+BxyTXIA==
+X-Received: by 2002:aa7:d354:0:b0:560:463:8cd7 with SMTP id
+ m20-20020aa7d354000000b0056004638cd7mr1368500edr.34.1708003713718; 
+ Thu, 15 Feb 2024 05:28:33 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.193.50])
+ by smtp.gmail.com with ESMTPSA id
+ ek5-20020a056402370500b00560c07f986asm538071edb.58.2024.02.15.05.28.32
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 15 Feb 2024 05:28:33 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ qemu-trivial@nongnu.org, Fabien Chouteau <chouteau@adacore.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/2] hw/sparc/leon3: Remove unused 'env' argument of
+ write_bootloader()
+Date: Thu, 15 Feb 2024 14:28:23 +0100
+Message-ID: <20240215132824.67363-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240215132824.67363-1-philmd@linaro.org>
+References: <20240215132824.67363-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a02:c205:3004:2154::1;
- envelope-from=andreas@kemnade.info; helo=mail.andi.de1.cc
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 15 Feb 2024 08:28:07 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,45 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Feb 2024 23:42:58 +0100
-"Arnd Bergmann" <arnd@arndb.de> wrote:
+'CPUSPARCState *env' argument is unused, remove it.
 
-> On Wed, Feb 14, 2024, at 13:26, Dmitry Baryshkov wrote:
-> > On Tue, 13 Feb 2024 at 23:22, Linus Walleij <linus.walleij@linaro.org> =
-wrote: =20
-> >> On Tue, Feb 13, 2024 at 9:12=E2=80=AFPM Arnd Bergmann <arnd@arndb.de> =
-wrote: =20
-> >> > On Tue, Feb 13, 2024, at 16:36, Guenter Roeck wrote: =20
-> >> > > On Tue, Feb 13, 2024 at 03:14:21PM +0000, Peter Maydell wrote: =20
-> >>
-> >> Andrea Adami and Dmitry Eremin-Solenikov did the work in 2017 to
-> >> modernize it a bit, and Russell helped out. I was under the impression
-> >> that they only used real hardware though! =20
-> >
-> > I used both Qemu and actual hardware (having collie, poodle, tosa and
-> > c860 that was easy).
-> >
-> > The biggest issue with Zaurus PDAs was that supporting interesting
-> > parts of the platform (PCMCIA, companion chips) required almost
-> > rebootstrapping of the corresponding drivers.
-> > E.g. I had a separate driver for the LoCoMo chip which worked properly
-> > with the DT systems.
-> > PCMCIA was a huuuge trouble and it didn't play well at all. The driver
-> > must be rewritten to use the component framework. =20
->=20
-> If we want to actually go there, I think the best option for PCMCIA
-> support is likely to replace the entire "soc_common" pcmcia driver
-> with a simple drivers/pata/ storage driver and no support for
-> other cards. There was a driver until commit 38943cbd25a2
-> ("ata: remove palmld pata driver") that could serve as an
-> template.
->=20
-hmm, main usage for PCMCIA/CF in those devices was often something else,
-not storage, at least on the IPAQ h2200. Wondering wether that road is
-actually good. When I was mainly using those devices, I was not good in
-mainlining things.
-I loved that daylight-visible display.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sparc/leon3.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Regards,
-Andreas=20
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 2dfb742566..d096fb04cb 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -94,8 +94,7 @@ static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
+  * state (eg: initialized by the bootloader). This little code reproduces
+  * this behavior.
+  */
+-static void write_bootloader(CPUSPARCState *env, uint8_t *base,
+-                             hwaddr kernel_addr)
++static void write_bootloader(uint8_t *base, hwaddr kernel_addr)
+ {
+     uint32_t *p = (uint32_t *) base;
+ 
+@@ -342,7 +341,7 @@ static void leon3_generic_hw_init(MachineState *machine)
+             uint8_t *bootloader_entry;
+ 
+             bootloader_entry = memory_region_get_ram_ptr(prom);
+-            write_bootloader(env, bootloader_entry, entry);
++            write_bootloader(bootloader_entry, entry);
+             env->pc = LEON3_PROM_OFFSET;
+             env->npc = LEON3_PROM_OFFSET + 4;
+             reset_info->entry = LEON3_PROM_OFFSET;
+-- 
+2.41.0
+
 
