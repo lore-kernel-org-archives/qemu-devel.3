@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07CECC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE2EDC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafep-0000HG-Ug; Thu, 15 Feb 2024 12:36:24 -0500
+	id 1rafex-0000eH-NQ; Thu, 15 Feb 2024 12:36:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeL-0007z8-Q2
+ id 1rafeL-0007z9-UF
  for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:54 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeG-0003xt-MH
+ id 1rafeG-0003xN-Lk
  for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:53 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3392b045e0aso687071f8f.2
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d0cdbd67f0so15801341fa.3
  for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018547; x=1708623347; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018546; x=1708623346; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OMq3Oiu8MVXVSj6SjndbT1ne8mFYQDhWUWbGPd/yiL0=;
- b=Tm8XQY5f7N/aFnaCXBxs2O/TBaTCRHcTOg5CAd3ebM4G8FX8kIeV5jUAy2nUw3HKdx
- rO/msKlvMK543R9CWzyRXEnC/YB7UR6Gd3SxBHtItPHn+i9vEtyNEcbeaQqXk5gazyVu
- Zhm+iWMIJ8P4aYhnU2y4bh2D0ahvD2TIIBsP5FWzOSohd2aTVq6+y1U4iFeNJhC3cQBO
- Tx9SOmtK0T8Cz8OBTUEiuZfyxm3T3ybaF6810jsY/BGmE70AASi1gn6VpITmWuyrtV4N
- K7Ek1xR2UhZYfonh3uyeVIR0455pz+PGovx3NcH32XjXHOUomIBRsSpgGqnFT81DkG6b
- 0glQ==
+ :reply-to; bh=t74q4lHJfmRE6xLpC3azh8koFmuAF2w+Csg2/m3aH1I=;
+ b=yyUzQUMdy9t8P7Go1WZnnq1xpJsG78l+1A+zRn/vpsuTvbfOYNSLqT60EMJ9wlNhbI
+ GuSE0CC78xckj4xY7ZeSob1QnVLbXRbAGuoTD0uTT2KjBPETfLDfAjT20nldWHWxz3w7
+ TLUmHMKCPk4KB4XQx1foUp88gaEHnYwCkiO6QvPvWCtZHqXEVyohDzCErFgwsrIJtHN6
+ 2fWcrkVyoGklPi3Sc4QC4ovlZV5NNxuec5hxVz2QrnhX754tsazkBbt5l7iy9W1Sr+tC
+ baTwBg/f4YaPvyGrlhwGqB/65YcM/ND6AdMVK1yvRoUjxHCnqr7YRIRFlUy/ZjxegHsN
+ 5zEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018547; x=1708623347;
+ d=1e100.net; s=20230601; t=1708018546; x=1708623346;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OMq3Oiu8MVXVSj6SjndbT1ne8mFYQDhWUWbGPd/yiL0=;
- b=tec5j2cVItsC1bEMDN4v5kRXIZjRlA4qLpU/pt5CJryqbJ9Tfe5j8XWOIPpTcpBWXx
- UNSyRPZloUitD3OxuLaDbSUdHqnYhs32obKuMwGcdmM9hS6vuw6tFpn2t/aIMruH0Dz9
- Dq3caFgDencthIxac8xLRB9wk/CEJ7lt1kCq11fQhWWPj//LtHEiTRhrny6LtuUPQJGk
- wVHdlzSj7u5oUVZ8xGeX25qCdIQA6zi9NtxmMsw+HYjd/y0HmmmRBw2sKgOveY9EzQ9k
- ZRqol8iFAkNZMBih0Cow3Z8XBFViGQwewk6RAIEnlH58hnCvo+4iCNlaUV/hwtH6b6Of
- Owbw==
-X-Gm-Message-State: AOJu0Ywr7WjaP07pFKzxqnmvmc8q9xtMa8HeZ7XaMc0aWVtZMS0GQAf9
- 1oKLfuOk7fNnVDb1h9UCtpybzhb7gSU/UjGD1GVh/I/Cc7qtNwU2gP0QjZvVv7i30BrXV/NRZjh
- I
-X-Google-Smtp-Source: AGHT+IH7ya+ABd33GHOoGjQi+HxEwa5NcrXNUllADO+BrQr3K0rj16xnE6JZeNQ88NBN73FIcMUOFQ==
-X-Received: by 2002:adf:cc86:0:b0:33b:26d7:e6dd with SMTP id
- p6-20020adfcc86000000b0033b26d7e6ddmr2037072wrj.48.1708018546972; 
+ bh=t74q4lHJfmRE6xLpC3azh8koFmuAF2w+Csg2/m3aH1I=;
+ b=SoHSXZssf9uxNHL5DJooWLd4zjoa3zAiaKGGs5kx86ovNDRGvIVXA/H+SvSg3aujVI
+ GjIvyywlxdTxZiBMLgnwy3KJZvdbhd36acI0Irp1ytnA2jI1FuD9sZ0fNEKwe8vSZCVB
+ WLrIW4L6cwP/yTFrFlfqdTpAg/wAr/FOsTInTf5MtfFQgfRyc/3JvmWLWEcS1XV8JNLI
+ YU4r5TgGhARXEBtzR2keWiuUQQPWK+6M2YeQaVrx1cSK8oQvChibFF+UQNB6nVxAUCdM
+ mwlNwKCyYNVoYhIxRSvhwIZUHX61HoU+MDKxPl8zMQfCy5bS7CkmNap7I+0XiwPasHE7
+ MaKA==
+X-Gm-Message-State: AOJu0YyWZY2c/XwATRJRYQ0et1iot3LsrbXXuZf9RlO2XjzZfwOJVfGb
+ RT3vkY9pP+cAWlcGPpWKAgK1DYRIejuu+wRThY7qBNMeyXA/mAph6eO3Ukwpl+vws/BfYZFNWTT
+ 9
+X-Google-Smtp-Source: AGHT+IETiigBd7kSnUWzNet5IAI2ZE5oDfzOIv1Vl0JLgqQifCrW5vpaq8NElj19/fphbm96yaUCyw==
+X-Received: by 2002:a2e:80da:0:b0:2d0:9fb2:2c79 with SMTP id
+ r26-20020a2e80da000000b002d09fb22c79mr2135678ljg.3.1708018546072; 
  Thu, 15 Feb 2024 09:35:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.46
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:46 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:45 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/35] tests/qtest: Fix GMAC test to run on a machine in
- upstream QEMU
-Date: Thu, 15 Feb 2024 17:35:20 +0000
-Message-Id: <20240215173538.2430599-18-peter.maydell@linaro.org>
+Subject: [PULL 15/35] tests/qtest/npcm7xx_emc-test: Connect all NICs to a
+ backend
+Date: Thu, 15 Feb 2024 17:35:18 +0000
+Message-Id: <20240215173538.2430599-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,164 +94,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
+Currently QEMU will warn if there is a NIC on the board that
+is not connected to a backend. By default the '-nic user' will
+get used for all NICs, but if you manually connect a specific
+NIC to a specific backend, then the other NICs on the board
+have no backend and will be warned about:
 
-Fix the nocm_gmac-test.c file to run on a nuvoton 7xx machine instead
-of 8xx. Also fix comments referencing this and values expecting 8xx.
+qemu-system-arm: warning: nic npcm7xx-emc.1 has no peer
+qemu-system-arm: warning: nic npcm-gmac.0 has no peer
+qemu-system-arm: warning: nic npcm-gmac.1 has no peer
 
-Change-Id: Iabd0fba14910c3f1e883c4a9521350f3db9ffab8
-Signed-Off-By: Nabih Estefan <nabihestefan@google.com>
-Reviewed-by: Tyrone Ting <kfting@nuvoton.com>
-Message-id: 20240208194759.2858582-2-nabihestefan@google.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: commit message tweaks]
+So suppress those warnings by manually connecting every NIC
+on the board to some backend.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20240206171231.396392-3-peter.maydell@linaro.org
 ---
- tests/qtest/npcm_gmac-test.c | 84 +-----------------------------------
- tests/qtest/meson.build      |  3 +-
- 2 files changed, 4 insertions(+), 83 deletions(-)
+ tests/qtest/npcm7xx_emc-test.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/npcm_gmac-test.c b/tests/qtest/npcm_gmac-test.c
-index 9e58b15ca1c..c28b471ab20 100644
---- a/tests/qtest/npcm_gmac-test.c
-+++ b/tests/qtest/npcm_gmac-test.c
-@@ -36,7 +36,7 @@ typedef struct TestData {
-     const GMACModule *module;
- } TestData;
+diff --git a/tests/qtest/npcm7xx_emc-test.c b/tests/qtest/npcm7xx_emc-test.c
+index f7646fae2c9..63f6cadb5cc 100644
+--- a/tests/qtest/npcm7xx_emc-test.c
++++ b/tests/qtest/npcm7xx_emc-test.c
+@@ -228,7 +228,10 @@ static int *packet_test_init(int module_num, GString *cmd_line)
+      * KISS and use -nic. The driver accepts 'emc0' and 'emc1' as aliases
+      * in the 'model' field to specify the device to match.
+      */
+-    g_string_append_printf(cmd_line, " -nic socket,fd=%d,model=emc%d ",
++    g_string_append_printf(cmd_line, " -nic socket,fd=%d,model=emc%d "
++                           "-nic user,model=npcm7xx-emc "
++                           "-nic user,model=npcm-gmac "
++                           "-nic user,model=npcm-gmac",
+                            test_sockets[1], module_num);
  
--/* Values extracted from hw/arm/npcm8xx.c */
-+/* Values extracted from hw/arm/npcm7xx.c */
- static const GMACModule gmac_module_list[] = {
-     {
-         .irq        = 14,
-@@ -46,14 +46,6 @@ static const GMACModule gmac_module_list[] = {
-         .irq        = 15,
-         .base_addr  = 0xf0804000
-     },
--    {
--        .irq        = 16,
--        .base_addr  = 0xf0806000
--    },
--    {
--        .irq        = 17,
--        .base_addr  = 0xf0808000
--    }
- };
- 
- /* Returns the index of the GMAC module. */
-@@ -182,32 +174,18 @@ static uint32_t gmac_read(QTestState *qts, const GMACModule *mod,
-     return qtest_readl(qts, mod->base_addr + regno);
- }
- 
--static uint16_t pcs_read(QTestState *qts, const GMACModule *mod,
--                          NPCMRegister regno)
--{
--    uint32_t write_value = (regno & 0x3ffe00) >> 9;
--    qtest_writel(qts, PCS_BASE_ADDRESS + NPCM_PCS_IND_AC_BA, write_value);
--    uint32_t read_offset = regno & 0x1ff;
--    return qtest_readl(qts, PCS_BASE_ADDRESS + read_offset);
--}
--
- /* Check that GMAC registers are reset to default value */
- static void test_init(gconstpointer test_data)
- {
-     const TestData *td = test_data;
-     const GMACModule *mod = td->module;
--    QTestState *qts = qtest_init("-machine npcm845-evb");
-+    QTestState *qts = qtest_init("-machine npcm750-evb");
- 
- #define CHECK_REG32(regno, value) \
-     do { \
-         g_assert_cmphex(gmac_read(qts, mod, (regno)), ==, (value)); \
-     } while (0)
- 
--#define CHECK_REG_PCS(regno, value) \
--    do { \
--        g_assert_cmphex(pcs_read(qts, mod, (regno)), ==, (value)); \
--    } while (0)
--
-     CHECK_REG32(NPCM_DMA_BUS_MODE, 0x00020100);
-     CHECK_REG32(NPCM_DMA_XMT_POLL_DEMAND, 0);
-     CHECK_REG32(NPCM_DMA_RCV_POLL_DEMAND, 0);
-@@ -257,64 +235,6 @@ static void test_init(gconstpointer test_data)
-     CHECK_REG32(NPCM_GMAC_PTP_TAR, 0);
-     CHECK_REG32(NPCM_GMAC_PTP_TTSR, 0);
- 
--    /* TODO Add registers PCS */
--    if (mod->base_addr == 0xf0802000) {
--        CHECK_REG_PCS(NPCM_PCS_SR_CTL_ID1, 0x699e);
--        CHECK_REG_PCS(NPCM_PCS_SR_CTL_ID2, 0);
--        CHECK_REG_PCS(NPCM_PCS_SR_CTL_STS, 0x8000);
--
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_CTRL, 0x1140);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_STS, 0x0109);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_DEV_ID1, 0x699e);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_DEV_ID2, 0x0ced0);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_AN_ADV, 0x0020);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_LP_BABL, 0);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_AN_EXPN, 0);
--        CHECK_REG_PCS(NPCM_PCS_SR_MII_EXT_STS, 0xc000);
--
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_ABL, 0x0003);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_LWR, 0x0038);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_UPR, 0);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_LWR, 0x0038);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_UPR, 0);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_LWR, 0x0058);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_UPR, 0);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_LWR, 0x0048);
--        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_UPR, 0);
--
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MMD_DIG_CTRL1, 0x2400);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_AN_CTRL, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_AN_INTR_STS, 0x000a);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_TC, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_DBG_CTRL, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_MCTRL0, 0x899c);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_TXTIMER, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_RXTIMER, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_LINK_TIMER_CTRL, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_MCTRL1, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_DIG_STS, 0x0010);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_ICG_ERRCNT1, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MISC_STS, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_RX_LSTS, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_BSTCTRL0, 0x00a);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_LVLCTRL0, 0x007f);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_GENCTRL0, 0x0001);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_GENCTRL1, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_STS, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_RX_GENCTRL0, 0x0100);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_RX_GENCTRL1, 0x1100);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_RX_LOS_CTRL0, 0x000e);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MPLL_CTRL0, 0x0100);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MPLL_CTRL1, 0x0032);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MPLL_STS, 0x0001);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MISC_CTRL2, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_LVL_CTRL, 0x0019);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MISC_CTRL0, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MISC_CTRL1, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_DIG_CTRL2, 0);
--        CHECK_REG_PCS(NPCM_PCS_VR_MII_DIG_ERRCNT_SEL, 0);
--    }
--
-     qtest_quit(qts);
- }
- 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 663338ae124..2b89e8634be 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -192,7 +192,8 @@ qtests_npcm7xx = \
-    'npcm7xx_sdhci-test',
-    'npcm7xx_smbus-test',
-    'npcm7xx_timer-test',
--   'npcm7xx_watchdog_timer-test'] + \
-+   'npcm7xx_watchdog_timer-test',
-+   'npcm_gmac-test'] + \
-    (slirp.found() ? ['npcm7xx_emc-test'] : [])
- qtests_aspeed = \
-   ['aspeed_hace-test',
+     g_test_queue_destroy(packet_test_clear, test_sockets);
 -- 
 2.34.1
 
