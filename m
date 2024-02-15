@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D3F4C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962F8C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafex-0000fl-W5; Thu, 15 Feb 2024 12:36:32 -0500
+	id 1rafeD-0007ux-Ie; Thu, 15 Feb 2024 12:35:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeR-000851-2U
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:00 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1rafeB-0007uO-Rn
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:43 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeC-0003ut-Br
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:58 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-33b2960ff60so1265659f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:43 -0800 (PST)
+ id 1rafe9-0003tf-PC
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:43 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41202eae372so9216705e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018542; x=1708623342; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018540; x=1708623340; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nwxkhpG8dtYdQVg6oQayFhjJNiCTSEIeqskFAgqh8XM=;
- b=ZeKWKg4q6dfdLcjdc50DNyMn0aQ9INFKNa15YgJiB8skTo8XsdT0Ld+kwDcygNyoMO
- oVfXBoaYsh/fgL+jgoJXA1eNuQgQLeFCaFmHdI7q1CFvLIu4S1IFU1m0dZcYHXXVXDCw
- Df/P6Xw/zYqEKxAQD5G4m/dZFKQsjh2KjMDNA1roVFBSR/5Wv4QAqIlENy+nmpXXb+1g
- TdlPf8VXpdMEkePTLh4baf2AE61Z24HN6BdeG2+eDngVcetcOCnZjyVCkj/o4MLTWgKP
- RHvE+cVOd1pplXa/pEAtG0Xq947bnk3n7rSeX8QDBb1q8/D7yA2B00+XA3zIoKr/fz3m
- Jvsw==
+ :reply-to; bh=gdK902k3mV/+S1hCWShYjttM//ciaEE1vsEEQ2RlFOg=;
+ b=DTrWRloIUVzK8uvonH9TuEYLHga5LzQI5RxWwIqRyajeFjAPd1PmDvKORFuPmmO9ww
+ UAJIEOmpLxk6U9BNlIvwZwfEZjzuvSbGwf17IL+DvgFcXszlR8Vr7sNThcCU/fFP6JtR
+ 08XVuV5gkEnEPVQPQHd5LyHXwKoJvDOFMkxTlZffFOCnUv4TbLf25tLJHeTQARvAjEZS
+ VvnCTDjhHf9Zk7hFxfydsZKPfvacqazvGSjHSDvRZwcaP7FgwdYadki+mQUh7Yr2dUpG
+ rvKhYPknrdDqoDJO0P5jH/pqLRXYFDF4W2KwIDtlZk/a3CTX658CXnQbQSXVaeTVldv3
+ rCWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018542; x=1708623342;
+ d=1e100.net; s=20230601; t=1708018540; x=1708623340;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nwxkhpG8dtYdQVg6oQayFhjJNiCTSEIeqskFAgqh8XM=;
- b=uhv8V741iv9u1PofQqHbFIEQo1Z8MLgs8HN6juZatfoSpIky+rHQlH0KmIi30xGO2b
- GVa54DeUZhUCfo2+zGfU+scEB26zoDOBRJt+bSbXzqWbaSYoro/TUCHCd3ja5q4EDihZ
- f5/0Nra4QMqNtvPpMTzEQFx7d/ioR6K6AlK9ewhSj+mbTrxfwsY6MtYln8ZVBuh71Ls3
- 91bHUB9grYZ6EcxeVXGWoBs8rMVKTlUC9oqt9xbkEdv/chc7Pf6QOGlvz/334wUJdzKk
- IqgSBc2beFqNxCr/Oi3MBUvo0WTkLJB7Hcfcn2ADFIC8oX/NSaKeVZd2E06ph1h3Nw+E
- Lekg==
-X-Gm-Message-State: AOJu0Yxo5yRCWZJXCFQWZ6S1iZuZTCCnZnrTlliPrA2yeNNcVSdMpn9s
- D3CZMm+XEbZKLvtP0+O6Opa6jkAfEsdxCxVlXpSN9D2pxwQ0V8zyuOXq38EjW+rVfA69dN8OxKr
- Q
-X-Google-Smtp-Source: AGHT+IEyZZ3SAx7V3z7ENaq4PyKxB0xp5PMTM23ISIgE/T94fzhCCgJ7k2bCt7kHawBBAkNvgXALhg==
-X-Received: by 2002:a5d:40c8:0:b0:33c:ef57:ef02 with SMTP id
- b8-20020a5d40c8000000b0033cef57ef02mr5104304wrq.17.1708018542798; 
- Thu, 15 Feb 2024 09:35:42 -0800 (PST)
+ bh=gdK902k3mV/+S1hCWShYjttM//ciaEE1vsEEQ2RlFOg=;
+ b=InWUDgiliTBEV45wZiTuyEZBj9kTjg6E51f/BKmysiljkDkoEbgbPPk5zGQNLxDuJv
+ TpgNfs7geD9YD23n4LFVaglemeedQLcE3zQKgm+SOIW26QL4Zx1goDba3RquKuuWfUiw
+ jKl9jkIIWeaQxGlDzTEVUeR9rCJro2eH5ubCNcoXKAd+5l2ig2C+gVF68b/EwwpALaXF
+ YtmlS1KfV3JXdXKZp+39n7CNhngHK40feOKVpoON9eoJ/n7oCr9sZ8Is3Kq+NUTBVclX
+ +LoR/mK8DWr1w33AR91hHeG2kvGhknYFpxBAyFJhCnglvKL4hJDXIc2RY2eNJN0gGiOB
+ DqEQ==
+X-Gm-Message-State: AOJu0YxVLJTkwZ/C6vfKVEEV9HlIQJOaE7XJUmfrP0XwqHhsYH8Qtgrd
+ YOe76IRSrueqUkX2KQP0W10xb8dMGM0XdbVccLb8X6hk5cRCQAPX56npNix/DpTMD+RzuQNfRpG
+ l
+X-Google-Smtp-Source: AGHT+IED+GoFtSaRxuqsb2GMFmVQqRhCjpC7uHVBBptH6em8wz/hWXoVSF9jND+8TX/SU+Z/d/OSlw==
+X-Received: by 2002:a5d:5258:0:b0:33a:ff6f:744e with SMTP id
+ k24-20020a5d5258000000b0033aff6f744emr1869868wrc.18.1708018540274; 
+ Thu, 15 Feb 2024 09:35:40 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.42
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:42 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/35] target/arm: Fix SVE/SME gross MTE suppression checks
-Date: Thu, 15 Feb 2024 17:35:10 +0000
-Message-Id: <20240215173538.2430599-8-peter.maydell@linaro.org>
+Subject: [PULL 01/35] hw/arm/xilinx_zynq: Wire FIQ between CPU <> GIC
+Date: Thu, 15 Feb 2024 17:35:04 +0000
+Message-Id: <20240215173538.2430599-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,84 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The TBI and TCMA bits are located within mtedesc, not desc.
+Similarly to commits dadbb58f59..5ae79fe825 for other ARM boards,
+connect FIQ output of the GIC CPU interfaces to the CPU.
 
-Cc: qemu-stable@nongnu.org
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240130152548.17855-1-philmd@linaro.org
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20240207025210.8837-7-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sme_helper.c |  8 ++++----
- target/arm/tcg/sve_helper.c | 12 ++++++------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ hw/arm/xilinx_zynq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 1ee2690ceb5..904bfdac43e 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -573,8 +573,8 @@ void sme_ld1_mte(CPUARMState *env, void *za, uint64_t *vg,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index a41a118346b..fc3abcbe88b 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -243,6 +243,8 @@ static void zynq_init(MachineState *machine)
+     sysbus_mmio_map(busdev, 0, MPCORE_PERIPHBASE);
+     sysbus_connect_irq(busdev, 0,
+                        qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_IRQ));
++    sysbus_connect_irq(busdev, 1,
++                       qdev_get_gpio_in(DEVICE(cpu), ARM_CPU_FIQ));
  
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
-@@ -750,8 +750,8 @@ void sme_st1_mte(CPUARMState *env, void *za, uint64_t *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
- 
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index bce4295d28b..6853f58c194 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5800,8 +5800,8 @@ void sve_ldN_r_mte(CPUARMState *env, uint64_t *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
- 
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
-@@ -6156,8 +6156,8 @@ void sve_ldnfff1_r_mte(CPUARMState *env, void *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
- 
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
-@@ -6410,8 +6410,8 @@ void sve_stN_r_mte(CPUARMState *env, uint64_t *vg, target_ulong addr,
-     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
- 
-     /* Perform gross MTE suppression early. */
--    if (!tbi_check(desc, bit55) ||
--        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
-+    if (!tbi_check(mtedesc, bit55) ||
-+        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
-         mtedesc = 0;
-     }
- 
+     for (n = 0; n < 64; n++) {
+         pic[n] = qdev_get_gpio_in(dev, n);
 -- 
 2.34.1
 
