@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65FC9C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF24C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXIA-00086d-9t; Thu, 15 Feb 2024 03:40:26 -0500
+	id 1raXLN-00018v-4s; Thu, 15 Feb 2024 03:43:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXI7-00083A-Hx
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:40:23 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXI2-0000B4-9W
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:40:23 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-33aea66a31cso312083f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 00:40:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707986416; x=1708591216; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gKl7kb+JeFYkzIuL7BAqCk9yiLY+dKXVUwicIE8Mz5U=;
- b=kAv8GL4atHHRa6+xkRI45hH/gcFdsGfsttKKNuaUYsD/WvcE+HxekpGMcnJyfXgnJv
- ne/HvRoNZmGSJ5MzbEwQm73nuxFLShUqh7yHr0w07YiaTiN3rp+AL4OqUzGSLY77uQfK
- Fr7/y09qpnm1u++IUhFKaekBDEK48VlVPrqKEwOMnKmVskxcvBcGQGSr0rVE6L43oIeJ
- pI2Ka/3/GvM21+rhfBr6hDZV7XeMarjSEbf9ghZL+Thh9e2xjb760UpThh0qOn/uT0Dg
- eVbCKON9w8aAbaETZukXi6ZbESXKjNT4fCc9ASIPRCHsktSYnr7B5Fw6S6s5dVob41+4
- hWFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707986416; x=1708591216;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gKl7kb+JeFYkzIuL7BAqCk9yiLY+dKXVUwicIE8Mz5U=;
- b=Cy+6226m7An+1mlP/sPvDX58fbUu36F5LDTuJn+mG40YaHK5zTJmRbugWOGza4Ks2z
- WrAPJekQRzWmfX2wD+9mGW8DRUcfj2jsj7I2T+vzjAqbjNmmPLzkcNMZw9P9HytaPnit
- DDgcIVaVe0l5ypaUJBeEibCYA3NCM8vzjTSLsJL6OgOV9Y/w9NRlt4+MaHfB58L8m9r1
- 3DKYyEkMBnKg6Ja/UzAIoa+uI4hrUO9Rv6YTsFXSuxcBWZi/9Eyi8mugJcTBh4A81+YK
- n/aKSXLbHDGaYr014r6by1N4x2yq4N6ShjdXe/wZG6FCxBO9c8SYasZVQs+MeRXdy8XW
- Ny9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDLIJtd6McbpKVgEsN5wrMCIOfM2S/2zj4P5T+dWGMR6dsFE1Ni7n7g994Yd9pys6aQvrstMEpjhBA52eVDSnyihr4ues=
-X-Gm-Message-State: AOJu0YwiLEzedZyqUldeVo0tUI4QI3tnPaXurtM0Nq2iGBCNTWMlXBn0
- ZlJ5cu+nOxsUN2sZ0nQu6F5zL+xK4h+7T4HCpKPrjoL99ZMj/ezYkqsKaH8OvfU=
-X-Google-Smtp-Source: AGHT+IHzutJY2RinbqFlQBB3WEczGAh+5abpXDsqtWWQefPDreuD0IhI138TEJuCcCRA0l3WzmTiFA==
-X-Received: by 2002:a5d:6106:0:b0:33c:e0a7:dd05 with SMTP id
- v6-20020a5d6106000000b0033ce0a7dd05mr747347wrt.27.1707986416363; 
- Thu, 15 Feb 2024 00:40:16 -0800 (PST)
-Received: from [192.168.124.175] (14.red-88-28-17.dynamicip.rima-tde.net.
- [88.28.17.14]) by smtp.gmail.com with ESMTPSA id
- bu3-20020a056000078300b0033b198efbedsm1060483wrb.15.2024.02.15.00.40.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 00:40:15 -0800 (PST)
-Message-ID: <cea06f88-e79e-41cb-bb70-6d05937a78c0@linaro.org>
-Date: Thu, 15 Feb 2024 09:40:12 +0100
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1raXLI-00018C-CV
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:43:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1raXLG-0001F2-Rs
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:43:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707986618;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qTDP635O3rFuA54PetQfruYqv8ZMSnd1Lx/gmGu1pDA=;
+ b=MffuVIcDrAMk6qTojnRbQd7JxW/gCeBvjHRfobuUNzRnTFa4uhoUjOclMm0BDHqpSZDZcj
+ LUFQdwAMJu9RJLyTYNiz9OXCEXHSyCd8pM9iL0dVBkhgaU0XXW5YXJ9CTDuGpxE2YEwmh+
+ MdftxT7+FCugLIarYD80NmQVf+Z2O6I=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-490-D3YyCsPsPXWCsgE6BrzbxQ-1; Thu, 15 Feb 2024 03:43:36 -0500
+X-MC-Unique: D3YyCsPsPXWCsgE6BrzbxQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 182D785CBA3;
+ Thu, 15 Feb 2024 08:43:36 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.193.101])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 24D75AC0F;
+ Thu, 15 Feb 2024 08:43:33 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, jean-philippe@linaro.org, mst@redhat.com,
+ peter.maydell@linaro.org, clg@redhat.com, zhenzhong.duan@intel.com,
+ yanghliu@redhat.com
+Cc: alex.williamson@redhat.com,
+	jasowang@redhat.com
+Subject: [PATCH v5 4/4] qemu-options.hx: Add an entry for virtio-iommu-pci and
+ document aw-bits
+Date: Thu, 15 Feb 2024 09:42:14 +0100
+Message-ID: <20240215084315.863897-5-eric.auger@redhat.com>
+In-Reply-To: <20240215084315.863897-1-eric.auger@redhat.com>
+References: <20240215084315.863897-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/10] util/bufferiszero: Simplify
- test_buffer_is_zero_next_accel
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: amonakov@ispras.ru, mmromanov@ispras.ru
-References: <20240215081449.848220-1-richard.henderson@linaro.org>
- <20240215081449.848220-9-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240215081449.848220-9-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,62 +87,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/2/24 09:14, Richard Henderson wrote:
-> Because the three alternatives are monotonic, we don't
-> need to keep a couple of bitmasks, just identify the
-> strongest alternative at startup.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   util/bufferiszero.c | 56 ++++++++++++++++++---------------------------
->   1 file changed, 22 insertions(+), 34 deletions(-)
+We are missing an entry for the virtio-iommu-pci device. Add the
+information on which machine it is currently supported and document
+the new aw-bits option.
 
-enum {
-   ACCEL_DEFAULT,
-   ACCEL_SSE2,
-   ACCEL_AVX2,
-};
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-> +static biz_accel_fn const accel_table[] = {
+---
 
-   [ACCEL_DEFAULT] =
+v4 -> v5
+- tweek the aw-bits option description according to Cédric's
+  suggestion
+---
+ qemu-options.hx | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> +    buffer_is_zero_int_ge256,
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 8547254dbf..a98bc7bd60 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1172,6 +1172,14 @@ SRST
+     Please also refer to the wiki page for general scenarios of VT-d
+     emulation in QEMU: https://wiki.qemu.org/Features/VT-d.
+ 
++``-device virtio-iommu-pci[,option=...]``
++    This is only supported by ``-machine q35`` and ``-machine virt``.
++    It supports below options:
++
++    ``aw-bits=val`` (val between 32 and 64, default depends on machine)
++        This decides the address width of IOVA address space. It defaults
++        to 39 bits on q35 machines and 48 bits on ARM virt machines.
++
+ ERST
+ 
+ DEF("name", HAS_ARG, QEMU_OPTION_name,
+-- 
+2.41.0
 
-   [ACCEL_SSE2] =
-
-> +    buffer_zero_sse2,
->   #ifdef CONFIG_AVX2_OPT
-
-   [ACCEL_AVX2] =
-
-> +    buffer_zero_avx2,
->   #endif
-
-
-> +static unsigned accel_index;
->   
->   static void __attribute__((constructor)) init_accel(void)
->   {
-> -    used_accel = select_accel_cpuinfo(cpuinfo_init());
-> +    unsigned info = cpuinfo_init();
-> +    unsigned index = (info & CPUINFO_SSE2 ? 1 : 0);
-
-   ... ? ACCEL_SSE2 : ACCEL_DEFAULT;
-
-> +
-> +#ifdef CONFIG_AVX2_OPT
-> +    if (info & CPUINFO_AVX2) {
-> +        index = 2;
-
-   ... = ACCEL_AVX2
-
-> +    }
-> +#endif
-> +
-> +    accel_index = index;
-> +    buffer_is_zero_accel = accel_table[index];
->   }
-Preferably introducing accel enum:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
