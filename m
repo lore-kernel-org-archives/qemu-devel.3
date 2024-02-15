@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ED3BC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 204E6C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafvu-0007j1-KA; Thu, 15 Feb 2024 12:54:02 -0500
+	id 1rafzr-0001CJ-NN; Thu, 15 Feb 2024 12:58:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafvt-0007ie-OD
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:54:01 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafzq-0001AJ-J4
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:06 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafvs-0000XB-37
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:54:01 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-411e71d8a2bso8298265e9.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:53:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafzo-0001Pq-Sw
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:58:06 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41223e0777dso5675385e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:58:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019638; x=1708624438; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7D3W3q0hxEsxgAn47lR7TzgEK+IPMcBeno3/WStGTbE=;
- b=LSwtTYQ1G2RDfEfaJTAwVrmGPHcbELbBPm3kQXIoklawKMaNXKItq8i8som7BnMKZl
- cEep1HpYG8HXMeBTfUoRxJd5gQhSj+KLMJIGlzXUqWnEGMp19ILUEUJq5g3Rd0AWUt9a
- lK2Jl9r572dayuzRuD99/OKGgsZedxVlwrVJEBVLP+Kr66fgRy1A5hhxTI+kvUxqP7ww
- 8XqSVdmO+B7wNSOUyfkdc8HOv9kNs+4OQH+k8ettQP381Spu3QXjhfg8gF4BQuZ6myUK
- DS0ZdWC5qTDR0k0Ko98IkxZLpCi7UfVvKvRSAGIVv/+afQFoK04pup1DvhejGIq0v2bo
- E3Pw==
+ d=linaro.org; s=google; t=1708019882; x=1708624682; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H+IRUZ5jWxcqPuMBnPz4ZPr8dlbjAv9aNyQYimjXdkc=;
+ b=WUxqx0ZFvEEJ3erOLv7hFlEQMe6iGuRr1JjHhULd1hD64AyCifWg5fC8uvFO8er7b9
+ oHza77w0dL92X57JPMALYVhIpBHSzQ/4CmCNQqahEemaJKhhKxuM+6HN8TqFn2sMmglh
+ MKUfPrGq+nIx1koUY3Cdq2cnWDRd/lJ1r7N9z0BB58RM/dZOf1WBs4oMOsF7iBf6ZWX7
+ OluZb6ucg+hnZX6/tMEOiEDbr14fW3L+hM7QCACmghjlPH6sCOwGg5NuHNyOe5GemdjO
+ CrfvNZzegHwETp27HIXefOWYuuOpRZO22lPjo3+rqo/C0CMkJm8e8ENBIi4FHfdE1gFf
+ d44A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019638; x=1708624438;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7D3W3q0hxEsxgAn47lR7TzgEK+IPMcBeno3/WStGTbE=;
- b=lKae/XVZmAtN0sbk18cM2A6WJdX7ZVvY4xa25yK4CDCoSEr9es3uBTGXCN6NApBvKs
- h73oEvF3oaZQb8jhGD+HPOnbgevboUao1yMw2rnCKjD8dZiVfvBjGZYbCH4/lX1DUmdI
- 8o1+z9ZUIFO46yvXFOan9Lis6jrRKJb6X8aWfZ4YePpmI6JplOIidtLb0EWSRl49gN4h
- YOSFCUqjtHZSFkZGIssWzYNE3BSfwTFWfPIyW0bxIChmvZ7G1UO+SFfLFjfVbJucOAzs
- CkUbHlSkeHPxQnFKSRhFztbjLn5mW9Vox9eowW6lQNJwNtBbOv/fDvyfVK2i1vcn+DMX
- +iIA==
-X-Gm-Message-State: AOJu0YyU3AWYSFkzHiz3mmEYkw3g7cK81+zPEPDok21ShAbjBKCoS982
- z3GGpVOAUjdorfIOhaIGDSXsDtdMJeiXNpogt0lZhEcYphFP+TNaZxfv8ya8Rwp5eZ4A71H4g3v
- 4vxI=
-X-Google-Smtp-Source: AGHT+IGmQe3IeZ96sYtMMJY+OSvJ1g/Fnb+hsj8CSnRdv0fA/MD3GmHvjd8jLtwfk01Y+U8BX2d6UQ==
-X-Received: by 2002:a05:600c:5486:b0:411:eb73:243b with SMTP id
- iv6-20020a05600c548600b00411eb73243bmr1984378wmb.5.1708019638148; 
- Thu, 15 Feb 2024 09:53:58 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.193.50])
+ d=1e100.net; s=20230601; t=1708019882; x=1708624682;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=H+IRUZ5jWxcqPuMBnPz4ZPr8dlbjAv9aNyQYimjXdkc=;
+ b=R4WeXUeWpNjzlvuFtxKuflcE7d/T4//WHgScLkxpEcLfIbz4Ad5LwJVTuUqY4+kJ1Q
+ EMnlKXJki3zykIFV1jtyw1R0Jd+AAONEFXovBdkR+pc6hLY+YKKHbNqXR0sObdX7liUV
+ sNz4/Oq0s1JS7bqRCPdixtgL50A6e/p5Cz8tAaKwAe63FhdggU46qZ3h9GkAws1okTOw
+ CIZzTSfbOLQUkJJT1cOIjxHol2IrRrnks7KdAZlYXCzUzwmFni4lWeb1M3ar7GCStzAy
+ uZcbO2+UW4mvBkf/mvLJ2D4dQ2H0kfJWbgsVG/bLUKNjHqDKxUU0rzBIJ5e+q5Eob6gC
+ oNgQ==
+X-Gm-Message-State: AOJu0YxqApgfqANE3paCgY+X+F1dGAuhXGJMmw4GjbhtX9QBNKYcc1ch
+ xWLCScTNL+VtrgYKTuhsAxjg3we7NMsv94g6zy2UYTmp/gucrW5CLtEB2gNJPAgFCMlpsd0m8Pw
+ TZRc=
+X-Google-Smtp-Source: AGHT+IEo/r7nzbH8BmIlhi5mTe+NeSsVhJI7MNENkuol/wgiPkkgeQ1r1Wc4mvp14QTgpAze7VRk8A==
+X-Received: by 2002:a05:600c:45c8:b0:412:2b7a:67fa with SMTP id
+ s8-20020a05600c45c800b004122b7a67famr968825wmo.0.1708019882504; 
+ Thu, 15 Feb 2024 09:58:02 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- s14-20020a05600c044e00b004104bc8d841sm5680826wmb.13.2024.02.15.09.53.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 09:53:57 -0800 (PST)
-Message-ID: <b8592713-6992-4641-bf92-6749c94a5d0c@linaro.org>
-Date: Thu, 15 Feb 2024 18:53:56 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [dubious RFC PATCH] target/mips: Allow I6500 CPU to access CP0
- SAAR registers
-Content-Language: en-US
+ z11-20020a1c4c0b000000b0040d5ae2906esm5644695wmf.30.2024.02.15.09.58.00
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 15 Feb 2024 09:58:02 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20240209085347.8446-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240209085347.8446-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Magnus Damm <magnus.damm@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: [PULL 01/56] hw/block/tc58128: Don't emit deprecation warning under
+ qtest
+Date: Thu, 15 Feb 2024 18:56:55 +0100
+Message-ID: <20240215175752.82828-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
+References: <20240215175752.82828-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,30 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/2/24 09:53, Philippe Mathieu-Daudé wrote:
-> Desperate attempt to enable access from ITU to SAAR registers, by
-> taking missing part of commits c9340491cc ("target-mips: implement
-> SAARI/SAAR registers") and c1af807054 ("target-mips: add I6500 core
-> configuration") from [*] which were partly committed as 5fb2dcd179
-> ("target/mips: Provide R/W access to SAARI and SAAR CP0 registers").
-> 
-> [*] https://github.com/MIPS/qemu/commit/c9340491cc.
-> 
-> Reported-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> I can not test this. We don't test the I6500 anyway. Besides this
-> CPU lacks DSPRAM support which was never merged, see:
-> https://lore.kernel.org/qemu-devel/1566216496-17375-2-git-send-email-aleksandar.markovic@rt-rk.com/
-> and:
-> https://github.com/MIPS/qemu/commit/a4c1477c84#diff-5362bb61a4a73490270458b19e452bac9b3b907f4efd59ece6494ec19d033a81
-> so I doubt it is really useful in its current incomplete state.
-> ---
->   target/mips/cpu.c           | 1 +
->   target/mips/tcg/translate.c | 1 +
->   target/mips/cpu-defs.c.inc  | 1 +
->   3 files changed, 3 insertions(+)
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Patch discarded in favor of:
-https://lore.kernel.org/qemu-devel/20240209090513.9401-1-philmd@linaro.org/
+Suppress the deprecation warning when we're running under qtest,
+to avoid "make check" including warning messages in its output.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240206154151.155620-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/block/tc58128.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/block/tc58128.c b/hw/block/tc58128.c
+index 6944cf58fa..0984e37417 100644
+--- a/hw/block/tc58128.c
++++ b/hw/block/tc58128.c
+@@ -202,7 +202,9 @@ static sh7750_io_device tc58128 = {
+ 
+ int tc58128_init(struct SH7750State *s, const char *zone1, const char *zone2)
+ {
+-    warn_report_once("The TC58128 flash device is deprecated");
++    if (!qtest_enabled()) {
++        warn_report_once("The TC58128 flash device is deprecated");
++    }
+     init_dev(&tc58128_devs[0], zone1);
+     init_dev(&tc58128_devs[1], zone2);
+     return sh7750_register_io_device(s, &tc58128);
+-- 
+2.41.0
+
 
