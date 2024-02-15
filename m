@@ -4,56 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66849C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 12:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD7DC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 12:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raaxX-0008F7-Rn; Thu, 15 Feb 2024 07:35:23 -0500
+	id 1rab3k-0001qz-O2; Thu, 15 Feb 2024 07:41:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <m_o_bz@163.com>)
- id 1raaxS-0008Ec-RE; Thu, 15 Feb 2024 07:35:19 -0500
-Received: from m16.mail.163.com ([220.197.31.2])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <m_o_bz@163.com>)
- id 1raaxN-0000gw-Mv; Thu, 15 Feb 2024 07:35:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:Subject:Message-ID:From:MIME-Version:
- Content-Type; bh=H0WeqezjgFQFbDDwf8Yk/vW9a8NXWpe8xqC3ZAT9LSo=;
- b=AHhxqfchN9qygebuD6La0rwy69wD50L33DEXkHKWXLHwhvxFM8CuFC8Orc8bZd
- kLVd6OmLHJotikul9YcPEQVEPU1nE1evP1m3AoVSnw9Sm02yzL9drJn8yI0c6nIl
- goMlvgduO936izmEC59Wq4VRuArRb7VHAWi79WX++URtk=
-Received: from [10.208.28.133] (unknown [140.243.150.78])
- by gzga-smtp-mta-g1-4 (Coremail) with SMTP id _____wDnF2jfBM5lPOuSCQ--.45883S2;
- Thu, 15 Feb 2024 20:34:40 +0800 (CST)
-Date: Thu, 15 Feb 2024 20:34:38 +0800
-Subject: Re: double free or corruption (out) in iscsi virtual machine
-Message-ID: <1mmaslugo8633964p2gq1di8.1708000054427@email.android.com>
-From: m_o_bz <m_o_bz@163.com>
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-block <qemu-block@nongnu.org>
-Cc: "deepa.srinivasan" <deepa.srinivasan@oracle.com>, qemu-devel
- <qemu-devel@nongnu.org>, ronniesahlberg <ronniesahlberg@gmail.com>,
- pbonzini <pbonzini@redhat.com>, pl <pl@kamp.de>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rab3i-0001qK-6e
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 07:41:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rab3g-0002CH-0S
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 07:41:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708000903;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=R7FRWbNq8MtJjCK508CLqpEoSOt45hz+LKNRmBj/pSo=;
+ b=UKEy/3/iN7K6YD4R8XixLurhsovthwQKX+qfojY7TvukUTo9t+1D37J/4jx89Nhhii2qfg
+ fe826OttUdzimuRzOULmYuaSE4LY7h6WjEzSZn3H06WFxZ3it/WugULJ7yHOPIkk4Ts61K
+ dGfr4kxZKBrUEb7vqBc/ruYCUlR1ReU=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-452-FjmE9maDPXawHmRrOZsVAA-1; Thu, 15 Feb 2024 07:41:42 -0500
+X-MC-Unique: FjmE9maDPXawHmRrOZsVAA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a3c3f477eb7so38704966b.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 04:41:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708000900; x=1708605700;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R7FRWbNq8MtJjCK508CLqpEoSOt45hz+LKNRmBj/pSo=;
+ b=JnhHDNcCg9/WCknDbPBghFC+NWemtQaVv3yBdHCdMl4IrDRGgWkRipSGKTRm3TNZEf
+ 1uoRGGVRk4sbiKbveuaSFC+vrO7MeAm2MP8WjqD5rAselIwp3/S949kBgM7X2xP4Yr6e
+ KBkJzpeaTVv2O6vOtsOX16t+GndPiEUYe7NFGtex/c2AZhId3KzDlhGHi3cSg325KCdM
+ 3rHPOji/aDhcy7u9bASmKzyVR+7rt3gHa4gfCau57wpyCSTRJdF+sAbxtv3hXUSlEm99
+ rNsnV0OSRi1+0E2YTFixuqlSvr76VRghAMSdhx4sBOPSUnNYiYLce+NmBI6romN1gRsH
+ mBGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJE1pPdM43kDdE9felqUJZ3ZrVv0nyVaULTNmCr8k1SOCjWtW3hjj7x/oDxYO0OkBH4e6X7i6Ikn7Rt8iKVA5zb8m2heQ=
+X-Gm-Message-State: AOJu0Yz1WaU20b5HFpkPAFPxVZLvQb5/fCPWXHjV/eAtFPBhIPrWy+FL
+ GHzEvvqsFr6gRJzyJ5CZWYRk/qPq792nBt/uaOp+0UlyrtumB7KxwrUyg32uMP4+iAhGd6vc2+D
+ HuJkc0/TPhckDRbmne6RNo0rce96FHMp5Ax0tAI7sc8hNE+upYHPhJHwZ549+
+X-Received: by 2002:a17:906:480d:b0:a3d:14ce:d95 with SMTP id
+ w13-20020a170906480d00b00a3d14ce0d95mr1313666ejq.47.1708000900068; 
+ Thu, 15 Feb 2024 04:41:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHSo4TnZmBtQMw4VmCWeDAuR69S1GD0EeWpwvrvA80W4R7IrBJ8iJ+Bgp88UA0MaXvU7f3ErA==
+X-Received: by 2002:a17:906:480d:b0:a3d:14ce:d95 with SMTP id
+ w13-20020a170906480d00b00a3d14ce0d95mr1313653ejq.47.1708000899781; 
+ Thu, 15 Feb 2024 04:41:39 -0800 (PST)
+Received: from [192.168.1.174] ([151.64.123.201])
+ by smtp.googlemail.com with ESMTPSA id
+ pk27-20020a170906d7bb00b00a3d716dde9csm504408ejb.44.2024.02.15.04.41.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 04:41:39 -0800 (PST)
+Message-ID: <48a8fac8-cee3-4062-8529-7a3b7f6f6c92@redhat.com>
+Date: Thu, 15 Feb 2024 13:41:38 +0100
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="--_com.android.email_1013616003729930"
-X-CM-TRANSID: _____wDnF2jfBM5lPOuSCQ--.45883S2
-X-Coremail-Antispam: 1Uf129KBjvdXoW7Jw4UtFWftF4rXF4rZr13Arb_yoWkKwb_Ca
- 4rta45CrWj9r40qanrJFnavry0k3W0gF4UJw1UGrsFv34fJr4xXrsY9r97Zw15Gw1xu3y3
- Z3W8ta1Ig3sxujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjJUU7UUUUU==
-X-Originating-IP: [140.243.150.78]
-X-CM-SenderInfo: ppbrsur26rljoofrz/1tbisgKF9WVOB29BbAAAsu
-Received-SPF: pass client-ip=220.197.31.2; envelope-from=m_o_bz@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] target/i386: Generate an illegal opcode exception on
+ cmp instructions with lock prefix
+Content-Language: en-US
+To: Ziqiao Kong <ziqiaokong@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20240215095015.570748-1-ziqiaokong@gmail.com>
+ <20240215095015.570748-2-ziqiaokong@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20240215095015.570748-2-ziqiaokong@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.772,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,61 +142,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-----_com.android.email_1013616003729930
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
+On 2/15/24 10:50, Ziqiao Kong wrote:
+> target/i386: As specified by Intel Manual Vol2 3-180, cmp instructions
+> are not allowed to have lock prefix and a `UD` should be raised. Without
+> this patch, s1->T0 will be uninitialized and used in the case OP_CMPL.
+> 
+> Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
+> ---
+>   target/i386/tcg/translate.c | 11 ++++++-----
+>   1 file changed, 6 insertions(+), 5 deletions(-)
 
-PGRpdj55ZXDvvIxJIGZvdW5kIHRoaXMgY29tbWl0IHRvbywmbmJzcDsgYWxyZWFkeSBwYXRjaCB0
-aGlzIGNvbW1pdCBhbmQgdGVzdCBpdCwgdGhlIGJ1ZyBjYW4gbm90IHJlcHJvZHVjZSBhbnkgbW9y
-ZTwvZGl2PjxiciBpZD0ibXpEaXZpZGVyIj48YnI+PGJyPi0tLS0tLS0tIOWOn+Wni+mCruS7tiAt
-LS0tLS0tLTxicj7lj5Hku7bkurrvvJpGaW9uYSBFYm5lciAmbHQ7Zi5lYm5lckBwcm94bW94LmNv
-bSZndDs8YnI+5pe26Ze077yaMjAyNOW5tDLmnIgxNeaXpSAxODoyOTxicj7mlLbku7bkurrvvJpN
-X09fQnogJmx0O21fb19iekAxNjMuY29tJmd0OyxxZW11LWJsb2NrICZsdDtxZW11LWJsb2NrQG5v
-bmdudS5vcmcmZ3Q7PGJyPuaKhOmAge+8miZxdW90O2RlZXBhLnNyaW5pdmFzYW4mcXVvdDsgJmx0
-O2RlZXBhLnNyaW5pdmFzYW5Ab3JhY2xlLmNvbSZndDsscWVtdS1kZXZlbCAmbHQ7cWVtdS1kZXZl
-bEBub25nbnUub3JnJmd0Oyxyb25uaWVzYWhsYmVyZyAmbHQ7cm9ubmllc2FobGJlcmdAZ21haWwu
-Y29tJmd0OyxwYm9uemluaSAmbHQ7cGJvbnppbmlAcmVkaGF0LmNvbSZndDsscGwgJmx0O3BsQGth
-bXAuZGUmZ3Q7PGJyPuS4u+mimO+8mlJlOiBkb3VibGUgZnJlZSBvciBjb3JydXB0aW9uIChvdXQp
-IGluIGlzY3NpIHZpcnR1YWwgbWFjaGluZTxicj48YnI+QW0gMTcuMDEuMjQgdW0gMDg6MjMgc2No
-cmllYiBNX09fQno6PGJyPiZndDsgQmFzaWMgSW5mbzo8YnI+Jmd0OyAxLiBJc3N1ZTogSSBnb3Qg
-YSAiIGRvdWJsZSBmcmVlIG9yIGNvcnJ1cHRpb24gKG91dCkiLCBoZWFkIGZvcjxicj4mZ3Q7IGF0
-dGFjaG1lbnQgZGVidWcubG9nIGZvciBkZXRhaWxzLCB0aGUgZGVidWcubG9nIHByaW50IHRoZSBi
-YWNrdHJhY2Ugb2Y8YnI+Jmd0OyBvbmUgdmlydHVhbCBtYWNoaW5lPGJyPiZndDsgMi4gUmVwcm9k
-dWNlOiBjdXJyZW50bHkgSSBjYW5uJ3QgZGVzdHJpYmUgaG93IHRvIHJlcHJvZHVjZSB0aGlzIGJ1
-Zyw8YnI+Jmd0OyBiZWNhdXNlIGl0J3MgaW4gbXkgcHJvZHVjdGl2ZSBlbnZpcm9tZW50IHdoaWNo
-IGluY2x1ZGUgc29tZSBzcGVjaWFsIHN0dWZmczxicj4mZ3Q7IDMuIHFlbXUgdmVyc2lvbjrCoCBJ
-J20gdXNpbmcgaXMgcWVtdS02LjAuMTxicj4mZ3Q7IDQuIHFlbXUgY2NtZGxpbmUgaW4gc2hvcnQ6
-KGNoZWNrb3V0IGRldGFpbCBpbiB0aGUgdmlydHVhbCBtYWNoaW5lIGxvZzxicj4mZ3Q7IG1lc3Nh
-Z2UpPGJyPjxicj5IaSw8YnI+c291bmRzIGxpa2UgaXQgbWlnaHQgYmUgdGhlIGlzc3VlIGZpeGVk
-IGJ5Ojxicj48YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vcWVtdS9xZW11L2NvbW1pdC81MDgw
-MTUyZTJlZjZjZGU3YWE2OTJlMjk4ODBjNjJiZDU0YWNiNzUwIj5odHRwczovL2dpdGh1Yi5jb20v
-cWVtdS9xZW11L2NvbW1pdC81MDgwMTUyZTJlZjZjZGU3YWE2OTJlMjk4ODBjNjJiZDU0YWNiNzUw
-PC9hPjxicj48YnI+QmVzdCBSZWdhcmRzLDxicj5GaW9uYTxicj4=
-----_com.android.email_1013616003729930
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Queued, thanks!
 
-eWVw77yMSSBmb3VuZCB0aGlzIGNvbW1pdCB0b28sICBhbHJlYWR5IHBhdGNoIHRoaXMgY29tbWl0
-IGFuZCB0ZXN0IGl0LCB0aGUgYnVnIGNhbiBub3QgcmVwcm9kdWNlIGFueSBtb3JlCgoKCgotLS0t
-LS0tLSDljp/lp4vpgq7ku7YgLS0tLS0tLS0K5Y+R5Lu25Lq677yaRmlvbmEgRWJuZXIgPGYuZWJu
-ZXJAcHJveG1veC5jb20+CuaXtumXtO+8mjIwMjTlubQy5pyIMTXml6UgMTg6MjkK5pS25Lu25Lq6
-77yaTV9PX0J6IDxtX29fYnpAMTYzLmNvbT4scWVtdS1ibG9jayA8cWVtdS1ibG9ja0Bub25nbnUu
-b3JnPgrmioTpgIHvvJoiZGVlcGEuc3Jpbml2YXNhbiIgPGRlZXBhLnNyaW5pdmFzYW5Ab3JhY2xl
-LmNvbT4scWVtdS1kZXZlbCA8cWVtdS1kZXZlbEBub25nbnUub3JnPixyb25uaWVzYWhsYmVyZyA8
-cm9ubmllc2FobGJlcmdAZ21haWwuY29tPixwYm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT4s
-cGwgPHBsQGthbXAuZGU+CuS4u+mimO+8mlJlOiBkb3VibGUgZnJlZSBvciBjb3JydXB0aW9uIChv
-dXQpIGluIGlzY3NpIHZpcnR1YWwgbWFjaGluZQoKPkFtIDE3LjAxLjI0IHVtIDA4OjIzIHNjaHJp
-ZWIgTV9PX0J6Ogo+PiBCYXNpYyBJbmZvOgo+PiAxLiBJc3N1ZTogSSBnb3QgYSAiIGRvdWJsZSBm
-cmVlIG9yIGNvcnJ1cHRpb24gKG91dCkiLCBoZWFkIGZvcgo+PiBhdHRhY2htZW50IGRlYnVnLmxv
-ZyBmb3IgZGV0YWlscywgdGhlIGRlYnVnLmxvZyBwcmludCB0aGUgYmFja3RyYWNlIG9mCj4+IG9u
-ZSB2aXJ0dWFsIG1hY2hpbmUKPj4gMi4gUmVwcm9kdWNlOiBjdXJyZW50bHkgSSBjYW5uJ3QgZGVz
-dHJpYmUgaG93IHRvIHJlcHJvZHVjZSB0aGlzIGJ1ZywKPj4gYmVjYXVzZSBpdCdzIGluIG15IHBy
-b2R1Y3RpdmUgZW52aXJvbWVudCB3aGljaCBpbmNsdWRlIHNvbWUgc3BlY2lhbCBzdHVmZnMKPj4g
-My4gcWVtdSB2ZXJzaW9uOsKgIEknbSB1c2luZyBpcyBxZW11LTYuMC4xCj4+IDQuIHFlbXUgY2Nt
-ZGxpbmUgaW4gc2hvcnQ6KGNoZWNrb3V0IGRldGFpbCBpbiB0aGUgdmlydHVhbCBtYWNoaW5lIGxv
-Zwo+PiBtZXNzYWdlKQo+Cj5IaSwKPnNvdW5kcyBsaWtlIGl0IG1pZ2h0IGJlIHRoZSBpc3N1ZSBm
-aXhlZCBieToKPmh0dHBzOi8vZ2l0aHViLmNvbS9xZW11L3FlbXUvY29tbWl0LzUwODAxNTJlMmVm
-NmNkZTdhYTY5MmUyOTg4MGM2MmJkNTRhY2I3NTAKPgo+QmVzdCBSZWdhcmRzLAo+RmlvbmEK
-----_com.android.email_1013616003729930--
+Paolo
+
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index 10cba16256..07f642dc9e 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -1507,12 +1507,13 @@ static bool check_iopl(DisasContext *s)
+>   /* if d == OR_TMP0, it means memory operand (address in A0) */
+>   static void gen_op(DisasContext *s1, int op, MemOp ot, int d)
+>   {
+> +    /* Invalid lock prefix when destination is not memory or OP_CMPL. */
+> +    if ((d != OR_TMP0 || op == OP_CMPL) && s1->prefix & PREFIX_LOCK) {
+> +        gen_illegal_opcode(s1);
+> +        return;
+> +    }
+> +
+>       if (d != OR_TMP0) {
+> -        if (s1->prefix & PREFIX_LOCK) {
+> -            /* Lock prefix when destination is not memory.  */
+> -            gen_illegal_opcode(s1);
+> -            return;
+> -        }
+>           gen_op_mov_v_reg(s1, ot, s1->T0, d);
+>       } else if (!(s1->prefix & PREFIX_LOCK)) {
+>           gen_op_ld_v(s1, ot, s1->T0, s1->A0);
 
 
