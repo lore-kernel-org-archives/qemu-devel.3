@@ -4,82 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF5BC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60817C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 10:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raYSJ-0004U8-EK; Thu, 15 Feb 2024 04:54:59 -0500
+	id 1raYdY-00016M-GL; Thu, 15 Feb 2024 05:06:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raYSH-0004Kt-8s; Thu, 15 Feb 2024 04:54:57 -0500
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1raYdW-00011d-3w
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 05:06:34 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raYSF-0001Xi-Pl; Thu, 15 Feb 2024 04:54:57 -0500
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-4c02dfa01a8so229831e0c.1; 
- Thu, 15 Feb 2024 01:54:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1raYdU-0004FT-0R
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 05:06:33 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a3c2efff32aso77108766b.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 02:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707990894; x=1708595694; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hANP1h3NsmU5oQsNrWCHd+g4mBlIaSjguB+KPP+LNm4=;
- b=QMw63DACXfSH3aYnVaDS5sRGVaE2LzacYYNBg/UB/vuweiu7le2cxTOBxlyoYMWhPd
- qR5VNM58nvDGzCvum1Fd2kuZpWbHbEPunTO7YwUw659wWEoNfY9wYzgXpobeCFq4XaxY
- 6ncQtH4U9qx8L6kCmLEWJ7usN/aeckPpYvKp4pWCpc//WsFRQLAoMGEp/M5pQleROBTV
- PDu+W0kSDpU0jWQ5ypshHNngp7Ra+huhJ5zK0s4oestsHU/hkBb6pPoGz7PFylBWEGQe
- 69aAqxjQIHHA88rT9mDb5IzhjVAZyP21UutIrpmtFrke5YjhvDcC4viGciVet/Xd1BLI
- 1S1A==
+ d=linaro.org; s=google; t=1707991590; x=1708596390; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=h7j7BDbf/2XTLgGFB+o6WPYFGjyq3xmN0zRxSIya6Co=;
+ b=oqdHqpnXSSJqP0h5OCYP3CKaZYdsjEX5W45sX2OPNBLODpopvQR9eTHgI8Vin4URRX
+ hpUkeUQYGoYEP1nzlncSpUWYs1mAn1nw4eJ+n4TYz/e0dHMg0EPbkeeysFXZKwys0RGs
+ DBywzelVrk5dD7mNtpS7cSwh49NDIQ3MzaxgrREtOnnjNP1vRiEFddsDU9k59UqqWggi
+ fj3QqRTE5tQPsPjM58z/kGeHtP7824RwcbZvtgFP+ozIWrk0c8vna5zummH1emYsH5iG
+ jVmKVUd/dDuBwMXo7JDifnFbrmYC9SmERbJ0dU1ATr4ajTEbwAmP5vai67qsN1DlT+W3
+ ijaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707990894; x=1708595694;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hANP1h3NsmU5oQsNrWCHd+g4mBlIaSjguB+KPP+LNm4=;
- b=mwvMBthdCVu9uRFkUVLRRhKmnGwbLAu41sELtzK7pTxoinhl2wSKLXlA3lRQcyqEXD
- 6GbOtp5Bj65RX12G4B1HVNKl4vgNejaI5/Wh33tjNEkYOUH7l3SVO7HVBnuV2bElKIx1
- v2u0Y8aiMjJQMsXXBXus3HulNTrltaSriadR9NL79PozP5h5v0hwYK3o5AtxZXNI3/QY
- EJcnFjIaSk7CdiDhMHcMF92HaS+Bn6PqZxOhNZN6vOU5hYI/GmcGelMBlWdyQiNIAmKi
- dSqhqQ9t99tS1GWnfk6PG5qWyGwI2Z8dtQS/3FqIseBU997+cFPsP1Q/XWy52Vt3vzLG
- 2Kog==
+ d=1e100.net; s=20230601; t=1707991590; x=1708596390;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h7j7BDbf/2XTLgGFB+o6WPYFGjyq3xmN0zRxSIya6Co=;
+ b=RIZAHMx2eHF9PQmxZnYR36sxoiM3tT75j4+/5NZIDr077xFoCopWaqYZOczaeTeJv/
+ 61aI0zuIF0psYwB161pan8+DSBcSFBrNBcIspCIjYbTPWY0EBXiZB0qwVko8jWkDEBMK
+ hnXv+6PDLcr/A19Kzwpa8ILOgqvsVVwjUU9sFaSUjIdK/G9BfXTq2Rl+RXVYuT/RWESm
+ 6M1KJVEIGz/o4gavR1A1oxGHy6DO/GUZyyexAyvs2ckzzwW3qAA/3lc7WxELrZyBuzsZ
+ b2979tifYbapHPodv+CRxmFjXGNr3XmGYE1KbdizeGNIAQZwzFtl+Yyvwi+x5/AJut8a
+ Os1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV14SsYs/HZ8PerJYvcgko6QsLDrv5d1e5TJ40+M7NUn4fzSNIH+x8h2F4i78/6otMuBxq7T5K370BHYFupUOzX6GGib5o=
-X-Gm-Message-State: AOJu0YxmMDrQ6ui1MEyjJB77ybXKstY+O4Ry8npGNCX32id9tZKssH7T
- CNpu6dVXQQsdSsjM3RwyFonai1eh0OwcE/ZCn1VS+ZfYNC7OiT2PQyPen9mqpO0zzPlShfKnRnh
- INtAt8SyI4gGjo0M+K02zaSt3m7oHAM/q
-X-Google-Smtp-Source: AGHT+IElzanXDOV+aXd8b5iY3fAdX8k1XwFJ+JqzAij44RcqwKSkJe0pFsEvwVOhTz6NfZm2LJ1lKkF+ZCDY2MorNuQ=
-X-Received: by 2002:a1f:6201:0:b0:4c0:d28:9557 with SMTP id
- w1-20020a1f6201000000b004c00d289557mr721932vkb.1.1707990894143; Thu, 15 Feb
- 2024 01:54:54 -0800 (PST)
+ AJvYcCXdPSx+taYl4JCMyTPFzRRx8EAr6c420Gfl/aJIIY2HVkEntSbOL+bUWm7BHTXFe6QFfqGMquc6RP3Twjxli+W3NoQzI08=
+X-Gm-Message-State: AOJu0Yzgqh3PdLd0vhmGp2ORs3SphrSrxMejG4ohfNhHT1WkPEJYM5pG
+ igeiXji/WntambzDsgR0fMdEG0q9uHodlop+RKaC+zTf0yX4cqvE5RkxsRn8us0=
+X-Google-Smtp-Source: AGHT+IEEM0cWgYXokqInqYrcPLv8UI1GS1w0YRnrANXKcGmmDrdUCqlP6GLPJ0jaV0GEu8jCAinSGQ==
+X-Received: by 2002:a17:906:e089:b0:a3c:f531:4514 with SMTP id
+ gh9-20020a170906e08900b00a3cf5314514mr971601ejb.62.1707991589675; 
+ Thu, 15 Feb 2024 02:06:29 -0800 (PST)
+Received: from [192.168.200.206] (83.11.22.32.ipv4.supernova.orange.pl.
+ [83.11.22.32]) by smtp.gmail.com with ESMTPSA id
+ fj15-20020a1709069c8f00b00a3d26805852sm393944ejc.17.2024.02.15.02.06.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 02:06:29 -0800 (PST)
+Message-ID: <6c27e4ba-34dc-4ba6-95fb-39989d0c2cc3@linaro.org>
+Date: Thu, 15 Feb 2024 11:06:27 +0100
 MIME-Version: 1.0
-References: <20240207115926.887816-1-christoph.muellner@vrull.eu>
-In-Reply-To: <20240207115926.887816-1-christoph.muellner@vrull.eu>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 19:54:28 +1000
-Message-ID: <CAKmqyKOxUjc-C_hUptj2gy7XzgYWzy6OL5cE_JXCLVPh_26Rhw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] linux-user/riscv: Sync hwprobe keys with kernel
-To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: possible deprecation and removal of some old QEMU Arm machine
+ types (pxa2xx, omap, sa1110)
+Content-Language: pl-PL, en-GB, en-HK
+To: Dmitry Baryshkov <dbaryshkov@gmail.com>, Arnd Bergmann <arnd@arndb.de>
+Cc: Andreas Kemnade <andreas@kemnade.info>,
+ Linus Walleij <linus.walleij@linaro.org>, paul.eggleton@linux.intel.com,
+ Andrea Adami <andrea.adami@gmail.com>, Guenter Roeck <linux@roeck-us.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+ Aaro Koskinen <aaro.koskinen@iki.fi>,
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
+ Linux-OMAP <linux-omap@vger.kernel.org>, Daniel Mack <daniel@zonque.org>,
+ Robert Jarzmik <robert.jarzmik@free.fr>,
+ Haojian Zhuang <haojian.zhuang@gmail.com>,
+ Stefan Lehner <stefan-lehner@aon.at>
+References: <CAFEAcA88UGhjh8-iBvhxx6GdWg74dinYouiguTcz=qEe51L7Ag@mail.gmail.com>
+ <fe5476c7-82e0-4353-a943-7f39b14e1b5b@roeck-us.net>
+ <CAFEAcA-bqOM4Ptws-tsEwo2HDZ6YSX1Y+xGkR0WueRD_dUd0+Q@mail.gmail.com>
+ <7bd858a2-9983-4ddf-8749-09c9b2e261f9@roeck-us.net>
+ <fbab8e59-6d2d-4193-a5ca-9fea3c524229@app.fastmail.com>
+ <CACRpkdbmJe8ZE7N0p_utWucyw+3mp1Qrb0bQEKcJPmwNFtVA_g@mail.gmail.com>
+ <CALT56yOT_U9jVkhTP=zZu-32B4pta5zaJocn9695N7ari4cFyQ@mail.gmail.com>
+ <be4038e1-a578-4439-a9bf-e936484c64cc@app.fastmail.com>
+ <20240215093113.5c58cabe@aktux>
+ <7c8a5c5b-a94a-4b87-a043-f1e398b55872@app.fastmail.com>
+ <CALT56yPLobsL699K9+DDMBWwi7-iLzaYwuDwV7NmecaTY7Z6Tw@mail.gmail.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Organization: Linaro
+In-Reply-To: <CALT56yPLobsL699K9+DDMBWwi7-iLzaYwuDwV7NmecaTY7Z6Tw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,32 +121,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 7, 2024 at 10:00=E2=80=AFPM Christoph M=C3=BCllner
-<christoph.muellner@vrull.eu> wrote:
->
-> This series syncs the hwprobe keys with those available in the upstream
-> kernel repository with the exception of Ztso, which is not supported in
-> QEMU as of now.
->
-> The first patch is a resend (sent on Nov 27), as it should have been
-> picked up on Dec 6, but seems to got lost.
->
-> Christoph M=C3=BCllner (2):
->   linux-user/riscv: Add Zicboz extensions to hwprobe
->   linux-user/riscv: Sync hwprobe keys with Linux
+W dniu 15.02.2024 o 9:52 AM, Dmitry Baryshkov pisze:
+>>>> If we want to actually go there, I think the best option for PCMCIA
+>>>> support is likely to replace the entire "soc_common" pcmcia driver
+>>>> with a simple drivers/pata/ storage driver and no support for
+>>>> other cards.
 
-Thanks!
+>>> hmm, main usage for PCMCIA/CF in those devices was often something else,
+>>> not storage,
 
-Applied to riscv-to-apply.next
+>> Do we still support any non-storage CF devices that someone might
+>> actually use? Do you have a specific example in mind? These are
+>> the currently supported devices that I see:
 
-Alistair
+> The Bluetooth over the PCMCIA UART worked last time I checked it and
+> according to your grep it is still a valid user.
 
->
->  linux-user/syscall.c | 99 +++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 93 insertions(+), 6 deletions(-)
->
-> --
-> 2.43.0
->
->
+If we want to keep those pda devices in Linux kernel then dropping 
+whatever PCMCIA which is not a storage sounds like sane way.
+
+No one is going to use such old PDA as daily tool nowadays. And if they 
+want then 6.6 LTS kernel would work better due to WiFi drivers being 
+still present.
+
+Bluetooth CF cards are old, v1.x tech. WiFi is 802.11b unless you manage 
+to get one of those libertas_cs cards but they were rare even when new 
+(I was involved in starting 2.6 driver for it). Camera cards had own 
+out-of-tree drivers at that time.
 
