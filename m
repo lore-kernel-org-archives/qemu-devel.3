@@ -4,90 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF2FC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D8A5C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ragfH-0002eY-GS; Thu, 15 Feb 2024 13:40:55 -0500
+	id 1ragke-0000Df-MN; Thu, 15 Feb 2024 13:46:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ragfG-0002dm-8L
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:40:54 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ragfC-0002zp-FU
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:40:54 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-41239bbab1aso437865e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:40:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708022448; x=1708627248; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QGD9T20Jc4aSOuGAN0aDkxSgl2L4t566uz6BP/xavB8=;
- b=VctD2qLD4juYudp9yC6n6jIeVEpCx5Cm4eXRiWJFt3CYAypjNJdDByXZ35gWA4Sgw9
- bdOEUFssIhvh6q7J+BORMUkFqHe8N1rBP/ab4RnkOyYjhHYZXrLqbDOrE3QulnKTSutz
- hkIg38sf4o1ggYO4yHGFNfCcvzSq7OKKtQ1tpac1ugAWLqb816EkLCXR27CXQs/DmYAP
- cxBPlf4rlnvDv66CPoOlA7gNHEWzq4AetbQ2Je4xOadBoofnkeQWE77J/90qqEyz4LlI
- tSoUau1pOFhfDjQVBHE/M2RxJ2/ccuyJlRuqJUv9VKL/kKHS/4mq/kIA6mXcAeJiSbeO
- sI1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708022448; x=1708627248;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QGD9T20Jc4aSOuGAN0aDkxSgl2L4t566uz6BP/xavB8=;
- b=Tieva01Teyb58dsxKFdplwPhLkQJkUCKWLUyubzQDlm7G3AyYwb9Pvhm9LSGQBFvZH
- 2C91YW5RZjEoQzISfqoLL2PWheJPG12XDTKx9KLgiNzbXBGZSdSr8KEGs3w1KaGCkx+L
- LCc/Cg1pge6vIWX6jyMWLqf4eXmUwL7qssO/1HOweCKa/dF/0Yk2jn5fEi3aYU24SlwQ
- UdakfxcNaLIh0VpmxVZ7dmOenC7oaT7cClSZp6LqOHYrdKcU99Lw3ENyp6rOnTZ8wlqc
- cffyeuIObXPEjobTHoJ7fCamuiD1ND4NteOWy7NvV0vsiiaZAGhanDq7kvWbEGq99yOp
- lMNQ==
-X-Gm-Message-State: AOJu0YwoaMOoJhRJsEGWlUMuLcQ2afEamuNuvbSLnQzNt7oTEJF54pHE
- eFoXGgudvmEVg/GPUrn+Al796dQoxq/Xb6M+KkFIcqKwIy7ujjfpk9ur9hP2xYo=
-X-Google-Smtp-Source: AGHT+IHvY3f4N7kNKaGdll3luCcZLadqwstsMz+GB4Yi6bdg5xd5+D/Ku0hSiEDSTzXsn/fOoCWFtg==
-X-Received: by 2002:a05:6000:1e83:b0:33b:69ee:981c with SMTP id
- dd3-20020a0560001e8300b0033b69ee981cmr2031704wrb.39.1708022448435; 
- Thu, 15 Feb 2024 10:40:48 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ex7-20020a056000248700b0033b8305ffe2sm2655267wrb.87.2024.02.15.10.40.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 10:40:48 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AD64E5F77B;
- Thu, 15 Feb 2024 18:40:47 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs),
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [RFC PATCH] tests/tcg: update licenses to GPLv2 as intended
-Date: Thu, 15 Feb 2024 18:40:36 +0000
-Message-Id: <20240215184036.214065-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1ragkc-0000CV-95
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:46:26 -0500
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1ragkZ-0004Uf-UP
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:46:26 -0500
+Received: from [10.10.3.121] (unknown [10.10.3.121])
+ by mail.ispras.ru (Postfix) with ESMTPS id 3DAED40762DF;
+ Thu, 15 Feb 2024 18:46:19 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 3DAED40762DF
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1708022779;
+ bh=bbYtPRFuMdaGYrsiQumLSofHRt5QzJKtXqkkIoaM6X0=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=DbtI5ZLWrA1usmLUIpANvVqQJDQKpQI3acKrGXLklrXp5Cvq3+AVBA6Foc3f1RVki
+ m4PfvR1hdz2ixuaHgyPHCstJvVEFAr0OkpJU+kV4WJmerFMHPlYpgfJd4KKees9Jql
+ 7NFmPJz03tHhC0H9KiUE9ruozUD8sCch7M9f0mXY=
+Date: Thu, 15 Feb 2024 21:46:19 +0300 (MSK)
+From: Alexander Monakov <amonakov@ispras.ru>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
+Subject: Re: [PATCH v4 09/10] util/bufferiszero: Add simd acceleration for
+ aarch64
+In-Reply-To: <6499be56-2002-44b3-9c53-1a1ec2fde53f@linaro.org>
+Message-ID: <1e4d5081-d86b-84f5-20f7-8e48044b751a@ispras.ru>
+References: <20240215081449.848220-1-richard.henderson@linaro.org>
+ <20240215081449.848220-10-richard.henderson@linaro.org>
+ <1f038576-5121-e84c-8196-ae5f9ca3a75b@ispras.ru>
+ <6499be56-2002-44b3-9c53-1a1ec2fde53f@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
+ helo=mail.ispras.ru
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,240 +68,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-My default header template is GPLv3 but for QEMU code we really should
-stick to GPLv2-or-later (allowing others to up-license it if they
-wish). While this is test code we should still be consistent on the
-source distribution.
 
-I wrote all of this code so its not a problem. However there remains
-one GPLv3 file left which is the crt0-tc2x.S for TriCore.
+On Thu, 15 Feb 2024, Richard Henderson wrote:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/tcg/aarch64/semicall.h                      | 4 ++--
- tests/tcg/arm/semicall.h                          | 4 ++--
- tests/tcg/multiarch/float_helpers.h               | 4 ++--
- tests/tcg/riscv64/semicall.h                      | 4 ++--
- tests/tcg/multiarch/arm-compat-semi/semiconsole.c | 4 ++--
- tests/tcg/multiarch/arm-compat-semi/semihosting.c | 4 ++--
- tests/tcg/multiarch/float_convd.c                 | 4 ++--
- tests/tcg/multiarch/float_convs.c                 | 4 ++--
- tests/tcg/multiarch/float_madds.c                 | 4 ++--
- tests/tcg/multiarch/libs/float_helpers.c          | 4 ++--
- tests/tcg/i386/system/boot.S                      | 6 +++---
- tests/tcg/x86_64/system/boot.S                    | 6 +++---
- 12 files changed, 26 insertions(+), 26 deletions(-)
+> On 2/14/24 22:47, Alexander Monakov wrote:
+> > 
+> > On Wed, 14 Feb 2024, Richard Henderson wrote:
+> > 
+> >> Because non-embedded aarch64 is expected to have AdvSIMD enabled, merely
+> >> double-check with the compiler flags for __ARM_NEON and don't bother with
+> >> a runtime check.  Otherwise, model the loop after the x86 SSE2 function,
+> >> and use VADDV to reduce the four vector comparisons.
+> > 
+> > I am not very familiar with Neon but I wonder if this couldn't use SHRN
+> > for the final 128b->64b reduction similar to 2022 Glibc optimizations:
+> > https://inbox.sourceware.org/libc-alpha/20220620174628.2820531-1-danilak@google.com/
+> 
+> The reason they use SHRN for memchr is that they have also applied a mask
+> to the comparison so that they can identify which byte contained the match.
+> That is not required here, so any reduction will do.
 
-diff --git a/tests/tcg/aarch64/semicall.h b/tests/tcg/aarch64/semicall.h
-index 8a3fce35c5f..30d4de9a549 100644
---- a/tests/tcg/aarch64/semicall.h
-+++ b/tests/tcg/aarch64/semicall.h
-@@ -1,10 +1,10 @@
- /*
-  * Semihosting Tests - AArch64 helper
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2019, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-diff --git a/tests/tcg/arm/semicall.h b/tests/tcg/arm/semicall.h
-index ad8ac51310b..624937c5577 100644
---- a/tests/tcg/arm/semicall.h
-+++ b/tests/tcg/arm/semicall.h
-@@ -1,10 +1,10 @@
- /*
-  * Semihosting Tests - ARM Helper
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2019, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-diff --git a/tests/tcg/multiarch/float_helpers.h b/tests/tcg/multiarch/float_helpers.h
-index 309f3f4bf10..c42ebe64b9e 100644
---- a/tests/tcg/multiarch/float_helpers.h
-+++ b/tests/tcg/multiarch/float_helpers.h
-@@ -1,9 +1,9 @@
- /*
-  * Common Float Helpers
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <inttypes.h>
-diff --git a/tests/tcg/riscv64/semicall.h b/tests/tcg/riscv64/semicall.h
-index f8c88f32dc5..11d0650cb06 100644
---- a/tests/tcg/riscv64/semicall.h
-+++ b/tests/tcg/riscv64/semicall.h
-@@ -1,10 +1,10 @@
- /*
-  * Semihosting Tests - RiscV64 Helper
-  *
-- * Copyright (c) 2021
-+ * Copyright (c) 2021, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-diff --git a/tests/tcg/multiarch/arm-compat-semi/semiconsole.c b/tests/tcg/multiarch/arm-compat-semi/semiconsole.c
-index 1d82efc589d..1e2268f4b75 100644
---- a/tests/tcg/multiarch/arm-compat-semi/semiconsole.c
-+++ b/tests/tcg/multiarch/arm-compat-semi/semiconsole.c
-@@ -1,10 +1,10 @@
- /*
-  * linux-user semihosting console
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #define SYS_READC       0x07
-diff --git a/tests/tcg/multiarch/arm-compat-semi/semihosting.c b/tests/tcg/multiarch/arm-compat-semi/semihosting.c
-index 8627eee3cf7..f609c01341a 100644
---- a/tests/tcg/multiarch/arm-compat-semi/semihosting.c
-+++ b/tests/tcg/multiarch/arm-compat-semi/semihosting.c
-@@ -1,10 +1,10 @@
- /*
-  * linux-user semihosting checks
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2019, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #define SYS_WRITE0      0x04
-diff --git a/tests/tcg/multiarch/float_convd.c b/tests/tcg/multiarch/float_convd.c
-index 0a1f0f93dc5..58d7f8b4c58 100644
---- a/tests/tcg/multiarch/float_convd.c
-+++ b/tests/tcg/multiarch/float_convd.c
-@@ -1,9 +1,9 @@
- /*
-  * Floating Point Convert Doubles to Various
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/multiarch/float_convs.c b/tests/tcg/multiarch/float_convs.c
-index 2e4fa55324d..cb1fdd439e3 100644
---- a/tests/tcg/multiarch/float_convs.c
-+++ b/tests/tcg/multiarch/float_convs.c
-@@ -1,9 +1,9 @@
- /*
-  * Floating Point Convert Single to Various
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/multiarch/float_madds.c b/tests/tcg/multiarch/float_madds.c
-index 4888f8641f4..a692e052d5b 100644
---- a/tests/tcg/multiarch/float_madds.c
-+++ b/tests/tcg/multiarch/float_madds.c
-@@ -1,9 +1,9 @@
- /*
-  * Fused Multiply Add (Single)
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/multiarch/libs/float_helpers.c b/tests/tcg/multiarch/libs/float_helpers.c
-index 4e68d2b6598..fad5fc98933 100644
---- a/tests/tcg/multiarch/libs/float_helpers.c
-+++ b/tests/tcg/multiarch/libs/float_helpers.c
-@@ -5,9 +5,9 @@
-  * floating point constants useful for exercising the edge cases in
-  * floating point tests.
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- /* we want additional float type definitions */
-diff --git a/tests/tcg/i386/system/boot.S b/tests/tcg/i386/system/boot.S
-index 9e8920cbfe0..28902c400d8 100644
---- a/tests/tcg/i386/system/boot.S
-+++ b/tests/tcg/i386/system/boot.S
-@@ -2,12 +2,12 @@
-  * i386 boot code, based on  qemu-bmibug.
-  *
-  * Copyright 2019 Doug Gale
-- * Copyright 2019 Linaro
-+ * Copyright 2019, 2024 Linaro
-  *
-- * This work is licensed under the terms of the GNU GPL, version 3 or later.
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-  * See the COPYING file in the top-level directory.
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-         .section .head
-diff --git a/tests/tcg/x86_64/system/boot.S b/tests/tcg/x86_64/system/boot.S
-index dac9bd534d7..7213aec63b2 100644
---- a/tests/tcg/x86_64/system/boot.S
-+++ b/tests/tcg/x86_64/system/boot.S
-@@ -1,16 +1,16 @@
- /*
-  * x86_64 boot and support code
-  *
-- * Copyright 2019 Linaro
-+ * Copyright 2019, 2024 Linaro
-  *
-- * This work is licensed under the terms of the GNU GPL, version 3 or later.
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-  * See the COPYING file in the top-level directory.
-  *
-  * Unlike the i386 version we instead use Xen's PVHVM booting header
-  * which should drop us automatically into 32 bit mode ready to go. I've
-  * nabbed bits of the Linux kernel setup to achieve this.
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-         .section .head
--- 
-2.39.2
+Right, so we can pick the cheapest reduction method, and if I'm reading
+Neoverse-N1 SOG right, SHRN is marginally cheaper than ADDV (latency 2
+instead of 3), and it should be generally preferable on other cores, no?
 
+For that matter, cannot UQXTN (unsigned saturating extract narrow) be
+used in place of CMEQ+ADDV here?
+
+Alexander
 
