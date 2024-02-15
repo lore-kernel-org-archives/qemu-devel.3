@@ -4,78 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692B1C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D65C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafhL-0002lY-Dr; Thu, 15 Feb 2024 12:38:59 -0500
+	id 1rafkf-0006DZ-5c; Thu, 15 Feb 2024 12:42:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafhJ-0002YY-LS
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:38:57 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafhH-00058j-Tu
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:38:57 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-55a035669d5so1680840a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018734; x=1708623534; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=y6pkeu6jZ6ZmZgRlPDpAqR9EIFF0QvDO6fF2xj7P6ZM=;
- b=OR25d1etD5qYxZXxfqUtFByVFZy8nF5OpedgBY11dZTwYW7/lyqEgcwdAz/9d4i+d3
- BisTWDjlqQvTbopjn47r/pFHw7+PfB4D2YP84u1evf9oL5FRDmfIMin5Mc/NUx5my89F
- ukkr8ISuLkVAz0BGcZDNhkRzA2PnnteaWe9WSdgoao3w2bdLmb9G/NHCAFSkb5MboElx
- 06o9LuFVTAKpzCHZlGZZ3o2g8eAZwcnlf4CoZe4VS1XJKlJiob4ZmUGwyqhciXhKsGeE
- rC1MzJCioOk0LMcKt4ogpnXJUhpdF5rKWcytjVXdO+VybQLgyBAgP0f2zAf5STPPbcD7
- FAEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018734; x=1708623534;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=y6pkeu6jZ6ZmZgRlPDpAqR9EIFF0QvDO6fF2xj7P6ZM=;
- b=nY3K3SV7tRW09XfbxN8OU28Rm6AqETh66nqVJouPi1ooJulw4UoDW1KyK0XVYVLYUF
- 60MQs6oKDlCOPsaa4mU5Vl0o1mjuw1MlFDL64C3E08+uirrC+nkWacd70z7lkX4t6yAX
- OkafD/QlU+ngMLe122WZbHD60eedTmo8PCIwKK3aY3UmJ54E0oiX8zIYb4JRsbf4aNbM
- ITj5ump6Bypi2pIOG6IntRz79t42/Lh2tel7/0OWUKCEl1YVgIHSzqyt9WRcBDwF9r6H
- mOAt67ns4dTiIFGSsZkyQGNTCIJsUMCfbZjkHefmx+S8FhKFg/nc8jFvWI19fdmtrnde
- XrpQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYwI4nrlvyr53V3VFW7JGJZHuPzs8gi/LFPjFXJ+lRNcYRIlqR/RhoK6rF7SsT1Qsr1kZAysC+KBT+amNg8GoN/aaEShg=
-X-Gm-Message-State: AOJu0YxPvo3Fne6sK5pyb6bQdSzDd6zPfyjugJl3U7LFMZccLzsuuTKx
- M4uPdIvShpiKETIUp9qnOAzQ+mfLSpj0MP9/hVx5mIGI1nq88MU+Bk9N3yz/AqJtLrlslVIR5mU
- KpIgoHGdFy2Cq7cYxgFZgEe4JiFAwitMmalZQ3A==
-X-Google-Smtp-Source: AGHT+IFfjXB1ixHiZHQzDjM2sltSYywaCagw0slZjFwOIQ97z7bkIksMVWDafkhHxhr3zO8Y5I79EAKJ5UyWaE2gxko=
-X-Received: by 2002:a05:6402:2151:b0:563:bd60:5809 with SMTP id
- bq17-20020a056402215100b00563bd605809mr1431081edb.31.1708018734452; Thu, 15
- Feb 2024 09:38:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rafkZ-00069T-7e
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:42:20 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rafkX-0006Pg-D1
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:42:18 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TbMjd11Mfz67MDB;
+ Fri, 16 Feb 2024 01:38:29 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id E74E11400D4;
+ Fri, 16 Feb 2024 01:42:13 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 15 Feb
+ 2024 17:42:13 +0000
+Date: Thu, 15 Feb 2024 17:42:12 +0000
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: <qemu-devel@nongnu.org>, Fan Ni <nifan.cxl@gmail.com>,
+ <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH qemu] hw/pci-bridge/pxb-cxl: Drop RAS capability from
+ host bridge.
+Message-ID: <20240215174212.000057c9@Huawei.com>
+In-Reply-To: <20240215111117-mutt-send-email-mst@kernel.org>
+References: <20240215155206.2736-1-Jonathan.Cameron@huawei.com>
+ <20240215111117-mutt-send-email-mst@kernel.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240209173103.239994-1-kwolf@redhat.com>
- <20240212152005.GA879395@fedora>
-In-Reply-To: <20240212152005.GA879395@fedora>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Feb 2024 17:38:43 +0000
-Message-ID: <CAFEAcA_sY5o3yzrWGw5JepTdYOzrfPEHuxDVuXvC+4wDcTizDQ@mail.gmail.com>
-Subject: Re: [PATCH] iotests: Make 144 deterministic again
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, hreitz@redhat.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,36 +68,120 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 12 Feb 2024 at 15:20, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->
-> On Fri, Feb 09, 2024 at 06:31:03PM +0100, Kevin Wolf wrote:
-> > Since commit effd60c8 changed how QMP commands are processed, the order
-> > of the block-commit return value and job events in iotests 144 wasn't
-> > fixed and more and caused the test to fail intermittently.
-> >
-> > Change the test to cache events first and then print them in a
-> > predefined order.
-> >
-> > Waiting three times for JOB_STATUS_CHANGE is a bit uglier than just
-> > waiting for the JOB_STATUS_CHANGE that has "status": "ready", but the
-> > tooling we have doesn't seem to allow the latter easily.
-> >
-> > Fixes: effd60c878176bcaf97fa7ce2b12d04bb8ead6f7
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2126
-> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+On Thu, 15 Feb 2024 11:11:47 -0500
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
+
+> On Thu, Feb 15, 2024 at 03:52:06PM +0000, Jonathan Cameron wrote:
+> > This CXL component isn't allowed to have a RAS capability.
+> > Whilst this should be harmless as software is not expected to look
+> > here, good to clean it up.
+> > 
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>  
+> 
+> Isn't this device migrateable? If yes you need compat
+> handling.
+
+Not yet. Migrating these is broken in lots of ways :(
+
+Given they are functional emulation only I've never cared that much.
+We'll need to fix this as part of adding support for virtualization
+use cases which start to make sense when dynamic capacity
+support lands in kernel + QEMU (probably later this year)
+
+Jonathan
+
+> 
+> 
 > > ---
-> >  tests/qemu-iotests/144     | 12 +++++++++++-
-> >  tests/qemu-iotests/144.out |  2 +-
-> >  2 files changed, 12 insertions(+), 2 deletions(-)
->
-> Thank you!
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> >  I've been carrying this on my tree for quite a while.
+> >  This wasn't in previous fixes set because it's low priority and
+> >  rebasing it across cleanup series that followed those fixes was
+> >  too fiddly to bother.
+> >  
+> >  include/hw/cxl/cxl_component.h      |  1 +
+> >  hw/cxl/cxl-component-utils.c        | 21 +++++++++++++++++----
+> >  hw/pci-bridge/pci_expander_bridge.c |  2 +-
+> >  3 files changed, 19 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
+> > index 0e5d35c263..5012fab6f7 100644
+> > --- a/include/hw/cxl/cxl_component.h
+> > +++ b/include/hw/cxl/cxl_component.h
+> > @@ -25,6 +25,7 @@ enum reg_type {
+> >      CXL2_TYPE3_DEVICE,
+> >      CXL2_LOGICAL_DEVICE,
+> >      CXL2_ROOT_PORT,
+> > +    CXL2_RC,
+> >      CXL2_UPSTREAM_PORT,
+> >      CXL2_DOWNSTREAM_PORT,
+> >      CXL3_SWITCH_MAILBOX_CCI,
+> > diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
+> > index 84ab503325..cd116c0401 100644
+> > --- a/hw/cxl/cxl-component-utils.c
+> > +++ b/hw/cxl/cxl-component-utils.c
+> > @@ -297,6 +297,7 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+> >          caps = 3;
+> >          break;
+> >      case CXL2_ROOT_PORT:
+> > +    case CXL2_RC:
+> >          /* + Extended Security, + Snoop */
+> >          caps = 5;
+> >          break;
+> > @@ -326,8 +327,19 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+> >                         CXL_##reg##_REGISTERS_OFFSET);                         \
+> >      } while (0)
+> >  
+> > +    switch (type) {
+> > +    case CXL2_DEVICE:
+> > +    case CXL2_TYPE3_DEVICE:
+> > +    case CXL2_LOGICAL_DEVICE:
+> > +    case CXL2_ROOT_PORT:
+> > +    case CXL2_UPSTREAM_PORT:
+> > +    case CXL2_DOWNSTREAM_PORT:
+> >      init_cap_reg(RAS, 2, CXL_RAS_CAPABILITY_VERSION);
+> > -    ras_init_common(reg_state, write_msk);
+> > +        ras_init_common(reg_state, write_msk);
+> > +        break;
+> > +    default:
+> > +        break;
+> > +    }
+> >  
+> >      init_cap_reg(LINK, 4, CXL_LINK_CAPABILITY_VERSION);
+> >  
+> > @@ -335,9 +347,10 @@ void cxl_component_register_init_common(uint32_t *reg_state,
+> >          return;
+> >      }
+> >  
+> > -    init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
+> > -    hdm_init_common(reg_state, write_msk, type);
+> > -
+> > +    if (type != CXL2_ROOT_PORT) {
+> > +        init_cap_reg(HDM, 5, CXL_HDM_CAPABILITY_VERSION);
+> > +        hdm_init_common(reg_state, write_msk, type);
+> > +    }
+> >      if (caps < 5) {
+> >          return;
+> >      }
+> > diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> > index 535889f7c2..0411ad31ea 100644
+> > --- a/hw/pci-bridge/pci_expander_bridge.c
+> > +++ b/hw/pci-bridge/pci_expander_bridge.c
+> > @@ -290,7 +290,7 @@ static void pxb_cxl_dev_reset(DeviceState *dev)
+> >      uint32_t *write_msk = cxl_cstate->crb.cache_mem_regs_write_mask;
+> >      int dsp_count = 0;
+> >  
+> > -    cxl_component_register_init_common(reg_state, write_msk, CXL2_ROOT_PORT);
+> > +    cxl_component_register_init_common(reg_state, write_msk, CXL2_RC);
+> >      /*
+> >       * The CXL specification allows for host bridges with no HDM decoders
+> >       * if they only have a single root port.
+> > -- 
+> > 2.39.2  
+> 
 
-Thanks; I'm applying this directly as a CI fix.
-
--- PMM
 
