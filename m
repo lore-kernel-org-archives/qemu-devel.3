@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA3BC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B20C48BF0
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raYRy-0002r5-3R; Thu, 15 Feb 2024 04:54:38 -0500
+	id 1raYRa-0001yx-Uj; Thu, 15 Feb 2024 04:54:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raYRq-0002bQ-IU; Thu, 15 Feb 2024 04:54:32 -0500
-Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ id 1raYRZ-0001yO-FA; Thu, 15 Feb 2024 04:54:13 -0500
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raYRo-0001Qi-Ua; Thu, 15 Feb 2024 04:54:30 -0500
-Received: by mail-vs1-xe2f.google.com with SMTP id
- ada2fe7eead31-467e4a04086so221874137.3; 
- Thu, 15 Feb 2024 01:54:26 -0800 (PST)
+ id 1raYRX-0001O2-Ux; Thu, 15 Feb 2024 04:54:13 -0500
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-7d6a772e08dso270462241.2; 
+ Thu, 15 Feb 2024 01:54:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707990866; x=1708595666; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707990850; x=1708595650; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UK3WtQ1qFUGeEMjDPu9dS0e8tiOTBzkH6/cmRz+LEO0=;
- b=IEgKLTpyO2SrzDUHA1wVweYvdIBfkVzlcxr9DECfikg1u7nSdNbS3qIXIYGiSntvp8
- qdRZfIChq18eKl+cUTI/cg753XnXyfSuo5ZPbTB7RP/Ml1r90C9wHn55jeX8+x5IMcLf
- ZeMJN2HOw9jQMpZiTISHe09XXB/2d9lGfCpR6KFnC+UZEG7arWgwLplBeNK7OVg1H3+E
- P+Vn9XuRX8bgtgDrTesVJCT1eu7trEg1KJkwAY/u6TSjPtOlmoSWG0XqGp7kkwWjYrlW
- WRFOE6oFuk2wEPFpHypyVs5UFyrTLUP8Hr7Kp4yPObFcpyszMCFO3qLqt3dCU3d3a+Fd
- cI3A==
+ bh=dg9Dq9LxbLZcuJ61oe45xPZhA69Go+urHMRwkKmROyI=;
+ b=DsBx4ghiwTT86YrVJyDBQnGvULcQYHcMHFa2el+MkpzDKTV/SUv4DzL9QcL0Csp5vZ
+ gWZ+IJUtxbPgQ5dWPMzPcOR0kJOb19Xz34jHvNNztco6HgDxNKsTrQqMouhKUN+MKPYE
+ XfTkq3cMzyZEnYiiwYlW12Eza4XGMdJBOK2uGrv4EJk7gQI9o3zS7ULpPrAx3oblGwmd
+ OxmJNFZ3iufTlmhykX1qBJS4WIDPaHcW5S3aMdWAKhB4nWVW/qtV9shv937qKEhepB1c
+ j9GR8vpwgcJNmoS68Lp+yrF1bc/5+XBD3p1pYWvkMapXT4ceomkszBX9gYnLsAAV/shY
+ Ot5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707990866; x=1708595666;
+ d=1e100.net; s=20230601; t=1707990850; x=1708595650;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UK3WtQ1qFUGeEMjDPu9dS0e8tiOTBzkH6/cmRz+LEO0=;
- b=JXV5tk+BgL7TZAGReG+0Yg3q6qrKCn5o++yeqm4HMyHhLdmUP2SDXH0fEqxDXkzhPw
- rP5m1oz2WPwyw7dp59UT7IBdewPEcrryPxVMWscfWId+R0iKmJ/0Mj0jywLkR8oJl12J
- QxQFOrsKUyfwgMYeblOEdykhVmLLpTINkkv0kGtU/LTjAx7roHFocV43FmsdsJiOzxZ3
- rA2HAYKtAAUz2Xj5sdDYMj7+B4wyC/6zsjzGsxZ0pOTnwx+MmpM2CgQx1Tte+k0hZGGG
- ycILcn8A9C8Qv3NJ38a4tuy0Li1706Bp+6UXw1rMV2IFZweM77hYDRDlxMM4IBAxd9sk
- eCAg==
+ bh=dg9Dq9LxbLZcuJ61oe45xPZhA69Go+urHMRwkKmROyI=;
+ b=AWsiU0dPSK+Zs9QldUW1KT8+uvt6n5/DJ0KS67dnaB2KGStMluphksTUm9tjJu8RMW
+ kNYt+L0RnQG6ioywY6m3vbsGoS9iwjxAt/zvlfiZa0Fb90Xo7d4o0KBVDbX1UphUVfB1
+ LS8IH2Epj2RsiERrhbatWPB7F0z3j6RI6yqasmEBoGg2b1jnuKEjJ99NpJhgYQuIex93
+ ouPIL1OCmEbMWx929MkW8XVrgGwkV4AQTPkVTYrEZTQR2Dy7C7xermsGgwE0sEooEaQ1
+ DOjFQkOh5DBI5yk/JzHfbw7klezO5sa3ugtEhw2PmFmVW6OXohECxaqGY641xEqP8Xsa
+ UQ3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfC7vCxbqMbdzC30n8Skupe0JEh1YWKM7S4s4URS/mSOyLgVKZUUjZoT60tc+5dTkC+nL3pLP4r266T3I7mSPYdMMOgmYD3n4Mu6UE/8BAQ9enROxVMj6jjbTiPw==
-X-Gm-Message-State: AOJu0YymY1OL/WiGrMby2szaSCU5RYR5vB4wvIjPS3hKfXXEei/qBwM6
- DR0meT2/A41bmh9OqtLhnDO/hrMiTqlPSQLD5eN2nNeAINAtbXK0COCfznsx+pNG38PFCfFfxgX
- hHKikUrtL5BDjb1V0QOdx1Q9+hgc=
-X-Google-Smtp-Source: AGHT+IEhKDmQXwAHkrVaV9pGWX9IxDEW8QdNh4HzmEJPa/CplRra83CklUkIZWSAWj8J6+WCo7mDzLdb3t/5VcB9DKc=
-X-Received: by 2002:a67:c598:0:b0:46e:c42c:e24a with SMTP id
- h24-20020a67c598000000b0046ec42ce24amr937099vsk.14.1707990866323; Thu, 15 Feb
- 2024 01:54:26 -0800 (PST)
+ AJvYcCXJg43sjt4ycfE6kU2ZgB4zRkdyXJO/Y2KJw9o98DzHZTXhdk7mK0rXBOvhEvMBj9qikBmeth+djYII/qu3S+QlLGQbt9g=
+X-Gm-Message-State: AOJu0YwXes4qY9piL2BkzGoJkjjuGy89Q0DYHhElyHcsmT/Nyqof3blS
+ Ar4nGEYfkbJkQvhdnTPM/fsXhPzadG6Xn07gnNE3x9gZmPe6pBwnlc86lcegqqQQwS47NOCCDES
+ T6frjFog7aclmFFoVMHAFbLi00Io=
+X-Google-Smtp-Source: AGHT+IGOQw3S1VPEzuIComSGfsNTgkc6otMpctHlb4SdjGBB5BFLZr3nc+tOMyT8/VrpxZoXa3zty0mIKWJ4WKxU2N0=
+X-Received: by 2002:a05:6102:1627:b0:46e:e449:b8f0 with SMTP id
+ cu39-20020a056102162700b0046ee449b8f0mr1213320vsb.7.1707990850107; Thu, 15
+ Feb 2024 01:54:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
-In-Reply-To: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
+References: <20240207081820.28559-1-jason.chien@sifive.com>
+In-Reply-To: <20240207081820.28559-1-jason.chien@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 19:54:00 +1000
-Message-ID: <CAKmqyKOsX+QYRsb9+DfeYC5hkzUakOC8M1h4JCssHQPu4zG8gw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] RISC-V: ACPI: Enable SPCR
-To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
- peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Date: Thu, 15 Feb 2024 19:53:43 +1000
+Message-ID: <CAKmqyKPZ9-vWgk3R5vupZw3Zbi1PBvRtxQHUaFnfSwHT2UwYmQ@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv: Update $ra with current $pc in
+ trans_cm_jalt()
+To: Jason Chien <jason.chien@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Frank Chang <frank.chang@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Junqiang Wang <wangjunqiang@iscas.ac.cn>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,39 +99,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jan 16, 2024 at 11:11=E2=80=AFAM Sia Jee Heng
-<jeeheng.sia@starfivetech.com> wrote:
+On Wed, Feb 7, 2024 at 6:18=E2=80=AFPM Jason Chien <jason.chien@sifive.com>=
+ wrote:
 >
-> This series focuses on enabling the Serial Port Console Redirection (SPCR=
-)
-> table for the RISC-V virt platform. Considering that ARM utilizes the sam=
-e
-> function, the initial patch involves migrating the build_spcr function to
-> common code. This consolidation ensures that RISC-V avoids duplicating th=
-e
-> function.
+> The original implementation sets $pc to the address read from the jump
+> vector table first and links $ra with the address of the next instruction
+> after the updated $pc. After jumping to the updated $pc and executing the
+> next ret instruction, the program jumps to $ra, which is in the same
+> function currently executing, which results in an infinite loop.
+> This commit stores the jump address in a temporary, updates $ra with the
+> current $pc, and copies the temporary to $pc.
 >
-> The patch set is built upon Alistair's riscv-to-apply.next branch
->
-> Changes in v2:
-> - Renamed the build_spcr_rev2() function to spcr_setup().
-> - SPCR table version is passed from spcr_setup() to the common
->   build_spcr() function.
-> - Added "Reviewed-by" from Daniel for patch 2.
-> - The term 'RFC' has been removed from this series, as the dependency cod=
-e
->   from [1] has been merged into Alistair's riscv-to-apply.next branch. Th=
-e
->   first series of this patch can be found at [2].
->
-> [1] https://lore.kernel.org/qemu-devel/20231218150247.466427-1-sunilvl@ve=
-ntanamicro.com/
-> [2] https://lore.kernel.org/qemu-devel/20240105090608.5745-1-jeeheng.sia@=
-starfivetech.com/
->
-> Sia Jee Heng (2):
->   hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location
->   hw/riscv/virt-acpi-build.c: Generate SPCR table
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
 
 Thanks!
 
@@ -134,16 +119,44 @@ Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+>  target/riscv/insn_trans/trans_rvzce.c.inc | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
->  hw/acpi/aml-build.c         | 51 ++++++++++++++++++++++++++++
->  hw/arm/virt-acpi-build.c    | 68 +++++++++++++++----------------------
->  hw/riscv/virt-acpi-build.c  | 39 +++++++++++++++++++++
->  include/hw/acpi/acpi-defs.h | 33 ++++++++++++++++++
->  include/hw/acpi/aml-build.h |  4 +++
->  5 files changed, 154 insertions(+), 41 deletions(-)
+> diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/ins=
+n_trans/trans_rvzce.c.inc
+> index 2d992e14c4..cd234ad960 100644
+> --- a/target/riscv/insn_trans/trans_rvzce.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvzce.c.inc
+> @@ -293,12 +293,14 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_cm=
+_jalt *a)
+>  {
+>      REQUIRE_ZCMT(ctx);
 >
+> +    TCGv addr =3D tcg_temp_new();
+> +
+>      /*
+>       * Update pc to current for the non-unwinding exception
+>       * that might come from cpu_ld*_code() in the helper.
+>       */
+>      gen_update_pc(ctx, 0);
+> -    gen_helper_cm_jalt(cpu_pc, tcg_env, tcg_constant_i32(a->index));
+> +    gen_helper_cm_jalt(addr, tcg_env, tcg_constant_i32(a->index));
+>
+>      /* c.jt vs c.jalt depends on the index. */
+>      if (a->index >=3D 32) {
+> @@ -307,6 +309,8 @@ static bool trans_cm_jalt(DisasContext *ctx, arg_cm_j=
+alt *a)
+>          gen_set_gpr(ctx, xRA, succ_pc);
+>      }
+>
+> +    tcg_gen_mov_tl(cpu_pc, addr);
+> +
+>      tcg_gen_lookup_and_goto_ptr();
+>      ctx->base.is_jmp =3D DISAS_NORETURN;
+>      return true;
 > --
-> 2.34.1
+> 2.43.0
 >
 >
 
