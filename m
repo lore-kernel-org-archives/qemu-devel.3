@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59618C48BEF
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E72C48BF0
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raV7A-0002Pt-Bm; Thu, 15 Feb 2024 01:20:56 -0500
+	id 1raV74-0002Ml-FB; Thu, 15 Feb 2024 01:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV79-0002PS-6B
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:55 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1raV6t-0002Jb-UZ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:40 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV77-0005Xl-Nf
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:54 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1d7881b1843so4656725ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:53 -0800 (PST)
+ id 1raV6s-0005TB-8t
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:39 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-5ce6b5e3c4eso398238a12.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707978052; x=1708582852; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707978037; x=1708582837; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mDHtjMX+mEQb+/p7zJ9SmZdTAU/DfY9CF76Jhj+l68I=;
- b=u3ei+nhA06wfOBKGdy1US7qnEUWsIj27qpj41UgMieXqcybrSn0krIXS1S0nBRA5et
- t/iYFG6SOibMqOzH6RWwMzeA/Wf0UiZXciaDzE+MYSyKOnOer4OV7wYX9MBV03q6/jo2
- 3iZXZQp0aYjEjSd5EOlGSGDq74VAST3RRM3uifA/vJffWJYYJjSOpvUpAlJyf34hrLsT
- zHdJpLmnB9+U6uKbleh4zgHo6kPdpzu1aXmxLnIHxU/IVP+eN85EnxgVsyAnWmf7WXHE
- +r53WJ1kvwNTVmO3U1zoGdUEb112ZedOpO2HagG7rD3Lfl8cpZM0Z8hwMcob3Ky4rqdO
- +jAA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z/9ie+RjhRAxWQRFAoaHPcdtrZYsCMJBCi3SaKV1dlk=;
+ b=kyE+u9nVvw+xMyRJ9BwM+rq86mWks7j+fwgHWUFj3SD1sFd6VTJPxTFkstVkmRNkgr
+ Zz6Mn75ODKSZoBp+0mqRH+PKrLc3KZaHeoZ5z7gn89UIk4DSk/CrzoHKwsqJain9aIkD
+ vF9oo/EgDlcDktVDzmJiFFaSjDAIaF6a1NVkec7qmXDyQB2R4O3VRN/ENQ561WAkFvuc
+ +a+DaTfQD9mFiwmNDoGaJCmDIPXzCixUVceTx+7k0YMrEpiJKRQw8Puz99iiiSagYy9W
+ 0CLwC3ibMykqJap4HIbDTnWc6ppXDd1e74Umc4MRU7x8Sy9mFe2+g54ylarsURluR1ei
+ 9d5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707978052; x=1708582852;
+ d=1e100.net; s=20230601; t=1707978037; x=1708582837;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mDHtjMX+mEQb+/p7zJ9SmZdTAU/DfY9CF76Jhj+l68I=;
- b=JVyINRQWecGTMjFZqj00ipWTyWCjPIjIU5YkSkj4DFzHxGB1cerZ3V1bDIKyB6c3Au
- UoJYghNEFc6ptewYgEA2cY0Xey6fO4USCcUGNv32moCQ/srVvXYh7JxDYbzzrGtMpp1O
- Ka9Lh8ycqxeRh2T4NLnUIH3dBGkUdPQr6Hq3Akv8ILyQsG7IQmc/hWeQALTyfu/xKrWZ
- HIgxwsnLRbeycmNd6hEZvglN2EyCcbCDeJeFE1hSnq1IrTojwqMBzyvy5kicgoHg1ju1
- DUCI/d5QC0iTAZ+CpQdJl+0u111cwqL6T6jDNDCiF9NLu/Ou32F7s2qIid4XaGl0NsTr
- ozGg==
-X-Gm-Message-State: AOJu0Yz7pJjB82QweHFjKtdz0YtNlwL4QXJCo9LGZWz3F1fTAsE+//QA
- SicUbRpc9xdKCwjKmTxX4G4zAxQUcEazKOgEa9afJeWzec3lEZ8jKpp8utOycLKmkwuTnMFC9L+
- A
-X-Google-Smtp-Source: AGHT+IEC1NtfJs2QyHSIdtijE2ZK6m4Zy1z2WpvF0QgCIKRbM1j3zN81cBK20pKK6N9FYJmOflccXw==
-X-Received: by 2002:a17:902:f68e:b0:1d8:aada:a7f5 with SMTP id
- l14-20020a170902f68e00b001d8aadaa7f5mr850946plg.11.1707978052467; 
- Wed, 14 Feb 2024 22:20:52 -0800 (PST)
+ bh=z/9ie+RjhRAxWQRFAoaHPcdtrZYsCMJBCi3SaKV1dlk=;
+ b=PnYJD4AWTRJVkkYhN4nR8DWVGsfMJAVfg8Y7ZyRLMyORxcudU7vzrKEc4Y0At9epjz
+ copYxIxXydgWLt5BBIhI5glIsQigQ/45tVtPJ15vLqgXBDIG+6ofHhqfn+D/A7yAXRXZ
+ UAcdfBTEktpQDb6XLmiW8HkLoaS72V4/Kr5zIRQxk7EU97rB+yZDTCgqrxyEZrsgd1Jz
+ iWwFZq/3gjRiO2esHA80HaFo7/pa1NgMgZdDFr8+pnkwiVCGCvnlDiN3qXSGMzAMAk7K
+ i5JPN3xkkRB6+cA9SDCK0Ig2nz9dIlRvc7+VpBtFSY80cZJjuHJjALab2U4bBowuL4jH
+ 8cfg==
+X-Gm-Message-State: AOJu0YzhkeC0H+9jboERXC0GETQFSmGr0Axxny+WWuIC1XYkOUJZTVWq
+ hlOYO0Ja3/Qaozp0MJGFl11cvRVZzrQ3RpIadgPHnY5xocsPH4i/uF6OCavg5xaCg9oOpxVCpPC
+ s
+X-Google-Smtp-Source: AGHT+IGwE7m9GInItJziaAaBXCCX8w+tWtIQk1sDDLvWFB7AKvfxgHUTnItrWaa0O6s/tOAD8U7yZw==
+X-Received: by 2002:a05:6a21:1519:b0:19e:9aec:ba1d with SMTP id
+ nq25-20020a056a21151900b0019e9aecba1dmr1442595pzb.47.1707978036792; 
+ Wed, 14 Feb 2024 22:20:36 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.51
- for <qemu-devel@nongnu.org>
+ d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 22:20:52 -0800 (PST)
+ Wed, 14 Feb 2024 22:20:36 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 22/36] linux-user: Use do_munmap for target_mmap failure
-Date: Wed, 14 Feb 2024 20:20:04 -1000
-Message-Id: <20240215062018.795056-23-richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PATCH v4 11/36] migration: Remove qemu_host_page_size
+Date: Wed, 14 Feb 2024 20:19:53 -1000
+Message-Id: <20240215062018.795056-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215062018.795056-1-richard.henderson@linaro.org>
 References: <20240215062018.795056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,46 +96,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the cases for which the host mmap succeeds, but does
-not yield the desired address, use do_munmap to restore
-the reserved_va memory reservation.
+Replace with the maximum of the real host page size
+and the target page size.  This is an exact replacement.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-12-richard.henderson@linaro.org>
 ---
- linux-user/mmap.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ migration/ram.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index 8ebcca4444..cbcd31e941 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -326,7 +326,7 @@ static bool mmap_frag(abi_ulong real_start, abi_ulong start, abi_ulong last,
-                        flags | MAP_ANONYMOUS, -1, 0);
-         if (p != host_start) {
-             if (p != MAP_FAILED) {
--                munmap(p, host_page_size);
-+                do_munmap(p, host_page_size);
-                 errno = EEXIST;
+diff --git a/migration/ram.c b/migration/ram.c
+index 4649a81204..61c1488352 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2935,7 +2935,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+ {
+     RAMState **rsp = opaque;
+     RAMBlock *block;
+-    int ret;
++    int ret, max_hg_page_size;
+ 
+     if (compress_threads_save_setup()) {
+         return -1;
+@@ -2950,6 +2950,12 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+     }
+     (*rsp)->pss[RAM_CHANNEL_PRECOPY].pss_channel = f;
+ 
++    /*
++     * ??? Mirrors the previous value of qemu_host_page_size,
++     * but is this really what was intended for the migration?
++     */
++    max_hg_page_size = MAX(qemu_real_host_page_size(), TARGET_PAGE_SIZE);
++
+     WITH_RCU_READ_LOCK_GUARD() {
+         qemu_put_be64(f, ram_bytes_total_with_ignored()
+                          | RAM_SAVE_FLAG_MEM_SIZE);
+@@ -2958,8 +2964,8 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
+             qemu_put_byte(f, strlen(block->idstr));
+             qemu_put_buffer(f, (uint8_t *)block->idstr, strlen(block->idstr));
+             qemu_put_be64(f, block->used_length);
+-            if (migrate_postcopy_ram() && block->page_size !=
+-                                          qemu_host_page_size) {
++            if (migrate_postcopy_ram() &&
++                block->page_size != max_hg_page_size) {
+                 qemu_put_be64(f, block->page_size);
              }
-             return false;
-@@ -622,7 +622,7 @@ static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
-             p = mmap(g2h_untagged(start), len, host_prot,
-                      flags | MAP_FIXED, fd, host_offset);
-             if (p == MAP_FAILED) {
--                munmap(g2h_untagged(start), host_len);
-+                do_munmap(g2h_untagged(start), host_len);
-                 return -1;
-             }
-             host_start += offset - host_offset;
-@@ -735,7 +735,7 @@ static abi_long target_mmap__locked(abi_ulong start, abi_ulong len,
-                      flags, fd, offset1);
-             if (p != want_p) {
-                 if (p != MAP_FAILED) {
--                    munmap(p, len1);
-+                    do_munmap(p, len1);
-                     errno = EEXIST;
-                 }
-                 return -1;
+             if (migrate_ignore_shared()) {
+@@ -3792,6 +3798,7 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+     int ret = 0;
+     /* ADVISE is earlier, it shows the source has the postcopy capability on */
+     bool postcopy_advised = migration_incoming_postcopy_advised();
++    int max_hg_page_size;
+ 
+     assert(block);
+ 
+@@ -3809,9 +3816,16 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+             return ret;
+         }
+     }
++
++    /*
++     * ??? Mirrors the previous value of qemu_host_page_size,
++     * but is this really what was intended for the migration?
++     */
++    max_hg_page_size = MAX(qemu_real_host_page_size(), TARGET_PAGE_SIZE);
++
+     /* For postcopy we need to check hugepage sizes match */
+     if (postcopy_advised && migrate_postcopy_ram() &&
+-        block->page_size != qemu_host_page_size) {
++        block->page_size != max_hg_page_size) {
+         uint64_t remote_page_size = qemu_get_be64(f);
+         if (remote_page_size != block->page_size) {
+             error_report("Mismatched RAM page size %s "
 -- 
 2.34.1
 
