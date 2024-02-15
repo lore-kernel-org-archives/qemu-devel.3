@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F9ABC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103FBC48BEF
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag41-0004Z6-2Z; Thu, 15 Feb 2024 13:02:25 -0500
+	id 1rag3y-00046h-D0; Thu, 15 Feb 2024 13:02:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag3Y-0003JH-Uj
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:58 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag3Q-00036Z-65
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:49 -0500
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag3T-0002e1-Qv
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:56 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-410ca9e851bso9273655e9.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:01:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag3M-0002cw-F1
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:01:47 -0500
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d1025717c7so13584431fa.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:01:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708020109; x=1708624909; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708020102; x=1708624902; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d24ptjop5v0vDtRVKzO4zmRV4raxlddQ2KCuegz4KuQ=;
- b=iE1pr4AdBSs5B4LHUVicwSvRTLthFEBDiRbnz0Isko64bZsM3CqB46gUyW0vDZORJg
- XD3ZoywU/irnjJUmju++FF7OagnN07+bSym5iUEP5IrO0bZsU+zVkSG7xXOfbaEU1ARC
- NkKbnrI7UnjRihnJNh6J0OnHaT1OfLdFVEr6jrWLz+84b0M01M4Yy4e/BZqfS7YhlUza
- 0vcx+QAuM1hPd1uxkYIjPJsh7PvlduvrR2AkD4NC42qOABDxfBdT+6/jvzviN7l/el1H
- BuO3TC5xiF+W0CrjdjdhZ3cSKE0xV/DK04fwNgzAFnNAiAi3m0hTWpdnjeD9DUo57Mam
- v3gA==
+ bh=ruX53CbVKYFd9a03NjcuApvlZnuC4B/Alw04ClG0uNE=;
+ b=hOI1M3o3q8YkX1TJw4hk7FpfS30B9odCwTpiUYRav0slATxtzhMhHcN4kXR6+bvVUL
+ GSWpo6Jkr1GLfhyefDS+Hi6AgX3gg/FW5pLzEoznNepSAhfpk/v98FXsHUGF6Cl8msWE
+ Q3jIm1HRWoFdowT8vJeDucf9hZGY8j+jLUDkLfdS0f63VyvmmoNw3+5he2Fb+3EU4rML
+ bA/vJbn9p+kDEQV4PKOvRZT7vURuWqLeh4K0H3xhZVSFr6G8McSE2lApV3C0xbIKutgc
+ v2884sok21qrRl9dKOWYVWUwkNlYIwBkw/GSA15anwHVTsW8bcXPaIFy8p+EFESbKbU1
+ +JEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708020109; x=1708624909;
+ d=1e100.net; s=20230601; t=1708020102; x=1708624902;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d24ptjop5v0vDtRVKzO4zmRV4raxlddQ2KCuegz4KuQ=;
- b=h9x2xATV+fpjsu9bdyYBcGdcVwIQNMSpA7X9g1Ovd10vcRbcXPOaETgt+rXO3S6/O9
- x1nvNWCxyzEU60YsIzgGrCtuTaehK6as70ISHzgy0rraB5OQz7mqa0Iy+sXq8d7aaS+x
- bWKu888qqqrXwmZunlrunIcjQnTyvd2cJgnyq8lNEWg87yJQnhfai3IJnV+HjOTmzZYP
- Xl5vfUl2IED+OaXdHl91y1P9kgt38mTN/MfkD9IuQs2VlveL3BpxqV7TcLMXt3dDOUXK
- vZvuo6NkyG5gr2xLymLOq69tA+odtfOFk0o7uTdiNawtDF5iYF3Y/RCfcyGbqOZJ3Srp
- KoBA==
-X-Gm-Message-State: AOJu0YxZqJAmN6M9MXp2nbZSsJklYUFa7CsyRwKPLkvFXYA6YO0yolms
- O0WSVTlcbNNBLlxkzVEp+B4d3dgJ+c93tocUswecK7AALRoBsnpLCSxXGeBsNPsd9qMu/1ag9KA
- zx4g=
-X-Google-Smtp-Source: AGHT+IFWsRPf3KdaqdmqnYQkTg97jRJi2UMAa8FO8t7BINh7EWaqHP1zeWca6l8fqotmTRq7Ei2pzw==
-X-Received: by 2002:a5d:4491:0:b0:33b:87a0:3af with SMTP id
- j17-20020a5d4491000000b0033b87a003afmr1863512wrq.67.1708020108771; 
- Thu, 15 Feb 2024 10:01:48 -0800 (PST)
+ bh=ruX53CbVKYFd9a03NjcuApvlZnuC4B/Alw04ClG0uNE=;
+ b=HWv0fVyVhPzFTSm54zXuWbQsliCSdqg/okE5fU0jWfWQZSASU8T9BaM9zARO+fiv2M
+ QUgNBfS9BpKkTux3c/l6BY1F9E73kfNG+nUJUIf2ShdGDns098pYe5n3JlygNortVwUM
+ mvmJXjQgUsJrQ1BZ8bDvETd6TZU06MJFLHE8GKJzCoBVjQVBfJRqoyjxcE+X6bjuupKj
+ 5SPcTzgRknZ/pHghEuMBpgL0q6Vy2XWDpkc2F83Sidj2hyFD9FeFlVyR7mSVFSxtMe2M
+ H5PME7BOygLxB/nAjMd4SFz0HuyvMa9AQFg6fr1hSr+1p40894H8xFILqLB+yXeAT++m
+ JMmA==
+X-Gm-Message-State: AOJu0YzE7WN/sRPMPkGygJnPXDRkWvQSys5Scy19gRyxWT29CDKfcDby
+ 9enC1KxRTAcj+9nA2ZudQNnxESr9a4ilTB2x227ktt/sm/P7zFYvlMaVH6xoYK0QKXEmWj7hsuy
+ Cw9k=
+X-Google-Smtp-Source: AGHT+IFx1r0lfzK4K0Vfh4rui2MlM/suS5H/p4OFMC2AaypBYI7dOJ39jvcjTpCNaK18iD7U4ueXJg==
+X-Received: by 2002:a2e:9058:0:b0:2d1:1c54:12d with SMTP id
+ n24-20020a2e9058000000b002d11c54012dmr1857104ljg.38.1708020102325; 
+ Thu, 15 Feb 2024 10:01:42 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- bu23-20020a056000079700b0033cdf4bea19sm2621169wrb.9.2024.02.15.10.01.47
+ j12-20020a05600c190c00b00410bca333b7sm5918918wmq.27.2024.02.15.10.01.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 10:01:48 -0800 (PST)
+ Thu, 15 Feb 2024 10:01:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
  =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
  Frederic Konrad <konrad.frederic@yahoo.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 35/56] hw/intc/grlib_irqmp: implements the multiprocessor
- status register
-Date: Thu, 15 Feb 2024 18:57:29 +0100
-Message-ID: <20240215175752.82828-36-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 34/56] hw/intc/grlib_irqmp: add ncpus property
+Date: Thu, 15 Feb 2024 18:57:28 +0100
+Message-ID: <20240215175752.82828-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,122 +100,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Clément Chigot <chigot@adacore.com>
 
-This implements the multiprocessor status register in grlib-irqmp and
-bind it to a start signal, which will be later wired in leon3-generic
-to start a cpu.
-
-The EIRQ and BA bits are not implemented.
-
-Based on https://gaisler.com/doc/gr712rc-usermanual.pdf, §8.3.5.
+This adds a "ncpus" property to the "grlib-irqmp" device to be used
+later, this required a little refactoring of how we initialize the
+device (ie: use realize instead of init).
 
 Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
 Signed-off-by: Clément Chigot <chigot@adacore.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240131085047.18458-4-chigot@adacore.com>
+Message-ID: <20240131085047.18458-3-chigot@adacore.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/grlib_irqmp.c | 35 ++++++++++++++++++++++++++++++++---
- 1 file changed, 32 insertions(+), 3 deletions(-)
+ hw/intc/grlib_irqmp.c | 30 +++++++++++++++++++++---------
+ hw/sparc/leon3.c      |  2 +-
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
 diff --git a/hw/intc/grlib_irqmp.c b/hw/intc/grlib_irqmp.c
-index 744cd64c58..1e073bd232 100644
+index 11eef62457..744cd64c58 100644
 --- a/hw/intc/grlib_irqmp.c
 +++ b/hw/intc/grlib_irqmp.c
-@@ -52,6 +52,10 @@
- #define FORCE_OFFSET     0x80
- #define EXTENDED_OFFSET  0xC0
+@@ -1,7 +1,7 @@
+ /*
+  * QEMU GRLIB IRQMP Emulator
+  *
+- * (Multiprocessor and extended interrupt not supported)
++ * (Extended interrupt not supported)
+  *
+  * SPDX-License-Identifier: MIT
+  *
+@@ -63,6 +63,7 @@ struct IRQMP {
  
-+/* Multiprocessor Status Register  */
-+#define MP_STATUS_CPU_STATUS_MASK ((1 << IRQMP_MAX_CPU)-2)
-+#define MP_STATUS_NCPU_SHIFT      28
-+
- #define MAX_PILS 16
+     MemoryRegion iomem;
  
- OBJECT_DECLARE_SIMPLE_TYPE(IRQMP, GRLIB_IRQMP)
-@@ -65,6 +69,7 @@ struct IRQMP {
- 
-     unsigned int ncpus;
++    unsigned int ncpus;
      IRQMPState *state;
-+    qemu_irq start_signal[IRQMP_MAX_CPU];
      qemu_irq irq;
  };
- 
-@@ -72,6 +77,7 @@ struct IRQMPState {
-     uint32_t level;
-     uint32_t pending;
-     uint32_t clear;
-+    uint32_t mpstatus;
-     uint32_t broadcast;
- 
-     uint32_t mask[IRQMP_MAX_CPU];
-@@ -182,10 +188,12 @@ static uint64_t grlib_irqmp_read(void *opaque, hwaddr addr,
-         return state->force[0];
- 
-     case CLEAR_OFFSET:
--    case MP_STATUS_OFFSET:
-         /* Always read as 0 */
-         return 0;
- 
-+    case MP_STATUS_OFFSET:
-+        return state->mpstatus;
-+
-     case BROADCAST_OFFSET:
-         return state->broadcast;
- 
-@@ -224,8 +232,9 @@ static uint64_t grlib_irqmp_read(void *opaque, hwaddr addr,
- static void grlib_irqmp_write(void *opaque, hwaddr addr,
-                               uint64_t value, unsigned size)
- {
--    IRQMP      *irqmp = opaque;
-+    IRQMP *irqmp = opaque;
-     IRQMPState *state;
-+    int i;
- 
-     assert(irqmp != NULL);
-     state = irqmp->state;
-@@ -258,7 +267,18 @@ static void grlib_irqmp_write(void *opaque, hwaddr addr,
-         return;
- 
-     case MP_STATUS_OFFSET:
--        /* Read Only (no SMP support) */
-+        /*
-+         * Writing and reading operations are reversed for the CPU status.
-+         * Writing "1" will start the CPU, but reading "1" means that the CPU
-+         * is power-down.
-+         */
-+        value &= MP_STATUS_CPU_STATUS_MASK;
-+        for (i = 0; i < irqmp->ncpus; i++) {
-+            if ((value >> i) & 1) {
-+                qemu_set_irq(irqmp->start_signal[i], 1);
-+                state->mpstatus &= ~(1 << i);
-+            }
-+        }
-         return;
- 
-     case BROADCAST_OFFSET:
-@@ -325,6 +345,8 @@ static void grlib_irqmp_reset(DeviceState *d)
- 
-     memset(irqmp->state, 0, sizeof *irqmp->state);
+@@ -326,33 +327,44 @@ static void grlib_irqmp_reset(DeviceState *d)
      irqmp->state->parent = irqmp;
-+    irqmp->state->mpstatus = ((irqmp->ncpus - 1) << MP_STATUS_NCPU_SHIFT) |
-+        ((1 << irqmp->ncpus) - 2);
  }
  
- static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
-@@ -338,6 +360,13 @@ static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
-     }
+-static void grlib_irqmp_init(Object *obj)
++static void grlib_irqmp_realize(DeviceState *dev, Error **errp)
+ {
+-    IRQMP *irqmp = GRLIB_IRQMP(obj);
+-    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
++    IRQMP *irqmp = GRLIB_IRQMP(dev);
  
-     qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
+-    qdev_init_gpio_in(DEVICE(obj), grlib_irqmp_set_irq, MAX_PILS);
+-    qdev_init_gpio_out_named(DEVICE(obj), &irqmp->irq, "grlib-irq", 1);
+-    memory_region_init_io(&irqmp->iomem, obj, &grlib_irqmp_ops, irqmp,
++    if ((!irqmp->ncpus) || (irqmp->ncpus > IRQMP_MAX_CPU)) {
++        error_setg(errp, "Invalid ncpus properties: "
++                   "%u, must be 0 < ncpus =< %u.", irqmp->ncpus,
++                   IRQMP_MAX_CPU);
++    }
 +
-+    /*
-+     * Transitionning from 0 to 1 starts the CPUs. The opposite can't
-+     * happen.
-+     */
-+    qdev_init_gpio_out_named(dev, irqmp->start_signal, "grlib-start-cpu",
-+                             IRQMP_MAX_CPU);
-     qdev_init_gpio_out_named(dev, &irqmp->irq, "grlib-irq", 1);
-     memory_region_init_io(&irqmp->iomem, OBJECT(dev), &grlib_irqmp_ops, irqmp,
++    qdev_init_gpio_in(dev, grlib_irqmp_set_irq, MAX_PILS);
++    qdev_init_gpio_out_named(dev, &irqmp->irq, "grlib-irq", 1);
++    memory_region_init_io(&irqmp->iomem, OBJECT(dev), &grlib_irqmp_ops, irqmp,
                            "irqmp", IRQMP_REG_SIZE);
+ 
+     irqmp->state = g_malloc0(sizeof *irqmp->state);
+ 
+-    sysbus_init_mmio(dev, &irqmp->iomem);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &irqmp->iomem);
+ }
+ 
++static Property grlib_irqmp_properties[] = {
++    DEFINE_PROP_UINT32("ncpus", IRQMP, ncpus, 1),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
+ static void grlib_irqmp_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
++    dc->realize = grlib_irqmp_realize;
+     dc->reset = grlib_irqmp_reset;
++    device_class_set_props(dc, grlib_irqmp_properties);
+ }
+ 
+ static const TypeInfo grlib_irqmp_info = {
+     .name          = TYPE_GRLIB_IRQMP,
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(IRQMP),
+-    .instance_init = grlib_irqmp_init,
+     .class_init    = grlib_irqmp_class_init,
+ };
+ 
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index e80b9410d4..bc6a85be9c 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -264,11 +264,11 @@ static void leon3_generic_hw_init(MachineState *machine)
+ 
+     /* Allocate IRQ manager */
+     irqmpdev = qdev_new(TYPE_GRLIB_IRQMP);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
+     qdev_init_gpio_in_named_with_opaque(DEVICE(cpu), leon3_set_pil_in,
+                                         env, "pil", 1);
+     qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", 0,
+                                 qdev_get_gpio_in_named(DEVICE(cpu), "pil", 0));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
+     sysbus_mmio_map(SYS_BUS_DEVICE(irqmpdev), 0, LEON3_IRQMP_OFFSET);
+     env->irq_manager = irqmpdev;
+     env->qemu_irq_ack = leon3_irq_manager;
 -- 
 2.41.0
 
