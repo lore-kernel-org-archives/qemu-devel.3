@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE536C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802EFC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raV75-0002NI-C3; Thu, 15 Feb 2024 01:20:51 -0500
+	id 1raVJs-0007p3-LM; Thu, 15 Feb 2024 01:34:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV6v-0002Jv-28
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:42 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV6t-0005Td-G8
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:40 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d8aadc624dso4184415ad.0
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707978038; x=1708582838; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8e59UVGjA+rf7vDiYDlVPV0vb6j37PsuKcjN1UFSiz0=;
- b=m6dM743nvCBONtmpXoTrg98ube4wBIS/1gKtxfx3gVz5jGnSFjMZcvEIX90u6Bi40b
- NKgfUan9q6KpdckTTYBQiWxy57lFN6i0eSK1gXCuNFSpBwqf8oKEzEmsUa1F2DIghhws
- cSBN7Vlh1b7GAXIxmu+OZPrC5Ej5wQzYw6B933EYhl7KYxwHezKHXQRrnWe3LKGmCm2l
- z3b5uGHq8Nk3kArITyPE0bKIKi/qPoy+kELXwgxF8chmc50ldy6KgD7qlMUB4pStrkip
- uPCF735JclVbccypzr8B0f9GLr/knPKdB55iNph3kTZDBPhDXSe20JfQiYgYrJ4GdcqE
- MNAA==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1raVJq-0007ol-Jn
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:34:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1raVJp-0000r0-2W
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:34:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1707978839;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=K+R5rB4jyZa9FVOzgVDgG6bCnOUGXUs1cGlhnCHIUzg=;
+ b=X081MzdKqo6mX5uxYkUR5HUvP6VH5gdpawSIz+/7e4p/OZrHw+PeuZT2uMWw1rsAzQKqo7
+ XBkqC1B2YgLZrknyosyav6m/wHH8d7+QOm0XnTbBE4IEP4GN6gqCXx1MqG2DHAsyohgDlS
+ AdcjVkK/XFtZW2ln8a5ALwO9MzG/zME=
+Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
+ [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-27-n5t_GdZBPUGMqdArhKqRyA-1; Thu, 15 Feb 2024 01:33:57 -0500
+X-MC-Unique: n5t_GdZBPUGMqdArhKqRyA-1
+Received: by mail-yb1-f198.google.com with SMTP id
+ 3f1490d57ef6-dccc49ef73eso683927276.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:33:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707978038; x=1708582838;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1707978837; x=1708583637;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8e59UVGjA+rf7vDiYDlVPV0vb6j37PsuKcjN1UFSiz0=;
- b=kj98B+e4kgiaCzZL/H7RlcoQB1WRyIW5cGL69L9uFUfPZvO/f9vjvYB6a2SoOigxo7
- vF/2sJsCZ9znI+Bav5N08gSqygvjyR9cq8GXitRfzWAOdn28oWMmE0Z1CLYuZuQvLrZu
- 3L0zzDwAv8lCKCa9iWSW+d2/IibCukAMcIdrCK7Yab8usI8KLLgFepP+2TK3xjhaUmUT
- ceh1nYKHtyqHSAqngDMGXYxDcwSwDvgODYGab08+KDeOD0Q29APtjZTk4HdgZkwtunl3
- FQYxjWjJy/UgQfF41GfTO94gH34+mCV0Rh7mxNzBFJCTa6Utx6ZGE1Z3qRGILPurfsU+
- v97w==
-X-Gm-Message-State: AOJu0YwewvCyWBucBV1D7AwDkMMjNVleLdbV0m2j2X8GXSVN26qxP18b
- 0WbL8sc7EjG9cu+0HZwmSu1umzsCwflC27XdH9AfZIDiMFD5Fygx3Pp5Q9RWP12vMEQY2yocmYO
- 9
-X-Google-Smtp-Source: AGHT+IGOPl7aLeb+RTsbvuqH8pWpd8f3a0w1l4a3JBWEDz1RjmGBP8n9D8UKg29DE749eB5plPmV+w==
-X-Received: by 2002:a17:902:c40c:b0:1db:5093:5e23 with SMTP id
- k12-20020a170902c40c00b001db50935e23mr1026511plk.28.1707978038374; 
- Wed, 14 Feb 2024 22:20:38 -0800 (PST)
-Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
- by smtp.gmail.com with ESMTPSA id
- d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 22:20:37 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PATCH v4 12/36] hw/tpm: Remove HOST_PAGE_ALIGN from tpm_ppi_init
-Date: Wed, 14 Feb 2024 20:19:54 -1000
-Message-Id: <20240215062018.795056-13-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240215062018.795056-1-richard.henderson@linaro.org>
-References: <20240215062018.795056-1-richard.henderson@linaro.org>
+ bh=K+R5rB4jyZa9FVOzgVDgG6bCnOUGXUs1cGlhnCHIUzg=;
+ b=grP699MNXfuAFjyZheKBl0yMWwg/QhW2NN9/P+Pu5Ua1iu6V7ABtVejgRjBSC8Z0TO
+ wFdCF3oHOJyTzJsvMO7FnPdg5seujJEq4DcGfAEA/bW6qyTaSK11qiQeIzvmCuBYvdoX
+ 9Qp2HX4Lnd6bYTtRiLa4YiHMb+5YSDPf9HeJs427HOa54o4v4tLDHm0zPqNB03AdmNWy
+ RhfeNxgnQVNMLjrXcGwPPWsmlCN7OTgfqkRi39DubQlOREuHUbTeiXNRxlT5PofhzqQH
+ 9Iib+ozDprOZEkG+JTKJsQZ+RsMYVow1Qf7pxcI3S0HEVzIPmVbKAnRxTI0eyhkhO9Ol
+ e3uA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCFAORBtj9BSWiJorVSj1jvFRu1fl1ACLfg/b5CreO1ROJ9dmVuW/6dkmOejTjdzro7wWrMYvZtJDnfCqjb0zbZEjrItY=
+X-Gm-Message-State: AOJu0YxVrr5nzqhzS4xBzIQS5jTk6cAKUTv3OWlnEhZUbtuJgPCzdNnv
+ T5yPZ/QaS4Ff4pdA/uWalzpG9taXmXY+YcO/gC6+h0sPbF+Jihch32TK5OdMjnuqgHfoRNZPzkS
+ QtG7vOs1Ratw90IjnVPtQLzh2bW4O3OET6cJy0DnKWtqkbQ8BqHZ1SCHf6u8u8MA/cEFzVqEeqX
+ lA83JaSDsPY61lRbHv0LNurWXOJjc=
+X-Received: by 2002:a25:ec05:0:b0:dc7:3265:37a9 with SMTP id
+ j5-20020a25ec05000000b00dc7326537a9mr711010ybh.37.1707978836865; 
+ Wed, 14 Feb 2024 22:33:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZIzoDNRhZpQOnJmVsuXuM0249q7zpcR5Koye/GuntJHq94lpnaY5a7QcBQezRPiY8RJQRS/4RwGyBFiAwQR4=
+X-Received: by 2002:a25:ec05:0:b0:dc7:3265:37a9 with SMTP id
+ j5-20020a25ec05000000b00dc7326537a9mr711000ybh.37.1707978836596; Wed, 14 Feb
+ 2024 22:33:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
+ <1707910082-10243-5-git-send-email-si-wei.liu@oracle.com>
+ <CAJaqyWd1qPmUn3Z=3SSbWT7rX78zza_mt1y6RQwi+62wFbda-Q@mail.gmail.com>
+ <fdc1ba6f-6e25-42ac-a40f-088501c648ad@oracle.com>
+In-Reply-To: <fdc1ba6f-6e25-42ac-a40f-088501c648ad@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 15 Feb 2024 07:33:20 +0100
+Message-ID: <CAJaqyWcg=b7jf1uzCBds2uzVD9LMpoqX3yO9wr0rMGxfv_kBdw@mail.gmail.com>
+Subject: Re: [PATCH 04/12] vdpa: factor out vhost_vdpa_net_get_nc_vdpa
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: jasowang@redhat.com, mst@redhat.com, dtatulea@nvidia.com, 
+ leiyang@redhat.com, yin31149@gmail.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,32 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The size of the allocation need not match the alignment.
+On Wed, Feb 14, 2024 at 9:59=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.com> =
+wrote:
+>
+>
+>
+> On 2/14/2024 10:54 AM, Eugenio Perez Martin wrote:
+> > On Wed, Feb 14, 2024 at 1:39=E2=80=AFPM Si-Wei Liu <si-wei.liu@oracle.c=
+om> wrote:
+> >> Introduce new API. No functional change on existing API.
+> >>
+> >> Acked-by: Jason Wang <jasowang@redhat.com>
+> >> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+> > I'm ok with the new function, but doesn't the compiler complain
+> > because adding a static function is not used?
+> Hmmm, which one? vhost_vdpa_net_get_nc_vdpa is used by
+> vhost_vdpa_net_first_nc_vdpa internally, and
+> vhost_vdpa_net_first_nc_vdpa is used by vhost_vdpa_net_cvq_start (Patch
+> 01). I think we should be fine?
+>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-13-richard.henderson@linaro.org>
----
- hw/tpm/tpm_ppi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Ouch, you're totally right.
 
-diff --git a/hw/tpm/tpm_ppi.c b/hw/tpm/tpm_ppi.c
-index 7f74e26ec6..91eeafd53a 100644
---- a/hw/tpm/tpm_ppi.c
-+++ b/hw/tpm/tpm_ppi.c
-@@ -47,8 +47,7 @@ void tpm_ppi_reset(TPMPPI *tpmppi)
- void tpm_ppi_init(TPMPPI *tpmppi, MemoryRegion *m,
-                   hwaddr addr, Object *obj)
- {
--    tpmppi->buf = qemu_memalign(qemu_real_host_page_size(),
--                                HOST_PAGE_ALIGN(TPM_PPI_ADDR_SIZE));
-+    tpmppi->buf = qemu_memalign(qemu_real_host_page_size(), TPM_PPI_ADDR_SIZE);
-     memory_region_init_ram_device_ptr(&tpmppi->ram, obj, "tpm-ppi",
-                                       TPM_PPI_ADDR_SIZE, tpmppi->buf);
-     vmstate_register_ram(&tpmppi->ram, DEVICE(obj));
--- 
-2.34.1
+Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+
+Thanks!
+
+> -Siwei
+> >
+> >> ---
+> >>   net/vhost-vdpa.c | 13 +++++++++----
+> >>   1 file changed, 9 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> >> index 06c83b4..4168cad 100644
+> >> --- a/net/vhost-vdpa.c
+> >> +++ b/net/vhost-vdpa.c
+> >> @@ -281,13 +281,18 @@ static ssize_t vhost_vdpa_receive(NetClientState=
+ *nc, const uint8_t *buf,
+> >>   }
+> >>
+> >>
+> >> -/** From any vdpa net client, get the netclient of the first queue pa=
+ir */
+> >> -static VhostVDPAState *vhost_vdpa_net_first_nc_vdpa(VhostVDPAState *s=
+)
+> >> +/** From any vdpa net client, get the netclient of the i-th queue pai=
+r */
+> >> +static VhostVDPAState *vhost_vdpa_net_get_nc_vdpa(VhostVDPAState *s, =
+int i)
+> >>   {
+> >>       NICState *nic =3D qemu_get_nic(s->nc.peer);
+> >> -    NetClientState *nc0 =3D qemu_get_peer(nic->ncs, 0);
+> >> +    NetClientState *nc_i =3D qemu_get_peer(nic->ncs, i);
+> >> +
+> >> +    return DO_UPCAST(VhostVDPAState, nc, nc_i);
+> >> +}
+> >>
+> >> -    return DO_UPCAST(VhostVDPAState, nc, nc0);
+> >> +static VhostVDPAState *vhost_vdpa_net_first_nc_vdpa(VhostVDPAState *s=
+)
+> >> +{
+> >> +    return vhost_vdpa_net_get_nc_vdpa(s, 0);
+> >>   }
+> >>
+> >>   static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool=
+ enable)
+> >> --
+> >> 1.8.3.1
+> >>
+>
 
 
