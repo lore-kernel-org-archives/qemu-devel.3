@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9C8C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA9AC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafer-0000OZ-33; Thu, 15 Feb 2024 12:36:25 -0500
+	id 1raffF-0001rE-F5; Thu, 15 Feb 2024 12:36:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeH-0007wn-Gi
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:49 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1rafeU-00085s-M6
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:05 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeC-0003uZ-G2
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:49 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33ce55ab993so632595f8f.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:44 -0800 (PST)
+ id 1rafeM-00042F-QH
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:36:02 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-411d715c401so9130975e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018542; x=1708623342; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018553; x=1708623353; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R5btJS3y3hUR8gjDhf2ty8AwSTtFlSAZAgw0FD5O3yo=;
- b=v81wawKSWPSx2yYlEDrGwDxMYp9XisLPmN9FHPwOQUXIpvJdCrDCdGSH4qNlUIuhLn
- 0GqYceh1sZ3+u0BBKByazZqbIDMq/VcTzOVFqGEjK6cPt1Fth3EKJDU9xoFYs9vxb01T
- At25RlSwMIe6027GtxxFk+5eao9xcJjyg3be9GF5GFSUH1zD/1p1jdoTSnKfeRE6gJJ/
- c0qtXtHX/aGvDgQNf7+OflnrFmVqrmQsjl6WPw2N104rXa/jlRaOCtPXI0HyC7/uPZ1g
- P7ucsif9HPtU831RW3/y6nUX6/sw8uTSUV5W/MHc5G1S5ol6FCR3bHChkue2ohesh3Ss
- 77KQ==
+ :reply-to; bh=LCg3WUjl9XChO4n77k4Rpa/1Bkv8CUgvWkFZbFL8dFw=;
+ b=SFTE9MRZIhmTTy33tCJcHDEdE/a+eSzR4ZMyhKpCcuPmuSmoyxpNxshVa+TzrcxYtq
+ siVnj4OfabkT7GVV6dMT4j9xCOZ8qkgKtkzHJlRPR+TkUbn/ijpd4/KAPAChrAZWrNao
+ HXJii0S5NvKNQk7BVEQfpsH4vSOKqY6nTkU8Huiv/XoLldSczU7LpXpvxQc6nAsPvU84
+ L6fPwDPFbHTIrB/yuzHWVmtIINCap0KKp40LpWBi3L6tb6Ymfd7b+6E1K8bOHqibz/h3
+ P3ZoVygZ/xq2WhQynFNxLIkSqYwAq6n4iavIyCyYX4+tlnVmdQXkRg0r6z1act358/mU
+ AiFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018542; x=1708623342;
+ d=1e100.net; s=20230601; t=1708018553; x=1708623353;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R5btJS3y3hUR8gjDhf2ty8AwSTtFlSAZAgw0FD5O3yo=;
- b=OHLq0vmdHe1wVBurTQERIpDGoxabRYIXnQMGlaLgIL2FVYSkFjqPzYARYd6SWSupAy
- 0sXd4i5XGeBwaVGQXB+hhDgKYMM5d2KawG1L7eDaJdCXwp9ZD2pi0jhgigOuveVSSIaA
- s9791B1fa31ksMTjm1NpFUWljZqqQvIIYz+2+L79bRDx4pEBQrkWlnVHJ0l1X4slU7yR
- 9+s5eI/67kDQkSpARU6ZXvvQP7y1aKDUtZAXN9coElpz8NpmdctT15xGVgiFiSgtUqHl
- wHFfVq1lKyIFS4Orrwtao9wyoYZza0j4sg4WA0tM0Pjivziz50wXe3zakgsijuP/Asnb
- 6NBA==
-X-Gm-Message-State: AOJu0YyhzfKPSA2kOw4wEHRpuk9CYiWnOsZ3ETMpqeHu9F7bIITENQZ0
- hkCMLVEMZdiShlkjK7VYefdRasvdjelAwkCMZThhc0tczvXuPLNEWeDX6cc2ja3E6Ipp25uhOWZ
- J
-X-Google-Smtp-Source: AGHT+IEUcGgmB7OzyaWSHkaYCnKhM9p+KXwf29dAJvP9ys6UA5UxpaDTinTEAFFKYlKQFF8gYLXaKg==
-X-Received: by 2002:a5d:644b:0:b0:33b:87c1:c4d with SMTP id
- d11-20020a5d644b000000b0033b87c10c4dmr1702299wrw.0.1708018541906; 
- Thu, 15 Feb 2024 09:35:41 -0800 (PST)
+ bh=LCg3WUjl9XChO4n77k4Rpa/1Bkv8CUgvWkFZbFL8dFw=;
+ b=aJ3jrp/9+8t3K5EGlcpH+YAI0QfHDeytBtd7bj0PpfawI5K3UQK4Izr0IzByKDwr3/
+ j/G7r7/xjSadzgKGTs/pDTmotpboBt7pHKO7m5u/f3BZ8w9l/sqBG8h5UDAuazK0pPHz
+ ZsdZSd88CwffKsdBv0hmA3WldGgAmO2RLT6mmrPBHBOlaebVDQxt/zw+jEfHaEGg1N6w
+ 2g3R2d3G47/MR5OrBl9a6HcCt8/mofxk8P/JNvzSQ7zJ/xWD4zdJFYrRCvex1pduuqSz
+ hZG9iL+s45j0dL3+RfiOdCgZLiaqtRX0GwxctRgRRVVYty9+Ba4XEvPgMGTEYwKS5jeV
+ LCVg==
+X-Gm-Message-State: AOJu0YwcNUKHR1o0ZVPFqhCn0msVi2eyWJmWfOL7vyA0/oiZCaiOCq6d
+ tdqqDfChPqSiEN0OZaNO/GriFZ620AZtlz0N+T6ae/kf2v5kPGvq+iC2L/z5kxauZff9V0cl6Ns
+ K
+X-Google-Smtp-Source: AGHT+IHSxbWSxskXBCYhWEj6Iha1jG4jVfrf9QOlM8khvFsJX08hdAhQ1X4pmAt4QOymI1zh4GaNTA==
+X-Received: by 2002:a5d:6dad:0:b0:33b:15fc:22bc with SMTP id
+ u13-20020a5d6dad000000b0033b15fc22bcmr2322750wrs.52.1708018553441; 
+ Thu, 15 Feb 2024 09:35:53 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.41
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:41 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:53 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/35] target/arm: Split out make_svemte_desc
-Date: Thu, 15 Feb 2024 17:35:08 +0000
-Message-Id: <20240215173538.2430599-6-peter.maydell@linaro.org>
+Subject: [PULL 32/35] hw/arm/mps3r: Add UARTs
+Date: Thu, 15 Feb 2024 17:35:35 +0000
+Message-Id: <20240215173538.2430599-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,160 +94,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+This board has a lot of UARTs: there is one UART per CPU in the
+per-CPU peripheral part of the address map, whose interrupts are
+connected as per-CPU interrupt lines.  Then there are 4 UARTs in the
+normal part of the peripheral space, whose interrupts are shared
+peripheral interrupts.
 
-Share code that creates mtedesc and embeds within simd_desc.
+Connect and wire them all up; this involves some OR gates where
+multiple overflow interrupts are wired into one GIC input.
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20240207025210.8837-5-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240206132931.38376-11-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate-a64.h |  2 ++
- target/arm/tcg/translate-sme.c | 15 +++--------
- target/arm/tcg/translate-sve.c | 47 ++++++++++++++++++----------------
- 3 files changed, 31 insertions(+), 33 deletions(-)
+ hw/arm/mps3r.c | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 94 insertions(+)
 
-diff --git a/target/arm/tcg/translate-a64.h b/target/arm/tcg/translate-a64.h
-index 96ba39b37e9..7b811b8ac51 100644
---- a/target/arm/tcg/translate-a64.h
-+++ b/target/arm/tcg/translate-a64.h
-@@ -28,6 +28,8 @@ bool logic_imm_decode_wmask(uint64_t *result, unsigned int immn,
- bool sve_access_check(DisasContext *s);
- bool sme_enabled_check(DisasContext *s);
- bool sme_enabled_check_with_svcr(DisasContext *s, unsigned);
-+uint32_t make_svemte_desc(DisasContext *s, unsigned vsz, uint32_t nregs,
-+                          uint32_t msz, bool is_write, uint32_t data);
+diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
+index 6473f62d677..8c790313790 100644
+--- a/hw/arm/mps3r.c
++++ b/hw/arm/mps3r.c
+@@ -30,10 +30,13 @@
+ #include "qapi/qmp/qlist.h"
+ #include "exec/address-spaces.h"
+ #include "cpu.h"
++#include "sysemu/sysemu.h"
+ #include "hw/boards.h"
++#include "hw/or-irq.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/bsa.h"
++#include "hw/char/cmsdk-apb-uart.h"
+ #include "hw/intc/arm_gicv3.h"
  
- /* This function corresponds to CheckStreamingSVEEnabled. */
- static inline bool sme_sm_enabled_check(DisasContext *s)
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 8f0dfc884ec..46c7fce8b4e 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -206,7 +206,7 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
+ /* Define the layout of RAM and ROM in a board */
+@@ -65,6 +68,7 @@ typedef struct RAMInfo {
  
-     TCGv_ptr t_za, t_pg;
-     TCGv_i64 addr;
--    int svl, desc = 0;
-+    uint32_t desc;
-     bool be = s->be_data == MO_BE;
-     bool mte = s->mte_active[0];
+ #define MPS3R_RAM_MAX 9
+ #define MPS3R_CPU_MAX 2
++#define MPS3R_UART_MAX 4 /* shared UART count */
  
-@@ -224,18 +224,11 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
-     tcg_gen_shli_i64(addr, cpu_reg(s, a->rm), a->esz);
-     tcg_gen_add_i64(addr, addr, cpu_reg_sp(s, a->rn));
- 
--    if (mte) {
--        desc = FIELD_DP32(desc, MTEDESC, MIDX, get_mem_index(s));
--        desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
--        desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
--        desc = FIELD_DP32(desc, MTEDESC, WRITE, a->st);
--        desc = FIELD_DP32(desc, MTEDESC, SIZEM1, (1 << a->esz) - 1);
--        desc <<= SVE_MTEDESC_SHIFT;
--    } else {
-+    if (!mte) {
-         addr = clean_data_tbi(s, addr);
-     }
--    svl = streaming_vec_reg_size(s);
--    desc = simd_desc(svl, svl, desc);
-+
-+    desc = make_svemte_desc(s, streaming_vec_reg_size(s), 1, a->esz, a->st, 0);
- 
-     fns[a->esz][be][a->v][mte][a->st](tcg_env, t_za, t_pg, addr,
-                                       tcg_constant_i32(desc));
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index a88e523cbab..508f7b6bbdc 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4437,18 +4437,18 @@ static const uint8_t dtype_esz[16] = {
-     3, 2, 1, 3
+ #define PERIPHBASE 0xf0000000
+ #define NUM_SPIS 96
+@@ -89,6 +93,10 @@ struct MPS3RMachineState {
+     MemoryRegion sysmem_alias[MPS3R_CPU_MAX];
+     MemoryRegion cpu_ram[MPS3R_CPU_MAX];
+     GICv3State gic;
++    /* per-CPU UARTs followed by the shared UARTs */
++    CMSDKAPBUART uart[MPS3R_CPU_MAX + MPS3R_UART_MAX];
++    OrIRQState cpu_uart_oflow[MPS3R_CPU_MAX];
++    OrIRQState uart_oflow;
  };
  
--static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
--                       int dtype, uint32_t mte_n, bool is_write,
--                       gen_helper_gvec_mem *fn)
-+uint32_t make_svemte_desc(DisasContext *s, unsigned vsz, uint32_t nregs,
-+                          uint32_t msz, bool is_write, uint32_t data)
- {
--    unsigned vsz = vec_full_reg_size(s);
--    TCGv_ptr t_pg;
-     uint32_t sizem1;
--    int desc = 0;
-+    uint32_t desc = 0;
+ #define TYPE_MPS3R_MACHINE "mps3r"
+@@ -96,6 +104,13 @@ struct MPS3RMachineState {
  
--    assert(mte_n >= 1 && mte_n <= 4);
--    sizem1 = (mte_n << dtype_msz(dtype)) - 1;
-+    /* Assert all of the data fits, with or without MTE enabled. */
-+    assert(nregs >= 1 && nregs <= 4);
-+    sizem1 = (nregs << msz) - 1;
-     assert(sizem1 <= R_MTEDESC_SIZEM1_MASK >> R_MTEDESC_SIZEM1_SHIFT);
-+    assert(data < 1u << SVE_MTEDESC_SHIFT);
+ OBJECT_DECLARE_TYPE(MPS3RMachineState, MPS3RMachineClass, MPS3R_MACHINE)
+ 
++/*
++ * Main clock frequency CLK in Hz (50MHz). In the image there are also
++ * ACLK, MCLK, GPUCLK and PERIPHCLK at the same frequency; for our
++ * model we just roll them all into one.
++ */
++#define CLK_FRQ 50000000
 +
-     if (s->mte_active[0]) {
-         desc = FIELD_DP32(desc, MTEDESC, MIDX, get_mem_index(s));
-         desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
-@@ -4456,7 +4456,18 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
-         desc = FIELD_DP32(desc, MTEDESC, WRITE, is_write);
-         desc = FIELD_DP32(desc, MTEDESC, SIZEM1, sizem1);
-         desc <<= SVE_MTEDESC_SHIFT;
--    } else {
-+    }
-+    return simd_desc(vsz, vsz, desc | data);
-+}
-+
-+static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
-+                       int dtype, uint32_t nregs, bool is_write,
-+                       gen_helper_gvec_mem *fn)
-+{
-+    TCGv_ptr t_pg;
-+    uint32_t desc;
-+
-+    if (!s->mte_active[0]) {
-         addr = clean_data_tbi(s, addr);
+ static const RAMInfo an536_raminfo[] = {
+     {
+         .name = "ATCM",
+@@ -279,11 +294,40 @@ static void create_gic(MPS3RMachineState *mms, MemoryRegion *sysmem)
      }
- 
-@@ -4465,7 +4476,8 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
-      * registers as pointers, so encode the regno into the data field.
-      * For consistency, do this even for LD1.
-      */
--    desc = simd_desc(vsz, vsz, zt | desc);
-+    desc = make_svemte_desc(s, vec_full_reg_size(s), nregs,
-+                            dtype_msz(dtype), is_write, zt);
-     t_pg = tcg_temp_new_ptr();
- 
-     tcg_gen_addi_ptr(t_pg, tcg_env, pred_full_reg_offset(s, pg));
-@@ -5224,25 +5236,16 @@ static void do_mem_zpz(DisasContext *s, int zt, int pg, int zm,
-                        int scale, TCGv_i64 scalar, int msz, bool is_write,
-                        gen_helper_gvec_mem_scatter *fn)
- {
--    unsigned vsz = vec_full_reg_size(s);
-     TCGv_ptr t_zm = tcg_temp_new_ptr();
-     TCGv_ptr t_pg = tcg_temp_new_ptr();
-     TCGv_ptr t_zt = tcg_temp_new_ptr();
--    int desc = 0;
--
--    if (s->mte_active[0]) {
--        desc = FIELD_DP32(desc, MTEDESC, MIDX, get_mem_index(s));
--        desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
--        desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
--        desc = FIELD_DP32(desc, MTEDESC, WRITE, is_write);
--        desc = FIELD_DP32(desc, MTEDESC, SIZEM1, (1 << msz) - 1);
--        desc <<= SVE_MTEDESC_SHIFT;
--    }
--    desc = simd_desc(vsz, vsz, desc | scale);
-+    uint32_t desc;
- 
-     tcg_gen_addi_ptr(t_pg, tcg_env, pred_full_reg_offset(s, pg));
-     tcg_gen_addi_ptr(t_zm, tcg_env, vec_full_reg_offset(s, zm));
-     tcg_gen_addi_ptr(t_zt, tcg_env, vec_full_reg_offset(s, zt));
-+
-+    desc = make_svemte_desc(s, vec_full_reg_size(s), 1, msz, is_write, scale);
-     fn(tcg_env, t_zt, t_pg, t_zm, scalar, tcg_constant_i32(desc));
  }
  
++/*
++ * Create UART uartno, and map it into the MemoryRegion mem at address baseaddr.
++ * The qemu_irq arguments are where we connect the various IRQs from the UART.
++ */
++static void create_uart(MPS3RMachineState *mms, int uartno, MemoryRegion *mem,
++                        hwaddr baseaddr, qemu_irq txirq, qemu_irq rxirq,
++                        qemu_irq txoverirq, qemu_irq rxoverirq,
++                        qemu_irq combirq)
++{
++    g_autofree char *s = g_strdup_printf("uart%d", uartno);
++    SysBusDevice *sbd;
++
++    assert(uartno < ARRAY_SIZE(mms->uart));
++    object_initialize_child(OBJECT(mms), s, &mms->uart[uartno],
++                            TYPE_CMSDK_APB_UART);
++    qdev_prop_set_uint32(DEVICE(&mms->uart[uartno]), "pclk-frq", CLK_FRQ);
++    qdev_prop_set_chr(DEVICE(&mms->uart[uartno]), "chardev", serial_hd(uartno));
++    sbd = SYS_BUS_DEVICE(&mms->uart[uartno]);
++    sysbus_realize(sbd, &error_fatal);
++    memory_region_add_subregion(mem, baseaddr,
++                                sysbus_mmio_get_region(sbd, 0));
++    sysbus_connect_irq(sbd, 0, txirq);
++    sysbus_connect_irq(sbd, 1, rxirq);
++    sysbus_connect_irq(sbd, 2, txoverirq);
++    sysbus_connect_irq(sbd, 3, rxoverirq);
++    sysbus_connect_irq(sbd, 4, combirq);
++}
++
+ static void mps3r_common_init(MachineState *machine)
+ {
+     MPS3RMachineState *mms = MPS3R_MACHINE(machine);
+     MPS3RMachineClass *mmc = MPS3R_MACHINE_GET_CLASS(mms);
+     MemoryRegion *sysmem = get_system_memory();
++    DeviceState *gicdev;
+ 
+     for (const RAMInfo *ri = mmc->raminfo; ri->name; ri++) {
+         MemoryRegion *mr = mr_for_raminfo(mms, ri);
+@@ -326,6 +370,56 @@ static void mps3r_common_init(MachineState *machine)
+     }
+ 
+     create_gic(mms, sysmem);
++    gicdev = DEVICE(&mms->gic);
++
++    /*
++     * UARTs 0 and 1 are per-CPU; their interrupts are wired to
++     * the relevant CPU's PPI 0..3, aka INTID 16..19
++     */
++    for (int i = 0; i < machine->smp.cpus; i++) {
++        int intidbase = NUM_SPIS + i * GIC_INTERNAL;
++        g_autofree char *s = g_strdup_printf("cpu-uart-oflow-orgate%d", i);
++        DeviceState *orgate;
++
++        /* The two overflow IRQs from the UART are ORed together into PPI 3 */
++        object_initialize_child(OBJECT(mms), s, &mms->cpu_uart_oflow[i],
++                                TYPE_OR_IRQ);
++        orgate = DEVICE(&mms->cpu_uart_oflow[i]);
++        qdev_prop_set_uint32(orgate, "num-lines", 2);
++        qdev_realize(orgate, NULL, &error_fatal);
++        qdev_connect_gpio_out(orgate, 0,
++                              qdev_get_gpio_in(gicdev, intidbase + 19));
++
++        create_uart(mms, i, &mms->cpu_sysmem[i], 0xe7c00000,
++                    qdev_get_gpio_in(gicdev, intidbase + 17), /* tx */
++                    qdev_get_gpio_in(gicdev, intidbase + 16), /* rx */
++                    qdev_get_gpio_in(orgate, 0), /* txover */
++                    qdev_get_gpio_in(orgate, 1), /* rxover */
++                    qdev_get_gpio_in(gicdev, intidbase + 18) /* combined */);
++    }
++    /*
++     * UARTs 2 to 5 are whole-system; all overflow IRQs are ORed
++     * together into IRQ 17
++     */
++    object_initialize_child(OBJECT(mms), "uart-oflow-orgate",
++                            &mms->uart_oflow, TYPE_OR_IRQ);
++    qdev_prop_set_uint32(DEVICE(&mms->uart_oflow), "num-lines",
++                         MPS3R_UART_MAX * 2);
++    qdev_realize(DEVICE(&mms->uart_oflow), NULL, &error_fatal);
++    qdev_connect_gpio_out(DEVICE(&mms->uart_oflow), 0,
++                          qdev_get_gpio_in(gicdev, 17));
++
++    for (int i = 0; i < MPS3R_UART_MAX; i++) {
++        hwaddr baseaddr = 0xe0205000 + i * 0x1000;
++        int rxirq = 5 + i * 2, txirq = 6 + i * 2, combirq = 13 + i;
++
++        create_uart(mms, i + MPS3R_CPU_MAX, sysmem, baseaddr,
++                    qdev_get_gpio_in(gicdev, txirq),
++                    qdev_get_gpio_in(gicdev, rxirq),
++                    qdev_get_gpio_in(DEVICE(&mms->uart_oflow), i * 2),
++                    qdev_get_gpio_in(DEVICE(&mms->uart_oflow), i * 2 + 1),
++                    qdev_get_gpio_in(gicdev, combirq));
++    }
+ 
+     mms->bootinfo.ram_size = machine->ram_size;
+     mms->bootinfo.board_id = -1;
 -- 
 2.34.1
 
