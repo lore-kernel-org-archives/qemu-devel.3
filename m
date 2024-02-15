@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC0A8C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68306C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag1R-0004yH-Qb; Thu, 15 Feb 2024 12:59:45 -0500
+	id 1rag1m-00079Y-9U; Thu, 15 Feb 2024 13:00:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag14-0004Wv-Hz
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:23 -0500
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1i-0006pZ-Cx
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:02 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag0w-0001jy-Mt
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:59:22 -0500
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d0fd07ba8bso13657991fa.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:59:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1e-0001tC-Gm
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:01 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-412345cca4eso1641045e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:59:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019952; x=1708624752; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708019992; x=1708624792; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8KRNAN7J6jVrW+a5YkWZvl2JIbNfjxd3JGHRrNe6AUc=;
- b=XwckSceFGVkZ5LLhJ+dnl+6hw9goj7dHawTxXt8MhWaOJ/0EVV/R7XCVpeRzEja8+D
- uMVxDtGZooeYAR71+3Mj13ETEbwG9eRyEGs5byjkJGV7x8XS5X5H9kT8W0YOR79GFMdS
- ZdQ+bOAm3bzA82my1ye1Ov8jq7TM8aJve9QhDtqnRmlKU1iqHlhmJ594aQw0Ye1+XbXn
- viVA2/P6s0T0SIzftbff8Oyj0aomOn2i8QmHjA5IcK4hpqVV6rL8x3Q+runs1FIJmWk1
- ezwElO45+IcNVzm8hbaddoAUkJYs8+drb9BWcqNchvGzscf3mkuztvJ96HXPqDvx0i5N
- 2sWQ==
+ bh=KrDWAyGRgS7V1HXGadIwipz2b43fHU+C3C1ocsMbGSU=;
+ b=eSLdhUi4QXO3Q4APHbiB67wLcgis0wcTKvILLJ6Aw1XL43jad83bipoBhnWZaakNxK
+ InhpHO0sXjpyZIAMIPcNbX3dQxzitCiveCWYq/96L1aHH3N/rwkUbvwEavL13a8P+Y5q
+ bxBDw4Tvw05plZ0t+vfnPbx7lm1XfWS+qFxYBLy4ARdO1Q8yRLtE3ZaVJwTSX8156sk9
+ AHXJjXWkashzsb5nsjSVvCqdxjsqA0ePxiD5hXORPJZjGoDoMlT2G371BoRzI3jbAbaX
+ GpkPeNRvAM5LGvIC9x+FPCbskY+pxFmuzEwHzkt4rZiiyGK411jXS5lmei5Bp4tal3Hp
+ +RDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019952; x=1708624752;
+ d=1e100.net; s=20230601; t=1708019992; x=1708624792;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8KRNAN7J6jVrW+a5YkWZvl2JIbNfjxd3JGHRrNe6AUc=;
- b=u48TqCNgALL9didzSrLo0JAZo/sEH5FUhffdLUINWPoGm6ylXqZZNH55TuK0JLA8fS
- Xn71FH03/mKaPnezD9+o/ZsAzgnibf4m4IhJD9QbWp1CnGHMj+pqpsvwf8/EKxBkE04w
- HPPzoxoWdJcX054nbvQVJC/97HttSyavlrhSaJop01XhQ0Ag78vikelw5KnV4NbODgcZ
- Hx5p3x8qRrYtWEbMhZmENbwsJTMVBjREo1F4CzOE/5xmhVgknod5v9W36JH5KglHTqvE
- dMHLtfhPs4+FmVcoc4yLzguqa1wNZYUyaycOLNrsJe02EV/jDKykdf48Dd0R7dLdTnXD
- F7wQ==
-X-Gm-Message-State: AOJu0YxoxoJCQvZOtei5GDN8lLVjgGJekiFUJO40f1nS2pb4IxnwgJdf
- HGMi0MX/CcANlnJ2dsB/Kk4zLLq/s3H6PvoUEw5c7DXRtdyaM5lSUVO0TcU4wTeVH8N+vhwsv7x
- 3nVU=
-X-Google-Smtp-Source: AGHT+IH3/9vfy51nEfjPBJcvZnTjuHpLd3xnzU+bNsH4pJmDzZXEZv1HebGRW9cW2tNttpIwoFOlqw==
-X-Received: by 2002:a2e:8018:0:b0:2d0:d3ec:a545 with SMTP id
- j24-20020a2e8018000000b002d0d3eca545mr1850052ljg.50.1708019952746; 
- Thu, 15 Feb 2024 09:59:12 -0800 (PST)
+ bh=KrDWAyGRgS7V1HXGadIwipz2b43fHU+C3C1ocsMbGSU=;
+ b=r6M+HJSUDcKxlvpAreGwXyssoEvhsMAqlpJLAS5H5pcFMYAPc1CczkP585ddc6gWdV
+ sR0l0p2DpnQjTbn0QvVvJKq51kOec3VWUQ6lUHKif2CRP4NKJ7ytW3a/nbrWElsYEI5M
+ ZT0BaZ8vVaf+gt6eJ7r/LzPm0/+i8UUBL09EJZzW4M3FUqxiH02V5q9RoBFINix7Trf5
+ YGZAQuGvC3McFDF97kDjh5B5rGzp+5vUeQmKnpGAn3DANtTatfWFYvZPOxc2UjfIObm7
+ 4u9NNNMppLd5jubVlXtn7IzlhYUgDJQNT+fnsIWBROvj7j7ceSSliod0NJhx7yRHYD6Y
+ NqYw==
+X-Gm-Message-State: AOJu0Yw0RMAU2cFx3eLEu/PFY1L8vS+2eNu5vI4iyzwex2LZ7wSz/uQG
+ KgU3tQR+fGh+WuSqTib9BD9HGL8uet5Vz8Rw5X0rJ+Yso5A2QPCZ+Pf20zC7BG2G5/i6Cs3yLCn
+ B3BA=
+X-Google-Smtp-Source: AGHT+IEge+7N7R5Dv+aWhleCePe/xXWie3Ax8OjFhYHUQVNaLC46zf2vna8295JbBHhsrvOyp0WM+A==
+X-Received: by 2002:a05:600c:91a:b0:40e:f46d:ad35 with SMTP id
+ m26-20020a05600c091a00b0040ef46dad35mr2161791wmp.36.1708019992628; 
+ Thu, 15 Feb 2024 09:59:52 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- y5-20020a7bcd85000000b00410ab50f70fsm5604008wmj.15.2024.02.15.09.59.11
+ z11-20020a7bc7cb000000b00411b7c91470sm5630301wmk.12.2024.02.15.09.59.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 09:59:12 -0800 (PST)
+ Thu, 15 Feb 2024 09:59:52 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-Subject: [PULL 12/56] target/mips: Remove helpers accessing SAARI register
-Date: Thu, 15 Feb 2024 18:57:06 +0100
-Message-ID: <20240215175752.82828-13-philmd@linaro.org>
+ Bernhard Beschow <shentey@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 18/56] hw/isa: specify instance_size in isa_superio_type_info
+Date: Thu, 15 Feb 2024 18:57:12 +0100
+Message-ID: <20240215175752.82828-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,101 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DisasContext::saar boolean is never set, so this code
-is not reachable. Remove it.
+From: Paolo Bonzini <pbonzini@redhat.com>
 
+Right now all subclasses of TYPE_ISA_SUPERIO have to specify an instance_size,
+because the ISASuperIODevice struct adds fields to ISADevice but the type does
+not include the increased instance size.  Failure to do so results in an access
+past the bounds of struct ISADevice as soon as isa_superio_realize is called.
+Fix this by specifying the instance_size already in the superclass.
+
+Fixes: 4c3119a6e3 ("hw/isa/superio: Factor out the parallel code from pc87312.c")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20240213155005.109954-6-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240209090513.9401-9-philmd@linaro.org>
 ---
- target/mips/tcg/sysemu_helper.h.inc |  1 -
- target/mips/tcg/sysemu/cp0_helper.c |  8 --------
- target/mips/tcg/translate.c         | 20 --------------------
- 3 files changed, 29 deletions(-)
+ hw/isa/isa-superio.c       | 2 +-
+ hw/isa/smc37c669-superio.c | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/mips/tcg/sysemu_helper.h.inc b/target/mips/tcg/sysemu_helper.h.inc
-index 78f7272208..1861d538de 100644
---- a/target/mips/tcg/sysemu_helper.h.inc
-+++ b/target/mips/tcg/sysemu_helper.h.inc
-@@ -100,7 +100,6 @@ DEF_HELPER_2(mtc0_srsconf4, void, env, tl)
- DEF_HELPER_2(mtc0_hwrena, void, env, tl)
- DEF_HELPER_2(mtc0_pwctl, void, env, tl)
- DEF_HELPER_2(mtc0_count, void, env, tl)
--DEF_HELPER_2(mtc0_saari, void, env, tl)
- DEF_HELPER_2(mtc0_entryhi, void, env, tl)
- DEF_HELPER_2(mttc0_entryhi, void, env, tl)
- DEF_HELPER_2(mtc0_compare, void, env, tl)
-diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
-index f8883a3515..ded6c78e9a 100644
---- a/target/mips/tcg/sysemu/cp0_helper.c
-+++ b/target/mips/tcg/sysemu/cp0_helper.c
-@@ -1077,14 +1077,6 @@ void helper_mtc0_count(CPUMIPSState *env, target_ulong arg1)
-     cpu_mips_store_count(env, arg1);
- }
+diff --git a/hw/isa/isa-superio.c b/hw/isa/isa-superio.c
+index 7dbfc374da..d85f22db1a 100644
+--- a/hw/isa/isa-superio.c
++++ b/hw/isa/isa-superio.c
+@@ -185,6 +185,7 @@ static const TypeInfo isa_superio_type_info = {
+     .abstract = true,
+     .class_size = sizeof(ISASuperIOClass),
+     .class_init = isa_superio_class_init,
++    .instance_size = sizeof(ISASuperIODevice),
+ };
  
--void helper_mtc0_saari(CPUMIPSState *env, target_ulong arg1)
--{
--    uint32_t target = arg1 & 0x3f;
--    if (target <= 1) {
--        env->CP0_SAARI = target;
--    }
--}
--
- void helper_mtc0_entryhi(CPUMIPSState *env, target_ulong arg1)
- {
-     target_ulong old, val, mask;
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index 173b19a090..3ba2101647 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -5653,11 +5653,6 @@ static void gen_mfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
-             ctx->base.is_jmp = DISAS_EXIT;
-             register_name = "Count";
-             break;
--        case CP0_REG09__SAARI:
--            CP0_CHECK(ctx->saar);
--            gen_mfc0_load32(arg, offsetof(CPUMIPSState, CP0_SAARI));
--            register_name = "SAARI";
--            break;
-         default:
-             goto cp0_unimplemented;
-         }
-@@ -6374,11 +6369,6 @@ static void gen_mtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
-             gen_helper_mtc0_count(tcg_env, arg);
-             register_name = "Count";
-             break;
--        case CP0_REG09__SAARI:
--            CP0_CHECK(ctx->saar);
--            gen_helper_mtc0_saari(tcg_env, arg);
--            register_name = "SAARI";
--            break;
-         default:
-             goto cp0_unimplemented;
-         }
-@@ -7143,11 +7133,6 @@ static void gen_dmfc0(DisasContext *ctx, TCGv arg, int reg, int sel)
-             ctx->base.is_jmp = DISAS_EXIT;
-             register_name = "Count";
-             break;
--        case CP0_REG09__SAARI:
--            CP0_CHECK(ctx->saar);
--            gen_mfc0_load32(arg, offsetof(CPUMIPSState, CP0_SAARI));
--            register_name = "SAARI";
--            break;
-         default:
-             goto cp0_unimplemented;
-         }
-@@ -7850,11 +7835,6 @@ static void gen_dmtc0(DisasContext *ctx, TCGv arg, int reg, int sel)
-             gen_helper_mtc0_count(tcg_env, arg);
-             register_name = "Count";
-             break;
--        case CP0_REG09__SAARI:
--            CP0_CHECK(ctx->saar);
--            gen_helper_mtc0_saari(tcg_env, arg);
--            register_name = "SAARI";
--            break;
-         default:
-             goto cp0_unimplemented;
-         }
+ /* SMS FDC37M817 Super I/O */
+@@ -201,7 +202,6 @@ static void fdc37m81x_class_init(ObjectClass *klass, void *data)
+ static const TypeInfo fdc37m81x_type_info = {
+     .name          = TYPE_FDC37M81X_SUPERIO,
+     .parent        = TYPE_ISA_SUPERIO,
+-    .instance_size = sizeof(ISASuperIODevice),
+     .class_init    = fdc37m81x_class_init,
+ };
+ 
+diff --git a/hw/isa/smc37c669-superio.c b/hw/isa/smc37c669-superio.c
+index 18287741cb..9e59dc1603 100644
+--- a/hw/isa/smc37c669-superio.c
++++ b/hw/isa/smc37c669-superio.c
+@@ -103,7 +103,6 @@ static void smc37c669_class_init(ObjectClass *klass, void *data)
+ static const TypeInfo smc37c669_type_info = {
+     .name          = TYPE_SMC37C669_SUPERIO,
+     .parent        = TYPE_ISA_SUPERIO,
+-    .instance_size = sizeof(ISASuperIODevice),
+     .class_size    = sizeof(ISASuperIOClass),
+     .class_init    = smc37c669_class_init,
+ };
 -- 
 2.41.0
 
