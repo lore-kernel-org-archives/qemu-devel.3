@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F14CC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2DBC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafqw-0001iU-Ki; Thu, 15 Feb 2024 12:48:54 -0500
+	id 1rafrS-0002Ef-7U; Thu, 15 Feb 2024 12:49:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafqu-0001hs-EV
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:48:52 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafrR-0002ED-4q
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:49:25 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafqt-0007ih-2R
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:48:52 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-411e5f21c0bso9989915e9.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:48:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rafrP-0007nF-L4
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:49:24 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-411f165ef9bso10200885e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:49:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708019329; x=1708624129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708019362; x=1708624162; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1tJGkLJajediyBQXb+bJ7Hi0C5Iq9zq2K/zAa04jujo=;
- b=wHWjFaaETSUxvosupmor1SEhNaBc5blBWpnLqzspPR4oGI7mB3yss0m++vk6x3fzbh
- +6Cp98PbKntZLrzbAKgmNsUdNTmEpS6rKe2lWldbEGSPFnDg+Mx9b7zNCUK8UK+PPLYk
- u3DsFl+g3rzGybdq3FeAvRXwFXQ6Vn3dDc6WypgBBnFE8wuNZLEB4j0Nq+5xBE8ScoNd
- YAsEddNh5NmcG88qEVPukmXeXJmldRYY7mE0TCsweAh7NqhKfgk3HfuZStXPZFH6Qegi
- CU3BKfzmfJqPe3BpENj+E1F2QfJcM8eddhM5HgPw9wKjl1T08LwsH8z/28qDetAXCdsg
- MCtQ==
+ bh=ikpjb8qdCXTGcFU31iQiImVYctFXP5UVWVfUj7TsGi8=;
+ b=HNK4ez5HrYS/4VI2fD74g09Y4lECQ9H8d4I0Ijz/PwZoB2dQ7e/hJ+utNMbE2S/B/D
+ O9GzfUPWwwPgDK4rx4UvUJyP8AGNzpmydikqOmzWQFe4vF+vTnBK2uOoPiEiAF7ErK7j
+ T7ZFTkjFU2nuEZA/ZaIokjm51FtxyUNPLaMzQDR/Dy7bDjtqklEXiUVcedTnGv42cV2Y
+ Xh1G5cZrq2fc0B6VCptltDo3DP768PLPWT2UdAhocd/pfcMwumsJGyEsuY15SWEsLC/D
+ y/ZuNxsqoeC7vXPoGaTWKPTc6NQ3rGAjiJrwEArho566IcsQT4U+B0VHjPJ7Tekt3pqi
+ Id7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708019329; x=1708624129;
+ d=1e100.net; s=20230601; t=1708019362; x=1708624162;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1tJGkLJajediyBQXb+bJ7Hi0C5Iq9zq2K/zAa04jujo=;
- b=N3KuGtPhiiYFIkpPaaSgjQlgPZ3JUk9VqRbPs61mHF3uVJDgLGNphun8pns0cfyI0G
- D98dRLLR7CERnIACyDbj2i3Dn7DFrlQYba7YI6eNk5pYFzEQV1ypRZnjcVU6emjxAa9X
- 6hKqyBEfhIzPiIdDVbRYww9Z21+0gmfYmMlIqkv42BGbUUkGhw+85jV2PkT2C3qZsWQZ
- UJxc4B4dtNYvjLh49tdKi6j1cpr0HtMITE9IKsTZPqOSg2b9j0s39ByBlZok4m7xJKQ1
- bFPdoVO10HkiZ470dyVkxoVJFSTnAAjyv1DvHgABV8vd/Rj03uydYqLsLBOrlenkrvkG
- t/fw==
-X-Gm-Message-State: AOJu0YwI1kAp4HtVYNeskgKf9RBh5wvcOJCsZSou4+a9AahZrBzSD+Bi
- kJQscYs5KwtO767fOHVCK5n5dJeUZTB0oaDWt8j3nAjGnps0PoZfOje5ajNVuQe3dQdqz8v+xfg
- l0fI=
-X-Google-Smtp-Source: AGHT+IHkYRtwkXanbR55lom50MOCCXbhjyEcsP10EkPsA6FwV5FPaP6+B1+dtSUAS19ekcqA47TQsA==
-X-Received: by 2002:a5d:6a08:0:b0:33c:d5a7:4fc with SMTP id
- m8-20020a5d6a08000000b0033cd5a704fcmr1854170wru.16.1708019329221; 
- Thu, 15 Feb 2024 09:48:49 -0800 (PST)
+ bh=ikpjb8qdCXTGcFU31iQiImVYctFXP5UVWVfUj7TsGi8=;
+ b=U/slF43YFaHEZiSejSEyLfJEl11s2H0gz9nSu/F06P3wtYRWTUCGGLqRSgvduqzPGR
+ mxeS11naMrX/PchE/WY4br9GHZH/Rkl9J7HJDnvRDZa7MrWu7rHHF+xadufpTCfREZby
+ AOrYRKY0+U8AMELe7ssz64CjyrryUbeu3XyAASYvyek7poHGhXpqGmSdjNhI3PjZBSHu
+ qi7D72rTiljFgB1gH7gWxBs8WlGYyvISjM2Oi0ts5Srimx8h7jMdAMBtPNoY8oEQA5ny
+ 3EGrVBs5EZ+sB3S7YflFO9mbfHG3Uu/yTfON9khwM9qKZ5/iGe7KCB3w0TUCznrzK7MP
+ pPlA==
+X-Gm-Message-State: AOJu0Yz5cBiX7QI872ZWQkXOIo97gEV78AeZkf82GPx6m8FUkbrdnJns
+ 9l/aRmKsD+UsxHOi3ZqlmC9Lm8iJCui0Uksi/W4/nBUSGDM9Cd5oeCEBwux0PQySXOFd8C2gVm9
+ cLk8=
+X-Google-Smtp-Source: AGHT+IEK/3eb8J3dIobCIzILD4tp6FITgkNUOJuk4eXwQhdkuCBAbrxjQ5SStmYGRSxGel/PnSXTbw==
+X-Received: by 2002:a05:600c:1553:b0:40e:d30b:6129 with SMTP id
+ f19-20020a05600c155300b0040ed30b6129mr1942580wmg.13.1708019361888; 
+ Thu, 15 Feb 2024 09:49:21 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- ex7-20020a056000248700b0033b8305ffe2sm2546489wrb.87.2024.02.15.09.48.48
+ ex7-20020a056000248700b0033b8305ffe2sm2546489wrb.87.2024.02.15.09.49.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 09:48:48 -0800 (PST)
-Message-ID: <5fe70a78-2ac9-485a-bf25-c8a1be7dfe51@linaro.org>
-Date: Thu, 15 Feb 2024 18:48:46 +0100
+ Thu, 15 Feb 2024 09:49:21 -0800 (PST)
+Message-ID: <fe12ff45-cc8c-449e-a3af-4e4971bd43c8@linaro.org>
+Date: Thu, 15 Feb 2024 18:49:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/3] hw/sparc/leon3: Strengthen SysBus & QBus API
+Subject: Re: [PATCH 0/2] hw/sparc/leon3: Trivial cleanups around
+ write_bootloader()
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
+Cc: Laurent Vivier <laurent@vivier.eu>, Artyom Tarasenko
+ <atar4qemu@gmail.com>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20240215144623.76233-1-philmd@linaro.org>
+ Michael Tokarev <mjt@tls.msk.ru>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
+ qemu-trivial@nongnu.org, Fabien Chouteau <chouteau@adacore.com>
+References: <20240215132824.67363-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240215144623.76233-1-philmd@linaro.org>
+In-Reply-To: <20240215132824.67363-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,12 +102,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/2/24 15:46, Philippe Mathieu-Daudé wrote:
+On 15/2/24 14:28, Philippe Mathieu-Daudé wrote:
+> Have write_bootloader() take a void* and remove unused 'env' arg.
+> 
+> Philippe Mathieu-Daudé (2):
+>    hw/sparc/leon3: Remove unused 'env' argument of write_bootloader()
+>    hw/sparc/leon3: Have write_bootloader() take a void pointer argument
 
-> Philippe Mathieu-Daudé (3):
->    hw/sparc/leon3: Pass DeviceState opaque argument to leon3_set_pil_in()
->    hw/sparc/leon3: Pass DeviceState opaque argument to leon3_start_cpu()
->    hw/sparc/leon3: Initialize GPIO before realizing CPU devices
+Series queued.
 
-Thanks, series queued.
 
