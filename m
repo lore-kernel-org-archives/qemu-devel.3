@@ -4,101 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B72DC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D97F5C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXOp-0006En-V7; Thu, 15 Feb 2024 03:47:20 -0500
+	id 1raXPZ-0007No-Fe; Thu, 15 Feb 2024 03:48:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOo-0006EK-1b
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:18 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raXOl-0002WX-Rj
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:47:17 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2d09cf00214so7941091fa.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 00:47:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707986833; x=1708591633; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iPHGWBestnNwAg9Qptn9JeQlM+amL1OQhF1dhfpYx/A=;
- b=fo3Tlt8xfneVhA/AWLeHKFg0jYNCjbnLpUcIeJO/Pt8c6d8DQ9+eXxjjMa2PPxVRfG
- b+z3hxbw3F1Zekp9SPGgHOd/VnW248daj/2pA/W12KnR3jJLYdhzgbgPN9MEJiTWUioN
- kbVyrpD6qNf0zJis2cKjbrjTQ7685PFuLbwbXJiLJ8wdJXG7EETwIH8TBQEbI/3EuHvy
- FxGHfO30u+QUYKHYvCaIvH9AAervIf8K3UzH7aDBmADQ0N+8vbePqAlwf2hAjoXRSock
- WSgsezHPonkCLpqdGdutRlFVrZ6fjs/wugCHICWgHVEBHxA0P7XQZ3oUxRcwGa0qugHU
- h7yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707986833; x=1708591633;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iPHGWBestnNwAg9Qptn9JeQlM+amL1OQhF1dhfpYx/A=;
- b=TP3uTPtdqMGyIPBWkg3YHR3deoOKKSSWSyUujE61iULwzCD/yMUCDytd1J9SpFH9tW
- RDRvED8fnm+yrBpS6VLkzQrlTKV8aH0VloCvd5QciJO8P/cLTYt7cuzcMHI+e2YZFCc/
- K89lBZaOavt+aV8Pj+qk9OX/Vua5aBSZJ5aeJjyg2GRqf9v3rEMFToFIZFZwjXEkV7Uj
- 1OP8oGmCdFLgv1yihHEIMsQLpe67B7kNqEn8q2E3oSinfrFvuoccwhZxO3xIyPDiYTPN
- o6c5Z1yVHH/Z4AS9JN2r6EiEgOsB5nvM87wfMdV30+EazMUhx5MRYf+/Sqv6+IANrNGl
- LyKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOs10D56T6D2v8tPC1TY9azdfRn4zFs96k+uTuOOIDCvGvNpU8hhYanhtHL7T2SQdDMiFeEOg0Po4BYORS1gF+uenYgHw=
-X-Gm-Message-State: AOJu0YxjpyrEcFzn3jt3H19O7L90RpUNHZgy7DXSnef3v86/YzxJesth
- yC8kxGyYlBwWsHmVGf9/P7PQabzMKF6WR++mYv21AMsGyxA9meV3Qk54N0pL5eU=
-X-Google-Smtp-Source: AGHT+IHl4QalSh5WSC/yVhgjoAoRPac/7NzI+RLuyDxwPBUy9Fh2l65+LlmtMHtfzug1O9RjhqVlsw==
-X-Received: by 2002:a2e:9588:0:b0:2cc:c6e0:fbb with SMTP id
- w8-20020a2e9588000000b002ccc6e00fbbmr757102ljh.20.1707986832723; 
- Thu, 15 Feb 2024 00:47:12 -0800 (PST)
-Received: from localhost.localdomain (14.red-88-28-17.dynamicip.rima-tde.net.
- [88.28.17.14]) by smtp.gmail.com with ESMTPSA id
- je14-20020a05600c1f8e00b00411ee1dd5afsm1278813wmb.16.2024.02.15.00.47.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 00:47:12 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Damien Hedde <dhedde@kalrayinc.com>, Zhao Liu <zhao1.liu@linux.intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Amir Gonnen <amir.gonnen@neuroblade.ai>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Luc Michel <luc.michel@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Bernhard Beschow <shentey@gmail.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
-Subject: [PATCH v3 1/1] target: Add system emulation aiming to target any
- architecture
-Date: Thu, 15 Feb 2024 09:46:53 +0100
-Message-ID: <20240215084654.56297-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240215084654.56297-1-philmd@linaro.org>
-References: <20240215084654.56297-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1raXPY-0007Ne-5y
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:48:04 -0500
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1raXPW-0002eb-1X
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:48:03 -0500
+Received: from [10.10.3.121] (unknown [10.10.3.121])
+ by mail.ispras.ru (Postfix) with ESMTPS id 4736040F1DF3;
+ Thu, 15 Feb 2024 08:47:36 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 4736040F1DF3
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1707986856;
+ bh=Ui9/8fx+RzWIY+snO+UzbNmhxOCBZUUrDAMkccw4ddA=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=Nw6PEE7QhSVwdgQ7UFBgOJ91xAx2wZ6S6VUP/Hd16hlwDx1rorMjgkmx0ytqozKdu
+ Tusmd0KyymOe29M/yhItuar4DZMy4ynDOeCWj/ugemk7pyce7JCn5n/lJRgeo4Uy2U
+ mYgPEt1MiX2C1Wjae751cQ+5Ccc1RAD0t41OhaQE=
+Date: Thu, 15 Feb 2024 11:47:36 +0300 (MSK)
+From: Alexander Monakov <amonakov@ispras.ru>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
+Subject: Re: [PATCH v4 09/10] util/bufferiszero: Add simd acceleration for
+ aarch64
+In-Reply-To: <20240215081449.848220-10-richard.henderson@linaro.org>
+Message-ID: <1f038576-5121-e84c-8196-ae5f9ca3a75b@ispras.ru>
+References: <20240215081449.848220-1-richard.henderson@linaro.org>
+ <20240215081449.848220-10-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
+ helo=mail.ispras.ru
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,314 +66,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-Add the 'any'-architecture target.
+On Wed, 14 Feb 2024, Richard Henderson wrote:
 
-- Only consider 64-bit targets
-- Do not use any hardware accelerator (except qtest)
-- For architecture constants, use:
-  . max of supported targets phys/virt address space
-  . max of supported targets MMU modes
-  . min of supported targets variable page bits
+> Because non-embedded aarch64 is expected to have AdvSIMD enabled, merely
+> double-check with the compiler flags for __ARM_NEON and don't bother with
+> a runtime check.  Otherwise, model the loop after the x86 SSE2 function,
+> and use VADDV to reduce the four vector comparisons.
 
-Build as:
+I am not very familiar with Neon but I wonder if this couldn't use SHRN
+for the final 128b->64b reduction similar to 2022 Glibc optimizations:
+https://inbox.sourceware.org/libc-alpha/20220620174628.2820531-1-danilak@google.com/
 
-  $ ../configure --target-list=any-softmmu \
-                 --disable-hvf \
-                 --disable-kvm \
-                 --disable-nvmm \
-                 --disable-tcg \
-                 --disable-whpx \
-                 --disable-xen
+In git history I see the previous Neon buffer_is_zero was removed because
+it was not faster. Is it because integer LDP was as good as vector loads
+at saturating load bandwidth on older cores, and things are different now?
 
-Test as:
+Alexander
 
-  $ qemu-system-any -M none,accel=qtest -monitor stdio
-  QEMU 6.2.50 monitor - type 'help' for more information
-  (qemu) info mtree
-  address-space: I/O
-    0000000000000000-000000000000ffff (prio 0, i/o): io
-
-  address-space: memory
-    0000000000000000-ffffffffffffffff (prio 0, i/o): system
-
-  (qemu) info qom-tree
-  /machine (none-machine)
-    /peripheral (container)
-    /peripheral-anon (container)
-    /unattached (container)
-      /io[0] (memory-region)
-      /sysbus (System)
-      /system[0] (memory-region)
-  (qemu) info qtree
-  bus: main-system-bus
-    type System
-  (qemu) info cpus
-  (qemu)
-
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
----
- configs/devices/any-softmmu/default.mak |  9 +++++++++
- configs/targets/any-softmmu.mak         |  3 +++
- meson.build                             |  6 ++++--
- qapi/machine.json                       |  2 +-
- include/sysemu/arch_init.h              |  1 +
- target/any/cpu-param.h                  | 13 +++++++++++++
- target/any/cpu-qom.h                    | 12 ++++++++++++
- target/any/cpu.h                        | 24 ++++++++++++++++++++++++
- .gitlab-ci.d/buildtest.yml              | 20 ++++++++++++++++++++
- hw/any/meson.build                      |  5 +++++
- hw/meson.build                          |  1 +
- target/Kconfig                          |  1 +
- target/any/Kconfig                      |  4 ++++
- target/any/meson.build                  |  7 +++++++
- target/meson.build                      |  1 +
- 15 files changed, 106 insertions(+), 3 deletions(-)
- create mode 100644 configs/devices/any-softmmu/default.mak
- create mode 100644 configs/targets/any-softmmu.mak
- create mode 100644 target/any/cpu-param.h
- create mode 100644 target/any/cpu-qom.h
- create mode 100644 target/any/cpu.h
- create mode 100644 hw/any/meson.build
- create mode 100644 target/any/Kconfig
- create mode 100644 target/any/meson.build
-
-diff --git a/configs/devices/any-softmmu/default.mak b/configs/devices/any-softmmu/default.mak
-new file mode 100644
-index 0000000000..dab0ce770e
---- /dev/null
-+++ b/configs/devices/any-softmmu/default.mak
-@@ -0,0 +1,9 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+CONFIG_ISA_BUS=y
-+CONFIG_PCI=y
-+CONFIG_PCI_DEVICES=y
-+CONFIG_I2C=y
-+CONFIG_TPM=y
-+CONFIG_NUBUS=y
-+CONFIG_VIRTIO=y
-diff --git a/configs/targets/any-softmmu.mak b/configs/targets/any-softmmu.mak
-new file mode 100644
-index 0000000000..2c6cf1edd4
---- /dev/null
-+++ b/configs/targets/any-softmmu.mak
-@@ -0,0 +1,3 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+TARGET_ARCH=any
-diff --git a/meson.build b/meson.build
-index c1dc83e4c0..f6aee8218b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -46,7 +46,7 @@ qapi_trace_events = []
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
- supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux']
- supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
--  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64']
-+  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'any']
- 
- cpu = host_machine.cpu_family()
- 
-@@ -3043,7 +3043,9 @@ foreach target : target_dirs
-     if default_targets
-       continue
-     endif
--    error('No accelerator available for target @0@'.format(target))
-+    if 'any-softmmu' not in target_dirs
-+      error('No accelerator available for target @0@'.format(target))
-+    endif
-   endif
- 
-   actual_target_dirs += target
-diff --git a/qapi/machine.json b/qapi/machine.json
-index d816c5c02e..8d3dcd5fb4 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -36,7 +36,7 @@
-              'mips64el', 'mipsel', 'nios2', 'or1k', 'ppc',
-              'ppc64', 'riscv32', 'riscv64', 'rx', 's390x', 'sh4',
-              'sh4eb', 'sparc', 'sparc64', 'tricore',
--             'x86_64', 'xtensa', 'xtensaeb' ] }
-+             'x86_64', 'xtensa', 'xtensaeb', 'any' ] }
- 
- ##
- # @CpuS390State:
-diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
-index 8850cb1a14..49bee75610 100644
---- a/include/sysemu/arch_init.h
-+++ b/include/sysemu/arch_init.h
-@@ -4,6 +4,7 @@
- 
- enum {
-     QEMU_ARCH_ALL = -1,
-+    QEMU_ARCH_ANY = -1,
-     QEMU_ARCH_ALPHA = (1 << 0),
-     QEMU_ARCH_ARM = (1 << 1),
-     QEMU_ARCH_CRIS = (1 << 2),
-diff --git a/target/any/cpu-param.h b/target/any/cpu-param.h
-new file mode 100644
-index 0000000000..42e38ae991
---- /dev/null
-+++ b/target/any/cpu-param.h
-@@ -0,0 +1,13 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef ANY_CPU_PARAM_H
-+#define ANY_CPU_PARAM_H
-+
-+#define TARGET_LONG_BITS 64
-+
-+#define TARGET_PHYS_ADDR_SPACE_BITS 64 /* MAX(targets) */
-+#define TARGET_VIRT_ADDR_SPACE_BITS 64 /* MAX(targets) */
-+
-+#define TARGET_PAGE_BITS_VARY
-+#define TARGET_PAGE_BITS_MIN  10 /* MIN(targets)=ARMv5/ARMv6, ignoring AVR */
-+
-+#endif
-diff --git a/target/any/cpu-qom.h b/target/any/cpu-qom.h
-new file mode 100644
-index 0000000000..18d6a85de9
---- /dev/null
-+++ b/target/any/cpu-qom.h
-@@ -0,0 +1,12 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef QEMU_DUMMY_CPU_QOM_H
-+#define QEMU_DUMMY_CPU_QOM_H
-+
-+#include "hw/core/cpu.h"
-+#include "qom/object.h"
-+
-+#define TYPE_DUMMY_CPU "dummy-cpu"
-+
-+OBJECT_DECLARE_CPU_TYPE(DUMMYCPU, CPUClass, DUMMY_CPU)
-+
-+#endif
-diff --git a/target/any/cpu.h b/target/any/cpu.h
-new file mode 100644
-index 0000000000..e8abb8891f
---- /dev/null
-+++ b/target/any/cpu.h
-@@ -0,0 +1,24 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#ifndef TARGET_ANY_CPU_H
-+#define TARGET_ANY_CPU_H
-+
-+#include "cpu-qom.h"
-+#include "exec/cpu-defs.h"
-+
-+#define DUMMY_CPU_TYPE_SUFFIX "-" TYPE_DUMMY_CPU
-+#define DUMMY_CPU_TYPE_NAME(name) (name DUMMY_CPU_TYPE_SUFFIX)
-+#define CPU_RESOLVING_TYPE TYPE_DUMMY_CPU
-+
-+struct CPUArchState {
-+    /* nothing here */
-+};
-+
-+struct ArchCPU {
-+    CPUState parent_obj;
-+
-+    CPUArchState env;
-+};
-+
-+#include "exec/cpu-all.h" /* FIXME remove once exec/ headers cleaned */
-+
-+#endif
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index f56df59c94..208625d4d5 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -729,3 +729,23 @@ pages:
-       - public
-   variables:
-     QEMU_JOB_PUBLISH: 1
-+
-+build-system-any:
-+  extends:
-+    - .native_build_job_template
-+  needs:
-+    - job: amd64-alpine-container
-+  variables:
-+    IMAGE: alpine
-+    TARGETS: any-softmmu
-+    MAKE_CHECK_ARGS: check-qtest
-+    CONFIGURE_ARGS:
-+      --disable-tools
-+      --disable-hvf
-+      --disable-kvm
-+      --disable-nvmm
-+      --disable-tcg
-+      --disable-whpx
-+      --disable-xen
-+      --with-default-devices
-+      --enable-qom-cast-debug
-diff --git a/hw/any/meson.build b/hw/any/meson.build
-new file mode 100644
-index 0000000000..60e1567e53
---- /dev/null
-+++ b/hw/any/meson.build
-@@ -0,0 +1,5 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+any_ss = ss.source_set()
-+
-+hw_arch += {'any': any_ss}
-diff --git a/hw/meson.build b/hw/meson.build
-index 463d702683..644eeee938 100644
---- a/hw/meson.build
-+++ b/hw/meson.build
-@@ -47,6 +47,7 @@ subdir('xenpv')
- subdir('fsi')
- 
- subdir('alpha')
-+subdir('any')
- subdir('arm')
- subdir('avr')
- subdir('cris')
-diff --git a/target/Kconfig b/target/Kconfig
-index 83da0bd293..09109c4884 100644
---- a/target/Kconfig
-+++ b/target/Kconfig
-@@ -1,4 +1,5 @@
- source alpha/Kconfig
-+source any/Kconfig
- source arm/Kconfig
- source avr/Kconfig
- source cris/Kconfig
-diff --git a/target/any/Kconfig b/target/any/Kconfig
-new file mode 100644
-index 0000000000..8840d70e55
---- /dev/null
-+++ b/target/any/Kconfig
-@@ -0,0 +1,4 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+config ANY
-+    bool
-diff --git a/target/any/meson.build b/target/any/meson.build
-new file mode 100644
-index 0000000000..4f5422d3a3
---- /dev/null
-+++ b/target/any/meson.build
-@@ -0,0 +1,7 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+any_ss = ss.source_set()
-+any_system_ss = ss.source_set()
-+
-+target_arch += {'any': any_ss}
-+target_system_arch += {'any': any_system_ss}
-diff --git a/target/meson.build b/target/meson.build
-index dee2ac47e0..c75b91e1b9 100644
---- a/target/meson.build
-+++ b/target/meson.build
-@@ -1,4 +1,5 @@
- subdir('alpha')
-+subdir('any')
- subdir('arm')
- subdir('avr')
- subdir('cris')
--- 
-2.41.0
-
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  util/bufferiszero.c | 74 +++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 74 insertions(+)
+> 
+> diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+> index 4eef6d47bc..2809b09225 100644
+> --- a/util/bufferiszero.c
+> +++ b/util/bufferiszero.c
+> @@ -214,7 +214,81 @@ bool test_buffer_is_zero_next_accel(void)
+>      }
+>      return false;
+>  }
+> +
+> +#elif defined(__aarch64__) && defined(__ARM_NEON)
+> +#include <arm_neon.h>
+> +
+> +#define REASSOC_BARRIER(vec0, vec1) asm("" : "+w"(vec0), "+w"(vec1))
+> +
+> +static bool buffer_is_zero_simd(const void *buf, size_t len)
+> +{
+> +    uint32x4_t t0, t1, t2, t3;
+> +
+> +    /* Align head/tail to 16-byte boundaries.  */
+> +    const uint32x4_t *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
+> +    const uint32x4_t *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
+> +
+> +    /* Unaligned loads at head/tail.  */
+> +    t0 = vld1q_u32(buf) | vld1q_u32(buf + len - 16);
+> +
+> +    /* Collect a partial block at tail end.  */
+> +    t1 = e[-7] | e[-6];
+> +    t2 = e[-5] | e[-4];
+> +    t3 = e[-3] | e[-2];
+> +    t0 |= e[-1];
+> +    REASSOC_BARRIER(t0, t1);
+> +    REASSOC_BARRIER(t2, t3);
+> +    t0 |= t1;
+> +    t2 |= t3;
+> +    REASSOC_BARRIER(t0, t2);
+> +    t0 |= t2;
+> +
+> +    /*
+> +     * Loop over complete 128-byte blocks.
+> +     * With the head and tail removed, e - p >= 14, so the loop
+> +     * must iterate at least once.
+> +     */
+> +    do {
+> +        /* Each comparison is [-1,0], so reduction is in [-4..0]. */
+> +        if (unlikely(vaddvq_u32(vceqzq_u32(t0)) != -4)) {
+> +            return false;
+> +        }
+> +
+> +        t0 = p[0] | p[1];
+> +        t1 = p[2] | p[3];
+> +        t2 = p[4] | p[5];
+> +        t3 = p[6] | p[7];
+> +        REASSOC_BARRIER(t0, t1);
+> +        REASSOC_BARRIER(t2, t3);
+> +        t0 |= t1;
+> +        t2 |= t3;
+> +        REASSOC_BARRIER(t0, t2);
+> +        t0 |= t2;
+> +        p += 8;
+> +    } while (p < e - 7);
+> +
+> +    return vaddvq_u32(vceqzq_u32(t0)) == -4;
+> +}
+> +
+> +static biz_accel_fn const accel_table[] = {
+> +    buffer_is_zero_int_ge256,
+> +    buffer_is_zero_simd,
+> +};
+> +
+> +static unsigned accel_index = 1;
+> +#define INIT_ACCEL buffer_is_zero_simd
+> +
+> +bool test_buffer_is_zero_next_accel(void)
+> +{
+> +    if (accel_index != 0) {
+> +        buffer_is_zero_accel = accel_table[--accel_index];
+> +        return true;
+> +    }
+> +    return false;
+> +}
+> +
+>  #else
+> +
+>  bool test_buffer_is_zero_next_accel(void)
+>  {
+>      return false;
+> 
 
