@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903E0C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2426C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rad0i-0006oN-H9; Thu, 15 Feb 2024 09:46:48 -0500
+	id 1rad3Z-0000xJ-Uq; Thu, 15 Feb 2024 09:49:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad0f-0006kn-K8
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:46:47 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad3Z-0000wz-0W
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:49:45 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad0e-00073W-2K
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:46:45 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a389ea940f1so122037166b.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:46:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad3W-0007Qp-SH
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:49:44 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a28a6cef709so124335066b.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708008402; x=1708613202; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zvJ+w++PMP9Jr9Dkgf+8l14WEtpiGiCahalhYRk1Dhg=;
- b=MXRQCJx1CBNlpvlxY9SUSa2ItkHl0w8YmlS7WW+xTmE/yKfKx9FL0ubFTtROCfAyZb
- 9YBxfwD1gsXOIDHNSTwsGpnRMj+Yzx8sKiWk3AYvbi8bQLSXXzq2wKDCxzY9VkXHU9mB
- JBIn5Ay5yLvOMPytdk3rs0pmMI98e/YYR0pQzBEMbWV/oSabessMDXWMz9QnuTtpqXCO
- OsNx7PPgyKlkYCf+od7ebz2v5C/a/fdsmkijNtFqRX27xXTnN7v/gDMlcINL9/65MaHS
- njA1T/L+6qCh8wra+ijCjgQVa1K8WAEMc+u6yu8XDXZ+Ziuv27drbJbia8fpSI4OdH1t
- 5Szw==
+ d=linaro.org; s=google; t=1708008581; x=1708613381; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aqr7wWcuqB9yP7xREpIQs/l1ZNVyP4RyA++HWsSqjYk=;
+ b=JhBv/dXYnzJj4ri9ts2Ui32g4euzqD+O48EcV1Iy9F1ZqWTsNoxLACcIM5y/IdhSuJ
+ kYgEo10pyTExAnyQpy8kWRVJwWHy5aiis/+7n1740hj8OTrBXLb4IemcTKt9MxuegXQm
+ dIiLJFzPRwNC5kQJxP1s22n1gfJBooi6dxFbrft0/KLXpsdSHZvnRwgahbN4voZmP2R9
+ Qb1uMHiSSfmaC5hX3YIgIhjOcZxEFCnIAvazDIpciAiy1xrDaJaFowP14TbWrr7F5nOd
+ DkNQ9GlOdWLG0Vdd3oMjRBIqMKzax4w9qyCI364PV6S6zYvZX/Wbi77UrY173DNDkJ62
+ IypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708008402; x=1708613202;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zvJ+w++PMP9Jr9Dkgf+8l14WEtpiGiCahalhYRk1Dhg=;
- b=Fkl8DyEPfPuIAcb2tJXpHrXIWEp5t1xItsRLwkU0viddGRRKM6/zpUFnUAUqUqbMOK
- BKEL/2TReHCWrWherqx+0eI+o7xbpuerUqTZCQYYqMbWP7QZiLPYpEwF3zDbNLB6TlmD
- HBaeVVeltqfx8XmP/rfCOa70J7TIykfQzclIhpA6pvmrIYqW9AA0gPNuau/BfmRGFJ/z
- lwWKxy+Zlhdzeyc4OAtXBHvwLFpNxf01CY7qWI/31SV1UToYanBNy7bA7RLD/VDgIEVN
- x5A8xNLXz2KOYD6CeoLcAod1u6f5a+j9yvLiMcb8FFmhAott/ki8fA0XJMwMRB0FHmh2
- ut6g==
-X-Gm-Message-State: AOJu0YwluocXAbtXSDepwzhLPs7BOmkCFAj5Gp+7EYKVzDUYMh9gP4SO
- msnO0g8npYo6pNj6RJvSce0XMGIDUOvp8F6j0SX/J48oYp1Zgp2OFL6FHPTYUPP18qFX9W7MP8t
- kMhE=
-X-Google-Smtp-Source: AGHT+IFzgfrDgkqh5AUbdfbpRMNFkbzwtPT3fXa5Z9u3LaksKb1bjtTljhdvCe4tywCLNr5T922iYw==
-X-Received: by 2002:a17:907:76d1:b0:a3d:9435:5805 with SMTP id
- kf17-20020a17090776d100b00a3d94355805mr1425473ejc.13.1708008401884; 
- Thu, 15 Feb 2024 06:46:41 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.193.50])
+ d=1e100.net; s=20230601; t=1708008581; x=1708613381;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aqr7wWcuqB9yP7xREpIQs/l1ZNVyP4RyA++HWsSqjYk=;
+ b=VmzE5tcbSlQO5ByH2ZK9LXuLkPUHQO0L4UZJXVw5HOIvO4ZIAwOFuXtqyxx0P/ffoK
+ ia806bbaft5j2DpmxJiteJTeBL7msuoWfLdiJ4q8Tj/wDG8f7cLfdy8JIvqgMq7wQa+0
+ j9lDgFLruO9fzbn+qN87CitgPIPIMfgVhkuRdsgDGjZ4aObgtWJqtPQr9Oz0+pZ95lFJ
+ A83KlKQYfEUjDz1uuzAoU8SXAtlvgnpLqV3+CXyJwB9549pDf/UuRttyKasQv+HsLsyt
+ Ft9/sJ4k+78b4zkixJ+/YzoFTwh7uuJWnhaVgiilXtYiSzuYW389CC1ha36qMg5RWXir
+ Ocbg==
+X-Gm-Message-State: AOJu0YxaovjH9sUz5s3ZO8cESEO8VcN+8CR1sk/6WDRyfSRm2gAqpEfM
+ S+KDLu3C3fkcfFf7/WhUg8TFX+mSSnbuR54+Wn4ZJ7q1A1GIqJ6kVtLhkOfou/m0SKHb214Ymtx
+ B8TM=
+X-Google-Smtp-Source: AGHT+IHR+MQNfCCXanh9nA0RYrDgNOW0/02hZeQFNv3c75DzG6ULdbqrtxiRs3IUDgxPgF6XSetbYg==
+X-Received: by 2002:a17:906:f156:b0:a3d:7c4f:9c5b with SMTP id
+ gw22-20020a170906f15600b00a3d7c4f9c5bmr1580255ejb.66.1708008580988; 
+ Thu, 15 Feb 2024 06:49:40 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- rf14-20020a1709076a0e00b00a3daa068f76sm341597ejc.65.2024.02.15.06.46.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 06:46:41 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v5 3/3] hw/sparc/leon3: Initialize GPIO before realizing CPU
- devices
-Date: Thu, 15 Feb 2024 15:46:22 +0100
-Message-ID: <20240215144623.76233-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240215144623.76233-1-philmd@linaro.org>
-References: <20240215144623.76233-1-philmd@linaro.org>
+ gs36-20020a1709072d2400b00a3d0a094574sm629020ejc.66.2024.02.15.06.49.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 06:49:40 -0800 (PST)
+Message-ID: <b6503fb9-b3a3-4b28-a18a-3254dab1a6bd@linaro.org>
+Date: Thu, 15 Feb 2024 15:49:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/dma: Pass parent object to i8257_dma_init()
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
+ <aurelien@aurel32.net>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ qemu-trivial@nongnu.org, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240213114426.87836-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240213114426.87836-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,45 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline cpu_create() in order to call qdev_init_gpio_in_named()
-before the CPU is realized.
+On 13/2/24 12:44, Philippe Mathieu-Daudé wrote:
+> Set I8257 instances parent (migration isn't affected).
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/dma/i8257.h | 2 +-
+>   hw/dma/i82374.c        | 2 +-
+>   hw/dma/i8257.c         | 4 +++-
+>   hw/i386/pc_piix.c      | 2 +-
+>   hw/isa/lpc_ich9.c      | 2 +-
+>   hw/isa/piix.c          | 2 +-
+>   hw/isa/vt82c686.c      | 2 +-
+>   hw/mips/jazz.c         | 2 +-
+>   8 files changed, 10 insertions(+), 8 deletions(-)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
----
- hw/sparc/leon3.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index 44fca1487d..4873b59b6c 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -277,7 +277,10 @@ static void leon3_generic_hw_init(MachineState *machine)
- 
-     for (i = 0; i < machine->smp.cpus; i++) {
-         /* Init CPU */
--        cpu = SPARC_CPU(cpu_create(machine->cpu_type));
-+        cpu = SPARC_CPU(object_new(machine->cpu_type));
-+        qdev_init_gpio_in_named(DEVICE(cpu), leon3_start_cpu, "start_cpu", 1);
-+        qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
-+        qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-         env = &cpu->env;
- 
-         cpu_sparc_set_id(env, i);
-@@ -311,11 +314,9 @@ static void leon3_generic_hw_init(MachineState *machine)
-     for (i = 0; i < machine->smp.cpus; i++) {
-         cpu = reset_info->info[i].cpu;
-         env = &cpu->env;
--        qdev_init_gpio_in_named(DEVICE(cpu), leon3_start_cpu, "start_cpu", 1);
-         qdev_connect_gpio_out_named(irqmpdev, "grlib-start-cpu", i,
-                                     qdev_get_gpio_in_named(DEVICE(cpu),
-                                                            "start_cpu", 0));
--        qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
-         qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", i,
-                                     qdev_get_gpio_in_named(DEVICE(cpu),
-                                                            "pil", 0));
--- 
-2.41.0
-
+Patch queued.
 
