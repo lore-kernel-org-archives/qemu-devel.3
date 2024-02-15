@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B17C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1B1C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafer-0000Oa-2X; Thu, 15 Feb 2024 12:36:25 -0500
+	id 1rafew-0000XT-M3; Thu, 15 Feb 2024 12:36:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeN-00082J-OV
+ id 1rafeO-00082N-LT
  for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:56 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeI-0003yp-3G
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:55 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-33cda3dfa06so828312f8f.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:49 -0800 (PST)
+ id 1rafeI-0003zZ-Vv
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:56 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-411fc50e4e9so8887515e9.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018548; x=1708623348; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708018549; x=1708623349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aGjNKILVOkz6T4RapcEJAgZAcxiKva6dOv/kPtf4wlc=;
- b=B+O0kX3x84M/OIOMm6NL4YKDsp5pr8XmX7nrnBobO3FSk6sfuVlJdLCy5E9R62cNAz
- KLOAgzA70l/xQowrpBuWWNO+oER4dGw+Zb8Uomx5tWSTpdfeZjhbel7vQlRcZYGVghLb
- NtrALyzrTZQ7I5D+qYbnEN1XBBF0zi/ajFswFEtqlqf1J11sNPkoadP4KbgCLWlvIGG+
- LwExEgMR0ZOl1xtMHEX7a0RXWJf543MLZ3pNl8eRAoKg6QLQ74kfpjojzQ5jHRDwrpq5
- RfYUmupy8nEP3zb1P46b9UVzBc2OZmT60xQJPzdR8igDOVbHwzgZa/895puQM7YUW3S2
- yhbQ==
+ :reply-to; bh=a87RueZW0PDoF8ZbDKzC++JXSZcqUh/P88llxuBUZWg=;
+ b=Ozuj3CX/NQEyoDK4hhAPjRQjIZFNr0I9tHnbQOYCJ7xh0x9FmUqCwR0b/ji6bn09Zv
+ TuX6bZ5dQOHGwnPjX8HIxawKDV5oxQ0tgrtfeTW++bNai31x5judqVeIxOdvaJrDL1vp
+ Zmuqg8fUYHFJt7c5gyR+Wwjn0J2n7qUjjel3z5iXRKoVgu68y681VJWX+I8GVkM352h6
+ 27CSUDcHGH913UeThciNOsU5P2D/Q2JQv0KqbGTeBlqB3E1Vnjh1p02zgATxHrNeb3J/
+ ZrwPkaT2lJwaHwjKVaC1GlC9ez6SfNxqrXjG9wf8gUs1Ocr8gQcWWkftQPMpu+GWgAdr
+ onSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018548; x=1708623348;
+ d=1e100.net; s=20230601; t=1708018549; x=1708623349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aGjNKILVOkz6T4RapcEJAgZAcxiKva6dOv/kPtf4wlc=;
- b=omncS17kb7dfmzW6o5s3DakESBom5DcqDeh5+9bVjMMPeDSt5tAIqPw39MZiwm/I9+
- jKxUJkyiVHqd0ah2++FHnxhShMnTkyJ++6CQF/XOSg9Sb4Wz0fR7wPyvXKYmnz1R7QFV
- 7SlJ6yhrVjua2H4tl0b3p7CCvc7ULOzqaWz/yvMSy3MdSEoUkxv2/aYoDT+VQS8A8vPC
- byWLdxgMhsn/9753qvIwcWxkjLE3AFylgk5ZMDqkASlaHlwx7N6WO3/MTK+6tp56Lz0n
- CSmyOTstndkbJrLsVsp4mDnGSkwpkVNiblUra0Y7v6E6++FUwrt5SDSxwBFjQ/IYuNhs
- iNDw==
-X-Gm-Message-State: AOJu0YxEHv5wWdnNjJt0seFH9fEbNdvP8pcUhgxCBV+S2sDWoHGSH4JU
- Rtjt1BuBdzxVkC/xjKGgPSV3d6Pobo+8PHuDUzfXUBENSs5fqPbDrTtbs/VDqtMtDB7bVxyJkh5
- f
-X-Google-Smtp-Source: AGHT+IHp7ZA2m4b5U6KXXRMdpAHUr9UItU2EGsiomUfuB8yLmdPgDDZqKd0qRyBM5UN0Lalq31tUcg==
-X-Received: by 2002:adf:e80c:0:b0:33b:49da:22e5 with SMTP id
- o12-20020adfe80c000000b0033b49da22e5mr1754741wrm.9.1708018548771; 
- Thu, 15 Feb 2024 09:35:48 -0800 (PST)
+ bh=a87RueZW0PDoF8ZbDKzC++JXSZcqUh/P88llxuBUZWg=;
+ b=N23GGUI8ci2qyTPW6GJdQClf9sEj/A2QkhK7gmSqTya17czGVQk6gXjOVGRBMwem2v
+ tvVnmUoHeM0rxf4U/CjLuAPzWzUo+1TGdbEcLQlMugWkgRs2Qg0ydQniJ7BA+j2lcPua
+ 3LtX57duMzcxGn0P1ljQDZkbrT7Pha5+Klw7KNJn5j9seXIDtOKhXtU85lttS6X6lRpq
+ rXMqEJAlk8SB+EbBg3RKzXgWK/ar2Y27Dc5JQ6eh2i1WsybgyLejiS8IDoS0SmXO84Gk
+ jf02VJUGuuQUCQfGjmyntDUn3Rja+v8X5OGjMDF2/gFU0ovo0X+flhtSTReHLi3TokKK
+ VTkQ==
+X-Gm-Message-State: AOJu0Yy47C+hpP1PrOpBfAdxBiazdsTIetHOmGQiZh0pIxnpjvxa0LAS
+ Gv//LfI/TPaF6x7cdumTWLP8J8JpCV3J12tTrm4WI58QFSCxEtl8jdzmbhiorx/UWCWRQ3Q3pIN
+ Q
+X-Google-Smtp-Source: AGHT+IGaUwTDUB1EG2Mol3h5UT+GjVEURwpApjEDKLk8AmmhymCJdr9albgVSXIJCSXak1ivLRBeXA==
+X-Received: by 2002:a05:600c:198e:b0:412:adb:504b with SMTP id
+ t14-20020a05600c198e00b004120adb504bmr2343067wmq.11.1708018549583; 
+ Thu, 15 Feb 2024 09:35:49 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.48
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:48 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:49 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/35] hw/arm/stellaris: Add missing QOM 'machine' parent
-Date: Thu, 15 Feb 2024 17:35:24 +0000
-Message-Id: <20240215173538.2430599-22-peter.maydell@linaro.org>
+Subject: [PULL 23/35] target/arm: Use new CBAR encoding for all v8 CPUs,
+ not all aarch64 CPUs
+Date: Thu, 15 Feb 2024 17:35:26 +0000
+Message-Id: <20240215173538.2430599-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
 References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,48 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+We support two different encodings for the AArch32 IMPDEF
+CBAR register -- older cores like the Cortex A9, A7, A15
+have this at 4, c15, c0, 0; newer cores like the
+Cortex A35, A53, A57 and A72 have it at 1 c15 c0 0.
 
-QDev objects created with qdev_new() need to manually add
-their parent relationship with object_property_add_child().
+When we implemented this we picked which encoding to
+use based on whether the CPU set ARM_FEATURE_AARCH64.
+However this isn't right for three cases:
+ * the qemu-system-arm 'max' CPU, which is supposed to be
+   a variant on a Cortex-A57; it ought to use the same
+   encoding the A57 does and which the AArch64 'max'
+   exposes to AArch32 guest code
+ * the Cortex-R52, which is AArch32-only but has the CBAR
+   at the newer encoding (and where we incorrectly are
+   not yet setting ARM_FEATURE_CBAR_RO anyway)
+ * any possible future support for other v8 AArch32
+   only CPUs, or for supporting "boot the CPU into
+   AArch32 mode" on our existing cores like the A57 etc
 
-This commit plug the devices which aren't part of the SoC;
-they will be plugged into a SoC container in the next one.
+Make the decision of the encoding be based on whether
+the CPU implements the ARM_FEATURE_V8 flag instead.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240213155214.13619-4-philmd@linaro.org
+This changes the behaviour only for the qemu-system-arm
+'-cpu max'. We don't expect anybody to be relying on the
+old behaviour because:
+ * it's not what the real hardware Cortex-A57 does
+   (and that's what our ID register claims we are)
+ * we don't implement the memory-mapped GICv3 support
+   which is the only thing that exists at the peripheral
+   base address pointed to by the register
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240206132931.38376-2-peter.maydell@linaro.org
 ---
- hw/arm/stellaris.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/arm/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index d3a12fe51c5..d9884286b3f 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1271,10 +1271,13 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-                                    &error_fatal);
- 
-             ssddev = qdev_new("ssd0323");
-+            object_property_add_child(OBJECT(ms), "oled", OBJECT(ssddev));
-             qdev_prop_set_uint8(ssddev, "cs", 1);
-             qdev_realize_and_unref(ssddev, bus, &error_fatal);
- 
-             gpio_d_splitter = qdev_new(TYPE_SPLIT_IRQ);
-+            object_property_add_child(OBJECT(ms), "splitter",
-+                                      OBJECT(gpio_d_splitter));
-             qdev_prop_set_uint32(gpio_d_splitter, "num-lines", 2);
-             qdev_realize_and_unref(gpio_d_splitter, NULL, &error_fatal);
-             qdev_connect_gpio_out(
-@@ -1314,6 +1317,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-         DeviceState *gpad;
- 
-         gpad = qdev_new(TYPE_STELLARIS_GAMEPAD);
-+        object_property_add_child(OBJECT(ms), "gamepad", OBJECT(gpad));
-         for (i = 0; i < ARRAY_SIZE(gpad_keycode); i++) {
-             qlist_append_int(gpad_keycode_list, gpad_keycode[i]);
-         }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7c531ee9cff..90c4fb72ce4 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9528,7 +9528,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+          * AArch64 cores we might need to add a specific feature flag
+          * to indicate cores with "flavour 2" CBAR.
+          */
+-        if (arm_feature(env, ARM_FEATURE_AARCH64)) {
++        if (arm_feature(env, ARM_FEATURE_V8)) {
+             /* 32 bit view is [31:18] 0...0 [43:32]. */
+             uint32_t cbar32 = (extract64(cpu->reset_cbar, 18, 14) << 18)
+                 | extract64(cpu->reset_cbar, 32, 12);
 -- 
 2.34.1
 
