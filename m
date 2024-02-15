@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5F8C48BF0
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 07:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E675AC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 07:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raWFf-0006Xd-W3; Thu, 15 Feb 2024 02:33:49 -0500
+	id 1raWGZ-000748-Me; Thu, 15 Feb 2024 02:34:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1raWFW-0006Ms-AF
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:33:38 -0500
+ id 1raWGW-00071z-0I; Thu, 15 Feb 2024 02:34:40 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX02.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1raWFT-0000V2-J7
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 02:33:38 -0500
+ id 1raWGU-0000h6-Ef; Thu, 15 Feb 2024 02:34:39 -0500
 Received: from TWMBX03.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
  (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 15 Feb
- 2024 15:33:31 +0800
+ 2024 15:34:36 +0800
 Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX03.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 15 Feb
- 2024 15:34:17 +0800
+ 2024 15:35:22 +0800
 Received: from twmbx02.aspeed.com (192.168.10.10) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server id 15.0.1497.2 via Frontend
- Transport; Thu, 15 Feb 2024 15:33:31 +0800
-To: "open list:All patches CC here" <qemu-devel@nongnu.org>
+ Transport; Thu, 15 Feb 2024 15:34:36 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <jamin_lin@aspeedtech.com>
-Subject: [PATCH v3 0/2] UART0 device name and fix hardcode boot address 0
-Date: Thu, 15 Feb 2024 15:33:28 +0800
-Message-ID: <20240215073330.2401960-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 2/2] aspeed: fix hardcode boot address 0
+Date: Thu, 15 Feb 2024 15:34:34 +0800
+Message-ID: <20240215073434.2406775-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240215073434.2406775-1-jamin_lin@aspeedtech.com>
+References: <20240215073434.2406775-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -62,30 +65,100 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
-1. support uart controller both 0 and 1 base
-2. fix hardcode boot address 0
+In the previous design of ASPEED SOCs QEMU model, it set the boot
+address at "0" which was the hardcode setting for ast10x0, ast2600,
+ast2500 and ast2400.
 
-v2:
-1. introduce a new UART0 device name
-2. remove ASPEED_SOC_SPI_BOOT_ADDR marco
+According to the design of ast2700, it has a bootmcu(riscv-32) which
+is used for executing SPL and initialize DRAM and copy u-boot image
+from SPI/Flash to DRAM at address 0x400000000 at SPL boot stage.
+Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
 
-v3:
-1. add uart helper functions to get the index, start and last.
-2. add more description in commit log
+Currently, qemu not support emulate two CPU architectures
+at the same machine. Therefore, qemu will only support
+to emulate CPU(cortex-a35) side for ast2700 and the boot
+address is "0x4 00000000".
 
-Jamin Lin (2):
-  aspeed: introduce a new UART0 device name
-  aspeed: fix hardcode boot address 0
+Fixed hardcode boot address "0" for future models using
+a different mapping address.
 
- hw/arm/aspeed.c             | 17 +++++++++++------
- hw/arm/aspeed_ast10x0.c     |  1 +
- hw/arm/aspeed_ast2400.c     |  6 ++++--
- hw/arm/aspeed_ast2600.c     |  3 ++-
- hw/arm/aspeed_soc_common.c  | 10 ++++++----
- include/hw/arm/aspeed_soc.h | 19 +++++++++++++++++--
- 6 files changed, 41 insertions(+), 15 deletions(-)
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/arm/aspeed.c             | 4 +++-
+ hw/arm/aspeed_ast2400.c     | 4 ++--
+ hw/arm/aspeed_ast2600.c     | 2 +-
+ include/hw/arm/aspeed_soc.h | 2 --
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index aa165d583b..9fec245e4e 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -289,12 +289,14 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
+                                     uint64_t rom_size)
+ {
+     AspeedSoCState *soc = bmc->soc;
++    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
+ 
+     memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
+                            &error_abort);
+     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
+                                         &bmc->boot_rom, 1);
+-    write_boot_rom(blk, ASPEED_SOC_SPI_BOOT_ADDR, rom_size, &error_abort);
++    write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT],
++                   rom_size, &error_abort);
+ }
+ 
+ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
+index 95da85fee0..d125886207 100644
+--- a/hw/arm/aspeed_ast2400.c
++++ b/hw/arm/aspeed_ast2400.c
+@@ -26,7 +26,7 @@
+ #define ASPEED_SOC_IOMEM_SIZE       0x00200000
+ 
+ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  =  ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_IOMEM]  = 0x1E600000,
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+@@ -61,7 +61,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+ };
+ 
+ static const hwaddr aspeed_soc_ast2500_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_IOMEM]  = 0x1E600000,
+     [ASPEED_DEV_FMC]    = 0x1E620000,
+     [ASPEED_DEV_SPI1]   = 0x1E630000,
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index f74561ecdc..174be53770 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -22,7 +22,7 @@
+ #define ASPEED_SOC_DPMCU_SIZE       0x00040000
+ 
+ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+-    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
++    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
+     [ASPEED_DEV_SRAM]      = 0x10000000,
+     [ASPEED_DEV_DPMCU]     = 0x18000000,
+     /* 0x16000000     0x17FFFFFF : AHB BUS do LPC Bus bridge */
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index e1a023be53..c60fac900a 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -224,8 +224,6 @@ enum {
+     ASPEED_DEV_FSI2,
+ };
+ 
+-#define ASPEED_SOC_SPI_BOOT_ADDR 0x0
+-
+ qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
+ bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
+ void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr);
 -- 
 2.25.1
 
