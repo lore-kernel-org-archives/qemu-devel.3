@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29F5C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 19:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE45C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 19:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rahRw-0004nf-Cb; Thu, 15 Feb 2024 14:31:15 -0500
+	id 1rahSt-00071J-BD; Thu, 15 Feb 2024 14:32:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rahRM-0004GZ-Hy
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:30:45 -0500
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1rahSq-0006ov-SI
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:32:08 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rahRJ-00059F-H7
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:30:34 -0500
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5d8b519e438so1178055a12.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 11:30:33 -0800 (PST)
+ id 1rahSl-0005Pz-OV
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:32:08 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6e0cc8d740cso1057923b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 11:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708025432; x=1708630232; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1708025522; x=1708630322; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=X3jH2JS8Icb9oqLzaU0hfXRD5zoULe7nghMNl44ps/I=;
- b=rJYRTFyiV/xj8LE3IOe+wpkR9iX98qYscp0Tcws93qkcwHIOUq2A2FNxx0JRqBDSQH
- s3z3f71XN0H/YtgapeJkcnAnnzJcNXT3xbe/Eux3KT9+XPNRN3Ede8U7Xjf0pUycW4xS
- w27Q4gbwlo4oQlg1xM/UwKThlXB6yKi4iDCyLNEJW2VQNJVtw6YoANeQ22HhKpSVmBFv
- 5dolzc+Y2T1rrlOCTEZ5+xM+scAHD1Dh39KPmSo0vR6ygjdOSwJBwHfKn4WfjLveD/sv
- cz+9BcnJbAFz3qsGa6LXKV0U9W8D4g290oxqTFhQYeg8r2J8u8cHVBt2RXruLuOlK+jI
- WSSA==
+ bh=J74btSBxazv6J2r+dLJAGzTw0cISGopBJUtERAZfl2s=;
+ b=JIfaOdwy9e4mAAFIBoLc41CvoPUC0fD9eaKmFxmd5yRbFpTdpHaeKIuCZ9N8uQgHxh
+ /eKJpuqfM2ZLWVOgY2TI1se5GrmgP/XgETi1JFK71QsiLU1HScQa3jvlOjGSOeAUKcxl
+ 0ixGIgT6FgZUUEyW94PtmezDPdDMLVUuuKdRhSZfN98bgsHso8p9sNTCuh90EjhIPYIL
+ AuFDD92+voPNYr0MfWqFxa+QDu8g6eVpMZ0tl6zaQq2RKGtJwtDsJXG244KU6v30EqU9
+ EEIqSwmazcsR+D9Y0cyQmBa3MG+LzW0KqKQUlOxs8j2Ix3wfLNuCsba5jmMYOOqLe8YG
+ 3f3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708025432; x=1708630232;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1708025522; x=1708630322;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X3jH2JS8Icb9oqLzaU0hfXRD5zoULe7nghMNl44ps/I=;
- b=cy04g+W6hg+VLO2R8k7vu6lomORy2ojFD0HB/2cZTvlvIzlBQMs1JwYCtFU+V4c9WC
- tjKbAvrNkmbPN3n8GRcKuYk0Owws4yKQBd6gVM2rbV8EKAlpobI71ySnSVr/ycwqwdme
- 2ujhslvaheFIW0UFeO0jA72Bo+9u+RAWw9m51Jf0gBgnOUoRkwRBT6+/O1ukVKxRAPAH
- kgoH2/6v2LPttjFGu3j5aZTYvaV1PPwzKs3ZJbqK0rrOOw7jYKciWqfdeCQBNv8+/lQa
- AMN6x1DJaxbudRTFkWdLTEeGYyQdlKFIWSq7R/Ky8ii9vZ3hhZbVbyziw0HgW1xYdV2M
- jwDw==
+ bh=J74btSBxazv6J2r+dLJAGzTw0cISGopBJUtERAZfl2s=;
+ b=MRynq08iekvcSKDAlqI0Dr03PCBUC9aQ3eZN3gYGkpc18EH1tpgkOOhgdNr9POu/pU
+ URb4YmLy7/HqU8qNwGZC95IkYpQYSBHtEQCcoGUiL7bhqdNDhtORW0v1ko/TLoIgyAra
+ 7nPvVHmvfMiy+KitZ55cBhx4EpzDMBwHg79mbbh3Yt6OUMUcyEkjXkqeiE/F+l7tzDmG
+ 2vHP102mHMvZDZoZ4opoyQFy91zxP5ImPqrx9sYNzvKLgOaNYD+2Tiy8TBoPCRTLsExx
+ 9VzSTs0yxtYr0p19nV5rzwE8Dd5A2iSH5qtCefs3IRvlLoYcXA/crF2YMap4nDH5vfWp
+ JGoQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtti3YKNh0yLsKC1jea71S0NFSl5jZWReyR5Mpzte82rk1Weg38ZhviKww4vYMSbMXJOVbAmgpHiohg4o3mEaVcYjE80s=
-X-Gm-Message-State: AOJu0YwhdTYvcmZOQLWfW/eB8H423EN7llSxzWxndniCgsAk3WO8TVWg
- MBtzJl9wO+Q7qcyAP34liQjOsnQXrkh6tbpyb8yacSx+NbdAVgqJGFT7TgUKjwE=
-X-Google-Smtp-Source: AGHT+IEDsdRsj/u65YHtSoPM/wJajiqBSJQADzhJh3bY129+226WIkRAHHQKkL+Cl/akOsvHw4QzKA==
-X-Received: by 2002:a05:6a21:164e:b0:19e:a1a2:4c53 with SMTP id
- no14-20020a056a21164e00b0019ea1a24c53mr2996223pzb.1.1708025432121; 
- Thu, 15 Feb 2024 11:30:32 -0800 (PST)
+ AJvYcCWgvDOzkvp0fO10BWeRRj7b2snOlY7c+2b72Q7Hci+XCMNHyb3xsFTo29Q3f8vpAk8QpNiTv98szlOXnqhKAKfC25qMIAo=
+X-Gm-Message-State: AOJu0Yx1ANA8NqwWB7MYlysVFIVR1XchIvWsz9AJiqNqvQL+F2DYqSLL
+ Khwpvn3Cu1DOl2zS4Ozg+1GgNPFvtTVEOGiTX1gJ2sQg4yfStu/sao1Isx2uBDw=
+X-Google-Smtp-Source: AGHT+IFccsrWtc7EyQAUASxzlMRnbGMmXkZtPTQwZgipLpC3c7rV0pdb+m2i/RFsiyndMlD46m08ig==
+X-Received: by 2002:a05:6a00:2344:b0:6e1:1144:b49d with SMTP id
+ j4-20020a056a00234400b006e11144b49dmr3267868pfj.10.1708025521846; 
+ Thu, 15 Feb 2024 11:32:01 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- ka19-20020a056a00939300b006e050c8f22bsm1679320pfb.207.2024.02.15.11.30.30
+ ka19-20020a056a00939300b006e050c8f22bsm1679320pfb.207.2024.02.15.11.31.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 11:30:31 -0800 (PST)
-Message-ID: <4b00b67d-cb3c-4173-bb7f-1ae68cdfbada@linaro.org>
-Date: Thu, 15 Feb 2024 09:30:27 -1000
+ Thu, 15 Feb 2024 11:32:01 -0800 (PST)
+Message-ID: <8d7469f6-9858-41ba-8056-c6a2de15c422@linaro.org>
+Date: Thu, 15 Feb 2024 09:31:58 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] tcg: Avoid double lock if page tables happen to be in
- mmio memory.
+Subject: Re: [PATCH 2/3] target/i386: Enable page walking from MMIO memory
 Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  Gregory Price <gregory.price@memverge.com>,
@@ -76,13 +76,13 @@ To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
 Cc: linux-cxl@vger.kernel.org
 References: <20240215150133.2088-1-Jonathan.Cameron@huawei.com>
- <20240215150133.2088-4-Jonathan.Cameron@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240215150133.2088-4-Jonathan.Cameron@huawei.com>
+ <20240215150133.2088-3-Jonathan.Cameron@huawei.com>
+ <cde1076c-d4bc-4e2f-9319-9eb37d24eef5@linaro.org>
+In-Reply-To: <cde1076c-d4bc-4e2f-9319-9eb37d24eef5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,56 +105,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/24 05:01, Jonathan Cameron wrote:
-> On i386, after fixing the page walking code to work with pages in
-> MMIO memory (specifically CXL emulated interleaved memory),
-> a crash was seen in an interrupt handling path.
+On 2/15/24 09:21, Richard Henderson wrote:
+> On 2/15/24 05:01, Jonathan Cameron wrote:
+>> -static bool ptw_translate(PTETranslate *inout, hwaddr addr)
+>> +static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
 > 
-> Useful part of bt
+> You do not need to pass in 'ra' here...
 > 
-> Peter identified this as being due to the BQL already being
-> held when the page table walker encounters MMIO memory and attempts
-> to take the lock again.  There are other examples of similar paths
-> TCG, so this follows the approach taken in those of simply checking
-> if the lock is already held and if it is, don't take it again.
+>>       flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
+>> -                              inout->ptw_idx, true, &inout->haddr, &full, 0);
+>> +                              inout->ptw_idx, true, &inout->haddr, &full, ra);
 > 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->   accel/tcg/cputlb.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index 047cd2cc0a..3b8d178707 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -2019,6 +2019,7 @@ static uint64_t do_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
->                                  int mmu_idx, MMUAccessType type, uintptr_t ra)
->   {
->       MemoryRegionSection *section;
-> +    bool locked = bql_locked();
->       MemoryRegion *mr;
->       hwaddr mr_offset;
->       MemTxAttrs attrs;
-> @@ -2030,10 +2031,14 @@ static uint64_t do_ld_mmio_beN(CPUState *cpu, CPUTLBEntryFull *full,
->       section = io_prepare(&mr_offset, cpu, full->xlat_section, attrs, addr, ra);
->       mr = section->mr;
->   
-> -    bql_lock();
-> +    if (!locked) {
-> +        bql_lock();
-> +    }
->       ret = int_ld_mmio_beN(cpu, full, ret_be, addr, size, mmu_idx,
->                             type, ra, mr, mr_offset);
-> -    bql_unlock();
-> +    if (!locked) {
-> +        bql_unlock();
-> +    }
+> ... because this                                 ^^^^
+> indicates a non-fault probe.
+> A return address is only required for a faulting probe to raise an exception.
 
-On top of other comments, I'm never keen on this type of test/lock/test/unlock.  When this 
-kind of thing is encountered, it means we should have been using a recursive lock in the 
-first place.
+Bah.  We can always recurse and hit the load case too.  So:
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
+
+> 
+>> -static inline uint32_t ptw_ldl(const PTETranslate *in)
+>> +static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
+>>  {
+>>      if (likely(in->haddr)) {
+>>          return ldl_p(in->haddr);
+>>      }
+>> -    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
+>> +    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+>>  }
+> 
+> However the loads do require 'ra' for the io_recompile, as you saw from the backtrace.
+> 
+> 
+> r~
+
 
