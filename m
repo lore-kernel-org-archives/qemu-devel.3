@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD78CC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 19:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E09EC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 19:12:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rah8d-0001Ha-Md; Thu, 15 Feb 2024 14:11:15 -0500
+	id 1rah8r-0001JA-LP; Thu, 15 Feb 2024 14:11:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rah8b-0001HJ-SY
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:11:13 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rah8q-0001Ir-He
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:11:28 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rah8Z-0001FQ-Tz
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:11:13 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e104196e6eso1271833b3a.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 11:11:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rah8o-0001Gg-Pt
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 14:11:28 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2909978624eso840372a91.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 11:11:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708024270; x=1708629070; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OBVn+VYEOLPWxHkYLSAH1u/vsJkqTKBZdT9CVb6RiYc=;
- b=bbEsUffqpndyrGWFcAFbPQ5OjsU8XCDLpQWvCOngsnmHXfxZz73F1+OsTt29fF+SoX
- OIcgdYlza3piL/TpCDTU5gMuRC/LDX6RLSL5+cXHZ3UyB9AMozIwY00WPQQMJgXUxdg2
- gUqCRNuOjL8+BpmOSVyv3Uq4ZHxFr6jSXzb0TLI8BVy1EgpVOZUGjtSHDKka+jumvjL9
- TjBkfd6oPyZ2DdPdb9uxRCcwDg9quxo7u/hBWtee46cOtAJN2QwFP9Him8GBW8wj0rlB
- AeejvGsVQAPsFcv89c03nn/DTqrOdRp6G0ZAgY+lSnBP78PZz6KV2hM2nxzYCBfRTh/g
- ipLA==
+ d=linaro.org; s=google; t=1708024285; x=1708629085; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bFlCBzvtwCOVRNl3twRHbZHmzPTvnU4xWu2ISNExgbI=;
+ b=bnBrX6ynMsXk0TJvS4N20Z0PiV1giC3CBmL+R5afZkR2vEPpBsP4FlD4p0J5WFAIrW
+ rA+LA+aRJgyZm1hQPKgo2MKQXyis5x8jq+r0qM07jzCpzKXDuEx7Nz9bd1KMCrkmMVEk
+ rvDOkHfy4KEC2c4iwlu0fQc8Gcp4tU74DZi2yV9i6AZcIv6OIAeeQ0E4EmeM9V7B6dJc
+ hsyZZmlHOF5GdODVeatVMNn+zt1gsQgH9dvW6LtE8e/yLfLgYSPRFiYrEPSkrVuVq851
+ ltZDifsv5qiCsfwzJzIqLGO+WBnUNuYsu5KkVTCfyPs49AWUZizCvN+bqn64S5pVddR+
+ qWLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708024270; x=1708629070;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OBVn+VYEOLPWxHkYLSAH1u/vsJkqTKBZdT9CVb6RiYc=;
- b=JhX7UFfIIMHNFYSMVtGzDIzOi/gGJ3lwui1+waQpQmj+ocVuhKVons36xJIqhPAYMd
- WRIfDI1KyBTahdVqn6hFFT/UFFmM7kYFs1hVJ0hotMaG2dhTuHp12Nrnr0AW266NqX3v
- XR9av7GL8yH9V1peMdhPjTGaDBA0qTMWDilj6CYwhwB2quIRKT5rHViRfqj/WydJ1a68
- 3FWVrvV7i0WzWeV2dA98NbTm1UEdTuKtww8vAbzibIDvrn3H4yhZozTQ0N5tTrYBN+Sy
- U28QDNzGiSNHW64cAGaZ3vsCVYrbXJ6F3c6KqVHNnGOibpLpUIJdqEQm+4uMJgSAS96d
- Qfpg==
-X-Gm-Message-State: AOJu0YyVz40oGXTDTS5xtaLFjaMpxFd6DjoJ3HEfde5wepzJIIsH3lWO
- /EyJWoOg3YmyJtRaNOhdcqszMSoJVAzuTwUd7AgaHbWvRm8xehL6
-X-Google-Smtp-Source: AGHT+IH7whzAf2whtoDFTquvBNsG/3LI1KXbcv9+gKKkOiltbhsJf48t+Kra9iQEzx7XYOKESMd8Dg==
-X-Received: by 2002:a05:6a00:2d03:b0:6e0:e235:e2ca with SMTP id
- fa3-20020a056a002d0300b006e0e235e2camr2910166pfb.9.1708024270301; 
- Thu, 15 Feb 2024 11:11:10 -0800 (PST)
-Received: from debian ([2601:641:300:14de:5279:cdf6:aaf1:e09c])
- by smtp.gmail.com with ESMTPSA id
- e6-20020a056a0000c600b006e0cfe94fc5sm1682161pfj.107.2024.02.15.11.11.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 11:11:09 -0800 (PST)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Thu, 15 Feb 2024 11:11:07 -0800
-To: shiju.jose@huawei.com
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- jonathan.cameron@huawei.com, tanxiaofei@huawei.com,
- prime.zeng@hisilicon.com, linuxarm@huawei.com
-Subject: Re: [PATCH v2 3/3] hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS
- control feature
-Message-ID: <Zc5hy-HR3sRTPLC6@debian>
-References: <20231124135338.1191-1-shiju.jose@huawei.com>
- <20231124135338.1191-4-shiju.jose@huawei.com>
+ d=1e100.net; s=20230601; t=1708024285; x=1708629085;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bFlCBzvtwCOVRNl3twRHbZHmzPTvnU4xWu2ISNExgbI=;
+ b=PlSK3g94uAFhn/9tloo0yVhdnltKfNDdx5ryOMSte24PeEbq+FRybnpLPq6/AuZCl5
+ nIyhgMQY/QFfoGB8TbKaojIFJT3DhvRzDWobSZO9Zu4HoUbuq3vTUSKp6tfatEoY7n1J
+ UBdNr08MFreN3w/oxPnEMadQbdByrSsol1lmjtPze0jnDgyhja3ntIzd8HK0WOBO2ZOV
+ aCkr6y2xQ1ZsQYc4HrsQ6Lrkovw8nH9F1TWC+nTiTAw4EhKvX712XXkyaAs3t3OlX/iE
+ V50hWAagIMxXYtNnB6PRB/2nl2yJ4ePDW/T75SauD4fu4oRfbvZWItyXc0WJSiIhwq04
+ Bphw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9tadBMV0oGpx3uIb586q7aQbElsEv+lor1N3d9mRqmABolIOzIlNMklgZHX+VNGrwHLWaWN8kwu/XQPaLoa9lNWa5YhQ=
+X-Gm-Message-State: AOJu0YzA89uuKfInSRoQq4QPMkYyoJXCkBB9z2JkRDk6WOFg09Sil5Ca
+ qSpoPjUepxhc20oNByTyoK79sGSZ6Uood6+qwFYHA1YZMBIOFh1prcxkAy4RRFg=
+X-Google-Smtp-Source: AGHT+IFosHLOzk4ViGv8QCWH+Bff4Yl9/gs4yDNGIeyREt8jgtSy+1qwAXmMbaMwcgP0IxmxKFvbJA==
+X-Received: by 2002:a17:90a:e617:b0:298:a03f:ecf7 with SMTP id
+ j23-20020a17090ae61700b00298a03fecf7mr2987448pjy.38.1708024285145; 
+ Thu, 15 Feb 2024 11:11:25 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ se14-20020a17090b518e00b002967bc2c852sm3769428pjb.43.2024.02.15.11.11.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 11:11:24 -0800 (PST)
+Message-ID: <11c4cd99-67e1-4a50-94e6-aee3f0b55230@linaro.org>
+Date: Thu, 15 Feb 2024 09:11:21 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231124135338.1191-4-shiju.jose@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x436.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] accel/tcg: Set can_do_io at at start of lookup_tb_ptr
+ helper
+Content-Language: en-US
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gregory Price <gregory.price@memverge.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Sajjan Rao <sajjanr@gmail.com>,
+ Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Cc: linux-cxl@vger.kernel.org
+References: <20240215150133.2088-1-Jonathan.Cameron@huawei.com>
+ <20240215150133.2088-2-Jonathan.Cameron@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240215150133.2088-2-Jonathan.Cameron@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,193 +105,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 24, 2023 at 09:53:37PM +0800, shiju.jose@huawei.com wrote:
-> From: Shiju Jose <shiju.jose@huawei.com>
+On 2/15/24 05:01, Jonathan Cameron wrote:
+> From: Peter Maydell <peter.maydell@linaro.org>
 > 
-> CXL spec 3.1 section 8.2.9.9.11.2 describes the DDR5 Error Check Scrub (ECS)
-> control feature.
+> Peter posted this in the thread trying to fix x86 TCG handling
+> of page tables in MMIO space (specifically emulated CXL interleaved memory)
+> https://lore.kernel.org/qemu-devel/CAFEAcA_a_AyQ=Epz3_+CheAT8Crsk9mOu894wbNW_FywamkZiw@mail.gmail.com/#t
 > 
-> The Error Check Scrub (ECS) is a feature defined in JEDEC DDR5 SDRAM
-> Specification (JESD79-5) and allows the DRAM to internally read, correct
-> single-bit errors, and write back corrected data bits to the DRAM array
-> while providing transparency to error counts. The ECS control feature
-> allows the request to configure ECS input configurations during system
-> boot or at run-time.
+> Peter, are you happy to give your SoB on this one?
 > 
-> The ECS control allows the requester to change the log entry type, the ECS
-> threshold count provided that the request is within the definition
-> specified in DDR5 mode registers, change mode between codeword mode and
-> row count mode, and reset the ECS counter.
-> 
-> Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-
-LGTM.
-
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
-Fan
-
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c | 100 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 99 insertions(+), 1 deletion(-)
+>   accel/tcg/cpu-exec.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 5a6f4e4029..098b92815a 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -810,6 +810,7 @@ typedef struct CXLSupportedFeatureEntry {
->  
->  enum CXL_SUPPORTED_FEATURES_LIST {
->      CXL_FEATURE_PATROL_SCRUB = 0,
-> +    CXL_FEATURE_DDR5_ECS,
->      CXL_FEATURE_MAX
->  };
->  
-> @@ -881,6 +882,42 @@ typedef struct CXLMemPatrolScrubSetFeature {
->          CXLMemPatrolScrubWriteAttrbs feat_data;
->  } QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
->  
-> +/*
-> + * CXL r3.1 section 8.2.9.9.11.2:
-> + * DDR5 Error Check Scrub (ECS) Control Feature
-> + */
-> +static const QemuUUID ddr5_ecs_uuid = {
-> +    .data = UUID(0xe5b13f22, 0x2328, 0x4a14, 0xb8, 0xba,
-> +                 0xb9, 0x69, 0x1e, 0x89, 0x33, 0x86)
-> +};
-> +
-> +#define CXL_DDR5_ECS_GET_FEATURE_VERSION    0x01
-> +#define CXL_DDR5_ECS_SET_FEATURE_VERSION    0x01
-> +#define CXL_DDR5_ECS_LOG_ENTRY_TYPE_DEFAULT    0x01
-> +#define CXL_DDR5_ECS_REALTIME_REPORT_CAP_DEFAULT    1
-> +#define CXL_DDR5_ECS_THRESHOLD_COUNT_DEFAULT    3 /* 3: 256, 4: 1024, 5: 4096 */
-> +#define CXL_DDR5_ECS_MODE_DEFAULT    0
-> +
-> +#define CXL_DDR5_ECS_NUM_MEDIA_FRUS   3
-> +
-> +/* CXL memdev DDR5 ECS control attributes */
-> +struct CXLMemECSReadAttrbs {
-> +        uint8_t ecs_log_cap;
-> +        uint8_t ecs_cap;
-> +        uint16_t ecs_config;
-> +        uint8_t ecs_flags;
-> +} QEMU_PACKED cxl_ddr5_ecs_feat_read_attrbs[CXL_DDR5_ECS_NUM_MEDIA_FRUS];
-> +
-> +typedef struct CXLDDR5ECSWriteAttrbs {
-> +    uint8_t ecs_log_cap;
-> +    uint16_t ecs_config;
-> +} QEMU_PACKED CXLDDR5ECSWriteAttrbs;
-> +
-> +typedef struct CXLDDR5ECSSetFeature {
-> +        CXLSetFeatureInHeader hdr;
-> +        CXLDDR5ECSWriteAttrbs feat_data[];
-> +} QEMU_PACKED QEMU_ALIGNED(16) CXLDDR5ECSSetFeature;
-> +
->  /* CXL r3.0 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
->  static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->                                               uint8_t *payload_in,
-> @@ -899,7 +936,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->          CXLSupportedFeatureHeader hdr;
->          CXLSupportedFeatureEntry feat_entries[];
->      } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_out = (void *)payload_out;
-> -    uint16_t index;
-> +    uint16_t count, index;
->      uint16_t entry, req_entries;
->      uint16_t feat_entries = 0;
->  
-> @@ -941,6 +978,35 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->              cxl_memdev_ps_feat_read_attrbs.scrub_flags =
->                                  CXL_MEMDEV_PS_ENABLE_DEFAULT;
->              break;
-> +        case  CXL_FEATURE_DDR5_ECS:
-> +            /* Fill supported feature entry for device DDR5 ECS control */
-> +            get_feats_out->feat_entries[entry] =
-> +                         (struct CXLSupportedFeatureEntry) {
-> +                .uuid = ddr5_ecs_uuid,
-> +                .feat_index = index,
-> +                .get_feat_size = CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                                    sizeof(struct CXLMemECSReadAttrbs),
-> +                .set_feat_size = CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                                    sizeof(CXLDDR5ECSWriteAttrbs),
-> +                .attrb_flags = 0x1,
-> +                .get_feat_version = CXL_DDR5_ECS_GET_FEATURE_VERSION,
-> +                .set_feat_version = CXL_DDR5_ECS_SET_FEATURE_VERSION,
-> +                .set_feat_effects = 0,
-> +            };
-> +            feat_entries++;
-> +            /* Set default value for DDR5 ECS read attributes */
-> +            for (count = 0; count < CXL_DDR5_ECS_NUM_MEDIA_FRUS; count++) {
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_log_cap =
-> +                                    CXL_DDR5_ECS_LOG_ENTRY_TYPE_DEFAULT;
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_cap =
-> +                                    CXL_DDR5_ECS_REALTIME_REPORT_CAP_DEFAULT;
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_config =
-> +                                    CXL_DDR5_ECS_THRESHOLD_COUNT_DEFAULT |
-> +                                    (CXL_DDR5_ECS_MODE_DEFAULT << 3);
-> +                /* Reserved */
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_flags = 0;
-> +            }
-> +            break;
->          default:
->              break;
->          }
-> @@ -992,6 +1058,19 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
->          memcpy(payload_out,
->                 &cxl_memdev_ps_feat_read_attrbs + get_feature->offset,
->                 bytes_to_copy);
-> +    } else if (qemu_uuid_is_equal(&get_feature->uuid, &ddr5_ecs_uuid)) {
-> +        if (get_feature->offset >=  CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                                sizeof(struct CXLMemECSReadAttrbs)) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        bytes_to_copy = CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                        sizeof(struct CXLMemECSReadAttrbs) -
-> +                                     get_feature->offset;
-> +        bytes_to_copy = (bytes_to_copy > get_feature->count) ?
-> +                                    get_feature->count : bytes_to_copy;
-> +        memcpy(payload_out,
-> +               &cxl_ddr5_ecs_feat_read_attrbs + get_feature->offset,
-> +               bytes_to_copy);
->      } else {
->          return CXL_MBOX_UNSUPPORTED;
->      }
-> @@ -1009,8 +1088,11 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->                                             size_t *len_out,
->                                             CXLCCI *cci)
->  {
-> +    uint16_t count;
->      CXLMemPatrolScrubWriteAttrbs *ps_write_attrbs;
-> +    CXLDDR5ECSWriteAttrbs *ecs_write_attrbs;
->      CXLMemPatrolScrubSetFeature *ps_set_feature;
-> +    CXLDDR5ECSSetFeature *ecs_set_feature;
->      CXLSetFeatureInHeader *hdr = (void *)payload_in;
->  
->      if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-> @@ -1028,6 +1110,22 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->          cxl_memdev_ps_feat_read_attrbs.scrub_flags &= ~0x1;
->          cxl_memdev_ps_feat_read_attrbs.scrub_flags |=
->                            ps_write_attrbs->scrub_flags & 0x1;
-> +    } else if (qemu_uuid_is_equal(&hdr->uuid,
-> +                                  &ddr5_ecs_uuid)) {
-> +        if (hdr->version != CXL_DDR5_ECS_SET_FEATURE_VERSION ||
-> +            (hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK) !=
-> +                               CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER) {
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-> +
-> +        ecs_set_feature = (void *)payload_in;
-> +        ecs_write_attrbs = ecs_set_feature->feat_data;
-> +        for (count = 0; count < CXL_DDR5_ECS_NUM_MEDIA_FRUS; count++) {
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_log_cap =
-> +                                  ecs_write_attrbs[count].ecs_log_cap;
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_config =
-> +                                  ecs_write_attrbs[count].ecs_config & 0x1F;
-> +        }
->      } else {
->          return CXL_MBOX_UNSUPPORTED;
->      }
-> -- 
-> 2.34.1
-> 
+> diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> index 977576ca14..52239a441f 100644
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -396,6 +396,14 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
+>       uint64_t cs_base;
+>       uint32_t flags, cflags;
+>   
+> +    /*
+> +     * By definition we've just finished a TB, so I/O is OK.
+> +     * Avoid the possibility of calling cpu_io_recompile() if
+> +     * a page table walk triggered by tb_lookup() calling
+> +     * probe_access_internal() happens to touch an MMIO device.
+> +     * The next TB, if we chain to it, will clear the flag again.
+> +     */
+> +    cpu->neg.can_do_io = true;
+
+Yes, this mirrors what is done in cpu_loop_exit(), and I can see how get_page_addr_code() 
+and the ptw within would require can_do_io set properly.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
