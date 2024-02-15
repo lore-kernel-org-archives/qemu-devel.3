@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 364B7C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA3BC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 09:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raYQR-0000Sj-CU; Thu, 15 Feb 2024 04:53:03 -0500
+	id 1raYRy-0002r5-3R; Thu, 15 Feb 2024 04:54:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raYQO-0000SC-2k; Thu, 15 Feb 2024 04:53:00 -0500
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ id 1raYRq-0002bQ-IU; Thu, 15 Feb 2024 04:54:32 -0500
+Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raYQM-0001A8-E5; Thu, 15 Feb 2024 04:52:59 -0500
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-7d2e15193bbso291905241.0; 
- Thu, 15 Feb 2024 01:52:57 -0800 (PST)
+ id 1raYRo-0001Qi-Ua; Thu, 15 Feb 2024 04:54:30 -0500
+Received: by mail-vs1-xe2f.google.com with SMTP id
+ ada2fe7eead31-467e4a04086so221874137.3; 
+ Thu, 15 Feb 2024 01:54:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707990777; x=1708595577; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707990866; x=1708595666; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0jJOhssCYRwnQoB4fN27AWOuxiZRSOe4ZUVa4Ngguqg=;
- b=b+bPzpjgfM/bC1XzZWcsZP5hWC97uaTY6mmKi5Jhm3bihlAK4XcyfM0Skw1tGgRLWs
- FT4Y3Yh9zmWH4mFV/IEDT0pUJMOnRaPxvmazp4IIwblS6RvmKZGh8OIdAg/7ueGGOoNe
- qm0HN4YApF63bus0ZODH/Ko9c0gdUkhV6gzbyZ86H53FHYQ6G732egeVWodDSON+UiSC
- iDXIA2IlLQYZtexd8DEq332jf5c+RK8nm09WakUVtmX77hxIloHA7jLs1r8wWAWcchZL
- vyWG8MoIhf2tUhFm3NvpLqxhBFoFpGf3+YH6JFQBGDNDV9SrZv+tCeFVVkFVeLz/POU9
- mwsw==
+ bh=UK3WtQ1qFUGeEMjDPu9dS0e8tiOTBzkH6/cmRz+LEO0=;
+ b=IEgKLTpyO2SrzDUHA1wVweYvdIBfkVzlcxr9DECfikg1u7nSdNbS3qIXIYGiSntvp8
+ qdRZfIChq18eKl+cUTI/cg753XnXyfSuo5ZPbTB7RP/Ml1r90C9wHn55jeX8+x5IMcLf
+ ZeMJN2HOw9jQMpZiTISHe09XXB/2d9lGfCpR6KFnC+UZEG7arWgwLplBeNK7OVg1H3+E
+ P+Vn9XuRX8bgtgDrTesVJCT1eu7trEg1KJkwAY/u6TSjPtOlmoSWG0XqGp7kkwWjYrlW
+ WRFOE6oFuk2wEPFpHypyVs5UFyrTLUP8Hr7Kp4yPObFcpyszMCFO3qLqt3dCU3d3a+Fd
+ cI3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707990777; x=1708595577;
+ d=1e100.net; s=20230601; t=1707990866; x=1708595666;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0jJOhssCYRwnQoB4fN27AWOuxiZRSOe4ZUVa4Ngguqg=;
- b=lFHbjNOVogG47fKfrJM07OncAJWWgaNYbaLZuPKPM6cmklCSLLrijjgsy0Q1YhQ4dz
- JqypgP5gbju6yPiG73I6zZUkB9tgNXAuiC3f7p8KDmCPdpcrypHjD9MTJQd7OdvYi148
- A5KYqbywU5vz2sBJIzpvm/oc5lkcveqygy8ny/KDGChJbMdAzTf0ELiMJtd/MNnr4gS4
- ANHVqD31Jj5wpwuPJvTamQC4E73AyGgGUgt2HpWbB5Ax8YxZ/KT6MUgJdi+2qMF+Kkwd
- hq6RoXk1aBzy4vIppnoOrrt2IgFeUB7wEhe6PsbDu7+7I9X7issH2bmP9fD3Zopao0Li
- Dsxw==
+ bh=UK3WtQ1qFUGeEMjDPu9dS0e8tiOTBzkH6/cmRz+LEO0=;
+ b=JXV5tk+BgL7TZAGReG+0Yg3q6qrKCn5o++yeqm4HMyHhLdmUP2SDXH0fEqxDXkzhPw
+ rP5m1oz2WPwyw7dp59UT7IBdewPEcrryPxVMWscfWId+R0iKmJ/0Mj0jywLkR8oJl12J
+ QxQFOrsKUyfwgMYeblOEdykhVmLLpTINkkv0kGtU/LTjAx7roHFocV43FmsdsJiOzxZ3
+ rA2HAYKtAAUz2Xj5sdDYMj7+B4wyC/6zsjzGsxZ0pOTnwx+MmpM2CgQx1Tte+k0hZGGG
+ ycILcn8A9C8Qv3NJ38a4tuy0Li1706Bp+6UXw1rMV2IFZweM77hYDRDlxMM4IBAxd9sk
+ eCAg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnsu8b4x9gfx7jUXZiRmCVkkk12VKjBY54U1l6w8+5ANa9g7S/CQ/d26ITPFpktS/fpuvA9IteB5S8qENiMHmQ7byUK+U=
-X-Gm-Message-State: AOJu0Yz9hr+RSRUpdoafd8LYp1zhPB0mmWsGHxauXidYd5YX+Ak412V9
- F5YHmKNVS/34iQawTua5wh7xYVJlmDXhF8zGEHO/Uol0+ecU/gOUVRuNfneObD+kmHqugiGroWG
- Pw7+Yfj3RtHBJn7m8Z15nIE9Yoi8=
-X-Google-Smtp-Source: AGHT+IGvN87ltAX7tgeTt8SfUtIOlzIgDnE+6+4Dm5m4viQ5ULSLk57H2DkuTvwZj3jd3nPP+fYww7Wmw2UoTnrgN0Y=
-X-Received: by 2002:a05:6102:304e:b0:46e:c5df:2b51 with SMTP id
- w14-20020a056102304e00b0046ec5df2b51mr1617900vsa.17.1707990777073; Thu, 15
- Feb 2024 01:52:57 -0800 (PST)
+ AJvYcCUfC7vCxbqMbdzC30n8Skupe0JEh1YWKM7S4s4URS/mSOyLgVKZUUjZoT60tc+5dTkC+nL3pLP4r266T3I7mSPYdMMOgmYD3n4Mu6UE/8BAQ9enROxVMj6jjbTiPw==
+X-Gm-Message-State: AOJu0YymY1OL/WiGrMby2szaSCU5RYR5vB4wvIjPS3hKfXXEei/qBwM6
+ DR0meT2/A41bmh9OqtLhnDO/hrMiTqlPSQLD5eN2nNeAINAtbXK0COCfznsx+pNG38PFCfFfxgX
+ hHKikUrtL5BDjb1V0QOdx1Q9+hgc=
+X-Google-Smtp-Source: AGHT+IEhKDmQXwAHkrVaV9pGWX9IxDEW8QdNh4HzmEJPa/CplRra83CklUkIZWSAWj8J6+WCo7mDzLdb3t/5VcB9DKc=
+X-Received: by 2002:a67:c598:0:b0:46e:c42c:e24a with SMTP id
+ h24-20020a67c598000000b0046ec42ce24amr937099vsk.14.1707990866323; Thu, 15 Feb
+ 2024 01:54:26 -0800 (PST)
 MIME-Version: 1.0
-References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240202152154.773253-1-dbarboza@ventanamicro.com>
+References: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
+In-Reply-To: <20240116010930.43433-1-jeeheng.sia@starfivetech.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 19:52:30 +1000
-Message-ID: <CAKmqyKN0UX_PK5Xiar-PdzJrV=S6+LaX8a3So8uahuqC04Wpvw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] riscv: named features riscv,isa, 'svade' rework
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com
+Date: Thu, 15 Feb 2024 19:54:00 +1000
+Message-ID: <CAKmqyKOsX+QYRsb9+DfeYC5hkzUakOC8M1h4JCssHQPu4zG8gw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] RISC-V: ACPI: Enable SPCR
+To: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, sunilvl@ventanamicro.com, 
+ palmer@dabbelt.com, alistair.francis@wdc.com, bin.meng@windriver.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,56 +94,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 3, 2024 at 1:23=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Tue, Jan 16, 2024 at 11:11=E2=80=AFAM Sia Jee Heng
+<jeeheng.sia@starfivetech.com> wrote:
 >
-> Hi,
+> This series focuses on enabling the Serial Port Console Redirection (SPCR=
+)
+> table for the RISC-V virt platform. Considering that ARM utilizes the sam=
+e
+> function, the initial patch involves migrating the build_spcr function to
+> common code. This consolidation ensures that RISC-V avoids duplicating th=
+e
+> function.
 >
-> In this new version we changed patch 3 as suggested by Alistair in v1
-> [1]. Instead of creating individual always-true bool for each named
-> feature, create a bool flag will be always 'true' to be used as config
-> offset for these named extensions.
+> The patch set is built upon Alistair's riscv-to-apply.next branch
 >
-> Patches based on riscv-to-apply.next.
+> Changes in v2:
+> - Renamed the build_spcr_rev2() function to spcr_setup().
+> - SPCR table version is passed from spcr_setup() to the common
+>   build_spcr() function.
+> - Added "Reviewed-by" from Daniel for patch 2.
+> - The term 'RFC' has been removed from this series, as the dependency cod=
+e
+>   from [1] has been merged into Alistair's riscv-to-apply.next branch. Th=
+e
+>   first series of this patch can be found at [2].
 >
-> Patches missing acks: patch 3.
+> [1] https://lore.kernel.org/qemu-devel/20231218150247.466427-1-sunilvl@ve=
+ntanamicro.com/
+> [2] https://lore.kernel.org/qemu-devel/20240105090608.5745-1-jeeheng.sia@=
+starfivetech.com/
 >
-> Changes from v2:
-> - patch 3:
->   - 'ext_always_enabled' bool added
->   - individual always-enabled named features bools removed
-> - v2 link: https://lore.kernel.org/qemu-riscv/20240126133101.61344-8-ajon=
-es@ventanamicro.com/
->
->
-> [1] https://lore.kernel.org/qemu-riscv/20240125195319.329181-1-dbarboza@v=
-entanamicro.com/
->
-> Andrew Jones (3):
->   target/riscv: Reset henvcfg to zero
->   target/riscv: Gate hardware A/D PTE bit updating
->   target/riscv: Promote svade to a normal extension
->
-> Daniel Henrique Barboza (3):
->   target/riscv/tcg: set 'mmu' with 'satp' in cpu_set_profile()
->   target/riscv: add riscv,isa to named features
->   target/riscv: add remaining named features
+> Sia Jee Heng (2):
+>   hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location
+>   hw/riscv/virt-acpi-build.c: Generate SPCR table
 
-Do you mind rebasing? I feel bad always asking, but I think it's your
-patches that cause the conflicts :P
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 >
->  target/riscv/cpu.c         | 70 +++++++++++++++++++++++++++-----------
->  target/riscv/cpu_cfg.h     | 12 +++++--
->  target/riscv/cpu_helper.c  | 19 ++++++++---
->  target/riscv/csr.c         |  2 +-
->  target/riscv/tcg/tcg-cpu.c | 34 +++++++++---------
->  5 files changed, 94 insertions(+), 43 deletions(-)
+>  hw/acpi/aml-build.c         | 51 ++++++++++++++++++++++++++++
+>  hw/arm/virt-acpi-build.c    | 68 +++++++++++++++----------------------
+>  hw/riscv/virt-acpi-build.c  | 39 +++++++++++++++++++++
+>  include/hw/acpi/acpi-defs.h | 33 ++++++++++++++++++
+>  include/hw/acpi/aml-build.h |  4 +++
+>  5 files changed, 154 insertions(+), 41 deletions(-)
 >
 > --
-> 2.43.0
+> 2.34.1
 >
 >
 
