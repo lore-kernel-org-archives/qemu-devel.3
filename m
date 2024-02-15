@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0183FC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:24:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027A5C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:26:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1racez-0000Fo-Ki; Thu, 15 Feb 2024 09:24:21 -0500
+	id 1rachB-0001pl-MY; Thu, 15 Feb 2024 09:26:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1racex-0000FI-Lz
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:24:19 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rach9-0001pW-W4
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:26:36 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1racew-0000kY-2q
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:24:19 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33cf7812777so509938f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:24:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1racgv-0001MN-MR
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:26:35 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a3d002bc6f7so88424966b.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:26:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708007056; x=1708611856; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BbodEF5CfyfyezAUM7C9Pjfur1AbgmXuVllEdfGP3ws=;
- b=SgK8+o3KUApX4BRt2Yy8mkR1pAv71w734KI3+Ea0xuycxOzvh+M0GQ1/5QGDJORqMz
- ENFSGbZu5kv1vjmZyZTCjHNxAYcS7CBa67V1vkC+5PByl/5hbHY0QVDvF5WRJPuKZsGK
- HSrklV8Z+abloVTP3aYs6/xao1b3gmWqmgJxfzihb8nSMdtdwEsdufHMhxpccRnB5qB9
- Zae7rtkRYJssDXlVXh/6WVMaVwhFwHaVcabgjZaTsXPr7eYQJVczbCXxjAdQ8wDllxYs
- q2BB4BJkarCOs24Cjm6To3+A/TBv/HG/7bdgI7WJcrd6Wlf+BBT7lCrVtoy538aNXICo
- E2oQ==
+ d=ventanamicro.com; s=google; t=1708007180; x=1708611980; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZYdDtSCMTkJNYvAd6MsMMttRe2dw3Q+k4CC2NfImhx0=;
+ b=OU0NbRSqWva/98NXoizVExlJpygYzN2T2TbCrtxupyrZab2apP6IXvMorZssmRbGRh
+ S0W9gSQZS59mb0V6+DIjA7ve5pK6LdIS5xAJPk5Rp1yMRYkH/v8RGKmH2IDlETaQTKKg
+ HNT57QPXuZmoH5dtab5TIlzWhF1qeSbg4S1Jxgv7Zxz0yqUW8+nJSUFvDOUN/hjC+1m7
+ egIbsVhFycJYqzpC9NEzFFhRqLTUy50wvctchx4RuuWenBPiurvw1pFzDuKBnFo0ucYk
+ hVl4+YJFO0KDiq7sJYwbAbbHUjeQfd3Oz2KDgmA0tDkzIgdeevEbDUQExzVeUS9cQ70i
+ ioHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708007056; x=1708611856;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BbodEF5CfyfyezAUM7C9Pjfur1AbgmXuVllEdfGP3ws=;
- b=J++dIJHObatRdCHnvl9MrgCbmKnVTadPdmyJjVjtpqaHq/fvGijGFVKVwS0d9JLNnn
- 84a3+xjnBJ92tXjAz3cFSDWzdz2MFXNCR5+57Zk4tbx0VFoyszy0pGjoHcq29bcRq1S0
- TzgycIDdBfwZU8w0wgv6nNfvDaILWOI/kQzjeMLMjYWkMhcPMeirMIigXxOMzXXBVwcf
- bSssxyjoFdeF2ATgFHRTCVIuXdch4PA9UwXr+eXht+wrWkNfAVhwYwaWYSiXL1HDSJFj
- rJOhhu2aYWoOD2+sTX2zmW2tu4QVWcaKv8oM6x9R0jhWYfZxuqijZKymY+cLn9YcMsOO
- QWkA==
-X-Gm-Message-State: AOJu0Yz3oTQh/SAn/M5IIGx/NLmXzeqaV8gIYBuRPHl05h/MuRp3BINx
- xg5hnWM1x2PvktRCeK8Kh/xMVVqv0KFvBOYRE1GHojj4L9f8zifvgmmzyOxTeV4=
-X-Google-Smtp-Source: AGHT+IGIbYETV9AbMpyGxDBqzj+Xmuzr40nossI1Z5oeeIPYWgm8+u9yXBhGS47unnE1lzxQjLnDcg==
-X-Received: by 2002:a5d:4fc1:0:b0:33b:d225:3640 with SMTP id
- h1-20020a5d4fc1000000b0033bd2253640mr1520980wrw.59.1708007056461; 
- Thu, 15 Feb 2024 06:24:16 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.193.50])
+ d=1e100.net; s=20230601; t=1708007180; x=1708611980;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZYdDtSCMTkJNYvAd6MsMMttRe2dw3Q+k4CC2NfImhx0=;
+ b=ZtQFz4LwZ3Q7I4scWIghMfFmgDj1yAy5x7/qkjhoxIDGUfx+xuiOnBLAAsBfWwCgqi
+ E5RZYbl6pwABsViQxaLwroyU2bFMBlGTUoDFN4/u5hZXsyOSYbOECiMDz2rlK1doKhc2
+ SpHR+lSeq1/evkf7+lu7uAG89XVcD0p3nL+VcO3rdkFQnHx3wGD2pwjIXGuIc8wokI7J
+ vSUZatW1LjQ6ATqkRBye6mjc49YoVM2v/6jlTm4Z+Avmd3moe5RI/zaQOpy6k/JUbxqp
+ u7jtVHjdLV3goLeo7wXg5I2mi1h5uVq2Y2FcaqlTvWCl63mqb3lI6+esU4U2wW6fX5g3
+ LRuw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8rxQpyptAGQqmr5wbaMWyJWnEjbpkYxXq4JwOVGb2qpI49xxJCRNZ8dw+zFxO5240VZPKjuaOwwZIJ3A0O724/UpjrZQ=
+X-Gm-Message-State: AOJu0Yw9rx7gRJSPs3GKOs5EdM8pqRuPosIbTfAgoAIhfSQ4lTkjy+s2
+ hsqxbrS95rC9WuGqQ+SIZrJqeqIbel3nVq7We5nQRvSoebaVzUuLdjql2gT8b74=
+X-Google-Smtp-Source: AGHT+IGJVFoYp+lWudsffHxUYb69f6QjU4yntF2LKwJ6+lGIpI4kiXsKmHVZ00YZ90UFN7UkBv8RJQ==
+X-Received: by 2002:a17:906:40d1:b0:a36:ff9f:4256 with SMTP id
+ a17-20020a17090640d100b00a36ff9f4256mr1525420ejk.54.1708007179815; 
+ Thu, 15 Feb 2024 06:26:19 -0800 (PST)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
  by smtp.gmail.com with ESMTPSA id
- n18-20020a5d67d2000000b0033cf0f5a01fsm1896020wrw.33.2024.02.15.06.24.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 06:24:16 -0800 (PST)
-Message-ID: <f9dd39e6-4ff1-4a05-944b-3cdd93fef82d@linaro.org>
-Date: Thu, 15 Feb 2024 15:24:14 +0100
+ hw12-20020a170907a0cc00b00a3d5d8ff745sm605393ejc.144.2024.02.15.06.26.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Feb 2024 06:26:19 -0800 (PST)
+Date: Thu, 15 Feb 2024 15:26:18 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Conor Dooley <conor@kernel.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Subject: Re: [PATCH v3 3/6] target/riscv: add remaining named features
+Message-ID: <20240215-55440212b4d6cde9feab5d94@orel>
+References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
+ <20240202152154.773253-4-dbarboza@ventanamicro.com>
+ <20240215-alkaline-saturday-275cd8e3aa39@spud>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/sparc/leon3: Have write_bootloader() take a void
- pointer argument
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Michael Tokarev <mjt@tls.msk.ru>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
- qemu-trivial@nongnu.org, Fabien Chouteau <chouteau@adacore.com>
-References: <20240215132824.67363-1-philmd@linaro.org>
- <20240215132824.67363-3-philmd@linaro.org>
- <CAFEAcA_we0joWBdAeyhRAAWaTF_gZSSUVJTNv=jQwpS+cUUuGg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_we0joWBdAeyhRAAWaTF_gZSSUVJTNv=jQwpS+cUUuGg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240215-alkaline-saturday-275cd8e3aa39@spud>
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/2/24 15:13, Peter Maydell wrote:
-> On Thu, 15 Feb 2024 at 13:28, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Directly use the void pointer argument returned
->> by memory_region_get_ram_ptr().
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/sparc/leon3.c | 9 +++------
->>   1 file changed, 3 insertions(+), 6 deletions(-)
-
-
->> -static void write_bootloader(uint8_t *base, hwaddr kernel_addr)
->> +static void write_bootloader(void *ptr, hwaddr kernel_addr)
->>   {
->> -    uint32_t *p = (uint32_t *) base;
->> +    uint32_t *p = (uint32_t *) ptr;
+On Thu, Feb 15, 2024 at 01:33:47PM +0000, Conor Dooley wrote:
+> On Fri, Feb 02, 2024 at 12:21:51PM -0300, Daniel Henrique Barboza wrote:
+> > The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
+> > until now, we were implying that they were available.
+> > 
+> > We can't do this anymore since named features also has a riscv,isa
+> > entry. Let's add them to riscv_cpu_named_features[].
+> > 
+> > Instead of adding one bool for each named feature that we'll always
+> > implement, i.e. can't be turned off, add a 'ext_always_enabled' bool in
+> > cpu->cfg. This bool will be set to 'true' in TCG accel init, and all
+> > named features will point to it. This also means that KVM won't see
+> > these features as always enable, which is our intention.
+> > 
+> > If any accelerator adds support to disable one of these features, we'll
+> > have to promote them to regular extensions and allow users to disable it
+> > via command line.
+> > 
+> > After this patch, here's the riscv,isa from a buildroot using the
+> > 'rva22s64' CPU:
 > 
-> I don't think you need the cast any more now ptr is void*.
-> (If you do, then our coding style doesn't put a space after
-> the cast.)
+> Why does an "rva22s64" cpu have "zicclsm" in it? Isn't zicclsm only
+> present in "u" profiles?
 
-Right, updated.
+"s" profiles mandate all the "u" profile mandatory extensions. For example
+6.2.2 says
 
-> Either way,
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+"""
+The RVA22S64 mandatory unprivileged extensions include all the mandatory unprivileged
+extensions in RVA22U64.
+"""
 
-Thank you!
+> 
+> >  # cat /proc/device-tree/cpus/cpu@0/riscv,isa
+> > rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
+> > zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
+> > zbs_zkt_ssccptr_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
+> 
+> I want to raise my frustration with the crock we've been given here by
+> RVI. Any "named feature" that just creates a name for something that
+> already is assumed is completely useless, and DT property that is used
+> to communicate it's presence cannot be used - instead the property needs
+> to be inverted - indicating the absence of that named feature.
+> 
+> Without the inversion, software that parses "riscv,isa" cannot make any
+> determination based on the absence of the property - it could be parsing
+> an old DT that does not have the property or it could be parsing the DT
+> of a system that does not support the extension.
+
+I'm guessing any platform which wants to advertise that it's compliant
+with a profile will update its hardware descriptions to ensure all the
+profile's mandatory extensions are presented. But, I think I understand
+your concern. If somebody is parsing the ISA string as way to determine
+if the platform is compliant with a profile, then they may get a false
+negative due to the ISA string missing a newly named feature. I'm not
+sure how much of a problem that will be in practice, though, since testing
+for profile compliance, just for the sake of it, doesn't seem very useful.
+Software really only needs to know which extensions are available and if
+it's an old feature that got newly named, then software likely already
+has another way of detecting it.
+
+> 
+> This is part of why I deprecated `riscv,isa`. It's the same problem as
+> with "zifencei" et al - does a system with `riscv,isa = "rv64imac"`
+> support fence.i?
+
+Yes, there's a handful of these messy things and the first profiles
+expose them since they're trying to define them. Fingers crossed that
+the next profiles won't have to name old features. FWIW, I at least
+don't see any "This is a new extension name for this feature" notes in
+the RVA23 profile.
+
+Thanks,
+drew
 
