@@ -4,69 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C85C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 21:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D92BC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 22:28:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rajgA-0007Rp-Bo; Thu, 15 Feb 2024 16:54:02 -0500
+	id 1rakCX-0007yo-Vu; Thu, 15 Feb 2024 17:27:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1rajg9-0007RH-9M; Thu, 15 Feb 2024 16:54:01 -0500
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1rajg7-0006sA-8y; Thu, 15 Feb 2024 16:54:01 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 2C9DACE1C7C;
- Thu, 15 Feb 2024 21:53:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E73C43390;
- Thu, 15 Feb 2024 21:53:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1708034033;
- bh=bSG+m3fb86fIU+19oOnI7aLdthWN/chLHMCrHBYvlX0=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=XB6EeI2HD1gG9ksFlTcyVsi+qVaYXsr78GJwu1AMKMPvYj6LeBRyYm1ZlF07XqJuN
- jZWvHXF1IdPtJih5n/duKLw2Dc1ahvo04EeN3FUceGl8CAFbYS2m+djEQMm60SozR9
- V1Kn99ualsc9QZQKAyRmVG7uK+lArTiKkoWTLvb5nTyk5824ynmr3yWv7yRxIxQUHc
- 1qOgzin6o7OMWN7k1tV8DqMW3lkXGUM6A76n8KMlL/J7aAqFT1OMRXOftdX/GdYrgy
- 67GT4l5KyZVt/Y0p+t8J70uSsNRNlwyepfGlMYVkuIgjlEguqegTNKEXNFbyVOY2c0
- BJsEA0mzLOYeg==
-Received: by mail-lf1-f44.google.com with SMTP id
- 2adb3069b0e04-511ac32fe38so2017570e87.1; 
- Thu, 15 Feb 2024 13:53:53 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCWE/4pDEsYFM4Zo64Gj3yTN2a0K44pqXOxIfbEL9TJPBFGebHKg25VgB3YndwwWDW0eHbU/j51JCYTvLvZa0zgY6F5BJGC1byPJK18/PobozfPQhSi5l7etaog=
-X-Gm-Message-State: AOJu0YzY98oobbWAsjxZS1fBdDnxKEf2e1746pVzGIQTkSG/20639RPF
- a8VEu+I5faV7j8olhqiWyapYHPfvi9nmIX1mcVeCHr4gtky3Hr6kk4KFpb6IKdvT6ZRvJTHNDoQ
- smE+yz122B1hX7NZZNJUqYND6/NE=
-X-Google-Smtp-Source: AGHT+IE/j5sw/3M1bEkVqOlozPWkUNxdgG1XI3y4sGlPKEm9dzHRdJvCmIqYMRg3y2PSvqDosVwqlHGXNEao31cS4R8=
-X-Received: by 2002:a05:6512:690:b0:512:8a57:c87a with SMTP id
- t16-20020a056512069000b005128a57c87amr2688075lfe.7.1708034031614; Thu, 15 Feb
- 2024 13:53:51 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rakCX-0007yb-7C
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:27:29 -0500
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rakCU-00041H-Kk
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:27:28 -0500
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-5ce9555d42eso1132927a12.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 14:27:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708036045; x=1708640845; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NW98hdEw/sMWsY0AmI/vKgALmUcYo83Mqgh3Pf6afYw=;
+ b=Tr3wLGuIC9DtASyXLhX9/uqdsyNVZYv7nahbKk8UkuBjQ2pPlPEKNVIKKY6+N4C0OX
+ jlxisHVhFzlPngosBMgresWBiLGdntpE+McTQCvvXN4Gx50/Y1+KmrW51cEeSoy5vQ7j
+ KnBZUpQEl67daJ0CLeVsyupyFm10iE/dpvP3PVQhl/pMIg72OY6P+IuCAf8YyJVlE9oX
+ Vm/bWe79PqMtFluf24s16LUoyRAJzlpBaKeSgGDB0kWo5A1arJqXb+1Tmo3e20y28nWX
+ nFxwU1YywTFNlA9dpfW3sjAmhYosXwVwoPBCvougftam4zlcF2zgmwgWnYabdZRLhKCF
+ h17w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708036045; x=1708640845;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NW98hdEw/sMWsY0AmI/vKgALmUcYo83Mqgh3Pf6afYw=;
+ b=RsadrkSgI0mvKpgkbSsToRKzFXe7fpDJbEtC9ch4EjYFvVFrgEF+9yYdngtE9i8iRZ
+ KnyBQPxagsZOAAKUU2CsRbz2WPdoDTFOC6kHxIhst8SeqUibeR6krcHTVq07jFPG8tg0
+ XVM7lAyt0h+OtQGdbbDjUK3tIFm7GKnPYIP4fqPuGMlDqkMrsHxH2NVxO5HaiOCtiVgt
+ FhEiZiRNB+B9g0A55BO/9CPE6wgTcRnleX0+AJYOVzQe37zxRDITyavAYgJ7WgmdMRWv
+ EZMJcTcJAsuptQf4OgjASdbRqVn+UpQ15/vmnv2JS7S6lHt9ZEYkIW62UFk+MNzEvP+f
+ AL2Q==
+X-Gm-Message-State: AOJu0Yw88nxkvsF9r3R+PtSeIvOVl5gxQQQc3Dwylti6SBxUaOu0rk+8
+ WHSMKAUNXkJsA5B9GMfQY7un+4NrFXkGbk8RjWDkO4oAMjR/X0QmjDDd01Cpca8=
+X-Google-Smtp-Source: AGHT+IEUFMZejuVXjNahOg+Z79CctXVmTu647N/wWH81vZSrjS3dIl+fUVV9/6I8xLoxiX7OBZTGpQ==
+X-Received: by 2002:a05:6a20:ce93:b0:19e:b925:f190 with SMTP id
+ if19-20020a056a20ce9300b0019eb925f190mr3120001pzb.19.1708036044749; 
+ Thu, 15 Feb 2024 14:27:24 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ d1-20020a056a0010c100b006e10f315ac7sm1827546pfu.80.2024.02.15.14.27.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Feb 2024 14:27:24 -0800 (PST)
+Message-ID: <2d211317-873e-43c6-a246-bd8bf84f048b@linaro.org>
+Date: Thu, 15 Feb 2024 12:27:16 -1000
 MIME-Version: 1.0
-References: <20240215160202.2803452-1-ardb+git@google.com>
- <e3a9fe96-8462-42d5-9e9d-b15dc304250c@linaro.org>
-In-Reply-To: <e3a9fe96-8462-42d5-9e9d-b15dc304250c@linaro.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Thu, 15 Feb 2024 22:53:40 +0100
-X-Gmail-Original-Message-ID: <CAMj1kXG4qfJWc0aWH-KMvL7DFRMyarxMHq+iyBBweTw8NCvdsw@mail.gmail.com>
-Message-ID: <CAMj1kXG4qfJWc0aWH-KMvL7DFRMyarxMHq+iyBBweTw8NCvdsw@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Advertise Cortex-A53 erratum #843419 fix via
- REVIDR
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Ard Biesheuvel <ardb+git@google.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peter.maydell@linaro.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=ardb@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.772,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/10] Optimize buffer_is_zero
+Content-Language: en-US
+To: Alexander Monakov <amonakov@ispras.ru>
+Cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
+References: <20240215081449.848220-1-richard.henderson@linaro.org>
+ <e1260284-cd5d-7a92-d8fc-21c0aface21c@ispras.ru>
+ <72d0e01e-ca54-4fc1-805c-b8de7175d64f@linaro.org>
+ <fa83e6cb-7270-0bf0-99f4-68d21dbdaa1c@ispras.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <fa83e6cb-7270-0bf0-99f4-68d21dbdaa1c@ispras.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,56 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Feb 2024 at 21:47, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 2/15/24 06:02, Ard Biesheuvel wrote:
-> > From: Ard Biesheuvel <ardb@kernel.org>
-> >
-> > The Cortex-A53 r0p4 revision that QEMU emulates is affected by a CatA
-> > erratum #843419 (i.e., the most severe), which requires workarounds in
-> > the toolchain as well as the OS.
-> >
-> > Since the emulation is obviously not affected in the same way, we can
-> > indicate this via REVIDR bit #8, which on r0p4 has the meaning that no
-> > workarounds for erratum #843419 are needed.
-> >
-> > Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-> > ---
-> >   target/arm/cpu64.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> > index 8e30a7993e..0f7a44a28f 100644
-> > --- a/target/arm/cpu64.c
-> > +++ b/target/arm/cpu64.c
-> > @@ -663,7 +663,7 @@ static void aarch64_a53_initfn(Object *obj)
-> >       set_feature(&cpu->env, ARM_FEATURE_PMU);
-> >       cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A53;
-> >       cpu->midr = 0x410fd034;
-> > -    cpu->revidr = 0x00000000;
-> > +    cpu->revidr = 0x00000100;
->
-> Is it worth indicating all three errata fixes (bits 7-9)?
->
+On 2/15/24 11:36, Alexander Monakov wrote:
+> 
+> On Thu, 15 Feb 2024, Richard Henderson wrote:
+> 
+>> On 2/14/24 22:57, Alexander Monakov wrote:
+>>>
+>>> On Wed, 14 Feb 2024, Richard Henderson wrote:
+>>>
+>>>> v3: https://patchew.org/QEMU/20240206204809.9859-1-amonakov@ispras.ru/
+>>>>
+>>>> Changes for v4:
+>>>>     - Keep separate >= 256 entry point, but only keep constant length
+>>>>       check inline.  This allows the indirect function call to be hidden
+>>>>       and optimized away when the pointer is constant.
+>>>
+>>> Sorry, I don't understand this. Most of the improvement (at least in our
+>>> testing) comes from inlining the byte checks, which often fail and eliminate
+>>> call overhead entirely. Moving them out-of-line seems to lose most of the
+>>> speedup the patchset was bringing, doesn't it? Is there some concern I am
+>>> not seeing?
+>>
+>> What is your benchmarking method?
+> 
+> Converting a 4.4 GiB Windows 10 image to qcow2. It was mentioned in v1 and v2,
+> are you saying they did not reach your inbox?
+> https://lore.kernel.org/qemu-devel/20231013155856.21475-1-mmromanov@ispras.ru/
+> https://lore.kernel.org/qemu-devel/20231027143704.7060-1-mmromanov@ispras.ru/
 
-835769 has a build time workaround in the linker which I don't think
-we even bother to enable in the kernel build. It is definitely not
-something the OS needs to worry about at runtime, so I don't think it
-matters.
+I'm saying that this is not a reproducible description of methodology.
 
-The other one is a performance related CatC without a workaround, so
-that one can be ignored as well.
+With master, so with neither of our changes:
 
-OTOH, our emulation is affected by neither so setting the REVIDR bits
-for them makes sense. But there is simply no software that I am aware
-of that will behave differently as a result (as opposed to the one for
-843419, which is read by the Linux kernel and triggers workaround
-logic in the module loader)
+I tried converting an 80G win7 image that I happened to have lying about, I see 
+buffer_zero_avx2 with only 3.03% perf overhead.  Then I tried truncating the image to 16G 
+to see if having the entire image in ram would help -- not yet, still only 3.4% perf 
+overhead.  Finally, I truncated the image to 4G and saw 2.9% overhead.
 
-> Anyway,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
+So... help be out here.  I would like to be able to see results that are at least vaguely 
+similar.
 
-Thanks.
+
+r~
 
