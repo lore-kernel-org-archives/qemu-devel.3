@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79298C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 22:41:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E43AC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 22:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rakPA-0005gB-37; Thu, 15 Feb 2024 17:40:32 -0500
+	id 1rakPU-0005mb-2P; Thu, 15 Feb 2024 17:40:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rakP8-0005fw-NN
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:40:30 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1rakPR-0005lr-K6
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:40:49 -0500
+Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rakP6-00064v-U7
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:40:30 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso727635ad.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 14:40:27 -0800 (PST)
+ id 1rakPP-0006Dz-N8
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:40:49 -0500
+Received: by mail-il1-x12e.google.com with SMTP id
+ e9e14a558f8ab-364efe11f6aso7218525ab.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 14:40:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708036826; x=1708641626; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6w64dO6hKqrROeNUBjWN2bBMCJB764mXYbbxFaUddJY=;
- b=eIRpQWE0rgoj2KvbRBbmskOiIFX8sPYUXMSjAswJR5jPhr7tM5rf0usnVxRMQtlnun
- YjR0FM0B8MvNGxAw+PhJ33LaXZ6QvnwKkGFE98ZnfDHreRLxRvoyH3c8tFSOhqWKYwpW
- BsqjvPcoBUbPE8pg1eC+Sh6LBg9MNjbYJIpEVtZvXV/yWChsAnC7Na9R79Ykremf25EJ
- SEti5lJA8en9aJ3+/isJbDVkeDpkll0Ifp/GeeJUfdzIeHDbfI1F08TxJnyBMBjfW9lc
- U0+egHGDsC6uKLXg2c6ubZ7wcUZFvqrJyhKz6+3lva4SEljkZzTFofrNJ9otY2NfEPeO
- Zb7g==
+ d=ventanamicro.com; s=google; t=1708036845; x=1708641645; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=37fZ+kvSrgmRxrOauqN5Kq+ehbdNsQUKhRww2rKUEUs=;
+ b=n+IdDF6Z39Fgup4nNU9ww+62L3PL8j4AGF3Mge6rSLTvB9Oq5gw4caQvJSSTBImDkA
+ Y4Bbaot0kT/ZNJSyquwqqT3Avh+yQlt6fILU7mwnJNzXHpDM5zQGJqkJv5OSBbRmz5yD
+ ZBJk7eqcn4MdMdJHJxU2uykNMYk5xEzg9nukSRSYdbCDvWX3neiGvVghOXoshSsJH5GR
+ zsShQ4lzXa0OEskgbQRaeEFdVyROEMwYAa+mnc1WDCFb9DDPDv0ZuBrDe0r7Qoa1P1zP
+ hxgtOhRFNXrCYMh0a0PhnhVf86ohpowNC6Wxb+tPK8FtKHH56taYRcyh4wZWtODkLCnZ
+ MQIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708036826; x=1708641626;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6w64dO6hKqrROeNUBjWN2bBMCJB764mXYbbxFaUddJY=;
- b=AcwWY26pRKEBVls9CoRTnD1ftyLzS3ERmV4YCaxnTDtTX0oxF63fzDEVI9VqmWj2vV
- OCJ1Cggcfy3mWNgHjAqAKqLqsDlIo5RsNJqslBzmQVmWgv48jkgBZEZKqojTdXervZmk
- yhgRGy43T1fuKMjdXY2L5nanW/I3b2ugkmbYiknU1JAj+iIZSv+FiPTZTM03SwkTAOvk
- AiEy7fRYlXhrC9t/ajjXsS1trp0AgqsUr3R4rZ8oU8W1BByesBa+Bg2P6TvLjTMyu5WJ
- QsFqkoq5tVVatLcvKT60HwhgaQqujLlHw0tynU1+iyAluP/QivB75E8djaHVNLMQOK3x
- mTVg==
-X-Gm-Message-State: AOJu0YzEDJwviQlm63mPz7v/XJQWw9dt9h33EBKp9t249QcsEEo/mBhw
- sdnU9a+bk5AZMl5ho+lGoEAznhtNqbjMyYEUsU4XK5oh0yG+6MUS6b65cFdkGwzQWL2EvDypnG6
- 8
-X-Google-Smtp-Source: AGHT+IHaeEEap3D4QOH3I+KGkg8hueY8PUQdonW88r23+IEa5KRnAtMzrkoGhfAPtPESXHkG8WpptQ==
-X-Received: by 2002:a17:902:b7c9:b0:1db:7052:2f39 with SMTP id
- v9-20020a170902b7c900b001db70522f39mr2616538plz.26.1708036826148; 
- Thu, 15 Feb 2024 14:40:26 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708036845; x=1708641645;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=37fZ+kvSrgmRxrOauqN5Kq+ehbdNsQUKhRww2rKUEUs=;
+ b=hI265HjcgEYjE1KLRMpkxyJeRCg/PkentjjyTsFFRIIUJQtYUnRKbCWIKfcB3v2Jzg
+ H6l6MxDIZFpgildGP93bJXYdBrm0NpPQgeWv7YWXWqVQBFlUHlijLAWrRvo+9pJ9FfrG
+ abIWdARFIfu8MbOxVwLxzkyF3egSYT6UabB4IdYzOhucz30+wLorXv5FpjMTWdzUBg3u
+ +SbHB0pvmBGCUupa8JGM2qIpTK/PS2FmEs04v32RxLxnEKyXU4XFu6edyDqAsG68z7sw
+ 1wjSJuAZbg+dnZPC9ekNsKZXBy/2pITksElzBzd10CCZmKU5t8VFUhKy0OUr1qk7hzzV
+ /7Yw==
+X-Gm-Message-State: AOJu0YyItpU69cX027lg7O/y/mKqWG/HRKY1llmCn34Ir9D0dWdueYJq
+ FJlhfrzwL47LQG36aCH/DfOTcw9tIvSNSomb6OiqdZr5QXcdd4UmCM7GKO7SQwx8TeBuOUW/wg3
+ I
+X-Google-Smtp-Source: AGHT+IGD65iL4k1paZbPg2f7bi3JnC/azY7+Pr4To4vjojjsf39wf4dEYMizyQ8nOfwEfbD6c0W0WQ==
+X-Received: by 2002:a92:c901:0:b0:363:dfc7:acc2 with SMTP id
+ t1-20020a92c901000000b00363dfc7acc2mr3585472ilp.12.1708036845103; 
+ Thu, 15 Feb 2024 14:40:45 -0800 (PST)
 Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- j2-20020a170902758200b001db40866e25sm1733679pll.308.2024.02.15.14.40.23
+ j2-20020a170902758200b001db40866e25sm1733679pll.308.2024.02.15.14.40.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 14:40:25 -0800 (PST)
+ Thu, 15 Feb 2024 14:40:44 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Andrew Jones <ajones@ventanamicro.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v4 0/6] riscv: named features riscv,isa, 'svade' rework
-Date: Thu, 15 Feb 2024 19:39:49 -0300
-Message-ID: <20240215223955.969568-1-dbarboza@ventanamicro.com>
+Subject: [PATCH v4 6/6] target/riscv: Promote svade to a normal extension
+Date: Thu, 15 Feb 2024 19:39:55 -0300
+Message-ID: <20240215223955.969568-7-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240215223955.969568-1-dbarboza@ventanamicro.com>
+References: <20240215223955.969568-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-il1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,34 +96,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Andrew Jones <ajones@ventanamicro.com>
 
-This new version is rebased with alistair/riscv-to-apply.next and with
-more acks added. 
+Named features are extensions which don't make sense for users to
+control and are therefore not exposed on the command line. However,
+svade is an extension which makes sense for users to control, so treat
+it like a "normal" extension. The default is false, even for the max
+cpu type, since QEMU has always implemented hardware A/D PTE bit
+updating, so users must opt into svade (or get it from a CPU type
+which enables it by default).
 
-No other changes made.
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.c         | 9 ++-------
+ target/riscv/tcg/tcg-cpu.c | 6 ++++++
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
-Changes from v3:
-- rebased with alistair/riscv-to-apply.next @ c93c42a273
-- v3 link: https://lore.kernel.org/qemu-riscv/20240202152154.773253-1-dbarboza@ventanamicro.com/
-
-Andrew Jones (3):
-  target/riscv: Reset henvcfg to zero
-  target/riscv: Gate hardware A/D PTE bit updating
-  target/riscv: Promote svade to a normal extension
-
-Daniel Henrique Barboza (3):
-  target/riscv/tcg: set 'mmu' with 'satp' in cpu_set_profile()
-  target/riscv: add riscv,isa to named features
-  target/riscv: add remaining named features
-
- target/riscv/cpu.c         | 70 +++++++++++++++++++++++++++-----------
- target/riscv/cpu_cfg.h     | 12 +++++--
- target/riscv/cpu_helper.c  | 19 ++++++++---
- target/riscv/csr.c         |  2 +-
- target/riscv/tcg/tcg-cpu.c | 34 +++++++++---------
- 5 files changed, 94 insertions(+), 43 deletions(-)
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 7598daa162..fd0c7efdda 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1474,6 +1474,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+ 
+     MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
+     MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
++    MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
+     MULTI_EXT_CFG_BOOL("svadu", ext_svadu, true),
+     MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
+     MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
+@@ -1589,7 +1590,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+  * and priv_ver like regular extensions.
+  */
+ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+-    MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+ 
+     /*
+@@ -2237,8 +2237,6 @@ static RISCVCPUProfile RVA22U64 = {
+  * Other named features that we already implement: Sstvecd, Sstvala,
+  * Sscounterenw
+  *
+- * Named features that we need to enable: svade
+- *
+  * The remaining features/extensions comes from RVA22U64.
+  */
+ static RISCVCPUProfile RVA22S64 = {
+@@ -2250,10 +2248,7 @@ static RISCVCPUProfile RVA22S64 = {
+     .ext_offsets = {
+         /* rva22s64 exts */
+         CPU_CFG_OFFSET(ext_zifencei), CPU_CFG_OFFSET(ext_svpbmt),
+-        CPU_CFG_OFFSET(ext_svinval),
+-
+-        /* rva22s64 named features */
+-        CPU_CFG_OFFSET(ext_svade),
++        CPU_CFG_OFFSET(ext_svinval), CPU_CFG_OFFSET(ext_svade),
+ 
+         RISCV_PROFILE_EXT_LIST_END
+     }
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index ccfb7b2dd3..ab6db817db 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1282,6 +1282,12 @@ static void riscv_init_max_cpu_extensions(Object *obj)
+         isa_ext_update_enabled(cpu, prop->offset, true);
+     }
+ 
++    /*
++     * Some extensions can't be added without backward compatibilty concerns.
++     * Disable those, the user can still opt in to them on the command line.
++     */
++    cpu->cfg.ext_svade = false;
++
+     /* set vector version */
+     env->vext_ver = VEXT_VERSION_1_00_0;
+ 
 -- 
 2.43.0
 
