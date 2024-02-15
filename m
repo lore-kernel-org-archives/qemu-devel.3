@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B13CC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E64C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 17:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rafea-00085r-KF; Thu, 15 Feb 2024 12:36:10 -0500
+	id 1rafeD-0007uw-Iu; Thu, 15 Feb 2024 12:35:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeM-0007zC-9A
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:54 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1rafeB-0007uP-Rn
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:43 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rafeE-0003wg-Nm
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:53 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33b66a7f859so378717f8f.3
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:46 -0800 (PST)
+ id 1rafe9-0003tW-OQ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 12:35:43 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-410ca9e851bso9059285e9.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 09:35:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708018545; x=1708623345; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HW07AFrfZUs7Nj6WN1tMAA+kc9ODE+bXQJgc6YEpBF0=;
- b=jocCiTNVDq0CnipRB9wSk9nA/3I1GwqOAOCxJTnE8fhhdUrK5OntzywvSkRLpeL2Vz
- 4oJ4yFczEKxTqy50y4PUylbKRHC41kZcH/Kyn/ZeZdJh+G/nbv4dlvvZEgvVskQ7R64+
- NYB0qs7gan8VeXITn2gmuZGECgesDsCoQKlretIIoPkp++69iTzSbWbUH4bCx7IK/Ga6
- fnPqYayXWyU1TUw00gP72g62Aj8a8vZPP4Fitsnl3V3J1cBxQUg1HohyRjhLiRUL1PsY
- LD/MfdEfcvyHIyuQEQBKzv0uZnJjfTKm7yv9U/q5Zr1DIwncJInBpb6FEF1zAFlk+gnP
- H5Gw==
+ d=linaro.org; s=google; t=1708018540; x=1708623340; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=RexkiDntXUclc+ODrTpB8ETswJdghZou3AXsBu6yv+A=;
+ b=juKtWhss0E+MPglTS7xfkMH4jaHQ+oINFDIIcZHhzRLcMvKipHKr/djLwNRbnuMzjm
+ BYA8iJj28bKX++n8wknZqwgVc5KJai/EE2hpsAj+stp0ecnma8omkyuzw6L4BJT2BXuY
+ 3IWOLSlujno06TMv9tb43LfOIRA9m444QfYfYvfSP+hg/vozBzX1eMs9qnVPiLhDlFd4
+ q8iZJ5ZiFL2p885o6wNsILMzh5Ea5gpeTNuXawbpeyOmwzDi7UoKi1wi5YscS8iDZZ8d
+ 9mYNsbFYJWFbDb9VeC3Av6cM7MtLRRtDnGGKJ+LJq8tcEg3cs8+Vq1589IwasadV/3SF
+ yUEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708018545; x=1708623345;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HW07AFrfZUs7Nj6WN1tMAA+kc9ODE+bXQJgc6YEpBF0=;
- b=A7JAuQjFmGJyHE0rTuOSDW0ug7M9VYAS8vNXZDgV22zV8sDVvDpaLrkyO/zLTB4cp/
- WRn0INfd94UpJNXlCKrON6mlLm0HBt/vXMti46Ci8x2tC56mG/u/Q84hytiETmqt4qZ/
- xdFHl3OjV3fUJxSe3cPe7IdljDaYF430tum8xGETdQgOJVCZbN2lS9p2pxqurX8XFS7u
- SKTu/dAGoJOdh2FrAyRT/vBOTSZlAZjvX9lGoN4sBktZuPpO2oVWGHfQFi13PbVNBmg9
- TP++9ViYFZMD+mrQS/u/xB6vQY4vq9+MkcGuFqrkXRSwqWE65RQCJP89kuH4xwTIcJkt
- XglQ==
-X-Gm-Message-State: AOJu0YygrOZOxXSOiR+MbBgDJwiUsmpXWA/WrBJkub6VZ3pLV9edq0gV
- kkMWQjGR/82BMGi9TU6H71aefS7t0IBMcIDigf9T6lkedyUabA8HlomldiOvRQNFCzDwUbVdz1b
- B
-X-Google-Smtp-Source: AGHT+IE1b+RjQQDakzvYZOtHKuV922c8o0oxC47t2oDmy07Tcw2UGkMUHFXVWLqPoqRfv+W7dsBKBQ==
-X-Received: by 2002:a5d:4acc:0:b0:33c:e2b0:600e with SMTP id
- y12-20020a5d4acc000000b0033ce2b0600emr2082951wrs.32.1708018545174; 
- Thu, 15 Feb 2024 09:35:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708018540; x=1708623340;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RexkiDntXUclc+ODrTpB8ETswJdghZou3AXsBu6yv+A=;
+ b=PBim1nJa+0+HQE8yGMe+96dtSG3Hq9TkR1MtlU6Uj4MJkWV4bDmlljtTC+gAu/0lHe
+ 1hliI9RaNgGqq3teCnBKwrV7EGy7ZMw/+jn2gG8tAI8glBonxOUD5vWc3EBYYhHu8OtD
+ gl8xv0RqZB+SGBtw06D5Uk/4ayT/JhRyH4NLZdLlC+2W7MpkcB7D7vfJCnWp1WYpSVOi
+ UQgVd+bJkSKQTfwjL+6uVKKLZ4EhPX5wsuVs25DJkclE2ZdRnBU9zvWx/+DN62xV80Oe
+ 68QBEigG8gTcwiSk9agPb3EF9eeIS7mocLypgmPbg7EDP0YRo6cCb4qecE9Vw4WzNOEf
+ qH3A==
+X-Gm-Message-State: AOJu0YzCHwZGCr3u3uuO/s/fmI6rEpfLIBxAsnxEX+4Fz0KpuhRxZp6m
+ ke53I7smK6pnezHBJ+UapQqBeI6H7gU1jbTpxCq5QqZAkXISW37WMd5R0mLXQzdSPWYUI+h5XKO
+ Y
+X-Google-Smtp-Source: AGHT+IG3XLhD27PtOby3FDTkllCT7qAJfM1gWyq4jPgQaStNlfmYailMVsFjVG+XCqhhCCfVerBJSA==
+X-Received: by 2002:a5d:40d2:0:b0:33b:7353:b632 with SMTP id
+ b18-20020a5d40d2000000b0033b7353b632mr1984551wrq.50.1708018539848; 
+ Thu, 15 Feb 2024 09:35:39 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.44
+ q16-20020adfea10000000b0033cfa00e497sm2384129wrm.64.2024.02.15.09.35.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Feb 2024 09:35:44 -0800 (PST)
+ Thu, 15 Feb 2024 09:35:39 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/35] tests/qtest/bios-tables-tests: Update virt golden
- reference
-Date: Thu, 15 Feb 2024 17:35:16 +0000
-Message-Id: <20240215173538.2430599-14-peter.maydell@linaro.org>
+Subject: [PULL 00/35] target-arm queue
+Date: Thu, 15 Feb 2024 17:35:03 +0000
+Message-Id: <20240215173538.2430599-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240215173538.2430599-1-peter.maydell@linaro.org>
-References: <20240215173538.2430599-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,225 +91,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the virt golden reference files to say that the FACP is ACPI
-v6.3, and the GTDT table is a revision 3 table with space for the
-virtual EL2 timer.
+The following changes since commit 5767815218efd3cbfd409505ed824d5f356044ae:
 
-Diffs from iasl:
+  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2024-02-14 15:45:52 +0000)
 
-@@ -1,32 +1,32 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/virt/FACP, Mon Jan 22 13:48:40 2024
-+ * Disassembly of /tmp/aml-W8RZH2, Mon Jan 22 13:48:40 2024
-  *
-  * ACPI Data Table [FACP]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
+are available in the Git repository at:
 
- [000h 0000   4]                    Signature : "FACP"    [Fixed ACPI Description Table (FADT)]
- [004h 0004   4]                 Table Length : 00000114
- [008h 0008   1]                     Revision : 06
--[009h 0009   1]                     Checksum : 15
-+[009h 0009   1]                     Checksum : 12
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240215
 
- [024h 0036   4]                 FACS Address : 00000000
- [028h 0040   4]                 DSDT Address : 00000000
- [02Ch 0044   1]                        Model : 00
- [02Dh 0045   1]                   PM Profile : 00 [Unspecified]
- [02Eh 0046   2]                SCI Interrupt : 0000
- [030h 0048   4]             SMI Command Port : 00000000
- [034h 0052   1]            ACPI Enable Value : 00
- [035h 0053   1]           ACPI Disable Value : 00
- [036h 0054   1]               S4BIOS Command : 00
- [037h 0055   1]              P-State Control : 00
-@@ -86,33 +86,33 @@
-      Use APIC Physical Destination Mode (V4) : 0
-                        Hardware Reduced (V5) : 1
-                       Low Power S0 Idle (V5) : 0
+for you to fetch changes up to f780e63fe731b058fe52d43653600d8729a1b5f2:
 
- [074h 0116  12]               Reset Register : [Generic Address Structure]
- [074h 0116   1]                     Space ID : 00 [SystemMemory]
- [075h 0117   1]                    Bit Width : 00
- [076h 0118   1]                   Bit Offset : 00
- [077h 0119   1]         Encoded Access Width : 00 [Undefined/Legacy]
- [078h 0120   8]                      Address : 0000000000000000
+  docs: Add documentation for the mps3-an536 board (2024-02-15 14:32:39 +0000)
 
- [080h 0128   1]         Value to cause reset : 00
- [081h 0129   2]    ARM Flags (decoded below) : 0003
-                               PSCI Compliant : 1
-                        Must use HVC for PSCI : 1
+----------------------------------------------------------------
+target-arm queue:
+ * hw/arm/xilinx_zynq: Wire FIQ between CPU <> GIC
+ * linux-user/aarch64: Choose SYNC as the preferred MTE mode
+ * Fix some errors in SVE/SME handling of MTE tags
+ * hw/pci-host/raven.c: Mark raven_io_ops as implementing unaligned accesses
+ * hw/block/tc58128: Don't emit deprecation warning under qtest
+ * tests/qtest: Fix handling of npcm7xx and GMAC tests
+ * hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
+ * tests/qtest/npcm7xx_emc-test: Connect all NICs to a backend
+ * Don't assert on vmload/vmsave of M-profile CPUs
+ * hw/arm/smmuv3: add support for stage 1 access fault
+ * hw/arm/stellaris: QOM cleanups
+ * Use new CBAR encoding for all v8 CPUs, not all aarch64 CPUs
+ * Improve Cortex_R52 IMPDEF sysreg modelling
+ * Allow access to SPSR_hyp from hyp mode
+ * New board model mps3-an536 (Cortex-R52)
 
--[083h 0131   1]          FADT Minor Revision : 00
-+[083h 0131   1]          FADT Minor Revision : 03
- [084h 0132   8]                 FACS Address : 0000000000000000
- [08Ch 0140   8]                 DSDT Address : 0000000000000000
- [094h 0148  12]             PM1A Event Block : [Generic Address Structure]
- [094h 0148   1]                     Space ID : 00 [SystemMemory]
- [095h 0149   1]                    Bit Width : 00
- [096h 0150   1]                   Bit Offset : 00
- [097h 0151   1]         Encoded Access Width : 00 [Undefined/Legacy]
- [098h 0152   8]                      Address : 0000000000000000
+----------------------------------------------------------------
+Luc Michel (1):
+      hw/arm/smmuv3: add support for stage 1 access fault
 
- [0A0h 0160  12]             PM1B Event Block : [Generic Address Structure]
- [0A0h 0160   1]                     Space ID : 00 [SystemMemory]
- [0A1h 0161   1]                    Bit Width : 00
- [0A2h 0162   1]                   Bit Offset : 00
- [0A3h 0163   1]         Encoded Access Width : 00 [Undefined/Legacy]
- [0A4h 0164   8]                      Address : 0000000000000000
+Nabih Estefan (1):
+      tests/qtest: Fix GMAC test to run on a machine in upstream QEMU
 
-@@ -164,34 +164,34 @@
- [0F5h 0245   1]                    Bit Width : 00
- [0F6h 0246   1]                   Bit Offset : 00
- [0F7h 0247   1]         Encoded Access Width : 00 [Undefined/Legacy]
- [0F8h 0248   8]                      Address : 0000000000000000
+Peter Maydell (22):
+      hw/pci-host/raven.c: Mark raven_io_ops as implementing unaligned accesses
+      hw/block/tc58128: Don't emit deprecation warning under qtest
+      tests/qtest/meson.build: Don't include qtests_npcm7xx in qtests_aarch64
+      tests/qtest/bios-tables-test: Allow changes to virt GTDT
+      hw/arm/virt: Wire up non-secure EL2 virtual timer IRQ
+      tests/qtest/bios-tables-tests: Update virt golden reference
+      hw/arm/npcm7xx: Call qemu_configure_nic_device() for GMAC modules
+      tests/qtest/npcm7xx_emc-test: Connect all NICs to a backend
+      target/arm: Don't get MDCR_EL2 in pmu_counter_enabled() before checking ARM_FEATURE_PMU
+      target/arm: Use new CBAR encoding for all v8 CPUs, not all aarch64 CPUs
+      target/arm: The Cortex-R52 has a read-only CBAR
+      target/arm: Add Cortex-R52 IMPDEF sysregs
+      target/arm: Allow access to SPSR_hyp from hyp mode
+      hw/misc/mps2-scc: Fix condition for CFG3 register
+      hw/misc/mps2-scc: Factor out which-board conditionals
+      hw/misc/mps2-scc: Make changes needed for AN536 FPGA image
+      hw/arm/mps3r: Initial skeleton for mps3-an536 board
+      hw/arm/mps3r: Add CPUs, GIC, and per-CPU RAM
+      hw/arm/mps3r: Add UARTs
+      hw/arm/mps3r: Add GPIO, watchdog, dual-timer, I2C devices
+      hw/arm/mps3r: Add remaining devices
+      docs: Add documentation for the mps3-an536 board
 
- [100h 0256  12]        Sleep Status Register : [Generic Address Structure]
- [100h 0256   1]                     Space ID : 00 [SystemMemory]
- [101h 0257   1]                    Bit Width : 00
- [102h 0258   1]                   Bit Offset : 00
- [103h 0259   1]         Encoded Access Width : 00 [Undefined/Legacy]
- [104h 0260   8]                      Address : 0000000000000000
+Philippe Mathieu-Daudé (5):
+      hw/arm/xilinx_zynq: Wire FIQ between CPU <> GIC
+      hw/arm/stellaris: Convert ADC controller to Resettable interface
+      hw/arm/stellaris: Convert I2C controller to Resettable interface
+      hw/arm/stellaris: Add missing QOM 'machine' parent
+      hw/arm/stellaris: Add missing QOM 'SoC' parent
 
- [10Ch 0268   8]                Hypervisor ID : 00000000554D4551
+Richard Henderson (6):
+      linux-user/aarch64: Choose SYNC as the preferred MTE mode
+      target/arm: Fix nregs computation in do_{ld,st}_zpa
+      target/arm: Adjust and validate mtedesc sizem1
+      target/arm: Split out make_svemte_desc
+      target/arm: Handle mte in do_ldrq, do_ldro
+      target/arm: Fix SVE/SME gross MTE suppression checks
 
- Raw Table Data: Length 276 (0x114)
-
--    0000: 46 41 43 50 14 01 00 00 06 15 42 4F 43 48 53 20  // FACP......BOCHS
-+    0000: 46 41 43 50 14 01 00 00 06 12 42 4F 43 48 53 20  // FACP......BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
-     0020: 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0070: 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
--    0080: 00 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-+    0080: 00 03 00 03 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     00A0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     00B0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     00C0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     00D0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     00E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     00F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-     0100: 00 00 00 00 00 00 00 00 00 00 00 00 51 45 4D 55  // ............QEMU
-     0110: 00 00 00 00                                      // ....
-
-@@ -1,32 +1,32 @@
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/virt/GTDT, Mon Jan 22 13:48:40 2024
-+ * Disassembly of /tmp/aml-XDSZH2, Mon Jan 22 13:48:40 2024
-  *
-  * ACPI Data Table [GTDT]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
-
- [000h 0000   4]                    Signature : "GTDT"    [Generic Timer Description Table]
--[004h 0004   4]                 Table Length : 00000060
--[008h 0008   1]                     Revision : 02
--[009h 0009   1]                     Checksum : 9C
-+[004h 0004   4]                 Table Length : 00000068
-+[008h 0008   1]                     Revision : 03
-+[009h 0009   1]                     Checksum : 93
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
-
- [024h 0036   8]        Counter Block Address : FFFFFFFFFFFFFFFF
- [02Ch 0044   4]                     Reserved : 00000000
-
- [030h 0048   4]         Secure EL1 Interrupt : 0000001D
- [034h 0052   4]    EL1 Flags (decoded below) : 00000000
-                                 Trigger Mode : 0
-                                     Polarity : 0
-                                    Always On : 0
-
- [038h 0056   4]     Non-Secure EL1 Interrupt : 0000001E
-@@ -37,25 +37,28 @@
-
- [040h 0064   4]      Virtual Timer Interrupt : 0000001B
- [044h 0068   4]     VT Flags (decoded below) : 00000000
-                                 Trigger Mode : 0
-                                     Polarity : 0
-                                    Always On : 0
-
- [048h 0072   4]     Non-Secure EL2 Interrupt : 0000001A
- [04Ch 0076   4]   NEL2 Flags (decoded below) : 00000000
-                                 Trigger Mode : 0
-                                     Polarity : 0
-                                    Always On : 0
- [050h 0080   8]   Counter Read Block Address : FFFFFFFFFFFFFFFF
-
- [058h 0088   4]         Platform Timer Count : 00000000
- [05Ch 0092   4]        Platform Timer Offset : 00000000
-+[060h 0096   4]       Virtual EL2 Timer GSIV : 00000000
-+[064h 0100   4]      Virtual EL2 Timer Flags : 00000000
-
--Raw Table Data: Length 96 (0x60)
-+Raw Table Data: Length 104 (0x68)
-
--    0000: 47 54 44 54 60 00 00 00 02 9C 42 4F 43 48 53 20  // GTDT`.....BOCHS
-+    0000: 47 54 44 54 68 00 00 00 03 93 42 4F 43 48 53 20  // GTDTh.....BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
-     0020: 01 00 00 00 FF FF FF FF FF FF FF FF 00 00 00 00  // ................
-     0030: 1D 00 00 00 00 00 00 00 1E 00 00 00 04 00 00 00  // ................
-     0040: 1B 00 00 00 00 00 00 00 1A 00 00 00 00 00 00 00  // ................
-     0050: FF FF FF FF FF FF FF FF 00 00 00 00 00 00 00 00  // ................
-+    0060: 00 00 00 00 00 00 00 00                          // ........
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Message-id: 20240122143537.233498-4-peter.maydell@linaro.org
----
- tests/qtest/bios-tables-test-allowed-diff.h |   2 --
- tests/data/acpi/virt/FACP                   | Bin 276 -> 276 bytes
- tests/data/acpi/virt/GTDT                   | Bin 96 -> 104 bytes
- 3 files changed, 2 deletions(-)
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 7a6d4f80214..dfb8523c8bf 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,3 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/virt/FACP",
--"tests/data/acpi/virt/GTDT",
-diff --git a/tests/data/acpi/virt/FACP b/tests/data/acpi/virt/FACP
-index ac05c35a69451519bd1152c54d1e741af36390f5..da0c3644cc4536a0a0141603ed470bd11492b678 100644
-GIT binary patch
-delta 25
-gcmbQjG=+)F&CxkPgpq-PO=u!l<;2F$$vli407<0<)c^nh
-
-delta 28
-kcmbQjG=+)F&CxkPgpq-PO>`nx<-|!<6Akz$^DuG%0AAS!ssI20
-
-diff --git a/tests/data/acpi/virt/GTDT b/tests/data/acpi/virt/GTDT
-index 6f8cb9b8f30b55f4c93fe515982621e3db50feb2..7f330e04d144f9cc22eef06127ecc19abf9e8009 100644
-GIT binary patch
-delta 25
-bcmYeu;BpUf3CUn!U|^m+kt>V?$N&QXMtB4L
-
-delta 16
-Xcmc~u;BpUf2}xjJU|^avkt+-UB60)u
-
--- 
-2.34.1
-
+ MAINTAINERS                             |   3 +-
+ docs/system/arm/mps2.rst                |  37 +-
+ configs/devices/arm-softmmu/default.mak |   1 +
+ hw/arm/smmuv3-internal.h                |   1 +
+ include/hw/arm/smmu-common.h            |   1 +
+ include/hw/arm/virt.h                   |   2 +
+ include/hw/misc/mps2-scc.h              |   1 +
+ linux-user/aarch64/target_prctl.h       |  29 +-
+ target/arm/internals.h                  |   2 +-
+ target/arm/tcg/translate-a64.h          |   2 +
+ hw/arm/mps3r.c                          | 640 ++++++++++++++++++++++++++++++++
+ hw/arm/npcm7xx.c                        |   1 +
+ hw/arm/smmu-common.c                    |  11 +
+ hw/arm/smmuv3.c                         |   1 +
+ hw/arm/stellaris.c                      |  47 ++-
+ hw/arm/virt-acpi-build.c                |  20 +-
+ hw/arm/virt.c                           |  60 ++-
+ hw/arm/xilinx_zynq.c                    |   2 +
+ hw/block/tc58128.c                      |   4 +-
+ hw/misc/mps2-scc.c                      | 138 ++++++-
+ hw/pci-host/raven.c                     |   1 +
+ target/arm/helper.c                     |  14 +-
+ target/arm/tcg/cpu32.c                  | 109 ++++++
+ target/arm/tcg/op_helper.c              |  43 ++-
+ target/arm/tcg/sme_helper.c             |   8 +-
+ target/arm/tcg/sve_helper.c             |  12 +-
+ target/arm/tcg/translate-sme.c          |  15 +-
+ target/arm/tcg/translate-sve.c          |  83 +++--
+ target/arm/tcg/translate.c              |  19 +-
+ tests/qtest/npcm7xx_emc-test.c          |   5 +-
+ tests/qtest/npcm_gmac-test.c            |  84 +----
+ hw/arm/Kconfig                          |   5 +
+ hw/arm/meson.build                      |   1 +
+ tests/data/acpi/virt/FACP               | Bin 276 -> 276 bytes
+ tests/data/acpi/virt/GTDT               | Bin 96 -> 104 bytes
+ tests/qtest/meson.build                 |   4 +-
+ 36 files changed, 1184 insertions(+), 222 deletions(-)
+ create mode 100644 hw/arm/mps3r.c
 
