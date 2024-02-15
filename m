@@ -4,77 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE62C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1739CC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 08:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raXLQ-00019h-W7; Thu, 15 Feb 2024 03:43:49 -0500
+	id 1raXLM-00018O-5p; Thu, 15 Feb 2024 03:43:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1raXLG-00017S-GD
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:43:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
+ id 1raXLB-00013w-Db
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:43:34 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1raXLD-0001Cs-Fe
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:43:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1707986614;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WhfD4H1lq1cIUvrRfuqhNN4ApQ6HAgwLpt5SyBkOdxA=;
- b=EX149tx9r2DDkopDJdw1kZvUxjhWhjsKpUsdNS2qGe3cuWdCfSyOCsmRT22Bqxf16kco8q
- uaITwBF7ssuM0kmfUwAvTgko3hVptoFbTG2+KpAouUffRqQ5+uBOXWxoGRXIw5YR1eoa46
- fWK5lKCbFNbBm5g0OkiCrMZp89NRJgM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-Vt2O73IoNaOIw3Hxvf1oUg-1; Thu, 15 Feb 2024 03:43:33 -0500
-X-MC-Unique: Vt2O73IoNaOIw3Hxvf1oUg-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D534A85A58A;
- Thu, 15 Feb 2024 08:43:32 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.101])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E2E3C7595;
- Thu, 15 Feb 2024 08:43:29 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, jean-philippe@linaro.org, mst@redhat.com,
- peter.maydell@linaro.org, clg@redhat.com, zhenzhong.duan@intel.com,
- yanghliu@redhat.com
-Cc: alex.williamson@redhat.com,
-	jasowang@redhat.com
-Subject: [PATCH v5 3/4] hw: Set virtio-iommu aw-bits default value on pc_q35
- and arm virt
-Date: Thu, 15 Feb 2024 09:42:13 +0100
-Message-ID: <20240215084315.863897-4-eric.auger@redhat.com>
-In-Reply-To: <20240215084315.863897-1-eric.auger@redhat.com>
-References: <20240215084315.863897-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
+ id 1raXL7-000168-SD
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 03:43:32 -0500
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:36ad:0:640:5aad:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id DA744618B5;
+ Thu, 15 Feb 2024 11:43:25 +0300 (MSK)
+Received: from rkhapov-nux.yandex.net (unknown
+ [2a02:6b8:82:604:e806:5ea2:b505:d402])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id OhkPjR5IiKo0-AtGKAhQQ; Thu, 15 Feb 2024 11:43:24 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1707986604;
+ bh=BO/mv5C6yvXXAB+zZEM52PqUHZ9pC8DMMequyOZtvus=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=CR+hJPO5EteGb9coiV6x2W9FvaCee6zkjxWYYL0jOpYpfBU0Bjp3tHjgUN9B9W/ce
+ t8r+6KjwvbSgE7s5JmE9RDAgdp/fp4vCGlRrZ8LDeFt9tiEVxXKjzWbPk9M5g3p/TC
+ AZoYgbtS8opf9S/bXej0Rfs4sbYCpS/MdrMCCwwg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Roman Khapov <rkhapov@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ yc-core@yandex-team.ru, Roman Khapov <rkhapov@yandex-team.ru>
+Subject: [PATCH 2/2] migration: add error reason for failed MIGRATION events
+Date: Thu, 15 Feb 2024 13:43:22 +0500
+Message-Id: <20240215084322.1384090-1-rkhapov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=rkhapov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.531,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -86,136 +74,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the default input range can extend to 64 bits. On x86,
-when the virtio-iommu protects vfio devices, the physical iommu
-may support only 39 bits. Let's set the default to 39, as done
-for the intel-iommu. On ARM we set 48b as a default (matching
-SMMUv3 SMMU_IDR5.VAX == 0).
+This patch adds error description as reason for event MIGRATION in every
+place that generates MIGRATION_STATE_FAILED
 
-We use hw_compat_8_2 to handle the compatibility for machines
-before 9.0 which used to have a virtio-iommu default input range
-of 64 bits.
-
-Of course if aw-bits is set from the command line, the default
-is overriden.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Yanghang Liu<yanghliu@redhat.com>
-
+Signed-off-by: Roman Khapov <rkhapov@yandex-team.ru>
 ---
+ migration/migration.c | 62 ++++++++++++++++++++++++++++++-------------
+ migration/multifd.c   |  8 +++---
+ migration/savevm.c    | 12 ++++-----
+ 3 files changed, 54 insertions(+), 28 deletions(-)
 
-v3 -> v4:
-- update the qos test to relax the check on the max input IOVA
-
-v2 -> v3:
-- collected Zhenzhong's R-b
-- use &error_abort instead of NULL error handle
-  on object_property_get_uint() call (Cédric)
-- use VTD_HOST_AW_39BIT (Cédric)
-
-v1 -> v2:
-- set aw-bits to 48b on ARM
-- use hw_compat_8_2 to handle the compat for older machines
-  which used 64b as a default
----
- hw/arm/virt.c                   | 6 ++++++
- hw/core/machine.c               | 5 ++++-
- hw/i386/pc.c                    | 6 ++++++
- hw/virtio/virtio-iommu.c        | 2 +-
- tests/qtest/virtio-iommu-test.c | 2 +-
- 5 files changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 368c2a415a..0994f2a560 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2716,10 +2716,16 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-         virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-+        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
-+                                                   "aw-bits", &error_abort);
-         hwaddr db_start = 0, db_end = 0;
-         QList *reserved_regions;
-         char *resv_prop_str;
+diff --git a/migration/migration.c b/migration/migration.c
+index d28885a55b..0af16d5fa9 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -702,11 +702,14 @@ process_incoming_migration_co(void *opaque)
+     MigrationIncomingState *mis = migration_incoming_get_current();
+     PostcopyState ps;
+     int ret;
++    g_autofree char *fail_reason = NULL;
  
-+        if (!aw_bits) {
-+            qdev_prop_set_uint8(dev, "aw-bits", 48);
-+        }
-+
-         if (vms->iommu != VIRT_IOMMU_NONE) {
-             error_setg(errp, "virt machine does not support multiple IOMMUs");
-             return;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index fb5afdcae4..70ac96954c 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -30,9 +30,12 @@
- #include "exec/confidential-guest-support.h"
- #include "hw/virtio/virtio-pci.h"
- #include "hw/virtio/virtio-net.h"
-+#include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
+     assert(mis->from_src_file);
  
--GlobalProperty hw_compat_8_2[] = {};
-+GlobalProperty hw_compat_8_2[] = {
-+    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
-+};
- const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
- 
- GlobalProperty hw_compat_8_1[] = {
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 196827531a..ee2d379c90 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1456,6 +1456,8 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-         virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
-+        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
-+                                                   "aw-bits", &error_abort);
-         /* Declare the APIC range as the reserved MSI region */
-         char *resv_prop_str = g_strdup_printf("0xfee00000:0xfeefffff:%d",
-                                               VIRTIO_IOMMU_RESV_MEM_T_MSI);
-@@ -1464,6 +1466,10 @@ static void pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-         qlist_append_str(reserved_regions, resv_prop_str);
-         qdev_prop_set_array(dev, "reserved-regions", reserved_regions);
- 
-+        if (!aw_bits) {
-+            qdev_prop_set_uint8(dev, "aw-bits", VTD_HOST_AW_39BIT);
-+        }
-+
-         g_free(resv_prop_str);
+     if (compress_threads_load_setup(mis->from_src_file)) {
+-        error_report("Failed to setup decompress threads");
++        fail_reason = g_strdup("Failed to setup decompress threads");
++        /* wrap with %s to silence compiler warning of non-literal in format */
++        error_report("%s", fail_reason);
+         goto fail;
      }
  
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 8b541de850..2ec5ef3cd1 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -1526,7 +1526,7 @@ static Property virtio_iommu_properties[] = {
-     DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
-                      TYPE_PCI_BUS, PCIBus *),
-     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
--    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
-+    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
+@@ -750,11 +753,15 @@ process_incoming_migration_co(void *opaque)
+                 error_report_err(s->error);
+             }
+         }
+-        error_report("load of migration failed: %s", strerror(-ret));
++        fail_reason = g_strdup_printf("load of migration failed: %s",
++                                      strerror(-ret));
++        /* wrap with %s to silence compiler warning of non-literal in format */
++        error_report("%s", fail_reason);
+         goto fail;
+     }
  
-diff --git a/tests/qtest/virtio-iommu-test.c b/tests/qtest/virtio-iommu-test.c
-index 068e7a9e6c..0f36381acb 100644
---- a/tests/qtest/virtio-iommu-test.c
-+++ b/tests/qtest/virtio-iommu-test.c
-@@ -34,7 +34,7 @@ static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
-     uint8_t bypass = qvirtio_config_readb(dev, 36);
+     if (colo_incoming_co() < 0) {
++        fail_reason = g_strdup("colo_incoming failed");
+         goto fail;
+     }
  
-     g_assert_cmpint(input_range_start, ==, 0);
--    g_assert_cmphex(input_range_end, ==, UINT64_MAX);
-+    g_assert_cmphex(input_range_end, >=, 32);
-     g_assert_cmpint(domain_range_start, ==, 0);
-     g_assert_cmpint(domain_range_end, ==, UINT32_MAX);
-     g_assert_cmpint(bypass, ==, 1);
+@@ -762,7 +769,7 @@ process_incoming_migration_co(void *opaque)
+     return;
+ fail:
+     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+-                      MIGRATION_STATUS_FAILED, NULL);
++                      MIGRATION_STATUS_FAILED, fail_reason);
+     qemu_fclose(mis->from_src_file);
+ 
+     multifd_recv_cleanup();
+@@ -1417,8 +1424,8 @@ static void migrate_fd_error(MigrationState *s, const Error *error)
+ {
+     trace_migrate_fd_error(error_get_pretty(error));
+     assert(s->to_dst_file == NULL);
+-    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+-                      MIGRATION_STATUS_FAILED, NULL);
++    migrate_set_state_err_reason(&s->state, MIGRATION_STATUS_SETUP,
++                                 MIGRATION_STATUS_FAILED, error);
+     migrate_set_error(s, error);
+ }
+ 
+@@ -1968,6 +1975,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+                  bool has_inc, bool inc, bool has_detach, bool detach,
+                  bool has_resume, bool resume, Error **errp)
+ {
++    ERRP_GUARD();
+     bool resume_requested;
+     Error *local_err = NULL;
+     MigrationState *s = migrate_get_current();
+@@ -2037,8 +2045,8 @@ void qmp_migrate(const char *uri, bool has_channels,
+     } else {
+         error_setg(&local_err, QERR_INVALID_PARAMETER_VALUE, "uri",
+                    "a valid migration protocol");
+-        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+-                          MIGRATION_STATUS_FAILED, NULL);
++        migrate_set_state_err_reason(&s->state, MIGRATION_STATUS_SETUP,
++                                     MIGRATION_STATUS_FAILED, *errp);
+         block_cleanup_parameters();
+     }
+ 
+@@ -2426,6 +2434,7 @@ migration_wait_main_channel(MigrationState *ms)
+  */
+ static int postcopy_start(MigrationState *ms, Error **errp)
+ {
++    ERRP_GUARD();
+     int ret;
+     QIOChannelBuffer *bioc;
+     QEMUFile *fb;
+@@ -2436,8 +2445,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     if (migrate_postcopy_preempt()) {
+         migration_wait_main_channel(ms);
+         if (postcopy_preempt_establish_channel(ms)) {
+-            migrate_set_state(&ms->state, ms->state,
+-                              MIGRATION_STATUS_FAILED, NULL);
++            error_setg(errp,
++                       "postcopy_start: establishing channel failed");
++            migrate_set_state_err_reason(&ms->state, ms->state,
++                                         MIGRATION_STATUS_FAILED, *errp);
+             return -1;
+         }
+     }
+@@ -2456,17 +2467,21 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     global_state_store();
+     ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
+     if (ret < 0) {
++        error_setg(errp, "postcopy_start: vm stop failed");
+         goto fail;
+     }
+ 
+     ret = migration_maybe_pause(ms, &cur_state,
+                                 MIGRATION_STATUS_POSTCOPY_ACTIVE);
+     if (ret < 0) {
++        error_setg(errp, "postcopy_start: migratoin pause failed");
+         goto fail;
+     }
+ 
+     ret = bdrv_inactivate_all();
+     if (ret < 0) {
++        error_setg(errp,
++                   "postcopy_start: making block drivers inactive failed");
+         goto fail;
+     }
+     restart_block = true;
+@@ -2543,6 +2558,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ 
+     /* Now send that blob */
+     if (qemu_savevm_send_packaged(ms->to_dst_file, bioc->data, bioc->usage)) {
++        error_setg(errp, "postcopy_start: blob sending failed");
+         goto fail_closefb;
+     }
+     qemu_fclose(fb);
+@@ -2573,8 +2589,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+     ret = qemu_file_get_error(ms->to_dst_file);
+     if (ret) {
+         error_setg(errp, "postcopy_start: Migration stream errored");
+-        migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                          MIGRATION_STATUS_FAILED, NULL);
++        migrate_set_state_err_reason(&ms->state,
++                                     MIGRATION_STATUS_POSTCOPY_ACTIVE,
++                                     MIGRATION_STATUS_FAILED, *errp);
+     }
+ 
+     trace_postcopy_preempt_enabled(migrate_postcopy_preempt());
+@@ -2584,8 +2601,8 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ fail_closefb:
+     qemu_fclose(fb);
+ fail:
+-    migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                      MIGRATION_STATUS_FAILED, NULL);
++    migrate_set_state_err_reason(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
++                                 MIGRATION_STATUS_FAILED, *errp);
+     if (restart_block) {
+         /* A failure happened early enough that we know the destination hasn't
+          * accessed block devices, so we're safe to recover.
+@@ -2700,7 +2717,8 @@ static void migration_completion_postcopy(MigrationState *s)
+ }
+ 
+ static void migration_completion_failed(MigrationState *s,
+-                                        int current_active_state)
++                                        int current_active_state,
++                                        const char *fail_reason)
+ {
+     if (s->block_inactive && (s->state == MIGRATION_STATUS_ACTIVE ||
+                               s->state == MIGRATION_STATUS_DEVICE)) {
+@@ -2721,7 +2739,7 @@ static void migration_completion_failed(MigrationState *s,
+     }
+ 
+     migrate_set_state(&s->state, current_active_state,
+-                      MIGRATION_STATUS_FAILED, NULL);
++                      MIGRATION_STATUS_FAILED, fail_reason);
+ }
+ 
+ /**
+@@ -2733,6 +2751,7 @@ static void migration_completion_failed(MigrationState *s,
+ static void migration_completion(MigrationState *s)
+ {
+     int ret = 0;
++    const char *fail_reason = NULL;
+     int current_active_state = s->state;
+ 
+     if (s->state == MIGRATION_STATUS_ACTIVE) {
+@@ -2740,6 +2759,7 @@ static void migration_completion(MigrationState *s)
+     } else if (s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE) {
+         migration_completion_postcopy(s);
+     } else {
++        fail_reason = "migration completion: unexpected migration state";
+         ret = -1;
+     }
+ 
+@@ -2748,6 +2768,7 @@ static void migration_completion(MigrationState *s)
+     }
+ 
+     if (close_return_path_on_source(s)) {
++        fail_reason = "migration completion: return path thread close failed";
+         goto fail;
+     }
+ 
+@@ -2768,7 +2789,7 @@ static void migration_completion(MigrationState *s)
+     return;
+ 
+ fail:
+-    migration_completion_failed(s, current_active_state);
++    migration_completion_failed(s, current_active_state, fail_reason);
+ }
+ 
+ /**
+@@ -2994,7 +3015,8 @@ static MigThrError migration_detect_error(MigrationState *s)
+          * For precopy (or postcopy with error outside IO), we fail
+          * with no time.
+          */
+-        migrate_set_state(&s->state, state, MIGRATION_STATUS_FAILED, NULL);
++        migrate_set_state_err_reason(&s->state, state,
++                                     MIGRATION_STATUS_FAILED, s->error);
+         trace_migration_thread_file_err();
+ 
+         /* Time to stop the migration, now. */
+@@ -3458,6 +3480,7 @@ static void *bg_migration_thread(void *opaque)
+     MigThrError thr_error;
+     QEMUFile *fb;
+     bool early_fail = true;
++    const char *fail_reason = NULL;
+ 
+     rcu_register_thread();
+     object_ref(OBJECT(s));
+@@ -3509,6 +3532,7 @@ static void *bg_migration_thread(void *opaque)
+     global_state_store();
+     /* Forcibly stop VM before saving state of vCPUs and devices */
+     if (migration_stop_vm(RUN_STATE_PAUSED)) {
++        fail_reason = "stopping vm failed";
+         goto fail;
+     }
+     /*
+@@ -3517,6 +3541,7 @@ static void *bg_migration_thread(void *opaque)
+      */
+     cpu_synchronize_all_states();
+     if (qemu_savevm_state_complete_precopy_non_iterable(fb, false, false)) {
++        fail_reason = "savevm state failed";
+         goto fail;
+     }
+     /*
+@@ -3527,6 +3552,7 @@ static void *bg_migration_thread(void *opaque)
+ 
+     /* Now initialize UFFD context and start tracking RAM writes */
+     if (ram_write_tracking_start()) {
++        fail_reason = "starting UFFD-WP memory tracking failed";
+         goto fail;
+     }
+     early_fail = false;
+@@ -3566,7 +3592,7 @@ static void *bg_migration_thread(void *opaque)
+ fail:
+     if (early_fail) {
+         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+-                          MIGRATION_STATUS_FAILED, NULL);
++                          MIGRATION_STATUS_FAILED, fail_reason);
+         bql_unlock();
+     }
+ 
+diff --git a/migration/multifd.c b/migration/multifd.c
+index da3d397642..cb52ebc062 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -594,8 +594,8 @@ static void multifd_send_set_error(Error *err)
+             s->state == MIGRATION_STATUS_PRE_SWITCHOVER ||
+             s->state == MIGRATION_STATUS_DEVICE ||
+             s->state == MIGRATION_STATUS_ACTIVE) {
+-            migrate_set_state(&s->state, s->state,
+-                              MIGRATION_STATUS_FAILED, NULL);
++            migrate_set_state_err_reason(&s->state, s->state,
++                                         MIGRATION_STATUS_FAILED, err);
+         }
+     }
+ }
+@@ -1086,8 +1086,8 @@ static void multifd_recv_terminate_threads(Error *err)
+         migrate_set_error(s, err);
+         if (s->state == MIGRATION_STATUS_SETUP ||
+             s->state == MIGRATION_STATUS_ACTIVE) {
+-            migrate_set_state(&s->state, s->state,
+-                              MIGRATION_STATUS_FAILED, NULL);
++            migrate_set_state_err_reason(&s->state, s->state,
++                                         MIGRATION_STATUS_FAILED, err);
+         }
+     }
+ 
+diff --git a/migration/savevm.c b/migration/savevm.c
+index be6cce8a51..52fd3e37db 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1700,9 +1700,9 @@ void qemu_savevm_state_cleanup(void)
+ 
+ static int qemu_savevm_state(QEMUFile *f, Error **errp)
+ {
++    ERRP_GUARD();
+     int ret;
+     MigrationState *ms = migrate_get_current();
+-    MigrationStatus status;
+ 
+     if (migration_is_running(ms->state)) {
+         error_setg(errp, QERR_MIGRATION_ACTIVE);
+@@ -1735,16 +1735,16 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
+         ret = qemu_file_get_error(f);
+     }
+     qemu_savevm_state_cleanup();
++
+     if (ret != 0) {
+         error_setg_errno(errp, -ret, "Error while writing VM state");
+-    }
+ 
+-    if (ret != 0) {
+-        status = MIGRATION_STATUS_FAILED;
++        migrate_set_state_err_reason(&ms->state, MIGRATION_STATUS_SETUP,
++                                     MIGRATION_STATUS_FAILED, *errp);
+     } else {
+-        status = MIGRATION_STATUS_COMPLETED;
++        migrate_set_state(&ms->state, MIGRATION_STATUS_SETUP,
++                          MIGRATION_STATUS_COMPLETED, NULL);
+     }
+-    migrate_set_state(&ms->state, MIGRATION_STATUS_SETUP, status, NULL);
+ 
+     /* f is outer parameter, it should not stay in global migration state after
+      * this function finished */
 -- 
-2.41.0
+2.34.1
 
 
