@@ -4,72 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5573EC4829E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889D0C48BEB
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 16:32:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raeeD-0004qm-63; Thu, 15 Feb 2024 11:31:41 -0500
+	id 1raeeD-0004rA-VI; Thu, 15 Feb 2024 11:31:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1radL8-00006c-SW
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:07:56 -0500
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from
+ <3ijXOZQgKCmMBSEC+HJUHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--ardb.bounces.google.com>)
+ id 1raeBq-0001aa-RQ
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 11:02:22 -0500
+Received: from mail-wm1-x34a.google.com ([2a00:1450:4864:20::34a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1radL2-0003EV-4x
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:07:54 -0500
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-55f50cf2021so1350859a12.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 07:07:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <3ijXOZQgKCmMBSEC+HJUHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--ardb.bounces.google.com>)
+ id 1raeBp-0001rs-0O
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 11:02:22 -0500
+Received: by mail-wm1-x34a.google.com with SMTP id
+ 5b1f17b1804b1-40e4478a3afso5192745e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 08:02:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708009663; x=1708614463; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ d=google.com; s=20230601; t=1708012939; x=1708617739; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=Fvw7t7txE8tGO9yD8Vbm+sVZTcggAkNf/7WmJGToWwk=;
- b=QidZVG8W1FU6hTDtWqVQvo/AQe3bil+dex1Ngi7/+dT+vC57dnK8NtuvKmhlMjgXYV
- d9J+N/aoWJq6CWK7kJmYzvTanleQRGD+aLJ7SZososLRrBfniZLzPSKtIH5E/AD9iq6C
- odNhhV/Wwn9hoHMqgjihuPdRvbQ5kWrcEEWE+dWj0XfkH65apBBRK8MrnWAvIUPMNhAN
- 0JsLAQxMSlk9bIT6yHuQohttenbFF49V1EfxgHuVgn5qFGtkxRsGAIXxUAb3McjRv19b
- qUzdJivN9ehu/F2zFDv/ceaCUc4zXOcoNpdZ+P2JlXL4bt9hGnyirn+YWhj+YmTSnHXo
- p15Q==
+ bh=ZxJ82GKHsUgKCva8HlVuPOEU7TH3AeI5O3T89aBX7P0=;
+ b=jz1OP7sIt8hbtsqIKGvG5du/+F7FfgDUqSOI0T7KTQRhp2iz1S6/kuArnVzm7AO8/f
+ MKyACRpnaE3IvtHKzu9Eg7VBy/0W1BHJJUSsHSPmyIKUsYHqbyaGJx2FAR/ddcp9Du00
+ Rs7xiKATHUXIMBp2MKltLSLnY0DmRjf3O7vw2IoGJ6CrHS392JQ2XxHwgOXSj+Iz+Yr+
+ RtPegCs1H4WQXZq9N0R5BNgyZznf0M8cEM9AF6V6mN2dKicVu0ld4AQLL2+ibhJaO29i
+ 2qUT771MmG2hH6DKP+UWlaUkhcscyblKXHCHbFUcId0sxhLzGtvyI8cA1fQ1H7nJWJQn
+ 1/UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708009663; x=1708614463;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ d=1e100.net; s=20230601; t=1708012939; x=1708617739;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Fvw7t7txE8tGO9yD8Vbm+sVZTcggAkNf/7WmJGToWwk=;
- b=dXhYq2Do/YH3Ix5My8nK4tfLI2KS9kOqIESvIckyB9FPU9cRJJrRDu1/i+rja95eFj
- MV7FBBJyganfwx5Ym1VmXXXtuz1NoiqDMI6Te99MEbzARnCCqYyaWeCh9bc7dkvpJ3Fq
- 6g7JqzLFpWbL0xIr1FLp8nPG2rjLOWP3rhDl/YEeHXVjYdjFY+Hd9A7HJ52lDLaMpRJd
- y+pUmJvY9OsgMgCbY0SbT06zt3nh+UZJyxvg1qEaWfNk6/6ImfpbLkfsQEuzMM77UuR3
- +VkajDj0ACpE+pVrbm96fa/9gd14auvgKgf+sCYoqTlQdTvIhRd/Hplqlnpf2beMLuIx
- MrMA==
-X-Gm-Message-State: AOJu0Yw4PEPpbylMqTr7Yc2awojhl6r/5Het/ffbJ2m4wlZVN54FguOr
- gdcpFvlzNpFAMzK/02sfaMOMcrTISy/uH0TbAPzN2PDzht6l0c8f1lMfJVVMopKxmRBcuQQxJ5d
- o5g8kRkkg81KZSMp+WIEcAkkJx4IDYEbBPLM=
-X-Google-Smtp-Source: AGHT+IFfensS8DLpT77rrjcBPMCMxexPYNr4rRrbDagGToWtH/+NuRDY74n7Z50jEfwJGdfGUoogUyxarmH2CxHRlkc=
-X-Received: by 2002:aa7:c48c:0:b0:561:caa5:c12e with SMTP id
- m12-20020aa7c48c000000b00561caa5c12emr1528534edq.34.1708009663504; Thu, 15
- Feb 2024 07:07:43 -0800 (PST)
-MIME-Version: 1.0
-From: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Date: Thu, 15 Feb 2024 16:07:32 +0100
-Message-ID: <CAOpGCnKC7YE8DV8eCi4zA5LtqdiL5So+ceNV63udDXmRJxeFFw@mail.gmail.com>
-Subject: Qemu network connectivity issue
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004424ba06116cfd63"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- HTML_FONT_LOW_CONTRAST=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ bh=ZxJ82GKHsUgKCva8HlVuPOEU7TH3AeI5O3T89aBX7P0=;
+ b=tvyL955v9OhWOTYWjEUXRuDaaef1p08odfD81/y5F3F977NOZDpNQKKoigxcI+6EY4
+ B3iPlNksHKtkJnMzg3i28DBTpn35RtdMW647RtinGSUGv6Cl6nyrplq7FSPsnv7n2/qV
+ Tt5UI5FVVWgJUYWhTu3J7mfK5BeSp12qRJAqcfEDrWkaIehQmQSH6+yTHlRMZNakiBRS
+ Pt5p4QbmaQL7nO+Sv+qVNuP+sCU3vH4XWrMX/s7Svv2keC6V9gtwvtFhgP1beBHcc666
+ 5sWU277KS9pmDKczOJ5VFYgVbOoa7LOyWtXIhNszV3kXfqUuqW1+6XPu8/3lOM7/fTqu
+ gD2Q==
+X-Gm-Message-State: AOJu0Yx5QWGYqqn+CuUTBb+q557NjdJ6y5kc/mfEU5UHxfkRr0nc1+cI
+ YQ5w/WzvfbznPvzfPJRP18Om6v+TrMl0vIxk7/X1On+aPL16jHIMYztaW6Sw+o/d2DP0xw==
+X-Google-Smtp-Source: AGHT+IHfWRQI5qljQB+wLQldxtp0OWorCucnhkxogytIMI3RvYiUNnHcP4cyFuTqP2m3Q58t4vwykpvl
+X-Received: from palermo.c.googlers.com
+ ([fda3:e722:ac3:cc00:28:9cb1:c0a8:118a])
+ (user=ardb job=sendgmr) by 2002:a05:600c:3512:b0:412:913:54c7 with SMTP id
+ h18-20020a05600c351200b00412091354c7mr76803wmq.4.1708012938539; Thu, 15 Feb
+ 2024 08:02:18 -0800 (PST)
+Date: Thu, 15 Feb 2024 17:02:02 +0100
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.43.0.687.g38aa6559b0-goog
+Message-ID: <20240215160202.2803452-1-ardb+git@google.com>
+Subject: [PATCH] target/arm: Advertise Cortex-A53 erratum #843419 fix via
+ REVIDR
+From: Ard Biesheuvel <ardb+git@google.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, philmd@linaro.org, 
+ richard.henderson@linaro.org, Ard Biesheuvel <ardb@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::34a;
+ envelope-from=3ijXOZQgKCmMBSEC+HJUHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--ardb.bounces.google.com;
+ helo=mail-wm1-x34a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 15 Feb 2024 11:31:40 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,62 +93,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004424ba06116cfd63
-Content-Type: text/plain; charset="UTF-8"
+From: Ard Biesheuvel <ardb@kernel.org>
 
-Hi my name is Faiq Ali Sayed
-Currently, I am trading to create a Qemu VM with the command below and
-getting an error and the terminal hangs after that
+The Cortex-A53 r0p4 revision that QEMU emulates is affected by a CatA
+erratum #843419 (i.e., the most severe), which requires workarounds in
+the toolchain as well as the OS.
 
-*Command:*
+Since the emulation is obviously not affected in the same way, we can
+indicate this via REVIDR bit #8, which on r0p4 has the meaning that no
+workarounds for erratum #843419 are needed.
 
-qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display none
--device loader,file=QNX-IFS,addr=0x00100000,cpu-num=0
--net nic,model=cadence_gem -net nic,model=cadence_gem -net
-nic,model=cadence_gem -net nic,model=cadence_gem,netdev=xzynq0 -netdev
-user,id=xzynq0,tftp=/tftpboot
--nographic -global xlnx,zynqmp-boot.cpu-num=0 -global
-'xlnx,zynqmp-boot.use-pmufw=true'
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+---
+ target/arm/cpu64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-*Error:*
-*qemu-system-aarch64: warning: hub 0 is not connected to host network*
-
-any help in this regard is highly appreciated.
-
-Thanks :)
-
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 8e30a7993e..0f7a44a28f 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -663,7 +663,7 @@ static void aarch64_a53_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A53;
+     cpu->midr = 0x410fd034;
+-    cpu->revidr = 0x00000000;
++    cpu->revidr = 0x00000100;
+     cpu->reset_fpsid = 0x41034070;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x12111111;
 -- 
-Kind Regard-
-Faiq Ali Sayed
+2.43.0.687.g38aa6559b0-goog
 
---0000000000004424ba06116cfd63
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi my name is Faiq Ali Sayed=C2=A0<div>Currently, I am tra=
-ding=C2=A0to create a Qemu VM with the command below and getting an error a=
-nd the terminal=C2=A0hangs after that=C2=A0</div><div><br></div><div><u>Com=
-mand:</u></div><div><br></div><div>qemu-system-aarch64 -M xlnx-zcu102 -m 16=
-G -serial mon:stdio -display none <br>-device loader,file=3DQNX-IFS,addr=3D=
-0x00100000,cpu-num=3D0 <br>-net nic,model=3Dcadence_gem -net nic,model=3Dca=
-dence_gem -net nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem,netdev=
-=3Dxzynq0 -netdev user,id=3Dxzynq0,tftp=3D/tftpboot =C2=A0<br>-nographic -g=
-lobal xlnx,zynqmp-boot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.use-pmufw=
-=3Dtrue&#39;<br></div><div><br></div><div><br></div><div><u>Error:</u></div=
-><div><b><i><font color=3D"#f3f3f3" style=3D"background-color:rgb(0,0,0)">q=
-emu-system-aarch64: warning: hub 0 is not connected to host network</font><=
-/i></b><br></div><div><br></div><div>any help in this regard is highly appr=
-eciated.</div><div><br></div><div>Thanks :)<br clear=3D"all"><div><br></div=
-><span class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" clas=
-s=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><=
-div dir=3D"ltr">
-<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
-lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
-=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
-v></div></div></div>
-<div><font style=3D"background-color:#ffffff" size=3D"1"><br></font></div><=
-br></div></div></div></div></div>
-
---0000000000004424ba06116cfd63--
 
