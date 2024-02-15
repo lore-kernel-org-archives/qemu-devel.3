@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E759AC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DACC48BEF
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 06:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raV6j-0002FR-CV; Thu, 15 Feb 2024 01:20:29 -0500
+	id 1raV7H-0002SN-Il; Thu, 15 Feb 2024 01:21:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV6h-0002En-0J
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:27 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1raV7F-0002Rj-Rh
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:21:01 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1raV6f-0005JP-7v
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:20:26 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1d94323d547so4406915ad.3
- for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:24 -0800 (PST)
+ id 1raV7D-0005ZR-JG
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 01:21:01 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1d8ef977f1eso4471555ad.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Feb 2024 22:20:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1707978024; x=1708582824; darn=nongnu.org;
+ d=linaro.org; s=google; t=1707978058; x=1708582858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sNAOuzYKunseGhjt30zEM/eN7uq1Wl50v8pWc8K9LWs=;
- b=df1jQ9nn0h3aSO6nnsYW1nF1/3ECGV8+AhgrhIomokIQnflH0KW+3wgGMX/1FEaDl0
- pBGf3EPTOKMG6MRauKwpmcnU/la1Sj9ULKATrkyJ3/kle/jTbRx5Hrr1Etir5OZLeqSC
- /rNdiEAda6G9GqDVCh6gPcSbs7OWkYhkQadRCKRcxiuUQMgic1NYhroNiydabPYwlnZX
- okwkCg6g1HuYeFRSltY17Us9jy99JOLsOtLeO+6QeX3iAJCVqNPKVdac/KxiQGL0KDUk
- 48P6qnKhLMZ3NceHPmDEg2J7J5dBYLpuIzZKOjwHOYR11GcKEfnxp7u81b/3cjo9Lhok
- g+NQ==
+ bh=2NxBdbDmPXvqTBcYichP7qzlXUZvSD7xiNQMCyXrUoI=;
+ b=NWxi5h2SJG9ja0acmKfI8WNKcewDyTPIvLjtCE9piJ85++m9uOjyOW6z+hcZmy9doZ
+ wBPlf5ARZ30lfWayfT/Dqn8MxhukVY18ARinrjLTLTOy++6Vae5+DtztQcrQ1iwvZ2/7
+ 6FjFWHyI4fF9rKT99gX/fccGeJnZrJXtreaniDsrwdQ0U85j4mrAQEdJ2cev4eljrXwx
+ Sph8VNLgtLdCjDrAAiRju2T0tKd3o9qcEJNGOQYD0aeeTBaNTSRz93uc7pW8hhV52B8u
+ dD58eMGIsNjH52f+HvgRX8Zp5PJT3Zw2z0mt3zQSxpnTi8ytV4aXqPA24SsWton2ZP0p
+ jTJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707978024; x=1708582824;
+ d=1e100.net; s=20230601; t=1707978058; x=1708582858;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sNAOuzYKunseGhjt30zEM/eN7uq1Wl50v8pWc8K9LWs=;
- b=DB4cq9lgvR61yl7kIsOWkQCJ07z7T2dHJNaEx+e385rnPb4uyayD7lv9hSQorPstGb
- +IyEjxc8r+YO8Umje4CtFVq3vpgo874IpmcBxADz5TY5TaGY0r4OrCn1P7gpmK4eb0m+
- GqbyNEskx0fGszWjfgqsSS3p2xGhrOCu15GD5cQPexspHP9K9k21n1vN7L44LExah8Wu
- /g7gBI51ZYh6dV3Qm9NGBYpVYoYWSECMNsdg+jbjhMAZbG53brVLwb9SaYER7sdk+o2E
- onzyhrjxmoLPFWxsTQ8ytP+HmBw3+3gAYiTyLUBtmDFpWVxynLPIeCmtbT0RO5JXTxiO
- IXwA==
-X-Gm-Message-State: AOJu0YzRfPfrZ7zuuW1IBLBALPNNtLaNMBgWmSYwbt2eyLWhnRW1Z93T
- hpDUFjrHlbR/HgYTLj/0Eqo2dZUzqpTSbfOJxhaD+Mxv3oOYC9b/ELZn6UJU6XEzOhVYDrNubXS
- 4
-X-Google-Smtp-Source: AGHT+IFZ/57uvY7YvXLIrwn1yHMllRkzWECQZhniPiaGQ4xDkMdx0mpTq5/fraMXHc18GdauUW0Vlg==
-X-Received: by 2002:a17:903:18e:b0:1d7:88de:cffa with SMTP id
- z14-20020a170903018e00b001d788decffamr1095734plg.19.1707978023844; 
- Wed, 14 Feb 2024 22:20:23 -0800 (PST)
+ bh=2NxBdbDmPXvqTBcYichP7qzlXUZvSD7xiNQMCyXrUoI=;
+ b=MKB0b2HAs0sIV8PdptHmQ5P1jsg1GRNEVfmsxyJIDXLu7Oc7c1dRIY/y51dGYaJjGt
+ eM6vkJgkUQzl7qgBPyK08/XpXdXgjdYl4HWllg+oWXw8FrA9vCsDjTH8WioNLRA/lA9q
+ 8GvF7Zb2sCJk1ootR7gUBXcID7faYJDct6jxhvXwAMLenXIdjU9n5UHSsR+9J1Fih9sq
+ jElmfTMcZkLCdey+iuYfCtwSW5tlZlUFGzJP+AMshi/D3tGsPcy3UlMPbfdJg/fzTqQv
+ LwMwguuVJb3X6CwbWQzFDZ0e+QzpqZ7kOXgRuGjMUkUB/KbPu5vUjXr0gdss+C/HI/Gz
+ 7c8A==
+X-Gm-Message-State: AOJu0YyCgymHJVzs/odHxsEc45fzX1u/mnaezgGzT1qsNQ4TXqxNi9Iv
+ ZC2N5y7lJdZAcbWVAKArSyrTzvah4uyANeqPZ9Oz+F+kB81IQo4e+DN9+YbGXdjjYIct1Hl+Zp4
+ j
+X-Google-Smtp-Source: AGHT+IEVY8wh6IeEDXaqHj1gTyVwI56b/8r645nNk4qaLCzH0KwrkXXl9msVe+dIOonAg7g2jeWYqA==
+X-Received: by 2002:a17:902:ce82:b0:1d9:63a3:e962 with SMTP id
+ f2-20020a170902ce8200b001d963a3e962mr1007444plg.6.1707978058361; 
+ Wed, 14 Feb 2024 22:20:58 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.22
+ d5-20020a170902b70500b001d6f29c12f7sm464418pls.135.2024.02.14.22.20.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Feb 2024 22:20:23 -0800 (PST)
+ Wed, 14 Feb 2024 22:20:58 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH v4 02/36] linux-user: Adjust SVr4 NULL page mapping
-Date: Wed, 14 Feb 2024 20:19:44 -1000
-Message-Id: <20240215062018.795056-3-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH v4 26/36] tests/tcg: Remove run-test-mmap-*
+Date: Wed, 14 Feb 2024 20:20:08 -1000
+Message-Id: <20240215062018.795056-27-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240215062018.795056-1-richard.henderson@linaro.org>
 References: <20240215062018.795056-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +95,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use TARGET_PAGE_SIZE and MAP_FIXED_NOREPLACE.
-
-We really should be attending to this earlier during
-probe_guest_base, as well as better detection and
-emulation of various Linux personalities.
+These tests are confused, because -p does not change
+the guest page size, but the host page size.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-3-richard.henderson@linaro.org>
+Message-Id: <20240102015808.132373-25-richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tests/tcg/alpha/Makefile.target     |  3 ---
+ tests/tcg/arm/Makefile.target       |  3 ---
+ tests/tcg/hppa/Makefile.target      |  3 ---
+ tests/tcg/i386/Makefile.target      |  3 ---
+ tests/tcg/m68k/Makefile.target      |  3 ---
+ tests/tcg/multiarch/Makefile.target |  9 ---------
+ tests/tcg/ppc/Makefile.target       | 12 ------------
+ tests/tcg/sh4/Makefile.target       |  3 ---
+ tests/tcg/sparc64/Makefile.target   |  6 ------
+ 9 files changed, 45 deletions(-)
+ delete mode 100644 tests/tcg/ppc/Makefile.target
+ delete mode 100644 tests/tcg/sparc64/Makefile.target
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index b8eef893d0..e918a13748 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -3912,8 +3912,9 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
-                and some applications "depend" upon this behavior.  Since
-                we do not have the power to recompile these, we emulate
-                the SVr4 behavior.  Sigh.  */
--            target_mmap(0, qemu_host_page_size, PROT_READ | PROT_EXEC,
--                        MAP_FIXED | MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+            target_mmap(0, TARGET_PAGE_SIZE, PROT_READ | PROT_EXEC,
-+                        MAP_FIXED_NOREPLACE | MAP_PRIVATE | MAP_ANONYMOUS,
-+                        -1, 0);
-         }
- #ifdef TARGET_MIPS
-         info->interp_fp_abi = interp_info.fp_abi;
+diff --git a/tests/tcg/alpha/Makefile.target b/tests/tcg/alpha/Makefile.target
+index b94500a7d9..fdd7ddf64e 100644
+--- a/tests/tcg/alpha/Makefile.target
++++ b/tests/tcg/alpha/Makefile.target
+@@ -13,6 +13,3 @@ test-cmov: test-cond.c
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+ 
+ run-test-cmov: test-cmov
+-
+-# On Alpha Linux only supports 8k pages
+-EXTRA_RUNS+=run-test-mmap-8192
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 3473f4619e..0a1965fce7 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -79,6 +79,3 @@ sha512-vector: sha512.c
+ ARM_TESTS += sha512-vector
+ 
+ TESTS += $(ARM_TESTS)
+-
+-# On ARM Linux only supports 4k pages
+-EXTRA_RUNS+=run-test-mmap-4096
+diff --git a/tests/tcg/hppa/Makefile.target b/tests/tcg/hppa/Makefile.target
+index cdd0d572a7..ea5ae2186d 100644
+--- a/tests/tcg/hppa/Makefile.target
++++ b/tests/tcg/hppa/Makefile.target
+@@ -2,9 +2,6 @@
+ #
+ # HPPA specific tweaks - specifically masking out broken tests
+ 
+-# On parisc Linux supports 4K/16K/64K (but currently only 4k works)
+-EXTRA_RUNS+=run-test-mmap-4096 # run-test-mmap-16384 run-test-mmap-65536
+-
+ # This triggers failures for hppa-linux about 1% of the time
+ # HPPA is the odd target that can't use the sigtramp page;
+ # it requires the full vdso with dwarf2 unwind info.
+diff --git a/tests/tcg/i386/Makefile.target b/tests/tcg/i386/Makefile.target
+index 9906f9e116..bbe2c44b2a 100644
+--- a/tests/tcg/i386/Makefile.target
++++ b/tests/tcg/i386/Makefile.target
+@@ -71,9 +71,6 @@ endif
+ I386_TESTS:=$(filter-out $(SKIP_I386_TESTS), $(ALL_X86_TESTS))
+ TESTS=$(MULTIARCH_TESTS) $(I386_TESTS)
+ 
+-# On i386 and x86_64 Linux only supports 4k pages (large pages are a different hack)
+-EXTRA_RUNS+=run-test-mmap-4096
+-
+ sha512-sse: CFLAGS=-msse4.1 -O3
+ sha512-sse: sha512.c
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+diff --git a/tests/tcg/m68k/Makefile.target b/tests/tcg/m68k/Makefile.target
+index 6ff214e60a..33f7b1b127 100644
+--- a/tests/tcg/m68k/Makefile.target
++++ b/tests/tcg/m68k/Makefile.target
+@@ -5,6 +5,3 @@
+ 
+ VPATH += $(SRC_PATH)/tests/tcg/m68k
+ TESTS += trap denormal
+-
+-# On m68k Linux supports 4k and 8k pages (but 8k is currently broken)
+-EXTRA_RUNS+=run-test-mmap-4096 # run-test-mmap-8192
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index e10951a801..f11f3b084d 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -51,18 +51,9 @@ run-plugin-vma-pthread-with-%: vma-pthread
+ 	$(call skip-test, $<, "flaky on CI?")
+ endif
+ 
+-# We define the runner for test-mmap after the individual
+-# architectures have defined their supported pages sizes. If no
+-# additional page sizes are defined we only run the default test.
+-
+-# default case (host page size)
+ run-test-mmap: test-mmap
+ 	$(call run-test, test-mmap, $(QEMU) $<, $< (default))
+ 
+-# additional page sizes (defined by each architecture adding to EXTRA_RUNS)
+-run-test-mmap-%: test-mmap
+-	$(call run-test, test-mmap-$*, $(QEMU) -p $* $<, $< ($* byte pages))
+-
+ ifneq ($(GDB),)
+ GDB_SCRIPT=$(SRC_PATH)/tests/guest-debug/run-test.py
+ 
+diff --git a/tests/tcg/ppc/Makefile.target b/tests/tcg/ppc/Makefile.target
+deleted file mode 100644
+index f5e08c7376..0000000000
+--- a/tests/tcg/ppc/Makefile.target
++++ /dev/null
+@@ -1,12 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# PPC - included from tests/tcg/Makefile
+-#
+-
+-ifneq (,$(findstring 64,$(TARGET_NAME)))
+-# On PPC64 Linux can be configured with 4k (default) or 64k pages (currently broken)
+-EXTRA_RUNS+=run-test-mmap-4096 #run-test-mmap-65536
+-else
+-# On PPC32 Linux supports 4K/16K/64K/256K (but currently only 4k works)
+-EXTRA_RUNS+=run-test-mmap-4096 #run-test-mmap-16384 run-test-mmap-65536 run-test-mmap-262144
+-endif
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 47c39a44b6..16eaa850a8 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,9 +3,6 @@
+ # SuperH specific tweaks
+ #
+ 
+-# On sh Linux supports 4k, 8k, 16k and 64k pages (but only 4k currently works)
+-EXTRA_RUNS+=run-test-mmap-4096 # run-test-mmap-8192 run-test-mmap-16384 run-test-mmap-65536
+-
+ # This triggers failures for sh4-linux about 10% of the time.
+ # Random SIGSEGV at unpredictable guest address, cause unknown.
+ run-signals: signals
+diff --git a/tests/tcg/sparc64/Makefile.target b/tests/tcg/sparc64/Makefile.target
+deleted file mode 100644
+index 408dace783..0000000000
+--- a/tests/tcg/sparc64/Makefile.target
++++ /dev/null
+@@ -1,6 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# sparc specific tweaks
+-
+-# On Sparc64 Linux support 8k pages
+-EXTRA_RUNS+=run-test-mmap-8192
 -- 
 2.34.1
 
