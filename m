@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA8EC48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 503C7C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 18:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rag1y-00083i-Gp; Thu, 15 Feb 2024 13:00:18 -0500
+	id 1rag41-0004aC-8P; Thu, 15 Feb 2024 13:02:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1q-0007Ym-BB
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:10 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag3q-0003le-00
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:02:15 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag1n-00023i-8O
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:00:09 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-33cf7812777so639139f8f.0
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:00:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rag3j-0002h2-JK
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 13:02:12 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-411d715c401so9345115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 10:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708020005; x=1708624805; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708020123; x=1708624923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DEY5Q9cN6dyZ6ENA20XPMsBoCTRW9qgX5vERomv9BCU=;
- b=gISc223vv85RqmfTBjyHfX7Yom02HvnP7aeXJ3DB+LkJqz/bV/lDqZnLcMZHFNsjAB
- 3ee73owj8x3OvCgjLKTcYo/0gXio8znOqtEZyiqjXT4fhSBSJf0Lr6xWay1idF4v7XpM
- FfH+S2fPMmaJTSe8HytSPvPV9Nm7KahG2Ky2A4tuYw01Kh0dVJ75r0NKGMjn6KUjWkCU
- QjuOLBtbBSCrNmLK3N7TJ/WXAqhf1+nG7OZ/HTaPeHoKyRePKuM4xrdBzboR1WaRz9/v
- 8uViySEbLk41gd+h9nmii+sIfXkMhT6EXUwtcSdUfPtGV9DAdyNtvFyz1AjJDg4oW1FP
- mMFg==
+ bh=RoJzuCIrsH01JQMu3l4P7H0/BC0QIRTQUaRRKiYrvbM=;
+ b=fqs7eixhayUIsPWPvQepdXb4+b3Q/AKm0bqu4nUJF88Wunnu/VmZ7knY0hzfTtZ/jf
+ I2K6potT9qLPHozHAuRfsGztBuPO44CXC0zHZ4WMBPtCQ1atr3BaIPk70H79SysylFv3
+ pfT6AKbffZkTwn0oV8R2Qq3TnE1EDgh8LAgawfJS9/3PRM0CpRwkeOYbxLZTtRK8p8TT
+ c+1rP0d8JJokwJEi/cc9ExEMNWoBX9T2oYwd6digUxGYlO5zPp5bZ3W+1HVGlhfRkyrz
+ jS7tV5+w0TfrY7wDmg39Gbv9WDY3QYqGHAqp4o4OZHIAsnSSa0gcagfEfk6a6QcbMM3Z
+ mfRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708020005; x=1708624805;
+ d=1e100.net; s=20230601; t=1708020123; x=1708624923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DEY5Q9cN6dyZ6ENA20XPMsBoCTRW9qgX5vERomv9BCU=;
- b=TlZZhjzWCKfza0PBg7R2btQzKCx4bHAX+lkJ5bY9qez/2DwUjvfWrRFkYNjW+mkUop
- orotFUcNMs1Rj4JjfiNic5r98Y3YkGWEctXkJRJvpsH6u5J6Tm5Ih2VoJH+RuHgf9Tfy
- fnRzf7ElkDk/L4zP0HjB+pdGZMz0LfkH2+10YYa7mVBmGylHIOArsy9FCy/LFAbG3xLs
- bM+XbhA9dVNclB6vJ6FY0WuJfbHZExyEyZSKzZDnV78mI7sVblhg+1iaE9BbXWgR/N93
- trSHKzqIbS+b/m8oRyuwuvLexZ0tNMQbhsm4fUn160RwX927QuhZcZA4Rt8Bd3b06/hz
- 3pjA==
-X-Gm-Message-State: AOJu0Yziq3VSKzAnZ+/DIOddoY4K7onBK4TmMs0HLcD1d7YDkL7qKh75
- +0QotM86gCx+OUWg+FK2fj1XgMVup7SF4Ul5ybzxR+3GNcwq6Xc1g4sxt4ihL3EqLYFJ19E3xfN
- aVL8=
-X-Google-Smtp-Source: AGHT+IEN0WVCyHBYi29wVrsc3DI5VmquZag5jlH68n5gHwL47UE7ze2KW06pHMGDuhVV28e4roT5XA==
-X-Received: by 2002:adf:e7cb:0:b0:33b:6773:1481 with SMTP id
- e11-20020adfe7cb000000b0033b67731481mr1883493wrn.56.1708020005318; 
- Thu, 15 Feb 2024 10:00:05 -0800 (PST)
+ bh=RoJzuCIrsH01JQMu3l4P7H0/BC0QIRTQUaRRKiYrvbM=;
+ b=lnKnpuCW6vtCJ6PqRa14mugFQsMag/dkqudEEswfVy6DXC4W12DtUnEo6Fn81O3tty
+ cHyDkutTH2B8SDAXPMxzMTweEwu53JyL7wPbJmlScWbC/S/JBjOFYd82ad/1uRllroON
+ cNfipkuzpNmFz6cwvHq2E922k2/s9NYZF0co7vTegl/TEp7+eIihbzNe/992j9Ch8MPb
+ QQAHAJ2pICG6EFOK0Kpry+MlffOU+8jWOdf4xRZJGZ5QbyFO9W6tx5JAsdCNcX+IttvQ
+ pccBMbnBrQSpnmyQkmv+JkXyWEspfLnvkKHj9XXRjkQzTHN7akCEY6F6rJktzJ3XL4/d
+ BbAA==
+X-Gm-Message-State: AOJu0YwR/ANuo/j/I2PwOTuhRaJLLSxJkKhmhGMMGgLQ/nbn+K7/ayad
+ S5c/t3JQ0BK5BAhd4AWwEu2j35vJeblA2/6UG98TZtSCvbvFlfKCH/ckzMNi4zT9yFuRHdbIXzY
+ RCCk=
+X-Google-Smtp-Source: AGHT+IFY9hGG2vljf22mvOtE0ougi1cbCRUSfU0FuBG5sFnmty9l0k3qlq1C7jdZ9QvgUyz7/mu/+Q==
+X-Received: by 2002:a05:600c:198f:b0:40f:ddc8:f804 with SMTP id
+ t15-20020a05600c198f00b0040fddc8f804mr1666036wmq.17.1708020122980; 
+ Thu, 15 Feb 2024 10:02:02 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- v9-20020a5d43c9000000b0033afc81fc00sm2374790wrr.41.2024.02.15.10.00.03
+ i7-20020a05600c290700b00410add3af79sm5649214wmd.23.2024.02.15.10.02.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 15 Feb 2024 10:00:04 -0800 (PST)
+ Thu, 15 Feb 2024 10:02:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 20/56] hw/rx/rx62n: Reduce inclusion of 'qemu/units.h'
-Date: Thu, 15 Feb 2024 18:57:14 +0100
-Message-ID: <20240215175752.82828-21-philmd@linaro.org>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 37/56] target/sparc: implement asr17 feature for smp
+Date: Thu, 15 Feb 2024 18:57:31 +0100
+Message-ID: <20240215175752.82828-38-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240215175752.82828-1-philmd@linaro.org>
 References: <20240215175752.82828-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,56 +99,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"qemu/units.h" is not used in the "hw/rx/rx62n.h"
-header, include it in the source where it is.
+From: Clément Chigot <chigot@adacore.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+This allows the guest program to know its cpu id.
+
+Co-developed-by: Frederic Konrad <konrad.frederic@yahoo.fr>
+Signed-off-by: Clément Chigot <chigot@adacore.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240213130341.1793-3-philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240131085047.18458-6-chigot@adacore.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/rx/rx62n.h | 1 -
- hw/rx/rx-gdbsim.c     | 1 +
- hw/rx/rx62n.c         | 1 +
- 3 files changed, 2 insertions(+), 1 deletion(-)
+ target/sparc/helper.h    |  1 +
+ target/sparc/helper.c    | 16 ++++++++++++++++
+ target/sparc/translate.c | 13 +++----------
+ 3 files changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/rx/rx62n.h b/include/hw/rx/rx62n.h
-index 73ceeb58e5..bcda583ab3 100644
---- a/include/hw/rx/rx62n.h
-+++ b/include/hw/rx/rx62n.h
-@@ -29,7 +29,6 @@
- #include "hw/timer/renesas_tmr.h"
- #include "hw/timer/renesas_cmt.h"
- #include "hw/char/renesas_sci.h"
--#include "qemu/units.h"
- #include "qom/object.h"
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 6a42ba4e9e..e55fad5b8c 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -2,6 +2,7 @@
+ DEF_HELPER_1(rett, void, env)
+ DEF_HELPER_2(wrpsr, void, env, tl)
+ DEF_HELPER_1(rdpsr, tl, env)
++DEF_HELPER_1(rdasr17, tl, env)
+ DEF_HELPER_1(power_down, void, env)
+ #else
+ DEF_HELPER_FLAGS_2(wrpil, TCG_CALL_NO_RWG, void, env, tl)
+diff --git a/target/sparc/helper.c b/target/sparc/helper.c
+index bd10b60e4b..2247e243b5 100644
+--- a/target/sparc/helper.c
++++ b/target/sparc/helper.c
+@@ -212,4 +212,20 @@ void helper_power_down(CPUSPARCState *env)
+     env->npc = env->pc + 4;
+     cpu_loop_exit(cs);
+ }
++
++target_ulong helper_rdasr17(CPUSPARCState *env)
++{
++    CPUState *cs = env_cpu(env);
++    target_ulong val;
++
++    /*
++     * TODO: There are many more fields to be filled,
++     * some of which are writable.
++     */
++    val = env->def.nwindows - 1;    /* [4:0]   NWIN   */
++    val |= 1 << 8;                  /* [8]      V8    */
++    val |= (cs->cpu_index) << 28;   /* [31:28] INDEX  */
++
++    return val;
++}
+ #endif
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index d9304a5bc4..692ce0b010 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -37,6 +37,7 @@
  
- #define TYPE_RX62N_MCU "rx62n-mcu"
-diff --git a/hw/rx/rx-gdbsim.c b/hw/rx/rx-gdbsim.c
-index 47c17026c7..bb4746c556 100644
---- a/hw/rx/rx-gdbsim.c
-+++ b/hw/rx/rx-gdbsim.c
-@@ -20,6 +20,7 @@
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qemu/guest-random.h"
-+#include "qemu/units.h"
- #include "qapi/error.h"
- #include "hw/loader.h"
- #include "hw/rx/rx62n.h"
-diff --git a/hw/rx/rx62n.c b/hw/rx/rx62n.c
-index 4dc44afd9d..d3f61a6837 100644
---- a/hw/rx/rx62n.c
-+++ b/hw/rx/rx62n.c
-@@ -23,6 +23,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-+#include "qemu/units.h"
- #include "hw/rx/rx62n.h"
- #include "hw/loader.h"
- #include "hw/sysbus.h"
+ #ifdef TARGET_SPARC64
+ # define gen_helper_rdpsr(D, E)                 qemu_build_not_reached()
++# define gen_helper_rdasr17(D, E)               qemu_build_not_reached()
+ # define gen_helper_rett(E)                     qemu_build_not_reached()
+ # define gen_helper_power_down(E)               qemu_build_not_reached()
+ # define gen_helper_wrpsr(E, S)                 qemu_build_not_reached()
+@@ -2382,16 +2383,8 @@ static bool trans_RDY(DisasContext *dc, arg_RDY *a)
+ 
+ static TCGv do_rd_leon3_config(DisasContext *dc, TCGv dst)
+ {
+-    uint32_t val;
+-
+-    /*
+-     * TODO: There are many more fields to be filled,
+-     * some of which are writable.
+-     */
+-    val = dc->def->nwindows - 1;   /* [4:0] NWIN */
+-    val |= 1 << 8;                 /* [8]   V8   */
+-
+-    return tcg_constant_tl(val);
++    gen_helper_rdasr17(dst, tcg_env);
++    return dst;
+ }
+ 
+ TRANS(RDASR17, ASR17, do_rd_special, true, a->rd, do_rd_leon3_config)
 -- 
 2.41.0
 
