@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C6E6C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 13:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33295C48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 13:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rac8j-0002jD-3o; Thu, 15 Feb 2024 08:51:01 -0500
+	id 1rac9J-0002tZ-Ez; Thu, 15 Feb 2024 08:51:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rac8h-0002iu-4w
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 08:50:59 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rac8f-0001rZ-0C
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 08:50:58 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-563b7b48b9aso593422a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 05:50:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708005055; x=1708609855; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hyaJA0HNIcaRxRK+On+ocjBrpyNSpvXsCeRbmdnaBnk=;
- b=e0PI5BAgecye9W3W3pHxC9RFOnfA+OSFLEFbSdmiD/1RU0c8wj819a2NtyAZbD5P7F
- Cpoil1oQlgMyZ0T7fhj6nYaWnqgvUguLV9PCz95REBU1LZ3V+7WoEJ+WheyMMibOEv6m
- x0cEEcgnKXraAOFF2dEJdf4SVgvTxaUebUnyvT2HAZdR95ksMYIozO0NW3SNVuLWs5cK
- h1OFpJY+kgmh35sHhhs6kubVES54WP7njom2wJYGP4EIwEUVozTkGVpiLvt4FV/PTli6
- khEFN44Z+hG61zo11CoJBvEFBClelOGyVEMukyM+TuoWRY+45umzdw3P4XEFi2Rn/QMj
- Y+Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708005055; x=1708609855;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hyaJA0HNIcaRxRK+On+ocjBrpyNSpvXsCeRbmdnaBnk=;
- b=e6wZpFfc3Cc/zAyFBFNXRw5gTn9PnHOU0j2pAJkoS21Go7fqdA1gsb4xQT/vK5f9/Z
- 0wxqrVrrMexLV+H6SYGShBxAitJEruYWBHTQ2R3bTCe8PANkSm5s2cR7nzvM3ONJ0u84
- tE7lC5vsfXCz3rYenTPy/mRRDgV71awC7m14cYN41tW8ADvl6/zaopwbsHNyMrwhDFSS
- UFiEpeeNNPL2ZSFA6EH34e/n3ZLyrhdFIGB0JxWsc+HJW1TgRvEgn9rb9es3UdwYIe5I
- GLr7PFI2Nr7f7/AMYgl9tMLDDZh5ooQgQWLOxr6brPZTMKzxaMmOk/o8JcTffIWkYdUY
- NFOA==
-X-Gm-Message-State: AOJu0YxPrjn/yKKU5LrhB9dy7lkkNusxxcHomQcAKMlPJN3+dIxxaKOB
- A7VbpkVYxr02Yf6lpzHVdHe9LwjOzYVigaFaNf4k0TL/YhcA2RxU6UEpi/PB1AJXBDNtI8XcH8V
- MXeSaMNN6aQGtBdb/gIhaDic486tcXjndwhUuow==
-X-Google-Smtp-Source: AGHT+IGveJof3wuofXDorpGwGYKvjD8A6kLEE0AnrjHkdMsTFyli1+X3vkKqDv8fc0FWGaFNye3uN41IuZeGZbo25FI=
-X-Received: by 2002:a05:6402:2cd:b0:561:f236:a480 with SMTP id
- b13-20020a05640202cd00b00561f236a480mr1311088edx.7.1708005055239; Thu, 15 Feb
- 2024 05:50:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rac9I-0002tJ-41
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 08:51:36 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rac9G-000219-Fl
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 08:51:35 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7BC774D93C;
+ Thu, 15 Feb 2024 16:51:38 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04EB68030E;
+ Thu, 15 Feb 2024 16:51:29 +0300 (MSK)
+Message-ID: <f89ccc6e-1338-4f8e-9ea7-56e9135f110a@tls.msk.ru>
+Date: Thu, 15 Feb 2024 16:51:28 +0300
 MIME-Version: 1.0
-References: <20240213155214.13619-1-philmd@linaro.org>
-In-Reply-To: <20240213155214.13619-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Feb 2024 13:50:44 +0000
-Message-ID: <CAFEAcA-uk4Zyc=ULzESFLxWrO3Sdpm_cPKmkKsmK5obuntWYog@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] hw/arm/stellaris: QOM/QDev cleanups
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/60] virtio,pc,pci: features, cleanups, fixes
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Hyeonggon Yoo <42.hyeyoo@gmail.com>, Ira Weiny <ira.weiny@intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <cover.1707909001.git.mst@redhat.com>
+ <39efcede-002c-49e6-be36-6637f3cb16fa@tls.msk.ru>
+ <20240215083907-mutt-send-email-mst@kernel.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240215083907-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,57 +89,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Feb 2024 at 15:52, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Since v1:
-> - Rebased
-> - Split I2C reset as enter/hold/exit (Peter)
-> - Added R-b tags
->
-> Gustavo wants to access the QOM path of an input IRQ line
-> from the NVIC, but since the device is orphan he ends up
-> with this nasty path [*]:
->
->   -device ivshmem-flat,chardev=3Divshmem_flat,x-irq-qompath=3D'/machine/u=
-nattached/device[1]/nvic/unnamed-gpio-in[0]',x-bus-qompath=3D'/sysbus'
->
-> Add the missing parent so the tree is now:
->
-> (qemu) info qom-tree
-> /machine (lm3s6965evb-machine)
->   /gamepad (stellaris-gamepad)
->   /oled (ssd0323)
->   /peripheral (container)
->   /peripheral-anon (container)
->   /soc (container)
->     /v7m (armv7m)
->       /cpu (cortex-m3-arm-cpu)
->         /unnamed-gpio-in[0] (irq)
->         /unnamed-gpio-in[1] (irq)
->         /unnamed-gpio-in[2] (irq)
->         /unnamed-gpio-in[3] (irq)
->       /cpuclk (clock)
->       /nvic (armv7m_nvic)
->         /NMI[0] (irq)
->         /nvic_sysregs[0] (memory-region)
->         /systick-trigger[0] (irq)
->         /systick-trigger[1] (irq)
->         /unnamed-gpio-in[0] (irq)
->         ...
->
-> [*] https://lore.kernel.org/qemu-devel/20231127052024.435743-1-gustavo.ro=
-mero@linaro.org/
->
-> Philippe Mathieu-Daud=C3=A9 (4):
->   hw/arm/stellaris: Convert ADC controller to Resettable interface
->   hw/arm/stellaris: Convert I2C controller to Resettable interface
->   hw/arm/stellaris: Add missing QOM 'machine' parent
->   hw/arm/stellaris: Add missing QOM 'SoC' parent
+15.02.2024 16:39, Michael S. Tsirkin :
+> Maybe add
+> 
+>>> Akihiko Odaki (2):
+>>>         hw/smbios: Fix OEM strings table option validation
+>>>         hw/smbios: Fix port connector option validation
+> 
+> this
+> 
+>>> Dmitry Osipenko (1):
+>>>         virtio-gpu: Correct virgl_renderer_resource_get_info() error check
+> 
+> and this
 
+Got it.  I picked smbios ones even before your pullreq, and
+included vigrl_renderer_resource_get_info from this pullreq.
 
+Thank you for the info!
 
-Applied to target-arm.next, thanks.
+/mjt
 
--- PMM
 
