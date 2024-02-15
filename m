@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2426C4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 14:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24095C4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 15:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rad3Z-0000xJ-Uq; Thu, 15 Feb 2024 09:49:45 -0500
+	id 1radDW-0003DG-EJ; Thu, 15 Feb 2024 10:00:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad3Z-0000wz-0W
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:49:45 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1radDV-0003CR-E6
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:00:01 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rad3W-0007Qp-SH
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 09:49:44 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a28a6cef709so124335066b.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:49:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1radDR-0001Ep-RR
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 10:00:01 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-41205e19660so6929245e9.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 06:59:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708008581; x=1708613381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708009196; x=1708613996; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aqr7wWcuqB9yP7xREpIQs/l1ZNVyP4RyA++HWsSqjYk=;
- b=JhBv/dXYnzJj4ri9ts2Ui32g4euzqD+O48EcV1Iy9F1ZqWTsNoxLACcIM5y/IdhSuJ
- kYgEo10pyTExAnyQpy8kWRVJwWHy5aiis/+7n1740hj8OTrBXLb4IemcTKt9MxuegXQm
- dIiLJFzPRwNC5kQJxP1s22n1gfJBooi6dxFbrft0/KLXpsdSHZvnRwgahbN4voZmP2R9
- Qb1uMHiSSfmaC5hX3YIgIhjOcZxEFCnIAvazDIpciAiy1xrDaJaFowP14TbWrr7F5nOd
- DkNQ9GlOdWLG0Vdd3oMjRBIqMKzax4w9qyCI364PV6S6zYvZX/Wbi77UrY173DNDkJ62
- IypA==
+ bh=Scw7mWZwOesiC9kjAItUYQqno2Y53ika4VsIu9enHpk=;
+ b=sTLn+1WeFZ/K/cFAFZwmFjbWo7TacSe5ZWjI7J7lv55uXr2T5MZxInaaQoDDqNZ4+3
+ Hg5C3tTLtCTCScugUad+nF7IPjm3o0+FyOgmMZaU6ccgJMCiF1QpPppevBkK23BCtaYS
+ 2Z9gApOruVpVvWNLkPLIxrbHyQSIz4k4Ep/uwvMmzWA5jqGZ2fyqizv+2f+wrzcopRFh
+ k4xSMa/OFnJ+IyUOk8Abinup0VQTZvU1FtKeK8R6K9Ris4hRYbD316SmsnXgf/zxr2Qc
+ LqZtGWOR3CgUiqoGJXOBrW0Sp+H43tPdf/iowGrGDTM2SuQ4KUB/CyjPg8OCxdioGQGm
+ 8cBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708008581; x=1708613381;
+ d=1e100.net; s=20230601; t=1708009196; x=1708613996;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aqr7wWcuqB9yP7xREpIQs/l1ZNVyP4RyA++HWsSqjYk=;
- b=VmzE5tcbSlQO5ByH2ZK9LXuLkPUHQO0L4UZJXVw5HOIvO4ZIAwOFuXtqyxx0P/ffoK
- ia806bbaft5j2DpmxJiteJTeBL7msuoWfLdiJ4q8Tj/wDG8f7cLfdy8JIvqgMq7wQa+0
- j9lDgFLruO9fzbn+qN87CitgPIPIMfgVhkuRdsgDGjZ4aObgtWJqtPQr9Oz0+pZ95lFJ
- A83KlKQYfEUjDz1uuzAoU8SXAtlvgnpLqV3+CXyJwB9549pDf/UuRttyKasQv+HsLsyt
- Ft9/sJ4k+78b4zkixJ+/YzoFTwh7uuJWnhaVgiilXtYiSzuYW389CC1ha36qMg5RWXir
- Ocbg==
-X-Gm-Message-State: AOJu0YxaovjH9sUz5s3ZO8cESEO8VcN+8CR1sk/6WDRyfSRm2gAqpEfM
- S+KDLu3C3fkcfFf7/WhUg8TFX+mSSnbuR54+Wn4ZJ7q1A1GIqJ6kVtLhkOfou/m0SKHb214Ymtx
- B8TM=
-X-Google-Smtp-Source: AGHT+IHR+MQNfCCXanh9nA0RYrDgNOW0/02hZeQFNv3c75DzG6ULdbqrtxiRs3IUDgxPgF6XSetbYg==
-X-Received: by 2002:a17:906:f156:b0:a3d:7c4f:9c5b with SMTP id
- gw22-20020a170906f15600b00a3d7c4f9c5bmr1580255ejb.66.1708008580988; 
- Thu, 15 Feb 2024 06:49:40 -0800 (PST)
+ bh=Scw7mWZwOesiC9kjAItUYQqno2Y53ika4VsIu9enHpk=;
+ b=RYYbK5XveaAd36QtbB0yGL39P3fq2qtqrOv4aDEGbjdlE4ZQGyeXeVQgtDeNqjf7Y0
+ K70dcDh7uHhqe41wy28v0SP5XNQMFsXJdbBfGqftfuJjsHH3GIAVj+c5gH5K/eTU/YSq
+ vIaxvUU617e0rtk/DsI2TxB3Vkk3CCvqJqm0y/FURwC/6xyW6S9AHfHt+/j/7YT24d0G
+ GP27kmqfc4qqxIZ8mgvQp3w1zVRsqYniu1zcYat5kXc300CblJAND/rR2Elmy5ugbI//
+ 6jkm3+0BIShTdFpbkImz9va1iLIRyNbaopMH0MTDZCqaavur5Cabrcf0kDxO+cj5YOuG
+ gBMg==
+X-Gm-Message-State: AOJu0YwZMocEL3d9CRSQUw+gRnKCeJXEIt3lKfk1nE407qU5wu2AnI1e
+ 6F5++To528eCBqdwJxQ4sH4F8Au9BPjs2RM4KHvTW+5eEKiUjKzdrKNwe2hxHxV5vu5SnxB//wD
+ /3U4=
+X-Google-Smtp-Source: AGHT+IFoQjn9MOharayAQZLJaW5gKWNow6jGtGu9nuegCBrS48/wa1dre4Q9Bo7itD8U3wC5uyO0BQ==
+X-Received: by 2002:a05:600c:4f4e:b0:412:943:9dca with SMTP id
+ m14-20020a05600c4f4e00b0041209439dcamr1766617wmq.29.1708009195785; 
+ Thu, 15 Feb 2024 06:59:55 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.193.50])
  by smtp.gmail.com with ESMTPSA id
- gs36-20020a1709072d2400b00a3d0a094574sm629020ejc.66.2024.02.15.06.49.39
+ hi11-20020a05600c534b00b00410dd253008sm5274074wmb.42.2024.02.15.06.59.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 06:49:40 -0800 (PST)
-Message-ID: <b6503fb9-b3a3-4b28-a18a-3254dab1a6bd@linaro.org>
-Date: Thu, 15 Feb 2024 15:49:38 +0100
+ Thu, 15 Feb 2024 06:59:55 -0800 (PST)
+Message-ID: <6b3deedb-2a9d-4ed1-b8a6-5bb43b77b6ff@linaro.org>
+Date: Thu, 15 Feb 2024 15:59:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/dma: Pass parent object to i8257_dma_init()
+Subject: Re: [PATCH 0/2] hw/sparc/leon3: Minor cleanups
 Content-Language: en-US
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aurelien Jarno
- <aurelien@aurel32.net>, Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- qemu-trivial@nongnu.org, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20240213114426.87836-1-philmd@linaro.org>
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>,
+ Fabien Chouteau <chouteau@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20240130113102.6732-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240213114426.87836-1-philmd@linaro.org>
+In-Reply-To: <20240130113102.6732-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,20 +98,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/2/24 12:44, Philippe Mathieu-Daudé wrote:
-> Set I8257 instances parent (migration isn't affected).
+On 30/1/24 12:31, Philippe Mathieu-Daudé wrote:
+> Minor cleanups noticed while reviewing Clément series:
+> https://lore.kernel.org/qemu-devel/20240116130213.172358-1-chigot@adacore.com/
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/dma/i8257.h | 2 +-
->   hw/dma/i82374.c        | 2 +-
->   hw/dma/i8257.c         | 4 +++-
->   hw/i386/pc_piix.c      | 2 +-
->   hw/isa/lpc_ich9.c      | 2 +-
->   hw/isa/piix.c          | 2 +-
->   hw/isa/vt82c686.c      | 2 +-
->   hw/mips/jazz.c         | 2 +-
->   8 files changed, 10 insertions(+), 8 deletions(-)
+> Philippe Mathieu-Daudé (2):
+>    target/sparc: Provide hint about CPUSPARCState::irq_manager member
+>    hw/sparc/leon3: Remove duplicated code
 
-Patch queued.
+Series queued.
+
 
