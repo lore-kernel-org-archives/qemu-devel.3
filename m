@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D92BC4829E
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 22:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF2CC48BC4
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 22:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rakCX-0007yo-Vu; Thu, 15 Feb 2024 17:27:30 -0500
+	id 1rakPB-0005gp-UG; Thu, 15 Feb 2024 17:40:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rakCX-0007yb-7C
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:27:29 -0500
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rakPB-0005gd-0P
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:40:33 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rakCU-00041H-Kk
- for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:27:28 -0500
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-5ce9555d42eso1132927a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 14:27:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rakP9-00065D-A7
+ for qemu-devel@nongnu.org; Thu, 15 Feb 2024 17:40:32 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d8ef977f1eso12362925ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 14:40:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708036045; x=1708640845; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NW98hdEw/sMWsY0AmI/vKgALmUcYo83Mqgh3Pf6afYw=;
- b=Tr3wLGuIC9DtASyXLhX9/uqdsyNVZYv7nahbKk8UkuBjQ2pPlPEKNVIKKY6+N4C0OX
- jlxisHVhFzlPngosBMgresWBiLGdntpE+McTQCvvXN4Gx50/Y1+KmrW51cEeSoy5vQ7j
- KnBZUpQEl67daJ0CLeVsyupyFm10iE/dpvP3PVQhl/pMIg72OY6P+IuCAf8YyJVlE9oX
- Vm/bWe79PqMtFluf24s16LUoyRAJzlpBaKeSgGDB0kWo5A1arJqXb+1Tmo3e20y28nWX
- nFxwU1YywTFNlA9dpfW3sjAmhYosXwVwoPBCvougftam4zlcF2zgmwgWnYabdZRLhKCF
- h17w==
+ d=ventanamicro.com; s=google; t=1708036829; x=1708641629; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R2nCob8e/9MrOFcmg40CV49q7uI9/BynfYgCCukIYUA=;
+ b=Kim9+sthSJR06vc3zSoVq98sqmdVg0VVXXsJPeVqoaStr5tuP3Zr2Xdxqq+xgy1EwF
+ LiI5szZEB6aagcLJvfmoW7/dgTWUpg4rWX9d/CtumOd+4AgOde4p6H3NIkjSyIdXhOY9
+ UBx2DAVD8j7nui+RodocJzBoL4lQHj2B8oVptXxsAm3a05OAb+eqFCYWSZwiVHto1+1A
+ Jlg4g6u/RDTa2nC2+wLBGTRtMCvR1VvMOZhU4e5/xxydC+6DqWZwqSroGZip4aMBxJbZ
+ BrdNZYKDKnj5x8O1ZJP9/rVT6Wuj91i1M4enxEJRmTN0fbCyMGpNGcyuLD4uAAtboCmM
+ pn+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708036045; x=1708640845;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NW98hdEw/sMWsY0AmI/vKgALmUcYo83Mqgh3Pf6afYw=;
- b=RsadrkSgI0mvKpgkbSsToRKzFXe7fpDJbEtC9ch4EjYFvVFrgEF+9yYdngtE9i8iRZ
- KnyBQPxagsZOAAKUU2CsRbz2WPdoDTFOC6kHxIhst8SeqUibeR6krcHTVq07jFPG8tg0
- XVM7lAyt0h+OtQGdbbDjUK3tIFm7GKnPYIP4fqPuGMlDqkMrsHxH2NVxO5HaiOCtiVgt
- FhEiZiRNB+B9g0A55BO/9CPE6wgTcRnleX0+AJYOVzQe37zxRDITyavAYgJ7WgmdMRWv
- EZMJcTcJAsuptQf4OgjASdbRqVn+UpQ15/vmnv2JS7S6lHt9ZEYkIW62UFk+MNzEvP+f
- AL2Q==
-X-Gm-Message-State: AOJu0Yw88nxkvsF9r3R+PtSeIvOVl5gxQQQc3Dwylti6SBxUaOu0rk+8
- WHSMKAUNXkJsA5B9GMfQY7un+4NrFXkGbk8RjWDkO4oAMjR/X0QmjDDd01Cpca8=
-X-Google-Smtp-Source: AGHT+IEUFMZejuVXjNahOg+Z79CctXVmTu647N/wWH81vZSrjS3dIl+fUVV9/6I8xLoxiX7OBZTGpQ==
-X-Received: by 2002:a05:6a20:ce93:b0:19e:b925:f190 with SMTP id
- if19-20020a056a20ce9300b0019eb925f190mr3120001pzb.19.1708036044749; 
- Thu, 15 Feb 2024 14:27:24 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- d1-20020a056a0010c100b006e10f315ac7sm1827546pfu.80.2024.02.15.14.27.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 14:27:24 -0800 (PST)
-Message-ID: <2d211317-873e-43c6-a246-bd8bf84f048b@linaro.org>
-Date: Thu, 15 Feb 2024 12:27:16 -1000
+ d=1e100.net; s=20230601; t=1708036829; x=1708641629;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R2nCob8e/9MrOFcmg40CV49q7uI9/BynfYgCCukIYUA=;
+ b=wSgaXbNIPVueLDA3U+ir4sKlwQ3cp+MDO1IbKEmWRnhscHqPo7L7gRj467ZOR+GEpZ
+ JGw73DVX+pvHA0/ovCG23kBeIVeDJtRQ9hWZpcvE44KFSO1nlnZeQ23A6qWQ1hmVkw21
+ oSHJVstHKVkVDpaEU3Q3ZvoxXjt6MCdVSDJ50cH6QXrTtgEtcPCGg9DokEdmlPskD9sw
+ BIZHh4lkGEBZM37OmpGwse98rb3YgRNamVSLjGhBx4DcHq2LOlDj9bhH18flVHB4wew9
+ jUiC6dx3oPF8W97RSDls8MaXr5YhXYdrW9UcdIMZr9zsOnwgTg7pbEZ4n+EdM29rv5VW
+ /d9g==
+X-Gm-Message-State: AOJu0Ywc/bDNJ1UdEi6j6WA3m3kFvexWPQkoafsl9+9MrX6agHjgSD81
+ Ew1chq6RuwxVjsA1s6BMLgUrlUOt+RCMSeM5QsCLUcEuioPYfuOG3DsG1e4jqvkFZGedKw6zCJk
+ t
+X-Google-Smtp-Source: AGHT+IEnCYazQ8KlkmqqjJQ3FCbFoiCNy17z4ZTbct4hW7Boeopm8BdXKvTrxdbhWKTClDAhJU4ZHw==
+X-Received: by 2002:a17:902:7ed0:b0:1d9:a4bb:29f2 with SMTP id
+ p16-20020a1709027ed000b001d9a4bb29f2mr2462100plb.46.1708036829017; 
+ Thu, 15 Feb 2024 14:40:29 -0800 (PST)
+Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
+ j2-20020a170902758200b001db40866e25sm1733679pll.308.2024.02.15.14.40.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Feb 2024 14:40:28 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v4 1/6] target/riscv/tcg: set 'mmu' with 'satp' in
+ cpu_set_profile()
+Date: Thu, 15 Feb 2024 19:39:50 -0300
+Message-ID: <20240215223955.969568-2-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240215223955.969568-1-dbarboza@ventanamicro.com>
+References: <20240215223955.969568-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/10] Optimize buffer_is_zero
-Content-Language: en-US
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
-References: <20240215081449.848220-1-richard.henderson@linaro.org>
- <e1260284-cd5d-7a92-d8fc-21c0aface21c@ispras.ru>
- <72d0e01e-ca54-4fc1-805c-b8de7175d64f@linaro.org>
- <fa83e6cb-7270-0bf0-99f4-68d21dbdaa1c@ispras.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <fa83e6cb-7270-0bf0-99f4-68d21dbdaa1c@ispras.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,46 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/24 11:36, Alexander Monakov wrote:
-> 
-> On Thu, 15 Feb 2024, Richard Henderson wrote:
-> 
->> On 2/14/24 22:57, Alexander Monakov wrote:
->>>
->>> On Wed, 14 Feb 2024, Richard Henderson wrote:
->>>
->>>> v3: https://patchew.org/QEMU/20240206204809.9859-1-amonakov@ispras.ru/
->>>>
->>>> Changes for v4:
->>>>     - Keep separate >= 256 entry point, but only keep constant length
->>>>       check inline.  This allows the indirect function call to be hidden
->>>>       and optimized away when the pointer is constant.
->>>
->>> Sorry, I don't understand this. Most of the improvement (at least in our
->>> testing) comes from inlining the byte checks, which often fail and eliminate
->>> call overhead entirely. Moving them out-of-line seems to lose most of the
->>> speedup the patchset was bringing, doesn't it? Is there some concern I am
->>> not seeing?
->>
->> What is your benchmarking method?
-> 
-> Converting a 4.4 GiB Windows 10 image to qcow2. It was mentioned in v1 and v2,
-> are you saying they did not reach your inbox?
-> https://lore.kernel.org/qemu-devel/20231013155856.21475-1-mmromanov@ispras.ru/
-> https://lore.kernel.org/qemu-devel/20231027143704.7060-1-mmromanov@ispras.ru/
+Recent changes in options handling removed the 'mmu' default the bare
+CPUs had, meaning that we must enable 'mmu' by hand when using the
+rva22s64 profile CPU.
 
-I'm saying that this is not a reproducible description of methodology.
+Given that this profile is setting a satp mode, it already implies that
+we need a 'mmu'. Enable the 'mmu' in this case.
 
-With master, so with neither of our changes:
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/tcg/tcg-cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I tried converting an 80G win7 image that I happened to have lying about, I see 
-buffer_zero_avx2 with only 3.03% perf overhead.  Then I tried truncating the image to 16G 
-to see if having the entire image in ram would help -- not yet, still only 3.4% perf 
-overhead.  Finally, I truncated the image to 4G and saw 2.9% overhead.
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index dd5228c288..ee4c349972 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1075,6 +1075,7 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
+ 
+ #ifndef CONFIG_USER_ONLY
+     if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
++        object_property_set_bool(obj, "mmu", true, NULL);
+         const char *satp_prop = satp_mode_str(profile->satp_mode,
+                                               riscv_cpu_is_32bit(cpu));
+         object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
+-- 
+2.43.0
 
-So... help be out here.  I would like to be able to see results that are at least vaguely 
-similar.
-
-
-r~
 
