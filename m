@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159B2C48BC4
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 04:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C179DC4829E
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Feb 2024 04:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raTIY-0001ko-3T; Wed, 14 Feb 2024 23:24:34 -0500
+	id 1raTcy-0006S3-WD; Wed, 14 Feb 2024 23:45:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raTIW-0001kY-99; Wed, 14 Feb 2024 23:24:32 -0500
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ id 1raTcv-0006Qv-0Y; Wed, 14 Feb 2024 23:45:38 -0500
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1raTIT-0007Dn-NP; Wed, 14 Feb 2024 23:24:32 -0500
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-7cedcea89a0so331833241.1; 
- Wed, 14 Feb 2024 20:24:29 -0800 (PST)
+ id 1raTcs-0004h1-S2; Wed, 14 Feb 2024 23:45:36 -0500
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-4c127eb4d6dso48697e0c.1; 
+ Wed, 14 Feb 2024 20:45:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1707971068; x=1708575868; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1707972333; x=1708577133; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aThjahPwQG6HU2V/gQbLgZISR8NDcuVOYy+dNVHWhjg=;
- b=bXsZUAM/sNhnB2+bamGbKAc4eR+b1DBuj3hfdbtgcaaUzqUrmifs3B6ce6nl2Go1iw
- TCdV7ijbgGYWgL/WulvPycLt2cYimSFT/Yinkw+L+4H4lAg0jEl6kx/pqHBtQJmtDVGI
- TAso57Y2rM5wGQ8fmSKi2ee2O3QmDIvFrH7KFeQkCrGc2triCZFr9qcXB2oApzDGkCvs
- LD5BPQUj0r2DFf/fPZM/QLeFv7Is1QtxcVQDQe7EF/x+8T2Te57oxC/j5VBvm40gz1Lz
- sxbaWaPaY2KauveajmlxYe/orA8BR/eCTZLe0jksos5AFp4ifa+0WHws+2OmnXxa1hft
- HMXQ==
+ bh=sVq0HWF57K+0IsviE1SfBthtou27mZWkM9cWtpqRjhU=;
+ b=RrSt+bxXQ0t5d/fvg7fRMR7ica4cjzhsBI/mF3+fHLGSovLqEQeC0V7zSBzxgX0OmD
+ +fVNCWnSksbJBhZZgr2ISvq1z9q+CobPe3Iipon87RBI9drpJStBLqm02eQe3xc2jCtH
+ 0+ONPDcfVIoFgNAlDlYtidT/Wxlj1WUGp1d8XMKGGOBuS1qpUiRyODPfESw8XC9t4tMI
+ /LkpNWr9Qa1/frDMO7UClOH/EqLoUYSj3pJ4kRn1+j5KF9wy0TrNdr4fo4aD2hGMeDpp
+ mLlJ1IyVTnUqGXER7uyx51Q9gWyf/VjaY5U4WgRZnzflEVfOl1IZyFbs7RAC1xog6UFY
+ b1zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1707971068; x=1708575868;
+ d=1e100.net; s=20230601; t=1707972333; x=1708577133;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aThjahPwQG6HU2V/gQbLgZISR8NDcuVOYy+dNVHWhjg=;
- b=Qx/1v+U9qg2Npg1vi+AZtrfSJVpp2mVJPnFL7MZDOQ/sXploJRUo/vG6aWXANfe+xY
- 58wS2pdJntX/KvLDQ7DPtlcI1QnjFUN9UvBef2pLw3+Xv6ZzB6aNYQHvk7Ccl/0o6B3h
- eZv/YNoo1YRKdaWXl59YoJ2RVRx3k+ah5r9frTYGX1OavFh58Dl/D8injCf15kiol9Gw
- aYc9LObel/+YAD/z4t+BHUXJGwF/3mu1RZMPS+lGdQV3LLljjSTDk/FbHzd4xjv60Ytf
- 4eIBqmdO+Yfo3zRAdM0g0iroSBWfqUQmmnrJdMykko2pWn7/6qfT/AL+1Evsp/KGTMwa
- /4Zw==
+ bh=sVq0HWF57K+0IsviE1SfBthtou27mZWkM9cWtpqRjhU=;
+ b=C9PW3XDvAxXgkYZE4vC0lgg351dODRgvQOlyON0MxOmFzRZxNnU0QMQKksGG1xgz4t
+ IbB4qDum5gt5f5d2l1q31OibJ4mqVWWGWVhOUVwAjU94xhrRX1+SXJYnYMuK4vSB9tPa
+ LohG9fzvBPzKqz7SQofFXYk/hdkhPJer2LsMO5dhjJvOlMN+5hGm/igwCn0B8ZnlvZS7
+ JQvdSEwDGP3GX9TPd7YymebLLV98Wne7e5GIhrrIoFF6H5eb9HHbeJXuFDRc6vLqA2U5
+ e7aR+XJObjJdg5mxechax+nZSi3V/RuH1cqxs8pexJ+EoHKcin/9ugbD/q6K7dYVM+PR
+ iRIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtqQAbTS2WJZ5tX0TX2Q/2mIzFpoAOCajxmq3avmWrJBdc6VaoK3Uo5kUOHa/dzkE8iSq8Ske2eoI9rQUJjOjAKXdMsEC5wZBAED/lKgs6vb1vRmEtO6f989hkZA==
-X-Gm-Message-State: AOJu0YxyXTO24s5LoMtGtre+K+6TzggpLKBERvgVKNN3bIiKWg5ecZC0
- zuMbkhUlGHvT6UHy5zzhQPOdPjf8cJufTjnoDDSXqWmJ+gH6ic7ApOmSumKGxl9Yp3/osXPBvV0
- RoyE/bqaUERyE+Ro7mpnBJtOOuCw=
-X-Google-Smtp-Source: AGHT+IET9olgyYCFC0gw5Eod2df3fC1iOheySN/QNIKtpqzYfaoXAASJfsxFhuTMe/wW2UQ6bu8j4cdCOL2DDomIDBI=
-X-Received: by 2002:a67:e8c5:0:b0:46e:d0cd:428d with SMTP id
- y5-20020a67e8c5000000b0046ed0cd428dmr855230vsn.33.1707971068227; Wed, 14 Feb
- 2024 20:24:28 -0800 (PST)
+ AJvYcCWLtPq9tD0bHVVCVS4OjCon6yydCdYV2Sa6HP0Ii1YVfAhfpj8hVPnY+mY8IJrr7zdcqKg6hCp55CZswFh0ZL8AqylMqxd9HjjgthP3v6cRJ1zSqVdIsgmDF1sQ2g==
+X-Gm-Message-State: AOJu0YwRbeERAaZzAq646mU3rpBw/nsZPn3PKs9JvokG7Wqg3lx8uAkQ
+ aw6W26kfodMRmaqw6SkJ1pZvkOOvZb982RRoOv6fG15jA0b4YnwSlNK5D/92ZgmZq1dTlrGGIDp
+ PhZx9ICboBUl3LDN0WCRXslE8oq8=
+X-Google-Smtp-Source: AGHT+IFIXuTMxTchfs8I7UkTeECkTa1YwSt3Txo9D7lqVStiWrUMoAqauFKYY+8wyymOQpNjbnAtXI8CzwWzQJHfDD4=
+X-Received: by 2002:a05:6122:290b:b0:4b7:2382:b4 with SMTP id
+ fm11-20020a056122290b00b004b7238200b4mr3819870vkb.6.1707972333248; Wed, 14
+ Feb 2024 20:45:33 -0800 (PST)
 MIME-Version: 1.0
-References: <20240204054228.651-1-zhiwei_liu@linux.alibaba.com>
- <20240204054228.651-3-zhiwei_liu@linux.alibaba.com>
- <CAKmqyKNGMjLg+JjJZAp+EsmfaWAyT7XiHZzBXZxeghS0hv6REg@mail.gmail.com>
- <CAEg0e7i6zaEhyfhRFKcTYjkCqRCzJ5eB+0EHUDVA6t-ypL78eg@mail.gmail.com>
-In-Reply-To: <CAEg0e7i6zaEhyfhRFKcTYjkCqRCzJ5eB+0EHUDVA6t-ypL78eg@mail.gmail.com>
+References: <20240109002554.646572-1-atishp@rivosinc.com>
+ <20240109002554.646572-6-atishp@rivosinc.com>
+In-Reply-To: <20240109002554.646572-6-atishp@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 15 Feb 2024 14:24:02 +1000
-Message-ID: <CAKmqyKPgAQ4JaSNRmFfR-=w3daDkag-ORz0Ckn7r1JNmf8X2oA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/riscv: Support xtheadmaee for thead-c906
-To: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>
-Cc: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
- Alistair.Francis@wdc.com, palmer@dabbelt.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, qemu-riscv@nongnu.org, 
- bjorn@kernel.org, Philipp Tomsich <philipp.tomsich@vrull.eu>
+Date: Thu, 15 Feb 2024 14:45:06 +1000
+Message-ID: <CAKmqyKNEZB3XrZ=p71cOEbZabpYYRwpDhc3V8HFCY2yE-kxwgw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] target/riscv: Implement privilege mode filtering
+ for cycle/instret
+To: Atish Patra <atishp@rivosinc.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, 
+ Weiwei Li <liwei1518@gmail.com>, kaiwenxue1@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,419 +97,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 5, 2024 at 6:37=E2=80=AFPM Christoph M=C3=BCllner
-<christoph.muellner@vrull.eu> wrote:
+On Tue, Jan 9, 2024 at 10:29=E2=80=AFAM Atish Patra <atishp@rivosinc.com> w=
+rote:
 >
-> On Mon, Feb 5, 2024 at 3:42=E2=80=AFAM Alistair Francis <alistair23@gmail=
-.com> wrote:
-> >
-> > On Sun, Feb 4, 2024 at 3:44=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.ali=
-baba.com> wrote:
-> > >
-> > > This patch set fix the regression on kernel pointed by Bj=C3=B6rn T=
-=C3=B6pel in
-> > > https://www.mail-archive.com/qemu-devel@nongnu.org/msg1018232.html.
-> > >
-> > > thead-c906 uses some flags in pte [60-63] bits. It has history reason=
-s that
-> > > SVPBMT didn't exist when thead-c906 came to wotrld. We named this fea=
-ture as
-> > > xtheadmaee[1]. this feature is controlled by an custom CSR named mxst=
-atus,
-> > > whose maee field encodes whether enable the pte [60-63] bits.
-> > >
-> > > [1]:https://github.com/T-head-Semi/thead-extension-spec/blob/master/x=
-theadmaee.adoc
-> > >
-> > > Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> > > ---
-> > > v1->v2:
-> > > 1) Remove mxstatus user mode access
-> > > 2) Add reference documentation to the commit log
-> > > ---
-> > >  target/riscv/cpu.c         |  6 ++++
-> > >  target/riscv/cpu.h         |  9 ++++++
-> > >  target/riscv/cpu_bits.h    |  6 ++++
-> > >  target/riscv/cpu_cfg.h     |  4 ++-
-> > >  target/riscv/cpu_helper.c  | 25 ++++++++-------
-> > >  target/riscv/meson.build   |  1 +
-> > >  target/riscv/tcg/tcg-cpu.c |  7 +++-
-> > >  target/riscv/xthead_csr.c  | 65 ++++++++++++++++++++++++++++++++++++=
-++
-> > >  8 files changed, 110 insertions(+), 13 deletions(-)
-> > >  create mode 100644 target/riscv/xthead_csr.c
-> > >
-> > > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > > index 2dcbc9ff32..bfdbb0539a 100644
-> > > --- a/target/riscv/cpu.c
-> > > +++ b/target/riscv/cpu.c
-> > > @@ -171,6 +171,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
-> > >      ISA_EXT_DATA_ENTRY(xtheadmemidx, PRIV_VERSION_1_11_0, ext_xthead=
-memidx),
-> > >      ISA_EXT_DATA_ENTRY(xtheadmempair, PRIV_VERSION_1_11_0, ext_xthea=
-dmempair),
-> > >      ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsy=
-nc),
-> > > +    ISA_EXT_DATA_ENTRY(xtheadmaee, PRIV_VERSION_1_11_0, ext_xtheadma=
-ee),
-> > >      ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVe=
-ntanaCondOps),
-> > >
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > > @@ -506,6 +507,7 @@ static void rv64_thead_c906_cpu_init(Object *obj)
-> > >
-> > >      cpu->cfg.mvendorid =3D THEAD_VENDOR_ID;
-> > >  #ifndef CONFIG_USER_ONLY
-> > > +    cpu->cfg.ext_xtheadmaee =3D true;
-> > >      set_satp_mode_max_supported(cpu, VM_1_10_SV39);
-> > >  #endif
-> > >
-> > > @@ -949,6 +951,9 @@ static void riscv_cpu_reset_hold(Object *obj)
-> > >      }
-> > >
-> > >      pmp_unlock_entries(env);
-> > > +    if (riscv_cpu_cfg(env)->ext_xtheadmaee) {
-> > > +        env->th_mxstatus |=3D TH_MXSTATUS_MAEE;
-> > > +    }
-> > >  #endif
-> > >      env->xl =3D riscv_cpu_mxl(env);
-> > >      riscv_cpu_update_mask(env);
-> > > @@ -1439,6 +1444,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_e=
-xts[] =3D {
-> > >      MULTI_EXT_CFG_BOOL("xtheadmemidx", ext_xtheadmemidx, false),
-> > >      MULTI_EXT_CFG_BOOL("xtheadmempair", ext_xtheadmempair, false),
-> > >      MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
-> > > +    MULTI_EXT_CFG_BOOL("xtheadmaee", ext_xtheadmaee, false),
-> > >      MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false=
-),
-> > >
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > > index 5f3955c38d..1bacf40355 100644
-> > > --- a/target/riscv/cpu.h
-> > > +++ b/target/riscv/cpu.h
-> > > @@ -412,6 +412,14 @@ struct CPUArchState {
-> > >      target_ulong cur_pmmask;
-> > >      target_ulong cur_pmbase;
-> > >
-> > > +    union {
-> > > +        /* Custom CSR for Xuantie CPU */
-> > > +        struct {
-> > > +#ifndef CONFIG_USER_ONLY
-> > > +            target_ulong th_mxstatus;
-> > > +#endif
-> > > +        };
-> > > +    };
-> > >      /* Fields from here on are preserved across CPU reset. */
-> > >      QEMUTimer *stimer; /* Internal timer for S-mode interrupt */
-> > >      QEMUTimer *vstimer; /* Internal timer for VS-mode interrupt */
-> > > @@ -799,6 +807,7 @@ void riscv_add_satp_mode_properties(Object *obj);
-> > >  bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
-> > >
-> > >  /* CSR function table */
-> > > +extern riscv_csr_operations th_csr_ops[CSR_TABLE_SIZE];
-> > >  extern riscv_csr_operations csr_ops[CSR_TABLE_SIZE];
-> > >
-> > >  extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
-> > > diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> > > index e116f6c252..67ebb1cefe 100644
-> > > --- a/target/riscv/cpu_bits.h
-> > > +++ b/target/riscv/cpu_bits.h
-> > > @@ -897,4 +897,10 @@ typedef enum RISCVException {
-> > >  /* JVT CSR bits */
-> > >  #define JVT_MODE                           0x3F
-> > >  #define JVT_BASE                           (~0x3F)
-> > > +
-> > > +/* Xuantie custom CSRs */
-> > > +#define CSR_TH_MXSTATUS 0x7c0
-> > > +
-> > > +#define TH_MXSTATUS_MAEE_SHIFT  21
-> > > +#define TH_MXSTATUS_MAEE        (0x1 << TH_MXSTATUS_MAEE_SHIFT)
-> > >  #endif
-> > > diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> > > index 780ae6ef17..3735c69fd6 100644
-> > > --- a/target/riscv/cpu_cfg.h
-> > > +++ b/target/riscv/cpu_cfg.h
-> > > @@ -136,6 +136,7 @@ struct RISCVCPUConfig {
-> > >      bool ext_xtheadmemidx;
-> > >      bool ext_xtheadmempair;
-> > >      bool ext_xtheadsync;
-> > > +    bool ext_xtheadmaee;
-> > >      bool ext_XVentanaCondOps;
-> > >
-> > >      uint32_t pmu_mask;
-> > > @@ -176,7 +177,8 @@ static inline bool has_xthead_p(const RISCVCPUCon=
-fig *cfg)
-> > >             cfg->ext_xtheadcondmov ||
-> > >             cfg->ext_xtheadfmemidx || cfg->ext_xtheadfmv ||
-> > >             cfg->ext_xtheadmac || cfg->ext_xtheadmemidx ||
-> > > -           cfg->ext_xtheadmempair || cfg->ext_xtheadsync;
-> > > +           cfg->ext_xtheadmempair || cfg->ext_xtheadsync ||
-> > > +           cfg->ext_xtheadmaee;
-> > >  }
-> > >
-> > >  #define MATERIALISE_EXT_PREDICATE(ext) \
-> > > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> > > index c7cc7eb423..5c1f380276 100644
-> > > --- a/target/riscv/cpu_helper.c
-> > > +++ b/target/riscv/cpu_helper.c
-> > > @@ -812,6 +812,7 @@ static int get_physical_address(CPURISCVState *en=
-v, hwaddr *physical,
-> > >      int napot_bits =3D 0;
-> > >      target_ulong napot_mask;
-> > >
-> > > +    bool skip_pte_check =3D env->th_mxstatus & TH_MXSTATUS_MAEE;
-> > >      /*
-> > >       * Check if we should use the background registers for the two
-> > >       * stage translation. We don't need to check if we actually need
-> > > @@ -974,18 +975,19 @@ restart:
-> > >          if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
-> > >              ppn =3D pte >> PTE_PPN_SHIFT;
-> > >          } else {
-> > > -            if (pte & PTE_RESERVED) {
-> > > -                return TRANSLATE_FAIL;
-> > > -            }
-> > > +            if (!skip_pte_check) {
-> > > +                if (pte & PTE_RESERVED) {
-> > > +                    return TRANSLATE_FAIL;
-> > > +                }
-> > >
-> > > -            if (!pbmte && (pte & PTE_PBMT)) {
-> > > -                return TRANSLATE_FAIL;
-> > > -            }
-> > > +                if (!pbmte && (pte & PTE_PBMT)) {
-> > > +                    return TRANSLATE_FAIL;
-> > > +                }
-> > >
-> > > -            if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
-> > > -                return TRANSLATE_FAIL;
-> > > +                if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N=
-)) {
-> > > +                    return TRANSLATE_FAIL;
-> > > +                }
-> > >              }
-> > > -
-> > >              ppn =3D (pte & (target_ulong)PTE_PPN_MASK) >> PTE_PPN_SH=
-IFT;
-> >
-> > Unfortunately we won't be able to take this upstream. This is core
-> > QEMU RISC-V code that is now being changed against the spec. I think
-> > adding the CSR is fine, but we can't take this core change.
-> >
-> > A fix that works for everyone should be supporting the th_mxstatus
-> > CSR, but don't support setting the TH_MXSTATUS_MAEE bit. That way
-> > guests can detect that the bit isn't set and not use the reserved bits
-> > in the PTE. From my understanding the extra PTE bits are related to
-> > cache control in the hardware, which we don't need here
+> Privilege mode filtering can also be emulated for cycle/instret by
+> tracking host_ticks/icount during each privilege mode switch. This
+> patch implements that for both cycle/instret and mhpmcounters. The
+> first one requires Smcntrpmf while the other one requires Sscofpmf
+> to be enabled.
 >
-> Sounds good! Let me recap the overall plan:
-> * QEMU does not emulate MAEE, but signals that MAEE is not available
-> by setting TH_MXSTATUS_MAEE to 0.
-
-Yep!
-
-> * Consequence: The c906 emulation does not enable any page-base memory
-> attribute mechanism.
-
-Exactly
-
-> * OpenSBI tests the TH_MXSTATUS_MAEE bit (M-mode only) and provides
-> that information to user-space (e.g. DTB).
-
-To the kernel, but yep!
-
-> * The current Linux errata code will be enhanced to not assume MAEE
-> for each core with T-Head vendor ID, but also query the MAEE bit and
-> ensure it is set.
-
-I feel like it should already do that :)
-
-> * Booting on a QEMU c906 will not enable MAEE, but will still boot.
-
-That's the hope
-
+> The cycle/instret are still computed using host ticks when icount
+> is not enabled. Otherwise, they are computed using raw icount which
+> is more accurate in icount mode.
 >
-> We never had a complete MAEE implementation upstream, because that's not =
-needed.
-> But until recently we could mess with reserved bits how we want.
-> Now that QEMU is more restrictive about reserved bits in the PTEs, we
-> need to address this in the kernel.
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> ---
+>  target/riscv/cpu.h        | 11 +++++
+>  target/riscv/cpu_helper.c |  9 +++-
+>  target/riscv/csr.c        | 95 ++++++++++++++++++++++++++++++---------
+>  target/riscv/pmu.c        | 43 ++++++++++++++++++
+>  target/riscv/pmu.h        |  2 +
+>  5 files changed, 136 insertions(+), 24 deletions(-)
 >
-> The downside is, that the kernel now sees a c906 CPU without MAEE and
-> such a CPU does not exist.
-
-Yeah, that is the downside. But in reality a CPU could exist that
-doesn't allow seeing MAEE, so I don't think it's that insane.
-
-> But that's fine, because this does not require extra code to handle this =
-case.
-> Also, the additional check for the MAEE bit in the kernel errata
-> probing code is likely needed anyway for future T-Head CPUs.
-
-Exactly
-
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 34617c4c4bab..40d10726155b 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -136,6 +136,15 @@ typedef struct PMUCTRState {
+>      target_ulong irq_overflow_left;
+>  } PMUCTRState;
 >
-> BTW, what was the reason for QEMU to prevent setting reserved bits in PTE=
-s?
+> +typedef struct PMUFixedCtrState {
+> +        /* Track cycle and icount for each privilege mode */
+> +        uint64_t counter[4];
+> +        uint64_t counter_prev[4];
+> +        /* Track cycle and icount for each privilege mode when V =3D 1*/
+> +        uint64_t counter_virt[2];
+> +        uint64_t counter_virt_prev[2];
+> +} PMUFixedCtrState;
+> +
+>  struct CPUArchState {
+>      target_ulong gpr[32];
+>      target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
+> @@ -334,6 +343,8 @@ struct CPUArchState {
+>      /* PMU event selector configured values for RV32 */
+>      target_ulong mhpmeventh_val[RV_MAX_MHPMEVENTS];
+>
+> +    PMUFixedCtrState pmu_fixed_ctrs[2];
+> +
+>      target_ulong sscratch;
+>      target_ulong mscratch;
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index e7e23b34f455..3dddb1b433e8 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -715,8 +715,13 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_u=
+long newpriv)
+>  {
+>      g_assert(newpriv <=3D PRV_M && newpriv !=3D PRV_RESERVED);
+>
+> -    if (icount_enabled() && newpriv !=3D env->priv) {
+> -        riscv_itrigger_update_priv(env);
+> +    if (newpriv !=3D env->priv) {
+> +        if (icount_enabled()) {
+> +            riscv_itrigger_update_priv(env);
+> +            riscv_pmu_icount_update_priv(env, newpriv);
+> +        } else {
+> +            riscv_pmu_cycle_update_priv(env, newpriv);
+> +        }
+>      }
+>      /* tlb_flush is unnecessary as mode is contained in mmu_idx */
+>      env->priv =3D newpriv;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 3bd4aa22374f..307d052021c5 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -782,32 +782,16 @@ static int write_vcsr(CPURISCVState *env, int csrno=
+, target_ulong val)
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> +#if defined(CONFIG_USER_ONLY)
+>  /* User Timers and Counters */
+>  static target_ulong get_ticks(bool shift)
+>  {
+> -    int64_t val;
+> -    target_ulong result;
+> -
+> -#if !defined(CONFIG_USER_ONLY)
+> -    if (icount_enabled()) {
+> -        val =3D icount_get();
+> -    } else {
+> -        val =3D cpu_get_host_ticks();
+> -    }
+> -#else
+> -    val =3D cpu_get_host_ticks();
+> -#endif
+> -
+> -    if (shift) {
+> -        result =3D val >> 32;
+> -    } else {
+> -        result =3D val;
+> -    }
+> +    int64_t val =3D cpu_get_host_ticks();
+> +    target_ulong result =3D shift ? val >> 32 : val;
+>
+>      return result;
+>  }
+>
+> -#if defined(CONFIG_USER_ONLY)
+>  static RISCVException read_time(CPURISCVState *env, int csrno,
+>                                  target_ulong *val)
+>  {
+> @@ -932,6 +916,70 @@ static int write_mhpmeventh(CPURISCVState *env, int =
+csrno, target_ulong val)
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> +static target_ulong riscv_pmu_ctr_get_fixed_counters_val(CPURISCVState *=
+env,
+> +                                                         int counter_idx=
+,
+> +                                                         bool upper_half=
+)
+> +{
+> +    uint64_t curr_val =3D 0;
+> +    target_ulong result =3D 0;
+> +    uint64_t *counter_arr =3D icount_enabled() ? env->pmu_fixed_ctrs[1].=
+counter :
+> +                            env->pmu_fixed_ctrs[0].counter;
 
-I don't have it in front of me, but I thought that is what the spec
-said should happen
+I don't follow why we access different arrays depending if
+icount_enabled(). Can we at least comment this?
 
 Alistair
 
+> +    uint64_t *counter_arr_virt =3D icount_enabled() ?
+> +                                 env->pmu_fixed_ctrs[1].counter_virt :
+> +                                 env->pmu_fixed_ctrs[0].counter_virt;
+> +    uint64_t cfg_val =3D 0;
+> +
+> +    if (counter_idx =3D=3D 0) {
+> +        cfg_val =3D upper_half ? ((uint64_t)env->mcyclecfgh << 32) :
+> +                  env->mcyclecfg;
+> +    } else if (counter_idx =3D=3D 2) {
+> +        cfg_val =3D upper_half ? ((uint64_t)env->minstretcfgh << 32) :
+> +                  env->minstretcfg;
+> +    } else {
+> +        cfg_val =3D upper_half ?
+> +                  ((uint64_t)env->mhpmeventh_val[counter_idx] << 32) :
+> +                  env->mhpmevent_val[counter_idx];
+> +    }
+> +
+> +    if (!cfg_val) {
+> +        if (icount_enabled()) {
+> +            curr_val =3D icount_get_raw();
+> +        } else {
+> +            curr_val =3D cpu_get_host_ticks();
+> +        }
+> +        goto done;
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_MINH)) {
+> +        curr_val +=3D counter_arr[PRV_M];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_SINH)) {
+> +        curr_val +=3D counter_arr[PRV_S];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_UINH)) {
+> +        curr_val +=3D counter_arr[PRV_U];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_VSINH)) {
+> +        curr_val +=3D counter_arr_virt[PRV_S];
+> +    }
+> +
+> +    if (!(cfg_val & MCYCLECFG_BIT_VUINH)) {
+> +        curr_val +=3D counter_arr_virt[PRV_U];
+> +    }
+> +
+> +done:
+> +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> +        result =3D upper_half ? curr_val >> 32 : curr_val;
+> +    } else {
+> +        result =3D curr_val;
+> +    }
+> +
+> +    return result;
+> +}
+> +
+>  static int write_mhpmcounter(CPURISCVState *env, int csrno, target_ulong=
+ val)
+>  {
+>      int ctr_idx =3D csrno - CSR_MCYCLE;
+> @@ -941,7 +989,8 @@ static int write_mhpmcounter(CPURISCVState *env, int =
+csrno, target_ulong val)
+>      counter->mhpmcounter_val =3D val;
+>      if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>          riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        counter->mhpmcounter_prev =3D get_ticks(false);
+> +        counter->mhpmcounter_prev =3D riscv_pmu_ctr_get_fixed_counters_v=
+al(env,
+> +                                                                ctr_idx,=
+ false);
+>          if (ctr_idx > 2) {
+>              if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+>                  mhpmctr_val =3D mhpmctr_val |
+> @@ -968,7 +1017,8 @@ static int write_mhpmcounterh(CPURISCVState *env, in=
+t csrno, target_ulong val)
+>      mhpmctr_val =3D mhpmctr_val | (mhpmctrh_val << 32);
+>      if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>          riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        counter->mhpmcounterh_prev =3D get_ticks(true);
+> +        counter->mhpmcounterh_prev =3D riscv_pmu_ctr_get_fixed_counters_=
+val(env,
+> +                                                                 ctr_idx=
+, true);
+>          if (ctr_idx > 2) {
+>              riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
+>          }
+> @@ -1009,7 +1059,8 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVSt=
+ate *env, target_ulong *val,
+>       */
+>      if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+>          riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+> -        *val =3D get_ticks(upper_half) - ctr_prev + ctr_val;
+> +        *val =3D riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx, uppe=
+r_half) -
+> +                                                    ctr_prev + ctr_val;
+>      } else {
+>          *val =3D ctr_val;
+>      }
+> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+> index 0e7d58b8a5c2..8b6cc4c6bb4d 100644
+> --- a/target/riscv/pmu.c
+> +++ b/target/riscv/pmu.c
+> @@ -19,6 +19,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/log.h"
+>  #include "qemu/error-report.h"
+> +#include "qemu/timer.h"
+>  #include "cpu.h"
+>  #include "pmu.h"
+>  #include "sysemu/cpu-timers.h"
+> @@ -176,6 +177,48 @@ static int riscv_pmu_incr_ctr_rv64(RISCVCPU *cpu, ui=
+nt32_t ctr_idx)
+>      return 0;
+>  }
 >
-> Thanks,
-> Christoph
+> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong newpr=
+iv)
+> +{
+> +    uint64_t delta;
+> +    uint64_t *counter_arr;
+> +    uint64_t *counter_arr_prev;
+> +    uint64_t current_icount =3D icount_get_raw();
+> +
+> +    if (env->virt_enabled) {
+> +        counter_arr =3D env->pmu_fixed_ctrs[1].counter_virt;
+> +        counter_arr_prev =3D env->pmu_fixed_ctrs[1].counter_virt_prev;
+> +    } else {
+> +        counter_arr =3D env->pmu_fixed_ctrs[1].counter;
+> +        counter_arr_prev =3D env->pmu_fixed_ctrs[1].counter_prev;
+> +    }
+> +
+> +    counter_arr_prev[newpriv] =3D current_icount;
+> +    delta =3D current_icount - counter_arr_prev[env->priv];
+> +
+> +    counter_arr[env->priv] +=3D delta;
+> +}
+> +
+> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong newpri=
+v)
+> +{
+> +    uint64_t delta;
+> +    uint64_t *counter_arr;
+> +    uint64_t *counter_arr_prev;
+> +    uint64_t current_host_ticks =3D cpu_get_host_ticks();
+> +
+> +    if (env->virt_enabled) {
+> +        counter_arr =3D env->pmu_fixed_ctrs[0].counter_virt;
+> +        counter_arr_prev =3D env->pmu_fixed_ctrs[0].counter_virt_prev;
+> +    } else {
+> +        counter_arr =3D env->pmu_fixed_ctrs[0].counter;
+> +        counter_arr_prev =3D env->pmu_fixed_ctrs[0].counter_prev;
+> +    }
+> +
+> +    counter_arr_prev[newpriv] =3D current_host_ticks;
+> +    delta =3D current_host_ticks - counter_arr_prev[env->priv];
+> +
+> +    counter_arr[env->priv] +=3D delta;
+> +}
+> +
+>  int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx=
+)
+>  {
+>      uint32_t ctr_idx;
+> diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+> index 505fc850d38e..50de6031a730 100644
+> --- a/target/riscv/pmu.h
+> +++ b/target/riscv/pmu.h
+> @@ -31,3 +31,5 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_ev=
+ent_idx event_idx);
+>  void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_na=
+me);
+>  int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+>                            uint32_t ctr_idx);
+> +void riscv_pmu_icount_update_priv(CPURISCVState *env, target_ulong newpr=
+iv);
+> +void riscv_pmu_cycle_update_priv(CPURISCVState *env, target_ulong newpri=
+v);
+> --
+> 2.34.1
 >
-> >
-> > Alistair
-> >
-> > >          }
-> > >
-> > > @@ -998,7 +1000,8 @@ restart:
-> > >          }
-> > >
-> > >          /* Inner PTE, continue walking */
-> > > -        if (pte & (PTE_D | PTE_A | PTE_U | PTE_ATTR)) {
-> > > +        if ((pte & (PTE_D | PTE_A | PTE_U)) ||
-> > > +            (!skip_pte_check && (pte & PTE_ATTR))) {
-> > >              return TRANSLATE_FAIL;
-> > >          }
-> > >          base =3D ppn << PGSHIFT;
-> > > @@ -1012,7 +1015,7 @@ restart:
-> > >          /* Misaligned PPN */
-> > >          return TRANSLATE_FAIL;
-> > >      }
-> > > -    if (!pbmte && (pte & PTE_PBMT)) {
-> > > +    if (!skip_pte_check && !pbmte && (pte & PTE_PBMT)) {
-> > >          /* Reserved without Svpbmt. */
-> > >          return TRANSLATE_FAIL;
-> > >      }
-> > > diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-> > > index a5e0734e7f..d7f675881d 100644
-> > > --- a/target/riscv/meson.build
-> > > +++ b/target/riscv/meson.build
-> > > @@ -12,6 +12,7 @@ riscv_ss.add(files(
-> > >    'cpu.c',
-> > >    'cpu_helper.c',
-> > >    'csr.c',
-> > > +  'xthead_csr.c',
-> > >    'fpu_helper.c',
-> > >    'gdbstub.c',
-> > >    'op_helper.c',
-> > > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> > > index 559bf373f3..4b1184c8ab 100644
-> > > --- a/target/riscv/tcg/tcg-cpu.c
-> > > +++ b/target/riscv/tcg/tcg-cpu.c
-> > > @@ -763,7 +763,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *=
-cpu, Error **errp)
-> > >          cpu->cfg.pmu_mask =3D 0;
-> > >          cpu->pmu_avail_ctrs =3D 0;
-> > >      }
-> > > -
-> > >      /*
-> > >       * Disable isa extensions based on priv spec after we
-> > >       * validated and set everything we need.
-> > > @@ -871,12 +870,18 @@ static void riscv_cpu_validate_profiles(RISCVCP=
-U *cpu)
-> > >      }
-> > >  }
-> > >
-> > > +static inline bool th_csr_p(const RISCVCPUConfig *cfg)
-> > > +{
-> > > +    return cfg->ext_xtheadmaee;
-> > > +}
-> > > +
-> > >  void riscv_tcg_cpu_register_vendor_csr(RISCVCPU *cpu)
-> > >  {
-> > >      static const struct {
-> > >          bool (*guard_func)(const RISCVCPUConfig *);
-> > >          riscv_csr_operations *csr_ops;
-> > >      } vendors[] =3D {
-> > > +        { th_csr_p, th_csr_ops },
-> > >      };
-> > >      for (int i =3D 0; i < ARRAY_SIZE(vendors); ++i) {
-> > >          if (!vendors[i].guard_func(&cpu->cfg)) {
-> > > diff --git a/target/riscv/xthead_csr.c b/target/riscv/xthead_csr.c
-> > > new file mode 100644
-> > > index 0000000000..9f88fa50db
-> > > --- /dev/null
-> > > +++ b/target/riscv/xthead_csr.c
-> > > @@ -0,0 +1,65 @@
-> > > +/*
-> > > + * Xuantie implementation for RISC-V Control and Status Registers.
-> > > + *
-> > > + * Copyright (c) 2024 Alibaba Group. All rights reserved.
-> > > + *
-> > > + * This program is free software; you can redistribute it and/or mod=
-ify it
-> > > + * under the terms and conditions of the GNU General Public License,
-> > > + * version 2 or later, as published by the Free Software Foundation.
-> > > + *
-> > > + * This program is distributed in the hope it will be useful, but WI=
-THOUT
-> > > + * ANY WARRANTY; without even the implied warranty of MERCHANTABILIT=
-Y or
-> > > + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public Lic=
-ense for
-> > > + * more details.
-> > > + *
-> > > + * You should have received a copy of the GNU General Public License=
- along with
-> > > + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> > > + */
-> > > +
-> > > +
-> > > +#include "qemu/osdep.h"
-> > > +#include "qemu/log.h"
-> > > +#include "cpu.h"
-> > > +#include "tcg/tcg-cpu.h"
-> > > +#include "exec/exec-all.h"
-> > > +#include "exec/tb-flush.h"
-> > > +#include "qapi/error.h"
-> > > +
-> > > +#if !defined(CONFIG_USER_ONLY)
-> > > +static RISCVException th_maee_check(CPURISCVState *env, int csrno)
-> > > +{
-> > > +    if (riscv_cpu_cfg(env)->ext_xtheadmaee) {
-> > > +        return RISCV_EXCP_ILLEGAL_INST;
-> > > +    }
-> > > +    return RISCV_EXCP_NONE;
-> > > +}
-> > > +
-> > > +static RISCVException
-> > > +read_th_mxstatus(CPURISCVState *env, int csrno, target_ulong *val)
-> > > +{
-> > > +    *val =3D env->th_mxstatus;
-> > > +    return RISCV_EXCP_NONE;
-> > > +}
-> > > +
-> > > +static RISCVException
-> > > +write_th_mxstatus(CPURISCVState *env, int csrno, target_ulong val)
-> > > +{
-> > > +    uint64_t mxstatus =3D env->th_mxstatus;
-> > > +    uint64_t mask =3D TH_MXSTATUS_MAEE;
-> > > +
-> > > +    if ((val ^ mxstatus) & TH_MXSTATUS_MAEE) {
-> > > +        tlb_flush(env_cpu(env));
-> > > +    }
-> > > +
-> > > +    mxstatus =3D (mxstatus & ~mask) | (val & mask);
-> > > +    env->th_mxstatus =3D mxstatus;
-> > > +    return RISCV_EXCP_NONE;
-> > > +}
-> > > +#endif
-> > > +
-> > > +riscv_csr_operations th_csr_ops[CSR_TABLE_SIZE] =3D {
-> > > +#if !defined(CONFIG_USER_ONLY)
-> > > +    [CSR_TH_MXSTATUS]     =3D { "th_mxstatus", th_maee_check, read_t=
-h_mxstatus,
-> > > +                                                            write_th=
-_mxstatus},
-> > > +#endif /* !CONFIG_USER_ONLY */
-> > > +};
-> > > --
-> > > 2.25.1
-> > >
-> > >
+>
 
