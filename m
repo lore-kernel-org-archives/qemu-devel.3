@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D945C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E66B4C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 16:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb0Qj-0002Xr-0R; Fri, 16 Feb 2024 10:47:13 -0500
+	id 1rb0xJ-0002AE-DH; Fri, 16 Feb 2024 11:20:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rb0Qc-0002X8-1A
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:47:06 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1rb0xH-00029g-MA
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 11:20:51 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rb0Qa-00024Z-8v
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:47:05 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4122a8566e4so12108925e9.2
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:47:03 -0800 (PST)
+ id 1rb0xF-00007V-Uv
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 11:20:51 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d0c7e6b240so30204881fa.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 08:20:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708098422; x=1708703222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708100446; x=1708705246; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JkUHQhfSifO0i3zFVHEM05VEE/CKxYmqTQXvW8S86gs=;
- b=UDMGIO+SKLf7lAddAeUquO5g7xbhPBhterNQKB5Ayqm9qpOP9ntbqEWW4rGdivhkz+
- nI8VvV4Dbz7UmgPxwIgih6ERwdwq1bgJZnEM0C0ioRPDCVyDWVfowdPwYTmcM/eeugHY
- V54iAyfd489PDxAOcAVndUKJlEaJxGK/GWwSaZS+MOoZ0bPA2VhpWwtUWW7av3PYhLen
- Q3Ct3qGAR6Ek7ZRVz5sq3Wf8L6utmy7RhFys0uvMNib8RxZnZQAEBae/butKnoVGeUs+
- 9juGH0UHBnNEKAg0aFElmJHaR5bqQ6ZI+4nhoDTLAlETPlZmFWaslJJv3oKBV0jn+ZDd
- xKxw==
+ bh=2Q1LtY8IHY+WTjlINQfJ6sJbZKnbUB75zr9/ihsIzUc=;
+ b=GIIIx545ewgP8PkTZ1AKj8LqDVjKLjS2dTrXjfU7GU35ZhGzEtWI8gyOhVCydWU3Oz
+ iSuo4NVT67bBIMUtKm895eBnr5RpakYCEMlQV57BfmXcPopCDoWGG/j+2b4/OIO5H1O/
+ YJJK6I1e7m+cTsV42081+e8EAsuxEl/50EKA7sI29bfeId5K5AkUPpY5iKszIW5Q4VJH
+ ZzZewLKXx3teSRihz+ctQFHMTnrI6kvOGoGXlib23SFN0b1y49uiO11gU7vqRzMZnaUC
+ bNxYHuEpEAfUcY4q4tyUBwmTTl3g6kXkw1zWeaNIlwuaPQeNHcswwagWFb0KmOUN4CK3
+ eloQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708098422; x=1708703222;
+ d=1e100.net; s=20230601; t=1708100446; x=1708705246;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JkUHQhfSifO0i3zFVHEM05VEE/CKxYmqTQXvW8S86gs=;
- b=o9xIpxkCT+xn26dHUbr52FA8Mgl8BirLEQn6gRFlZ9b9GfeC05uSpTKnvUp21K359k
- NS2TmoOLbsg3XJZEEcQTVSoZhcfZguy5WAVgR+qiTsbUVNTgZ4bsOv1truoxOYVVs0QL
- FWuKE25ih4m3rFnfLD8n8tOVvQrn0xde+Q7FwdyqKoANoGarWwosXOwekPxCObJ0JE5X
- qYUvIJRCZWoOKRSW+a7Yfa5BFcHwbNGa5vI1MZL74vF6HUWfW2B2HRBySO226NlFK9cn
- GjbtB6vWs4l4xgMmLsWcoa1E7ouEYkDZQWCpDpsborGmuAnVmEHY1nEKopOS7b3EEzOO
- nSTQ==
-X-Gm-Message-State: AOJu0YxZb3BjPpiRfodqjZgvacN9M8TK+7qvfCx1m/Uy30Mz90WKfJt/
- oTI01a6DSZDs6CQpx0E0joncEW708NlG2buWjKfP2zjbZ5QGD8DwyyPmNurPrVE=
-X-Google-Smtp-Source: AGHT+IGPLnTb6uHNKBYa623FL3pN/uaaDxd+9Zq93RLQmuBVLRTpqwlQGiY02+IfDAfEbnsaqUvnFA==
-X-Received: by 2002:a05:600c:470d:b0:411:e4d4:8fd6 with SMTP id
- v13-20020a05600c470d00b00411e4d48fd6mr3855854wmo.12.1708098422130; 
- Fri, 16 Feb 2024 07:47:02 -0800 (PST)
+ bh=2Q1LtY8IHY+WTjlINQfJ6sJbZKnbUB75zr9/ihsIzUc=;
+ b=V3BRtNB7ymmpYTT4lfK8wypgiWGM2Ju+2avFQnZRznnbaQPgNEJ0mmShNxjqYDmne8
+ rIKPEhIF4swSxBETjUg4rSdqnxRsgF3LGdYJFDzwq9cYgBTK/rKgg4BHW5ACa2xz/ZPg
+ gNP0CUstOxZKgYqvym282L55e/2NXWDIF0r8JFToMVTCWprub+PrysL5nwj3ht/EN3qC
+ jEUdF/MoDn0ZuT3o0DgR2PDKcpSYjRLGPV6ouJIjb0A6NntKQI1fCiUFHSC++o8HUjpn
+ kkwH7bSkoAi2Ct4fAo39PH5OwBr87q4zvjPhVUrYpfu+C8mFewlYh1eFq8PNnHPYoG72
+ QnZA==
+X-Gm-Message-State: AOJu0Yz87pdeRYEMNf1trLg27AvsK3qA2YbFoLoJeOuMpe7jfN/FMv5W
+ S0NZmSOnOIjoPuWMsLc5qYDvzjM+d4Fj4hsE6C/NcLdJQ0MP51KBQ+t7pWr1f40=
+X-Google-Smtp-Source: AGHT+IE6Qy8JbBSIAhrDaZL5oMZviNPe6zBtxBg0kLPffNEkAGh/r7lBou2Y9SwTjHt2wfdo0iXn9w==
+X-Received: by 2002:a2e:7a16:0:b0:2d0:f96a:23b4 with SMTP id
+ v22-20020a2e7a16000000b002d0f96a23b4mr3545574ljc.7.1708100446544; 
+ Fri, 16 Feb 2024 08:20:46 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 13-20020a05600c230d00b00411d640085csm2663305wmo.43.2024.02.16.07.47.01
+ q17-20020a05600c46d100b0041249ea88b9sm2053967wmo.16.2024.02.16.08.20.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 07:47:01 -0800 (PST)
+ Fri, 16 Feb 2024 08:20:46 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6D1685F83F;
- Fri, 16 Feb 2024 15:47:01 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D805B5F83F;
+ Fri, 16 Feb 2024 16:20:45 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org,  Yonggang Luo
- <luoyonggang@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] .gitlab-ci/windows.yml: Don't install libusb or spice
- packages on 32-bit
-In-Reply-To: <CAFEAcA-7S7QOBzDBS0UmWDxK=2AWuX1QFZ-TCfvCOOhJpL-wng@mail.gmail.com>
- (Peter Maydell's message of "Fri, 16 Feb 2024 13:19:54 +0000")
-References: <20240215155009.2422335-1-peter.maydell@linaro.org>
- <87y1bk4pfz.fsf@draig.linaro.org>
- <CAFEAcA-7S7QOBzDBS0UmWDxK=2AWuX1QFZ-TCfvCOOhJpL-wng@mail.gmail.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Yanan Wang <wangyanan55@huawei.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Eduardo Habkost <eduardo@habkost.net>,  Richard
+ Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v4 00/18] TCG Plugin inline operation enhancement
+In-Reply-To: <20240213094009.150349-1-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Tue, 13 Feb 2024 13:39:50 +0400")
+References: <20240213094009.150349-1-pierrick.bouvier@linaro.org>
 User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Fri, 16 Feb 2024 15:47:01 +0000
-Message-ID: <87bk8g4dje.fsf@draig.linaro.org>
+Date: Fri, 16 Feb 2024 16:20:45 +0000
+Message-ID: <875xyo4bz6.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,42 +103,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> On Fri, 16 Feb 2024 at 11:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> Peter Maydell <peter.maydell@linaro.org> writes:
->>
->> > When msys2 updated their libusb packages to libusb 1.0.27, they
->> > dropped support for building them for mingw32, leaving only mingw64
->> > packages.  This broke our CI job, as the 'pacman' package install now
->> > fails with:
->> >
->> > error: target not found: mingw-w64-i686-libusb
->> > error: target not found: mingw-w64-i686-usbredir
->> >
->> > (both these binary packages are from the libusb source package).
->> >
->> > Similarly, spice is now 64-bit only:
->> > error: target not found: mingw-w64-i686-spice
->> >
->> > Fix this by dropping these packages from the list we install for our
->> > msys2-32bit build.  We do this with a simple mechanism for the
->> > msys2-64bit and msys2-32bit jobs to specify a list of extra packages
->> > to install on top of the common ones we install for both jobs.
->> >
->> > Cc: qemu-stable@nongnu.org
->> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2160
->> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>
->> Queued to testing/next, thanks.
+> This series adds a new thread-safe API to declare inline operation
+> inside plugins. As well, it removes the existing non thread-safe API,
+> and migrates all existing plugins to use it.
 >
-> I'm just testing a merge where I've applied this directly to
-> get our CI back to green, so you don't need to take it via
-> your tree.
+> Tested on Linux (user, system) for i386, x86_64 and aarch64.
+<snip>
+>
+> Pierrick Bouvier (18):
+>   plugins: remove previous n_vcpus functions from API
+>   plugins: add qemu_plugin_num_vcpus function
+>   plugins: fix order of init/idle/resume callback
+>   cpu: call plugin init hook asynchronously
+>   docs/devel: plugins can trigger a tb flush
 
-Ok.
+I've queued these into the maintainer pre-PR series I'm about to send as
+I need the callback fixes to make the register code safe.
 
 --=20
 Alex Benn=C3=A9e
