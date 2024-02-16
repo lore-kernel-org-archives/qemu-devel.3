@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C420C48BEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 09:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB49BC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 09:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rauKh-0007jq-4h; Fri, 16 Feb 2024 04:16:35 -0500
+	id 1rauMY-0000F8-IV; Fri, 16 Feb 2024 04:18:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rauKf-0007jO-Un
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 04:16:33 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rauMX-0000Ex-H0
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 04:18:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rauKd-0005o0-Ob
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 04:16:33 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rauMW-000694-12
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 04:18:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708074988;
+ s=mimecast20190719; t=1708075106;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=tqqDW39l+V/yPFeZxBUCWNqogR2/wN8JjWZ2Hv5ILfE=;
- b=Uapsw7OoYPTulDRoZzs2ts6OvBo2sBhPBnhEROWvSJuZ5UKzBQa62BmgYYOlaExJHHzC0A
- cCC35fp58PpcG2zIeNgn0maNTqk3fTvtyGtxU0cfLRDoeSonV9jXC9AuGrB8QGsPc4/oBH
- w+YyvV6kiLw8BUh1+WoaNZmAbTo7FQs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=l8FWaeGv1q0g9QFHO+gn0EkjN7HN3aBNvo4Kr3VxHco=;
+ b=GpKiUfCOEKIC75Jl9ixAhzTIKTeYaYjASkeLL9V8yIaKZl/5Skivwwg37EEd1ZuFGIrrK+
+ iLIpeyJmH3bn9FIjRgEdFoC2ngDinXOqfrOBnhk+BGneQex/hUDsOQHqky5GjARs2d60Rf
+ 9BMsYHZNxQotkcW3PUGSVja5aCzQd+M=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-iz1mgji0NimqQd_C8psgnw-1; Fri, 16 Feb 2024 04:16:24 -0500
-X-MC-Unique: iz1mgji0NimqQd_C8psgnw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 77E72837234;
- Fri, 16 Feb 2024 09:16:24 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.46])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A0E10AC07;
- Fri, 16 Feb 2024 09:16:22 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	qemu-trivial@nongnu.org
-Subject: [PATCH v2] hw/hppa/Kconfig: Fix building with "configure
- --without-default-devices"
-Date: Fri, 16 Feb 2024 10:16:21 +0100
-Message-ID: <20240216091621.32989-1-thuth@redhat.com>
+ us-mta-389-LLXgFQlZPQ-CEmCG-dm2ow-1; Fri, 16 Feb 2024 04:18:24 -0500
+X-MC-Unique: LLXgFQlZPQ-CEmCG-dm2ow-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-680b2c9b0ccso8014216d6.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 01:18:24 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708074800; x=1708679600;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l8FWaeGv1q0g9QFHO+gn0EkjN7HN3aBNvo4Kr3VxHco=;
+ b=m36POESbWWFAr/yyYnyY2iNf2aAbPLWk5IujcgQTmrUs4BuMm2r1kxhR74DTX3vKyI
+ S5oTIERrQS4ddOijf0b+9jp9dM8v6x5ohKG8mtiWLVpT1PhfjfoTQdnH4Pd3LSSBLvyQ
+ VcovT8OUaqJUXCS+kkbT79LuiDkFG1sfIhHHp/KR8jLQDu9nSQbNkyQXEjd0ED3n8T7i
+ Z6SYKBDIBYiAKLHLgKhm4uD9/VK6PETK8xz3SCxBZHzuTfX51MLUN8DbJiFDrQUNDCjf
+ x66+trsfylHR8sJIxmTaoSIWNNWUcHFxk8I4MmdqioGn9ZCAbbwJvI3o9XFO/+KVBGP5
+ oWFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVeFOJgPh9ZcNOCHzQoBtG5/8FVZAkRsk8gFEAL5ZyRI2YC4SrCcBLUcsJ2q3iQiRtwb8OEqz1e9ixibYT8lm1MJweqidc=
+X-Gm-Message-State: AOJu0YyabYxSJKXW0CA4eqqQ82BrdARQo24S7dkNtkwzU0T8pNeUuI7t
+ 0TguNcRXDOmRSc959halVxFNFStJ+4FrZUfxgMOKi3LCAhm0l4H+2JEbczdTWqGJB2CJOor8xyy
+ cJBzzkXWMWG4dF/LNc7RFKKnP//hXKI4MhEHI2A9gtyzmORsK3K6c
+X-Received: by 2002:a05:6214:e61:b0:68c:95ed:8d2d with SMTP id
+ jz1-20020a0562140e6100b0068c95ed8d2dmr5318388qvb.23.1708074800162; 
+ Fri, 16 Feb 2024 01:13:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFoe462vBHlCH2Ntj7224IXK0TyTBS477w0QiLGL7ZCw/kFKBsQcdpCIBliVSS1jIMoGV1dpg==
+X-Received: by 2002:a05:6214:e61:b0:68c:95ed:8d2d with SMTP id
+ jz1-20020a0562140e6100b0068c95ed8d2dmr5318375qvb.23.1708074799912; 
+ Fri, 16 Feb 2024 01:13:19 -0800 (PST)
+Received: from ?IPV6:2a01:cb19:853d:fa00:f59e:918a:6675:6332?
+ ([2a01:cb19:853d:fa00:f59e:918a:6675:6332])
+ by smtp.gmail.com with ESMTPSA id
+ lz8-20020a0562145c4800b0068f1223e3e2sm1580077qvb.1.2024.02.16.01.13.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Feb 2024 01:13:19 -0800 (PST)
+Message-ID: <2fbf0024-3a2c-4656-8407-fa271a8bb7ec@redhat.com>
+Date: Fri, 16 Feb 2024 10:13:13 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/6] hw/vfio/common: Use RCU_READ macros
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
+ Greg Kurz <groug@kaod.org>, Richard Henderson
+ <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20240124074201.8239-1-philmd@linaro.org>
+ <20240124074201.8239-6-philmd@linaro.org> <7reip.7d0x82au0t9p@linaro.org>
+ <887a8b74-423f-4c4c-8cdd-d29fcb4f14b8@linaro.org>
+ <a55d793c-3d61-4bda-8213-12a1de65c85f@linaro.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <a55d793c-3d61-4bda-8213-12a1de65c85f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.772,
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.772,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,47 +113,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running "configure" with "--without-default-devices", building
-of qemu-system-hppa currently fails with:
+On 2/16/24 09:49, Philippe Mathieu-Daudé wrote:
+> On 24/1/24 15:09, Philippe Mathieu-Daudé wrote:
+>> On 24/1/24 10:25, Manos Pitsidianakis wrote:
+>>> On Wed, 24 Jan 2024 09:42, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>>> Replace the manual rcu_read_(un)lock calls by the
+>>>> *RCU_READ_LOCK_GUARD macros (See commit ef46ae67ba
+>>>> "docs/style: call out the use of GUARD macros").
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> hw/vfio/common.c | 34 ++++++++++++++++------------------
+>>>> 1 file changed, 16 insertions(+), 18 deletions(-)
+>>>>
+>>>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>>>> index 4aa86f563c..09878a3603 100644
+>>>> --- a/hw/vfio/common.c
+>>>> +++ b/hw/vfio/common.c
+>>>> @@ -308,13 +308,13 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>>>>         return;
+>>>>     }
+>>>>
+>>>> -    rcu_read_lock();
+>>>> +    RCU_READ_LOCK_GUARD();
+>>>>
+>>>>     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>>>>         bool read_only;
+>>>>
+>>>>         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
+>>>> -            goto out;
+>>>> +            return;
+>>>
+>>> Since this is the only early return, we could alternatively do:
+>>>
+>>> -         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
+>>> +         if (vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
+>>>
+>>> remove the goto/return, and wrap the rest of the codeflow in this if's brackets. And then we could use WITH_RCU_READ_LOCK_GUARD instead. That'd increase the code indentation however.
+>>
+>> If the maintainer agrees with the style & code churn, I don't
+>> mind respining.
+> 
+> Alex, Cédric, any preference?
 
- /usr/bin/ld: libqemu-hppa-softmmu.fa.p/hw_hppa_machine.c.o: in function `machine_HP_common_init_tail':
- hw/hppa/machine.c:399: undefined reference to `usb_bus_find'
- /usr/bin/ld: hw/hppa/machine.c:399: undefined reference to `usb_create_simple'
- /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_bus_find'
- /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_create_simple'
- collect2: error: ld returned 1 exit status
- ninja: build stopped: subcommand failed.
- make: *** [Makefile:162: run-ninja] Error 1
+my choice would be to keep the 'goto' statement and protect
+the vfio_get_xlat_addr() call with :
 
-And after fixing this, the qemu-system-hppa binary refuses to run
-due to the missing 'pci-ohci' and 'pci-serial' devices. Let's add
-the right config switches to fix these problems.
++        WITH_RCU_READ_LOCK_GUARD() {
++            if (vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL)) {
++                ret = vfio_get_dirty_bitmap(bcontainer, iova,
++                                            iotlb->addr_mask + 1,
++                                            translated_addr);
++                if (ret) {
++                    error_report("vfio_iommu_map_dirty_notify(%p,"
++                                 " 0x%"HWADDR_PRIx
++                                 ", 0x%"HWADDR_PRIx") = %d (%s)",
++                                 bcontainer, iova, iotlb->addr_mask + 1, ret,
++                                 strerror(-ret));
++                }
++            }
+          }
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- v2: Keep "select SERIAL" instead of replacing it
 
- hw/hppa/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
-index ff8528aaa8..dff5df7f72 100644
---- a/hw/hppa/Kconfig
-+++ b/hw/hppa/Kconfig
-@@ -7,6 +7,7 @@ config HPPA_B160L
-     select DINO
-     select LASI
-     select SERIAL
-+    select SERIAL_PCI
-     select ISA_BUS
-     select I8259
-     select IDE_CMD646
-@@ -16,3 +17,4 @@ config HPPA_B160L
-     select LASIPS2
-     select PARALLEL
-     select ARTIST
-+    select USB_OHCI_PCI
--- 
-2.43.0
+Thanks,
+
+C.
+
+
 
 
