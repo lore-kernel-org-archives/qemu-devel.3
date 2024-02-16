@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7155EC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A02C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raznT-0002h8-SV; Fri, 16 Feb 2024 10:06:39 -0500
+	id 1razpU-00044M-OE; Fri, 16 Feb 2024 10:08:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1raznO-0002gO-G1
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:06:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1razpS-00040w-2h; Fri, 16 Feb 2024 10:08:42 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1raznM-0001CL-5k
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:06:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708095989;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CPBTdysDYpPiACBe5cKL5ETdbaaMEMrm03T0DAO6ASg=;
- b=DIreeWh0Y2xeNPhO13/qom3iQkp+sl2284J8lHWlFYhQwbGrxm3RpgoIVq8E9k0EmJ02V4
- r8Gn7TG8PIanx/bMMIMW+AUVj1HubqItPzLiax05Dx7AfE+gO68CDYh5NqUqFalrVndxkT
- tt9ESR7Lo9X9Car7buRAAWGRNCvnpRE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-246-d6VkizI0PhCbTpGCuEf_yQ-1; Fri, 16 Feb 2024 10:06:27 -0500
-X-MC-Unique: d6VkizI0PhCbTpGCuEf_yQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33d23c8694dso159520f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:06:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708095986; x=1708700786;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CPBTdysDYpPiACBe5cKL5ETdbaaMEMrm03T0DAO6ASg=;
- b=A0Wx77Zg8MVck3n02XpHhnyhWJXGvoOFx9NIMm5w7l3URQPaBEei8t5bSrGjJA7TkR
- DQTWx8I1EePi4AUkX1g4jJbLO9FSQ9v6JvYfjYGERUrnlsQfwPetGxCnYYPc73B9yYT7
- ErwYCAACb85s7PmJDeoCiliv4dbeMGO7sP4lOMxu33wF4dGY9Ih/+h7PARmYgNBj25UL
- mwu/v+xgWT/7IjeZBeHcVXpIQ4QIbrN52XLnz/81nvFzALjyrSXZr+zNLmmGhd6zlLnD
- pWeWAmMgfxQvmi/Qh5ayXRdkI/B7jp2a7MlEBQyY65AKVEAWYgwDmRenvdMcyL0Dcr2f
- 34tw==
-X-Gm-Message-State: AOJu0YwBXFWhmhzx8cuAkeKuEmV/BAgj0FvuATtDkJ8LgZnbN66Oo8nA
- 2biSd9rJCQ3yVgk+0ZGJyE6v+UHqjHQ6taMvNimmwymzI8vn9tl5pSYr/TzRFas1r28fdOZhA4e
- xzKYOgZGDzEgODBeBtwXLxE/LGKiKTHkWAAbx/Onpg0+XvKo+bc96Fjztzl0U1NiIcrCCj0ISua
- +6JTdWqOGw1TYNBtyMTjnBNEIUp8k=
-X-Received: by 2002:adf:a30e:0:b0:33d:1f21:2dd with SMTP id
- c14-20020adfa30e000000b0033d1f2102ddmr1385083wrb.40.1708095986567; 
- Fri, 16 Feb 2024 07:06:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF6nb+V5JIUApGsbqtuvHC1+amCjLEW74NDgmopjTNFkQqUwUy/KpRDF9zaSew+lpAWDcwhzXC54uzrYLovztI=
-X-Received: by 2002:adf:a30e:0:b0:33d:1f21:2dd with SMTP id
- c14-20020adfa30e000000b0033d1f2102ddmr1385068wrb.40.1708095986202; Fri, 16
- Feb 2024 07:06:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1razpQ-0001kk-Ay; Fri, 16 Feb 2024 10:08:41 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 4E1C260C6C;
+ Fri, 16 Feb 2024 15:08:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA336C433C7;
+ Fri, 16 Feb 2024 15:08:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1708096110;
+ bh=gCnaKCztZ+aD+uXJOWghdDjln68u/ZHD9+aTBKnA/dM=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=kemfZ1ZlyFQnDqhz3jpdtiEnY01a60TAAJ5RTL2fjmcecdl+WK/FZAuQ0R57elesE
+ aa+XYHkriMQ1g0UseCHLTrVm6Pb/Eeed2CYatXu+xqrsmRV6dib7t/RiYKEiRyjhky
+ /GCVBBQFa24jALguttMI8XUwOzin4PCOZ5keDaO/er4IeTVz96e0fEvBFt1Gs/TPFu
+ xkhZW2ZzEG0wHIIPQqL1zXh5Kea98PQvKQzgl0xE1mS5z9Znw4LtHcH6Zmfl4PLj7E
+ k1ZWFSs6d7DOw7bhy/7pltuDYmZy5kvqONzzetjTCK8mmt++i6cnYR0PUMTICyV7eB
+ isFW4Y5hdSeyA==
+Date: Fri, 16 Feb 2024 15:08:25 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Andrew Jones <ajones@ventanamicro.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ alistair.francis@wdc.com, bmeng@tinylab.org, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+Subject: Re: [PATCH v3 3/6] target/riscv: add remaining named features
+Message-ID: <20240216-fabulous-eraser-ffc4c2ed080f@spud>
+References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
+ <20240202152154.773253-4-dbarboza@ventanamicro.com>
+ <20240215-alkaline-saturday-275cd8e3aa39@spud>
+ <20240215-55440212b4d6cde9feab5d94@orel>
+ <20240215-overhear-paycheck-8c70c17bd151@spud>
+ <20240215-8e556e6029ee11ee7317db8b@orel>
+ <20240215-landfall-clamp-34ce9760d4cd@spud>
+ <CAKmqyKPy8C9fz2c7RMnFL1bG1XHZf9kdduGOjgTGP+O6PB_fSg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240216091621.32989-1-thuth@redhat.com>
-In-Reply-To: <20240216091621.32989-1-thuth@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 16 Feb 2024 16:06:00 +0100
-Message-ID: <CABgObfYf7Yy3sfDSfU7v+RFLsa5VShC9FSiNCd0CkJyun6vkbA@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/hppa/Kconfig: Fix building with "configure
- --without-default-devices"
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="R32YE83afCNpLIxc"
+Content-Disposition: inline
+In-Reply-To: <CAKmqyKPy8C9fz2c7RMnFL1bG1XHZf9kdduGOjgTGP+O6PB_fSg@mail.gmail.com>
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=conor@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,62 +80,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 10:16=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
-te:
->
-> When running "configure" with "--without-default-devices", building
-> of qemu-system-hppa currently fails with:
->
->  /usr/bin/ld: libqemu-hppa-softmmu.fa.p/hw_hppa_machine.c.o: in function =
-`machine_HP_common_init_tail':
->  hw/hppa/machine.c:399: undefined reference to `usb_bus_find'
->  /usr/bin/ld: hw/hppa/machine.c:399: undefined reference to `usb_create_s=
-imple'
->  /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_bus_find=
-'
->  /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_create_s=
-imple'
->  collect2: error: ld returned 1 exit status
->  ninja: build stopped: subcommand failed.
->  make: *** [Makefile:162: run-ninja] Error 1
->
-> And after fixing this, the qemu-system-hppa binary refuses to run
-> due to the missing 'pci-ohci' and 'pci-serial' devices. Let's add
-> the right config switches to fix these problems.
 
-USB_OHCI_PCI is something similar to what was going on with the
-Loongsoon virt machine, and Philippe asked me to look at removing
-usb_bus_find() everywhere. But I have no objection to having this
-patch committed in the meanwhile.
+--R32YE83afCNpLIxc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Paolo
+> > No they can't. For a "regular extension" you populate the DT with the
+> > extension. For these extensions it has to put negated properties in the
+> > DT, otherwise it is incorrectly describing the hardware it is emulating.
+> > That is handling them differently in my book! If QEMU generates an
+> > incorrect DT representation of the hardware it is emulating, that's a
+> > QEMU bug.
+>=20
+> QEMU listing the extensions that it supports seems to me to be the
+> correct approach.
+>=20
+> It's clunky that the list of "extensions" are constantly changing.
+> There isn't much we can do about that from a QEMU perspective though.
+>=20
+> Listing the hardware and what it supports is the job of the DT.
+>=20
+> I see your concern about what happens if the "extensions" are disabled
+> though. Realislity they probably never will be.
 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  v2: Keep "select SERIAL" instead of replacing it
->
->  hw/hppa/Kconfig | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
-> index ff8528aaa8..dff5df7f72 100644
-> --- a/hw/hppa/Kconfig
-> +++ b/hw/hppa/Kconfig
-> @@ -7,6 +7,7 @@ config HPPA_B160L
->      select DINO
->      select LASI
->      select SERIAL
-> +    select SERIAL_PCI
->      select ISA_BUS
->      select I8259
->      select IDE_CMD646
-> @@ -16,3 +17,4 @@ config HPPA_B160L
->      select LASIPS2
->      select PARALLEL
->      select ARTIST
-> +    select USB_OHCI_PCI
-> --
-> 2.43.0
->
+Yeah, it's something we can sweep under the rug unless/until someone
+wants to disable these things.
 
+> > > Linux or whatever software consuming
+> > > the hardware descriptions may want to distrust the absence of newly
+> > > named feature extensions and do their own checks, but that's not QEMU=
+'s
+> > > concern.
+> >
+> > Software should be able to trust that the DT describes the system
+> > correctly. I can only speak for Linux here, but validating the DT is not
+> > the job of the running kernel - it should be a correct description.
+>=20
+> AFAIK the DT is correct. We are describing the hardware within the
+> scope of the DT spec.
+>=20
+> If a new node exists that describes what the hardware does not support
+> we can update to support that as well.
+
+It won't be a new node property, it'll just be negated properties - eg
+riscv,isa-extensions =3D ..., "no-zicclsm";
+That's what I mean when I say that these will not be able to be treated
+in the same way as any other extension, but it only applies iff someone
+wants to disable them. This isn't just a QEMU problem, but QEMU is the
+bleeding edge of "hardware" support, so it's cropping up here first (or
+maybe only :))
+
+> > > Actually, being able to disable these newly named features allows
+> > > Linux and other software to test how they behave when the feature goes
+> > > away.
+> >
+> > That's helpful sure, but it doesn't absolve QEMU of having to correctly
+> > generate a DT.
+>=20
+> I'm pretty sure there isn't anything for us to do differently here
+> right? It's just a bad situation that we are trying to support.
+
+Until someone wants to turn them off, you can avoid doing anything
+differently, just like this amazing ascii art I found:
+
+                _,-\/-,_
+                \      /
+                 \_.._/
+               _,/    \,_
+              / \      / \
+             ,\  )    (  /,
+             (__/ .''. \__)
+                \,_||   /
+                |  ||\ |
+                | /|| \|
+                () || ()
+                // || ||
+               //  || ||
+              //   || ||
+             //    || /\
+ -- '' -'-' ^^'    )( '^^-- '' -'-'   miK
+                  (=3D=3D)
+                   `~`
+
+Hopefully posting ostriches on the QEMU list isn't grounds for a ban,
+Conor.
+
+--R32YE83afCNpLIxc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZc96aQAKCRB4tDGHoIJi
+0nJNAQCNPVcftYNWpE3Q7HB6nixeHO3Ew9afcv+enPMmEsuxXQEAnUYcqY9fWGvL
+jwEXGpinzCh+0UGEE+cSxUxM+DEpLAg=
+=Ma6n
+-----END PGP SIGNATURE-----
+
+--R32YE83afCNpLIxc--
 
