@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0757C48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54355C48BEF
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 16:39:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb1Dh-0001Kx-9p; Fri, 16 Feb 2024 11:37:49 -0500
+	id 1rb1Db-0001Dc-Ey; Fri, 16 Feb 2024 11:37:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rb1De-0001Hh-Ri
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 11:37:46 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1rb1DX-0001BW-Ag
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 11:37:40 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rb1DV-00044E-4d
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 11:37:46 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33d26da3e15so149032f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 08:37:36 -0800 (PST)
+ id 1rb1DT-00042Q-6T
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 11:37:38 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2d0a4e1789cso26317741fa.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 08:37:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708101455; x=1708706255; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708101452; x=1708706252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pTAh5Ga1/WCguB9K86wBQIKOB8LucCe9FRfIk+dLcDE=;
- b=CgvQ5w2Gx4wB8CDP8vaTVBGcGz9xHay+XB97NEKqh9nOZvGpi1A9FqkMPQ3oCJFR+Q
- 9/NSdWGdX1xVzgYgG5x7pDXEHNwwXlJJ6Xfo/f0IkE5/GDL4SCECLAPynNFBbmli8ETg
- egxevGdMgObJLgZoiXJi93Px5yMCye+O7Fsj9n82Mrg0D4Lf0YMlb6JaZ/c8X4MDg4HF
- veRCWX50w277km1RFTb6xrCcmqxY/hX03sLsiAM19FWLtMSyhm4bWg5nMW3V2K1vqVjR
- k1MH1BuoK8XYMmVTY4K1v84Bf/6/nWGwH7ZWJ0uG5x706v5DPWlxGtUyZqN4VsPDMMuj
- 0wmQ==
+ bh=zMZ+pFdg1P4n/cHnfp4DZXoxUsYEnk+lXnRUtGdShK8=;
+ b=pvBb/hxoCHkAAvCXqmkSa0i8ubAqg/YL+N2TO74XCC5A01sh7H4YEbYRVJn5fzH0Yg
+ DJvDtuqqiCeuamroWavYdWhydR3emPvbK35OPjRUNF2psGPWh84Aybo8H0DO9SWt90L9
+ LsVFv9e2EJzTZ+ckTcv929QOUMUWHyXDYnYZ+qkxIucAfBX3XuhTI6ogTRchOpqEAMhe
+ CHyTvmnhHEAVY++RU+qWdG2K89cNukuvVOOcmDkCCpFOvDUFtLexQ7cmr6DzYViIMznt
+ FjRCPSh9aR7Oyxjyd0mTxGjmTFJCPcdTbTn5h84WiZnKWNkIKooXcTmtH6VGNPdnnW60
+ ChzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708101455; x=1708706255;
+ d=1e100.net; s=20230601; t=1708101452; x=1708706252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pTAh5Ga1/WCguB9K86wBQIKOB8LucCe9FRfIk+dLcDE=;
- b=tQhq1V0fZcJ3y+VUpAsb1c0nBJk7clbkq8Fnkcwv3Qz6WGqC3nst274pRsElcJynG7
- OC1a0R6wr1003Fd8DzMIP2jCHi2d0y8EeZVjIpA4RTtbfOFjU2ChphK86ax+amshmFAw
- Ad0Oym+gAfe0UmOqDw4eAiwZD70rBeWC3ebaeUdnp2AgNvZKBvVeby3jB+Ianefe5xUo
- scGCkmthvjCk7/TOW8sCicPvM0sEem+P9Ccl+qQ/cfPonBYszgvRVZ1fEB8cEKlbUcEo
- YY5atNYUqHfzfpvKmZ3876fabAZ7+Pq///Uw4L4fBakXWstQi91TKXQwBaksCZshpuBl
- H7xQ==
-X-Gm-Message-State: AOJu0YyWsJUh3mXGFp5aUQduYJcFN0l6epeGblHnmmshbHOiFnnN8/ad
- 1pTYEn0COvKSMuv7R2zjoOVj1fjRQflGKxcjtMQSi/giGYIrlG6vm8dZ8wqh6u4=
-X-Google-Smtp-Source: AGHT+IHcyZ2KIH/U3Vd3Q3sGq6Z3C36bbvg73d+q7RAa047FV+WE49RTLT+s8ruwPZ9+WhsDTPsE1w==
-X-Received: by 2002:adf:e947:0:b0:33d:2567:995c with SMTP id
- m7-20020adfe947000000b0033d2567995cmr820513wrn.1.1708101455066; 
- Fri, 16 Feb 2024 08:37:35 -0800 (PST)
+ bh=zMZ+pFdg1P4n/cHnfp4DZXoxUsYEnk+lXnRUtGdShK8=;
+ b=IC4JuXNshxiqNc2r9WEdU+/cl5TXec/qMop3gv7QLZSAnMk+reuowtYyMJwRwHjs5A
+ 4QCSCOW44KMZgot8nX9RNjtGyg4SyaQ2bU5+BZDkx03xVzULrePtPUWGleMHN1n5JHl6
+ mhjr+JbMtnlyKkUnX4TfS8D0rOZcYYajNi94Qi7D8E+8ySCuFk/9QXGgiNDyT6KrwzVx
+ Lomhvy65gt3qMpbOZqKv3739E+XFRMAlu9pKwSHVG6GOvqHfhxnJYZr+ZFAKtZydkbgj
+ Rlghv2VPhhVnaxChL5MeH8wT/2/IaTmxxrX/hPMgh1EWl78kn1e5z/PLc3FxBwRRravj
+ taHA==
+X-Gm-Message-State: AOJu0YyeVaCZ1zH7QA0lo+Kb1We/Ggmp1CwJ/oOMjxpyCO1R3EKx4+Xm
+ nwrDpfBvIGGHOzNNsCqG9Yf/ds9Oy9LN2IpPmFBr0uZpTtdSRsGU9ALqlEOy1N02f5DINOs2pTV
+ T
+X-Google-Smtp-Source: AGHT+IEs18XUXWJPj7u/naFmox40F8EKAaTo4bM8a/Jg+AqEKtytLtB2G2K8MwxsAjvGLb6S2l0Ghw==
+X-Received: by 2002:a05:651c:2046:b0:2d0:4ef8:347a with SMTP id
+ t6-20020a05651c204600b002d04ef8347amr3340354ljo.18.1708101452538; 
+ Fri, 16 Feb 2024 08:37:32 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- t12-20020a5d460c000000b0033b48190e5esm2633756wrq.67.2024.02.16.08.37.32
+ i6-20020a05600c354600b004107686650esm2850704wmq.36.2024.02.16.08.37.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 16 Feb 2024 08:37:32 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 06B685F9E3;
+ by draig.lan (Postfix) with ESMTP id 857F65F9E8;
  Fri, 16 Feb 2024 16:30:28 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -86,19 +87,18 @@ Cc: Yoshinori Sato <ysato@users.sourceforge.jp>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 17/23] gdbstub: expose api to find registers
-Date: Fri, 16 Feb 2024 16:30:19 +0000
-Message-Id: <20240216163025.424857-18-alex.bennee@linaro.org>
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH 22/23] docs/devel: document some plugin assumptions
+Date: Fri, 16 Feb 2024 16:30:24 +0000
+Message-Id: <20240216163025.424857-23-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240216163025.424857-1-alex.bennee@linaro.org>
 References: <20240216163025.424857-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,99 +121,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose an internal API to QEMU to return all the registers for a vCPU.
-The list containing the details required to called gdb_read_register().
+While we attempt to hide implementation details from the plugin we
+shouldn't be totally obtuse. Let the user know what they can and can't
+expect with the various instrumentation options.
 
-Based-on: <20231025093128.33116-15-akihiko.odaki@daynix.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240103173349.398526-38-alex.bennee@linaro.org>
+Message-Id: <20240103173349.398526-44-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v3
-  - rm unused api functions left over
----
- include/exec/gdbstub.h | 28 ++++++++++++++++++++++++++++
- gdbstub/gdbstub.c      | 27 ++++++++++++++++++++++++++-
- 2 files changed, 54 insertions(+), 1 deletion(-)
+ docs/devel/tcg-plugins.rst | 49 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index da9ddfe54c5..eb14b91139b 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -111,6 +111,34 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder);
-  */
- const GDBFeature *gdb_find_static_feature(const char *xmlname);
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index 535a74684c5..9cc09d8c3da 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -112,6 +112,55 @@ details are opaque to plugins. The plugin is able to query select
+ details of instructions and system configuration only through the
+ exported *qemu_plugin* functions.
  
-+/**
-+ * gdb_read_register() - Read a register associated with a CPU.
-+ * @cpu: The CPU associated with the register.
-+ * @buf: The buffer that the read register will be appended to.
-+ * @reg: The register's number returned by gdb_find_feature_register().
-+ *
-+ * Return: The number of read bytes.
-+ */
-+int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
++However the following assumptions can be made:
 +
-+/**
-+ * typedef GDBRegDesc - a register description from gdbstub
-+ */
-+typedef struct {
-+    int gdb_reg;
-+    const char *name;
-+    const char *feature_name;
-+} GDBRegDesc;
++Translation Blocks
++++++++++++++++++++
 +
-+/**
-+ * gdb_get_register_list() - Return list of all registers for CPU
-+ * @cpu: The CPU being searched
-+ *
-+ * Returns a GArray of GDBRegDesc, caller frees array but not the
-+ * const strings.
-+ */
-+GArray *gdb_get_register_list(CPUState *cpu);
++All code will go through a translation phase although not all
++translations will be necessarily be executed. You need to instrument
++actual executions to track what is happening.
 +
- void gdb_set_stop_cpu(CPUState *cpu);
++It is quite normal to see the same address translated multiple times.
++If you want to track the code in system emulation you should examine
++the underlying physical address (``qemu_plugin_insn_haddr``) to take
++into account the effects of virtual memory although if the system does
++paging this will change too.
++
++Not all instructions in a block will always execute so if its
++important to track individual instruction execution you need to
++instrument them directly. However asynchronous interrupts will not
++change control flow mid-block.
++
++Instructions
++++++++++++++
++
++Instruction instrumentation runs before the instruction executes. You
++can be can be sure the instruction will be dispatched, but you can't
++be sure it will complete. Generally this will be because of a
++synchronous exception (e.g. SIGILL) triggered by the instruction
++attempting to execute. If you want to be sure you will need to
++instrument the next instruction as well. See the ``execlog.c`` plugin
++for examples of how to track this and finalise details after execution.
++
++Memory Accesses
+++++++++++++++++
++
++Memory callbacks are called after a successful load or store.
++Unsuccessful operations (i.e. faults) will not be visible to memory
++instrumentation although the execution side effects can be observed
++(e.g. entering a exception handler).
++
++System Idle and Resume States
+++++++++++++++++++++++++++++++
++
++The ``qemu_plugin_register_vcpu_idle_cb`` and
++``qemu_plugin_register_vcpu_resume_cb`` functions can be used to track
++when CPUs go into and return from sleep states when waiting for
++external I/O. Be aware though that these may occur less frequently
++than in real HW due to the inefficiencies of emulation giving less
++chance for the CPU to idle.
++
+ Internals
+ ---------
  
- /* in gdbstub-xml.c, generated by scripts/feature_to_c.py */
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index a55b5e6581a..2909bc8c69f 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -490,7 +490,32 @@ const GDBFeature *gdb_find_static_feature(const char *xmlname)
-     g_assert_not_reached();
- }
- 
--static int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-+GArray *gdb_get_register_list(CPUState *cpu)
-+{
-+    GArray *results = g_array_new(true, true, sizeof(GDBRegDesc));
-+
-+    /* registers are only available once the CPU is initialised */
-+    if (!cpu->gdb_regs) {
-+        return results;
-+    }
-+
-+    for (int f = 0; f < cpu->gdb_regs->len; f++) {
-+        GDBRegisterState *r = &g_array_index(cpu->gdb_regs, GDBRegisterState, f);
-+        for (int i = 0; i < r->feature->num_regs; i++) {
-+            const char *name = r->feature->regs[i];
-+            GDBRegDesc desc = {
-+                r->base_reg + i,
-+                name,
-+                r->feature->name
-+            };
-+            g_array_append_val(results, desc);
-+        }
-+    }
-+
-+    return results;
-+}
-+
-+int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
- {
-     CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
 -- 
 2.39.2
 
