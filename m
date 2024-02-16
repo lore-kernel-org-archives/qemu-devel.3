@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83BA2C48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 18:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE0A2C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 18:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb2yd-0002Bl-9g; Fri, 16 Feb 2024 13:30:24 -0500
+	id 1rb3OI-0000to-82; Fri, 16 Feb 2024 13:56:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rb2yT-00029X-Sy
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:30:14 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rb3OH-0000te-KD
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:56:53 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rb2yQ-0000Y2-FB
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:30:13 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1d780a392fdso10261655ad.3
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 10:30:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rb3OF-0005aU-GI
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:56:53 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1d746ce7d13so9451465ad.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 10:56:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708108208; x=1708713008; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=mObbpYEKqcp4uRcZvwPuXcfhackZdXkNqYjw0XdnrF4=;
- b=AeDEZDExzcmCd8ehMgpvoePRoJPpGV8WS/i4RjrEOrDzwGOK9axy7UDdNBcE6729qk
- xctmplvJukTS9hVP2GB83J4K6uqZhKS7VTroZ2ZPAdTs+J+j2udzRos+LqwDVVOwuj/K
- hZmX4POttzH4dK5IUn2ZI8Z2z0hS2jcJN07Meyyeg40GeJAAe0x7gbQkATj97bWhhW5W
- 7UwYssyieAuCNqCZkfWjyLrruX4LXJVmTTC2hLxNsAqLDFh8uqXf2n9Y7S/QoTyfMVqK
- p8g+/AqufS+/OOPhTwOCI60S4cSiXui/GgopkZWF2fSWWuje9nwbsQjo9FAOmhZgmrsU
- QEvQ==
+ d=linaro.org; s=google; t=1708109810; x=1708714610; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RAWapSTMXGK36m8ARbQQlTB/w+UMQ/roARNJOzJtx2U=;
+ b=FNHPzNANkXrJQOQikCfRUYo9itQv/4FSJ5QnnbIdX5AoinpP2bB2oRnrVCOum5cQ1i
+ O6XnKDIcsPpfjfDNxpn8UJoy9sFLFhYs4c8ic5HdZeuXhLWMFGl0nmrdIiVrpJrXcXjW
+ Vo2mxxpEFiF/lUCBh0NxtOtcthVqjuStxYE7dKldf2yTsMKegarMWMjsJ8ael9t9y/bm
+ WmQreQMCE7jYxNrOwxd/XXF0+4YUK7DT8xIWvQvMp6yD43CKEgrNzyCyiYplbFC5eXWW
+ tOakwmVHlJyq2uSxcjVb/gzwgS+yU9Ei58KltsEFojBCBm5y89OIwEjvReSWZjFjQNtV
+ oEyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708108208; x=1708713008;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mObbpYEKqcp4uRcZvwPuXcfhackZdXkNqYjw0XdnrF4=;
- b=U9JrYgM9+syI7Si40BwGxj5gZHCTYsRfEYnpW9mZVuCZO31RhZOtXGX1mqvk4AX1t1
- zsD9co9x8FXGbLmvJXgeG7oLUJS1q9zL3Tp+ScWR9P1jgkAkjFI7kJrJq+dOkbBjPgxR
- 5jyLsfgdCWsh1p5dxcgJwQtUa46cZCgK3YbSxYXVzkmUanGAqI9+J4mnixI06KBVLLh9
- 9EMjd0RDvatSV8Z9BG/Y1Fj+73Lz7C2L06h9pWJvdGCTLnPoQ0xGErQBhMkpPwjbMsKw
- FUJI7xoC+0hi3m/HKmL/oXpYsfdrItAfRiL71wCUYF5nLuxZA/DWlIMcQXRiT9nlVNr1
- XOiw==
-X-Gm-Message-State: AOJu0YwL0fV1cOyPRU5hiWh9m6ohCZFhiYs6szfDpVYU7mcBN11gkrpw
- y7LCPb1XX6qorJDDxpVmglw1kj04iZJo1r7xL43U3ycdGU2BsA94
-X-Google-Smtp-Source: AGHT+IFzfupfHxMT0oJfKTI47824WBIRA00QRnKQQ+07IrRBbshHZw7h4IyGcPLqBi+T+xVlNk46bQ==
-X-Received: by 2002:a17:902:8a94:b0:1db:9e2a:7e59 with SMTP id
- p20-20020a1709028a9400b001db9e2a7e59mr3833414plo.7.1708108207660; 
- Fri, 16 Feb 2024 10:30:07 -0800 (PST)
-Received: from debian ([2601:641:300:14de:f1a:387c:5c5c:3099])
- by smtp.gmail.com with ESMTPSA id
- lo5-20020a170903434500b001db83ae5d08sm163286plb.243.2024.02.16.10.30.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 10:30:07 -0800 (PST)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Fri, 16 Feb 2024 10:30:05 -0800
-To: shiju.jose@huawei.com
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- jonathan.cameron@huawei.com, tanxiaofei@huawei.com,
- prime.zeng@hisilicon.com, linuxarm@huawei.com, fan.ni@samsung.com
-Subject: Re: [PATCH v3 3/3] hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS
- control feature
-Message-ID: <Zc-prXVf1bwfKoiv@debian>
-References: <20240215110146.1444-1-shiju.jose@huawei.com>
- <20240215110146.1444-4-shiju.jose@huawei.com>
+ d=1e100.net; s=20230601; t=1708109810; x=1708714610;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RAWapSTMXGK36m8ARbQQlTB/w+UMQ/roARNJOzJtx2U=;
+ b=GSkQoarOfQb/mKIKOFIaoMQB7dG4Y0aAa10sokPsiKCJjpn8l3Ics3dqSzEFrJyLZn
+ i6TYZWzoQ6nrIytIZKZX4nhT8U2ju4K1lAk+LqSB9H0v/HEWfj0XM9uWigkLLCY+VQCW
+ Qldm3aB0UX1D7wDIGAwx1uiIAdSW6/El6Sl5vGQd5vNMXKm9pXrGZn2vtltRunrQHbd5
+ +U56vKfzh33uz90HbgsLjUgRnJ/Dh3cvbwDDedohwUPhl5atDQ2PYHKBicvkxmogb2RE
+ e8IFPcE9oo0MXOIQ97VaGWaVPJBDNKi06jJxYfww702e+rvpErEQyZQfABUfdHIddmPb
+ gZNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUD7FBzSiJidJXQ1qNji8DkYSFKo6hT3wQ7/Dn+ZxP09hT72bv038qhSUr3ehCLVnK1+ql9cjM14toVoGQ+2Y/y64yD5Ug=
+X-Gm-Message-State: AOJu0YxZ4IlnTJvA2f9s6NsrJfJRol1PABzzl6j5cQ173THPs9ODaMDu
+ fQXbYt828y7uvntXWOH7DEmZOdm3IweeU7Cfd88v7p9ZBBOFGknT5jovQ/YFgLo=
+X-Google-Smtp-Source: AGHT+IE3aS8fc+S/Wyj503gVZWKq7YiSG6x1TYJvewoSjRVXEX9ZpGOxA5B6URnd5KVTPg/ZBBSglw==
+X-Received: by 2002:a17:902:d484:b0:1d9:373a:6124 with SMTP id
+ c4-20020a170902d48400b001d9373a6124mr6995613plg.22.1708109809681; 
+ Fri, 16 Feb 2024 10:56:49 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ kq13-20020a170903284d00b001db5079b705sm195381plb.36.2024.02.16.10.56.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Feb 2024 10:56:49 -0800 (PST)
+Message-ID: <16087154-b3d2-4cab-938f-4a04fc8dd166@linaro.org>
+Date: Fri, 16 Feb 2024 08:56:44 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240215110146.1444-4-shiju.jose@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] target/riscv/translate.c: set vstart_eq_zero in
+ mark_vs_dirty()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ max.chou@sifive.com
+References: <20240216135719.1034289-1-dbarboza@ventanamicro.com>
+ <20240216135719.1034289-4-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240216135719.1034289-4-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, URI_HEX=0.1 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,187 +101,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 15, 2024 at 07:01:46PM +0800, shiju.jose@huawei.com wrote:
-> 500006.china.huawei.com (7.191.161.198)
-> Status: O
-> Content-Length: 7949
-> Lines: 181
+On 2/16/24 03:57, Daniel Henrique Barboza wrote:
+> The 'vstart_eq_zero' flag which is used to determine if some insns, like
+> vector reductor operations, should SIGILL. At this moment the flag is
+> being updated only during cpu_get_tb_cpu_state(), at the start of each
+> translation block.
 > 
-> From: Shiju Jose <shiju.jose@huawei.com>
+> This cadence isn't enough and we're facing situations where a vector
+> instruction successfully updated 'vstart' to zero, but the flag was
+> still marked as 'false', resulting in a SIGILL because instructions are
+> checking the flag.
 > 
-> CXL spec 3.1 section 8.2.9.9.11.2 describes the DDR5 Error Check Scrub (ECS)
-> control feature.
+> mark_vs_dirty() is called after any instruction changes Vector CSR
+> state, making it a good place to update 'vstart_eq_zero'.
 > 
-> The Error Check Scrub (ECS) is a feature defined in JEDEC DDR5 SDRAM
-> Specification (JESD79-5) and allows the DRAM to internally read, correct
-> single-bit errors, and write back corrected data bits to the DRAM array
-> while providing transparency to error counts. The ECS control feature
-> allows the request to configure ECS input configurations during system
-> boot or at run-time.
-> 
-> The ECS control allows the requester to change the log entry type, the ECS
-> threshold count provided that the request is within the definition
-> specified in DDR5 mode registers, change mode between codeword mode and
-> row count mode, and reset the ECS counter.
-> 
-> Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
+> Fixes: 8e1ee1fb57 ("target/riscv: rvv-1.0: add translation-time vector context status")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1976
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  hw/cxl/cxl-mailbox-utils.c | 100 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 99 insertions(+), 1 deletion(-)
+>   target/riscv/translate.c | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 9557c38dd9..a14eee9ff5 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -998,6 +998,7 @@ typedef struct CXLSupportedFeatureEntry {
->  
->  enum CXL_SUPPORTED_FEATURES_LIST {
->      CXL_FEATURE_PATROL_SCRUB = 0,
-> +    CXL_FEATURE_DDR5_ECS,
->      CXL_FEATURE_MAX
->  };
->  
-> @@ -1069,6 +1070,42 @@ typedef struct CXLMemPatrolScrubSetFeature {
->          CXLMemPatrolScrubWriteAttrbs feat_data;
->  } QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
->  
-> +/*
-> + * CXL r3.1 section 8.2.9.9.11.2:
-> + * DDR5 Error Check Scrub (ECS) Control Feature
-> + */
-> +static const QemuUUID ddr5_ecs_uuid = {
-> +    .data = UUID(0xe5b13f22, 0x2328, 0x4a14, 0xb8, 0xba,
-> +                 0xb9, 0x69, 0x1e, 0x89, 0x33, 0x86)
-> +};
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 177418b2b9..f9ff7b6173 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -652,6 +652,8 @@ static inline void mark_fs_dirty(DisasContext *ctx) { }
+>    */
+>   static void mark_vs_dirty(DisasContext *ctx)
+>   {
+> +    TCGLabel *vstart_zero = gen_new_label();
+> +    TCGLabel *done = gen_new_label();
+>       TCGv tmp;
+>   
+>       if (ctx->mstatus_vs != EXT_STATUS_DIRTY) {
+> @@ -669,6 +671,24 @@ static void mark_vs_dirty(DisasContext *ctx)
+>               tcg_gen_st_tl(tmp, tcg_env, offsetof(CPURISCVState, mstatus_hs));
+>           }
+>       }
 > +
-> +#define CXL_DDR5_ECS_GET_FEATURE_VERSION    0x01
-> +#define CXL_DDR5_ECS_SET_FEATURE_VERSION    0x01
-> +#define CXL_DDR5_ECS_LOG_ENTRY_TYPE_DEFAULT    0x01
-> +#define CXL_DDR5_ECS_REALTIME_REPORT_CAP_DEFAULT    1
-> +#define CXL_DDR5_ECS_THRESHOLD_COUNT_DEFAULT    3 /* 3: 256, 4: 1024, 5: 4096 */
-> +#define CXL_DDR5_ECS_MODE_DEFAULT    0
+> +    /*
+> +     * We can safely make 'vl_eq_vlmax = false' if we marked
+> +     * VS as dirty with non-zero 'vstart', i.e. there's a fault
+> +     * to be handled. If 'vstart' is zero then we should retain
+> +     * the existing 'vl_eq_vlmax' - it'll be recalculated on the
+> +     * start of the next TB or during vset{i}vl{i} (that forces a
+> +     * TB end).
+> +     */
+> +    tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vstart, 0, vstart_zero);
+> +    ctx->vstart_eq_zero = false;
+> +    ctx->vl_eq_vlmax = false;
+> +    tcg_gen_br(done);
 > +
-> +#define CXL_DDR5_ECS_NUM_MEDIA_FRUS   3
+> +    gen_set_label(vstart_zero);
+> +    ctx->vstart_eq_zero = true;
 > +
-> +/* CXL memdev DDR5 ECS control attributes */
-> +struct CXLMemECSReadAttrbs {
-> +        uint8_t ecs_log_cap;
-> +        uint8_t ecs_cap;
-> +        uint16_t ecs_config;
-> +        uint8_t ecs_flags;
-> +} QEMU_PACKED cxl_ddr5_ecs_feat_read_attrbs[CXL_DDR5_ECS_NUM_MEDIA_FRUS];
-> +
-> +typedef struct CXLDDR5ECSWriteAttrbs {
-> +    uint8_t ecs_log_cap;
-> +    uint16_t ecs_config;
-> +} QEMU_PACKED CXLDDR5ECSWriteAttrbs;
-> +
-> +typedef struct CXLDDR5ECSSetFeature {
-> +        CXLSetFeatureInHeader hdr;
-> +        CXLDDR5ECSWriteAttrbs feat_data[];
-> +} QEMU_PACKED QEMU_ALIGNED(16) CXLDDR5ECSSetFeature;
-> +
->  /* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
->  static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->                                               uint8_t *payload_in,
-> @@ -1087,7 +1124,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->          CXLSupportedFeatureHeader hdr;
->          CXLSupportedFeatureEntry feat_entries[];
->      } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_out = (void *)payload_out;
-> -    uint16_t index;
-> +    uint16_t count, index;
->      uint16_t entry, req_entries;
->      uint16_t feat_entries = 0;
->  
-> @@ -1129,6 +1166,35 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->              cxl_memdev_ps_feat_read_attrbs.scrub_flags =
->                                  CXL_MEMDEV_PS_ENABLE_DEFAULT;
->              break;
-> +        case  CXL_FEATURE_DDR5_ECS:
-> +            /* Fill supported feature entry for device DDR5 ECS control */
-> +            get_feats_out->feat_entries[entry] =
-> +                         (struct CXLSupportedFeatureEntry) {
-> +                .uuid = ddr5_ecs_uuid,
-> +                .feat_index = index,
-> +                .get_feat_size = CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                                    sizeof(struct CXLMemECSReadAttrbs),
-> +                .set_feat_size = CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                                    sizeof(CXLDDR5ECSWriteAttrbs),
-> +                .attrb_flags = 0x1,
-> +                .get_feat_version = CXL_DDR5_ECS_GET_FEATURE_VERSION,
-> +                .set_feat_version = CXL_DDR5_ECS_SET_FEATURE_VERSION,
-> +                .set_feat_effects = 0,
-> +            };
-> +            feat_entries++;
-> +            /* Set default value for DDR5 ECS read attributes */
-> +            for (count = 0; count < CXL_DDR5_ECS_NUM_MEDIA_FRUS; count++) {
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_log_cap =
-> +                                    CXL_DDR5_ECS_LOG_ENTRY_TYPE_DEFAULT;
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_cap =
-> +                                    CXL_DDR5_ECS_REALTIME_REPORT_CAP_DEFAULT;
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_config =
-> +                                    CXL_DDR5_ECS_THRESHOLD_COUNT_DEFAULT |
-> +                                    (CXL_DDR5_ECS_MODE_DEFAULT << 3);
-> +                /* Reserved */
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_flags = 0;
-> +            }
-> +            break;
->          default:
->              break;
->          }
-> @@ -1180,6 +1246,19 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
->          memcpy(payload_out,
->                 &cxl_memdev_ps_feat_read_attrbs + get_feature->offset,
->                 bytes_to_copy);
-> +    } else if (qemu_uuid_is_equal(&get_feature->uuid, &ddr5_ecs_uuid)) {
-> +        if (get_feature->offset >=  CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                                sizeof(struct CXLMemECSReadAttrbs)) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        bytes_to_copy = CXL_DDR5_ECS_NUM_MEDIA_FRUS *
-> +                        sizeof(struct CXLMemECSReadAttrbs) -
-> +                                     get_feature->offset;
-> +        bytes_to_copy = (bytes_to_copy > get_feature->count) ?
-> +                                    get_feature->count : bytes_to_copy;
-> +        memcpy(payload_out,
-> +               &cxl_ddr5_ecs_feat_read_attrbs + get_feature->offset,
-> +               bytes_to_copy);
->      } else {
->          return CXL_MBOX_UNSUPPORTED;
->      }
-> @@ -1197,8 +1276,11 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->                                             size_t *len_out,
->                                             CXLCCI *cci)
->  {
-> +    uint16_t count;
->      CXLMemPatrolScrubWriteAttrbs *ps_write_attrbs;
-> +    CXLDDR5ECSWriteAttrbs *ecs_write_attrbs;
->      CXLMemPatrolScrubSetFeature *ps_set_feature;
-> +    CXLDDR5ECSSetFeature *ecs_set_feature;
->      CXLSetFeatureInHeader *hdr = (void *)payload_in;
->  
->      if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-> @@ -1216,6 +1298,22 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->          cxl_memdev_ps_feat_read_attrbs.scrub_flags &= ~0x1;
->          cxl_memdev_ps_feat_read_attrbs.scrub_flags |=
->                            ps_write_attrbs->scrub_flags & 0x1;
-> +    } else if (qemu_uuid_is_equal(&hdr->uuid,
-> +                                  &ddr5_ecs_uuid)) {
-> +        if (hdr->version != CXL_DDR5_ECS_SET_FEATURE_VERSION ||
-> +            (hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK) !=
-> +                               CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER) {
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-> +
-> +        ecs_set_feature = (void *)payload_in;
-> +        ecs_write_attrbs = ecs_set_feature->feat_data;
-> +        for (count = 0; count < CXL_DDR5_ECS_NUM_MEDIA_FRUS; count++) {
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_log_cap =
-> +                                  ecs_write_attrbs[count].ecs_log_cap;
-> +                cxl_ddr5_ecs_feat_read_attrbs[count].ecs_config =
-> +                                  ecs_write_attrbs[count].ecs_config & 0x1F;
+> +    gen_set_label(done);
+
+This is very confused, apparently generating code to test vstart at runtime, and then set 
+some translation time variables in the branches.
+
+Afaik, the only way vstart != 0 is an explicit set to the CSR or exiting a load via 
+exception.  Therefore you have no need to have any sort of brcond here -- just set
+ctx->vstart_eq_zero = true.
+
+Also, you need to move the ifdefs from around mark_vs_dirty, because it is now relevant to 
+user-only.
+
+It may be worth a rename, because it does more than mark vs dirty, and therefore is 
+different than mark_fs_dirty.
+
+You need to review all instances of
+
+     TCGLabel *over = gen_new_label();
+     tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
+...
+     gen_set_label(over);
+     return true;
+
+because this *should have* set vstart = 0.  With vstart < vl, this is done in the helper 
+function, but every place using a conditional branch needs attention.
+
+
+r~
 
