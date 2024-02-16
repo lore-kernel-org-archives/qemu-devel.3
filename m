@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3B0C48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B01C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:37:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb0Fr-0004GI-MZ; Fri, 16 Feb 2024 10:35:59 -0500
+	id 1rb0Fp-0004A8-1G; Fri, 16 Feb 2024 10:35:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fi-0004AJ-J0
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:54 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fa-00046y-8X
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:43 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Ff-0008Im-Li
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:50 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-55a8fd60af0so3193124a12.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:35:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0FY-0008Fd-GE
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:41 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a3dfb2e03e7so46946666b.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:35:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708097745; x=1708702545; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708097739; x=1708702539; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6ztXjxwe8IKbXpGPRKa7UqA3qhxM54O9HdB2Bhpwj8c=;
- b=OHbhCNXn0vnVsM5RG9SuZuIctabUQbGfbSYJtKURuTuvdJrs+JGCCQqgFNT5r+aZdg
- r1OCYf0/ro7oFmtLQWz8061n4f5qIJs6UKMdVffDoCeN1LM2mCZj/qBhlQjzGHQBz4FM
- bacWMeQvkffmzh5BDVCp7LLzGDaxa55LFp8e13xbN9Bp9Lpp59bhH/vlc2O5lNkUnG2k
- H47gffriNLc1u/GoMNoKMa0VvA+BMKp07abfufSPnZUmo2poQhGyCtG3qwX7AEY5TtZL
- UkFMD6ZMzFoCleJiSR0zRVZMumLjbm5yJeVcxP6SoRxkD2gfJcXAslAWbiMKp/CuGWz0
- DWHg==
+ bh=FHq12xVLql3ZjDkC8k2lRJAF5RJwUJ4vzRZ5Ca5vbxw=;
+ b=aGUvTxVn0CSevQHyBDA9cVw+UVglgY2WrUoRExucsmzbM/eRtrS5afWbUMOl5saiC0
+ DFasHe2Rr9+TBowErSS1Z8yGmXrQD7zEolWAVbCv3u/pB6icUh03uVvzxSWYi/9GFmGb
+ BP6EInDIox0XWaz7Yp+j+YWO419I9+jWTsAIS5LE6Re2hd5XbihKkBlAQot/4bQEfHbZ
+ /w4luttgu7EWUA9KVsmHc9R1d8NI7mDDKcl5+XcbFZ1KVzA+ZN51Kf3bMD8okv1c4nAj
+ z7aahlG9hehfiZbh8Ys/psowuFQ2tCEiLN30UMG7XBTvZ6kpbggx4yTxdig7KKvFj7aL
+ +UpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708097745; x=1708702545;
+ d=1e100.net; s=20230601; t=1708097739; x=1708702539;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6ztXjxwe8IKbXpGPRKa7UqA3qhxM54O9HdB2Bhpwj8c=;
- b=NZ8Stf+axABhOTSqm5EDXnfA5jZ26VBp1iy9TS+HIqG70C9gYn7PTxcK/vVh0FDGg1
- z/gBMoYu3u7FpdwtSK8B7S6YTjDc95b+em4Wqw/mqD7uTgzq+0BiEWYfYRTSZdhUSHtM
- 6PhEhYBfv81qL6SXXPT1FDgwlf/uUpUlZwWQYxycT1CTwJhyuDPHw42IFj0HLdILodnw
- tZ6puKUxTIc1aCdVd2qUrdn63M5K7tl88BdN4ShaAZJx6Pt28uoAqSJoNZE0R06Hurww
- S57XaEhUKxC5i/CSVDnhdxwodpnudCyfm/VkQHW9UnM2kRUbTpKE4cYCGUmB32XwHArV
- C/eg==
-X-Gm-Message-State: AOJu0YzcXLagCUTMtnClX8EpxGfndTBxveRlOaieQbRwKCWcsTAPV5m7
- m02LT9J9hXX4rnMXY3TLYkFjbKR5HhAzuJ7QOE2RGx4l/FLeUdNUcNXapKkLd62XqIR7hvZH0ql
- P
-X-Google-Smtp-Source: AGHT+IGAFxEntDsPXEoYg04THRPSQ35FumBk18CuWooi3xaKjvMlW2W8e2Rd87e9wlVE4krtOGb7/g==
-X-Received: by 2002:a05:6402:793:b0:564:1c0:bf4b with SMTP id
- d19-20020a056402079300b0056401c0bf4bmr836119edy.40.1708097744750; 
- Fri, 16 Feb 2024 07:35:44 -0800 (PST)
+ bh=FHq12xVLql3ZjDkC8k2lRJAF5RJwUJ4vzRZ5Ca5vbxw=;
+ b=XmMipHQvcsUOmNJ2F7F9j6PLiTvrEcr1xH6+BwlysCx5EgmCMu4uMZG9/vvS0OsOR2
+ W11SCbFSU7Aeeq9W3LkK1ZXNlKDD4ulVeVif4L4KnvIti3DxUtmVSJagw1nddIi2CFts
+ Rsgl1Glfq64gAH8jRyFBLtvr9xfeacHTx2JLrvw/SHHhb3/PAuNaeblhLDH8cwpNYPOD
+ jwsMPyr5RU+pM35jjsb7olRX2TPaVy3SFUJb3t6H8iCbO4jCY+6o3GZglBKGoCLRSpt1
+ ZqbZOBogEh5h6t0jJ0lwZJHeY5edlE2xjOI5Ln8e+igOlXtxCHOESCTEgu7EUlB87G0X
+ BA5g==
+X-Gm-Message-State: AOJu0YyZDoP4RyaRNMJe9tX7tQqdltxKs7Nd3/1urhh3VFIiRzhpcoa1
+ SjNxxMmvP1yJC1t3qdrxQ2J48RgVpxN0SjkH58DO9gGvD7tQya/rDlH9qHEgsc92Dbh6rlb2h9K
+ N
+X-Google-Smtp-Source: AGHT+IEi6meqrapeqjO4OgHfp/p6JY/NLaWMf9AKL7DDim/5nYeDiOvwjmctPUdudVyzB5T7NpBDLw==
+X-Received: by 2002:a17:907:b9c6:b0:a3d:2e34:30a5 with SMTP id
+ xa6-20020a170907b9c600b00a3d2e3430a5mr3626388ejc.29.1708097738898; 
+ Fri, 16 Feb 2024 07:35:38 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- df13-20020a05640230ad00b005621a9b09fbsm83681edb.41.2024.02.16.07.35.43
+ tl7-20020a170907c30700b00a3d1458523esm52110ejc.29.2024.02.16.07.35.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 07:35:44 -0800 (PST)
+ Fri, 16 Feb 2024 07:35:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -68,18 +68,18 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/6] hw/display/exynos4210_fimd: Pass frame buffer memory
- region as link
-Date: Fri, 16 Feb 2024 16:35:15 +0100
-Message-ID: <20240216153517.49422-5-philmd@linaro.org>
+Subject: [PATCH 3/6] hw/arm/exynos4210: Inline
+ sysbus_create_varargs(EXYNOS4210_FIMD)
+Date: Fri, 16 Feb 2024 16:35:14 +0100
+Message-ID: <20240216153517.49422-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216153517.49422-1-philmd@linaro.org>
 References: <20240216153517.49422-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,94 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Exynos4210fimdState::'framebuffer-memory' property. Have
-the board set it. We don't need to call sysbus_address_space()
-anymore.
+We want to set another qdev property (a link) for the FIMD
+device, we can not use sysbus_create_varargs() which only
+passes sysbus base address and IRQs as arguments. Inline
+it so we can set the link property in the next commit.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/exynos4210_fimd.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ hw/arm/exynos4210.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index 84687527d5..5712558e13 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "hw/qdev-properties.h"
- #include "hw/hw.h"
- #include "hw/irq.h"
- #include "hw/sysbus.h"
-@@ -32,6 +33,7 @@
- #include "qemu/bswap.h"
- #include "qemu/module.h"
- #include "qemu/log.h"
-+#include "qapi/error.h"
- #include "qom/object.h"
- 
- /* Debug messages configuration */
-@@ -302,6 +304,7 @@ struct Exynos4210fimdState {
-     MemoryRegion iomem;
-     QemuConsole *console;
-     qemu_irq irq[3];
-+    MemoryRegion *fbmem;
- 
-     uint32_t vidcon[4];     /* Video main control registers 0-3 */
-     uint32_t vidtcon[4];    /* Video time control registers 0-3 */
-@@ -1119,7 +1122,6 @@ static void exynos4210_fimd_invalidate(void *opaque)
-  * VIDOSDA, VIDOSDB, VIDWADDx and SHADOWCON registers */
- static void fimd_update_memory_section(Exynos4210fimdState *s, unsigned win)
- {
--    SysBusDevice *sbd = SYS_BUS_DEVICE(s);
-     Exynos4210fimdWindow *w = &s->window[win];
-     hwaddr fb_start_addr, fb_mapped_len;
- 
-@@ -1147,8 +1149,7 @@ static void fimd_update_memory_section(Exynos4210fimdState *s, unsigned win)
-         memory_region_unref(w->mem_section.mr);
+diff --git a/hw/arm/exynos4210.c b/hw/arm/exynos4210.c
+index 57c77b140c..ab18836943 100644
+--- a/hw/arm/exynos4210.c
++++ b/hw/arm/exynos4210.c
+@@ -769,11 +769,13 @@ static void exynos4210_realize(DeviceState *socdev, Error **errp)
      }
  
--    w->mem_section = memory_region_find(sysbus_address_space(sbd),
--                                        fb_start_addr, w->fb_len);
-+    w->mem_section = memory_region_find(s->fbmem, fb_start_addr, w->fb_len);
-     assert(w->mem_section.mr);
-     assert(w->mem_section.offset_within_address_space == fb_start_addr);
-     DPRINT_TRACE("Window %u framebuffer changed: address=0x%08x, len=0x%x\n",
-@@ -1924,6 +1925,12 @@ static const GraphicHwOps exynos4210_fimd_ops = {
-     .gfx_update  = exynos4210_fimd_update,
- };
- 
-+static Property exynos4210_fimd_properties[] = {
-+    DEFINE_PROP_LINK("framebuffer-memory", Exynos4210fimdState, fbmem,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
- static void exynos4210_fimd_init(Object *obj)
- {
-     Exynos4210fimdState *s = EXYNOS4210_FIMD(obj);
-@@ -1944,6 +1951,11 @@ static void exynos4210_fimd_realize(DeviceState *dev, Error **errp)
- {
-     Exynos4210fimdState *s = EXYNOS4210_FIMD(dev);
- 
-+    if (!s->fbmem) {
-+        error_setg(errp, "'framebuffer-memory' property was not set");
-+        return;
+     /*** Display controller (FIMD) ***/
+-    sysbus_create_varargs("exynos4210.fimd", EXYNOS4210_FIMD0_BASE_ADDR,
+-            s->irq_table[exynos4210_get_irq(11, 0)],
+-            s->irq_table[exynos4210_get_irq(11, 1)],
+-            s->irq_table[exynos4210_get_irq(11, 2)],
+-            NULL);
++    dev = qdev_new("exynos4210.fimd");
++    busdev = SYS_BUS_DEVICE(dev);
++    sysbus_realize_and_unref(busdev, &error_fatal);
++    sysbus_mmio_map(busdev, 0, EXYNOS4210_FIMD0_BASE_ADDR);
++    for (n = 0; n < 3; n++) {
++        sysbus_connect_irq(busdev, n, s->irq_table[exynos4210_get_irq(11, n)]);
 +    }
-+
-     s->console = graphic_console_init(dev, 0, &exynos4210_fimd_ops, s);
- }
  
-@@ -1954,6 +1966,7 @@ static void exynos4210_fimd_class_init(ObjectClass *klass, void *data)
-     dc->vmsd = &exynos4210_fimd_vmstate;
-     dc->reset = exynos4210_fimd_reset;
-     dc->realize = exynos4210_fimd_realize;
-+    device_class_set_props(dc, exynos4210_fimd_properties);
- }
- 
- static const TypeInfo exynos4210_fimd_info = {
+     sysbus_create_simple(TYPE_EXYNOS4210_EHCI, EXYNOS4210_EHCI_BASE_ADDR,
+             s->irq_table[exynos4210_get_irq(28, 3)]);
 -- 
 2.41.0
 
