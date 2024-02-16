@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D60B9C48BEF
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 06:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E27C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 06:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rarUY-0001NC-1W; Fri, 16 Feb 2024 01:14:34 -0500
+	id 1rarUh-0001SN-Cq; Fri, 16 Feb 2024 01:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1rarUW-0001Mi-J0
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:32 -0500
+ id 1rarUg-0001Ry-AB
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:42 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1rarUU-0006Mb-TZ
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:32 -0500
+ id 1rarUe-0006Ns-EC
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:42 -0500
 Received: from mail.andestech.com (ATCPCS16.andestech.com [10.0.1.222])
- by Atcsqr.andestech.com with ESMTP id 41G6ECCa007728;
- Fri, 16 Feb 2024 14:14:12 +0800 (+08)
+ by Atcsqr.andestech.com with ESMTP id 41G6EN7B007773;
+ Fri, 16 Feb 2024 14:14:23 +0800 (+08)
  (envelope-from alvinga@andestech.com)
 Received: from alvinga-VirtualBox.andestech.com (10.0.13.68) by
  ATCPCS16.andestech.com (10.0.1.222) with Microsoft SMTP Server id 14.3.498.0; 
- Fri, 16 Feb 2024 14:14:10 +0800
+ Fri, 16 Feb 2024 14:14:20 +0800
 To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH 2/4] target/riscv: Reset CSR tcontrol when the trigger module
- resets
-Date: Fri, 16 Feb 2024 14:13:30 +0800
-Message-ID: <20240216061332.50229-3-alvinga@andestech.com>
+Subject: [PATCH 4/4] target/riscv: Set the value of CSR tcontrol when mret is
+ executed
+Date: Fri, 16 Feb 2024 14:13:32 +0800
+Message-ID: <20240216061332.50229-5-alvinga@andestech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240216061332.50229-1-alvinga@andestech.com>
 References: <20240216061332.50229-1-alvinga@andestech.com>
@@ -44,7 +44,7 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.0.13.68]
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 41G6ECCa007728
+X-MAIL: Atcsqr.andestech.com 41G6EN7B007773
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -70,24 +70,39 @@ From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the trigger module resets, reset the value of CSR tcontrol as zero.
+The RISC-V debug specification defines the following operation for CSR
+tcontrol when "mret" is executed:
+- tcontrol.MTE is set to the value of tcontrol.MPTE
+
+This commit implements the above operation into helper_mret().
+
+Note that from tech-debug mailing list:
+https://lists.riscv.org/g/tech-debug/topic/102702615#1461
+The debug specification does not mention the operation to tcontrol.MPTE
+when "mret" is executed. Therefore, we just keep its current value.
 
 Signed-off-by: Alvin Chang <alvinga@andestech.com>
 ---
- target/riscv/debug.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/riscv/op_helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index e30d99cc2f..e3832a643e 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -941,5 +941,6 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
-         timer_del(env->itrigger_timer[i]);
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index f414aaebdb..12822b3afa 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -347,6 +347,12 @@ target_ulong helper_mret(CPURISCVState *env)
+         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
      }
+     env->mstatus = mstatus;
++
++    uint64_t tcontrol = env->tcontrol;
++    tcontrol = set_field(tcontrol, TCONTROL_MTE,
++                         get_field(tcontrol, TCONTROL_MPTE));
++    env->tcontrol = tcontrol;
++
+     riscv_cpu_set_mode(env, prev_priv);
  
-+    env->tcontrol = 0;
-     env->mcontext = 0;
- }
+     if (riscv_has_ext(env, RVH)) {
 -- 
 2.34.1
 
