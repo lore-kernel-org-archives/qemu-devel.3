@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C97C48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AEFCC48BEF
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rayhm-00052y-IY; Fri, 16 Feb 2024 08:56:42 -0500
+	id 1rayhi-0004yS-QG; Fri, 16 Feb 2024 08:56:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atp.exp@gmail.com>) id 1rayhl-00050a-2p
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:56:41 -0500
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <atp.exp@gmail.com>) id 1rayhh-0004yI-JZ
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:56:37 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atp.exp@gmail.com>) id 1rayhj-0003ZA-EN
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:56:40 -0500
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-296e22229b6so476158a91.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 05:56:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <atp.exp@gmail.com>) id 1rayhf-0003Yo-Mo
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:56:37 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-290ec261a61so1324361a91.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 05:56:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708091797; x=1708696597; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708091793; x=1708696593; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1gX9IUPWPcBf9gAlly0i+hCoY3fDrVJRBiGPX7Qe8RY=;
- b=OFS4HSQl4GXcqf2xduWQRK0y2NM90Ejm+PwBhAdWtjFmIxXUINdPetF68UBaNw0BvT
- AR7hCJReKEZjaUsrKgeUki5eBo3hD4KgX6S3Ul0wi5nJaSqrmaYNk2EQ5QeTY4TCb2ME
- XPnrvcgXXoeOZS5lPZWwe4zuwU9mMHl+JzqeuSto6J+i1Vt7bpmtxIR7NrY3L0Q13jYq
- A2CgeW/6qXHsY2lB1PcwhtfFpgVzmfQIiNOGqt9ZJKF6RGef41jNVU9VlBvYGJ4mRxf0
- eF0b+nWBG2dxZ0Mm1Mm3CjrTqQfGLI/0RsbZ+7sWMvYZYa7IuTZRaT1F+JH4LluRyRNI
- ruuA==
+ bh=POgfkVVu83Vm75+SuvVmDFMZzSx8Ahq22ouOJhX3uno=;
+ b=mWNXA0HgB+847rhzh+P1qum3fZaTzBa6N3ny4htBVED/SdEt1fdDG2fUCBZ/4DHzdc
+ NRvvJc2pFmhv3V8/hIR8Vvhbz9vJXzXCysG7oABjx+x/GwO4Htqy+VZC4Mpsj60Yg73N
+ w+o2el1RMO+o1WSxJHHzF5hxM7sWeiPjJhca2MAXPV8FFhJrOEJNRQwkH9OGKVOAezRW
+ D7vruPOHMMCJhdcOD+mO+Wl6i6CHrKDS+gq1H/FZoK6DSb4H3TLboBDp3phZ3H0YHBg6
+ Sf1NEes2lCp0VmtS05pldIDHt6wvbaJLcppnA3ma+dR01xmRne9AmzfBRPlCXT9O75f7
+ NRlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708091797; x=1708696597;
+ d=1e100.net; s=20230601; t=1708091793; x=1708696593;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1gX9IUPWPcBf9gAlly0i+hCoY3fDrVJRBiGPX7Qe8RY=;
- b=tpG5VQuHLnJDC4BU7NODeARr0uLgXoDXQnFJw3ik92NGE7gKh5sqbGhD7QpAlq9Gtk
- VTO9esPRYCDCKrnF5lmt15K9cgTEQBSBJlixGELw36J9AYWgbWEL8ZXmtz/Qfcpcb9c/
- Eyzs4OMQ1Zxqs+15p2eGhiBKcLBXj5UOvR2pKe1/rcVhmbGT8eIWQm5Hbhmwkop2fTRr
- 8lr/pp/PK/FtyLkLmTES3b+oV3ebsgWZ8pziSEqaOUTEcI1KisUg0LlbrSOUin27hJQJ
- pN0TxQXdTeuL2VmrrEo0wL8Mew9uxDRgk3iTXfegYUAIpVfxqBBxm0uptQ1PEvhFNUin
- VADw==
-X-Gm-Message-State: AOJu0Yy9BwdvG6vi2Y0+NHnNdhYDBBwxhUSqSJX1PcePM+OOgraZwPxz
- EmIO8m+zYLEV2zv+3wvVw0EPj/mK88e0zly9Wb8IxAUuh8V/TjxoMrlOs/fDX80=
-X-Google-Smtp-Source: AGHT+IFF5RZI2telRMBNKwNibKQQtuSsKFYjTBSHKB3VRXujXyWCB+CyKHB874HsT/WOal+NnUBs7A==
-X-Received: by 2002:a17:90b:1953:b0:298:c81a:2395 with SMTP id
- nk19-20020a17090b195300b00298c81a2395mr4496568pjb.1.1708091797106; 
- Fri, 16 Feb 2024 05:56:37 -0800 (PST)
+ bh=POgfkVVu83Vm75+SuvVmDFMZzSx8Ahq22ouOJhX3uno=;
+ b=JULqUG4nJb16o1WZzivKVIkN2cHRjStctrOmNd1VNdwQwWVjSHqtEWJVwS0c12kVoS
+ 9jkuAdBDo/sSleI8G/yHyX4OJfOyKlxSwACDsnmV8YQQ93Oxo4O3WFQyeLUXs/EKChf4
+ 5f3LB9qec4CMlk5swaI7luWukbqDv3kGhFqnfJnK0uSj8DIjE9kMJpjxsu3xqFuJMwg7
+ QPLYeNWMuy54GRpdyUWk/0kQ1jPDwBfc92MUD7sRuaq20bh+Rf8x2KgkL28iXPjf/F4g
+ 8rMKhh6StzjuQwfReVB2HWiVy+x52ERFRFee/mHclSk3Hjj+AU7+RhKLVBeM0a7WKcpW
+ esOg==
+X-Gm-Message-State: AOJu0Yx2EYyT9za8dhO5RA+dHiEEygAoTlqxeKn6Ds+M91oOWYTs84Ag
+ TM/5ELg78upxKaduV4a7iPnwPKrAw8lhz0qwecza0z2eYCIJ2xUFDZvHdS4hjTE=
+X-Google-Smtp-Source: AGHT+IGpbjDgJ90TwkfIlZmijpSkQXLOwcQiUKWD1Rbo9DnCXs7EKrQhu9GyiS+FDx7FNjFwe+MMtQ==
+X-Received: by 2002:a17:90a:f597:b0:299:2a8:55b0 with SMTP id
+ ct23-20020a17090af59700b0029902a855b0mr5471604pjb.23.1708091793151; 
+ Fri, 16 Feb 2024 05:56:33 -0800 (PST)
 Received: from iuseotherswifi.notpua ([14.139.82.6])
  by smtp.gmail.com with ESMTPSA id
- gv8-20020a17090b11c800b00296e2434e7esm3382844pjb.53.2024.02.16.05.56.34
+ gv8-20020a17090b11c800b00296e2434e7esm3382844pjb.53.2024.02.16.05.56.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 05:56:36 -0800 (PST)
+ Fri, 16 Feb 2024 05:56:32 -0800 (PST)
 From: Abhiram Tilak <atp.exp@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, clg@kaod.org, david@gibson.dropbear.id.au,
  harshpb@linux.ibm.com, Abhiram Tilak <atp.exp@gmail.com>
-Subject: [PATCH 2/3] misc: pxa2xx_timer: replace qemu_system_reset_request()
- call with watchdog_perform_action()
-Date: Fri, 16 Feb 2024 19:21:38 +0530
-Message-ID: <20240216135137.8668-5-atp.exp@gmail.com>
+Subject: [PATCH 1/3] misc: m48t59: replace qemu_system_reset_request() call
+ with watchdog_perform_action()
+Date: Fri, 16 Feb 2024 19:21:37 +0530
+Message-ID: <20240216135137.8668-4-atp.exp@gmail.com>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20240216135137.8668-3-atp.exp@gmail.com>
 References: <20240216135137.8668-3-atp.exp@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=atp.exp@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=atp.exp@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,30 +102,31 @@ what to do.
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2124
 Signed-off-by: Abhiram Tilak <atp.exp@gmail.com>
 ---
- hw/timer/pxa2xx_timer.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/rtc/m48t59.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/timer/pxa2xx_timer.c b/hw/timer/pxa2xx_timer.c
-index 6a7d5551f4..6479ab1a8b 100644
---- a/hw/timer/pxa2xx_timer.c
-+++ b/hw/timer/pxa2xx_timer.c
-@@ -18,6 +18,7 @@
- #include "qemu/log.h"
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index aa44c4b20c..ebda084478 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -36,6 +36,7 @@
+ #include "qemu/bcd.h"
  #include "qemu/module.h"
- #include "qom/object.h"
+ #include "trace.h"
 +#include "sysemu/watchdog.h"
  
- #define OSMR0	0x00
- #define OSMR1	0x04
-@@ -417,7 +418,7 @@ static void pxa2xx_timer_tick(void *opaque)
-     if (t->num == 3)
-         if (i->reset3 & 1) {
-             i->reset3 = 0;
--            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+            watchdog_perform_action();
-         }
- }
- 
+ #include "m48t59-internal.h"
+ #include "migration/vmstate.h"
+@@ -163,8 +164,7 @@ static void watchdog_cb (void *opaque)
+     if (NVRAM->buffer[0x1FF7] & 0x80) {
+         NVRAM->buffer[0x1FF7] = 0x00;
+         NVRAM->buffer[0x1FFC] &= ~0x40;
+-        /* May it be a hw CPU Reset instead ? */
+-        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++        watchdog_perform_action(); /* watchdog-expired action */
+     } else {
+         qemu_set_irq(NVRAM->IRQ, 1);
+         qemu_set_irq(NVRAM->IRQ, 0);
 -- 
 2.42.1
 
