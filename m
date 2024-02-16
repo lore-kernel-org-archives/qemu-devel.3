@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAF2C48BEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9E5C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raw0J-0006Jy-Dq; Fri, 16 Feb 2024 06:03:39 -0500
+	id 1raw0X-0006TQ-Gu; Fri, 16 Feb 2024 06:03:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0H-0006JE-Mq
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:03:37 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0W-0006RK-5J
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:03:52 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0D-0000oV-Ia
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:03:36 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-33d14a711efso681052f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:03:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0U-0000tB-2g
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:03:51 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-412345cca4eso7136985e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:03:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708081409; x=1708686209; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708081428; x=1708686228; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=11uvKBQ22hdk4Lseo0ZUQbLGXppus19b55fkM12lrfA=;
- b=VVtEuRONg16xx1oOe+nOWr24BGDYupjedUe7m/Ujf6aVZ+6pexCN+uWLFWnvv6/die
- f0p5imiKaKkivgTp0MnTNlr2Xvra4oKuMAKBKsNCGmky56UcgLPxTSbGVeIA7/qUmts1
- hd8JyMbK6VxjKivF4ClO3HOjxZ6DXyTYaRKR/pAf0ei7zKtKY3RtciPy8DQTwKH0O0mV
- PVUSfPxkL7VgsbizmdK9JWuw7bN5bzjwwdPbwgd6To7jkWDMgWn6WGmBNy85sAuq2WFw
- ReVQmnsYNRJuTvqgeU2ZhqCVZfMShzvN+mXHUSnP7xeSMjG6JH7Xd1Z+UHpwTVQCgv1e
- fmAA==
+ bh=NuItVagnX21LnnaFpIrCDiEh6nnybH9GKoEtwiotckg=;
+ b=zNIr7y0EqNB2slVEoVD7JE/EWg79kDhOfze+vjPAGjuJ35R1MMLkDxzeIG9MuY2uTc
+ teic7TqLhD7U17NYex5MxbWWKRrFY7mLll2gs18eQ5pdqS7v0IZjK4k8TuExWAyN1WYP
+ ETooz96kVf67wAqZhv05YpAwLvvO3m8mRkWsXrb1Fll6N4/ISmgIsINOmYod0EHbmJvJ
+ NI2JTpSHqi7DDFPc1+hnuylXIkr1dBEv3bqdc9IybqRfoMtGwKjIQcLII3Qo5Dy6hvih
+ +jqIQAzq3wnKZkwCzefgEewZxjgxR2LZfedaGU/EDu+x52xWs9m8iPkpXEM/UqNteDio
+ lEBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708081409; x=1708686209;
+ d=1e100.net; s=20230601; t=1708081428; x=1708686228;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=11uvKBQ22hdk4Lseo0ZUQbLGXppus19b55fkM12lrfA=;
- b=P7LMImfzuersiKzc/KF0cXreZa50DDJUzlHICS/l8bnSiE3OVBmmQ9Onu0AhdMm0xu
- WbwP91Y7vDbrbe7722+nfvWmGBDFpSCXkYM3kwCv2AiKGCQ14F/qiSv/1mt38CPfl3wo
- ZabAxp6xFsCzK4mhfvLgooymdqd2O05OgCMEHfHwuO3PFzGy1AolUzl88FUN3F/7QKDJ
- K25+0W5/NnT9T25uowshkzrGysAH/CbstLW2VsAf2VsVzGLkCzbznmAendixsZ0TiFaH
- zt3UO+PVxFcMzucuP4Db8YHx3kH36SMe87+mVeHKvfGsKRrd5r4fWf2uYLDchODkFDda
- 81Sg==
-X-Gm-Message-State: AOJu0Yz1NyKC1+SkmLc6vuZ8+u1psoXTHQiLQ8BeL55Gsy/I6eFvZrap
- E62uJ5Uhu51RlHuabSeKZvNusKkkZPaNsBXrlpSYcPKstG/4yivQKg4+yP4L4ZjOlYpGVKAS+Js
- n
-X-Google-Smtp-Source: AGHT+IFEGlWLlINId8jkLQ8/GP9ml2ND63LfgQ5zuvLNh4i2admrWyka8hFD5GkfVv0excP++UzanQ==
-X-Received: by 2002:a5d:408b:0:b0:33a:fafa:8cdc with SMTP id
- o11-20020a5d408b000000b0033afafa8cdcmr3540983wrp.32.1708081409620; 
- Fri, 16 Feb 2024 03:03:29 -0800 (PST)
+ bh=NuItVagnX21LnnaFpIrCDiEh6nnybH9GKoEtwiotckg=;
+ b=iF11jaQZNJSJKJtP/V8da8L8guObVERNqzDfnKf950D29Kj4L2EUz8ThzTRT8Fz+XW
+ /OThyhT+QVYEKuVEQYmtZjcCdW99aPE7dWqbIH+xxldCKiH2I7cS1AeF5ihAw7A7MU46
+ 52zRuZIL2sYReVKEYJc8w9Vu04pEqHTR9RuGCIC5j2GhZweUNlv5te5+VGeCPpqBE8qh
+ CJvRZiWVXk6mWyaP05yRsd4Gtcltg5tq+gQSTB92/2w1SWfud0tOsZhT1mYphWZo49Pr
+ aQsLbx7yNwsHkv33Zne8W03QMw8AWBAhWTgSAI3zmlDoOQQetd7qxlErS5pI4LdaQsoH
+ vIrQ==
+X-Gm-Message-State: AOJu0YwQTJhp+6qZJBnJn1I+0OTiyoBmfgV/T2ARK67rZvggMABUEOt4
+ SXwmyX+1x5jefWNiqLFq/9/Q2fDmLqmQ+MlOGzmpoGP6jzyH0ZPxzciVhrzVOPJM0HKJBvL6zKb
+ Y
+X-Google-Smtp-Source: AGHT+IF1rjUpQD9NjyQ+iWSd2ftr2L4Qc5BBAPfLtU5QmVd9bHlSq1HNudg1PtEIdKHsOlgDeHuqIw==
+X-Received: by 2002:adf:f34b:0:b0:33c:e1fc:65c5 with SMTP id
+ e11-20020adff34b000000b0033ce1fc65c5mr3642680wrp.69.1708081428352; 
+ Fri, 16 Feb 2024 03:03:48 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- ay3-20020a5d6f03000000b0033d1b760125sm1780146wrb.92.2024.02.16.03.03.27
+ k4-20020a5d5184000000b0033b4f82b301sm1942603wrv.3.2024.02.16.03.03.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 03:03:29 -0800 (PST)
+ Fri, 16 Feb 2024 03:03:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 02/21] hw/i386/pc_sysfw: Use qdev_is_realized() instead of QOM
- API
-Date: Fri, 16 Feb 2024 12:02:53 +0100
-Message-ID: <20240216110313.17039-3-philmd@linaro.org>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
+Subject: [PATCH 05/21] hw/ppc/pnv_bmc: Use qdev_new() instead of QOM API
+Date: Fri, 16 Feb 2024 12:02:56 +0100
+Message-ID: <20240216110313.17039-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216110313.17039-1-philmd@linaro.org>
 References: <20240216110313.17039-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,33 +102,32 @@ Prefer QDev API for QDev objects, avoid the underlying QOM layer.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_sysfw.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ hw/ppc/pnv_bmc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index c8d9e71b88..3efabbbab2 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -107,17 +107,15 @@ void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+diff --git a/hw/ppc/pnv_bmc.c b/hw/ppc/pnv_bmc.c
+index 99f1e8d7f9..0c1274df21 100644
+--- a/hw/ppc/pnv_bmc.c
++++ b/hw/ppc/pnv_bmc.c
+@@ -269,13 +269,13 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor)
+  */
+ IPMIBmc *pnv_bmc_create(PnvPnor *pnor)
  {
-     char *prop_name;
-     int i;
--    Object *dev_obj;
+-    Object *obj;
++    DeviceState *dev;
  
-     assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
+-    obj = object_new(TYPE_IPMI_BMC_SIMULATOR);
+-    qdev_realize(DEVICE(obj), NULL, &error_fatal);
+-    pnv_bmc_set_pnor(IPMI_BMC(obj), pnor);
++    dev = qdev_new(TYPE_IPMI_BMC_SIMULATOR);
++    qdev_realize(dev, NULL, &error_fatal);
++    pnv_bmc_set_pnor(IPMI_BMC(dev), pnor);
  
-     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
--        dev_obj = OBJECT(pcms->flash[i]);
--        if (!object_property_get_bool(dev_obj, "realized", &error_abort)) {
-+        if (!qdev_is_realized(DEVICE(pcms->flash[i]))) {
-             prop_name = g_strdup_printf("pflash%d", i);
-             object_property_del(OBJECT(pcms), prop_name);
-             g_free(prop_name);
--            object_unparent(dev_obj);
-+            object_unparent(OBJECT(pcms->flash[i]));
-             pcms->flash[i] = NULL;
-         }
-     }
+-    return IPMI_BMC(obj);
++    return IPMI_BMC(dev);
+ }
+ 
+ typedef struct ForeachArgs {
 -- 
 2.41.0
 
