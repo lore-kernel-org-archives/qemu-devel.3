@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3EAC48BEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2008C48BF6
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razfy-0005o8-I7; Fri, 16 Feb 2024 09:58:54 -0500
+	id 1razg5-0005xE-6x; Fri, 16 Feb 2024 09:59:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfx-0005km-09
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfz-0005re-UB
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfv-000806-21
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:52 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfw-00081h-LO
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708095530;
+ s=mimecast20190719; t=1708095531;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mVnnZkzjfW0NMjCisUfqMat6dv7WNb4sTkV4lCYJqxU=;
- b=ePO0u4Z97LF5vGVV/BmjKSAUvQbuKY49XlhM149abs4lPyecQZbGK9LyMbMTEPGlXq0V9Q
- cVfucsPtf+6g7Ei67byTTtR4yjfSLKArMporrZ9B7S+917r9BNvJLe3oYk0OfpvdF2NcAY
- Tmw4fSw80jKXcyMLX/k61UD9AQ9Zz68=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-VHrGXRg8Nz2cSs_fXIdxeQ-1; Fri,
- 16 Feb 2024 09:58:48 -0500
-X-MC-Unique: VHrGXRg8Nz2cSs_fXIdxeQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ bh=5MMrqr/SNoKBeu/Om0WtMCcuxdsDjLuibMSkHjALTVA=;
+ b=NseMHHnngm3dkBdPBy7uMQ8n/zhJE8RGTrjLVLFnO5jW2VRX7rxAhx56CQFytW0Jl0WNeL
+ cqZiZBabFXJPtvgel9xHoXFuAIaOWCmu0bdtnq09xENJhXYHD4WlBu4pSQNQxK4MplRRkp
+ 0suZwgyCIIDHD1vBJSV7D8l6Smo4oyc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-K1zHkioiNESKfrQFZoe0ag-1; Fri, 16 Feb 2024 09:58:48 -0500
+X-MC-Unique: K1zHkioiNESKfrQFZoe0ag-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 62AA43C0BE2D;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 65EFA88D187;
  Fri, 16 Feb 2024 14:58:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3FECD40166A5;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 438382026D06;
  Fri, 16 Feb 2024 14:58:48 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2093421E60F3; Fri, 16 Feb 2024 15:58:41 +0100 (CET)
+ id 10F8921E669D; Fri, 16 Feb 2024 15:58:41 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, jsnow@redhat.com, eblake@redhat.com,
  peter.maydell@linaro.org
-Subject: [PATCH 07/16] qapi: Improve error message for empty doc sections
-Date: Fri, 16 Feb 2024 15:58:31 +0100
-Message-ID: <20240216145841.2099240-8-armbru@redhat.com>
+Subject: [PATCH 02/16] tests/qapi-schema: Cover duplicate 'Features:' line
+Date: Fri, 16 Feb 2024 15:58:26 +0100
+Message-ID: <20240216145841.2099240-3-armbru@redhat.com>
 In-Reply-To: <20240216145841.2099240-1-armbru@redhat.com>
 References: <20240216145841.2099240-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,101 +82,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Improve the message for an empty tagged section from
+We don't actually recognize the second 'Features:' line.  Instead, we
+treat it as an untagged section.
 
-    empty doc section 'Note'
+If it was followed by feature description, we'd reject that like
+"description of '@feat2:' follows a section".  Less than clear.
 
-to
-
-    text required after 'Note:'
-
-and the message for an empty argument or feature description from
-
-    empty doc section 'foo'
-
-to
-
-    text required after '@foo:'
-
-Improve the error position to refer to the beginning of the empty
-section instead of its end.
+To be improved shortly.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/sphinx/qapidoc.py                  |  4 ++--
- scripts/qapi/parser.py                  | 14 +++++++-------
- tests/qapi-schema/doc-empty-section.err |  2 +-
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ tests/qapi-schema/doc-duplicate-features.err  |  0
+ tests/qapi-schema/doc-duplicate-features.json | 11 ++++++++++
+ tests/qapi-schema/doc-duplicate-features.out  | 22 +++++++++++++++++++
+ tests/qapi-schema/meson.build                 |  1 +
+ 4 files changed, 34 insertions(+)
+ create mode 100644 tests/qapi-schema/doc-duplicate-features.err
+ create mode 100644 tests/qapi-schema/doc-duplicate-features.json
+ create mode 100644 tests/qapi-schema/doc-duplicate-features.out
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 488de23d72..1e8b4a70a1 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -239,8 +239,8 @@ def _nodes_for_features(self, doc):
-         seen_item = False
-         dlnode = nodes.definition_list()
-         for section in doc.features.values():
--            dlnode += self._make_dlitem([nodes.literal('', section.name)],
--                                        section.text)
-+            dlnode += self._make_dlitem(
-+                [nodes.literal('', section.member.name)], section.text)
-             seen_item = True
- 
-         if not seen_item:
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index a771013959..43daf55860 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -476,9 +476,9 @@ def __init__(self, parser: QAPISchemaParser,
-             self.info = parser.info
-             # parser, for error messages about indentation
-             self._parser = parser
--            # optional section name (argument/member or section name)
-+            # section tag, if any ('Returns', '@name', ...)
-             self.name = name
--            # section text without section name
-+            # section text without tag
-             self.text = ''
-             # indentation to strip (None means indeterminate)
-             self._indent = None if self.name else 0
-@@ -700,7 +700,7 @@ def _start_symbol_section(
-             raise QAPIParseError(self._parser,
-                                  "'%s' parameter name duplicated" % name)
-         assert not self.sections
--        new_section = QAPIDoc.ArgSection(self._parser, name)
-+        new_section = QAPIDoc.ArgSection(self._parser, '@' + name)
-         self._switch_section(new_section)
-         symbols_dict[name] = new_section
- 
-@@ -727,9 +727,9 @@ def _switch_section(self, new_section: 'QAPIDoc.Section') -> None:
-             # We do not create anonymous sections unless there is
-             # something to put in them; this is a parser bug.
-             assert self._section.name
--            raise QAPIParseError(
--                self._parser,
--                "empty doc section '%s'" % self._section.name)
-+            raise QAPISemError(
-+                self._section.info,
-+                "text required after '%s:'" % self._section.name)
- 
-         self._section = new_section
- 
-@@ -748,7 +748,7 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
-                                    "%s '%s' lacks documentation"
-                                    % (member.role, member.name))
-             self.args[member.name] = QAPIDoc.ArgSection(self._parser,
--                                                        member.name)
-+                                                        '@' + member.name)
-         self.args[member.name].connect(member)
- 
-     def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
-diff --git a/tests/qapi-schema/doc-empty-section.err b/tests/qapi-schema/doc-empty-section.err
-index ba7ba70125..5f03a6d733 100644
---- a/tests/qapi-schema/doc-empty-section.err
-+++ b/tests/qapi-schema/doc-empty-section.err
-@@ -1 +1 @@
--doc-empty-section.json:7:1: empty doc section 'Note'
-+doc-empty-section.json:6: text required after 'Note:'
+diff --git a/tests/qapi-schema/doc-duplicate-features.err b/tests/qapi-schema/doc-duplicate-features.err
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/tests/qapi-schema/doc-duplicate-features.json b/tests/qapi-schema/doc-duplicate-features.json
+new file mode 100644
+index 0000000000..a4d559e740
+--- /dev/null
++++ b/tests/qapi-schema/doc-duplicate-features.json
+@@ -0,0 +1,11 @@
++# Duplicate 'Features:' line
++
++##
++# @foo:
++#
++# Features:
++# @feat: mumble
++#
++# Features:
++##
++{ 'command': 'foo', 'features': ['feat'] }
+diff --git a/tests/qapi-schema/doc-duplicate-features.out b/tests/qapi-schema/doc-duplicate-features.out
+new file mode 100644
+index 0000000000..43bfe1034b
+--- /dev/null
++++ b/tests/qapi-schema/doc-duplicate-features.out
+@@ -0,0 +1,22 @@
++module ./builtin
++object q_empty
++enum QType
++    prefix QTYPE
++    member none
++    member qnull
++    member qnum
++    member qstring
++    member qdict
++    member qlist
++    member qbool
++module doc-duplicate-features.json
++command foo None -> None
++    gen=True success_response=True boxed=False oob=False preconfig=False
++    feature feat
++doc symbol=foo
++    body=
++
++    feature=feat
++mumble
++    section=None
++Features:
+diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+index 44a9385563..4c714c792f 100644
+--- a/tests/qapi-schema/meson.build
++++ b/tests/qapi-schema/meson.build
+@@ -66,6 +66,7 @@ schemas = [
+   'doc-bad-union-member.json',
+   'doc-before-include.json',
+   'doc-before-pragma.json',
++  'doc-duplicate-features.json',
+   'doc-duplicated-arg.json',
+   'doc-duplicated-return.json',
+   'doc-duplicated-since.json',
 -- 
 2.43.0
 
