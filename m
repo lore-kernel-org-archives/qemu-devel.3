@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC20C48BF6
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:03:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41FDC48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razg6-0005y2-Vm; Fri, 16 Feb 2024 09:59:03 -0500
+	id 1razg2-0005uL-Hj; Fri, 16 Feb 2024 09:58:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razg1-0005tO-9l
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:57 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razg0-0005s9-89
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfx-00083D-Tw
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:57 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfw-000821-U1
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708095533;
+ s=mimecast20190719; t=1708095532;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=quNPGzAfYk4xijW3ChKUFh1qR6poXO1qlh5/lMiUjvM=;
- b=TM7u8YZlMuJjafmUz4Ud2JmHsseZKVl2+S+qnB4244BWKaYzsmgAycLFCoI/lGpZIzXjfJ
- EehBdkWWJK2r509pzz5Cx92fk7lvKqTiKcamS2cKNdh948taBZC3SK/qrB1pG+m2E5VYgq
- qB6Dr2b0/TvFZLk/Iw06Ew2FFJUtvCQ=
+ bh=36uNUQPM62FYtbRXZ7En4OCYfIBDFWswM6LRFVUxF6Y=;
+ b=NKCRF5PRDTzo4vOnbO1CE2BDAH5mCU5SNFbQo/E54BWWsxw+vyEBUrUbccoMDqcQTJNs6A
+ RcVKGOde148iAXh/uxktgLVmjbog/UgyBRHMHW2AU+2jVWg5ucoS+KhZpOw5z8PMiNrK2V
+ MLZIxun25vSH1LaLLz+B39FcLIrO4TQ=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-kHQYADYhO6qhNVCwBBPQaw-1; Fri,
- 16 Feb 2024 09:58:49 -0500
-X-MC-Unique: kHQYADYhO6qhNVCwBBPQaw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-SIt4i5bkNOKHSk4WKLQsxQ-1; Fri,
+ 16 Feb 2024 09:58:48 -0500
+X-MC-Unique: SIt4i5bkNOKHSk4WKLQsxQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A41381C0433B;
- Fri, 16 Feb 2024 14:58:49 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 636972812FEB;
+ Fri, 16 Feb 2024 14:58:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6485D2166B4F;
- Fri, 16 Feb 2024 14:58:49 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 3FFC61C060B1;
+ Fri, 16 Feb 2024 14:58:48 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3C36D21E5A5B; Fri, 16 Feb 2024 15:58:41 +0100 (CET)
+ id 1D89121E60DD; Fri, 16 Feb 2024 15:58:41 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, jsnow@redhat.com, eblake@redhat.com,
  peter.maydell@linaro.org
-Subject: [PATCH 15/16] qapi: Reject multiple and empty feature descriptions
-Date: Fri, 16 Feb 2024 15:58:39 +0100
-Message-ID: <20240216145841.2099240-16-armbru@redhat.com>
+Subject: [PATCH 06/16] qapi: Improve error position for bogus invalid
+ "Returns" section
+Date: Fri, 16 Feb 2024 15:58:30 +0100
+Message-ID: <20240216145841.2099240-7-armbru@redhat.com>
 In-Reply-To: <20240216145841.2099240-1-armbru@redhat.com>
 References: <20240216145841.2099240-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -82,129 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The parser recognizes only the first "Features:" line.  Any subsequent
-ones are treated as ordinary text, as visible in test case
-doc-duplicate-features.  Recognize "Features:" lines anywhere.  A
-second one is an error.
-
-A 'Features:' line without any features is useless, but not an error.
-Make it an error.  This makes detecting a second "Features:" line
-easier.
-
-qapi/run-state.json actually has an instance of this since commit
-fe17522d854 (qapi: Remove deprecated 'singlestep' member of
-StatusInfo).  Clean it up.
+When something other than a command has a "Returns" section, the error
+message points to the beginning of the definition comment.  Point to
+the "Returns" section instead.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/run-state.json                          |  2 --
- scripts/qapi/parser.py                       |  8 ++++++-
- tests/qapi-schema/doc-duplicate-features.err |  1 +
- tests/qapi-schema/doc-duplicate-features.out | 22 --------------------
- tests/qapi-schema/doc-empty-features.err     |  1 +
- tests/qapi-schema/doc-empty-features.out     | 17 ---------------
- 6 files changed, 9 insertions(+), 42 deletions(-)
+ scripts/qapi/parser.py                   | 10 +++++++---
+ tests/qapi-schema/doc-invalid-return.err |  2 +-
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index d19d23a0fd..dd0770b379 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -108,8 +108,6 @@
- #
- # @status: the virtual machine @RunState
- #
--# Features:
--#
- # Since: 0.14
- #
- ##
 diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 73ff150430..3d8c62b412 100644
+index 82db595dcf..a771013959 100644
 --- a/scripts/qapi/parser.py
 +++ b/scripts/qapi/parser.py
-@@ -507,7 +507,10 @@ def get_doc(self) -> 'QAPIDoc':
-                 if line is None:
-                     break
-                 # Non-blank line, first of a section
--                if line == 'Features:' and not doc.features:
-+                if line == 'Features:':
-+                    if doc.features:
-+                        raise QAPIParseError(
-+                            self, "duplicated 'Features:' line")
-                     self.accept(False)
-                     line = self.get_doc_line()
-                     while line == '':
-@@ -520,6 +523,9 @@ def get_doc(self) -> 'QAPIDoc':
-                         if text:
-                             doc.append_line(text)
-                         line = self.get_doc_indented(doc)
-+                    if not doc.features:
-+                        raise QAPIParseError(
-+                            self, 'feature descriptions expected')
-                     no_more_args = True
-                 elif match := self._match_at_name_colon(line):
-                     # description
-diff --git a/tests/qapi-schema/doc-duplicate-features.err b/tests/qapi-schema/doc-duplicate-features.err
-index e69de29bb2..cadb2957a6 100644
---- a/tests/qapi-schema/doc-duplicate-features.err
-+++ b/tests/qapi-schema/doc-duplicate-features.err
-@@ -0,0 +1 @@
-+doc-duplicate-features.json:9:1: duplicated 'Features:' line
-diff --git a/tests/qapi-schema/doc-duplicate-features.out b/tests/qapi-schema/doc-duplicate-features.out
-index 43bfe1034b..e69de29bb2 100644
---- a/tests/qapi-schema/doc-duplicate-features.out
-+++ b/tests/qapi-schema/doc-duplicate-features.out
-@@ -1,22 +0,0 @@
--module ./builtin
--object q_empty
--enum QType
--    prefix QTYPE
--    member none
--    member qnull
--    member qnum
--    member qstring
--    member qdict
--    member qlist
--    member qbool
--module doc-duplicate-features.json
--command foo None -> None
--    gen=True success_response=True boxed=False oob=False preconfig=False
--    feature feat
--doc symbol=foo
--    body=
--
--    feature=feat
--mumble
--    section=None
--Features:
-diff --git a/tests/qapi-schema/doc-empty-features.err b/tests/qapi-schema/doc-empty-features.err
-index e69de29bb2..2709a18d8f 100644
---- a/tests/qapi-schema/doc-empty-features.err
-+++ b/tests/qapi-schema/doc-empty-features.err
-@@ -0,0 +1 @@
-+doc-empty-features.json:8:1: feature descriptions expected
-diff --git a/tests/qapi-schema/doc-empty-features.out b/tests/qapi-schema/doc-empty-features.out
-index 473f59552d..e69de29bb2 100644
---- a/tests/qapi-schema/doc-empty-features.out
-+++ b/tests/qapi-schema/doc-empty-features.out
-@@ -1,17 +0,0 @@
--module ./builtin
--object q_empty
--enum QType
--    prefix QTYPE
--    member none
--    member qnull
--    member qnum
--    member qstring
--    member qdict
--    member qlist
--    member qbool
--module doc-empty-features.json
--command foo None -> None
--    gen=True success_response=True boxed=False oob=False preconfig=False
--doc symbol=foo
--    body=
--not a description
+@@ -759,9 +759,13 @@ def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
+         self.features[feature.name].connect(feature)
+ 
+     def check_expr(self, expr: QAPIExpression) -> None:
+-        if self.has_section('Returns') and 'command' not in expr:
+-            raise QAPISemError(self.info,
+-                               "'Returns:' is only valid for commands")
++        if 'command' not in expr:
++            sec = next((sec for sec in self.sections
++                        if sec.name == 'Returns'),
++                       None)
++            if sec:
++                raise QAPISemError(sec.info,
++                                   "'Returns:' is only valid for commands")
+ 
+     def check(self) -> None:
+ 
+diff --git a/tests/qapi-schema/doc-invalid-return.err b/tests/qapi-schema/doc-invalid-return.err
+index 2ad89c5941..bc5826de20 100644
+--- a/tests/qapi-schema/doc-invalid-return.err
++++ b/tests/qapi-schema/doc-invalid-return.err
+@@ -1 +1 @@
+-doc-invalid-return.json:3: 'Returns:' is only valid for commands
++doc-invalid-return.json:5: 'Returns:' is only valid for commands
 -- 
 2.43.0
 
