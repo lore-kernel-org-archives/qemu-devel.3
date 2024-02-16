@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D987C48BEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76966C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raw12-00073T-Do; Fri, 16 Feb 2024 06:04:24 -0500
+	id 1raw1P-0008Gz-Mb; Fri, 16 Feb 2024 06:04:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0x-0006qw-Ft
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:21 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw1N-0008AD-GH
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:45 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0u-00011d-L2
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:19 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4124907f6fcso2992465e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:04:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw1L-00017G-Qq
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:45 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d094bc2244so24396151fa.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:04:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708081455; x=1708686255; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708081481; x=1708686281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7iBFC1QhPdWDrDOtRIvOXPWDjCtIz2lHCQrIRmLbo9Y=;
- b=wYiptgNATPM6dlfnFTPvx+lWJzI+wJZgbFG8wYD7C3czB9Cy/uqfistfDLM4yxj/U0
- /qwWlA+2JzfJgywgFXbiX+Fwq1Al0h3JHuQ637UDAC9sFfTbDmZLsUV+nN0mOBBFtTsv
- M5tu/2JKLMzH/GFc/WHanaZy8CdIMc3nSZR52EYbMkINHq/REzasZ4val+iRVC6HbgHl
- A4zS2LKtfaHto88IuwrQHSTzKl9IvJVWSmnJJUEoByabCZYB/APz/rIVLY0kQicaxMwa
- qoYkpCUWivO8Vn2Z3HdweVwQJOa1xnaX29PjdY5MTy7lkcooDRYPunTwZm+hp915dky+
- 4Fbw==
+ bh=SDE/2ozeILt8icMDCEMhs9DK4Gx3Yb4arama1t6dDAI=;
+ b=zRnddEaPVtVB3ljS8L4qwXg3FSFcOSNQNEZmwKN+dQ3hu6DVbC5oYtHoQ7atunkP+F
+ sCmlXBhPEQPVjb4C2C+w/cGV8tO1aABftXwSMnQM0F3h7ky9mts1rzkmT6yRkepX2G1B
+ jmHzrYz1ZREiP+ondn179HOmhdU+5xcPoZmxEUopslBQLVF1fdwbBQCy5Udtl6vLkfZx
+ v3KOZq+F2/sni8rmSkKlGtfhb+l0fVyH2CmFNWDbUR9hH7G78+GxDbIf6tyP1T2A13rA
+ d6DfZ1J3Z6l+/hjzZ1YG77ymj5pdx2XEE1O8t20ph21h1/x/LcELMWx+lnnJ6HiV29bo
+ qLZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708081455; x=1708686255;
+ d=1e100.net; s=20230601; t=1708081481; x=1708686281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7iBFC1QhPdWDrDOtRIvOXPWDjCtIz2lHCQrIRmLbo9Y=;
- b=YWuAjOin1fbprF4d13YZGzEHD86oyV30H8jFweDeKLYVEKRO/srFiuiMRQBbU1+gTL
- HkuZIwZXFWBe79/8BwlDgQxj6ZLaTiBSjC0M4YXpwv0Z7VEQHOZT0e9BBUn12bBvtgWh
- qU9q6mFPTgr68WHu+86lh7Ob/MApKLCok4ZfPxzWTbsUGkonV0KQfVZa5URBqKE/BvZM
- BI+WOv37xtjFtz2yhYDaFxvnbMQPZaIP4d4aMwnwzbhNU7SehYzLzz9Ak0u15gpmRZ50
- IefFwo3vlqKYBDEjASHdOO6X7nezrH+FqKwcKVv+qLYZB1BWSIhYXTp85eoxmw0Mi5Bj
- g3GQ==
-X-Gm-Message-State: AOJu0YymlkuoUQ0/jHy+y+pwHrobom7DcPv4o021olxw3UA50I3KjXQ6
- Oip7ZXVa5pClMRSyETXT1OIRLDI9sqkf7EB3kfsRiwnKUCYZaUcN0e8+JKgQG564GByH8o2tejS
- m
-X-Google-Smtp-Source: AGHT+IF8QGAe9CWzaU1NDXic+DWdnM9DUB8PzSiWHsKJgDo8NqFEzjBod/sng/WkWkUHWzyjCvyQtA==
-X-Received: by 2002:a05:600c:b92:b0:410:c69f:51b8 with SMTP id
- fl18-20020a05600c0b9200b00410c69f51b8mr3531506wmb.14.1708081454975; 
- Fri, 16 Feb 2024 03:04:14 -0800 (PST)
+ bh=SDE/2ozeILt8icMDCEMhs9DK4Gx3Yb4arama1t6dDAI=;
+ b=vVbn84gZ+ZiJ1CMVHKQKWnlZ9MdLrZHK4vqGg+nuo9hJ1T1PeQMxaB35M8QDajovd7
+ 4RghIaTff6HMS2VGD4deqpcLtIdJpvUxVGRK7NwYX60aXZBPvt8pTCAw9lwVc1SLCtw/
+ kJNW2/FUKTRxhpQT0KH8hLdJeBsCCNvMMVRAqsfaR40CiOvFGbDLz4nTANbsXkmIzHB+
+ 8V2L9i3pLdUd3gdyvo2cSzeHRIyRxoww0ORcCJZldIG2cZSkmUGcPp8LyKA/DUTzfmtE
+ 3Z3xL2Z6LJw2vbMoMN1f+uePnw1DU3xjC6BbNbkz+AanQoDkNDAfz8n5kTyA9YmzDghn
+ eWrw==
+X-Gm-Message-State: AOJu0Yzmh4i490FQJp/R6D3XeHGDDUjHmUzizrd7wsogDiwVG52exuGZ
+ qU1uLnVxtcEIf0Cxuujadl69tR45ki8cvDmQLZ7lfSpZjjztFY2Bwb+isN1MQUHdYz7mJMeigbt
+ 2
+X-Google-Smtp-Source: AGHT+IFZNkHzLFZsRRmZmy29Ui82mj7wZIEzSZ0XA/O/0xcGEFo6EopzBMSekmatFRBZBkq2tUbraA==
+X-Received: by 2002:a2e:8950:0:b0:2d1:26f0:8167 with SMTP id
+ b16-20020a2e8950000000b002d126f08167mr3170282ljk.35.1708081481655; 
+ Fri, 16 Feb 2024 03:04:41 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- k35-20020a05600c1ca300b00412393ddac2sm2036410wms.6.2024.02.16.03.04.13
+ p18-20020a7bcc92000000b00411a0477755sm1963807wma.9.2024.02.16.03.04.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 03:04:14 -0800 (PST)
+ Fri, 16 Feb 2024 03:04:41 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 09/21] hw/usb: Inline usb_try_new()
-Date: Fri, 16 Feb 2024 12:03:00 +0100
-Message-ID: <20240216110313.17039-10-philmd@linaro.org>
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>
+Subject: [PATCH 13/21] hw/pci-host/raven: Embedded OrIRQ in PRePPCIState
+Date: Fri, 16 Feb 2024 12:03:04 +0100
+Message-ID: <20240216110313.17039-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216110313.17039-1-philmd@linaro.org>
 References: <20240216110313.17039-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,38 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline the single use of usb_try_new().
+Since we know the size of the OrIRQ object, we can initialize
+it directly in place with object_initialize_child(). Doing so
+we also set the QOM parent <-> child relationship.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/usb/bus.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ hw/pci-host/raven.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 59c39945dd..148224f06a 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -334,11 +334,6 @@ USBDevice *usb_new(const char *name)
-     return USB_DEVICE(qdev_new(name));
- }
+diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+index c7a0a2878a..9e47caebc5 100644
+--- a/hw/pci-host/raven.c
++++ b/hw/pci-host/raven.c
+@@ -60,7 +60,7 @@ DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+ struct PRePPCIState {
+     PCIHostState parent_obj;
  
--static USBDevice *usb_try_new(const char *name)
--{
--    return USB_DEVICE(qdev_try_new(name));
--}
--
- bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
- {
-     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
-@@ -447,7 +442,7 @@ void usb_claim_port(USBDevice *dev, Error **errp)
+-    OrIRQState *or_irq;
++    OrIRQState or_irq;
+     qemu_irq pci_irqs[PCI_NUM_PINS];
+     PCIBus pci_bus;
+     AddressSpace pci_io_as;
+@@ -249,14 +249,14 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
      } else {
-         if (bus->nfree == 1 && strcmp(object_get_typename(OBJECT(dev)), "usb-hub") != 0) {
-             /* Create a new hub and chain it on */
--            hub = usb_try_new("usb-hub");
-+            hub = USB_DEVICE(qdev_try_new("usb-hub"));
-             if (hub) {
-                 usb_realize_and_unref(hub, bus, NULL);
-             }
+         /* According to PReP specification section 6.1.6 "System Interrupt
+          * Assignments", all PCI interrupts are routed via IRQ 15 */
+-        s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
+-        object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
++        object_initialize_child(OBJECT(dev), "or-irq", &s->or_irq, TYPE_OR_IRQ);
++        object_property_set_int(OBJECT(&s->or_irq), "num-lines", PCI_NUM_PINS,
+                                 &error_fatal);
+-        qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
+-        sysbus_init_irq(dev, &s->or_irq->out_irq);
++        qdev_realize(DEVICE(&s->or_irq), NULL, &error_fatal);
++        sysbus_init_irq(dev, &s->or_irq.out_irq);
+ 
+         for (i = 0; i < PCI_NUM_PINS; i++) {
+-            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
++            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(&s->or_irq), i);
+         }
+     }
+ 
 -- 
 2.41.0
 
