@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F3CC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E971C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razY6-0002nB-Us; Fri, 16 Feb 2024 09:50:46 -0500
+	id 1razbu-0003st-Sh; Fri, 16 Feb 2024 09:54:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1razY5-0002mj-Br
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:50:45 -0500
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ id 1razbr-0003sa-2e
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:54:39 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1razY3-0006M2-Jf
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:50:45 -0500
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-51299e0cb8fso406521e87.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:50:43 -0800 (PST)
+ id 1razbp-0006vf-8j
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:54:38 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-55f50cf2021so2901905a12.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:54:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708095041; x=1708699841; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708095275; x=1708700075; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MDiqs+U5t0NptwhkjBiPyr3hzIQRm866Qe5lQWxu8Gs=;
- b=EfTrkOlUeZRHXRfQnF5sX//QC4O0EVw8lE9GVdtBf1a82FqYcRnppSLawN79LBoVGb
- j40rthDn6sdAxyx5+4qr/OJwlXokHlek3LQoJu3vcDovHZeiqQBPgIPYFGmHxY7GWpLi
- OARlQh6uaWXj+XupKnpwL+2eR0RUhfdBUouEcfXrDa0BbLSN2aDuVk7qdIwjLcW2BMb3
- ELtm0YJo8SvSN+8yZ7dbprAqUlR3ITTIZK7l8n/Et8jI5e3cHHwsu+zFG/Rf6H8GfPaC
- aj3OM4VFfDHOXMmxoiaeVWgxM46nt7nejfNrCxSe2f7BHk9qW9K2yOtepkCzHHl7zn5o
- vkuA==
+ bh=7xXTa/W2p2MaLklKaZVjyubH9ibXSXdaZOGnUiZ4xe4=;
+ b=icqg9Qvn4Ize9HE/7x1XhqUEpXTkIy9445NGnsna8P1eT4CEoCNx6mukslQb0NW99a
+ onaxQtkLiZu5Z05MzSQUMYMGiC6iCp9O7KCo/t+SBDBcjlky8LGPF5awZl36CEdsFEkY
+ Nm5SOzUE4FhSXroBYP/rpFAFoFhmUb2LHQYwjvw/jdVnAgjQJml+t9KLjA6NcxCe3WC3
+ iQizYgelBjM1x8EQDpdTjK2BopIMWygEKzg8Emu5rlgFdftKpOSJAG/fQ8eZ3cdnyqij
+ U1hjiiCL+RCk8XUScO8YpujewE/8dTtBKcZLYDDSrHaKnbJ9uNtlVrEojBMkVL2fCRHK
+ v4kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708095041; x=1708699841;
+ d=1e100.net; s=20230601; t=1708095275; x=1708700075;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MDiqs+U5t0NptwhkjBiPyr3hzIQRm866Qe5lQWxu8Gs=;
- b=AcQ1s58mWMPGCZ4Zj7vVyjPTlO4wn1jL0F6Oz8f2poZGJd1jndvNE9V7KbdAo7gpdO
- K1mYY2jiRA0RgPY8NxQwbYpNX6rrluDcCnP0XGhUBWnDc8IXo7rrW8VL6pCFD1iyoVVY
- BhBCDbsWqTc3QCo8rF2KA90U1BHWXoZpsVBDfpwsps20TRwgfi2Lfc90we8DbC6ks3kA
- ut7hAyvYXZuPD275Ao6227IeEt4ExdiiLiEKN+i2HR3AmoS9FSxJw1O2oyL7hdQv9xAI
- 049SfvdonYMX5qRRz8oVNniWr5M0+I4jZSSQro40AoSqtKrhrL1oZeWmhEyqNb/I539s
- jXcw==
-X-Gm-Message-State: AOJu0Yzx5QWxztDH4GthCExiHFeHgD8LewLksRQahjqFUMV9CbzBeUsj
- ryC2YdOyNc0TbB+/zwaYcjhIt9KJBfNRyc/6KOkFn+k2++ezxqXnKWmpmvXzsrXMYcAg4IwDzCN
- nse6pn031B5sHetmu1BnWxDgYiNqfbIJFgrkbAw==
-X-Google-Smtp-Source: AGHT+IFiHbqsP5Mu2ffABz8wJW0YB/R4HkODSix39M8LQ4tNdei1gde3oUSrGaNEDAuMgS3uj9JAqmp4n0qVw1FK9GA=
-X-Received: by 2002:ac2:4c13:0:b0:511:19bf:fa0c with SMTP id
- t19-20020ac24c13000000b0051119bffa0cmr3879076lfq.56.1708095041542; Fri, 16
- Feb 2024 06:50:41 -0800 (PST)
+ bh=7xXTa/W2p2MaLklKaZVjyubH9ibXSXdaZOGnUiZ4xe4=;
+ b=dD6D8LcmHoJsB8yPG60riA/TV62wskBREhBGSH8Qf6jg+pmiS429nTrYtHrbEjcWg8
+ MZOEYDZA/TPB2StdVTYgP6bi9nLm/L2KUejZ8MNOhTDv5k5N3iAxfQI7pIoKztt0+vNo
+ /acnyLNGJBrb38xW93Ct5fgCZAHrjJrTi/qAFlFaUoi8NnUkQD1AgeTlUIc6/ntMzpMN
+ cIPjrXcddUFmao+Q0EKg5gr6nu4QKIQ2wGb4jxanyP2mDh/Z3gens/CcBPHszvPvbyJH
+ VxWlt4Zmq+Uav0YehKqI2ZIpcS1NbA8slCB9cRYfqFSYpP6Wz7fRyY/YSpHz8ZPmlWc6
+ nOkw==
+X-Gm-Message-State: AOJu0Yz4V+Ii2oAIdkBTUy2Zp23R8p9WajwuHfLGXzDZOfVUmv1OO4S4
+ Jw4GPIkDLpJkx0ZSELvc1HLl/WBrTWZ/YQ4+c4L4HOEfEqj2OXHnKZdvSQGBIl+LF7sBlOQlDId
+ bJi5QSQKluFAKZwYWnJDYuZMm+MaG8po8PVEARw==
+X-Google-Smtp-Source: AGHT+IGVs28RWefRMDTe/h0gfbuD/W7N7NeNDkWZ4w3CYR2GFwutbJyWk9MaxjHBESYPus8uDql9TmTd1xw2si/Wnwg=
+X-Received: by 2002:aa7:cd46:0:b0:562:1441:81f0 with SMTP id
+ v6-20020aa7cd46000000b00562144181f0mr3633178edw.7.1708095275087; Fri, 16 Feb
+ 2024 06:54:35 -0800 (PST)
 MIME-Version: 1.0
 References: <20240216135137.8668-3-atp.exp@gmail.com>
- <20240216135137.8668-5-atp.exp@gmail.com>
-In-Reply-To: <20240216135137.8668-5-atp.exp@gmail.com>
+ <20240216135137.8668-6-atp.exp@gmail.com>
+In-Reply-To: <20240216135137.8668-6-atp.exp@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Feb 2024 14:50:30 +0000
-Message-ID: <CAFEAcA-FzZTT9twzPP7KAvqvkV5GAjYGM0cfV35jYa26R3cKLQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] misc: pxa2xx_timer: replace
- qemu_system_reset_request() call with watchdog_perform_action()
+Date: Fri, 16 Feb 2024 14:54:24 +0000
+Message-ID: <CAFEAcA8dC6siNn684zqgiEZhKkxnw3DRu_AzPPZ16QRUg2410Q@mail.gmail.com>
+Subject: Re: [PATCH 3/3] misc: ppc/spapr: replace qemu_system_reset_request()
+ calls with watchdog_perform_action()
 To: Abhiram Tilak <atp.exp@gmail.com>
 Cc: qemu-devel@nongnu.org, clg@kaod.org, david@gibson.dropbear.id.au, 
  harshpb@linux.ibm.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,34 +98,48 @@ On Fri, 16 Feb 2024 at 13:56, Abhiram Tilak <atp.exp@gmail.com> wrote:
 > to reset when a watchdog timer expires, let watchdog_perform_action() decide
 > what to do.
 >
+> I am unsure about the changes in `spapr_watchdog.c` in patch 3, it would be great
+> if any of the maintainers review it.
+>
 > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2124
 > Signed-off-by: Abhiram Tilak <atp.exp@gmail.com>
 > ---
->  hw/timer/pxa2xx_timer.c | 3 ++-
+>  hw/watchdog/spapr_watchdog.c | 3 ++-
 >  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/timer/pxa2xx_timer.c b/hw/timer/pxa2xx_timer.c
-> index 6a7d5551f4..6479ab1a8b 100644
-> --- a/hw/timer/pxa2xx_timer.c
-> +++ b/hw/timer/pxa2xx_timer.c
+> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+> index 2bb1d3c532..9751b19506 100644
+> --- a/hw/watchdog/spapr_watchdog.c
+> +++ b/hw/watchdog/spapr_watchdog.c
 > @@ -18,6 +18,7 @@
->  #include "qemu/log.h"
->  #include "qemu/module.h"
->  #include "qom/object.h"
+>  #include "target/ppc/cpu.h"
+>  #include "migration/vmstate.h"
+>  #include "trace.h"
 > +#include "sysemu/watchdog.h"
 >
->  #define OSMR0  0x00
->  #define OSMR1  0x04
-> @@ -417,7 +418,7 @@ static void pxa2xx_timer_tick(void *opaque)
->      if (t->num == 3)
->          if (i->reset3 & 1) {
->              i->reset3 = 0;
-> -            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> +            watchdog_perform_action();
->          }
->  }
+>  #include "hw/ppc/spapr.h"
+>
+> @@ -114,7 +115,7 @@ static void watchdog_expired(void *pw)
+>          qemu_system_vmstop_request(RUN_STATE_SHUTDOWN);
+>          break;
+>      case PSERIES_WDTF_ACTION_HARD_RESTART:
+> -        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> +        watchdog_perform_action();
+>          break;
+>      case PSERIES_WDTF_ACTION_DUMP_RESTART:
+>          CPU_FOREACH(cs) {
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+This one is more complicated, because the spapr watchdog
+has multiple possible behaviours which the guest can ask for.
+
+We had a discussion on the mailing list about this a little while back:
+https://lore.kernel.org/qemu-devel/CAFEAcA_KjSgt-oC=d2m6WAdqoRsUcs1W_ji7Ng2fgVjxAWLZEw@mail.gmail.com/
+
+The conclusion was that the watchdog-behaviour QAPI API
+needs to be enhanced to be able to handle this kind of
+"the guest picks an action" watchdog, so that the user can
+either override the guest's choice, or request that the
+behaviour be what the guest wants it to be.
 
 thanks
 -- PMM
