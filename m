@@ -4,73 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65384C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A775C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raztl-0006mA-R3; Fri, 16 Feb 2024 10:13:10 -0500
+	id 1razy2-0000gz-KE; Fri, 16 Feb 2024 10:17:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1raztj-0006lW-Os; Fri, 16 Feb 2024 10:13:07 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1razy1-0000go-TF
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:17:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1raztg-000384-JI; Fri, 16 Feb 2024 10:13:07 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F379C4DF67;
- Fri, 16 Feb 2024 18:13:04 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3E43481766;
- Fri, 16 Feb 2024 18:12:53 +0300 (MSK)
-Message-ID: <572bd0e6-002e-4990-a9e0-e70eec65fd93@tls.msk.ru>
-Date: Fri, 16 Feb 2024 18:12:53 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1razy0-0004HP-5p
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:17:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708096651;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZHDGJzBOIMpLQPuM8MYFTCXIdjMpnj/st5iNb+WRDxk=;
+ b=ObJ1bnVdD52sH1CpfQ6cTGQqBxqTZYNPMVW8supM/GRev8Ma3yJBVII/ts6XJ8jPJ5pDqD
+ 5GOc/904sSDwnLGp6wznd1yZzQF2JGmWAwfXCaM035sCW7n9WI13cmxogX+Yv+ZdjlRviS
+ uyrLDlbdcPewc4YrK96n0VvoupI5Z38=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-641-EKNGFtzBPuOvf8I51hKhQQ-1; Fri, 16 Feb 2024 10:17:29 -0500
+X-MC-Unique: EKNGFtzBPuOvf8I51hKhQQ-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6805f615543so35811206d6.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:17:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708096648; x=1708701448;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZHDGJzBOIMpLQPuM8MYFTCXIdjMpnj/st5iNb+WRDxk=;
+ b=xUULPcTKuWzGaDlq++0f9I0BKPDQd3HkSGD3WChlfJIM3KMu2Cbb1AMhFCiNANVdxM
+ nFV99mrn1/1HQm0fn2c0d9eHm3I2au9V7yWGb7vgjZ8Mik+3BN+FqZ931TMdVCeWlmFS
+ LjGthXgEex8ng5vkPKCuATxFJusbkIFW5J7lAed1ncjkC9DjACQcfZNvkNWR5cS9vqrk
+ 68XPR630Tkk/mPK4O2ugmWr7zZwvLSy+pq3xmiwi1i/q4XOAtX5w06TxNsoRmM+ChJNB
+ oLnw+0TYcLu2foSK+qgkGZ71ZF1sOEekoaBVGoBVT7E8C+7x/Wc8OGvZhcXPdmEGmkjj
+ ptqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1Zlu7gv+MOwqsRAv8VAX0pWCKRmh1SET2iQ8IuIlpDzOLAsetXyESq8Ow+NjwQidKgXGhfhn9mpiHPWk4WOHN851fiew=
+X-Gm-Message-State: AOJu0YzOjBRfKMRcgDESq5/7V0TIH5rQFQIh+zwxL+57lKl9A2+2ze+u
+ 7PVSse7VbwoXhVEPKAGv/ghz8VgV5HdRSuUGY5z2ipHbEIkwU1ND6m9Qt8lt9Hd5gxFzGEKciDV
+ u9RwZ8o5yZhjNgz/zAf/STk3fg5GjFmCNj8ElUqNTYGpcYGrsU4Ub
+X-Received: by 2002:a0c:db87:0:b0:68f:162d:a8ad with SMTP id
+ m7-20020a0cdb87000000b0068f162da8admr4784570qvk.0.1708096648375; 
+ Fri, 16 Feb 2024 07:17:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF4u0m+Dy/HvKVwJ/+VTep/Add9y0R2yiUT3dktJyhTbub9x/HFSsuviDuB0Lb2cDcuHMNtCg==
+X-Received: by 2002:a0c:db87:0:b0:68f:162d:a8ad with SMTP id
+ m7-20020a0cdb87000000b0068f162da8admr4784547qvk.0.1708096647984; 
+ Fri, 16 Feb 2024 07:17:27 -0800 (PST)
+Received: from ?IPV6:2a01:cb19:853d:fa00:f59e:918a:6675:6332?
+ ([2a01:cb19:853d:fa00:f59e:918a:6675:6332])
+ by smtp.gmail.com with ESMTPSA id
+ ld8-20020a056214418800b0068ef238441bsm952756qvb.39.2024.02.16.07.17.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Feb 2024 07:17:27 -0800 (PST)
+Message-ID: <10a2610e-713d-41ec-a317-b442f2062000@redhat.com>
+Date: Fri, 16 Feb 2024 16:17:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/6] target/arm: Adjust and validate mtedesc sizem1
+Subject: Re: [PATCH 13/14] migration: Use migrate_has_error() in
+ close_return_path_on_source()
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, gustavo.romero@linaro.org, qemu-stable@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240207025210.8837-1-richard.henderson@linaro.org>
- <20240207025210.8837-4-richard.henderson@linaro.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240207025210.8837-4-richard.henderson@linaro.org>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson <alex.williamson@redhat.com>
+References: <20240207133347.1115903-1-clg@redhat.com>
+ <20240207133347.1115903-14-clg@redhat.com> <87y1bvayu7.fsf@suse.de>
+ <fbdb9fbc-c3de-4b0a-be1f-2bed405dfd86@redhat.com> <87sf23awjp.fsf@suse.de>
+ <4af61bb2-4b21-4560-a7c1-c3fb65f20ff3@redhat.com> <87zfw3ox2m.fsf@suse.de>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <87zfw3ox2m.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,85 +107,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.02.2024 05:52, Richard Henderson :
-> When we added SVE_MTEDESC_SHIFT, we effectively limited the
-> maximum size of MTEDESC.  Adjust SIZEM1 to consume the remaining
-> bits (32 - 10 - 5 - 12 == 5).  Assert that the data to be stored
-> fits within the field (expecting 8 * 4 - 1 == 31, exact fit).
+On 2/14/24 17:00, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
 > 
-> Cc: qemu-stable@nongnu.org
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/internals.h         | 2 +-
->   target/arm/tcg/translate-sve.c | 7 ++++---
->   2 files changed, 5 insertions(+), 4 deletions(-)
+>> On 2/8/24 14:57, Fabiano Rosas wrote:
+>>> Cédric Le Goater <clg@redhat.com> writes:
+>>>
+>>>> On 2/8/24 14:07, Fabiano Rosas wrote:
+>>>>> Cédric Le Goater <clg@redhat.com> writes:
+>>>>>
+>>>>>> close_return_path_on_source() retrieves the migration error from the
+>>>>>> the QEMUFile '->to_dst_file' to know if a shutdown is required. This
+>>>>>> shutdown is required to exit the return-path thread. However, in
+>>>>>> migrate_fd_cleanup(), '->to_dst_file' is cleaned up before calling
+>>>>>> close_return_path_on_source() and the shutdown is never performed,
+>>>>>> leaving the source and destination waiting for an event to occur.
+>>>>>>
+>>>>>> Avoid relying on '->to_dst_file' and use migrate_has_error() instead.
+>>>>>>
+>>>>>> Suggested-by: Peter Xu <peterx@redhat.com>
+>>>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>>>>> ---
+>>>>>>     migration/migration.c | 3 +--
+>>>>>>     1 file changed, 1 insertion(+), 2 deletions(-)
+>>>>>>
+>>>>>> diff --git a/migration/migration.c b/migration/migration.c
+>>>>>> index d5f705ceef4c925589aa49335969672c0d761fa2..5f55af3d7624750ca416c4177781241b3e291e5d 100644
+>>>>>> --- a/migration/migration.c
+>>>>>> +++ b/migration/migration.c
+>>>>>> @@ -2372,8 +2372,7 @@ static bool close_return_path_on_source(MigrationState *ms)
+>>>>>>          * cause it to unblock if it's stuck waiting for the destination.
+>>>>>>          */
+>>>>>>         WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+>>>>>> -        if (ms->to_dst_file && ms->rp_state.from_dst_file &&
+>>>>>> -            qemu_file_get_error(ms->to_dst_file)) {
+>>>>>> +        if (migrate_has_error(ms) && ms->rp_state.from_dst_file) {
+>>>>>>                 qemu_file_shutdown(ms->rp_state.from_dst_file);
+>>>>>>             }
+>>>>>>         }
+>>>>>
+>>>>> Hm, maybe Peter can help defend this, but this assumes that every
+>>>>> function that takes an 'f' and sets the file error also sets
+>>>>> migrate_set_error(). I'm not sure we have determined that, have we?
+>>>>
+>>>> How could we check all the code path ? I agree it is difficult when
+>>>> looking at the code :/
+>>>
+>>> It would help if the thing wasn't called 'f' for the most part of the
+>>> code to begin with.
+>>>
+>>> Whenever there's a file error at to_dst_file there's the chance that the
+>>> rp_state.from_dst_file got stuck. So we cannot ignore the file error.
+>>>
+>>> Would it work if we checked it earlier during cleanup as you did
+>>> previously and then set the migration error?
+>>
+>> Do you mean doing something similar to what is done in
+>> source_return_path_thread() ?
+>>
+>>           if (qemu_file_get_error(s->to_dst_file)) {
+>>               qemu_file_get_error_obj(s->to_dst_file, &err);
+>>       	    if (err) {
+>>           	migrate_set_error(ms, err);
+>>           	error_free(err);
+>> 	...
+>>
+>> Yes. That would be safer I think.
 > 
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index fc337fe40e..50bff44549 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -1278,7 +1278,7 @@ FIELD(MTEDESC, TBI,   4, 2)
->   FIELD(MTEDESC, TCMA,  6, 2)
->   FIELD(MTEDESC, WRITE, 8, 1)
->   FIELD(MTEDESC, ALIGN, 9, 3)
-> -FIELD(MTEDESC, SIZEM1, 12, SIMD_DATA_BITS - 12)  /* size - 1 */
-> +FIELD(MTEDESC, SIZEM1, 12, SIMD_DATA_BITS - SVE_MTEDESC_SHIFT - 12)  /* size - 1 */
->   
->   bool mte_probe(CPUARMState *env, uint32_t desc, uint64_t ptr);
->   uint64_t mte_check(CPUARMState *env, uint32_t desc, uint64_t ptr, uintptr_t ra);
-> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-> index 7108938251..a88e523cba 100644
-> --- a/target/arm/tcg/translate-sve.c
-> +++ b/target/arm/tcg/translate-sve.c
-> @@ -4443,17 +4443,18 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
->   {
->       unsigned vsz = vec_full_reg_size(s);
->       TCGv_ptr t_pg;
-> +    uint32_t sizem1;
->       int desc = 0;
->   
->       assert(mte_n >= 1 && mte_n <= 4);
-> +    sizem1 = (mte_n << dtype_msz(dtype)) - 1;
-> +    assert(sizem1 <= R_MTEDESC_SIZEM1_MASK >> R_MTEDESC_SIZEM1_SHIFT);
->       if (s->mte_active[0]) {
-> -        int msz = dtype_msz(dtype);
-> -
->           desc = FIELD_DP32(desc, MTEDESC, MIDX, get_mem_index(s));
->           desc = FIELD_DP32(desc, MTEDESC, TBI, s->tbid);
->           desc = FIELD_DP32(desc, MTEDESC, TCMA, s->tcma);
->           desc = FIELD_DP32(desc, MTEDESC, WRITE, is_write);
-> -        desc = FIELD_DP32(desc, MTEDESC, SIZEM1, (mte_n << msz) - 1);
-> +        desc = FIELD_DP32(desc, MTEDESC, SIZEM1, sizem1);
->           desc <<= SVE_MTEDESC_SHIFT;
->       } else {
->           addr = clean_data_tbi(s, addr);
+> Yes, something like that.
+> 
+> I wish we could make that return path cleanup more deterministic, but
+> currently it's just: "if something hangs, call shutdown()". We don't
+> have a way to detect a hang, we just look at the file error and hope it
+> works.
+> 
+> A crucial aspect here is that calling qemu_file_shutdown() itself sets
+> the file error. So there's not even a guarantee that an error is
+> actually an error.
+> 
+>>
+>>
+>> Nevertheless, I am struggling to understand how qemu_file_set_error()
+>> and migrate_set_error() fit together. I was expecting some kind of
+>> synchronization  routine but there isn't it seems. Are they completely
+>> orthogonal ? when should we use these routines and when not ?
+> 
+> We're trying to phase out the QEMUFile usage altogether. One thing that
+> is getting in the way is this dependency on the qemu_file_*_error
+> functions.
 
-There's no question about stable-8.2 here, this change needed there.
-But I've a question about stable-7.2 - does it make sense to pick this
-one up for 7.2?  It quickly goes out of control, because this one
-is on top of
+OK. the other changes, which add an Error** argument to various handlers,
+reduce the use of qemu_file_*_error routines in VFIO.
 
-  523da6b963455ce0a0e8d572d98d9cd91f952785 target/arm: Check alignment in helper_mte_check
-  (this one might be good for 7.2 by its own)
-  which needs:
-   3b97520c86e704b0533627c26b98173b71834bad target/arm: Pass single_memop to gen_mte_checkN
-   which needs:
-    6f47e7c18972802c428a5e03eb52a8f0a7bebe5c target/arm: Load/store integer pair with one tcg operation
-    which needs:
-     needs 128bit ops
-     659aed5feda4472d8aed4ccc69e125bba2af8b89 target/arm: Drop tcg_temp_free from translator-a64.c
-     ...
+> While we're not there yet, a good pattern is to find a
+> qemu_file_set|get_error() pair and replace it with
+> migrate_set|has_error(). 
 
-So I think it's not a good idea to go down this hole..
-
-Probably ditto for the other two:
-   target/arm: Split out make_svemte_desc
-   target/arm: Handle mte in do_ldrq, do_ldro
-
-Makes sense?  Or it's better to do a proper backport?
+OK. I will keep that in mind for the other changes.
 
 Thanks,
 
-/mjt
+C.
+
+
+
+> Unfortunately the return path does not fit in
+> this, because we don't have a matching qemu_file_set_error, it could be
+> anywhere. As I said above, we're using that error as a heuristic for: "a
+> recvmsg() might be hanging".
+> 
+>>
+>> My initial goal was to modify some of the memory handlers (log_global*)
+>> and migration handlers to propagate errors at the QMP level and them
+>> report to the management layer. This is growing in something bigger
+>> and currently, I don't find a good approach to the problem.
+>>
+>> The last two patches of this series try to fix the return-path thread
+>> termination. Let's keep that for after.
+> 
+> I'll try to figure that out. I see you provided a reproducer.
+> 
+>>
+>> Thanks,
+>>
+>> C.
+> 
+
 
