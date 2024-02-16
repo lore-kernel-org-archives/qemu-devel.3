@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C1CC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7155EC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razmT-0001Tr-Ft; Fri, 16 Feb 2024 10:05:42 -0500
+	id 1raznT-0002h8-SV; Fri, 16 Feb 2024 10:06:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1razmF-0001Py-2B
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:05:23 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1razmC-000166-VJ
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:05:22 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1d918008b99so18096785ad.3
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:05:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708095919; x=1708700719; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zItzZE+8VFPxucbXvrzht6cgzQM/wiZTpdu4plEgS4U=;
- b=VRoCed6B6w8H9IT0pybeYNXt1pmiXmrY2wj8RFP0orq2Nvaq9SPloIMCZUwDmWd2UL
- uBtvYW75WE94kjgbV6r96f6GB1qK7MaZ3V9pYjZRmx/mqt/t2PwnotuvsHXIO69PuNgF
- qyTQw67ks4HE8kvljm9WUFEPuz50kMmn5mIyLXWJibCLEh+4kVRUsAH2oD6IytIYTXLY
- yUBZR59aMaKYcPY0zKRWiYzuOVCch3pACH3hD1NgQJMUAauIxG7FuK2S5PyYIpX/3Otm
- kWNXT5SiiKC+ay33cyPbyIAWkME2IL7H2Ig3zx898zDAFx9MFWmmtMnC/tbu4ghSf5i8
- +IwA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1raznO-0002gO-G1
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:06:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1raznM-0001CL-5k
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:06:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708095989;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CPBTdysDYpPiACBe5cKL5ETdbaaMEMrm03T0DAO6ASg=;
+ b=DIreeWh0Y2xeNPhO13/qom3iQkp+sl2284J8lHWlFYhQwbGrxm3RpgoIVq8E9k0EmJ02V4
+ r8Gn7TG8PIanx/bMMIMW+AUVj1HubqItPzLiax05Dx7AfE+gO68CDYh5NqUqFalrVndxkT
+ tt9ESR7Lo9X9Car7buRAAWGRNCvnpRE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-246-d6VkizI0PhCbTpGCuEf_yQ-1; Fri, 16 Feb 2024 10:06:27 -0500
+X-MC-Unique: d6VkizI0PhCbTpGCuEf_yQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33d23c8694dso159520f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:06:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708095919; x=1708700719;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zItzZE+8VFPxucbXvrzht6cgzQM/wiZTpdu4plEgS4U=;
- b=th9R9pguS1aiFvv6aCCPdUz8Vll49E0W/W8PNPTAcot/CZO+dXvDW4CMNzipqV8lbT
- 1UPent8z7L0saoPpxTHzZFr/jdT42DNHTLsTwjpMxiFz7R7ntyqcoCg0dvniTdQ3bNxK
- +rxLzKFln2zyXnCBdbvTKbrsAUnCN5H+okBe5/qipYV1XI7lUBcuUli7OntF6oAifPJr
- hTMtTcYSKxmfByOeWg8qX/S4gUT7GspL1n2a7y0xjRwI/TdX0+4XhvmoKyWNrYquuABK
- hUjR04VGuEuZ4gpBaVwRLsTe04arLjBvatprTrim7XvqG2Z9YulgHjs6M7L0D1DWQySv
- fIeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEh/nH8Ie8vCXI8NxggPkEoMkFPjqL4zlSZQ8V4sixkHdZbpllqlQc64KEGDiPCeCNpdt1UcO6Py4oeoAtIz6gR7OM5nw=
-X-Gm-Message-State: AOJu0YybCXE+PiAC7rZJEE4E+e84/P7gS677+pyRH6RscuGz/vxKuJBj
- UrOdQrG6SxDLjUkzXe9raQ/pC9cPBJmSz/111UzppuMp3Xz22jEnpLFE5BThKWc=
-X-Google-Smtp-Source: AGHT+IFE0byytz3npLaHPmQKj4DSQYmeqhUA2ENyVvbKGLMgMbqT38itvH52UVcv0tbfdgN+gQn/Yg==
-X-Received: by 2002:a17:902:8c98:b0:1db:5468:20d9 with SMTP id
- t24-20020a1709028c9800b001db546820d9mr4745571plo.44.1708095919582; 
- Fri, 16 Feb 2024 07:05:19 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- q7-20020a170902a3c700b001db90df1283sm2889442plb.4.2024.02.16.07.05.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Feb 2024 07:05:19 -0800 (PST)
-Message-ID: <015d2d76-3903-4b18-8845-77001ac786b1@ventanamicro.com>
-Date: Fri, 16 Feb 2024 12:05:16 -0300
+ d=1e100.net; s=20230601; t=1708095986; x=1708700786;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CPBTdysDYpPiACBe5cKL5ETdbaaMEMrm03T0DAO6ASg=;
+ b=A0Wx77Zg8MVck3n02XpHhnyhWJXGvoOFx9NIMm5w7l3URQPaBEei8t5bSrGjJA7TkR
+ DQTWx8I1EePi4AUkX1g4jJbLO9FSQ9v6JvYfjYGERUrnlsQfwPetGxCnYYPc73B9yYT7
+ ErwYCAACb85s7PmJDeoCiliv4dbeMGO7sP4lOMxu33wF4dGY9Ih/+h7PARmYgNBj25UL
+ mwu/v+xgWT/7IjeZBeHcVXpIQ4QIbrN52XLnz/81nvFzALjyrSXZr+zNLmmGhd6zlLnD
+ pWeWAmMgfxQvmi/Qh5ayXRdkI/B7jp2a7MlEBQyY65AKVEAWYgwDmRenvdMcyL0Dcr2f
+ 34tw==
+X-Gm-Message-State: AOJu0YwBXFWhmhzx8cuAkeKuEmV/BAgj0FvuATtDkJ8LgZnbN66Oo8nA
+ 2biSd9rJCQ3yVgk+0ZGJyE6v+UHqjHQ6taMvNimmwymzI8vn9tl5pSYr/TzRFas1r28fdOZhA4e
+ xzKYOgZGDzEgODBeBtwXLxE/LGKiKTHkWAAbx/Onpg0+XvKo+bc96Fjztzl0U1NiIcrCCj0ISua
+ +6JTdWqOGw1TYNBtyMTjnBNEIUp8k=
+X-Received: by 2002:adf:a30e:0:b0:33d:1f21:2dd with SMTP id
+ c14-20020adfa30e000000b0033d1f2102ddmr1385083wrb.40.1708095986567; 
+ Fri, 16 Feb 2024 07:06:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF6nb+V5JIUApGsbqtuvHC1+amCjLEW74NDgmopjTNFkQqUwUy/KpRDF9zaSew+lpAWDcwhzXC54uzrYLovztI=
+X-Received: by 2002:adf:a30e:0:b0:33d:1f21:2dd with SMTP id
+ c14-20020adfa30e000000b0033d1f2102ddmr1385068wrb.40.1708095986202; Fri, 16
+ Feb 2024 07:06:26 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/riscv: Add CSR tcontrol of debug trigger module
-Content-Language: en-US
-To: Alvin Chang <alvinga@andestech.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-References: <20240216061332.50229-1-alvinga@andestech.com>
- <20240216061332.50229-2-alvinga@andestech.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240216061332.50229-2-alvinga@andestech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240216091621.32989-1-thuth@redhat.com>
+In-Reply-To: <20240216091621.32989-1-thuth@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 16 Feb 2024 16:06:00 +0100
+Message-ID: <CABgObfYf7Yy3sfDSfU7v+RFLsa5VShC9FSiNCd0CkJyun6vkbA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/hppa/Kconfig: Fix building with "configure
+ --without-default-devices"
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,87 +99,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Feb 16, 2024 at 10:16=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
+te:
+>
+> When running "configure" with "--without-default-devices", building
+> of qemu-system-hppa currently fails with:
+>
+>  /usr/bin/ld: libqemu-hppa-softmmu.fa.p/hw_hppa_machine.c.o: in function =
+`machine_HP_common_init_tail':
+>  hw/hppa/machine.c:399: undefined reference to `usb_bus_find'
+>  /usr/bin/ld: hw/hppa/machine.c:399: undefined reference to `usb_create_s=
+imple'
+>  /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_bus_find=
+'
+>  /usr/bin/ld: hw/hppa/machine.c:400: undefined reference to `usb_create_s=
+imple'
+>  collect2: error: ld returned 1 exit status
+>  ninja: build stopped: subcommand failed.
+>  make: *** [Makefile:162: run-ninja] Error 1
+>
+> And after fixing this, the qemu-system-hppa binary refuses to run
+> due to the missing 'pci-ohci' and 'pci-serial' devices. Let's add
+> the right config switches to fix these problems.
 
+USB_OHCI_PCI is something similar to what was going on with the
+Loongsoon virt machine, and Philippe asked me to look at removing
+usb_bus_find() everywhere. But I have no objection to having this
+patch committed in the meanwhile.
 
-On 2/16/24 03:13, Alvin Chang wrote:
-> The RISC-V debug specification defines an optional CSR "tcontrol" within
-> the trigger module. This commit adds its read/write operations and
-> related bit-field definitions.
-> 
-> Signed-off-by: Alvin Chang <alvinga@andestech.com>
+Paolo
+
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
+>  v2: Keep "select SERIAL" instead of replacing it
+>
+>  hw/hppa/Kconfig | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
+> index ff8528aaa8..dff5df7f72 100644
+> --- a/hw/hppa/Kconfig
+> +++ b/hw/hppa/Kconfig
+> @@ -7,6 +7,7 @@ config HPPA_B160L
+>      select DINO
+>      select LASI
+>      select SERIAL
+> +    select SERIAL_PCI
+>      select ISA_BUS
+>      select I8259
+>      select IDE_CMD646
+> @@ -16,3 +17,4 @@ config HPPA_B160L
+>      select LASIPS2
+>      select PARALLEL
+>      select ARTIST
+> +    select USB_OHCI_PCI
+> --
+> 2.43.0
+>
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/cpu.h      |  1 +
->   target/riscv/cpu_bits.h |  3 +++
->   target/riscv/csr.c      | 15 +++++++++++++++
->   3 files changed, 19 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index f52dce78ba..f9ae3e3025 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -364,6 +364,7 @@ struct CPUArchState {
->       target_ulong tdata1[RV_MAX_TRIGGERS];
->       target_ulong tdata2[RV_MAX_TRIGGERS];
->       target_ulong tdata3[RV_MAX_TRIGGERS];
-> +    target_ulong tcontrol;
->       target_ulong mcontext;
->       struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
->       struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index fc2068ee4d..3b3a7a0fa4 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -353,6 +353,7 @@
->   #define CSR_TDATA2          0x7a2
->   #define CSR_TDATA3          0x7a3
->   #define CSR_TINFO           0x7a4
-> +#define CSR_TCONTROL        0x7a5
->   #define CSR_MCONTEXT        0x7a8
->   
->   /* Debug Mode Registers */
-> @@ -900,6 +901,8 @@ typedef enum RISCVException {
->   #define JVT_BASE                           (~0x3F)
->   
->   /* Debug Sdtrig CSR masks */
-> +#define TCONTROL_MTE                       BIT(3)
-> +#define TCONTROL_MPTE                      BIT(7)
->   #define MCONTEXT32                         0x0000003F
->   #define MCONTEXT64                         0x0000000000001FFFULL
->   #define MCONTEXT32_HCONTEXT                0x0000007F
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index d4e8ac13b9..816c530481 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3937,6 +3937,20 @@ static RISCVException read_tinfo(CPURISCVState *env, int csrno,
->       return RISCV_EXCP_NONE;
->   }
->   
-> +static RISCVException read_tcontrol(CPURISCVState *env, int csrno,
-> +                                    target_ulong *val)
-> +{
-> +    *val = env->tcontrol;
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException write_tcontrol(CPURISCVState *env, int csrno,
-> +                                     target_ulong val)
-> +{
-> +    env->tcontrol = val & (TCONTROL_MPTE | TCONTROL_MTE);
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
->   static RISCVException read_mcontext(CPURISCVState *env, int csrno,
->                                       target_ulong *val)
->   {
-> @@ -4861,6 +4875,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
->       [CSR_TDATA2]    =  { "tdata2",   debug, read_tdata,    write_tdata    },
->       [CSR_TDATA3]    =  { "tdata3",   debug, read_tdata,    write_tdata    },
->       [CSR_TINFO]     =  { "tinfo",    debug, read_tinfo,    write_ignore   },
-> +    [CSR_TCONTROL]  =  { "tcontrol", debug, read_tcontrol, write_tcontrol },
->       [CSR_MCONTEXT]  =  { "mcontext", debug, read_mcontext, write_mcontext },
->   
->       /* User Pointer Masking */
 
