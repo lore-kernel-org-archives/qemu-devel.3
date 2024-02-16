@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE4FC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10798C48BEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ray13-0007Yy-Nc; Fri, 16 Feb 2024 08:12:33 -0500
+	id 1ray38-0000PQ-TX; Fri, 16 Feb 2024 08:14:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ray11-0007YG-V6
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:12:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1ray0z-0002Ee-9b
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:12:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708089148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9UJnlXBVKDFPTtOjkYDA8LFAc/zxFfBoy4m8zfCR8hk=;
- b=g5t09qorJCfDNKVUJptRwnSaEdv2z+XY3Sm31rVETUbcFw55/XzxqCeawseVKuMjjlnoCJ
- Mtb70o5Vv449kjSGMBM/yojwe5Gzfh5o3qHsB7ZX9rWaEgtslUjSsoClswTVHEi9IH138Q
- 4q31dv34q31KpwXBl3FZxqXDrbcl3tc=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-X5RQenVgPUu5y2K8jwjM_g-1; Fri, 16 Feb 2024 08:12:24 -0500
-X-MC-Unique: X5RQenVgPUu5y2K8jwjM_g-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-68efdf7e047so23529486d6.0
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 05:12:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ray31-0000KP-IW
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:14:35 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ray2x-0002mB-3B
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:14:35 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33b2960ff60so1729184f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 05:14:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708089269; x=1708694069; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UQW2XTOIXxEEpn1sQycYmvx33WMOBULqAV/EMMlI01o=;
+ b=kHa5rl8WGdkbLLhiyugXWLxBteF2q8zfvcoOGmXl08QsuZt2Q/0eGSt8/INqWiNuBB
+ 7obZXhKlhIa8gPa0UtWKj72Wu3gQ6n9AhvL7g1qW9wgrgyZLdIOGWf4dB61XYkbYZrxC
+ Nrt4w3CrhzuGeuLn6cX+mKVEBYv1wBNhGvroS7xIygsjOiFXJ0/lZykU6FAPs2Dor3Xh
+ URJQKM8PvLUQ1BCVMcD9UPv2O2a0AOznJbUgugnsw3BP8e0l/PdX/niFND5ZOyTCZqOL
+ VV/KMAiogiDQ2sZfRfw4Y/bvwJRKfrci64aTMhSdc5Lgot0lHIjBbXw9mYREl/V0DnM3
+ iJFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708089144; x=1708693944;
+ d=1e100.net; s=20230601; t=1708089269; x=1708694069;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9UJnlXBVKDFPTtOjkYDA8LFAc/zxFfBoy4m8zfCR8hk=;
- b=lvmYxtpAMmOZepeM0e39FdWWPFDgyjwqmvacfikq0r8PM2vAidqHK7FcVUKrxrxzZ0
- skNcUzrFb4RT4WswJG+vq7JbV/7D+8RuZRbcdWoRued+tIEFNMYHwO4Ex2vota3oVkN5
- WvqDwAiNEz3L1ur6sWiweSvh7pdCaTH77v1V6bLlzSfA8vHJM5KN577iCvg34VQFYq37
- 5k/S5PUEEPZ9F4E2SSjgKdw6XBt6/oQMed3ku8+Vgf7R9uM7iH5dz3SZ13mGL8I9nb+D
- f/obu5I/N3Udq7vaUng6uRx7NhlS/5PMkgs9hpyrE8Vw3vLvfmmw/I5wQwqQR3ghkm7Z
- 1ZGw==
+ bh=UQW2XTOIXxEEpn1sQycYmvx33WMOBULqAV/EMMlI01o=;
+ b=s3eSpJYyWE6UHHqEULHeQIYP051Um23jY8/fj7H1y7KzdcRyD8ZEe28NdRI05CL/Mq
+ wP82XeXD+c4ck5b7gCFnVN+th5UQvbOu7dmJu8HGiqBrO7HkwtV3SOuE28JtJ9DAPLHF
+ N/LpJh5yNkOx6o3X4I2cFfQQ3Lr+EhXIEWsHADG0Z809KrwmIihpvvsdkt6cmAnhLfKP
+ COONHFapvvxreNLgGNSLZJlzPnCdnc9Ze2R6UombcxeRlITJsQgWbW10inzrI3GtFu2g
+ nrSzngpphpOYY4Cy2K1yeCGmwAhWCemrM3YfssR45NI6OQk8nNIfm5RLy/+Y53Q9ThHh
+ HGiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6o/ZMOCXDvLk6AwXdEBvUtZ/MajxGPYVhr2BS8ZCIBJlj6CUrGgMIzUAmBNICtW+pPR3Wfkx7Cpw8OG2tTkA6PHtLEDY=
-X-Gm-Message-State: AOJu0YxXJvdnZL1O0ssB9ZU66ZevD4bx+EhGVensfJseZSfc7x8MGd4e
- 38nJe7LXgd5KytCDFcrxNFa2syMyf9MupXsriObfAOTAt71S7NQ098Yvit5VBuwb/8Px/kruQv5
- cS7C4BJok2SbAimHeavSkdU3JlXQiZg0odiIMYxb2OXl+XtKXbgW3
-X-Received: by 2002:a05:6214:c6e:b0:68f:2f35:d957 with SMTP id
- t14-20020a0562140c6e00b0068f2f35d957mr2444039qvj.16.1708089144342; 
- Fri, 16 Feb 2024 05:12:24 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHC2nBuJ1nCyxAhz6UJZBSs6SnflMlp9ipwqd77UUcc4OoX6OtacJWA0N6xdaEdSW6ESqNIag==
-X-Received: by 2002:a05:6214:c6e:b0:68f:2f35:d957 with SMTP id
- t14-20020a0562140c6e00b0068f2f35d957mr2444014qvj.16.1708089143963; 
- Fri, 16 Feb 2024 05:12:23 -0800 (PST)
-Received: from ?IPV6:2a01:cb19:853d:fa00:f59e:918a:6675:6332?
- ([2a01:cb19:853d:fa00:f59e:918a:6675:6332])
+ AJvYcCU/GNCF/9SaeC252pznaUKY5MdCYZ9APco84cqJ1ln/XwK+2XLp1Adr0oo4zApjjiyX7yB62uDO7n2EdjLyK2x1wPul+BM=
+X-Gm-Message-State: AOJu0YyUShpqHDGILzgy7r/HcAlwJVBUWbjnBASSnji009yLkyWthk6R
+ AR7sVPv83niPKSKOOlXP8IgcMrwArVvkto5Rnfwf9/bdVivJ+X6EHNpujaE/rAY=
+X-Google-Smtp-Source: AGHT+IGM9GJvAvpeIikXUhpgCit7dtIQ3MT61p1XzS97ahtKgrb3AYnH5XonfeiDsV5qaro8VSb3hw==
+X-Received: by 2002:adf:efd2:0:b0:33d:201f:ea9d with SMTP id
+ i18-20020adfefd2000000b0033d201fea9dmr1214769wrp.2.1708089268931; 
+ Fri, 16 Feb 2024 05:14:28 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- ny4-20020a056214398400b006862b537412sm1737861qvb.123.2024.02.16.05.12.22
+ o10-20020a05600c378a00b0040fdc7f4fcdsm2262733wmr.4.2024.02.16.05.14.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Feb 2024 05:12:23 -0800 (PST)
-Message-ID: <2c689be3-126a-4da8-b173-c29b8c8af5e0@redhat.com>
-Date: Fri, 16 Feb 2024 14:12:20 +0100
+ Fri, 16 Feb 2024 05:14:28 -0800 (PST)
+Message-ID: <9dcd14bf-6ccd-4ed5-91c2-f0af96774b8c@linaro.org>
+Date: Fri, 16 Feb 2024 14:14:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/14] vfio: Extend vfio_set_migration_error() with Error*
- argument
+Subject: Re: [PATCH 1/4] Add ivshmem-flat device
 Content-Language: en-US
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-12-clg@redhat.com>
- <addd8e61-535e-4a7f-976a-8e0c57cfe944@nvidia.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <addd8e61-535e-4a7f-976a-8e0c57cfe944@nvidia.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+Cc: thuth@redhat.com
+References: <20231127052024.435743-1-gustavo.romero@linaro.org>
+ <20231127052024.435743-2-gustavo.romero@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20231127052024.435743-2-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,178 +98,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Avihai,
-
-On 2/12/24 10:35, Avihai Horon wrote:
-> Hi Cedric,
+On 27/11/23 06:20, Gustavo Romero wrote:
+> Add a new device, ivshmem-flat, which is similar to the ivshmem PCI but
+> does not require a PCI bus. It's meant to be used on machines like those
+> with Cortex-M MCUs, which usually lack a PCI/PCIe bus, e.g. lm3s6965evb
+> and mps2-an385.
 > 
-> On 07/02/2024 15:33, Cédric Le Goater wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> vfio_set_migration_error() sets the 'return' error on the migration
->> stream if a migration is in progress. To improve error reporting, add
->> a new Error* argument to also set the Error object on the migration
->> stream.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   hw/vfio/common.c | 50 +++++++++++++++++++++++++++++-------------------
->>   1 file changed, 30 insertions(+), 20 deletions(-)
->>
->> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index 82173b039c47150f5edd05d329192c5b9c8a9a0f..afe8b6bd294fd5904f394a5db48aae3fd718b14e 100644
->> --- a/hw/vfio/common.c
->> +++ b/hw/vfio/common.c
->> @@ -148,16 +148,18 @@ bool vfio_viommu_preset(VFIODevice *vbasedev)
->>       return vbasedev->bcontainer->space->as != &address_space_memory;
->>   }
->>
->> -static void vfio_set_migration_error(int err)
->> +static void vfio_set_migration_error(int ret, Error *err)
->>   {
->>       MigrationState *ms = migrate_get_current();
->>
->>       if (migration_is_setup_or_active(ms->state)) {
->>           WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
->>               if (ms->to_dst_file) {
->> -                qemu_file_set_error(ms->to_dst_file, err);
->> +                qemu_file_set_error_obj(ms->to_dst_file, ret, err);
->>               }
->>           }
->> +    } else {
->> +        error_report_err(err);
->>       }
->>   }
->>
->> @@ -296,15 +298,17 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       VFIOContainerBase *bcontainer = giommu->bcontainer;
->>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
->>       void *vaddr;
->> +    Error *local_err = NULL;
->>       int ret;
->>
->>       trace_vfio_iommu_map_notify(iotlb->perm == IOMMU_NONE ? "UNMAP" : "MAP",
->>                                   iova, iova + iotlb->addr_mask);
->>
->>       if (iotlb->target_as != &address_space_memory) {
->> -        error_report("Wrong target AS \"%s\", only system memory is allowed",
->> -                     iotlb->target_as->name ? iotlb->target_as->name : "none");
->> -        vfio_set_migration_error(-EINVAL);
->> +        error_setg(&local_err,
->> +                   "Wrong target AS \"%s\", only system memory is allowed",
->> +                   iotlb->target_as->name ? iotlb->target_as->name : "none");
->> +        vfio_set_migration_error(-EINVAL, local_err);
->>           return;
->>       }
->>
->> @@ -336,11 +340,12 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>           ret = vfio_container_dma_unmap(bcontainer, iova,
->>                                          iotlb->addr_mask + 1, iotlb);
->>           if (ret) {
->> -            error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
->> -                         "0x%"HWADDR_PRIx") = %d (%s)",
->> -                         bcontainer, iova,
->> -                         iotlb->addr_mask + 1, ret, strerror(-ret));
->> -            vfio_set_migration_error(ret);
->> +            error_setg(&local_err,
->> +                       "vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
->> +                       "0x%"HWADDR_PRIx") = %d (%s)",
->> +                       bcontainer, iova,
->> +                       iotlb->addr_mask + 1, ret, strerror(-ret));
->> +            vfio_set_migration_error(ret, local_err);
->>           }
->>       }
->>   out:
->> @@ -1224,13 +1229,15 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>       VFIOContainerBase *bcontainer = giommu->bcontainer;
->>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
->>       ram_addr_t translated_addr;
->> +    Error *local_err = NULL;
->>       int ret = -EINVAL;
->>
->>       trace_vfio_iommu_map_dirty_notify(iova, iova + iotlb->addr_mask);
->>
->>       if (iotlb->target_as != &address_space_memory) {
->> -        error_report("Wrong target AS \"%s\", only system memory is allowed",
->> -                     iotlb->target_as->name ? iotlb->target_as->name : "none");
->> +        error_setg(&local_err,
->> +                   "Wrong target AS \"%s\", only system memory is allowed",
->> +                   iotlb->target_as->name ? iotlb->target_as->name : "none");
->>           goto out;
->>       }
->>
->> @@ -1239,17 +1246,18 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
->>           ret = vfio_get_dirty_bitmap(bcontainer, iova, iotlb->addr_mask + 1,
->>                                       translated_addr);
+> The device currently only supports the sysbus bus.
 > 
-> If vfio_get_xlat_addr() above (it's not shown here) returns false, we will pass a NULL local_err to vfio_set_migration_error() and it may de-reference NULL ptr in error_report_err().
-
-Ah yes. Thanks for spotting this.
-
+> The following is an example on how to create the ivshmem-flat device on
+> a Stellaris machine:
 > 
-> Should we refactor vfio_get_xlat_addr() to get errp, 
-
-I think we should add an Error** parameter to vfio_get_xlat_addr() and
-memory_get_xlat_addr(). It shouldn't be too much change and would be
-cleaner.
-
-Thanks,
-
-C.
-
-
-> or add an else branch below, setting -EINVAL (and removing the default -EINVAL from the top of the function)?
+> $ qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb -nographic
+>                    -net none -chardev stdio,id=con,mux=on
+>                    -serial chardev:con -mon chardev=con,mode=readline
+>                    -chardev socket,path=/tmp/ivshmem_socket,id=ivf
+>                    -device ivshmem-flat,x-irq-qompath=/machine/unattached/device[1]/nvic/unnamed-gpio-in[0],x-bus-qompath="/sysbus",chardev=ivf
+>                    -kernel zephyr_qemu.elf
 > 
-> Thanks.
+> The new device, just like the ivshmem PCI device, supports both peer
+> notification via hardware interrupts and shared memory.
 > 
->>           if (ret) {
->> -            error_report("vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
->> -                         "0x%"HWADDR_PRIx") = %d (%s)",
->> -                         bcontainer, iova, iotlb->addr_mask + 1, ret,
->> -                         strerror(-ret));
->> +            error_setg(&local_err,
->> +                       "vfio_iommu_map_dirty_notify(%p, 0x%"HWADDR_PRIx", "
->> +                       "0x%"HWADDR_PRIx") = %d (%s)",
->> +                       bcontainer, iova, iotlb->addr_mask + 1, ret,
->> +                       strerror(-ret));
->>           }
->>       }
->>       rcu_read_unlock();
->>
->>   out:
->>       if (ret) {
->> -        vfio_set_migration_error(ret);
->> +        vfio_set_migration_error(ret, local_err);
->>       }
->>   }
->>
->> @@ -1345,6 +1353,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
->>   {
->>       VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
->>                                                    listener);
->> +    Error *local_err = NULL;
->>       int ret;
->>
->>       if (vfio_listener_skipped_section(section)) {
->> @@ -1354,9 +1363,10 @@ static void vfio_listener_log_sync(MemoryListener *listener,
->>       if (vfio_devices_all_dirty_tracking(bcontainer)) {
->>           ret = vfio_sync_dirty_bitmap(bcontainer, section);
->>           if (ret) {
->> -            error_report("vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
->> -                         strerror(-ret));
->> -            vfio_set_migration_error(ret);
->> +            error_setg(&local_err,
->> +                       "vfio: Failed to sync dirty bitmap, err: %d (%s)", ret,
->> +                       strerror(-ret));
->> +            vfio_set_migration_error(ret, local_err);
->>           }
->>       }
->>   }
->> -- 
->> 2.43.0
->>
->>
+> The IRQ QOM path for the target machine can be determined by creating
+> the VM without the ivshmem-flat device, going to the QEMU console and
+> listing the QOM nodes with 'info qom-tree'. In the Stellaris example
+> above the input IRQ is in the NVIC IC.
 > 
+> The MMRs for status and control (notification) are mapped to the MMIO
+> region at 0x400FF000 (default), whilst the shared memory region start
+> is mapped at addr. 0x40100000 (default), but both addresses can be set
+> when creating the device by using 'x-bus-address-{mmr,shmem}' options,
+> respectively.
+> 
+> The device shared memory size can be set using the 'shmem-size' option
+> and it defaults to 4 MiB, which is the default size of shmem allocated
+> by the ivshmem server.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   docs/system/devices/ivshmem-flat.rst |  89 +++++
+>   hw/arm/mps2.c                        |   2 +
+>   hw/arm/stellaris.c                   |   5 +-
+>   hw/arm/virt.c                        |   2 +
+>   hw/core/sysbus-fdt.c                 |   1 +
+>   hw/misc/Kconfig                      |   5 +
+>   hw/misc/ivshmem-flat.c               | 477 +++++++++++++++++++++++++++
+>   hw/misc/meson.build                  |   2 +
+>   hw/misc/trace-events                 |  18 +
+>   include/hw/misc/ivshmem-flat.h       |  72 ++++
+>   10 files changed, 672 insertions(+), 1 deletion(-)
+>   create mode 100644 docs/system/devices/ivshmem-flat.rst
+>   create mode 100644 hw/misc/ivshmem-flat.c
+>   create mode 100644 include/hw/misc/ivshmem-flat.h
+
+
+> diff --git a/include/hw/misc/ivshmem-flat.h b/include/hw/misc/ivshmem-flat.h
+> new file mode 100644
+> index 0000000000..2f6f7462f6
+> --- /dev/null
+> +++ b/include/hw/misc/ivshmem-flat.h
+> @@ -0,0 +1,72 @@
+> +/*
+> + * Inter-VM Shared Memory Flat Device
+> + *
+> + * SPDX-FileCopyrightText: 2023 Linaro Ltd.
+> + * SPDX-FileContributor: Gustavo Romero <gustavo.romero@linaro.org>
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + */
+> +
+> +#ifndef IVSHMEM_FLAT_H
+> +#define IVSHMEM_FLAT_H
+> +
+
+I had to include the following headers:
+
+  #include "qemu/queue.h"
+  #include "qemu/event_notifier.h"
+  #include "chardev/char-fe.h"
+  #include "exec/memory.h"
+  #include "qom/object.h"
+  #include "hw/sysbus.h"
+
+in order to fix:
+
+include/hw/misc/ivshmem-flat.h:50:19: error: field has incomplete type 
+'EventNotifier' (aka 'struct EventNotifier')
+     EventNotifier event_notifier;
+                   ^
+include/hw/misc/ivshmem-flat.h:55:5: error: type name requires a 
+specifier or qualifier
+     QTAILQ_ENTRY(IvshmemPeer) next;
+     ^
+include/hw/misc/ivshmem-flat.h:62:5: error: unknown type name 'SysBusDevice'
+     SysBusDevice parent_obj;
+     ^
+include/hw/misc/ivshmem-flat.h:70:5: error: unknown type name 'CharBackend'
+     CharBackend server_chr;
+     ^
+include/hw/misc/ivshmem-flat.h:76:18: error: field has incomplete type 
+'MemoryRegion' (aka 'struct MemoryRegion')
+     MemoryRegion iomem;
+                  ^
+
+> +#define IVSHMEM_MAX_VECTOR_NUM 64
+> +
+> +#define TYPE_IVSHMEM_FLAT "ivshmem-flat"
+> +typedef struct IvshmemFTState IvshmemFTState;
+> +
+> +DECLARE_INSTANCE_CHECKER(IvshmemFTState, IVSHMEM_FLAT, TYPE_IVSHMEM_FLAT)
+> +
+> +/* Ivshmem registers. See ./docs/specs/ivshmem-spec.txt for details. */
+> +enum ivshmem_registers {
+> +    INTMASK = 0,
+> +    INTSTATUS = 4,
+> +    IVPOSITION = 8,
+> +    DOORBELL = 12,
+> +};
+> +
+> +typedef struct VectorInfo {
+> +    EventNotifier event_notifier;
+> +    uint16_t id;
+> +} VectorInfo;
+> +
+> +typedef struct IvshmemPeer {
+> +    QTAILQ_ENTRY(IvshmemPeer) next;
+> +    VectorInfo vector[IVSHMEM_MAX_VECTOR_NUM];
+> +    int vector_counter;
+> +    uint16_t id;
+> +} IvshmemPeer;
+> +
+> +struct IvshmemFTState {
+> +    SysBusDevice parent_obj;
+> +
+> +    uint64_t msg_buf;
+> +    int msg_buffered_bytes;
+> +
+> +    QTAILQ_HEAD(, IvshmemPeer) peer;
+> +    IvshmemPeer own;
+> +
+> +    CharBackend server_chr;
+> +
+> +    char *bus_qompath;
+> +
+> +    /* IRQ */
+> +    qemu_irq irq;
+> +    char *irq_qompath;
+> +
+> +    /* MMRs */
+> +    MemoryRegion iomem;
+> +    uint64_t bus_address_mmr;
+> +    uint32_t intmask;
+> +    uint32_t intstatus;
+> +    uint32_t ivposition;
+> +    uint32_t doorbell;
+> +
+> +    /* Shared memory */
+> +    MemoryRegion shmem;
+> +    int shmem_fd;
+> +    uint32_t shmem_size;
+> +    uint64_t bus_address_shmem;
+> +};
+> +
+> +#endif /* IVSHMEM_FLAT_H */
 
 
