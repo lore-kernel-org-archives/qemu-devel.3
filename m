@@ -4,77 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E971C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FA3C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razbu-0003st-Sh; Fri, 16 Feb 2024 09:54:43 -0500
+	id 1razg3-0005w1-Tx; Fri, 16 Feb 2024 09:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1razbr-0003sa-2e
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:54:39 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1razbp-0006vf-8j
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:54:38 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-55f50cf2021so2901905a12.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:54:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708095275; x=1708700075; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7xXTa/W2p2MaLklKaZVjyubH9ibXSXdaZOGnUiZ4xe4=;
- b=icqg9Qvn4Ize9HE/7x1XhqUEpXTkIy9445NGnsna8P1eT4CEoCNx6mukslQb0NW99a
- onaxQtkLiZu5Z05MzSQUMYMGiC6iCp9O7KCo/t+SBDBcjlky8LGPF5awZl36CEdsFEkY
- Nm5SOzUE4FhSXroBYP/rpFAFoFhmUb2LHQYwjvw/jdVnAgjQJml+t9KLjA6NcxCe3WC3
- iQizYgelBjM1x8EQDpdTjK2BopIMWygEKzg8Emu5rlgFdftKpOSJAG/fQ8eZ3cdnyqij
- U1hjiiCL+RCk8XUScO8YpujewE/8dTtBKcZLYDDSrHaKnbJ9uNtlVrEojBMkVL2fCRHK
- v4kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708095275; x=1708700075;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7xXTa/W2p2MaLklKaZVjyubH9ibXSXdaZOGnUiZ4xe4=;
- b=dD6D8LcmHoJsB8yPG60riA/TV62wskBREhBGSH8Qf6jg+pmiS429nTrYtHrbEjcWg8
- MZOEYDZA/TPB2StdVTYgP6bi9nLm/L2KUejZ8MNOhTDv5k5N3iAxfQI7pIoKztt0+vNo
- /acnyLNGJBrb38xW93Ct5fgCZAHrjJrTi/qAFlFaUoi8NnUkQD1AgeTlUIc6/ntMzpMN
- cIPjrXcddUFmao+Q0EKg5gr6nu4QKIQ2wGb4jxanyP2mDh/Z3gens/CcBPHszvPvbyJH
- VxWlt4Zmq+Uav0YehKqI2ZIpcS1NbA8slCB9cRYfqFSYpP6Wz7fRyY/YSpHz8ZPmlWc6
- nOkw==
-X-Gm-Message-State: AOJu0Yz4V+Ii2oAIdkBTUy2Zp23R8p9WajwuHfLGXzDZOfVUmv1OO4S4
- Jw4GPIkDLpJkx0ZSELvc1HLl/WBrTWZ/YQ4+c4L4HOEfEqj2OXHnKZdvSQGBIl+LF7sBlOQlDId
- bJi5QSQKluFAKZwYWnJDYuZMm+MaG8po8PVEARw==
-X-Google-Smtp-Source: AGHT+IGVs28RWefRMDTe/h0gfbuD/W7N7NeNDkWZ4w3CYR2GFwutbJyWk9MaxjHBESYPus8uDql9TmTd1xw2si/Wnwg=
-X-Received: by 2002:aa7:cd46:0:b0:562:1441:81f0 with SMTP id
- v6-20020aa7cd46000000b00562144181f0mr3633178edw.7.1708095275087; Fri, 16 Feb
- 2024 06:54:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfy-0005ng-5v
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1razfw-00080c-1h
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:58:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708095530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iKJuLnd1KADEdCkTYo6pt2VmMrtk06c3t+hzTZxHNgc=;
+ b=h8vPSrZObhnffGkXkDaQwVljnXGAXPQ5X6uwwsGxHPMX+eM6BcTr5gUwUuA4q17ltKbHFQ
+ ZDx6/z18bHKuPOkLIeGMT256TRdo39GONXwkjSHA0uAkdCpJ1TqErGs8IVjUmXoWOI3n9D
+ hVyurjpUJJQJavOe21EOFB6D9WTdaJg=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-x2SnygqoPsyAUi95Af9fgg-1; Fri,
+ 16 Feb 2024 09:58:47 -0500
+X-MC-Unique: x2SnygqoPsyAUi95Af9fgg-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2AAB33C000A2;
+ Fri, 16 Feb 2024 14:58:47 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 07F8C20110C4;
+ Fri, 16 Feb 2024 14:58:47 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0E39D21E668C; Fri, 16 Feb 2024 15:58:41 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: michael.roth@amd.com, jsnow@redhat.com, eblake@redhat.com,
+ peter.maydell@linaro.org
+Subject: [PATCH 01/16] tests/qapi-schema: Fix test 'QAPI rST doc'
+Date: Fri, 16 Feb 2024 15:58:25 +0100
+Message-ID: <20240216145841.2099240-2-armbru@redhat.com>
+In-Reply-To: <20240216145841.2099240-1-armbru@redhat.com>
+References: <20240216145841.2099240-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20240216135137.8668-3-atp.exp@gmail.com>
- <20240216135137.8668-6-atp.exp@gmail.com>
-In-Reply-To: <20240216135137.8668-6-atp.exp@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Feb 2024 14:54:24 +0000
-Message-ID: <CAFEAcA8dC6siNn684zqgiEZhKkxnw3DRu_AzPPZ16QRUg2410Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] misc: ppc/spapr: replace qemu_system_reset_request()
- calls with watchdog_perform_action()
-To: Abhiram Tilak <atp.exp@gmail.com>
-Cc: qemu-devel@nongnu.org, clg@kaod.org, david@gibson.dropbear.id.au, 
- harshpb@linux.ibm.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.364,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,57 +82,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Feb 2024 at 13:56, Abhiram Tilak <atp.exp@gmail.com> wrote:
->
-> A few watchdog devices use qemu_system_reset_request(). This is not ideal since
-> behaviour of watchdog-expiry can't be changed by QMP using `watchdog_action`.
-> As stated in BiteSizedTasks wiki page, instead of using qemu_system_reset_request()
-> to reset when a watchdog timer expires, let watchdog_perform_action() decide
-> what to do.
->
-> I am unsure about the changes in `spapr_watchdog.c` in patch 3, it would be great
-> if any of the maintainers review it.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2124
-> Signed-off-by: Abhiram Tilak <atp.exp@gmail.com>
-> ---
->  hw/watchdog/spapr_watchdog.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
-> index 2bb1d3c532..9751b19506 100644
-> --- a/hw/watchdog/spapr_watchdog.c
-> +++ b/hw/watchdog/spapr_watchdog.c
-> @@ -18,6 +18,7 @@
->  #include "target/ppc/cpu.h"
->  #include "migration/vmstate.h"
->  #include "trace.h"
-> +#include "sysemu/watchdog.h"
->
->  #include "hw/ppc/spapr.h"
->
-> @@ -114,7 +115,7 @@ static void watchdog_expired(void *pw)
->          qemu_system_vmstop_request(RUN_STATE_SHUTDOWN);
->          break;
->      case PSERIES_WDTF_ACTION_HARD_RESTART:
-> -        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> +        watchdog_perform_action();
->          break;
->      case PSERIES_WDTF_ACTION_DUMP_RESTART:
->          CPU_FOREACH(cs) {
+The test compares Sphinx plain-text output against a golden reference.
+To work on Windows hosts, it filters out carriage returns in both
+files.  Unfortunately, the filter doesn't work: it creates an empty
+file.  Comparing empty files always succeeds.
 
-This one is more complicated, because the spapr watchdog
-has multiple possible behaviours which the guest can ask for.
+Fix the filter, and update the golden reference to current Sphinx
+output.
 
-We had a discussion on the mailing list about this a little while back:
-https://lore.kernel.org/qemu-devel/CAFEAcA_KjSgt-oC=d2m6WAdqoRsUcs1W_ji7Ng2fgVjxAWLZEw@mail.gmail.com/
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ tests/qapi-schema/doc-good.txt | 21 +++++++++------------
+ tests/qapi-schema/meson.build  | 10 ++++++----
+ 2 files changed, 15 insertions(+), 16 deletions(-)
 
-The conclusion was that the watchdog-behaviour QAPI API
-needs to be enhanced to be able to handle this kind of
-"the guest picks an action" watchdog, so that the user can
-either override the guest's choice, or request that the
-behaviour be what the guest wants it to be.
+diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.txt
+index b3b76bd43f..879f6ff50a 100644
+--- a/tests/qapi-schema/doc-good.txt
++++ b/tests/qapi-schema/doc-good.txt
+@@ -44,7 +44,7 @@ Values
+ ~~~~~~
+ 
+ "one" (**If: **"IFONE")
+-   The _one_ {and only}
++   The _one_ {and only}, description on the same line
+ 
+ "two"
+    Not documented
+@@ -76,7 +76,7 @@ Members
+ ~~~~~~~
+ 
+ "base1": "Enum"
+-   the first member
++   description starts on a new line, minimally indented
+ 
+ 
+ If
+@@ -90,7 +90,9 @@ If
+ 
+ A paragraph
+ 
+-Another paragraph (but no "var": line)
++Another paragraph
++
++"var1" is undocumented
+ 
+ 
+ Members
+@@ -141,7 +143,8 @@ Members
+ ~~~~~~~
+ 
+ "i": "int"
+-   an integer "b" is undocumented
++   description starts on the same line remainder indented the same "b"
++   is undocumented
+ 
+ "b": "boolean"
+    Not documented
+@@ -172,10 +175,10 @@ Arguments
+ ~~~~~~~~~
+ 
+ "arg1": "int"
+-   the first argument
++   description starts on a new line, indented
+ 
+ "arg2": "string" (optional)
+-   the second argument
++   description starts on the same line remainder indented differently
+ 
+ "arg3": "boolean"
+    Not documented
+@@ -203,12 +206,6 @@ Returns
+ "Object"
+ 
+ 
+-TODO
+-~~~~
+-
+-frobnicate
+-
+-
+ Notes
+ ~~~~~
+ 
+diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
+index af085f745d..44a9385563 100644
+--- a/tests/qapi-schema/meson.build
++++ b/tests/qapi-schema/meson.build
+@@ -273,15 +273,17 @@ if build_docs
+                                     output: ['doc-good.txt.nocr'],
+                                     input: qapi_doc_out[0],
+                                     build_by_default: true,
+-                                    command: [remove_cr, '@INPUT@'],
+-                                    capture: true)
++                                    command: [remove_cr],
++                                    capture: true,
++                                    feed: true)
+ 
+   qapi_doc_ref_nocr = custom_target('QAPI rST doc reference newline-sanitized',
+                                     output: ['doc-good.ref.nocr'],
+                                     input: files('doc-good.txt'),
+                                     build_by_default: true,
+-                                    command: [remove_cr, '@INPUT@'],
+-                                    capture: true)
++                                    command: [remove_cr],
++                                    capture: true,
++                                    feed: true)
+ 
+   test('QAPI rST doc', diff, args: ['-u', qapi_doc_ref_nocr[0], qapi_doc_out_nocr[0]],
+        suite: ['qapi-schema', 'qapi-doc'])
+-- 
+2.43.0
 
-thanks
--- PMM
 
