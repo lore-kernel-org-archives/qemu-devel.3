@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E52CC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A864EC48BEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raw0t-0006p3-Bt; Fri, 16 Feb 2024 06:04:15 -0500
+	id 1raw0W-0006RL-7c; Fri, 16 Feb 2024 06:03:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0o-0006hA-57
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:10 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0S-0006Nk-Pe
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:03:50 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0i-0000z3-14
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:06 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-411d231ea71so14663285e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:04:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw0J-0000pv-D2
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:03:48 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33d01faf711so571675f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:03:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708081441; x=1708686241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708081416; x=1708686216; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+4cWnhsBShzzzFHqb9EuQ4ogMglB6l+e/nMze0glgi0=;
- b=loa2CLhH2eVGucz+5u/ZHrF/tVm3Kb1XtkZaChSqNZYVLfUMD0wrsLSiUCIX1v+ZZ2
- jnXz5aRtVP6cTU3+P5FB0lxpBp84TcD4B/ZpIHLL0UwDR370wc10Ayzy/MMmX50KDTzZ
- z/Xk/1TgaS3HGA1tZzbOYyJ5yMj5iqUmsvFOtz/mMibvVNmyGoDg6pE7J3ywZfZoyJM+
- rP5QIqhDB64AJm+QA0C/hkCE5WkVITAfkMzFpGjp46DbKKpYv+z9A4zHOKszin2d1q8w
- vxNA667jv1R8UcE5ccNyourlTN6BHYxI41xFsKfuTAlNPqFyqEWYIVrJQHdFX1xTtkID
- EDSg==
+ bh=jnkIS3AaHEP065b9a1SZ9IcaJ8jPciqvA+XhsfUsiWs=;
+ b=Xwk2xuO8gUd5m24pdtCIK+51HtqI0K8DX6rY4qrU8Oh6w/gcQV50/ngb/AZe4bg9op
+ oBGmuZE5FVtE56VBWhjNE7YGqWErOzN26YnTMUGbNK8nfeWCOJ5waOKdsNhpX46YGk9i
+ Ap8jO/vr8kqza8kGnIAcg+iTVgpDKVrKZIGQlCMIpk0+06OxC4k+AxHzg/MOLVfBh8Ws
+ SiJr5mH3+XUmq8+H80MySpDDzokzqoSiBUvXLkZ75v7N/jROevb06vxxPVMAp+kIuo4m
+ vp8gznQuv7V/eBCNbhENNuVz7c68oBcoDgu1gHFhj/rMWvOJ5RMGL8zrPI1/v/wrb6f2
+ nAMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708081441; x=1708686241;
+ d=1e100.net; s=20230601; t=1708081416; x=1708686216;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+4cWnhsBShzzzFHqb9EuQ4ogMglB6l+e/nMze0glgi0=;
- b=n6Ra7KPfjdWCSeLc8zqX07pITiqtJjuBClbelXjOXHtatzyy9cpS99/Tu0B0cphHSR
- 1EuX8u4rm9I6whvRPG0QDs9aqMFX77sVMcjGyvmpqaFRT7qABWDaN4oPLDIE9/dAKlu4
- Q1ebiNDhmOZ7JszZCp556hoOg5kQUHMAsnvulOhV8Ui7uyPCC+RtbfZSzVs3D30OFSjw
- KNnRxmJ30w0HLS0/NLzDDaFVluPZZpMPY6IpIT6ceoKkWhBzYaTOfYuQsDcQdhDQkQRU
- 6CmxiGErBA5iBh8jtH6+D6Fj4cKFbGMpFvXBMa9VaeZi5miHjucGoFiH+6P0wqA75kDg
- +2wA==
-X-Gm-Message-State: AOJu0YxDDg/XgyxyF4antVqefTlGQ+Lv0P+6ZRTEGp++iwUJjr2UhAHJ
- XqgaBHbmFp5IBOcfQst/ARoKOmb/l9yRrkZlQITIV548fZRnpbNo6cjcTOhsqD1eS9T0hkwK7jU
- q
-X-Google-Smtp-Source: AGHT+IFJ0tgORZjuv+Xo1BE69NDOJYJ5Z6N8Ug5++1Pn0E/2AFdYFRNsQvRUPzDxGqWA0u8rp4Hd/Q==
-X-Received: by 2002:a5d:6143:0:b0:33d:2437:e739 with SMTP id
- y3-20020a5d6143000000b0033d2437e739mr252251wrt.54.1708081441727; 
- Fri, 16 Feb 2024 03:04:01 -0800 (PST)
+ bh=jnkIS3AaHEP065b9a1SZ9IcaJ8jPciqvA+XhsfUsiWs=;
+ b=uEOE2DqwipAXw5hm9+PfDsErJh/nntv2EILfd21EFmfszjzWCjiZSLcgSfp9iQtHL1
+ s3+5i1UMGc0+kkEdhUDCFjflQCLQ4gLgulT0dqU6UCdtn1zesIbds/YAi1ZKh0+d408H
+ mWn1y6Hqw0z3IiFvo1WvpicJJOdUo8RpncqajZk/RH+rIsA9d+WQZyRCaO3tl+wpinJp
+ /clgXsPYjpVGyEHiiEr882oBo0zmueJvrvHt+K0+eP8yXafGouyJPik6QHPxxI7Oa+4P
+ DA6DapO47ZxCqN3eoOhqgiVHrNOy4Wm1Z53BaEKWP3YZXicw73Bq3eyNM0IZEKGK/iLN
+ sJ2A==
+X-Gm-Message-State: AOJu0YwI2cKFwE7+MNs4A1m6jlBHxD+bNoU1h75WWeoPNlFqU7h6Nq4M
+ s1QNAJtzitUunRaCuKvCIp+HDpTEGCzsT83v90oLTMWYG1EkYZTJRSk595+WXOf6DE+1ancgt0n
+ G
+X-Google-Smtp-Source: AGHT+IHX94RGubUwK9zNha0Z7Tr05UGN79hCY5mMek9sIxtt8PGwvMF3xUnkwUzNuyMV2GQiYyBSHA==
+X-Received: by 2002:adf:f4d1:0:b0:33c:e3da:923a with SMTP id
+ h17-20020adff4d1000000b0033ce3da923amr3667425wrp.12.1708081416026; 
+ Fri, 16 Feb 2024 03:03:36 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- x11-20020adff64b000000b0033d157bb26esm1880818wrp.32.2024.02.16.03.03.59
+ r8-20020adfe688000000b0033cf5094fcesm1863549wrm.36.2024.02.16.03.03.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 03:04:01 -0800 (PST)
+ Fri, 16 Feb 2024 03:03:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 07/21] target: Replace DEVICE(object_new) -> qdev_new()
-Date: Fri, 16 Feb 2024 12:02:58 +0100
-Message-ID: <20240216110313.17039-8-philmd@linaro.org>
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH 03/21] hw/ppc/spapr_cpu: Use qdev_is_realized() instead of QOM
+ API
+Date: Fri, 16 Feb 2024 12:02:54 +0100
+Message-ID: <20240216110313.17039-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216110313.17039-1-philmd@linaro.org>
 References: <20240216110313.17039-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +105,23 @@ Prefer QDev API for QDev objects, avoid the underlying QOM layer.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/cpu.c   | 2 +-
- target/xtensa/cpu.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/spapr_cpu_core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index d644adbc77..6b3909ee08 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -649,7 +649,7 @@ MIPSCPU *mips_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
- {
-     DeviceState *cpu;
- 
--    cpu = DEVICE(object_new(cpu_type));
-+    cpu = qdev_new(cpu_type);
-     qdev_connect_clock_in(cpu, "clk-in", cpu_refclk);
-     qdev_realize(cpu, NULL, &error_abort);
- 
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index 79f91819df..4f9408e1a0 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -205,7 +205,7 @@ XtensaCPU *xtensa_cpu_create_with_clock(const char *cpu_type, Clock *cpu_refclk)
- {
-     DeviceState *cpu;
- 
--    cpu = DEVICE(object_new(cpu_type));
-+    cpu = qdev_new(cpu_type);
-     qdev_connect_clock_in(cpu, "clk-in", cpu_refclk);
-     qdev_realize(cpu, NULL, &error_abort);
- 
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 0c0fb3f1b0..40b7c52f7f 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -245,8 +245,7 @@ static void spapr_cpu_core_unrealize(DeviceState *dev)
+              * spapr_cpu_core_realize(), make sure we only unrealize
+              * vCPUs that have already been realized.
+              */
+-            if (object_property_get_bool(OBJECT(sc->threads[i]), "realized",
+-                                         &error_abort)) {
++            if (qdev_is_realized(DEVICE(sc->threads[i]))) {
+                 spapr_unrealize_vcpu(sc->threads[i], sc);
+             }
+             spapr_delete_vcpu(sc->threads[i]);
 -- 
 2.41.0
 
