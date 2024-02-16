@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E9FC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F3CC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razXJ-0002CU-1w; Fri, 16 Feb 2024 09:49:57 -0500
+	id 1razY6-0002nB-Us; Fri, 16 Feb 2024 09:50:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1razXH-0002CI-5y
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:49:55 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1razY5-0002mj-Br
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:50:45 -0500
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1razXF-00063r-BZ
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:49:54 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-55a5e7fa471so1045271a12.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:49:50 -0800 (PST)
+ id 1razY3-0006M2-Jf
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:50:45 -0500
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-51299e0cb8fso406521e87.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:50:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708094989; x=1708699789; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708095041; x=1708699841; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7VibctzhXdSNGnPmq/82XJ2FrkBgcFpo0v0gHF0RsXo=;
- b=YSS2sLLaQahq3vpIDKDk/HQCh9AIFkOLLNAcZDIZLQB7dLQ6dTzh7hfclzbXFSVGlu
- dyKjThkVKiLPw9pbpxmLAm6hrFx69UOh8PUFNGDSvJ4sQBfoAIbjYb7JME0uy28Yopk2
- R/FjkclDe0CElDe23v7cQLvUyLPioD3BhFKi+z0PFxaWFBlYt+63fCfNpNB7ZaDN/1g6
- 0LwQC40qNm701CbRZHwoaaEJ2gGwyoau+yE8599jgI4dw2xqpbhaayhOuQ3BLmQ7rA0a
- 4CCOSWcHAE3iezjtYcIjUrZM8J0A/ZLzPb8+PG1r5OsbUoKKhB3M+3nACkSXort1B8Io
- G9vg==
+ bh=MDiqs+U5t0NptwhkjBiPyr3hzIQRm866Qe5lQWxu8Gs=;
+ b=EfTrkOlUeZRHXRfQnF5sX//QC4O0EVw8lE9GVdtBf1a82FqYcRnppSLawN79LBoVGb
+ j40rthDn6sdAxyx5+4qr/OJwlXokHlek3LQoJu3vcDovHZeiqQBPgIPYFGmHxY7GWpLi
+ OARlQh6uaWXj+XupKnpwL+2eR0RUhfdBUouEcfXrDa0BbLSN2aDuVk7qdIwjLcW2BMb3
+ ELtm0YJo8SvSN+8yZ7dbprAqUlR3ITTIZK7l8n/Et8jI5e3cHHwsu+zFG/Rf6H8GfPaC
+ aj3OM4VFfDHOXMmxoiaeVWgxM46nt7nejfNrCxSe2f7BHk9qW9K2yOtepkCzHHl7zn5o
+ vkuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708094989; x=1708699789;
+ d=1e100.net; s=20230601; t=1708095041; x=1708699841;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7VibctzhXdSNGnPmq/82XJ2FrkBgcFpo0v0gHF0RsXo=;
- b=X5G4Hqrkh/CHMcjYnwew5GAWXaGM7UZrGTAficFHC6qD4U/QlPYY56WtBSQslIUaAq
- ia8uwnqx/F7vWn0hJy1PTWyWPWRFWMQOM8fqGIppO8HhfFmKQEHhnLrvEB39RQOxytQk
- KAlenvIlOdSJMRM4xM2myj4s18xabOKvkLzNOb+QBC4nuYP5NEotzuCvRgDjbhO7mqHu
- VRHtREIfVbjAT3//vgkSqzY1i205FDlm4Pj0LPaa1esbvwsvJyDRBFq+DBgiL05u5pkh
- Z6eg13JdIvl4f7L7dEuglvDDTDUo6dI8+Q0loURSZ4986F+ZTv3LKDDGMWno5uy7hfJ4
- P3mg==
-X-Gm-Message-State: AOJu0YzvucNhlmDD2uEZO4Jv2lEzc+Zm+I9zK8Xpx5oXifZk3+K6H9DH
- fFu/NfJiEqJND0920wPCrIo69qkEYkcIgdn7+M3Baz+dmMeoWkQBVK0PZnmohiA3m4wTcrhtWdd
- EWb23Ydz6zJHfkjcfMKK3hDs6udw9Er35FfU/WKnlc5eIho63
-X-Google-Smtp-Source: AGHT+IF8u/KIRXot/zqJzya3dNimH4kRO61tGT1c9T+ZPnzRROv0TvZuKGSLqDH2JxHVzBJ+YUx6cJ5gTHs7jWt1oR8=
-X-Received: by 2002:a50:ee89:0:b0:561:bcbc:7c96 with SMTP id
- f9-20020a50ee89000000b00561bcbc7c96mr4421878edr.31.1708094988757; Fri, 16 Feb
- 2024 06:49:48 -0800 (PST)
+ bh=MDiqs+U5t0NptwhkjBiPyr3hzIQRm866Qe5lQWxu8Gs=;
+ b=AcQ1s58mWMPGCZ4Zj7vVyjPTlO4wn1jL0F6Oz8f2poZGJd1jndvNE9V7KbdAo7gpdO
+ K1mYY2jiRA0RgPY8NxQwbYpNX6rrluDcCnP0XGhUBWnDc8IXo7rrW8VL6pCFD1iyoVVY
+ BhBCDbsWqTc3QCo8rF2KA90U1BHWXoZpsVBDfpwsps20TRwgfi2Lfc90we8DbC6ks3kA
+ ut7hAyvYXZuPD275Ao6227IeEt4ExdiiLiEKN+i2HR3AmoS9FSxJw1O2oyL7hdQv9xAI
+ 049SfvdonYMX5qRRz8oVNniWr5M0+I4jZSSQro40AoSqtKrhrL1oZeWmhEyqNb/I539s
+ jXcw==
+X-Gm-Message-State: AOJu0Yzx5QWxztDH4GthCExiHFeHgD8LewLksRQahjqFUMV9CbzBeUsj
+ ryC2YdOyNc0TbB+/zwaYcjhIt9KJBfNRyc/6KOkFn+k2++ezxqXnKWmpmvXzsrXMYcAg4IwDzCN
+ nse6pn031B5sHetmu1BnWxDgYiNqfbIJFgrkbAw==
+X-Google-Smtp-Source: AGHT+IFiHbqsP5Mu2ffABz8wJW0YB/R4HkODSix39M8LQ4tNdei1gde3oUSrGaNEDAuMgS3uj9JAqmp4n0qVw1FK9GA=
+X-Received: by 2002:ac2:4c13:0:b0:511:19bf:fa0c with SMTP id
+ t19-20020ac24c13000000b0051119bffa0cmr3879076lfq.56.1708095041542; Fri, 16
+ Feb 2024 06:50:41 -0800 (PST)
 MIME-Version: 1.0
 References: <20240216135137.8668-3-atp.exp@gmail.com>
- <20240216135137.8668-4-atp.exp@gmail.com>
-In-Reply-To: <20240216135137.8668-4-atp.exp@gmail.com>
+ <20240216135137.8668-5-atp.exp@gmail.com>
+In-Reply-To: <20240216135137.8668-5-atp.exp@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Feb 2024 14:49:37 +0000
-Message-ID: <CAFEAcA_D+rJys-YP3W3UkGM+RFkv+GsrXymqUDGEgOdSu+KKMg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] misc: m48t59: replace qemu_system_reset_request()
- call with watchdog_perform_action()
+Date: Fri, 16 Feb 2024 14:50:30 +0000
+Message-ID: <CAFEAcA-FzZTT9twzPP7KAvqvkV5GAjYGM0cfV35jYa26R3cKLQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] misc: pxa2xx_timer: replace
+ qemu_system_reset_request() call with watchdog_perform_action()
 To: Abhiram Tilak <atp.exp@gmail.com>
 Cc: qemu-devel@nongnu.org, clg@kaod.org, david@gibson.dropbear.id.au, 
  harshpb@linux.ibm.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,34 +101,30 @@ On Fri, 16 Feb 2024 at 13:56, Abhiram Tilak <atp.exp@gmail.com> wrote:
 > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2124
 > Signed-off-by: Abhiram Tilak <atp.exp@gmail.com>
 > ---
->  hw/rtc/m48t59.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  hw/timer/pxa2xx_timer.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
-> index aa44c4b20c..ebda084478 100644
-> --- a/hw/rtc/m48t59.c
-> +++ b/hw/rtc/m48t59.c
-> @@ -36,6 +36,7 @@
->  #include "qemu/bcd.h"
+> diff --git a/hw/timer/pxa2xx_timer.c b/hw/timer/pxa2xx_timer.c
+> index 6a7d5551f4..6479ab1a8b 100644
+> --- a/hw/timer/pxa2xx_timer.c
+> +++ b/hw/timer/pxa2xx_timer.c
+> @@ -18,6 +18,7 @@
+>  #include "qemu/log.h"
 >  #include "qemu/module.h"
->  #include "trace.h"
+>  #include "qom/object.h"
 > +#include "sysemu/watchdog.h"
 >
->  #include "m48t59-internal.h"
->  #include "migration/vmstate.h"
-> @@ -163,8 +164,7 @@ static void watchdog_cb (void *opaque)
->      if (NVRAM->buffer[0x1FF7] & 0x80) {
->          NVRAM->buffer[0x1FF7] = 0x00;
->          NVRAM->buffer[0x1FFC] &= ~0x40;
-> -        /* May it be a hw CPU Reset instead ? */
-> -        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> +        watchdog_perform_action(); /* watchdog-expired action */
->      } else {
+>  #define OSMR0  0x00
+>  #define OSMR1  0x04
+> @@ -417,7 +418,7 @@ static void pxa2xx_timer_tick(void *opaque)
+>      if (t->num == 3)
+>          if (i->reset3 & 1) {
+>              i->reset3 = 0;
+> -            qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+> +            watchdog_perform_action();
+>          }
+>  }
 
-I don't think we need the comment, it's clear enough from the
-name of the function.
-
-Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
