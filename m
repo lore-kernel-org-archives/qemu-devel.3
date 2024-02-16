@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54991C48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:24:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB91C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rayCQ-0005gh-Cl; Fri, 16 Feb 2024 08:24:18 -0500
+	id 1rayGj-0006yC-9r; Fri, 16 Feb 2024 08:28:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rayCP-0005gS-3B; Fri, 16 Feb 2024 08:24:17 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1rayGh-0006xr-PY; Fri, 16 Feb 2024 08:28:43 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rayCL-0004c6-Jm; Fri, 16 Feb 2024 08:24:15 -0500
+ id 1rayGg-0005Rf-7f; Fri, 16 Feb 2024 08:28:43 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1BF2E4E602C;
- Fri, 16 Feb 2024 14:24:11 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C345C4E602D;
+ Fri, 16 Feb 2024 14:28:38 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id nBcButkd3Us7; Fri, 16 Feb 2024 14:24:09 +0100 (CET)
+ with ESMTP id ybgoBxecQugd; Fri, 16 Feb 2024 14:28:36 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 26FAB4E601F; Fri, 16 Feb 2024 14:24:09 +0100 (CET)
+ id D13D64E601F; Fri, 16 Feb 2024 14:28:36 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 255897456B4;
- Fri, 16 Feb 2024 14:24:09 +0100 (CET)
-Date: Fri, 16 Feb 2024 14:24:09 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id CF7427456B4;
+ Fri, 16 Feb 2024 14:28:36 +0100 (CET)
+Date: Fri, 16 Feb 2024 14:28:36 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-cc: Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Subject: Re: [PATCH v5 0/9] Misc clean ups to target/ppc exception handling
-In-Reply-To: <821d7bc0-f3c7-6809-cd0f-8280da924250@eik.bme.hu>
-Message-ID: <bf3a7ed6-7a28-f640-9505-486f8def8556@eik.bme.hu>
-References: <cover.1705614747.git.balaton@eik.bme.hu>
- <821d7bc0-f3c7-6809-cd0f-8280da924250@eik.bme.hu>
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/6] target/ppc: Fix 440 tlbwe TLB invalidation gaps
+In-Reply-To: <20240117151238.93323-1-npiggin@gmail.com>
+Message-ID: <4ee51a3d-6a71-e45a-2902-d133fadfff4c@eik.bme.hu>
+References: <20240117151238.93323-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -64,44 +64,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jan 2024, BALATON Zoltan wrote:
-> On Thu, 18 Jan 2024, BALATON Zoltan wrote:
->> These are some small clean ups for target/ppc/excp_helper.c trying to
->> make this code a bit simpler. No functional change is intended. This
->> series was submitted before but only partially merged due to freeze
->> and conflicting series os thia was postponed then to avoid conflicts.
+On Thu, 18 Jan 2024, Nicholas Piggin wrote:
+> The 440 software TLB write entry misses several cases that must flush
+> the TCG TLB:
+> - If the new size is smaller than the existing size, the EA no longer
+>  covered should be flushed. This looks like an inverted inequality test.
+> - If the TLB PID changes.
+> - If the TLB attr bit 0 (translation address space) changes.
+> - If low prot (access control) bits change.
 >
-> Ping?
+> Fix this by removing tricks to avoid TLB flushes, and just invalidate
+> the TLB if any valid entry is being changed, similarly to 4xx.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Ping^2?
+This series was missing a cover letter so patchew did not pick it up 
+correctly. However this improves the sam460ex performance a lot so I'd 
+like this to be included in 9.0 release. Nick, maybe it's time to start 
+merging patches and send a pull request to avoid getting conflicts in last 
+minute that could cause series to miss release. So an early pull request 
+would help to get everybody on the same page.
 
 Regards,
 BALATON Zoltan
-
->> v5:
->> - rebase on master
->> - keep logging nip pointing to the sc instruction
->> - add another patch
->> 
->> v4: Rebased on master dropping what was merged
->> 
->> BALATON Zoltan (9):
->>  target/ppc: Use env_cpu for cpu_abort in excp_helper
->>  target/ppc: Readability improvements in exception handlers
->>  target/ppc: Fix gen_sc to use correct nip
->>  target/ppc: Move patching nip from exception handler to helper_scv
->>  target/ppc: Simplify syscall exception handlers
->>  target/ppc: Clean up ifdefs in excp_helper.c, part 1
->>  target/ppc: Clean up ifdefs in excp_helper.c, part 2
->>  target/ppc: Clean up ifdefs in excp_helper.c, part 3
->>  target/ppc: Remove interrupt handler wrapper functions
->> 
->> target/ppc/cpu.h         |   1 +
->> target/ppc/excp_helper.c | 490 +++++++++++++--------------------------
->> target/ppc/translate.c   |  16 +-
->> 3 files changed, 170 insertions(+), 337 deletions(-)
->> 
->> 
->
->
 
