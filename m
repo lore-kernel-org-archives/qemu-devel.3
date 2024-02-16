@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5324EC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCA35C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raxxF-0008BZ-M3; Fri, 16 Feb 2024 08:08:37 -0500
+	id 1raxxG-0008Bn-An; Fri, 16 Feb 2024 08:08:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raxxE-0008Ao-I0
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raxxE-0008Ar-NP
  for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:08:36 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raxxC-0001Ow-K7
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1raxxC-0001Os-46
  for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:08:36 -0500
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41GCbZaI006914; Fri, 16 Feb 2024 13:08:29 GMT
+ 41GC3ITR012247; Fri, 16 Feb 2024 13:08:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=Wrl1WgXQtSoar+XyTVaxT51hBzzxaBQEId1XBe1SyYk=;
- b=RxYbrwIb5YmBFmqzpOP+OyfbFuGPBchWx0w4NxUvZj+PJ6XiVfZUbHJc4jX5UPwB4Sot
- nb51fHjzwA57PwCqtDO3zz3jizJSOb9/Qt3f0oIZpOOoi6N43MP/+Rgsw1scRBlL8HW8
- GRnxHIN7+7Y9wHZ7sdkgkRE1XvYB4a5BuRRsICq5K19awCBSdWG0+sdb045CW6w2EvKB
- PYwhR0FND2mfuDOw0kq0I3uN7qqRioww7McE64Wk+TtUVl6hWEfWDez3KRBqfeHIchXe
- Q8+0LzUqxyjIbkl1Mw2GvNprqt9bG4xD7ZFLzZFHNacoM9kyrF2/E6tzP/kItUFGZfLt Fg== 
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wa7vcrfdb-1
+ bh=sqLdqERZH13hBBCwpo3pHBUqf4m1IS2l/08oC2bhiPI=;
+ b=PC719iQcbcAx87i0YfN2pTExmusMBoUFDTLetAfryEdNVrbaxA89YCk5idi/BvSCh1LZ
+ txvmsEfVWiIUNaNrQKAoHG+Otwsum/HJi64TQaN6+5svgZGWjy8iAEHupckJcwUQ6eAB
+ 7jBKg9ClwSngBdjh8Ecu34gVj3zTEe4JvpOy0AsH3CX6jp9Psmfyu5K7SidlVXfT5mEO
+ bUiKPfxsW+FwVBm0sUcCSNOB2ts3ksudKVaSZgldAfvrGO37ebT/kuskB2rynCvnPFhg
+ S9TgsWVb7ObJvOYF76zEV8MU+BTAPx29nRuEWb5/4EotBoc95GX/Ofv1c9er0gLxL2rA vQ== 
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wa5cuupbh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 Feb 2024 13:08:29 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41GAf7f4010060; Fri, 16 Feb 2024 13:08:27 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w6npmb0hv-1
+ Fri, 16 Feb 2024 13:08:31 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41GBcQNN032605; Fri, 16 Feb 2024 13:08:31 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3w6kfu3kgw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 16 Feb 2024 13:08:27 +0000
+ Fri, 16 Feb 2024 13:08:31 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41GD8NRe41943734
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41GD8R6d47644950
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 16 Feb 2024 13:08:25 GMT
+ Fri, 16 Feb 2024 13:08:29 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD0F920040;
- Fri, 16 Feb 2024 13:08:23 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 459462005A;
+ Fri, 16 Feb 2024 13:08:27 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6986D20043;
- Fri, 16 Feb 2024 13:08:23 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0C7AD2004F;
+ Fri, 16 Feb 2024 13:08:27 +0000 (GMT)
 Received: from black.boeblingen.de.ibm.com (unknown [9.155.200.166])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 16 Feb 2024 13:08:23 +0000 (GMT)
+ Fri, 16 Feb 2024 13:08:26 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Warner Losh <imp@bsdimp.com>
 Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 02/11] {linux,bsd}-user: Update ts_tid after fork()
-Date: Fri, 16 Feb 2024 14:05:29 +0100
-Message-ID: <20240216130817.369377-3-iii@linux.ibm.com>
+Subject: [PATCH v3 08/11] gdbstub: Introduce gdb_handle_set_thread_user()
+Date: Fri, 16 Feb 2024 14:05:35 +0100
+Message-ID: <20240216130817.369377-9-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240216130817.369377-1-iii@linux.ibm.com>
 References: <20240216130817.369377-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 8lYRA4PspIxTCVaOBfjhOdYos7NeLB5K
-X-Proofpoint-GUID: 8lYRA4PspIxTCVaOBfjhOdYos7NeLB5K
+X-Proofpoint-GUID: cOKcQc0pzemVU-kAeU18KZFw8wVjGP64
+X-Proofpoint-ORIG-GUID: cOKcQc0pzemVU-kAeU18KZFw8wVjGP64
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-16_11,2024-02-16_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0
- spamscore=0 mlxlogscore=946 lowpriorityscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 impostorscore=0 mlxscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ spamscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ impostorscore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402160106
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -108,40 +108,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently ts_tid contains the parent tid after fork(), which is not
-correct. So far it has not affected anything, but the upcoming
-follow-fork-mode child support relies on the correct value, so fix it.
+The upcoming follow-fork-mode child support needs to perform certain
+actions when GDB switches between the stopped parent and the stopped
+child. Introduce a user-specific hook for this.
 
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- bsd-user/main.c   | 1 +
- linux-user/main.c | 1 +
- 2 files changed, 2 insertions(+)
+ gdbstub/gdbstub.c   | 11 +++++++++--
+ gdbstub/internals.h |  1 +
+ gdbstub/user.c      |  5 +++++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index e5efb7b8458..4140edc8311 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -127,6 +127,7 @@ void fork_end(int child)
-          * state, so we don't need to end_exclusive() here.
-          */
-         qemu_init_cpu_list();
-+        ((TaskState *)thread_cpu->opaque)->ts_tid = qemu_get_thread_id();
-         gdbserver_fork(thread_cpu);
-     } else {
-         mmap_fork_end(child);
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 74b2fbb3938..e6427d72332 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -160,6 +160,7 @@ void fork_end(int child)
-             }
-         }
-         qemu_init_cpu_list();
-+        ((TaskState *)thread_cpu->opaque)->ts_tid = qemu_get_thread_id();
-         gdbserver_fork(thread_cpu);
-     } else {
-         cpu_list_unlock();
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 43d79dfdd59..adcd977cd57 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1066,6 +1066,7 @@ static void handle_cont_with_sig(GArray *params, void *user_ctx)
+ 
+ static void handle_set_thread(GArray *params, void *user_ctx)
+ {
++    uint32_t pid, tid;
+     CPUState *cpu;
+ 
+     if (params->len != 2) {
+@@ -1083,8 +1084,14 @@ static void handle_set_thread(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    cpu = gdb_get_cpu(get_param(params, 1)->thread_id.pid,
+-                      get_param(params, 1)->thread_id.tid);
++    pid = get_param(params, 1)->thread_id.pid;
++    tid = get_param(params, 1)->thread_id.tid;
++#ifdef CONFIG_USER_ONLY
++    if (gdb_handle_set_thread_user(pid, tid)) {
++        return;
++    }
++#endif
++    cpu = gdb_get_cpu(pid, tid);
+     if (!cpu) {
+         gdb_put_packet("E22");
+         return;
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index e6063835b1f..b4905c7181a 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -197,6 +197,7 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_supported_user(const char *gdb_supported); /* user */
++bool gdb_handle_set_thread_user(uint32_t pid, uint32_t tid); /* user */
+ 
+ void gdb_handle_query_attached(GArray *params, void *user_ctx); /* both */
+ 
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index d8db5bd3949..60f3e83849e 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -386,6 +386,11 @@ void gdb_handle_query_supported_user(const char *gdb_supported)
+ {
+ }
+ 
++bool gdb_handle_set_thread_user(uint32_t pid, uint32_t tid)
++{
++    return false;
++}
++
+ /*
+  * Execution state helpers
+  */
 -- 
 2.43.0
 
