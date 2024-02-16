@@ -4,130 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6443FC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 06:22:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165DAC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 07:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rarbm-0006ES-Fo; Fri, 16 Feb 2024 01:22:02 -0500
+	id 1rat2R-0001NT-4V; Fri, 16 Feb 2024 02:53:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rarbk-0006EI-FK
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:22:00 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rat2P-0001N3-1o
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 02:53:37 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rarbi-0007ts-Gj
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:22:00 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6e11596b2e7so249009b3a.1
- for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 22:21:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rat2M-0006Zt-B8
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 02:53:36 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-51296b58239so318698e87.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 23:53:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708064517; x=1708669317; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :sender:from:to:cc:subject:date:message-id:reply-to;
- bh=WtYdi0+JGRjjczAkq0svJONSWgi6ODiSnVrxCHKpnuY=;
- b=At3t1++CIqpjZvBy0pAZlU1pPtMAwDyJ/O3IKM2p1f/OHUY+unYSbxZG+tCxnmDp0m
- EobtcnyjqBAj+LHVh4meBRYVm3YK5J7LzXSz1zo+AthMn8BK99Wmpd0YakzErBfEXbGN
- 5YyRNSTcJ2pqdVZDso3ICKTbsq/YgEQJZERSSau8fjLVaoqkpnmA/w3IcBqjMORSgar+
- sSokuRu0iVSrid0RT0Il6Kp3TjO9674HjueZ0msKzgSD3BXKg+laFahA0iMB3Q6HBzJX
- 5EjT7mXvrYxe4/V+RAeS8X5zIEUBuFEftGioyORWdvpmLilBQwA9QEhBx1SuJqhov4LG
- qipQ==
+ d=linaro.org; s=google; t=1708070011; x=1708674811; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=a6jtcrefzMd7LNO41mdRMT1bmmA3xSa8hGdCnAaXxYI=;
+ b=k8U7gqQyTkPRs5m59x+K4ELSXzYAijEtGAALp2SOYpKwH6O1Ypzh/EKETCCu+u6w0m
+ 3QyloVkDQv4WIS46NqN26FRjt5zO5tE2gx7ziQHeEyMYH+PLAOFueKixS3CiiHWdF3QL
+ Bnv1yFjZ0pOB4V8jE+qco+G7OIPiYmJ83QMJa7O7zn34VmVCs2G8lDWWnHTIXib+Yw1Q
+ dU8GTx7G7278pRJcBmCmxiQO5NwveST7xb/GEpbiIsVdEOKC/lBLc0AUYiforpoFX6jc
+ bX2nxodciAeg9HuwG4jSy9dc+U6ndRjBFi6YpFT1xHCAMbswCdosZfMhHPogRzvgErw7
+ hLRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708064517; x=1708669317;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :sender:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WtYdi0+JGRjjczAkq0svJONSWgi6ODiSnVrxCHKpnuY=;
- b=PLnqEBqU2k+TF05XeJukyIgBky0FEJd57QIMK3G8kxpxGDp4YeRaGxR+dAyhk1aotg
- mhiStxiZ0LT/tf+wfvgx3S034Wz9ds+IoGVBRZvSkQBDztIVKwDLmInKrS4O47DHplk0
- EVQ/1/ibwvJadTgYCHLP39EBon4/b14/IbEO/aiM4cUEEB4R10b/oRSb5VVOAYJZUj13
- DKa4Fi/5BO8KLRj1k3UN8AtNRd7csne+nzFPfIhXxcOeuLq27y1TsSRiN5cdxziKc/Ig
- 5I/1SWTlVDrRMDKeQHaa34EFC82VlEN7AsNEX3k4Qb7NzFwwWu0vZjL3KbAALIIe+ILJ
- JHaA==
-X-Gm-Message-State: AOJu0YyIDO/0hqX79eAJvUfj3UaY3IqOUpGs1k4u61Ealg77ZcfwKiEN
- rJWHM67w2TCuQJf902kNGOvIvlm3qZXTWGlk7FKXxHxEpaPokYtw
-X-Google-Smtp-Source: AGHT+IE2j1YFvsAIRtPVQ/YhgGQf7ZsNYwNHU+LzYOdZqiIcQvEK2JinmxT1Vhfc6wlmc4gWo/KfXA==
-X-Received: by 2002:a05:6a20:d905:b0:19e:9d92:b6a6 with SMTP id
- jd5-20020a056a20d90500b0019e9d92b6a6mr4842722pzb.44.1708064516865; 
- Thu, 15 Feb 2024 22:21:56 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
- ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ d=1e100.net; s=20230601; t=1708070011; x=1708674811;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=a6jtcrefzMd7LNO41mdRMT1bmmA3xSa8hGdCnAaXxYI=;
+ b=HsRbIBycTSf/J0SrpP3C0p/rVUM8VSSq8g6HZpqSVBbpgxeWbxwhPtfJCpZjTDfq2h
+ INIBX9J3Qcw+iHfcKFh9OxWflZHh8iSh0CGy5dr+uhI33YYMVEZ9JthGeNlbSESHxzjx
+ xZKw/qfS5r5qoFbKh1XJgVP1SR2/pQHOstvHtTU7AKgWfLML4IgYhUpaDID2kBKwlCOj
+ vOxV6geiZ7QOd3JRGniytl6kgbifi6VlHrR6olNjD8Go5Vgo4QX58tm6urxNb3YhGTNK
+ 30ssfPVnkg5E2qpRS7tls8nzKRLb/k1EwSgulvqyUzC9lFvx6U+YQGm4/NLd/FiUDDb2
+ FSrQ==
+X-Gm-Message-State: AOJu0YzsGJsUfzgTiG2xRoxiUdTcNopl/ZWQFiGD/DAEN11ARHSM/gne
+ PlroasSlPZX0AdqG4vUUgKhBj9F4XSRBVXc29WFAbvt3hDNhznuE3WMQaV+GTuDbvWJXbIOtf0j
+ /9cg=
+X-Google-Smtp-Source: AGHT+IH/8iMR9MUM9ZZpbNF37H2SwydUMAnWcXzNaj/pdAa8o58mgtQ1prOqX+aH4JZ69LN+tJufMw==
+X-Received: by 2002:a19:9143:0:b0:511:8763:bb63 with SMTP id
+ y3-20020a199143000000b005118763bb63mr2597213lfj.41.1708070011176; 
+ Thu, 15 Feb 2024 23:53:31 -0800 (PST)
+Received: from meli.delivery (adsl-245.37.6.163.tellas.gr. [37.6.163.245])
  by smtp.gmail.com with ESMTPSA id
- q7-20020a170902a3c700b001db90df1283sm1990475plb.4.2024.02.15.22.21.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Feb 2024 22:21:56 -0800 (PST)
-Message-ID: <00391f28-76b1-424b-b42d-b30efbf89c59@roeck-us.net>
-Date: Thu, 15 Feb 2024 22:21:55 -0800
+ vg11-20020a170907d30b00b00a3d6ff5f087sm1294597ejc.55.2024.02.15.23.53.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Feb 2024 23:53:30 -0800 (PST)
+Date: Fri, 16 Feb 2024 09:52:32 +0200
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org, Lukas Stockner <lstockner@genesiscloud.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Lukas Stockner <lstockner@genesiscloud.com>
+Subject: Re: [PATCH] pcie: Support PCIe Gen5/Gen6 link speeds
+User-Agent: meli 0.8.5-rc.3
+References: <20240215012326.3272366-1-lstockner@genesiscloud.com>
+In-Reply-To: <20240215012326.3272366-1-lstockner@genesiscloud.com>
+Message-ID: <8xv91.32qjtsyqi8qb@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target: hppa: Fix unaligned double word accesses for
- hppa64
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Charlie Jenkins <charlie@rivosinc.com>,
- Helge Deller <deller@gmx.de>
-References: <20240216053415.2163286-1-linux@roeck-us.net>
- <2e1ec6a5-a566-4729-a604-a7b2ec7aff58@linaro.org>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <2e1ec6a5-a566-4729-a604-a7b2ec7aff58@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=groeck7@gmail.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,31 +97,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/15/24 22:16, Richard Henderson wrote:
-> On 2/15/24 19:34, Guenter Roeck wrote:
->> -    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
->> +    if (hppa_is_pa20(env)) {
->> +        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB | 0xff00000000ull);
->> +    } else {
->> +        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
->> +    }
+On Thu, 15 Feb 2024 03:23, Lukas Stockner <lstockner@genesiscloud.com> wrote:
+>This patch extends the PCIe link speed option so that slots can be
+>configured as supporting 32GT/s (Gen5) or 64GT/s (Gen5) speeds.
+>This is as simple as setting the appropriate bit in LnkCap2 and
+>the appropriate value in LnkCap and LnkCtl2.
+>
+>Signed-off-by: Lukas Stockner <lstockner@genesiscloud.com>
+>---
+> hw/core/qdev-properties-system.c | 16 ++++++++++++++--
+> hw/pci/pcie.c                    |  8 ++++++++
+> include/hw/pci/pcie_regs.h       |  2 ++
+> qapi/common.json                 |  6 +++++-
+> 4 files changed, 29 insertions(+), 3 deletions(-)
+>
+>diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+>index 1a396521d5..106a31c233 100644
+>--- a/hw/core/qdev-properties-system.c
+>+++ b/hw/core/qdev-properties-system.c
+>@@ -941,7 +941,7 @@ const PropertyInfo qdev_prop_off_auto_pcibar = {
+>     .set_default_value = qdev_propinfo_set_default_value_enum,
+> };
 > 
-> There are never any bits above 31 set in env->psw, because all of the CB bits are supposed to be stored in env->psw_cb.  Thus
+>-/* --- PCIELinkSpeed 2_5/5/8/16 -- */
+>+/* --- PCIELinkSpeed 2_5/5/8/16/32/64 -- */
 > 
->    env->psw = psw & (uint32_t)~(...)
+> static void get_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
+>                                    void *opaque, Error **errp)
+>@@ -963,6 +963,12 @@ static void get_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
+>     case QEMU_PCI_EXP_LNK_16GT:
+>         speed = PCIE_LINK_SPEED_16;
+>         break;
+>+    case QEMU_PCI_EXP_LNK_32GT:
+>+        speed = PCIE_LINK_SPEED_32;
+>+        break;
+>+    case QEMU_PCI_EXP_LNK_64GT:
+>+        speed = PCIE_LINK_SPEED_64;
+>+        break;
+>     default:
+>         /* Unreachable */
+>         abort();
+>@@ -996,6 +1002,12 @@ static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
+>     case PCIE_LINK_SPEED_16:
+>         *p = QEMU_PCI_EXP_LNK_16GT;
+>         break;
+>+    case PCIE_LINK_SPEED_32:
+>+        *p = QEMU_PCI_EXP_LNK_32GT;
+>+        break;
+>+    case PCIE_LINK_SPEED_64:
+>+        *p = QEMU_PCI_EXP_LNK_64GT;
+>+        break;
+>     default:
+>         /* Unreachable */
+>         abort();
+>@@ -1004,7 +1016,7 @@ static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
 > 
-> with no need for the pa20 check.
+> const PropertyInfo qdev_prop_pcie_link_speed = {
+>     .name = "PCIELinkSpeed",
+>-    .description = "2_5/5/8/16",
+>+    .description = "2_5/5/8/16/32/64",
+>     .enum_table = &PCIELinkSpeed_lookup,
+>     .get = get_prop_pcielinkspeed,
+>     .set = set_prop_pcielinkspeed,
+>diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+>index 6db0cf69cd..0b4817e144 100644
+>--- a/hw/pci/pcie.c
+>+++ b/hw/pci/pcie.c
+>@@ -153,6 +153,14 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
+>             pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKCAP2,
+>                                        PCI_EXP_LNKCAP2_SLS_16_0GB);
+>         }
+>+        if (s->speed > QEMU_PCI_EXP_LNK_16GT) {
+>+            pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKCAP2,
+>+                                       PCI_EXP_LNKCAP2_SLS_32_0GB);
+>+        }
+>+        if (s->speed > QEMU_PCI_EXP_LNK_32GT) {
+>+            pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKCAP2,
+>+                                       PCI_EXP_LNKCAP2_SLS_64_0GB);
+>+        }
+>     }
+> }
 > 
-> With that,
+>diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
+>index 4972106c42..9d3b6868dc 100644
+>--- a/include/hw/pci/pcie_regs.h
+>+++ b/include/hw/pci/pcie_regs.h
+>@@ -39,6 +39,8 @@ typedef enum PCIExpLinkSpeed {
+>     QEMU_PCI_EXP_LNK_5GT,
+>     QEMU_PCI_EXP_LNK_8GT,
+>     QEMU_PCI_EXP_LNK_16GT,
+>+    QEMU_PCI_EXP_LNK_32GT,
+>+    QEMU_PCI_EXP_LNK_64GT,
+> } PCIExpLinkSpeed;
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> #define QEMU_PCI_EXP_LNKCAP_MLS(speed)  (speed)
+>diff --git a/qapi/common.json b/qapi/common.json
+>index f1bb841951..867a9ad9b0 100644
+>--- a/qapi/common.json
+>+++ b/qapi/common.json
+>@@ -107,10 +107,14 @@
+> #
+> # @16: 16.0GT/s
+> #
+>+# @32: 32.0GT/s
+>+#
+>+# @64: 64.0GT/s
+>+#
+> # Since: 4.0
+> ##
+> { 'enum': 'PCIELinkSpeed',
+>-  'data': [ '2_5', '5', '8', '16' ] }
+>+  'data': [ '2_5', '5', '8', '16', '32', '64' ] }
 > 
+> ##
+> # @PCIELinkWidth:
+>-- 
+>2.43.1
+>
+>
 
-sgtm. I'll test that and send v2 tomorrow (it is getting late).
-
-Thanks,
-Guenter
-
-
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
