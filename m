@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C87C48BEF
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F67C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:37:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb0Fu-0004If-UF; Fri, 16 Feb 2024 10:36:02 -0500
+	id 1rb0Fu-0004I6-1V; Fri, 16 Feb 2024 10:36:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fs-0004HQ-LK
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:36:00 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fp-0004DI-8H
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:58 -0500
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fq-0008L5-Lp
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:59 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a293f2280c7so306499866b.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:35:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fk-0008Ju-Gw
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:54 -0500
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-511ac32fe38so3199942e87.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:35:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708097756; x=1708702556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708097750; x=1708702550; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hOmGAqEBBOEy9P6DsYyadVIEFCheEXAYvta8nSQ9bhE=;
- b=Il9PjfY1GBNrm1H293ZJGyUpt6q+yo6054KPUfrdvkQIPsbWvqWcH5zQYS/5Fol+FA
- QmgHa0uAzzGuDEX792phmJpBUeTZJvL7JdZ/lbdh1SZfy7diLp1PGHpg3wjGzpLR9hy1
- eS8+j0fg7zTlKZU/pTYlf2cTgq2vX0t0mNIPvd+SULimOlZfR0ywlrUFKiYL+IrTEj+O
- kYDFAyMrHUYpT2e74iCph96d8xGgDyIDlizB1iYRCa5nJ0sFOg0NHRsaDcPS3KveG8BR
- 0P2YcsTd1tHzYYe4KmpqRWmteowe+pVqDCYc6rKsFVfUmJFFl2/tRGDCp7wiyZdugoA3
- QFoQ==
+ bh=6fLBBhh1GSx7gD4Lvttkm3NNOOv+Jojp8q0UUHVCrGQ=;
+ b=zpab49GdHR407PIxh5Gd0ldme4YocbRxvc/IrE1JsLfO29RoA+en4LtQ/YGwzhEk77
+ 52+E4OE0qrGgKBtDIdbnbLwLiD5rsGXzEdqwe79M/iLoF0KfmWSdDbaIQJMj43l8+Mv+
+ P77mzyX8JiZC29066OSSQQDdNY+3dcpr454PAC6buUD+PTdYkF9E3JH2uhet8om/BkJ/
+ mPNG9QKNG+R8E/VLcU6yrlfKifhnvgUxtBCPoanApzWEwrocshA6Pwt2G6GeajKtG6P/
+ PO4BqHdgN2qgK9N5/VLBW9/eODa1rZIFyCTNd6nrEj7+qhi9DZJfzJk2oj2T17hwYO5f
+ LypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708097756; x=1708702556;
+ d=1e100.net; s=20230601; t=1708097750; x=1708702550;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hOmGAqEBBOEy9P6DsYyadVIEFCheEXAYvta8nSQ9bhE=;
- b=WktRJyzJ0PSzKX6nBqIb8+TbnOGJh2EApNmZnE8Vl3ziBZ8K4nNBoOrmYjhEfBPMP5
- GUsBu/p6LdHAY695HjJsyQNwQrdEZrW+lJplrvlvL6VMrDYwCXJC3nkE8mbAa3q+bKjh
- JH9MCLFSm8dxZsWEOBYu1HJwUnZElYEaI53zIgj0AZF4HX0skteLvcksbnUUhOvTVzqQ
- 2GvkRpWAwQAimlpFzMQgebN5gbMmyqjMQkSxw7+mzJWNTDert5KYXFuoaKDnsZtBlBRK
- ufaQT0KSBGLF1ZKX8/HLNI9Jvcka5DDhcvIfbEf6fBsEBFp26DKw2N9BbPw1HmG7hrUJ
- q3UQ==
-X-Gm-Message-State: AOJu0YxR2qgvJemsiB8TvDTqwlJxnSBsDKEmAYXm5XD2cJC8GIjM9gkb
- 6lLRq2u+H6CX5Z/TSgEVoxK7055AqQvfJnX/Qm+GuSzOkUrLLrYFPnaGY/9LLN5Y6xnzYEcJRzU
- B
-X-Google-Smtp-Source: AGHT+IGBmhb6VOfB2zCo0LEpA88KaKbBg1ovfqo3KF7CJB2va+ushmG+IzCBDpkcDMp91+krbOftmg==
-X-Received: by 2002:a17:906:c415:b0:a3d:7d6b:2dc3 with SMTP id
- u21-20020a170906c41500b00a3d7d6b2dc3mr3608466ejz.73.1708097756627; 
- Fri, 16 Feb 2024 07:35:56 -0800 (PST)
+ bh=6fLBBhh1GSx7gD4Lvttkm3NNOOv+Jojp8q0UUHVCrGQ=;
+ b=tQYTmlJb4ZfOPB8sRBGD1mEcINwltGyAIzPxheib/tIZGNeBWx/tR/Xbud/6NtWLZl
+ 1Wj0/jO9BmSImjPLkmgrIuP2j2AvOfj/L3uSus+dNknvoQLKbh7VeKRuhk+ItVV+wvw/
+ 1Ki4RZhDBJngkwmGWyMdqlZJ/8BzM/HVZ9D/DCc/m03f6QP1MY8L7vpkH4LsUxi+qM4H
+ Xcvlt6ncid6H+fwfgmJtA+o4kfLmoyft8GcXoSwez1T9etuVa/XiMHzFRuBRGliL4P8V
+ 82uy6EO5pUZCiddtUmkofTBuJsfDYDHu+rhaRqTuvwg0I3EW2GSXnHI+CPADtLN1waLX
+ QfXw==
+X-Gm-Message-State: AOJu0YxZgJrL3hjW+P1KMews6AruVJ2E+08W+BQlGcLoYs++D8pUSoqy
+ vwOphpAAIQR5H/LNNgCjD5IrsjFaJukRCq7jgnhjeIAIyU7vHv8OxOiGhntIT1DQ5uR1LywCN75
+ 4
+X-Google-Smtp-Source: AGHT+IGNHeZhgcGo12jNmOStEDC3hBsbxmtv6u/9HX9Me13ycUZT94SzgrmFQ42EJFSWhVNwe4Qrpw==
+X-Received: by 2002:a05:6512:224d:b0:512:99ad:d465 with SMTP id
+ i13-20020a056512224d00b0051299add465mr995055lfu.16.1708097750674; 
+ Fri, 16 Feb 2024 07:35:50 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- fy22-20020a170906b7d600b00a3cf4e8fdf5sm44841ejb.150.2024.02.16.07.35.55
+ e1-20020aa7d7c1000000b005621b45daffsm85225eds.28.2024.02.16.07.35.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 07:35:56 -0800 (PST)
+ Fri, 16 Feb 2024 07:35:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -68,24 +68,24 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 6/6] hw/sysbus: Remove now unused sysbus_address_space()
-Date: Fri, 16 Feb 2024 16:35:17 +0100
-Message-ID: <20240216153517.49422-7-philmd@linaro.org>
+Subject: [PATCH 5/6] hw/i386/kvmvapic: Inline sysbus_address_space()
+Date: Fri, 16 Feb 2024 16:35:16 +0100
+Message-ID: <20240216153517.49422-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216153517.49422-1-philmd@linaro.org>
 References: <20240216153517.49422-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,42 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sysbus_address_space() is not more used, remove it.
+sysbus_address_space(...) is a simple wrapper to
+get_system_memory(). Use it in place, since KVM
+VAPIC doesn't distinct address spaces.
+
+Rename the 'as' variable as 'mr' since it is a
+MemoryRegion type, not an AddressSpace one.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sysbus.h | 1 -
- hw/core/sysbus.c    | 5 -----
- 2 files changed, 6 deletions(-)
+ hw/i386/kvmvapic.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
-index 3564b7b6a2..01d4a400c6 100644
---- a/include/hw/sysbus.h
-+++ b/include/hw/sysbus.h
-@@ -85,7 +85,6 @@ void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
- void sysbus_mmio_unmap(SysBusDevice *dev, int n);
- void sysbus_add_io(SysBusDevice *dev, hwaddr addr,
-                    MemoryRegion *mem);
--MemoryRegion *sysbus_address_space(SysBusDevice *dev);
+diff --git a/hw/i386/kvmvapic.c b/hw/i386/kvmvapic.c
+index f2b0aff479..25321d4f66 100644
+--- a/hw/i386/kvmvapic.c
++++ b/hw/i386/kvmvapic.c
+@@ -16,6 +16,7 @@
+ #include "sysemu/hw_accel.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/runstate.h"
++#include "exec/address-spaces.h"
+ #include "hw/i386/apic_internal.h"
+ #include "hw/sysbus.h"
+ #include "hw/boards.h"
+@@ -57,6 +58,7 @@ typedef struct GuestROMState {
  
- bool sysbus_realize(SysBusDevice *dev, Error **errp);
- bool sysbus_realize_and_unref(SysBusDevice *dev, Error **errp);
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 35f902b582..5524287730 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -304,11 +304,6 @@ void sysbus_add_io(SysBusDevice *dev, hwaddr addr,
-     memory_region_add_subregion(get_system_io(), addr, mem);
- }
- 
--MemoryRegion *sysbus_address_space(SysBusDevice *dev)
--{
--    return get_system_memory();
--}
--
- static void sysbus_device_class_init(ObjectClass *klass, void *data)
+ struct VAPICROMState {
+     SysBusDevice busdev;
++
+     MemoryRegion io;
+     MemoryRegion rom;
+     uint32_t state;
+@@ -580,19 +582,17 @@ static int vapic_map_rom_writable(VAPICROMState *s)
  {
-     DeviceClass *k = DEVICE_CLASS(klass);
+     hwaddr rom_paddr = s->rom_state_paddr & ROM_BLOCK_MASK;
+     MemoryRegionSection section;
+-    MemoryRegion *as;
++    MemoryRegion *mr = get_system_memory();
+     size_t rom_size;
+     uint8_t *ram;
+ 
+-    as = sysbus_address_space(&s->busdev);
+-
+     if (s->rom_mapped_writable) {
+-        memory_region_del_subregion(as, &s->rom);
++        memory_region_del_subregion(mr, &s->rom);
+         object_unparent(OBJECT(&s->rom));
+     }
+ 
+     /* grab RAM memory region (region @rom_paddr may still be pc.rom) */
+-    section = memory_region_find(as, 0, 1);
++    section = memory_region_find(mr, 0, 1);
+ 
+     /* read ROM size from RAM region */
+     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
+@@ -613,7 +613,7 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+ 
+     memory_region_init_alias(&s->rom, OBJECT(s), "kvmvapic-rom", section.mr,
+                              rom_paddr, rom_size);
+-    memory_region_add_subregion_overlap(as, rom_paddr, &s->rom, 1000);
++    memory_region_add_subregion_overlap(mr, rom_paddr, &s->rom, 1000);
+     s->rom_mapped_writable = true;
+     memory_region_unref(section.mr);
+ 
 -- 
 2.41.0
 
