@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DABAC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D146C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:40:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rawVW-0003iZ-HD; Fri, 16 Feb 2024 06:35:54 -0500
+	id 1rawZy-0005Df-W9; Fri, 16 Feb 2024 06:40:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rawVO-0003ci-QJ
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:35:48 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1rawZw-0005Bj-Qy
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:40:28 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rawVM-0007Vc-A6
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:35:45 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-41241f64c6bso4122295e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:35:43 -0800 (PST)
+ id 1rawZs-0008LN-QD
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:40:28 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-411f165ef9bso15879075e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:40:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708083342; x=1708688142; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708083623; x=1708688423; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=byXr1vxX/CMuu+s64IJfOeg3jjw+pETDY7XOlELiJtA=;
- b=gHGMAUW9hU4qcTOz1ulh+NylQNnYde2MD0WOy0FPUYEiGfx/ToXUzY/jXzGPef5FZE
- HDyym7SEHY0IuegS/lcLzdkNhUGdOZOSBuTUNInkeShTjwHRBRkL852PBChbSk2YrEAG
- 83NzJ45kE3PBsn3neBTSp7jm5xUUha2CnRpy/e4o6fFCdp5pBazjYzWDh1ehAdnZI3G1
- HIPPem8B71s/HcQDRJNAl7Ka9pIYGVKZeDj5FQN6N91lT/blxnEu9KSgSCuVD1fBvR28
- 560z5f2YM1dkcSOUTmFIAZxAFUyO6bbae8UtNzUljz500S5dBeAmPGrlHKy0cMtoCFUP
- WfWA==
+ bh=a65JjfFK+ZznfVKA9rXr8wh1Kjh+9UE0VG0YP4sWVno=;
+ b=A/vCPpUUveZmaM6l2MQsm9OgOT0XKLcEXk2ahNZDKNxhNYxN5NC54Aa0a5eIAx0EXL
+ HpKIJ3H/Br0Yqj1XUVzb+RKw6VJTloa2oId9y0rvM144QfHfOpgrtC/k6tKfRDygUuCa
+ vnqfAm7rBbn6c7QEXfNYiNrA39gkb0MMWRwvgxqI9iqUwtWVDjo3qvDzMQ+WGGmGgq2e
+ mPBm1gqQ+BVCszRZ8f2jc8+ncjZBCKvNCeD4b1ehu4ZvjdvZIi5NJ0FAQ3ho3eUn7vA/
+ 06VIrmmyTr8LK6oxN3mG+mWAvIT3ROMRzU+nW1sy6b47Kf29uvg9gUnbZwJWcdSTaVNX
+ ODXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708083342; x=1708688142;
+ d=1e100.net; s=20230601; t=1708083623; x=1708688423;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=byXr1vxX/CMuu+s64IJfOeg3jjw+pETDY7XOlELiJtA=;
- b=TMcQtefGUdlHcmz18kcFhHjXCZlUKHVfac7G2nPC+gpmcXQl3Qua6TMSxotifsiNWz
- 1DzG2sRK96G1fP2MXBYHTRAu7ZX8tLObL+C2+tUMvVMcSfsEUAa4lA86U8rd8yp3Mm3W
- 3JbpoOkY690EPrKETjtyB74SuqztL1ickxVLu7FwIKbbrAL/mWaD2O/4zO/40YJJ+Dl6
- oGGinpU2hz9347zbgNkefOKJA36WuJcljy0hZVqIC/obGz5UIhB/YUv6x0ZfUG/grw+8
- 4DthyjsTK4W8iRTQQiy0BlJwOJhsyJ0WOX/z1+Mf7akOt15QQpmlsZKcItqzl4B2nOMV
- vrZQ==
-X-Gm-Message-State: AOJu0Yw8obt0OvzTuO1qJEBB0O1KpsbH7L/TIN/0F+3VLmE6i3trjWvn
- TsvihC+eGKEZFh1U2yY9FmN9uH03Ss4t/i09ZU9XqK+Soo0uNR06h40HTqx3niU=
-X-Google-Smtp-Source: AGHT+IFhx+R0Fb5gXSRKaOmtNxqgvOWp3Bg2CrwG5uTNSlq6xYM9dL4Vj4J7KqSFLK+Ry56X7vdhCA==
-X-Received: by 2002:a5d:4fc5:0:b0:33c:d9f8:9d8 with SMTP id
- h5-20020a5d4fc5000000b0033cd9f809d8mr3449559wrw.48.1708083342546; 
- Fri, 16 Feb 2024 03:35:42 -0800 (PST)
+ bh=a65JjfFK+ZznfVKA9rXr8wh1Kjh+9UE0VG0YP4sWVno=;
+ b=Nq55d8lHKTGmlYmD4NPVSd5V8Y5W4tmbtPMih/dhspZFe7bpQO1wx4QtTXGFzzZ6Z8
+ WR8sovQ/zbPqHvaUph5V7enQ98Q/n8dwX5ccms342/Irun7oGQgmOEp9CZmTsnP13OTF
+ VjAeRWqAAYbgdBD0esmRM596PudK6MF4kXvpoVVV/P4pXiRcmYDXYQsFTF7l7E53iYcI
+ NupIe52YFBM2TlCo7k5/IBp+VKZlfw1xG1QUk46tSjc+djYkeQLv/aVlnZgfK6B/cU14
+ k1XDH25TtDR4rLuWg8IHvr9O1nnbqRIzJzPApoGMPrA9bqi7qi5t3/wG7nYxRDDoplTe
+ 4/pQ==
+X-Gm-Message-State: AOJu0Yw+JLFxh1Z7TvobPmWKf1KCwszNlz8xsGs1FtovLmCU2FOaSuT4
+ hxQfydU946KoHyEaHd5aPZ90mge5dxwjHGMvW/nHpP0kZx+aF+vzeYN/H6zcjEw=
+X-Google-Smtp-Source: AGHT+IHVynA1cDXEqQnXK8U2PkqA34VjsFbQiAckdivMd04+AEdkxvNJPkgGCnTnHroWOMIYzAiEBA==
+X-Received: by 2002:a05:600c:3513:b0:411:c390:ea43 with SMTP id
+ h19-20020a05600c351300b00411c390ea43mr3508518wmq.10.1708083622721; 
+ Fri, 16 Feb 2024 03:40:22 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- b14-20020a05600010ce00b0033d06dfcf84sm1934846wrx.100.2024.02.16.03.35.42
+ b14-20020a05600010ce00b0033d06dfcf84sm1946480wrx.100.2024.02.16.03.40.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 03:35:42 -0800 (PST)
+ Fri, 16 Feb 2024 03:40:22 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AA0CA5F83F;
- Fri, 16 Feb 2024 11:35:41 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id E001C5F83F;
+ Fri, 16 Feb 2024 11:40:21 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  Ilya Leoshkevich <iii@linux.ibm.com>,  Pierrick
- Bouvier <pierrick.bouvier@linaro.org>,  Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH v4 02/36] linux-user: Adjust SVr4 NULL page mapping
-In-Reply-To: <20240215062018.795056-3-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 14 Feb 2024 20:19:44 -1000")
-References: <20240215062018.795056-1-richard.henderson@linaro.org>
- <20240215062018.795056-3-richard.henderson@linaro.org>
+To: Mark Charney OS <mark.charney@os.amperecomputing.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>,  Aaron Lindsay OS <aaron@os.amperecomputing.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>
+Subject: Re: QEMU 8.2.0 aarch64 sve ldff1b returning 1 byte when 16 are
+ expected
+In-Reply-To: <BL1PR01MB7795E154CD5AE6ADA60C0D53A87C2@BL1PR01MB7795.prod.exchangelabs.com>
+ (Mark Charney's message of "Wed, 31 Jan 2024 20:44:55 +0000")
+References: <BL1PR01MB7795E154CD5AE6ADA60C0D53A87C2@BL1PR01MB7795.prod.exchangelabs.com>
 User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Fri, 16 Feb 2024 11:35:41 +0000
-Message-ID: <87sf1s4p6a.fsf@draig.linaro.org>
+Date: Fri, 16 Feb 2024 11:40:21 +0000
+Message-ID: <87mss04oyi.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,44 +100,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Mark Charney OS <mark.charney@os.amperecomputing.com> writes:
 
-> Use TARGET_PAGE_SIZE and MAP_FIXED_NOREPLACE.
+> Using QEMU v8.2.0 (and also the HEAD of the git master branch), I
+> encountered an unexpected situation: an ldff1b is returning 1 byte
+> when I run with the QEMU user level plugin (and setting FFR as if
+> there was a fault).
 >
-> We really should be attending to this earlier during
-> probe_guest_base, as well as better detection and
-> emulation of various Linux personalities.
+> However the ldff1b actually loads 16 bytes when: (a) I run this same
+> test natively on a system with SVE support (no QEMU involved) or (b)
+> when I run this test interactively (logged in to a console) in GDB
+> running on the QEMU (with no plugin involved).
+>
+> I was wondering if this one-byte-per-ldff1b was a known/expected
+> behavior with plugins?  I guess it is legal to only return one byte,
+> but I was wondering why QEMU did this and if there was some way to get
+> QEMU to return 16 bytes in the absence of faults (or as many bytes as
+> it can up until the fault).
 
-Do we know all our supported systems support this flag now?=20
+Could it be a change with the location w.r.t a page boundary between the
+two cases?
 
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Acked-by: Helge Deller <deller@gmx.de>
-> Message-Id: <20240102015808.132373-3-richard.henderson@linaro.org>
-> ---
->  linux-user/elfload.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+> There is *no* page boundary being crossed in the examples of interest,
+> and no MMIO, so a partial data return is not expected. The page
+> referenced is mapped and previously referenced.
 >
-> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index b8eef893d0..e918a13748 100644
-> --- a/linux-user/elfload.c
-> +++ b/linux-user/elfload.c
-> @@ -3912,8 +3912,9 @@ int load_elf_binary(struct linux_binprm *bprm, stru=
-ct image_info *info)
->                 and some applications "depend" upon this behavior.  Since
->                 we do not have the power to recompile these, we emulate
->                 the SVr4 behavior.  Sigh.  */
-> -            target_mmap(0, qemu_host_page_size, PROT_READ | PROT_EXEC,
-> -                        MAP_FIXED | MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-> +            target_mmap(0, TARGET_PAGE_SIZE, PROT_READ | PROT_EXEC,
-> +                        MAP_FIXED_NOREPLACE | MAP_PRIVATE | MAP_ANONYMOU=
-S,
-> +                        -1, 0);
->          }
->  #ifdef TARGET_MIPS
->          info->interp_fp_abi =3D interp_info.fp_abi;
+> Talking to Alex Bennee, he pointed out:
+>
+>> I'm wondering if this is a result of the fix in 6d03226b422
+>> (plugins: force slow path when plugins instrument memory ops). This
+>> will always force the slow path which is where we instrument the
+>> operation.
+>
+> I attempted to revert this commit locally and no longer got memop
+> callbacks for any SVE load operations, first fault, nonfault or not
+> "normal" predicated SVE operations. But I believe ldff1b are returning
+> 16 bytes (judging by the control flow).
+>
+> Our goal is to use QEMU for tracing with a home-grown plugin.  For our
+> purposes, we were expecting to observe control flow like what we see
+> on SVE-enabled hardware where ldff1b returns 16 bytes in the absence
+> of faults.
+>
+> If necessary, I can provide a reproducer, that includes:
+>   - a sve strcpy loop from one of Alex's talks.
+
+Yeah lets add the test case.
+
+>   - a simple user level plugin
+
+It should show up with execlog as well right?
 
 --=20
 Alex Benn=C3=A9e
