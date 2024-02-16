@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26E5BC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DABAC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rawQA-0000w5-Rc; Fri, 16 Feb 2024 06:30:22 -0500
+	id 1rawVW-0003iZ-HD; Fri, 16 Feb 2024 06:35:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rawQ1-0000b0-11
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:30:16 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1rawVO-0003ci-QJ
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:35:48 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rawPi-00069Y-Lf
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:29:56 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33d118a181fso748991f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:29:54 -0800 (PST)
+ id 1rawVM-0007Vc-A6
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:35:45 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-41241f64c6bso4122295e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:35:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708082993; x=1708687793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708083342; x=1708688142; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZIaqEKxla8by4CNie5UtvlAxZ70g97+C9RyQ8V1R4Ko=;
- b=VFZfmG9MpAt+leTWgRHmWor6ns4uBX/NeEb3Jn6z39Tw8/Aa8/ELdGcenLtr8KGjZb
- lpEFeTXJXWZA5x4OimjZPCRcJc296T6GAmSy3ngOKV4erT+3LcUlyM5fy9jtVPqRiRmy
- qcdcUd9O97xwIHDtb3bNbrSI95kgnlu5IKoBKNZkPqbfzBdoF3ltBopQruPjGkOC8H4i
- LMIsK/aFw5AzPPbQAusXW6896jmNTsLQsGgDJeLQZxhbt6KbW8LEpH+FHP5u1WYECkjv
- g7N6T631AGDWEygF/K9/aZGFlGNkj/BhYEUZ9fHYlgXEZH9KDtNLhECZHNX9cQGm5ACy
- vGcQ==
+ bh=byXr1vxX/CMuu+s64IJfOeg3jjw+pETDY7XOlELiJtA=;
+ b=gHGMAUW9hU4qcTOz1ulh+NylQNnYde2MD0WOy0FPUYEiGfx/ToXUzY/jXzGPef5FZE
+ HDyym7SEHY0IuegS/lcLzdkNhUGdOZOSBuTUNInkeShTjwHRBRkL852PBChbSk2YrEAG
+ 83NzJ45kE3PBsn3neBTSp7jm5xUUha2CnRpy/e4o6fFCdp5pBazjYzWDh1ehAdnZI3G1
+ HIPPem8B71s/HcQDRJNAl7Ka9pIYGVKZeDj5FQN6N91lT/blxnEu9KSgSCuVD1fBvR28
+ 560z5f2YM1dkcSOUTmFIAZxAFUyO6bbae8UtNzUljz500S5dBeAmPGrlHKy0cMtoCFUP
+ WfWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708082993; x=1708687793;
+ d=1e100.net; s=20230601; t=1708083342; x=1708688142;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZIaqEKxla8by4CNie5UtvlAxZ70g97+C9RyQ8V1R4Ko=;
- b=IsefkAdpcDgAsdVfnl2ToVX79dQPbj+lDgnWh/jAKsz1HwAtBVM4Z9nU5sruCCtPeB
- 10efUPMBr7hxrUNkSEH3jzSvgmTRabC2INvVEPyHO0+aMBaDOL8qiQUm8GpYdZCpbkpA
- M+XDoPGhEJxPLZ5t1c6JhReWLomEfbHX6Dhsvl1vrNJUhmOjfJB8Qt1ZtZ+tupXy+PZW
- AU3q7QchhAtv7DU/pfPJwOEODRunFKVglG7K9ykOaNAVi4kiIiXo24LwdDQwq8YGFB4l
- Q1Cjc9hB1WuGpCg5Z4+uQZu++cBadYmTY0ZpC/X/TBppYUYEwLCtx87xiCws9z88Up45
- /7pg==
-X-Gm-Message-State: AOJu0Yy0+1NyyqtGilzr+c2DgpxoJY1LsT2131rHSRVSoGmUnjL9Mdgw
- n/Y2yXWBlgO9b8HxazvSEbHxO5VvillHDUHNS96Wgrj4E/TQ8tAAkM23LZZCbtE=
-X-Google-Smtp-Source: AGHT+IGwumDf0bhVBDaFLI4LnVi/zfpbD27OYbi2cV+yZlPU8UXmm8aLmg4cwUcge5/S/eODF8bSqQ==
-X-Received: by 2002:a5d:6201:0:b0:33b:792e:e780 with SMTP id
- y1-20020a5d6201000000b0033b792ee780mr3222607wru.66.1708082992883; 
- Fri, 16 Feb 2024 03:29:52 -0800 (PST)
+ bh=byXr1vxX/CMuu+s64IJfOeg3jjw+pETDY7XOlELiJtA=;
+ b=TMcQtefGUdlHcmz18kcFhHjXCZlUKHVfac7G2nPC+gpmcXQl3Qua6TMSxotifsiNWz
+ 1DzG2sRK96G1fP2MXBYHTRAu7ZX8tLObL+C2+tUMvVMcSfsEUAa4lA86U8rd8yp3Mm3W
+ 3JbpoOkY690EPrKETjtyB74SuqztL1ickxVLu7FwIKbbrAL/mWaD2O/4zO/40YJJ+Dl6
+ oGGinpU2hz9347zbgNkefOKJA36WuJcljy0hZVqIC/obGz5UIhB/YUv6x0ZfUG/grw+8
+ 4DthyjsTK4W8iRTQQiy0BlJwOJhsyJ0WOX/z1+Mf7akOt15QQpmlsZKcItqzl4B2nOMV
+ vrZQ==
+X-Gm-Message-State: AOJu0Yw8obt0OvzTuO1qJEBB0O1KpsbH7L/TIN/0F+3VLmE6i3trjWvn
+ TsvihC+eGKEZFh1U2yY9FmN9uH03Ss4t/i09ZU9XqK+Soo0uNR06h40HTqx3niU=
+X-Google-Smtp-Source: AGHT+IFhx+R0Fb5gXSRKaOmtNxqgvOWp3Bg2CrwG5uTNSlq6xYM9dL4Vj4J7KqSFLK+Ry56X7vdhCA==
+X-Received: by 2002:a5d:4fc5:0:b0:33c:d9f8:9d8 with SMTP id
+ h5-20020a5d4fc5000000b0033cd9f809d8mr3449559wrw.48.1708083342546; 
+ Fri, 16 Feb 2024 03:35:42 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- bs28-20020a056000071c00b0033d247309a9sm404508wrb.12.2024.02.16.03.29.52
+ b14-20020a05600010ce00b0033d06dfcf84sm1934846wrx.100.2024.02.16.03.35.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 03:29:52 -0800 (PST)
+ Fri, 16 Feb 2024 03:35:42 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3BBF15F83F;
- Fri, 16 Feb 2024 11:29:52 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id AA0CA5F83F;
+ Fri, 16 Feb 2024 11:35:41 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org,  Yonggang Luo
- <luoyonggang@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] .gitlab-ci/windows.yml: Don't install libusb or spice
- packages on 32-bit
-In-Reply-To: <20240215155009.2422335-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Thu, 15 Feb 2024 15:50:09 +0000")
-References: <20240215155009.2422335-1-peter.maydell@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  Ilya Leoshkevich <iii@linux.ibm.com>,  Pierrick
+ Bouvier <pierrick.bouvier@linaro.org>,  Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH v4 02/36] linux-user: Adjust SVr4 NULL page mapping
+In-Reply-To: <20240215062018.795056-3-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Wed, 14 Feb 2024 20:19:44 -1000")
+References: <20240215062018.795056-1-richard.henderson@linaro.org>
+ <20240215062018.795056-3-richard.henderson@linaro.org>
 User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Fri, 16 Feb 2024 11:29:52 +0000
-Message-ID: <87y1bk4pfz.fsf@draig.linaro.org>
+Date: Fri, 16 Feb 2024 11:35:41 +0000
+Message-ID: <87sf1s4p6a.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,31 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> When msys2 updated their libusb packages to libusb 1.0.27, they
-> dropped support for building them for mingw32, leaving only mingw64
-> packages.  This broke our CI job, as the 'pacman' package install now
-> fails with:
+> Use TARGET_PAGE_SIZE and MAP_FIXED_NOREPLACE.
 >
-> error: target not found: mingw-w64-i686-libusb
-> error: target not found: mingw-w64-i686-usbredir
->
-> (both these binary packages are from the libusb source package).
->
-> Similarly, spice is now 64-bit only:
-> error: target not found: mingw-w64-i686-spice
->
-> Fix this by dropping these packages from the list we install for our
-> msys2-32bit build.  We do this with a simple mechanism for the
-> msys2-64bit and msys2-32bit jobs to specify a list of extra packages
-> to install on top of the common ones we install for both jobs.
->
-> Cc: qemu-stable@nongnu.org
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2160
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> We really should be attending to this earlier during
+> probe_guest_base, as well as better detection and
+> emulation of various Linux personalities.
 
-Queued to testing/next, thanks.
+Do we know all our supported systems support this flag now?=20
+
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Acked-by: Helge Deller <deller@gmx.de>
+> Message-Id: <20240102015808.132373-3-richard.henderson@linaro.org>
+> ---
+>  linux-user/elfload.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index b8eef893d0..e918a13748 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -3912,8 +3912,9 @@ int load_elf_binary(struct linux_binprm *bprm, stru=
+ct image_info *info)
+>                 and some applications "depend" upon this behavior.  Since
+>                 we do not have the power to recompile these, we emulate
+>                 the SVr4 behavior.  Sigh.  */
+> -            target_mmap(0, qemu_host_page_size, PROT_READ | PROT_EXEC,
+> -                        MAP_FIXED | MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+> +            target_mmap(0, TARGET_PAGE_SIZE, PROT_READ | PROT_EXEC,
+> +                        MAP_FIXED_NOREPLACE | MAP_PRIVATE | MAP_ANONYMOU=
+S,
+> +                        -1, 0);
+>          }
+>  #ifdef TARGET_MIPS
+>          info->interp_fp_abi =3D interp_info.fp_abi;
 
 --=20
 Alex Benn=C3=A9e
