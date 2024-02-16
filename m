@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3297C48BEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACAD7C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:10:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raw18-0007Nn-DF; Fri, 16 Feb 2024 06:04:30 -0500
+	id 1raw2L-0003Au-KT; Fri, 16 Feb 2024 06:05:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw15-0007BI-2w
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:27 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1raw27-0001wv-NM
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:05:32 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw12-00013E-1b
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:26 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33d14a711efso681771f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:04:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1raw23-0001Id-EX
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:05:31 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4124d8f9915so2091025e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:05:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708081462; x=1708686262; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1708081525; x=1708686325; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1f6J2H1K9VOhN8YiJnj6i61rwEdmxKhJYj3MwXMwmEA=;
- b=aklU6aCRgVVkS4G4qnszjyTTv5IvY/xbh8JwrkXQjUznalKUIvh7LMV/FuwUMv8qwT
- qPyUkgwuQ1RF9CgV5iEKCgtVjtHoPAghDMs3D4pegzbUspx9nnUV+1y/61YUCwFSelVr
- pYLGNo4POjhX1n7amesa143IGUtbKy3rPZOXozLnJ1wT54xkewGPjn4AGxart7IJ8GXg
- T2ErzLyQ8r9ZrxjweRz5e3yAncECGMHnbh60x6qWIIwnqXd0S7t0peR16jF5KOQZmffW
- IXfOV8bFpTjr50/2VFgVdUPx5Zwms1SuF6/KSqE9P0zCo4NisOwo9Vo66QVKuDon7uCd
- QTHg==
+ bh=VuH9hqTqNDDFmXccRjofPIgFAMpQ8zGYoJVwZaguqNQ=;
+ b=NW71z4t08zst/w+yEksGXPB2RCAIHfAsqgWEywICqLtDvPGXHX/kRMURewo35vKwQ2
+ OTtaijcTkBbcM4mg+W9kxoE25n1glqGDK/ByE3u3kZrHp5dpRKqY3++o8mzfX0fgnmK1
+ ETI9W5ue+2aYWPXwCRQDrOzR7zYyIG6ZEsIgl/qfiYt7en2QWjIV+Q3mpP0mxjQjuZD4
+ 1llkHj8fVXdEpDtk+67cmLsIy3PY1fcWjdIsMbUMg9USCNER5CSBPRH1izI16/gDAuMG
+ t5If/a51csUbu3QvVKNq4sxAiHNXcjj1NwVyc0Hj+f59ELPrUWzREXx6WwGxBbvsNQbd
+ cdRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708081462; x=1708686262;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1f6J2H1K9VOhN8YiJnj6i61rwEdmxKhJYj3MwXMwmEA=;
- b=cgkEdGwznHfFjPcId8wTg6JTaByRIhU7x1gP7Ey+gErROHLsypfX+ZgZFWgTkum0mR
- ETzS3j3vtHowNLLYPb8JC0r+Eu5x2ScQGUHebMYLUUaB9JJvz2oGY+3c67Vvc33uiv9p
- xpyHs0TmDxawsZPyAC1LOrEE3GtdR9/zDhuueJ+4NswWKTWMjMqnFMe+HHLeHAChFAio
- nMgi0BVoLHTqQX8LmCbuKH68E+TPv+jBtCRqrajvJBs6WGoygV/fteK10E9d1t3M6ZPD
- v7M+a+HceTIWE92x7mKoD7ou1iKfLfHjeNQRXVFMIjYMn/+Z1Qzu1/HyYHb5psu9e7rO
- Iipw==
-X-Gm-Message-State: AOJu0YzMF+WKQ7JMJmRv7b0HBAHSOSP+wOCyWzfjSkbY4G1nv/e/+1uq
- gxm72gwFoTv7CP4+o/H9ImM+LpsZxQ4ZMbVrkU+hppVmFMbY+Y6al38PWTmIqOiEx5JUI43Ufbv
- 3
-X-Google-Smtp-Source: AGHT+IGd+K1Ye21x3B9/fikutK4pHA5/MV8nPoj9xvkFcz4dlQ3vDbllE3JsMEgnq7erpMjwDyfFKw==
-X-Received: by 2002:a05:6000:1e8f:b0:33d:2120:1011 with SMTP id
- dd15-20020a0560001e8f00b0033d21201011mr550180wrb.54.1708081462196; 
- Fri, 16 Feb 2024 03:04:22 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.210.246])
- by smtp.gmail.com with ESMTPSA id
- az1-20020adfe181000000b0033d1f992ae3sm1275770wrb.112.2024.02.16.03.04.20
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 03:04:21 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Samuel Thibault <samuel.thibault@ens-lyon.org>
-Subject: [PATCH 10/21] hw/usb: Inline usb_new()
-Date: Fri, 16 Feb 2024 12:03:01 +0100
-Message-ID: <20240216110313.17039-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240216110313.17039-1-philmd@linaro.org>
-References: <20240216110313.17039-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1708081525; x=1708686325;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VuH9hqTqNDDFmXccRjofPIgFAMpQ8zGYoJVwZaguqNQ=;
+ b=rNgfWiv51O5FEGkYugQYQI0e7xef0rwlCyCW8WSNfu71+uOoBd7BVARjy0xdr23o2l
+ FILTqv0v5bRGBM+fQDNqZtlOleuPYY56fEOb8L4YFo+M0RZZmYrjH/nEeyjcABDm5ooB
+ 7K1mwGYsG32F55rSXZf7LrGBBsu9V0jbJrV2MW6ejVYRdymFWwyJRqvRzsWPdg6SH5Ic
+ NInt/3k/7W+vIe/8lH0q4izHT3oIJv2oL39EpXSOA95GZHwTLJi1ZKmsHUzDEY9Sx+d0
+ YRZ1pvgIiwkn8lbtoIP/iOeO/gMRJze1k+E9Wgtp7OMFMQpwHqPs8RvVuZyKylM1wla5
+ cyVw==
+X-Gm-Message-State: AOJu0Ywd9hKZSOcGyJU74cdzh3yUKlY03rPijTD2BCRVqMLnrpivTD1V
+ 7jkGS74pRrI+imCBdsvJ6zzrFQvRol0l0Ilw/ja5jd9uuOQ3UyteIU43kQflKZk=
+X-Google-Smtp-Source: AGHT+IFUTiVmn+hgnh5vt4fHQ7e8VGyF1snmLvQgURFSHojA2uIGQrJcn7hcu/LA6AKGbVcihYwGhg==
+X-Received: by 2002:a05:600c:a15:b0:411:fc83:b10 with SMTP id
+ z21-20020a05600c0a1500b00411fc830b10mr3339609wmp.34.1708081525459; 
+ Fri, 16 Feb 2024 03:05:25 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ h5-20020a05600c350500b004124219a8c9sm1647110wmq.32.2024.02.16.03.05.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Feb 2024 03:05:24 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5CBFD5F7B1;
+ Fri, 16 Feb 2024 11:05:24 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  amonakov@ispras.ru,  mmromanov@ispras.ru
+Subject: Re: [RFC PATCH v4 10/10] util/bufferiszero: Add sve acceleration
+ for aarch64
+In-Reply-To: <20240215081449.848220-11-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Wed, 14 Feb 2024 22:14:49 -1000")
+References: <20240215081449.848220-1-richard.henderson@linaro.org>
+ <20240215081449.848220-11-richard.henderson@linaro.org>
+User-Agent: mu4e 1.11.28; emacs 29.1
+Date: Fri, 16 Feb 2024 11:05:24 +0000
+Message-ID: <87a5o06557.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,75 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline the 2 uses of usb_new().
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/usb.h    | 1 -
- hw/usb/bus.c        | 9 ++-------
- hw/usb/dev-serial.c | 2 +-
- 3 files changed, 3 insertions(+), 9 deletions(-)
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>
+> RFC because I've not benchmarked this on real hw, only run it
+> through qemu for validation.
+>
+<snip>
+>=20=20
+> +#ifdef CONFIG_SVE_OPT
+> +static unsigned accel_index;
+> +static void __attribute__((constructor)) init_accel(void)
+> +{
+> +    accel_index =3D (cpuinfo & CPUINFO_SVE ? 2 : 1);
+> +    buffer_is_zero_accel =3D accel_table[accel_index];
+> +}
 
-diff --git a/include/hw/usb.h b/include/hw/usb.h
-index 32c23a5ca2..2d820685cc 100644
---- a/include/hw/usb.h
-+++ b/include/hw/usb.h
-@@ -500,7 +500,6 @@ void usb_bus_release(USBBus *bus);
- USBBus *usb_bus_find(int busnr);
- void usb_legacy_register(const char *typename, const char *usbdevice_name,
-                          USBDevice *(*usbdevice_init)(void));
--USBDevice *usb_new(const char *name);
- bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp);
- USBDevice *usb_create_simple(USBBus *bus, const char *name);
- USBDevice *usbdevice_create(const char *cmdline);
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 148224f06a..a599e2552b 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -329,11 +329,6 @@ void usb_legacy_register(const char *typename, const char *usbdevice_name,
-     }
- }
- 
--USBDevice *usb_new(const char *name)
--{
--    return USB_DEVICE(qdev_new(name));
--}
--
- bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
- {
-     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
-@@ -341,7 +336,7 @@ bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
- 
- USBDevice *usb_create_simple(USBBus *bus, const char *name)
- {
--    USBDevice *dev = usb_new(name);
-+    USBDevice *dev = USB_DEVICE(qdev_new(name));
- 
-     usb_realize_and_unref(dev, bus, &error_abort);
-     return dev;
-@@ -693,7 +688,7 @@ USBDevice *usbdevice_create(const char *driver)
-         return NULL;
-     }
- 
--    dev = f->usbdevice_init ? f->usbdevice_init() : usb_new(f->name);
-+    dev = f->usbdevice_init ? f->usbdevice_init() : USB_DEVICE(qdev_new(f->name));
-     if (!dev) {
-         error_report("Failed to create USB device '%s'", f->name);
-         return NULL;
-diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
-index 63047d79cf..6e79c46d53 100644
---- a/hw/usb/dev-serial.c
-+++ b/hw/usb/dev-serial.c
-@@ -624,7 +624,7 @@ static USBDevice *usb_braille_init(void)
-         return NULL;
-     }
- 
--    dev = usb_new("usb-braille");
-+    dev = USB_DEVICE(qdev_new("usb-braille"));
-     qdev_prop_set_chr(&dev->qdev, "chardev", cdrv);
-     return dev;
- }
--- 
-2.41.0
+This really needs to be:
 
+  -    accel_index =3D (cpuinfo & CPUINFO_SVE ? 2 : 1);
+  +    unsigned info =3D cpuinfo_init();
+  +    accel_index =3D (info & CPUINFO_SVE ? 2 : 1);
+
+because otherwise you are relying on constructor initialisation order
+and on the Graviton 3 I built on it wasn't detecting the SVE. With that I
+get this from "perf record ./tests/unit/test-bufferiszero -m thorough"
+
+  51.17%  test-bufferisze  test-bufferiszero      [.] buffer_is_zero_sve
+  18.92%  test-bufferisze  test-bufferiszero      [.] buffer_is_zero_simd
+  18.02%  test-bufferisze  test-bufferiszero      [.] buffer_is_zero_int_ge=
+256
+   7.67%  test-bufferisze  test-bufferiszero      [.] buffer_is_zero_ool
+   4.09%  test-bufferisze  test-bufferiszero      [.] test_1
+
+but as I mentioned before it would be nice to have a proper benchmark
+for the buffer utils as I'm sure the unit test would be prone to noise.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
