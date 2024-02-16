@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8F67C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D945C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 15:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb0Fu-0004I6-1V; Fri, 16 Feb 2024 10:36:02 -0500
+	id 1rb0Qj-0002Xr-0R; Fri, 16 Feb 2024 10:47:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fp-0004DI-8H
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:58 -0500
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rb0Qc-0002X8-1A
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:47:06 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rb0Fk-0008Ju-Gw
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:35:54 -0500
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-511ac32fe38so3199942e87.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:35:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rb0Qa-00024Z-8v
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 10:47:05 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4122a8566e4so12108925e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 07:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708097750; x=1708702550; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1708098422; x=1708703222; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6fLBBhh1GSx7gD4Lvttkm3NNOOv+Jojp8q0UUHVCrGQ=;
- b=zpab49GdHR407PIxh5Gd0ldme4YocbRxvc/IrE1JsLfO29RoA+en4LtQ/YGwzhEk77
- 52+E4OE0qrGgKBtDIdbnbLwLiD5rsGXzEdqwe79M/iLoF0KfmWSdDbaIQJMj43l8+Mv+
- P77mzyX8JiZC29066OSSQQDdNY+3dcpr454PAC6buUD+PTdYkF9E3JH2uhet8om/BkJ/
- mPNG9QKNG+R8E/VLcU6yrlfKifhnvgUxtBCPoanApzWEwrocshA6Pwt2G6GeajKtG6P/
- PO4BqHdgN2qgK9N5/VLBW9/eODa1rZIFyCTNd6nrEj7+qhi9DZJfzJk2oj2T17hwYO5f
- LypA==
+ bh=JkUHQhfSifO0i3zFVHEM05VEE/CKxYmqTQXvW8S86gs=;
+ b=UDMGIO+SKLf7lAddAeUquO5g7xbhPBhterNQKB5Ayqm9qpOP9ntbqEWW4rGdivhkz+
+ nI8VvV4Dbz7UmgPxwIgih6ERwdwq1bgJZnEM0C0ioRPDCVyDWVfowdPwYTmcM/eeugHY
+ V54iAyfd489PDxAOcAVndUKJlEaJxGK/GWwSaZS+MOoZ0bPA2VhpWwtUWW7av3PYhLen
+ Q3Ct3qGAR6Ek7ZRVz5sq3Wf8L6utmy7RhFys0uvMNib8RxZnZQAEBae/butKnoVGeUs+
+ 9juGH0UHBnNEKAg0aFElmJHaR5bqQ6ZI+4nhoDTLAlETPlZmFWaslJJv3oKBV0jn+ZDd
+ xKxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708097750; x=1708702550;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6fLBBhh1GSx7gD4Lvttkm3NNOOv+Jojp8q0UUHVCrGQ=;
- b=tQYTmlJb4ZfOPB8sRBGD1mEcINwltGyAIzPxheib/tIZGNeBWx/tR/Xbud/6NtWLZl
- 1Wj0/jO9BmSImjPLkmgrIuP2j2AvOfj/L3uSus+dNknvoQLKbh7VeKRuhk+ItVV+wvw/
- 1Ki4RZhDBJngkwmGWyMdqlZJ/8BzM/HVZ9D/DCc/m03f6QP1MY8L7vpkH4LsUxi+qM4H
- Xcvlt6ncid6H+fwfgmJtA+o4kfLmoyft8GcXoSwez1T9etuVa/XiMHzFRuBRGliL4P8V
- 82uy6EO5pUZCiddtUmkofTBuJsfDYDHu+rhaRqTuvwg0I3EW2GSXnHI+CPADtLN1waLX
- QfXw==
-X-Gm-Message-State: AOJu0YxZgJrL3hjW+P1KMews6AruVJ2E+08W+BQlGcLoYs++D8pUSoqy
- vwOphpAAIQR5H/LNNgCjD5IrsjFaJukRCq7jgnhjeIAIyU7vHv8OxOiGhntIT1DQ5uR1LywCN75
- 4
-X-Google-Smtp-Source: AGHT+IGNHeZhgcGo12jNmOStEDC3hBsbxmtv6u/9HX9Me13ycUZT94SzgrmFQ42EJFSWhVNwe4Qrpw==
-X-Received: by 2002:a05:6512:224d:b0:512:99ad:d465 with SMTP id
- i13-20020a056512224d00b0051299add465mr995055lfu.16.1708097750674; 
- Fri, 16 Feb 2024 07:35:50 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.210.246])
- by smtp.gmail.com with ESMTPSA id
- e1-20020aa7d7c1000000b005621b45daffsm85225eds.28.2024.02.16.07.35.49
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 07:35:50 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org,
- kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/6] hw/i386/kvmvapic: Inline sysbus_address_space()
-Date: Fri, 16 Feb 2024 16:35:16 +0100
-Message-ID: <20240216153517.49422-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240216153517.49422-1-philmd@linaro.org>
-References: <20240216153517.49422-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1708098422; x=1708703222;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=JkUHQhfSifO0i3zFVHEM05VEE/CKxYmqTQXvW8S86gs=;
+ b=o9xIpxkCT+xn26dHUbr52FA8Mgl8BirLEQn6gRFlZ9b9GfeC05uSpTKnvUp21K359k
+ NS2TmoOLbsg3XJZEEcQTVSoZhcfZguy5WAVgR+qiTsbUVNTgZ4bsOv1truoxOYVVs0QL
+ FWuKE25ih4m3rFnfLD8n8tOVvQrn0xde+Q7FwdyqKoANoGarWwosXOwekPxCObJ0JE5X
+ qYUvIJRCZWoOKRSW+a7Yfa5BFcHwbNGa5vI1MZL74vF6HUWfW2B2HRBySO226NlFK9cn
+ GjbtB6vWs4l4xgMmLsWcoa1E7ouEYkDZQWCpDpsborGmuAnVmEHY1nEKopOS7b3EEzOO
+ nSTQ==
+X-Gm-Message-State: AOJu0YxZb3BjPpiRfodqjZgvacN9M8TK+7qvfCx1m/Uy30Mz90WKfJt/
+ oTI01a6DSZDs6CQpx0E0joncEW708NlG2buWjKfP2zjbZ5QGD8DwyyPmNurPrVE=
+X-Google-Smtp-Source: AGHT+IGPLnTb6uHNKBYa623FL3pN/uaaDxd+9Zq93RLQmuBVLRTpqwlQGiY02+IfDAfEbnsaqUvnFA==
+X-Received: by 2002:a05:600c:470d:b0:411:e4d4:8fd6 with SMTP id
+ v13-20020a05600c470d00b00411e4d48fd6mr3855854wmo.12.1708098422130; 
+ Fri, 16 Feb 2024 07:47:02 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 13-20020a05600c230d00b00411d640085csm2663305wmo.43.2024.02.16.07.47.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Feb 2024 07:47:01 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6D1685F83F;
+ Fri, 16 Feb 2024 15:47:01 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org,  Yonggang Luo
+ <luoyonggang@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] .gitlab-ci/windows.yml: Don't install libusb or spice
+ packages on 32-bit
+In-Reply-To: <CAFEAcA-7S7QOBzDBS0UmWDxK=2AWuX1QFZ-TCfvCOOhJpL-wng@mail.gmail.com>
+ (Peter Maydell's message of "Fri, 16 Feb 2024 13:19:54 +0000")
+References: <20240215155009.2422335-1-peter.maydell@linaro.org>
+ <87y1bk4pfz.fsf@draig.linaro.org>
+ <CAFEAcA-7S7QOBzDBS0UmWDxK=2AWuX1QFZ-TCfvCOOhJpL-wng@mail.gmail.com>
+User-Agent: mu4e 1.11.28; emacs 29.1
+Date: Fri, 16 Feb 2024 15:47:01 +0000
+Message-ID: <87bk8g4dje.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,71 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sysbus_address_space(...) is a simple wrapper to
-get_system_memory(). Use it in place, since KVM
-VAPIC doesn't distinct address spaces.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Rename the 'as' variable as 'mr' since it is a
-MemoryRegion type, not an AddressSpace one.
+> On Fri, 16 Feb 2024 at 11:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+>> > When msys2 updated their libusb packages to libusb 1.0.27, they
+>> > dropped support for building them for mingw32, leaving only mingw64
+>> > packages.  This broke our CI job, as the 'pacman' package install now
+>> > fails with:
+>> >
+>> > error: target not found: mingw-w64-i686-libusb
+>> > error: target not found: mingw-w64-i686-usbredir
+>> >
+>> > (both these binary packages are from the libusb source package).
+>> >
+>> > Similarly, spice is now 64-bit only:
+>> > error: target not found: mingw-w64-i686-spice
+>> >
+>> > Fix this by dropping these packages from the list we install for our
+>> > msys2-32bit build.  We do this with a simple mechanism for the
+>> > msys2-64bit and msys2-32bit jobs to specify a list of extra packages
+>> > to install on top of the common ones we install for both jobs.
+>> >
+>> > Cc: qemu-stable@nongnu.org
+>> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2160
+>> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>
+>> Queued to testing/next, thanks.
+>
+> I'm just testing a merge where I've applied this directly to
+> get our CI back to green, so you don't need to take it via
+> your tree.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/i386/kvmvapic.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Ok.
 
-diff --git a/hw/i386/kvmvapic.c b/hw/i386/kvmvapic.c
-index f2b0aff479..25321d4f66 100644
---- a/hw/i386/kvmvapic.c
-+++ b/hw/i386/kvmvapic.c
-@@ -16,6 +16,7 @@
- #include "sysemu/hw_accel.h"
- #include "sysemu/kvm.h"
- #include "sysemu/runstate.h"
-+#include "exec/address-spaces.h"
- #include "hw/i386/apic_internal.h"
- #include "hw/sysbus.h"
- #include "hw/boards.h"
-@@ -57,6 +58,7 @@ typedef struct GuestROMState {
- 
- struct VAPICROMState {
-     SysBusDevice busdev;
-+
-     MemoryRegion io;
-     MemoryRegion rom;
-     uint32_t state;
-@@ -580,19 +582,17 @@ static int vapic_map_rom_writable(VAPICROMState *s)
- {
-     hwaddr rom_paddr = s->rom_state_paddr & ROM_BLOCK_MASK;
-     MemoryRegionSection section;
--    MemoryRegion *as;
-+    MemoryRegion *mr = get_system_memory();
-     size_t rom_size;
-     uint8_t *ram;
- 
--    as = sysbus_address_space(&s->busdev);
--
-     if (s->rom_mapped_writable) {
--        memory_region_del_subregion(as, &s->rom);
-+        memory_region_del_subregion(mr, &s->rom);
-         object_unparent(OBJECT(&s->rom));
-     }
- 
-     /* grab RAM memory region (region @rom_paddr may still be pc.rom) */
--    section = memory_region_find(as, 0, 1);
-+    section = memory_region_find(mr, 0, 1);
- 
-     /* read ROM size from RAM region */
-     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
-@@ -613,7 +613,7 @@ static int vapic_map_rom_writable(VAPICROMState *s)
- 
-     memory_region_init_alias(&s->rom, OBJECT(s), "kvmvapic-rom", section.mr,
-                              rom_paddr, rom_size);
--    memory_region_add_subregion_overlap(as, rom_paddr, &s->rom, 1000);
-+    memory_region_add_subregion_overlap(mr, rom_paddr, &s->rom, 1000);
-     s->rom_mapped_writable = true;
-     memory_region_unref(section.mr);
- 
--- 
-2.41.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
