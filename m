@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73668C48BEF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A78C48BC4
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 14:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1razSt-0005Re-MW; Fri, 16 Feb 2024 09:45:23 -0500
+	id 1razSz-0005W7-3v; Fri, 16 Feb 2024 09:45:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1razSr-0005RF-Ra
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:45:21 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1razSx-0005Tz-AL
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:45:27 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1razSq-0005Rn-2S
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:45:21 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56394d0ee54so1071079a12.3
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:45:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1razSv-0005Yb-Ps
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 09:45:27 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a3d159220c7so119107566b.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 06:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708094718; x=1708699518; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708094724; x=1708699524; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oXng8oGwwqDt/PMjq6VF0UcwHwIEk/qMcV0UYux3zN8=;
- b=KyfOAkKe0+C1WWTjZc9DOOW5ianms3KID6wtOQe/YL91LiFh8MHMwZyj5pI1V9XJQ6
- OvP0yOQxXrDa4ZO6EFssqixsBlpoPC1LvKySshuujyrIT29D6GU9LFHaOltjFPDCdcrM
- PgBwgvmmtRrhsBzM2qYs7F8lbdcecVtBi5/PYz+LbCSTiq+MGUPj9ARC7QPtXMaWALXi
- 7y9vvhTuq5tAsgW+2TMA7sYmZowBl4qYn1d2hi0u+W7ymoRuSFoWtJdtUw3O8rMtQhWV
- reVGGF7DYVmguO+tN7ajzMflw3wr2K69Lb8cRCVEMldhcBkBTwpkgAkX5XCHYL+Zg52L
- ziNA==
+ bh=qTV1hvk+3GXPfy1FUvwkBJo4EhZOBPRYeMtALlPmFCg=;
+ b=nqON344Ku3h/EadFpfWx/0eqXsJfplih4BERCxA+uCuZV7eTghTcqXbWAHHfHihpBI
+ vV9LmPxW3HVQSRjTvhYl2LZrOJ8UBOB0QokgFUyH5kN30iNQtedQuwczAJ0Issr6Idr5
+ x/ooJHSoXqjbHPQX8z7b47i43ehfCcrPqKDYyXfj65kwRujcF95DVmZXzOjGpHbGE73G
+ Bl+Gemof4dfdIZTkJHQt7CahQzll1zy2tumubYEuB9yNEmpioPqu8Jm8XoTFoAZvfabQ
+ WvBnK5euO3WJhNYcn0wlKk4L+dP6pYpS2NtTwZAYHzedInp0DwMz0dZS0wRpYacGCI2S
+ xHUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708094718; x=1708699518;
+ d=1e100.net; s=20230601; t=1708094724; x=1708699524;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oXng8oGwwqDt/PMjq6VF0UcwHwIEk/qMcV0UYux3zN8=;
- b=Swx/2+v9BSfrjIM02VmQLrz1DoAA1NFg4DIk3qvfweFl70RNdyCNHwpx0qcqE+T+dz
- Eg0oU06GrBrws75b6qs8vh22MBVMcz9STUZzalvCE+a+Dwdka9URl7eCQKJKgYtceg6i
- J56BnxsCHPIVFp/t5x+TK8Cmma+hwTlTihg37T/94fxQeaOqe8vOYj+EuZUqgpu18N7u
- ctytZxvXmOeaW+ymcy/0Jxvl12SSJnK+lBlL22jGclC61cDcDC/zV86qYoFPMQutk+RQ
- w1rLRxWjF/2E/KOLnjEXc2qIzPoPoGp8SxDiy3hfce2sG2481XTQuzkyVWgyhkiNZwyg
- lCyA==
-X-Gm-Message-State: AOJu0YzBmmk3ach84bUoRrmF13It7XD0Owwv7ay1OGHZW9kH5dy2qG98
- weOIR0ogN5v44rwKY4a9jVEUvx9i3vVeKonCLxfqewqL5cAY2jrgkqbBSlWMzc1R5kHWapZq6zr
- x
-X-Google-Smtp-Source: AGHT+IGK5WYs6Evb0lMuBrJCBdo55QSC3BU2SAY6VBsZUT1RxpdpqKP5TMf2j23bsg++TMfnX3YhIA==
-X-Received: by 2002:a17:906:a1d4:b0:a3b:eaa3:ecc4 with SMTP id
- bx20-20020a170906a1d400b00a3beaa3ecc4mr3985642ejb.60.1708094718406; 
- Fri, 16 Feb 2024 06:45:18 -0800 (PST)
+ bh=qTV1hvk+3GXPfy1FUvwkBJo4EhZOBPRYeMtALlPmFCg=;
+ b=XerDwTKmgQPQtU8Qs90lX5UDtwMiSnCxj3tUAaSyMDO2yt7bv+HrudOpRhAllk+RyA
+ CS7VT72iynzvyb8PMUzYZMqiUBvyWFz2Sk2wi3YYaD+djUCIqCa6BVeDPt0pRPYsu8tX
+ cKlybGazmnTNvrSbUsi8VhYw8IOHiJxE39GFHKpaIYX6DEd0A/cSUCvzpP13uOdw69sB
+ Y69wxdtsyUC+auBBcaC43eZs+QaTchY1lg1MEvD+WA/+gRFoQvWWDZFax1l0RqDqIR04
+ RrZb6FmutcuUTId7ieqpQIMdm2tT4qWY5YSfPJMkaKmDvhmJgTQgt+u9AFXbFappwzRI
+ 7oUw==
+X-Gm-Message-State: AOJu0YxyQBSfzOoP1ngZqnBDA4/YjI1u+nU/VoMPlrw0lhwgDcfj8Znl
+ k4lnQxNiXekBZwkaoN+1hRmJK3HBeMyNUTY4zrIgwZp2uGP2rzvASBcOr98ywdXFx5VD/+/2cq6
+ y
+X-Google-Smtp-Source: AGHT+IHbqCH+Y3UVzShUZcHue7uudIxl1S8ppZme8kclN2WfkTatO0o1NHeI33w2VlRh4xPZbiWopA==
+X-Received: by 2002:a17:906:6d0a:b0:a3d:d7ad:49b1 with SMTP id
+ m10-20020a1709066d0a00b00a3dd7ad49b1mr1271394ejr.19.1708094724295; 
+ Fri, 16 Feb 2024 06:45:24 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- th8-20020a1709078e0800b00a3d120e311asm1601054ejc.117.2024.02.16.06.45.16
+ hw18-20020a170907a0d200b00a3c456b0c0esm1614529ejc.108.2024.02.16.06.45.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 06:45:17 -0800 (PST)
+ Fri, 16 Feb 2024 06:45:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Gustavo Romero <gustavo.romero@linaro.org>
@@ -66,25 +66,24 @@ Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Anton Kochkov <anton.kochkov@proton.me>, richard.henderson@linaro.org,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 3/6] hw/arm: Allow some machines to use the ivshmem-flat
- device
-Date: Fri, 16 Feb 2024 15:44:53 +0100
-Message-ID: <20240216144456.34992-4-philmd@linaro.org>
+Subject: [PATCH v2 4/6] hw/misc/ivshmem: Rename ivshmem to ivshmem-pci
+Date: Fri, 16 Feb 2024 15:44:54 +0100
+Message-ID: <20240216144456.34992-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216144456.34992-1-philmd@linaro.org>
 References: <20240216144456.34992-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,77 +101,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <20231127052024.435743-2-gustavo.romero@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/mps2.c      | 3 +++
- hw/arm/stellaris.c | 3 +++
- hw/arm/virt.c      | 2 ++
- 3 files changed, 8 insertions(+)
+Because now there is also an MMIO ivshmem device (ivshmem-flat.c), and
+ivshmem.c is a PCI specific implementation, rename it to ivshmem-pci.c.
 
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 50919ee46d..fe158dfbc0 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -42,6 +42,7 @@
- #include "hw/timer/cmsdk-apb-dualtimer.h"
- #include "hw/misc/mps2-scc.h"
- #include "hw/misc/mps2-fpgaio.h"
-+#include "hw/misc/ivshmem-flat.h"
- #include "hw/ssi/pl022.h"
- #include "hw/i2c/arm_sbcon_i2c.h"
- #include "hw/net/lan9118.h"
-@@ -472,6 +473,8 @@ static void mps2_class_init(ObjectClass *oc, void *data)
-     mc->max_cpus = 1;
-     mc->default_ram_size = 16 * MiB;
-     mc->default_ram_id = "mps.ram";
-+
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_IVSHMEM_FLAT);
- }
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20231127052024.435743-5-gustavo.romero@linaro.org>
+---
+ hw/misc/{ivshmem.c => ivshmem-pci.c} | 0
+ hw/misc/meson.build                  | 2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename hw/misc/{ivshmem.c => ivshmem-pci.c} (100%)
+
+diff --git a/hw/misc/ivshmem.c b/hw/misc/ivshmem-pci.c
+similarity index 100%
+rename from hw/misc/ivshmem.c
+rename to hw/misc/ivshmem-pci.c
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 84dff09f5d..4a9369082b 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -39,7 +39,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
+ subdir('macio')
  
- static void mps2_an385_class_init(ObjectClass *oc, void *data)
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index a2f998bf9e..e25858f232 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -28,6 +28,7 @@
- #include "hw/watchdog/cmsdk-apb-watchdog.h"
- #include "migration/vmstate.h"
- #include "hw/misc/unimp.h"
-+#include "hw/misc/ivshmem-flat.h"
- #include "hw/timer/stellaris-gptm.h"
- #include "hw/qdev-clock.h"
- #include "qom/object.h"
-@@ -1404,6 +1405,8 @@ static void lm3s6965evb_class_init(ObjectClass *oc, void *data)
-     mc->init = lm3s6965evb_init;
-     mc->ignore_memory_transaction_failures = true;
-     mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-m3");
-+
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_IVSHMEM_FLAT);
- }
+ # ivshmem devices
+-system_ss.add(when: 'CONFIG_IVSHMEM_DEVICE', if_true: files('ivshmem.c'))
++system_ss.add(when: 'CONFIG_IVSHMEM_DEVICE', if_true: files('ivshmem-pci.c'))
+ system_ss.add(when: 'CONFIG_IVSHMEM_FLAT_DEVICE', if_true: files('ivshmem-flat.c'))
  
- static const TypeInfo lm3s6965evb_type = {
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0af1943697..6c0917f3b2 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -84,6 +84,7 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/char/pl011.h"
- #include "qemu/guest-random.h"
-+#include "hw/misc/ivshmem-flat.h"
- 
- #define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
-     static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
-@@ -2973,6 +2974,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_AMD_XGBE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_VFIO_PLATFORM);
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_IVSHMEM_FLAT);
- #ifdef CONFIG_TPM
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
- #endif
+ system_ss.add(when: 'CONFIG_ALLWINNER_SRAMC', if_true: files('allwinner-sramc.c'))
 -- 
 2.41.0
 
