@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2408AC48260
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 08:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A220C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 08:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ratud-00073F-N4; Fri, 16 Feb 2024 03:49:39 -0500
+	id 1ratxB-0007tz-N9; Fri, 16 Feb 2024 03:52:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ratuc-000735-FD
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 03:49:38 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ratua-0000VI-U7
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 03:49:38 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4124d5ab11aso1046045e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 00:49:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708073375; x=1708678175; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TZkxSuTYrXl7wGkuiexBJl1zvE1x6GFi9aPqiuCa5GE=;
- b=cSg4efQgbRDQU7TRzl/rEvfJv4SCyxvnWq5EQRRutO3b505WfAcFwEb+gpC8+5LsD7
- 2+EUsaFkytESIRra0Q/HUZyZfWD+X7NrKzKZQ7y+6bQV4L+jDnJctqFA5J+hYty73biN
- m9pqM8VaB4XjPWPFjXqVqk3gtVqvN94TkJkY2v+tiLjbvoT6gDBlifNnE9wLepQUvSfV
- y5q18ih4F88UduntqrXlcoWVEwCeRW5ooHwBEwv7kK3GzzBl/GGety5fc7BrQeEAP/4v
- gVdocwWWDezDkRINc4zuhHf6dUttAX86d8+DIXPhNXzoAP4WBk2W/Xax4aNxvtwzHQoH
- 6Qaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708073375; x=1708678175;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TZkxSuTYrXl7wGkuiexBJl1zvE1x6GFi9aPqiuCa5GE=;
- b=r6E32eMVVmBK1V/vj3AQNbnqEiVzjNfHfalxRDXmgrHvuzez4RIUUS3hYCmpaL7oGS
- 5slx54Wt9kiiIx4iqhIJKa9mR5vkiAkiLoSFKlgnSOXn0BXW1uklxHdSdEjuyLv54bS7
- 0KqlyxLUYFC6jhRZb5iJs1HmWVZH1j5mAnY40vr3r9BW9cfEDo/6UDiSC4eNGBeVpwjI
- 4js33PzeuC4ofhgppTlilsByvOP1hulIe5zLOU8k6a56QNWyLHXk6E9kSzbdcs6eMGe2
- xZ8zv99T1V9HvUS9MDBRGdcs/Cq6wdtHPmZILTUm9iolZcWlYzzz68e+UCKEsB9MJJWS
- u4Tw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUv6bvVSdFudbCQSeezy7Kc/2yx5s5Th4AslWJyGzz+ddM/9cly5QcLPetze+XgP7upEMAYkPgrAReHXuaoUvfL0GFUB68=
-X-Gm-Message-State: AOJu0YxAAveGKWOUpUQbAw8wy0I/jcELKMhlS2favo4zznsRw9KeP/rR
- 7SdT9yOAzpv/M2uX45ddDYKDwmwPQC6iNumfHApjP49J8VNN8FTEPYIP5hzY94s=
-X-Google-Smtp-Source: AGHT+IFr/Gk8+hpdkvWQ2HdbimoWu4upglze7TqlhkodUvgtcEGayMXjI/Ih3MdwiLHE5hN2SLT1mw==
-X-Received: by 2002:a05:600c:4f43:b0:411:e86d:85a3 with SMTP id
- m3-20020a05600c4f4300b00411e86d85a3mr6321296wmq.16.1708073374732; 
- Fri, 16 Feb 2024 00:49:34 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.210.246])
- by smtp.gmail.com with ESMTPSA id
- u12-20020a05600c19cc00b0041061f094a2sm1645204wmq.11.2024.02.16.00.49.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Feb 2024 00:49:34 -0800 (PST)
-Message-ID: <a55d793c-3d61-4bda-8213-12a1de65c85f@linaro.org>
-Date: Fri, 16 Feb 2024 09:49:31 +0100
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1ratx8-0007t6-M9; Fri, 16 Feb 2024 03:52:14 -0500
+Received: from fout5-smtp.messagingengine.com ([103.168.172.148])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1ratx6-00014m-AV; Fri, 16 Feb 2024 03:52:14 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 8F8621380090;
+ Fri, 16 Feb 2024 03:52:09 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Fri, 16 Feb 2024 03:52:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1708073529; x=
+ 1708159929; bh=qtbGpNOmQBeh0EWgVDEzkwtA7IM+WUWndprA6WEiqDs=; b=O
+ XORN7RvEfrZzvI5OWzMi9iqtmkJ+PuJ/qmDX79yicquicqM2q+zGAsj0i0KfYSQQ
+ sRBFKzJM7/WxuCwGHurY/omHqULUbvWJp5jyHy7Rkdnt6Iqo3CDBxaZZG9YiltKd
+ n74inNkA2Lc4w9JskmutTJ0pec1ktH5ZxAsNnen2TxaKRqqSWpLZuU6D+A9poUZe
+ 1WMRR3JJaPHPWRtaNm7lR1TUIZG9kAP11knqz/DF7nepLaiajiQpEUB0mpMV3XSx
+ 7TgKyJlwc3u/Q0D/d+WBYl01T7EDN8yDoPJzQ3rfEYez5KnnINvCWNc4NGa4NamX
+ BKfvN2KY1mkbZ78kkzCOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1708073529; x=1708159929; bh=qtbGpNOmQBeh0EWgVDEzkwtA7IM+
+ WUWndprA6WEiqDs=; b=FHYj+K9T72BZer6tBoftSOiymrtRAiHKuigS2f36AmP3
+ GHMIXMnEakw1kD3JqWHMz1jcKh/XvviI3dofUfkwVGPAhJSLM4XD736m+UH3kqEu
+ SIH5VmYn3vFBstyzmcdw0BFOEwgKyqLweumXf2zIYKVeKJJRBBVHUqYRbyFGgxT+
+ bbYhQcWFlwaydmkaFyITVl54OY536f5zCosY+3FcrOn9r7rr6i0aPhqfPHZaiumY
+ KsmlNd9UTNbihcaw31pLdyDJgD5JuP4XYj18J5YPU5j+hL0NG2KI+MqsjBK1nOcn
+ dQqgj7qo5pHC5sy7wJ2UsA2jN6DM+vFqa/XLldA1TQ==
+X-ME-Sender: <xms:OCLPZf_NEvh_kTO51iaQEwts9ef-iN_hDSD9Fl6-ieFj4Iw5UTrTvA>
+ <xme:OCLPZbvrHtblIOQIiEn39P63ojuc26_gBIBU0_nT6gINonje1XBfzM3ECgMEvVNAd
+ 3JHx_T_PKy9nf4ExU0>
+X-ME-Received: <xmr:OCLPZdC4uGTEIUGpBv-0nW2R6b1_sgGsqr6j-m51hCgPXX8TT9Igbr7nPA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddugdduvdejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
+ shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
+ htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
+ jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
+ htshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:OCLPZbf8VN1b8t1FAbcgrgL42WJJdOKhdklVCetoxE4xT89qaIeAdQ>
+ <xmx:OCLPZUPIM38ocLsabZ6NnMjgTc8wRN92Oof3HzolJCw76Npw26flNQ>
+ <xmx:OCLPZdkSo-extKU0ltlCeMVvJjjh0VDO6BZGoMktxb-C6pqXkgbb6w>
+ <xmx:OSLPZZvm2hgLE5KIX9zw3Ti0I53gQjFQd4hZ8J4FgQtUd6FW5yNkzg>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Feb 2024 03:52:07 -0500 (EST)
+Date: Fri, 16 Feb 2024 09:51:57 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Alistair Francis <alistair23@gmail.com>, marcel.apfelbaum@gmail.com,
+ mst@redhat.com, hchkuo@avery-design.com.tw, kbusch@kernel.org,
+ lukas@wunner.de, wilfred.mallawa@wdc.com, cbrowy@avery-design.com,
+ qemu-devel@nongnu.org, jiewen.yao@intel.com,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH v4 0/3] Initial support for SPDM Responders
+Message-ID: <Zc8iLc3KWhcjChQo@cormorant.local>
+References: <20240213024403.1060188-1-alistair.francis@wdc.com>
+ <20240215144434.00005bf9@Huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] hw/vfio/common: Use RCU_READ macros
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>, Fam Zheng <fam@euphon.net>,
- Greg Kurz <groug@kaod.org>, Richard Henderson
- <richard.henderson@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C_=C3=A9_dric_Le_Goater?= <clg@redhat.com>
-References: <20240124074201.8239-1-philmd@linaro.org>
- <20240124074201.8239-6-philmd@linaro.org> <7reip.7d0x82au0t9p@linaro.org>
- <887a8b74-423f-4c4c-8cdd-d29fcb4f14b8@linaro.org>
-Content-Language: en-US
-In-Reply-To: <887a8b74-423f-4c4c-8cdd-d29fcb4f14b8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="xuBUPKsCBwrC9ezf"
+Content-Disposition: inline
+In-Reply-To: <20240215144434.00005bf9@Huawei.com>
+Received-SPF: pass client-ip=103.168.172.148; envelope-from=its@irrelevant.dk;
+ helo=fout5-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,68 +107,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/1/24 15:09, Philippe Mathieu-Daudé wrote:
-> On 24/1/24 10:25, Manos Pitsidianakis wrote:
->> On Wed, 24 Jan 2024 09:42, Philippe Mathieu-Daudé <philmd@linaro.org> 
->> wrote:
->>> Replace the manual rcu_read_(un)lock calls by the
->>> *RCU_READ_LOCK_GUARD macros (See commit ef46ae67ba
->>> "docs/style: call out the use of GUARD macros").
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>> hw/vfio/common.c | 34 ++++++++++++++++------------------
->>> 1 file changed, 16 insertions(+), 18 deletions(-)
->>>
->>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>> index 4aa86f563c..09878a3603 100644
->>> --- a/hw/vfio/common.c
->>> +++ b/hw/vfio/common.c
->>> @@ -308,13 +308,13 @@ static void vfio_iommu_map_notify(IOMMUNotifier 
->>> *n, IOMMUTLBEntry *iotlb)
->>>         return;
->>>     }
->>>
->>> -    rcu_read_lock();
->>> +    RCU_READ_LOCK_GUARD();
->>>
->>>     if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
->>>         bool read_only;
->>>
->>>         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
->>> -            goto out;
->>> +            return;
->>
->> Since this is the only early return, we could alternatively do:
->>
->> -         if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
->> +         if (vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only)) {
->>
->> remove the goto/return, and wrap the rest of the codeflow in this if's 
->> brackets. And then we could use WITH_RCU_READ_LOCK_GUARD instead. 
->> That'd increase the code indentation however.
-> 
-> If the maintainer agrees with the style & code churn, I don't
-> mind respining.
 
-Alex, Cédric, any preference?
+--xuBUPKsCBwrC9ezf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
->>
->>>         }
->>>         /*
->>>          * vaddr is only valid until rcu_read_unlock(). But after
->>> @@ -343,8 +343,6 @@ static void vfio_iommu_map_notify(IOMMUNotifier 
->>> *n, IOMMUTLBEntry *iotlb)
->>>             vfio_set_migration_error(ret);
->>>         }
->>>     }
->>> -out:
->>> -    rcu_read_unlock();
->>> }
-> 
->> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> 
-> Thanks!
+On Feb 15 14:44, Jonathan Cameron wrote:
+> On Tue, 13 Feb 2024 12:44:00 +1000
+> Alistair Francis <alistair23@gmail.com> wrote:
+>=20
+> Hi All,
+>=20
+> Just wanted to add that back in v2 Klaus Jensen stated:
+>=20
+> "I have no problem with picking this up for nvme, but I'd rather not take
+>  the full series through my tree without reviews/acks from the pci
+>  maintainers."
+>=20
+> So I'd like to add my request that Michael and/or Marcell takes a look
+> when they have time.
+>=20
+> I've been carrying more or less the first 2 patches in my CXL staging
+> tree for a couple of years (the initial Linux Kernel support that Lukas
+> Wunner is now handling was developed against this) and I would love
+> to see this upstream. Along with PCI and CXL and NVME usecases this
+> is a major part of the Confidential Compute device assignment story
+> via PCI/TDISP and CXL equivalent.
+>=20
+> It's not changed in significant ways since v2 back in October last year.
+>=20
 
+Would someone be willing to sign up to maintain the spdm_socket backend?
+
+--xuBUPKsCBwrC9ezf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXPIi0ACgkQTeGvMW1P
+Dekz2wf9Gt9o1HSUmH7+wcHggFMBCQ7+tIXQU+ga+AX5C+U+Th+GjAXDbMoxS6nb
+JHEg2Z7oh+m0J5pd2E8BL2J0UONmd5LFwQBjcuAYoda1C9NJe+JhctSnUSqjNMuC
+kV8rsmsOt+KL0c0VXqkd0aXTULydMAa5Q+0QI+2db9PVcZbtRqS9NEZNe/4VIPNl
+0a7HzXKiIGX3mS9oxcJkOT5dmaGD/Qx2qwXPSnw4eNzRVVg/rqDtkxpqj1B8uGYu
+f+qJRiSWVWdBTLZmILuHasQO9XSnYxDIA4OVr56kuY4xjqTR+IC/L+RLFlE/x8a+
+NS5riuvnzQCZGlN6pGmt3rUeKtw7Ow==
+=iTVA
+-----END PGP SIGNATURE-----
+
+--xuBUPKsCBwrC9ezf--
 
