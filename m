@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C377BC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 18:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 489C5C48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 18:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb2ZL-0002OV-B9; Fri, 16 Feb 2024 13:04:15 -0500
+	id 1rb2i1-0005nY-Gn; Fri, 16 Feb 2024 13:13:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atp.exp@gmail.com>) id 1rb2ZK-0002OL-1C
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:04:14 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atp.exp@gmail.com>) id 1rb2ZI-0003qk-1J
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:04:13 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-511acd26c2bso3384069e87.2
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 10:04:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708106650; x=1708711450; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+g2R2bRRY3QTPyFingBrSwpVNKRMq5czci+xhOrEMns=;
- b=T8R0DfgbQuiSWEDED825otU0baSulmYrnOldveOL/pAW7d9LfVnV94k6Pm1NrdCFlq
- GNAw7sE45p1tnCcPpmkoUsQtm35QHeJFiFi8BTMAEkGpCwuordBCfZMi9knqG02EwmhQ
- XVYY5FZd5dlUpCsGfuvVizejFjtx768mJH3HicSheRgCASrCGei5nsrARgRc+Kkww9Ws
- Xxz0f/IYe0+azeMRIOrxt2RYz08SY6NHVYtRCNcZAse44TSWQ/uEFjbn1MkN5vex/bwS
- ofS+Z0Cq/MKgECA5pJR4fkblLVsh0RNDLWjasiLwzJTxJa9Qamdy+1Ap5wqCUHWMXeS7
- dnFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708106650; x=1708711450;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+g2R2bRRY3QTPyFingBrSwpVNKRMq5czci+xhOrEMns=;
- b=LomHfnXetxN1CS6qnwZRKmiPpjSlBwggcchUs8UYgNhOZ52mwLkSAmrfn8T8ll4Wri
- s5WK6XFk9f7vk+eBlTvv7BHtxOaF8KZdy8s1gIsJLZI8jazQBImWiuWQha1ZCUVbuDqC
- VnF49R6NZ9yZKmcQoY2GHk9f6IGFq5AsCEyTMcns8io1TouKH2srkD+is18UJjeEk2fg
- w/PTTeRydHhpWAZJi3/V/3MRdkMS6qKWNDMVwvzKUkepeHOCsVigrrJIjAgY0J2paFbH
- aiP7EBl5jep0SOcx0UxRJYCUy823WcmceYAJGBhvIWGLsaNlLSNeABpmpKrBlPTJuvgx
- 6YmQ==
-X-Gm-Message-State: AOJu0YxYhq8NyUrqBjn0Fr8e4r2JezeYjLmQ2+ltH/gqDROMbaPsukxO
- cgtqSz5TVbWY/2q15Em9HijbfrJ2vmrcgoD2j+tjUzRAy8lmoPFLknG54c/4ByqShDIxxbNIAu9
- 521iVFhRHA2bnw6urswMLkdLQCCY=
-X-Google-Smtp-Source: AGHT+IFDJeaNAwQlo3VQXgaapFmXopJLi4Zn5FmdtPgOv8lpB3bMjY8FwaSbmPTwXLbG/z/23/03W0sIzfUiQefZZMw=
-X-Received: by 2002:a19:f706:0:b0:511:9746:6794 with SMTP id
- z6-20020a19f706000000b0051197466794mr4030109lfe.60.1708106649669; Fri, 16 Feb
- 2024 10:04:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1rb2hz-0005nN-Cu
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:13:11 -0500
+Received: from fhigh6-smtp.messagingengine.com ([103.168.172.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1rb2hu-0005sp-6S
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 13:13:11 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id 0BD8E114009A;
+ Fri, 16 Feb 2024 13:13:02 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Fri, 16 Feb 2024 13:13:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ invisiblethingslab.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:from:from:in-reply-to
+ :message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+ t=1708107182; x=1708193582; bh=g4Bx5J3rm7lI/qFnqCLX1FdEAQchH94E
+ o1zzM1RjUvA=; b=Lq3SFxC2fHdJ1Foei8jEDhtM8RzZEEDS/JWygDKcl30cLssP
+ FPMDUu054lKuQwJZ82o5eD4EDxFS+gyCrcpkL5BVfmWUBpbdqkdnBz4zVb6Kgntc
+ UOgQVixF4E5raSkeD1oSTZMiA4m46pRaNBZibD68Gt/FMrALX47+83tiUP9F743q
+ Y3VrxEMklf4bA5VraVVBh86waEO3pY9wryVHj2fFzm4o32NoTxDVeYqOa6Ze7N+w
+ PSnuSoKFaiNeyF3wSVmdAXtRE9wnvENhk9xeIVKTXFIHhcq7UGhSKVv+5EJq3AoM
+ 8z3tmt2wO55OO8lmHAtZl5XHEtt6800bcB9hqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1708107182; x=1708193582; bh=g4Bx5J3rm7lI/
+ qFnqCLX1FdEAQchH94Eo1zzM1RjUvA=; b=I6QZ5PnusRU/jQJW/RckB3gbDTWpi
+ +OYBEy/9eJu29+M0ySdq/z7wCfd/byHs1nlO63+95NWLgcsVeUitKc9NDTQloAal
+ Z/PGiRc2D8Aov/HeVidTDuYeymuO67171sQxN1A6zLjfdCp5/H+nIu47C/dQQy+P
+ stPIzhM/ay6XsiNnSo6R7zjZuF2pWjqM+YxEH45qlHJs8C11+Aam4iQ+qjVJjBDR
+ R3SlwTHPDsY/vrKzNjZI4ISicF+rzHblCTt+gIA+SOKE2itxlEmg13Syt3/uDfyD
+ KOG7RA80PjzV7HLAJE6qTGwQNTlcoEpLqBVvkBSMtCkWnvwSXZn07CsOQ==
+X-ME-Sender: <xms:raXPZVTDLgBdVaeDswNpHzwpLFhyxe7rBzIop6xVA-fXTdDrJO4cyQ>
+ <xme:raXPZey-zEiBIPGkGC5BuiIl9JAqwdR58PpdQ4ag6oVT22TQXN95Yth5zAaQCo4fr
+ 2kEFlUdnCnjEw>
+X-ME-Received: <xmr:raXPZa2qpZNjUxIs9tpOLSDa50ICnQOfkHSbaPOezlf3ZqAe6yamPqjj86krdRj9A7r5N57t1ayJfEhEcM8PSnwa4ysnLNayBM1EGZBIaprfOlCda-k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvgddutdelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpeforghrvghk
+ ucforghrtgiihihkohifshhkihdqifpkrhgvtghkihcuoehmrghrmhgrrhgvkhesihhnvh
+ hishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeelkefh
+ udelteelleelteetveeffeetffekteetjeehlefggeekleeghefhtdehvdenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrghrmhgrrhgvkhes
+ ihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:raXPZdCFQFfVup_o-HaD6Hp2uJtmQaf7Rtmuqh15s6HhV-vnEMXidg>
+ <xmx:raXPZeidtRavR9hXCCS6pq3h-fCXUmzZd64Oc5ty5SgbCgYkBopPrA>
+ <xmx:raXPZRpI-Rm-307G08vRv0FGMWDW84oz7o4i0eTjPG7dQLhyq-3l-A>
+ <xmx:rqXPZWeqPOOBrk6FQq7voTCWBlUBkc23hz1bzk8HPBBw1u804J9-Iw>
+Feedback-ID: i1568416f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Feb 2024 13:13:00 -0500 (EST)
+From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH] configure: do not require gcc runtime library for firmwares
+Date: Fri, 16 Feb 2024 19:12:17 +0100
+Message-ID: <20240216181238.262772-1-marmarek@invisiblethingslab.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240216135137.8668-3-atp.exp@gmail.com>
- <20240216135137.8668-6-atp.exp@gmail.com>
- <CAFEAcA8dC6siNn684zqgiEZhKkxnw3DRu_AzPPZ16QRUg2410Q@mail.gmail.com>
-In-Reply-To: <CAFEAcA8dC6siNn684zqgiEZhKkxnw3DRu_AzPPZ16QRUg2410Q@mail.gmail.com>
-From: atp exp <atp.exp@gmail.com>
-Date: Fri, 16 Feb 2024 23:33:02 +0530
-Message-ID: <CAFgBtdGXmqc0ouH+-oyF2xO9LWucW_AbronG0O6-DV-Rd88CSw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] misc: ppc/spapr: replace qemu_system_reset_request()
- calls with watchdog_perform_action()
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, clg@kaod.org, david@gibson.dropbear.id.au, 
- harshpb@linux.ibm.com
-Content-Type: multipart/alternative; boundary="00000000000017952206118392de"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=atp.exp@gmail.com; helo=mail-lf1-x12c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=103.168.172.157;
+ envelope-from=marmarek@invisiblethingslab.com;
+ helo=fhigh6-smtp.messagingengine.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,161 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000017952206118392de
-Content-Type: text/plain; charset="UTF-8"
+probe_target_compiler() when checking for multilib support checks if
+-nostdlib works together with -lgcc. It isn't necessary for building
+various components in pc-bios/optionrom, as evidenced by looking at
+actually used link flags there.
+Alpine Linux for x86_64 does not ship with 32bit libgcc, but its gcc is
+otherwise perfectly capable of building firmwares in pc-bios/optionrom
+dir. Make configure recognize this situation.
 
-I will exclude this patch from the series for now.
-According to the discussions, the current code honours the
-guest's preference.
-Will wait for the enhancements needed in watchdog QAPI.
+Keep requiring functional -lgcc in other places.
 
-Abhiram
+Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+---
+ configure | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-On Fri, 16 Feb 2024 at 20:24, Peter Maydell <peter.maydell@linaro.org>
-wrote:
+diff --git a/configure b/configure
+index ff058d6c48..7721999f49 100755
+--- a/configure
++++ b/configure
+@@ -1216,7 +1216,7 @@ have_target() {
+   return 1
+ }
+ 
+-# probe_target_compiler TARGET
++# probe_target_compiler TARGET [nostdlib-extra-ldflags]
+ #
+ # Look for a compiler for the given target, either native or cross.
+ # Set variables target_* if a compiler is found, and container_cross_*
+@@ -1226,6 +1226,9 @@ have_target() {
+ #
+ # If TARGET is a user-mode emulation target, also set build_static to
+ # "y" if static linking is possible.
++# When testing -nostdlib build, -lgcc will be added for more extensive multilib
++# support test, but the -lgcc can be overriden with the second argument to the
++# function.
+ #
+ probe_target_compiler() {
+   # reset all output variables
+@@ -1243,6 +1246,7 @@ probe_target_compiler() {
+   container_cross_strip=
+ 
+   target_arch=${1%%-*}
++  nostdlib_ldflags=${2--lgcc}
+   case $target_arch in
+     aarch64) container_hosts="x86_64 aarch64" ;;
+     alpha) container_hosts=x86_64 ;;
+@@ -1432,7 +1436,7 @@ probe_target_compiler() {
+     case $1 in
+       *-softmmu)
+         if do_compiler "$target_cc" $target_cflags -o $TMPO -c $TMPC &&
+-          do_compiler "$target_cc" $target_cflags -r -nostdlib -o "${TMPDIR1}/${TMPB}2.o" "$TMPO" -lgcc; then
++          do_compiler "$target_cc" $target_cflags -r -nostdlib -o "${TMPDIR1}/${TMPB}2.o" "$TMPO" $nostdlib_ldflags; then
+           got_cross_cc=yes
+           break
+         fi
+@@ -1544,7 +1548,7 @@ echo "# Automatically generated by configure - do not modify" > Makefile.prereqs
+ if have_target i386-softmmu x86_64-softmmu && \
+         test "$host_os" != "darwin" && test "$host_os" != "sunos" && \
+         test "$host_os" != "haiku" && \
+-        probe_target_compiler i386-softmmu; then
++        probe_target_compiler i386-softmmu ""; then
+     subdirs="$subdirs pc-bios/optionrom"
+     config_mak=pc-bios/optionrom/config.mak
+     echo "# Automatically generated by configure - do not modify" > $config_mak
+-- 
+2.43.0
 
-> On Fri, 16 Feb 2024 at 13:56, Abhiram Tilak <atp.exp@gmail.com> wrote:
-> >
-> > A few watchdog devices use qemu_system_reset_request(). This is not
-> ideal since
-> > behaviour of watchdog-expiry can't be changed by QMP using
-> `watchdog_action`.
-> > As stated in BiteSizedTasks wiki page, instead of using
-> qemu_system_reset_request()
-> > to reset when a watchdog timer expires, let watchdog_perform_action()
-> decide
-> > what to do.
-> >
-> > I am unsure about the changes in `spapr_watchdog.c` in patch 3, it would
-> be great
-> > if any of the maintainers review it.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2124
-> > Signed-off-by: Abhiram Tilak <atp.exp@gmail.com>
-> > ---
-> >  hw/watchdog/spapr_watchdog.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
-> > index 2bb1d3c532..9751b19506 100644
-> > --- a/hw/watchdog/spapr_watchdog.c
-> > +++ b/hw/watchdog/spapr_watchdog.c
-> > @@ -18,6 +18,7 @@
-> >  #include "target/ppc/cpu.h"
-> >  #include "migration/vmstate.h"
-> >  #include "trace.h"
-> > +#include "sysemu/watchdog.h"
-> >
-> >  #include "hw/ppc/spapr.h"
-> >
-> > @@ -114,7 +115,7 @@ static void watchdog_expired(void *pw)
-> >          qemu_system_vmstop_request(RUN_STATE_SHUTDOWN);
-> >          break;
-> >      case PSERIES_WDTF_ACTION_HARD_RESTART:
-> > -        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-> > +        watchdog_perform_action();
-> >          break;
-> >      case PSERIES_WDTF_ACTION_DUMP_RESTART:
-> >          CPU_FOREACH(cs) {
->
-> This one is more complicated, because the spapr watchdog
-> has multiple possible behaviours which the guest can ask for.
->
-> We had a discussion on the mailing list about this a little while back:
->
-> https://lore.kernel.org/qemu-devel/CAFEAcA_KjSgt-oC=d2m6WAdqoRsUcs1W_ji7Ng2fgVjxAWLZEw@mail.gmail.com/
->
-> The conclusion was that the watchdog-behaviour QAPI API
-> needs to be enhanced to be able to handle this kind of
-> "the guest picks an action" watchdog, so that the user can
-> either override the guest's choice, or request that the
-> behaviour be what the guest wants it to be.
->
-> thanks
-> -- PMM
->
-
---00000000000017952206118392de
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I will exclude this patch from the series for now. <br>Acc=
-ording to the discussions, the current code honours the<div>guest&#39;s pre=
-ference.<br>Will wait for the enhancements needed in watchdog QAPI.<br><br>=
-Abhiram</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Fri, 16 Feb 2024 at 20:24, Peter Maydell &lt;<a href=3D"mai=
-lto:peter.maydell@linaro.org" target=3D"_blank">peter.maydell@linaro.org</a=
->&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On =
-Fri, 16 Feb 2024 at 13:56, Abhiram Tilak &lt;<a href=3D"mailto:atp.exp@gmai=
-l.com" target=3D"_blank">atp.exp@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; A few watchdog devices use qemu_system_reset_request(). This is not id=
-eal since<br>
-&gt; behaviour of watchdog-expiry can&#39;t be changed by QMP using `watchd=
-og_action`.<br>
-&gt; As stated in BiteSizedTasks wiki page, instead of using qemu_system_re=
-set_request()<br>
-&gt; to reset when a watchdog timer expires, let watchdog_perform_action() =
-decide<br>
-&gt; what to do.<br>
-&gt;<br>
-&gt; I am unsure about the changes in `spapr_watchdog.c` in patch 3, it wou=
-ld be great<br>
-&gt; if any of the maintainers review it.<br>
-&gt;<br>
-&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/212=
-4" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qem=
-u/-/issues/2124</a><br>
-&gt; Signed-off-by: Abhiram Tilak &lt;<a href=3D"mailto:atp.exp@gmail.com" =
-target=3D"_blank">atp.exp@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/watchdog/spapr_watchdog.c | 3 ++-<br>
-&gt;=C2=A0 1 file changed, 2 insertions(+), 1 deletion(-)<br>
-&gt;<br>
-&gt; diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog=
-.c<br>
-&gt; index 2bb1d3c532..9751b19506 100644<br>
-&gt; --- a/hw/watchdog/spapr_watchdog.c<br>
-&gt; +++ b/hw/watchdog/spapr_watchdog.c<br>
-&gt; @@ -18,6 +18,7 @@<br>
-&gt;=C2=A0 #include &quot;target/ppc/cpu.h&quot;<br>
-&gt;=C2=A0 #include &quot;migration/vmstate.h&quot;<br>
-&gt;=C2=A0 #include &quot;trace.h&quot;<br>
-&gt; +#include &quot;sysemu/watchdog.h&quot;<br>
-&gt;<br>
-&gt;=C2=A0 #include &quot;hw/ppc/spapr.h&quot;<br>
-&gt;<br>
-&gt; @@ -114,7 +115,7 @@ static void watchdog_expired(void *pw)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_system_vmstop_request(RUN_STATE=
-_SHUTDOWN);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case PSERIES_WDTF_ACTION_HARD_RESTART:<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_system_reset_request(SHUTDOWN_CAUSE_=
-GUEST_RESET);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 watchdog_perform_action();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case PSERIES_WDTF_ACTION_DUMP_RESTART:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPU_FOREACH(cs) {<br>
-<br>
-This one is more complicated, because the spapr watchdog<br>
-has multiple possible behaviours which the guest can ask for.<br>
-<br>
-We had a discussion on the mailing list about this a little while back:<br>
-<a href=3D"https://lore.kernel.org/qemu-devel/CAFEAcA_KjSgt-oC=3Dd2m6WAdqoR=
-sUcs1W_ji7Ng2fgVjxAWLZEw@mail.gmail.com/" rel=3D"noreferrer" target=3D"_bla=
-nk">https://lore.kernel.org/qemu-devel/CAFEAcA_KjSgt-oC=3Dd2m6WAdqoRsUcs1W_=
-ji7Ng2fgVjxAWLZEw@mail.gmail.com/</a><br>
-<br>
-The conclusion was that the watchdog-behaviour QAPI API<br>
-needs to be enhanced to be able to handle this kind of<br>
-&quot;the guest picks an action&quot; watchdog, so that the user can<br>
-either override the guest&#39;s choice, or request that the<br>
-behaviour be what the guest wants it to be.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
-
---00000000000017952206118392de--
 
