@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E20C4829E
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 00:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878ECC4829E
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 00:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ralqw-0000CQ-65; Thu, 15 Feb 2024 19:13:18 -0500
+	id 1ramAl-0003fw-IK; Thu, 15 Feb 2024 19:33:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ralqu-0000Bo-Lc; Thu, 15 Feb 2024 19:13:16 -0500
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1ramAk-0003fh-AX; Thu, 15 Feb 2024 19:33:46 -0500
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1ralqs-0007VD-MA; Thu, 15 Feb 2024 19:13:16 -0500
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-7d6275d7d4dso673870241.2; 
- Thu, 15 Feb 2024 16:13:14 -0800 (PST)
+ id 1ramAi-0003Ii-Hc; Thu, 15 Feb 2024 19:33:46 -0500
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-4c127eb4d6dso545917e0c.1; 
+ Thu, 15 Feb 2024 16:33:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708042393; x=1708647193; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708043623; x=1708648423; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/IgRNuQpDZUAOKdiYz5ZojhKKYKy4OUChSm3Z+UsCl0=;
- b=FIuALBfBsyvXM8l0CYLjxV/sJLYLpcUHpZEWs8ByTtkB27YDnVBKHDzKpmqvKmyNqg
- wjwPJ+DGest7lE1firpy5lPrTtFLVIEkiKqgFe/EhVcVzWbE8XIaOz5vklKfrppVDzNc
- jQpreFtt30keFRxSVZVdMp3NlhQx2mWRn0WpI1eCLzpY9v6gtq4usdpBepEMAuXH1ZBI
- 6VCGJD8KURUaDcCmY95PzeY9ChUpNVQDpM7GYh5o/P4siYb/9E5aEsP5m62vZenLg6aO
- fk/+Ul7yvA0OKzrku7UKYqtBik0SEZZJ7sWvJx8bGIHsKdg0lp3GzIpqFMd6+KkUnpUT
- //Dg==
+ bh=1gB8/Fkt9uKc8NGcBURDmAIW/8egtKq93QlauaQn6c8=;
+ b=F6flWzbkcHLE8zeyg+WRIrndkYzj3PlmGYJcAbsNUOH6GEI2Z9V4gJlyLacUitrhCb
+ MAqY0YbuuR1sODfelihuzgzI5/ogmf4zYCnRpV4hcXFZXj3HHmZax9992zAPXi3QYqyh
+ Ca+TBRSQvXo3/KbErvY+cmxYOmYP4w4tOh270lNkqkzDXHNd2X5xONj5SLzGHGOwVH/W
+ xw0QbsZyTlyWVEQ6+xaBNPwV4xTZ56qcpk3hdUcs62tAv7ZDdbR1CyIgLciVKsLhOXx6
+ 6vP77X2R/hXROYobgy8bkma+5kYwr5Jzpgi6dUQriR6KWIXTC+g3HXpjpb2dyM0c8i5c
+ xB/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708042393; x=1708647193;
+ d=1e100.net; s=20230601; t=1708043623; x=1708648423;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/IgRNuQpDZUAOKdiYz5ZojhKKYKy4OUChSm3Z+UsCl0=;
- b=TMN2lIe4bNMdVFvTLenq6v8WRupviwyLTU1VkXjRDgIYy+2el+OugFngIMQg2Yrl0q
- fxbQ9xNbBocb5HzPceusq2HxwW6snKgJL2MXNuVFbNAs113FriijNcEksnL1bDcbRRqb
- ZRqB8QbkH/kmZY649X1I0sdwToMf1uA8Dn5Pw9ktigKxrINRWxQxPatIA63aJbiqFZ7k
- JizvBf8QlLdtFdbJrnzc4roZwamqOp0frq+zwVJqY32MCC3bSLukKvzYr791g4HU0CZ2
- VHrOmuD/zaFg4YORNMxH3uMNekQ9WXOdknMGFzt0aF3Q9GbyyrAulIhOC9eoF0W2UKwG
- 7WTQ==
+ bh=1gB8/Fkt9uKc8NGcBURDmAIW/8egtKq93QlauaQn6c8=;
+ b=hAlxH47GvcDM5i5KoAkGjcka8kI4iwZ2EKtWDAEuRM5x9p16h1HEsV54RbCdPmpWYW
+ nzlUMfjMMF+oo3UZHzwpTkCX/WlgWFaiI0XJEj1BJX3qv5vS6WYY7mNHZxc7JxUpBgjJ
+ Cdo2lMHL/j3WD+XZD7oEW8trPshVxGe+lBri5RzH+y8Zb+cX7sdtpvQU0cTh1VfXBQW5
+ 56mP91sPc9SFw9uoRDQR8u8LMBHo0DSKl7QE1Jj8oqJCti70CHQQj8g3oHsAKtOTtMDm
+ QnmsaBVKlES4BH+e30OM55VXO5XnOoSSn4kLW9L6hfXKd/kE3evsVv9U3KM5/Uzrk0oR
+ +nVw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1SHN7v91Uxt3KwNNfTj5dy1Boj6h8jt1+B3vvuEN0GYzCSQEgrP1DsL5mF4EuWHoUepj+mkEUGRutpR5wHY5npsYJLme6wvO2DV5O1/HNxOh7rWXtog3vjL1W1g==
-X-Gm-Message-State: AOJu0YyHdg5DNIpnAoSRz32PQumQ2F0z7jxUFnD/VhM5sGXetTVUZsQ7
- wl5ZxWyjPk8+xbYVZylGNP6Sla4/Yd5+P38Bo+ntDvXZDxpZZ6t7h/fmIUWkkeX1XfM0xD4KK1w
- 5duCqfa3ex6mczvNulsSeUyaiKur67yR/UTQ=
-X-Google-Smtp-Source: AGHT+IFEcDB2dN0VniUKtrCcPHEk75+w2k4ZhU+IFh8rLrPRgwsYC9EhfjQTDS+6HRhQw0BSkBbz/CW0xqN2GDZfjHE=
-X-Received: by 2002:a1f:6d82:0:b0:4c0:2553:3b19 with SMTP id
- i124-20020a1f6d82000000b004c025533b19mr3041805vkc.13.1708042392977; Thu, 15
- Feb 2024 16:13:12 -0800 (PST)
+ AJvYcCUygsgauGmNzaBBVfWwnMcDY9lkDmJ2b75cCULVbu0YOvRw0SRoFXsTC8LW99xFszyWD41GWIYqhSPomTqv5OsEPVB+DCg=
+X-Gm-Message-State: AOJu0YzxjOQMNm0H9ckLcZorne7WF0O9blqMPdHLx2AdyRfAtXT/knQa
+ 4T/SA463YMf+3euVLvOA0EgUJRKLmRoJ0tT5jOJKT3+g/fvEjGGBQzmCO2uy/4US9YqXNIrdm5F
+ WBgvMHiYz4ntbQE1LvEGcCOpGij8=
+X-Google-Smtp-Source: AGHT+IHZ+8wn6DyKMBtRL2hnPi+CGZ3NaugfkjdZ2wblAsSSa/keJIY/Hdx6i7XT3DmMuTvztJJnX/yCHdnbiNEJaoI=
+X-Received: by 2002:a1f:6602:0:b0:4bf:fe7f:1c56 with SMTP id
+ a2-20020a1f6602000000b004bffe7f1c56mr3292692vkc.7.1708043622781; Thu, 15 Feb
+ 2024 16:33:42 -0800 (PST)
 MIME-Version: 1.0
-References: <20240202152154.773253-1-dbarboza@ventanamicro.com>
- <20240202152154.773253-4-dbarboza@ventanamicro.com>
- <20240215-alkaline-saturday-275cd8e3aa39@spud>
- <20240215-55440212b4d6cde9feab5d94@orel>
- <20240215-overhear-paycheck-8c70c17bd151@spud>
- <20240215-8e556e6029ee11ee7317db8b@orel>
- <20240215-landfall-clamp-34ce9760d4cd@spud>
-In-Reply-To: <20240215-landfall-clamp-34ce9760d4cd@spud>
+References: <20240109145923.37893-1-irina.ryapolova@syntacore.com>
+ <20240109145923.37893-2-irina.ryapolova@syntacore.com>
+In-Reply-To: <20240109145923.37893-2-irina.ryapolova@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 16 Feb 2024 10:12:46 +1000
-Message-ID: <CAKmqyKPy8C9fz2c7RMnFL1bG1XHZf9kdduGOjgTGP+O6PB_fSg@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] target/riscv: add remaining named features
-To: Conor Dooley <conor@kernel.org>
-Cc: Andrew Jones <ajones@ventanamicro.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- alistair.francis@wdc.com, bmeng@tinylab.org, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+Date: Fri, 16 Feb 2024 10:33:16 +1000
+Message-ID: <CAKmqyKNhRJtgg7ycxzN=AjmAM35F=Q4m51Xpfy=As5_Vtes6mw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] target/riscv: UPDATE xATP write CSR
+To: Irina Ryapolova <irina.ryapolova@syntacore.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa33.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,226 +93,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 6:00=E2=80=AFAM Conor Dooley <conor@kernel.org> wro=
-te:
+On Wed, Jan 10, 2024 at 2:07=E2=80=AFAM Irina Ryapolova
+<irina.ryapolova@syntacore.com> wrote:
 >
-> On Thu, Feb 15, 2024 at 08:11:45PM +0100, Andrew Jones wrote:
-> > On Thu, Feb 15, 2024 at 04:34:32PM +0000, Conor Dooley wrote:
-> > > On Thu, Feb 15, 2024 at 03:26:18PM +0100, Andrew Jones wrote:
-> > > > On Thu, Feb 15, 2024 at 01:33:47PM +0000, Conor Dooley wrote:
-> > > > > On Fri, Feb 02, 2024 at 12:21:51PM -0300, Daniel Henrique Barboza=
- wrote:
-> > > > > > The RVA22U64 and RVA22S64 profiles mandates certain extensions =
-that,
-> > > > > > until now, we were implying that they were available.
-> > > > > >
-> > > > > > We can't do this anymore since named features also has a riscv,=
-isa
-> > > > > > entry. Let's add them to riscv_cpu_named_features[].
-> > > > > >
-> > > > > > Instead of adding one bool for each named feature that we'll al=
-ways
-> > > > > > implement, i.e. can't be turned off, add a 'ext_always_enabled'=
- bool in
-> > > > > > cpu->cfg. This bool will be set to 'true' in TCG accel init, an=
-d all
-> > > > > > named features will point to it. This also means that KVM won't=
- see
-> > > > > > these features as always enable, which is our intention.
-> > > > > >
-> > > > > > If any accelerator adds support to disable one of these feature=
-s, we'll
-> > > > > > have to promote them to regular extensions and allow users to d=
-isable it
-> > > > > > via command line.
-> > > > > >
-> > > > > > After this patch, here's the riscv,isa from a buildroot using t=
-he
-> > > > > > 'rva22s64' CPU:
-> > > > >
-> > > > > Why does an "rva22s64" cpu have "zicclsm" in it? Isn't zicclsm on=
-ly
-> > > > > present in "u" profiles?
-> > > >
-> > > > "s" profiles mandate all the "u" profile mandatory extensions. For =
-example
-> > > > 6.2.2 says
-> > > >
-> > > > """
-> > > > The RVA22S64 mandatory unprivileged extensions include all the mand=
-atory unprivileged
-> > > > extensions in RVA22U64.
-> > > > """
-> > >
-> > > Doesn't that rule out emulating misaligned access in s-mode if you wa=
-nt
-> > > to be profile compliant?
-> >
-> > That's how I interpret it, but I'll defer to a profile spec author, or
-> > at least to somebody more confident of their spec interpretation skills=
-.
+> Added xATP_MODE validation for vsatp/hgatp CSRs.
+> The xATP register is an SXLEN-bit read/write WARL register, so
+> the legal value must be returned (See riscv-privileged-20211203, SATP/VSA=
+TP/HGATP CSRs).
 >
-> Hmm, actually it doesn't. Your firmware just needs to _also_ implement
-> it. So your OS kernel could test whether or not the misaligned access
-> performance is beans and then choose to emulate misaligned access
-> itself. Not ideal, but better than I thought.
->
-> > > > > >  # cat /proc/device-tree/cpus/cpu@0/riscv,isa
-> > > > > > rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_=
-ziccrse_
-> > > > > > zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_z=
-ba_zbb_
-> > > > > > zbs_zkt_ssccptr_sscounterenw_sstvala_sstvecd_svade_svinval_svpb=
-mt#
-> > > > >
-> > > > > I want to raise my frustration with the crock we've been given he=
-re by
-> > > > > RVI. Any "named feature" that just creates a name for something t=
-hat
-> > > > > already is assumed is completely useless, and DT property that is=
- used
-> > > > > to communicate it's presence cannot be used - instead the propert=
-y needs
-> > > > > to be inverted - indicating the absence of that named feature.
-> > > > >
-> > > > > Without the inversion, software that parses "riscv,isa" cannot ma=
-ke any
-> > > > > determination based on the absence of the property - it could be =
-parsing
-> > > > > an old DT that does not have the property or it could be parsing =
-the DT
-> > > > > of a system that does not support the extension.
-> > > >
-> > > > I'm guessing any platform which wants to advertise that it's compli=
-ant
-> > > > with a profile will update its hardware descriptions to ensure all =
-the
-> > > > profile's mandatory extensions are presented. But, I think I unders=
-tand
-> > > > your concern. If somebody is parsing the ISA string as way to deter=
-mine
-> > > > if the platform is compliant with a profile, then they may get a fa=
-lse
-> > > > negative due to the ISA string missing a newly named feature.
-> > >
-> > > Nah, you misunderstand me. I don't care at all about profiles or
-> > > checking for compliance with one. I'm only interested in how my softw=
-are
-> > > can check that some feature is (or is not) supported. This creating a=
- name
-> > > for something implicit business is not a problem in and of itself, bu=
-t
-> > > putting then into "riscv,isa" is a pointless activity as it communica=
-tes
-> > > nothing.
-> > >
-> > > > I'm not
-> > > > sure how much of a problem that will be in practice, though, since =
-testing
-> > > > for profile compliance, just for the sake of it, doesn't seem very =
-useful.
-> > > > Software really only needs to know which extensions are available a=
-nd if
-> > > > it's an old feature that got newly named, then software likely alre=
-ady
-> > > > has another way of detecting it.
-> > >
-> > > Right. That part is fine, but creating extensions for these things we
-> > > previously assumed present gives me the impression that creating syst=
-ems
-> > > that do not support these features is valid. IFF that does happen,
-> > > removing the string from "riscv,isa" isn't going to be able to
-> > > communicate that the feature is unsupported.
-> >
-> > Ah, now I think I understand the concern. The new names might as well b=
-e
-> > ignored because the absence of the names in the hardware descriptions i=
-s
-> > ambiguous.
->
-> Correct.
->
-> > I guess I'd encourage software that has a role in advertising
-> > features to use the new names when it has detected the feature or assum=
-es
-> > the feature is present (and presumably wouldn't be running if its
-> > assumption was wrong). If, for example, Linux puts a new name in
-> > /proc/cpuinfo after detecting or assuming the feature's presence, then =
-it
-> > no longer matters that the hardware description had it or not from the
-> > perspective of the /proc/cpuinfo consumer (assuming they're aware of wh=
-ich
-> > kernel version they need). With these types of fixups and enough time,
-> > then hopefully most of the software ecosystem will able to live in
-> > ignorant bliss.
->
-> Yeah, that's effectively what we have to do. I started doing that for
-> zifencei/zicsr in Linux and it should be done for anything else like
-> this going forwards.
->
-> > > The commit message here
-> > > says:
-> > > > > > If any accelerator adds support to disable one of these feature=
-s, we'll
-> > > > > > have to promote them to regular extensions and allow users to d=
-isable it
-> > > > > > via command line.
-> > >
-> > > Which is part of what prompted me here, since they cannot be handled =
-in
-> > > the same way that "regular extensions" are.
-> > >
-> >
-> > From QEMU's perspective, they can.
->
-> No they can't. For a "regular extension" you populate the DT with the
-> extension. For these extensions it has to put negated properties in the
-> DT, otherwise it is incorrectly describing the hardware it is emulating.
-> That is handling them differently in my book! If QEMU generates an
-> incorrect DT representation of the hardware it is emulating, that's a
-> QEMU bug.
+> Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-QEMU listing the extensions that it supports seems to me to be the
-correct approach.
+Thanks for the patches.
 
-It's clunky that the list of "extensions" are constantly changing.
-There isn't much we can do about that from a QEMU perspective though.
+In the future can you please send a multi-patch series with a cover
+letter. It makes
+the QEMU automation a lot easier to work with.
 
-Listing the hardware and what it supports is the job of the DT.
-
-I see your concern about what happens if the "extensions" are disabled
-though. Realislity they probably never will be.
-
->
-> > Linux or whatever software consuming
-> > the hardware descriptions may want to distrust the absence of newly
-> > named feature extensions and do their own checks, but that's not QEMU's
-> > concern.
->
-> Software should be able to trust that the DT describes the system
-> correctly. I can only speak for Linux here, but validating the DT is not
-> the job of the running kernel - it should be a correct description.
-
-AFAIK the DT is correct. We are describing the hardware within the
-scope of the DT spec.
-
-If a new node exists that describes what the hardware does not support
-we can update to support that as well.
-
->
-> > Actually, being able to disable these newly named features allows
-> > Linux and other software to test how they behave when the feature goes
-> > away.
->
-> That's helpful sure, but it doesn't absolve QEMU of having to correctly
-> generate a DT.
-
-I'm pretty sure there isn't anything for us to do differently here
-right? It's just a bad situation that we are trying to support.
+I have applied these two patches to the riscv-to-apply.next branch
 
 Alistair
 
+> ---
+>  target/riscv/csr.c | 52 ++++++++++++++++++++++++++--------------------
+>  1 file changed, 29 insertions(+), 23 deletions(-)
 >
-> Thanks,
-> Conor.
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 735fb27be7..6d7a3dd9aa 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1282,6 +1282,32 @@ static bool validate_vm(CPURISCVState *env, target=
+_ulong vm)
+>      return get_field(mode_supported, (1 << vm));
+>  }
+>
+> +static target_ulong legalize_xatp(CPURISCVState *env, target_ulong old_x=
+atp,
+> +                                  target_ulong val)
+> +{
+> +    target_ulong mask;
+> +    bool vm;
+> +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> +        vm =3D validate_vm(env, get_field(val, SATP32_MODE));
+> +        mask =3D (val ^ old_xatp) & (SATP32_MODE | SATP32_ASID | SATP32_=
+PPN);
+> +    } else {
+> +        vm =3D validate_vm(env, get_field(val, SATP64_MODE));
+> +        mask =3D (val ^ old_xatp) & (SATP64_MODE | SATP64_ASID | SATP64_=
+PPN);
+> +    }
+> +
+> +    if (vm && mask) {
+> +        /*
+> +         * The ISA defines SATP.MODE=3DBare as "no translation", but we =
+still
+> +         * pass these through QEMU's TLB emulation as it improves
+> +         * performance.  Flushing the TLB on SATP writes with paging
+> +         * enabled avoids leaking those invalid cached mappings.
+> +         */
+> +        tlb_flush(env_cpu(env));
+> +        return val;
+> +    }
+> +    return old_xatp;
+> +}
+> +
+>  static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mp=
+p,
+>                                   target_ulong val)
+>  {
+> @@ -2997,31 +3023,11 @@ static RISCVException read_satp(CPURISCVState *en=
+v, int csrno,
+>  static RISCVException write_satp(CPURISCVState *env, int csrno,
+>                                   target_ulong val)
+>  {
+> -    target_ulong mask;
+> -    bool vm;
+> -
+>      if (!riscv_cpu_cfg(env)->mmu) {
+>          return RISCV_EXCP_NONE;
+>      }
+>
+> -    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> -        vm =3D validate_vm(env, get_field(val, SATP32_MODE));
+> -        mask =3D (val ^ env->satp) & (SATP32_MODE | SATP32_ASID | SATP32=
+_PPN);
+> -    } else {
+> -        vm =3D validate_vm(env, get_field(val, SATP64_MODE));
+> -        mask =3D (val ^ env->satp) & (SATP64_MODE | SATP64_ASID | SATP64=
+_PPN);
+> -    }
+> -
+> -    if (vm && mask) {
+> -        /*
+> -         * The ISA defines SATP.MODE=3DBare as "no translation", but we =
+still
+> -         * pass these through QEMU's TLB emulation as it improves
+> -         * performance.  Flushing the TLB on SATP writes with paging
+> -         * enabled avoids leaking those invalid cached mappings.
+> -         */
+> -        tlb_flush(env_cpu(env));
+> -        env->satp =3D val;
+> -    }
+> +    env->satp =3D legalize_xatp(env, env->satp, val);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -3506,7 +3512,7 @@ static RISCVException read_hgatp(CPURISCVState *env=
+, int csrno,
+>  static RISCVException write_hgatp(CPURISCVState *env, int csrno,
+>                                    target_ulong val)
+>  {
+> -    env->hgatp =3D val;
+> +    env->hgatp =3D legalize_xatp(env, env->hgatp, val);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> @@ -3772,7 +3778,7 @@ static RISCVException read_vsatp(CPURISCVState *env=
+, int csrno,
+>  static RISCVException write_vsatp(CPURISCVState *env, int csrno,
+>                                    target_ulong val)
+>  {
+> -    env->vsatp =3D val;
+> +    env->vsatp =3D legalize_xatp(env, env->vsatp, val);
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> --
+> 2.25.1
+>
+>
 
