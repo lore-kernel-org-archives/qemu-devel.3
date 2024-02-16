@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5883CC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 06:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D290CC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 06:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rarUR-0001LG-0S; Fri, 16 Feb 2024 01:14:27 -0500
+	id 1rarUd-0001Qh-RR; Fri, 16 Feb 2024 01:14:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1rarUP-0001Ky-3a
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:26 -0500
+ id 1rarUc-0001P3-3Y
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:38 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1rarUM-0006L6-W3
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:24 -0500
+ id 1rarUa-0006N6-8h
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 01:14:37 -0500
 Received: from mail.andestech.com (ATCPCS16.andestech.com [10.0.1.222])
- by Atcsqr.andestech.com with ESMTP id 41G6E7Sw007706;
- Fri, 16 Feb 2024 14:14:07 +0800 (+08)
+ by Atcsqr.andestech.com with ESMTP id 41G6EIQA007749;
+ Fri, 16 Feb 2024 14:14:18 +0800 (+08)
  (envelope-from alvinga@andestech.com)
 Received: from alvinga-VirtualBox.andestech.com (10.0.13.68) by
  ATCPCS16.andestech.com (10.0.1.222) with Microsoft SMTP Server id 14.3.498.0; 
- Fri, 16 Feb 2024 14:14:06 +0800
+ Fri, 16 Feb 2024 14:14:15 +0800
 To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH 1/4] target/riscv: Add CSR tcontrol of debug trigger module
-Date: Fri, 16 Feb 2024 14:13:29 +0800
-Message-ID: <20240216061332.50229-2-alvinga@andestech.com>
+Subject: [PATCH 3/4] target/riscv: Set the value of CSR tcontrol when trapping
+ to M-mode
+Date: Fri, 16 Feb 2024 14:13:31 +0800
+Message-ID: <20240216061332.50229-4-alvinga@andestech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240216061332.50229-1-alvinga@andestech.com>
 References: <20240216061332.50229-1-alvinga@andestech.com>
@@ -43,7 +44,7 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.0.13.68]
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 41G6E7Sw007706
+X-MAIL: Atcsqr.andestech.com 41G6EIQA007749
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -69,83 +70,36 @@ From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The RISC-V debug specification defines an optional CSR "tcontrol" within
-the trigger module. This commit adds its read/write operations and
-related bit-field definitions.
+From the RISC-V debug specification, it defines the following operations
+for CSR tcontrol when any trap into M-mode is taken:
+1. tcontrol.MPTE is set to the value of tcontrol.MTE
+2. tcontrol.MTE is set to 0
+
+This commit implements the above operations into
+riscv_cpu_do_interrupt().
 
 Signed-off-by: Alvin Chang <alvinga@andestech.com>
 ---
- target/riscv/cpu.h      |  1 +
- target/riscv/cpu_bits.h |  3 +++
- target/riscv/csr.c      | 15 +++++++++++++++
- 3 files changed, 19 insertions(+)
+ target/riscv/cpu_helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index f52dce78ba..f9ae3e3025 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -364,6 +364,7 @@ struct CPUArchState {
-     target_ulong tdata1[RV_MAX_TRIGGERS];
-     target_ulong tdata2[RV_MAX_TRIGGERS];
-     target_ulong tdata3[RV_MAX_TRIGGERS];
-+    target_ulong tcontrol;
-     target_ulong mcontext;
-     struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
-     struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index fc2068ee4d..3b3a7a0fa4 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -353,6 +353,7 @@
- #define CSR_TDATA2          0x7a2
- #define CSR_TDATA3          0x7a3
- #define CSR_TINFO           0x7a4
-+#define CSR_TCONTROL        0x7a5
- #define CSR_MCONTEXT        0x7a8
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index d462d95ee1..037ae21062 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1806,6 +1806,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+             riscv_cpu_set_virt_enabled(env, 0);
+         }
  
- /* Debug Mode Registers */
-@@ -900,6 +901,8 @@ typedef enum RISCVException {
- #define JVT_BASE                           (~0x3F)
- 
- /* Debug Sdtrig CSR masks */
-+#define TCONTROL_MTE                       BIT(3)
-+#define TCONTROL_MPTE                      BIT(7)
- #define MCONTEXT32                         0x0000003F
- #define MCONTEXT64                         0x0000000000001FFFULL
- #define MCONTEXT32_HCONTEXT                0x0000007F
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index d4e8ac13b9..816c530481 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3937,6 +3937,20 @@ static RISCVException read_tinfo(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException read_tcontrol(CPURISCVState *env, int csrno,
-+                                    target_ulong *val)
-+{
-+    *val = env->tcontrol;
-+    return RISCV_EXCP_NONE;
-+}
++        /* Trapping to M-mode. Set tcontrol CSR in debug Sdtrig extension. */
++        s = env->tcontrol;
++        s = set_field(s, TCONTROL_MPTE, get_field(s, TCONTROL_MTE));
++        s = set_field(s, TCONTROL_MTE, 0);
++        env->tcontrol = s;
 +
-+static RISCVException write_tcontrol(CPURISCVState *env, int csrno,
-+                                     target_ulong val)
-+{
-+    env->tcontrol = val & (TCONTROL_MPTE | TCONTROL_MTE);
-+    return RISCV_EXCP_NONE;
-+}
-+
- static RISCVException read_mcontext(CPURISCVState *env, int csrno,
-                                     target_ulong *val)
- {
-@@ -4861,6 +4875,7 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     [CSR_TDATA2]    =  { "tdata2",   debug, read_tdata,    write_tdata    },
-     [CSR_TDATA3]    =  { "tdata3",   debug, read_tdata,    write_tdata    },
-     [CSR_TINFO]     =  { "tinfo",    debug, read_tinfo,    write_ignore   },
-+    [CSR_TCONTROL]  =  { "tcontrol", debug, read_tcontrol, write_tcontrol },
-     [CSR_MCONTEXT]  =  { "mcontext", debug, read_mcontext, write_mcontext },
- 
-     /* User Pointer Masking */
+         s = env->mstatus;
+         s = set_field(s, MSTATUS_MPIE, get_field(s, MSTATUS_MIE));
+         s = set_field(s, MSTATUS_MPP, env->priv);
 -- 
 2.34.1
 
