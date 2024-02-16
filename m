@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C554EC48BEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3297C48BEB
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 11:09:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1raw38-0004YI-WE; Fri, 16 Feb 2024 06:06:39 -0500
+	id 1raw18-0007Nn-DF; Fri, 16 Feb 2024 06:04:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw2E-0002bV-Qu
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:05:39 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw15-0007BI-2w
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:27 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw27-0001L6-AN
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:05:38 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-40fd2f7ef55so16816995e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:05:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1raw12-00013E-1b
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 06:04:26 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-33d14a711efso681771f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 03:04:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708081528; x=1708686328; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708081462; x=1708686262; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+TP1TJioczzc39Hx3iqthMm6LDPQbvhwTOiEAkO1gUM=;
- b=YxW32De3ZsXwzJns1+dzJxJhcBFHYEb8tnw00Pf98GX+sR5gfeKz/H3vV8ezDDiDmN
- Vp7iT2hVTH/vhgcq0Zrzd3K1wFB6aA+HwgnbHY/X5FiiFwjHjC4revQ7rlIVkg7gwxnx
- 3uCP5OMjKl0is5y2Ety2xRPsrWsPB8LYEXR6hi3W6MV5DFzaS4sfVYqLENmRCUYq+/C9
- ST7vnlkCbp5vBgMHS4El2ekn9fFvZBNUkaGQ3nUYfHLOZYaS0jpGCX8rQhg/9NHrS7bv
- ED6JuTxTNE8BcokPCcENyQDdh4B9spnhIuEp48xK8VNG1R0yvqlKve4ebn6UcB/Fjaly
- EcwA==
+ bh=1f6J2H1K9VOhN8YiJnj6i61rwEdmxKhJYj3MwXMwmEA=;
+ b=aklU6aCRgVVkS4G4qnszjyTTv5IvY/xbh8JwrkXQjUznalKUIvh7LMV/FuwUMv8qwT
+ qPyUkgwuQ1RF9CgV5iEKCgtVjtHoPAghDMs3D4pegzbUspx9nnUV+1y/61YUCwFSelVr
+ pYLGNo4POjhX1n7amesa143IGUtbKy3rPZOXozLnJ1wT54xkewGPjn4AGxart7IJ8GXg
+ T2ErzLyQ8r9ZrxjweRz5e3yAncECGMHnbh60x6qWIIwnqXd0S7t0peR16jF5KOQZmffW
+ IXfOV8bFpTjr50/2VFgVdUPx5Zwms1SuF6/KSqE9P0zCo4NisOwo9Vo66QVKuDon7uCd
+ QTHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708081528; x=1708686328;
+ d=1e100.net; s=20230601; t=1708081462; x=1708686262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+TP1TJioczzc39Hx3iqthMm6LDPQbvhwTOiEAkO1gUM=;
- b=NvERRj9zm9ydTlQTGux8r5v05i+7dJdcvKcJz9xXZ/bTE+jkZwJv6sllPfrWLgtjdI
- gxpr+C9X2w7y2GHvxDZEAM5NVlPjYHWK9I95yyjvv9HevOZ6P5eHiFWvDL3oDE9xRb4W
- HlgjfY4lspVyhReoYbOOJKujZ9ZQudFBpDQXnZ2rZYDXO9ooNTHupL8KvRu7tnOSr2n1
- xU/FqWPetTnMLlnNFepaDADNlONaRiJMpmJkM2wueiZjEVqqXn6s2r5VyqnR0+8HRS+V
- IT/6slut4sDIOWgLNUcZOKqDjZuhF2kT02I/HT6c9jmVF7tV1l5KxFdro8Cb8MQ36huh
- imWQ==
-X-Gm-Message-State: AOJu0Yy7Q8jk87ObReJPyAzDiTb7mA9Wy39ivEFNLzTcY6zVdkExqelb
- b9GLV2CU0V/cjqBHo85kXrElM+Do5gcpf5FPuU7lk1jXs9LUvU5GYiz1Nr8PpO0cbx/11zbhMQM
- G
-X-Google-Smtp-Source: AGHT+IEuLhan8PMzjpoVk8iNDX+51J2TUk5ZsvY/EOaOL/amk+8mlPJ5ImdnALCtoNT5IeBwXzj7/A==
-X-Received: by 2002:a05:600c:3b10:b0:411:aa3c:128d with SMTP id
- m16-20020a05600c3b1000b00411aa3c128dmr7082597wms.15.1708081528391; 
- Fri, 16 Feb 2024 03:05:28 -0800 (PST)
+ bh=1f6J2H1K9VOhN8YiJnj6i61rwEdmxKhJYj3MwXMwmEA=;
+ b=cgkEdGwznHfFjPcId8wTg6JTaByRIhU7x1gP7Ey+gErROHLsypfX+ZgZFWgTkum0mR
+ ETzS3j3vtHowNLLYPb8JC0r+Eu5x2ScQGUHebMYLUUaB9JJvz2oGY+3c67Vvc33uiv9p
+ xpyHs0TmDxawsZPyAC1LOrEE3GtdR9/zDhuueJ+4NswWKTWMjMqnFMe+HHLeHAChFAio
+ nMgi0BVoLHTqQX8LmCbuKH68E+TPv+jBtCRqrajvJBs6WGoygV/fteK10E9d1t3M6ZPD
+ v7M+a+HceTIWE92x7mKoD7ou1iKfLfHjeNQRXVFMIjYMn/+Z1Qzu1/HyYHb5psu9e7rO
+ Iipw==
+X-Gm-Message-State: AOJu0YzMF+WKQ7JMJmRv7b0HBAHSOSP+wOCyWzfjSkbY4G1nv/e/+1uq
+ gxm72gwFoTv7CP4+o/H9ImM+LpsZxQ4ZMbVrkU+hppVmFMbY+Y6al38PWTmIqOiEx5JUI43Ufbv
+ 3
+X-Google-Smtp-Source: AGHT+IGd+K1Ye21x3B9/fikutK4pHA5/MV8nPoj9xvkFcz4dlQ3vDbllE3JsMEgnq7erpMjwDyfFKw==
+X-Received: by 2002:a05:6000:1e8f:b0:33d:2120:1011 with SMTP id
+ dd15-20020a0560001e8f00b0033d21201011mr550180wrb.54.1708081462196; 
+ Fri, 16 Feb 2024 03:04:22 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.210.246])
  by smtp.gmail.com with ESMTPSA id
- l8-20020a05600c1d0800b00410c04e5455sm2031239wms.20.2024.02.16.03.05.26
+ az1-20020adfe181000000b0033d1f992ae3sm1275770wrb.112.2024.02.16.03.04.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Feb 2024 03:05:27 -0800 (PST)
+ Fri, 16 Feb 2024 03:04:21 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 20/21] hw/arm/mps2: Add QOM parentship relation with OR IRQ
- gates
-Date: Fri, 16 Feb 2024 12:03:11 +0100
-Message-ID: <20240216110313.17039-21-philmd@linaro.org>
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 10/21] hw/usb: Inline usb_new()
+Date: Fri, 16 Feb 2024 12:03:01 +0100
+Message-ID: <20240216110313.17039-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240216110313.17039-1-philmd@linaro.org>
 References: <20240216110313.17039-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,53 +97,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev objects created with object_new() need to manually add
-their parent relationship with object_property_add_child().
+Inline the 2 uses of usb_new().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Better would be to embedded an call object_initialize_child()...
----
- hw/arm/mps2.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/hw/usb.h    | 1 -
+ hw/usb/bus.c        | 9 ++-------
+ hw/usb/dev-serial.c | 2 +-
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 50919ee46d..780f2adf0f 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -274,6 +274,7 @@ static void mps2_common_init(MachineState *machine)
+diff --git a/include/hw/usb.h b/include/hw/usb.h
+index 32c23a5ca2..2d820685cc 100644
+--- a/include/hw/usb.h
++++ b/include/hw/usb.h
+@@ -500,7 +500,6 @@ void usb_bus_release(USBBus *bus);
+ USBBus *usb_bus_find(int busnr);
+ void usb_legacy_register(const char *typename, const char *usbdevice_name,
+                          USBDevice *(*usbdevice_init)(void));
+-USBDevice *usb_new(const char *name);
+ bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp);
+ USBDevice *usb_create_simple(USBBus *bus, const char *name);
+ USBDevice *usbdevice_create(const char *cmdline);
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+index 148224f06a..a599e2552b 100644
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -329,11 +329,6 @@ void usb_legacy_register(const char *typename, const char *usbdevice_name,
+     }
+ }
  
-         orgate = object_new(TYPE_OR_IRQ);
-         object_property_set_int(orgate, "num-lines", 6, &error_fatal);
-+        object_property_add_child(OBJECT(machine), "orgate12", orgate);
-         qdev_realize(DEVICE(orgate), NULL, &error_fatal);
-         orgate_dev = DEVICE(orgate);
-         qdev_connect_gpio_out(orgate_dev, 0, qdev_get_gpio_in(armv7m, 12));
-@@ -317,6 +318,7 @@ static void mps2_common_init(MachineState *machine)
+-USBDevice *usb_new(const char *name)
+-{
+-    return USB_DEVICE(qdev_new(name));
+-}
+-
+ bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
+ {
+     return qdev_realize_and_unref(&dev->qdev, &bus->qbus, errp);
+@@ -341,7 +336,7 @@ bool usb_realize_and_unref(USBDevice *dev, USBBus *bus, Error **errp)
  
-         orgate = object_new(TYPE_OR_IRQ);
-         object_property_set_int(orgate, "num-lines", 10, &error_fatal);
-+        object_property_add_child(OBJECT(machine), "orgate-12", orgate);
-         qdev_realize(DEVICE(orgate), NULL, &error_fatal);
-         orgate_dev = DEVICE(orgate);
-         qdev_connect_gpio_out(orgate_dev, 0, qdev_get_gpio_in(armv7m, 12));
-@@ -333,6 +335,8 @@ static void mps2_common_init(MachineState *machine)
+ USBDevice *usb_create_simple(USBBus *bus, const char *name)
+ {
+-    USBDevice *dev = usb_new(name);
++    USBDevice *dev = USB_DEVICE(qdev_new(name));
  
-             txrx_orgate = object_new(TYPE_OR_IRQ);
-             object_property_set_int(txrx_orgate, "num-lines", 2, &error_fatal);
-+            object_property_add_child(OBJECT(machine),
-+                                      "orgate-uart[*]", txrx_orgate);
-             qdev_realize(DEVICE(txrx_orgate), NULL, &error_fatal);
-             txrx_orgate_dev = DEVICE(txrx_orgate);
-             qdev_connect_gpio_out(txrx_orgate_dev, 0,
-@@ -425,6 +429,7 @@ static void mps2_common_init(MachineState *machine)
+     usb_realize_and_unref(dev, bus, &error_abort);
+     return dev;
+@@ -693,7 +688,7 @@ USBDevice *usbdevice_create(const char *driver)
+         return NULL;
+     }
  
-         orgate = object_new(TYPE_OR_IRQ);
-         object_property_set_int(orgate, "num-lines", 2, &error_fatal);
-+        object_property_add_child(OBJECT(machine), "orgate-ssi[*]", orgate);
-         orgate_dev = DEVICE(orgate);
-         qdev_realize(orgate_dev, NULL, &error_fatal);
-         qdev_connect_gpio_out(orgate_dev, 0,
+-    dev = f->usbdevice_init ? f->usbdevice_init() : usb_new(f->name);
++    dev = f->usbdevice_init ? f->usbdevice_init() : USB_DEVICE(qdev_new(f->name));
+     if (!dev) {
+         error_report("Failed to create USB device '%s'", f->name);
+         return NULL;
+diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
+index 63047d79cf..6e79c46d53 100644
+--- a/hw/usb/dev-serial.c
++++ b/hw/usb/dev-serial.c
+@@ -624,7 +624,7 @@ static USBDevice *usb_braille_init(void)
+         return NULL;
+     }
+ 
+-    dev = usb_new("usb-braille");
++    dev = USB_DEVICE(qdev_new("usb-braille"));
+     qdev_prop_set_chr(&dev->qdev, "chardev", cdrv);
+     return dev;
+ }
 -- 
 2.41.0
 
