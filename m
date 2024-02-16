@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10798C48BEB
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0271DC48260
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Feb 2024 13:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ray38-0000PQ-TX; Fri, 16 Feb 2024 08:14:43 -0500
+	id 1ray34-0000KZ-4D; Fri, 16 Feb 2024 08:14:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ray31-0000KP-IW
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:14:35 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <charlie@rivosinc.com>)
+ id 1rarFW-0003pg-Lg
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 00:59:02 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ray2x-0002mB-3B
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 08:14:35 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33b2960ff60so1729184f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 05:14:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <charlie@rivosinc.com>)
+ id 1rarFU-0002Sf-Oq
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 00:59:02 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-607d9c4fa90so13432367b3.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Feb 2024 21:58:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708089269; x=1708694069; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UQW2XTOIXxEEpn1sQycYmvx33WMOBULqAV/EMMlI01o=;
- b=kHa5rl8WGdkbLLhiyugXWLxBteF2q8zfvcoOGmXl08QsuZt2Q/0eGSt8/INqWiNuBB
- 7obZXhKlhIa8gPa0UtWKj72Wu3gQ6n9AhvL7g1qW9wgrgyZLdIOGWf4dB61XYkbYZrxC
- Nrt4w3CrhzuGeuLn6cX+mKVEBYv1wBNhGvroS7xIygsjOiFXJ0/lZykU6FAPs2Dor3Xh
- URJQKM8PvLUQ1BCVMcD9UPv2O2a0AOznJbUgugnsw3BP8e0l/PdX/niFND5ZOyTCZqOL
- VV/KMAiogiDQ2sZfRfw4Y/bvwJRKfrci64aTMhSdc5Lgot0lHIjBbXw9mYREl/V0DnM3
- iJFg==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1708063138; x=1708667938;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=qkt6gzG86HYBPO5PBKdyksyrZ9wuJF9yjWjHm8/bdzM=;
+ b=i6HFdH8QGao2zMYLndDRIBJpfoEMxhBvNMXTj1DP/CzqiGDf3shKDjeksC4C8g+j19
+ nsjQu1sxfdSdqX+Eb4MNe0Eeb138KdG3EeFx3ohs+VlCE6PO/gCm3lqkCacNyG6NE+Jd
+ O796okjjDe7dLzrUhowhgiLNyuf8QZ0MbDre60Ytb3SlsaczqhcYoofIR3JS2EXqYDzV
+ eT4jP+E0vAf0ejErgCbsEDDlEAflQWO8fFpA6ZcZckuU2Dc4VLFOS38YkswLIElm5deL
+ rDIyj9LTmlmMCbt9a6iTYK0+yiFGfVGfcy+TOAHUDlgWvM7kKxEIBAb1EYjGratkXYJH
+ VFhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708089269; x=1708694069;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UQW2XTOIXxEEpn1sQycYmvx33WMOBULqAV/EMMlI01o=;
- b=s3eSpJYyWE6UHHqEULHeQIYP051Um23jY8/fj7H1y7KzdcRyD8ZEe28NdRI05CL/Mq
- wP82XeXD+c4ck5b7gCFnVN+th5UQvbOu7dmJu8HGiqBrO7HkwtV3SOuE28JtJ9DAPLHF
- N/LpJh5yNkOx6o3X4I2cFfQQ3Lr+EhXIEWsHADG0Z809KrwmIihpvvsdkt6cmAnhLfKP
- COONHFapvvxreNLgGNSLZJlzPnCdnc9Ze2R6UombcxeRlITJsQgWbW10inzrI3GtFu2g
- nrSzngpphpOYY4Cy2K1yeCGmwAhWCemrM3YfssR45NI6OQk8nNIfm5RLy/+Y53Q9ThHh
- HGiA==
+ d=1e100.net; s=20230601; t=1708063138; x=1708667938;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qkt6gzG86HYBPO5PBKdyksyrZ9wuJF9yjWjHm8/bdzM=;
+ b=BuDJhGEPHkdrK6n/7ctO8eBLuHlVFU4n18q1PwXzYLm+gysA4y8FQ0uOHYTIA+r4XB
+ lXf4hIScA6x13rx2yzrtCwZ8TflYH9cZf+6DO4occFFM+uU7qCKmHE5yU9NvCGBwDwUX
+ dwknSmR6LnEo5hA+vTgsZALr9czzFwUwd/4zQ6ymepRpp75vzGnNpuCLQXrh4tUpsz0q
+ 1ZxsG0eLyu36fmwsXtC9Od9EKuRlu/FWV8oULB7AShaGnOr48OCRo9Z7OLzk5oHLJSUi
+ bzjifsb91ZroYsduG8kBtcU8GRvOExbnHn7VwlbyFSTI7DKSxMCENdogU8JzEV1z3NOG
+ EB5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU/GNCF/9SaeC252pznaUKY5MdCYZ9APco84cqJ1ln/XwK+2XLp1Adr0oo4zApjjiyX7yB62uDO7n2EdjLyK2x1wPul+BM=
-X-Gm-Message-State: AOJu0YyUShpqHDGILzgy7r/HcAlwJVBUWbjnBASSnji009yLkyWthk6R
- AR7sVPv83niPKSKOOlXP8IgcMrwArVvkto5Rnfwf9/bdVivJ+X6EHNpujaE/rAY=
-X-Google-Smtp-Source: AGHT+IGM9GJvAvpeIikXUhpgCit7dtIQ3MT61p1XzS97ahtKgrb3AYnH5XonfeiDsV5qaro8VSb3hw==
-X-Received: by 2002:adf:efd2:0:b0:33d:201f:ea9d with SMTP id
- i18-20020adfefd2000000b0033d201fea9dmr1214769wrp.2.1708089268931; 
- Fri, 16 Feb 2024 05:14:28 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.210.246])
- by smtp.gmail.com with ESMTPSA id
- o10-20020a05600c378a00b0040fdc7f4fcdsm2262733wmr.4.2024.02.16.05.14.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Feb 2024 05:14:28 -0800 (PST)
-Message-ID: <9dcd14bf-6ccd-4ed5-91c2-f0af96774b8c@linaro.org>
-Date: Fri, 16 Feb 2024 14:14:26 +0100
+ AJvYcCWu2XNpDZRkIL8u2T5MQ31wmDXwjyh3cPAzgswPWLL6z9M3+vADaYWG2Q+j+BG7umDNtlfg70WVGCzfp8eePmbT3qTujIg=
+X-Gm-Message-State: AOJu0YyMSUEh9DkbRjBFyinXEXZ5rOoiSZHUaN679KPTYiZ8DsaShX6J
+ 8TAjascOw7WEleh5A6/+ru20qq8yXTOv2XpQ06CzaVVng79k+1wQyjz8ljbNtK0=
+X-Google-Smtp-Source: AGHT+IG0YQeP3a55UeL2dPLivTEtmwPUZxTwga0rFX7vur+O1AF9hPkrFxutjRNb2b9SOk6reFrQDw==
+X-Received: by 2002:a81:4c41:0:b0:607:a085:b434 with SMTP id
+ z62-20020a814c41000000b00607a085b434mr3801690ywa.8.1708063138659; 
+ Thu, 15 Feb 2024 21:58:58 -0800 (PST)
+Received: from ghost ([50.146.0.2]) by smtp.gmail.com with ESMTPSA id
+ p202-20020a0de6d3000000b00607fc1e4fe6sm113000ywe.30.2024.02.15.21.58.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Feb 2024 21:58:57 -0800 (PST)
+Date: Fri, 16 Feb 2024 00:58:56 -0500
+From: Charlie Jenkins <charlie@rivosinc.com>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH] target: hppa: Fix unaligned double word accesses for
+ hppa64
+Message-ID: <Zc75oNNSPx5n2ODr@ghost>
+References: <20240216053415.2163286-1-linux@roeck-us.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] Add ivshmem-flat device
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org
-Cc: thuth@redhat.com
-References: <20231127052024.435743-1-gustavo.romero@linaro.org>
- <20231127052024.435743-2-gustavo.romero@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20231127052024.435743-2-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240216053415.2163286-1-linux@roeck-us.net>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=charlie@rivosinc.com; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 16 Feb 2024 08:14:33 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,168 +96,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/23 06:20, Gustavo Romero wrote:
-> Add a new device, ivshmem-flat, which is similar to the ivshmem PCI but
-> does not require a PCI bus. It's meant to be used on machines like those
-> with Cortex-M MCUs, which usually lack a PCI/PCIe bus, e.g. lm3s6965evb
-> and mps2-an385.
+On Thu, Feb 15, 2024 at 09:34:15PM -0800, Guenter Roeck wrote:
+> Unaligned 64-bit accesses were found in Linux to clobber carry bits,
+> resulting in bad results if an arithmetic operation involving a
+> carry bit was executed after an unaligned 64-bit operation.
 > 
-> The device currently only supports the sysbus bus.
+> hppa 2.0 defines additional carry bits in PSW register bits 32..39.
+> When restoring PSW after executing an unaligned instruction trap,
+> those bits were not cleared and ended up to be active all the time.
+> Clearing bit 32..39 in psw prior to restoring it solves the problem.
 > 
-> The following is an example on how to create the ivshmem-flat device on
-> a Stellaris machine:
-> 
-> $ qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb -nographic
->                    -net none -chardev stdio,id=con,mux=on
->                    -serial chardev:con -mon chardev=con,mode=readline
->                    -chardev socket,path=/tmp/ivshmem_socket,id=ivf
->                    -device ivshmem-flat,x-irq-qompath=/machine/unattached/device[1]/nvic/unnamed-gpio-in[0],x-bus-qompath="/sysbus",chardev=ivf
->                    -kernel zephyr_qemu.elf
-> 
-> The new device, just like the ivshmem PCI device, supports both peer
-> notification via hardware interrupts and shared memory.
-> 
-> The IRQ QOM path for the target machine can be determined by creating
-> the VM without the ivshmem-flat device, going to the QEMU console and
-> listing the QOM nodes with 'info qom-tree'. In the Stellaris example
-> above the input IRQ is in the NVIC IC.
-> 
-> The MMRs for status and control (notification) are mapped to the MMIO
-> region at 0x400FF000 (default), whilst the shared memory region start
-> is mapped at addr. 0x40100000 (default), but both addresses can be set
-> when creating the device by using 'x-bus-address-{mmr,shmem}' options,
-> respectively.
-> 
-> The device shared memory size can be set using the 'shmem-size' option
-> and it defaults to 4 MiB, which is the default size of shmem allocated
-> by the ivshmem server.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> Cc: Charlie Jenkins <charlie@rivosinc.com>
+> Cc: Helge Deller <deller@gmx.de>
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 > ---
->   docs/system/devices/ivshmem-flat.rst |  89 +++++
->   hw/arm/mps2.c                        |   2 +
->   hw/arm/stellaris.c                   |   5 +-
->   hw/arm/virt.c                        |   2 +
->   hw/core/sysbus-fdt.c                 |   1 +
->   hw/misc/Kconfig                      |   5 +
->   hw/misc/ivshmem-flat.c               | 477 +++++++++++++++++++++++++++
->   hw/misc/meson.build                  |   2 +
->   hw/misc/trace-events                 |  18 +
->   include/hw/misc/ivshmem-flat.h       |  72 ++++
->   10 files changed, 672 insertions(+), 1 deletion(-)
->   create mode 100644 docs/system/devices/ivshmem-flat.rst
->   create mode 100644 hw/misc/ivshmem-flat.c
->   create mode 100644 include/hw/misc/ivshmem-flat.h
+>  target/hppa/helper.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+> index 859644c47a..7b798d1227 100644
+> --- a/target/hppa/helper.c
+> +++ b/target/hppa/helper.c
+> @@ -76,7 +76,12 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
+>      }
+>      psw &= ~reserved;
+>  
+> -    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
+> +    if (hppa_is_pa20(env)) {
+> +        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB | 0xff00000000ull);
 
+I thought there was something fishy in this function but was slow on the
+uptake...
 
-> diff --git a/include/hw/misc/ivshmem-flat.h b/include/hw/misc/ivshmem-flat.h
-> new file mode 100644
-> index 0000000000..2f6f7462f6
-> --- /dev/null
-> +++ b/include/hw/misc/ivshmem-flat.h
-> @@ -0,0 +1,72 @@
-> +/*
-> + * Inter-VM Shared Memory Flat Device
-> + *
-> + * SPDX-FileCopyrightText: 2023 Linaro Ltd.
-> + * SPDX-FileContributor: Gustavo Romero <gustavo.romero@linaro.org>
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + */
-> +
-> +#ifndef IVSHMEM_FLAT_H
-> +#define IVSHMEM_FLAT_H
-> +
+How about defining a new macro (PSW_CB_HIGH) to hold this value?
 
-I had to include the following headers:
+- Charlie
 
-  #include "qemu/queue.h"
-  #include "qemu/event_notifier.h"
-  #include "chardev/char-fe.h"
-  #include "exec/memory.h"
-  #include "qom/object.h"
-  #include "hw/sysbus.h"
-
-in order to fix:
-
-include/hw/misc/ivshmem-flat.h:50:19: error: field has incomplete type 
-'EventNotifier' (aka 'struct EventNotifier')
-     EventNotifier event_notifier;
-                   ^
-include/hw/misc/ivshmem-flat.h:55:5: error: type name requires a 
-specifier or qualifier
-     QTAILQ_ENTRY(IvshmemPeer) next;
-     ^
-include/hw/misc/ivshmem-flat.h:62:5: error: unknown type name 'SysBusDevice'
-     SysBusDevice parent_obj;
-     ^
-include/hw/misc/ivshmem-flat.h:70:5: error: unknown type name 'CharBackend'
-     CharBackend server_chr;
-     ^
-include/hw/misc/ivshmem-flat.h:76:18: error: field has incomplete type 
-'MemoryRegion' (aka 'struct MemoryRegion')
-     MemoryRegion iomem;
-                  ^
-
-> +#define IVSHMEM_MAX_VECTOR_NUM 64
+> +    } else {
+> +        env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
+> +    }
 > +
-> +#define TYPE_IVSHMEM_FLAT "ivshmem-flat"
-> +typedef struct IvshmemFTState IvshmemFTState;
-> +
-> +DECLARE_INSTANCE_CHECKER(IvshmemFTState, IVSHMEM_FLAT, TYPE_IVSHMEM_FLAT)
-> +
-> +/* Ivshmem registers. See ./docs/specs/ivshmem-spec.txt for details. */
-> +enum ivshmem_registers {
-> +    INTMASK = 0,
-> +    INTSTATUS = 4,
-> +    IVPOSITION = 8,
-> +    DOORBELL = 12,
-> +};
-> +
-> +typedef struct VectorInfo {
-> +    EventNotifier event_notifier;
-> +    uint16_t id;
-> +} VectorInfo;
-> +
-> +typedef struct IvshmemPeer {
-> +    QTAILQ_ENTRY(IvshmemPeer) next;
-> +    VectorInfo vector[IVSHMEM_MAX_VECTOR_NUM];
-> +    int vector_counter;
-> +    uint16_t id;
-> +} IvshmemPeer;
-> +
-> +struct IvshmemFTState {
-> +    SysBusDevice parent_obj;
-> +
-> +    uint64_t msg_buf;
-> +    int msg_buffered_bytes;
-> +
-> +    QTAILQ_HEAD(, IvshmemPeer) peer;
-> +    IvshmemPeer own;
-> +
-> +    CharBackend server_chr;
-> +
-> +    char *bus_qompath;
-> +
-> +    /* IRQ */
-> +    qemu_irq irq;
-> +    char *irq_qompath;
-> +
-> +    /* MMRs */
-> +    MemoryRegion iomem;
-> +    uint64_t bus_address_mmr;
-> +    uint32_t intmask;
-> +    uint32_t intstatus;
-> +    uint32_t ivposition;
-> +    uint32_t doorbell;
-> +
-> +    /* Shared memory */
-> +    MemoryRegion shmem;
-> +    int shmem_fd;
-> +    uint32_t shmem_size;
-> +    uint64_t bus_address_shmem;
-> +};
-> +
-> +#endif /* IVSHMEM_FLAT_H */
-
+>      env->psw_n = (psw / PSW_N) & 1;
+>      env->psw_v = -((psw / PSW_V) & 1);
+>  
+> -- 
+> 2.39.2
+> 
 
