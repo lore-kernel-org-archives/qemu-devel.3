@@ -4,38 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E1AC48BC4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 09:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60142C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 09:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbGpA-00050h-KF; Sat, 17 Feb 2024 04:17:32 -0500
+	id 1rbGtT-00075a-Nc; Sat, 17 Feb 2024 04:21:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rbGp8-00050F-PD; Sat, 17 Feb 2024 04:17:30 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbGtS-00075Q-Fq
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:21:58 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rbGp3-0006kK-4k; Sat, 17 Feb 2024 04:17:30 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbGtM-0007W6-TZ
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:21:58 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EC9FE4E175;
- Sat, 17 Feb 2024 12:17:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CB0024E179;
+ Sat, 17 Feb 2024 12:22:03 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CF73081CA8;
- Sat, 17 Feb 2024 12:17:20 +0300 (MSK)
-Message-ID: <c1f1a290-f1d8-44bb-adfa-5320119f860f@tls.msk.ru>
-Date: Sat, 17 Feb 2024 12:17:20 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id A2A8581CAD;
+ Sat, 17 Feb 2024 12:21:50 +0300 (MSK)
+Message-ID: <616a3701-dd06-4bbd-8519-b670f07e66aa@tls.msk.ru>
+Date: Sat, 17 Feb 2024 12:21:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vdpa: set old virtio status at cvq isolation probing end
+Subject: Re: [PATCH] target/i386: Eip error in x86_64-softmmu
 Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, si-wei.liu@oracle.com, qemu-stable@nongnu.org,
- Hawkins Jiawei <yin31149@gmail.com>
-References: <20230725182143.1523091-1-eperezma@redhat.com>
- <CACGkMEsqbZNGKdK1kM-qQeZShNeonQKK4_65vtCueQxUsRFTsQ@mail.gmail.com>
+To: guoguangyao <guoguangyao18@mails.ucas.ac.cn>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, eduardo@habkost.net
+References: <20240115020804.30272-1-guoguangyao18@mails.ucas.ac.cn>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -61,9 +58,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CACGkMEsqbZNGKdK1kM-qQeZShNeonQKK4_65vtCueQxUsRFTsQ@mail.gmail.com>
+In-Reply-To: <20240115020804.30272-1-guoguangyao18@mails.ucas.ac.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -87,39 +84,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.07.2023 05:07, Jason Wang wrote:
-> On Wed, Jul 26, 2023 at 2:21 AM Eugenio Pérez <eperezma@redhat.com> wrote:
->>
->> The device already has a virtio status set by vhost_vdpa_init by the
->> time vhost_vdpa_probe_cvq_isolation is called. vhost_vdpa_init set
->> S_ACKNOWLEDGE and S_DRIVER, so it is invalid to just reset it.
->>
->> It is invalid to start the device after it, but all devices seems to be
->> fine with it.  Fixing qemu so it follows virtio start procedure.
->>
->> Fixes: 152128d64697 ("vdpa: move CVQ isolation check to net_init_vhost_vdpa")
->> Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
->> Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
->> ---
->>   net/vhost-vdpa.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
->> index 9795306742..d7e2b714b4 100644
->> --- a/net/vhost-vdpa.c
->> +++ b/net/vhost-vdpa.c
->> @@ -1333,6 +1333,8 @@ static int vhost_vdpa_probe_cvq_isolation(int device_fd, uint64_t features,
->>   out:
->>       status = 0;
->>       ioctl(device_fd, VHOST_VDPA_SET_STATUS, &status);
->> +    status = VIRTIO_CONFIG_S_ACKNOWLEDGE | VIRTIO_CONFIG_S_DRIVER;
->> +    ioctl(device_fd, VHOST_VDPA_SET_STATUS, &status);
+15.01.2024 05:08, guoguangyao wrote:
+> When closing PCREL, qemu-system-x86_64 run into error.
+> Eip modification here leads to the result. Using s->pc
+> in func gen_update_eip_next() solves the problem.
+> 
+> Fixes: b5e0d5d22fbf("target/i386: Fix 32-bit wrapping of pc/eip computation")
 
-Ping? Has this been forgotten, or not needed anymore?
+It looks like the situation with PCREL is a bit more complex,
+see https://gitlab.com/qemu-project/qemu/-/issues/2092
+I'm assuming this particular change does not actually fix the problem
+(which is still unfixed on master).
 
-(Just looking at the stable-to-apply queue)
+Thanks,
 
 /mjt
 
+> Signed-off-by: guoguangyao <guoguangyao18@mails.ucas.ac.cn>
+> 
+> 	modified:   target/i386/tcg/translate.c
+> ---
+>   target/i386/tcg/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index e1eb82a5c6..6f57d5a8a5 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -567,9 +567,9 @@ static void gen_update_eip_next(DisasContext *s)
+>       if (tb_cflags(s->base.tb) & CF_PCREL) {
+>           tcg_gen_addi_tl(cpu_eip, cpu_eip, s->pc - s->pc_save);
+>       } else if (CODE64(s)) {
+> -        tcg_gen_movi_tl(cpu_eip, s->base.pc_next);
+> +        tcg_gen_movi_tl(cpu_eip, s->pc);
+>       } else {
+> -        tcg_gen_movi_tl(cpu_eip, (uint32_t)(s->base.pc_next - s->cs_base));
+> +        tcg_gen_movi_tl(cpu_eip, (uint32_t)(s->pc - s->cs_base));
+>       }
+>       s->pc_save = s->pc;
+>   }
 
 
