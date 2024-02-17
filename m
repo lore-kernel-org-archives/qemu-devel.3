@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12566C48260
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 02:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E58BC48BEF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 03:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbAZY-0005PW-9n; Fri, 16 Feb 2024 21:37:00 -0500
+	id 1rbBHy-0001eL-Tz; Fri, 16 Feb 2024 22:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rbAZS-0005P9-Fu
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 21:36:54 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rbAZQ-00048Z-RP
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 21:36:54 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e11a779334so1733898b3a.0
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 18:36:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708137411; x=1708742211; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8fSUs8BjH68Z0oXNSJRrjzgD6NMFae9HgvcKhiRDnBo=;
- b=RU/AE4/KYLzlpUVlwf5RLLFfWYo6Z2PSeNOEBmkSkBzHEQMCp9gBNAj9mYwdxe85jD
- cdRru33tGEV2bSdakK7/SdEKkXSPgA8IS/K8Ptl+ETxth4Za1qf5IulCgrsl7tJ1MRBo
- P79MzyfFmz9BawAGzse3BZClZW4JE+SkBuno8O37rRYq6ZZeZPan6bbcX8o+LV2ANqU5
- ke5p1pgAYR42XZiwTppZ+covfe/HPSzgBkPMJYmzToEuOojE9B0WGUORTD+Gc2ysKnbS
- NJz/UTgWadqsjeBxe53diBLRsmWO1nIU69+n/SGk1wh59dCZ9CfzywmjTiBWywQzArbO
- U46g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708137411; x=1708742211;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8fSUs8BjH68Z0oXNSJRrjzgD6NMFae9HgvcKhiRDnBo=;
- b=TuJcus+XKMCGZkPouvkCtUOG0Dy79R2+P7V+ec4SvIGyWRj4ZAx95oZXLrMUXzin+b
- 0S1yUHYG0x9aEQ/x8dpjt51mRpusQMfmxQFK0OLS6uzIPtOpWEjrZNmiU2xoQtRo+55u
- 9MK3tT+OYr6qq2zQnWgH1ZR4Cli7PpzrWKYxyATvLxHM5pwhme4r7gs5m8mmW/7xlJFU
- gMaRNNzHH+BUeL2gyJs31I9T1u09DTirtwMsnyHDqcCfqQ5VLPL8prI3MdcFZ4IhWY+C
- JQ6bQc+KORRKkJD9lC4KARrS4XLT25E4yXnFcFklXOM8nIEL+sKsnrChggFc/xRPr+4z
- eDQA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVR/Iab2NFFV/l8ijXAo7ypQN2a6WL0d2W/XnA1H0fLdD8FOI7MveGU3fo1lQM+yeQnpRVU/Ed/pSgUcQHQ9JAmLghR/Xo=
-X-Gm-Message-State: AOJu0Yyl8zwtJIULk9cUdlasdlW5EyiaxaO11JFObwgRuzwwHuTeOxzt
- VVXr2LQ1H80/KXJ69kZeUuN6Ty7pfftVZqaVKAq3iQgHz9htDm/XHHKzMRvaZNg=
-X-Google-Smtp-Source: AGHT+IEIB9LYXQsspbEbztTkq9m5HZfhnFyjcNXON4+p5xe6ROfdK1EbiH3oFzZt4j9IdgXHS4PCpA==
-X-Received: by 2002:a05:6a00:2451:b0:6e0:50cb:5f0a with SMTP id
- d17-20020a056a00245100b006e050cb5f0amr13468786pfj.12.1708137411296; 
- Fri, 16 Feb 2024 18:36:51 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- q23-20020a62e117000000b006d9a6039745sm619221pfh.40.2024.02.16.18.36.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Feb 2024 18:36:50 -0800 (PST)
-Message-ID: <477ebee9-429e-45ab-b94b-2b649482c9d0@ventanamicro.com>
-Date: Fri, 16 Feb 2024 23:36:46 -0300
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1rbBHy-0001eB-4h
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 22:22:54 -0500
+Received: from wfout6-smtp.messagingengine.com ([64.147.123.149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
+ id 1rbBHw-0002P0-89
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 22:22:53 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailfout.west.internal (Postfix) with ESMTP id F22F11C0008B;
+ Fri, 16 Feb 2024 22:22:49 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute6.internal (MEProxy); Fri, 16 Feb 2024 22:22:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ invisiblethingslab.com; h=cc:cc:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1708140169;
+ x=1708226569; bh=Yf01G1o+UqIKYBUWB3l3I2awerZSH20vNqLMgLnpFvQ=; b=
+ SJex7i+3Guapf/FPfjKqWk1wTYsbEushu7ikiT0korY2KlM7lsdrp+CfJyDAQSzV
+ NVNO3DCJqhSTbGyf/zOEuG2w+3GSFBin9X2ECG+l6vu9DcKzj6CkbvyptRfZTjd/
+ 0ithZ2XMUKWPmjS+tCGflCTjsbhkY4uzfQLWNCz4dMFd3U9r1wKRWpqE947F6DdZ
+ hrDX1gZUd1YTB5bYkHrP+H25XwZIzkmD3yGyDUgwMslk+LMj9foaxwryfUo2hwvI
+ 9CHIOXbpgE8B6FJpSmJmEGvKpev3hz5OegidlUGUT0bXfSop6L+MqwSlsQk25zUK
+ Qay7AZ78REEGjHycXyy6pw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1708140169; x=1708226569; bh=Yf01G1o+UqIKYBUWB3l3I2awerZS
+ H20vNqLMgLnpFvQ=; b=LGriUFRndYn0Gg2wp4qY+gFliYUL2uQMMZgSsk8x05jZ
+ g5ktO6+oCLVdCwVGKQpU0aCRT6fCKl8zGu428AN15dgCuNKgoFc49b+sznJFitsM
+ 9wqt6juyVlff73uZJz8jFwDevfZ6mvya891R/qLoXOMwBpPKcQcvs6/rhbzxGpoq
+ AdSCaOSAPV6XQzzLI5f8R5dYy0+1BbcbmvW6DhUlksL3qa9mzrGDs9f/yk70KQAG
+ uoBxoYpxGKHbUN7Ya4p0z44FfBGYWLo5evkJYd97IUuj5bgKsrT8oLMLMDitU6tf
+ FYzZAebXInWdng+FG8KuWyGLE7QZxWEKBobaqcXCvg==
+X-ME-Sender: <xms:iSbQZQcqpsay7yvJxp9_Pm1TEPol9MRujNIGxRjFaowNq8yZ3buGmA>
+ <xme:iSbQZSNL7PbLgqa-NLJXxXq5h5P5qFq6_GBSZ__TQxcySQSWlNwV-ZczEtkS3dUXv
+ dFITWVf79UvIg>
+X-ME-Received: <xmr:iSbQZRjIwQPj1sTMJCdfvGrUpT3gFmoCC-XbuV0r4KwiOgGXX2ptm3laVVvWa1YAlXvj12Gae_Q2sqdie36t0MYFWWHlCa-lQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefgdehjecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpeforghrvghk
+ ucforghrtgiihihkohifshhkihdqifpkrhgvtghkihcuoehmrghrmhgrrhgvkhesihhnvh
+ hishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeeiledu
+ vdekjeeukefhffetgeefiefffeejjedvieejvdfgjeehteduvdekffduieenucffohhmrg
+ hinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+ pehmrghilhhfrhhomhepmhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslh
+ grsgdrtghomh
+X-ME-Proxy: <xmx:iSbQZV8uSz6GQnw7nVs9Y0WQ_psCsKufUIz9NONY6gZkIvCn1FtBgA>
+ <xmx:iSbQZcvcg29hJ2z1lYcNMaqgamj1buP9i7CN71fj0w2ilIlu3NW4VA>
+ <xmx:iSbQZcEAjglVTN0iS_frc707OY3RaEnEM8PQ5hLpmulln4kju3Hyjw>
+ <xmx:iSbQZWWBcOgr93FKOl_1VGuzQpo5Nv3UqSNdqWdumhBQPVLB-FHoyor9y7I>
+Feedback-ID: i1568416f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 Feb 2024 22:22:48 -0500 (EST)
+Date: Sat, 17 Feb 2024 04:22:45 +0100
+From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH] i386: load kernel on xen using DMA
+Message-ID: <ZdAmhqse3AyEbE82@mail-itl>
+References: <20210426034709.595432-1-marmarek@invisiblethingslab.com>
+ <87sg1feemf.fsf@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] target/riscv/translate.c: set vstart_eq_zero in
- mark_vs_dirty()
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- max.chou@sifive.com, Ivan Klokov <ivan.klokov@syntacore.com>
-References: <20240216135719.1034289-1-dbarboza@ventanamicro.com>
- <20240216135719.1034289-4-dbarboza@ventanamicro.com>
- <16087154-b3d2-4cab-938f-4a04fc8dd166@linaro.org>
- <04a3c3d3-fc2f-4b1e-9845-f5345e062c7b@ventanamicro.com>
- <59b52f47-43a3-4f67-97e8-86e31db8746c@linaro.org>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <59b52f47-43a3-4f67-97e8-86e31db8746c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Q0+3eHKn/djYPxYa"
+Content-Disposition: inline
+In-Reply-To: <87sg1feemf.fsf@linaro.org>
+Received-SPF: none client-ip=64.147.123.149;
+ envelope-from=marmarek@invisiblethingslab.com;
+ helo=wfout6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,82 +111,86 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--Q0+3eHKn/djYPxYa
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 17 Feb 2024 04:22:45 +0100
+From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
+To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
+	Anthony Perard <anthony.perard@citrix.com>,
+	Paul Durrant <paul@xen.org>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+	xen-devel@lists.xenproject.org
+Subject: Re: [PATCH] i386: load kernel on xen using DMA
 
-On 2/16/24 20:41, Richard Henderson wrote:
-> On 2/16/24 12:40, Daniel Henrique Barboza wrote:
->> After reading the reviews of patches 1 and 3 what I'm considering here is:
->>
->> 1 - drop patch 1;
-> 
-> Ok.
-> 
->> 2 - there's a patch from Ivan Klokov sent 2 months ago:
->>
->> "[PATCH 1/1] target/riscv: Clear vstart_qe_zero flag"
->> https://lore.kernel.org/qemu-riscv/20231214111851.142532-1-ivan.klokov@syntacore.com/
->>
->> His patch is closer to what you suggested than mine. He already renamed mark_vs_dirty()
->> to finalize_rvv_inst() and made it set start_eq_zero unconditionally. It needs a
->> little work (i.e. remove the ifds from the function) that I'll do myself.
->>
->> 3 - I'll keep patch 2 to reduce the redundant calls to the now finalize_rvv_inst();
-> 
-> Ok.
-> 
->> 4 - Add another patch to through all "gen_set_label(over)" cond branches and set
->> vstart = 0 && vstart_eq_zero manually when we're doing the jump.
->>
->> In fact, shouldn't we return earlier if we're not taking the branch? Otherwise
->> we'll set vstart twice in case we didn't get the branch. E.g:
->>
->>        TCGLabel *over = gen_new_label();
->>        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
->>        (...)
->>        finalize_rvv_insn();
->>        return true;
->>
->>        gen_set_label(over);
->>        /* some TCG ops to set cpu_vstart to zero. Perhaps a helper?  */
->>        s->vstart_eq_zero = true;
->>        return true;
-> 
-> That will break, of course, because you wouldn't emit 'over'.
-> You really need to get translation-time and run-time separate in your head.
-> 
-> That said, I think these brcond(vstart >= vl) are a mistake.
-> The loops within the helpers are generally of the form
-> 
->      for (i = env->vstart; i < evl; i++, env->vstart++) {
-> 
-> which will operate just fine with vstart >= vl, iterating zero times.
-> We will then fall through to the post-insn cleanup,
-> 
->      env->vstart = 0;
->      vext_set_tail_elems_1s(evl, vd, desc, nf, esz, max_elems);
-> 
-> or whatever.
-> 
-> I would expect the condition vstart >= vl to never happen in practice.  I believe the only way to induce it is an explicit write to vstart.  Therefore I think you should not attempt to "optimize away" the call to the helper.
-> 
-> Of course you will want to double-check all of the loop iterations in the associated helpers when removing the branches.
+On Fri, Jun 18, 2021 at 09:54:14AM +0100, Alex Benn=C3=A9e wrote:
+>=20
+> Marek Marczykowski-G=C3=B3recki <marmarek@invisiblethingslab.com> writes:
+>=20
+> > Kernel on Xen is loaded via fw_cfg. Previously it used non-DMA version,
+> > which loaded the kernel (and initramfs) byte by byte. Change this
+> > to DMA, to load in bigger chunks.
+> > This change alone reduces load time of a (big) kernel+initramfs from
+> > ~10s down to below 1s.
+> >
+> > This change was suggested initially here:
+> > https://lore.kernel.org/xen-devel/20180216204031.000052e9@gmail.com/
+> > Apparently this alone is already enough to get massive speedup.
+> >
+> > Signed-off-by: Marek Marczykowski-G=C3=B3recki <marmarek@invisiblething=
+slab.com>
+> > ---
+> >  hw/i386/pc.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > index 8a84b25a03..14e43d4da4 100644
+> > --- a/hw/i386/pc.c
+> > +++ b/hw/i386/pc.c
+> > @@ -839,7 +839,8 @@ void xen_load_linux(PCMachineState *pcms)
+> > =20
+> >      assert(MACHINE(pcms)->kernel_filename !=3D NULL);
+> > =20
+> > -    fw_cfg =3D fw_cfg_init_io(FW_CFG_IO_BASE);
+> > +    fw_cfg =3D fw_cfg_init_io_dma(FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
+> > +                                &address_space_memory);
+> >      fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+> >      rom_set_fw(fw_cfg);
+>=20
+> Gentle ping. The fix looks perfectly sane to me but I don't have any x86
+> Xen HW to test this one. Are the x86 maintainers happy to take this on?
 
-Ok!
+Ping...
 
-> 
-> 
-> r~
-> 
-> 
-> PS: I believe a better form for the ldst loops is
-> 
->      for (i = env->vstart; i < evl; env->vstart = ++i)
-> 
-> to avoid re-reading from vstart each iteration.
+>=20
+> FWIW:
+>=20
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>=20
+> --=20
+> Alex Benn=C3=A9e
+>=20
 
+--=20
+Best Regards,
+Marek Marczykowski-G=C3=B3recki
+Invisible Things Lab
 
-I'll add a patch to convert these loops. Thanks,
+--Q0+3eHKn/djYPxYa
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Daniel
+iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmXQJoYACgkQ24/THMrX
+1yymZAf8ChLekrtLpigwAq1cK/g9+kUbjLWHksGz666MCdEgd5P+Zy0KSbfa4A/6
+PR2754T9zgqf5JCGFkaE9uCKYG3AtQpqXvQO7tLI4GicrIBO1YHYp094OV2F97oT
+KTxdR97aYPbKJ78SfRf4phU6lFq1BFFEMs9SsPEYF/g+i1AsP8m+F40AHw7CiK/G
+vCznXYoHwIhRFHPbf/lEkBVLHE7L7J12hMXM1Q0j7n3MMGHWMhmN9WL1T4EfSjHf
+oGs+2CrWIJ70LW8BbdklCZpEmH692PmuY/br+CiyauL+l4EioPtvZrm3NAlLdKet
+509POMwoSg+3YNbl8aRAD1wkx7+baQ==
+=IVfk
+-----END PGP SIGNATURE-----
 
+--Q0+3eHKn/djYPxYa--
 
