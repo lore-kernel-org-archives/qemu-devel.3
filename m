@@ -4,70 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60142C48BC4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 09:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48F7C48BC3
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 09:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbGtT-00075a-Nc; Sat, 17 Feb 2024 04:21:59 -0500
+	id 1rbHG3-000519-2C; Sat, 17 Feb 2024 04:45:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbGtS-00075Q-Fq
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:21:58 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbGtM-0007W6-TZ
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:21:58 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB0024E179;
- Sat, 17 Feb 2024 12:22:03 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A2A8581CAD;
- Sat, 17 Feb 2024 12:21:50 +0300 (MSK)
-Message-ID: <616a3701-dd06-4bbd-8519-b670f07e66aa@tls.msk.ru>
-Date: Sat, 17 Feb 2024 12:21:50 +0300
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1rbHFz-0004yy-J3
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:45:16 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1rbHFr-00034m-HU
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:45:15 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e09493eb8eso3079590b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 01:45:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1708163106; x=1708767906; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=a8Cz9CZUe7qvuagMteR1dzEPTjXiLhQgV9FMcMB/Jb0=;
+ b=KZfPVG5UlrGerZ/WnI5Yh1xc9JfedgVlad/57+PoPltoHbbyLE/DTikdDzL/HEcvxz
+ uLJBcS7muDhfHCTGU6KG0EXIySoqcFTCy8mUBnJDsAtqrXsL03tR7jmh0LtJx6ZNZnE4
+ C7gKMoTW6sIIB/O3kMDw2XulMu9Bgy8kppmfdf/dC2lEE020kGQTWHEFerXAFvq9IApq
+ etXZb752QDGwcbKs9o+Sg45Bvd0Kq5ug04Hqa/oFcXn+MA+7UXxyYU8QFdbdeupR8nEW
+ kLWxBydbOJV7I0ERTq7a+fN3C2v8BPY1QxE7fitKs7OsIoMBW2K4kLMRE86xZP32mlie
+ pv3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708163106; x=1708767906;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a8Cz9CZUe7qvuagMteR1dzEPTjXiLhQgV9FMcMB/Jb0=;
+ b=kzwPKiktUV/0vHzB1NrEqoyPknyGnweCDndOXH6xGY3I7NeeUkNhuD4ULXQWZDVa6u
+ D40/9JixnnCDGTYepgaR5qR/wmfst129V6egWOZPo8SemU3zo5aRUd14aKireKLQe+Fp
+ y6z5u33iDGbS5ufJ9cZHHKgXmEglsQNAd9FRTcOf1iwTFjSaMEXOXuRCyHYEaoTggz9c
+ ufY9b9AubPcBx1WzFLYquJGpc106uEO0inE2x4KPGSfHckjqBRzZGfsxEg0OzINuIzyy
+ Tdc2CFM/WSMPnyeSbf5B//i8CU6VAUEnL32mxjMxxjFT5SJ1yQkvBKBRgUwUMcmLi//T
+ AWVQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2GtDiemoNAXeVhspdJIo+BEnSvCICRDPuDVwYFFWZXUWtud+Bw7z2LyLD5prh9G9HH2WAoPLCKCzn++B02NN/fwC/5iw=
+X-Gm-Message-State: AOJu0YwcJT/tq8qn6PuNlqnMTGpSCpZ+yW5l4zkjewSspv0KX061OBJe
+ htX0/pSbYJw1gzBVAV9OiN+wTHvQuhe6tbuCgs5rkIG+L1nnBf0CHnwQN2Zl85o=
+X-Google-Smtp-Source: AGHT+IGXvsWdSDmajc3upYnmeAZWZmPKB08QcSpIHnZK7dXZLflNWp5Bxna4e+4yH5/K2/3NYNKLXQ==
+X-Received: by 2002:a05:6a20:6f03:b0:1a0:85ed:4769 with SMTP id
+ gt3-20020a056a206f0300b001a085ed4769mr6425035pzb.11.1708163105899; 
+ Sat, 17 Feb 2024 01:45:05 -0800 (PST)
+Received: from [100.64.0.1] ([136.226.240.197])
+ by smtp.gmail.com with ESMTPSA id
+ n15-20020aa7984f000000b006e0651ec052sm1295608pfq.32.2024.02.17.01.45.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 17 Feb 2024 01:45:05 -0800 (PST)
+Message-ID: <60c09bf6-a0c9-04ff-ede9-eab4092a3a72@sifive.com>
+Date: Sat, 17 Feb 2024 17:45:03 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: Eip error in x86_64-softmmu
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [RFC PATCH 2/6] accel/tcg: Avoid uncessary call overhead from
+ qemu_plugin_vcpu_mem_cb
 Content-Language: en-US
-To: guoguangyao <guoguangyao18@mails.ucas.ac.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, eduardo@habkost.net
-References: <20240115020804.30272-1-guoguangyao18@mails.ucas.ac.cn>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240115020804.30272-1-guoguangyao18@mails.ucas.ac.cn>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240215192823.729209-1-max.chou@sifive.com>
+ <20240215192823.729209-3-max.chou@sifive.com>
+ <2d119d74-3a12-4efa-94e1-acebfe4f0742@ventanamicro.com>
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <2d119d74-3a12-4efa-94e1-acebfe4f0742@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.399,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,44 +103,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-15.01.2024 05:08, guoguangyao wrote:
-> When closing PCREL, qemu-system-x86_64 run into error.
-> Eip modification here leads to the result. Using s->pc
-> in func gen_update_eip_next() solves the problem.
-> 
-> Fixes: b5e0d5d22fbf("target/i386: Fix 32-bit wrapping of pc/eip computation")
+Hi Daniel,
 
-It looks like the situation with PCREL is a bit more complex,
-see https://gitlab.com/qemu-project/qemu/-/issues/2092
-I'm assuming this particular change does not actually fix the problem
-(which is still unfixed on master).
+I think the the overhead from the plugin callbacks depending on the type 
+of plugin callbacks.
+Because there is only qemu_plugin_vcpu_mem_cb in the perf report of the 
+glibc memcpy benchtest, so I just looked it up for the the memory 
+callbacks in this RFC.
+I'll try to get more experiment results to check the status of other 
+plugin callbacks.
 
 Thanks,
+Max
 
-/mjt
-
-> Signed-off-by: guoguangyao <guoguangyao18@mails.ucas.ac.cn>
-> 
-> 	modified:   target/i386/tcg/translate.c
-> ---
->   target/i386/tcg/translate.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index e1eb82a5c6..6f57d5a8a5 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -567,9 +567,9 @@ static void gen_update_eip_next(DisasContext *s)
->       if (tb_cflags(s->base.tb) & CF_PCREL) {
->           tcg_gen_addi_tl(cpu_eip, cpu_eip, s->pc - s->pc_save);
->       } else if (CODE64(s)) {
-> -        tcg_gen_movi_tl(cpu_eip, s->base.pc_next);
-> +        tcg_gen_movi_tl(cpu_eip, s->pc);
->       } else {
-> -        tcg_gen_movi_tl(cpu_eip, (uint32_t)(s->base.pc_next - s->cs_base));
-> +        tcg_gen_movi_tl(cpu_eip, (uint32_t)(s->pc - s->cs_base));
->       }
->       s->pc_save = s->pc;
->   }
-
+On 2024/2/16 4:21 AM, Daniel Henrique Barboza wrote:
+>
+>
+> On 2/15/24 16:28, Max Chou wrote:
+>> If there are not any QEMU plugin memory callback functions, checking
+>> before calling the qemu_plugin_vcpu_mem_cb function can reduce the
+>> function call overhead.
+>>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>> ---
+>
+> This was in my TODO list for some time. Thanks for looking it up.
+>
+> Can't we avoid all callbacks, not just qemu_plugin_vcpu_mem_cb, if 
+> there's no
+> plugin loaded? The performance increase when building with 
+> --disable-plugins
+> shouldn't be a thing - if the user isn't using plug-ins it should have a
+> penalty to it.
+>
+> Thanks,
+>
+> Daniel
+>
+>>   accel/tcg/ldst_common.c.inc | 40 +++++++++++++++++++++++++++----------
+>>   1 file changed, 30 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
+>> index c82048e377e..bf24986c562 100644
+>> --- a/accel/tcg/ldst_common.c.inc
+>> +++ b/accel/tcg/ldst_common.c.inc
+>> @@ -134,7 +134,9 @@ uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr 
+>> addr, MemOpIdx oi, uintptr_t ra)
+>>         tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_UB);
+>>       ret = do_ld1_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+>> -    plugin_load_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_load_cb(env, addr, oi);
+>> +    }
+>>       return ret;
+>>   }
+>>   @@ -145,7 +147,9 @@ uint16_t cpu_ldw_mmu(CPUArchState *env, abi_ptr 
+>> addr,
+>>         tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_16);
+>>       ret = do_ld2_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+>> -    plugin_load_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_load_cb(env, addr, oi);
+>> +    }
+>>       return ret;
+>>   }
+>>   @@ -156,7 +160,9 @@ uint32_t cpu_ldl_mmu(CPUArchState *env, abi_ptr 
+>> addr,
+>>         tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_32);
+>>       ret = do_ld4_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+>> -    plugin_load_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_load_cb(env, addr, oi);
+>> +    }
+>>       return ret;
+>>   }
+>>   @@ -167,7 +173,9 @@ uint64_t cpu_ldq_mmu(CPUArchState *env, abi_ptr 
+>> addr,
+>>         tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_64);
+>>       ret = do_ld8_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+>> -    plugin_load_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_load_cb(env, addr, oi);
+>> +    }
+>>       return ret;
+>>   }
+>>   @@ -178,7 +186,9 @@ Int128 cpu_ld16_mmu(CPUArchState *env, abi_ptr 
+>> addr,
+>>         tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_128);
+>>       ret = do_ld16_mmu(env_cpu(env), addr, oi, ra);
+>> -    plugin_load_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_load_cb(env, addr, oi);
+>> +    }
+>>       return ret;
+>>   }
+>>   @@ -195,7 +205,9 @@ void cpu_stb_mmu(CPUArchState *env, abi_ptr 
+>> addr, uint8_t val,
+>>                    MemOpIdx oi, uintptr_t retaddr)
+>>   {
+>>       helper_stb_mmu(env, addr, val, oi, retaddr);
+>> -    plugin_store_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_store_cb(env, addr, oi);
+>> +    }
+>>   }
+>>     void cpu_stw_mmu(CPUArchState *env, abi_ptr addr, uint16_t val,
+>> @@ -203,7 +215,9 @@ void cpu_stw_mmu(CPUArchState *env, abi_ptr addr, 
+>> uint16_t val,
+>>   {
+>>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_16);
+>>       do_st2_mmu(env_cpu(env), addr, val, oi, retaddr);
+>> -    plugin_store_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_store_cb(env, addr, oi);
+>> +    }
+>>   }
+>>     void cpu_stl_mmu(CPUArchState *env, abi_ptr addr, uint32_t val,
+>> @@ -211,7 +225,9 @@ void cpu_stl_mmu(CPUArchState *env, abi_ptr addr, 
+>> uint32_t val,
+>>   {
+>>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_32);
+>>       do_st4_mmu(env_cpu(env), addr, val, oi, retaddr);
+>> -    plugin_store_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_store_cb(env, addr, oi);
+>> +    }
+>>   }
+>>     void cpu_stq_mmu(CPUArchState *env, abi_ptr addr, uint64_t val,
+>> @@ -219,7 +235,9 @@ void cpu_stq_mmu(CPUArchState *env, abi_ptr addr, 
+>> uint64_t val,
+>>   {
+>>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_64);
+>>       do_st8_mmu(env_cpu(env), addr, val, oi, retaddr);
+>> -    plugin_store_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_store_cb(env, addr, oi);
+>> +    }
+>>   }
+>>     void cpu_st16_mmu(CPUArchState *env, abi_ptr addr, Int128 val,
+>> @@ -227,7 +245,9 @@ void cpu_st16_mmu(CPUArchState *env, abi_ptr 
+>> addr, Int128 val,
+>>   {
+>>       tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_128);
+>>       do_st16_mmu(env_cpu(env), addr, val, oi, retaddr);
+>> -    plugin_store_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_store_cb(env, addr, oi);
+>> +    }
+>>   }
+>>     /*
 
