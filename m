@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FEBDC48BC3
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 20:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D610C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 20:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbRHv-0004U2-Lq; Sat, 17 Feb 2024 15:27:55 -0500
+	id 1rbRKS-0005Za-EH; Sat, 17 Feb 2024 15:30:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rbRHt-0004TV-SK
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 15:27:53 -0500
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ id 1rbRKQ-0005ZB-AS
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 15:30:30 -0500
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rbRHs-0006RJ-D9
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 15:27:53 -0500
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-59fb5b09cc2so182162eaf.0
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 12:27:51 -0800 (PST)
+ id 1rbRKO-0006kS-Oe
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 15:30:29 -0500
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-5d81b08d6f2so1873594a12.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 12:30:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708201671; x=1708806471; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708201825; x=1708806625; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=E4fplPCHWBpLLV9Pt0Kzz0VA1xpzvnKrgo7iV2TG/6M=;
- b=nZu6rdkpRbPy6yo5KMRJLuZMqz2EoYE78u+oXgRZbd5bqA/rG2+hRHFJj6PLjm9s7Y
- Jv6Z2WIM5LxjaTZLBG5UcF1PFoJbraUt6ElrbsjOI7Ow1xLFek5gxgzLEXlidSFnbqtb
- 0PwWmF+sCMZ6XOjYHPMvCg+bF7xYpVoBiFlCSTLqpfQP69upNtKoFk7hQjZt7pd4ElTL
- aV078rbQEFcYQ1Ecyo/jGJLzOAfMjoxXFiU7G3XeCWA42/TMBc7zWDCVka0d9f4Luj0T
- 3HtgzVIO8bdyooCUUw9ZP3z0pZIN2STyqDM5qMemgz5OuwnEIWhJ6vN/Sif2y/Ptj9Y3
- RV3Q==
+ bh=E3nOq8w4jF5ob0iuasxRZdtbEuAzyZerIRkZJXA+HlA=;
+ b=zMwc++8XqipIdRHqj50XlxcvDsktz4r43Up9f16vYJ372vgFLW8TLh7uNMSeCW4xws
+ EL6CK5Tc/s67EUmOggQj/NJweo4CiJLKhUo8JULY6wgNnFsI5RCmV8gYixMK4AGXGyyq
+ gKFtEDJkmBusrFtbo63ohcfZlqBkgcb1yK62yQ19/ceDSIKlf8Qi5BJbbkxOPl95+wes
+ 0OWgSkzIpFZ+HosAo3Qgc5zwn5d6eo5rGY6ivNyHaRiR5sAhYwQN8weuy9ENqVI/H6ZM
+ YcGffuyXM3zbkT5zN6oqH2ea9Ct/FoOCln/NvrigPnTboNwBiq7QU1D9+sw5H5IhJTnv
+ N56Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708201671; x=1708806471;
+ d=1e100.net; s=20230601; t=1708201825; x=1708806625;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E4fplPCHWBpLLV9Pt0Kzz0VA1xpzvnKrgo7iV2TG/6M=;
- b=aI/DjR0Mx8mKtBftNUHHM3M4RBw3x4KYj14U2Qc/yjO9cwAI+hXDwr0JAXNCcqQyR7
- 8G8VUDIFln/neQ56kPW+RG2sBPuTZ7rVlVADc80w4aZf6XEX02ruIACsh/xFmFH5WwrM
- zVfOmtNQWxlL4DmGkUaOu6+UZ3pziOR286LXN39L4/XPv2kAPKpeklvo57CmmccEBjS6
- 3YF5sqTlkUB7eKAu4wF7cdMPwwdsmmFEt+1cCtOTbKPbTYyaLAJp5yAD0af33OBEcJIO
- 5tvXnNUKadOk54Lr1ekLkM9H2hSEU9dtqJHLTGc5gK6ajrN5x1Sn+7HXtcqdelXgB/zD
- QPnQ==
+ bh=E3nOq8w4jF5ob0iuasxRZdtbEuAzyZerIRkZJXA+HlA=;
+ b=R/BXnhLkwUwohCA+RU5d1sCi/4ok65OylxkA55Y1UCWcygMziF3iIrE8XNXjsDDhz0
+ 3gSZS9+ebD0zD2czZDhvL3H3ikXjapICvX1eqM4nhc8Tikizr/3EwriqhDy6iTMKpAtX
+ XgP5IZvVbG2ezYTg/50+w+CVBejC7StC8qo70xqwLVqlqCttAnPoxL8q9zR4o3+7G33b
+ e3Gh39fioQWJ1UCQ1GfyVAdRlADfj5iEfL/L+nFXW3qLzW/U/BWo/WyjDAVg49zqAG1r
+ fCJaoFR/sEY6ZTY0PSkNxXxpEwfounFzJ3Dk2f8A8U6BbAmJ283JHYSZHf+ISv6nOXA5
+ sZZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3iOSUVS0OtUkoJIe0EmB3Aw6KU+fYN5fkoAJtUurR/v1VvFBI9Ho/UoUWVVACXjuWDPzcJS6pvwifRHQyy4nTXA1En48=
-X-Gm-Message-State: AOJu0YyR7dVckNguMo7er1C3hWsCfbY4OVSx8WeU8S/C2/Yg5YamFsjn
- 8E/s/krTZmHa/C1ugc9VRyd5agvTvC0R53FoHoJcpQbicNjuso2cmjzQXzc5zTE=
-X-Google-Smtp-Source: AGHT+IHoH9kxJqHDoQ1LqYW4EIGYZduQeSGxk0s3UbxgQvapPxjCZ1oxZ5W2yT0kV83XpSOLLaDgag==
-X-Received: by 2002:a05:6358:e497:b0:176:d2dc:5115 with SMTP id
- by23-20020a056358e49700b00176d2dc5115mr9572391rwb.20.1708201671007; 
- Sat, 17 Feb 2024 12:27:51 -0800 (PST)
+ AJvYcCUN9NL6dYuUIKTF7vof9KDy1u9yg6p21o4LmIdGp9R5bbHWdBSl3D3qt5/+t6WSoX8iBNOzg393+wZhZOsLiJARt3HPRvk=
+X-Gm-Message-State: AOJu0YwK7yDQKHP6Ie7xViuaV/WIFr93VtFJO8wVfJP22iIPLoQHJ9H5
+ z4BGuUar591v0PNCLoTdHyTv6aIAPMFDTUHuXc2U/b5IvnS/pQnj/9XecCkl4f/6pXv6zZh6wpa
+ O
+X-Google-Smtp-Source: AGHT+IFxJSCZ3KwtGE7BcIeMq2Rl5Lilx6FHmraMJBisLG9RfQ9kTTxzjYK4jl/iPkk9cUc7flhIEQ==
+X-Received: by 2002:a05:6a20:4f05:b0:19e:8b31:f1ae with SMTP id
+ gi5-20020a056a204f0500b0019e8b31f1aemr7891398pzb.29.1708201825642; 
+ Sat, 17 Feb 2024 12:30:25 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- t4-20020a62d144000000b006e3b868b8b8sm738940pfl.130.2024.02.17.12.27.49
+ lb26-20020a056a004f1a00b006dde1781800sm2081245pfb.94.2024.02.17.12.30.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 12:27:50 -0800 (PST)
-Message-ID: <5aff894f-4c83-4a8e-9a3b-84c7b844e158@linaro.org>
-Date: Sat, 17 Feb 2024 10:27:48 -1000
+ Sat, 17 Feb 2024 12:30:25 -0800 (PST)
+Message-ID: <c96d085f-9625-40f1-8b45-5daa5f4f2a12@linaro.org>
+Date: Sat, 17 Feb 2024 10:30:21 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/11] {linux,bsd}-user: Pass pid to gdbserver_fork()
+Subject: Re: [PATCH v3 06/11] gdbstub: Call gdbserver_fork() both in parent
+ and in child
 Content-Language: en-US
 To: Ilya Leoshkevich <iii@linux.ibm.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Laurent Vivier <laurent@vivier.eu>,
@@ -73,13 +75,13 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240216130817.369377-1-iii@linux.ibm.com>
- <20240216130817.369377-6-iii@linux.ibm.com>
+ <20240216130817.369377-7-iii@linux.ibm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240216130817.369377-6-iii@linux.ibm.com>
+In-Reply-To: <20240216130817.369377-7-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +105,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/16/24 03:05, Ilya Leoshkevich wrote:
-> The upcoming follow-fork-mode child support requires knowing the child
-> pid. Pass it down.
+> The upcoming follow-fork-mode child support requires post-fork message
+> exchange between the parent and the child. Prepare gdbserver_fork() for
+> this purpose. Rename it to gdbserver_fork_end() to better reflect its
+> purpose.
 > 
 > Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
 > ---
->   bsd-user/main.c        | 2 +-
->   gdbstub/user.c         | 2 +-
->   include/gdbstub/user.h | 2 +-
+>   bsd-user/main.c        | 3 ++-
+>   gdbstub/user.c         | 5 ++---
+>   include/gdbstub/user.h | 6 +++---
 >   linux-user/main.c      | 2 +-
->   4 files changed, 4 insertions(+), 4 deletions(-)
+>   4 files changed, 8 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
