@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E932CC48BF5
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 00:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C986EC48260
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 00:41:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb8jy-000694-2Z; Fri, 16 Feb 2024 19:39:38 -0500
+	id 1rb8jp-00064g-6t; Fri, 16 Feb 2024 19:39:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rb8jv-00068G-5c
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 19:39:35 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1rb8jn-00063x-Ld
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 19:39:27 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rb8jt-0008HG-HK
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 19:39:34 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1d73066880eso25546425ad.3
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 16:39:33 -0800 (PST)
+ id 1rb8jl-0008FM-E0
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 19:39:27 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1d953fa3286so11474115ad.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 16:39:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708130372; x=1708735172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708130364; x=1708735164; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6+vMZHnTNPjSijzEPZ6pE1ZEQb70DOSnKuGgl762H28=;
- b=pTpzVQ6K1hAWblQycMsIJ7wnX4N4Upz/AKqBuk72pAFbryGG89nyBR0xK1Elglt7Kx
- by3MbFawWOvT6AEiSkCTCp77eZSFc7PphIeMCQLYuZLPAv4URWHxc4qFtAbraXr2gs4X
- Zi3Q07WZuZ6ikdrYrF+NGCdYhRv67ldooWzkHhGN0OcsTGpCTZH8Wd3iQ1q9W7N7O384
- iYU7RYO1LWgLAbN6iL4R28YEaoFnhabh0q3FRBhpR8+vICywFoIaxMHuFNv+Vu5H5ayt
- OmmbWM9jXM7G7VjMQVZKEbZHenmsElanYEU+4Zsc04SNzxd9/RLxt3OnihUqtYBvvnFj
- tkvg==
+ bh=Sc6Au+pExfgVbkEVt3xBcrgjk6DJCZWLxXzjjgNJTcI=;
+ b=PsmPtOjwIOUa0GBrFYzxy0RmwnLHQaK2UN5QIV+4QaMnBXDFOaDouihhHYDvn7UOBz
+ 8plMNwvieI+/46Qlpa/Fe3Ag6drshE94ewgH1ofo9rCLiEQpb3N7j/2M7+xQr05711UA
+ jSCSouLYdwviT2LJ+DdL7WLJnF8vwkb6C/+dhLWZYjIRpizrLJpmj/+jEgw6oCvKPpcq
+ O4pNb1grhHkgknhyO/UEb9lqCCe6WX0/cTOrhssC4FdgR/biIXDg0YJo100NVY+0W3IY
+ K+P5usF6ROlgUiEoLLUdUCEXbk2a5yX9++rvxwLYaQ3QVrB+LupMvIVBf8+9VQmj1uyM
+ +alA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708130372; x=1708735172;
+ d=1e100.net; s=20230601; t=1708130364; x=1708735164;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6+vMZHnTNPjSijzEPZ6pE1ZEQb70DOSnKuGgl762H28=;
- b=AlDjFOttL2biPLkGqgIywmzqdpZuicJEo/TuoaBgMg/gabT/mrir7USEcAiJJA/x66
- BGuuwRNSouuYTwgPs5W2a9WiAPEeV40ju1wh6BT57ohA5EU0B6LjYaAFlCNcOiCpO6ud
- GCk+7ta646/bO730tgxpy063WNw5ao1hPjFVqVo+EGa9YfSnfC2sO8Hn3LihhgUCeIPx
- lqn5FAQfRy+lG7rNXh6Sq8KUfzn9GWhS3JRhePsUTYkWv4VcjKQtG9yml8bIxBhs3frr
- pjuPu8xrrtugwZvEI+PdEjpNhZ3BFbpHr5PuEPH3ubOiw+w43Vzk61IdcEs7oy29WEC4
- RCBQ==
-X-Gm-Message-State: AOJu0YxIyE+VUq9MloMFKTKxoLykp8c0/+ZQRA0rehXRfYEVqipfoXKb
- KeVqM+trklUUY6GFLO2lbCV2paTA7fwidM7MIivd4NcmLIsGqs70mm6pnPMB1VatvS+8btzI4u9
- W
-X-Google-Smtp-Source: AGHT+IHMYy4o77CjpSpNLHtsRIsQjo2pBzCyjzgDEOrNSNonC7BcSGiqjwxrFx66Cm1v9UDFATcIxw==
-X-Received: by 2002:a17:903:32c5:b0:1db:c348:60d8 with SMTP id
- i5-20020a17090332c500b001dbc34860d8mr1153996plr.23.1708130372163; 
- Fri, 16 Feb 2024 16:39:32 -0800 (PST)
+ bh=Sc6Au+pExfgVbkEVt3xBcrgjk6DJCZWLxXzjjgNJTcI=;
+ b=bXUUKA4duaW/mJQU9j8kjX3JUy9zqTI/lwhAYX73CkiwvGOjHmXXA6su5e2ftDBoKf
+ BIqvViCv69RD42ahSWBhAOGtdTXKhWMIdQ4+tS09o45jWN6aNBGH0cqUZseQzYPTXCS8
+ gazNcdIln4dvdj8rUGOy3ZQ2vpMx+31fNUm9KXozD4kYlepyxhajZ9bwbWxa/V+4Hx2S
+ VIXXNu6qi860Pli3RsFFijgfAGnhGPFI8VumP2voMTPrMlrpdMQDSkP5l3rJUTBS1v0c
+ TZZvJ5GaqTEt3xT090itXjs74bBSqWfow31TcGABNhvlvAmNp7sLGupvH+kMf/rImVaU
+ IqJg==
+X-Gm-Message-State: AOJu0YwvGTOuQn6DBpbGqIr+rhrR8x2ltfd79h5eYGnJGu8arwuOC1gH
+ ys89fkenr3U8LT8fMHaqIXKDoMJDXvnLRW5HTQz4hiiSbxRySRq+ZYr5u0NZyilrdV/AgQqSgXT
+ U
+X-Google-Smtp-Source: AGHT+IG1AmesixUhiBnFqyjHYCaE+eS5O+wbqGBgQr5+SruQfatd+CsAvt7bpmlhedY2ZU3+/lywsw==
+X-Received: by 2002:a17:902:c944:b0:1db:c1a3:7d59 with SMTP id
+ i4-20020a170902c94400b001dbc1a37d59mr1228054pla.9.1708130364123; 
+ Fri, 16 Feb 2024 16:39:24 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- z6-20020a170902ee0600b001d90306bdcfsm419325plb.65.2024.02.16.16.39.31
+ z6-20020a170902ee0600b001d90306bdcfsm419325plb.65.2024.02.16.16.39.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 16:39:31 -0800 (PST)
+ Fri, 16 Feb 2024 16:39:23 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: amonakov@ispras.ru,
 	mmromanov@ispras.ru
-Subject: [PATCH v5 08/10] util/bufferiszero: Simplify
- test_buffer_is_zero_next_accel
-Date: Fri, 16 Feb 2024 14:39:16 -1000
-Message-Id: <20240217003918.52229-9-richard.henderson@linaro.org>
+Subject: [PATCH v5 02/10] util/bufferiszero: Remove AVX512 variant
+Date: Fri, 16 Feb 2024 14:39:10 -1000
+Message-Id: <20240217003918.52229-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240217003918.52229-1-richard.henderson@linaro.org>
 References: <20240217003918.52229-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,93 +95,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because the three alternatives are monotonic, we don't
-need to keep a couple of bitmasks, just identify the
-strongest alternative at startup.
+From: Alexander Monakov <amonakov@ispras.ru>
 
+Thanks to early checks in the inline buffer_is_zero wrapper, the SIMD
+routines are invoked much more rarely in normal use when most buffers
+are non-zero. This makes use of AVX512 unprofitable, as it incurs extra
+frequency and voltage transition periods during which the CPU operates
+at reduced performance, as described in
+https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html
+
+Signed-off-by: Mikhail Romanov <mmromanov@ispras.ru>
+Signed-off-by: Alexander Monakov <amonakov@ispras.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240206204809.9859-4-amonakov@ispras.ru>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- util/bufferiszero.c | 56 ++++++++++++++++++---------------------------
- 1 file changed, 22 insertions(+), 34 deletions(-)
+ util/bufferiszero.c | 38 +++-----------------------------------
+ 1 file changed, 3 insertions(+), 35 deletions(-)
 
 diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 61ea59d2e0..9b338f7be5 100644
+index f5a3634f9a..641d5f9b9e 100644
 --- a/util/bufferiszero.c
 +++ b/util/bufferiszero.c
-@@ -180,51 +180,39 @@ buffer_zero_avx2(const void *buf, size_t len)
+@@ -64,7 +64,7 @@ buffer_zero_int(const void *buf, size_t len)
+     }
+ }
+ 
+-#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
++#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
+ #include <immintrin.h>
+ 
+ /* Note that each of these vectorized functions require len >= 64.  */
+@@ -128,41 +128,12 @@ buffer_zero_avx2(const void *buf, size_t len)
  }
  #endif /* CONFIG_AVX2_OPT */
  
--
--
--static unsigned __attribute__((noinline))
--select_accel_cpuinfo(unsigned info)
+-#ifdef CONFIG_AVX512F_OPT
+-static bool __attribute__((target("avx512f")))
+-buffer_zero_avx512(const void *buf, size_t len)
 -{
--    /* Array is sorted in order of algorithm preference. */
--    static const struct {
--        unsigned bit;
--        biz_accel_fn fn;
--    } all[] = {
-+static biz_accel_fn const accel_table[] = {
-+    buffer_is_zero_int_ge256,
-+    buffer_zero_sse2,
- #ifdef CONFIG_AVX2_OPT
--        { CPUINFO_AVX2,    buffer_zero_avx2 },
-+    buffer_zero_avx2,
- #endif
--        { CPUINFO_SSE2,    buffer_zero_sse2 },
--        { CPUINFO_ALWAYS,  buffer_is_zero_int_ge256 },
--    };
+-    /* Begin with an unaligned head of 64 bytes.  */
+-    __m512i t = _mm512_loadu_si512(buf);
+-    __m512i *p = (__m512i *)(((uintptr_t)buf + 5 * 64) & -64);
+-    __m512i *e = (__m512i *)(((uintptr_t)buf + len) & -64);
 -
--    for (unsigned i = 0; i < ARRAY_SIZE(all); ++i) {
--        if (info & all[i].bit) {
--            buffer_is_zero_accel = all[i].fn;
--            return all[i].bit;
+-    /* Loop over 64-byte aligned blocks of 256.  */
+-    while (p <= e) {
+-        __builtin_prefetch(p);
+-        if (unlikely(_mm512_test_epi64_mask(t, t))) {
+-            return false;
 -        }
+-        t = p[-4] | p[-3] | p[-2] | p[-1];
+-        p += 4;
 -    }
--    return 0;
--}
 -
--static unsigned used_accel;
-+};
-+static unsigned accel_index;
+-    t |= _mm512_loadu_si512(buf + len - 4 * 64);
+-    t |= _mm512_loadu_si512(buf + len - 3 * 64);
+-    t |= _mm512_loadu_si512(buf + len - 2 * 64);
+-    t |= _mm512_loadu_si512(buf + len - 1 * 64);
+-
+-    return !_mm512_test_epi64_mask(t, t);
+-
+-}
+-#endif /* CONFIG_AVX512F_OPT */
+-
+ /*
+  * Make sure that these variables are appropriately initialized when
+  * SSE2 is enabled on the compiler command-line, but the compiler is
+  * too old to support CONFIG_AVX2_OPT.
+  */
+-#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT)
++#if defined(CONFIG_AVX2_OPT)
+ # define INIT_USED     0
+ # define INIT_LENGTH   0
+ # define INIT_ACCEL    buffer_zero_int
+@@ -188,9 +159,6 @@ select_accel_cpuinfo(unsigned info)
+         unsigned len;
+         bool (*fn)(const void *, size_t);
+     } all[] = {
+-#ifdef CONFIG_AVX512F_OPT
+-        { CPUINFO_AVX512F, 256, buffer_zero_avx512 },
+-#endif
+ #ifdef CONFIG_AVX2_OPT
+         { CPUINFO_AVX2,    128, buffer_zero_avx2 },
+ #endif
+@@ -208,7 +176,7 @@ select_accel_cpuinfo(unsigned info)
+     return 0;
+ }
  
+-#if defined(CONFIG_AVX512F_OPT) || defined(CONFIG_AVX2_OPT)
++#if defined(CONFIG_AVX2_OPT)
  static void __attribute__((constructor)) init_accel(void)
  {
--    used_accel = select_accel_cpuinfo(cpuinfo_init());
-+    unsigned info = cpuinfo_init();
-+    unsigned index = (info & CPUINFO_SSE2 ? 1 : 0);
-+
-+#ifdef CONFIG_AVX2_OPT
-+    if (info & CPUINFO_AVX2) {
-+        index = 2;
-+    }
-+#endif
-+
-+    accel_index = index;
-+    buffer_is_zero_accel = accel_table[index];
- }
- 
- #define INIT_ACCEL NULL
- 
- bool test_buffer_is_zero_next_accel(void)
- {
--    /*
--     * Accumulate the accelerators that we've already tested, and
--     * remove them from the set to test this round.  We'll get back
--     * a zero from select_accel_cpuinfo when there are no more.
--     */
--    unsigned used = select_accel_cpuinfo(cpuinfo & ~used_accel);
--    used_accel |= used;
--    return used;
-+    if (accel_index != 0) {
-+        buffer_is_zero_accel = accel_table[--accel_index];
-+        return true;
-+    }
-+    return false;
- }
- #else
- bool test_buffer_is_zero_next_accel(void)
+     used_accel = select_accel_cpuinfo(cpuinfo_init());
 -- 
 2.34.1
 
