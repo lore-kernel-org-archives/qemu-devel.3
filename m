@@ -4,96 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E58BC48BEF
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 03:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDADC48BEF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 03:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbBHy-0001eL-Tz; Fri, 16 Feb 2024 22:22:54 -0500
+	id 1rbBkG-0001J5-8U; Fri, 16 Feb 2024 22:52:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rbBHy-0001eB-4h
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 22:22:54 -0500
-Received: from wfout6-smtp.messagingengine.com ([64.147.123.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rbBHw-0002P0-89
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 22:22:53 -0500
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailfout.west.internal (Postfix) with ESMTP id F22F11C0008B;
- Fri, 16 Feb 2024 22:22:49 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute6.internal (MEProxy); Fri, 16 Feb 2024 22:22:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1708140169;
- x=1708226569; bh=Yf01G1o+UqIKYBUWB3l3I2awerZSH20vNqLMgLnpFvQ=; b=
- SJex7i+3Guapf/FPfjKqWk1wTYsbEushu7ikiT0korY2KlM7lsdrp+CfJyDAQSzV
- NVNO3DCJqhSTbGyf/zOEuG2w+3GSFBin9X2ECG+l6vu9DcKzj6CkbvyptRfZTjd/
- 0ithZ2XMUKWPmjS+tCGflCTjsbhkY4uzfQLWNCz4dMFd3U9r1wKRWpqE947F6DdZ
- hrDX1gZUd1YTB5bYkHrP+H25XwZIzkmD3yGyDUgwMslk+LMj9foaxwryfUo2hwvI
- 9CHIOXbpgE8B6FJpSmJmEGvKpev3hz5OegidlUGUT0bXfSop6L+MqwSlsQk25zUK
- Qay7AZ78REEGjHycXyy6pw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1708140169; x=1708226569; bh=Yf01G1o+UqIKYBUWB3l3I2awerZS
- H20vNqLMgLnpFvQ=; b=LGriUFRndYn0Gg2wp4qY+gFliYUL2uQMMZgSsk8x05jZ
- g5ktO6+oCLVdCwVGKQpU0aCRT6fCKl8zGu428AN15dgCuNKgoFc49b+sznJFitsM
- 9wqt6juyVlff73uZJz8jFwDevfZ6mvya891R/qLoXOMwBpPKcQcvs6/rhbzxGpoq
- AdSCaOSAPV6XQzzLI5f8R5dYy0+1BbcbmvW6DhUlksL3qa9mzrGDs9f/yk70KQAG
- uoBxoYpxGKHbUN7Ya4p0z44FfBGYWLo5evkJYd97IUuj5bgKsrT8oLMLMDitU6tf
- FYzZAebXInWdng+FG8KuWyGLE7QZxWEKBobaqcXCvg==
-X-ME-Sender: <xms:iSbQZQcqpsay7yvJxp9_Pm1TEPol9MRujNIGxRjFaowNq8yZ3buGmA>
- <xme:iSbQZSNL7PbLgqa-NLJXxXq5h5P5qFq6_GBSZ__TQxcySQSWlNwV-ZczEtkS3dUXv
- dFITWVf79UvIg>
-X-ME-Received: <xmr:iSbQZRjIwQPj1sTMJCdfvGrUpT3gFmoCC-XbuV0r4KwiOgGXX2ptm3laVVvWa1YAlXvj12Gae_Q2sqdie36t0MYFWWHlCa-lQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdefgdehjecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpeforghrvghk
- ucforghrtgiihihkohifshhkihdqifpkrhgvtghkihcuoehmrghrmhgrrhgvkhesihhnvh
- hishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeeiledu
- vdekjeeukefhffetgeefiefffeejjedvieejvdfgjeehteduvdekffduieenucffohhmrg
- hinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
- pehmrghilhhfrhhomhepmhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslh
- grsgdrtghomh
-X-ME-Proxy: <xmx:iSbQZV8uSz6GQnw7nVs9Y0WQ_psCsKufUIz9NONY6gZkIvCn1FtBgA>
- <xmx:iSbQZcvcg29hJ2z1lYcNMaqgamj1buP9i7CN71fj0w2ilIlu3NW4VA>
- <xmx:iSbQZcEAjglVTN0iS_frc707OY3RaEnEM8PQ5hLpmulln4kju3Hyjw>
- <xmx:iSbQZWWBcOgr93FKOl_1VGuzQpo5Nv3UqSNdqWdumhBQPVLB-FHoyor9y7I>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Feb 2024 22:22:48 -0500 (EST)
-Date: Sat, 17 Feb 2024 04:22:45 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH] i386: load kernel on xen using DMA
-Message-ID: <ZdAmhqse3AyEbE82@mail-itl>
-References: <20210426034709.595432-1-marmarek@invisiblethingslab.com>
- <87sg1feemf.fsf@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1rbBkE-0001I6-9h; Fri, 16 Feb 2024 22:52:06 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>)
+ id 1rbBkB-0006jq-CM; Fri, 16 Feb 2024 22:52:06 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8AxjutYLdBl+PENAA--.37018S3;
+ Sat, 17 Feb 2024 11:51:53 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxZMxXLdBlduY4AA--.20163S3; 
+ Sat, 17 Feb 2024 11:51:52 +0800 (CST)
+Subject: Re: [PATCH] tests/cdrom-test: Add cdrom test for LoongArch virt
+ machine
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>, Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240205021318.3759925-1-maobibo@loongson.cn>
+ <678324f1-2b8d-45a1-aea8-03c187f069d1@linaro.org>
+ <e0052a77-d6b1-fee9-a179-d7074132304f@loongson.cn>
+ <387d27bf-2bdb-432a-baf1-19fb0d026045@redhat.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <afd8bd94-6d32-a387-1b9b-91ac5ef83030@loongson.cn>
+Date: Sat, 17 Feb 2024 11:51:58 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="Q0+3eHKn/djYPxYa"
-Content-Disposition: inline
-In-Reply-To: <87sg1feemf.fsf@linaro.org>
-Received-SPF: none client-ip=64.147.123.149;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=wfout6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+In-Reply-To: <387d27bf-2bdb-432a-baf1-19fb0d026045@redhat.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxZMxXLdBlduY4AA--.20163S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7KryUZryfZrWfGry5uFWUKFX_yoW8ur1Upr
+ 1kAa40kayUGr18Jr1xKw1DWFyYyr4DAa4kur1vqF18GFZ8XryqgrW0gr1Y9r1kJFWfXF18
+ Zw18tw13uF1UZrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jb_-PU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.399,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,86 +88,59 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---Q0+3eHKn/djYPxYa
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 17 Feb 2024 04:22:45 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
-	Anthony Perard <anthony.perard@citrix.com>,
-	Paul Durrant <paul@xen.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
-	xen-devel@lists.xenproject.org
-Subject: Re: [PATCH] i386: load kernel on xen using DMA
 
-On Fri, Jun 18, 2021 at 09:54:14AM +0100, Alex Benn=C3=A9e wrote:
->=20
-> Marek Marczykowski-G=C3=B3recki <marmarek@invisiblethingslab.com> writes:
->=20
-> > Kernel on Xen is loaded via fw_cfg. Previously it used non-DMA version,
-> > which loaded the kernel (and initramfs) byte by byte. Change this
-> > to DMA, to load in bigger chunks.
-> > This change alone reduces load time of a (big) kernel+initramfs from
-> > ~10s down to below 1s.
-> >
-> > This change was suggested initially here:
-> > https://lore.kernel.org/xen-devel/20180216204031.000052e9@gmail.com/
-> > Apparently this alone is already enough to get massive speedup.
-> >
-> > Signed-off-by: Marek Marczykowski-G=C3=B3recki <marmarek@invisiblething=
-slab.com>
-> > ---
-> >  hw/i386/pc.c | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index 8a84b25a03..14e43d4da4 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -839,7 +839,8 @@ void xen_load_linux(PCMachineState *pcms)
-> > =20
-> >      assert(MACHINE(pcms)->kernel_filename !=3D NULL);
-> > =20
-> > -    fw_cfg =3D fw_cfg_init_io(FW_CFG_IO_BASE);
-> > +    fw_cfg =3D fw_cfg_init_io_dma(FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
-> > +                                &address_space_memory);
-> >      fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-> >      rom_set_fw(fw_cfg);
->=20
-> Gentle ping. The fix looks perfectly sane to me but I don't have any x86
-> Xen HW to test this one. Are the x86 maintainers happy to take this on?
+On 2024/2/6 下午5:20, Thomas Huth wrote:
+> On 06/02/2024 03.29, maobibo wrote:
+>> Hi Philippe,
+>>
+>> On 2024/2/5 下午8:58, Philippe Mathieu-Daudé wrote:
+>>> Hi Bibo,
+>>>
+>>> On 5/2/24 03:13, Bibo Mao wrote:
+>>>> The cdrom test skips to execute on LoongArch system with command
+>>>> "make check", this patch enables cdrom test for LoongArch virt
+>>>> machine platform.
+>>>>
+>>>> With this patch, cdrom test passes to run on LoongArch virt
+>>>> machine type.
+>>>>
+>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>>> ---
+>>>>   tests/qtest/cdrom-test.c | 3 +++
+>>>>   1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+>>>> index 0945383789..c8b97d8d9a 100644
+>>>> --- a/tests/qtest/cdrom-test.c
+>>>> +++ b/tests/qtest/cdrom-test.c
+>>>> @@ -271,6 +271,9 @@ int main(int argc, char **argv)
+>>>>               const char *virtmachine[] = { "virt", NULL };
+>>>>               add_cdrom_param_tests(virtmachine);
+>>>>           }
+>>>> +    } else if (g_str_equal(arch, "loongarch64")) {
+>>>> +        const char *virtmachine[] = { "virt", NULL };
+>>>> +        add_cdrom_param_tests(virtmachine);
+>>>
+>>> What is the default device used, virtio-blk-pci?
+>>>
+>> yes, it is. For virt machine type, the default type for block device is
+>> virtio interface, and it is defined at function loongarch_class_init().
+>>     mc->block_default_type = IF_VIRTIO
+> 
+> Ok, then you might need to check whether your patch still works when you 
+> run "configure" with "--without-default-devices". You might need to 
+> check with 'if (qtest_has_device("virtio-blk-pci"))' whether the device 
+> is really available in the binary, like it is done some lines earlier in 
+> the arm case.
+Sorry for the late response. Yes cdrom test case will report failure 
+with it is compiled with --without-default-devices option.
 
-Ping...
+I will refresh the patch like arm case.
 
->=20
-> FWIW:
->=20
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->=20
-> --=20
-> Alex Benn=C3=A9e
->=20
+Regards
+Bibo Mao
+> 
+>   Thomas
+> 
 
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
-
---Q0+3eHKn/djYPxYa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmXQJoYACgkQ24/THMrX
-1yymZAf8ChLekrtLpigwAq1cK/g9+kUbjLWHksGz666MCdEgd5P+Zy0KSbfa4A/6
-PR2754T9zgqf5JCGFkaE9uCKYG3AtQpqXvQO7tLI4GicrIBO1YHYp094OV2F97oT
-KTxdR97aYPbKJ78SfRf4phU6lFq1BFFEMs9SsPEYF/g+i1AsP8m+F40AHw7CiK/G
-vCznXYoHwIhRFHPbf/lEkBVLHE7L7J12hMXM1Q0j7n3MMGHWMhmN9WL1T4EfSjHf
-oGs+2CrWIJ70LW8BbdklCZpEmH692PmuY/br+CiyauL+l4EioPtvZrm3NAlLdKet
-509POMwoSg+3YNbl8aRAD1wkx7+baQ==
-=IVfk
------END PGP SIGNATURE-----
-
---Q0+3eHKn/djYPxYa--
 
