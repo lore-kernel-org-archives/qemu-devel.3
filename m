@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D991C48BC4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 09:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33643C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 09:09:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbGei-0007lf-TP; Sat, 17 Feb 2024 04:06:45 -0500
+	id 1rbGh4-0000lx-Uj; Sat, 17 Feb 2024 04:09:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rbGeh-0007dW-1D; Sat, 17 Feb 2024 04:06:43 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rbGeb-000505-9W; Sat, 17 Feb 2024 04:06:42 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 595314E16E;
- Sat, 17 Feb 2024 12:06:45 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 313F481C99;
- Sat, 17 Feb 2024 12:06:32 +0300 (MSK)
-Message-ID: <96add555-a8aa-4ca7-8333-0890c3cedc0a@tls.msk.ru>
-Date: Sat, 17 Feb 2024 12:06:32 +0300
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1rbGh3-0000le-3w
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:09:09 -0500
+Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1rbGgx-0005TA-Q6
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 04:09:08 -0500
+Received: by mail-oo1-xc33.google.com with SMTP id
+ 006d021491bc7-59f786b2b59so1321288eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 01:09:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1708160942; x=1708765742; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OUPRFafdu1pnm8k3a5iqOvAeWByKXJpU9624AlGP1FQ=;
+ b=VMj+bjkuC2mu0f1hZZHbQ9r+abP4HuUG9QHuWedW/uciEez0XxTwTuLquLvYKP7ATZ
+ 6YmLkZYqdjW/v5x4jlwftbLQhqxlYowU1iDL9A6ujjWrc5xPP42+z9kWCji8fyKoB4Rb
+ KbsQ0W7spme6rVqQ1JPQ8zd3TzdlUCSHbx8ZMHZi/DtW1LmTEv6Gs802rRtMilpIYFu2
+ qXPsOzCWQVdjAqZLNtUzCG7wF9i+Ul9sHoJOoa0e8Bm+9pbWjanrfadgTg7lnMaqrrV6
+ VAskfmJP6d6ZqT/AKpTymOI5kGs7BcrXdNpCAyIWcmc3Uez//tMnsdAx4O52ftAiVPBo
+ Ttkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708160942; x=1708765742;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OUPRFafdu1pnm8k3a5iqOvAeWByKXJpU9624AlGP1FQ=;
+ b=uZVz9h/Yy7m2X5p7SzCBVmNEX2oXKPyb7gfM2AUUtFe/E8BhsXuVQfzHlqF4IZIF3S
+ b33Uvz949ucUPyTphqZHYiWVF+e7pDCQ/mG5UERD46Azz3QUXoGWD7InJH5yd3w/sUAO
+ V1IMLlZ7qO29RnxdBhjDzWQ8mYKXaBQV6ErHzY8/n+KXcknjZyonODWbC6XE3fRVRsWB
+ npGmuFQkT/L+jLTh/NIg9RoxqwA88CzegAH3/ZFQdDWqgOQ6zyHDC9YTzTDImA3v5E5n
+ ISpOnk0qtIzKuvuk34h3Qzngdca17e7bcc5K+abNGPRn2ytww15Wladm38ftPO6TW7le
+ z+bg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5tItCH0FiXV+NHsgw+p/7aJO69aRf99VH3qeCVSG4Vz7MlFcWwwxw+/QkikMNDBd65l5IJhhCnrADJEkc55XGQ1ZUKkQ=
+X-Gm-Message-State: AOJu0YzG+U1y6u7Rv2iPcNWigXeGXELBa8cOtYp3acGIAdQ1r7GAjWpo
+ yOG2/1V3fq78us0xqOqJCHIvB5A5RPofScJ4WJJPPNXeIlVnxwkmYWhW/I8++Ps=
+X-Google-Smtp-Source: AGHT+IHplEMYsKg98eaqgsyMZmSbCUP9e3zY/nokBsjZYAm1lbTqs8jAQNZNNm60D6ZQKRe9S2JF5Q==
+X-Received: by 2002:a05:6358:8aa:b0:176:5c73:393b with SMTP id
+ m42-20020a05635808aa00b001765c73393bmr8397139rwj.18.1708160942017; 
+ Sat, 17 Feb 2024 01:09:02 -0800 (PST)
+Received: from [100.64.0.1] ([136.226.240.197])
+ by smtp.gmail.com with ESMTPSA id
+ v9-20020aa78089000000b006e13a88d52esm1228777pff.61.2024.02.17.01.09.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 17 Feb 2024 01:09:01 -0800 (PST)
+Message-ID: <0d5cbc01-a121-ab44-a8f0-4fe99e03fb20@sifive.com>
+Date: Sat, 17 Feb 2024 17:08:59 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scsi: megasas: Internal cdbs have 16-byte length
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.14.0
+Subject: Re: [RFC PATCH 2/6] accel/tcg: Avoid uncessary call overhead from
+ qemu_plugin_vcpu_mem_cb
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: dbarboza@ventanamicro.com, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240215192823.729209-1-max.chou@sifive.com>
+ <20240215192823.729209-3-max.chou@sifive.com>
+ <0d95525a-8307-4c89-9045-68130b44f095@linaro.org>
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Guenter Roeck <linux@roeck-us.net>, Hannes Reinecke <hare@suse.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20230228171129.4094709-1-linux@roeck-us.net>
- <dd384cc6-92f1-e940-a329-08b70f7ae439@msgid.tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <dd384cc6-92f1-e940-a329-08b70f7ae439@msgid.tls.msk.ru>
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <0d95525a-8307-4c89-9045-68130b44f095@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
+ envelope-from=max.chou@sifive.com; helo=mail-oo1-xc33.google.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.399,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,16 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> 28.02.2023 20:11, Guenter Roeck wrote:
->> Host drivers do not necessarily set cdb_len in megasas io commands.
->> With commits 6d1511cea0 ("scsi: Reject commands if the CDB length
->> exceeds buf_len") and fe9d8927e2 ("scsi: Add buf_len parameter to
->> scsi_req_new()"), this results in failures to boot Linux from affected
->> SCSI drives because cdb_len is set to 0 by the host driver.
->> Set the cdb length to its actual size to solve the problem.
+Hi Richard,
 
-Has this been lost/forgotten?
+Thank you for the suggestion. I'll do a v2 with this.
 
-/mjt
+Thanks,
+Max
 
+On 2024/2/16 4:03 AM, Richard Henderson wrote:
+> On 2/15/24 09:28, Max Chou wrote:
+>> If there are not any QEMU plugin memory callback functions, checking
+>> before calling the qemu_plugin_vcpu_mem_cb function can reduce the
+>> function call overhead.
+>>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>> ---
+>>   accel/tcg/ldst_common.c.inc | 40 +++++++++++++++++++++++++++----------
+>>   1 file changed, 30 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
+>> index c82048e377e..bf24986c562 100644
+>> --- a/accel/tcg/ldst_common.c.inc
+>> +++ b/accel/tcg/ldst_common.c.inc
+>> @@ -134,7 +134,9 @@ uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr 
+>> addr, MemOpIdx oi, uintptr_t ra)
+>>         tcg_debug_assert((get_memop(oi) & MO_SIZE) == MO_UB);
+>>       ret = do_ld1_mmu(env_cpu(env), addr, oi, ra, MMU_DATA_LOAD);
+>> -    plugin_load_cb(env, addr, oi);
+>> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
+>> +        plugin_load_cb(env, addr, oi);
+>> +    }
+>>       return ret;
+>>   }
+>
+> Rather than repeating N times, modify plugin_load_cb and 
+> plugin_store_cb just above to avoid the call to 
+> cpu_plugin_mem_cbs_enabled().  I expect the compiler is inlining those 
+> functions already.
+>
+>
+> r~
 
