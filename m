@@ -4,88 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56489C48260
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 01:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D46AFC48260
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 01:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rb98B-0000BQ-9h; Fri, 16 Feb 2024 20:04:39 -0500
+	id 1rb9yB-0004jc-KU; Fri, 16 Feb 2024 20:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tcminyard@gmail.com>)
- id 1rb989-0000AZ-Cs
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 20:04:37 -0500
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rb9y8-0004jD-W9
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 20:58:21 -0500
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tcminyard@gmail.com>)
- id 1rb985-0005MV-I4
- for qemu-devel@nongnu.org; Fri, 16 Feb 2024 20:04:37 -0500
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-6e2e42fb159so1214864a34.2
- for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 17:04:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>) id 1rb9y7-00070H-5r
+ for qemu-devel@nongnu.org; Fri, 16 Feb 2024 20:58:20 -0500
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-6e2de202d9aso1048921a34.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Feb 2024 17:58:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708131872; x=1708736672; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zxypKfwz1nWInwHTT7q31WH9T1k/8244u0yq+eE8rPc=;
- b=IgTz9kE6leC5Z1+zehuoaRk9l4CgG3a8t3BkGMfkpqeOVMKhiZsWavBkgsw0ogxU8H
- lnWNCPAzHG4Tr0sqMteyv1DlnZKsWQ/+uZCiKOk30brrLXjeEx8NhikmOtdpPSyphGi3
- nYCeRTXgjAAsRcTtC7tmBmLe1trtf9vtk0gfPBklia9pfMF700D1H68n4GTv1GRgWbb3
- ggm+qjXl50d2o6cjHqqQBH37ydW0ZGT/wX24xyS6uTYqnuJcIS5d3YWpPYG7xO/6ayIe
- N845Z7l+8W5qSMtfcjPgANXysiJXi94YuylZptB4D0qb2RW02fnvtew1Sfc6uhJ7g5H8
- nGzw==
+ d=gmail.com; s=20230601; t=1708135096; x=1708739896; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=LPdabQpB/k07IdknuZ1qRdlEreRQmWkHPCDUa56ZKyA=;
+ b=WDVPgeZ+Tdi355jMlcBho1BXJHgP471GPSyiSUqvG2HcOQO0TM9wiyC8kRxbi9N0Yz
+ pKYXZeN7djfVTQzYzU3hw6D9c3gNiasY1+TNHIFFYTyZvDRId5hvYK630FmGHtgcFILG
+ CyP1z6p2sVB6j64SloIcqSEpOhT7ElCT0sAwC0aJVDw1cEX76FNmTsF3nDQ9KGURikwQ
+ iR+5tqh5zg7lKQDmBWdSDKryyT/XcxsEaGQnz6I7FfYInXu0A8MLX2UEOcZCwlJ2coVa
+ 5NC/RvyrhnSoF8os8L5jperu4B/fycDrjhdusjR6gXyDWKdjYQod/iWkHDoNjS6K1yhY
+ ZYrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708131872; x=1708736672;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zxypKfwz1nWInwHTT7q31WH9T1k/8244u0yq+eE8rPc=;
- b=ngC0Zl+gkiY/pt67rwvokqvG2zo5Lrv/z0xb4/k/poaGtRf0g62Bnhrb1pVNaqM0Qv
- IvPUfnBVLgNPpgFASZD4xsZYc7Jfjnyzu0bR3suYXmKXTso6U/VMYWEdMdXxDumOkm0J
- Mm1E9kM5gD60P0i2fI4Hod0oNv9on0/X+BqVR95Pn3MA3hANqDVwtscLpHjknCa6b/QC
- g59kz1wSpyz9G/euSkUB17s5VM1vV3zEA3lkQW9G52iKV1rAuMWOcVj1h0RPCxFD9ay2
- 7fwdiC8bQakOiqTGU6XtZbJNt6HESXd46UK07aurBk5gVjN8sajmDFnnQkdcjaQKpX6Q
- IZ2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGNgozEMsAKw/CYQ2BFxRO6MkTlL5E52jj821KNSeOn6j6KJjXBUdFQdvHv/9uX8qsR40vJ/bDAwPP5RIssn5uU/taw1c=
-X-Gm-Message-State: AOJu0YyUJ1omglxG/8l4BpNELgHjXRZ8vKzeMgChmEZTdTuZzqpd2EL+
- x2t6TT9FjDyvzJ1V05n1PpMn1IyJZRGBAQghpfJvDKbQlmeXzmc=
-X-Google-Smtp-Source: AGHT+IEbVIsU+UXdOzHIdhe78HOQITOEVDCN+Qn1dFPI0eJop/URsIP73eBQlehSezlKCFUhPIddzA==
-X-Received: by 2002:a05:6870:a101:b0:21e:8133:755f with SMTP id
- m1-20020a056870a10100b0021e8133755fmr1672512oae.1.1708131871831; 
- Fri, 16 Feb 2024 17:04:31 -0800 (PST)
-Received: from serve.minyard.net ([47.184.181.2])
+ d=1e100.net; s=20230601; t=1708135096; x=1708739896;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LPdabQpB/k07IdknuZ1qRdlEreRQmWkHPCDUa56ZKyA=;
+ b=Lly+QhrqrgTdOlNK9+m7oWpd3VpD0yAO7pb6sSl0jkQmKvnIsV6jBGmv3WrkVS/AAm
+ WfPPBI2kpXW3jKfEa5RYu4ldBJryu/fRtP8nCJDgYPGJ1SGCPfKZI0cJNJGQBxJxhySc
+ PLOnsB+IhOBW0rfaELAYD/fLmOxPaCjR66NEWh99yFgoKue0Th5mWD0zS+N/Xk9B/ZVx
+ +gymjXIeRwzUVNuXzzL3w4uTgT9QPehDYhDtPjdlowXfmz6ZV2uhleoKZJaIBx762od9
+ eDDz/rHbe/sNe9SieAE5Z+2tNBr4dwMg6ylTYZsn5QtBXAhXy2X4XyjtZ/RjoGrJDRmt
+ qX6g==
+X-Gm-Message-State: AOJu0Yw9diMDTJTU3iC15YmmLfDvsUDVpODWazADIDINflgNRD6eImuv
+ jgqEQAjDGfOQyehyLoZtcnvuXoQHHjkTLQdMZMm7zAjLS4/tiTMOQlE7hdSS
+X-Google-Smtp-Source: AGHT+IEGNlHQlmpv29a9JVMjArRNdwuX6in2erzOrzpWSORyCs9k8ZzdFS34rPZAQrY/0Eslw30vcA==
+X-Received: by 2002:a05:6808:220f:b0:3c0:3653:aa61 with SMTP id
+ bd15-20020a056808220f00b003c03653aa61mr8203981oib.1.1708135096551; 
+ Fri, 16 Feb 2024 17:58:16 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- j2-20020a9d7682000000b006e2ea96949csm181949otl.29.2024.02.16.17.04.30
+ y4-20020a17090aca8400b00296f2c1d2c9sm654001pjt.18.2024.02.16.17.58.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Feb 2024 17:04:30 -0800 (PST)
-Received: from mail.minyard.net (unknown
- [IPv6:2001:470:b8f6:1b:f16d:b49:a339:b48b])
- by serve.minyard.net (Postfix) with ESMTPSA id 76B281800BF;
- Sat, 17 Feb 2024 01:04:30 +0000 (UTC)
-Date: Fri, 16 Feb 2024 19:04:29 -0600
-From: Corey Minyard <minyard@acm.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Joe Komlodi <komlodi@google.com>, qemu-devel@nongnu.org, venture@google.com
-Subject: Re: [PATCH v3 1/3] hw/i2c: core: Add reset
-Message-ID: <ZdAGHThxd2JSyX7b@mail.minyard.net>
-References: <20240202204847.2062798-1-komlodi@google.com>
- <20240202204847.2062798-2-komlodi@google.com>
- <CAFEAcA8R13bQ7niSXhZPJ3vUD_OdNWpvjpKrWpz-gZsJxO_=dg@mail.gmail.com>
+ Fri, 16 Feb 2024 17:58:15 -0800 (PST)
+From: Guenter Roeck <linux@roeck-us.net>
+To: qemu-devel@nongnu.org
+Cc: Guenter Roeck <linux@roeck-us.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Charlie Jenkins <charlie@rivosinc.com>, Helge Deller <deller@gmx.de>
+Subject: [PATCH v2] target: hppa: Fix unaligned double word accesses for hppa64
+Date: Fri, 16 Feb 2024 17:58:11 -0800
+Message-Id: <20240217015811.1975411-1-linux@roeck-us.net>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8R13bQ7niSXhZPJ3vUD_OdNWpvjpKrWpz-gZsJxO_=dg@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=tcminyard@gmail.com; helo=mail-ot1-x32b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=groeck7@gmail.com; helo=mail-ot1-x330.google.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,102 +89,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: minyard@acm.org
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 04:39:10PM +0000, Peter Maydell wrote:
-> On Fri, 2 Feb 2024 at 20:48, Joe Komlodi <komlodi@google.com> wrote:
-> >
-> > It's possible for a reset to come in the middle of a transaction, which
-> > causes the bus to be in an old state when a new transaction comes in.
-> >
-> > Signed-off-by: Joe Komlodi <komlodi@google.com>
-> > ---
-> >  hw/i2c/core.c        | 19 +++++++++++++++++++
-> >  include/hw/i2c/i2c.h |  2 +-
-> >  2 files changed, 20 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-> > index 4cf30b2c86..3128067bba 100644
-> > --- a/hw/i2c/core.c
-> > +++ b/hw/i2c/core.c
-> > @@ -23,10 +23,29 @@ static Property i2c_props[] = {
-> >      DEFINE_PROP_END_OF_LIST(),
-> >  };
-> >
-> > +static void i2c_bus_hold_reset(Object *obj)
-> > +{
-> > +    I2CBus *bus = I2C_BUS(obj);
-> > +    I2CNode *node, *next;
-> > +
-> > +    bus->broadcast = false;
-> > +    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
-> > +        QLIST_REMOVE(node, next);
-> > +        g_free(node);
-> > +    }
-> > +}
-> 
-> This does what it says it's going to do; but I think it
-> would be good to hear from Corey whether it's better to
-> do this, or instead to call i2c_end_transfer() in the
-> reset-enter phase.
+Unaligned 64-bit accesses were found in Linux to clobber carry bits,
+resulting in bad results if an arithmetic operation involving a
+carry bit was executed after an unaligned 64-bit operation.
 
-Sorry, I missed this, I'm having major chaos going on right now in my
-life.
+hppa 2.0 defines additional carry bits in PSW register bits 32..39.
+When restoring PSW after executing an unaligned instruction trap, those
+bits were not cleared and ended up to be active all the time. Since there
+are no bits other than the upper carry bits needed in the upper 32 bit of
+env->psw and since those are stored in env->psw_cb, just clear the entire
+upper 32 bit when storing psw to solve the problem unconditionally.
 
-I don't think i2c_end_transfer() is the right thing to do.  The transfer
-has not cleanly ended, it is just forgotten.
+Fixes: 931adff31478 ("target/hppa: Update cpu_hppa_get/put_psw for hppa64")
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Charlie Jenkins <charlie@rivosinc.com>
+Cc: Helge Deller <deller@gmx.de>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+---
+v2: Rework to not require conditional code [Richard]
+    Add Richard's Reviewed-by: tag
 
-> 
-> Mostly QEMU's "reset" is like power-cycling, in which case
-> I guess that what we have here where we just forget about
-> the in-progress transfer and assume the device on the other
-> end is also going to reset back to a neutral state is what
-> we want.
-> 
-> Does i2c have a concept of a bus-level "reset" operation?
+ target/hppa/helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-No, it does not.  Most I2C devices don't even have a reset pin.  In a
-reset situation in real hardware, the operation would be aborted by
-the lines drifting high after the bus master has been reset.
+diff --git a/target/hppa/helper.c b/target/hppa/helper.c
+index 859644c47a..9d217d051c 100644
+--- a/target/hppa/helper.c
++++ b/target/hppa/helper.c
+@@ -76,7 +76,8 @@ void cpu_hppa_put_psw(CPUHPPAState *env, target_ulong psw)
+     }
+     psw &= ~reserved;
+ 
+-    env->psw = psw & ~(PSW_N | PSW_V | PSW_CB);
++    env->psw = psw & (uint32_t)~(PSW_N | PSW_V | PSW_CB);
++
+     env->psw_n = (psw / PSW_N) & 1;
+     env->psw_v = -((psw / PSW_V) & 1);
+ 
+-- 
+2.39.2
 
-So I think this is fine as is.
-
--corey
-
-> 
-> > +
-> > +static void i2c_bus_class_init(ObjectClass *klass, void *data)
-> > +{
-> > +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> > +    rc->phases.hold = i2c_bus_hold_reset;
-> > +}
-> > +
-> >  static const TypeInfo i2c_bus_info = {
-> >      .name = TYPE_I2C_BUS,
-> >      .parent = TYPE_BUS,
-> >      .instance_size = sizeof(I2CBus),
-> > +    .class_init = i2c_bus_class_init,
-> >  };
-> 
-> 
-> 
-> >  static int i2c_bus_pre_save(void *opaque)
-> > diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-> > index 2a3abacd1b..49580e30e2 100644
-> > --- a/include/hw/i2c/i2c.h
-> > +++ b/include/hw/i2c/i2c.h
-> > @@ -64,7 +64,7 @@ struct I2CSlave {
-> >  };
-> >
-> >  #define TYPE_I2C_BUS "i2c-bus"
-> > -OBJECT_DECLARE_SIMPLE_TYPE(I2CBus, I2C_BUS)
-> > +OBJECT_DECLARE_TYPE(I2CBus, I2CBusClass, I2C_BUS)
-> 
-> I don't think you need this change any more ?
-> 
-> thanks
-> -- PMM
-> 
 
