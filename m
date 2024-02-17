@@ -4,88 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4023C48BC4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 17:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6F2C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 18:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbOTo-0008P3-Qr; Sat, 17 Feb 2024 12:28:00 -0500
+	id 1rbPsq-000138-S5; Sat, 17 Feb 2024 13:57:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rbOTn-0008Om-Jo
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 12:27:59 -0500
-Received: from mail-pj1-x1042.google.com ([2607:f8b0:4864:20::1042])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rbOTl-0001Kx-7z
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 12:27:59 -0500
-Received: by mail-pj1-x1042.google.com with SMTP id
- 98e67ed59e1d1-2997c5fe6abso23219a91.1
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 09:27:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1708190876; x=1708795676; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YZ7fOpUHNbJKvjI94vWeCJeJ6Gt6HFQtT5Uk1QodXSc=;
- b=cXjhZNk8qcBSQB+oaMQM6ghJ17bQiaAIQ+KC+lXY+3smdmlv8RlGqzd8K648Jst3lC
- 3fDhHdBEl2DwKNOGX85tyrtbjds9Lnu9GJYgT8wbEM5MTSPvcNoQOVuFy/3zMhXT0QtD
- VcqfSLQ59zd/XbwVerp7q9JDMf4ie0OGmu/nsdjFb8gxWygqhXR3OaZHj+XQsVNQDNm6
- n5XgGDGEJ+PwAB1hUOIRA7D8/VLco37ZX6SWfpwS7YexiJRfJ6+NLrQ+sVZt/40aSKR9
- RZ1+l2Hf4UTWZrjXObzrA64wSxCJxHgVUqWZd/2XAfd2uTHv0EruS+5xTeaRLy08QYqC
- t5YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708190876; x=1708795676;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YZ7fOpUHNbJKvjI94vWeCJeJ6Gt6HFQtT5Uk1QodXSc=;
- b=lq2TQ0CIRfv5Set8JVi2mm26hSCYJuJm7o7f075T6vAHrA5u92KjML0LA/KQi9Oo0r
- 2stHiPNypBbQg6dRZ0jU6OMTH8w0Re3LwBzoRb+ZpKGBMKpb2yBnOvIbUr//kuooLajP
- +QJDFHF7Xq1TjdGwYvSt6lJhOJe3gnPfXE94jSguu4IlH4/Q06rWELfrNTgbw1St6WTP
- V5rvitS3xbP4CyTeL4MuX98JpYUgCm/NKJUUEZW9MZmwOTw5iOFnz6g0CEyrc558KLCm
- UVEi3fbeMy35IZ2UIZ8iNatkLuEss6xRQAUvnusntiR5DYnwnS/fac+Tfrz/6MrCYBKF
- 9C0Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULihsKmomuh9X2tQL+aU4qvldK0YseQV9ZEPHPvYpIEgp9laWfSw/oN463A/sfL20TR3TG+IzLLxJOjPyeyzHj8T3qsKw=
-X-Gm-Message-State: AOJu0YxMYWe3ZSxEKgM2qbGm01N4ehjDUo3YT30ljquJp5fhEttLZTfx
- NB15+748fiLH+9dzCM9Zou5SV3C08kubl/MocvkBJCOpbrwIpNu7GFurRWEShXw=
-X-Google-Smtp-Source: AGHT+IEZUZsm5r0AusWrz/jMFABl/7vkvFyDDC08uvqkpYema6yfDysh32fBFMe4rfRhZ26XazM3xQ==
-X-Received: by 2002:a17:90a:4ce1:b0:298:d301:db69 with SMTP id
- k88-20020a17090a4ce100b00298d301db69mr7528402pjh.33.1708190875590; 
- Sat, 17 Feb 2024 09:27:55 -0800 (PST)
-Received: from [100.64.0.1] ([136.226.240.169])
- by smtp.gmail.com with ESMTPSA id
- li13-20020a17090b48cd00b00297317e5e04sm2088476pjb.52.2024.02.17.09.27.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 09:27:55 -0800 (PST)
-Message-ID: <79830f29-485c-4755-1ba7-57aa76ccc9d7@sifive.com>
-Date: Sun, 18 Feb 2024 01:27:53 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.14.0
-Subject: Re: [RFC PATCH 4/6] accel/tcg: Inline cpu_mmu_lookup function
+ (Exim 4.90_1) (envelope-from <i.bermudezl@uniandes.edu.co>)
+ id 1rbPso-00012d-05
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 13:57:54 -0500
+Received: from mail-mw2nam12on2136.outbound.protection.outlook.com
+ ([40.107.244.136] helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <i.bermudezl@uniandes.edu.co>)
+ id 1rbPsh-00084N-Vy
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 13:57:53 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dRYIE7J3JrO7vk6H9ZjNSnxEDbZlxZ7DmjwhxYUPRSvL4RHTV7l6UsoLn2vHbbfnZinI3frSUWgEdxr0JOCoqVslRwD0zD7k15xtttjbQNOdCZwSIDqD68FklM2B8aFRZNFvXpnwTys9VR4l1RK6S/S493hNxEh5H6B2igBV8KJQ2BHl7ntyyTYECjoTdFL0J9SLvl7grqUSAjurQPJu+SXfB4FwpUA0dQ55uGjgSvuCxo1vO56QFJddhcelznDweEiI5MUIpZt2snCGFK3GFWPZ/MXFC/Kz3Z7HUAqelEnoZgYiQqLr/iDbFK1cuVs7wx9zr9RSwVyu9QacZkZq2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=10qdEw2Nwriq5apIDnI2seBJNURXi7JRMWyukUqjkWE=;
+ b=IbceyA41Pi09HCyKoGdleEHWwfY3Z+M0tysSc/KZDoIwyvqXdtv5h5Ry5ozS5K5E3oe034CchkTZr1yYMouC4QK8YKcIzjTryO+SXKV/BRVxYIFGB3YFv+Q+1lsC8zM64hKn/2bRevliGEDZ7NUrdvIz/oZW24qPoNvqcOzqCGkx6nWnslaBTjTMwAA0Fvr+dLyQTmMtdCTq0XzQsQA+GBPQDoqp7XNurFrhDXQveXpscTy6g+LfEWnzTzfc+KHfCXcd1rQia3zHpacnFYayHXY9HZfMCF3cmrj2BAqhZ3p4lMRmOnEJed92XuuF674bLWLcyM3pE5N05b3kNaSJeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=uniandes.edu.co; dmarc=pass action=none
+ header.from=uniandes.edu.co; dkim=pass header.d=uniandes.edu.co; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniandes.edu.co;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=10qdEw2Nwriq5apIDnI2seBJNURXi7JRMWyukUqjkWE=;
+ b=bNyN/+acXbf8gUN192qY38IUBtpQSgN0X3S4xy3KDz4jwi3822GwdjZ8Gs7joBctlaSsTZgfYs7Gg9i/VzqP7uojEoGiEecL1YXF24rphJq3J4il1CV6qLASSg6uwCMcjYQi8wWRLgYl8qbBbLyhfb9NH66p4/8WJbZ5ABlxslk=
+Received: from DM6PR08MB5850.namprd08.prod.outlook.com (2603:10b6:5:158::12)
+ by SJ0PR08MB7797.namprd08.prod.outlook.com (2603:10b6:a03:3d4::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.28; Sat, 17 Feb
+ 2024 18:52:42 +0000
+Received: from DM6PR08MB5850.namprd08.prod.outlook.com
+ ([fe80::a4c9:830d:1290:99a7]) by DM6PR08MB5850.namprd08.prod.outlook.com
+ ([fe80::a4c9:830d:1290:99a7%7]) with mapi id 15.20.7292.029; Sat, 17 Feb 2024
+ 18:52:31 +0000
+From: Isaac David Bermudez Lara <i.bermudezl@uniandes.edu.co>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: QEMU development setup
+Thread-Topic: QEMU development setup
+Thread-Index: AQHaYdIpj9ZpzRpXh0aT/+bmeBxApA==
+Date: Sat, 17 Feb 2024 18:52:30 +0000
+Message-ID: <DM6PR08MB5850F6109B1F37FE288A6ECCB0532@DM6PR08MB5850.namprd08.prod.outlook.com>
+Accept-Language: en-US, es-CO
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: dbarboza@ventanamicro.com, Riku Voipio <riku.voipio@iki.fi>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240215192823.729209-1-max.chou@sifive.com>
- <20240215192823.729209-5-max.chou@sifive.com>
- <4a2b1c91-0f25-4474-ad5c-13d9993a16f5@linaro.org>
-From: Max Chou <max.chou@sifive.com>
-In-Reply-To: <4a2b1c91-0f25-4474-ad5c-13d9993a16f5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1042;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1042.google.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.405,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=uniandes.edu.co;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR08MB5850:EE_|SJ0PR08MB7797:EE_
+x-ms-office365-filtering-correlation-id: 8fcb526f-c6ca-4d4b-4bf7-08dc2fe9985b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: vsHTH1pChZ+dSnSIGb1SarZJrZ8WvvQGJ1jKCWluTzj/bV8mXG7Asu10DAujEh4pKfXKAG65p81BtADMAdUcmNjzUligIDoCNJi/j/gp8/kWLiCdys0s5Cy2DcQCG0JOKetx+cO+o/SgFPjtkCho1eJWqx8CMFsqXtKSA2lUd0h1R+QptZZGSNnYNDglYje0rTr/A4jBq15Xc/GDsuNSzBSEO91IAaY3RuecFNNbycz9OqYUxsBrIcJApKyi581p4Ml3eN2BbJIHhHzSQohM/31fVfSRZs/cVxwJVaelmU1zGIP6jhHkm6iYLu+iMFRa66cO7aWMIjMEtRx7MEvNQS8+6vsaKoM0CAs4anBfOHH8b1LsK3bPSHv/5zxbIdwoKM+PuXwD0fhVRvs0m/DXw8mcXQvt/mrQ4xkFIJ6TVHAMG4f2a1zsJsTxaUXMDRXubiWMO1wyvdKEDrot4lJjSmxr3djit8bqYhIRwmQ5Mf3LodCswQhb7/lKlHwZvgP6TjmOKyT825nPn1HWHSDT3VelIBkgYVWfhdN64E8CGPLA4I+Xak/x89xnH9f+mSgoJBj/v+/IRF8DkNKagMGxoRNTsUxgP7bDrYRF/YfZ/V691rwH51Pu5Xkn+bF3l2M1
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR08MB5850.namprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(346002)(396003)(376002)(39860400002)(366004)(136003)(230922051799003)(451199024)(64100799003)(1800799012)(186009)(38100700002)(2906002)(5660300002)(7116003)(66556008)(91956017)(66476007)(66946007)(8936002)(76116006)(66446008)(52536014)(71200400001)(64756008)(8676002)(6916009)(558084003)(26005)(33656002)(122000001)(38070700009)(3480700007)(86362001)(786003)(316002)(478600001)(41300700001)(9686003)(7696005)(6506007)(55016003)(19627405001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rc1CWgf8/s8tBjqbQiIhTe0XZ5rMH7xhwVzZMrUgLheAahHdqargC9y7DV?=
+ =?iso-8859-1?Q?T1PPHYOjOHRR62ZVblBGhjCb0Ti26DvIiLAPqcU+LLAExQzjLOuNJC30Ce?=
+ =?iso-8859-1?Q?7fPTso078omWHjCEZL/1pHRGt14h7vSNWlAX4mg8FIVADp6SzCpowHPD1/?=
+ =?iso-8859-1?Q?f5ph0ctcmr9mM0vyRw5WuJV+F1lJdLT8aaTDV5peCeSc77Hz33nItX9V98?=
+ =?iso-8859-1?Q?lJHU41QPMTof/ojmx+ORhr1yCnxh6y6g5uPzK+uU1tJyZiYC/LXC1AJR5A?=
+ =?iso-8859-1?Q?qL2ua9MiagZortfj/TNDltwrZodUFwdq/3+9yKcvc+MQu0eDW+/byrS2jD?=
+ =?iso-8859-1?Q?H1UCXnV/MidhTHMlr9yVMKF0Ug9YpShQ2r5TQYiM2q/japdYik3FZeQGM3?=
+ =?iso-8859-1?Q?oUx4dayJ7Q5vZly68oKMkHO3EK/Z/zfHIrN+5p8ojlUhV+b9+LWI6a3NQc?=
+ =?iso-8859-1?Q?TNLl46sP4uz2jhp+gtwD7xycZNsfLN3lMjSzWEgdov2nC3qHyk0xsjDXie?=
+ =?iso-8859-1?Q?PlMaqOqdl3IfcpXt0u0xYAhQ5dyDfLu9UbxRL8vJXNUO4910eYi0hwn3yq?=
+ =?iso-8859-1?Q?RdSttZEYd6TtGNdVDp2i/U2kjw5CPdT+G1+m2xKkpuV6+ONfmA62GJ8zKl?=
+ =?iso-8859-1?Q?4upbw0i5LF/XeWSRCec/lWBaNN+Q+DyZsyL+knZRmk1Y1GGuq/BP1GqFTh?=
+ =?iso-8859-1?Q?68Ad1e/t+XD89NvOFxGes9iCutOmD0p1MHx3BBKgwYXO+BO5Li0YivR3F1?=
+ =?iso-8859-1?Q?qBS2zXDr5lpEPVmosg/qMXXU3ATpgzra0ZF+fPHwOqNkbBx01QjX8vKCLY?=
+ =?iso-8859-1?Q?wJZvgVHqtC81jXk2UeJbXZFlvRvc7e4n29feZy26QFMYSrgayNlZxjs9Lf?=
+ =?iso-8859-1?Q?vL2tld4K2F8+KJO+yNhocVBVvrtce3e0wQsjeExGc4GHHznag4epUMdw0K?=
+ =?iso-8859-1?Q?hKcQN+1S86LRlujLcqAEgelYa0hu09nWWYxYeG/P5lCD2qRTOkibDxAeon?=
+ =?iso-8859-1?Q?uCqrqwid1t+IY8bpd60lM09ugSq0bhPvZUCqICDmOK/oaTAKCCKf6o5fK+?=
+ =?iso-8859-1?Q?C5SlAxBDzUsIx03ZCyf00GMpjYi1sQLko+VKO4e6S1xYnwp6/qDBYBeon6?=
+ =?iso-8859-1?Q?DT74i3dDIL4rA3WfGhSrastXZFHyQxLQ2slX3ku9gki0hVpye1eOfv3gwB?=
+ =?iso-8859-1?Q?v9Cq9XY4Xe7vH7OyE4t9wJeun/BGedOt3awtqcWWMMisF6w0O10Qs9DUp1?=
+ =?iso-8859-1?Q?CkBHHPKfUZRsEGzjCr2luNiwapn2jCHwuEw8Ew5iudQxovryRDSlumaExY?=
+ =?iso-8859-1?Q?kExsGtDcU9n7AZNre4oFkzmHFUE5v1j+zTgCipnyXC6E5zQATD5s2+HYRa?=
+ =?iso-8859-1?Q?Pv37kvq4J1qCP1b0Ik+GfnjgmdzB5onDR8zevwOmOczy7gS5TuNLyGK+ZS?=
+ =?iso-8859-1?Q?j0gvBVW9UVDIAWgXEsEpZbm0NqplUf9SQNPGV9RQoqXE4Puq+lPPq/zJ0p?=
+ =?iso-8859-1?Q?nJBh8Y3KLkCDyh1T7y5v5/QLa68Y5zujc0t0ENovr1m/obhuQpcxP0KdT2?=
+ =?iso-8859-1?Q?8OOuQiVOMcMz36TQCkcfGBNtvTO6vF7mF/otnIS7kMjMLOsLksDvRhu5kF?=
+ =?iso-8859-1?Q?EEbhMqJxooxvEzvNPy173+ztVLpJjXTonS?=
+Content-Type: multipart/alternative;
+ boundary="_000_DM6PR08MB5850F6109B1F37FE288A6ECCB0532DM6PR08MB5850namp_"
+MIME-Version: 1.0
+X-OriginatorOrg: uniandes.edu.co
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB5850.namprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8fcb526f-c6ca-4d4b-4bf7-08dc2fe9985b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Feb 2024 18:52:30.9510 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fabd047c-ff48-492a-8bbb-8f98b9fb9cca
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: O1h58S8oz/MQY/A/L87ZUivQGipmaWCSn/iWxGL6mRHNcXWkRg5UEC9b16oUiFM101iSQcnEx4H0OrQzlh7ZZRKENdPIP6n4TSlFVYUAHyc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR08MB7797
+Received-SPF: pass client-ip=40.107.244.136;
+ envelope-from=i.bermudezl@uniandes.edu.co;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,274 +137,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+--_000_DM6PR08MB5850F6109B1F37FE288A6ECCB0532DM6PR08MB5850namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-After I tried to reduce the overhead of unnecessary segment flow and 
-memory plugin callbacks, I observed that there several functions consume 
-most of runtime from perf report.
-So these three inline patches and previous patch were created to reduce 
-the overhead without modifying the functions.
-
-The following are the experiment results.
-The benchmark target is the bench-memcpy executable generated from the 
-glibc repository (release 2.38 with RVV support patch [1]).
-
-- Execution command
-
-`qemu-riscv64 -E TIMEOUTFACTOR=10 -R 1G -L {glibc build folder}/rootfs 
--cpu 
-rv64,zba=true,zbb=true,v=true,vlen=256,vext_spec=v1.0,rvv_ta_all_1s=true,rvv_ma_all_1s=true 
-bench-memcpy`
+Hi, I am just starting out on QEMU development, and I would like to know wh=
+ich tools to use. I would really appreciate it.
+Additionally, how is the support for LLVM toolchain on QEMU?
 
 
-- Total  runtime
+Best regards
 
-0. Original riscv-to-apply.next branch (commit ID: deb0ff0)
-     - Total execution time: ~383 sec.
-1. Cherry pick PATCH 4 to riscv-to-apply.next branch (commit ID: deb0ff0)
-     - Total execution time: ~375 sec.
-2. Cherry pick PATCH 4+5+6 to riscv-to-apply.next branch (commit ID: 
-deb0ff0)
-     - Total execution time: ~342 sec.
+  *
+Isaac
 
+--_000_DM6PR08MB5850F6109B1F37FE288A6ECCB0532DM6PR08MB5850namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-- Perf report (cycles)
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Hi, I am just starting out on QEMU development, and I would&nbsp;like to kn=
+ow which tools to use. I would really&nbsp;appreciate it.</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Additionally, how is the support for LLVM toolchain on QEMU?</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+Best regards</div>
+<ul data-editing-info=3D"{&quot;orderedStyleType&quot;:1,&quot;unorderedSty=
+leType&quot;:2}" style=3D"margin-top: 0px; margin-bottom: 0px;">
+<li style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, C=
+alibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0); list-s=
+tyle-type: &quot;- &quot;; margin: 0in 0in 0in -0.25in;">
+<div class=3D"elementToProof"><span style=3D"font-family: Aptos, Aptos_Embe=
+ddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 1=
+2pt; color: rgb(0, 0, 0);">Isaac</span></div>
+</li></ul>
+</body>
+</html>
 
-0. Original riscv-to-apply.next branch (commit ID: deb0ff0)
-
-# Samples: 385K of event 'cycles:u'
-# Event count (approx.): 1411574690539
-#
-# Children      Self  Command       Shared Object Symbol
-# ........  ........  ............  ....................... 
-............................................
-#
-     47.54%    31.35%  qemu-riscv64  qemu-riscv64             [.] 
-vext_ldst_us
-     25.60%     0.03%  qemu-riscv64  qemu-riscv64             [.] 
-helper_vse8_v
-     18.87%    13.29%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldb_mmu
-     17.40%     0.04%  qemu-riscv64  qemu-riscv64             [.] 
-helper_vle8_v
-     17.39%    15.71%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_stb_mmu
-     17.17%    17.17%  qemu-riscv64  qemu-riscv64             [.] 
-qemu_plugin_vcpu_mem_cb
-     12.25%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-helper_stb_mmu (inlined)
-      8.18%     4.08%  qemu-riscv64  qemu-riscv64             [.] lde_b
-      8.17%     8.17%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_mmu_lookup
-      7.45%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-plugin_load_cb (inlined)
-      7.32%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-do_st1_mmu (inlined)
-      6.79%     0.00%  qemu-riscv64  [unknown]                [.] 
-0x00000000000000ff
-      5.91%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-adjust_addr (inlined)
-      5.70%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-do_ld1_mmu (inlined)
-      5.58%     0.00%  qemu-riscv64  [unknown]                [.] 
-0x00000000000001fe
-      5.23%     4.25%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldsb_data_ra
-      4.93%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-get_memop (inlined)
-      4.11%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldub_data_ra (inlined)
-      4.11%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldub_mmuidx_ra (inlined)
-      2.88%     2.88%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_stb_data_ra
-      2.88%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_stb_mmuidx_ra (inlined)
-      2.75%     0.00%  qemu-riscv64  qemu-riscv64             [.] stb_p 
-(inlined)
-      2.66%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-get_alignment_bits (inlined)
-      1.79%     0.00%  qemu-riscv64  [unknown]                [.] 
-0x00000000e40203bf
-      1.68%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-plugin_store_cb (inlined)
-      1.60%     0.00%  qemu-riscv64  [unknown]                [.] 
-0x00000000e403733f
-      1.13%     0.00%  qemu-riscv64  qemu-riscv64             [.] ldub_p 
-(inlined)
-      0.73%     0.73%  qemu-riscv64  qemu-riscv64             [.] ste_b
-      0.53%     0.21%  qemu-riscv64  qemu-riscv64             [.] 
-helper_lookup_tb_ptr
-
-1. Cherry pick PATCH 4 to riscv-to-apply.next branch (commit ID: deb0ff0)
-
-# Samples: 378K of event 'cycles:u'
-# Event count (approx.): 1381912775966
-#
-# Children      Self  Command       Shared Object Symbol
-# ........  ........  ............  ....................... 
-.......................................
-#
-     63.30%    29.62%  qemu-riscv64  qemu-riscv64             [.] 
-vext_ldst_us
-     30.77%     0.04%  qemu-riscv64  qemu-riscv64             [.] 
-helper_vle8_v
-     28.59%     0.02%  qemu-riscv64  qemu-riscv64             [.] 
-helper_vse8_v
-     22.78%    22.78%  qemu-riscv64  qemu-riscv64             [.] 
-qemu_plugin_vcpu_mem_cb
-     21.40%     5.26%  qemu-riscv64  qemu-riscv64             [.] lde_b
-     20.69%    10.40%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldb_mmu
-     20.06%     3.91%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldsb_data_ra
-     19.16%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldub_data_ra (inlined)
-     19.16%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldub_mmuidx_ra (inlined)
-     12.65%     9.36%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_stb_mmu
-      8.60%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-plugin_load_cb (inlined)
-      6.73%     6.73%  qemu-riscv64  qemu-riscv64             [.] 
-do_ld1_mmu.constprop.23
-      6.73%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-do_ld1_mmu (inlined)
-      6.31%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-helper_stb_mmu (inlined)
-      6.20%     6.20%  qemu-riscv64  qemu-riscv64             [.] do_st1_mmu
-      6.20%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-adjust_addr (inlined)
-      5.49%     0.00%  qemu-riscv64  [unknown]                [.] 
-0x00000000000001fe
-      3.82%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-plugin_store_cb (inlined)
-      3.01%     0.00%  qemu-riscv64  qemu-riscv64             [.] ldub_p 
-(inlined)
-      2.94%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_mmu_lookup (inlined)
-      2.94%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-get_alignment_bits (inlined)
-      2.91%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-clear_helper_retaddr (inlined)
-      2.91%     2.91%  qemu-riscv64  qemu-riscv64             [.] ste_b
-      2.90%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_mmu_lookup (inlined)
-      2.90%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-get_alignment_bits (inlined)
-      0.59%     0.24%  qemu-riscv64  qemu-riscv64             [.] 
-helper_lookup_tb_ptr
-
-2. Cherry pick PATCH 4+5+6 to riscv-to-apply.next branch (commit ID: 
-deb0ff0)
-
-# Samples: 343K of event 'cycles:u'
-# Event count (approx.): 1259748868940
-#
-# Children      Self  Command       Shared Object Symbol
-# ........  ........  ............  ....................... 
-.......................................
-#
-     64.16%    35.81%  qemu-riscv64  qemu-riscv64             [.] 
-vext_ldst_us
-     30.96%     0.02%  qemu-riscv64  qemu-riscv64             [.] 
-helper_vse8_v
-     27.44%     0.05%  qemu-riscv64  qemu-riscv64             [.] 
-helper_vle8_v
-     18.37%    18.37%  qemu-riscv64  qemu-riscv64             [.] 
-qemu_plugin_vcpu_mem_cb
-     17.33%     7.45%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldsb_data_ra
-     14.90%     5.02%  qemu-riscv64  qemu-riscv64             [.] lde_b
-     14.83%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldub_data_ra (inlined)
-     14.83%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldub_mmuidx_ra (inlined)
-     14.15%    10.33%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_stb_mmu
-     11.25%     9.62%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_ldb_mmu
-      7.22%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-adjust_addr (inlined)
-      6.99%     6.99%  qemu-riscv64  qemu-riscv64             [.] 
-helper_stb_mmu
-      6.99%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-do_st1_mmu (inlined)
-      5.96%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-do_ld1_mmu (inlined)
-      5.95%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_mmu_lookup (inlined)
-      5.30%     0.00%  qemu-riscv64  [unknown]                [.] 
-0x00000000000001fe
-      4.18%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-plugin_store_cb (inlined)
-      3.22%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-cpu_mmu_lookup (inlined)
-      3.22%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-get_alignment_bits (inlined)
-      3.22%     3.22%  qemu-riscv64  qemu-riscv64             [.] ste_b
-      3.19%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-get_alignment_bits (inlined)
-      3.16%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-clear_helper_retaddr (inlined)
-      2.76%     0.00%  qemu-riscv64  qemu-riscv64             [.] g2h 
-(inlined)
-      2.76%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-g2h_untagged (inlined)
-      2.30%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-env_cpu (inlined)
-      2.21%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-plugin_load_cb (inlined)
-      0.99%     0.00%  qemu-riscv64  qemu-riscv64             [.] 
-env_cpu (inlined)
-
-
-I agree that these functions are large functions to inline and I didn't 
-test these patches on all combinations (different guest architecture + 
-different host architecture).
-So I think that we can drop these three patches until we can make sure 
-that these patches can get benefit on all combinations without side effect.
-I'll focus on avoiding over-use of the full out-of-line load/store 
-routines for the next version.
-
-
-Thanks for the suggestion and question,
-
-Max
-
-[1] 
-https://inbox.sourceware.org/libc-alpha/20230504074851.38763-1-hau.hsu@sifive.com
-
-On 2024/2/16 4:10 AM, Richard Henderson wrote:
-> On 2/15/24 09:28, Max Chou wrote:
->> Signed-off-by: Max Chou <max.chou@sifive.com>
->> ---
->>   accel/tcg/user-exec.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
->> index 68b252cb8e8..c5453810eee 100644
->> --- a/accel/tcg/user-exec.c
->> +++ b/accel/tcg/user-exec.c
->> @@ -942,8 +942,11 @@ void page_reset_target_data(target_ulong start, 
->> target_ulong last) { }
->>     /* The system-mode versions of these helpers are in cputlb.c.  */
->>   -static void *cpu_mmu_lookup(CPUState *cpu, vaddr addr,
->> -                            MemOp mop, uintptr_t ra, MMUAccessType 
->> type)
->> +static inline QEMU_ALWAYS_INLINE void *cpu_mmu_lookup(CPUState *cpu,
->> +                                                      vaddr addr,
->> +                                                      MemOp mop,
->> +                                                      uintptr_t ra,
->> + MMUAccessType type)
->>   {
->>       int a_bits = get_alignment_bits(mop);
->>       void *ret;
->
-> This is a large function.  Why does it need to be inlined?
-> For this and the next two patches I require evidence, because I don't 
-> believe you are attacking the problem correctly.
->
->
-> r~
+--_000_DM6PR08MB5850F6109B1F37FE288A6ECCB0532DM6PR08MB5850namp_--
 
