@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B65AC54766
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 19:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2BDC48BC3
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 19:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbQKf-0001rO-47; Sat, 17 Feb 2024 14:26:41 -0500
+	id 1rbQKW-0001mn-Tc; Sat, 17 Feb 2024 14:26:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rbQKd-0001qY-MK
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:26:39 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rbQKV-0001mO-Qv
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:26:31 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rbQKb-0004UJ-Kx
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:26:39 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1d944e8f367so29217145ad.0
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 11:26:37 -0800 (PST)
+ id 1rbQKU-0004Qa-Ak
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:26:31 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1d71cb97937so31954615ad.3
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 11:26:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708197995; x=1708802795; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1708197988; x=1708802788; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UUNIfOBkHjYLuvOH/rpRmRcQF/okub2SyllhTNRVXOo=;
- b=DK8Q50L1fVjV0EihpgZ7L8RAhXKVWrBQREyYd1/+DA+Ihfj6zJCf5JvN2bHivb6whF
- RdZByP6OwNpHDCrwBV5GT2WgvMc+KTBl2kq/wPJXUFeuqmbj6vqHxGKmp96SK6bWgXfB
- dACTqxDBzCcka4IbBYEOeTrFrUJoEtYLslRM08XofW3Kg/sYyXf9e1SBYhCxcMioJl6v
- DHNHc6QzC+2qmCDMEaHdgY8c/N8FBVCVoja5TAjCMtV7xhVSvyXt8vsCCTPSA2/stefY
- udfc/NQK7CD1VnUvwbburr2KIoA8AMoKJ5giplsYvnlSv2rIt8uokSyIJl+g06LtoGkk
- Kc3A==
+ bh=Uz3CofM05BSE21m08IOk5vQLqDk13O/XdOJBk/QRHeo=;
+ b=L/X4zXwTObTkcuYI9QVXWjzlW+OFiUZxC7MSPYvQPk780A042h+Csv1Lfr2u4PS+Ez
+ QuVYsMUQZfF74p3cN3D33biPuB/reDQnxN2R+MftzYAO615YS5c7KYWcim8/rozXe2LN
+ OVcqNTMfhoYWC0DP16PhrBfcUVitrfoUnjO/9buFPhK9tWXniHD7A/3f9ZdEn1VXVF2/
+ gNVZePsgdZIRhDQNrM8WarZt4SyeIbiS1rpm0/u/nwTcmgH3dfmO/5++FqAUcMIEke/Y
+ sw4J8b5FJuYqz05rpADIgPxUxZ9FSOXNMlGSshz2+2kjqfzCedzC/U94d54rLRpt28lZ
+ VOMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708197995; x=1708802795;
+ d=1e100.net; s=20230601; t=1708197988; x=1708802788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UUNIfOBkHjYLuvOH/rpRmRcQF/okub2SyllhTNRVXOo=;
- b=SyGCGPJ+9LXy8F32toZzRWgQO6YIsq3qm5l2GTzhtWdcL0K3jN4uyIapfdYlub8lHe
- kRgWRinCGvyEMBDb6hVmYvlQQlkxOT6ZEfmAa46Rx+o0Qlnc9n1Sen/+tUUQwIJnT9RN
- vRk5QOZZMLY8M5u1QI5MiIg/TPeUW4K6K6z1RGdIlHDRkRQUDAMV/Unrf+x9qtjFqmxh
- QdGY0O/xeGc7o7w0nlsCaBH54/AFsu082nSUA98g0B0shrGxmBvfHyiMDUXAOyCxoix+
- sbkUTqK3UlitTHm9XkgmXjoov1VylxsHrRL/Y13Xr9x7LAmByDxPa1rHlh7r1dD8LicE
- 2ysA==
-X-Gm-Message-State: AOJu0YzfGyncUCH/IYCn93tUFbB+RmzQZnZeiy2Llhqho19ulYJH2Npa
- /Z+pzZCGKxrGRn2uMY7eV1cSnX7fKjX5R6IBJ3pv89/oYQWH5gBkWfd8HNiLZuy8SXnzuwesQ5H
- S
-X-Google-Smtp-Source: AGHT+IEaBmVD3Mc5pIFt4cmzTnKlv3giDxE/iZEdbB3jshNXbNpyUoi/FNe4KVjpn0lHRJwnSubRUQ==
-X-Received: by 2002:a17:902:c40e:b0:1db:5b41:c5ac with SMTP id
- k14-20020a170902c40e00b001db5b41c5acmr10309421plk.68.1708197995018; 
- Sat, 17 Feb 2024 11:26:35 -0800 (PST)
+ bh=Uz3CofM05BSE21m08IOk5vQLqDk13O/XdOJBk/QRHeo=;
+ b=iZcu72XI0O5aHyTmOlzcnd8b9gNN/szv8Hj6gWOX5l15/cBo5RdaXmtGLlbsaIwcPR
+ Q8YPl6UUzedtX6toUjyN4+fCXlpfnJmtsyyvuL96hHp2dYkiJ6PU1uC2eHGFRm9fBk1h
+ Q5aq8CM2CelT0r1xScdTmIsdbvBvOQxzFUmkvew+7T7ZKE6wuQaRDqglDjb7B+ReHXGq
+ zQ9otrQuuuY2GJfQh5v4sO31K9S5GWyxkxGFddU6dhFgvWwHTdaYU72wbl4YMdKnG8PG
+ FTpnFW67tWyekYP3XiwHz0juUYsmSthg8cY1FeI7tPME4cvBMvg6SfCWuUOIEQBr/U7s
+ 4MxQ==
+X-Gm-Message-State: AOJu0YwB4/IXy9qCfB4QrDqFYNHX5hKFJbdK/0VGC2IImltG8IEkQvgA
+ 0+TgO8H8DCuHB7RALPNV1hoOs2Lt1tc+WUV/hfMkz/1PwTLUJl3JQYF7IbOXnpdwkID442ZZF/W
+ D
+X-Google-Smtp-Source: AGHT+IERfmhacNIJXbxXhGTimw6Ng50QduZO98lWsXsDEUw0Dt4jnF9GIjDod1rICY4bSxVA5h2TNw==
+X-Received: by 2002:a17:902:b686:b0:1d9:8f6e:86e8 with SMTP id
+ c6-20020a170902b68600b001d98f6e86e8mr7395064pls.69.1708197988009; 
+ Sat, 17 Feb 2024 11:26:28 -0800 (PST)
 Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
- p3-20020a170902c70300b001db86c48221sm1770927plp.22.2024.02.17.11.26.31
+ p3-20020a170902c70300b001db86c48221sm1770927plp.22.2024.02.17.11.26.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 17 Feb 2024 11:26:34 -0800 (PST)
+ Sat, 17 Feb 2024 11:26:27 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 6/6] tests/libqos: add riscv/virt machine nodes
-Date: Sat, 17 Feb 2024 16:26:07 -0300
-Message-ID: <20240217192607.32565-7-dbarboza@ventanamicro.com>
+Subject: [PATCH v2 4/6] hw/riscv/virt.c: add virtio-iommu-pci hotplug support
+Date: Sat, 17 Feb 2024 16:26:05 -0300
+Message-ID: <20240217192607.32565-5-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240217192607.32565-1-dbarboza@ventanamicro.com>
 References: <20240217192607.32565-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,181 +96,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a RISC-V 'virt' machine to the graph. This implementation is a
-modified copy of the existing arm machine in arm-virt-machine.c
+We want to add a RISC-V 'virt' libqos machine to increase our test
+coverage. Some of the tests will try to plug a virtio-iommu-pci
+device into the board and do some tests with it.
 
-It contains a virtio-mmio and a generic-pcihost controller. The
-generic-pcihost controller hardcodes assumptions from the ARM 'virt'
-machine, like ecam and pio_base addresses, so we'll add an extra step to
-set its parameters after creating it.
-
-Our command line is incremented with 'aclint' parameters to allow the
-machine to run MSI tests.
+Enable virtio-iommu-pci in the 'virt' machine.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/libqos/meson.build          |   1 +
- tests/qtest/libqos/riscv-virt-machine.c | 137 ++++++++++++++++++++++++
- 2 files changed, 138 insertions(+)
- create mode 100644 tests/qtest/libqos/riscv-virt-machine.c
+ hw/riscv/virt.c | 36 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 35 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 90aae42a22..3aed6efcb8 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -60,6 +60,7 @@ libqos_srcs = files(
-         'arm-xilinx-zynq-a9-machine.c',
-         'ppc64_pseries-machine.c',
-         'x86_64_pc-machine.c',
-+        'riscv-virt-machine.c',
- )
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index b540f4d3da..54ad809b44 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -53,6 +53,7 @@
+ #include "hw/display/ramfb.h"
+ #include "hw/acpi/aml-build.h"
+ #include "qapi/qapi-visit-common.h"
++#include "hw/virtio/virtio-iommu.h"
  
- if have_virtfs
-diff --git a/tests/qtest/libqos/riscv-virt-machine.c b/tests/qtest/libqos/riscv-virt-machine.c
-new file mode 100644
-index 0000000000..c4364c9c5d
---- /dev/null
-+++ b/tests/qtest/libqos/riscv-virt-machine.c
-@@ -0,0 +1,137 @@
-+/*
-+ * libqos driver framework for risc-v
-+ *
-+ * Initial version based on arm-virt-machine.c
-+ *
-+ * Copyright (c) 2024 Ventana Micro
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License version 2.1 as published by the Free Software Foundation.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "../libqtest.h"
-+#include "qemu/module.h"
-+#include "libqos-malloc.h"
-+#include "qgraph.h"
-+#include "virtio-mmio.h"
-+#include "generic-pcihost.h"
-+#include "hw/pci/pci_regs.h"
-+
-+#define RISCV_PAGE_SIZE            4096
-+
-+/* VIRT_DRAM */
-+#define RISCV_VIRT_RAM_ADDR        0x80000000
-+#define RISCV_VIRT_RAM_SIZE        0x20000000
-+
-+/*
-+ * VIRT_VIRTIO. BASE_ADDR  points to the last
-+ * virtio_mmio device.
-+ */
-+#define VIRTIO_MMIO_BASE_ADDR      0x10008000
-+#define VIRTIO_MMIO_SIZE           0x00001000
-+
-+/* VIRT_PCIE_PIO  */
-+#define RISCV_GPEX_PIO_BASE        0x3000000
-+#define RISCV_BUS_PIO_LIMIT        0x10000
-+
-+/* VIRT_PCIE_MMIO */
-+#define RISCV_BUS_MMIO_ALLOC_PTR   0x40000000
-+#define RISCV_BUS_MMIO_LIMIT       0x80000000
-+
-+/* VIRT_PCIE_ECAM */
-+#define RISCV_ECAM_ALLOC_PTR   0x30000000
-+
-+typedef struct QVirtMachine QVirtMachine;
-+
-+struct QVirtMachine {
-+    QOSGraphObject obj;
-+    QGuestAllocator alloc;
-+    QVirtioMMIODevice virtio_mmio;
-+    QGenericPCIHost bridge;
-+};
-+
-+static void virt_destructor(QOSGraphObject *obj)
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia(RISCVVirtState *s)
+@@ -971,6 +972,34 @@ static void create_fdt_fw_cfg(RISCVVirtState *s, const MemMapEntry *memmap)
+     qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
+ }
+ 
++static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
 +{
-+    QVirtMachine *machine = (QVirtMachine *) obj;
-+    alloc_destroy(&machine->alloc);
++    const char compat[] = "virtio,pci-iommu\0pci1af4,1057";
++    void *fdt = MACHINE(s)->fdt;
++    uint32_t iommu_phandle;
++    g_autofree char *iommu_node = NULL;
++    g_autofree char *pci_node = NULL;
++
++    pci_node = g_strdup_printf("/soc/pci@%lx",
++                               (long) virt_memmap[VIRT_PCIE_ECAM].base);
++    iommu_node = g_strdup_printf("%s/virtio_iommu@%x,%x", pci_node,
++                                 PCI_SLOT(bdf), PCI_FUNC(bdf));
++    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
++
++    qemu_fdt_add_subnode(fdt, iommu_node);
++
++    qemu_fdt_setprop(fdt, iommu_node, "compatible", compat, sizeof(compat));
++    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg",
++                                 1, bdf << 8, 1, 0, 1, 0,
++                                 1, 0, 1, 0);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
++
++    qemu_fdt_setprop_cells(fdt, pci_node, "iommu-map",
++                           0, iommu_phandle, 0, bdf,
++                           bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
 +}
 +
-+static void *virt_get_driver(void *object, const char *interface)
-+{
-+    QVirtMachine *machine = object;
-+    if (!g_strcmp0(interface, "memory")) {
-+        return &machine->alloc;
+ static void finalize_fdt(RISCVVirtState *s)
+ {
+     uint32_t phandle = 1, irq_mmio_phandle = 1, msi_pcie_phandle = 1;
+@@ -1680,7 +1709,8 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+ 
+-    if (device_is_dynamic_sysbus(mc, dev)) {
++    if (device_is_dynamic_sysbus(mc, dev) ||
++        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+         return HOTPLUG_HANDLER(machine);
+     }
+     return NULL;
+@@ -1699,6 +1729,10 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+                                      SYS_BUS_DEVICE(dev));
+         }
+     }
++
++    if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
++        create_fdt_virtio_iommu(s, pci_get_bdf(PCI_DEVICE(dev)));
 +    }
-+
-+    fprintf(stderr, "%s not present in riscv/virtio\n", interface);
-+    g_assert_not_reached();
-+}
-+
-+static QOSGraphObject *virt_get_device(void *obj, const char *device)
-+{
-+    QVirtMachine *machine = obj;
-+    if (!g_strcmp0(device, "generic-pcihost")) {
-+        return &machine->bridge.obj;
-+    } else if (!g_strcmp0(device, "virtio-mmio")) {
-+        return &machine->virtio_mmio.obj;
-+    }
-+
-+    fprintf(stderr, "%s not present in riscv/virt\n", device);
-+    g_assert_not_reached();
-+}
-+
-+static void riscv_config_qpci_bus(QGenericPCIBus *qpci)
-+{
-+    qpci->gpex_pio_base = RISCV_GPEX_PIO_BASE;
-+    qpci->bus.pio_limit = RISCV_BUS_PIO_LIMIT;
-+
-+    qpci->bus.mmio_alloc_ptr = RISCV_BUS_MMIO_ALLOC_PTR;
-+    qpci->bus.mmio_limit = RISCV_BUS_MMIO_LIMIT;
-+
-+    qpci->ecam_alloc_ptr = RISCV_ECAM_ALLOC_PTR;
-+}
-+
-+static void *qos_create_machine_riscv_virt(QTestState *qts)
-+{
-+    QVirtMachine *machine = g_new0(QVirtMachine, 1);
-+
-+    alloc_init(&machine->alloc, 0,
-+               RISCV_VIRT_RAM_ADDR,
-+               RISCV_VIRT_RAM_ADDR + RISCV_VIRT_RAM_SIZE,
-+               RISCV_PAGE_SIZE);
-+    qvirtio_mmio_init_device(&machine->virtio_mmio, qts, VIRTIO_MMIO_BASE_ADDR,
-+                              VIRTIO_MMIO_SIZE);
-+
-+    qos_create_generic_pcihost(&machine->bridge, qts, &machine->alloc);
-+    riscv_config_qpci_bus(&machine->bridge.pci);
-+
-+    machine->obj.get_device = virt_get_device;
-+    machine->obj.get_driver = virt_get_driver;
-+    machine->obj.destructor = virt_destructor;
-+    return machine;
-+}
-+
-+static void virt_machine_register_nodes(void)
-+{
-+    qos_node_create_machine_args("riscv32/virt", qos_create_machine_riscv_virt,
-+                                 "aclint=on,aia=aplic-imsic");
-+    qos_node_contains("riscv32/virt", "virtio-mmio", NULL);
-+    qos_node_contains("riscv32/virt", "generic-pcihost", NULL);
-+
-+    qos_node_create_machine_args("riscv64/virt", qos_create_machine_riscv_virt,
-+                                 "aclint=on,aia=aplic-imsic");
-+    qos_node_contains("riscv64/virt", "virtio-mmio", NULL);
-+    qos_node_contains("riscv64/virt", "generic-pcihost", NULL);
-+}
-+
-+libqos_init(virt_machine_register_nodes);
+ }
+ 
+ static void virt_machine_class_init(ObjectClass *oc, void *data)
 -- 
 2.43.2
 
