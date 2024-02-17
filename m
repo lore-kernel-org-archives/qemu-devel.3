@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A3EC48BC4
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 19:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91BDC48BC3
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 19:27:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbQGC-0000dn-Ad; Sat, 17 Feb 2024 14:22:05 -0500
+	id 1rbQKT-0001lb-AH; Sat, 17 Feb 2024 14:26:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rbQG9-0000dR-7G
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:22:02 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rbQKR-0001lB-Qs
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:26:27 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rbQG4-0003qs-FI
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:22:00 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e09493eb8eso3266063b3a.1
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 11:21:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rbQKQ-0004O8-Ec
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 14:26:27 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-5e152c757a5so161844a12.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 11:26:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708197714; x=1708802514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eczxQgv+wMObP9nnFw7Pxw9/NkNNXGOMAeQZ/VT3Rk0=;
- b=TlJr29cyVyuo9h9O7ydgWIxTk+qO2vIxoeSOeIHZM+8wR+Bk/4AnEuehLmUhkRQL9Y
- aRWtaE+4cdgx9Hgo33SP/n5hekaI9fZMY82Jy/uROFLqAdK2u7iJv+RgMr0498828bqt
- AhW2gkWy7E0aPQgHBaeqSlt+DJkBts2lYKSIuoJ5dvX0fIAI2K8bDiTy1B3jmmKS+p25
- KLx/w40hj4AfvgFAXuCm7B9tl/CGUUbHHOcLoekHhrWYNr+p+V8az0DN5dBMsNZDIQzO
- wlAxuQx8656UTp5eqrNzrO6zbx03TuPOAlemgiSsiAwSEl5QBnNtjZIiwZjhMx1y+n13
- nv8Q==
+ d=ventanamicro.com; s=google; t=1708197984; x=1708802784; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O+D1+0YQa8IFtBkx/EjqXOpu3pS63aF1bu256H6yh6U=;
+ b=kUjYl57JamiobgCVzgZLaSOFCdydS69iIj0zHZpCrYAvG1q3pRLTK2LMznA2u7kzXS
+ tamrFVZvMmHjBmBKdj//uXItVWJj8MUEznmfU2MSnKfXgfzahL0WSZ5qDosdvbQ31RI1
+ xePtE/M60CL4QsuFY1LyG4gN6ZdgIztlpgCtRW1bIxFdkYno7CMzv47H2hLnweEqneMg
+ kIdn39XumaFDkF9E9jTmQg/BnUiS/XNuudW2VT0QP2wSVbLbDS9SAN2Ya2JRbtUYgrdo
+ QMpcdZmVhLEZBUpDiRopXlAB3sx2qF6QFK4siUu1PI06vbjzDZJt0jOf/0wg6gB3d/Pw
+ eHHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708197714; x=1708802514;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eczxQgv+wMObP9nnFw7Pxw9/NkNNXGOMAeQZ/VT3Rk0=;
- b=dGmK+f/fJeeO4RNSd9VADtEFjNHHXb6wh+quYEPVa+C+zyBdaFBlB8+WojDUzzsw5q
- rdtI6+rRJYCATVdxs2zT0PBvBS6HBZZ7u6TicnSF7KVMlcGgTzuRKZbjaaQjQwHOk/Ne
- hHkGwJr56aRSnrAoioI+ojkpy3jcD6g3S3sbpgBditD4tD3LZeKb0rRsKOXkMz3cn7og
- l2jAmyWcWFh4LlOjOeYO3hFiL0u1+rgeiCy+8P6IuqtDev4XHLLP38L1SIF1EyvQxdWT
- MOAElx+HqGpni/ANg3yeIdx8ye+mEu5y10OUADXBM3HHQdhZbLtp1Z2uAbS7eW5bVnib
- /ckg==
-X-Gm-Message-State: AOJu0YxkHGTB+Jbt0m3/KvUPEje+TxTDC9RQ5DuWq5rwtdgCGSb1ljlY
- EtyahzgpPOCTZmqFxKHkFJC5iAMQHxvmEzY0rmMmhsuWJyghYmSE6FNznnAy1gvpkKYFDfXsgfA
- R
-X-Google-Smtp-Source: AGHT+IGYwT8gE9Pj4nAfgEJ3e/hAtzSXIGjFurWTt7QFey6s0FwABy4cJJLe9gjuF3yW+XmJfORXYg==
-X-Received: by 2002:a05:6a20:9592:b0:19e:5e0c:3bb8 with SMTP id
- iu18-20020a056a20959200b0019e5e0c3bb8mr12141028pzb.7.1708197714198; 
- Sat, 17 Feb 2024 11:21:54 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- b9-20020aa78109000000b006e08da9c29csm1998147pfi.54.2024.02.17.11.21.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 11:21:53 -0800 (PST)
-Message-ID: <ba0548c4-d47c-4bf0-8f27-1f753b41b603@linaro.org>
-Date: Sat, 17 Feb 2024 09:21:50 -1000
+ d=1e100.net; s=20230601; t=1708197984; x=1708802784;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=O+D1+0YQa8IFtBkx/EjqXOpu3pS63aF1bu256H6yh6U=;
+ b=g/kk2DAXzDZ5IQ2kTJNK3xWdkQjxt7MilgaiUImaj71bZNtnXozfun9ilJa0tlJfuw
+ Wa4ufr0SkqsWwiDKKyfusBm8UWcc2JDwqRFBSJLNzzNZa94F094MdPF5sKDvEMmJmbXz
+ jrhyQlyq2Ub6hy4MJoRtCnP+7QhvzzyUA0k7zrAzzSaHvH/qerjl9NlzcUcWmkAVcB16
+ fQMKE7mhZsv8AmUrp9CdrrTMoyaYXD5kOHnD0gxhBXRe/yEOQ4rNMyCxcuGkHN/4ghFP
+ vAgglTytoLjSG1v7TaP83q/dbdVQSsXryNtSsZ8jfCo3Xxq5nCJjoGu9+ABkB/RmJ70e
+ pCjw==
+X-Gm-Message-State: AOJu0Yyeerl7JQlSviQ5mobVB35i7xdsJApH6jBEzOxhThZ/SgrisyzJ
+ Ge2wkOmI2TMZuuP7Pgu2B04WtKW4OOmAo0JUe4G/oJ554lQjp1MDydfABhTPGLqzi9wkmp7uTof
+ z
+X-Google-Smtp-Source: AGHT+IEkzhMqMSd5Js0N5VOzJAprD52NUKG+H3naaK3yOseG2PDfeG5YEoFITSF3Ay2KU6GPiPgB4Q==
+X-Received: by 2002:a05:6a21:3a47:b0:19e:4f38:d8b8 with SMTP id
+ zu7-20020a056a213a4700b0019e4f38d8b8mr9590905pzb.49.1708197984428; 
+ Sat, 17 Feb 2024 11:26:24 -0800 (PST)
+Received: from grind.. ([177.94.15.159]) by smtp.gmail.com with ESMTPSA id
+ p3-20020a170902c70300b001db86c48221sm1770927plp.22.2024.02.17.11.26.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 17 Feb 2024 11:26:24 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 3/6] hw/riscv/virt.c: create '/soc/pci@...' fdt node earlier
+Date: Sat, 17 Feb 2024 16:26:04 -0300
+Message-ID: <20240217192607.32565-4-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240217192607.32565-1-dbarboza@ventanamicro.com>
+References: <20240217192607.32565-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 10/10] tests/bench: Add bufferiszero-bench
-Content-Language: en-US
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: qemu-devel@nongnu.org, mmromanov@ispras.ru
-References: <20240217003918.52229-1-richard.henderson@linaro.org>
- <20240217003918.52229-11-richard.henderson@linaro.org>
- <2abd887c-c99c-437c-f0bc-e06f3a13fd33@ispras.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <2abd887c-c99c-437c-f0bc-e06f3a13fd33@ispras.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,47 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/24 23:49, Alexander Monakov wrote:
-> 
-> On Fri, 16 Feb 2024, Richard Henderson wrote:
-> 
->> Benchmark each acceleration function vs an aligned buffer of zeros.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->> +
->> +static void test(const void *opaque)
->> +{
->> +    size_t len = 64 * KiB;
-> 
-> This exceeds L1 cache capacity, so the performance ceiling of L2 cache
-> throughput is easier to hit with a suboptimal implementation. It also
-> seems to vastly exceed typical buffer sizes in Qemu.
-> 
-> When preparing the patch we mostly tested at 8 KiB. The size decides
-> whether the branch exiting the loop becomes perfectly predictable in
-> the microbenchmark, e.g. at 128 bytes per iteration it exits on the
-> 63'rd iteration, which Intel predictors cannot track, so we get
-> one mispredict per call.
-> 
-> (so perhaps smaller sizes like 2 or 4 KiB are better)
+Hotplugged FDT nodes will attempt to write this node that, at this
+moment, is being created only in create_fdt_pcie() during
+finalize_fdt().
 
-Fair.  I've adjusted to loop over 1, 4, 16, 64 KiB.
+Create it earlier.
 
-# Start of bufferiszero tests
-# buffer_is_zero #0: 1KB 49227.29 MB/sec
-# buffer_is_zero #0: 4KB 137461.28 MB/sec
-# buffer_is_zero #0: 16KB 224220.41 MB/sec
-# buffer_is_zero #0: 64KB 142461.00 MB/sec
-# buffer_is_zero #1: 1KB 45423.59 MB/sec
-# buffer_is_zero #1: 4KB 91409.69 MB/sec
-# buffer_is_zero #1: 16KB 123819.94 MB/sec
-# buffer_is_zero #1: 64KB 71173.75 MB/sec
-# buffer_is_zero #2: 1KB 35465.03 MB/sec
-# buffer_is_zero #2: 4KB 56110.46 MB/sec
-# buffer_is_zero #2: 16KB 68852.28 MB/sec
-# buffer_is_zero #2: 64KB 39043.80 MB/sec
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/riscv/virt.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index fd35c74781..b540f4d3da 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -826,7 +826,6 @@ static void create_fdt_pcie(RISCVVirtState *s, const MemMapEntry *memmap,
+ 
+     name = g_strdup_printf("/soc/pci@%lx",
+         (long) memmap[VIRT_PCIE_ECAM].base);
+-    qemu_fdt_add_subnode(ms->fdt, name);
+     qemu_fdt_setprop_cell(ms->fdt, name, "#address-cells",
+         FDT_PCI_ADDR_CELLS);
+     qemu_fdt_setprop_cell(ms->fdt, name, "#interrupt-cells",
+@@ -996,6 +995,7 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+ {
+     MachineState *ms = MACHINE(s);
+     uint8_t rng_seed[32];
++    g_autofree char *name = NULL;
+ 
+     ms->fdt = create_device_tree(&s->fdt_size);
+     if (!ms->fdt) {
+@@ -1014,6 +1014,13 @@ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+     qemu_fdt_setprop_cell(ms->fdt, "/soc", "#size-cells", 0x2);
+     qemu_fdt_setprop_cell(ms->fdt, "/soc", "#address-cells", 0x2);
+ 
++    /*
++     * The "/soc/pci@..." node is needed for PCIE hotplugs
++     * that might happen before finalize_fdt().
++     */
++    name = g_strdup_printf("/soc/pci@%lx", (long) memmap[VIRT_PCIE_ECAM].base);
++    qemu_fdt_add_subnode(ms->fdt, name);
++
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
+ 
+     /* Pass seed to RNG */
+-- 
+2.43.2
 
-r~
 
