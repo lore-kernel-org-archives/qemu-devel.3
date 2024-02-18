@@ -4,154 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3045C48BC4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 02:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C32C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbWTa-00015H-6q; Sat, 17 Feb 2024 21:00:19 -0500
+	id 1rbZEC-0001HR-55; Sat, 17 Feb 2024 23:56:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoyong.zhong@nephogine.com>)
- id 1rbWTY-000157-QB
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 21:00:17 -0500
-Received: from mail-mw2nam10on2138.outbound.protection.outlook.com
- ([40.107.94.138] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoyong.zhong@nephogine.com>)
- id 1rbWTW-0000Kn-V9
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 21:00:16 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DtegkD9wLrBg/yS9AvM53r7lg5Kj2Hjl3wu9xhS8+mJzobnW8U0MbimostGYoi48iCycqqgmbHmmisLLe75kh0q69eMhcNBs4LvGzhN/XiGC/1w1LiGoSRTpue9aaQotdif9u975AjJHdKsAwwmIqMfJX8vJBZucpgB5gHo3QRrZRkSLa9w65Ifjy8bxXet0k+CxBP9fMgMKdKt99TiS+p5ghGSVn/WJQWB5SjiLmAakvXjgKBsSjFmNqYwouIapHMImeNWTx+sFzlWCI3pfa2IQpI0IDK/zoRK13jInTNTSMgSlBGFk2UvaGYKBr6nveip6EQJf1UHH+LHkeCCM0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=muAbBe5g9bsdC0snmcHfQp3gUZ1Z3xRIYkE4CW+hOsw=;
- b=mt+74TDI4OZ71zSUj4yVdFxxL+poSL14E4jWnyvWTSVU1f9G9HKkQAIUHZFy/cJ1pkotSHRrJI1mjmmxDORiG9k4nOQmn3I6oR4SogzzwUsVhfCEK8u6W7+NP7MzpgxZnA5WlYlThJUVjiwka6cFG7zKg94+SqnMonRdA+MpX8gNwAZuqEa6BszQOTGeZwr8TIXNo4E/ylosR+jEh3uuTiZMPZQE2WMouJVG2TKW6ID4Jo/NBcD/PNvlif6soS5bR+j/ZhPkIOzM4JC/ELUaaHbjFxtfojGNJ75SpWgbSeTyHYo5zuH8KJ9/8E1bXlde88TcnKpjykOCXYIA6he0DQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nephogine.com; dmarc=pass action=none
- header.from=nephogine.com; dkim=pass header.d=nephogine.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nephogine.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=muAbBe5g9bsdC0snmcHfQp3gUZ1Z3xRIYkE4CW+hOsw=;
- b=3Q6cp0Bu2ZSAq+WXTGfv/1bx2fTjLf0Nr5l+QWdKSd6+gGdN4yaCeY75KhHxxJzoUXBfnzyzWTvQrMTqJ9MoKosob6OkLDMUeLfJn6SHCFYFQw5ZwxuCaalyCEcpedgwIKOMGMbrLj6ajVm6br+WC4EmNqcb34JWfvPGq4gynAxk+zXqgUpDkaCujzoM/sV0Pjq3DA6U3WH9LpsVcYGXiO6XZUZ0LmOsWRbvwNJjGYscsxYdZ9iSdCCP5zkB7S8/0zrjvBM8ZIA4i9CZU1NHkpkmNeOCQpPW19dZNUKYMdk8pCA3SwtsthBgqNz289E8bNXi8VLwchIRhA4CEzVPaA==
-Received: from DM6PR13MB3988.namprd13.prod.outlook.com (2603:10b6:5:28e::12)
- by SA1PR13MB4896.namprd13.prod.outlook.com (2603:10b6:806:186::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.32; Sun, 18 Feb
- 2024 01:55:08 +0000
-Received: from DM6PR13MB3988.namprd13.prod.outlook.com
- ([fe80::dfdb:af69:82f4:cad9]) by DM6PR13MB3988.namprd13.prod.outlook.com
- ([fe80::dfdb:af69:82f4:cad9%7]) with mapi id 15.20.7292.033; Sun, 18 Feb 2024
- 01:55:08 +0000
-From: Rick Zhong <zhaoyong.zhong@nephogine.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Wentao Jia
- <wentao.jia@nephogine.com>
-CC: Eugenio Perez Martin <eperezma@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>, Peter Xu
- <peterx@redhat.com>, Guo Zhi <qtxuning1999@sjtu.edu.cn>, Xinying Yu
- <xinying.yu@nephogine.com>, Shujing Dong <shujing.dong@nephogine.com>, Kyle
- Xu <zhenbing.xu@nephogine.com>
-Subject: =?gb2312?B?u9i4tDogu9i4tDogRlc6IFtQQVRDSF0gdmhvc3QtdXNlcjogYWRkIFZJUlRJ?=
- =?gb2312?B?T19GX0lOX09SREVSIGFuZCBWSVJUSU9fRl9OT1RJRklDQVRJT05fREFUQSBm?=
- =?gb2312?Q?eature?=
-Thread-Topic: =?gb2312?B?u9i4tDogRlc6IFtQQVRDSF0gdmhvc3QtdXNlcjogYWRkIFZJUlRJT19GX0lO?=
- =?gb2312?B?X09SREVSIGFuZCBWSVJUSU9fRl9OT1RJRklDQVRJT05fREFUQSBmZWF0dXJl?=
-Thread-Index: AdokPrZLsAJfb0btQhCy7EbMDce/EgY4mSYwAAJ9PgAABGqn8AAAz8ygAfvHuzAAhk7OgAA1l2oAAAD22YAAB9kDgACXz1iAAAgyIIAAAEaZwAFcG0xwABOlOwABFssUYAAMR9GAAB5bYdACNqaugADquGNQ
-Date: Sun, 18 Feb 2024 01:55:07 +0000
-Message-ID: <DM6PR13MB39880A261589BE275809C69F95522@DM6PR13MB3988.namprd13.prod.outlook.com>
-References: <CACGkMEtHQHmhBAF6WguUSHr+iFMmOjvTshqpGzkvE=QtkgVVPA@mail.gmail.com>
- <SN4PR13MB5727AF7CB6E6CF563B618F1386732@SN4PR13MB5727.namprd13.prod.outlook.com>
- <SN4PR13MB5727D5A7AD34F7169E2A236F86702@SN4PR13MB5727.namprd13.prod.outlook.com>
- <CAJaqyWc2P6iHrG9dR2X9YC=P7dw4=Y2RwRkr5H81hkj6ej_5hA@mail.gmail.com>
- <DM6PR13MB3988D0E01FE275F72E53397295702@DM6PR13MB3988.namprd13.prod.outlook.com>
- <SN4PR13MB5727A733210FBF7A3B72DDE886792@SN4PR13MB5727.namprd13.prod.outlook.com>
- <CAJaqyWdx+33QrtCkMDAMG=1au7jKCgw4bcmgC+zgEcXaeW=Fbg@mail.gmail.com>
- <SN4PR13MB5727E433825757E3E326EB9F86432@SN4PR13MB5727.namprd13.prod.outlook.com>
- <20240201075513-mutt-send-email-mst@kernel.org>
- <DM6PR13MB39889A667DB46A0EC65FA08495422@DM6PR13MB3988.namprd13.prod.outlook.com>
- <20240213044703-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240213044703-mutt-send-email-mst@kernel.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nephogine.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR13MB3988:EE_|SA1PR13MB4896:EE_
-x-ms-office365-filtering-correlation-id: f2d19103-cb42-459f-ff98-08dc3024a23e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: bZgDTrRFHR1FVW2jmm/KuZpfMWwphyGNBVAsnMWHMIPhKeO85QSJvmHXnF7Hf5HR1fd7WvZG1tI6RI29BRTbj7Gd6pb44WmHUbNVI3l2vYrXnTH4rmnZ1cLJV6JUEps5NR0z3OtynCbtadBriUv0bh9B43UtfXRZEXs6flHKgt7mANykwYSFODRo1AOOyAjbwdWc0XIyzk0Me62a2CUb77VhnuLsID6d0LmZPBvCgfs41VG2l9rQuGVr5GYC4Yklbtxb7jNeCOmKv+BNnjlRFnyqKRWImN+VXwRhgCVGLqrR9FrDQ5I/xGDJtVbSNWCwXi3uxORwoGUBsU+MMk7PlBGwsi/COQOVAFQsfvsleeuuPP7bnbZV9T1qicijMdRnADNpKuvTDSmWrTVoR+HVXA7XWbkfk2cqoz5PPXw11lcQWAaohIzCUHUzixy3hparnt+KY9xRq7SY4K1H/iZnzDKKt+dEHj46OtH0mhpNJNLP7q0a/laY7cxthp8h1Hj1m1nFc814pRyKbST+QhOv5uoCt4QOUORx7Xrpz0sksZ+6htQANpn5vPr+vP+U7R7F2njyLgVN+bu0nkqHfTX1n3DJta/RCgQsvToPEzJfZE4j0xveH4lUn+vtXDshbwi0
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR13MB3988.namprd13.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(396003)(346002)(39830400003)(376002)(136003)(366004)(230922051799003)(230273577357003)(64100799003)(451199024)(186009)(1800799012)(9686003)(6636002)(7696005)(6506007)(316002)(54906003)(478600001)(71200400001)(110136005)(52536014)(66556008)(66476007)(66446008)(64756008)(4326008)(2906002)(66946007)(76116006)(8936002)(41300700001)(5660300002)(86362001)(38100700002)(33656002)(38070700009)(224303003)(107886003)(122000001)(26005)(83380400001)(55016003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?gb2312?B?TnA3SGhiS1c1eFJpVWNHdEJmT1hwS1B6d0NxM3FGdCt5TGFtdUpJZkJIaHlT?=
- =?gb2312?B?T053MDhTaUVXcTJLaHFlYVhzUjF4aTRBTWkyTTU5UFJmbmY5SkdlMUYrSnJ2?=
- =?gb2312?B?UlR1NFB6TFpHc0xtaUVVY2YrdmpocldlcklRckVaZTZFUFg0Ymd0RkdkRGhC?=
- =?gb2312?B?bzZrazdYVlNyZEFPV3dtNjFtMDBrQXZxWDI0QWhVYnB0MVRhblVZN3dkR0ZP?=
- =?gb2312?B?M0tnQWlEWGlrOVlFNURpeEJtTUVMWTdHTk5jNmxqdkZTRWNLMUxCbFFreFd1?=
- =?gb2312?B?eFVHYk40SDNZMzJEOGRTdENFVEIwU3Z6TGFUWFJ1eXJZdDIvNHJMSUUzNmo2?=
- =?gb2312?B?V1VGR2dDaVQxeU1vOEcvZTlYYkFrM01TWDJRaVdaelE0VHdVRVZnbkdjSDI5?=
- =?gb2312?B?UWFVS2l6NUpZb21SSzZNUU82N0FvT0R0dTQ4SzFFdTMrVTVJNnpIQThITkxX?=
- =?gb2312?B?YlViSTRlTjFrN3grZ0sxcmNwNGYvWSt2QVJMbjZrUWppNUxzTUFrUzJ3aU5E?=
- =?gb2312?B?SFkxMzgvQ0ZxcWpXRzRyMko5MS9QeWo2L0Z0WllUd0NrS3RuMmZQa3BNbGRL?=
- =?gb2312?B?TngvWk53ZlZjL1E0WkZia3ZqWkw1aXU2REM2d29USEN1TGcyS3JOM3YyZkRo?=
- =?gb2312?B?NjloeFhwWTRpd2RuMnZyd0EzRDR1LzNUSFJRNUlwYXZ0Q0pxU0ZDeWJtSms2?=
- =?gb2312?B?N1FleGN2T1lZUUdRSjZmTS9pSG9wbkFTT3VTVXhNU3Z1OFB3V0J3eTlnT1NT?=
- =?gb2312?B?ZHJzZFR2WmtQMXRSN0NseFNRL051RTF2cGROUkZyczFQLzczOUVFNVFQem1w?=
- =?gb2312?B?UE9tSng5d3NTWTVzOWVIZ2VOcFQ2dXF5a2tBUGNra0xuZks0bnBTb1FGWmZF?=
- =?gb2312?B?SHJsNGl5Mi9RYWhvUVc0ZEp1NWNGVFZrbVpUdlJuZU1LSmpJY2JPWEJZMDBu?=
- =?gb2312?B?di9oMUE4TnhJcVBQTkZRMVZwRWozNzNjRHlkRXJYYlVsLy9HR0FSQ0RJME9M?=
- =?gb2312?B?ckNaSFBua011N2NBSEVUdTJ5VXB5anVaT3FtaTdRd3cwcDhzRnJVcjVSazVj?=
- =?gb2312?B?cmZXZTRLWUkwTEpqK1JMTWtndzcwWjBOd3pYcmNKcHZYSlFkRlU2OXZXWEJT?=
- =?gb2312?B?RG1CLzkrMjIzR1VlZ2xMUUZEd2J1eEJteXo3ZGFmK2Nla21NMlpOZk9rMEIy?=
- =?gb2312?B?UXMzbkpmemo0UVhIaFd0YzVUYjhqUjN0MGdmMHNpRVFjZUplR0VFbXk3aE1v?=
- =?gb2312?B?bllLd3RwcE1JMGVVQVY5eGRwYUZIMHliZjk2THRZaEordTBncjRzTnJHeU9E?=
- =?gb2312?B?b0ZIS1EvaHp2blhYM1kramdYdnJzd05FNTdHZXcrYTYySmpOQ3ZXeHdvRGli?=
- =?gb2312?B?WTB5aU5xVWdtVkRFVUNPNmxIQXY2eVFCYlJ6ZVFBelFOTTFFUGZBUG5STTQz?=
- =?gb2312?B?UE5Hd3IvK0Ftcm9xTzJNcjU5TTJMekd5RXJxV1dwcjVod3RFVGJRek9mRDBV?=
- =?gb2312?B?aFRXQkVwY2ppck16VlpwOE5UQUxYTVVPR1FDTFVwaU9oL0VXWUR0a081Zjg5?=
- =?gb2312?B?UCtPUTBGOTlUUXZ1cDBZdFJzbzUvWEhxbEpvcGRSWkpFckxxZVhxb2g2N0Vj?=
- =?gb2312?B?b05pSG5wb2hiR29aczlKN0pEZnhYU09qeERkNnVIblBCVFljb1R2ODEyOUlK?=
- =?gb2312?B?SzNvTjh3aTVuZG9idVkrMCtuZlk3SVI5VWJQcTVwYmtNT2t4UythRDdQcjVK?=
- =?gb2312?B?N3lPUzJ0cmUrYTY1UUV5NDM2VVo2QW9JU0M5UXNaT2hzVlNvQXhlOTJCcStW?=
- =?gb2312?B?Z3U3L1ZZYkM3dThTNWoya0R2T0ZtcnNKckEvTlVBQjhZRncxY3JIdTkyVm4v?=
- =?gb2312?B?bzFlR3RUME5EZTg0QWxQTWdjcUREK09JRkx6cEpWSUNZb2l3blNkaUx0NnFW?=
- =?gb2312?B?ZisyTDA0M0doV0FYYlhuV0FFVVlSWVVKS29FemNtUk5PQ0YzWHcvYUk4RW1K?=
- =?gb2312?B?NE05ZG9jOEp4RXNRN3FpVFh3SjlRSEpnTlpRTmU2OURwTXRqeWhJSFJIM1l6?=
- =?gb2312?B?STR0cU1VeG84QlRneGxKVm9uVWFFenVHc2FqeDBKSjY4V1V3Q3JjbERzRTRJ?=
- =?gb2312?B?YTlaYjBaOUN1NEg4azlTeVdvc2laOWdkUDliczd3cjJNNytRdjRiaUNxZ2h4?=
- =?gb2312?B?U0E9PQ==?=
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rbZEA-0001H3-1P
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:56:34 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rbZE6-0003yf-CC
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:56:33 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e457fab0e2so46461b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:56:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232188; x=1708836988;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=W/c+igS85k+pwLGqDf3MUC16NxpvSAHmdOizE67MdE0=;
+ b=KSzClR0LLpBcEQC8xQUmXloKaIGZwjFOxCB2RSt6g2lRNmWoPeDXJSXGsFpeIRgdQh
+ iIkkug9WVW4ePaBYxlkKNxMHhQMLH8ZEUfFrU6W7bvw18qv9RW7COzHutk0LEl9w0R2m
+ UV5TN+mTRdnB9Zg2oeGfn1eD6GdcVLcHYs+Kd4y0sd0BNOwrxplvFg/0IQndfxk7Z4Wf
+ 2mAim1vWbCiK1FiL9HaaHi35HaXHWdtGmoSeTUswlKhankpSD2rBh+HgmaV5pgvuuUbG
+ ZLr8DlKb8qSHnWjHmKjWU+4HVW9Iy3h7HBF795BUzNYQlK62WiDVavgU32JmQUgcGyeS
+ AmVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708232188; x=1708836988;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=W/c+igS85k+pwLGqDf3MUC16NxpvSAHmdOizE67MdE0=;
+ b=qFAakdwYL1/s9LAcKnaLrdROEdQyAmrRBF8VSVYe+YCv2ulU8u36nHH33oa39efT9C
+ J8y8QkWN8L/CimwiAoTwMi9vaV+0rmIZGglFE7G4ITykC9UCyZM398fO5wSKFVa0YEvq
+ gFKVjl3c3Fuer4spG/3j/mIkL/mGWCf2ZJaOv1PA087DPH4Qsa3Dh2JgkYIpVt5tUcS2
+ L09hl9lcT7P/MpT8r5ZMJasQ0u378O0qcqNPgc/SzV1r/1yAAOD9/uZAaIuJW5Dj1O5O
+ EDT7XO1OQW3+G2FInFUtFnIBJEKS6Gub9/Ozd8D7lQyTxLBX9+OVrvupKP1VjegtmZpG
+ rrQg==
+X-Gm-Message-State: AOJu0Yy3MYVQhqF1YWXNVm4VbqrV+fUAIiKT2Qw/4549POe+LYBRDy8t
+ Hoooz6ZcXBjuCq5MyzhTBmCLhEPHdBLBQPhDhdc91GDyqc1c60J3MbJZCDNWigQ=
+X-Google-Smtp-Source: AGHT+IHJp8xMAn+l++MGTVWo28D/fuxqN/Je/1CUaEDS5m2Lbv9CPWH+1RBoQEuR95P3ENnKp/MsKA==
+X-Received: by 2002:a05:6a20:93a2:b0:19e:5dda:6bd with SMTP id
+ x34-20020a056a2093a200b0019e5dda06bdmr14199098pzh.8.1708232187630; 
+ Sat, 17 Feb 2024 20:56:27 -0800 (PST)
+Received: from localhost ([157.82.200.138])
+ by smtp.gmail.com with UTF8SMTPSA id
+ c18-20020aa78812000000b006e1464e71f9sm198209pfo.47.2024.02.17.20.56.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 17 Feb 2024 20:56:27 -0800 (PST)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH v5 00/11] hw/pci: SR-IOV related fixes and improvements
+Date: Sun, 18 Feb 2024 13:56:05 +0900
+Message-Id: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 MIME-Version: 1.0
-X-OriginatorOrg: nephogine.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR13MB3988.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f2d19103-cb42-459f-ff98-08dc3024a23e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2024 01:55:07.8265 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fe128f2c-073b-4c20-818e-7246a585940c
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: vad5X6ZZlH+ofhNzXAzi/pqJrjwezXrnjcIjUavadMBI1VGD8QYiZbWBlLUaQ0VySwZB/1URmil+udGu7HReI0XUTKuzNbdnPxZFChONS/Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR13MB4896
-Received-SPF: pass client-ip=40.107.94.138;
- envelope-from=zhaoyong.zhong@nephogine.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: 35
-X-Spam_score: 3.5
-X-Spam_bar: +++
-X-Spam_report: (3.5 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAOaN0WUC/2XMTQ6CMBCG4auYrq2ZTstPXXkP46KUQboQTKsEQ
+ ri7BSXBsPwm87wjC+QdBXY+jMxT54JrmziS44HZ2jR34q6MmyGgAoGae3oH4pUxhFgIoaVi8ff
+ pqXL90rne4q5deLV+WLKdmK/fAoL8FTrBgScF5TaxlEqZX0ozNK4/2fbB5kSHGyZgZRgZqsKgS
+ QBTjTsmtwxXJiPLQWRFmmtLWbVjasvUytTMtClBSwNZpf7YNE0f/6D1+EABAAA=
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org
+X-Mailer: b4 0.12.3
+Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,39 +106,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTWljaGFlbCwNCg0KVW5kZXJzdG9vZC4gVGhhbmtzLg0KDQpCZXN0IFJlZ2FyZHMsDQpSaWNr
-IFpob25nDQoNCi0tLS0t08q8/tStvP4tLS0tLQ0Kt6K8/sjLOiBNaWNoYWVsIFMuIFRzaXJraW4g
-PG1zdEByZWRoYXQuY29tPiANCreiy83KsbzkOiAyMDI0xOoy1MIxM8jVIDE3OjUzDQrK1bz+yMs6
-IFJpY2sgWmhvbmcgPHpoYW95b25nLnpob25nQG5lcGhvZ2luZS5jb20+DQqzrcvNOiBFdWdlbmlv
-IFBlcmV6IE1hcnRpbiA8ZXBlcmV6bWFAcmVkaGF0LmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9y
-ZzsgSmFzb24gV2FuZyA8amFzb3dhbmdAcmVkaGF0LmNvbT47IFBldGVyIFh1IDxwZXRlcnhAcmVk
-aGF0LmNvbT47IEd1byBaaGkgPHF0eHVuaW5nMTk5OUBzanR1LmVkdS5jbj47IFhpbnlpbmcgWXUg
-PHhpbnlpbmcueXVAbmVwaG9naW5lLmNvbT47IFdlbnRhbyBKaWEgPHdlbnRhby5qaWFAbmVwaG9n
-aW5lLmNvbT47IFNodWppbmcgRG9uZyA8c2h1amluZy5kb25nQG5lcGhvZ2luZS5jb20+OyBLeWxl
-IFh1IDx6aGVuYmluZy54dUBuZXBob2dpbmUuY29tPg0K1vfM4jogUmU6ILvYuLQ6IEZXOiBbUEFU
-Q0hdIHZob3N0LXVzZXI6IGFkZCBWSVJUSU9fRl9JTl9PUkRFUiBhbmQgVklSVElPX0ZfTk9USUZJ
-Q0FUSU9OX0RBVEEgZmVhdHVyZQ0KDQpPbiBGcmksIEZlYiAwMiwgMjAyNCBhdCAxMDoyNzozM0FN
-ICswMDAwLCBSaWNrIFpob25nIHdyb3RlOg0KPiBIaSBFdWdlbmlvIGFuZCBNaWNoYWVsLA0KPiAN
-Cj4gTGV0IG1lIG1ha2UgaXQgbW9yZSBjbGVhciBhYm91dCB0aGUgdGFyZ2V0IGZvciB0aGlzIHBh
-dGNoLiBDdXJyZW50bHkgQ29yaWdpbmUgaXMgZGV2ZWxvcGluZyB0aGUgdkRQQSBmZWF0dXJlcyBv
-biBOSUMgd2hpY2ggYXJlIGJhc2VkIG9uIHRoZSBRRU1VIHZob3N0LXZkcGEvdmhvc3QtdXNlciBi
-YWNrZW5kLiBUaGVzZSB0d28gdmlydGlvIGZlYXR1cmVzIGFyZSBoZWxwZnVsIGluIGRhdGEgcGxh
-bmUgcGVyZm9ybWFuY2UuDQo+IA0KPiBJbiBteSB1bmRlcnN0YW5kaW5nLCB0aGVzZSB0d28gdmly
-dGlvIGZlYXR1cmVzIGFyZSBkZWZpbmVkIGFzIHBhcnQgb2YgdGhlIGJhc2ljIGZhY2lsaXRpZXMg
-b2YgYSBjb21tb24gdmlydGlvIGRldmljZSwgd2hpY2ggbWVhbnMgdGhleSBjYW4gYmUgdXRpbGl6
-ZWQgYnkgdmlydGlvLW5ldCwgdmlydGlvLWJsaywgdmlydGlvLWZzLi4uIHdoYXRldmVyIGJhY2tl
-bmQuIFRvIGltcGxlbWVudCwgaXQgaXMgYmV5b25kIHRoZSB0ZWFtJ3Mga25vd2xlZGdlIHRvIGhh
-bmRsZSB0aGVzZSBmb3IgYWxsIGtpbmRzIG9mIGJhY2tlbmRzLiBTbyBJJ2QgcHJlZmVyIHRvIHNl
-dCB0aGVtIG9mZiBieSBkZWZhdWx0IGFuZCByYWlzZSBhbiB3YXJuaW5nIGZvciBvdGhlciB0eXBl
-IG9mIGJhY2tlbmRzLCBleGNlcHQgdmhvc3QtdmRwYS92aG9zdC11c2VyLg0KPiANCj4gQmVzdCBS
-ZWdhcmRzLA0KPiBSaWNrIFpob25nDQoNClllcywgeW91IHNob3VsZCBzZXQgaXQgb2ZmIGJ5IGRl
-ZmF1bHQuICBObywganVzdCBza2lwcGluZyBpbXBsZW1lbnRhdGlvbiB3b24ndCBjdXQgaXQuICBJ
-dCBpcyB1bmRlcnN0YW5kYWJsZSB0aGF0IHlvdSBqdXN0IHdhbnQgeW91ciBvd24gdXNlLWNhc2Ug
-YWRkcmVzc2VkIGFuZCBpdCBpcyBhbm5veWluZyB0byBnZXQgcm9wZWQgaW4gdG8gZG8gc29tZSB3
-b3JrIG9uIHFlbXUuDQpIb3dldmVyLCBzdWNoIGlzIHRoZSBjb3N0IG9mIGRvaW5nIHRoaXMgYnVz
-aW5lc3MuICBJZiBpbnN0ZWFkIHdlIGFkZCBoYWNrcyBsaWtlIHRoZSB3YXJuaW5nIHlvdSBtZW50
-aW9uIHRoZW4gdGhlIGNvZGViYXNlIHF1aWNrbHkgYmVjb21lcyBhIG1lc3Mgb2Ygc3BlY2lhbCBj
-YXNlcy4gIElmIHlvdSBuZWVkIHRoaXMgZmVhdHVyZSwgeW91IGhhdmUgdG8gbWFrZSBpdCBuaWNl
-bHkgb3J0aG9nb25hbCBhbmQgcGFsYXRhYmxlIHRvIGV2ZXJ5b25lLiBJdCBpcyByZWFsbHkgbm90
-IGEgbG90IG9mIGNvZGluZyB3b3JrLCBtb3N0bHkgdGVzdGluZy4NCg0KLS0NCk1TVA0KDQo=
+I submitted a RFC series[1] to add support for SR-IOV emulation to
+virtio-net-pci. During the development of the series, I fixed some
+trivial bugs and made improvements that I think are independently
+useful. This series extracts those fixes and improvements from the RFC
+series.
+
+[1]: https://patchew.org/QEMU/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com/
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+Changes in v5:
+- Added patch "hw/pci: Always call pcie_sriov_pf_reset()".
+- Added patch "pcie_sriov: Reset SR-IOV extended capability".
+- Removed a reference to PCI_SRIOV_CTRL_VFE in hw/nvme.
+  (Michael S. Tsirkin)
+- Noted the impact on the guest of patch "pcie_sriov: Do not reset
+  NumVFs after unregistering VFs". (Michael S. Tsirkin)
+- Changed to use pcie_sriov_num_vfs().
+- Restored pci_set_power() and changed it to call pci_set_enabled() only
+  for PFs with an expalanation. (Michael S. Tsirkin)
+- Reordered patches.
+- Link to v4: https://lore.kernel.org/r/20240214-reuse-v4-0-89ad093a07f4@daynix.com
+
+Changes in v4:
+- Reverted the change to pci_rom_bar_explicitly_enabled().
+  (Michael S. Tsirkin)
+- Added patch "pcie_sriov: Do not reset NumVFs after unregistering VFs".
+- Added patch "hw/nvme: Refer to dev->exp.sriov_pf.num_vfs".
+- Link to v3: https://lore.kernel.org/r/20240212-reuse-v3-0-8017b689ce7f@daynix.com
+
+Changes in v3:
+- Extracted patch "hw/pci: Use -1 as a default value for rombar" from
+  patch "hw/pci: Determine if rombar is explicitly enabled"
+  (Philippe Mathieu-Daudé)
+- Added an audit result of PCIDevice::rom_bar to the message of patch
+  "hw/pci: Use -1 as a default value for rombar"
+  (Philippe Mathieu-Daudé)
+- Link to v2: https://lore.kernel.org/r/20240210-reuse-v2-0-24ba2a502692@daynix.com
+
+Changes in v2:
+- Reset after enabling a function so that NVMe VF state gets updated.
+- Link to v1: https://lore.kernel.org/r/20240203-reuse-v1-0-5be8c5ce6338@daynix.com
+
+---
+Akihiko Odaki (11):
+      hw/nvme: Use pcie_sriov_num_vfs()
+      pcie_sriov: Validate NumVFs
+      hw/pci: Use -1 as a default value for rombar
+      hw/pci: Determine if rombar is explicitly enabled
+      vfio: Avoid inspecting option QDict for rombar
+      hw/qdev: Remove opts member
+      pcie_sriov: Reset SR-IOV extended capability
+      pcie_sriov: Do not reset NumVFs after disabling VFs
+      hw/pci: Always call pcie_sriov_pf_reset()
+      hw/pci: Rename has_power to enabled
+      pcie_sriov: Reuse SR-IOV VF device instances
+
+ docs/pcie_sriov.txt         |   8 ++-
+ include/hw/pci/pci.h        |   2 +-
+ include/hw/pci/pci_device.h |  22 ++++++-
+ include/hw/pci/pcie_sriov.h |  10 ++--
+ include/hw/qdev-core.h      |   4 --
+ hw/core/qdev.c              |   1 -
+ hw/net/igb.c                |  15 +++--
+ hw/nvme/ctrl.c              |  54 ++++++++---------
+ hw/pci/pci.c                |  17 +++---
+ hw/pci/pci_host.c           |   4 +-
+ hw/pci/pcie_sriov.c         | 142 ++++++++++++++++++++++----------------------
+ hw/vfio/pci.c               |   3 +-
+ system/qdev-monitor.c       |  12 ++--
+ 13 files changed, 157 insertions(+), 137 deletions(-)
+---
+base-commit: 5005aed8a7e728d028efb40e243ecfc2b4f3df3a
+change-id: 20240129-reuse-faae22b11934
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
+
 
