@@ -4,44 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BFD2C4829E
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 08:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 577F3C48BF8
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 08:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbcZw-0000rj-AA; Sun, 18 Feb 2024 03:31:16 -0500
+	id 1rbcca-000359-Ew; Sun, 18 Feb 2024 03:34:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1rbcZp-0000pm-6B; Sun, 18 Feb 2024 03:31:12 -0500
-Received: from mailout05.t-online.de ([194.25.134.82])
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1rbccY-00034u-1Y; Sun, 18 Feb 2024 03:33:58 -0500
+Received: from mailout02.t-online.de ([194.25.134.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1rbcZn-0005lT-Iu; Sun, 18 Feb 2024 03:31:08 -0500
-Received: from fwd78.aul.t-online.de (fwd78.aul.t-online.de [10.223.144.104])
- by mailout05.t-online.de (Postfix) with SMTP id 0000719BDA;
- Sun, 18 Feb 2024 09:31:04 +0100 (CET)
-Received: from [192.168.211.200] ([79.208.24.6]) by fwd78.t-online.de
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1rbccW-0006JX-G1; Sun, 18 Feb 2024 03:33:57 -0500
+Received: from fwd84.aul.t-online.de (fwd84.aul.t-online.de [10.223.144.110])
+ by mailout02.t-online.de (Postfix) with SMTP id B104A89FD;
+ Sun, 18 Feb 2024 09:33:52 +0100 (CET)
+Received: from linpower.localnet ([79.208.24.6]) by fwd84.t-online.de
  with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1rbcZj-0qy76H0; Sun, 18 Feb 2024 09:31:03 +0100
-Message-ID: <a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de>
-Date: Sun, 18 Feb 2024 09:31:02 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ esmtp id 1rbccR-0er8XB0; Sun, 18 Feb 2024 09:33:51 +0100
+Received: by linpower.localnet (Postfix, from userid 1000)
+ id 61D1F2001C6; Sun, 18 Feb 2024 09:33:51 +0100 (CET)
+From: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-Subject: [PATCH v2 00/11] virtio-sound migration part 1
+Cc: qemu-devel@nongnu.org,
+	qemu-stable@nongnu.org
+Subject: [PATCH v2 01/11] hw/audio/virtio-sound: return correct command
+ response size
+Date: Sun, 18 Feb 2024 09:33:41 +0100
+Message-Id: <20240218083351.8524-1-vr_qemu@t-online.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de>
+References: <a289a081-9a61-4bcb-b693-bf6cd7768c0e@t-online.de>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1708245063-5CF5D979-46E4D3FD/0/0 CLEAN NORMAL
-X-TOI-MSGID: db17e7fa-3fe6-41f8-9683-66a1a9414bd3
-Received-SPF: pass client-ip=194.25.134.82; envelope-from=vr_qemu@t-online.de;
- helo=mailout05.t-online.de
+X-TOI-EXPURGATEID: 150726::1708245231-2FFFC9FB-24B1E8BB/0/0 CLEAN NORMAL
+X-TOI-MSGID: d18c995b-3b24-4e30-bb46-fb1d3023e65a
+Received-SPF: pass client-ip=194.25.134.17;
+ envelope-from=volker.ruemelin@t-online.de; helo=mailout02.t-online.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -64,56 +69,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here is the first part of my virtio-sound patches. Most of them are a
-preparation to make migration work. Patch 10/11 enables migration.
+The payload size returned by command VIRTIO_SND_R_PCM_INFO is
+wrong. The code in process_cmd() assumes that all commands
+return only a virtio_snd_hdr payload, but some commands like
+VIRTIO_SND_R_PCM_INFO may return an additional payload.
 
-The second part isn't finished yet and will have to do with virtio-sound
-jack and channel maps configuration and migration.
+Add a zero initialized payload_size variable to struct
+virtio_snd_ctrl_command to allow for additional payloads.
 
-Patch 01/11 "hw/audio/virtio-sound: return correct command response
-size", patch 02/11 "hw/audio/virtio-sound: fix segmentation fault in
-tx/rx xfer handler" and patch 05/11 "hw/audio/virtio-sound: free all
-stream buffers on reset" are candidates for stable-8.2. Patch 05/11
-either needs patches 03/11 and 04/11 or has to be rewritten for stable-8.2.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+---
+ hw/audio/virtio-snd.c         | 7 +++++--
+ include/hw/audio/virtio-snd.h | 1 +
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-v2:
-The patches were reordered to facilitate the backport of 3 patches to
-QEMU stable-8.2.
-
-Patch 02/11 "fix segmentation fault in tx/rx xfer handler" has been
-completely rewritten.
-
-Patch 04/11 "hw/audio/virtio-sound: allocate an array of streams" has
-been renamed. The subject and the commit message describe the patch better.
-
-Patch 05/11 "hw/audio/virtio-sound: free all stream buffers on reset" is
-an additional patch.
-
-Patch 07/11 "hw/audio/virtio-sound: add stream state variable" resets
-the state variable on reset. Once a stream has been opened, it will only
-be closed after a reset or when QEMU shuts down.
-
-Patch 10/11 "add missing vmstate fields" resets the inuse variables on
-reset.
-
-Volker Rümelin (11):
-  hw/audio/virtio-sound: return correct command response size
-  hw/audio/virtio-sound: fix segmentation fault in tx/rx xfer handler
-  hw/audio/virtio-sound: remove command and stream mutexes
-  hw/audio/virtio-sound: allocate an array of streams
-  hw/audio/virtio-sound: free all stream buffers on reset
-  hw/audio/virtio-sound: split out virtio_snd_pcm_start_stop()
-  hw/audio/virtio-sound: add stream state variable
-  hw/audio/virtio-sound: introduce virtio_snd_pcm_open()
-  hw/audio/virtio-sound: introduce virtio_snd_set_active()
-  hw/audio/virtio-sound: add missing vmstate fields
-  hw/audio/virtio-sound: add placeholder for buffer write position
-
- hw/audio/trace-events         |   3 +-
- hw/audio/virtio-snd.c         | 776 ++++++++++++++++++----------------
- include/hw/audio/virtio-snd.h |  29 +-
- 3 files changed, 427 insertions(+), 381 deletions(-)
-
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index ea2aeaef14..e604d8f30c 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -243,12 +243,13 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
+         memset(&pcm_info[i].padding, 0, 5);
+     }
+ 
++    cmd->payload_size = sizeof(virtio_snd_pcm_info) * count;
+     cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
+     iov_from_buf(cmd->elem->in_sg,
+                  cmd->elem->in_num,
+                  sizeof(virtio_snd_hdr),
+                  pcm_info,
+-                 sizeof(virtio_snd_pcm_info) * count);
++                 cmd->payload_size);
+ }
+ 
+ /*
+@@ -749,7 +750,8 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
+                  0,
+                  &cmd->resp,
+                  sizeof(virtio_snd_hdr));
+-    virtqueue_push(cmd->vq, cmd->elem, sizeof(virtio_snd_hdr));
++    virtqueue_push(cmd->vq, cmd->elem,
++                   sizeof(virtio_snd_hdr) + cmd->payload_size);
+     virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
+ }
+ 
+@@ -808,6 +810,7 @@ static void virtio_snd_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+         cmd->elem = elem;
+         cmd->vq = vq;
+         cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
++        /* implicit cmd->payload_size = 0; */
+         QTAILQ_INSERT_TAIL(&s->cmdq, cmd, next);
+         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+     }
+diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
+index c3767f442b..3d79181364 100644
+--- a/include/hw/audio/virtio-snd.h
++++ b/include/hw/audio/virtio-snd.h
+@@ -230,6 +230,7 @@ struct virtio_snd_ctrl_command {
+     VirtQueue *vq;
+     virtio_snd_hdr ctrl;
+     virtio_snd_hdr resp;
++    size_t payload_size;
+     QTAILQ_ENTRY(virtio_snd_ctrl_command) next;
+ };
+ #endif
 -- 
 2.35.3
+
 
