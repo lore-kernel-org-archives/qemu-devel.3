@@ -4,62 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DDF5C4829E
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 07:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D918AC4829E
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 07:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbbAH-0004fL-QS; Sun, 18 Feb 2024 02:00:47 -0500
+	id 1rbbSS-0002pz-2K; Sun, 18 Feb 2024 02:19:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1rbbAF-0004et-EW
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 02:00:39 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1rbbAB-0007kJ-Ux
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 02:00:38 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxuvAKq9FlBRMOAA--.37757S3;
- Sun, 18 Feb 2024 15:00:27 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxzxMJq9Fli5U6AA--.29360S2; 
- Sun, 18 Feb 2024 15:00:26 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [RFC PATCH] target/loongarch/kvm: Add software breakpoint support
-Date: Sun, 18 Feb 2024 15:00:25 +0800
-Message-Id: <20240218070025.218680-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rbbSO-0002oa-UB
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 02:19:25 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rbbSN-0002JU-Ak
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 02:19:24 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-6e2da00185dso2015400a34.1
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 23:19:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708240761; x=1708845561;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1lVnzMMkpIRhlqySheub8knNaPlPlRU5oAlDojkSjhE=;
+ b=QJy9AbfA31a9W7Ff+RZ3+1SqyLwi6PMhiss+kNWZ1gCZBUPo8fQdI5yvVKlnit6Y0E
+ 48dwhzHYgkuLfQwqj1dvGZ2oEs6g0zkqfbUEgbB8asypwgMtH8ULu7Ck3OlT6w/XEosg
+ Vg0coaqxT7U90iHkRw+Ea87IaviVFRCtt6QPRD7ThGQnSV7B00OpkHKGYynhAEOVQ2VP
+ z+2hLkG6jz9XH5iUs9BpwMizwgflMchwYOCMRbKyahujPHMPrbiJT9gvkcFJxARUSxOn
+ lnel4fnbHXlDqJTzQNzNTqnAe82fio6HYxoOP7W8l0UcijKJJuHzPTiv0hXlwuX0Z0Kg
+ VWsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708240761; x=1708845561;
+ h=content-transfer-encoding:in-reply-to:from:references:cc
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1lVnzMMkpIRhlqySheub8knNaPlPlRU5oAlDojkSjhE=;
+ b=ZeUqymV2LfZXC0Stm3Qt/AbKPmBFyds3MK+9Bib2/ZWY3qaETo/8kE93OkI0MKmFDy
+ xOpX+E8Us4eFkbzVYaAFR0PAVQ+T++/5+JkGy/WSDNsdUTFT7WgVCuiBUemORZPAE8Or
+ ZoHskDm+dj9zipT1iBFegi/5IskHDMRRQpnp+UPSxWpRnTxny1d/pYurlJbFt1Wy7nE2
+ ZPmsACGcy2zKnl1jheiYf46RNp9rwPsPq9Jq3IRwqWxoRI4kkX/FOfvq4V0Pkfwg2S8W
+ D09RGEs9+Qyt1h7gkmNrJICpnDoz1jbAHlBPrBxf8oVEtQfc8IFjweN3HSLIIDxSuhgT
+ piCg==
+X-Gm-Message-State: AOJu0YyviPa8Ij2IW1S8In4xYRhES1q1CJfJE+TYHJRYWJjMXl+JTZYP
+ e+R4x+bZ/7odqJI1/YTLnMj/sjkQImLW7mcmKFalZKufsLjqZloeAa5nX3YiBrIT/31AnbHbSTm
+ Q
+X-Google-Smtp-Source: AGHT+IFIXhegcBWrMQXEBc5zBwvz9PIi8hZwOpdTfxeiKq4D4srV8zms3uAjUDePCCp4cTpjfq+IjA==
+X-Received: by 2002:a9d:5914:0:b0:6e4:3e64:b01 with SMTP id
+ t20-20020a9d5914000000b006e43e640b01mr4888666oth.5.1708240761626; 
+ Sat, 17 Feb 2024 23:19:21 -0800 (PST)
+Received: from [157.82.200.138] ([157.82.200.138])
+ by smtp.gmail.com with ESMTPSA id
+ t4-20020a628104000000b006e3c8eb705fsm1216766pfd.151.2024.02.17.23.19.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 17 Feb 2024 23:19:21 -0800 (PST)
+Message-ID: <f6560bab-705e-4f2a-9f08-158667a23a70@daynix.com>
+Date: Sun, 18 Feb 2024 16:19:14 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxzxMJq9Fli5U6AA--.29360S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCw1fXrykGF4rXFyxZw1UArc_yoW5urW8pF
- y7Arn8Gr45J3y3Gw1fJw4DZF43ZrZ7WrsrJ34Sg34SkF17Jr15Ar1kK3yqyFWru348W3WS
- vFs3XFW3u3WqqwcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUkYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x
- 0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E
- 7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIxkGc2Ij64vIr41lIxAIcV
- C0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF
- 04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7
- CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] util: Introduce qemu_get_runtime_dir()
+Content-Language: en-US
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, virtio-fs@redhat.com,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>, "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>, Yan Vugenfirer <yan@daynix.com>
+References: <20230921075425.16738-1-akihiko.odaki@daynix.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20230921075425.16738-1-akihiko.odaki@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::333;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x333.google.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MISSING_HEADERS=1.021, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,133 +103,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With KVM virtualization, debug exception is passthrough to
-to guest kernel rather than host mode. Here hypercall
-instruction with special hypercall code is used for sw
-breakpoint usage.
+Hi,
 
-Now only software breakpoint is supported, and itt is allowed
-to insert/remove software breakpoint. Later hardware  breakpoint
-will be added.
+This patch series has been forgotten for a while but can still be 
+applied. Can anyone review it?
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/kvm/kvm.c | 77 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
+Regards,
+Akihiko Odaki
 
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index c19978a970..49d02076ad 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -29,6 +29,7 @@
- #include "trace.h"
- 
- static bool cap_has_mp_state;
-+static unsigned int brk_insn;
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
-@@ -675,7 +676,14 @@ static void kvm_loongarch_vm_stage_change(void *opaque, bool running,
- 
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-+    uint64_t val;
-+
-     qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
-+
-+    if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
-+        brk_insn = val;
-+    }
-+
-     return 0;
- }
- 
-@@ -755,6 +763,68 @@ bool kvm_arch_cpu_check_are_resettable(void)
-     return true;
- }
- 
-+
-+void kvm_arch_update_guest_debug(CPUState *cpu, struct kvm_guest_debug *dbg)
-+{
-+    if (kvm_sw_breakpoints_active(cpu)) {
-+        dbg->control |= KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_USE_SW_BP;
-+    }
-+}
-+
-+int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-+{
-+    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 0) ||
-+        cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk_insn, 4, 1)) {
-+        error_report("%s failed", __func__);
-+        return -EINVAL;
-+    }
-+    return 0;
-+}
-+
-+int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-+{
-+    static uint32_t brk;
-+
-+    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk, 4, 0) ||
-+        brk != brk_insn ||
-+        cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 1)) {
-+        error_report("%s failed", __func__);
-+        return -EINVAL;
-+    }
-+    return 0;
-+}
-+
-+int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type)
-+{
-+    return -ENOSYS;
-+}
-+
-+int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type)
-+{
-+    return -ENOSYS;
-+}
-+
-+void kvm_arch_remove_all_hw_breakpoints(void)
-+{
-+}
-+
-+static bool kvm_loongarch_handle_debug(CPUState *cs, struct kvm_run *run)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    CPULoongArchState *env = &cpu->env;
-+
-+    kvm_cpu_synchronize_state(cs);
-+    if (cs->singlestep_enabled) {
-+        return true;
-+    }
-+
-+    if (kvm_find_sw_breakpoint(cs, env->pc)) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
- {
-     int ret = 0;
-@@ -774,6 +844,13 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-                          run->iocsr_io.len,
-                          run->iocsr_io.is_write);
-         break;
-+
-+    case KVM_EXIT_DEBUG:
-+        if (kvm_loongarch_handle_debug(cs, run)) {
-+            ret = EXCP_DEBUG;
-+        }
-+        break;
-+
-     default:
-         ret = -1;
-         warn_report("KVM: unknown exit reason %d", run->exit_reason);
-
-base-commit: 5767815218efd3cbfd409505ed824d5f356044ae
--- 
-2.39.3
-
+On 2023/09/21 16:54, Akihiko Odaki wrote:
+> qemu_get_runtime_dir() returns a dynamically allocated directory path
+> that is appropriate for storing runtime files. It corresponds to "run"
+> directory in Unix.
+> 
+> With a tree-wide search, it was found that there are several cases
+> where such a functionality is implemented so let's have one as a common
+> utlity function.
+> 
+> A notable feature of qemu_get_runtime_dir() is that it uses
+> $XDG_RUNTIME_DIR if available. While the function is often called by
+> executables which requires root privileges, it is still possible that
+> they are called from a user without privilege to write the system
+> runtime directory. In fact, I decided to write this patch when I ran
+> virtiofsd in a Linux namespace created by a normal user and realized
+> it tries to write the system runtime directory, not writable in this
+> case. $XDG_RUNTIME_DIR should provide a writable directory in such
+> cases.
+> 
+> This function does not use qemu_get_local_state_dir() or its logic
+> for Windows. Actually the implementation of qemu_get_local_state_dir()
+> for Windows seems not right as it calls g_get_system_data_dirs(),
+> which refers to $XDG_DATA_DIRS. In Unix terminology, it is basically
+> "/usr/share", not "/var", which qemu_get_local_state_dir() is intended
+> to provide. Instead, this function try to use the following in order:
+> - $XDG_RUNTIME_DIR
+> - LocalAppData folder
+> - get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run")
+> 
+> This function does not use g_get_user_runtime_dir() either as it
+> falls back to g_get_user_cache_dir() when $XDG_DATA_DIRS is not
+> available. In the case, we rather use:
+> get_relocated_path(CONFIG_QEMU_LOCALSTATEDIR "/run")
+> 
+> V2 -> V3:
+>    Rebase to the current master.
+>    Dropped patch "qga: Remove platform GUID definitions" since it is
+>    irrelevant.
+> 
+> V1 -> V2:
+>    Rebased to the current master since Patchew complains.
+> 
+> Akihiko Odaki (8):
+>    util: Introduce qemu_get_runtime_dir()
+>    ivshmem-server: Use qemu_get_runtime_dir()
+>    contrib/rdmacm-mux: Use qemu_get_runtime_dir()
+>    qga: Use qemu_get_runtime_dir()
+>    scsi: Use qemu_get_runtime_dir()
+>    module: Use qemu_get_runtime_dir()
+>    util: Remove qemu_get_local_state_dir()
+>    spice-app: Use qemu_get_runtime_dir()
+> 
+>   include/qemu/osdep.h           | 10 +++++++---
+>   contrib/ivshmem-server/main.c  | 20 ++++++++++++++++----
+>   contrib/rdmacm-mux/main.c      | 22 ++++++++++++++--------
+>   qga/main.c                     |  9 ++++-----
+>   scsi/qemu-pr-helper.c          |  6 +++---
+>   ui/spice-app.c                 |  4 ++--
+>   util/module.c                  |  3 ++-
+>   util/oslib-posix.c             |  9 +++++++--
+>   util/oslib-win32.c             | 24 ++++++++++++++++++++----
+>   contrib/rdmacm-mux/meson.build |  2 +-
+>   10 files changed, 76 insertions(+), 33 deletions(-)
+> 
 
