@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55ACEC4829E
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2946C4829E
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbZET-0001MD-Ka; Sat, 17 Feb 2024 23:56:53 -0500
+	id 1rbZEg-0001RV-4K; Sat, 17 Feb 2024 23:57:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZES-0001LY-4C
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:56:52 -0500
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1rbZEf-0001RF-Eb
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:05 -0500
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZEQ-00041m-Hg
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:56:51 -0500
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-59fd6693ac1so18862eaf.0
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:56:50 -0800 (PST)
+ id 1rbZEe-00048C-3A
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:05 -0500
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-59f80e1e259so1923729eaf.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:57:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232209; x=1708837009;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232222; x=1708837022;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BaCmMEn+CDQfp2DNhTw9K7jZZQfvGGVZ+DKaMJUxrD4=;
- b=QUQdLIidnjdLp3N7oxI+b/k+BQQKnk7z0slhzlVnNAVm3sGgalfI8M9EykpqhIIo92
- ESgt4RU7Ck9p/B4/ZlLY6Zrc81JceqBx4q6e/CxIAFKeFQMNKwrlip9ksPpxBcViQr/r
- EyJXgCNac6cbVpyyp1Zsa+vG8M2rLCuiO4OtWrIYCJiBH4NzSIlDZZU9Q+Al0smYCiYJ
- rl1LS6fdnoluOB6JR4wDCsZBB3ZeIh4aCrbvtoTDLVpMgK7JRROqdNO5q8q6qWu4sxrw
- NLLYwLzawHtQQqE1/sbONQJXAS+zRqWJl3NrVEFSn/O2k6WKUEFzd7greURWTwtRfG4s
- AOTw==
+ :reply-to; bh=uKib9lFhkqfQp/XBira3ThQ631U3FRHMXLPB53AQUH4=;
+ b=txQcel8inuVnfcDcdkjzSmqHT1X2w2ws9BnIXQtHIh2cl6cdHXXGSpV+dA5xo5E2Df
+ vYAU7/xRsvUCFfU5PrWP4WMLO3s82a3wmvO4vayHeKmMQix874HuYjUJYraAgLs+PjFU
+ +Ip1JcsOAweHJ+KJgCymkHZHyI+Or0DvKQreth3/OWU1XJaJ765SXSFtW5osPS+EXOHv
+ cr7s0uuWuGmXPt72s+90naTORSy1Fqi+EGxjyTmrYrnhM8ELrOQoQX6aGW1vNjuOfR+S
+ gRa84js9Ox9+egRv7FQcYhnk2nrxIe2rBpWw6wRgQY+upDefPFitU0FjOwhg5gAJP0GW
+ V/7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708232209; x=1708837009;
+ d=1e100.net; s=20230601; t=1708232222; x=1708837022;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BaCmMEn+CDQfp2DNhTw9K7jZZQfvGGVZ+DKaMJUxrD4=;
- b=mhWySZ2IPMUZF+FZch974FpbaGPJPdcgakancPEuEWE1OaPqC+gndUkeTEQzfvxbku
- R6PLMsQ5VSBXQOt1EDJpMNOC/fjWXWHAeyMjuLRDrApSeGqjqFVRC1iDarxJZB2DxkOf
- giL2SBS14/U7Wv4ST77t8/AZdKjlvagofJCj7PSzN7mwwr5+opwTAkANiOkitHhIORHN
- uE9fR7GeZpoxkNk5HJ6edYxEDZ3F/8sbe3X/mwFXeWSj4XOrRjKpTjs1GPM43ih8oDJd
- NJTxavCo855Xc6cUvdH7xWNZSCUC9H+aSrjZA2GfYcO1zX0YNVV5yYA5oRB9J4kebRgm
- uaSw==
-X-Gm-Message-State: AOJu0YyvbFPEnwm4e8CayywiY2sLjvjoh2D7DCwDh9G0nSt7N/fFCKrT
- 5aAmkS3AMlrAxF2Sh0VVW0AqjxEhyldsvm4RmwevyMTebWW7A+TG6+VvU5T8ugY=
-X-Google-Smtp-Source: AGHT+IHDlGvYAmrrsax7qRZ/bNJU5MjCoAKtoH3OwUpUDvYTGXKlnxCAjdAQUV9bZmds6UREDPd/lQ==
-X-Received: by 2002:a05:6358:724:b0:17b:3369:ef32 with SMTP id
- e36-20020a056358072400b0017b3369ef32mr2389749rwj.27.1708232209192; 
- Sat, 17 Feb 2024 20:56:49 -0800 (PST)
+ bh=uKib9lFhkqfQp/XBira3ThQ631U3FRHMXLPB53AQUH4=;
+ b=DBfRoppXuUGokhl96vmc3HgGCLEqPCn78cP/tjv3x37fXdsAiDRehfUCdE+GF+Dx3c
+ H1GLdqFT6f3cCr9+woYV3DjgT4GegPSRJPqMnU1XG4R4MGHQjggGaSn00N1SbmQ8Erf9
+ V3vqWboZq+fIjDKabNixR9scM75yrXAj3tlAqclDkSc0Fk5B0L4KRofoI2aBwLQ8yQVG
+ gy5eIYDjM3jcuO4FU8dbZ5jMv6fJUygjZtyOhS+NDmIUZn+C7Z011LNrEBFnbjVnuahW
+ M2AK8SZuc12SyCDzqp/Ezvts8D1C/D0jrNl9y+hh1zqbqT7uEYZy7cAotfJK2i+nVoRp
+ sDlg==
+X-Gm-Message-State: AOJu0Yzv8iAOeVfna2yzdGGxI8iBT1+Wy2DxDYkhlaMbqOXFrWNDKtvY
+ 27w3y/t2htiQ/UcZC9KCAy7JWxfP1c9Hy/wDY9AYem2CHGdevsTHs7xUpumzK7A=
+X-Google-Smtp-Source: AGHT+IH3hS81efNMSBzGDSJTewpcA5P2VXLEL3H7qUlbG4dFnsPTF3SVpuPP5McdG8eOWw3vt4gZYw==
+X-Received: by 2002:a05:6358:6f90:b0:17a:ebb9:d26a with SMTP id
+ s16-20020a0563586f9000b0017aebb9d26amr9422483rwn.31.1708232222645; 
+ Sat, 17 Feb 2024 20:57:02 -0800 (PST)
 Received: from localhost ([157.82.200.138])
  by smtp.gmail.com with UTF8SMTPSA id
- u4-20020a17090ac88400b00296f3401cabsm2621911pjt.41.2024.02.17.20.56.44
+ sg15-20020a17090b520f00b002993e862145sm2699470pjb.15.2024.02.17.20.56.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 20:56:48 -0800 (PST)
+ Sat, 17 Feb 2024 20:57:02 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 18 Feb 2024 13:56:08 +0900
-Subject: [PATCH v5 03/11] hw/pci: Use -1 as a default value for rombar
+Date: Sun, 18 Feb 2024 13:56:10 +0900
+Subject: [PATCH v5 05/11] vfio: Avoid inspecting option QDict for rombar
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240218-reuse-v5-3-e4fc1c19b5a9@daynix.com>
+Message-Id: <20240218-reuse-v5-5-e4fc1c19b5a9@daynix.com>
 References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 In-Reply-To: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,14 +81,15 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc2f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,47 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently there is no way to distinguish the case that rombar is
-explicitly specified as 1 and the case that rombar is not specified.
-
-Set rombar -1 by default to distinguish these cases just as it is done
-for addr and romsize. It was confirmed that changing the default value
-to -1 will not change the behavior by looking at occurences of rom_bar.
-
-$ git grep -w rom_bar
-hw/display/qxl.c:328:    QXLRom *rom = memory_region_get_ram_ptr(&d->rom_bar);
-hw/display/qxl.c:431:    qxl_set_dirty(&qxl->rom_bar, 0, qxl->rom_size);
-hw/display/qxl.c:1048:    QXLRom *rom = memory_region_get_ram_ptr(&qxl->rom_bar);
-hw/display/qxl.c:2131:    memory_region_init_rom(&qxl->rom_bar, OBJECT(qxl), "qxl.vrom",
-hw/display/qxl.c:2154: PCI_BASE_ADDRESS_SPACE_MEMORY, &qxl->rom_bar);
-hw/display/qxl.h:101:    MemoryRegion       rom_bar;
-hw/pci/pci.c:74:    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-hw/pci/pci.c:2329:    if (!pdev->rom_bar) {
-hw/vfio/pci.c:1019:    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
-hw/xen/xen_pt_load_rom.c:29:    if (dev->romfile || !dev->rom_bar) {
-include/hw/pci/pci_device.h:150:    uint32_t rom_bar;
-
-rom_bar refers to a different variable in qxl. It is only tested if
-the value is 0 or not in the other places.
+Use pci_rom_bar_explicitly_enabled() to determine if rombar is explicitly
+enabled.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/pci/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/pci.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 6496d027ca61..47f38375bb09 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -71,7 +71,7 @@ static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, -1),
--    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-+    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, -1),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 4fa387f0430d..647f15b2a060 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -1012,7 +1012,6 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+ {
+     uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
+     off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
+-    DeviceState *dev = DEVICE(vdev);
+     char *name;
+     int fd = vdev->vbasedev.fd;
+ 
+@@ -1046,7 +1045,7 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+     }
+ 
+     if (vfio_opt_rom_in_denylist(vdev)) {
+-        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
++        if (pci_rom_bar_explicitly_enabled(&vdev->pdev)) {
+             warn_report("Device at %s is known to cause system instability"
+                         " issues during option rom execution",
+                         vdev->vbasedev.name);
 
 -- 
 2.43.1
