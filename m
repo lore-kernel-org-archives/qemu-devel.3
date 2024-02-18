@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E83DC48BC4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B66C4829E
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 05:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbZFE-00027V-KN; Sat, 17 Feb 2024 23:57:40 -0500
+	id 1rba1Z-0000P4-KJ; Sun, 18 Feb 2024 00:47:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZFD-00025U-44
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:39 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1rba1W-0000OV-P7
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 00:47:34 -0500
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZFB-0004CH-J4
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:38 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1d953fa3286so17638145ad.2
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:57:37 -0800 (PST)
+ id 1rba1U-00040H-Rh
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 00:47:34 -0500
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-214def5da12so1307063fac.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 21:47:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232256; x=1708837056;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708235250; x=1708840050;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9Dt5tQ5uZ9hzL7haEhvwz3ceAUkLCui5MeuPY2TlXFo=;
- b=Of8Ny0VcT1axeJA3YuBx4XaXXOmHXdanUeBh3ScrtaJh5O95Gdd/FNahiBAQ0jdSgG
- hTD/MC/soM7STy5B2C0ION7bKQxoNdGWYdNXKeev+oYCpLK3QLs7X1mW5JmfC+fOiM1I
- 9Nbdmtr48mNr7nlGUZ/f2eVM1MUkQTwdFifVh0s41NAodKK07se8I2KmsLqcRrXgG7F7
- ujf0pDQfKj9QEa7u8n7qvPB0+GwiG0kpbGLtutCbBC998ZIUS08rVmS60mMCL5zuxJZe
- qeRUPxuT4a/2Nltu+G0Ejw34wTmrwmf8ZKpGGrIdszkQWjpIQtcNXHTouxPT0yCdnxIg
- TwtA==
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fLD2G7b/gc3u6Zm0GpLIgynnW6CskVg7NeyeRzWFwAQ=;
+ b=2wUZ1GenjWWszPvw7c3fauDeEhm7AjlYRRCalnKMGSB/GETLphgrprQZJLwbymsNhx
+ rG++o1FtYBmWEd3w2c6RgnQhS3wOUWAuiNotAIUWJ9yNJUwudkAiojC3hPN5H96w/F0a
+ Qd2dpbNlAMpyqurNcPGvCDWeh0O5bgTK3QOLLDHkEJOIVY+Vn8KQsjSjICkolWbDm6NI
+ FgalM24fPKBYs6qfBL8STtl1GJy8CzKmjtkkS6wAXYBOUgOP1yckRKRYl399v81aKMr5
+ AUeZiewoTPBqDjeLjepeIMeQUHCdxygc4bPYBGwfwGLhlzCjZ8WHM6QyxZtg568wioL/
+ RlJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708232256; x=1708837056;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9Dt5tQ5uZ9hzL7haEhvwz3ceAUkLCui5MeuPY2TlXFo=;
- b=KZxUouxAUZWKV47sfgghvU/hCcD8dGW7++zbZ102V/LGtdFPz0F+2EXGTE0EZHTCKw
- wRSg2qxVwpE9iAYva1Nx5IHkS1fc4OdaIGRkCSTVLy3zrp7nBsOmaKh98bAN9g5PKGQ2
- bfwwLsa3EeQFLop2noEk7wX0MWyqbjLhSE+s5qxMHwamt6ZB160o3WHhouG723Jx1LpR
- Z08+fIwsJBrLGom7y0dk4LOzkXivs72fBMzv+BOKxtVILd6lcx0GlvL98m6ZwHp05pv2
- K8T7bNbQ22PcfxY0AI8dW7/YiOPQHjSo5YWWC7OKMHhcymtzwKtxFyzaupuxtiRc9aeH
- y4zQ==
-X-Gm-Message-State: AOJu0Yxz5vm9hkTUXb5uzbdSFT07B4RsRRkyB+I3IDqq8K/QzYz8VfEB
- y/TzfKr1cEierL9TEgYVJvN1tBBbpC2IW2jKBKRx67U00g+e+nAqhevHH/x+bNE=
-X-Google-Smtp-Source: AGHT+IGisP7XXa4Q8U7eP1yNs5FCsT80BSQeaYuw28dx8UXBBCSo09V4G+TIZMVVu1B2mznoXVCNiQ==
-X-Received: by 2002:a17:903:2302:b0:1d9:b3ea:25ef with SMTP id
- d2-20020a170903230200b001d9b3ea25efmr12755220plh.10.1708232256336; 
- Sat, 17 Feb 2024 20:57:36 -0800 (PST)
-Received: from localhost ([157.82.200.138])
- by smtp.gmail.com with UTF8SMTPSA id
- mi11-20020a170902fccb00b001da34166cd2sm2152542plb.180.2024.02.17.20.57.31
+ d=1e100.net; s=20230601; t=1708235250; x=1708840050;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fLD2G7b/gc3u6Zm0GpLIgynnW6CskVg7NeyeRzWFwAQ=;
+ b=jUAFXx0ILfVJJtX4kyLkwcoL20PzMNHxDJFpEsmAb/anq9quFLTHEac4NKHx4qAFbI
+ /nGj4/QlgUNe5w5Mm/mPHMlsFlbS5QgLv3arvzp4uxk7glHGXJnODJCNYO3DagA4x0TK
+ OKWaYodIGxNoP+Zp4IY4fFv6tNe5x3TN78LG+0d7wqVahhiyJrXvHFA5t3tHG6t3e02D
+ Ck78Y4jbu1HE68GGvgu7Ib+UUxQ5CSi+R+ezMtWbaTAbYBBKYcSCrxNv7zYJCkkKJTck
+ Dk0Wyc484V4O4QHTEuis5VIlBHpT2blqTK/YU3vrXWpm8zqzlSxU4L5AIYGwRjawv/Za
+ wndw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWG4sVI/OKefPYL+PykpMlwcD0eZU9705ob5bpylYFh60b5Bdrnqy/ingqhhF25wNM1Pu2pH35gmx/TIEm9XP6e6VHMxi0=
+X-Gm-Message-State: AOJu0YxX1W25gQemlAok6YwZhTSizznbV1bpY5NSMPCcrgQ2dcPk8DUc
+ JEy4RiWYWV0QleZQn357ALT9HAxmvwb19qCcOosR+u4G1J/XbVmVjAMrZ/vPh4Y=
+X-Google-Smtp-Source: AGHT+IEVnE1x/FaH3ITWn9Lss/JfHzgEsSt1MJHKPapNPjiilCZrIqlzn2x+k1/TzHtMecE4bzK+Og==
+X-Received: by 2002:a05:6870:c115:b0:214:df30:3b77 with SMTP id
+ f21-20020a056870c11500b00214df303b77mr10333512oad.1.1708235250151; 
+ Sat, 17 Feb 2024 21:47:30 -0800 (PST)
+Received: from [157.82.207.250] ([157.82.207.250])
+ by smtp.gmail.com with ESMTPSA id
+ l184-20020a6391c1000000b005dca5caed40sm2384968pge.81.2024.02.17.21.47.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 20:57:36 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 18 Feb 2024 13:56:15 +0900
-Subject: [PATCH v5 10/11] hw/pci: Rename has_power to enabled
+ Sat, 17 Feb 2024 21:47:29 -0800 (PST)
+Message-ID: <e22f1045-afdd-4a02-bf41-ae48ea4e0934@daynix.com>
+Date: Sun, 18 Feb 2024 14:47:25 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] qdev: Report an error for machine without
+ HotplugHandler
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org
+References: <20231210-bus-v2-1-34ebf5726fa0@daynix.com>
+ <87h6kpgrl7.fsf@pond.sub.org>
+ <cbda6265-5027-424c-be93-86073d9ad63a@daynix.com>
+ <8734vzsj6k.fsf@pond.sub.org>
+ <ff212914-32b5-442e-8f67-4f01a7208a0c@daynix.com>
+ <87y1dpgvim.fsf@pond.sub.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <87y1dpgvim.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240218-reuse-v5-10-e4fc1c19b5a9@daynix.com>
-References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
-In-Reply-To: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::36;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x36.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,117 +105,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The renamed state will not only represent powering state of PFs, but
-also represent SR-IOV VF enablement in the future.
+On 2023/12/20 16:53, Markus Armbruster wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+> 
+>> On 2023/12/18 23:02, Markus Armbruster wrote:
+>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>>
+>>>> On 2023/12/11 15:51, Markus Armbruster wrote:
+>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>>>>
+>>>>>> The HotplugHandler of the machine will be used when the parent bus does
+>>>>>> not exist, but the machine may not have one. Report an error in such a
+>>>>>> case instead of aborting.
+>>>>>>
+>>>>>> Fixes: 7716b8ca74 ("qdev: HotplugHandler: Add support for unplugging BUS-less devices")
+>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>>
+>>>>> Do you have a reproducer for the crash?
+>>>>>
+>>>>>> ---
+>>>>>> Changes in v2:
+>>>>>> - Fixed indention.
+>>>>>> - Link to v1: https://lore.kernel.org/r/20231202-bus-v1-1-f7540e3a8d62@daynix.com
+>>>>>> ---
+>>>>>>     system/qdev-monitor.c | 13 ++++++++++---
+>>>>>>     1 file changed, 10 insertions(+), 3 deletions(-)
+>>>>>>
+>>>>>> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+>>>>>> index a13db763e5..5fe5d49c20 100644
+>>>>>> --- a/system/qdev-monitor.c
+>>>>>> +++ b/system/qdev-monitor.c
+>>>>>> @@ -927,9 +927,16 @@ void qdev_unplug(DeviceState *dev, Error **errp)
+>>>>>     void qdev_unplug(DeviceState *dev, Error **errp)
+>>>>>     {
+>>>>>         DeviceClass *dc = DEVICE_GET_CLASS(dev);
+>>>>>         HotplugHandler *hotplug_ctrl;
+>>>>>         HotplugHandlerClass *hdc;
+>>>>>         Error *local_err = NULL;
+>>>>>         if (qdev_unplug_blocked(dev, errp)) {
+>>>>>             return;
+>>>>>         }
+>>>>>         if (dev->parent_bus && !qbus_is_hotpluggable(dev->parent_bus)) {
+>>>>>             error_setg(errp, QERR_BUS_NO_HOTPLUG, dev->parent_bus->name);
+>>>>>             return;
+>>>>>         }
+>>>>>         if (!dc->hotpluggable) {
+>>>>>             error_setg(errp, QERR_DEVICE_NO_HOTPLUG,
+>>>>>                        object_get_typename(OBJECT(dev)));
+>>>>>             return;
+>>>>>         }
+>>>>>         if (!migration_is_idle() && !dev->allow_unplug_during_migration) {
+>>>>>             error_setg(errp, "device_del not allowed while migrating");
+>>>>>             return;
+>>>>>         }
+>>>>>
+>>>>>>        qdev_hot_removed = true;
+>>>>>>           hotplug_ctrl = qdev_get_hotplug_handler(dev);
+>>>>>> -    /* hotpluggable device MUST have HotplugHandler, if it doesn't
+>>>>>> -     * then something is very wrong with it */
+>>>>>> -    g_assert(hotplug_ctrl);
+>>>>>> +    if (!hotplug_ctrl) {
+>>>>>> +        /*
+>>>>>> +         * hotpluggable bus MUST have HotplugHandler, if it doesn't
+>>>>>> +         * then something is very wrong with it
+>>>>>> +         */
+>>>>>> +        assert(!dev->parent_bus);
+>>>>>> +
+>>>>>> +        error_setg(errp, "The machine does not support hotplugging for a device without parent bus");
+>>>>>> +        return;
+>>>>>> +    }
+>>>>>
+>>>>> Extended version of my question above: what are the devices where
+>>>>> qdev_get_hotplug_handler(dev) returns null here?
+>>>>
+>>>> Start a VM: qemu-system-aarch64 -M virt -nographic
+>>>> Run the following on its HMP: device_del /machine/unattached/device[0]
+>>>>
+>>>> It tries to unplug cortex-a15-arm-cpu and crashes.
+>>>
+>>> This device has no parent bus (dev->parent_bus is null), but is marked
+>>> hot-pluggable (dc->hotpluggable is true).  Question for somebody
+>>> familiar with the hot-plug machinery: is this sane?
+>>
+>> Setting hotpluggable false for each device without bus_type gives the same effect, but is error-prone.
+> 
+> Having hotpluggable = true when the device cannot be hot-plugged is
+> *wrong*.  You might be able to paper over the wrongness so the code
+> works anyway, but nothing good can come out of lying to developers
+> trying to understand how the code works.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/hw/pci/pci.h        |  7 ++++++-
- include/hw/pci/pci_device.h |  2 +-
- hw/pci/pci.c                | 14 +++++++-------
- hw/pci/pci_host.c           |  4 ++--
- 4 files changed, 16 insertions(+), 11 deletions(-)
+Hi,
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index eaa3fc99d884..6c92b2f70008 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -642,6 +642,11 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
- }
- 
- MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
--void pci_set_power(PCIDevice *pci_dev, bool state);
-+void pci_set_enabled(PCIDevice *pci_dev, bool state);
-+
-+static inline void pci_set_power(PCIDevice *pci_dev, bool state)
-+{
-+    pci_set_enabled(pci_dev, state);
-+}
- 
- #endif
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 54fa0676abf1..cde53065e4fe 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -56,7 +56,7 @@ typedef struct PCIReqIDCache PCIReqIDCache;
- struct PCIDevice {
-     DeviceState qdev;
-     bool partially_hotplugged;
--    bool has_power;
-+    bool enabled;
- 
-     /* PCI config space */
-     uint8_t *config;
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 3d37ddbb101e..1543f284b255 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1525,7 +1525,7 @@ static void pci_update_mappings(PCIDevice *d)
-             continue;
- 
-         new_addr = pci_bar_address(d, i, r->type, r->size);
--        if (!d->has_power) {
-+        if (!d->enabled) {
-             new_addr = PCI_BAR_UNMAPPED;
-         }
- 
-@@ -1613,7 +1613,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
-         pci_update_irq_disabled(d, was_irq_disabled);
-         memory_region_set_enabled(&d->bus_master_enable_region,
-                                   (pci_get_word(d->config + PCI_COMMAND)
--                                   & PCI_COMMAND_MASTER) && d->has_power);
-+                                   & PCI_COMMAND_MASTER) && d->enabled);
-     }
- 
-     msi_write_config(d, addr, val_in, l);
-@@ -2811,18 +2811,18 @@ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
-     return msg;
- }
- 
--void pci_set_power(PCIDevice *d, bool state)
-+void pci_set_enabled(PCIDevice *d, bool state)
- {
--    if (d->has_power == state) {
-+    if (d->enabled == state) {
-         return;
-     }
- 
--    d->has_power = state;
-+    d->enabled = state;
-     pci_update_mappings(d);
-     memory_region_set_enabled(&d->bus_master_enable_region,
-                               (pci_get_word(d->config + PCI_COMMAND)
--                               & PCI_COMMAND_MASTER) && d->has_power);
--    if (!d->has_power) {
-+                               & PCI_COMMAND_MASTER) && d->enabled);
-+    if (!d->enabled) {
-         pci_device_reset(d);
-     }
- }
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index dfe6fe618401..0d82727cc9dd 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -86,7 +86,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
-      * allowing direct removal of unexposed functions.
-      */
-     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
--        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
-+        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
-         return;
-     }
- 
-@@ -111,7 +111,7 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
-      * allowing direct removal of unexposed functions.
-      */
-     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
--        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
-+        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
-         return ~0x0;
-     }
- 
+I'm now revisiting this patch and now I think it is still semantically 
+correct.
 
--- 
-2.43.1
+This patch indeed prevents hotplugging a hotpluggable device and that 
+may sound irrational. However, we should note that the entity that 
+prevents hotplugging is not the device, but the machine that lacks a 
+hotplug handler. So we can say the device itself is hotpluggable, but 
+the machine is preventing hotplugging.
 
+We already do similar in a case that a device has a parent bus. 
+qbus_is_hotpluggable() returns false if the parent bus lacks a hotplug 
+handler and prevents from hotplugging a hotpluggable device. The device 
+class must still have hotpluggable = true in such a case because another 
+instance of device may be plugged into a bus that has a hotplug handler.
+
+I'll submit v3 soon so please check if this reasoning sounds valid for 
+you and review it once I submit it.
+
+Regards,
+Akihiko Odaki
 
