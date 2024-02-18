@@ -4,58 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63E0C48BC4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 16:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A83C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 17:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbjmS-00034Y-9u; Sun, 18 Feb 2024 11:12:40 -0500
+	id 1rbkvx-0002ib-L1; Sun, 18 Feb 2024 12:26:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rbjmQ-00034B-GD
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 11:12:38 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rbkvv-0002hm-OF
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 12:26:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rbjmN-0005dP-Kp
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 11:12:38 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 780184E6012;
- Sun, 18 Feb 2024 17:12:32 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ru_ph4c1UrVb; Sun, 18 Feb 2024 17:12:30 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 333D04E6005; Sun, 18 Feb 2024 17:12:30 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3144A7456B4;
- Sun, 18 Feb 2024 17:12:30 +0100 (CET)
-Date: Sun, 18 Feb 2024 17:12:30 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
-Subject: Re: [PATCH 0/5] Implement port 92 in south bridges
-In-Reply-To: <20240218131701.91132-1-shentey@gmail.com>
-Message-ID: <35e05c51-6a06-1830-972b-42332e7b7b56@eik.bme.hu>
-References: <20240218131701.91132-1-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rbkvu-00016C-48
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 12:26:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708277187;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZIKDUPe8anBYWiF2GwAVkIFNMsLY0saGcbkzcrRRG3A=;
+ b=KKQujkREXxUn1TcTaYnjqeFUloaILW97e7f1ieG/nkC3yffDu1TSedP18MOSwsPpms/Rui
+ nIqCw0EBhwcEM7HZxJEQkisYH2wY4zAmfsRL0dYHtalPtEvDGunLEkqZW1CCI/me1slEiy
+ LPW13j3z9RlAz+Fyp+Ktu1JpjHa3fjo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-aFUE2aLuOVOP9q3Zaltkmg-1; Sun, 18 Feb 2024 12:26:26 -0500
+X-MC-Unique: aFUE2aLuOVOP9q3Zaltkmg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4107469e8adso23282065e9.1
+ for <qemu-devel@nongnu.org>; Sun, 18 Feb 2024 09:26:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708277185; x=1708881985;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZIKDUPe8anBYWiF2GwAVkIFNMsLY0saGcbkzcrRRG3A=;
+ b=XFUTnbk32GPwZPWtRFJh1qc3i6wFxUZfQpP3q9DZluBuXbjpYcbIO3lXRTE2tvL9yf
+ qgv2UxWzbw7+0a3zTpP4R1xv/t6FNSXdL5UhvqRBVUvCb8u/fW1k4Vj2a1BGmNZnlGTc
+ /T7myhk+dfz4Riy4wNpigjC6YVhWBP8WjlXx9A3rwxkYyZ7TAlfrF4aRtcFyLmj4Q5/5
+ dma72UgM2MszGpwbai5l+mOQNtQm761wuAgt9cxx7+3BVVAevxYcU9FObBeD47Kh3Db3
+ ZU2nbM+k2Nd7wgYMV0m+JKz/R80dJyKrEvJPOYCPUoCxEQ76CLGGvrEdp8V6Zw6lWTJE
+ htBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX40RUssHtIqsYDew4RwDWLLYSZNaymNZmcpmwVrwsee3SxwZ4MqZo6Te2sqVqVkfkXi7SvDxNABCBeinT/+Enm6aVRQS4=
+X-Gm-Message-State: AOJu0Ywy/5Ppga5kigeyjAHVTr+zKEPY0u/uaBIDyQv9sVvlFcAKc9D2
+ lIK41DpqkxWLLgyKxUF+TORP2ml8YxGTbyhIDJ3IvgEOcD0IWgtxmNAlJMuFOZUWfHp3COHM9sJ
+ fJ1e0ko7RxQGhRHzfh8FERnOhb86x0536N21aqikc9CgfFfmU+9g9
+X-Received: by 2002:a05:600c:4f0d:b0:410:7428:1fb5 with SMTP id
+ l13-20020a05600c4f0d00b0041074281fb5mr7670402wmq.27.1708277184970; 
+ Sun, 18 Feb 2024 09:26:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjyPbCSNdnCpg2iDR+6Ei5NMFk191+f9SnzL/Iqabyq43rEQA1o2g8gXFCZ9XGjtisab6QzQ==
+X-Received: by 2002:a05:600c:4f0d:b0:410:7428:1fb5 with SMTP id
+ l13-20020a05600c4f0d00b0041074281fb5mr7670381wmq.27.1708277184577; 
+ Sun, 18 Feb 2024 09:26:24 -0800 (PST)
+Received: from redhat.com ([2.52.19.211]) by smtp.gmail.com with ESMTPSA id
+ p6-20020adfe606000000b0033cdbe335bcsm7860788wrm.71.2024.02.18.09.26.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 18 Feb 2024 09:26:23 -0800 (PST)
+Date: Sun, 18 Feb 2024 12:26:19 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH v5 05/11] vfio: Avoid inspecting option QDict for rombar
+Message-ID: <20240218122530-mutt-send-email-mst@kernel.org>
+References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
+ <20240218-reuse-v5-5-e4fc1c19b5a9@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240218-reuse-v5-5-e4fc1c19b5a9@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,121 +109,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 18 Feb 2024, Bernhard Beschow wrote:
-> This series attempts to make QEMU's south bridge families PIIX, ICH9, and VIA
-> 82xx more self-contained by integrating IO port 92 like the originals do.
->
-> In QEMU, the IO port is currently instantiated as a dedicated device in common
-> PC code. While this works and even results in less code, it seems cleaner to
-> model the behavior of the real devices. For example, software running on the
-> Malta machine, which uses PIIX4, needs to take port 92 into account, even if it
-> doesn't use it (does it?). Moreover, the FDC37M81x used in the original Malta
-> machine provides a port 92 too, which can be activated. If QEMU implemented the
-> FDC37M81x more closely, one could check if Yamon (or any alternative boot
-> loader) deals correctly with these ports.
+On Sun, Feb 18, 2024 at 01:56:10PM +0900, Akihiko Odaki wrote:
+> Use pci_rom_bar_explicitly_enabled() to determine if rombar is explicitly
+> enabled.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Maybe that's unlikely as this register is for controlling A20 line of 
-Intel CPUs so probably there's no use for it in a MIPS or PPC board but 
-I'm not sure if it may be used for something else.
 
-> Moving port 92 into the south bridges might also help with configuration-driven
-> machine creation. In such a scenario it is probably desirable if machine code
-> had less of its own idea of which devices it creates.
+I see little point in all this reworks: QDict lookups are
+robust. But if Alex wants this change, I won't oppose it.
+Alex?
 
-The direction is probably good as these chips have a pin for A20 control 
-and handle the register themselves but I'm not sure this series is the 
-right way. One immediate problem is that TYPE_PORT92 has state which is in 
-the migration stream so moving it elsewhere would break migration which 
-would need to be handled. Does this series handle that? I'm not sure it's 
-worth the effort though if it results in more comlex code. If the 
-migration issue is handled, then I think we should get rid of TYPE_PORT92 
-completely and just add the one reg and qemu_irq modeling the output pin 
-as qemu_gpio to the south bridge implementations directly, not embedding a 
-separate object for it as these south bridges may already have some io 
-region for ports and state where the reg can be stored so it could be 
-added there instead of just moving the TYPE_PORT92 there. But with the 
-migration issue it's probably easier to just leave it as it is now. Even 
-if this would model the real chip better, it would result in more code and 
-complexity in QEMU so not sure it's a good idea because of that.
+> ---
+>  hw/vfio/pci.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 4fa387f0430d..647f15b2a060 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1012,7 +1012,6 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+>  {
+>      uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
+>      off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
+> -    DeviceState *dev = DEVICE(vdev);
+>      char *name;
+>      int fd = vdev->vbasedev.fd;
+>  
+> @@ -1046,7 +1045,7 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+>      }
+>  
+>      if (vfio_opt_rom_in_denylist(vdev)) {
+> -        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
+> +        if (pci_rom_bar_explicitly_enabled(&vdev->pdev)) {
+>              warn_report("Device at %s is known to cause system instability"
+>                          " issues during option rom execution",
+>                          vdev->vbasedev.name);
+> 
+> -- 
+> 2.43.1
 
-> Moving port 92 from
-> machine code into a potentially user-creaeable device (where it is part of per
-> datasheet) seems like a good direction. Of course, machine code still wires up
-> port 92 and I don't have a good idea on how to make this user-configurable.
-> Such insights might provide some input for discussions around
-> configuration-driven machine creation.
-
-That's a generic problem for dynamic or declarative machine creation to 
-solve. Likely the machine description will also need to describe the 
-connections between devices, not just what devices to instantiate. So 
-that's not specific to port92. As we're not there yet it's also not urgent 
-to touch this port92 stuff.
-
-Maybe I overestimate the migration issue as I'm not familiar with that so 
-if others think it's not an issue then I'm not against this series as it 
-would bring the model closer to the actual hardware but then go all the 
-way and get rid of TYPE_PORT92 and just implement it in the south bridges. 
-But due to how it's currently done and how that's now baked in because of 
-backward compatibility requrement for migration, I'm not sure it would 
-really simplify the code, so we may need to live with what we have now. 
-But let me know if I'm wrong and missed something.
-
-Regards,
-BALATON Zoltan
-
-> This series is structured as follows: Patch 1 moves TYPE_PORT92 into the isa
-> directory to make it reusable by other architectures. It also adds a
-> configuration switch. Patch 2 integrates TYPE_PORT92 into the PC south bridges
-> and adapts PC code accordingly. While at it, patch 3 cleans up wiring of the
-> A20 line with the keyboard controller. Patch 4 simply adds TYPE_PORT92 to the
-> VIA south bridges which is also needed when using the VIA south bridges in the
-> pc machine.
->
-> Testing done:
-> * `qemu-system-x86_64 -M {q35,pc},i8042={true,false} ...`
->  -> `info mtree` confirms port92 to be present iff i8042=true
-> * `make check`
-> * `make check-avocado`
-> * Start amigaone and pegasos2 machines as described in
->    https://patchew.org/QEMU/20240216001019.69A524E601F@zero.eik.bme.hu/
->  -> no regressions compared to master
->
-> Best regards,
-> Bernhard
->
-> Bernhard Beschow (5):
->  hw/isa/meson.build: Sort alphabetically
->  hw/i386/port92: Allow for TYPE_PORT92 to be embedded in devices
->  hw/isa: Embed TYPE_PORT92 in south bridges used in PC machines
->  hw/i386/pc: Inline i8042_setup_a20_line() and remove it
->  hw/isa/vt82c686: Embed TYPE_PORT92
->
-> include/hw/i386/pc.h          |  7 +------
-> include/hw/input/i8042.h      |  1 -
-> include/hw/isa/port92.h       | 30 ++++++++++++++++++++++++++++++
-> include/hw/southbridge/ich9.h |  4 ++++
-> include/hw/southbridge/piix.h |  3 +++
-> hw/i386/pc.c                  | 21 ++++++++++++++-------
-> hw/i386/pc_piix.c             |  9 +++++++--
-> hw/i386/pc_q35.c              |  8 +++++---
-> hw/input/pckbd.c              |  5 -----
-> hw/isa/lpc_ich9.c             |  9 +++++++++
-> hw/isa/piix.c                 |  9 +++++++++
-> hw/{i386 => isa}/port92.c     | 14 +-------------
-> hw/isa/vt82c686.c             |  7 +++++++
-> hw/i386/Kconfig               |  1 +
-> hw/i386/meson.build           |  3 +--
-> hw/i386/trace-events          |  4 ----
-> hw/isa/Kconfig                |  6 ++++++
-> hw/isa/meson.build            |  3 ++-
-> hw/isa/trace-events           |  4 ++++
-> 19 files changed, 104 insertions(+), 44 deletions(-)
-> create mode 100644 include/hw/isa/port92.h
-> rename hw/{i386 => isa}/port92.c (91%)
->
-> --
-> 2.43.2
->
->
->
 
