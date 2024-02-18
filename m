@@ -4,71 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE18C48BC3
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Feb 2024 22:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3045C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 02:01:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbTD6-0008LL-FU; Sat, 17 Feb 2024 17:31:04 -0500
+	id 1rbWTa-00015H-6q; Sat, 17 Feb 2024 21:00:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hc981@poolhem.se>) id 1rbTD2-0008LA-AL
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 17:31:00 -0500
-Received: from mailout12.inleed.net ([185.189.50.81])
+ (Exim 4.90_1) (envelope-from <zhaoyong.zhong@nephogine.com>)
+ id 1rbWTY-000157-QB
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 21:00:17 -0500
+Received: from mail-mw2nam10on2138.outbound.protection.outlook.com
+ ([40.107.94.138] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hc981@poolhem.se>)
- id 1rbTCs-00015g-AX; Sat, 17 Feb 2024 17:31:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=poolhem.se; 
- s=x;
- h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:
- In-Reply-To:Message-Id:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=XnRqtgwcxLgI6lIRK+bIuFwHZV/NnejVYe9RfYPE5bg=; b=UDmOb/PkNyB0gaetwHPxeS0Z37
- 5BxRY/9c8asbsC4VkXRTT2igdHcqpDuOFxJ/anwrqJDYjVc9WACz4Bfl3ciLXQbPWKWHugdgC/9Kl
- Zn9Z6LElHnJwoEi6T3XF7O5N42s9PkNxhtxP2BonnMBm+Byy4YrOQZv2/zX0j1k9SoOQT7KvcrThH
- 3Jmfww9eKw0Io96qDDUk9aoGSKxmMYpK+s8kXka6d7txw8ACwuH/3zp/sibOcIUHWixB2HLM1iyxs
- b2DB0rgW3hhV2JqVe8Go00WdtA/b/OEyLbg+5RbNY33hKltFxsUrJXq9ZYjixw1xibvw2+RvCbQOP
- z4RDippQ==;
-Received: from [213.115.245.47] (helo=balrog.lkp.se)
- by ns12.inleed.net with esmtpa (Exim 4.97.1)
- (envelope-from <hc981@poolhem.se>) id 1rbTAl-0000000HPDM-3l27;
- Sat, 17 Feb 2024 23:28:39 +0100
-Date: Sat, 17 Feb 2024 23:28:24 +0100
-From: Henrik Carlqvist <hc981@poolhem.se>
-To: Henrik Carlqvist <hc94@poolhem.se>
-Cc: samuel.thibault@gnu.org, qemu-devel@nongnu.org
-Subject: Ping 2: [PATCH v2] Allowing setting and overriding parameters in
- smb.conf
-Message-Id: <20240217232824.3db4c9c7.hc981@poolhem.se>
-In-Reply-To: <20230910134812.7fa3a603.hc94@poolhem.se>
-References: <ZJFv4Hq8RMVOUum/@redhat.com>
- <20230620215043.6124c450.hc94@poolhem.se>
- <ZJKiGBJNQa5Kx+Dg@redhat.com>
- <20230621201447.712ec73a.hc94@poolhem.se>
- <20230623203007.56d3d182.hc981@poolhem.se>
- <20230801232725.4cc838fb.hc981@poolhem.se>
- <20230802195356.rwibjix3bub7s7qw@begin>
- <20230803010909.723e2c1f.hc981@poolhem.se>
- <20230802231324.b5zk2kf44oqzocel@begin>
- <20230803012602.7c75df75.hc981@poolhem.se>
- <20230802233404.lnpa5owybhvbbkyl@begin>
- <20230803171256.1d39d71f.hc981@poolhem.se>
- <20230910134812.7fa3a603.hc94@poolhem.se>
-X-Mailer: Sylpheed version 0.9.7 (GTK+ 1.2.10; i686-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Id: henrik@poolhem.se
-Received-SPF: none client-ip=185.189.50.81; envelope-from=hc981@poolhem.se;
- helo=mailout12.inleed.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <zhaoyong.zhong@nephogine.com>)
+ id 1rbWTW-0000Kn-V9
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 21:00:16 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DtegkD9wLrBg/yS9AvM53r7lg5Kj2Hjl3wu9xhS8+mJzobnW8U0MbimostGYoi48iCycqqgmbHmmisLLe75kh0q69eMhcNBs4LvGzhN/XiGC/1w1LiGoSRTpue9aaQotdif9u975AjJHdKsAwwmIqMfJX8vJBZucpgB5gHo3QRrZRkSLa9w65Ifjy8bxXet0k+CxBP9fMgMKdKt99TiS+p5ghGSVn/WJQWB5SjiLmAakvXjgKBsSjFmNqYwouIapHMImeNWTx+sFzlWCI3pfa2IQpI0IDK/zoRK13jInTNTSMgSlBGFk2UvaGYKBr6nveip6EQJf1UHH+LHkeCCM0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=muAbBe5g9bsdC0snmcHfQp3gUZ1Z3xRIYkE4CW+hOsw=;
+ b=mt+74TDI4OZ71zSUj4yVdFxxL+poSL14E4jWnyvWTSVU1f9G9HKkQAIUHZFy/cJ1pkotSHRrJI1mjmmxDORiG9k4nOQmn3I6oR4SogzzwUsVhfCEK8u6W7+NP7MzpgxZnA5WlYlThJUVjiwka6cFG7zKg94+SqnMonRdA+MpX8gNwAZuqEa6BszQOTGeZwr8TIXNo4E/ylosR+jEh3uuTiZMPZQE2WMouJVG2TKW6ID4Jo/NBcD/PNvlif6soS5bR+j/ZhPkIOzM4JC/ELUaaHbjFxtfojGNJ75SpWgbSeTyHYo5zuH8KJ9/8E1bXlde88TcnKpjykOCXYIA6he0DQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nephogine.com; dmarc=pass action=none
+ header.from=nephogine.com; dkim=pass header.d=nephogine.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nephogine.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=muAbBe5g9bsdC0snmcHfQp3gUZ1Z3xRIYkE4CW+hOsw=;
+ b=3Q6cp0Bu2ZSAq+WXTGfv/1bx2fTjLf0Nr5l+QWdKSd6+gGdN4yaCeY75KhHxxJzoUXBfnzyzWTvQrMTqJ9MoKosob6OkLDMUeLfJn6SHCFYFQw5ZwxuCaalyCEcpedgwIKOMGMbrLj6ajVm6br+WC4EmNqcb34JWfvPGq4gynAxk+zXqgUpDkaCujzoM/sV0Pjq3DA6U3WH9LpsVcYGXiO6XZUZ0LmOsWRbvwNJjGYscsxYdZ9iSdCCP5zkB7S8/0zrjvBM8ZIA4i9CZU1NHkpkmNeOCQpPW19dZNUKYMdk8pCA3SwtsthBgqNz289E8bNXi8VLwchIRhA4CEzVPaA==
+Received: from DM6PR13MB3988.namprd13.prod.outlook.com (2603:10b6:5:28e::12)
+ by SA1PR13MB4896.namprd13.prod.outlook.com (2603:10b6:806:186::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.32; Sun, 18 Feb
+ 2024 01:55:08 +0000
+Received: from DM6PR13MB3988.namprd13.prod.outlook.com
+ ([fe80::dfdb:af69:82f4:cad9]) by DM6PR13MB3988.namprd13.prod.outlook.com
+ ([fe80::dfdb:af69:82f4:cad9%7]) with mapi id 15.20.7292.033; Sun, 18 Feb 2024
+ 01:55:08 +0000
+From: Rick Zhong <zhaoyong.zhong@nephogine.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Wentao Jia
+ <wentao.jia@nephogine.com>
+CC: Eugenio Perez Martin <eperezma@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>, Peter Xu
+ <peterx@redhat.com>, Guo Zhi <qtxuning1999@sjtu.edu.cn>, Xinying Yu
+ <xinying.yu@nephogine.com>, Shujing Dong <shujing.dong@nephogine.com>, Kyle
+ Xu <zhenbing.xu@nephogine.com>
+Subject: =?gb2312?B?u9i4tDogu9i4tDogRlc6IFtQQVRDSF0gdmhvc3QtdXNlcjogYWRkIFZJUlRJ?=
+ =?gb2312?B?T19GX0lOX09SREVSIGFuZCBWSVJUSU9fRl9OT1RJRklDQVRJT05fREFUQSBm?=
+ =?gb2312?Q?eature?=
+Thread-Topic: =?gb2312?B?u9i4tDogRlc6IFtQQVRDSF0gdmhvc3QtdXNlcjogYWRkIFZJUlRJT19GX0lO?=
+ =?gb2312?B?X09SREVSIGFuZCBWSVJUSU9fRl9OT1RJRklDQVRJT05fREFUQSBmZWF0dXJl?=
+Thread-Index: AdokPrZLsAJfb0btQhCy7EbMDce/EgY4mSYwAAJ9PgAABGqn8AAAz8ygAfvHuzAAhk7OgAA1l2oAAAD22YAAB9kDgACXz1iAAAgyIIAAAEaZwAFcG0xwABOlOwABFssUYAAMR9GAAB5bYdACNqaugADquGNQ
+Date: Sun, 18 Feb 2024 01:55:07 +0000
+Message-ID: <DM6PR13MB39880A261589BE275809C69F95522@DM6PR13MB3988.namprd13.prod.outlook.com>
+References: <CACGkMEtHQHmhBAF6WguUSHr+iFMmOjvTshqpGzkvE=QtkgVVPA@mail.gmail.com>
+ <SN4PR13MB5727AF7CB6E6CF563B618F1386732@SN4PR13MB5727.namprd13.prod.outlook.com>
+ <SN4PR13MB5727D5A7AD34F7169E2A236F86702@SN4PR13MB5727.namprd13.prod.outlook.com>
+ <CAJaqyWc2P6iHrG9dR2X9YC=P7dw4=Y2RwRkr5H81hkj6ej_5hA@mail.gmail.com>
+ <DM6PR13MB3988D0E01FE275F72E53397295702@DM6PR13MB3988.namprd13.prod.outlook.com>
+ <SN4PR13MB5727A733210FBF7A3B72DDE886792@SN4PR13MB5727.namprd13.prod.outlook.com>
+ <CAJaqyWdx+33QrtCkMDAMG=1au7jKCgw4bcmgC+zgEcXaeW=Fbg@mail.gmail.com>
+ <SN4PR13MB5727E433825757E3E326EB9F86432@SN4PR13MB5727.namprd13.prod.outlook.com>
+ <20240201075513-mutt-send-email-mst@kernel.org>
+ <DM6PR13MB39889A667DB46A0EC65FA08495422@DM6PR13MB3988.namprd13.prod.outlook.com>
+ <20240213044703-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240213044703-mutt-send-email-mst@kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nephogine.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR13MB3988:EE_|SA1PR13MB4896:EE_
+x-ms-office365-filtering-correlation-id: f2d19103-cb42-459f-ff98-08dc3024a23e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: bZgDTrRFHR1FVW2jmm/KuZpfMWwphyGNBVAsnMWHMIPhKeO85QSJvmHXnF7Hf5HR1fd7WvZG1tI6RI29BRTbj7Gd6pb44WmHUbNVI3l2vYrXnTH4rmnZ1cLJV6JUEps5NR0z3OtynCbtadBriUv0bh9B43UtfXRZEXs6flHKgt7mANykwYSFODRo1AOOyAjbwdWc0XIyzk0Me62a2CUb77VhnuLsID6d0LmZPBvCgfs41VG2l9rQuGVr5GYC4Yklbtxb7jNeCOmKv+BNnjlRFnyqKRWImN+VXwRhgCVGLqrR9FrDQ5I/xGDJtVbSNWCwXi3uxORwoGUBsU+MMk7PlBGwsi/COQOVAFQsfvsleeuuPP7bnbZV9T1qicijMdRnADNpKuvTDSmWrTVoR+HVXA7XWbkfk2cqoz5PPXw11lcQWAaohIzCUHUzixy3hparnt+KY9xRq7SY4K1H/iZnzDKKt+dEHj46OtH0mhpNJNLP7q0a/laY7cxthp8h1Hj1m1nFc814pRyKbST+QhOv5uoCt4QOUORx7Xrpz0sksZ+6htQANpn5vPr+vP+U7R7F2njyLgVN+bu0nkqHfTX1n3DJta/RCgQsvToPEzJfZE4j0xveH4lUn+vtXDshbwi0
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR13MB3988.namprd13.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(396003)(346002)(39830400003)(376002)(136003)(366004)(230922051799003)(230273577357003)(64100799003)(451199024)(186009)(1800799012)(9686003)(6636002)(7696005)(6506007)(316002)(54906003)(478600001)(71200400001)(110136005)(52536014)(66556008)(66476007)(66446008)(64756008)(4326008)(2906002)(66946007)(76116006)(8936002)(41300700001)(5660300002)(86362001)(38100700002)(33656002)(38070700009)(224303003)(107886003)(122000001)(26005)(83380400001)(55016003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?gb2312?B?TnA3SGhiS1c1eFJpVWNHdEJmT1hwS1B6d0NxM3FGdCt5TGFtdUpJZkJIaHlT?=
+ =?gb2312?B?T053MDhTaUVXcTJLaHFlYVhzUjF4aTRBTWkyTTU5UFJmbmY5SkdlMUYrSnJ2?=
+ =?gb2312?B?UlR1NFB6TFpHc0xtaUVVY2YrdmpocldlcklRckVaZTZFUFg0Ymd0RkdkRGhC?=
+ =?gb2312?B?bzZrazdYVlNyZEFPV3dtNjFtMDBrQXZxWDI0QWhVYnB0MVRhblVZN3dkR0ZP?=
+ =?gb2312?B?M0tnQWlEWGlrOVlFNURpeEJtTUVMWTdHTk5jNmxqdkZTRWNLMUxCbFFreFd1?=
+ =?gb2312?B?eFVHYk40SDNZMzJEOGRTdENFVEIwU3Z6TGFUWFJ1eXJZdDIvNHJMSUUzNmo2?=
+ =?gb2312?B?V1VGR2dDaVQxeU1vOEcvZTlYYkFrM01TWDJRaVdaelE0VHdVRVZnbkdjSDI5?=
+ =?gb2312?B?UWFVS2l6NUpZb21SSzZNUU82N0FvT0R0dTQ4SzFFdTMrVTVJNnpIQThITkxX?=
+ =?gb2312?B?YlViSTRlTjFrN3grZ0sxcmNwNGYvWSt2QVJMbjZrUWppNUxzTUFrUzJ3aU5E?=
+ =?gb2312?B?SFkxMzgvQ0ZxcWpXRzRyMko5MS9QeWo2L0Z0WllUd0NrS3RuMmZQa3BNbGRL?=
+ =?gb2312?B?TngvWk53ZlZjL1E0WkZia3ZqWkw1aXU2REM2d29USEN1TGcyS3JOM3YyZkRo?=
+ =?gb2312?B?NjloeFhwWTRpd2RuMnZyd0EzRDR1LzNUSFJRNUlwYXZ0Q0pxU0ZDeWJtSms2?=
+ =?gb2312?B?N1FleGN2T1lZUUdRSjZmTS9pSG9wbkFTT3VTVXhNU3Z1OFB3V0J3eTlnT1NT?=
+ =?gb2312?B?ZHJzZFR2WmtQMXRSN0NseFNRL051RTF2cGROUkZyczFQLzczOUVFNVFQem1w?=
+ =?gb2312?B?UE9tSng5d3NTWTVzOWVIZ2VOcFQ2dXF5a2tBUGNra0xuZks0bnBTb1FGWmZF?=
+ =?gb2312?B?SHJsNGl5Mi9RYWhvUVc0ZEp1NWNGVFZrbVpUdlJuZU1LSmpJY2JPWEJZMDBu?=
+ =?gb2312?B?di9oMUE4TnhJcVBQTkZRMVZwRWozNzNjRHlkRXJYYlVsLy9HR0FSQ0RJME9M?=
+ =?gb2312?B?ckNaSFBua011N2NBSEVUdTJ5VXB5anVaT3FtaTdRd3cwcDhzRnJVcjVSazVj?=
+ =?gb2312?B?cmZXZTRLWUkwTEpqK1JMTWtndzcwWjBOd3pYcmNKcHZYSlFkRlU2OXZXWEJT?=
+ =?gb2312?B?RG1CLzkrMjIzR1VlZ2xMUUZEd2J1eEJteXo3ZGFmK2Nla21NMlpOZk9rMEIy?=
+ =?gb2312?B?UXMzbkpmemo0UVhIaFd0YzVUYjhqUjN0MGdmMHNpRVFjZUplR0VFbXk3aE1v?=
+ =?gb2312?B?bllLd3RwcE1JMGVVQVY5eGRwYUZIMHliZjk2THRZaEordTBncjRzTnJHeU9E?=
+ =?gb2312?B?b0ZIS1EvaHp2blhYM1kramdYdnJzd05FNTdHZXcrYTYySmpOQ3ZXeHdvRGli?=
+ =?gb2312?B?WTB5aU5xVWdtVkRFVUNPNmxIQXY2eVFCYlJ6ZVFBelFOTTFFUGZBUG5STTQz?=
+ =?gb2312?B?UE5Hd3IvK0Ftcm9xTzJNcjU5TTJMekd5RXJxV1dwcjVod3RFVGJRek9mRDBV?=
+ =?gb2312?B?aFRXQkVwY2ppck16VlpwOE5UQUxYTVVPR1FDTFVwaU9oL0VXWUR0a081Zjg5?=
+ =?gb2312?B?UCtPUTBGOTlUUXZ1cDBZdFJzbzUvWEhxbEpvcGRSWkpFckxxZVhxb2g2N0Vj?=
+ =?gb2312?B?b05pSG5wb2hiR29aczlKN0pEZnhYU09qeERkNnVIblBCVFljb1R2ODEyOUlK?=
+ =?gb2312?B?SzNvTjh3aTVuZG9idVkrMCtuZlk3SVI5VWJQcTVwYmtNT2t4UythRDdQcjVK?=
+ =?gb2312?B?N3lPUzJ0cmUrYTY1UUV5NDM2VVo2QW9JU0M5UXNaT2hzVlNvQXhlOTJCcStW?=
+ =?gb2312?B?Z3U3L1ZZYkM3dThTNWoya0R2T0ZtcnNKckEvTlVBQjhZRncxY3JIdTkyVm4v?=
+ =?gb2312?B?bzFlR3RUME5EZTg0QWxQTWdjcUREK09JRkx6cEpWSUNZb2l3blNkaUx0NnFW?=
+ =?gb2312?B?ZisyTDA0M0doV0FYYlhuV0FFVVlSWVVKS29FemNtUk5PQ0YzWHcvYUk4RW1K?=
+ =?gb2312?B?NE05ZG9jOEp4RXNRN3FpVFh3SjlRSEpnTlpRTmU2OURwTXRqeWhJSFJIM1l6?=
+ =?gb2312?B?STR0cU1VeG84QlRneGxKVm9uVWFFenVHc2FqeDBKSjY4V1V3Q3JjbERzRTRJ?=
+ =?gb2312?B?YTlaYjBaOUN1NEg4azlTeVdvc2laOWdkUDliczd3cjJNNytRdjRiaUNxZ2h4?=
+ =?gb2312?B?U0E9PQ==?=
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: nephogine.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR13MB3988.namprd13.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f2d19103-cb42-459f-ff98-08dc3024a23e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2024 01:55:07.8265 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fe128f2c-073b-4c20-818e-7246a585940c
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: vad5X6ZZlH+ofhNzXAzi/pqJrjwezXrnjcIjUavadMBI1VGD8QYiZbWBlLUaQ0VySwZB/1URmil+udGu7HReI0XUTKuzNbdnPxZFChONS/Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR13MB4896
+Received-SPF: pass client-ip=40.107.94.138;
+ envelope-from=zhaoyong.zhong@nephogine.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: 35
+X-Spam_score: 3.5
+X-Spam_bar: +++
+X-Spam_report: (3.5 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,267 +167,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Still wondering if there are any plans to apply my patch or if you would like
-to change anything in the patch?
-
-Being able to set parameters in smb.conf would be really useful these days for
-people running old versions of Windows like Windows XP in a qemu guest. Today,
-the default settings of Samba has disabled SMBv1 making old versions of
-Windows unable to connect to Samba shares.
-
-regards Henrik
-
-On Sun, 10 Sep 2023 13:48:12 +0200
-Henrik Carlqvist <hc94@poolhem.se> wrote:
-
-> I'm just wondering if there are any plans to apply my patch in this version
-> or if you would like me to change anything more in the patch? I am aware
-> that during this time of the year many have been away on vacation and it has
-> also been a new release 8.1 which has blocked any submitted patches but bug
-> fixes. However, now might be a good time to push this patch towards master?
-> 
-> Best regards Henrik
-> 
-> On Thu, 3 Aug 2023 17:12:56 +0200
-> Henrik Carlqvist <hc981@poolhem.se> wrote:
-> 
-> > From a6dfb322a88965281e3bba00a92f8d5e437bfa95 Mon Sep 17 00:00:00 2001
-> > From: Henrik Carlqvist <hc1245@poolhem.se>
-> > Date: Thu, 3 Aug 2023 16:52:25 +0200
-> > Subject: [PATCH] Allowing setting and overriding parameters in smb.conf,
-> >  moving some parameters from the [qemu] section to the [global] section to
-> >  allow them to get overridden by custom user settings.
-> > 
-> > Signed-off-by: Henrik Carlqvist <hc1245@poolhem.se>
-> > ---
-> > 
-> > In this second version of the patch I have moved also the "force user" 
-> > parameter to the global section of smb.conf. Even though I do not self see
-> > the usefullness of altering that parameter we might just as well give the
-> > users the freedom to alter anything in smb.conf. Maybe someone else will
-> > see the need to alter that parameter.
-> > 
-> > Best regards Henrik
-> > 
-> >  net/slirp.c     | 50 ++++++++++++++++++++++++++++++++++++++++---------
-> >  qapi/net.json   |  3 +++
-> >  qemu-options.hx | 15 ++++++++++++---
-> >  3 files changed, 56 insertions(+), 12 deletions(-)
-> > 
-> > diff --git a/net/slirp.c b/net/slirp.c
-> > index c33b3e02e7..e27d115bc4 100644
-> > --- a/net/slirp.c
-> > +++ b/net/slirp.c
-> > @@ -106,7 +106,8 @@ static int slirp_guestfwd(SlirpState *s, const char
-> > *config_str, Error **errp);
-> >  
-> >  #if defined(CONFIG_SMBD_COMMAND)
-> >  static int slirp_smb(SlirpState *s, const char *exported_dir,
-> > -                     struct in_addr vserver_addr, Error **errp);
-> > +                     struct in_addr vserver_addr, const char *smbparams,
-> > +                     Error **errp);
-> >  static void slirp_smb_cleanup(SlirpState *s);
-> >  #else
-> >  static inline void slirp_smb_cleanup(SlirpState *s) { }
-> > @@ -424,6 +425,7 @@ static int net_slirp_init(NetClientState *peer, const
-> > char *model,
-> >                            const char *bootfile, const char *vdhcp_start,
-> >                            const char *vnameserver, const char
-> >                            *vnameserver6, const char *smb_export, const
-> >                            char*vsmbserver,
-> > +                          const char *smbparams,
-> >                            const char **dnssearch, const char
-> >                            *vdomainname, const char *tftp_server_name,
-> >                            Error **errp)
-> > @@ -678,7 +680,7 @@ static int net_slirp_init(NetClientState *peer, const
-> > char *model,
-> >      }
-> >  #if defined(CONFIG_SMBD_COMMAND)
-> >      if (smb_export) {
-> > -        if (slirp_smb(s, smb_export, smbsrv, errp) < 0) {
-> > +        if (slirp_smb(s, smb_export, smbsrv, smbparams, errp) < 0) {
-> >              goto error;
-> >          }
-> >      }
-> > @@ -891,7 +893,8 @@ static void slirp_smb_cleanup(SlirpState *s)
-> >  }
-> >  
-> >  static int slirp_smb(SlirpState* s, const char *exported_dir,
-> > -                     struct in_addr vserver_addr, Error **errp)
-> > +                     struct in_addr vserver_addr, const char *smbparams,
-> > +                     Error **errp)
-> >  {
-> >      char *smb_conf;
-> >      char *smb_cmdline;
-> > @@ -950,11 +953,12 @@ static int slirp_smb(SlirpState* s, const char
-> > *exported_dir,
-> >              "printing = bsd\n"
-> >              "disable spoolss = yes\n"
-> >              "usershare max shares = 0\n"
-> > -            "[qemu]\n"
-> > -            "path=%s\n"
-> >              "read only=no\n"
-> >              "guest ok=yes\n"
-> > -            "force user=%s\n",
-> > +            "force user=%s\n"
-> > +	    "%s"
-> > +            "[qemu]\n"
-> > +            "path=%s\n",
-> >              s->smb_dir,
-> >              s->smb_dir,
-> >              s->smb_dir,
-> > @@ -963,8 +967,9 @@ static int slirp_smb(SlirpState* s, const char
-> > *exported_dir,
-> >              s->smb_dir,
-> >              s->smb_dir,
-> >              s->smb_dir,
-> > -            exported_dir,
-> > -            passwd->pw_name
-> > +            passwd->pw_name,
-> > +            smbparams,
-> > +            exported_dir
-> >              );
-> >      fclose(f);
-> >  
-> > @@ -1143,6 +1148,29 @@ static const char **slirp_dnssearch(const
-> > StringList*dnsname)
-> >      return ret;
-> >  }
-> >  
-> > +static char *slirp_smbparams(const StringList *smbparam)
-> > +{
-> > +    const StringList *c = smbparam;
-> > +    size_t i = 1; /* for string terminating 0 */
-> > +    char *ret;
-> > +
-> > +    while (c) {
-> > +        i += strlen(c->value->str);
-> > +        i++; /* for \n */
-> > +        c = c->next;
-> > +    }
-> > +    ret = g_malloc(i * sizeof(*ret));
-> > +    ret[0]=0; /* Start with empty string */
-> > +
-> > +    c = smbparam;
-> > +    while (c) {
-> > +        pstrcat(ret, i * sizeof(*ret), c->value->str);
-> > +        pstrcat(ret, i * sizeof(*ret), "\n");
-> > +        c = c->next;
-> > +    }
-> > +    return ret;
-> > +}
-> > +
-> >  int net_init_slirp(const Netdev *netdev, const char *name,
-> >                     NetClientState *peer, Error **errp)
-> >  {
-> > @@ -1151,6 +1179,7 @@ int net_init_slirp(const Netdev *netdev, const char
-> > *name,
-> >      int ret;
-> >      const NetdevUserOptions *user;
-> >      const char **dnssearch;
-> > +    char *smbparams;
-> >      bool ipv4 = true, ipv6 = true;
-> >  
-> >      assert(netdev->type == NET_CLIENT_DRIVER_USER);
-> > @@ -1170,6 +1199,7 @@ int net_init_slirp(const Netdev *netdev, const char
-> > *name,
-> >             NULL;
-> >  
-> >      dnssearch = slirp_dnssearch(user->dnssearch);
-> > +    smbparams = slirp_smbparams(user->smbparam);
-> >  
-> >      /* all optional fields are initialized to "all bits zero" */
-> >  
-> > @@ -1182,7 +1212,8 @@ int net_init_slirp(const Netdev *netdev, const char
-> > *name,
-> >                           user->ipv6_host, user->hostname, user->tftp,
-> >                           user->bootfile, user->dhcpstart,
-> >                           user->dns, user->ipv6_dns, user->smb,
-> > -                         user->smbserver, dnssearch, user->domainname,
-> > +                         user->smbserver, smbparams,
-> > +                         dnssearch, user->domainname,
-> >                           user->tftp_server_name, errp);
-> >  
-> >      while (slirp_configs) {
-> > @@ -1193,6 +1224,7 @@ int net_init_slirp(const Netdev *netdev, const char
-> > *name,
-> >  
-> >      g_free(vnet);
-> >      g_free(dnssearch);
-> > +    g_free(smbparams);
-> >  
-> >      return ret;
-> >  }
-> > diff --git a/qapi/net.json b/qapi/net.json
-> > index 313c8a606e..163091719c 100644
-> > --- a/qapi/net.json
-> > +++ b/qapi/net.json
-> > @@ -156,6 +156,8 @@
-> >  #
-> >  # @smbserver: IP address of the built-in SMB server
-> >  #
-> > +# @smbparam: list of parameters with values for smb.conf
-> > +#
-> >  # @hostfwd: redirect incoming TCP or UDP host connections to guest
-> >  #     endpoints
-> >  #
-> > @@ -186,6 +188,7 @@
-> >      '*ipv6-dns':         'str',
-> >      '*smb':       'str',
-> >      '*smbserver': 'str',
-> > +    '*smbparam': ['String'],
-> >      '*hostfwd':   ['String'],
-> >      '*guestfwd':  ['String'],
-> >      '*tftp-server-name': 'str' } }
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index 29b98c3d4c..7b92d08c3e 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -2758,9 +2758,9 @@ DEF("netdev", HAS_ARG, QEMU_OPTION_netdev,
-> >      "         [,ipv6=on|off][,ipv6-net=addr[/int]][,ipv6-host=addr]\n"
-> >      "         [,restrict=on|off][,hostname=host][,dhcpstart=addr]\n"
-> >      "        
-> >      [,dns=addr][,ipv6-dns=addr][,dnssearch=domain][,domainname=domain]\n"
-> > -    "        
-> > [,tftp=dir][,tftp-server-name=name][,bootfile=f][,hostfwd=rule][,guestfwd
-> > =r ule]"+    "        
-> > [,tftp=dir][,tftp-server-name=name][,bootfile=f][,hostfwd=rule][,guestfwd
-> > =r ule]\n"
-> >  #ifndef _WIN32
-> > -                                            
-> > "[,smb=dir[,smbserver=addr]]\n"+    "        
-> > [,smb=dir[,smbserver=addr][,smbparam=parameter=value]]\n"
-> >  #endif
-> >      "                configure a user mode network backend with ID
-> >      'str',\n""                its DHCP server and optional services\n"
-> > @@ -3062,7 +3062,7 @@ SRST
-> >              |qemu_system| -hda linux.img -boot n -device e1000,netdev=n1
-> >              |\\
-> >                  -netdev
-> >                  user,id=n1,tftp=/path/to/tftp/files,bootfile=/pxelinux.0
-> >  
-> > -    ``smb=dir[,smbserver=addr]``
-> > +    ``smb=dir[,smbserver=addr][,smbparam=parameter=value]``
-> >          When using the user mode network stack, activate a built-in SMB
-> >          server so that Windows OSes can access to the host files in
-> >          ``dir`` transparently. The IP address of the SMB server can be
-> > @@ -3081,6 +3081,15 @@ SRST
-> >  
-> >          Then ``dir`` can be accessed in ``\\smbserver\qemu``.
-> >  
-> > +        It is possible to set samba parameters in the generated smb.conf
-> > +        with one or more ``smbparam=parameter=value``. Example:
-> > +
-> > +        .. parsed-literal::
-> > +
-> > +            |qemu_system| -nic user,smb=/tmp,smbparam="read
-> > only"=yes,smbparam="server min protocol"=NT1+
-> > +        See the man page of smb.conf for a complete listing of
-> > parameters.+
-> >          Note that a SAMBA server must be installed on the host OS.
-> >  
-> >      ``hostfwd=[tcp|udp]:[hostaddr]:hostport-[guestaddr]:guestport``
-> > -- 
-> > 2.35.1
-> > 
+SGkgTWljaGFlbCwNCg0KVW5kZXJzdG9vZC4gVGhhbmtzLg0KDQpCZXN0IFJlZ2FyZHMsDQpSaWNr
+IFpob25nDQoNCi0tLS0t08q8/tStvP4tLS0tLQ0Kt6K8/sjLOiBNaWNoYWVsIFMuIFRzaXJraW4g
+PG1zdEByZWRoYXQuY29tPiANCreiy83KsbzkOiAyMDI0xOoy1MIxM8jVIDE3OjUzDQrK1bz+yMs6
+IFJpY2sgWmhvbmcgPHpoYW95b25nLnpob25nQG5lcGhvZ2luZS5jb20+DQqzrcvNOiBFdWdlbmlv
+IFBlcmV6IE1hcnRpbiA8ZXBlcmV6bWFAcmVkaGF0LmNvbT47IHFlbXUtZGV2ZWxAbm9uZ251Lm9y
+ZzsgSmFzb24gV2FuZyA8amFzb3dhbmdAcmVkaGF0LmNvbT47IFBldGVyIFh1IDxwZXRlcnhAcmVk
+aGF0LmNvbT47IEd1byBaaGkgPHF0eHVuaW5nMTk5OUBzanR1LmVkdS5jbj47IFhpbnlpbmcgWXUg
+PHhpbnlpbmcueXVAbmVwaG9naW5lLmNvbT47IFdlbnRhbyBKaWEgPHdlbnRhby5qaWFAbmVwaG9n
+aW5lLmNvbT47IFNodWppbmcgRG9uZyA8c2h1amluZy5kb25nQG5lcGhvZ2luZS5jb20+OyBLeWxl
+IFh1IDx6aGVuYmluZy54dUBuZXBob2dpbmUuY29tPg0K1vfM4jogUmU6ILvYuLQ6IEZXOiBbUEFU
+Q0hdIHZob3N0LXVzZXI6IGFkZCBWSVJUSU9fRl9JTl9PUkRFUiBhbmQgVklSVElPX0ZfTk9USUZJ
+Q0FUSU9OX0RBVEEgZmVhdHVyZQ0KDQpPbiBGcmksIEZlYiAwMiwgMjAyNCBhdCAxMDoyNzozM0FN
+ICswMDAwLCBSaWNrIFpob25nIHdyb3RlOg0KPiBIaSBFdWdlbmlvIGFuZCBNaWNoYWVsLA0KPiAN
+Cj4gTGV0IG1lIG1ha2UgaXQgbW9yZSBjbGVhciBhYm91dCB0aGUgdGFyZ2V0IGZvciB0aGlzIHBh
+dGNoLiBDdXJyZW50bHkgQ29yaWdpbmUgaXMgZGV2ZWxvcGluZyB0aGUgdkRQQSBmZWF0dXJlcyBv
+biBOSUMgd2hpY2ggYXJlIGJhc2VkIG9uIHRoZSBRRU1VIHZob3N0LXZkcGEvdmhvc3QtdXNlciBi
+YWNrZW5kLiBUaGVzZSB0d28gdmlydGlvIGZlYXR1cmVzIGFyZSBoZWxwZnVsIGluIGRhdGEgcGxh
+bmUgcGVyZm9ybWFuY2UuDQo+IA0KPiBJbiBteSB1bmRlcnN0YW5kaW5nLCB0aGVzZSB0d28gdmly
+dGlvIGZlYXR1cmVzIGFyZSBkZWZpbmVkIGFzIHBhcnQgb2YgdGhlIGJhc2ljIGZhY2lsaXRpZXMg
+b2YgYSBjb21tb24gdmlydGlvIGRldmljZSwgd2hpY2ggbWVhbnMgdGhleSBjYW4gYmUgdXRpbGl6
+ZWQgYnkgdmlydGlvLW5ldCwgdmlydGlvLWJsaywgdmlydGlvLWZzLi4uIHdoYXRldmVyIGJhY2tl
+bmQuIFRvIGltcGxlbWVudCwgaXQgaXMgYmV5b25kIHRoZSB0ZWFtJ3Mga25vd2xlZGdlIHRvIGhh
+bmRsZSB0aGVzZSBmb3IgYWxsIGtpbmRzIG9mIGJhY2tlbmRzLiBTbyBJJ2QgcHJlZmVyIHRvIHNl
+dCB0aGVtIG9mZiBieSBkZWZhdWx0IGFuZCByYWlzZSBhbiB3YXJuaW5nIGZvciBvdGhlciB0eXBl
+IG9mIGJhY2tlbmRzLCBleGNlcHQgdmhvc3QtdmRwYS92aG9zdC11c2VyLg0KPiANCj4gQmVzdCBS
+ZWdhcmRzLA0KPiBSaWNrIFpob25nDQoNClllcywgeW91IHNob3VsZCBzZXQgaXQgb2ZmIGJ5IGRl
+ZmF1bHQuICBObywganVzdCBza2lwcGluZyBpbXBsZW1lbnRhdGlvbiB3b24ndCBjdXQgaXQuICBJ
+dCBpcyB1bmRlcnN0YW5kYWJsZSB0aGF0IHlvdSBqdXN0IHdhbnQgeW91ciBvd24gdXNlLWNhc2Ug
+YWRkcmVzc2VkIGFuZCBpdCBpcyBhbm5veWluZyB0byBnZXQgcm9wZWQgaW4gdG8gZG8gc29tZSB3
+b3JrIG9uIHFlbXUuDQpIb3dldmVyLCBzdWNoIGlzIHRoZSBjb3N0IG9mIGRvaW5nIHRoaXMgYnVz
+aW5lc3MuICBJZiBpbnN0ZWFkIHdlIGFkZCBoYWNrcyBsaWtlIHRoZSB3YXJuaW5nIHlvdSBtZW50
+aW9uIHRoZW4gdGhlIGNvZGViYXNlIHF1aWNrbHkgYmVjb21lcyBhIG1lc3Mgb2Ygc3BlY2lhbCBj
+YXNlcy4gIElmIHlvdSBuZWVkIHRoaXMgZmVhdHVyZSwgeW91IGhhdmUgdG8gbWFrZSBpdCBuaWNl
+bHkgb3J0aG9nb25hbCBhbmQgcGFsYXRhYmxlIHRvIGV2ZXJ5b25lLiBJdCBpcyByZWFsbHkgbm90
+IGEgbG90IG9mIGNvZGluZyB3b3JrLCBtb3N0bHkgdGVzdGluZy4NCg0KLS0NCk1TVA0KDQo=
 
