@@ -4,49 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE5EC4829E
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 09:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2028C4829E
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 09:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbdVA-00032l-IY; Sun, 18 Feb 2024 04:30:25 -0500
+	id 1rbdXF-0003sW-26; Sun, 18 Feb 2024 04:32:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbdV4-00032P-9V
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 04:30:18 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbdXE-0003sO-9w
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 04:32:32 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbdV1-0008Jx-AY
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 04:30:18 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rbdXC-0000QD-LG
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 04:32:32 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A80D64E3BE;
- Sun, 18 Feb 2024 12:30:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 234564E3C2;
+ Sun, 18 Feb 2024 12:32:43 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A92782E87;
- Sun, 18 Feb 2024 12:30:01 +0300 (MSK)
-Message-ID: <727be4d0-3c88-4d02-b3ba-82a532fad840@tls.msk.ru>
-Date: Sun, 18 Feb 2024 12:30:01 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id EE1E282E88;
+ Sun, 18 Feb 2024 12:32:27 +0300 (MSK)
+Message-ID: <bfd2f1e7-ac90-4972-ace7-517b27c666df@tls.msk.ru>
+Date: Sun, 18 Feb 2024 12:32:27 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Ping 2: [PATCH v2] Allowing setting and overriding parameters in
- smb.conf
+Subject: Re: [PATCH] scripts/qemu-binfmt-conf.sh: refresh
 Content-Language: en-US
-To: Henrik Carlqvist <hc981@poolhem.se>, Henrik Carlqvist <hc94@poolhem.se>
-Cc: samuel.thibault@gnu.org, qemu-devel@nongnu.org
-References: <ZJFv4Hq8RMVOUum/@redhat.com>
- <20230620215043.6124c450.hc94@poolhem.se> <ZJKiGBJNQa5Kx+Dg@redhat.com>
- <20230621201447.712ec73a.hc94@poolhem.se>
- <20230623203007.56d3d182.hc981@poolhem.se>
- <20230801232725.4cc838fb.hc981@poolhem.se>
- <20230802195356.rwibjix3bub7s7qw@begin>
- <20230803010909.723e2c1f.hc981@poolhem.se>
- <20230802231324.b5zk2kf44oqzocel@begin>
- <20230803012602.7c75df75.hc981@poolhem.se>
- <20230802233404.lnpa5owybhvbbkyl@begin>
- <20230803171256.1d39d71f.hc981@poolhem.se>
- <20230910134812.7fa3a603.hc94@poolhem.se>
- <20240217232824.3db4c9c7.hc981@poolhem.se>
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20230721115031.3224648-1-mjt@tls.msk.ru>
+ <f7656ee0-586a-a89d-6815-d2d378195811@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
  bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
@@ -71,9 +59,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240217232824.3db4c9c7.hc981@poolhem.se>
+In-Reply-To: <f7656ee0-586a-a89d-6815-d2d378195811@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -97,35 +85,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-18.02.2024 01:28, Henrik Carlqvist :
-> Still wondering if there are any plans to apply my patch or if you would like
-> to change anything in the patch?
-> 
-> Being able to set parameters in smb.conf would be really useful these days for
-> people running old versions of Windows like Windows XP in a qemu guest. Today,
-> the default settings of Samba has disabled SMBv1 making old versions of
-> Windows unable to connect to Samba shares.
+09.09.2023 16:23, Michael Tokarev :
+> A friendly ping?
 
-I don't maintain this code, so my email is just a random comment.
-But I did have an issue with smbd not working right due to one
-missing/wrong parameter or another, more than once.  Also, samba
-is evolving too, so it might need more parameters or less.
+A friendly ping #2?
 
-My suggestion is still the same as 10+ years ago: to ship a shell script
-which run smbd, instead of running smbd directly.  This script will set
-up smb.conf (whole thing, exactly as it is done now in the C code), and
-exec /usr/sbin/smbd with the necessary args.
-
-This way, it's a) trivial to modify parameters on the qemu side (easy to
-edit just this script), b) possible to see which samba version is in use
-and adopt some parameters, c) use alternative smbd, and especially d)
-allow the end-user to override smbd or config in use.
-
-The best, I'd say, is to allow to specify the script on qemu command line
-(like samba=/etc/qemu/run-smbd.sh), and have default value for that, like
-/usr/share/qemu/run-smbd.sh, which is the default script shipped with
-qemu.  Or maybe let qemu choose to use either the one specified on the
-command line, /etc/qemu/run-smbd.sh if it exists, or /usr/share/qemu/run-smbd.sh.
+Thanks,
 
 /mjt
+
+> 21.07.2023 14:50, Michael Tokarev wrote:
+>> Currently qemu-binfmt-conf.sh does a number of strange things.
+>>
+>> 1. --systemd requires an argument - the CPU type to register,
+>>     while --debian (which is actually --binfmt-support) does not
+>>     accept such an argument, so it is not possible to specify which
+>>     CPU(s) to register for debian.
+>>
+>> 2. Why this "ALL" at all?
+>>
+>> 3. it just ignores extra command-line arguments.  It would be
+>>     logical to specify which CPUs to register (multiple!) as the
+>>     additional arguments.
+>>
+>> 4. Even if a CPU is explicitly requested, it does not register
+>>     anything if this CPU is of the same family as host one. But
+>>     this is wrong, since quite often it *is* desirable to do this
+>>     registration, - like, when running in i386 when the system is
+>>     not capable of running x86-64 binaries, and countless other
+>>     examples
+>>
+>> 5. It ignores errors
+>>
+>> 6. It ignores wrong command line arguments
+>>
+>> Fix this, and simplify things a bit.
+>>
+>> 1. Stop accepting an argument for --systemd.  With getopt_long,
+>>     this argument, if given, will be returned as a non-optional
+>>     parameter so compatibility with current version is preserved.
+>>
+>> 2. Accept optional arguments and generate registration for the
+>>     given CPUs only.  In case no extra arguments are given, register
+>>     for all supportd CPUs except of the same family as host.
+>>
+>> 3. Recognze "ALL" "CPU" to keep compatibility with current version
+>>     (but do not document it).
+>>
+>> 4. Warn but perform registration anyway if a cpu of the same family
+>>     has been requested.
+>>
+>> 5. In help text, use --debian and --systemd as alternatives to each
+>>     other, to make it clear the two can not be used at the same time.
+>>
+>> 6. Tiny optimization of eval expression.
+>>
+>> 7. Fold the list of supported CPUs to fit in 80 columns.
+>>
+>> 8. Exit with non-zero code in case registration fails or the command
+>>     line is wrong.
+>>
+>> 9. Remove explicit checking for writability of various things.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   scripts/qemu-binfmt-conf.sh | 89 +++++++++++++++++--------------------
+>>   1 file changed, 40 insertions(+), 49 deletions(-)
+> 
+> 
+
 
