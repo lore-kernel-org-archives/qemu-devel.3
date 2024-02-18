@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E0ECC48BC4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B90C4829E
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbZF1-0001iu-Bm; Sat, 17 Feb 2024 23:57:27 -0500
+	id 1rbZEo-0001V1-Bm; Sat, 17 Feb 2024 23:57:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZF0-0001cv-7X
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:26 -0500
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ id 1rbZEn-0001UY-0i
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:13 -0500
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZEy-0004BC-Qc
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:25 -0500
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3bbb4806f67so2346400b6e.3
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:57:23 -0800 (PST)
+ id 1rbZEl-0004A9-G2
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:12 -0500
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-6ddf26eba3cso2512836a34.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:57:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232243; x=1708837043;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232229; x=1708837029;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oEGv7dA87enISvNwWKVp+KmYZzRr7ttxpncFC9B4Uog=;
- b=urtf71ryZpdY4W6qhavqAuR0mb2G65IV87ZdtqdU50ZBCwuC6a3h/r1tElXaIXn+ig
- bWJp55ZZK/2rfTlWUsbYssO3fVJhrsTIF+OuoEeOx72F0w95d44jTTuv2pbpf6i7A2vk
- c6noIa+UtRtKAeEnhi8V6r23YFUHHAffjykow33IRU5jvDc0lf/lS2tn8u0mcHA/URZ1
- 0LPYssQBpVxHHJRthWHjpVyrF8jtzxIa7rltyHJX+i1rbf8whlx1u0h6eJPqfMmi5Uul
- lfRCI38dEdyZsUOuXfNvir3Nt7CyMUzGafstzkST9SDvsCiVtlUYE5kOQ78tzXn8OEGs
- lsjQ==
+ :reply-to; bh=UlKagWgW/Suhx5XrwPdfnlsQ3+kK6LLiHW7W/dUMHaY=;
+ b=PjiJa9CI192izjrgVvuydFDbzVhhqxv3gJ9s5UW0tWdElOkA0dt7GS4lskw2mCBfLT
+ dUbcB/xNp6fnIhpWXlsFRyXWWTnymGkT6lLgE+xfSOdw5aZHTjHx5T637J0a0+sG0Cpz
+ ypGbY+BEWFNhZFEnszeCqGf/Q+Mn6HQHUvH2ZpphfW6RljiibZCqwTrGfVBf1l7q59vn
+ ykCvQmmb33EEpaTG/h5YI25IJ2RmUyHlLadumHEaE76c2e1xy7fANwcI5vbKN2d6vR4H
+ 9L4piWQTULj0impJ0OmOJDs2F0+xZeAYU+8Va5FoAN+vMLrk8j99zc49k/QxMgiWRU+Q
+ wBwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708232243; x=1708837043;
+ d=1e100.net; s=20230601; t=1708232229; x=1708837029;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oEGv7dA87enISvNwWKVp+KmYZzRr7ttxpncFC9B4Uog=;
- b=hf116I5Uus3zXll7p/65lzrugb3p1MSsi5+JXeqL1KmSOTzFERBW6S/ZUvucRe5V+D
- E/Xqp0knYkpaY4zp4n/EXVhN+GLCIdO+IJQJUW8918zy6cDgyIz3qxPMf7MgdP7dlg0R
- 1DPWfTZ12km16+vq/yME3BXMF/Y+riEuJGLiVSSWQOFsbubEkCRbvWoInanntkRDne+B
- PyPAfYMBZ3LQCJH6HuIKxBGDHjJy8VA8l3XUZOyne4FawEvFk7FEMS6/tBamJJ0JNcvy
- QrVmTm2jYYpxNrLck5Q7qw0Rxxiye5lS2WgDYgNLIE4Q4yhB2AWf7P1w6SCZaZApvVo9
- HsHw==
-X-Gm-Message-State: AOJu0YxJD/gqrUAoZCWrIzZGBMXs3c1eG8/b6lt+HEq38FkYKTJTBebd
- BBlShrz+Lpt6p06D/LAAxPiUJ6NJ7rgovXgAcu9LGkkuVLo9QnZ80GP+QI/we8I=
-X-Google-Smtp-Source: AGHT+IFQIeAhqZEkL7McA06QAQGBJNuf+42mOMT5SbvhOHBo6TyBdr4TqUfgc3c8g4f1ROuuUeF1Ww==
-X-Received: by 2002:a05:6808:2129:b0:3c1:547d:cfc8 with SMTP id
- r41-20020a056808212900b003c1547dcfc8mr1202231oiw.45.1708232242804; 
- Sat, 17 Feb 2024 20:57:22 -0800 (PST)
+ bh=UlKagWgW/Suhx5XrwPdfnlsQ3+kK6LLiHW7W/dUMHaY=;
+ b=Ep+KWsJiYul7X4YJ6mdROYJa3HuX2DE7GoQ8S5b7uEetBFOpaKGXt5t+r8xPPkr/M+
+ Q1sDQVWmTTEiM7uYWIJCvwb8hq33GBjfJE+lTAw+d9RBaBa7w7ZZir3jPYoGqsjDxJeM
+ F6B0tmtCsldx43iH9XF/7VfuDrjRhAa8VSmOfsQ8v9KEqY1f7Qn4ftCSVdbecedcMPKb
+ LOL4ouVmdEFF/Bj9vQehORU26jgI2W37SXlTKPG+2ZY8XzHe5KIe9Is1amlLGkZWpAtr
+ dkXRSKwFug3cEWK0MDmqZl9t1fCn+vr/5OeateBBDN08+nxh51g0OeFg6CV105umLite
+ 86tw==
+X-Gm-Message-State: AOJu0YwRE/15eM+3ZRZVUuTZsVByIAG/xhf31xN7W4vBiHHa8fAo9dkw
+ h2wkxVCl5TK0D5uK91g6XzmLame6QQ4JDTmVjFhA4NH63P3CG2kacIJOVPxwSZ8=
+X-Google-Smtp-Source: AGHT+IHkTm8oqPb/qgb6fxbhdLnsVZpqodL1oivOPOqqDJqnyatdJeOLma8/csN6u7qUHExtswb/XA==
+X-Received: by 2002:a05:6830:1153:b0:6e0:ba7c:4203 with SMTP id
+ x19-20020a056830115300b006e0ba7c4203mr8645400otq.1.1708232229329; 
+ Sat, 17 Feb 2024 20:57:09 -0800 (PST)
 Received: from localhost ([157.82.200.138])
  by smtp.gmail.com with UTF8SMTPSA id
- ga15-20020a17090b038f00b002989901759bsm2600374pjb.42.2024.02.17.20.57.18
+ e13-20020a056a0000cd00b006e35c1acedcsm1682100pfj.211.2024.02.17.20.57.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 20:57:22 -0800 (PST)
+ Sat, 17 Feb 2024 20:57:09 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 18 Feb 2024 13:56:13 +0900
-Subject: [PATCH v5 08/11] pcie_sriov: Do not reset NumVFs after disabling VFs
+Date: Sun, 18 Feb 2024 13:56:11 +0900
+Subject: [PATCH v5 06/11] hw/qdev: Remove opts member
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240218-reuse-v5-8-e4fc1c19b5a9@daynix.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240218-reuse-v5-6-e4fc1c19b5a9@daynix.com>
 References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 In-Reply-To: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,8 +81,8 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::230;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x230.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,38 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The spec does not NumVFs is reset after disabling VFs except when
-resetting the PF. Clearing it is guest visible and out of spec, even
-though Linux doesn't rely on this value being preserved, so we never
-noticed.
+It is no longer used.
 
-Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/pci/pcie_sriov.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/hw/qdev-core.h |  4 ----
+ hw/core/qdev.c         |  1 -
+ system/qdev-monitor.c  | 12 +++++++-----
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 51b66d1bb342..e9b23221d713 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -215,7 +215,6 @@ static void unregister_vfs(PCIDevice *dev)
-     g_free(dev->exp.sriov_pf.vf);
-     dev->exp.sriov_pf.vf = NULL;
-     dev->exp.sriov_pf.num_vfs = 0;
--    pci_set_word(dev->config + dev->exp.sriov_cap + PCI_SRIOV_NUM_VF, 0);
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 9228e96c87e9..5954404dcbfe 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -237,10 +237,6 @@ struct DeviceState {
+      * @pending_deleted_expires_ms: optional timeout for deletion events
+      */
+     int64_t pending_deleted_expires_ms;
+-    /**
+-     * @opts: QDict of options for the device
+-     */
+-    QDict *opts;
+     /**
+      * @hotplugged: was device added after PHASE_MACHINE_READY?
+      */
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index c68d0f7c512f..7349c9a86be8 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
+         dev->canonical_path = NULL;
+     }
+ 
+-    qobject_unref(dev->opts);
+     g_free(dev->id);
  }
  
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-@@ -260,6 +259,8 @@ void pcie_sriov_pf_reset(PCIDevice *dev)
-     pci_set_word(dev->config + sriov_cap + PCI_SRIOV_CTRL, 0);
-     unregister_vfs(dev);
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index a13db763e5dd..71c00f62ee38 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -625,6 +625,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     char *id;
+     DeviceState *dev = NULL;
+     BusState *bus = NULL;
++    QDict *properties;
  
-+    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF, 0);
-+
-     /*
-      * Default is to use 4K pages, software can modify it
-      * to any of the supported bits
+     driver = qdict_get_try_str(opts, "driver");
+     if (!driver) {
+@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     }
+ 
+     /* set properties */
+-    dev->opts = qdict_clone_shallow(opts);
+-    qdict_del(dev->opts, "driver");
+-    qdict_del(dev->opts, "bus");
+-    qdict_del(dev->opts, "id");
++    properties = qdict_clone_shallow(opts);
++    qdict_del(properties, "driver");
++    qdict_del(properties, "bus");
++    qdict_del(properties, "id");
+ 
+-    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
++    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
+                                       errp);
++    qobject_unref(properties);
+     if (*errp) {
+         goto err_del_dev;
+     }
 
 -- 
 2.43.1
