@@ -4,74 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098EBC48BF6
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 14:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63E0C48BC4
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 16:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbibx-0005R3-QT; Sun, 18 Feb 2024 09:57:45 -0500
+	id 1rbjmS-00034Y-9u; Sun, 18 Feb 2024 11:12:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hc981@poolhem.se>) id 1rbibv-0005K4-5C
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 09:57:44 -0500
-Received: from mailout12.inleed.net ([185.189.50.81])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rbjmQ-00034B-GD
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 11:12:38 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hc981@poolhem.se>)
- id 1rbibm-0002Og-UZ; Sun, 18 Feb 2024 09:57:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=poolhem.se; 
- s=x;
- h=Content-Transfer-Encoding:Content-Type:Mime-Version:References:
- In-Reply-To:Message-Id:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=j439FxdVTEt30KwY2hUimdM1SDmKeeeB8be3bZEk8w4=; b=NKe2CC/C70UJbVmYFA793CmIS7
- N/ykvMVLyOcJ9dVvZLrCdZJ/9js2R8keNADwyVhiQzv8CyPnmpGz93FXeAEEozkpznbN+UFCETqx3
- dK0Yr6C02qCm996XBJ9K8j1ifgDD/m8/sJw4QxFzppDCYgrNHgh9Qzr5VFadrSbKaHUksRGKsdGxb
- XqjTu8hSu4suSGyX2QT12po4uBNNUV6fcoGYQxw/Ro0xI0s5jIMFZxVIouvdZG3nM5cU4glUFU99W
- pF7YsLe6f9XydwUcArh5ghQtVDJql8ukgEkeH9zw7ZNTjMivbPz2Khl8foaxoYz1Tc0UKBz6Q34rc
- 3eGJEYJQ==;
-Received: from [213.115.245.47] (helo=balrog.lkp.se)
- by ns12.inleed.net with esmtpa (Exim 4.97.1)
- (envelope-from <hc981@poolhem.se>) id 1rbiZh-0000000AdQM-2vH9;
- Sun, 18 Feb 2024 15:55:25 +0100
-Date: Sun, 18 Feb 2024 15:55:03 +0100
-From: Henrik Carlqvist <hc981@poolhem.se>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: hc981@poolhem.se, samuel.thibault@gnu.org, qemu-devel@nongnu.org
-Subject: Re: Ping 2: [PATCH v2] Allowing setting and overriding parameters
- in smb.conf
-Message-Id: <20240218155503.7d52a2f9.hc981@poolhem.se>
-In-Reply-To: <727be4d0-3c88-4d02-b3ba-82a532fad840@tls.msk.ru>
-References: <ZJFv4Hq8RMVOUum/@redhat.com>
- <20230620215043.6124c450.hc94@poolhem.se>
- <ZJKiGBJNQa5Kx+Dg@redhat.com>
- <20230621201447.712ec73a.hc94@poolhem.se>
- <20230623203007.56d3d182.hc981@poolhem.se>
- <20230801232725.4cc838fb.hc981@poolhem.se>
- <20230802195356.rwibjix3bub7s7qw@begin>
- <20230803010909.723e2c1f.hc981@poolhem.se>
- <20230802231324.b5zk2kf44oqzocel@begin>
- <20230803012602.7c75df75.hc981@poolhem.se>
- <20230802233404.lnpa5owybhvbbkyl@begin>
- <20230803171256.1d39d71f.hc981@poolhem.se>
- <20230910134812.7fa3a603.hc94@poolhem.se>
- <20240217232824.3db4c9c7.hc981@poolhem.se>
- <727be4d0-3c88-4d02-b3ba-82a532fad840@tls.msk.ru>
-X-Mailer: Sylpheed version 0.9.7 (GTK+ 1.2.10; i686-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Authenticated-Id: henrik@poolhem.se
-Received-SPF: none client-ip=185.189.50.81; envelope-from=hc981@poolhem.se;
- helo=mailout12.inleed.net
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.002,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rbjmN-0005dP-Kp
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 11:12:38 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 780184E6012;
+ Sun, 18 Feb 2024 17:12:32 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id ru_ph4c1UrVb; Sun, 18 Feb 2024 17:12:30 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 333D04E6005; Sun, 18 Feb 2024 17:12:30 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3144A7456B4;
+ Sun, 18 Feb 2024 17:12:30 +0100 (CET)
+Date: Sun, 18 Feb 2024 17:12:30 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
+Subject: Re: [PATCH 0/5] Implement port 92 in south bridges
+In-Reply-To: <20240218131701.91132-1-shentey@gmail.com>
+Message-ID: <35e05c51-6a06-1830-972b-42332e7b7b56@eik.bme.hu>
+References: <20240218131701.91132-1-shentey@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,65 +72,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 18 Feb 2024 12:30:01 +0300
-Michael Tokarev <mjt@tls.msk.ru> wrote:
-> I don't maintain this code, so my email is just a random comment.
+On Sun, 18 Feb 2024, Bernhard Beschow wrote:
+> This series attempts to make QEMU's south bridge families PIIX, ICH9, and VIA
+> 82xx more self-contained by integrating IO port 92 like the originals do.
+>
+> In QEMU, the IO port is currently instantiated as a dedicated device in common
+> PC code. While this works and even results in less code, it seems cleaner to
+> model the behavior of the real devices. For example, software running on the
+> Malta machine, which uses PIIX4, needs to take port 92 into account, even if it
+> doesn't use it (does it?). Moreover, the FDC37M81x used in the original Malta
+> machine provides a port 92 too, which can be activated. If QEMU implemented the
+> FDC37M81x more closely, one could check if Yamon (or any alternative boot
+> loader) deals correctly with these ports.
 
-Thanks for your comment anyway!
+Maybe that's unlikely as this register is for controlling A20 line of 
+Intel CPUs so probably there's no use for it in a MIPS or PPC board but 
+I'm not sure if it may be used for something else.
 
-> But I did have an issue with smbd not working right due to one
-> missing/wrong parameter or another, more than once.  Also, samba
-> is evolving too, so it might need more parameters or less.
+> Moving port 92 into the south bridges might also help with configuration-driven
+> machine creation. In such a scenario it is probably desirable if machine code
+> had less of its own idea of which devices it creates.
 
-During the years, my brute force approach to solve issues like this has been
-to locally patch qemu source code to build custom qemu binaries with the
-smb.conf parameters that I want. 
+The direction is probably good as these chips have a pin for A20 control 
+and handle the register themselves but I'm not sure this series is the 
+right way. One immediate problem is that TYPE_PORT92 has state which is in 
+the migration stream so moving it elsewhere would break migration which 
+would need to be handled. Does this series handle that? I'm not sure it's 
+worth the effort though if it results in more comlex code. If the 
+migration issue is handled, then I think we should get rid of TYPE_PORT92 
+completely and just add the one reg and qemu_irq modeling the output pin 
+as qemu_gpio to the south bridge implementations directly, not embedding a 
+separate object for it as these south bridges may already have some io 
+region for ports and state where the reg can be stored so it could be 
+added there instead of just moving the TYPE_PORT92 there. But with the 
+migration issue it's probably easier to just leave it as it is now. Even 
+if this would model the real chip better, it would result in more code and 
+complexity in QEMU so not sure it's a good idea because of that.
 
-> My suggestion is still the same as 10+ years ago: to ship a shell script
-> which run smbd, instead of running smbd directly.  This script will set
-> up smb.conf (whole thing, exactly as it is done now in the C code), and
-> exec /usr/sbin/smbd with the necessary args.
+> Moving port 92 from
+> machine code into a potentially user-creaeable device (where it is part of per
+> datasheet) seems like a good direction. Of course, machine code still wires up
+> port 92 and I don't have a good idea on how to make this user-configurable.
+> Such insights might provide some input for discussions around
+> configuration-driven machine creation.
 
-Such a script would be easier to modify than changing the C sources.
+That's a generic problem for dynamic or declarative machine creation to 
+solve. Likely the machine description will also need to describe the 
+connections between devices, not just what devices to instantiate. So 
+that's not specific to port92. As we're not there yet it's also not urgent 
+to touch this port92 stuff.
 
-> This way, it's a) trivial to modify parameters on the qemu side (easy to
-> edit just this script), b) possible to see which samba version is in use
-> and adopt some parameters, c) use alternative smbd, and especially d)
-> allow the end-user to override smbd or config in use.
+Maybe I overestimate the migration issue as I'm not familiar with that so 
+if others think it's not an issue then I'm not against this series as it 
+would bring the model closer to the actual hardware but then go all the 
+way and get rid of TYPE_PORT92 and just implement it in the south bridges. 
+But due to how it's currently done and how that's now baked in because of 
+backward compatibility requrement for migration, I'm not sure it would 
+really simplify the code, so we may need to live with what we have now. 
+But let me know if I'm wrong and missed something.
 
-During the years, I have also seen the need to use alternative smbd. I have
-then solved it by having the old smbd that I prefered for qemu in /usr/sbin
-and moved the "original" smbd provided by the Linux distribution to
-/usr/local/sbin where it has been started by any real Samba servers in the
-network.
+Regards,
+BALATON Zoltan
 
-> The best, I'd say, is to allow to specify the script on qemu command line
-> (like samba=/etc/qemu/run-smbd.sh), and have default value for that, like
-> /usr/share/qemu/run-smbd.sh, which is the default script shipped with
-> qemu.  Or maybe let qemu choose to use either the one specified on the
-> command line, /etc/qemu/run-smbd.sh if it exists, or
-> /usr/share/qemu/run-smbd.sh.
-
-Yes, by specifying such a script on the command line it would be possible to
-have different parameters for different qemu sessions.  However, I think that
-also my solution allowing settings of samba parameters fixes most of the
-problems in a way which most of the times will be easier to use. 
-
-Usually, there is no need to modify more than a handfull of parameters so
-those extra arguments to the qemu command line will be less to write than a
-separate script starting samba. In my experience qemu is mostly started from a
-script with a rather long qemu command line anyway.
-
-The remaining problem is when Samba comes with a new version which requires
-new settings of parameters. Regardless of solution some script will need to be
-modified to solve that problem.
-
-Again, thanks for your comment! I hope that someone will consider my patch or
-your suggestion. The next thing to look into would be the possibility to start
-some userspace NFS daemon as an alternative to Samba as Unix-guests works
-better with NFS than CIFS. However, that would be a much bigger project and I
-won't dig into such a thing until I have gotten any response on this small
-patch.
-
-regards Henrik
+> This series is structured as follows: Patch 1 moves TYPE_PORT92 into the isa
+> directory to make it reusable by other architectures. It also adds a
+> configuration switch. Patch 2 integrates TYPE_PORT92 into the PC south bridges
+> and adapts PC code accordingly. While at it, patch 3 cleans up wiring of the
+> A20 line with the keyboard controller. Patch 4 simply adds TYPE_PORT92 to the
+> VIA south bridges which is also needed when using the VIA south bridges in the
+> pc machine.
+>
+> Testing done:
+> * `qemu-system-x86_64 -M {q35,pc},i8042={true,false} ...`
+>  -> `info mtree` confirms port92 to be present iff i8042=true
+> * `make check`
+> * `make check-avocado`
+> * Start amigaone and pegasos2 machines as described in
+>    https://patchew.org/QEMU/20240216001019.69A524E601F@zero.eik.bme.hu/
+>  -> no regressions compared to master
+>
+> Best regards,
+> Bernhard
+>
+> Bernhard Beschow (5):
+>  hw/isa/meson.build: Sort alphabetically
+>  hw/i386/port92: Allow for TYPE_PORT92 to be embedded in devices
+>  hw/isa: Embed TYPE_PORT92 in south bridges used in PC machines
+>  hw/i386/pc: Inline i8042_setup_a20_line() and remove it
+>  hw/isa/vt82c686: Embed TYPE_PORT92
+>
+> include/hw/i386/pc.h          |  7 +------
+> include/hw/input/i8042.h      |  1 -
+> include/hw/isa/port92.h       | 30 ++++++++++++++++++++++++++++++
+> include/hw/southbridge/ich9.h |  4 ++++
+> include/hw/southbridge/piix.h |  3 +++
+> hw/i386/pc.c                  | 21 ++++++++++++++-------
+> hw/i386/pc_piix.c             |  9 +++++++--
+> hw/i386/pc_q35.c              |  8 +++++---
+> hw/input/pckbd.c              |  5 -----
+> hw/isa/lpc_ich9.c             |  9 +++++++++
+> hw/isa/piix.c                 |  9 +++++++++
+> hw/{i386 => isa}/port92.c     | 14 +-------------
+> hw/isa/vt82c686.c             |  7 +++++++
+> hw/i386/Kconfig               |  1 +
+> hw/i386/meson.build           |  3 +--
+> hw/i386/trace-events          |  4 ----
+> hw/isa/Kconfig                |  6 ++++++
+> hw/isa/meson.build            |  3 ++-
+> hw/isa/trace-events           |  4 ++++
+> 19 files changed, 104 insertions(+), 44 deletions(-)
+> create mode 100644 include/hw/isa/port92.h
+> rename hw/{i386 => isa}/port92.c (91%)
+>
+> --
+> 2.43.2
+>
+>
+>
 
