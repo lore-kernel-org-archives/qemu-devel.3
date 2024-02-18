@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1130DC4829E
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1218CC5475B
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 04:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbZF7-0001yv-RP; Sat, 17 Feb 2024 23:57:33 -0500
+	id 1rbZEa-0001QC-Dx; Sat, 17 Feb 2024 23:57:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZF6-0001sn-JK
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:32 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rbZEY-0001PR-I6
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:56:58 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rbZF5-0004Bl-6i
- for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:57:32 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e459b39e2cso94489b3a.1
- for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:57:30 -0800 (PST)
+ id 1rbZEX-00045W-3d
+ for qemu-devel@nongnu.org; Sat, 17 Feb 2024 23:56:58 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2995185dbbbso955639a91.3
+ for <qemu-devel@nongnu.org>; Sat, 17 Feb 2024 20:56:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232249; x=1708837049;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708232216; x=1708837016;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R79mO33FGl2f95tPTOgT74nDibLPhhkP4godfeJT6W4=;
- b=s/XYYmwnj4s98OcEfcxZ/hvxI/6lZXNXB9U7dnsKPDGukpUjc5E08UbNXxVxhu9rUF
- awj9N1Aha99V0CmgChzwIT56y6XYhQHfA+QQGPsAutDEHIvjMxjD6SwGh+xezHGiZUMr
- PQOkGLnl0sSwCyZMxf/eZxbU1TuehuE9vwSYPokBYgLv0zt8hZHXukRqDBCHpUiGoyDb
- Iy/+ob1oW0FJt6AY1JUkK8aTDXqK/7rp9+I3YQYRH8iM7kUtTh8RMHWLN+tR7OjWaIc6
- DH6LDLrJeXwrak5I3uVtnpMIuSKJKb4cP18Ot8EfhmBExSnyKJ7ppuqNItlp8kbGUGF9
- 30Wg==
+ :reply-to; bh=0pI7/kgzAyUqVmg5oIUsMyi/X4fn9vaVlpf42x700uc=;
+ b=yZcfDydcuUJCmCSrb1hFul6e2/dkZgmlcNj+SEIi9B/82fILNIaXM9WydxSBd6qjKC
+ lqyclkYjpITbNK+YeYyGSwB02udCpx3hmTpNYmX+fDZkO2rnzyUSX0795I9+ko+UND6Z
+ Uj8nbsEePsdHk0HKgaPrEI7aZm431WqXQ5Bt1orD9uV3c/VA3IwCoiXsvR20tvkjd1M8
+ wo/3hInWr/sneHsDFCZMU7izTWxLsSX8AGckIjlH/hHkSsGVueUIqg6Lc83SWWDq6toE
+ lQn7mDqgccjuTT3vAEuPv1Mdu937JT8+FNfyzJkr2azxL7DbJCjVmh8RA+WnROs8TWoJ
+ bY5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708232249; x=1708837049;
+ d=1e100.net; s=20230601; t=1708232216; x=1708837016;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=R79mO33FGl2f95tPTOgT74nDibLPhhkP4godfeJT6W4=;
- b=gOjT0yMCISL9Xx+I/TpRIhx6AnI7w0pYQY7fNXwx1RgBGh5MHWZFxI4tKjrX9QEj6/
- ajJORd6q6+PhdqCd8g1e0S2Z2olFVuMu7v4WZ9dBPv53BAwj/YhsWbYcLy9jG+S8bLjy
- cnRwzWBxfP3uFHwgxzx1frKpssfG/eF0+I6i53xQIqX6JAjmVYD87ZBSedxGRW8sAfvr
- 5Av8aq7o5w132IUp1TNtJdWx0gqIvWavjHMX+M2M0pKjnWpSF4fakh0Dkvaon/52JAOz
- pUTMtWkpvuDzO+oef43ETTzj9wceGzl+RtUomY6mnsPyXzHck03K7hsPdjndnHYySu01
- m4rw==
-X-Gm-Message-State: AOJu0Yw9pA/pkWVJ6y7O+Z0ylZbNz815vWfF0S/m9z0e63EwmFy9dTQt
- iC4n1TrLMxvAexFclDE7ABI0W0ZCanjLwzUPS61OyuEad/h4PPP8ujkFD2mfQVw=
-X-Google-Smtp-Source: AGHT+IGHB/HJUnrx/X5NEY1k3D03b9ZH8VfO0fkZOnSq3YXgVkMQDHeqzcPDjnD+OEBJlMD0ZSh6VA==
-X-Received: by 2002:a05:6a20:93a2:b0:19e:5dda:6bd with SMTP id
- x34-20020a056a2093a200b0019e5dda06bdmr14200854pzh.8.1708232249507; 
- Sat, 17 Feb 2024 20:57:29 -0800 (PST)
+ bh=0pI7/kgzAyUqVmg5oIUsMyi/X4fn9vaVlpf42x700uc=;
+ b=ZVNdrvCZRfclnsB1rQKgzyGirGRFAvc2h58YktSVIKti9p+FNPOZo4/TloJIpoTpru
+ /XoNBJCdurcRcBeiZ33SlejhHbuObQbPzLPxGiNHaJsVTP1NiwGVIlmIrdyPSgEkF9jO
+ M2BPFqSiNejbnyHn4iN+kV1ccdhCmtumtWfn9j5Q2nKagO9EPrNAfPhkGGTtRdpL7xVq
+ mH7kwZ17kDggJRaHldNqln4iU+2prag8cKdQHcv24KUDSO1eBc5xz6FXq8EsqMOa+b2u
+ EtBqthVnfcYYU7FORgUZjrOtR/1OWPmK0ro7qXNBlPm8xmlW2jQpwmVf4obD3AhElLu7
+ FUKA==
+X-Gm-Message-State: AOJu0YwY1WLPz1KyYsHLCXqvVlUOZvcHujXta2hXCmyyBUw9Ig+hNXwm
+ qB8AkPyl72LUJ+PTRI9DQnPdp6wR5sfKaBaLXWVSGIDooQTYxTNd/9leFMMcmzY=
+X-Google-Smtp-Source: AGHT+IEaExf+BkjnkyXkRywq0dPw1dg6kMWucDIcpKPmzB1kZPWB0qUXb2DBecP0OwLjPVPd9pQCAw==
+X-Received: by 2002:a17:90b:3911:b0:299:3bf6:f2eb with SMTP id
+ ob17-20020a17090b391100b002993bf6f2ebmr4565244pjb.5.1708232215876; 
+ Sat, 17 Feb 2024 20:56:55 -0800 (PST)
 Received: from localhost ([157.82.200.138])
  by smtp.gmail.com with UTF8SMTPSA id
- c18-20020a056a00009200b006dff3ca9e26sm2385102pfj.102.2024.02.17.20.57.25
+ cx3-20020a17090afd8300b0029951d04dc4sm2260748pjb.54.2024.02.17.20.56.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Feb 2024 20:57:29 -0800 (PST)
+ Sat, 17 Feb 2024 20:56:55 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 18 Feb 2024 13:56:14 +0900
-Subject: [PATCH v5 09/11] hw/pci: Always call pcie_sriov_pf_reset()
+Date: Sun, 18 Feb 2024 13:56:09 +0900
+Subject: [PATCH v5 04/11] hw/pci: Determine if rombar is explicitly enabled
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240218-reuse-v5-9-e4fc1c19b5a9@daynix.com>
+Message-Id: <20240218-reuse-v5-4-e4fc1c19b5a9@daynix.com>
 References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 In-Reply-To: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,14 +81,15 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::430;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,61 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Call pcie_sriov_pf_reset() from pci_do_device_reset() just as we do
-for msi_reset() and msix_reset() to prevent duplicating code for each
-SR-IOV PF.
+vfio determines if rombar is explicitly enabled by inspecting QDict.
+Inspecting QDict is not nice because QDict is untyped and depends on the
+details on the external interface. Add an infrastructure to determine if
+rombar is explicitly enabled to hw/pci.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/net/igb.c   | 2 --
- hw/nvme/ctrl.c | 4 ----
- hw/pci/pci.c   | 1 +
- 3 files changed, 1 insertion(+), 6 deletions(-)
+ include/hw/pci/pci_device.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/net/igb.c b/hw/net/igb.c
-index 9345506f81ec..9b37523d6df8 100644
---- a/hw/net/igb.c
-+++ b/hw/net/igb.c
-@@ -488,12 +488,10 @@ static void igb_pci_uninit(PCIDevice *pci_dev)
- 
- static void igb_qdev_reset_hold(Object *obj)
- {
--    PCIDevice *d = PCI_DEVICE(obj);
-     IGBState *s = IGB(obj);
- 
-     trace_e1000e_cb_qdev_reset_hold();
- 
--    pcie_sriov_pf_reset(d);
-     igb_core_reset(&s->core);
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index d3dd0f64b273..54fa0676abf1 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -205,6 +205,11 @@ static inline uint16_t pci_get_bdf(PCIDevice *dev)
+     return PCI_BUILD_BDF(pci_bus_num(pci_get_bus(dev)), dev->devfn);
  }
  
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 7c0d3f108724..c1af4b87b34a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7114,10 +7114,6 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-                 sctrl = &n->sec_ctrl_list.sec[i];
-                 nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
-             }
--
--            if (rst != NVME_RESET_CONTROLLER) {
--                pcie_sriov_pf_reset(pci_dev);
--            }
-         }
++static inline bool pci_rom_bar_explicitly_enabled(PCIDevice *dev)
++{
++    return dev->rom_bar && dev->rom_bar != -1;
++}
++
+ uint16_t pci_requester_id(PCIDevice *dev);
  
-         if (rst != NVME_RESET_CONTROLLER) {
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 47f38375bb09..3d37ddbb101e 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -409,6 +409,7 @@ static void pci_do_device_reset(PCIDevice *dev)
- 
-     msi_reset(dev);
-     msix_reset(dev);
-+    pcie_sriov_pf_reset(dev);
- }
- 
- /*
+ /* DMA access functions */
 
 -- 
 2.43.1
