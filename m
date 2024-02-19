@@ -4,58 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCBCC5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F88C54764
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc6fH-00018C-6Z; Mon, 19 Feb 2024 11:38:47 -0500
+	id 1rc6fv-0001SN-18; Mon, 19 Feb 2024 11:39:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rc6fF-00017T-H9
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:38:45 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rc6fC-0002qi-QC
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:38:44 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tdp670819z6K60P;
- Tue, 20 Feb 2024 00:34:39 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id EA95C140F2F;
- Tue, 20 Feb 2024 00:38:35 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Mon, 19 Feb
- 2024 16:38:35 +0000
-Date: Mon, 19 Feb 2024 16:38:34 +0000
-To: <shiju.jose@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v4 1/3] hw/cxl/cxl-mailbox-utils: Add support for
- feature commands (8.2.9.6)
-Message-ID: <20240219163834.00005d6e@Huawei.com>
-In-Reply-To: <20240219150025.1531-2-shiju.jose@huawei.com>
-References: <20240219150025.1531-1-shiju.jose@huawei.com>
- <20240219150025.1531-2-shiju.jose@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6fs-0001RB-BK
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:24 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6fl-0002vv-Ve
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:23 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33d38c9ca5bso898234f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:39:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708360754; x=1708965554; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g4FCzhBMxBMDZoobHoXe86blnQI4iLx/WEkq5NXhKrY=;
+ b=JnyXsnuICmP5Jg8a/zmDVDVxQazwzX3Tv6u/RZpiIfm7eok2hFnOo5Q1kWJW0y6hxI
+ TtjCSNJmnvfPNPTQqIk4UZvEkj6DqFoBM3AtIH+4e1rr2YUqbmJa5pO3HSsVEmwz107K
+ oZZOuES1zVdRn2Gg5i9g7lHnY/GRy9i3b8Y8TFR0VDIHjbTNAAGLXydEkSqXUB2fuCUA
+ jyAhuBskbiks4mOWPFmUA4W/8Ui/XAjhDem2eIo2YN0XZcSit0OWQT5OWcdAw8t4O6GL
+ 30r9lZaOVSgoxicf+guv6jEOUg5Zsn0h79WzcKLjOVhZtMDuk1nTZnrIDqAQg1EsCQ+l
+ ET/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708360754; x=1708965554;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g4FCzhBMxBMDZoobHoXe86blnQI4iLx/WEkq5NXhKrY=;
+ b=rfM8Z7Har5IB2BG3hgKwzjH6JiMgt/SEJHumyRtT3c6fwbPIuj6YhfjVk4huVtsc1v
+ x+cVwWtH9wnD8U4BdZkfHPr0qJm2sKDItGu0kwwhq9vwsOG5pYOqaKXNvYg0gbhrdt8d
+ gOyThxvUp9r3YMSYQmpS1prQcxwsbvdPCODxP6uo2J1lf2OebXd2ZQwtk/AhhOBrZZuN
+ dZp7NbCPyjjXVx94GrAvYP2Q45QLINeG+xp1rXh2RoXfttDXLZTpOAOkodP2DjtXaQaL
+ pw87ZEhMScNUo3QcnrUYAe0DoQghcUjgxapUonrN1bptRF49+vLu2T9JzJOYFT1cdsMl
+ bCCg==
+X-Gm-Message-State: AOJu0YzSTU5wJ7I0mZwLWT/mCqvHxH0jgivpQS+3tCRvSsPowXFv21Pi
+ bTLDterpUmCFIIRNIPDZtNxqoa8sT0EcD1+O1Xka98ksmy4fLM1xW6QXJHYtvjQ+vhZz2p2R5X/
+ M
+X-Google-Smtp-Source: AGHT+IFgBDkCLPS0L77lmL6b9/TMgs59h2x46S4M3Nc73nGqBRnmVDdlyQYzcd5a26zgtAyJ+Mv7qw==
+X-Received: by 2002:a5d:5248:0:b0:33d:36e0:b9eb with SMTP id
+ k8-20020a5d5248000000b0033d36e0b9ebmr3278810wrc.50.1708360754075; 
+ Mon, 19 Feb 2024 08:39:14 -0800 (PST)
+Received: from m1x-phil.lan ([176.176.181.220])
+ by smtp.gmail.com with ESMTPSA id
+ i13-20020a5d55cd000000b0033b198efbedsm10733258wrw.15.2024.02.19.08.39.11
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 19 Feb 2024 08:39:13 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Bernhard Beschow <shentey@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 02/14] hw/i386/q35: Add local 'lpc_obj' variable
+Date: Mon, 19 Feb 2024 17:38:42 +0100
+Message-ID: <20240219163855.87326-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240219163855.87326-1-philmd@linaro.org>
+References: <20240219163855.87326-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,105 +99,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 23:00:23 +0800
-<shiju.jose@huawei.com> wrote:
+Instead of casting OBJECT(lpc) multiple times,
+do it once in the new 'lpc_obj' variable.
 
-> From: Shiju Jose <shiju.jose@huawei.com>
-> 
-> CXL spec 3.1 section 8.2.9.6 describes optional device specific features.
-> CXL devices supports features with changeable attributes.
-> Get Supported Features retrieves the list of supported device specific
-> features. The settings of a feature can be retrieved using Get Feature and
-> optionally modified using Set Feature.
-> 
-> Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-> Reviewed-by: Fan Ni <fan.ni@samsung.com>
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/i386/pc_q35.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Hi Shiju,
-
-Sorry I've taken so long to get to this!
-
-Looks good. One small comment inline.
-
-Jonathan
-
-> +
-> +/* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
-> +static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-> +                                             uint8_t *payload_in,
-> +                                             size_t len_in,
-> +                                             uint8_t *payload_out,
-> +                                             size_t *len_out,
-> +                                             CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint32_t count;
-> +        uint16_t start_index;
-> +        uint16_t reserved;
-> +    } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_in = (void *)payload_in;
-> +
-> +    struct {
-> +        CXLSupportedFeatureHeader hdr;
-> +        CXLSupportedFeatureEntry feat_entries[];
-> +    } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_out = (void *)payload_out;
-> +    uint16_t index;
-> +    uint16_t entry, req_entries;
-> +    uint16_t feat_entries = 0;
-> +
-> +    if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
-> +        get_feats_in->start_index > CXL_FEATURE_MAX) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +    req_entries = (get_feats_in->count -
-> +                   sizeof(CXLSupportedFeatureHeader)) /
-> +                   sizeof(CXLSupportedFeatureEntry);
-
-I'm struggling a bit with the Specification text.
-I says that count is
-"Count in bytes of the supported Feature data to return in the
-output payload."
-
-I suppose that includes the header but it's not entirely clear
-to me. Let's go with what we have here unless we get a spec
-clarification.
-
-> +    req_entries = MIN(req_entries, CXL_FEATURE_MAX);
-> +    index = get_feats_in->start_index;
-> +
-> +    entry = 0;
-> +    while (entry < req_entries) {
-
-Given it's a known set of bounds a for loops should be
-easier to read.
-
-       for (index = get_feats_in->start_index;
-	    index < req_entries;
-	    index++) {
-           switch (index) {
-	   default:
-		__builtin_unreachable();
-           }
-       }  
-> +        switch (index) {
-> +        default:
-> +            break;
-> +        }
-> +        index++;
-> +        entry++;
-> +    }
-> +
-> +    get_feats_out->hdr.nsuppfeats_dev = CXL_FEATURE_MAX;
-> +    get_feats_out->hdr.entries = feat_entries;
-> +    *len_out = sizeof(CXLSupportedFeatureHeader) +
-> +                      feat_entries * sizeof(CXLSupportedFeatureEntry);
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index a91f414922..621661a738 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -126,6 +126,7 @@ static void pc_q35_init(MachineState *machine)
+     Object *phb;
+     PCIBus *host_bus;
+     PCIDevice *lpc;
++    Object *lpc_obj;
+     DeviceState *lpc_dev;
+     BusState *idebus[MAX_SATA_PORTS];
+     ISADevice *rtc_state;
+@@ -238,6 +239,7 @@ static void pc_q35_init(MachineState *machine)
+     /* create ISA bus */
+     lpc = pci_new_multifunction(PCI_DEVFN(ICH9_LPC_DEV, ICH9_LPC_FUNC),
+                                 TYPE_ICH9_LPC_DEVICE);
++    lpc_obj = OBJECT(lpc);
+     lpc_dev = DEVICE(lpc);
+     qdev_prop_set_bit(lpc_dev, "smm-enabled",
+                       x86_machine_is_smm_enabled(x86ms));
+@@ -246,7 +248,7 @@ static void pc_q35_init(MachineState *machine)
+         qdev_connect_gpio_out_named(lpc_dev, ICH9_GPIO_GSI, i, x86ms->gsi[i]);
+     }
+ 
+-    rtc_state = ISA_DEVICE(object_resolve_path_component(OBJECT(lpc), "rtc"));
++    rtc_state = ISA_DEVICE(object_resolve_path_component(lpc_obj, "rtc"));
+ 
+     object_property_add_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
+                              TYPE_HOTPLUG_HANDLER,
+@@ -254,13 +256,13 @@ static void pc_q35_init(MachineState *machine)
+                              object_property_allow_set_link,
+                              OBJ_PROP_LINK_STRONG);
+     object_property_set_link(OBJECT(machine), PC_MACHINE_ACPI_DEVICE_PROP,
+-                             OBJECT(lpc), &error_abort);
++                             lpc_obj, &error_abort);
+ 
+-    acpi_pcihp = object_property_get_bool(OBJECT(lpc),
++    acpi_pcihp = object_property_get_bool(lpc_obj,
+                                           ACPI_PM_PROP_ACPI_PCIHP_BRIDGE,
+                                           NULL);
+ 
+-    keep_pci_slot_hpc = object_property_get_bool(OBJECT(lpc),
++    keep_pci_slot_hpc = object_property_get_bool(lpc_obj,
+                                                  "x-keep-pci-slot-hpc",
+                                                  NULL);
+ 
+-- 
+2.41.0
 
 
