@@ -4,100 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4306DC48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 15:46:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 490CDC48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 15:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc5pm-0000GI-DJ; Mon, 19 Feb 2024 10:45:34 -0500
+	id 1rc5xS-0002Ru-II; Mon, 19 Feb 2024 10:53:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rc5pg-0000DR-OY
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:45:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rc5xR-0002Pa-9Y
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:53:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rc5pe-00011I-JB
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:45:28 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rc5xP-0002F7-GL
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:53:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708357525;
+ s=mimecast20190719; t=1708358006;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=voS9eT8qh6lq+PojwwQhtdgbtAE1EnfOW9rmavkYfrw=;
- b=Z/hM7AE1IQ2mVxiaX/naXDQgwV9yzgWrhM1XhScSavw+t7Ljre7vO27l75Kr4MVk4CjQsK
- gTLL+aSET4n5AiQxnG+taVaTddMZkOS0oGSRLBp0rzpD3QWc1RVf/s9DWOiJpRb69+DfQ4
- UJx1jFNIodQLBDs+BKnT6fUezY8Wzhg=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=8ns/PwRe/J423cCaUwa8i01r5zRGB3FwnM6fW4Zb6pU=;
+ b=JWTIdsMG4QePl+236iEnsNSTuFwnqUzusxcY7LrCJbR4wacmGtSTOt/vSbdeBOuxlHwAip
+ yGJ+NSIQqmt3YlAPnIuZ45gTs4jI92WCAmwBSOxk6VyOWUQHnuA8yO0A1HpW01fUjwR26g
+ NYvGCHPDcogilddQ1eLfo4w7u/exvmU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-mjqCuf0_MgaD-pUVrz4tWQ-1; Mon, 19 Feb 2024 10:45:24 -0500
-X-MC-Unique: mjqCuf0_MgaD-pUVrz4tWQ-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7873b392eb3so551507385a.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 07:45:24 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708357524; x=1708962324;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=voS9eT8qh6lq+PojwwQhtdgbtAE1EnfOW9rmavkYfrw=;
- b=Uynxq3T0PwuGKUzubvrpCWWEPiOxswsWQQNhoqv9sDNi+2rNayFcjnQUaPl7Nt7tJn
- qg77oUsQGw033amgaSGQSWSnyKSI+qHXAASoDiMeJScOJAwh1s2iHDC/EQs21HiUIiuT
- 3zDI+Y1y6GBNFxjau3DnSjGGeBATiHboy3wpbswzn+HZd5C06LlEYI1/B6RmJpNmL7bA
- ZTCQg+BWVHmbiQE19ldkDHG0C+a4ABfotymWokP0S7xubFGT6qTYqfW0DoYue4wlUTqG
- IW8yDXscipQZK6QgvXeZT6YR6PAXo7kV/rRaJJtOGLWcXcKViGuqrEu6Ua/hFtmGAZp4
- R0fg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMOJ/CUfcehLwnzcxDZEyCBtZQwmnMNbcfqFYQUs7z2qQm/7MzcOr+EkXwh6OL0+oMkMwotciv3UHkU9joEZKVxUOTBS8=
-X-Gm-Message-State: AOJu0Yx6XQ0v+G721dALGvQb6LvPpF9YUqmzr5b7d2+krScl2tcH/Jzm
- td7xSN6eHzok8cQhXaj0QJMyWWr+3b3SOexlNMhrBowaof7wlFUOUh1xwapC7ROWyvlxos7AtFX
- o1pmsCsGRodTaSOfj+5idG/q9i6B+0KbWmYB62EoTVoG+E6n2Wwld
-X-Received: by 2002:a05:620a:801b:b0:787:730b:11e9 with SMTP id
- ee27-20020a05620a801b00b00787730b11e9mr1261408qkb.36.1708357523850; 
- Mon, 19 Feb 2024 07:45:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFKvrfi8JvVjzHMxyxYWZ8ZI1iIcgj6Nlik4XD0YCl72e+1bcaNvpJKcOwIyx73F5DjWg/Dew==
-X-Received: by 2002:a05:620a:801b:b0:787:730b:11e9 with SMTP id
- ee27-20020a05620a801b00b00787730b11e9mr1261372qkb.36.1708357523588; 
- Mon, 19 Feb 2024 07:45:23 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- vq26-20020a05620a559a00b007873b3d0573sm2570572qkn.123.2024.02.19.07.45.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 07:45:22 -0800 (PST)
-Message-ID: <60307c1a-bff5-48ff-99a3-a44c1fd23db2@redhat.com>
-Date: Mon, 19 Feb 2024 16:45:17 +0100
+ us-mta-328-F4-1iHXhMjK_uR_mPnQJMw-1; Mon, 19 Feb 2024 10:53:24 -0500
+X-MC-Unique: F4-1iHXhMjK_uR_mPnQJMw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8C0BF85A588;
+ Mon, 19 Feb 2024 15:53:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.30])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id D7F1E492BC6;
+ Mon, 19 Feb 2024 15:53:23 +0000 (UTC)
+Date: Mon, 19 Feb 2024 15:53:21 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Stefan Weil <sw@weilnetz.de>
+Subject: Re: dropping 32-bit Windows host support
+Message-ID: <ZdN5cbaqnJMTK5ts@redhat.com>
+References: <CAFEAcA_BB5-eieVGuqqXn3aS-Vmc7OcTFmv5e=i5HgNw3Kp2FQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 04/18] vfio: Add host iommu device instance into
- VFIODevice
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
- jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- yi.y.sun@intel.com, chao.p.peng@intel.com
-References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
- <20240201072818.327930-5-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240201072818.327930-5-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA_BB5-eieVGuqqXn3aS-Vmc7OcTFmv5e=i5HgNw3Kp2FQ@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,56 +79,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Feb 19, 2024 at 03:37:31PM +0000, Peter Maydell wrote:
+> Our msys2 32-bit Windows host CI job has been failing recently
+> because upstream MSYS2 are starting to phase out 32-bit windows
+> host support and are steadily removing i686 versions of packages.
+> The latest is dtc:
+> https://gitlab.com/qemu-project/qemu/-/issues/2177
+> 
+> The writing is clearly on the wall for their 32-bit support, judging
+> from the "2023-12-13 - Starting to drop some 32-bit Packages" news
+> item at https://www.msys2.org/news/ and associated discussion at
+> https://github.com/msys2/MINGW-packages/discussions/19326 .
+> 
+> QEMU on a 32-bit host is not likely to be a great experience, and I
+> suspect we don't have many users using 32-bit Windows who couldn't
+> use the 64-bit version instead. Our Download page points users at
+> MSYS2's packages, and they have already dropped the 32-bit QEMU
+> package build. Stefan Weil's binaries page, which is the other thing
+> we link to from Download, has no 32-bit version newer than 7.2.0.
+> So anybody using 32-bit Windows QEMU must be building it themselves.
+> Plus, we've already deprecated system emulation on 32-bit x86 hosts,
+> so the only remaining "supported" config is with the NVMM or WHPX
+> accelerators.
 
+The other data point is that Win11 is 64-bit only, and IIUC,
+Win10 was 64-bit only for new OEM installs too, only upgrades
+or end user installs could choose 32-bit. 
 
-On 2/1/24 08:28, Zhenzhong Duan wrote:
-> Either IOMMULegacyDevice or IOMMUFDDevice into VFIODevice, neither
-> both.
->
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  include/hw/vfio/vfio-common.h | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 8bfb9cbe94..1bbad003ee 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -32,6 +32,7 @@
->  #include "sysemu/sysemu.h"
->  #include "hw/vfio/vfio-container-base.h"
->  #include "sysemu/host_iommu_device.h"
-> +#include "sysemu/iommufd.h"
->  
->  #define VFIO_MSG_PREFIX "vfio %s: "
->  
-> @@ -132,8 +133,18 @@ typedef struct VFIODevice {
->      bool dirty_tracking;
->      int devid;
->      IOMMUFDBackend *iommufd;
-> +    union {
-> +        HostIOMMUDevice base_hdev;
-> +        IOMMULegacyDevice legacy_dev;
-> +        IOMMUFDDevice iommufd_dev;
-I think you should rather have a HostIOMMUDevice handle.
+> 
+> I suggest that we should:
+> 
+>  * remove the msys2-32bit CI job entirely (we will still have at least
+>    compile-time coverage via the cross-win32-system job)
+>  * document that the 32-bit Windows support is deprecated in
+>    docs/about/build-platforms.rst and deprecated.rst
+>  * update our Download page to remove mention of 32-bit Windows
+> 
+> Any objections?
 
-host_iommu_device_init cb would allocate the right type of the derived object and you would store the base object pointer here.
+I think that's sane.
 
-Eric
-> +    };
->  } VFIODevice;
->  
-> +QEMU_BUILD_BUG_ON(offsetof(VFIODevice, legacy_dev.base) !=
-> +                  offsetof(VFIODevice, base_hdev));
-> +QEMU_BUILD_BUG_ON(offsetof(VFIODevice, iommufd_dev.base) !=
-> +                  offsetof(VFIODevice, base_hdev));
-> +
->  struct VFIODeviceOps {
->      void (*vfio_compute_needs_reset)(VFIODevice *vdev);
->      int (*vfio_hot_reset_multi)(VFIODevice *vdev);
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
