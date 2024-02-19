@@ -4,66 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E1E6C54764
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 11:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC236C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 11:29:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc1Xm-0006V6-JY; Mon, 19 Feb 2024 06:10:42 -0500
+	id 1rc1oa-0002qe-A1; Mon, 19 Feb 2024 06:28:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc1Xj-0006US-L8
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 06:10:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc1oY-0002q5-Tm; Mon, 19 Feb 2024 06:28:02 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc1Xi-0005H5-54
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 06:10:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708341037;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Wwhcq9d24Y8fXRPCPmM5LJVrD3A40ujKe6m1ZsX7wGk=;
- b=UZh0X4xz0M3IHLGSmKXxPvC1ImDNjUI6BorVXgln/jHUfwlHSHq7MQxMEj3aSkV/VVsBHL
- TXctw11F65sYucv533TNVYO54AdCduOESFd0hHAmaqcc7tUqDaYIjqXWXoX7ZIpFgy6PVm
- 5o7obE3ZOcwmyd9vs8TOhVueUzMiOb8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-468-p_KVqQn0Oba8h5kEL24WQg-1; Mon, 19 Feb 2024 06:10:32 -0500
-X-MC-Unique: p_KVqQn0Oba8h5kEL24WQg-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B93B1025620;
- Mon, 19 Feb 2024 11:10:32 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.115])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 438EF492BE7;
- Mon, 19 Feb 2024 11:10:31 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-ppc@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
-	qemu-trivial@nongnu.org
-Subject: [PATCH] tests/qtest: Fix boot-serial-test when using
- --without-default-devices
-Date: Mon, 19 Feb 2024 12:10:30 +0100
-Message-ID: <20240219111030.384158-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc1oV-0008IE-B7; Mon, 19 Feb 2024 06:28:01 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C27344E6012;
+ Mon, 19 Feb 2024 12:27:53 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id ZCiph4DT3mu7; Mon, 19 Feb 2024 12:27:51 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C80734E6003; Mon, 19 Feb 2024 12:27:51 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C65637456B4;
+ Mon, 19 Feb 2024 12:27:51 +0100 (CET)
+Date: Mon, 19 Feb 2024 12:27:51 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, 
+ kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
+In-Reply-To: <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
+Message-ID: <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
+References: <20240216153517.49422-1-philmd@linaro.org>
+ <20240216153517.49422-2-philmd@linaro.org>
+ <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
+ <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
+ <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-507710864-1708342071=:44613"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,33 +77,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If "configure" has been run with "--without-default-devices", there is
-no e1000 device in the binaries, so the boot-serial-test currently fails
-in that case since it tries to use the e1000 with the sam460ex machine.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Since we're testing the serial output here, and not the NIC, let's
-simply switch to the "pci-bridge" device here instead, which should
-always be there for PCIe-based machines like the sam460ex.
+--3866299591-507710864-1708342071=:44613
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/qtest/boot-serial-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+> On 16/2/24 20:54, Philippe Mathieu-Daudé wrote:
+>> On 16/2/24 18:14, BALATON Zoltan wrote:
+>>> On Fri, 16 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>> We want to set another qdev property (a link) for the pl110
+>>>> and pl111 devices, we can not use sysbus_create_simple() which
+>>>> only passes sysbus base address and IRQs as arguments. Inline
+>>>> it so we can set the link property in the next commit.
+>>>> 
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> hw/arm/realview.c    |  5 ++++-
+>>>> hw/arm/versatilepb.c |  6 +++++-
+>>>> hw/arm/vexpress.c    | 10 ++++++++--
+>>>> 3 files changed, 17 insertions(+), 4 deletions(-)
+>>>> 
+>>>> diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+>>>> index 9058f5b414..77300e92e5 100644
+>>>> --- a/hw/arm/realview.c
+>>>> +++ b/hw/arm/realview.c
+>>>> @@ -238,7 +238,10 @@ static void realview_init(MachineState *machine,
+>>>>     sysbus_create_simple("pl061", 0x10014000, pic[7]);
+>>>>     gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
+>>>> 
+>>>> -    sysbus_create_simple("pl111", 0x10020000, pic[23]);
+>>>> +    dev = qdev_new("pl111");
+>>>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
+>>>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
+>>> 
+>>> Not directly related to this patch but this blows up 1 line into 4 just to 
+>>> allow setting a property. Maybe just to keep some simplicity we'd rather 
+>>> need either a sysbus_realize_simple function that takes a sysbus device 
+>>> instead of the name and does not create the device itself or some way to 
+>>> pass properties to sysbus create simple (but the latter may not be easy to 
+>>> do in a generic way so not sure about that). What do you think?
+>> 
+>> Unfortunately sysbus doesn't scale in heterogeneous setup.
+>
+> Regarding the HW modelling API complexity you are pointing at, we'd
+> like to move from the current imperative programming paradigm to a
+> declarative one, likely DSL driven. Meanwhile it is being investigated
+> (as part of "Dynamic Machine"), I'm trying to get the HW APIs right
 
-diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 6dd06aeaf4..e3b7d65fe5 100644
---- a/tests/qtest/boot-serial-test.c
-+++ b/tests/qtest/boot-serial-test.c
-@@ -156,7 +156,7 @@ static const testdef_t tests[] = {
-       "Open Firmware" },
-     { "ppc64", "powernv8", "", "OPAL" },
-     { "ppc64", "powernv9", "", "OPAL" },
--    { "ppc64", "sam460ex", "-device e1000", "8086  100e" },
-+    { "ppc64", "sam460ex", "-device pci-bridge,chassis_nr=2", "1b36  0001" },
-     { "i386", "isapc", "-cpu qemu32 -M graphics=off", "SeaBIOS" },
-     { "i386", "pc", "-M graphics=off", "SeaBIOS" },
-     { "i386", "q35", "-M graphics=off", "SeaBIOS" },
--- 
-2.43.2
+I'm aware of that activity but we're currently still using board code to 
+construct machines and probably will continue to do so for a while. Also 
+because likely not all current machines will be converted to new 
+declarative way so having a convenient API for that is still useful.
 
+(As for the language to describe the devices of a machine and their 
+connections declaratively the device tree does just that but dts is not a 
+very user friendly descrtiption language so I haven't brought that up as a 
+possibility. But you may still could get some clues by looking at the 
+problems it had to solve to at least get a requirements for the machine 
+description language.)
+
+> for heterogeneous emulation. Current price to pay is a verbose
+> imperative QDev API, hoping we'll get later a trivial declarative one
+> (like this single sysbus_create_simple call), where we shouldn't worry
+> about the order of low level calls, whether to use link or not, etc.
+
+Having a detailed low level API does not prevent a more convenient for 
+current use higher level API on top so keeping that around for current 
+machines would allow you to chnage the low level API without having to 
+change all the board codes because you's only need to update the simple 
+high level API.
+
+Regards,
+BALATON Zoltan
+--3866299591-507710864-1708342071=:44613--
 
