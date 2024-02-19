@@ -4,61 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2D46C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 15:39:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C35DC48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 15:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc5j3-0006i8-Jj; Mon, 19 Feb 2024 10:38:37 -0500
+	id 1rc5nx-0007sz-EV; Mon, 19 Feb 2024 10:43:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc5j1-0006hT-Pz
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:38:35 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc5nw-0007sr-O7
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:43:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc5j0-0008CF-EN
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:38:35 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc5nv-0000bT-D8
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:43:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708357113;
+ s=mimecast20190719; t=1708357418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6gOAk9dKraK6KCXg9oWRWIbk3YBA055sIODPEhg8T0s=;
- b=Ey2iT/ukpcKUsIBAofBUh+LKsRUTpcxL4V7MQyWMqUolDm6W6e9toRzsm1T/5KPkcIY4jv
- DWrP5Oth2esvhsAX2AhcVAnTkNtz/dgy+enBsK78/Y/L56AD/CTjSGXRKYZPP+qEyzwCut
- oTFSoo9sc5tCDfYwgKW5VPWwR2oAO4s=
+ bh=uPQmf6RkLVz1bFxZaEzFpYkz1rBLvb8p35TCevhtNnE=;
+ b=bs7VKscv4LpqAzGvMQW/52OblzAug0KLRBEwXQ1uiqCBVqp1LZJBaJ64GLH+vLTmGNpwPq
+ JkNSh5FjgSnIaSxBA7LWUthU0lDyWgUiO+ciZwj4+VVc5ERYPtbfCvxlACo4VLJaR3kti8
+ pkVxbmLtDyFtntgnyE4vzwFZWk5rLeA=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-XsxSdubtORmbo8jFgvsoiw-1; Mon, 19 Feb 2024 10:38:29 -0500
-X-MC-Unique: XsxSdubtORmbo8jFgvsoiw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ us-mta-648-jzMAIeTdMXqsSSmdwYR3nw-1; Mon, 19 Feb 2024 10:43:36 -0500
+X-MC-Unique: jzMAIeTdMXqsSSmdwYR3nw-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A4AFF85A588;
- Mon, 19 Feb 2024 15:38:29 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DFDCA101A52A;
+ Mon, 19 Feb 2024 15:43:35 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 668878BCC;
- Mon, 19 Feb 2024 15:38:29 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id BE1B6C185C0;
+ Mon, 19 Feb 2024 15:43:35 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4E25221E6740; Mon, 19 Feb 2024 16:38:27 +0100 (CET)
+ id 9547F21E6740; Mon, 19 Feb 2024 16:43:33 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Hyman Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,  Eric
- Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 2/3] virtio: Declare the decoding functions to static
-In-Reply-To: <7b92f9ccc9ca5e4d6a2e2dd7804f172dc538f355.1706883915.git.yong.huang@smartx.com>
- (Hyman Huang's message of "Fri, 2 Feb 2024 22:32:16 +0800")
-References: <cover.1706883915.git.yong.huang@smartx.com>
- <7b92f9ccc9ca5e4d6a2e2dd7804f172dc538f355.1706883915.git.yong.huang@smartx.com>
-Date: Mon, 19 Feb 2024 16:38:27 +0100
-Message-ID: <87bk8cihvw.fsf@pond.sub.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: yong.huang@smartx.com,  qemu-devel@nongnu.org,  Eric Blake
+ <eblake@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf
+ <kwolf@redhat.com>
+Subject: Re: [PATCH v4 4/7] block: Support detached LUKS header creation
+ using blockdev-create
+In-Reply-To: <ZdNsSX2n6fmb7KnD@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 19 Feb 2024 14:57:13 +0000")
+References: <cover.1706586786.git.yong.huang@smartx.com>
+ <9e35e621f12478822072e5c740ed65beb77f1238.1706586786.git.yong.huang@smartx.com>
+ <87v86kjzwb.fsf@pond.sub.org> <87ttm4ik5h.fsf@pond.sub.org>
+ <ZdNsSX2n6fmb7KnD@redhat.com>
+Date: Mon, 19 Feb 2024 16:43:33 +0100
+Message-ID: <87le7gh32y.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -84,49 +91,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hyman Huang <yong.huang@smartx.com> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> qmp_decode_protocols(), qmp_decode_status(), and qmp_decode_features()
-> are now only used in virtio-hmp-cmds.c.  So move them into there,
-> redeclare them to static, and replace the qmp_ prefix with hmp_.
+[...]
+
+> TL;DR: the @detached-header field needs to go, as that's supposed to
+> be internal only. The mgmt app should only care about 'header' in the
+> BlockdevCreateOptionsLUKS struct.
 >
-> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
-> ---
->  hw/virtio/meson.build       |   3 +-
->  hw/virtio/virtio-hmp-cmds.c | 677 +++++++++++++++++++++++++++++++++++-
->  hw/virtio/virtio-qmp.c      | 661 -----------------------------------
->  hw/virtio/virtio-qmp.h      |   3 -
->  4 files changed, 670 insertions(+), 674 deletions(-)
->
-> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> index 47baf00366..6665669480 100644
-> --- a/hw/virtio/meson.build
-> +++ b/hw/virtio/meson.build
-> @@ -9,7 +9,7 @@ system_virtio_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev.c')
->  
->  specific_virtio_ss = ss.source_set()
->  specific_virtio_ss.add(files('virtio.c'))
-> -specific_virtio_ss.add(files('virtio-config-io.c', 'virtio-qmp.c'))
-> +specific_virtio_ss.add(files('virtio-config-io.c', 'virtio-qmp.c', 'virtio-hmp-cmds.c'))
+> FYI, this whole series is already merged last week. So this will need
+> a fixup. I'll look into it now.
 
-I think you can also move virtio-qmp.c, i.e.
+Glad I neglected to check for a merge, because if I had, I wouldn't have
+looked at the schema :)
 
-   specific_virtio_ss.add(files('virtio-config-io.c', 'virtio-hmp-cmds.c'))
-
-here, and ...
-
->  
->  if have_vhost
->    system_virtio_ss.add(files('vhost.c'))
-> @@ -74,7 +74,6 @@ specific_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
->  system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
->  system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('vhost-stub.c'))
->  system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('virtio-stub.c'))
-> -system_ss.add(files('virtio-hmp-cmds.c'))
-
-   system_ss.add(files('virtio-qmp.c'))
-
-here.
+My apologies for looking so late!
 
 [...]
 
