@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9FFC48260
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99501C48BC3
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz3k-0001po-1P; Mon, 19 Feb 2024 03:31:32 -0500
+	id 1rbz5i-0000Ez-7a; Mon, 19 Feb 2024 03:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz3a-0001IO-FC; Mon, 19 Feb 2024 03:31:27 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1rbz5Z-0000B5-Bl; Mon, 19 Feb 2024 03:33:25 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz3Y-0002Kq-1M; Mon, 19 Feb 2024 03:31:21 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1d91397bd22so33603645ad.0; 
- Mon, 19 Feb 2024 00:31:19 -0800 (PST)
+ id 1rbz5X-0002m8-Rx; Mon, 19 Feb 2024 03:33:25 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6e466a679bfso123271b3a.1; 
+ Mon, 19 Feb 2024 00:33:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331478; x=1708936278; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331601; x=1708936401; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WpvdZvblkLn3xhVOqbL60pez5dBNmSPBOMujYWaJTgo=;
- b=M3gwcKEDQiuUQLIhL1i2FkFek3nJKmBYV2sPxf06+XoTJeVuJXvlLdYXkwtSXxD4cI
- HdY3p+3LNExuQ38LU2Bg494GyyMtxz22j5IYvn+PeiB/COu6MRaN7px5w+PY/v11lI0k
- tsnfLdP1WR138LVVBAoG8wHckJHI/OWM7HHzL+KqInsZlVCdca6zxqx3U/xSACfZZZU9
- bPo+mU0jw+qxWT3K82K8rG+q/z1QSoOCD1IO5vxui7ym9JSFfq7gxHtI5Y6MB+Uf/Lr0
- VStxnuWTTl7PGNNnNyKLL7HOHNJvpzJUuLsKhb+Ga6cFWQTOS0Uyae/Tga4SgvpCs+2S
- GtwA==
+ bh=DrRZ61wOnwt9hhs6OE9xukgw6eXlMPtoB/Awq7rJA7I=;
+ b=ced6m7Z1pNWJLWf50VDaIzNFpjMiy0IyLz3lb6kpXN2BN/gJwWkK4VX+9vpeZo/ktw
+ 7KjTdIhSwpYvqvQMwTD6Y2eZLRnqnIvOOWOycudgdOzauxgm/t411mpgwXkAlcDHq58S
+ mkdMo3wjOhZ40TkIR9Lm9ginkgT6m1krEDD6Y9RKlSQEWyYdLTip+ApLzf2K1WcM65Vr
+ m1x25S0uG0cdQbELNiOO5BTpccAUkqSoc/k06wuwyzDRaoL90BpxBDgzh/I2/fYhEbIj
+ h5p/XrU/AdZDHrjOg/sYQI0DEBzMvVo4Q7s7WXyluB587yOpbH0xNurKnlfJnwaKn/gg
+ rttA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331478; x=1708936278;
+ d=1e100.net; s=20230601; t=1708331601; x=1708936401;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WpvdZvblkLn3xhVOqbL60pez5dBNmSPBOMujYWaJTgo=;
- b=bnabySWxDnO55KvMgFvbv07u8S9tvZI4qRpvVIBhH8Wkc0IQkx+YICEBy/QfiDluBL
- FtUhwJ22JZkKjtasylGf0T6rWJpi1oqNcF2briBbO2Ah5mKb7gtg70vVWEs/4qar/Kiv
- 6B6BfClrAKzBiAIyWLlfGk0grItA/Mx1/Vkxh6MvP0psXgv2jxxpdhRTbO4QGKSYb6Lb
- HMpvXvWcJ+tNKYNZSkghJ7sv7d9CPrQTJK32Ni35e/xJ0eG/PPODVkYbotxcuSOzBgjV
- UWMSCR/+NBjOhZzpyBusWeYeQ1BbyqnKZ3D/8s/DnaiyZ/zTmO1zdRYucO/EDEUxyHSv
- 1JGw==
+ bh=DrRZ61wOnwt9hhs6OE9xukgw6eXlMPtoB/Awq7rJA7I=;
+ b=gZzG9xZXDGMetQWk1/R71krz7ROxb9ZH7d1eIC+i5VwzpAla+aBL2glGn7A0JkjtSD
+ 17fUxXFtmd1X1sJ6XmoclJYOlQm01ztE1dhhF6QHU4yXytCMBWfm7+0ntTpkFMtPZeuB
+ Wv0H1Ze72XwWnQiQkL60EYCDtGXNSwBnAOXVc9rY11cO4HUFx7hxG4Ood1XyDiSlAXbj
+ 6MNdlpPrXkVB4QKsGE6feKY93OPSz7IKqmGcHDatTrIFly6udQ/T2eD1BSlPlnJLGT2/
+ M5I41BUtE8yt8PJPw5iEYp1vkHYZK9/oh3mr4NoxCw0SOKAvXOTH8/EOe6hmViZH6A4w
+ 0sZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFBxVxkwocd0PftMdN4+N5+Dxv1hn3KOor7VCDY82hKucZ6oa4pF5Y96mUehD9+rhqOj+PgkgWlKnr6ELO+p/HGbZ7
-X-Gm-Message-State: AOJu0YynX+qwkSosITpwMMccoS95czeBWDi3xcugKyf3sehp4hwe/z21
- WuHEmICZtmi9M0DztdxS2qEzbjKQN3qMJameegOJKH9cte2dMJAZDstQOHjh
-X-Google-Smtp-Source: AGHT+IEphfDWJ7tt7xzKvu6d95KuoBl8DnGKZGdDWK8aOOqWar8EDZFfkQXMBUMzRVwtgj4iox1IEA==
-X-Received: by 2002:a17:903:32c9:b0:1dc:147:18b4 with SMTP id
- i9-20020a17090332c900b001dc014718b4mr850157plr.35.1708331478146; 
- Mon, 19 Feb 2024 00:31:18 -0800 (PST)
+ AJvYcCVq3Jb3XPqGT0UyOog6MdLPaBCha1Od4q16D1ORylEYSWoUH4LErsQNj/AyFqDIaSaC5fP5HAKNaVr8Xm0uhWUtJvUc
+X-Gm-Message-State: AOJu0YxqAm+YTo/PjI0w+v1ckC5vzUDfnJtcuyhCAW+SvJv16j2GTgEr
+ tv0l8TmM7qSI9Op2rZT6bkKFGRgNMpPL9ofhztuacZYW6QLCcC7zrbwEmhG3
+X-Google-Smtp-Source: AGHT+IG83Fk7HNG7A97VFE/7OPUylJDHfsrD+QSzNWVEjViG2JLYI++sqkA5sRh+S46aBpP2KHrcVQ==
+X-Received: by 2002:a05:6a20:4e08:b0:19e:a1a1:5360 with SMTP id
+ gk8-20020a056a204e0800b0019ea1a15360mr7776578pzb.23.1708331601712; 
+ Mon, 19 Feb 2024 00:33:21 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.14
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.33.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:31:17 -0800 (PST)
+ Mon, 19 Feb 2024 00:33:21 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 17/49] ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ
- range for CPU IPIs.
-Date: Mon, 19 Feb 2024 18:29:06 +1000
-Message-ID: <20240219082938.238302-18-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 46/49] target/ppc: 4xx don't flush TLB for a newly written
+ software TLB entry
+Date: Mon, 19 Feb 2024 18:29:35 +1000
+Message-ID: <20240219082938.238302-47-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,80 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+BookE software TLB is implemented by flushing old translations from the
+relevant TCG TLB whenever software TLB entries change. This means a new
+software TLB entry should not have any corresponding cached TCG TLB
+translations, so there is nothing to flush. The exception is multiple
+software TLBs that cover the same address and address space, but that is
+a programming error and results in undefined behaviour, and flushing
+does not give an obviously better outcome in that case either.
 
-spapr_irq_init currently uses existing macro SPAPR_XIRQ_BASE to refer to
-the range of CPU IPIs during initialization of nr-irqs property.
-It is more appropriate to have its own define which can be further
-reused as appropriate for correct interpretation.
+Remove the unnecessary flush of a newly written software TLB entry.
 
-Suggested-by: Cedric Le Goater <clg@kaod.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr_irq.c         |  6 ++++--
- include/hw/ppc/spapr_irq.h | 14 +++++++++++++-
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ target/ppc/mmu_helper.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
-index a0d1e1298e..97b2fc42ab 100644
---- a/hw/ppc/spapr_irq.c
-+++ b/hw/ppc/spapr_irq.c
-@@ -23,6 +23,8 @@
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index 949ae87f4f..68632bf54e 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -808,13 +808,6 @@ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
+                   tlb->prot & PAGE_WRITE ? 'w' : '-',
+                   tlb->prot & PAGE_EXEC ? 'x' : '-',
+                   tlb->prot & PAGE_VALID ? 'v' : '-', (int)tlb->PID);
+-    /* Invalidate new TLB (if valid) */
+-    if (tlb->prot & PAGE_VALID) {
+-        qemu_log_mask(CPU_LOG_MMU, "%s: invalidate TLB %d start "
+-                      TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
+-                      (int)entry, tlb->EPN, tlb->EPN + tlb->size);
+-        ppcemb_tlb_flush(cs, tlb);
+-    }
+ }
  
- #include "trace.h"
- 
-+QEMU_BUILD_BUG_ON(SPAPR_IRQ_NR_IPIS > SPAPR_XIRQ_BASE);
-+
- static const TypeInfo spapr_intc_info = {
-     .name = TYPE_SPAPR_INTC,
-     .parent = TYPE_INTERFACE,
-@@ -329,7 +331,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-         int i;
- 
-         dev = qdev_new(TYPE_SPAPR_XIVE);
--        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
-         /*
-          * 8 XIVE END structures per CPU. One for each available
-          * priority
-@@ -356,7 +358,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-     }
- 
-     spapr->qirqs = qemu_allocate_irqs(spapr_set_irq, spapr,
--                                      smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+                                      smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
- 
-     /*
-      * Mostly we don't actually need this until reset, except that not
-diff --git a/include/hw/ppc/spapr_irq.h b/include/hw/ppc/spapr_irq.h
-index c22a72c9e2..4fd2d5853d 100644
---- a/include/hw/ppc/spapr_irq.h
-+++ b/include/hw/ppc/spapr_irq.h
-@@ -14,9 +14,21 @@
- #include "qom/object.h"
- 
- /*
-- * IRQ range offsets per device type
-+ * The XIVE IRQ backend uses the same layout as the XICS backend but
-+ * covers the full range of the IRQ number space. The IRQ numbers for
-+ * the CPU IPIs are allocated at the bottom of this space, below 4K,
-+ * to preserve compatibility with XICS which does not use that range.
-+ */
-+
-+/*
-+ * CPU IPI range (XIVE only)
-  */
- #define SPAPR_IRQ_IPI        0x0
-+#define SPAPR_IRQ_NR_IPIS    0x1000
-+
-+/*
-+ * IRQ range offsets per device type
-+ */
- 
- #define SPAPR_XIRQ_BASE      XICS_IRQ_BASE /* 0x1000 */
- #define SPAPR_IRQ_EPOW       (SPAPR_XIRQ_BASE + 0x0000)
+ void helper_4xx_tlbwe_lo(CPUPPCState *env, target_ulong entry,
 -- 
 2.42.0
 
