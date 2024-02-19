@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0020FC48260
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F74C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz3E-0000R8-Is; Mon, 19 Feb 2024 03:31:00 -0500
+	id 1rbz4M-0004iq-9f; Mon, 19 Feb 2024 03:32:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz2u-0000KJ-JQ; Mon, 19 Feb 2024 03:30:51 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1rbz4I-0004Rd-57; Mon, 19 Feb 2024 03:32:06 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz2q-0002Aq-23; Mon, 19 Feb 2024 03:30:38 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1d911c2103aso20588405ad.0; 
- Mon, 19 Feb 2024 00:30:33 -0800 (PST)
+ id 1rbz4F-0002XH-07; Mon, 19 Feb 2024 03:32:05 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6da202aa138so2745969b3a.2; 
+ Mon, 19 Feb 2024 00:32:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331432; x=1708936232; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331520; x=1708936320; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zcVzYG/97Y2i91MMCzd4nuy9jQZI+cZ1UCqveYJ9kuo=;
- b=EhFReaUCKsYYOQM31RJtQZXVCmNPBuPUdoZLYKKnwzU/T9UbDa0jrYkpG95/99AUAZ
- 0QmQwu29sGQRGBXmPSt1n9CNmQd71j4UJaYVC6+ym+pnsX0WQ0mNOXyhEstISkTEqVfx
- S/sJZ8nGF2+cBi7nxImrEDBXrYga8d0A7dH/Fdu/h8yU3zAJP/x8HoVv4emUMWsI2dnV
- T0JBweIjkz5edPkDfRdznipWd4h8uUhO7W6IUpfi6FXxlGjZcQn1Bx2FA7FK8vviPOB5
- 0dewc/WriCKB7wEhpBYv2v50ebWaVwIu3gUj9VKjnnixXrEsc4jWd8/iKcAbmMpP8smC
- Zm/A==
+ bh=PwPtUyKyEVd6AyaLlqPC6tZGZHAetOay6q3kchulGSU=;
+ b=OhNbr7EiadrV2Caksoi3i3ibKMdi4lEl3ApxiZUsK5hisw4FkrHqx1Yy2lbQp1naIN
+ 4cJle1zheaqDW52q5PBtuitJ5WncU2q7AdwZ2naEZ4/QJ8R0bJeP2L3kjMXbksRiWnft
+ /O1y0lDpGPB6PHQ96fNVYzSZHWsyduZRfUmsEiHfXYkXvZcLoB4NyveR9TzHchy1HkAo
+ wkkl2nyPNf7LqDq2YBt8Wix7M3GcfK0DDo3TWjK5+vaAKcelrmLLi4ihj/ot4PSrrB0n
+ 1QqNOVQ3fgMonFK8n6mut/iYXfnbq0gO9U997D48MSYuWWNqDUOMmJ+akmYxKHhJ5NU8
+ CV+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331432; x=1708936232;
+ d=1e100.net; s=20230601; t=1708331520; x=1708936320;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zcVzYG/97Y2i91MMCzd4nuy9jQZI+cZ1UCqveYJ9kuo=;
- b=qRU1X1Yq8BCgOwTlairG9VHgpFXTsrd+6y+RgfIZ9YEnckPEMMHgjueI3ZZBd9EIhl
- 3dz29hWcPJRno15eZRr2a1WGWRTsI/MVIpi+kbLWSJDVx5E8KgR1AbBxNM5VPHvHPYXK
- tPLAZ1JBntUr9x4cSxEeFgmZj607A9x/xWQM6TVfTgQCSGUPEy10VGJFNEvBTw30WE05
- FeENIKaDcS9qQ9Wnjc77IvsUsUYyG64Vrqgr7/0AsIFsMw+i9JYREXZH9hOVuRFI2y1P
- XcQb/Z0g2Mg6YvlR6MpfUVWvPfG2Y1zLWtPhdjV7tbo2Z1gFCCbqQwmQiThtkw1WeGTz
- Ghig==
+ bh=PwPtUyKyEVd6AyaLlqPC6tZGZHAetOay6q3kchulGSU=;
+ b=bmOg8XePsiHqYxRjXkjFRAiw3UAoS3ExO+kZWFx2rKnhn5Uy6O/KnDhTTy2AbzpYgL
+ /BLAkpsv4/OwpqT6V1VfzbImfbHHgRjOsTT5qg8LArwTar9UDL3En2WKYRyQWrcS6Ewx
+ LGzr3GcMGWWErlrgcHk4aJfOHBHj3UWbQgzjp+jnSWjFqLCO9w3hheCUR/T7u+pdDkSM
+ 175fP8gWhFnVuFIIUTfn+srtJ3zRHDumus6LBuz194gaoL1J/psdw2OBOAcwNVntqZ00
+ 4bkCMeZH5M/jqIhI+pGTODPBXL0EtX5l4JkeGjR/jiF5PbRqQtkXGWVROUFfVVILHYVU
+ rD1g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV0QD+/9XkN5t+Qjjri0iktP82ChLEVfnCNpkgl8SMpyVXoQgM+XWzRpM3HYFoUxa2yU87qLkFnbuOduiRv2uPXqiXn
-X-Gm-Message-State: AOJu0Yy4+eU4Nt4Kw1eXpdVL0kqkcDGJFwLu/RPQNl/kfhRg8Q7ZgS2Y
- Q9+jrqoqcmF88ugzapOz00CN7BQJgAh+SzI4r/iTMaTkz5IJdnKiYb2iIQK5
-X-Google-Smtp-Source: AGHT+IFR3+2059ZhE/wRYiT/met58WbVIhNcjYUrMRpndaFGE0WMXz+HX7xoAcGvpp7LCRtesVbs8g==
-X-Received: by 2002:a17:903:22ca:b0:1db:cbff:f7d6 with SMTP id
- y10-20020a17090322ca00b001dbcbfff7d6mr4150794plg.44.1708331432534; 
- Mon, 19 Feb 2024 00:30:32 -0800 (PST)
+ AJvYcCX8TIF4oEUwFRnT3UVcPnYMxP+8QhddnupwNleuv3qo1qanZa1osgJjAY98t1ndvPJNzi36zYl+361Olwna75ENGuF3
+X-Gm-Message-State: AOJu0Yyv96G1eJrg3ma/C/UtRXxBu/flRUMw2+AwPypffqU7hOFrlmvy
+ ePx+YlDVQDYSk6wkWuVeYbUVkx7x9PIaHb2kEnMYhteec9VeBfJNaPFNttU4
+X-Google-Smtp-Source: AGHT+IFOx4jAkl8yw1lxKn13heUoYIpoH1uCd5iGjtyBTgj9McWTAzvqgsoA3GhYu6BNYFCPO2Qp3g==
+X-Received: by 2002:a05:6a20:a814:b0:19e:39d4:284c with SMTP id
+ cb20-20020a056a20a81400b0019e39d4284cmr10917704pzb.29.1708331520478; 
+ Mon, 19 Feb 2024 00:32:00 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.30.28
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:30:32 -0800 (PST)
+ Mon, 19 Feb 2024 00:32:00 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Warner Losh <imp@bsdimp.com>
-Subject: [PULL 09/49] tests/avocado: Add FreeBSD distro boot tests for ppc
-Date: Mon, 19 Feb 2024 18:28:58 +1000
-Message-ID: <20240219082938.238302-10-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.vnet.ibm.com>
+Subject: [PULL 27/49] ppc/pnv: Wire up pca9552 GPIO pins for PCIe hotplug
+ power control
+Date: Mon, 19 Feb 2024 18:29:16 +1000
+Message-ID: <20240219082938.238302-28-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,206 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FreeBSD project provides qcow2 images that work well for testing QEMU.
-Add pseries tests for HPT and Radix, KVM and TCG. This uses a short
-term VM image, because FreeBSD has not set up long term builds for
-ppc64 at present.
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-Other architectures could be added so this does not get a ppc_ prefix
-but is instead named similarly to boot_linux.
+For power10-rainier, a pca9552 device is used for PCIe slot hotplug
+power control by the Power Hypervisor code.  The code expects that
+some time after it enables power to a PCIe slot by asserting one of
+the pca9552 GPIO pins 0-4, it should see a "power good" signal asserted
+on one of pca9552 GPIO pins 5-9.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+To simulate this behavior, we simply connect the GPIO outputs for
+pins 0-4 to the GPIO inputs for pins 5-9.
+
+Each PCIe slot is assigned 3 GPIO pins on the pca9552 device, for
+control of up to 5 PCIe slots.  The per-slot signal names are:
+
+   SLOTx_EN.......PHYP uses this as an output to enable
+                  slot power.  We connect this to the
+                  SLOTx_PG pin to simulate a PGOOD signal.
+   SLOTx_PG.......PHYP uses this as in input to detect
+                  PGOOD for the slot.  For our purposes
+                  we just connect this to the SLOTx_EN
+                  output.
+   SLOTx_Control..PHYP uses this as an output to prevent
+                  a race condition in the real hotplug
+                  circuitry, but we can ignore this output
+                  for simulation.
+
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
-Unfortunately the latest stable (14.0) x86-64 VM image does not seem to
-output to console by default and I've not been able to find a reliable
-way to edit the filesystem to change the boot loader options, or use
-console input in the test case to change it on the fly.
 ---
- tests/avocado/boot_freebsd.py | 174 ++++++++++++++++++++++++++++++++++
- 1 file changed, 174 insertions(+)
- create mode 100644 tests/avocado/boot_freebsd.py
+ hw/ppc/pnv.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/tests/avocado/boot_freebsd.py b/tests/avocado/boot_freebsd.py
-new file mode 100644
-index 0000000000..c01cd06cca
---- /dev/null
-+++ b/tests/avocado/boot_freebsd.py
-@@ -0,0 +1,174 @@
-+# Functional tests that boot FreeBSD in various configurations
-+#
-+# Copyright (c) 2023 IBM Corporation
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later. See the COPYING file in the top-level directory.
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 78f5c6262a..97bdfb2d1e 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1900,7 +1900,19 @@ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
+          * Add a PCA9552 I2C device for PCIe hotplug control
+          * to engine 2, bus 1, address 0x63
+          */
+-        i2c_slave_create_simple(chip10->i2c[2].busses[1], "pca9552", 0x63);
++        I2CSlave *dev = i2c_slave_create_simple(chip10->i2c[2].busses[1],
++                                                "pca9552", 0x63);
 +
-+import os
-+import subprocess
-+
-+from avocado import skipUnless
-+from avocado_qemu import QemuSystemTest
-+from avocado_qemu import wait_for_console_pattern
-+from avocado_qemu import exec_command
-+from avocado.utils import archive
-+from avocado.utils import process
-+from avocado.utils.path import find_command
-+
-+@skipUnless(os.getenv('AVOCADO_ALLOW_LARGE_STORAGE'), 'storage limited')
-+@skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
-+class BootFreeBSDPPC64(QemuSystemTest):
-+    """
-+    :avocado: tags=arch:ppc64
-+    """
-+
-+    timeout = 360
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        # We need zstd for all the tests
-+        # See https://github.com/avocado-framework/avocado/issues/5609
-+        zstd = find_command('zstd', False)
-+        if zstd is False:
-+            self.cancel('Could not find "zstd", which is required to '
-+                        'decompress rootfs')
-+        tar = find_command('tar', False)
-+        if tar is False:
-+            self.cancel('Could not find "tar", which is required to '
-+                        'decompress rootfs')
-+
-+        drive_url = ('https://artifact.ci.freebsd.org/snapshot/15.0-CURRENT/8a735ffdf04936c6785ac4fa31486639262dd416/powerpc/powerpc64le/disk.qcow2.zst')
-+        drive_hash = '95d863dbbc4b60f4899d1ef21d6489fca05bf03d'
-+        drive_path_zstd = self.fetch_asset(drive_url, asset_hash=drive_hash)
-+        self.drive_path = os.path.join(self.workdir, 'disk.qcow2')
-+
-+        cmd = f"{zstd} -d {drive_path_zstd} -o {self.drive_path}"
-+        process.run(cmd)
-+
-+        kernel_url = ('https://artifact.ci.freebsd.org/snapshot/15.0-CURRENT/8a735ffdf04936c6785ac4fa31486639262dd416/powerpc/powerpc64le/kernel.txz')
-+        kernel_hash = '31d14c2dc658858830a7acab5128a5b91ea548cf'
-+        kernel_path_txz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-+        self.kernel_path = os.path.join(self.workdir, 'kernel')
-+
-+        with open(self.kernel_path, "w") as outfile:
-+            cmd = f"{tar} OJxf {kernel_path_txz} ./boot/kernel/kernel"
-+            subprocess.run(cmd.split(), stdout=outfile)
-+
-+    def set_pseries_devices(self):
-+        self.vm.add_args('-drive', f"file={self.drive_path},format=qcow2,if=virtio")
-+        self.vm.add_args('-net', 'nic,model=virtio')
-+
-+    def set_powernv_devices(self):
-+        self.vm.add_args('-device', 'nvme,bus=pcie.2,addr=0x0,serial=1234,drive=drive0',
-+                         '-device', 'e1000e,netdev=net0,mac=C0:FF:EE:00:00:02,bus=pcie.0,addr=0x0',
-+                         '-netdev', 'user,id=net0,hostfwd=::20022-:22,hostname=freebsd')
-+        self.vm.add_args("-drive", f"file={self.drive_path},format=qcow2,if=none,id=drive0")
-+        self.vm.add_args("-kernel", self.kernel_path)
-+
-+    def run_pseries_test(self, force_HPT=False):
-+        if force_HPT:
-+            self.vm.add_args('-m', '4g')
-+        else:
-+            self.vm.add_args('-m', '1g')
-+        self.vm.add_args('-smp', '4')
-+        self.set_pseries_devices()
-+        self.vm.set_console()
-+        self.vm.launch()
-+
-+        wait_for_console_pattern(self, 'Hit [Enter] to boot immediately, or any other key for command prompt.')
-+        if force_HPT:
-+            exec_command(self, 'x')
-+            wait_for_console_pattern(self, 'OK')
-+            exec_command(self, 'set radix_mmu=0')
-+            exec_command(self, 'boot')
-+            wait_for_console_pattern(self, 'cas: selected hash MMU', 'panic:')
-+        else:
-+            exec_command(self, '')
-+            wait_for_console_pattern(self, 'cas: selected radix MMU', 'panic:')
-+
-+        wait_for_console_pattern(self, 'FreeBSD 15.0-CURRENT', 'panic:')
-+        wait_for_console_pattern(self, 'FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs', 'panic:')
-+        wait_for_console_pattern(self, 'FreeBSD/powerpc (Amnesiac) (ttyu0)', 'panic:')
-+        exec_command(self, 'root')
-+        wait_for_console_pattern(self, 'resizewin: timeout reading from terminal')
-+        exec_command(self, 'poweroff')
-+        wait_for_console_pattern(self, 'Uptime:', 'panic:')
-+        self.vm.wait()
-+
-+    # powernv does not have a bootloader so must load the kernel directly
-+    # and work around manual specification of the root device. Also can't
-+    # specify options like radix_mmu the same way (todo: work out how it
-+    # is done, and add HPT test).
-+    def run_powernv_test(self, force_HPT=False):
-+        self.vm.add_args('-m', '8g')
-+        self.vm.add_args('-smp', '4')
-+        self.set_powernv_devices()
-+        self.vm.set_console()
-+        self.vm.launch()
-+
-+        wait_for_console_pattern(self, 'FreeBSD 15.0-CURRENT', 'panic:')
-+        wait_for_console_pattern(self, 'FreeBSD/SMP: Multiprocessor System Detected: 4 CPUs', 'panic:')
-+        wait_for_console_pattern(self, '<empty line>    Abort manual input')
-+        exec_command(self, 'ufs:diskid/DISK-1234s3')
-+
-+        wait_for_console_pattern(self, 'FreeBSD/powerpc (Amnesiac) (ttyu0)', 'panic:')
-+        exec_command(self, 'root')
-+        wait_for_console_pattern(self, 'resizewin: timeout reading from terminal')
-+        exec_command(self, 'poweroff')
-+        wait_for_console_pattern(self, 'Uptime:', 'panic:')
-+        wait_for_console_pattern(self, 'OPAL: Shutdown request', 'panic:')
-+        self.vm.wait()
-+
-+    def test_pseries_tcg(self):
-+        """
-+        :avocado: tags=arch:ppc64
-+        :avocado: tags=machine:pseries
-+        :avocado: tags=accel:tcg
-+        """
-+        self.require_accelerator("tcg")
-+        self.vm.add_args("-cpu", "power10")
-+        self.vm.add_args("-accel", "tcg,thread=multi")
-+        self.run_pseries_test()
-+
-+    def test_pseries_hpt_tcg(self):
-+        """
-+        :avocado: tags=arch:ppc64
-+        :avocado: tags=machine:pseries
-+        :avocado: tags=accel:tcg
-+        """
-+        self.require_accelerator("tcg")
-+        self.vm.add_args("-accel", "tcg,thread=multi")
-+        self.run_pseries_test(force_HPT=True)
-+
-+    def test_pseries_kvm(self):
-+        """
-+        :avocado: tags=arch:ppc64
-+        :avocado: tags=machine:pseries
-+        :avocado: tags=accel:kvm
-+        """
-+        self.require_accelerator("kvm")
-+        self.vm.add_args("-accel", "kvm")
-+        self.run_pseries_test()
-+
-+    def test_pseries_hpt_kvm(self):
-+        """
-+        :avocado: tags=arch:ppc64
-+        :avocado: tags=machine:pseries
-+        :avocado: tags=accel:kvm
-+        """
-+        self.require_accelerator("kvm")
-+        self.vm.add_args("-accel", "kvm")
-+        self.run_pseries_test(force_HPT=True)
-+
-+    # powernv9 works, powernv10 fails
-+    def test_powernv(self):
-+        """
-+        :avocado: tags=arch:ppc64
-+        :avocado: tags=machine:powernv9
-+        :avocado: tags=accel:tcg
-+        """
-+        self.require_accelerator("tcg")
-+        self.vm.add_args("-accel", "tcg,thread=multi")
-+        self.run_powernv_test()
++        /*
++         * Connect PCA9552 GPIO pins 0-4 (SLOTx_EN) outputs to GPIO pins 5-9
++         * (SLOTx_PG) inputs in order to fake the pgood state of PCIe slots
++         * after hypervisor code sets a SLOTx_EN pin high.
++         */
++        qdev_connect_gpio_out(DEVICE(dev), 0, qdev_get_gpio_in(DEVICE(dev), 5));
++        qdev_connect_gpio_out(DEVICE(dev), 1, qdev_get_gpio_in(DEVICE(dev), 6));
++        qdev_connect_gpio_out(DEVICE(dev), 2, qdev_get_gpio_in(DEVICE(dev), 7));
++        qdev_connect_gpio_out(DEVICE(dev), 3, qdev_get_gpio_in(DEVICE(dev), 8));
++        qdev_connect_gpio_out(DEVICE(dev), 4, qdev_get_gpio_in(DEVICE(dev), 9));
+     }
+ }
+ 
 -- 
 2.42.0
 
