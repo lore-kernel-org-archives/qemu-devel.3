@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326DEC48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 446EBC54766
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz3k-0001rV-5Q; Mon, 19 Feb 2024 03:31:32 -0500
+	id 1rbz3i-0001XZ-1x; Mon, 19 Feb 2024 03:31:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz3i-0001Ya-5H; Mon, 19 Feb 2024 03:31:30 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1rbz3Q-00010g-U6; Mon, 19 Feb 2024 03:31:13 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz3g-0002Lu-KK; Mon, 19 Feb 2024 03:31:29 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1da0cd9c0e5so37034685ad.0; 
- Mon, 19 Feb 2024 00:31:27 -0800 (PST)
+ id 1rbz3P-0002In-5C; Mon, 19 Feb 2024 03:31:12 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1da0cd9c0e5so37032125ad.0; 
+ Mon, 19 Feb 2024 00:31:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331486; x=1708936286; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331469; x=1708936269; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TNkOh3VPNtlgospyMybpdwKaxmKzTmiXNUjVZD0tHkg=;
- b=J0y0tVndEy00dEKNYWfog+85/L04ueKhX5h+kKYWq3y04bqfCvcmn5spawyEwBUVVu
- Me9MdhCj2e7IcgTgTWldwNEX2pz8HiJWcxRsUj9hvfTTT6KrpzcGV03ZWcV6jazn3XBS
- Hb/b9J3CFPqtbRPHIIvJ1rp6nf/fKwOoGiq1j1r42iENlFfyHOmcrGT2QbrBeHVbEbne
- 9dzjjTu8vuQqD2n2B/NTu+48B9WoG8Qk5gI+YwILjWN2slvLccUHQM/cRYED9HJPwpOr
- nFmJWNKuxRvBwqfA2Q7E/Wms+YEHvwAYXe4tNPpgxgIV1A1BuplY5jx1pht8NYzfCT42
- ujSA==
+ bh=7/DLuXky9FQDqFdM2qoHQOMo5LuNUVQuzkj5LQTCSNQ=;
+ b=iTlPi7s1ITsC6Z66zXFt4P9d5xuDeNOUGja5p6/YbKzCZNIFJRZJKjmVaPuFo6KTq8
+ 98pfGSnnuLeFdCPfhPc811XyBChN5cjQJf7TT3OVgQAcvCHPuDDLKN93hAmOcPpaCW+f
+ Lh/x9frdrpFXTHKBDYu9jfrEd1bWTDXKJJAbiT6ZsJ9KO/dxTo1qIOfjNbmx8CrdWh27
+ WJStEsb5NHF88MxoVRUZVQdUjSEaPOv9zR44egeqJTx5q2eO2NFQWGknE9ChrbYpOEG2
+ FuNAdY36/E6g05js1OLOsslfL7FfUyKxxxVBFyfAbL49SH25pEwTAvaMcYL9MWrKF+Vn
+ mdEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331486; x=1708936286;
+ d=1e100.net; s=20230601; t=1708331469; x=1708936269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TNkOh3VPNtlgospyMybpdwKaxmKzTmiXNUjVZD0tHkg=;
- b=e59hhDcWSO/+231YORc6wdLlk+y4kmp3hqs1REgQyxl1ZX6TqbWlqwNjY1BoRU+h7i
- EyHqrboNNaDxg65xtgW3TXGZlK9bXF8EyKail2sW38HG4yaZpguLVmCt+yglmXrN6yph
- sh8tzCKKAINrriPWrmPXaBXXOReEpJmVIb/qEFL5OWbe7xGACbw0KWUf4XzYoz9W1DDq
- h1c/rsv3l1BtTJJTy/FUCFOTGELMRpzj6b7/6v7wEPeUvq/dLqOG+foUnxvhmID76Os9
- sQUky86pW9ecQI7syHRpjrjMOqC3QIIR4wP5fkNf5O7b5SN6ChSZUOylUiEQnLTRuH63
- MMvA==
+ bh=7/DLuXky9FQDqFdM2qoHQOMo5LuNUVQuzkj5LQTCSNQ=;
+ b=kMqmMVoJLUuQtW5CYYxFAQoM4kwRBkItccFJgAX+/SzEEhZX/NJ9jFKVbIBOjVhl34
+ hbyyClvoR/qxT0t5y1HCoYM+NX5nRMokbxzjbNhVDad793SzEWGeFhewFrjGczdb3wYO
+ ObIaaj2hSFjDQhTcaJ/Ei6BGFY0WP1uBHbKHRlpNAQifoxN3ySRzeTyc5ozg/fA6dBDx
+ i37dwYzI9yUN7hUC9vpQxtHGv3cvnQJW4sJaAyj0xZJj6RRFXEsTuDaAwYF3L68rqDE2
+ cjWnaJuE8BwB9hpZ5eM4+naTyE8V6FBeFemLXay/38/sK/jgVg0pQ1f5iulKUiJjn/xb
+ 1WMQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXq0oKaXnXVFQtRRFFv1JAJ+CbbfUjRwLegNcP+BK/BZKfG3t7mkTCXuLIO5EyHPq/rJfySwNmkNicztQ5UGxGR+Nq
-X-Gm-Message-State: AOJu0Ywpy5Ob/GXlkMCXgEtvcaaadMAGIQutDU/XTldLjkiMWBxL8OjO
- z9aUWNQ4xFzBJIO69HdaAgOPa6pa6ifCcLBpFnJOmvz/Hz6AF/w7i8njhMdk
-X-Google-Smtp-Source: AGHT+IEKw5+57KmnK40iYFImqxbNwg5k7IHpuUePsV0Tim2BpyyzsilmvRp2AEqnYMn5zJ06ILAvKg==
-X-Received: by 2002:a17:902:7c8c:b0:1db:47bb:671b with SMTP id
- y12-20020a1709027c8c00b001db47bb671bmr15850399pll.19.1708331486159; 
- Mon, 19 Feb 2024 00:31:26 -0800 (PST)
+ AJvYcCWkvrFm8RyzGrIjxBoJZA+cb2Nk9QCF5fdyxYkrE+28ZAi70okFsMdugSePgfIQ2d78LD+KKJ9j/fW77WhBC4GBpLwE
+X-Gm-Message-State: AOJu0YwOiquOPit+hl8VyPJSckPj7c7kewcP+WoMQyMoALe0UWAUUfus
+ mSatZMW5+AqdhmShTGYIFGpzf852tXeOzPb1j94q75lN8ztRfu5gvfMi3v9f
+X-Google-Smtp-Source: AGHT+IGBvekDO5QI/CfzmHNJzhcORPoTyfzumLC1+5mdvCv8oWARi4ImpepXF+H3VPxfDliaBZkVoA==
+X-Received: by 2002:a17:902:d512:b0:1db:cf64:7331 with SMTP id
+ b18-20020a170902d51200b001dbcf647331mr6469868plg.13.1708331469270; 
+ Mon, 19 Feb 2024 00:31:09 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.22
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:31:25 -0800 (PST)
+ Mon, 19 Feb 2024 00:31:08 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 19/49] ppc/spapr: change pseries machine default to POWER10 CPU
-Date: Mon, 19 Feb 2024 18:29:08 +1000
-Message-ID: <20240219082938.238302-20-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 15/49] hw/ppc/spapr_hcall: Rename {softmmu ->
+ vhyp_mmu}_resize_hpt_pr
+Date: Mon, 19 Feb 2024 18:29:04 +1000
+Message-ID: <20240219082938.238302-16-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,27 +99,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-POWER10 is the latest pseries CPU.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Since 'softmmu' is quite a loaded term in QEMU, rename the vhyp MMU
+facilities to use the vhyp_mmu_ prefix rather than softmmu_.
+
+vhyp_mmu_ is chosen because the code that manipulates the hash table
+via guest software hypercalls is QEMU's implementation of the PAPR
+hypervisor interface, called vhyp.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[npiggin: Pick a different name, explain it in changelog.]
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/spapr_hcall.c   | 4 ++--
+ hw/ppc/spapr_softmmu.c | 4 ++--
+ include/hw/ppc/spapr.h | 9 ++++++---
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 0028ce0b67..b442d18317 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4664,7 +4664,7 @@ static void spapr_machine_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 0d7d523e6d..75c2d12978 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -124,7 +124,7 @@ static target_ulong h_resize_hpt_prepare(PowerPCCPU *cpu,
+     if (kvm_enabled()) {
+         return H_HARDWARE;
+     } else if (tcg_enabled()) {
+-        return softmmu_resize_hpt_prepare(cpu, spapr, shift);
++        return vhyp_mmu_resize_hpt_prepare(cpu, spapr, shift);
+     } else {
+         g_assert_not_reached();
+     }
+@@ -194,7 +194,7 @@ static target_ulong h_resize_hpt_commit(PowerPCCPU *cpu,
+     if (kvm_enabled()) {
+         return H_HARDWARE;
+     } else if (tcg_enabled()) {
+-        return softmmu_resize_hpt_commit(cpu, spapr, flags, shift);
++        return vhyp_mmu_resize_hpt_commit(cpu, spapr, flags, shift);
+     } else {
+         g_assert_not_reached();
+     }
+diff --git a/hw/ppc/spapr_softmmu.c b/hw/ppc/spapr_softmmu.c
+index 2fade94029..b3dd8b3a59 100644
+--- a/hw/ppc/spapr_softmmu.c
++++ b/hw/ppc/spapr_softmmu.c
+@@ -378,7 +378,7 @@ static void cancel_hpt_prepare(SpaprMachineState *spapr)
+     free_pending_hpt(pending);
+ }
  
-     smc->dr_lmb_enabled = true;
-     smc->update_dt_enabled = true;
--    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power9_v2.2");
-+    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
-     mc->has_hotpluggable_cpus = true;
-     mc->nvdimm_supported = true;
-     smc->resize_hpt_default = SPAPR_RESIZE_HPT_ENABLED;
+-target_ulong softmmu_resize_hpt_prepare(PowerPCCPU *cpu,
++target_ulong vhyp_mmu_resize_hpt_prepare(PowerPCCPU *cpu,
+                                          SpaprMachineState *spapr,
+                                          target_ulong shift)
+ {
+@@ -562,7 +562,7 @@ static int rehash_hpt(PowerPCCPU *cpu,
+     return H_SUCCESS;
+ }
+ 
+-target_ulong softmmu_resize_hpt_commit(PowerPCCPU *cpu,
++target_ulong vhyp_mmu_resize_hpt_commit(PowerPCCPU *cpu,
+                                         SpaprMachineState *spapr,
+                                         target_ulong flags,
+                                         target_ulong shift)
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index e91791a1a9..5b5ba9ef77 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -634,10 +634,13 @@ void spapr_register_hypercall(target_ulong opcode, spapr_hcall_fn fn);
+ target_ulong spapr_hypercall(PowerPCCPU *cpu, target_ulong opcode,
+                              target_ulong *args);
+ 
+-target_ulong softmmu_resize_hpt_prepare(PowerPCCPU *cpu, SpaprMachineState *spapr,
++target_ulong vhyp_mmu_resize_hpt_prepare(PowerPCCPU *cpu,
++                                         SpaprMachineState *spapr,
+                                          target_ulong shift);
+-target_ulong softmmu_resize_hpt_commit(PowerPCCPU *cpu, SpaprMachineState *spapr,
+-                                        target_ulong flags, target_ulong shift);
++target_ulong vhyp_mmu_resize_hpt_commit(PowerPCCPU *cpu,
++                                        SpaprMachineState *spapr,
++                                        target_ulong flags,
++                                        target_ulong shift);
+ bool is_ram_address(SpaprMachineState *spapr, hwaddr addr);
+ void push_sregs_to_kvm_pr(SpaprMachineState *spapr);
+ 
 -- 
 2.42.0
 
