@@ -4,68 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C795C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 13:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA1F2C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 13:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc3ta-0005gR-Kr; Mon, 19 Feb 2024 08:41:22 -0500
+	id 1rc475-00080R-F3; Mon, 19 Feb 2024 08:55:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rc3tY-0005fw-GN; Mon, 19 Feb 2024 08:41:20 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc472-00080C-QN
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:55:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rc3tT-000232-M0; Mon, 19 Feb 2024 08:41:18 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 472B14E6013;
- Mon, 19 Feb 2024 14:41:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ZGsfy8Nekz77; Mon, 19 Feb 2024 14:41:11 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 496DA4E6012; Mon, 19 Feb 2024 14:41:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 473337456B4;
- Mon, 19 Feb 2024 14:41:11 +0100 (CET)
-Date: Mon, 19 Feb 2024 14:41:11 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, 
- kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>, 
- Igor Mitsyanko <i.mitsyanko@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-In-Reply-To: <e3c5dc3f-8e66-4e69-86c0-89e35a8a6b8e@linaro.org>
-Message-ID: <f2b2e231-56b5-4212-3f4f-e1eb30b8088b@eik.bme.hu>
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
- <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
- <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
- <e3c5dc3f-8e66-4e69-86c0-89e35a8a6b8e@linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc46v-0004gG-Ft
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:55:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708350906;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=KOmKu+Rzp/lTJ/ZVZrnXclE2BJLwrNZDXnxjwtEc9xI=;
+ b=HwwAo0t/Vmd7XyCm0F2w9ja/fo5jZFs6yZ+wukKBvGFx2ztHcHh/pWoPFOxvBbPw1nkAWU
+ UvkU3/KkewgSmulZksSrZBefPETQWNJXJWI5E/RX+mEk2sVqIfDsMfzwEzr9NfquTYXPD0
+ UGnY4wsCnX2KQ6mrt37Ehmo5he45swg=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-390-qMg4keTVMPGYCQZY2hxYng-1; Mon, 19 Feb 2024 08:55:04 -0500
+X-MC-Unique: qMg4keTVMPGYCQZY2hxYng-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-6082ad43ca1so17518007b3.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 05:55:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708350904; x=1708955704;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KOmKu+Rzp/lTJ/ZVZrnXclE2BJLwrNZDXnxjwtEc9xI=;
+ b=nPmzQLj+wBZSaoUhZ2d57BpXnXCuSiErlAHfWRoc4Cb31XVEkkTkCkzJrtfXWQSva8
+ tlYU4qK7xoigkdhAAH6EDZQp55TAaTSvQGkkkgixrViowuQfLAorKlzGGzACBQqm+Kqs
+ cZJImFkd4t8sPeq2VqkA2gryScQgvkW+nPSPZXrAJjB0k5r2aVewFQcOhc+bQJ1pkdu4
+ gv6Ho2lpHM2dU9mmV0RKJN548DtLRGT9SWrvE7xndUgcYtzag7oRBMZi3f+6d+FoTrGC
+ 3lCub6B9xDdCkJPllfNpJgPfg4PYzbFFqtwxtKN4O5sZOn9kHcCSk3CFdXMALhreOvbn
+ VTFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXzihGidU09ZNiXKBG+Ru4q1cvMVhmCpWwRd9vWS6TBu0OsKu1KoowyYIcYe4vajOQlG0YkEWlmElaqs3AmGWNJmEG6398=
+X-Gm-Message-State: AOJu0YwjhPABXpIEgyflzE0RQvB2Hn+ecEVaHxdTgfdYFiKbo8yeJdUx
+ wJ0LTjrALusd9lVyiXZVSgkBz1hGONjzvKzqE9oXiDJ6rTzPSVw6uuZP7IpcW1m9ZAJaGZnvKIS
+ 6gg+RLvjTiG5Nr5BPe79HuY8ukMZ7KLFSf01LethRNF+7y3dZp4/y
+X-Received: by 2002:a0d:cb89:0:b0:607:c93f:2c2a with SMTP id
+ n131-20020a0dcb89000000b00607c93f2c2amr12158215ywd.46.1708350904224; 
+ Mon, 19 Feb 2024 05:55:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFkC6aVf187EA1M5JCRfL+PLyp/XJwSQl9NknL8vlhmP6s5/rxMW3HiGI7Uw2h3/YW72UIZGg==
+X-Received: by 2002:a0d:cb89:0:b0:607:c93f:2c2a with SMTP id
+ n131-20020a0dcb89000000b00607c93f2c2amr12158197ywd.46.1708350903924; 
+ Mon, 19 Feb 2024 05:55:03 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-177-48.web.vodafone.de.
+ [109.43.177.48]) by smtp.gmail.com with ESMTPSA id
+ f20-20020ac840d4000000b0042e14c58ee1sm700128qtm.26.2024.02.19.05.55.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Feb 2024 05:55:03 -0800 (PST)
+Message-ID: <fb09a916-a17d-4d2a-a04d-8c44f73fc1f7@redhat.com>
+Date: Mon, 19 Feb 2024 14:54:59 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-497618412-1708350071=:77986"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/6] tests/qtest: Reorganize common code in ivshmem-test
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Anton Kochkov <anton.kochkov@proton.me>, richard.henderson@linaro.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240216144456.34992-1-philmd@linaro.org>
+ <20240216144456.34992-6-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240216144456.34992-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,150 +150,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 16/02/2024 15.44, Philippe Mathieu-Daudé wrote:
+> From: Gustavo Romero <gustavo.romero@linaro.org>
+> 
+> This commit reorganizes the ivshmem-test qtest by moving common structs,
+> functions, and code that can be utilized by other ivshmem qtests into
+> two new files: ivshmem-utils.h and ivshmem-utils.c.
+> 
+> Enum Reg, struct ServerThread, and mktempshm() have been relocated to
+> these new files. Two new functions have been introduced to handle the
+> ivshmem server start/stop: test_ivshmem_server_{start,stop}.
+> 
+> To accommodate the new way for starting/stopping the ivshmem server,
+> struct ServerThread now includes two new members: 'server', previously
+> present but not a member of any struct; and 'status', a new member of a
+> new type, ServerStartStatus, used to track and handle service
+> termination properly.
+> 
+> Additionally, a new function, mktempsocket(), has been added to help
+> create a unix socket filename, similar to what mktempshm() does for the
+> creation of a shm file.
+> 
+> Finally, the ivshmem-test qtest has been adapted to use the new ivhsmem
+> utils. Adjustments in that sense have also been made to meson.build;
+> also 'rt' have been removed as a lib dependency for ivhsmem-test.c.
+> 
+> Two lines unrelated to these changes have had their line indentation
+> also fixed in meson.build.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Message-ID: <20231127052024.435743-3-gustavo.romero@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+...
+> diff --git a/tests/qtest/ivshmem-utils.c b/tests/qtest/ivshmem-utils.c
+> new file mode 100644
+> index 0000000000..b9578ab554
+> --- /dev/null
+> +++ b/tests/qtest/ivshmem-utils.c
+> @@ -0,0 +1,155 @@
+...
+> +gchar *mktempsocket(void)
+> +{
+> +    gchar *server_socket_path;
+> +
+> +    server_socket_path = g_strdup_printf("/tmp/ivshmem_socket_qtest-%u-%u",
 
---3866299591-497618412-1708350071=:77986
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Can we please avoid hard-coding "/tmp" in new code? Please use 
+g_get_tmp_dir() instead.
 
-On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
-> On 19/2/24 13:00, BALATON Zoltan wrote:
->> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
->>> On 19/2/24 12:27, BALATON Zoltan wrote:
->>>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>>> On 16/2/24 20:54, Philippe Mathieu-Daudé wrote:
->>>>>> On 16/2/24 18:14, BALATON Zoltan wrote:
->>>>>>> On Fri, 16 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>>>>>> We want to set another qdev property (a link) for the pl110
->>>>>>>> and pl111 devices, we can not use sysbus_create_simple() which
->>>>>>>> only passes sysbus base address and IRQs as arguments. Inline
->>>>>>>> it so we can set the link property in the next commit.
->>>>>>>> 
->>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>>> ---
->>>>>>>> hw/arm/realview.c    |  5 ++++-
->>>>>>>> hw/arm/versatilepb.c |  6 +++++-
->>>>>>>> hw/arm/vexpress.c    | 10 ++++++++--
->>>>>>>> 3 files changed, 17 insertions(+), 4 deletions(-)
->>>>>>>> 
->>>>>>>> diff --git a/hw/arm/realview.c b/hw/arm/realview.c
->>>>>>>> index 9058f5b414..77300e92e5 100644
->>>>>>>> --- a/hw/arm/realview.c
->>>>>>>> +++ b/hw/arm/realview.c
->>>>>>>> @@ -238,7 +238,10 @@ static void realview_init(MachineState *machine,
->>>>>>>>     sysbus_create_simple("pl061", 0x10014000, pic[7]);
->>>>>>>>     gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
->>>>>>>> 
->>>>>>>> -    sysbus_create_simple("pl111", 0x10020000, pic[23]);
->>>>>>>> +    dev = qdev_new("pl111");
->>>>>>>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>>>>>>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
->>>>>>>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
->>>>>>> 
->>>>>>> Not directly related to this patch but this blows up 1 line into 4 
->>>>>>> just to allow setting a property. Maybe just to keep some simplicity 
->>>>>>> we'd rather need either a sysbus_realize_simple function that takes a 
->>>>>>> sysbus device instead of the name and does not create the device 
->>>>>>> itself or some way to pass properties to sysbus create simple (but the 
->>>>>>> latter may not be easy to do in a generic way so not sure about that). 
->>>>>>> What do you think?
->>>>>> 
->>>>>> Unfortunately sysbus doesn't scale in heterogeneous setup.
->>>>> 
->>>>> Regarding the HW modelling API complexity you are pointing at, we'd
->>>>> like to move from the current imperative programming paradigm to a
->>>>> declarative one, likely DSL driven. Meanwhile it is being investigated
->>>>> (as part of "Dynamic Machine"), I'm trying to get the HW APIs right
->>>> 
->>>> I'm aware of that activity but we're currently still using board code to 
->>>> construct machines and probably will continue to do so for a while. Also 
->>>> because likely not all current machines will be converted to new 
->>>> declarative way so having a convenient API for that is still useful.
->>>> 
->>>> (As for the language to describe the devices of a machine and their 
->>>> connections declaratively the device tree does just that but dts is not a 
->>>> very user friendly descrtiption language so I haven't brought that up as 
->>>> a possibility. But you may still could get some clues by looking at the 
->>>> problems it had to solve to at least get a requirements for the machine 
->>>> description language.)
->>>> 
->>>>> for heterogeneous emulation. Current price to pay is a verbose
->>>>> imperative QDev API, hoping we'll get later a trivial declarative one
->>>>> (like this single sysbus_create_simple call), where we shouldn't worry
->>>>> about the order of low level calls, whether to use link or not, etc.
->>>> 
->>>> Having a detailed low level API does not prevent a more convenient for 
->>>> current use higher level API on top so keeping that around for current 
->>>> machines would allow you to chnage the low level API without having to 
->>>> change all the board codes because you's only need to update the simple 
->>>> high level API.
->>> 
->>> So what is your suggestion here, add a new complex helper to keep
->>> a one-line style?
->>> 
->>> DeviceState *sysbus_create_simple_dma_link(const char *typename,
->>>                                           hwaddr baseaddr,
->>>                                           const char *linkname,
->>>                                           Object *linkobj,
->>>                                           qemu_irq irq);
->> 
->> I think just having sysbus_realize_simple that does the same as 
->> sysbus_create_simple minus creating the device would be enough because then 
->> the cases where you need to set properties could still use it after 
->> qdev_new or init and property_set but hide the realize and connecting the 
->> device behind this single call.
->
-> So you suggest splitting sysbus_create_simple() as
-> sysbus_create_simple() + sysbus_realize_simple(), so we can set
-> properties between the 2 calls? IOW extract qdev_new() from
-> sysbus_create_varargs() and rename it as sysbus_realize_simple()?
+> +                                         getpid(), g_test_rand_int());
+> +    return server_socket_path;
+> +}
 
-No I suggest to keep sysbus_create_simple as it is for cases that don't 
-need to set properties and use it now add a sysbus_realize_simple that 
-takes a device instead of the type name and does not create the device 
-just does the rest of realizing and connecting it. (After that 
-sysbus_create_simple would also call sysbus_realize_simple internally to 
-avoid code duplication but that's not something the users of this API ahve 
-to care about.) Then cases where sysbus_create_simple cannot be used 
-(because you need to set properties or the device is allocated statically 
-so it needs init instead of new) can use sysbus_realize_simple to still 
-keep the code somewhat simple so it would be:
+  Thomas
 
-> - dev = sysbus_create_simple(typename, addr, irq);
-> + dev = qdev_new(typename);
-> + // optionally set properties
-> + sysbus_realize_simple(dev, addr, irq);
 
-Where you need properties, but keep sysbus_create_simple where it's 
-already used, no need to change those places.
-
-> - dev = sysbus_create_varargs(typename, addr, irqA, irqB, ...);
-> + dev = qdev_new(typename);
-> + // optionally set properties
-> + sysbus_realize_varargs(dev, addr, irqA, irqB, ...);
->
-> I'm not sure it is worth it because we want to move away from
-> sysbus, merging the non-sysbus specific API to qdev (like indexed
-> memory regions and IRQs to named ones).
-
-If sysbus will be gone soon then maybe it's not worth it but if we're then 
-left with needing five lines to create and connect a simple device (most 
-of which is more concerning QOM and QDev than the actual device) then 
-we'll really need to find some other way to reduce this boilerplate and 
-let the developer create simple devices with simple calls. Littering board 
-code with all the QOM boilerplate makes it really hard to see what it 
-actually does so this should be hidden behind a simple API so that the 
-board code is clean and overseeable without having to go into too much 
-detail about the QOM and QDev implementations. If we need to do every 
-detail of creating a device with a low level call (which may not even fit 
-in one single line) then the board code will become unreadable and 
-unaccessible especially for new contributors. That's why I think this is a 
-problem we'd need to consider. (And this is not about this patch but a 
-general issue, which I said in the beginning, I was just reminded about 
-this by this patch.)
-
-Regards,
-BALATON Zoltan
---3866299591-497618412-1708350071=:77986--
 
