@@ -4,58 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C81C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED20DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc6MF-0004Uc-Md; Mon, 19 Feb 2024 11:19:08 -0500
+	id 1rc6Tx-0006Pc-Hs; Mon, 19 Feb 2024 11:27:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rc6ME-0004UR-2T
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:19:06 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc6Tu-0006PN-94
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:27:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rc6Lx-0007TF-AN
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:19:05 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TdngZ2Khkz6K9DY;
- Tue, 20 Feb 2024 00:15:06 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id ADF801404FC;
- Tue, 20 Feb 2024 00:18:39 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Mon, 19 Feb
- 2024 16:18:39 +0000
-Date: Mon, 19 Feb 2024 16:18:38 +0000
-To: fan <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
- <a.manzanares@samsung.com>, <dave@stgolabs.net>, <nmtadam.samsung@gmail.com>, 
- <nifan@outlook.com>, <jim.harris@samsung.com>
-Subject: Re: [PATCH v3 0/9] Enabling DCD emulation support in Qemu
-Message-ID: <20240219161838.0000592e@Huawei.com>
-In-Reply-To: <ZcuyZ0Nwq31z8YIr@debian>
-References: <20231107180907.553451-1-nifan.cxl@gmail.com>
- <ZcuyZ0Nwq31z8YIr@debian>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc6Tn-0000ko-Gc
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:27:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708360014;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=pfkdY7A0R2qEVWg70pUKTIfg/jH9xUEZWj74zXS6luM=;
+ b=MYgquFJkkCFs/OnxxnszT/9l/YtWRONHFSWa+AzWDGiBQrPgPUuuQi9Mb6pC66ss7Rcyts
+ y/6O01fuie8mh9P+CwQPOjKu/nei0R26VvS5tDk8jzAiTGazFkoi8CtmcD0JZYYUFlh4bR
+ +0SIfK670He6p8nbW/YvN2KwsiAtBkQ=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-175-Q2izFwusPXOTWzySk01ucg-1; Mon, 19 Feb 2024 11:26:48 -0500
+X-MC-Unique: Q2izFwusPXOTWzySk01ucg-1
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3c045f4a135so5595506b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:26:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708360008; x=1708964808;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pfkdY7A0R2qEVWg70pUKTIfg/jH9xUEZWj74zXS6luM=;
+ b=PWnvPnhHTQuCCvO0s5QuQjm+l/vnMV74065zTOfi3WpdtcIpH/ImxP+lX563t5niUB
+ CFmvDRpIxj/y3MmHM+TYFhtmkJePBrAoSxWekbRrzAjRhrk9yI3LjbQbhl8A80ogYnxa
+ zmGVxWDBOzBrMxMLN4gT2RwTe43ncCqcZoYILTjAEO8JVATOnWUeDOE4njP12DIKOf09
+ zpYXCNQSOQXHJPzZn1D160jRC2z/ppDAoIIpQy7vVqZlcuRS3Vsh/OIMZ29ccw7De1P5
+ jzE834May9WzjKJ/HUt/BIVBtotRKrGpF8NeiAGQcM4OObihIEHXsoycKafWd8o8aphs
+ a+Ig==
+X-Gm-Message-State: AOJu0Yy6v86qNYiJgnTbwJcUG4YeNcnQJpBgyj/2RPfWV5n3Ncp2eVVR
+ 1s2VY+GVMpYCknWTLHd2QrZgD2DSh/IAGQd+86gVs1WSz86Mel2yN73icaJSrVtgS1UHayi2kF9
+ tncrd+wwh1hhGtTT0CWo2mnOrId5LZjGkX21tpgvqrCqKlQN954Vb
+X-Received: by 2002:aca:d0f:0:b0:3c0:4ac4:d7f1 with SMTP id
+ 15-20020aca0d0f000000b003c04ac4d7f1mr10633827oin.35.1708360008041; 
+ Mon, 19 Feb 2024 08:26:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFt6ppMNIikDsZYpdz0wA3BFGKb78kM1fVn3qIHNTMG9VhucdLp4QNV8cA9D8e7Z3E7AjF5ng==
+X-Received: by 2002:aca:d0f:0:b0:3c0:4ac4:d7f1 with SMTP id
+ 15-20020aca0d0f000000b003c04ac4d7f1mr10633812oin.35.1708360007703; 
+ Mon, 19 Feb 2024 08:26:47 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-177-48.web.vodafone.de.
+ [109.43.177.48]) by smtp.gmail.com with ESMTPSA id
+ mc7-20020a056214554700b0068caf901c9bsm3394878qvb.17.2024.02.19.08.26.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Feb 2024 08:26:47 -0800 (PST)
+Message-ID: <0a084faf-3685-4134-aecc-5edf13111d89@redhat.com>
+Date: Mon, 19 Feb 2024 17:26:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: dropping 32-bit Windows host support
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Stefan Weil <sw@weilnetz.de>
+References: <CAFEAcA_BB5-eieVGuqqXn3aS-Vmc7OcTFmv5e=i5HgNw3Kp2FQ@mail.gmail.com>
+ <ZdN5cbaqnJMTK5ts@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <ZdN5cbaqnJMTK5ts@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,191 +142,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 13 Feb 2024 10:18:15 -0800
-fan <nifan.cxl@gmail.com> wrote:
-
-> On Tue, Nov 07, 2023 at 10:07:04AM -0800, nifan.cxl@gmail.com wrote:
-> > From: Fan Ni <nifan.cxl@gmail.com>
-> > 
-> > 
-> > The patch series are based on Jonathan's branch cxl-2023-09-26.
-> > 
-> > The main changes include,
-> > 1. Update cxl_find_dc_region to detect the case the range of the extent cross
-> >     multiple DC regions.
-> > 2. Add comments to explain the checks performed in function
-> >     cxl_detect_malformed_extent_list. (Jonathan)
-> > 3. Minimize the checks in cmd_dcd_add_dyn_cap_rsp.(Jonathan)
-> > 4. Update total_extent_count in add/release dynamic capacity response function.
-> >     (Ira and Jorgen Hansen).
-> > 5. Fix the logic issue in test_bits and renamed it to
-> >     test_any_bits_set to clear its function.
-> > 6. Add pending extent list for dc extent add event.
-> > 7. When add extent response is received, use the pending-to-add list to
-> >     verify the extents are valid.
-> > 8. Add test_any_bits_set and cxl_insert_extent_to_extent_list declaration to
-> >     cxl_device.h so it can be used in different files.
-> > 9. Updated ct3d_qmp_cxl_event_log_enc to include dynamic capacity event
-> >     log type.
-> > 10. Extract the functionality to delete extent from extent list to a helper
-> >     function.
-> > 11. Move the update of the bitmap which reflects which blocks are backed with
-> > dc extents from the moment when a dc extent is offered to the moment when it
-> > is accepted from the host.
-> > 12. Free dc_name after calling address_space_init to avoid memory leak when
-> >     returning early. (Nathan)
-> > 13. Add code to detect and reject QMP requests without any extents. (Jonathan)
-> > 14. Add code to detect and reject QMP requests where the extent len is 0.
-> > 15. Change the QMP interface and move the region-id out of extents and now
-> >     each command only takes care of extent add/release request in a single
-> >     region. (Jonathan)
-> > 16. Change the region bitmap length from decode_len to len.
-> > 17. Rename "dpa" to "offset" in the add/release dc extent qmp interface.
-> >     (Jonathan)
-> > 18. Block any dc extent release command if the exact extent is not already in
-> >     the extent list of the device.
-> > 
-> > The code is tested together with Ira's kernel DCD support:
-> > https://github.com/weiny2/linux-kernel/tree/dcd-v3-2023-10-30
-> > 
-> > Cover letter from v2 is here:
-> > https://lore.kernel.org/linux-cxl/20230724162313.34196-1-fan.ni@samsung.com/T/#m63039621087023691c9749a0af1212deb5549ddf
-> > 
-> > Last version (v2) is here:
-> > https://lore.kernel.org/linux-cxl/20230725183939.2741025-1-fan.ni@samsung.com/
-> > 
-> > More DCD related discussions are here:
-> > https://lore.kernel.org/linux-cxl/650cc29ab3f64_50d07294e7@iweiny-mobl.notmuch/
-> > 
-> > 
-> > 
-> > Fan Ni (9):
-> >   hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output
-> >     payload of identify memory device command
-> >   hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative
-> >     and mailbox command support
-> >   include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for
-> >     type3 memory devices
-> >   hw/mem/cxl_type3: Add support to create DC regions to type3 memory
-> >     devices
-> >   hw/mem/cxl_type3: Add host backend and address space handling for DC
-> >     regions
-> >   hw/mem/cxl_type3: Add DC extent list representative and get DC extent
-> >     list mailbox support
-> >   hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release
-> >     dynamic capacity response
-> >   hw/cxl/events: Add qmp interfaces to add/release dynamic capacity
-> >     extents
-> >   hw/mem/cxl_type3: Add dpa range validation for accesses to dc regions
-> > 
-> >  hw/cxl/cxl-mailbox-utils.c  | 469 +++++++++++++++++++++++++++++-
-> >  hw/mem/cxl_type3.c          | 548 +++++++++++++++++++++++++++++++++---
-> >  hw/mem/cxl_type3_stubs.c    |  14 +
-> >  include/hw/cxl/cxl_device.h |  64 ++++-
-> >  include/hw/cxl/cxl_events.h |  15 +
-> >  qapi/cxl.json               |  60 +++-
-> >  6 files changed, 1123 insertions(+), 47 deletions(-)
-> > 
-> > -- 
-> > 2.42.0
-> >   
+On 19/02/2024 16.53, Daniel P. Berrangé wrote:
+> On Mon, Feb 19, 2024 at 03:37:31PM +0000, Peter Maydell wrote:
+>> Our msys2 32-bit Windows host CI job has been failing recently
+>> because upstream MSYS2 are starting to phase out 32-bit windows
+>> host support and are steadily removing i686 versions of packages.
+>> The latest is dtc:
+>> https://gitlab.com/qemu-project/qemu/-/issues/2177
+>>
+>> The writing is clearly on the wall for their 32-bit support, judging
+>> from the "2023-12-13 - Starting to drop some 32-bit Packages" news
+>> item at https://www.msys2.org/news/ and associated discussion at
+>> https://github.com/msys2/MINGW-packages/discussions/19326 .
+>>
+>> QEMU on a 32-bit host is not likely to be a great experience, and I
+>> suspect we don't have many users using 32-bit Windows who couldn't
+>> use the 64-bit version instead. Our Download page points users at
+>> MSYS2's packages, and they have already dropped the 32-bit QEMU
+>> package build. Stefan Weil's binaries page, which is the other thing
+>> we link to from Download, has no 32-bit version newer than 7.2.0.
+>> So anybody using 32-bit Windows QEMU must be building it themselves.
+>> Plus, we've already deprecated system emulation on 32-bit x86 hosts,
+>> so the only remaining "supported" config is with the NVMM or WHPX
+>> accelerators.
 > 
-> Hi Jonathan,
+> The other data point is that Win11 is 64-bit only, and IIUC,
+> Win10 was 64-bit only for new OEM installs too, only upgrades
+> or end user installs could choose 32-bit.
+
+Yes, and considering that there will likely be a Windows 12 at one point in 
+time, we'll drop support for Win10 and thus 32-bit support anyway.
+
+>> I suggest that we should:
+>>
+>>   * remove the msys2-32bit CI job entirely (we will still have at least
+>>     compile-time coverage via the cross-win32-system job)
+>>   * document that the 32-bit Windows support is deprecated in
+>>     docs/about/build-platforms.rst and deprecated.rst
+>>   * update our Download page to remove mention of 32-bit Windows
+>>
+>> Any objections?
 > 
-> I have updated the patch set based on your feedback and aligned the code
-> to cxl spec r3.1.
-> 
-> Here is the new code:
-> https://github.com/moking/qemu/tree/dcd-v4
-> 
-> I plan to send it out for review early next week to see if there is any kernel
-> side update for dcd this week so I can test more.
+> I think that's sane.
 
-Excellent!
+Sounds good to me, too.
 
-> 
-> If the plan needs to be adjusted to align with the merge window, please
-> let me know.
+Note that we already have an entry for "System emulation on 32-bit x86 
+hosts" in the deprecation list ... so IMHO we could also justify to drop the 
+32-bit Windows support immediately, since that's a subset of that entry.
 
-I'm focused on the TCG and physmem fixes right now, but would like to do
-a detailed review of your new version later this week.
+  Thomas
 
-We have a few more weeks - probably want a final version to be on list by
-end of this month - so there is a bit of time before the soft feature freeze
-on the 12th March https://wiki.qemu.org/Planning/9.0
-
-> 
-> v3[1]->v4: 
-> 
-> The code is rebased on mainstream QEMU with the following patch series:
-> 
-> [PATCH 00/12 qemu] CXL emulation fixes and minor cleanup.
-> [PATCH 0/5 qemu] hw/cxl: Update CXL emulation to reflect and reference r3.1
-Those 2 series our now upstream :)
-
-> hw/cxl/mailbox: change CCI cmd set structure to be a member, not a reference
-> hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-> 
-> Main changes include:
-> 
-> 1. Updated the specification references to align with cxl spec r3.1.
-> 2. Add extra elements to get dc region configuration output payload and
-> procecced accordingly in mailbox command 4800h.
-> 3. Removed the unwanted space.
-> 4. Refactored ct3_build_cdat_entries_for_mr and extract it as a separate patch.
-> 5. Updated cxl_create_dc_regions function to derive region len from host
-> backend size.
-> 6. Changed the logic for creating DC regions when host backend and address
-> space processing is introduced, now cxl_create_dc_regions is called only
-> when host backend exists.
-> 7. Updated the name of the definitions related to DC extents for consistency.
-> 7. Updated dynamic capacity event record definition to align with spec r3.1.
-> 9. Changed the dynamic capacity request process logic, for release request,
-> extra checks are done against the pending list to remove the extent yet added.
-> 10. Changed the return value of cxl_create_dc_regions so the return can be used
-> to remove the extent for the list if needed.
-> 11. Offset and size in the qmp interface are changed to be byte-wise while the
-> original is MiB-wise.
-> 12. Fixed bugs in handling bitmap for dpa range existence.
-> 13. NOTE: in previous version DC is set to non-volatile, while in this version
-> we change it to volatile per Jonathan's suggestion.
-> 14. Updated the doc in qapi/cxl.json.
-
-All sound good. I'll not attempt to review in the git tree  - I've gotten far
-too used to email flows for review but I should be able to get on it fairly
-quickly once posted. 
-
-> 
-> Thank Jonathan for the detailed review of the last version[1].
-> 
-> The code is tested with Ira's last kernel DCD patch set [2] with some minor
-> bug fixes[3]. Tested operations include:
-> 1. create DC region;
-> 2. Add/release DC extents;
-> 3. convert DC capacity into system RAM;
-
-I guess that will hit the TCG bugs/missing features if we end up with page tables
-in it.  Should have same problems as for non DC regions.
-
-Review feedback has been helpful on the TCG changes so they should be in 9.0 I think.
-Will go via different paths to the CXL support however so no idea when they'll be
-in relative to DC support.
-
-Thanks,
-
-Jonathan
-
-
-> 
-> 
-> v3: 
-> [1] https://lore.kernel.org/linux-cxl/20231107180907.553451-1-nifan.cxl@gmail.com/T/#t
-> [2] https://github.com/weiny2/linux-kernel/tree/dcd-v3-2023-10-30
-> [3] https://github.com/moking/linux-dcd/commit/9d24fa6e5d39f934623220953caecc080f93e964
 
 
