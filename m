@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34702C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 11:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0BEC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 11:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc29S-0005lM-DZ; Mon, 19 Feb 2024 06:49:38 -0500
+	id 1rc2An-0006Xg-O4; Mon, 19 Feb 2024 06:51:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc29Q-0005kW-IM
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 06:49:36 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rc2Ak-0006Ww-70
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 06:50:58 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc29O-0003g9-Ib
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 06:49:36 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4125e435b38so15185475e9.0
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 03:49:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rc2Ai-00044E-Dy
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 06:50:57 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-563d32ee33aso4076654a12.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 03:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708343372; x=1708948172; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YngC5yhQXscsRLlNrXXGSMc1GCmCcfETUmdOlmq3fbI=;
- b=cdqNv+J12Mc5zXrP1BEdfFZwCgi+ddTUgvY4FRPgarK64CKe4Z3LBNzJ7C4zoPciT8
- pTcg53cLOX44H5OUM0xcY2Wi5hbiKkQFSWiJXIXx5DdByxCQkR6uH1+bA68Jw9Ui8kB1
- MqplwKGy3C2PP3x9XuJD8wIi9uvO/vZN02Gyljec4NycYdjMP79ymf+QPeZei9yjQNok
- EqDYl2lvP2j2MRbk/Pq6thmz+J3ck1V9Jjm8HVeTinz1CsZf/+6xoRI00I8ryElS2pfV
- V1mJx9oR056l/crRsNq62QQshav5tY9YJ8xS1NpBlnjh2BH85ArCp6spgi19QiGFGDBQ
- +E9w==
+ d=linaro.org; s=google; t=1708343453; x=1708948253; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wRqMCBzf+R3oPVWN5HPILjOg+0s4Zpcn1+zkzkrhkXQ=;
+ b=BvMM8l0wmHQ8FzFq5zY/vdOYQVxV0Iw55ayAjkeeEtM3zpAaCQ/qT3758HP3u+WFeD
+ ZhMzhDCUaPntsyci1wx2ZS0MEMpeYtY4MXbqzScJKcdvT5DwlhwtA/cgxdp+fkOA7neJ
+ gtkABXa/2Eu+GtAfhUSyfMNEsSpY1e5Nw8AWYXmo61uN+p+YSAPJgc1kchubahVVdhLM
+ FwDofI2bUWyOL4Npuj0RMNL4Ar3P2+gdz1ADl/Ake0sGTAQd3xh4TVfVliaB8yFwSSUD
+ lAm7LWqehI9kTKt7mVgMzavj0R56tnB9ut9VLhDlHUycts9GyNEbyitfnusgB0VTqYIu
+ YO+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708343372; x=1708948172;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YngC5yhQXscsRLlNrXXGSMc1GCmCcfETUmdOlmq3fbI=;
- b=O2n8IAtscCaOLuIIHr1P5sOf7X8QAqtrayTj06AqwWr5uN0k+QNBT3G42SuK6XnG6y
- PU0Ld6mDNo2zz9c/enJjntPHE95Md/t/SUpfQYTbWyVDd7c2I8RCBKxK82Olw3G99AsT
- NpENqBm9H1DzP1DDnUrghJF2kiyMilVcRsIUmnFlMl3jIPwGlLV6QTBtwOFjHUKmBqRR
- T7qCt0dmzWY1BdTNdx16SuKMKcDfx8M71ScJ9nG/P1ZuMcEsTGkntU8CjoD1xaeIpZsh
- +HeEPkqeTvZyyef3fLm+HxolthgUu284owlCThVd4qmn7l8YMLFNkgO8u7G1JF7wJull
- Fskw==
-X-Gm-Message-State: AOJu0YyX2JJO/D1nR6zF6ax1JI/Xf3jeYzaFPp9SUGXlOngsReDqVgVS
- AOwb3+WcaSnzI+63TFrEz0hnORCu/B/qcbk3AoFvER9JjfCTK+i8fObwCudJf8M=
-X-Google-Smtp-Source: AGHT+IE8KNo6h9P+hO82/XMMmYdvNPlUxhLjsn8Bh7xGr43q6/gL/9uAehuo7PCZY4KC/Ns/Cr8pTg==
-X-Received: by 2002:a05:6000:a07:b0:33d:4e4:686e with SMTP id
- co7-20020a0560000a0700b0033d04e4686emr10084893wrb.68.1708343371946; 
- Mon, 19 Feb 2024 03:49:31 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.181.220])
- by smtp.gmail.com with ESMTPSA id
- w2-20020adfec42000000b0033d13530134sm10088512wrn.106.2024.02.19.03.49.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 03:49:31 -0800 (PST)
-Message-ID: <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
-Date: Mon, 19 Feb 2024 12:49:28 +0100
+ d=1e100.net; s=20230601; t=1708343453; x=1708948253;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wRqMCBzf+R3oPVWN5HPILjOg+0s4Zpcn1+zkzkrhkXQ=;
+ b=lfvl1h11GAtvgI5kSq9r4atHKUJM890TX91P/EDklfWCebvOLDsGM20J4UY1/T3gbs
+ /KHtA8Qygfrf2l9CkDSThaNzGFY884+gKg56ILSC30jTU+yNy6s0sdxEgmRTVfdifNjP
+ oGg6CniCJT0TBzLp5O+F2VhMLUcUjHSsCVFqfMWQHReLc2vei6FLgIeuFzK0acmTcO9B
+ dLUUJSU0QBasEDVcGvPvvW4sKs8GktkeobM2gdnkYyK4Ec5rtPTOiaqN22xRUSEzGbK1
+ AEKv0rOuRDB9o0I8n+S4E3Tpi6RwpYOadN8yGgq+KrENSpnbSnVrolIqQGXDtxNwAUWA
+ sB5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWC2OlMxJl3OBYwuf0/SNvbyFpLWOMh0sYoaUiSNLNKVfUinIzky34hEwfvIJACTj6CsLOy0o8ExZlHRf+mV0T3lscxEfw=
+X-Gm-Message-State: AOJu0Yz29qYq7VzRAokiIuXGZkvED4xbOjK/PuJH29hayuYLBjfGKi+Y
+ 3ZIrLgTk+Sh8ci3XclN6y58OHGpiiYlp2yqgndYlfaEURI4c5utTam0UDfWK6DkT+TQib8NkAmc
+ IBhKLPQcvwGQW3G2sEPLkmSFI8l+aeohjW1kT7LtCAZcURys+
+X-Google-Smtp-Source: AGHT+IEhN/N8srsegjmd62Nb46r+QdlqWsvsBnavJVQa6/fsW9epm6qk4NmB8JLwpKb908Muh40YJqXPthpU+2PGZLI=
+X-Received: by 2002:aa7:d64d:0:b0:564:42e1:fa93 with SMTP id
+ v13-20020aa7d64d000000b0056442e1fa93mr2860424edr.25.1708343453519; Mon, 19
+ Feb 2024 03:50:53 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <87y1hspiyh.fsf@linaro.org>
+ <alpine.DEB.2.22.394.2308301745530.6458@ubuntu-linux-20-04-desktop>
+ <CAFEAcA8Ziov9vA9dW+4vzFE=KkSUqfMNNMZOtvQhqCXyjRytzQ@mail.gmail.com>
+ <87cyz3pmgz.fsf@linaro.org>
+ <CAFEAcA-m8G1kfTw52kOGPEvQwWPph0NWc0URVY1aQ2WwVeB_OQ@mail.gmail.com>
+ <799b1754-7529-0538-1b5a-d94a362eb74d@amd.com>
+In-Reply-To: <799b1754-7529-0538-1b5a-d94a362eb74d@amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Feb 2024 11:50:41 +0000
+Message-ID: <CAFEAcA8UwpWzD=Z1syjWPcpRev0OLSMnfyqqYg=9UEQk05s4yQ@mail.gmail.com>
+Subject: Re: QEMU features useful for Xen development?
+To: Ayan Kumar Halder <ayankuma@amd.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Xen-devel <xen-devel@lists.xenproject.org>, 
+ Stewart Hildebrand <stewart.hildebrand@amd.com>,
+ Viresh Kumar <viresh.kumar@linaro.org>, 
+ Volodymyr Babchuk <Volodymyr_Babchuk@epam.com>,
+ Sergiy Kibrik <Sergiy_Kibrik@epam.com>, 
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Vikram Garhwal <vikram.garhwal@amd.com>, 
+ Stefano Stabellini <stefano.stabellini@amd.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,153 +107,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/2/24 12:27, BALATON Zoltan wrote:
-> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
->> On 16/2/24 20:54, Philippe Mathieu-Daudé wrote:
->>> On 16/2/24 18:14, BALATON Zoltan wrote:
->>>> On Fri, 16 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>>> We want to set another qdev property (a link) for the pl110
->>>>> and pl111 devices, we can not use sysbus_create_simple() which
->>>>> only passes sysbus base address and IRQs as arguments. Inline
->>>>> it so we can set the link property in the next commit.
->>>>>
->>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>> ---
->>>>> hw/arm/realview.c    |  5 ++++-
->>>>> hw/arm/versatilepb.c |  6 +++++-
->>>>> hw/arm/vexpress.c    | 10 ++++++++--
->>>>> 3 files changed, 17 insertions(+), 4 deletions(-)
->>>>>
->>>>> diff --git a/hw/arm/realview.c b/hw/arm/realview.c
->>>>> index 9058f5b414..77300e92e5 100644
->>>>> --- a/hw/arm/realview.c
->>>>> +++ b/hw/arm/realview.c
->>>>> @@ -238,7 +238,10 @@ static void realview_init(MachineState *machine,
->>>>>     sysbus_create_simple("pl061", 0x10014000, pic[7]);
->>>>>     gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
->>>>>
->>>>> -    sysbus_create_simple("pl111", 0x10020000, pic[23]);
->>>>> +    dev = qdev_new("pl111");
->>>>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>>>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
->>>>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
->>>>
->>>> Not directly related to this patch but this blows up 1 line into 4 
->>>> just to allow setting a property. Maybe just to keep some simplicity 
->>>> we'd rather need either a sysbus_realize_simple function that takes 
->>>> a sysbus device instead of the name and does not create the device 
->>>> itself or some way to pass properties to sysbus create simple (but 
->>>> the latter may not be easy to do in a generic way so not sure about 
->>>> that). What do you think?
->>>
->>> Unfortunately sysbus doesn't scale in heterogeneous setup.
->>
->> Regarding the HW modelling API complexity you are pointing at, we'd
->> like to move from the current imperative programming paradigm to a
->> declarative one, likely DSL driven. Meanwhile it is being investigated
->> (as part of "Dynamic Machine"), I'm trying to get the HW APIs right
-> 
-> I'm aware of that activity but we're currently still using board code to 
-> construct machines and probably will continue to do so for a while. Also 
-> because likely not all current machines will be converted to new 
-> declarative way so having a convenient API for that is still useful.
-> 
-> (As for the language to describe the devices of a machine and their 
-> connections declaratively the device tree does just that but dts is not 
-> a very user friendly descrtiption language so I haven't brought that up 
-> as a possibility. But you may still could get some clues by looking at 
-> the problems it had to solve to at least get a requirements for the 
-> machine description language.)
-> 
->> for heterogeneous emulation. Current price to pay is a verbose
->> imperative QDev API, hoping we'll get later a trivial declarative one
->> (like this single sysbus_create_simple call), where we shouldn't worry
->> about the order of low level calls, whether to use link or not, etc.
-> 
-> Having a detailed low level API does not prevent a more convenient for 
-> current use higher level API on top so keeping that around for current 
-> machines would allow you to chnage the low level API without having to 
-> change all the board codes because you's only need to update the simple 
-> high level API.
+On Thu, 31 Aug 2023 at 11:32, Ayan Kumar Halder <ayankuma@amd.com> wrote:
+> On 31/08/2023 11:03, Peter Maydell wrote:
+> > On Thu, 31 Aug 2023 at 10:53, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
+ wrote:
+> >> Peter Maydell <peter.maydell@linaro.org> writes:
+> >>> On Thu, 31 Aug 2023 at 01:57, Stefano Stabellini <sstabellini@kernel.=
+org> wrote:
+> >>>> As Xen is gaining R52 and R82 support, it would be great to be able =
+to
+> >>>> use QEMU for development and testing there as well, but I don't thin=
+k
+> >>>> QEMU can emulate EL2 properly for the Cortex-R architecture. We woul=
+d
+> >>>> need EL2 support in the GIC/timer for R52/R82 as well.
 
-So what is your suggestion here, add a new complex helper to keep
-a one-line style?
+> >>> (What sort of board model would Xen want to use it with?)
 
-DeviceState *sysbus_create_simple_dma_link(const char *typename,
-                                            hwaddr baseaddr,
-                                            const char *linkname,
-                                            Object *linkobj,
-                                            qemu_irq irq);
+> >> We already model a bunch of the mps2/mps3 images so I'm assuming addin=
+g
+> >> the mps3-an536 would be a fairly simple step to do (mps2tz.c is mostly
+> >> tweaking config values). The question is would it be a useful target f=
+or
+> >> Xen?
 
-I wonder why this is that important since you never modified
-any of the files changed by this series:
+> Yes, it will be helpful if Qemu can model this board. We have a
+> downstream port of Xen on R52 (upstreaming is in progress).
+>
+> So, we can test the Qemu model with Xen.
 
-$ git shortlog -es hw/arm/realview.c hw/arm/versatilepb.c 
-hw/arm/vexpress.c hw/display/pl110.c hw/arm/exynos4210.c 
-hw/display/exynos4210_fimd.c hw/i386/kvmvapic.c
-     66  Peter Maydell <peter.maydell@linaro.org>
-     34  Markus Armbruster <armbru@redhat.com>
-     29  Philippe Mathieu-Daudé <philmd@linaro.org>
-     28  Paolo Bonzini <pbonzini@redhat.com>
-     17  Andreas Färber <afaerber@suse.de>
-     13  Eduardo Habkost <ehabkost@redhat.com>
-      8  Greg Bellows <greg.bellows@linaro.org>
-      7  Krzysztof Kozlowski <krzk@kernel.org>
-      6  Gerd Hoffmann <kraxel@redhat.com>
-      5  Richard Henderson <richard.henderson@linaro.org>
-      5  Jan Kiszka <jan.kiszka@siemens.com>
-      5  Igor Mammedov <imammedo@redhat.com>
-      4  Xiaoqiang Zhao <zxq_yx_007@163.com>
-      4  Thomas Huth <thuth@redhat.com>
-      4  Anthony Liguori <anthony@codemonkey.ws>
-      3  Stefan Weil <sw@weilnetz.de>
-      3  Pavel Dovgaluk <Pavel.Dovgaluk@ispras.ru>
-      3  Guenter Roeck <linux@roeck-us.net>
-      3  Daniel P. Berrangé <berrange@redhat.com>
-      3  Alistair Francis <alistair.francis@xilinx.com>
-      2  Roy Franz <roy.franz@linaro.org>
-      2  Pavel Dovgaluk <pavel.dovgaluk@ispras.ru>
-      2  Marcel Apfelbaum <marcel.a@redhat.com>
-      2  Linus Walleij <linus.walleij@linaro.org>
-      2  Like Xu <like.xu@linux.intel.com>
-      2  Juan Quintela <quintela@trasno.org>
-      2  Igor Mitsyanko <i.mitsyanko@samsung.com>
-      2  Hu Tao <hutao@cn.fujitsu.com>
-      2  David Woodhouse <dwmw@amazon.co.uk>
-      1  Zongyuan Li <zongyuan.li@smartx.com>
-      1  Wen, Jianxian <Jianxian.Wen@verisilicon.com>
-      1  Vincent Palatin <vpalatin@chromium.org>
-      1  Tao Xu <tao3.xu@intel.com>
-      1  Sergey Fedorov <serge.fdrv@gmail.com>
-      1  Prasad J Pandit <ppandit@redhat.com>
-      1  Prasad J Pandit <pjp@fedoraproject.org>
-      1  Pranith Kumar <bobby.prani@gmail.com>
-      1  Peter Crosthwaite <peter.crosthwaite@xilinx.com>
-      1  Nikita Belov <zodiac@ispras.ru>
-      1  Martin Kletzander <mkletzan@redhat.com>
-      1  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-      1  Marcelo Tosatti <mtosatti@redhat.com>
-      1  Marcel Apfelbaum <marcel@redhat.com>
-      1  Marc-André Lureau <marcandre.lureau@redhat.com>
-      1  Laurent Vivier <lvivier@redhat.com>
-      1  Laszlo Ersek <lersek@redhat.com>
-      1  Kevin Wolf <kwolf@redhat.com>
-      1  Jean-Christophe Dubois <jcd@tribudubois.net>
-      1  Igor Mitsyanko <i.mitsyanko@gmail.com>
-      1  Grant Likely <grant.likely@linaro.org>
-      1  Gonglei (Arei) <arei.gonglei@huawei.com>
-      1  Frederic Konrad <konrad.frederic@yahoo.fr>
-      1  Fabian Aggeler <aggelerf@ethz.ch>
-      1  Eric Auger <eric.auger@linaro.org>
-      1  Emilio G. Cota <cota@braap.org>
-      1  Dirk Müller <dirk@dmllr.de>
-      1  David Gibson <david@gibson.dropbear.id.au>
-      1  Chen Qun <kuhn.chenqun@huawei.com>
-      1  Chen Fan <chen.fan.fnst@cn.fujitsu.com>
-      1  Bartlomiej Zolnierkiewicz <b.zolnierkie@samsung.com>
-      1  Anthony Liguori <aliguori@amazon.com>
-      1  Alexander Graf <agraf@csgraf.de>
-      1  Alex Chen <alex.chen@huawei.com>
-      1  Alex Bennée <alex.bennee@linaro.org>
+Hi, all. I just wanted to provide an update on this. We've now
+completed the mps3-an536 board model, and you can find it if
+you check out the head-of-git QEMU. The new board will be in the
+9.0 QEMU release, but if you have a chance to give it a spin now
+we'll be able to fix any bugs or problems with it before the release.
 
+The documentation for the board is here:
+https://www.qemu.org/docs/master/system/arm/mps2.html
+and it lists the limitations/missing features. (If any of those
+are important let me know and we can look at scheduling the work
+to fill them in.)
+
+I'd also like to draw your attention to the note about the UART
+ordering on the AN536; unfortunately the hardware setup is a bit
+awkward here, so if you have an "I don't see any output" problem
+make sure your guest is sending to the same UART you're asking
+QEMU to show you the output from :-)
+
+thanks
+-- PMM
 
