@@ -4,119 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36CFC48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CFB2C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:14:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc4Oz-0002mW-Sh; Mon, 19 Feb 2024 09:13:49 -0500
+	id 1rc4Ph-0003Kf-58; Mon, 19 Feb 2024 09:14:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1rc4Ox-0002ll-GP; Mon, 19 Feb 2024 09:13:47 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4Pc-0003DG-Rb
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:14:29 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1rc4Ov-0008Nv-S1; Mon, 19 Feb 2024 09:13:47 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3A7FA21EEC;
- Mon, 19 Feb 2024 14:13:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708352021; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2OdCcVlDVyB6Rl/n48Fllehgc6/oTTxOrnlT7G0ZP5s=;
- b=ELwSIhaVztP6GGd0OxYwRYesZ5tsgS0NIDlwN8X/vmum6kBmWqn9A0rfOUZytex38O5f+E
- Qj2AyA/JyAdtdRXPYnUk21MTSHoh/KK6hEbDQoah8QVvevVoJ5k6u9KApdH2Ze2yAJ5XFk
- KUQCxPd30t5V9jpm3ELdt7Ff0ozYjKU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708352021;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2OdCcVlDVyB6Rl/n48Fllehgc6/oTTxOrnlT7G0ZP5s=;
- b=IuQKbZp5WQcDhrjDdcRN0Z1Fad9+Gc4iPUl+vEfzKruqHyOt3JAD8DYm/IkXsCaVeoTOcL
- otlUnk/6M9xxLqBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708352021; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2OdCcVlDVyB6Rl/n48Fllehgc6/oTTxOrnlT7G0ZP5s=;
- b=ELwSIhaVztP6GGd0OxYwRYesZ5tsgS0NIDlwN8X/vmum6kBmWqn9A0rfOUZytex38O5f+E
- Qj2AyA/JyAdtdRXPYnUk21MTSHoh/KK6hEbDQoah8QVvevVoJ5k6u9KApdH2Ze2yAJ5XFk
- KUQCxPd30t5V9jpm3ELdt7Ff0ozYjKU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708352021;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2OdCcVlDVyB6Rl/n48Fllehgc6/oTTxOrnlT7G0ZP5s=;
- b=IuQKbZp5WQcDhrjDdcRN0Z1Fad9+Gc4iPUl+vEfzKruqHyOt3JAD8DYm/IkXsCaVeoTOcL
- otlUnk/6M9xxLqBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B9DB6139D0;
- Mon, 19 Feb 2024 14:13:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id y+X9HxRi02VZXQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 19 Feb 2024 14:13:40 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
-Cc: peterx@redhat.com, qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berra?=
- =?utf-8?Q?ng=C3=A9?=
- <berrange@redhat.com>, Sebastian Ott <sebott@redhat.com>, Eric Auger
- <eric.auger@redhat.com>, qemu-arm <qemu-arm@nongnu.org>
-Subject: Re: [PATCH v2 1/3] tests/migration-test: Stick with gicv3 in
- aarch64 test
-In-Reply-To: <CAFEAcA-AVjn5JdG+6eBd69o5BiJjmA1G6i4F2wVPSmRSw-X=Yg@mail.gmail.com>
-References: <20240207005403.242235-1-peterx@redhat.com>
- <20240207005403.242235-2-peterx@redhat.com>
- <13862227-d782-46fe-b10f-94587c74745e@redhat.com>
- <CAFEAcA-AVjn5JdG+6eBd69o5BiJjmA1G6i4F2wVPSmRSw-X=Yg@mail.gmail.com>
-Date: Mon, 19 Feb 2024 11:13:38 -0300
-Message-ID: <87o7cch78t.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4PX-0008PB-Og
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:14:28 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-561587ce966so8841347a12.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 06:14:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708352061; x=1708956861; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RrGDeP6FKIUU6jW18CkpL97+y4+8zvvTBqQzIVQHxhI=;
+ b=ZEv+ioZjkdfLAJWgCBHaI1a91L2/vdjP6Fl9WapRXiVVBQylbEFq8CYQC1o9Y1TmGo
+ vUGzcXHcqRccomlfZoUhC83FfFgmvInwFeSHs/ighjWR+LepgTCYIJezcol79nYzeQbr
+ w/zCKqmhJvJgdDX3URIYGHJjFRhK+qvEugCTltvVGq5jXThOWRL1Ve8kOhiJ5WECkUhP
+ YEd2sf782ruD6TqFkMua1Y9F/lUF1aaFutqlu5lTDgDGjdf2nwBsx5BUXSV4VEo1pAiz
+ hbcA2ESejZOu7SmQHBEfgaHW5j31jabmWpE4dQdOGFnQ+lwBZnCav/vfHWU0mIcQ46K8
+ UgWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708352061; x=1708956861;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RrGDeP6FKIUU6jW18CkpL97+y4+8zvvTBqQzIVQHxhI=;
+ b=NmNiZNfM3yh5CjQ5FRjm4ryuRRSJmRGw0xPYH4jzvUSRJzaqi/0nNUlLQtam5EC3UX
+ k1u/dFN2WF+t30/NS02NeJmVOcYcZmyQ7unpwkD03gLJVJkcWcAoHNmvOXV6nN1T7kMF
+ 26mxLCiT8v6idWVnRcX7rjOUzbRGUNdtH3FLjZLnguIjgACqOvLpqO0ynMxqraudzHfs
+ w8FkWZAvORuRD0ts/IewNgvpPNPs8lyXpTP6Tqthn1m0sgXPZsOx+BYdfK/lB8x9FayG
+ hPdL+/OnOFq5RY1uu6bi6YP8Qmbuj9m0VmiS4VNMgnEBTcAyWCN3nyf62lB1L32G69fQ
+ iksg==
+X-Gm-Message-State: AOJu0Yxgpag5o/7AIWclv6UI0uqlvXNOSyPhOTy24OGTydoLntXHVnpN
+ ieB+RD63w7EwlDxQJWZ3iyZePvSWPaCULQtxl/4wJEKdCxDzPqsxuBLtTWcvb56/eeLJDxZj/xf
+ N
+X-Google-Smtp-Source: AGHT+IHzOgCsF98PrJhe9iNHrFgTY9Z9G0CP6qHwUdgjAVQm+TpUmvtwi+joVmtzO84iqwB2eJ675A==
+X-Received: by 2002:a05:6402:500f:b0:561:fc2:bec0 with SMTP id
+ p15-20020a056402500f00b005610fc2bec0mr15748624eda.4.1708352061418; 
+ Mon, 19 Feb 2024 06:14:21 -0800 (PST)
+Received: from m1x-phil.lan ([176.176.181.220])
+ by smtp.gmail.com with ESMTPSA id
+ fg11-20020a056402548b00b00564168e6674sm2569687edb.51.2024.02.19.06.14.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 19 Feb 2024 06:14:21 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/5] hw/acpi: Include missing 'qapi/qapi-types-acpi.h'
+ generated header
+Date: Mon, 19 Feb 2024 15:14:07 +0100
+Message-ID: <20240219141412.71418-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240219141412.71418-1-philmd@linaro.org>
+References: <20240219141412.71418-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ELwSIhaV;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=IuQKbZp5
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Queue-Id: 3A7FA21EEC
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,85 +100,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+ACPIOSTInfo is a QAPI generated structure:
 
-> On Mon, 19 Feb 2024 at 11:54, Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 07/02/2024 01.54, peterx@redhat.com wrote:
->> > From: Peter Xu <peterx@redhat.com>
->> >
->> > Recently we introduced cross-binary migration test.  It's always wanted
->> > that migration-test uses stable guest ABI for both QEMU binaries in th=
-is
->> > case, so that both QEMU binaries will be compatible on the migration
->> > stream with the cmdline specified.
->> >
->> > Switch to a static gic version "3" rather than using version "max", so=
- that
->> > GIC should be stable now across any future QEMU binaries for migration=
--test.
->> >
->> > Here the version can actually be anything as long as the ABI is stable=
-.  We
->> > choose "3" because it's the majority of what we already use in QEMU wh=
-ile
->> > still new enough: "git grep gic-version=3D3" shows 6 hit, while versio=
-n 4 has
->> > no direct user yet besides "max".
->> >
->> > Note that even with this change, aarch64 won't be able to work yet with
->> > migration cross binary test, but then the only missing piece will be t=
-he
->> > stable CPU model.
->> >
->> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >   tests/qtest/migration-test.c | 2 +-
->> >   1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test=
-.c
->> > index 7675519cfa..8a5bb1752e 100644
->> > --- a/tests/qtest/migration-test.c
->> > +++ b/tests/qtest/migration-test.c
->> > @@ -819,7 +819,7 @@ static int test_migrate_start(QTestState **from, Q=
-TestState **to,
->> >       } else if (strcmp(arch, "aarch64") =3D=3D 0) {
->> >           memory_size =3D "150M";
->> >           machine_alias =3D "virt";
->> > -        machine_opts =3D "gic-version=3Dmax";
->> > +        machine_opts =3D "gic-version=3D3";
->> >           arch_opts =3D g_strdup_printf("-cpu max -kernel %s", bootpat=
-h);
->> >           start_address =3D ARM_TEST_MEM_START;
->> >           end_address =3D ARM_TEST_MEM_END;
->>
->> Looks like the migration test now fails on aarch64 when "configure" has =
-been
->> run with "--without-default-devices", since that disables the gicv3 in t=
-he
->> binary ... is there a way to check whether the gicv3 is available, and u=
-se
->> "=3Dmax" instead if it is not?
+  $ git grep -w ACPIOSTInfo
+  qapi/acpi.json:81:# @ACPIOSTInfo:
+  qapi/acpi.json:99:{ 'struct': 'ACPIOSTInfo',
+  qapi/acpi.json:109:# Return a list of ACPIOSTInfo for devices that support status
 
-How about adding aarch64 to the set of targets on the without-defaults
-CI job?
+Include the "qapi/qapi-types-acpi.h" header to avoid the following
+errors when including "hw/acpi/cpu.h" or "hw/acpi/memory_hotplug.h"
+elsewhere:
 
->
-> A QEMU for AArch64 with no GICv3 is of very little practical use,
-> so I'm not sure it makes sense to allow users to build one like that.
-> (I'm also a little surprised that it worked with 'max', because
-> without a GICv3 it would try to fall back to GICv2, and if we're
-> going to allow users to compile-time disable one of the GICs then
-> we should definitely allow them to choose to not build GICv2.)
->
-> I think I would go for disabling the migration test entirely if
-> the build doesn't include the GICv3.
+  include/hw/acpi/cpu.h:67:52: error: unknown type name 'ACPIOSTInfoList'
+  void acpi_cpu_ospm_status(CPUHotplugState *cpu_st, ACPIOSTInfoList ***list);
+                                                     ^
+  include/hw/acpi/memory_hotplug.h:51:55: error: unknown type name 'ACPIOSTInfoList'
+  void acpi_memory_ospm_status(MemHotplugState *mem_st, ACPIOSTInfoList ***list);
+                                                        ^
 
-Makes sense. I've got my hands full right now, but I'll work on it later
-this week along with your other suggestion to only test TCG.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/acpi/cpu.h            | 1 +
+ include/hw/acpi/memory_hotplug.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-Thanks
+diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
+index bc901660fb..e011d01adf 100644
+--- a/include/hw/acpi/cpu.h
++++ b/include/hw/acpi/cpu.h
+@@ -12,6 +12,7 @@
+ #ifndef ACPI_CPU_H
+ #define ACPI_CPU_H
+ 
++#include "qapi/qapi-types-acpi.h"
+ #include "hw/qdev-core.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
+diff --git a/include/hw/acpi/memory_hotplug.h b/include/hw/acpi/memory_hotplug.h
+index dfe9cf3fde..38841d7b06 100644
+--- a/include/hw/acpi/memory_hotplug.h
++++ b/include/hw/acpi/memory_hotplug.h
+@@ -1,6 +1,7 @@
+ #ifndef QEMU_HW_ACPI_MEMORY_HOTPLUG_H
+ #define QEMU_HW_ACPI_MEMORY_HOTPLUG_H
+ 
++#include "qapi/qapi-types-acpi.h"
+ #include "hw/qdev-core.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
+-- 
+2.41.0
 
 
