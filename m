@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F481C5475B
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB8DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:36:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz4f-0005GJ-3u; Mon, 19 Feb 2024 03:32:29 -0500
+	id 1rbz3I-0000Za-1k; Mon, 19 Feb 2024 03:31:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz4T-0004xP-TS; Mon, 19 Feb 2024 03:32:18 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1rbz3E-0000Ra-7c; Mon, 19 Feb 2024 03:31:00 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz4R-0002Y8-M9; Mon, 19 Feb 2024 03:32:17 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dba177c596so20072045ad.0; 
- Mon, 19 Feb 2024 00:32:14 -0800 (PST)
+ id 1rbz3C-0002Hm-DW; Mon, 19 Feb 2024 03:30:59 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e45bd5014dso65946b3a.1; 
+ Mon, 19 Feb 2024 00:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331533; x=1708936333; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331456; x=1708936256; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6mOx/ZOZzdjWfC1DAtK2q5WSUrtNSa8E8AfSYcVc8Ng=;
- b=OdNiYImQEJzGcd7RitnDLySmz4cx66Q/EXfFVkiUF2Nzl1NJUrUwtBwPz6mlO6eVR6
- Y7kNyiECubTRq0QEAWQL+Hjq3YT2+MjKkWWpxP96H21hYUt5XXiRynY6Z/DcK/7AyICG
- nmvBg2tAywtCZUwJ+T4RrmbZNO5Uik+ciDWN9X9XfdqFWPtdgUyNpkKpT7Uc1UyHdkjt
- CMu8Kli8lIkL8L7jzRpnJrEJkcim4ocQeMqmtUEXKPr6MImzuaO5exH5Sz9Q1UIJPwwZ
- M8hHw+sZIqQUCj9Og6UPsrgwLEXRpajjLtxbCVOo/b8nAfbwbqm4WmgjnFl/+nAqTcD9
- ZetA==
+ bh=DpJTcCEBaucSP+9TveiDuIoWZzeK5xPgEMIfuzilfqU=;
+ b=S6DQSo0A/Y3j2de7Fn10zDEsqdKC2u4uQEjHGkn1LQ+56sAGJZlVybmlQN+jjgDqYC
+ x8rTAJM8qxo6JqFTbGGCUdO2MDTeMVABvRGzCsgLq5zD8ViaZYd95geuWLrSLEHc3poj
+ DtPQqp4aYCNE73TvsRrM9zEJquSXv+wE0xGCA+0bxmyUu7VF/84PRPFoeOuS8acg2Hl1
+ pNZ6Bo0kDzt4O3SMY5xcfgHO/JjniPlN9L8BDkV5adaMz9TJvZQcAaClhQhgRiA1/3zc
+ IE+tYJe8eaa7r7m5qugA6Ala2T9Tt8DrvPM8L0KE60+xD1y+vsc9ujPhlbLU10NrR7qy
+ k8aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331533; x=1708936333;
+ d=1e100.net; s=20230601; t=1708331456; x=1708936256;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6mOx/ZOZzdjWfC1DAtK2q5WSUrtNSa8E8AfSYcVc8Ng=;
- b=TJz8yTfLxEUWoQB4xZsBnN07qfZOrA6kJH9Xr9PqDi9FPryTFFdRwdNghWNTSauvrT
- d1ZH6zR6/8hDiAkQDs1Y+H7hnPXPC+9WiKDpmR1dKpVbn8DCDnzkKg/kMklD+nr6nEJ2
- qgsg85CRlN2Z1zzYiTFnOion3dovdrxfJC1mIezxgJHHiF6dFaYi75IgeNNDLuWlPIri
- XgW2Fll/YCZHjgHolJvQ14llM8QZErL76Nw8y5YadcSMh2MIkx4XNsSa23HbOfMG1k7S
- V4VTeUm+PyifWbXGA1oT32vDnRGQFssQKDRp6D6T94Uywd8zdCnpRwrjg+81jjqkNqW7
- 47Vg==
+ bh=DpJTcCEBaucSP+9TveiDuIoWZzeK5xPgEMIfuzilfqU=;
+ b=G2Z8SqKTuAVWObl8WfRmyPTC0afzRM7oKXNgVRDfNsTRGfxmx18eOEqF2GVKfvD/qe
+ cexSDtnFu7N2WVZFhjM9iEazJYcL6r19i2022ZCbDO5oiQ3YeE4c5jKqkIAg3ue0v+Ef
+ q9/jmBBguiTVWBBqlMLlaGdbIfXQ2oZsytRP2Y6I+qDxNDkmHI5G79K3paSeMfRhmGxI
+ H6N1C5x6NiTA3gZQ9faezp6f6q32JB3WAldI2xyYfrooyzsQS6x+dF/sX4kIikTLGpPo
+ QZUupjumk8jhlQu6qcl6qKHvhDjQBuhSkz+vrSVP+NDbFzduLBC146iX6E0GK/wySSN2
+ J90g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkaug5CAGtdJZ66/JfPVAPakg8tfiKgb870wjgInKTqnnr/SUVGeYg6Q06Dq+qxWjxAr0biuPfAkGhA0/M2pJW2F95
-X-Gm-Message-State: AOJu0YyBgOE1wQOEIf9ues8y5XQEG3y1/riuhOcaJiSmanqhI1yf0f3D
- +MXnQUsd/m0aMECxCI3OX/7uX7bUy3Dr1VD3sB/aPLzGtlJJqDHvg/ckYAl8
-X-Google-Smtp-Source: AGHT+IEcrIvM0U+tbqsxwyhPK3xFkswoKEf+WBjfmB/YPLVnLlBU+Ro/AjxaC/2pwtdhb0bdan66Ow==
-X-Received: by 2002:a17:902:e746:b0:1d9:a15:615d with SMTP id
- p6-20020a170902e74600b001d90a15615dmr17124314plf.1.1708331533403; 
- Mon, 19 Feb 2024 00:32:13 -0800 (PST)
+ AJvYcCWu1r3eWJ4jS1L6vdHpfhZ8VbGE4i2vcjiEy37sOFCiQroTZwiDmEwFM+RCes/V5hQvkkQzMm6y5Ssd/xt2QSM5a2pe
+X-Gm-Message-State: AOJu0YxCtQoVyxs9KwQjiVeo4yjzhNT0PUIcNIkZot8cqOKrwXwBHsOI
+ paz+ukQwjOTF4mecmMCi6CDAIv7OU9HF2kqkM+AAQEpWg0NdiwdTQhqxZYvY
+X-Google-Smtp-Source: AGHT+IHk9J2elGgP8PTZMwNj9mavhaXu7zU2nbGgMkSzQwPb6o6YQ38BfLrhpsMIUC5AsRVav7C7jw==
+X-Received: by 2002:a17:902:6b05:b0:1db:a2bc:22c8 with SMTP id
+ o5-20020a1709026b0500b001dba2bc22c8mr7784496plk.58.1708331455944; 
+ Mon, 19 Feb 2024 00:30:55 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.32.09
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.30.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:32:13 -0800 (PST)
+ Mon, 19 Feb 2024 00:30:55 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>
-Subject: [PULL 30/49] ppc/pnv: Add a pca9554 I2C device to powernv10-rainier
-Date: Mon, 19 Feb 2024 18:29:19 +1000
-Message-ID: <20240219082938.238302-31-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 12/49] target/ppc: Rename registers to match ISA
+Date: Mon, 19 Feb 2024 18:29:01 +1000
+Message-ID: <20240219082938.238302-13-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,79 +97,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.vnet.ibm.com>
+Several registers have names that don't match the ISA (or convention
+with other QEMU PPC registers), making them unintuitive to use with
+GDB.
 
-For powernv10-rainier, the Power Hypervisor code expects to see a
-pca9554 device connected to the 3rd PNV I2C engine on port 1 at I2C
-address 0x25 (or left-justified address of 0x4A).  This is used by
-the hypervisor code to detect if a "Cable Card" is present.
+Fortunately most of these registers are obscure and/or have not been
+correctly implemented in the gdb server (e.g., DEC, TB, CFAR), so risk
+of breaking users should be low.
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+QEMU should follow the ISA for register name convention (where there is
+no established GDB name).
+
+Acked-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/misc/Kconfig     | 4 ++++
- hw/misc/meson.build | 1 +
- hw/ppc/Kconfig      | 1 +
- hw/ppc/pnv.c        | 6 ++++++
- 4 files changed, 12 insertions(+)
+ target/ppc/cpu_init.c    | 20 ++++++++++----------
+ target/ppc/helper_regs.c |  2 +-
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 4fc6b29b43..83ad849b62 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -34,6 +34,10 @@ config PCA9552
-     bool
-     depends on I2C
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 9931372a08..9bccddb350 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -5062,7 +5062,7 @@ static void register_970_hid_sprs(CPUPPCState *env)
  
-+config PCA9554
-+    bool
-+    depends on I2C
-+
- config I2C_ECHO
-     bool
-     default y if TEST_DEVICES
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e4ef1da5a5..746686835b 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -4,6 +4,7 @@ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
- system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
- system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
-+system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
- system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
- system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
-diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-index 8e592e4307..d97743d02f 100644
---- a/hw/ppc/Kconfig
-+++ b/hw/ppc/Kconfig
-@@ -33,6 +33,7 @@ config POWERNV
-     select FDT_PPC
-     select PCI_POWERNV
-     select PCA9552
-+    select PCA9554
+ static void register_970_hior_sprs(CPUPPCState *env)
+ {
+-    spr_register(env, SPR_HIOR, "SPR_HIOR",
++    spr_register(env, SPR_HIOR, "HIOR",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_hior, &spr_write_hior,
+                  0x00000000);
+@@ -5070,11 +5070,11 @@ static void register_970_hior_sprs(CPUPPCState *env)
  
- config PPC405
-     bool
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 97bdfb2d1e..0755fab155 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1913,6 +1913,12 @@ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
-         qdev_connect_gpio_out(DEVICE(dev), 2, qdev_get_gpio_in(DEVICE(dev), 7));
-         qdev_connect_gpio_out(DEVICE(dev), 3, qdev_get_gpio_in(DEVICE(dev), 8));
-         qdev_connect_gpio_out(DEVICE(dev), 4, qdev_get_gpio_in(DEVICE(dev), 9));
-+
-+        /*
-+         * Add a PCA9554 I2C device for cable card presence detection
-+         * to engine 2, bus 1, address 0x25
-+         */
-+        i2c_slave_create_simple(chip10->i2c[2].busses[1], "pca9554", 0x25);
-     }
- }
+ static void register_book3s_ctrl_sprs(CPUPPCState *env)
+ {
+-    spr_register(env, SPR_CTRL, "SPR_CTRL",
++    spr_register(env, SPR_CTRL, "CTRL",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  SPR_NOACCESS, &spr_write_CTRL,
+                  0x00000000);
+-    spr_register(env, SPR_UCTRL, "SPR_UCTRL",
++    spr_register(env, SPR_UCTRL, "UCTRL",
+                  &spr_read_ureg, SPR_NOACCESS,
+                  &spr_read_ureg, SPR_NOACCESS,
+                  0x00000000);
+@@ -5465,7 +5465,7 @@ static void register_book3s_purr_sprs(CPUPPCState *env)
+ static void register_power6_dbg_sprs(CPUPPCState *env)
+ {
+ #if !defined(CONFIG_USER_ONLY)
+-    spr_register(env, SPR_CFAR, "SPR_CFAR",
++    spr_register(env, SPR_CFAR, "CFAR",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_cfar, &spr_write_cfar,
+                  0x00000000);
+@@ -5483,7 +5483,7 @@ static void register_power5p_common_sprs(CPUPPCState *env)
+ static void register_power6_common_sprs(CPUPPCState *env)
+ {
+ #if !defined(CONFIG_USER_ONLY)
+-    spr_register_kvm(env, SPR_DSCR, "SPR_DSCR",
++    spr_register_kvm(env, SPR_DSCR, "DSCR",
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_DSCR, 0x00000000);
+@@ -5695,7 +5695,7 @@ static void register_power8_book4_sprs(CPUPPCState *env)
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_ACOP, 0);
+     /* PID is only in BookE in ISA v2.07 */
+-    spr_register_kvm(env, SPR_BOOKS_PID, "PID",
++    spr_register_kvm(env, SPR_BOOKS_PID, "PIDR",
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_pidr,
+                      KVM_REG_PPC_PID, 0);
+@@ -5716,7 +5716,7 @@ static void register_power7_book4_sprs(CPUPPCState *env)
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_ACOP, 0);
+     /* PID is only in BookE in ISA v2.06 */
+-    spr_register_kvm(env, SPR_BOOKS_PID, "PID",
++    spr_register_kvm(env, SPR_BOOKS_PID, "PIDR",
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_generic32,
+                      KVM_REG_PPC_PID, 0);
+@@ -5750,7 +5750,7 @@ static void register_power9_mmu_sprs(CPUPPCState *env)
+                     &spr_read_generic, &spr_write_generic,
+                     0x0000000000000000);
+     /* PID is part of the BookS ISA from v3.0 */
+-    spr_register_kvm(env, SPR_BOOKS_PID, "PID",
++    spr_register_kvm(env, SPR_BOOKS_PID, "PIDR",
+                      SPR_NOACCESS, SPR_NOACCESS,
+                      &spr_read_generic, &spr_write_pidr,
+                      KVM_REG_PPC_PID, 0);
+@@ -5791,7 +5791,7 @@ static void register_power10_dexcr_sprs(CPUPPCState *env)
+             &spr_read_generic, &spr_write_generic32,
+             0);
  
+-    spr_register(env, SPR_UDEXCR, "DEXCR",
++    spr_register(env, SPR_UDEXCR, "UDEXCR",
+             &spr_read_dexcr_ureg, SPR_NOACCESS,
+             &spr_read_dexcr_ureg, SPR_NOACCESS,
+             0);
+@@ -5802,7 +5802,7 @@ static void register_power10_dexcr_sprs(CPUPPCState *env)
+             &spr_read_generic, &spr_write_generic32,
+             0);
+ 
+-    spr_register(env, SPR_UHDEXCR, "HDEXCR",
++    spr_register(env, SPR_UHDEXCR, "UHDEXCR",
+             &spr_read_dexcr_ureg, SPR_NOACCESS,
+             &spr_read_dexcr_ureg, SPR_NOACCESS,
+             0);
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index e0b2dcd02e..8324ff22db 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -490,7 +490,7 @@ void register_non_embedded_sprs(CPUPPCState *env)
+                      &spr_read_generic, &spr_write_generic,
+                      KVM_REG_PPC_DAR, 0x00000000);
+     /* Timer */
+-    spr_register(env, SPR_DECR, "DECR",
++    spr_register(env, SPR_DECR, "DEC",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_decr, &spr_write_decr,
+                  0x00000000);
 -- 
 2.42.0
 
