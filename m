@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62739C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 20:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346CDC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 20:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcASL-00080a-Cq; Mon, 19 Feb 2024 15:41:42 -0500
+	id 1rcATC-0008UP-0i; Mon, 19 Feb 2024 15:42:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcASI-000802-DG
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 15:41:38 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcASF-00053W-Tc
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 15:41:37 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a3ed9cae56fso111534066b.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 12:41:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708375293; x=1708980093; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9PRAtNB64fi/Ho3MFXo2ha3qxf9llUUPvZwmCKh/LoU=;
- b=FnUyXE/23n9sTc3y8Ah7OPD+iCvfZe1lOL8S+fms7rzo/eZxjRHtnDD/6DIR1emvh2
- UPQX1YMF8wxxZckPBqqUxshoTgKTQNeNGOAEJZMtcILubo08gV93vaVaIich0rRP8IE8
- vUBjdxF+cSy6nredrUR+KXJPvvF/eNVJe/NCSsaBNzyg9Dn8kY4xfFbfAepB/b6tjKSn
- 8iapOC1OhgDnNm+bqBnIztI4itjMxzWwtKk7mpuuJuNFC6pAgsKqEx1yYqcdRJTj/VN5
- gmtJc4j/DYR3yJBeNVq5/cnmrgjxuSUYEdJc0i6TGSQAmZVu/o3RvldB00isrlGZ6Znl
- H21A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708375293; x=1708980093;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9PRAtNB64fi/Ho3MFXo2ha3qxf9llUUPvZwmCKh/LoU=;
- b=MZybQwkAwPXxDWjxBdkKMBeQO4+GyKwUl8tQ/bN+WGJdN/fRNG0UNavLA8hW/MPfh3
- C7/VfIS2nAEeQOi/MvBUGhaIyMkdoFTKd1cEYC2lx/95Z5u6L4VFWzxUjPZj6ISExR8/
- 4R9gDTVhynKhpSqjLXTrMaTWgm+uv7TQi0vmhKLeQZq4FrKzAel0m22fSj96CWeJk1Qo
- ZF7cHojQaSz1fEYID8w5aMdtYF5rswmcBPbHDxGT0ifd47aZEDoCBb3xxyI+fp6D7JQq
- 6wKMhNeZBMXhSulFSgPZ3lI0MUdNVE3/dzheQrZTQp9nG13rGhCU5B6YYEPcP26XpU3J
- zH4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlKoFeKxdVrEn5SiLXSI7Ff4dPbRwagUqFnha0KYnTuZbEPtgD3LdT0HVVhLYbewgKUwY5xOlXZcdg2samopQS1ZGpF/4=
-X-Gm-Message-State: AOJu0YznMYIbHwCME64NozVST/Q53x7vBKcS8EHhdya+rN1X90/DHMND
- ZMG5vR4MZI5UH6zopA/MsuZfbpcDrZhPUs7dRj+smfFgwFwTr52i
-X-Google-Smtp-Source: AGHT+IFT8NM+xB3nHDV+c1DB5vjL/WhS4xa9oa8VItHSHYMorB+f0jPxftEK0A3/fBLV8oogOPji1w==
-X-Received: by 2002:a17:907:9483:b0:a3e:a383:3581 with SMTP id
- dm3-20020a170907948300b00a3ea3833581mr3906610ejc.24.1708375293206; 
- Mon, 19 Feb 2024 12:41:33 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-089-014-244-242.89.14.pool.telefonica.de.
- [89.14.244.242]) by smtp.gmail.com with ESMTPSA id
- w24-20020a1709067c9800b00a3ec01c4079sm874796ejo.224.2024.02.19.12.41.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 12:41:32 -0800 (PST)
-Date: Mon, 19 Feb 2024 20:41:32 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-CC: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_hw/i386/pc=5Fq35=3A_Populate_interru?=
- =?US-ASCII?Q?pt_handlers_before_realizing_LPC_PCI_function?=
-In-Reply-To: <cd0e13c6-c03d-411f-83a5-1d4d28ea4345@linaro.org>
-References: <20240217104644.19755-1-shentey@gmail.com>
- <cd0e13c6-c03d-411f-83a5-1d4d28ea4345@linaro.org>
-Message-ID: <0FFB5FD2-08CE-4CEC-9001-E7AC24407A44@gmail.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcAT8-0008U0-AL
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 15:42:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcAT3-0005BF-Cz
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 15:42:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708375344;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XuDTBkw1wSaPCP1GHtjMVNOMx8kMwUG0AeUDb913NWg=;
+ b=FPmXVNWWmc6eEgbVrpHORN4qdK9U/xnpt72j1CSiUVXmqv8SGrEVZuYLqUjaNNyBUXpXd1
+ i2M1EEeMPoqUhKkRYN0FoHKXcYxJ85ovaUdWie3nUexJICj5f9ebo/WTimKR80wrN9oaVT
+ 9dERWvg+6OWKk5vtiWcCB6KonoI2Wa0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-33-Bq-PQy1uMaebWrS0teWnRQ-1; Mon, 19 Feb 2024 15:42:21 -0500
+X-MC-Unique: Bq-PQy1uMaebWrS0teWnRQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6024B85A58A;
+ Mon, 19 Feb 2024 20:42:21 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CF2E82026D06;
+ Mon, 19 Feb 2024 20:42:20 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BEC8021E66D0; Mon, 19 Feb 2024 21:42:19 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Sam Li <faithilikerun@gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
+ dlemoal@kernel.org,  Hanna Reitz <hreitz@redhat.com>,
+ dmitry.fomichev@wdc.com,  qemu-block@nongnu.org,  Eric Blake
+ <eblake@redhat.com>,  hare@suse.de,  Kevin Wolf <kwolf@redhat.com>,
+ stefanha@redhat.com
+Subject: Re: [PATCH v7 2/4] qcow2: add configurations for zoned format
+ extension
+In-Reply-To: <CAAAx-8+Am5ehs6tyA64Vms713+34iq44yR6SvWr7CpHX_dq-MA@mail.gmail.com>
+ (Sam Li's message of "Mon, 19 Feb 2024 17:09:58 +0100")
+References: <20240122184830.40094-1-faithilikerun@gmail.com>
+ <20240122184830.40094-3-faithilikerun@gmail.com>
+ <87plwsfyyv.fsf@pond.sub.org> <87edd8fyme.fsf@pond.sub.org>
+ <CAAAx-8KAD1bygZsnCtkCYO=oNf7W2xnqGU+RD5Afsz8jcBUYhg@mail.gmail.com>
+ <877cj0jz5u.fsf@pond.sub.org>
+ <CAAAx-8JYR2r7BzWWVtcY9h8ZgNq1an4=eTCwBnDNe+HwbkgHeg@mail.gmail.com>
+ <87a5nwh2h6.fsf@pond.sub.org>
+ <CAAAx-8+Am5ehs6tyA64Vms713+34iq44yR6SvWr7CpHX_dq-MA@mail.gmail.com>
+Date: Mon, 19 Feb 2024 21:42:19 +0100
+Message-ID: <87o7ccfaok.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,101 +95,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Sam Li <faithilikerun@gmail.com> writes:
 
+> Markus Armbruster <armbru@redhat.com> =E4=BA=8E2024=E5=B9=B42=E6=9C=8819=
+=E6=97=A5=E5=91=A8=E4=B8=80 16:56=E5=86=99=E9=81=93=EF=BC=9A
+>>
+>> Sam Li <faithilikerun@gmail.com> writes:
+>>
+>> > Markus Armbruster <armbru@redhat.com> =E4=BA=8E2024=E5=B9=B42=E6=9C=88=
+19=E6=97=A5=E5=91=A8=E4=B8=80 15:40=E5=86=99=E9=81=93=EF=BC=9A
+>> >>
+>> >> Sam Li <faithilikerun@gmail.com> writes:
+>> >>
+>> >> > Markus Armbruster <armbru@redhat.com> =E4=BA=8E2024=E5=B9=B42=E6=9C=
+=8819=E6=97=A5=E5=91=A8=E4=B8=80 13:05=E5=86=99=E9=81=93=EF=BC=9A
+>> >> >>
+>> >> >> One more thing...
+>> >> >>
+>> >> >> Markus Armbruster <armbru@redhat.com> writes:
+>> >> >>
+>> >> >> > I apologize for the delayed review.
+>> >> >
+>> >> > No problems. Thanks for reviewing!
+>> >> >
+>> >> >> >
+>> >> >> > Sam Li <faithilikerun@gmail.com> writes:
+>> >> >> >
+>> >> >> >> To configure the zoned format feature on the qcow2 driver, it
+>> >> >> >> requires settings as: the device size, zone model, zone size,
+>> >> >> >> zone capacity, number of conventional zones, limits on zone
+>> >> >> >> resources (max append bytes, max open zones, and max_active_zon=
+es).
+>> >> >> >>
+>> >> >> >> To create a qcow2 image with zoned format feature, use command =
+like
+>> >> >> >> this:
+>> >> >> >> qemu-img create -f qcow2 zbc.qcow2 -o size=3D768M \
+>> >> >> >> -o zone.size=3D64M -o zone.capacity=3D64M -o zone.conventional_=
+zones=3D0 \
+>> >> >> >> -o zone.max_append_bytes=3D4096 -o zone.max_open_zones=3D6 \
+>> >> >> >> -o zone.max_active_zones=3D8 -o zone.mode=3Dhost-managed
+>> >> >> >>
+>> >> >> >> Signed-off-by: Sam Li <faithilikerun@gmail.com>
+>> >> >> >
+>> >> >> > [...]
+>> >> >> >
+>> >> >> >> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> >> >> >> index ca390c5700..e2e0ec21a5 100644
+>> >> >> >> --- a/qapi/block-core.json
+>> >> >> >> +++ b/qapi/block-core.json
+>> >> >> >> @@ -5038,6 +5038,67 @@
+>> >> >> >>  { 'enum': 'Qcow2CompressionType',
+>> >> >> >>    'data': [ 'zlib', { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
+>> >> >> >>
+>> >> >> >> +##
+>> >> >> >> +# @Qcow2ZoneModel:
+>> >> >> >> +#
+>> >> >> >> +# Zoned device model used in qcow2 image file
+>> >> >> >> +#
+>> >> >> >> +# @host-managed: The host-managed model only allows sequential=
+ write over the
+>> >> >> >> +#     device zones.
+>> >> >> >> +#
+>> >> >> >> +# Since 8.2
+>> >> >> >> +##
+>> >> >> >> +{ 'enum': 'Qcow2ZoneModel',
+>> >> >> >> +  'data': [ 'host-managed'] }
+>> >> >> >> +
+>> >> >> >> +##
+>> >> >> >> +# @Qcow2ZoneHostManaged:
+>> >> >> >> +#
+>> >> >> >> +# The host-managed zone model.  It only allows sequential writ=
+es.
+>> >> >> >> +#
+>> >> >> >> +# @size: Total number of bytes within zones.
+>> >> >> >
+>> >> >> > Default?
+>> >> >
+>> >> > It should be set by users. No default value provided. If it's unset
+>> >> > then it is zero and an error will be returned.
+>> >>
+>> >> If the user must provide @size, why is it optional then?
+>> >
+>> > It is not optional when the zone model is host-managed. If it's
+>> > non-zoned, then we don't care about zone info. I am not sure how to
+>> > make it unoptional.
+>>
+>> We have:
+>>
+>>    blockdev-create argument @options of type BlockdevCreateOptions
+>>
+>>    BlockdevCreateOptions union branch @qcow2 of type
+>>    BlockdevCreateOptionsQcow2, union tag member is @driver
+>>
+>>    BlockdevCreateOptionsQcow2 optional member @zone of type
+>>    Qcow2ZoneCreateOptions, default not zoned
+>>
+>>    Qcow2ZoneCreateOptions union branch @host-managed of type
+>>    Qcow2ZoneHostManaged, union tag member is @mode
+>>
+>>    Qcow2ZoneHostManaged optional member @size of type size.
+>>
+>> Making this member @size mandatory means we must specify it when
+>> BlockdevCreateOptionsQcow2 member @zone is present and @zone's member
+>> @mode is "host-managed".  Feels right to me.  Am I missing anything?
+>
+> That's right. And the checks when creating such an img can help do
+> that. It's not specified in the .json file directly.
 
-Am 19=2E Februar 2024 08:51:07 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
-philmd@linaro=2Eorg>:
->On 17/2/24 11:46, Bernhard Beschow wrote:
->> The interrupt handlers need to be populated before the device is realiz=
-ed since
->> internal devices such as the RTC are wired during realize()=2E If the i=
-nterrupt
->> handlers aren't populated, devices such as the RTC will be wired with a=
- NULL
->> interrupt handler, i=2Ee=2E MC146818RtcState::irq is NULL=2E
->>=20
->> Fixes: fc11ca08bc29 "hw/i386/q35: Realize LPC PCI function before acces=
-sing it"
->
->I think this commit is correct, but exposes a pre-existing bug=2E
->
->I noticed it for the PC equivalent, so didn't posted the
->pci_realize_and_unref() change there, but missed the Q35 is
->similarly affected=2E
->
->IMO the problem is how the GSI lines are allocated=2E The ISA
->ones are allocated twice!
->
->Before this patch, the 1st alloc is just overwritten and
->ignored, ISA RTC IRQ is assigned to the 2nd alloc=2E
->
->After this patch, ISA RTC IRQ is assigned to the 1st alloc,
->then the 2nd alloc wipe it, and an empty IRQ is eventually
->wired later=2E
->
->The proper fix is to alloc ISA IRQs just once=2E Either filling
->GSI with them, or having GSI take care of that=2E
->
->Since GSI is not a piece of HW but a concept to simplify
->developers writing x86 HW drivers, I currently think we shouldn't
->model it as a QOM container=2E
+What would break if we did specify it in the QAPI schema directly?
 
-The qdev_connect_gpio_out_named() call below populates an internal array o=
-f IOAPIC_NUM_PINS callbacks inside the LPC device=2E These callbacks trigge=
-r IRQs=2E The RTC inside the LPC device relies on this array to be populate=
-d with valid handlers during LPC's realize, else the RTC gets wired with no=
-/invalid callbacks=2E This patch fixes this array to be populated before re=
-alize=2E Before this patch, the array was populated after LPC's realize, ca=
-using NULL callbacks to be assigned to the RTC there=2E
+[...]
 
-Thus, IRQ allocations don't seem like the underlying problem to me=2E
-
-The general pattern I see here is that qdev_connect_gpio_out_*() should be=
- performed *before* realizing the device passed as the first argument=2E Th=
-e reason is that this device could contain an arbitrarily deep nesting of i=
-nternal devices which may want to be assigned valid IRQ callbacks during it=
-s realize=2E AFAICS this pattern would work recursively, so internal device=
-s which have themselves internal devices would be wired correctly=2E This p=
-attern may not be immediately evident since most of the time we're wiring "=
-leaf" devices which can be wired either way=2E
-
-Furthermore, it seems that qdev_get_gpio_in_*() may need to be called *aft=
-er* a device's realize because the device may need to prepare its IRQs befo=
-re exposing them=2E So it looks like qdev_get_gpio_in_*() and qdev_get_gpio=
-_out_*() should be treated in dual manner=2E
-
-Note that "IRQ forwarders" like piix_request_i8259_irq() may allow qdev_co=
-nnect_gpio_out_*() to be called after a device has been realized=2E This pa=
-ttern comes with a small performance penalty and might add some cognitive l=
-oad when trying to understand code=2E So the above pattern seems like the p=
-referable solution=2E
-
-Best regards,
-Bernhard
-
->
->> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>   hw/i386/pc_q35=2Ec | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>=20
->> diff --git a/hw/i386/pc_q35=2Ec b/hw/i386/pc_q35=2Ec
->> index d346fa3b1d=2E=2E43675bf597 100644
->> --- a/hw/i386/pc_q35=2Ec
->> +++ b/hw/i386/pc_q35=2Ec
->> @@ -240,10 +240,10 @@ static void pc_q35_init(MachineState *machine)
->>       lpc_dev =3D DEVICE(lpc);
->>       qdev_prop_set_bit(lpc_dev, "smm-enabled",
->>                         x86_machine_is_smm_enabled(x86ms));
->> -    pci_realize_and_unref(lpc, host_bus, &error_fatal);
->>       for (i =3D 0; i < IOAPIC_NUM_PINS; i++) {
->>           qdev_connect_gpio_out_named(lpc_dev, ICH9_GPIO_GSI, i, x86ms-=
->gsi[i]);
->>       }
->> +    pci_realize_and_unref(lpc, host_bus, &error_fatal);
->>         rtc_state =3D ISA_DEVICE(object_resolve_path_component(OBJECT(l=
-pc), "rtc"));
->>  =20
->
 
