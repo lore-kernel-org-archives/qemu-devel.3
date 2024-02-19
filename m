@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C89A8C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 17:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7A9C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 17:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc7j9-0002Ap-Nj; Mon, 19 Feb 2024 12:46:51 -0500
+	id 1rc7nz-00044B-JL; Mon, 19 Feb 2024 12:51:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rc7j3-0002AN-5z
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 12:46:45 -0500
+ id 1rc7nx-00043I-HP
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 12:51:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rc7j1-0006rA-Ae
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 12:46:44 -0500
+ id 1rc7nt-00086L-1l
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 12:51:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708364802;
+ s=mimecast20190719; t=1708365103;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PjB/RAxotsZCWqt5XLgSLluD+e5KjLTrSK7blaWPM78=;
- b=OrEP2WTQYNFSmboXFCy834E4mQCzOmZAroKFhAI0LXjbgn0XLFyPVNT60Sd+KX3jFQyQxz
- ekkCK4B6KniPeUUkE+g/vhXAvsSHUjTj4XNf1arY7g+HnOvC9ncFAqZMWY8E2SYYqUh3oQ
- HsOZs0HUiKQXNijxCCNBSp8gNs2AVjQ=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s8H1eFPOhtSw8K5hz/X/ZhKjJEt2LFUFnC9oN0PdPSg=;
+ b=bUs0oOvEyCE1aoWDTGwaHsI8kuYWscvwkrFAtgJAT6OP1raUTkBwmraVEtU4W4j5GJfzr4
+ zk67R5WVgSODl1ozrEyzBYc4orHE3CvfZyYCyxfDCBo5hlXaKQ9LoAjDqWxjZv0nWmhq/x
+ 8rA2TIh3NG+LKfpE7CURyJHU/mdO6ic=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646-9jmemBc1Nb23_GfgfE5ItQ-1; Mon, 19 Feb 2024 12:46:40 -0500
-X-MC-Unique: 9jmemBc1Nb23_GfgfE5ItQ-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-785db68c0b2so469498285a.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 09:46:40 -0800 (PST)
+ us-mta-524-dzGjr6LvOoS1BFivRZu78w-1; Mon, 19 Feb 2024 12:51:42 -0500
+X-MC-Unique: dzGjr6LvOoS1BFivRZu78w-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3c13db33d54so4797767b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 09:51:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708364800; x=1708969600;
+ d=1e100.net; s=20230601; t=1708365102; x=1708969902;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PjB/RAxotsZCWqt5XLgSLluD+e5KjLTrSK7blaWPM78=;
- b=roqYn27UXA8LBBn03bWkZRh1oQNMaow4fzTFSqclCH3TJMzX3joYh62e2kpd3qMzHm
- L+Bv/ralbSTkF94iMJ2tZKvm5aced3JNh24dgS/VTlpM+anw1V+M9h/XG3mhWqcZ/Srg
- D1cRRhJxu0/SThPWHbJ4B8w2mWkzhukWXsteEH47kN1FKmk7rREZJJiJhqNV9NFy9B1j
- DpEZanmcNopj+v0KFPtxq99PBoIFN3OgE8WC2GJ5X8iT9OeNjmdWEMKc9BQzThQQ7EVi
- Yue4ZhNak3DDxNgVKHXmmTn/MWwMT54zPW/xJE+/dAVrcGm/+Mfp5MsZQHHth43GIVWh
- kBKw==
+ bh=s8H1eFPOhtSw8K5hz/X/ZhKjJEt2LFUFnC9oN0PdPSg=;
+ b=bNZnMi75kkKRVzTxP+NFIaDwgvEt/PDoSTwZtqek0RrtOkuydQxXfnvMWcVY2pL98l
+ fidxvScmAnia4yV7YFXPVEyOJ39Ik59fb8uI48OTgg9ueA64eYfu5AtyrdIlQxXp0oDh
+ /k+N7SSZ4L99bKDgeJ6r4q7XfBeLEiELWguKLZX3xtnb8r3fwAn02Kvn5SI/rYVUOPvd
+ Z/8Kvs80nEbYhTef8n3qF4yUF85iWuHL0I6d0W1Iq8k3x6K3q8UhOhINiE8mXKaOX4ve
+ tY7pP9/mpl0N3GwbllybrLVwLfBuTCPHi3V9sBxdRAgxtvFICopcszZ2bSNpHPHO+v36
+ wq8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1ZddntQGXdLbnZdOJpbAX+hqnWB9BMPQFhT0dIjbtPQJdbXgxdunTpb5RqogahElbaezqtiwnbDL+qKV6PMKudE3R5Kc=
-X-Gm-Message-State: AOJu0YzU1Ro8eGmXSlxynqQDjOhwHGJRjIz2xQgW2ACBwJs/JEQ9/oh7
- APxEP/KrXcFtfQ6+yzyhxrhriUg7lbcL6NJTcsRkZ+oTd8KMvLcvFExPp3kAwDftUwy3x9yMnZG
- bxBTfEzaoBKEbpJTpZReTeL7fcdBpMSAxdnpS/DQAoTr8WdKx/tbm
-X-Received: by 2002:a05:620a:a0b:b0:787:3503:6c71 with SMTP id
- i11-20020a05620a0a0b00b0078735036c71mr11678473qka.5.1708364799733; 
- Mon, 19 Feb 2024 09:46:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCVFA3i8XzSjppj50Bt/VgXH83K+p0wIMa6Ba8HWezP2aNswIx97O+Bo6pSebxi0GsyUJAgg==
-X-Received: by 2002:a05:620a:a0b:b0:787:3503:6c71 with SMTP id
- i11-20020a05620a0a0b00b0078735036c71mr11678444qka.5.1708364799351; 
- Mon, 19 Feb 2024 09:46:39 -0800 (PST)
+ AJvYcCW6mkHQdzHjxbupgHmP/ftdX/j/iQ5FeizmxhZHeMpEl+R4xHNpbDHgT0Cc8rAP20IF5RUAHIGOsZliqf3GW3T1mu4pKbY=
+X-Gm-Message-State: AOJu0Yx370TOI3UGp31rNJB6q/Efkl9tZCzyw0RPVUC7L+YJCvkvL0A8
+ itg83E2sgE6Q0gSD9nfksw3iJHJGo2qtsOFI9xTj1gXq18XJo0sEOzXTIbuIWY5n+iCnuBn0xP2
+ c2Q0TNjDOTdx2bOU2weiK43cYd5erRh/OFCRhpSWcZ9ZukscxApa2
+X-Received: by 2002:a05:6808:198d:b0:3c1:55ad:dd25 with SMTP id
+ bj13-20020a056808198d00b003c155addd25mr5283386oib.59.1708365101807; 
+ Mon, 19 Feb 2024 09:51:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFW0jhIH1yFerNZyZRBqTOlc44rLY5TC+d0zzXGiwAfbFXWchyoTQ7O9IQRqhpxWY9LturGGw==
+X-Received: by 2002:a05:6808:198d:b0:3c1:55ad:dd25 with SMTP id
+ bj13-20020a056808198d00b003c155addd25mr5283354oib.59.1708365101445; 
+ Mon, 19 Feb 2024 09:51:41 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- a13-20020a05620a16cd00b0078715cd3116sm2679226qkn.106.2024.02.19.09.46.34
+ qp19-20020a056214599300b0068f160a09c5sm1675062qvb.49.2024.02.19.09.51.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 09:46:38 -0800 (PST)
-Message-ID: <5ce5af6a-1279-44a0-87ca-820021d41a18@redhat.com>
-Date: Mon, 19 Feb 2024 18:46:32 +0100
+ Mon, 19 Feb 2024 09:51:40 -0800 (PST)
+Message-ID: <750f1f96-5e6f-4ef0-9436-9b7947515e05@redhat.com>
+Date: Mon, 19 Feb 2024 18:51:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 11/18] intel_iommu: Add set/unset_iommu_device
- callback
+Subject: Re: [PATCH rfcv2 14/18] intel_iommu: Add a framework to check and
+ sync host IOMMU cap/ecap
 Content-Language: en-US
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
@@ -87,21 +87,21 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
- <20240201072818.327930-12-zhenzhong.duan@intel.com>
+ <20240201072818.327930-15-zhenzhong.duan@intel.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240201072818.327930-12-zhenzhong.duan@intel.com>
+In-Reply-To: <20240201072818.327930-15-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,173 +123,119 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2/1/24 08:28, Zhenzhong Duan wrote:
 > From: Yi Liu <yi.l.liu@intel.com>
 >
-> This adds set/unset_iommu_device() implementation in Intel vIOMMU.
-> In set call, a pointer to host IOMMU device info is stored in hash
-> table indexed by PCI BDF.
+> Add a framework to check and synchronize host IOMMU cap/ecap with
+> vIOMMU cap/ecap.
+>
+> The sequence will be:
+>
+> vtd_cap_init() initializes iommu->cap/ecap.
+> vtd_check_hdev() update iommu->cap/ecap based on host cap/ecap.
+> iommu->cap_frozen set when machine create done, iommu->cap/ecap become readonly.
+>
+> Implementation details for different backends will be in following patches.
 >
 > Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 > Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->  hw/i386/intel_iommu_internal.h | 14 +++++++
->  include/hw/i386/intel_iommu.h  |  2 +
->  hw/i386/intel_iommu.c          | 74 ++++++++++++++++++++++++++++++++++
->  3 files changed, 90 insertions(+)
+>  include/hw/i386/intel_iommu.h |  1 +
+>  hw/i386/intel_iommu.c         | 41 ++++++++++++++++++++++++++++++++++-
+>  2 files changed, 41 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index f8cf99bddf..3301f54b35 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -28,6 +28,8 @@
->  #ifndef HW_I386_INTEL_IOMMU_INTERNAL_H
->  #define HW_I386_INTEL_IOMMU_INTERNAL_H
->  #include "hw/i386/intel_iommu.h"
-> +#include "sysemu/host_iommu_device.h"
-> +#include "hw/vfio/vfio-common.h"
->  
->  /*
->   * Intel IOMMU register specification
-> @@ -537,4 +539,16 @@ typedef struct VTDRootEntry VTDRootEntry;
->  #define VTD_SL_IGN_COM              0xbff0000000000000ULL
->  #define VTD_SL_TM                   (1ULL << 62)
->  
-> +
-> +typedef struct VTDHostIOMMUDevice {
-> +    IntelIOMMUState *iommu_state;
-> +    PCIBus *bus;
-> +    uint8_t devfn;
-> +    union {
-> +        HostIOMMUDevice *dev;
-> +        IOMMULegacyDevice *ldev;
-> +        IOMMUFDDevice *idev;
-> +    };
-again this looks really weird to me. Why don't we simply have
-
-HostIOMMUDevice *dev;
-
-> +    QLIST_ENTRY(VTDHostIOMMUDevice) next;
-> +} VTDHostIOMMUDevice;
->  #endif
 > diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-> index 7fa0a695c8..bbc7b96add 100644
+> index bbc7b96add..c71a133820 100644
 > --- a/include/hw/i386/intel_iommu.h
 > +++ b/include/hw/i386/intel_iommu.h
-> @@ -292,6 +292,8 @@ struct IntelIOMMUState {
->      /* list of registered notifiers */
->      QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
+> @@ -283,6 +283,7 @@ struct IntelIOMMUState {
 >  
-> +    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice */
-> +
->      /* interrupt remapping */
->      bool intr_enabled;              /* Whether guest enabled IR */
->      dma_addr_t intr_root;           /* Interrupt remapping table pointer */
+>      uint64_t cap;                   /* The value of capability reg */
+>      uint64_t ecap;                  /* The value of extended capability reg */
+> +    bool cap_frozen;                /* cap/ecap become read-only after frozen */
+>  
+>      uint32_t context_cache_gen;     /* Should be in [1,MAX] */
+>      GHashTable *iotlb;              /* IOTLB */
 > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 1a07faddb4..9b62441439 100644
+> index ffa1ad6429..7ed2b79669 100644
 > --- a/hw/i386/intel_iommu.c
 > +++ b/hw/i386/intel_iommu.c
-> @@ -237,6 +237,13 @@ static gboolean vtd_as_equal(gconstpointer v1, gconstpointer v2)
->             (key1->pasid == key2->pasid);
->  }
->  
-> +static gboolean vtd_as_idev_equal(gconstpointer v1, gconstpointer v2)
-> +{
-> +    const struct vtd_as_key *key1 = v1;
-> +    const struct vtd_as_key *key2 = v2;
-> +
-> +    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
-> +}
->  /*
->   * Note that we use pointer to PCIBus as the key, so hashing/shifting
->   * based on the pointer value is intended. Note that we deal with
-> @@ -3812,6 +3819,68 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+> @@ -3819,6 +3819,31 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
 >      return vtd_dev_as;
 >  }
 >  
-> +static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-> +                                    HostIOMMUDevice *base_dev, Error **errp)
+> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+> +                                 IOMMULegacyDevice *ldev,
+> +                                 Error **errp)
 > +{
-> +    IntelIOMMUState *s = opaque;
-> +    VTDHostIOMMUDevice *vtd_hdev;
-> +    struct vtd_as_key key = {
-> +        .bus = bus,
-> +        .devfn = devfn,
-> +    };
-> +    struct vtd_as_key *new_key;
-> +
-> +    assert(base_dev);
-> +
-> +    vtd_iommu_lock(s);
-> +
-> +    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
-> +
-> +    if (vtd_hdev) {
-> +        error_setg(errp, "IOMMUFD device already exist");
-> +        vtd_iommu_unlock(s);
-> +        return -EEXIST;
-> +    }
-> +
-> +    vtd_hdev = g_malloc0(sizeof(VTDHostIOMMUDevice));
-> +    vtd_hdev->bus = bus;
-> +    vtd_hdev->devfn = (uint8_t)devfn;
-> +    vtd_hdev->iommu_state = s;
-> +    vtd_hdev->dev = base_dev;
-and here you set the base pointer.
-> +
-> +    new_key = g_malloc(sizeof(*new_key));
-> +    new_key->bus = bus;
-> +    new_key->devfn = devfn;
-> +
-> +    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hdev);
-> +
-> +    vtd_iommu_unlock(s);
-> +
 > +    return 0;
 > +}
 > +
-> +static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
+> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+> +                                  IOMMUFDDevice *idev,
+> +                                  Error **errp)
 > +{
-> +    IntelIOMMUState *s = opaque;
-> +    VTDHostIOMMUDevice *vtd_hdev;
-> +    struct vtd_as_key key = {
-> +        .bus = bus,
-> +        .devfn = devfn,
-> +    };
-> +
-> +    vtd_iommu_lock(s);
-> +
-> +    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
-> +    if (!vtd_hdev) {
-> +        vtd_iommu_unlock(s);
-> +        return;
-> +    }
-> +
-> +    g_hash_table_remove(s->vtd_host_iommu_dev, &key);
-> +
-> +    vtd_iommu_unlock(s);
+> +    return 0;
 > +}
 > +
->  /* Unmap the whole range in the notifier's scope. */
->  static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
->  {
-> @@ -4107,6 +4176,8 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
->  
->  static PCIIOMMUOps vtd_iommu_ops = {
->      .get_address_space = vtd_host_dma_iommu,
-> +    .set_iommu_device = vtd_dev_set_iommu_device,
-> +    .unset_iommu_device = vtd_dev_unset_iommu_device,
->  };
->  
->  static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-> @@ -4230,6 +4301,9 @@ static void vtd_realize(DeviceState *dev, Error **errp)
->                                       g_free, g_free);
->      s->vtd_address_spaces = g_hash_table_new_full(vtd_as_hash, vtd_as_equal,
->                                        g_free, g_free);
-> +    s->vtd_host_iommu_dev = g_hash_table_new_full(vtd_as_hash,
-> +                                                  vtd_as_idev_equal,
-> +                                                  g_free, g_free);
->      vtd_init(s);
->      pci_setup_iommu(bus, &vtd_iommu_ops, dev);
->      /* Pseudo address space under root PCI bus. */
+> +static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
+> +                          Error **errp)
+> +{
+> +    HostIOMMUDevice *base_dev = vtd_hdev->dev;
+> +
+> +    if (base_dev->type == HID_LEGACY) {
+> +        return vtd_check_legacy_hdev(s, vtd_hdev->ldev, errp);
+> +    }
+> +    return vtd_check_iommufd_hdev(s, vtd_hdev->idev, errp);
+Couldn't we have HostIOMMUDevice ops instead of having this check here?
+
 Eric
+> +}
+> +
+>  static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>                                      HostIOMMUDevice *base_dev, Error **errp)
+>  {
+> @@ -3829,6 +3854,7 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>          .devfn = devfn,
+>      };
+>      struct vtd_as_key *new_key;
+> +    int ret;
+>  
+>      assert(base_dev);
+>  
+> @@ -3848,6 +3874,13 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>      vtd_hdev->iommu_state = s;
+>      vtd_hdev->dev = base_dev;
+>  
+> +    ret = vtd_check_hdev(s, vtd_hdev, errp);
+> +    if (ret) {
+> +        g_free(vtd_hdev);
+> +        vtd_iommu_unlock(s);
+> +        return ret;
+> +    }
+> +
+>      new_key = g_malloc(sizeof(*new_key));
+>      new_key->bus = bus;
+>      new_key->devfn = devfn;
+> @@ -4083,7 +4116,9 @@ static void vtd_init(IntelIOMMUState *s)
+>      s->iq_dw = false;
+>      s->next_frcd_reg = 0;
+>  
+> -    vtd_cap_init(s);
+> +    if (!s->cap_frozen) {
+> +        vtd_cap_init(s);
+> +    }
+>  
+>      /*
+>       * Rsvd field masks for spte
+> @@ -4254,6 +4289,10 @@ static int vtd_machine_done_notify_one(Object *child, void *unused)
+>  
+>  static void vtd_machine_done_hook(Notifier *notifier, void *unused)
+>  {
+> +    IntelIOMMUState *iommu = INTEL_IOMMU_DEVICE(x86_iommu_get_default());
+> +
+> +    iommu->cap_frozen = true;
+> +
+>      object_child_foreach_recursive(object_get_root(),
+>                                     vtd_machine_done_notify_one, NULL);
+>  }
 
 
