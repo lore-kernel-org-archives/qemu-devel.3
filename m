@@ -4,96 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B33E4C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 13:36:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3BA0C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 13:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc3oZ-0002Wk-LN; Mon, 19 Feb 2024 08:36:11 -0500
+	id 1rc3r1-0004XM-6n; Mon, 19 Feb 2024 08:38:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rc3oX-0002W6-Q1
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:36:09 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rc3oS-0000Zu-UN
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:36:09 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5648d92919dso943096a12.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 05:36:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708349763; x=1708954563; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wBS7p74C18vfgjZS21+4+584H1doL/iiQgs2ufqQxso=;
- b=YNnXMOtpzttv0KvdT4k8C/MwuU0ij+1ryDlNwtCFsuwrxiLCHZ9nlJZY5POJC3qXQn
- m+5Nz+LIX2Fcq4GyUtr7UtFWec3eSOi7V6alkYkoq8dbnHHIg2wccnbuwY0p0KH68THF
- FVF3a4UdYkwj4kqCK5ZF6PH1pvJz3wLSlIOFEdoFU3pKHd/bwSEdH4pG/cqqR5uNOovH
- IV7J/3NhwsN3J5AJfdgvXPGEB31wrhKqHJuOfSypW7qIqUv14KtR5R8HRJjxnB5rH22s
- +sd7M6M4QeMzxr78PBkPtfW5NUi15Y/2upSA5A/okFIG1hBBWj2M1Sse2DIOTQuLoI6C
- oIgQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc3qm-0004UJ-5d
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:38:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc3qj-0001LG-I9
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:38:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708349904;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mzlkps8ssHKgwsZfhp/xIz76Yrr0q9leJ/xdBj/Nm9U=;
+ b=Li7XmoqSLAZFNc8QmjMGZ/eCc84nwV4CoSpb8DreY7nwUpiXtI7D9kxvSq9J6doeevnn9K
+ z6bpYTPE6+8dxWSxyTPS1xUPqAeLEFX3FeIXbjsOTxupFru88kdstGpI9PypQfzQLCsVgI
+ cop9EWS8fECbuVxFbkhvv5Xn4f7wpe0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-EvhSpdG1MIicCPP6BGV8bw-1; Mon, 19 Feb 2024 08:38:23 -0500
+X-MC-Unique: EvhSpdG1MIicCPP6BGV8bw-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7816bea8d28so1034774085a.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 05:38:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708349763; x=1708954563;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wBS7p74C18vfgjZS21+4+584H1doL/iiQgs2ufqQxso=;
- b=HDsmcCYnb25KS+N2yf327GLdr+hisR+P0vu/VgL0GgsaGh1uZ20yaVxMbQa9Gq+l/4
- N3dEcfRDBPC236HQjdN0hhSGuWPVdxHIPfKKQgA9vSci87Jv1rfbrSMXyJsIjnCgtvv+
- bvqG9YJsHDd+UwQK0uZ4kPm8uRrvSTSEkNw7vWRNNMLMYCuA4zL3sMapEhfgpyohMhGM
- Zx6F12UuIA9AXDTLDPJDhWwSX21fKPPO1xhU1yLS81avhSBrSJ7RR4o2D5iFakxqVv/V
- P48A6ft06UgYhHxis+4ADkPuDpCUVxNmIlAUQi/5/Xm2Y/3Qqs7z0DtfOKPG+FcYXna/
- LNLA==
+ d=1e100.net; s=20230601; t=1708349902; x=1708954702;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mzlkps8ssHKgwsZfhp/xIz76Yrr0q9leJ/xdBj/Nm9U=;
+ b=ksEFCJrcD5e82b277MKLETMl+9717OwDlG4QAFqCMj69fg9NvqY9B2t9H6hUwawvwu
+ 3Ek7AUWW4MaKupo6gFrO5CGKdQbZ+RpM0E2Vh+ZGmMyHlsI2d9O1NIbv6ot5THl0VkLG
+ bojwemUraoYcFMPeHnqkx9MXHmH8LE5qT1FVPXDRsZD8i5T2TJhPPhzMXo20+OEAjvoK
+ cCZUAZzpeDD8MfCLSaRS41PkOhEaj2gBYr1C0ShBYha1+pS+dwKqar+gIv8dY0cN4Mhq
+ X7GMHYpTWDhs2R5zIpD9VclAinEaAOSVWafQKA1OJvsXRt9vZ6M5+cXWGuWOTMf7OCJ3
+ /Kvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVOOOg3eKe/aPkRvam3ai/cdNq5UZt9wesTv2d19LN5ZQ/13FqopDEvdCTUGv5YEYLT7CwM9GzwcCQcCNjswJ4P/liRDEA=
-X-Gm-Message-State: AOJu0Ywiss6iO6k9SR3Jl14lmYu5xJ83AuWQY36qT/Pz39UJPTHxCssk
- HlZv+wvrIF2NyAn8fHMwieyCJSgGhcfYaefg4QbAxm+ukt4X8KMEG03oPOIhgi+X6hhzFRhCV6+
- OeCD48svwKypH2C4EKYmhJzQCYPOpYfdgW5pJWQ==
-X-Google-Smtp-Source: AGHT+IEA9qzeFyNa6St5iDH/5EmfmMHd+lQVjAjZAhCGm+7uhOR77otna5NOB/IVvHl9XHDVEEA5ToTdg+leMXF/sss=
-X-Received: by 2002:aa7:d455:0:b0:564:2519:5a74 with SMTP id
- q21-20020aa7d455000000b0056425195a74mr3438061edr.11.1708349763342; Mon, 19
- Feb 2024 05:36:03 -0800 (PST)
+ AJvYcCUNQorM/uFOIB4JC4NEVtaW8I1ozxoTYQYxCx2XZjy2MZoPkwrwzWZldz2aYBAyqu9Jms4hRhbFJe0JUIwWsFs2DJjzcUU=
+X-Gm-Message-State: AOJu0YyCM9Uoitn4R5A38xf6nTQQbGZsbs9K8ulwjYo1KG5AW0Vl5NEk
+ iclaqcPVryKFPKGj+BQnU0z2ciylUJqi+l2pqE+kPUC3qcUMip4bUsdjr1nl2Um57/aKb/ZJnlt
+ b9SEyfY7U+ieMNxSJtjnGBUXZjtZFlMciKxowaTQNzo40xuuHx5MO
+X-Received: by 2002:a05:620a:895:b0:787:2cc2:41c1 with SMTP id
+ b21-20020a05620a089500b007872cc241c1mr19226026qka.25.1708349902576; 
+ Mon, 19 Feb 2024 05:38:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHfm9Zmd/th5akK1JT78VTFhAfOaPBEnyrP7L5gVWUbxBeW5kduk0QtEUFe8XU/1IeFk9awJw==
+X-Received: by 2002:a05:620a:895:b0:787:2cc2:41c1 with SMTP id
+ b21-20020a05620a089500b007872cc241c1mr19225999qka.25.1708349902315; 
+ Mon, 19 Feb 2024 05:38:22 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-177-48.web.vodafone.de.
+ [109.43.177.48]) by smtp.gmail.com with ESMTPSA id
+ i1-20020a05620a144100b007873ac0ac56sm2455996qkl.59.2024.02.19.05.38.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Feb 2024 05:38:22 -0800 (PST)
+Message-ID: <84d0375c-b687-4e0a-b7c7-77f1891ea244@redhat.com>
+Date: Mon, 19 Feb 2024 14:38:16 +0100
 MIME-Version: 1.0
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
- <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
- <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
- <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
- <CAFEAcA-Mvd4NVY2yDgNEdjZ_YPrN93PDZRyfCi7JyCjmPs4gAQ@mail.gmail.com>
- <0a31f410-415d-474b-bcea-9cb18f41aeb2@ilande.co.uk>
-In-Reply-To: <0a31f410-415d-474b-bcea-9cb18f41aeb2@ilande.co.uk>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Feb 2024 13:35:51 +0000
-Message-ID: <CAFEAcA9v4yh=K9+ND7R+KHC_0=fW39=fK7ScjE+HX-ip-KwQvw@mail.gmail.com>
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/21] hw/s390x/zpci-bus: Add QOM parentship relation with
+ zPCI devices
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-block@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20240216110313.17039-1-philmd@linaro.org>
+ <20240216110313.17039-20-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240216110313.17039-20-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,49 +154,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 at 13:33, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
->
-> On 19/02/2024 13:05, Peter Maydell wrote:
->
-> > On Mon, 19 Feb 2024 at 12:49, Mark Cave-Ayland
-> > <mark.cave-ayland@ilande.co.uk> wrote:
-> >>
-> >> On 19/02/2024 12:00, BALATON Zoltan wrote:
-> >>> For new people trying to contribute to QEMU QDev is overwhelming so having some way
-> >>> to need less of it to do simple things would help them to get started.
-> >>
-> >> It depends what how you define "simple": for QEMU developers most people search for
-> >> similar examples in the codebase and copy/paste them. I'd much rather have a slightly
-> >> longer, but consistent API for setting properties rather than coming up with many
-> >> special case wrappers that need to be maintained just to keep the line count down for
-> >> "simplicity".
-> >>
-> >> I think that Phil's approach here is the best one for now, particularly given that it
-> >> allows us to take another step towards heterogeneous machines. As the work in this
-> >> area matures it might be that we can consider other approaches, but that's not a
-> >> decision that can be made right now and so shouldn't be a reason to block this change.
-> >
-> > Mmm. It's unfortunate that we're working with C, so we're a bit limited
-> > in what tools we have to try to make a better and lower-boilerplate
-> > interface for the "create, configure, realize and wire up devices" task.
-> > (I think you could do much better in a higher level language...)
-> > sysbus_create_simple() was handy at the time, but it doesn't work so
-> > well for more complicated SoC-based boards. It's noticeable that
-> > if you look at the code that uses it, it's almost entirely the older
-> > and less maintained board models, especially those which don't actually
-> > model an SoC and just have the board code create all the devices.
->
-> Yeah I was thinking that you'd use the DSL (e.g. YAML templates or similar) to
-> provide some of the boilerplating around common actions, rather than the C API
-> itself. Even better, once everything has been moved to use a DSL then the C API
-> shouldn't really matter so much as it is no longer directly exposed to the user.
+On 16/02/2024 12.03, Philippe Mathieu-Daudé wrote:
+> QDev objects created with qdev_*new() need to manually add
+> their parent relationship with object_property_add_child().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/s390x/s390-pci-bus.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+> index 3e57d5faca..6d07a7b530 100644
+> --- a/hw/s390x/s390-pci-bus.c
+> +++ b/hw/s390x/s390-pci-bus.c
+> @@ -934,6 +934,7 @@ static S390PCIBusDevice *s390_pci_device_new(S390pciState *s,
+>                                   "zPCI device could not be created: ");
+>           return NULL;
+>       }
+> +    object_property_add_child(OBJECT(s), "zpci[*]", OBJECT(dev));
 
-That does feel like it's rather a long way away, though, so there
-might be scope for improving our C APIs in the meantime. (Also,
-doing the boilerplating with fragments of YAML or whatever means
-that checking of eg typos and other syntax errors shifts from
-compile time to runtime, which is a shame.)
+I think there can only be one zpci device per PCI device, so do we need the 
+"[*]" here?
 
--- PMM
+  Thomas
+
+>       if (!qdev_realize_and_unref(dev, BUS(s->bus), &local_err)) {
+>           object_unparent(OBJECT(dev));
+>           error_propagate_prepend(errp, local_err,
+
 
