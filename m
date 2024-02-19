@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F139C48260
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 06:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 902C6C48260
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 07:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbxO6-0002Jp-KK; Mon, 19 Feb 2024 01:44:26 -0500
+	id 1rbxiL-00074P-1A; Mon, 19 Feb 2024 02:05:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rbxO3-0002JM-S3
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 01:44:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rbxiJ-000748-5C
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 02:05:19 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rbxO1-0000RO-98
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 01:44:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rbxiH-0003vT-Av
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 02:05:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708325059;
+ s=mimecast20190719; t=1708326316;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Yr+IfAcr+WpUHqDa5LqiPKxaQ+CvrXvzbcpIz95EH0c=;
- b=WZmOBglBhCrExGf8OL3UPsS/pyw9RAkLZb8zVGZ2ZPYKW9k56uPL3rvFC7LRbVUzddeQdt
- SZMHTBgVa5mN/9KDzm0v8IWvXHm0exPGhyazsk8hVCNrZUcO5p7Q6oi5CB18XdGvbBdMAG
- Lt5Z/WGQdf10M0aRFvS9Iz189ubuci4=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6l6zMDBr7lzLL+rPq2I8dE19tUnJibSr61B/Zn2flI0=;
+ b=Zn7bshEKfc4TKQ0H/xBByJtZLnfcd6mOeMpxO3FWWTGAxF9VnczdNFMmx8iMV7rIfYNJcb
+ SNBWZ329SFsP1k7mseinOfaMKpRlgED4nxOkYPu+vP2HOKoEIico1GjDpTkmRg+FoAUW/u
+ f8j8itb+C5rliUUD7hMXxeHAjQ9hcCw=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-LCz7wGsmMqq8kySFtouSuQ-1; Mon, 19 Feb 2024 01:44:17 -0500
-X-MC-Unique: LCz7wGsmMqq8kySFtouSuQ-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-68c4f2aca5dso72469376d6.3
- for <qemu-devel@nongnu.org>; Sun, 18 Feb 2024 22:44:17 -0800 (PST)
+ us-mta-92-wkQBPvp4OzaR5_SC2mPYzQ-1; Mon, 19 Feb 2024 02:05:14 -0500
+X-MC-Unique: wkQBPvp4OzaR5_SC2mPYzQ-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-78757f750b2so214905285a.2
+ for <qemu-devel@nongnu.org>; Sun, 18 Feb 2024 23:05:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708325057; x=1708929857;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Yr+IfAcr+WpUHqDa5LqiPKxaQ+CvrXvzbcpIz95EH0c=;
- b=A3A7JiZmH8KRzfknHNf3iME0n2P3mfm6iCevyKNgkaIXxJ2IABZEMgaaYuuPlhR1JE
- sjSJFI96ZRMDjbHaGNgD3WTqCSiSNtAZom+21NUQAtmSEHnHpARr4lJWfEkXXCneOUrD
- NuXxqiwrwX3j2vzxLT8IjxPhVb1vdAnWQAkRmLFz/HEt7gMN7fw8PudBeVCJUAq7YjD2
- NiqwupNIb/3cCodZTYmlYWIMwiOsIYd3rY/BwGL1+k5n8Q84iaZE4K5N2VnsoJKAGx9k
- aFesX34803Jcr6ywq+v+iSDozOIC1V13KCrXIxr8jZQlNvjOX8ZUyoeyi2RjfXgqHeiW
- r7Fw==
+ d=1e100.net; s=20230601; t=1708326313; x=1708931113;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6l6zMDBr7lzLL+rPq2I8dE19tUnJibSr61B/Zn2flI0=;
+ b=QebAsn756nPQVkyOewarOhngt1eWJLrBkN/imO0lTFakiSzRYfL0iU97rMQ044whE2
+ KOvCNI8oiP1lpZt7PRu0VX9A8+PEz0A13t6Hc8wzVA8d4HPTcT+csaopOYgWMmENm9mE
+ VhQP5/vXqZj0i0jCPcEqMhfxdunClcFPwevlflXh7OmUG5MEOIPpk/kqpcUTST9+y7mG
+ RBpISxIyAoyQomyJeuSkm8IHb+qacBITmCIxqVFC45DOaV89EOpR58xbYI1dIl0yIMi4
+ wg/0GO7S0g3bFOhFzSlV034saaG0bfGCENmDKxmWnKF9FOXk0jlWwr7CbejHfmXGlABj
+ JEtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXteE466Y1GXl20+wxJCwSK/d8DKyGl69W3O9+ipXO16AwiKssPMWH/T3lU6t/m9PP6+xLdAv3gAWqdvXpVKj40WwO0Ayo=
-X-Gm-Message-State: AOJu0YzAie3i6VhUBTwvWddw7O6uSUTmvHOeSSbiAXMFHG2v8WQGNVUr
- 2C7c+pL6LyW0wKuxMSx11O/y8Sb9Sjn9pfXvef81rf2LZJo/VgNgp3MUdfhp7F1gC+TCaDY+UNQ
- c7sHRS13Bsnv1Z67842zCJA4HAoFVQtsW/ciCyhkGOHUHqc+5DGlD
-X-Received: by 2002:a05:6214:daf:b0:68f:2abb:b4b2 with SMTP id
- h15-20020a0562140daf00b0068f2abbb4b2mr16496665qvh.30.1708325057359; 
- Sun, 18 Feb 2024 22:44:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHdh7gxraOVkOcN5KDRzBia1CRIo1KIzA+hFTb91tvhytroIEARg0x8QgaMOUTnWk/HI+/bFg==
-X-Received: by 2002:a05:6214:daf:b0:68f:2abb:b4b2 with SMTP id
- h15-20020a0562140daf00b0068f2abbb4b2mr16496652qvh.30.1708325057079; 
- Sun, 18 Feb 2024 22:44:17 -0800 (PST)
+ AJvYcCXfs1Z62hGEOSa2uCSKPcB2RpT+TYMTpKJyfoHDNPZ14dA9i9ls9qSFf8PsxhbXD5MSOMkWjD+xmX2SVkKW1MIfWO51o3E=
+X-Gm-Message-State: AOJu0Yye5sIBSRjXOVlUPlFCvvb4nRRP1BoW6RoOWcx+P2FrnuQfJgn9
+ sxdelKHEgJJijp9Je7OLMV2X5hs805sFD+xlS5M68LVvszLv/KH9ZoqHT/6MwJkG+nhxkVXZr9G
+ yYJOSNsNZp32yZgZWnpVDAN+scKs/UZ6qvi32KZCkI3rZhmCR79zX
+X-Received: by 2002:a05:620a:5ca1:b0:787:2239:3025 with SMTP id
+ xq1-20020a05620a5ca100b0078722393025mr12707235qkn.19.1708326313773; 
+ Sun, 18 Feb 2024 23:05:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGLOJ66+eV42L6dTCzeY7Rq9YpNKTx9Pdux2xH3jYMeTvMJirrA9mfMm7dCbBRWTEeQ8WSc7A==
+X-Received: by 2002:a05:620a:5ca1:b0:787:2239:3025 with SMTP id
+ xq1-20020a05620a5ca100b0078722393025mr12707228qkn.19.1708326313518; 
+ Sun, 18 Feb 2024 23:05:13 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-177-48.web.vodafone.de.
  [109.43.177.48]) by smtp.gmail.com with ESMTPSA id
- pa1-20020a056214480100b0068f65b22b0fsm1084496qvb.82.2024.02.18.22.44.14
+ t7-20020a05620a034700b00787218d6a97sm2193714qkm.60.2024.02.18.23.05.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Feb 2024 22:44:16 -0800 (PST)
-Message-ID: <da218011-301b-4557-be89-e65f08536889@redhat.com>
-Date: Mon, 19 Feb 2024 07:44:13 +0100
+ Sun, 18 Feb 2024 23:05:13 -0800 (PST)
+Message-ID: <ff55bf91-995f-45e4-91ef-0ee99492d0a4@redhat.com>
+Date: Mon, 19 Feb 2024 08:05:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/cdrom-test: Add cdrom test for LoongArch virt
- machine
-To: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Laurent Vivier <lvivier@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240217100230.134042-1-maobibo@loongson.cn>
+Subject: Re: QEMU development setup
 Content-Language: en-US
+To: Isaac David Bermudez Lara <i.bermudezl@uniandes.edu.co>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <DM6PR08MB5850F6109B1F37FE288A6ECCB0532@DM6PR08MB5850.namprd08.prod.outlook.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -121,9 +117,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240217100230.134042-1-maobibo@loongson.cn>
+In-Reply-To: <DM6PR08MB5850F6109B1F37FE288A6ECCB0532@DM6PR08MB5850.namprd08.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -6
@@ -149,42 +145,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/02/2024 11.02, Bibo Mao wrote:
-> The cdrom test skips to execute on LoongArch system with command
-> "make check", this patch enables cdrom test for LoongArch virt
-> machine platform.
-> 
-> With this patch, cdrom test passes to run on LoongArch virt
-> machine type.
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-> Add virtio-blk-pci checking since LoongArch virt machine type does
-> not support ISA bus and IDE harddisk.
-> 
-> ---
->   tests/qtest/cdrom-test.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-> index 0945383789..5d89e62515 100644
-> --- a/tests/qtest/cdrom-test.c
-> +++ b/tests/qtest/cdrom-test.c
-> @@ -271,6 +271,11 @@ int main(int argc, char **argv)
->               const char *virtmachine[] = { "virt", NULL };
->               add_cdrom_param_tests(virtmachine);
->           }
-> +    } else if (g_str_equal(arch, "loongarch64")) {
-> +        if (qtest_has_device("virtio-blk-pci")) {
-> +            const char *virtmachine[] = { "virt", NULL };
-> +            add_cdrom_param_tests(virtmachine);
-> +        }
->       } else {
->           const char *nonemachine[] = { "none", NULL };
->           add_cdrom_param_tests(nonemachine);
-> 
-> base-commit: 5767815218efd3cbfd409505ed824d5f356044ae
+On 17/02/2024 19.52, Isaac David Bermudez Lara wrote:
+> Hi, I am just starting out on QEMU development, and I would like to know 
+> which tools to use. I would really appreciate it.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Hi Isaac,
+
+please see https://wiki.qemu.org/Hosts/Linux for some hints on how to get 
+started.
+
+> Additionally, how is the support for LLVM toolchain on QEMU?
+
+You can easily compile QEMU with clang by running the configure script with 
+"--cc=clang".
+
+  HTH,
+   Thomas
 
 
