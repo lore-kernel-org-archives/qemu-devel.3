@@ -4,102 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6871CC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:24:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F20C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:24:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc4Yf-0001UL-5g; Mon, 19 Feb 2024 09:23:49 -0500
+	id 1rc4ZB-000263-0X; Mon, 19 Feb 2024 09:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4Yd-0001Tu-CH
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:23:47 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4YY-0001yK-Go
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:23:47 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d23a22233fso12484871fa.2
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 06:23:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708352620; x=1708957420; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mnDDTtlItDfPp9YM6wZ4fhPF4cOhRwX1C0WTfTez+m0=;
- b=BH/tJhZoxIo9JlaWpo2O1XaIKCSYOs929dQ8KZUw0T1pmvti+6xaCIzlyyYlf/n+8I
- xr2t29Ne38e4SkZwuZjaozFXEsbyEdgj76DW+xiWSvFlXuJzsIWzTdUrIm9ofkH1peTE
- Y/68clNNvCMmsWnwL0to1i2cU8y9lwl+c0PNdsF4aVrXZ3M79FSMo6y/qs0Ewtpj7NkE
- xzWWUncaBmQlYm5CtpQgyRf1+wdlYwGSfC8LTtgdD3inFKSS7qVq1QauNlcLHBsKI89m
- CZE4nVfpiDqVVZJk8MJkSdYr44OUX48XAKyg/v+yH/UU5cSFCJ2lplt9PkQgMJi39W8P
- RvXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708352620; x=1708957420;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mnDDTtlItDfPp9YM6wZ4fhPF4cOhRwX1C0WTfTez+m0=;
- b=RMzUN8QHPHZlZzOsNSAW7bwd59LTOmJlIhMi/UoOyK+Rdtq3HPoNGIrpsSksEL0LZY
- 11G/uEm+zJCgTdwl0h3KvUggnaZJFxV7X5K+7bHxFRcZmo1CyLWrZH/oO6MLIbYS5xKO
- HM5pS+8mBjQI4Py+8/c/byyhk3k4jjbY0XNu3gb8P767ByJ98JWYpS41tcCIEhm1V7Mi
- IsosYUA5nxVAUvDgYm6xBxU7lU7FWAa0clrRZxVnjJr7idK12WOiqsi2Sv/NP+zgwGFd
- uyNiYgpjS4L5BG9ZGeS8PHKuAFiW9B+HbTeI1OIn7t9ggpdxT0MAUXpuzcmLgyd1O5oe
- /DmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXwYkIntonRr6qKW6KJ07k4QyFf7eMWJeV+51SQNtPxabpaUulFqAdXZynEy5yGYUJzXsnP+VKctVdnrq1CWJlNefuYmuc=
-X-Gm-Message-State: AOJu0YxkOOqGG2jJ4djcC1cF6Dmi6Yu6cZ1IBpqdXGsTJk4CmOIuuwp0
- NhEsq0CUqJFwa4ZNinwMWedtcsz3kSS7T8rTyEIE2LmhfELz9u5rSR4hnBXGmJQ=
-X-Google-Smtp-Source: AGHT+IEqpZ5zb0feebO8red8/Sw1NYW1UodRBiH/bxq1MisB1DILduX4ZjniHvxcNj577PKlT0HjAQ==
-X-Received: by 2002:a2e:8546:0:b0:2d2:4474:2e69 with SMTP id
- u6-20020a2e8546000000b002d244742e69mr100766ljj.9.1708352620437; 
- Mon, 19 Feb 2024 06:23:40 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.181.220])
- by smtp.gmail.com with ESMTPSA id
- s6-20020a05600c45c600b00412696bd7d9sm1590167wmo.41.2024.02.19.06.23.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 06:23:39 -0800 (PST)
-Message-ID: <ff91fafa-1f6d-442f-adf5-f7a6e108cea7@linaro.org>
-Date: Mon, 19 Feb 2024 15:23:37 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc4Z9-000202-EV
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:24:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc4Z7-00020C-OA
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:24:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708352655;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tKmwzc9arQvQ/YMujDPllRaQRZ7lO5m8ghqbTilMuRA=;
+ b=g+/KqvJjUQj2fPwpIU3aIK8A0OzTEElakEF8w1yD7g+/Li1++HmquyZOemQ/LofVYf2d19
+ bnlPSQfwCXXOWtjphbC+oG3ZO9QHXqcFPoUYjAW/nV1RWNzNgo/8xLs6scC1qhhHTTzgtp
+ v3lqOwPw9+4f9EE+fb9uixPheECL2Yc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-5Z60k3E3M9aDlecb0-mwtg-1; Mon,
+ 19 Feb 2024 09:24:12 -0500
+X-MC-Unique: 5Z60k3E3M9aDlecb0-mwtg-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 66CB33C0ED51;
+ Mon, 19 Feb 2024 14:24:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0085D1C060AF;
+ Mon, 19 Feb 2024 14:24:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B9FA521E66D0; Mon, 19 Feb 2024 15:24:04 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: yong.huang@smartx.com
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eric
+ Blake <eblake@redhat.com>,  Markus Armbruster <armbru@redhat.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v4 4/7] block: Support detached LUKS header creation
+ using blockdev-create
+In-Reply-To: <9e35e621f12478822072e5c740ed65beb77f1238.1706586786.git.yong.huang@smartx.com>
+ (yong huang's message of "Tue, 30 Jan 2024 13:37:22 +0800")
+References: <cover.1706586786.git.yong.huang@smartx.com>
+ <9e35e621f12478822072e5c740ed65beb77f1238.1706586786.git.yong.huang@smartx.com>
+Date: Mon, 19 Feb 2024 15:24:04 +0100
+Message-ID: <87v86kjzwb.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-Content-Language: en-US
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org,
- kvm@vger.kernel.org, Igor Mitsyanko <i.mitsyanko@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
- <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
- <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
- <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
- <CAFEAcA-Mvd4NVY2yDgNEdjZ_YPrN93PDZRyfCi7JyCjmPs4gAQ@mail.gmail.com>
- <0a31f410-415d-474b-bcea-9cb18f41aeb2@ilande.co.uk>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0a31f410-415d-474b-bcea-9cb18f41aeb2@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,55 +86,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/2/24 14:33, Mark Cave-Ayland wrote:
-> On 19/02/2024 13:05, Peter Maydell wrote:
-> 
->> On Mon, 19 Feb 2024 at 12:49, Mark Cave-Ayland
->> <mark.cave-ayland@ilande.co.uk> wrote:
->>>
->>> On 19/02/2024 12:00, BALATON Zoltan wrote:
->>>> For new people trying to contribute to QEMU QDev is overwhelming so 
->>>> having some way
->>>> to need less of it to do simple things would help them to get started.
->>>
->>> It depends what how you define "simple": for QEMU developers most 
->>> people search for
->>> similar examples in the codebase and copy/paste them. I'd much rather 
->>> have a slightly
->>> longer, but consistent API for setting properties rather than coming 
->>> up with many
->>> special case wrappers that need to be maintained just to keep the 
->>> line count down for
->>> "simplicity".
->>>
->>> I think that Phil's approach here is the best one for now, 
->>> particularly given that it
->>> allows us to take another step towards heterogeneous machines. As the 
->>> work in this
->>> area matures it might be that we can consider other approaches, but 
->>> that's not a
->>> decision that can be made right now and so shouldn't be a reason to 
->>> block this change.
->>
->> Mmm. It's unfortunate that we're working with C, so we're a bit limited
->> in what tools we have to try to make a better and lower-boilerplate
->> interface for the "create, configure, realize and wire up devices" task.
->> (I think you could do much better in a higher level language...)
->> sysbus_create_simple() was handy at the time, but it doesn't work so
->> well for more complicated SoC-based boards. It's noticeable that
->> if you look at the code that uses it, it's almost entirely the older
->> and less maintained board models, especially those which don't actually
->> model an SoC and just have the board code create all the devices.
-> 
-> Yeah I was thinking that you'd use the DSL (e.g. YAML templates or 
-> similar) to provide some of the boilerplating around common actions, 
-> rather than the C API itself. Even better, once everything has been 
-> moved to use a DSL then the C API shouldn't really matter so much as it 
-> is no longer directly exposed to the user.
+yong.huang@smartx.com writes:
 
-Something similar was discussed with Markus and Manos. Although the
-first step we noticed is to unify the QDev API -- making it verbose --
-to figure what we need to expose in the DSL. Doing it the other way
-(starting a DSL and trying to adapt it to all QEMU models) seemed a
-waste of time. At least for our current human resources.
+> From: Hyman Huang <yong.huang@smartx.com>
+>
+> Firstly, enable the ability to choose the block device containing
+> a detachable LUKS header by adding the 'header' parameter to
+> BlockdevCreateOptionsLUKS.
+>
+> Secondly, when formatting the LUKS volume with a detachable header,
+> truncate the payload volume to length without a header size.
+>
+> Using the qmp blockdev command, create the LUKS volume with a
+> detachable header as follows:
+>
+> 1. add the secret to lock/unlock the cipher stored in the
+>    detached LUKS header
+> $ virsh qemu-monitor-command vm '{"execute":"object-add",
+>> "arguments":{"qom-type": "secret", "id": "sec0", "data": "foo"}}'
+>
+> 2. create a header img with 0 size
+> $ virsh qemu-monitor-command vm '{"execute":"blockdev-create",
+>> "arguments":{"job-id":"job0", "options":{"driver":"file",
+>> "filename":"/path/to/detached_luks_header.img", "size":0 }}}'
+>
+> 3. add protocol blockdev node for header
+> $ virsh qemu-monitor-command vm '{"execute":"blockdev-add",
+>> "arguments": {"driver":"file", "filename":
+>> "/path/to/detached_luks_header.img", "node-name":
+>> "detached-luks-header-storage"}}'
+>
+> 4. create a payload img with 0 size
+> $ virsh qemu-monitor-command vm '{"execute":"blockdev-create",
+>> "arguments":{"job-id":"job1", "options":{"driver":"file",
+>> "filename":"/path/to/detached_luks_payload_raw.img", "size":0}}}'
+>
+> 5. add protocol blockdev node for payload
+> $ virsh qemu-monitor-command vm '{"execute":"blockdev-add",
+>> "arguments": {"driver":"file", "filename":
+>> "/path/to/detached_luks_payload_raw.img", "node-name":
+>> "luks-payload-raw-storage"}}'
+>
+> 6. do the formatting with 128M size
+> $ virsh qemu-monitor-command c81_node1 '{"execute":"blockdev-create",
+>> "arguments":{"job-id":"job2", "options":{"driver":"luks", "header":
+>> "detached-luks-header-storage", "file":"luks-payload-raw-storage",
+>> "size":134217728, "preallocation":"full", "key-secret":"sec0" }}}'
+>
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> ---
+
+[...]
+
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index 69a88d613d..eab15d7dd9 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -4960,6 +4960,8 @@
+>  # @file: Node to create the image format on, mandatory except when
+>  #        'preallocation' is not requested
+>  #
+> +# @header: Block device holding a detached LUKS header. (since 9.0)
+> +#
+
+Behavior when @header is present vs. behavior when it's absent?
+
+>  # @size: Size of the virtual disk in bytes
+>  #
+>  # @preallocation: Preallocation mode for the new image (since: 4.2)
+> @@ -4970,6 +4972,7 @@
+>  { 'struct': 'BlockdevCreateOptionsLUKS',
+>    'base': 'QCryptoBlockCreateOptionsLUKS',
+>    'data': { '*file':            'BlockdevRef',
+> +            '*header':          'BlockdevRef',
+>              'size':             'size',
+>              '*preallocation':   'PreallocMode' } }
+
 
