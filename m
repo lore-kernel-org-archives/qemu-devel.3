@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D7FC48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7A2C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc6fa-0001HA-07; Mon, 19 Feb 2024 11:39:06 -0500
+	id 1rc6kS-0005Bl-Rt; Mon, 19 Feb 2024 11:44:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6fY-0001G6-Bq
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:04 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6kM-0005B1-O7
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:44:04 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6fW-0002u4-EU
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:04 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4125df90568so15055675e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:39:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6kK-0003xR-1a
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:44:01 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55a5e7fa471so4358404a12.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708360739; x=1708965539; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kTU8ttLQ0Q/QZTFMRvnUDY5Q7E85B92+i/v0dSrq/0k=;
- b=zZZIskw5aOq8cUd5eelBruas0cx90VuNe1fcGag/9y4DhL2CxbRAc2YbvndFqgYlvr
- Pu6DoKE036pK9ea4A07e+jxy7F404V5St1rFVYV4xkxgLnn9NlVnbBXpPYbTHonBhcau
- G4nW9NoOo3qIGGqYxiN9/Xkq3wnIwIjiS4U6qucn0z4w6XD59Ke02UAquc/vc4ZS20ys
- EHPqXcui+67GHWirvzo1QRrZ8ba4RcpnfMnVa3HEqBAYuGzPQ/1vhwXxriONx9A3tdr5
- sxtH+5VzNG75cRzckxlIoFsWHe9WlK4eta8YORkZn2hze9cjViAC9Ax4fVhmrfMfp+1d
- 8aqA==
+ d=linaro.org; s=google; t=1708361038; x=1708965838; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HoOwFA01d1oaTXxGVdRi4h2xMn4Onl1GnuoBnHC95UA=;
+ b=TvjT3jUhMJVWeODu/rNA1pq+NqVklBv7NYGwv+2B6KAp2oPYim97wKCQew5s9x5ze6
+ 49ChzPkbjbZ7BKhDsn7yKzQ2RLfYq0FyLmZ/YE9M/CgxBlCvm0JoAkyaRqNCsHpbTuIv
+ wk5J/9Tsaa1O1EEVdwJvGz/ke2FFMyjg2RrOt6c3PIeeTGvQ8Mm1vX53BgZ0G4EFTLGQ
+ vFT7f6cWqUVHR5WiLF2UAytrUvfsyCdL/PGqujIL4TJ3401NcFap7ULRS3O2Kec7gL5K
+ nszOYc+PnGCP5S/+gh8uPFOzw6dBUwvhBIGueRKg0XAfQYRXEhzFtgyKtCHLLdvP+M39
+ trWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708360739; x=1708965539;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kTU8ttLQ0Q/QZTFMRvnUDY5Q7E85B92+i/v0dSrq/0k=;
- b=vkSEYD1+NXE0pGrInPxsTP3zWT0VXzIh9FCoJ4ac0xLTQXUldjeCdFjM+CaRWgtV5c
- NkMLwjtOh/UyTEEfUXvinx4Twa5J5Nm/6a8RiuPQHuZysJRFvPUv8y9ULeXeh97Adqj7
- ADpU0oQfVm0iLscG3wLJc0CCosGJPEtZU3dcWQO1+8ph8E/4GZI/FhPqpkvmkXySjLzY
- BIJ1IHL585iE8yy2SVV6CtTttK9ak0eCpMb0s2yl9l65un2yQGZKMa4PCvIRBkC+oCCz
- xMuWYUBH/xwfvH/ESmMHUhjOoFqEZ1fGinqA6tm8V+/bIlK2NZsnVWYQ4nneRBztQHZU
- kiOA==
-X-Gm-Message-State: AOJu0Yx0ZllRVLRfFeICDvxcl8dnoyM7QF0l4PL1l31M2/E7yo69jI9r
- cdgzkreptTGDYnk+sf5mHj8kKAFUOEb5abnSCKfW1ioeiqiWRUoH+ff5tPAmrYiYlg1nxtlvNR1
- S
-X-Google-Smtp-Source: AGHT+IH7dcTn8XhdCeP8hGMxlC0FveKf6g0dovZdSVYZjKswOqkfFldbX2Z7rkCwNY/kknNacyapaQ==
-X-Received: by 2002:a5d:66d2:0:b0:33d:13ea:cf39 with SMTP id
- k18-20020a5d66d2000000b0033d13eacf39mr6614537wrw.36.1708360739474; 
- Mon, 19 Feb 2024 08:38:59 -0800 (PST)
-Received: from m1x-phil.lan ([176.176.181.220])
+ d=1e100.net; s=20230601; t=1708361038; x=1708965838;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HoOwFA01d1oaTXxGVdRi4h2xMn4Onl1GnuoBnHC95UA=;
+ b=jjKVR2ZY04T7RFTokl97FtIj8/F5vbaU0R2CZVxFKdECn5AHPB1CoBLb5F7nudU71b
+ UkKdXXHu9EaJ/ijBLU9AsTsuzxDuhQ+SkIrFro3t+bR1RmE8dCSiv6wxCkFaKsp5f/DE
+ NB6cuEkJsp85JkNWJtTxRIsm4V4RkT6ErlBElvSy9DNMFLQzZNipto2lnrDk2dgHnexB
+ GNVFKsqG4JdwewG1F4csSWZiXeyRiu1uFWM9ULEJykhqIfbiAFnTvyxetF5NJQRl0q0l
+ k/z5wggCnnQfNq6AdM2lVYnfOf7uEHIffkyGIlMs43xBksKcYLADb5+EE2t/eoMdK4hV
+ 5S4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbj6yW47xdCt2aplW6jD7+aYXUiXb7igcdN2rAgf2mKOHMqH9AdmMLS6EBQxsV47ASFg8/GnkTBtX027wZmYxgrGwrQgE=
+X-Gm-Message-State: AOJu0YxaF0Id4VbVyEu9gbfblSQ+At+g0Qddje/Jl9t1vYPFeFBfj+1+
+ VTw94buCe5phH258zTkMMJV+/VqPgoFkKtaOuRu1iamGdKe8lBct8gyDM2XyEmU=
+X-Google-Smtp-Source: AGHT+IE0qm9istRnCjMA8+y6rFFLWbWkP0Hv1wrqs71OB/mUJlx5ph/Y8/qrN4Yegw7O+xwyuEDwQQ==
+X-Received: by 2002:a17:906:fc05:b0:a3e:c245:9a6d with SMTP id
+ ov5-20020a170906fc0500b00a3ec2459a6dmr1616630ejb.46.1708361038302; 
+ Mon, 19 Feb 2024 08:43:58 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.181.220])
  by smtp.gmail.com with ESMTPSA id
- r10-20020adfda4a000000b0033d3b8820f8sm5722396wrl.109.2024.02.19.08.38.57
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Feb 2024 08:38:58 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Bernhard Beschow <shentey@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 00/14] hw/southbridge: Extract ICH9 QOM container model
-Date: Mon, 19 Feb 2024 17:38:40 +0100
-Message-ID: <20240219163855.87326-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ vw15-20020a170907a70f00b00a3cf7711d40sm3126886ejc.131.2024.02.19.08.43.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Feb 2024 08:43:57 -0800 (PST)
+Message-ID: <6960207f-eaaa-4cfd-a4e3-3118da697ef7@linaro.org>
+Date: Mon, 19 Feb 2024 17:43:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: fix ACPI MCFG table
+Content-Language: en-US
+To: X512 <danger_mail@list.ru>, qemu-devel@nongnu.org
+References: <180d236d-c8e4-411a-b4d2-632eb82092fa@list.ru>
+Cc: qemu-riscv <qemu-riscv@nongnu.org>, Sunil V L <sunilvl@ventanamicro.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <180d236d-c8e4-411a-b4d2-632eb82092fa@list.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,84 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 19/2/24 17:09, X512 via wrote:
+> MCFG segments should point to PCI configuration range, not BAR MMIO.
+> 
 
-I have a long standing southbridge QOM rework branches. Since
-Bernhard is actively working on the PIIX, I'll try to refresh
-and post. This is also motivated by the Dynamic Machine work
-where we are trying to figure the ideal DSL for QEMU, so having
-complex models well designed help.
+Fixes: 55ecd83b36 ("hw/riscv/virt-acpi-build.c: Add IO controllers and 
+devices")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Here we introduce the ICH9 'southbridge' as a QOM container.
-Since the chipset comes as a whole, we shouldn't instantiate
-its components separately. However in order to maintain old
-code we expose some properties to configure the container and
-not introduce any change for the Q35 machine. There is no
-migration change, only QOM objects moved around.
-
-More work remain in the LPC function (more code to remove from
-Q35). Maybe worth doing in parallel with the PIIX to clean both
-PC machines.
-
-Also we'd need to decouple the cpu_interrupt() calls between hw/
-and target/.
-
-Note that GSI is currently broken [1]. Once the LPC/ISA part is
-done, it might be easier to fix it.
-
-Based-on: <20240213043859.61019-1-philmd@linaro.org> [2]
-Based-on: <20240219141412.71418-1-philmd@linaro.org> [3]
-
-[1] https://lore.kernel.org/qemu-devel/cd0e13c6-c03d-411f-83a5-1d4d28ea4345@linaro.org/
-[2] https://lore.kernel.org/qemu-devel/20240213043859.61019-1-philmd@linaro.org/ (USB)
-[3] https://lore.kernel.org/qemu-devel/20240219141412.71418-1-philmd@linaro.org/ (AHCI)
-
-Philippe Mathieu-Daudé (14):
-  MAINTAINERS: Add 'ICH9 South Bridge' section
-  hw/i386/q35: Add local 'lpc_obj' variable
-  hw/acpi/ich9: Restrict definitions from 'hw/southbridge/ich9.h'
-  hw/acpi/ich9_tco: Include 'ich9' in names
-  hw/acpi/ich9_tco: Restrict ich9_generate_smi() declaration
-  hw/pci-bridge: Extract QOM ICH definitions to 'ich_dmi_pci.h'
-  hw/southbridge/ich9: Introduce TYPE_ICH9_SOUTHBRIDGE stub
-  hw/southbridge/ich9: Add the DMI-to-PCI bridge
-  hw/southbridge/ich9: Add a AHCI function
-  hw/i2c/smbus: Extract QOM ICH9 definitions to 'smbus_ich9.h'
-  hw/southbridge/ich9: Add the SMBus function
-  hw/southbridge/ich9: Add the USB EHCI/UHCI functions
-  hw/southbridge/ich9: Extract LPC definitions to 'hw/isa/ich9_lpc.h'
-  hw/southbridge/ich9: Add the LPC / ISA bridge function
-
- MAINTAINERS                         |  21 ++-
- include/hw/acpi/ich9.h              |  15 ++
- include/hw/acpi/ich9_tco.h          |   6 +-
- include/hw/i2c/smbus_ich9.h         |  25 +++
- include/hw/isa/ich9_lpc.h           | 166 ++++++++++++++++++++
- include/hw/pci-bridge/ich_dmi_pci.h |  20 +++
- include/hw/southbridge/ich9.h       | 235 +---------------------------
- hw/acpi/ich9.c                      |   9 +-
- hw/acpi/ich9_tco.c                  |   5 +-
- hw/i2c/smbus_ich9.c                 |  36 +++--
- hw/i386/acpi-build.c                |   1 +
- hw/i386/pc_q35.c                    | 124 +++------------
- hw/isa/lpc_ich9.c                   |  37 ++++-
- hw/pci-bridge/i82801b11.c           |  11 +-
- hw/southbridge/ich9.c               | 212 +++++++++++++++++++++++++
- tests/qtest/tco-test.c              |   2 +-
- hw/Kconfig                          |   1 +
- hw/i386/Kconfig                     |   3 +-
- hw/meson.build                      |   1 +
- hw/southbridge/Kconfig              |  11 ++
- hw/southbridge/meson.build          |   3 +
- 21 files changed, 581 insertions(+), 363 deletions(-)
- create mode 100644 include/hw/i2c/smbus_ich9.h
- create mode 100644 include/hw/isa/ich9_lpc.h
- create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
- create mode 100644 hw/southbridge/ich9.c
- create mode 100644 hw/southbridge/Kconfig
- create mode 100644 hw/southbridge/meson.build
-
--- 
-2.41.0
+> Signed-off-by: Ilya Chugin <danger_mail@list.ru>
+> ---
+>   hw/riscv/virt-acpi-build.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> index fb8baf64f6..fe01b626ea 100644
+> --- a/hw/riscv/virt-acpi-build.c
+> +++ b/hw/riscv/virt-acpi-build.c
+> @@ -558,8 +558,8 @@ static void virt_acpi_build(RISCVVirtState *s, 
+> AcpiBuildTables *tables)
+>       acpi_add_table(table_offsets, tables_blob);
+>       {
+>           AcpiMcfgInfo mcfg = {
+> -           .base = s->memmap[VIRT_PCIE_MMIO].base,
+> -           .size = s->memmap[VIRT_PCIE_MMIO].size,
+> +           .base = s->memmap[VIRT_PCIE_ECAM].base,
+> +           .size = s->memmap[VIRT_PCIE_ECAM].size,
+>           };
+>           build_mcfg(tables_blob, tables->linker, &mcfg, s->oem_id,
+>                      s->oem_table_id);
 
 
