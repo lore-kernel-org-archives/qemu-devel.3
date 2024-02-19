@@ -4,54 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB825C54764
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 10:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFDFC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 10:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc0yz-000874-4x; Mon, 19 Feb 2024 05:34:45 -0500
+	id 1rc19O-0002zZ-F9; Mon, 19 Feb 2024 05:45:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rc0yu-00086j-Qk
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:34:42 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rc0yf-0006zb-JZ
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:34:30 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxeeiqLtNlXlIOAA--.18840S3;
- Mon, 19 Feb 2024 18:34:18 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxzxOoLtNlVPE7AA--.33368S3; 
- Mon, 19 Feb 2024 18:34:17 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>, zhaotianrui@loongson.cn
-Subject: [PATCH V2 1/1] loongarch: Change the UEFI loading mode to loongarch
-Date: Mon, 19 Feb 2024 18:34:14 +0800
-Message-Id: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <cover.1708336919.git.lixianglai@loongson.cn>
-References: <cover.1708336919.git.lixianglai@loongson.cn>
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1rc19M-0002wu-9o
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:45:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1rc19I-0000U3-SB
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:45:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708339523;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DNBPehS6WmIT/53tRRy1qI7SYIpVOkMB9owzvyxsBhw=;
+ b=Mxo7xTRlaHJ4lGohUAisiJWJvqsiYeZ5dokgqe7/XUq9OkOZFjXl8gbJ//zOu8a19q/9Fa
+ +xepR6Kq/qaoUeMHesEbyaLnyf+g0xwxs7LcKyUkGaAzxbVipE0HR+ontsRAqJFlGrpRIH
+ fNn5TowATZ0n06saG2saVq13eq0FzPQ=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-489-AY1rF7JBMj2yPxhpsy4pAw-1; Mon, 19 Feb 2024 05:45:21 -0500
+X-MC-Unique: AY1rF7JBMj2yPxhpsy4pAw-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2997a3f97fcso675824a91.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 02:45:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708339520; x=1708944320;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DNBPehS6WmIT/53tRRy1qI7SYIpVOkMB9owzvyxsBhw=;
+ b=VwvSH6q/68CEUBq9umUCb2KDyC5ieLavD642oU8EBdqBPGOu8LQC3FsaCRCpojeG+u
+ ySpvGSu2Em4wutvl/Oe2Jb69FmC4SIerAxh4OIhVAybLMhU5Ua1v1TTIV5SS76viYUq5
+ 5C5a7AeLA6GX9DFAqfuwrsJXKMhHgCQMai6va1uRzAIfioiruYDIqR7Ld9hT6PXC8M11
+ 7npunlThIsQUgaDv+nYjR+tQp50NZnk594T/0TrZoBHZK0LV8y4PMX4jyYOnxeJdnRxd
+ +n5tb5Xh/FHuwauYwukolCA2S6kac50PxxUqJSf5cI5f99hyidyoOvepyzxvWpnL66id
+ hZBg==
+X-Gm-Message-State: AOJu0Yx/bHQHE11Wxo+NAJstCh3ekebYoVx4NxXemotdMT4wvl0FHU0V
+ Z69UAN882zMTQwKxzPujffiU0q7VFt+2w4vt4HYSAVXtGbgJCcvdekuPoUlb3mlJoMyW92+f/f7
+ 5fWaebeCqbdOAYM2O/VzmrIE2C9KAb2N5lcZfUIXS+DI+37vWqi1zNG6jYCSMsYoki6bOODGxqq
+ uWLdzHN4Yn5my0CUP5AU3Mg5cXVbE=
+X-Received: by 2002:a17:90a:d506:b0:299:41de:9fea with SMTP id
+ t6-20020a17090ad50600b0029941de9feamr4828234pju.15.1708339520042; 
+ Mon, 19 Feb 2024 02:45:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEGYSwq6lZg/pyKEZZSdx/8YNqeLT1pVGRgxESKfIOYJF7WUTszKTZG3xCTBps98yky4cLjrFL5sHveJBKXkNo=
+X-Received: by 2002:a17:90a:d506:b0:299:41de:9fea with SMTP id
+ t6-20020a17090ad50600b0029941de9feamr4828218pju.15.1708339519750; Mon, 19 Feb
+ 2024 02:45:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxzxOoLtNlVPE7AA--.33368S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240109125614.220293-1-aesteve@redhat.com>
+ <20240109125614.220293-3-aesteve@redhat.com>
+ <87le7ymrqg.fsf@draig.linaro.org>
+ <CADSE00+fCX_w_CyyRmXTJw3WTY-Z-uM+WkOf+yzLKuffUdOB+w@mail.gmail.com>
+In-Reply-To: <CADSE00+fCX_w_CyyRmXTJw3WTY-Z-uM+WkOf+yzLKuffUdOB+w@mail.gmail.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Mon, 19 Feb 2024 11:45:08 +0100
+Message-ID: <CADSE00LJL2r6TSRqRYAN=Jy5Z_wYFuqC6SK7Go1dd8vW0nLijw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] hw/virtio: cleanup shared resources
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, stefanha@gmail.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, marcandre.lureau@gmail.com,
+ kraxel@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000003b18380611b9ca9a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,280 +100,463 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The UEFI loading mode in loongarch is very different
-from that in other architectures:loongarch's UEFI code
-is in rom, while other architectures' UEFI code is in flash.
+--0000000000003b18380611b9ca9a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-loongarch UEFI can be loaded as follows:
--machine virt,pflash=pflash0-format
--bios ./QEMU_EFI.fd
+On Thu, Feb 15, 2024 at 10:45=E2=80=AFAM Albert Esteve <aesteve@redhat.com>=
+ wrote:
 
-Other architectures load UEFI using the following methods:
--machine virt,pflash0=pflash0-format,pflash1=pflash1-format
+>
+>
+> On Tue, Feb 6, 2024 at 12:11=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lin=
+aro.org>
+> wrote:
+>
+>> Albert Esteve <aesteve@redhat.com> writes:
+>>
+>> > Ensure that we cleanup all virtio shared
+>> > resources when the vhost devices is cleaned
+>> > up (after a hot unplug, or a crash).
+>> >
+>> > To do so, we add a new function to the virtio_dmabuf
+>> > API called `virtio_dmabuf_vhost_cleanup`, which
+>> > loop through the table and removes all
+>> > resources owned by the vhost device parameter.
+>> >
+>> > Also, add a test to verify that the new
+>> > function in the API behaves as expected.
+>> >
+>> > Signed-off-by: Albert Esteve <aesteve@redhat.com>
+>> > Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> > ---
+>> >  hw/display/virtio-dmabuf.c        | 22 +++++++++++++++++++++
+>> >  hw/virtio/vhost.c                 |  3 +++
+>> >  include/hw/virtio/virtio-dmabuf.h | 10 ++++++++++
+>> >  tests/unit/test-virtio-dmabuf.c   | 33 ++++++++++++++++++++++++++++++=
++
+>> >  4 files changed, 68 insertions(+)
+>> >
+>> > diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+>> > index 3dba4577ca..6688809777 100644
+>> > --- a/hw/display/virtio-dmabuf.c
+>> > +++ b/hw/display/virtio-dmabuf.c
+>> > @@ -136,6 +136,28 @@ SharedObjectType virtio_object_type(const QemuUUI=
+D
+>> *uuid)
+>> >      return vso->type;
+>> >  }
+>> >
+>> > +static bool virtio_dmabuf_resource_is_owned(gpointer key,
+>> > +                                            gpointer value,
+>> > +                                            gpointer dev)
+>> > +{
+>> > +    VirtioSharedObject *vso;
+>> > +
+>> > +    vso =3D (VirtioSharedObject *) value;
+>> > +    return vso->type =3D=3D TYPE_VHOST_DEV && vso->value =3D=3D dev;
+>>
+>> It's a bit surprising to see vso->value being an anonymous gpointer
+>> rather than the proper type and a bit confusing between value and
+>> vso->value.
+>>
+>>
+> It is the signature required for this to be used with
+> `g_hash_table_foreach_remove`.
+> For the naming, the HashMap stores gpointers, that point to
+> `VirtioSharedObject`, and
+> these point to the underlying type (stored at `vso->value`). It may sound
+> a bit confusing,
+> but is a byproduct of the VirtioSharedObject indirection. Not sure which
+> names could be
+> more fit for this, but I'm open to change them.
+>
+>
+>> > +}
+>> > +
+>> > +int virtio_dmabuf_vhost_cleanup(struct vhost_dev *dev)
+>> > +{
+>> > +    int num_removed;
+>> > +
+>> > +    g_mutex_lock(&lock);
+>> > +    num_removed =3D g_hash_table_foreach_remove(
+>> > +        resource_uuids, (GHRFunc) virtio_dmabuf_resource_is_owned,
+>> dev);
+>> > +    g_mutex_unlock(&lock);
+>>
+>> I'll note if we used a QemuMutex for the lock we could:
+>>
+>>   - use WITH_QEMU_LOCK_GUARD(&lock) { }
+>>   - enable QSP porfiling for the lock
+>>
+>>
+> Was not aware of these QemuMutex's. I wouldn't mind changing the mutex in
+> this
+> file in a different commit.
+>
 
-loongarch's UEFI loading method makes qemu and libvirt incompatible
-when using NVRAM, and the cost of loongarch's current loading method
-far outweighs the benefits, so we decided to use the same UEFI loading
-scheme as other architectures.
+The problem is that current lock is a global static, and `QemuMutex` needs
+to be
+initialised by doing `qemu_mutex_init(&lock);`.
 
-Cc: Andrea Bolognani <abologna@redhat.com>
-Cc: maobibo@loongson.cn
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: zhaotianrui@loongson.cn
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Andrea Bolognani <abologna@redhat.com>
----
- hw/loongarch/acpi-build.c   |  29 +++++++++--
- hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
- include/hw/loongarch/virt.h |  10 ++--
- 3 files changed, 107 insertions(+), 33 deletions(-)
+Maybe can be initialised at vhost-user.c by adding a public function?
 
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index a1c4198741..6c75f216ea 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -314,16 +314,39 @@ static void build_pci_device_aml(Aml *scope, LoongArchMachineState *lams)
- static void build_flash_aml(Aml *scope, LoongArchMachineState *lams)
- {
-     Aml *dev, *crs;
-+    MemoryRegion *flash_mem;
- 
--    hwaddr flash_base = VIRT_FLASH_BASE;
--    hwaddr flash_size = VIRT_FLASH_SIZE;
-+    hwaddr flash0_base;
-+    hwaddr flash0_size;
-+
-+    hwaddr flash1_base;
-+    hwaddr flash1_size;
-+
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
-+    flash0_base = flash_mem->addr;
-+    flash0_size = flash_mem->size;
-+
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
-+    flash1_base = flash_mem->addr;
-+    flash1_size = flash_mem->size;
- 
-     dev = aml_device("FLS0");
-     aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
-     aml_append(dev, aml_name_decl("_UID", aml_int(0)));
- 
-     crs = aml_resource_template();
--    aml_append(crs, aml_memory32_fixed(flash_base, flash_size, AML_READ_WRITE));
-+    aml_append(crs, aml_memory32_fixed(flash0_base, flash0_size,
-+                                       AML_READ_WRITE));
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+
-+    dev = aml_device("FLS1");
-+    aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
-+
-+    crs = aml_resource_template();
-+    aml_append(crs, aml_memory32_fixed(flash1_base, flash1_size,
-+                                       AML_READ_WRITE));
-     aml_append(dev, aml_name_decl("_CRS", crs));
-     aml_append(scope, dev);
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 0ad7d8c887..a7b9199e70 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -54,7 +54,9 @@ struct loaderparams {
-     const char *initrd_filename;
- };
- 
--static void virt_flash_create(LoongArchMachineState *lams)
-+static PFlashCFI01 *virt_flash_create1(LoongArchMachineState *lams,
-+                                       const char *name,
-+                                       const char *alias_prop_name)
- {
-     DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
- 
-@@ -66,45 +68,78 @@ static void virt_flash_create(LoongArchMachineState *lams)
-     qdev_prop_set_uint16(dev, "id1", 0x18);
-     qdev_prop_set_uint16(dev, "id2", 0x00);
-     qdev_prop_set_uint16(dev, "id3", 0x00);
--    qdev_prop_set_string(dev, "name", "virt.flash");
--    object_property_add_child(OBJECT(lams), "virt.flash", OBJECT(dev));
--    object_property_add_alias(OBJECT(lams), "pflash",
-+    qdev_prop_set_string(dev, "name", name);
-+    object_property_add_child(OBJECT(lams), name, OBJECT(dev));
-+    object_property_add_alias(OBJECT(lams), alias_prop_name,
-                               OBJECT(dev), "drive");
-+    return PFLASH_CFI01(dev);
-+}
- 
--    lams->flash = PFLASH_CFI01(dev);
-+static void virt_flash_create(LoongArchMachineState *lams)
-+{
-+    lams->flash[0] = virt_flash_create1(lams, "virt.flash0", "pflash0");
-+    lams->flash[1] = virt_flash_create1(lams, "virt.flash1", "pflash1");
- }
- 
--static void virt_flash_map(LoongArchMachineState *lams,
--                           MemoryRegion *sysmem)
-+static void virt_flash_map1(PFlashCFI01 *flash,
-+                            hwaddr base, hwaddr size,
-+                            MemoryRegion *sysmem)
- {
--    PFlashCFI01 *flash = lams->flash;
-     DeviceState *dev = DEVICE(flash);
--    hwaddr base = VIRT_FLASH_BASE;
--    hwaddr size = VIRT_FLASH_SIZE;
-+    BlockBackend *blk;
-+    hwaddr real_size = size;
-+
-+    blk = pflash_cfi01_get_blk(flash);
-+    if (blk) {
-+        real_size = blk_getlength(blk);
-+        assert(real_size && real_size <= size);
-+    }
- 
--    assert(QEMU_IS_ALIGNED(size, VIRT_FLASH_SECTOR_SIZE));
--    assert(size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
-+    assert(QEMU_IS_ALIGNED(real_size, VIRT_FLASH_SECTOR_SIZE));
-+    assert(real_size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
- 
--    qdev_prop_set_uint32(dev, "num-blocks", size / VIRT_FLASH_SECTOR_SIZE);
-+    qdev_prop_set_uint32(dev, "num-blocks", real_size / VIRT_FLASH_SECTOR_SIZE);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-     memory_region_add_subregion(sysmem, base,
-                                 sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
-+}
- 
-+static void virt_flash_map(LoongArchMachineState *lams,
-+                           MemoryRegion *sysmem)
-+{
-+    PFlashCFI01 *flash0 = lams->flash[0];
-+    PFlashCFI01 *flash1 = lams->flash[1];
-+
-+    virt_flash_map1(flash0, VIRT_FLASH0_BASE, VIRT_FLASH0_SIZE, sysmem);
-+    virt_flash_map1(flash1, VIRT_FLASH1_BASE, VIRT_FLASH1_SIZE, sysmem);
- }
- 
- static void fdt_add_flash_node(LoongArchMachineState *lams)
- {
-     MachineState *ms = MACHINE(lams);
-     char *nodename;
-+    MemoryRegion *flash_mem;
-+
-+    hwaddr flash0_base;
-+    hwaddr flash0_size;
- 
--    hwaddr flash_base = VIRT_FLASH_BASE;
--    hwaddr flash_size = VIRT_FLASH_SIZE;
-+    hwaddr flash1_base;
-+    hwaddr flash1_size;
- 
--    nodename = g_strdup_printf("/flash@%" PRIx64, flash_base);
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
-+    flash0_base = flash_mem->addr;
-+    flash0_size = flash_mem->size;
-+
-+    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
-+    flash1_base = flash_mem->addr;
-+    flash1_size = flash_mem->size;
-+
-+    nodename = g_strdup_printf("/flash@%" PRIx64, flash0_base);
-     qemu_fdt_add_subnode(ms->fdt, nodename);
-     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "cfi-flash");
-     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
--                                 2, flash_base, 2, flash_size);
-+                                 2, flash0_base, 2, flash0_size,
-+                                 2, flash1_base, 2, flash1_size);
-     qemu_fdt_setprop_cell(ms->fdt, nodename, "bank-width", 4);
-     g_free(nodename);
- }
-@@ -637,12 +672,32 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
- {
-     char *filename = MACHINE(lams)->firmware;
-     char *bios_name = NULL;
--    int bios_size;
-+    int bios_size, i;
-+    BlockBackend *pflash_blk0;
-+    MemoryRegion *mr;
- 
-     lams->bios_loaded = false;
- 
-+    /* Map legacy -drive if=pflash to machine properties */
-+    for (i = 0; i < ARRAY_SIZE(lams->flash); i++) {
-+        pflash_cfi01_legacy_drive(lams->flash[i],
-+                                  drive_get(IF_PFLASH, 0, i));
-+    }
-+
-     virt_flash_map(lams, get_system_memory());
- 
-+    pflash_blk0 = pflash_cfi01_get_blk(lams->flash[0]);
-+
-+    if (pflash_blk0) {
-+        if (filename) {
-+            error_report("cannot use both '-bios' and '-drive if=pflash'"
-+                         "options at once");
-+            exit(1);
-+        }
-+        lams->bios_loaded = true;
-+        return;
-+    }
-+
-     if (filename) {
-         bios_name = qemu_find_file(QEMU_FILE_TYPE_BIOS, filename);
-         if (!bios_name) {
-@@ -650,21 +705,15 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
-             exit(1);
-         }
- 
--        bios_size = load_image_targphys(bios_name, VIRT_BIOS_BASE, VIRT_BIOS_SIZE);
-+        mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(lams->flash[0]), 0);
-+        bios_size = load_image_mr(bios_name, mr);
-         if (bios_size < 0) {
-             error_report("Could not load ROM image '%s'", bios_name);
-             exit(1);
-         }
--
-         g_free(bios_name);
--
--        memory_region_init_ram(&lams->bios, NULL, "loongarch.bios",
--                               VIRT_BIOS_SIZE, &error_fatal);
--        memory_region_set_readonly(&lams->bios, true);
--        memory_region_add_subregion(get_system_memory(), VIRT_BIOS_BASE, &lams->bios);
-         lams->bios_loaded = true;
-     }
--
- }
- 
- static void reset_load_elf(void *opaque)
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 6ef9a92394..252f7df7f4 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -18,10 +18,12 @@
- 
- #define VIRT_FWCFG_BASE         0x1e020000UL
- #define VIRT_BIOS_BASE          0x1c000000UL
--#define VIRT_BIOS_SIZE          (4 * MiB)
-+#define VIRT_BIOS_SIZE          (16 * MiB)
- #define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
--#define VIRT_FLASH_BASE         0x1d000000UL
--#define VIRT_FLASH_SIZE         (16 * MiB)
-+#define VIRT_FLASH0_BASE        VIRT_BIOS_BASE
-+#define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
-+#define VIRT_FLASH1_BASE        0x1d000000UL
-+#define VIRT_FLASH1_SIZE        (16 * MiB)
- 
- #define VIRT_LOWMEM_BASE        0
- #define VIRT_LOWMEM_SIZE        0x10000000
-@@ -49,7 +51,7 @@ struct LoongArchMachineState {
-     int          fdt_size;
-     DeviceState *platform_bus_dev;
-     PCIBus       *pci_bus;
--    PFlashCFI01  *flash;
-+    PFlashCFI01  *flash[2];
-     MemoryRegion system_iocsr;
-     MemoryRegion iocsr_mem;
-     AddressSpace as_iocsr;
--- 
-2.39.1
+
+>
+>
+>> > +
+>> > +    return num_removed;
+>> > +}
+>> > +
+>> >  void virtio_free_resources(void)
+>> >  {
+>> >      g_mutex_lock(&lock);
+>> > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>> > index 2c9ac79468..c5622eac14 100644
+>> > --- a/hw/virtio/vhost.c
+>> > +++ b/hw/virtio/vhost.c
+>> > @@ -16,6 +16,7 @@
+>> >  #include "qemu/osdep.h"
+>> >  #include "qapi/error.h"
+>> >  #include "hw/virtio/vhost.h"
+>> > +#include "hw/virtio/virtio-dmabuf.h"
+>> >  #include "qemu/atomic.h"
+>> >  #include "qemu/range.h"
+>> >  #include "qemu/error-report.h"
+>> > @@ -1599,6 +1600,8 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+>> >      migrate_del_blocker(&hdev->migration_blocker);
+>> >      g_free(hdev->mem);
+>> >      g_free(hdev->mem_sections);
+>> > +    /* free virtio shared objects */
+>> > +    virtio_dmabuf_vhost_cleanup(hdev);
+>> >      if (hdev->vhost_ops) {
+>> >          hdev->vhost_ops->vhost_backend_cleanup(hdev);
+>> >      }
+>> > diff --git a/include/hw/virtio/virtio-dmabuf.h
+>> b/include/hw/virtio/virtio-dmabuf.h
+>> > index 627c3b6db7..73f70fb482 100644
+>> > --- a/include/hw/virtio/virtio-dmabuf.h
+>> > +++ b/include/hw/virtio/virtio-dmabuf.h
+>> > @@ -91,6 +91,16 @@ struct vhost_dev *virtio_lookup_vhost_device(const
+>> QemuUUID *uuid);
+>> >   */
+>> >  SharedObjectType virtio_object_type(const QemuUUID *uuid);
+>> >
+>> > +/**
+>> > + * virtio_dmabuf_vhost_cleanup() - Destroys all entries of the shared
+>> > + * resources lookup table that are owned by the vhost backend
+>> > + * @dev: the pointer to the vhost device that owns the entries. Data
+>> is owned
+>> > + *       by the called of the function.
+>> > + *
+>> > + * Return: the number of resource entries removed.
+>> > + */
+>> > +int virtio_dmabuf_vhost_cleanup(struct vhost_dev *dev);
+>> > +
+>> >  /**
+>> >   * virtio_free_resources() - Destroys all keys and values of the shar=
+ed
+>> >   * resources lookup table, and frees them
+>> > diff --git a/tests/unit/test-virtio-dmabuf.c
+>> b/tests/unit/test-virtio-dmabuf.c
+>> > index a45ec52f42..1c8123c2d2 100644
+>> > --- a/tests/unit/test-virtio-dmabuf.c
+>> > +++ b/tests/unit/test-virtio-dmabuf.c
+>> > @@ -103,6 +103,38 @@ static void test_add_invalid_resource(void)
+>> >      }
+>> >  }
+>> >
+>> > +static void test_cleanup_res(void)
+>> > +{
+>> > +    QemuUUID uuids[20], uuid_alt;
+>> > +    struct vhost_dev *dev =3D g_new0(struct vhost_dev, 1);
+>> > +    struct vhost_dev *dev_alt =3D g_new0(struct vhost_dev, 1);
+>> > +    int i, num_removed;
+>> > +
+>> > +    for (i =3D 0; i < ARRAY_SIZE(uuids); ++i) {
+>> > +        qemu_uuid_generate(&uuids[i]);
+>> > +        virtio_add_vhost_device(&uuids[i], dev);
+>> > +        /* vhost device is found */
+>> > +        g_assert(virtio_lookup_vhost_device(&uuids[i]) !=3D NULL);
+>> > +    }
+>> > +    qemu_uuid_generate(&uuid_alt);
+>> > +    virtio_add_vhost_device(&uuid_alt, dev_alt);
+>> > +    /* vhost device is found */
+>> > +    g_assert(virtio_lookup_vhost_device(&uuid_alt) !=3D NULL);
+>> > +    /* cleanup all dev resources */
+>> > +    num_removed =3D virtio_dmabuf_vhost_cleanup(dev);
+>> > +    g_assert_cmpint(num_removed, =3D=3D, ARRAY_SIZE(uuids));
+>> > +    for (i =3D 0; i < ARRAY_SIZE(uuids); ++i) {
+>> > +        /* None of the dev resources is found after free'd */
+>> > +        g_assert_cmpint(virtio_lookup_dmabuf(&uuids[i]), =3D=3D, -1);
+>> > +    }
+>> > +    /* uuid_alt is still in the hash table */
+>> > +    g_assert(virtio_lookup_vhost_device(&uuid_alt) !=3D NULL);
+>> > +
+>> > +    virtio_free_resources();
+>> > +    g_free(dev);
+>> > +    g_free(dev_alt);
+>> > +}
+>> > +
+>> >  static void test_free_resources(void)
+>> >  {
+>> >      QemuUUID uuids[20];
+>> > @@ -131,6 +163,7 @@ int main(int argc, char **argv)
+>> >                      test_remove_invalid_resource);
+>> >      g_test_add_func("/virtio-dmabuf/add_invalid_res",
+>> >                      test_add_invalid_resource);
+>> > +    g_test_add_func("/virtio-dmabuf/cleanup_dev", test_cleanup_res);
+>> >      g_test_add_func("/virtio-dmabuf/free_res", test_free_resources);
+>> >
+>> >      return g_test_run();
+>>
+>> --
+>> Alex Benn=C3=A9e
+>> Virtualisation Tech Lead @ Linaro
+>>
+>>
+
+--0000000000003b18380611b9ca9a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr" class=3D"gmail_sign=
+ature"><div dir=3D"ltr"><br></div></div></div><br></div><br><div class=3D"g=
+mail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 15, 2024 at 1=
+0:45=E2=80=AFAM Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.com">aes=
+teve@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr" clas=
+s=3D"gmail_signature"><div dir=3D"ltr"><br></div></div></div></div><br><div=
+ class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 6,=
+ 2024 at 12:11=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.benne=
+e@linaro.org" target=3D"_blank">alex.bennee@linaro.org</a>&gt; wrote:<br></=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">Albert Esteve &lt;<a =
+href=3D"mailto:aesteve@redhat.com" target=3D"_blank">aesteve@redhat.com</a>=
+&gt; writes:<br>
+<br>
+&gt; Ensure that we cleanup all virtio shared<br>
+&gt; resources when the vhost devices is cleaned<br>
+&gt; up (after a hot unplug, or a crash).<br>
+&gt;<br>
+&gt; To do so, we add a new function to the virtio_dmabuf<br>
+&gt; API called `virtio_dmabuf_vhost_cleanup`, which<br>
+&gt; loop through the table and removes all<br>
+&gt; resources owned by the vhost device parameter.<br>
+&gt;<br>
+&gt; Also, add a test to verify that the new<br>
+&gt; function in the API behaves as expected.<br>
+&gt;<br>
+&gt; Signed-off-by: Albert Esteve &lt;<a href=3D"mailto:aesteve@redhat.com"=
+ target=3D"_blank">aesteve@redhat.com</a>&gt;<br>
+&gt; Acked-by: Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com" t=
+arget=3D"_blank">stefanha@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/display/virtio-dmabuf.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 22 +++++=
+++++++++++++++++<br>
+&gt;=C2=A0 hw/virtio/vhost.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0|=C2=A0 3 +++<br>
+&gt;=C2=A0 include/hw/virtio/virtio-dmabuf.h | 10 ++++++++++<br>
+&gt;=C2=A0 tests/unit/test-virtio-dmabuf.c=C2=A0 =C2=A0| 33 +++++++++++++++=
+++++++++++++++++<br>
+&gt;=C2=A0 4 files changed, 68 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c<b=
+r>
+&gt; index 3dba4577ca..6688809777 100644<br>
+&gt; --- a/hw/display/virtio-dmabuf.c<br>
+&gt; +++ b/hw/display/virtio-dmabuf.c<br>
+&gt; @@ -136,6 +136,28 @@ SharedObjectType virtio_object_type(const QemuUUI=
+D *uuid)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return vso-&gt;type;<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; +static bool virtio_dmabuf_resource_is_owned(gpointer key,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 gpointer value,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 gpointer dev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 VirtioSharedObject *vso;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 vso =3D (VirtioSharedObject *) value;<br>
+&gt; +=C2=A0 =C2=A0 return vso-&gt;type =3D=3D TYPE_VHOST_DEV &amp;&amp; vs=
+o-&gt;value =3D=3D dev;<br>
+<br>
+It&#39;s a bit surprising to see vso-&gt;value being an anonymous gpointer<=
+br>
+rather than the proper type and a bit confusing between value and<br>
+vso-&gt;value.<br>
+<br></blockquote><div><br></div><div>It is the signature required for this =
+to be used with `g_hash_table_foreach_remove`.</div><div>For the naming, th=
+e HashMap stores gpointers, that point to `VirtioSharedObject`, and</div><d=
+iv>these point to the underlying type (stored at `vso-&gt;value`). It may s=
+ound a bit confusing,</div><div>but is a byproduct=C2=A0of the VirtioShared=
+Object indirection. Not sure which names could be</div><div>more fit for th=
+is, but I&#39;m open to change them.</div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">
+&gt; +}<br>
+&gt; +<br>
+&gt; +int virtio_dmabuf_vhost_cleanup(struct vhost_dev *dev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 int num_removed;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 g_mutex_lock(&amp;lock);<br>
+&gt; +=C2=A0 =C2=A0 num_removed =3D g_hash_table_foreach_remove(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 resource_uuids, (GHRFunc) virtio_dmabuf_r=
+esource_is_owned, dev);<br>
+&gt; +=C2=A0 =C2=A0 g_mutex_unlock(&amp;lock);<br>
+<br>
+I&#39;ll note if we used a QemuMutex for the lock we could:<br>
+<br>
+=C2=A0 - use WITH_QEMU_LOCK_GUARD(&amp;lock) { }<br>
+=C2=A0 - enable QSP porfiling for the lock<br>
+<br></blockquote><div><br></div><div>Was not aware of these QemuMutex&#39;s=
+. I wouldn&#39;t mind changing the mutex in this</div><div>file in a differ=
+ent commit.</div></div></div></blockquote><div><br></div><div>The problem i=
+s that current lock is a global static, and `QemuMutex` needs to be</div><d=
+iv>initialised by doing `qemu_mutex_init(&amp;lock);`.</div><div><br></div>=
+<div>Maybe can be initialised at vhost-user.c by adding a public function?<=
+/div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><di=
+v dir=3D"ltr"><div class=3D"gmail_quote"><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return num_removed;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt;=C2=A0 void virtio_free_resources(void)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_mutex_lock(&amp;lock);<br>
+&gt; diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c<br>
+&gt; index 2c9ac79468..c5622eac14 100644<br>
+&gt; --- a/hw/virtio/vhost.c<br>
+&gt; +++ b/hw/virtio/vhost.c<br>
+&gt; @@ -16,6 +16,7 @@<br>
+&gt;=C2=A0 #include &quot;qemu/osdep.h&quot;<br>
+&gt;=C2=A0 #include &quot;qapi/error.h&quot;<br>
+&gt;=C2=A0 #include &quot;hw/virtio/vhost.h&quot;<br>
+&gt; +#include &quot;hw/virtio/virtio-dmabuf.h&quot;<br>
+&gt;=C2=A0 #include &quot;qemu/atomic.h&quot;<br>
+&gt;=C2=A0 #include &quot;qemu/range.h&quot;<br>
+&gt;=C2=A0 #include &quot;qemu/error-report.h&quot;<br>
+&gt; @@ -1599,6 +1600,8 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 migrate_del_blocker(&amp;hdev-&gt;migration_blocke=
+r);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_free(hdev-&gt;mem);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_free(hdev-&gt;mem_sections);<br>
+&gt; +=C2=A0 =C2=A0 /* free virtio shared objects */<br>
+&gt; +=C2=A0 =C2=A0 virtio_dmabuf_vhost_cleanup(hdev);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (hdev-&gt;vhost_ops) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hdev-&gt;vhost_ops-&gt;vhost_backend=
+_cleanup(hdev);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; diff --git a/include/hw/virtio/virtio-dmabuf.h b/include/hw/virtio/vir=
+tio-dmabuf.h<br>
+&gt; index 627c3b6db7..73f70fb482 100644<br>
+&gt; --- a/include/hw/virtio/virtio-dmabuf.h<br>
+&gt; +++ b/include/hw/virtio/virtio-dmabuf.h<br>
+&gt; @@ -91,6 +91,16 @@ struct vhost_dev *virtio_lookup_vhost_device(const =
+QemuUUID *uuid);<br>
+&gt;=C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 SharedObjectType virtio_object_type(const QemuUUID *uuid);<br>
+&gt;=C2=A0 <br>
+&gt; +/**<br>
+&gt; + * virtio_dmabuf_vhost_cleanup() - Destroys all entries of the shared=
+<br>
+&gt; + * resources lookup table that are owned by the vhost backend<br>
+&gt; + * @dev: the pointer to the vhost device that owns the entries. Data =
+is owned<br>
+&gt; + *=C2=A0 =C2=A0 =C2=A0 =C2=A0by the called of the function.<br>
+&gt; + * <br>
+&gt; + * Return: the number of resource entries removed.<br>
+&gt; + */<br>
+&gt; +int virtio_dmabuf_vhost_cleanup(struct vhost_dev *dev);<br>
+&gt; +<br>
+&gt;=C2=A0 /**<br>
+&gt;=C2=A0 =C2=A0* virtio_free_resources() - Destroys all keys and values o=
+f the shared<br>
+&gt;=C2=A0 =C2=A0* resources lookup table, and frees them<br>
+&gt; diff --git a/tests/unit/test-virtio-dmabuf.c b/tests/unit/test-virtio-=
+dmabuf.c<br>
+&gt; index a45ec52f42..1c8123c2d2 100644<br>
+&gt; --- a/tests/unit/test-virtio-dmabuf.c<br>
+&gt; +++ b/tests/unit/test-virtio-dmabuf.c<br>
+&gt; @@ -103,6 +103,38 @@ static void test_add_invalid_resource(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; +static void test_cleanup_res(void)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 QemuUUID uuids[20], uuid_alt;<br>
+&gt; +=C2=A0 =C2=A0 struct vhost_dev *dev =3D g_new0(struct vhost_dev, 1);<=
+br>
+&gt; +=C2=A0 =C2=A0 struct vhost_dev *dev_alt =3D g_new0(struct vhost_dev, =
+1);<br>
+&gt; +=C2=A0 =C2=A0 int i, num_removed;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; ARRAY_SIZE(uuids); ++i) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_uuid_generate(&amp;uuids[i]);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_add_vhost_device(&amp;uuids[i], de=
+v);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* vhost device is found */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert(virtio_lookup_vhost_device(&amp;=
+uuids[i]) !=3D NULL);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 qemu_uuid_generate(&amp;uuid_alt);<br>
+&gt; +=C2=A0 =C2=A0 virtio_add_vhost_device(&amp;uuid_alt, dev_alt);<br>
+&gt; +=C2=A0 =C2=A0 /* vhost device is found */<br>
+&gt; +=C2=A0 =C2=A0 g_assert(virtio_lookup_vhost_device(&amp;uuid_alt) !=3D=
+ NULL);<br>
+&gt; +=C2=A0 =C2=A0 /* cleanup all dev resources */<br>
+&gt; +=C2=A0 =C2=A0 num_removed =3D virtio_dmabuf_vhost_cleanup(dev);<br>
+&gt; +=C2=A0 =C2=A0 g_assert_cmpint(num_removed, =3D=3D, ARRAY_SIZE(uuids))=
+;<br>
+&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; ARRAY_SIZE(uuids); ++i) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* None of the dev resources is found aft=
+er free&#39;d */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_cmpint(virtio_lookup_dmabuf(&amp=
+;uuids[i]), =3D=3D, -1);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 /* uuid_alt is still in the hash table */<br>
+&gt; +=C2=A0 =C2=A0 g_assert(virtio_lookup_vhost_device(&amp;uuid_alt) !=3D=
+ NULL);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 virtio_free_resources();<br>
+&gt; +=C2=A0 =C2=A0 g_free(dev);<br>
+&gt; +=C2=A0 =C2=A0 g_free(dev_alt);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt;=C2=A0 static void test_free_resources(void)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 QemuUUID uuids[20];<br>
+&gt; @@ -131,6 +163,7 @@ int main(int argc, char **argv)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 test_remove_invalid_resource);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_test_add_func(&quot;/virtio-dmabuf/add_invalid_r=
+es&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 test_add_invalid_resource);<br>
+&gt; +=C2=A0 =C2=A0 g_test_add_func(&quot;/virtio-dmabuf/cleanup_dev&quot;,=
+ test_cleanup_res);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 g_test_add_func(&quot;/virtio-dmabuf/free_res&quot=
+;, test_free_resources);<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return g_test_run();<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+<br>
+</blockquote></div></div>
+</blockquote></div></div>
+
+--0000000000003b18380611b9ca9a--
 
 
