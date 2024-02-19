@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C283C48260
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4A3AC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz49-0003ME-BK; Mon, 19 Feb 2024 03:31:57 -0500
+	id 1rbz4k-0005zP-Mw; Mon, 19 Feb 2024 03:32:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz47-0003Fv-OP; Mon, 19 Feb 2024 03:31:55 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1rbz4d-0005GG-Tr; Mon, 19 Feb 2024 03:32:28 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz45-0002WE-Uq; Mon, 19 Feb 2024 03:31:55 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d746856d85so21987955ad.0; 
- Mon, 19 Feb 2024 00:31:53 -0800 (PST)
+ id 1rbz4b-0002bC-Bb; Mon, 19 Feb 2024 03:32:27 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1d7881b1843so34373595ad.3; 
+ Mon, 19 Feb 2024 00:32:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331512; x=1708936312; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331542; x=1708936342; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DNu7LbnPyEXqAmNz1J8vUk98CtltlRUnNqB1Qw24DM8=;
- b=jEw1K5gkxMkWOYIOFYqIG+BaTWn6vqv7KAx5NOUKlHdg+dFWY21Fk5Lgvtj4EEYtyI
- WESukXYkB5ZbM1DXDCnsKMwIhd4F6Gho/yuZtX8ZZAcmvn57GXh7J4qiSgCMzfkO5+77
- ogjRQAhQo5bq/OAvhzak1IruXfYzhHJxC94ZvctvVDCh/J7nBR35lTlcdjuUlXEVPr9m
- YtWgJM4keTxgYFVhTQTqX9AbHtwZcR1sQD2Yt63AmtN5PwR7U7EjatZvsOab7RzS4HEe
- gDhBTlpTEdok/9aR2YRU0p4eTGNEvQuuOTMa/RusZSfhdzf5c+H8/Vo1W+cgNPBXycq7
- 5Nxg==
+ bh=v+oPM12tWxnBSsHCiXIjAZTIQlwfOLUqo3EB/1FOic8=;
+ b=gwLOMGttlaLBq0vtTblyUkhf16fM1wo32bM0wJyD4cJVtjFipWqpulC344vI2h/rH6
+ 0k8rweCnm+OtKq1GN9m4qJmBaerKRSOxNvPUz8175dVPIMRsvmjWureQ5Q6WKT03HwHK
+ 8+HpUnLm6Y1Rx2ARBzMObCTYu7HMeP6raBW1Snd2chWbRXfKBCV4Byga4Mdq8EsFCvjq
+ iDbBg/4E1nYNdTrQJEtU1GHy5kqAXv/v2ofV9FBWoymBmc2ri34ujO1HT9mJin6EubaX
+ 8V5Wx5/uPb/ON/kGL8R3RTVWliP8qiOnY0zO8diVnwE6D8VVnjOTO6p39MDeOJWHEG6h
+ 0P5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331512; x=1708936312;
+ d=1e100.net; s=20230601; t=1708331542; x=1708936342;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DNu7LbnPyEXqAmNz1J8vUk98CtltlRUnNqB1Qw24DM8=;
- b=lX4ADHQEYO4nyqfD7cNRTZVF1onB57AdptaJ+S820h83alQAVAovAmVi45eBDJAxTM
- gZSQWm7Pt5K6KRA5hLv3NazQqoChO+2t6xkRe74ZYU80P0q0t2U6kc36tWB1nJlQJBCQ
- EhVuvhyMLQUaECYmj1tMtD+OdqFJzHkNfvc+Mej8NiIbiQwpgI4rvwSbgj7XSpMcltpr
- OoDjfiqHIA/9EjH6GgnMqw41JZzXdGN0HD2eRgKOvt5tb1g8ImSgOdO1bRIVFNSsrJs1
- YJL6Tuumx59DvINoVUC1FR7CLNGXFeD4roDXdTLZc9z68dotjUNGJmemfl8Pe8z85ipV
- G/Lw==
+ bh=v+oPM12tWxnBSsHCiXIjAZTIQlwfOLUqo3EB/1FOic8=;
+ b=p26C8fiCLqlhczetJfH5XNIyYDn0tFxltwuhpxsypY+xZOpT1YAT94lbxgxVRatTuW
+ DHsxild0ERONN9xTXD83M3NMOBOpY9WZ9wTdo2CPjZpF4OXhkVsoTLy6RzbA7+usRXsW
+ wMsy3ieE9vG37DSFe4jjnRGquDkhCEwlLxlUtiVW7O3Vsw0G483CSOttpS3EacLZ7UUr
+ KhMXoKJTUmvSmGVfPuu6mxyxW+s0XiWRwglIhR175xla9vIo3Lm8R97z+uTdDciuD889
+ gBgwEHUo6RxRFvXc8r4+OhpO3+gsR9KOXLsh+tjcKv0DJz2CQlRJXBJ2drl5P1EKY7Fd
+ /Dcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZRuIbtahYGfXRa203bQIjeimKlDFubsrpAvtnOu0Pfoh+qOmZ0AQZfTL94HRx4g+BtLsmE6MqICx3YVZhPCfo9VQI
-X-Gm-Message-State: AOJu0Yz83MenesIwc97tqq1ZSqEuagDELtLSleQohZN3bnvZBrBrucwn
- DMES8iZE0Fm8Tp8jOm67Nek7m9trGlSN+YvpBs2dytjDXa6gFc9j9LsPReup
-X-Google-Smtp-Source: AGHT+IGTO6HdLL18/EkKkbKJh/xmlhRDy63SA/5w8nzzGj2GWTPT7UMJxji3H7UhQx03OovpAMdqEg==
-X-Received: by 2002:a17:902:7286:b0:1db:cf57:7bad with SMTP id
- d6-20020a170902728600b001dbcf577badmr4321017pll.22.1708331512297; 
- Mon, 19 Feb 2024 00:31:52 -0800 (PST)
+ AJvYcCVsSNytBfkfE5mLcj4NRjiAWmvUp108MnHsBF7uXfEIC6NaEv4r2nFJINCzemo/xddiClsAqmU/2tUkiaL/Oe+EzuIr
+X-Gm-Message-State: AOJu0YxO5QHoeeSGvhU00ukFLk6VNXo75QY6l6N81K7ksn7GUvQ4Qabn
+ q0GWwPIrMUIdJvQHh8cJhVBYfdVthrFL98cjQfMKplPjXTVZmviL+92AbDDa
+X-Google-Smtp-Source: AGHT+IHtMFpq7J+9zoj3G+qCM7YMgwPa/oiui7up7R3xCwnOzZcZNYM0kCZUEU0Psjc0EBq+RvPwfQ==
+X-Received: by 2002:a17:902:db0e:b0:1d9:b9da:ea8f with SMTP id
+ m14-20020a170902db0e00b001d9b9daea8fmr16268246plx.2.1708331542105; 
+ Mon, 19 Feb 2024 00:32:22 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.48
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.32.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:31:52 -0800 (PST)
+ Mon, 19 Feb 2024 00:32:21 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>
-Subject: [PULL 25/49] ppc/pnv: New powernv10-rainier machine type
-Date: Mon, 19 Feb 2024 18:29:14 +1000
-Message-ID: <20240219082938.238302-26-npiggin@gmail.com>
+ Chalapathi V <chalapathi.v@linux.ibm.com>
+Subject: [PULL 32/49] hw/ppc: Add pnv nest pervasive common chiplet model
+Date: Mon, 19 Feb 2024 18:29:21 +1000
+Message-ID: <20240219082938.238302-33-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,74 +98,308 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.vnet.ibm.com>
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
 
-Create a new powernv machine type, powernv10-rainier, that
-will contain rainier-specific devices.
+A POWER10 chip is divided into logical units called chiplets. Chiplets
+are broadly divided into "core chiplets" (with the processor cores) and
+"nest chiplets" (with everything else). Each chiplet has an attachment
+to the pervasive bus (PIB) and with chiplet-specific registers. All nest
+chiplets have a common basic set of registers and This model will provide
+the registers functionality for common registers of nest chiplet (Pervasive
+Chiplet, PB Chiplet, PCI Chiplets, MC Chiplet, PAU Chiplets)
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+This commit implement the read/write functions of chiplet control registers.
+
+Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ hw/ppc/meson.build                  |   1 +
+ hw/ppc/pnv_nest_pervasive.c         | 208 ++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_nest_pervasive.h |  32 +++++
+ include/hw/ppc/pnv_xscom.h          |   3 +
+ 4 files changed, 244 insertions(+)
+ create mode 100644 hw/ppc/pnv_nest_pervasive.c
+ create mode 100644 include/hw/ppc/pnv_nest_pervasive.h
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index b949398689..33b905f854 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2249,7 +2249,7 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
- }
- 
--static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
-+static void pnv_machine_p10_common_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     PnvMachineClass *pmc = PNV_MACHINE_CLASS(oc);
-@@ -2261,7 +2261,6 @@ static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
-         { TYPE_PNV_PHB_ROOT_PORT, "version", "5" },
-     };
- 
--    mc->desc = "IBM PowerNV (Non-Virtualized) POWER10";
-     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
-     compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
- 
-@@ -2276,6 +2275,22 @@ static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_PNV_PHB);
- }
- 
-+static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index 30bd2aaccf..e46c9bcd7b 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -53,6 +53,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_bmc.c',
+   'pnv_homer.c',
+   'pnv_pnor.c',
++  'pnv_nest_pervasive.c',
+ ))
+ # PowerPC 4xx boards
+ ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
+diff --git a/hw/ppc/pnv_nest_pervasive.c b/hw/ppc/pnv_nest_pervasive.c
+new file mode 100644
+index 0000000000..77476753a4
+--- /dev/null
++++ b/hw/ppc/pnv_nest_pervasive.c
+@@ -0,0 +1,208 @@
++/*
++ * QEMU PowerPC nest pervasive common chiplet model
++ *
++ * Copyright (c) 2023, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-+    pnv_machine_p10_common_class_init(oc, data);
-+    mc->desc = "IBM PowerNV (Non-Virtualized) POWER10";
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/qdev-properties.h"
++#include "hw/ppc/pnv.h"
++#include "hw/ppc/pnv_xscom.h"
++#include "hw/ppc/pnv_nest_pervasive.h"
++
++/*
++ * Status, configuration, and control units in POWER chips is provided
++ * by the pervasive subsystem, which connects registers to the SCOM bus,
++ * which can be programmed by processor cores, other units on the chip,
++ * BMCs, or other POWER chips.
++ *
++ * A POWER10 chip is divided into logical units called chiplets. Chiplets
++ * are broadly divided into "core chiplets" (with the processor cores) and
++ * "nest chiplets" (with everything else). Each chiplet has an attachment
++ * to the pervasive bus (PIB) and with chiplet-specific registers.
++ * All nest chiplets have a common basic set of registers.
++ *
++ * This model will provide the registers functionality for common registers of
++ * nest unit (PB Chiplet, PCI Chiplets, MC Chiplet, PAU Chiplets)
++ *
++ * Currently this model provide the read/write functionality of chiplet control
++ * scom registers.
++ */
++
++#define CPLT_CONF0               0x08
++#define CPLT_CONF0_OR            0x18
++#define CPLT_CONF0_CLEAR         0x28
++#define CPLT_CONF1               0x09
++#define CPLT_CONF1_OR            0x19
++#define CPLT_CONF1_CLEAR         0x29
++#define CPLT_STAT0               0x100
++#define CPLT_MASK0               0x101
++#define CPLT_PROTECT_MODE        0x3FE
++#define CPLT_ATOMIC_CLOCK        0x3FF
++
++static uint64_t pnv_chiplet_ctrl_read(void *opaque, hwaddr addr, unsigned size)
++{
++    PnvNestChipletPervasive *nest_pervasive = PNV_NEST_CHIPLET_PERVASIVE(
++                                              opaque);
++    uint32_t reg = addr >> 3;
++    uint64_t val = ~0ull;
++
++    /* CPLT_CTRL0 to CPLT_CTRL5 */
++    for (int i = 0; i < PNV_CPLT_CTRL_SIZE; i++) {
++        if (reg == i) {
++            return nest_pervasive->control_regs.cplt_ctrl[i];
++        } else if ((reg == (i + 0x10)) || (reg == (i + 0x20))) {
++            qemu_log_mask(LOG_GUEST_ERROR, "%s: Write only register, ignoring "
++                                           "xscom read at 0x%" PRIx32 "\n",
++                                           __func__, reg);
++            return val;
++        }
++    }
++
++    switch (reg) {
++    case CPLT_CONF0:
++        val = nest_pervasive->control_regs.cplt_cfg0;
++        break;
++    case CPLT_CONF0_OR:
++    case CPLT_CONF0_CLEAR:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Write only register, ignoring "
++                                   "xscom read at 0x%" PRIx32 "\n",
++                                   __func__, reg);
++        break;
++    case CPLT_CONF1:
++        val = nest_pervasive->control_regs.cplt_cfg1;
++        break;
++    case CPLT_CONF1_OR:
++    case CPLT_CONF1_CLEAR:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Write only register, ignoring "
++                                   "xscom read at 0x%" PRIx32 "\n",
++                                   __func__, reg);
++        break;
++    case CPLT_STAT0:
++        val = nest_pervasive->control_regs.cplt_stat0;
++        break;
++    case CPLT_MASK0:
++        val = nest_pervasive->control_regs.cplt_mask0;
++        break;
++    case CPLT_PROTECT_MODE:
++        val = nest_pervasive->control_regs.ctrl_protect_mode;
++        break;
++    case CPLT_ATOMIC_CLOCK:
++        val = nest_pervasive->control_regs.ctrl_atomic_lock;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "%s: Chiplet_control_regs: Invalid xscom "
++                 "read at 0x%" PRIx32 "\n", __func__, reg);
++    }
++    return val;
 +}
 +
-+static void pnv_machine_p10_rainier_class_init(ObjectClass *oc, void *data)
++static void pnv_chiplet_ctrl_write(void *opaque, hwaddr addr,
++                                 uint64_t val, unsigned size)
 +{
-+    MachineClass *mc = MACHINE_CLASS(oc);
++    PnvNestChipletPervasive *nest_pervasive = PNV_NEST_CHIPLET_PERVASIVE(
++                                              opaque);
++    uint32_t reg = addr >> 3;
 +
-+    pnv_machine_p10_common_class_init(oc, data);
-+    mc->desc = "IBM PowerNV (Non-Virtualized) POWER10 Rainier";
++    /* CPLT_CTRL0 to CPLT_CTRL5 */
++    for (int i = 0; i < PNV_CPLT_CTRL_SIZE; i++) {
++        if (reg == i) {
++            nest_pervasive->control_regs.cplt_ctrl[i] = val;
++            return;
++        } else if (reg == (i + 0x10)) {
++            nest_pervasive->control_regs.cplt_ctrl[i] |= val;
++            return;
++        } else if (reg == (i + 0x20)) {
++            nest_pervasive->control_regs.cplt_ctrl[i] &= ~val;
++            return;
++        }
++    }
++
++    switch (reg) {
++    case CPLT_CONF0:
++        nest_pervasive->control_regs.cplt_cfg0 = val;
++        break;
++    case CPLT_CONF0_OR:
++        nest_pervasive->control_regs.cplt_cfg0 |= val;
++        break;
++    case CPLT_CONF0_CLEAR:
++        nest_pervasive->control_regs.cplt_cfg0 &= ~val;
++        break;
++    case CPLT_CONF1:
++        nest_pervasive->control_regs.cplt_cfg1 = val;
++        break;
++    case CPLT_CONF1_OR:
++        nest_pervasive->control_regs.cplt_cfg1 |= val;
++        break;
++    case CPLT_CONF1_CLEAR:
++        nest_pervasive->control_regs.cplt_cfg1 &= ~val;
++        break;
++    case CPLT_STAT0:
++        nest_pervasive->control_regs.cplt_stat0 = val;
++        break;
++    case CPLT_MASK0:
++        nest_pervasive->control_regs.cplt_mask0 = val;
++        break;
++    case CPLT_PROTECT_MODE:
++        nest_pervasive->control_regs.ctrl_protect_mode = val;
++        break;
++    case CPLT_ATOMIC_CLOCK:
++        nest_pervasive->control_regs.ctrl_atomic_lock = val;
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "%s: Chiplet_control_regs: Invalid xscom "
++                                 "write at 0x%" PRIx32 "\n",
++                                 __func__, reg);
++    }
 +}
 +
- static bool pnv_machine_get_hb(Object *obj, Error **errp)
- {
-     PnvMachineState *pnv = PNV_MACHINE(obj);
-@@ -2381,6 +2396,11 @@ static void pnv_machine_class_init(ObjectClass *oc, void *data)
-     }
++static const MemoryRegionOps pnv_nest_pervasive_control_xscom_ops = {
++    .read = pnv_chiplet_ctrl_read,
++    .write = pnv_chiplet_ctrl_write,
++    .valid.min_access_size = 8,
++    .valid.max_access_size = 8,
++    .impl.min_access_size = 8,
++    .impl.max_access_size = 8,
++    .endianness = DEVICE_BIG_ENDIAN,
++};
++
++static void pnv_nest_pervasive_realize(DeviceState *dev, Error **errp)
++{
++    PnvNestChipletPervasive *nest_pervasive = PNV_NEST_CHIPLET_PERVASIVE(dev);
++
++    /* Chiplet control scoms */
++    pnv_xscom_region_init(&nest_pervasive->xscom_ctrl_regs_mr,
++                          OBJECT(nest_pervasive),
++                          &pnv_nest_pervasive_control_xscom_ops,
++                          nest_pervasive, "pervasive-control",
++                          PNV10_XSCOM_CHIPLET_CTRL_REGS_SIZE);
++}
++
++static void pnv_nest_pervasive_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->desc = "PowerNV nest pervasive chiplet";
++    dc->realize = pnv_nest_pervasive_realize;
++}
++
++static const TypeInfo pnv_nest_pervasive_info = {
++    .name          = TYPE_PNV_NEST_CHIPLET_PERVASIVE,
++    .parent        = TYPE_DEVICE,
++    .instance_size = sizeof(PnvNestChipletPervasive),
++    .class_init    = pnv_nest_pervasive_class_init,
++    .interfaces    = (InterfaceInfo[]) {
++        { TYPE_PNV_XSCOM_INTERFACE },
++        { }
++    }
++};
++
++static void pnv_nest_pervasive_register_types(void)
++{
++    type_register_static(&pnv_nest_pervasive_info);
++}
++
++type_init(pnv_nest_pervasive_register_types);
+diff --git a/include/hw/ppc/pnv_nest_pervasive.h b/include/hw/ppc/pnv_nest_pervasive.h
+new file mode 100644
+index 0000000000..73cacf3823
+--- /dev/null
++++ b/include/hw/ppc/pnv_nest_pervasive.h
+@@ -0,0 +1,32 @@
++/*
++ * QEMU PowerPC nest pervasive common chiplet model
++ *
++ * Copyright (c) 2023, IBM Corporation.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef PPC_PNV_NEST_CHIPLET_PERVASIVE_H
++#define PPC_PNV_NEST_CHIPLET_PERVASIVE_H
++
++#define TYPE_PNV_NEST_CHIPLET_PERVASIVE "pnv-nest-chiplet-pervasive"
++#define PNV_NEST_CHIPLET_PERVASIVE(obj) OBJECT_CHECK(PnvNestChipletPervasive, (obj), TYPE_PNV_NEST_CHIPLET_PERVASIVE)
++
++typedef struct PnvPervasiveCtrlRegs {
++#define PNV_CPLT_CTRL_SIZE 6
++    uint64_t cplt_ctrl[PNV_CPLT_CTRL_SIZE];
++    uint64_t cplt_cfg0;
++    uint64_t cplt_cfg1;
++    uint64_t cplt_stat0;
++    uint64_t cplt_mask0;
++    uint64_t ctrl_protect_mode;
++    uint64_t ctrl_atomic_lock;
++} PnvPervasiveCtrlRegs;
++
++typedef struct PnvNestChipletPervasive {
++    DeviceState             parent;
++    MemoryRegion            xscom_ctrl_regs_mr;
++    PnvPervasiveCtrlRegs    control_regs;
++} PnvNestChipletPervasive;
++
++#endif /*PPC_PNV_NEST_CHIPLET_PERVASIVE_H */
+diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
+index f5becbab41..3e15706dec 100644
+--- a/include/hw/ppc/pnv_xscom.h
++++ b/include/hw/ppc/pnv_xscom.h
+@@ -170,6 +170,9 @@ struct PnvXScomInterfaceClass {
+ #define PNV10_XSCOM_XIVE2_BASE     0x2010800
+ #define PNV10_XSCOM_XIVE2_SIZE     0x400
  
- static const TypeInfo types[] = {
-+    {
-+        .name          = MACHINE_TYPE_NAME("powernv10-rainier"),
-+        .parent        = MACHINE_TYPE_NAME("powernv10"),
-+        .class_init    = pnv_machine_p10_rainier_class_init,
-+    },
-     {
-         .name          = MACHINE_TYPE_NAME("powernv10"),
-         .parent        = TYPE_PNV_MACHINE,
++#define PNV10_XSCOM_N1_CHIPLET_CTRL_REGS_BASE      0x3000000
++#define PNV10_XSCOM_CHIPLET_CTRL_REGS_SIZE         0x400
++
+ #define PNV10_XSCOM_PEC_NEST_BASE  0x3011800 /* index goes downwards ... */
+ #define PNV10_XSCOM_PEC_NEST_SIZE  0x100
+ 
 -- 
 2.42.0
 
