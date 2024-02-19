@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E216C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BCAC48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc6g1-0001Tv-G2; Mon, 19 Feb 2024 11:39:33 -0500
+	id 1rc6gF-00020n-77; Mon, 19 Feb 2024 11:39:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6fz-0001TV-JU
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:31 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6gD-0001vH-2f
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:45 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6fx-0002xF-O3
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:31 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-412698cdd77so4570605e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:39:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6gB-0002yn-8I
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:39:44 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-41261233e61so8607315e9.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:39:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708360768; x=1708965568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708360781; x=1708965581; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MHN0WwPF0EH6RoLWLYyydVS2IwI6/kKCgvu+Hk831E8=;
- b=Lwz6hbkWFbh8LMKWvjqaqdYZBj64xMBkroarhToBzNh7jTVIyZ5+MrCfFfdWFCbWdG
- CjairSSNxN0Ps9QJDLIyPXKlE8WOW2Gs1FFDtkKIGpbJlGqu0o0HbsyWDp2J1xlihmLh
- SRDg5H9oPZbw3XpPAal1lRHcn+S1PQwsXXy8bQ8TvrLNiP8lMprXQbvb8KnoJPQYW313
- CgQSqxYLuJXBf6clPyXtbPJKGC/InrQDrFYwVPjx9OqtcsY0kKjJ3Vdk1D1VrYMlTMdY
- mE4LuZKs3EWIMTH9B9LxSIBOnqtA18Apy7ZRRsk+eHaBSJ0BYCbx8YK04p1s31eFZbTV
- jR8w==
+ bh=eHqLJIf48lUklPD2bsMO5k3sbW9zd3TEK1XtTCythow=;
+ b=vbwXM9vaKtADKSqj1B4rhNH9Qtpu+Wc2qlY/gRERD7lATZ0+aR8VQLO8CYVh6+HCzI
+ VWo07vohP2vbRpqJTrSoEviaGxHKgFHq1exot130ANqNuUAAdb4qsQS8wd09mrgL2AeX
+ Z+t3cYGg43izAg2VBfpEBiOLqQYxORNLWxL0r7XPKfAV6FjfaUhTrXhbQYIlb5e6sW4k
+ +k/lbodmq26Ug/ksEg9rdFT0A2r7YgFLnuYrCuWbZ5+NIfrsmBaxF48R88X5MPhLX5lh
+ F87WGRQBRVRvQmlLoW2KuOKSqa25FtjlKUluCS4iWolVYr4htreRJo2ywDhFT1DkMqd0
+ 1LkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708360768; x=1708965568;
+ d=1e100.net; s=20230601; t=1708360781; x=1708965581;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MHN0WwPF0EH6RoLWLYyydVS2IwI6/kKCgvu+Hk831E8=;
- b=gsnk5sn3HcuXrkaxpOhjzTJaYEU/WXF+MwNq6e/qhBkYWckmQA9rrbEA14zkONGURX
- u7csgOxFabRS5rKK5Gg0JUgRs7FHB/lbQWibDP95p0zn4tjncmaen3xyztyiud8aY0wl
- 06oXOvRVmtMv54e466UyCLAwy3LB9MKqaG6W0nMWlImkVMGY5cEhxAIsoCXhn+gwxFOi
- KJHisTECtTbyLFnZlpHbOUvi0o/wHB5RzHYna6Ix610NdBMn111CS1zSo+70cFXp0iDM
- 7k4a+gJ8bK9y3agZWS7EUctWE94phhsf8sJ7uMQ8+Ud8u4CHhYiV+uvL1yJcsFFIquUe
- jtGw==
-X-Gm-Message-State: AOJu0YxI0p9Lfe2nghDZEb+0UyL0gVUNHakbPaA6IXEjQzHgia/qLdwd
- l6BNnVveFiCZuyjP8kfbBxpoq2IaXA0jYaUQ5JsF4U8cXVKe1BOPEaeySTKDGHcmJD7QpWaP1SO
- J
-X-Google-Smtp-Source: AGHT+IEoHJLzHVLTyvEwbEyxFoRPNZDGp+cW+mz77MnRgCdXqHj3vgP1XNARDqQ9ooduA0YUS1oasw==
-X-Received: by 2002:a05:600c:154f:b0:411:de5c:8023 with SMTP id
- f15-20020a05600c154f00b00411de5c8023mr11101835wmg.4.1708360767825; 
- Mon, 19 Feb 2024 08:39:27 -0800 (PST)
+ bh=eHqLJIf48lUklPD2bsMO5k3sbW9zd3TEK1XtTCythow=;
+ b=xSwkQify3752lJlU0hJYzZlqIGU1bvEds0fqbfvH3jKouVhZ51iOeOvmaQAmkyXtdN
+ OZo603RuBUeLYadIiwxBMF+lw7CKurNLWids57M7RU6et7+P6kCn9bRagzeSM7TdUgCL
+ 0TZDgNARgujIwJrnbSEOZGPUhoEBiadRgpjdkDxfD1d5V2HleV0u016orUdwiiDV2PSL
+ nQfYzQW84b/wC6/1aQkhQGZAG93rppQThenT8IEtZ77cC+3m8cdezGAHMzgPA9nV0XSg
+ 9L+keM56XgcLEW5JFYyIf/iDK2Ze+KS3owePiGR5fy//4BwyLFytNjLpJVDr2HipFp4L
+ b6qQ==
+X-Gm-Message-State: AOJu0YyysRPbXP2PWs427iL4628m4zEHjddFj49YFKz58dbE9y7j2Fvb
+ SaiUK2viqFTWAbS+gfgC+aiQsNXJWMbHlqiLJYclAh1vFRXUaCli7NFx4OR531v11lrsUCsK5Mq
+ Y
+X-Google-Smtp-Source: AGHT+IEJsakYa9P4Z0qhYdzvRgFxhjP7w89K7jZtJe7VQdQ+dsVrHm+CkgwcNlnMscvuIHMsKpx9OA==
+X-Received: by 2002:a05:600c:518e:b0:412:6c73:a63e with SMTP id
+ fa14-20020a05600c518e00b004126c73a63emr484118wmb.0.1708360781284; 
+ Mon, 19 Feb 2024 08:39:41 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.220])
  by smtp.gmail.com with ESMTPSA id
- o1-20020a05600c378100b004125f34fd7csm7131030wmr.31.2024.02.19.08.39.25
+ 21-20020a05600c229500b0041228b2e179sm11715550wmf.39.2024.02.19.08.39.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Feb 2024 08:39:27 -0800 (PST)
+ Mon, 19 Feb 2024 08:39:40 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Bernhard Beschow <shentey@gmail.com>
@@ -69,17 +69,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 04/14] hw/acpi/ich9_tco: Include 'ich9' in names
-Date: Mon, 19 Feb 2024 17:38:44 +0100
-Message-ID: <20240219163855.87326-5-philmd@linaro.org>
+Subject: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
+ 'ich_dmi_pci.h'
+Date: Mon, 19 Feb 2024 17:38:46 +0100
+Message-ID: <20240219163855.87326-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240219163855.87326-1-philmd@linaro.org>
 References: <20240219163855.87326-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,77 +103,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make it explicit the following are ICH9 specific:
-  acpi_pm_tco_init()  -> ich9_acpi_pm_tco_init()
-  vmstate_tco_io_sts  -> vmstate_ich9_sm_tco.
+Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
+"hw/pci-bridge/ich_dmi_pci.h" header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/acpi/ich9_tco.h | 5 ++---
- hw/acpi/ich9.c             | 4 ++--
- hw/acpi/ich9_tco.c         | 4 ++--
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ MAINTAINERS                         |  1 +
+ include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
+ include/hw/southbridge/ich9.h       |  2 --
+ hw/pci-bridge/i82801b11.c           | 11 ++++-------
+ 4 files changed, 25 insertions(+), 9 deletions(-)
+ create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
 
-diff --git a/include/hw/acpi/ich9_tco.h b/include/hw/acpi/ich9_tco.h
-index 2562a7cf39..1c99781a79 100644
---- a/include/hw/acpi/ich9_tco.h
-+++ b/include/hw/acpi/ich9_tco.h
-@@ -75,9 +75,8 @@ typedef struct TCOIORegs {
-     MemoryRegion io;
- } TCOIORegs;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1b210c5cc1..50507c3dd6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
+ F: hw/i2c/smbus_ich9.c
+ F: hw/isa/lpc_ich9.c
+ F: include/hw/acpi/ich9*.h
++F: include/hw/pci-bridge/ich_dmi_pci.h
+ F: include/hw/southbridge/ich9.h
  
--/* tco.c */
--void acpi_pm_tco_init(TCOIORegs *tr, MemoryRegion *parent);
-+void ich9_acpi_pm_tco_init(TCOIORegs *tr, MemoryRegion *parent);
+ PIIX4 South Bridge (i82371AB)
+diff --git a/include/hw/pci-bridge/ich_dmi_pci.h b/include/hw/pci-bridge/ich_dmi_pci.h
+new file mode 100644
+index 0000000000..7623b32b8e
+--- /dev/null
++++ b/include/hw/pci-bridge/ich_dmi_pci.h
+@@ -0,0 +1,20 @@
++/*
++ * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_PCI_BRIDGE_ICH_D2P_H
++#define HW_PCI_BRIDGE_ICH_D2P_H
++
++#include "qom/object.h"
++#include "hw/pci/pci_bridge.h"
++
++#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
++OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
++
++struct I82801b11Bridge {
++    PCIBridge parent_obj;
++};
++
++#endif
+diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+index bee522a4cf..b2abf483e0 100644
+--- a/include/hw/southbridge/ich9.h
++++ b/include/hw/southbridge/ich9.h
+@@ -114,8 +114,6 @@ struct ICH9LPCState {
  
--extern const VMStateDescription vmstate_tco_io_sts;
-+extern const VMStateDescription vmstate_ich9_sm_tco;
+ #define ICH9_D2P_SECONDARY_DEFAULT              (256 - 8)
  
- #endif /* HW_ACPI_TCO_H */
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 228ebc9a1e..660fa6a082 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -186,7 +186,7 @@ static const VMStateDescription vmstate_tco_io_state = {
-     .minimum_version_id = 1,
-     .needed = vmstate_test_use_tco,
-     .fields = (const VMStateField[]) {
--        VMSTATE_STRUCT(tco_regs, ICH9LPCPMRegs, 1, vmstate_tco_io_sts,
-+        VMSTATE_STRUCT(tco_regs, ICH9LPCPMRegs, 1, vmstate_ich9_sm_tco,
-                        TCOIORegs),
-         VMSTATE_END_OF_LIST()
-     }
-@@ -317,7 +317,7 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
-     memory_region_add_subregion(&pm->io, ICH9_PMIO_SMI_EN, &pm->io_smi);
+-#define ICH9_D2P_A2_REVISION                    0x92
+-
+ /* D31:F0 LPC Processor Interface */
+ #define ICH9_RST_CNT_IOPORT                     0xCF9
  
-     if (pm->enable_tco) {
--        acpi_pm_tco_init(&pm->tco_regs, &pm->io);
-+        ich9_acpi_pm_tco_init(&pm->tco_regs, &pm->io);
-     }
+diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
+index c140919cbc..dd17e35b0a 100644
+--- a/hw/pci-bridge/i82801b11.c
++++ b/hw/pci-bridge/i82801b11.c
+@@ -45,7 +45,7 @@
+ #include "hw/pci/pci_bridge.h"
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
+-#include "hw/southbridge/ich9.h"
++#include "hw/pci-bridge/ich_dmi_pci.h"
  
-     if (pm->acpi_pci_hotplug.use_acpi_hotplug_bridge) {
-diff --git a/hw/acpi/ich9_tco.c b/hw/acpi/ich9_tco.c
-index 81606219f7..dd4aff82e0 100644
---- a/hw/acpi/ich9_tco.c
-+++ b/hw/acpi/ich9_tco.c
-@@ -224,7 +224,7 @@ static const MemoryRegionOps tco_io_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
+ /*****************************************************************************/
+ /* ICH9 DMI-to-PCI bridge */
+@@ -53,11 +53,8 @@
+ #define I82801ba_SSVID_SVID     0
+ #define I82801ba_SSVID_SSID     0
  
--void acpi_pm_tco_init(TCOIORegs *tr, MemoryRegion *parent)
-+void ich9_acpi_pm_tco_init(TCOIORegs *tr, MemoryRegion *parent)
+-typedef struct I82801b11Bridge {
+-    /*< private >*/
+-    PCIBridge parent_obj;
+-    /*< public >*/
+-} I82801b11Bridge;
++
++#define ICH9_D2P_A2_REVISION                    0x92
+ 
+ static void i82801b11_bridge_realize(PCIDevice *d, Error **errp)
  {
-     *tr = (TCOIORegs) {
-         .tco = {
-@@ -250,7 +250,7 @@ void acpi_pm_tco_init(TCOIORegs *tr, MemoryRegion *parent)
-     memory_region_add_subregion(parent, ICH9_PMIO_TCO_RLD, &tr->io);
+@@ -103,7 +100,7 @@ static void i82801b11_bridge_class_init(ObjectClass *klass, void *data)
  }
  
--const VMStateDescription vmstate_tco_io_sts = {
-+const VMStateDescription vmstate_ich9_sm_tco = {
-     .name = "tco io device status",
-     .version_id = 1,
-     .minimum_version_id = 1,
+ static const TypeInfo i82801b11_bridge_info = {
+-    .name          = "i82801b11-bridge",
++    .name          = TYPE_ICH_DMI_PCI_BRIDGE,
+     .parent        = TYPE_PCI_BRIDGE,
+     .instance_size = sizeof(I82801b11Bridge),
+     .class_init    = i82801b11_bridge_class_init,
 -- 
 2.41.0
 
