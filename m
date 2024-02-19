@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128D7C48BC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 01:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF9DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 01:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbsIB-0003EG-Dn; Sun, 18 Feb 2024 20:17:59 -0500
+	id 1rbsJb-0005aH-1a; Sun, 18 Feb 2024 20:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1rbsI7-00039W-Gr; Sun, 18 Feb 2024 20:17:55 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1rbsIg-0003ZN-Bh; Sun, 18 Feb 2024 20:18:33 -0500
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1rbsI5-0004BR-Nc; Sun, 18 Feb 2024 20:17:55 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-607cd210962so31415267b3.2; 
- Sun, 18 Feb 2024 17:17:52 -0800 (PST)
+ id 1rbsIe-0004Kg-Cr; Sun, 18 Feb 2024 20:18:30 -0500
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-60495209415so35370687b3.3; 
+ Sun, 18 Feb 2024 17:18:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708305471; x=1708910271; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ypoNV7TDihhDE//3EFwZgzopV8EXsfG6IzmC2Wab+H8=;
- b=HJAf87flRuCQPtZTcuRkSSt1wIAuGzSDNG8ZZvJR2ZkNp7KiCL+Zo7yndEMf+RLOvL
- B4eEgd4CsCVzlBGr8ypfMVeH+1TxhUNeQHoxlzauYYUD5P7LRYNL6Wrr0xwWglelNe1a
- MxjvSiYJ8A6Nxag3KeB2bU98igYNIKSdmrjO1lM9Ay+rt3geyFWXlQJ66REd50otxqMa
- G1wlu8GblK4cTdUtR8Y+FjZHndPT8FacFi8hoy+I3FAhmQXQuxnp3NZnyv31imOXxofY
- H8d+ShGAf4gJSm3IFMIlV14d+jB/pEhNWn12T77bchDvqSNXXQVeC6sZik7/r+TgAiJ1
- rv5w==
+ d=gmail.com; s=20230601; t=1708305503; x=1708910303; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R+5nn8hCwpZzaVfTQwWnore40MHayijwV/Mz9d7pKPI=;
+ b=h07NzF1s8Y8JN9zd3Q1LvgtxBXOnoGO/oAcYB9PCvgkzxAzo14nlNtBcdGO/WDHrCS
+ keaRe3FMgXtexQxknIL2teDM+oZpUOY5Iwo3QbZMwrbKb2cXWTZEfy21gepaZRLaaNOX
+ oF9za0VtQMlwldkHUhGzNjNnZWyrIxG9bSn8CwePr8HtVkIFuDnhakUjpc3u9YeSWpOL
+ WlKsnB3EZGmnZbSYtewJK3P4rrA5RyQSL0ox/DrbcKVy8JmVEZW9aSo3aD/q4EMuYn25
+ 5maQwM2TYeFx8aHadx2pYNEO36+kDHwVkzJWXBFcSA1lu696V1j056iJq8+vCILvK9ge
+ L5wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708305471; x=1708910271;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ypoNV7TDihhDE//3EFwZgzopV8EXsfG6IzmC2Wab+H8=;
- b=icb4+beEM8NNpQP1KnfXf44CiPn4bL/IfRBgYhCp9RPfvQRQ/nkZmmJlN4NgmUywLj
- PpAkIRQso7R3Z9zBh54kZ9jU9BLJFgfxmfNRHQeLCj6qW/9Xd/PRluTYVO3fjTNRropN
- +QcgbUT74ZKEq1PdCcwgyDz298Pkco2qHNZFOkBA3xcuDjrHNXMli1sTx6TUDk7ylEqa
- /J0CZ/oWVZgAp3+ngSaZfwARF9W0rGGzGrZJnJarIO3tGJ8rJF+noizXFzzksJv1XrBk
- 5WlfueqnjQxEn/2eEiNtuiR0yKujLmBee6Zm1jT8DLSySazVYsL/qs3WgGVufS7Xs2tu
- imGA==
-X-Gm-Message-State: AOJu0YyuaAyqjxc/iVokTksj5WH9EP3Nq/PJqIcvlzSuMAEauWgbmx2c
- lPMj1noEFotP3D7ydGu1iNtqDxy4BVeGtrYmPkVqhlAZugCk/b7gLRqH0N6Hqe4=
-X-Google-Smtp-Source: AGHT+IGQBFCXoknodC2B+dFh0z8Tpr6QnTanJi4vkPS8Y+nB2reaqfIP/WYqrh2hO7jxi1XrOK1ULg==
-X-Received: by 2002:a0d:eb94:0:b0:607:df61:5811 with SMTP id
- u142-20020a0deb94000000b00607df615811mr10338418ywe.13.1708305470572; 
- Sun, 18 Feb 2024 17:17:50 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708305503; x=1708910303;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R+5nn8hCwpZzaVfTQwWnore40MHayijwV/Mz9d7pKPI=;
+ b=fQOypyykzk7lY1hq6KygWVOPdvYggfazm0FpBI3Yuqrt4AR1pHAZf5dfUfpbj7Y7np
+ 1xVxi/3yz+bBnmhCKohTQr4TBLH2Din6+Q1pyVksXajXAmgWtgNg83PaS4y6hRCHnLEL
+ IppcvKmvIQveEv05PZ7taKubwq/JevS/1UrNvWJEq9OtxSyUNJ2lIL3ghZVtXttNacKF
+ CSxYQZwmg1eZ3rBREoWJtcyMTnEQow5Fo5dVuqXdsVZHgXnmoMmjc7jbYKSx21e9RpP2
+ 9aaJyksqyAZl3lO9UHImPu22zomYexVAod+AYdVHgcbd2mBRxxr1Q5oClo31muDQ+6aE
+ EGIQ==
+X-Gm-Message-State: AOJu0YxOcUwIjdE1CMZqg8pBLrcZK7R3qrOjB196adxQ5ThQUoYueOp1
+ ZoRqnup8If67RDTPWMFfFCBoS+z0BnVGCk7EFwWsN5s7jU+GQezL4t/ybtfueDU=
+X-Google-Smtp-Source: AGHT+IEzPfHgZorUAVXw3PugZ9Pdzf5bnyLTlCN3AlvWyt5pfYYM393WRrsh21bXpRq7I4oR0rCa3g==
+X-Received: by 2002:a81:4417:0:b0:607:82e6:aa40 with SMTP id
+ r23-20020a814417000000b0060782e6aa40mr10016833ywa.27.1708305503167; 
+ Sun, 18 Feb 2024 17:18:23 -0800 (PST)
 Received: from localhost.localdomain ([201.203.117.224])
  by smtp.gmail.com with ESMTPSA id
- m12-20020a819e0c000000b00607ff905ed3sm1204704ywj.58.2024.02.18.17.17.49
+ m12-20020a819e0c000000b00607ff905ed3sm1204704ywj.58.2024.02.18.17.18.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Feb 2024 17:17:50 -0800 (PST)
+ Sun, 18 Feb 2024 17:18:22 -0800 (PST)
 From: Sergey Kambalin <serg.oker@gmail.com>
 X-Google-Original-From: Sergey Kambalin <sergey.kambalin@auriga.com>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org,
 	Sergey Kambalin <sergey.kambalin@auriga.com>
-Subject: [PATCH v5 00/41] Raspberry Pi 4B machine
-Date: Sun, 18 Feb 2024 19:16:58 -0600
-Message-Id: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
+Subject: [PATCH v5 34/41] Add mailbox tests tags. Part 2
+Date: Sun, 18 Feb 2024 19:17:32 -0600
+Message-Id: <20240219011739.2316619-35-sergey.kambalin@auriga.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
+References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=serg.oker@gmail.com; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=serg.oker@gmail.com; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,133 +93,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introducing Raspberry Pi 4B model.
-It contains new BCM2838 SoC, PCIE subsystem,
-RNG200, Thermal sensor and Genet network controller.
+Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+---
+ tests/qtest/bcm2838-mailbox.h | 152 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 152 insertions(+)
 
-It can work with recent linux kernels 6.x.x.
-Two avocado tests was added to check that.
-
-Unit tests has been made as read/write operations
-via mailbox properties.
-
-Genet integration test is under development.
-
-Every single commit
-1) builds without errors
-2) passes regression tests
-3) passes style check*
-*the only exception is bcm2838-mbox-property-test.c file
-containing heavy macros usage which cause a lot of
-false-positives of checkpatch.pl.
-
-I did my best to keep the commits less than 200 changes,
-but had to make some of them a bit more in order to
-keep their integrity.
-
-This is v5 patchset with the most of v1..v4 comments fixed.
-
-
-Sergey Kambalin (41):
-  Split out common part of BCM283X classes
-  Split out common part of peripherals
-  Split out raspi machine common part
-  Introduce BCM2838 SoC
-  Add GIC-400 to BCM2838 SoC
-  Add BCM2838 GPIO stub
-  Implement BCM2838 GPIO functionality
-  Connect SD controller to BCM2838 GPIO
-  Add GPIO and SD to BCM2838 periph
-  Introduce Raspberry PI 4 machine
-  Temporarily disable unimplemented rpi4b devices
-  Add memory region for BCM2837 RPiVid ASB
-  Add BCM2838 PCIE Root Complex
-  Add BCM2838 PCIE host
-  Enable BCM2838 PCIE
-  Add RPi4 RNG200
-  Implement BCM2838 thermal sensor
-  Add clock_isp stub
-  Add GENET stub
-  Add GENET register structs. Part 1
-  Add GENET register structs. Part 2
-  Add GENET register structs. Part 3
-  Add GENET register structs. Part 4
-  Add GENET register access macros
-  Implement GENET register ops
-  Implement GENET MDIO
-  Implement GENET TX path
-  Implement GENET RX path
-  Enable BCM2838 GENET controller
-  Add Rpi4b boot tests
-  Add mailbox test stub
-  Add mailbox test constants
-  Add mailbox tests tags. Part 1
-  Add mailbox tests tags. Part 2
-  Add mailbox tests tags. Part 3
-  Add mailbox property tests. Part 1
-  Add mailbox property tests. Part 2
-  Add mailbox property tests. Part 3
-  Add missed BCM2835 properties
-  Append added properties to mailbox test
-  Add RPi4B to paspi.rst
-
- docs/system/arm/raspi.rst                |   11 +-
- hw/arm/bcm2835_peripherals.c             |  215 +++--
- hw/arm/bcm2836.c                         |  117 ++-
- hw/arm/bcm2838.c                         |  282 ++++++
- hw/arm/bcm2838_pcie.c                    |  295 ++++++
- hw/arm/bcm2838_peripherals.c             |  287 ++++++
- hw/arm/meson.build                       |    8 +-
- hw/arm/raspi.c                           |  130 +--
- hw/arm/raspi4b.c                         |  111 +++
- hw/arm/trace-events                      |    7 +
- hw/gpio/bcm2838_gpio.c                   |  390 ++++++++
- hw/gpio/meson.build                      |    5 +-
- hw/misc/bcm2835_property.c               |   21 +
- hw/misc/bcm2838_rng200.c                 |  405 ++++++++
- hw/misc/bcm2838_thermal.c                |   98 ++
- hw/misc/meson.build                      |    2 +
- hw/misc/trace-events                     |    9 +
- hw/net/bcm2838_genet.c                   | 1088 ++++++++++++++++++++++
- hw/net/meson.build                       |    2 +
- hw/net/trace-events                      |   16 +
- include/hw/arm/bcm2835_peripherals.h     |   29 +-
- include/hw/arm/bcm2836.h                 |   27 +-
- include/hw/arm/bcm2838.h                 |   31 +
- include/hw/arm/bcm2838_pcie.h            |   75 ++
- include/hw/arm/bcm2838_peripherals.h     |   94 ++
- include/hw/arm/raspberrypi-fw-defs.h     |   11 +
- include/hw/arm/raspi_platform.h          |   38 +-
- include/hw/display/bcm2835_fb.h          |    2 +
- include/hw/gpio/bcm2838_gpio.h           |   45 +
- include/hw/misc/bcm2838_rng200.h         |   43 +
- include/hw/misc/bcm2838_thermal.h        |   24 +
- include/hw/net/bcm2838_genet.h           |  426 +++++++++
- tests/avocado/boot_linux_console.py      |   92 ++
- tests/qtest/bcm2838-mailbox.c            |   60 ++
- tests/qtest/bcm2838-mailbox.h            |  532 +++++++++++
- tests/qtest/bcm2838-mbox-property-test.c |  631 +++++++++++++
- tests/qtest/meson.build                  |    3 +-
- 37 files changed, 5457 insertions(+), 205 deletions(-)
- create mode 100644 hw/arm/bcm2838.c
- create mode 100644 hw/arm/bcm2838_pcie.c
- create mode 100644 hw/arm/bcm2838_peripherals.c
- create mode 100644 hw/arm/raspi4b.c
- create mode 100644 hw/gpio/bcm2838_gpio.c
- create mode 100644 hw/misc/bcm2838_rng200.c
- create mode 100644 hw/misc/bcm2838_thermal.c
- create mode 100644 hw/net/bcm2838_genet.c
- create mode 100644 include/hw/arm/bcm2838.h
- create mode 100644 include/hw/arm/bcm2838_pcie.h
- create mode 100644 include/hw/arm/bcm2838_peripherals.h
- create mode 100644 include/hw/gpio/bcm2838_gpio.h
- create mode 100644 include/hw/misc/bcm2838_rng200.h
- create mode 100644 include/hw/misc/bcm2838_thermal.h
- create mode 100644 include/hw/net/bcm2838_genet.h
- create mode 100644 tests/qtest/bcm2838-mailbox.c
- create mode 100644 tests/qtest/bcm2838-mailbox.h
- create mode 100644 tests/qtest/bcm2838-mbox-property-test.c
-
+diff --git a/tests/qtest/bcm2838-mailbox.h b/tests/qtest/bcm2838-mailbox.h
+index 1360fbb8cf..b4f7b7b314 100644
+--- a/tests/qtest/bcm2838-mailbox.h
++++ b/tests/qtest/bcm2838-mailbox.h
+@@ -294,6 +294,158 @@ DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_VIRTUAL_WIDTH_HEIGHT_t,
+         uint32_t height;
+     });
+ 
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_DEPTH_t,
++    struct {},
++    struct {
++        uint32_t bpp;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_DEPTH_t,
++    struct {
++        uint32_t bpp;
++    },
++    struct {
++        uint32_t bpp;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_DEPTH_t,
++    struct {
++        uint32_t bpp;
++    },
++    struct {
++        uint32_t bpp;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_PIXEL_ORDER_t,
++    struct {},
++    struct {
++        uint32_t pixel_order;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_PIXEL_ORDER_t,
++    struct {
++        uint32_t pixel_order;
++    },
++    struct {
++        uint32_t pixel_order;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_PIXEL_ORDER_t,
++    struct {
++        uint32_t pixel_order;
++    },
++    struct {
++        uint32_t pixel_order;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_ALPHA_MODE_t,
++    struct {},
++    struct {
++        uint32_t alpha_mode;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_ALPHA_MODE_t,
++    struct {
++        uint32_t alpha_mode;
++    },
++    struct {
++        uint32_t alpha_mode;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_ALPHA_MODE_t,
++    struct {
++        uint32_t alpha_mode;
++    },
++    struct {
++        uint32_t alpha_mode;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_PITCH_t,
++    struct {},
++    struct {
++        uint32_t pitch;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_PITCH_t,
++    struct {
++        uint32_t pitch;
++    },
++    struct {});
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_VIRTUAL_OFFSET_t,
++    struct {},
++    struct {
++        uint32_t x;
++        uint32_t y;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_VIRTUAL_OFFSET_t,
++    struct {
++        uint32_t x;
++        uint32_t y;
++    },
++    struct {
++        uint32_t x;
++        uint32_t y;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_VIRTUAL_OFFSET_t,
++    struct {
++        uint32_t x;
++        uint32_t y;
++    },
++    struct {
++        uint32_t x;
++        uint32_t y;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_OVERSCAN_t,
++    struct {},
++    struct {
++        uint32_t top;
++        uint32_t bottom;
++        uint32_t left;
++        uint32_t right;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_OVERSCAN_t,
++    struct {
++        uint32_t top;
++        uint32_t bottom;
++        uint32_t left;
++        uint32_t right;
++    },
++    struct {
++        uint32_t top;
++        uint32_t bottom;
++        uint32_t left;
++        uint32_t right;
++    });
++
++DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_OVERSCAN_t,
++    struct {
++        uint32_t top;
++        uint32_t bottom;
++        uint32_t left;
++        uint32_t right;
++    },
++    struct {
++        uint32_t top;
++        uint32_t bottom;
++        uint32_t left;
++        uint32_t right;
++    });
++
++DECLARE_TAG_TYPE(TAG_GET_COMMAND_LINE_t,
++    struct {},
++    struct {});
++
++DECLARE_TAG_TYPE(TAG_GET_DMA_CHANNELS_t,
++    struct {},
++    struct {
++        uint32_t mask;
++    });
++
+ int mbox0_has_data(void);
+ void mbox0_read_message(uint8_t channel, void *msgbuf, size_t msgbuf_size);
+ void mbox1_write_message(uint8_t channel, uint32_t msg_addr);
 -- 
 2.34.1
 
