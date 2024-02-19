@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01111C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDCFC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz2T-0008TL-RK; Mon, 19 Feb 2024 03:30:13 -0500
+	id 1rbz3C-0000QD-RK; Mon, 19 Feb 2024 03:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz2K-0008Qa-LX; Mon, 19 Feb 2024 03:30:09 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rbz2w-0000Ka-BY; Mon, 19 Feb 2024 03:30:51 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz2I-0001tq-4c; Mon, 19 Feb 2024 03:30:04 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e4670921a4so252652b3a.0; 
- Mon, 19 Feb 2024 00:30:01 -0800 (PST)
+ id 1rbz2u-0002DF-Mc; Mon, 19 Feb 2024 03:30:42 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e32a92e0fdso163192b3a.0; 
+ Mon, 19 Feb 2024 00:30:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331399; x=1708936199; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331436; x=1708936236; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w9FRJ2ZWIfP9zV5rwAD9pnJwp81GQt2uUL68JC2IbS8=;
- b=Ovbj/8Io7at5Md5NY3UdtlqX/lRLU/v4L/+nx4DpkBfEvGCZr0ZC4tTKP+kwXPtHJN
- t+pw24X7Xgg2zNT3e5OBlMLaHa/kxdxePrGmUrhVkh0rj2vxV9yoL6g3HgecKpIAoH6D
- GigVEvk1r07PQurHznEyetH9J1b72/SJZ29cb4QyTNy/A3BALNDimpxtzgEMeuy8S8Pn
- wjdN586uwVPe1xSzdb2NdOyiMuBY8VQFCZiZt5kNRZwUAAQ50Sk2WUjvhsBqsQmtm3aA
- scyp9TG/+HLauNtp6AQ/G0VU9hF4jYhNq86ruU0yALyZkxHx4SboTHolLmsV6gz7BFuc
- DdSw==
+ bh=oE+i0wB8T8QiAUtycDHPhVOaO7KwBsgheydu+gbxs90=;
+ b=j0Mn6XhF9L1okKTehVpegbOd/vkPJXk6N0MUwqa8ERrfj3oYRu4G2qQVfdXOF7vV+j
+ hsBt5YlKAMufvR4KrMVtS9QxZvTZg3UllrG9sjRZXMUSjaOagF7Y0FKPmF5nBoZddqHO
+ /pzhEFAne+8uFX2IHBz43pMGwsfpNULIjsHXYSiD0GgGjv3G8S//39+UbLeMzolZo42P
+ p5LVBF0Cg0/E8DjtzqsWK1jfu8GUV781Sl//EJi6LHWqD+QFpnmzgYwO6ud2oNI8oTp0
+ tjkU1WV3LDRDpfSlJqWobBgYYDZkqUCKhkL7HdU5LKNGYp6nE9KetMLICR8dSMQmVsuJ
+ MNAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331399; x=1708936199;
+ d=1e100.net; s=20230601; t=1708331436; x=1708936236;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w9FRJ2ZWIfP9zV5rwAD9pnJwp81GQt2uUL68JC2IbS8=;
- b=r/00iajHwz0r+07pT1XjygyHiO3O3muHVmMwR38jFEdl9I3ZoergILIhl7OQ1MOyF1
- VrX6ONDxETqyMLlxWSs5BzYO/NpK4oX1cPQull/P608Hbmr51IHVe3hsYA8gavs/+mpb
- DuPlgCNudR+1t8YL0KH6kSLY/7vV9N4sLLbD0MAz2nAPtTjhUwURGcr1fKLB6q1HZBFs
- 8cHoOkddZIZneRKYX5PvvTQMUPK3UoxKDB/RVukl+Mu6z5qRl8icB948ayLoO1DsuZFg
- 1F3LVgkKqIOr6UrGeJ/DC1TyGhZIBrSb4c9mv3JDl17s4aamSsu+jgSdivVKeKWLSjXU
- /jcA==
+ bh=oE+i0wB8T8QiAUtycDHPhVOaO7KwBsgheydu+gbxs90=;
+ b=msqEyOyn6oMjVR4THzePMQvJ5mKesh7LTJnz0qNJeiS46IzQR4TPJosc1Rn6n5W4WL
+ oVa46SnQ1mbhXytty9+RdsFzp0WghlaBCN4I2rjG4WiiIrWAWrc920B3MZZ8O+Z7JfNr
+ MEV5Dak092u9Yx5uQgXZK38klMBGTWK6KYBZH0sF7mHpcBAp7E3MbverRwF5JUOKYEKs
+ yH2Qaoaknukog+nl2Ghs5kw+ShdzaeYUSNlTOOHYI2FB/H/AcCuPIKSmyKGPk+MGk62G
+ Ow9VtH6JTgLRzf8qbtTd9A2609Bag25hRHZIdvHm2u4G3sFEOdsvVNxBDbuDWGWjYd8I
+ bcFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6WJNXY5VVCuKNBSARJMdcjAWgNdf7bTZ1lhr3ZWQNob/bcYBo44Cf4qgIkBac5LpFkoLDCUSNGmDNg/fWUfp6EYedeV6E4BBa4DvsWH/YX0pPdxL9q9HksYzQ
-X-Gm-Message-State: AOJu0YwzgoFyWJKhjBby0U+UInpwjVQ2FKYRJgBKTNew4NK7H+x3gVfW
- yTG4IHJdRNCSakMI/2SIKYnmg89dznH8NwWvDEJLkJ/7VSBVG1p10zUam5gR
-X-Google-Smtp-Source: AGHT+IGUPMasGuH6W2xwoS/4QOj8LGTtxFyONubrnI9V8Vpk2+l/QabO6gX0Oc0Nzmqm7/Zw9BlTrw==
-X-Received: by 2002:a05:6a21:1799:b0:1a0:56c9:608e with SMTP id
- nx25-20020a056a21179900b001a056c9608emr16097694pzb.61.1708331399599; 
- Mon, 19 Feb 2024 00:29:59 -0800 (PST)
+ AJvYcCUFCwLzZEqugkJZeiPEKGOAQeg88v2dlqwDIxrAWKM83CY+4iME+MBLJfmdZJ7HS0hCMEPALl3pXzqj3yLPJI8Sekzu
+X-Gm-Message-State: AOJu0YwLTTSDpw2avOxZBM3tSbg1zx7l1WcjVUHbMR0/wSrAJUHtT7JO
+ EHZR+VfK+SvTkHaPZjLw/UCbv/t/cNWRyIkwv/7nipCXihRh17YFE2kkSt1g
+X-Google-Smtp-Source: AGHT+IGZ/rY5IRufE+E/alUEUdREQTAc1PgYRApdcv8yC/AV6/jludzemk1iIpvVHPUqn/Pw3fkNuA==
+X-Received: by 2002:a17:902:d2c1:b0:1db:dd24:9945 with SMTP id
+ n1-20020a170902d2c100b001dbdd249945mr3299934plc.14.1708331436381; 
+ Mon, 19 Feb 2024 00:30:36 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.29.55
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.30.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:29:59 -0800 (PST)
+ Mon, 19 Feb 2024 00:30:36 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-stable@nongnu.org,
- Joel Stanley <joel@jms.id.au>
-Subject: [PULL 01/49] target/ppc: Fix lxv/stxv MSR facility check
-Date: Mon, 19 Feb 2024 18:28:50 +1000
-Message-ID: <20240219082938.238302-2-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 10/49] tests/avocado: Use default CPU for pseries machine
+Date: Mon, 19 Feb 2024 18:28:59 +1000
+Message-ID: <20240219082938.238302-11-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,38 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The move to decodetree flipped the inequality test for the VEC / VSX
-MSR facility check.
+Use the default CPU with the pseries machine unless there is a
+specific requirement.
 
-This caused application crashes under Linux, where these facility
-unavailable interrupts are used for lazy-switching of VEC/VSX register
-sets. Getting the incorrect interrupt would result in wrong registers
-being loaded, potentially overwriting live values and/or exposing
-stale ones.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Joel Stanley <joel@jms.id.au>
-Fixes: 70426b5bb738 ("target/ppc: moved stxvx and lxvx from legacy to decodtree")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1769
-Tested-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/translate/vsx-impl.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/avocado/migration.py | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-index 6db87ab336..0266f09119 100644
---- a/target/ppc/translate/vsx-impl.c.inc
-+++ b/target/ppc/translate/vsx-impl.c.inc
-@@ -2268,7 +2268,7 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
+diff --git a/tests/avocado/migration.py b/tests/avocado/migration.py
+index 09b62f813e..be6234b3c2 100644
+--- a/tests/avocado/migration.py
++++ b/tests/avocado/migration.py
+@@ -123,7 +123,6 @@ class PPC64(MigrationTest):
+     """
+     :avocado: tags=arch:ppc64
+     :avocado: tags=machine:pseries
+-    :avocado: tags=cpu:power9_v2.0
+     """
  
- static bool do_lstxv_D(DisasContext *ctx, arg_D *a, bool store, bool paired)
- {
--    if (paired || a->rt >= 32) {
-+    if (paired || a->rt < 32) {
-         REQUIRE_VSX(ctx);
-     } else {
-         REQUIRE_VECTOR(ctx);
+     def test_migration_with_tcp_localhost(self):
 -- 
 2.42.0
 
