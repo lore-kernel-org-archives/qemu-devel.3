@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCDFC48260
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6FFBC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbzBH-0007Z9-4m; Mon, 19 Feb 2024 03:39:19 -0500
+	id 1rbzMr-0003b6-EV; Mon, 19 Feb 2024 03:51:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rbzBF-0007Yk-Nb
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 03:39:17 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rbzMn-0003an-48
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 03:51:13 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rbzBD-0003r8-81
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 03:39:17 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412698cdd77so1020355e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 00:39:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rbzMl-0006EU-Cm
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 03:51:12 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56439b7c7a9so1494649a12.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 00:51:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708331953; x=1708936753; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1708332669; x=1708937469; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CYXFroxxpCnwAYN1gM2WM91eHQq25PtJZrWxJ2nunuU=;
- b=GyvDvVFFcciTQP0s89o3HN6W6Wkmijx/pWfguldRGLe6UD5SJtERJUN9qTRRBG1aSp
- U3dJdZbZpk1IU4qCjrKDKweI/STTb6cS5YKOzzHR6yCvXqFVUS2gb89qF9wORvgAvqQz
- t9wohjI5nQ0Vwyj6YwVZ8sQ23cDZgQn6+pno1In4TsOGIVHUkZL79fy+rAFIJH0ymbG1
- +9WAvp8bUxsxRaC17plmN63bwMVgPiWt/xTtJX/0dwxQ+dYNpqOHNQE3VcZbBVv6WeOA
- fpkNI85dHgYnXLCChRBHT47+B3usJZcpOcIOTYIxzeBUvfOJb9AXu3+hOje7y3dU5P0L
- Tbrg==
+ bh=vmZqW8EI/CtrrThbpB+ZE1itJYLfl2+JjStxpohzQPQ=;
+ b=DVo4LqDYnikyMvv8cMJcZG0ZMjy/36OKN2LFc3fnyi0hyH/A4Aa/h0cJUsBPo3JbNN
+ WKGBLcnsoB9Z6/RWRp6QsOTPIJ/0fit1CMaTetxH7H08olgvp7M9kxEIW5sdY2QeR5no
+ 142JPUhR2zJnqFAFdU43iqe4FYwB0qECUMUgi1KBfJMCWx0FE/cJ2Mpf97kgi3FnhErW
+ 26gAWWWIhKen7U9JDIY5bGtEdVvnMstYIQ+jgxzICeY5nxkAEjUjixrkUNsMpfFVyTbR
+ h044jwpB2dpqYTbLiMoyAmBGabE4umLCD0EdaHPQnquw2q/ZAovhMNsQFM3zgWspr+6t
+ q6fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331953; x=1708936753;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1708332669; x=1708937469;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CYXFroxxpCnwAYN1gM2WM91eHQq25PtJZrWxJ2nunuU=;
- b=OJJOXS1MsKwo1HosoXcKn7S0YnXTCIu4MQkGppyHwGyu+FFxOQwfwI1hPJjRfyKBkL
- OBbol/MWiTvg4qDn/JVvarB41n3N2mX5PqxxdoZwZ0CO4nSEonJBGrWPNlAvEETsoi5M
- a2wSIfyiYGfQNZ2mkgSD5ufXL8h6aKtO76W5Ntd3pPGalNJdiusCsbjCWJB2wYevTNUg
- 5eZ7qDgSlRRpSYev6zldTz3Dhcm7ASDBpGUtSn1/XaiLMCGrLo6f97cDo7BC0ea5DWJJ
- wb9O4v2g0ahPMAybCnt7wUE2uWoqPgEHZBTnw+Ggr7Vl9ZiZNDQ8+IuF7iyuqVViE6dy
- KjiQ==
-X-Gm-Message-State: AOJu0Ywykvo3SmZ3oaXgj/4sef6v0XA3EIE4aIEsW/M/kFz4JwHdEPd7
- cCcSChJUWrlP713f/X9nr/jPs6uN0rNMsBoyUonnbcalFwU0k2Z+SomCk4nGgls=
-X-Google-Smtp-Source: AGHT+IHHZHE2hxZImjTjtz52BTCa19x73B+ifItIOGXblR1mvSpW7ADOmJuk9lMf8fB3r9j7LKBDzQ==
-X-Received: by 2002:a05:600c:3591:b0:412:41:bb3d with SMTP id
- p17-20020a05600c359100b004120041bb3dmr9611111wmq.3.1708331952833; 
- Mon, 19 Feb 2024 00:39:12 -0800 (PST)
+ bh=vmZqW8EI/CtrrThbpB+ZE1itJYLfl2+JjStxpohzQPQ=;
+ b=QsxVUXG6NkcUeMZzCX3OgLNwbW9lX6/JOKOs7ubHi97u72IpjRIM/rMnQbvdnbMDvQ
+ KyrKO7l2pC9Rxj3EcEkkxrVowHrno86Wc51LGeKc4FEv1pZYPX4KdngmEH3ciVMt3jfU
+ s1ooxryJVifawhYOW+tFI1EDSphXBsCmYujnKbBBKe77t4Ylus98N7ThUGtiuSm1d6n4
+ o0vf8O3WfYi4HCoZUpN2ZLzCTQQTvKXny0KmLizZmI5gv3maSBev0v08LRDM7qA4IDeJ
+ Tnx0wgZK9eM2TNzWp7jLpvy0SbxaOTEio5gqVTrPtaXLyid/HaQUAi7+b+zCZxgJnbDc
+ Bc+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXnJc18EFPs9X1aAWaL7LqPYsGqfdNNJAll2Jwv3UqDC91mwoyeWQdlDKnrX/4Xijvt/vovNgKI0enoy76VAiDG8zqdmU4=
+X-Gm-Message-State: AOJu0YxMdKI+wgxUQOs64/lrnDRpl0YcYfTEw6NXXJCSR7ZyjPV+LwSn
+ cx/Xj5iPcBSG2viPK+6xc1jiOuQ9YBhmf84QjChFtM/t+TMhLDOFLjkVKfP1N5A=
+X-Google-Smtp-Source: AGHT+IF7UUwXmHbxEs55PxjUA7WGd5OwwI/VTbp5akPA9EmhbAjyW8wcaoNyxrGCmHnxOG2raJIyIA==
+X-Received: by 2002:a17:906:4e8a:b0:a3e:977a:708f with SMTP id
+ v10-20020a1709064e8a00b00a3e977a708fmr1609580eju.70.1708332669393; 
+ Mon, 19 Feb 2024 00:51:09 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.181.220])
  by smtp.gmail.com with ESMTPSA id
- w3-20020a05600c014300b0040fccf7e8easm10567009wmm.36.2024.02.19.00.39.11
+ ha1-20020a170906a88100b00a381ca0e589sm2707754ejb.22.2024.02.19.00.51.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 00:39:12 -0800 (PST)
-Message-ID: <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
-Date: Mon, 19 Feb 2024 09:39:10 +0100
+ Mon, 19 Feb 2024 00:51:08 -0800 (PST)
+Message-ID: <cd0e13c6-c03d-411f-83a5-1d4d28ea4345@linaro.org>
+Date: Mon, 19 Feb 2024 09:51:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
+Subject: Re: [PATCH] hw/i386/pc_q35: Populate interrupt handlers before
+ realizing LPC PCI function
 Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240217104644.19755-1-shentey@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
-In-Reply-To: <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
+In-Reply-To: <20240217104644.19755-1-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +99,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/2/24 20:54, Philippe Mathieu-Daudé wrote:
-> On 16/2/24 18:14, BALATON Zoltan wrote:
->> On Fri, 16 Feb 2024, Philippe Mathieu-Daudé wrote:
->>> We want to set another qdev property (a link) for the pl110
->>> and pl111 devices, we can not use sysbus_create_simple() which
->>> only passes sysbus base address and IRQs as arguments. Inline
->>> it so we can set the link property in the next commit.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>> hw/arm/realview.c    |  5 ++++-
->>> hw/arm/versatilepb.c |  6 +++++-
->>> hw/arm/vexpress.c    | 10 ++++++++--
->>> 3 files changed, 17 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/arm/realview.c b/hw/arm/realview.c
->>> index 9058f5b414..77300e92e5 100644
->>> --- a/hw/arm/realview.c
->>> +++ b/hw/arm/realview.c
->>> @@ -238,7 +238,10 @@ static void realview_init(MachineState *machine,
->>>     sysbus_create_simple("pl061", 0x10014000, pic[7]);
->>>     gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
->>>
->>> -    sysbus_create_simple("pl111", 0x10020000, pic[23]);
->>> +    dev = qdev_new("pl111");
->>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
->>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
->>
->> Not directly related to this patch but this blows up 1 line into 4 
->> just to allow setting a property. Maybe just to keep some simplicity 
->> we'd rather need either a sysbus_realize_simple function that takes a 
->> sysbus device instead of the name and does not create the device 
->> itself or some way to pass properties to sysbus create simple (but the 
->> latter may not be easy to do in a generic way so not sure about that). 
->> What do you think?
+On 17/2/24 11:46, Bernhard Beschow wrote:
+> The interrupt handlers need to be populated before the device is realized since
+> internal devices such as the RTC are wired during realize(). If the interrupt
+> handlers aren't populated, devices such as the RTC will be wired with a NULL
+> interrupt handler, i.e. MC146818RtcState::irq is NULL.
 > 
-> Unfortunately sysbus doesn't scale in heterogeneous setup.
+> Fixes: fc11ca08bc29 "hw/i386/q35: Realize LPC PCI function before accessing it"
 
-Regarding the HW modelling API complexity you are pointing at, we'd
-like to move from the current imperative programming paradigm to a
-declarative one, likely DSL driven. Meanwhile it is being investigated
-(as part of "Dynamic Machine"), I'm trying to get the HW APIs right
-for heterogeneous emulation. Current price to pay is a verbose
-imperative QDev API, hoping we'll get later a trivial declarative one
-(like this single sysbus_create_simple call), where we shouldn't worry
-about the order of low level calls, whether to use link or not, etc.
+I think this commit is correct, but exposes a pre-existing bug.
 
-For the big list of issues we are trying to improve, see:
-https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+I noticed it for the PC equivalent, so didn't posted the
+pci_realize_and_unref() change there, but missed the Q35 is
+similarly affected.
+
+IMO the problem is how the GSI lines are allocated. The ISA
+ones are allocated twice!
+
+Before this patch, the 1st alloc is just overwritten and
+ignored, ISA RTC IRQ is assigned to the 2nd alloc.
+
+After this patch, ISA RTC IRQ is assigned to the 1st alloc,
+then the 2nd alloc wipe it, and an empty IRQ is eventually
+wired later.
+
+The proper fix is to alloc ISA IRQs just once. Either filling
+GSI with them, or having GSI take care of that.
+
+Since GSI is not a piece of HW but a concept to simplify
+developers writing x86 HW drivers, I currently think we shouldn't
+model it as a QOM container.
+
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/i386/pc_q35.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index d346fa3b1d..43675bf597 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -240,10 +240,10 @@ static void pc_q35_init(MachineState *machine)
+>       lpc_dev = DEVICE(lpc);
+>       qdev_prop_set_bit(lpc_dev, "smm-enabled",
+>                         x86_machine_is_smm_enabled(x86ms));
+> -    pci_realize_and_unref(lpc, host_bus, &error_fatal);
+>       for (i = 0; i < IOAPIC_NUM_PINS; i++) {
+>           qdev_connect_gpio_out_named(lpc_dev, ICH9_GPIO_GSI, i, x86ms->gsi[i]);
+>       }
+> +    pci_realize_and_unref(lpc, host_bus, &error_fatal);
+>   
+>       rtc_state = ISA_DEVICE(object_resolve_path_component(OBJECT(lpc), "rtc"));
+>   
+
 
