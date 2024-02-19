@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54771C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 19:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D162C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 19:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc9NR-0003iF-Lg; Mon, 19 Feb 2024 14:32:33 -0500
+	id 1rc9Ze-00006d-7o; Mon, 19 Feb 2024 14:45:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rc9NP-0003hw-5d
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 14:32:31 -0500
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rc9Zc-00005y-PE
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 14:45:09 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1rc9NN-0003mN-2q
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 14:32:30 -0500
-Received: from [192.168.178.59] (p57b42d52.dip0.t-ipconnect.de [87.180.45.82])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rc9ZZ-00061w-Tm
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 14:45:08 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 048BADA077A;
- Mon, 19 Feb 2024 20:32:24 +0100 (CET)
-Message-ID: <f53460f4-e445-4c1b-b48a-a1be9b0d069e@weilnetz.de>
-Date: Mon, 19 Feb 2024 20:32:24 +0100
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 962081F81C;
+ Mon, 19 Feb 2024 19:45:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708371900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Sks2JFeUF9PfTW2IGZp0Yr9KBnfVSOjSU4rOkcPoRic=;
+ b=l3JhJYIwobp3esOKWnA3OuzM3qONMzPRv6sOGTx7ARIXVOR1+AfFZZqF+bpyPJ7wxlwPFX
+ YBBZo8QjeBAoZ4IVXcKGAJIEodssrAcNCUnIff4Xnp99tlccSQ9A86rtxp6uZ9aqfUHkNx
+ iW0+Q3oArF6qif9Nuk/irBAI+XzX7yU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708371900;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Sks2JFeUF9PfTW2IGZp0Yr9KBnfVSOjSU4rOkcPoRic=;
+ b=D21ASuyx8QcBpKMfVV2JwQls4i3SHK3AtFCcrMdKn8DQN5vAnuglzQrmEBMiQIT/aMJLp4
+ ktKlO07rJvCTnNDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708371900; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Sks2JFeUF9PfTW2IGZp0Yr9KBnfVSOjSU4rOkcPoRic=;
+ b=l3JhJYIwobp3esOKWnA3OuzM3qONMzPRv6sOGTx7ARIXVOR1+AfFZZqF+bpyPJ7wxlwPFX
+ YBBZo8QjeBAoZ4IVXcKGAJIEodssrAcNCUnIff4Xnp99tlccSQ9A86rtxp6uZ9aqfUHkNx
+ iW0+Q3oArF6qif9Nuk/irBAI+XzX7yU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708371900;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=Sks2JFeUF9PfTW2IGZp0Yr9KBnfVSOjSU4rOkcPoRic=;
+ b=D21ASuyx8QcBpKMfVV2JwQls4i3SHK3AtFCcrMdKn8DQN5vAnuglzQrmEBMiQIT/aMJLp4
+ ktKlO07rJvCTnNDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9FF2E13647;
+ Mon, 19 Feb 2024 19:44:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 7YKFGbuv02VzLgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 19 Feb 2024 19:44:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PATCH] migration: Fix qmp_query_migrate mbps value
+Date: Mon, 19 Feb 2024 16:44:57 -0300
+Message-Id: <20240219194457.26923-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: dropping 32-bit Windows host support
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>
-References: <CAFEAcA_BB5-eieVGuqqXn3aS-Vmc7OcTFmv5e=i5HgNw3Kp2FQ@mail.gmail.com>
- <ZdN5cbaqnJMTK5ts@redhat.com>
- <0a084faf-3685-4134-aecc-5edf13111d89@redhat.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <0a084faf-3685-4134-aecc-5edf13111d89@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [0.92 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCVD_COUNT_THREE(0.00)[3];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ BAYES_HAM(-2.78)[99.06%]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,31 +105,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19.02.24 um 17:26 schrieb Thomas Huth:
+The QMP command query_migrate might see incorrect throughput numbers
+if it runs after we've set the migration completion status but before
+migration_calculate_complete() has updated s->total_time and s->mbps.
 
-> On 19/02/2024 16.53, Daniel P. Berrangé wrote:
->> On Mon, Feb 19, 2024 at 03:37:31PM +0000, Peter Maydell wrote:
->>> Our msys2 32-bit Windows host CI job has been failing recently
->>> because upstream MSYS2 are starting to phase out 32-bit windows
->>> host support and are steadily removing i686 versions of packages.
->>> The latest is dtc:
->>> https://gitlab.com/qemu-project/qemu/-/issues/2177
->>> [...]
+The migration status would show COMPLETED, but the throughput value
+would be the one from the last iteration and not the one from the
+whole migration. This will usually be a larger value due to the time
+period being smaller (one iteration).
 
+Move migration_calculate_complete() earlier so that the status
+MIGRATION_STATUS_COMPLETED is only emitted after the final counters
+update.
 
-I agree with all your comments and also think that support for 32-bit 
-Windows hosts can be dropped.
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/1182405776
+---
+ migration/migration.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-As Peter noted, I have been building 64-bit installers only since QEMU 
-8.0.0. I have not received any complaints about this.
-
-Best regards
-
-Stefan
+diff --git a/migration/migration.c b/migration/migration.c
+index ab21de2cad..7486d59da0 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -102,6 +102,7 @@ static int migration_maybe_pause(MigrationState *s,
+                                  int new_state);
+ static void migrate_fd_cancel(MigrationState *s);
+ static bool close_return_path_on_source(MigrationState *s);
++static void migration_calculate_complete(MigrationState *s);
+ 
+ static void migration_downtime_start(MigrationState *s)
+ {
+@@ -2746,6 +2747,7 @@ static void migration_completion(MigrationState *s)
+         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+                           MIGRATION_STATUS_COLO);
+     } else {
++        migration_calculate_complete(s);
+         migrate_set_state(&s->state, current_active_state,
+                           MIGRATION_STATUS_COMPLETED);
+     }
+@@ -2784,6 +2786,7 @@ static void bg_migration_completion(MigrationState *s)
+         goto fail;
+     }
+ 
++    migration_calculate_complete(s);
+     migrate_set_state(&s->state, current_active_state,
+                       MIGRATION_STATUS_COMPLETED);
+     return;
+@@ -2993,12 +2996,15 @@ static void migration_calculate_complete(MigrationState *s)
+     int64_t end_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+     int64_t transfer_time;
+ 
++    /* QMP could read from these concurrently */
++    bql_lock();
+     migration_downtime_end(s);
+     s->total_time = end_time - s->start_time;
+     transfer_time = s->total_time - s->setup_time;
+     if (transfer_time) {
+         s->mbps = ((double) bytes * 8.0) / transfer_time / 1000;
+     }
++    bql_unlock();
+ }
+ 
+ static void update_iteration_initial_status(MigrationState *s)
+@@ -3145,7 +3151,6 @@ static void migration_iteration_finish(MigrationState *s)
+     bql_lock();
+     switch (s->state) {
+     case MIGRATION_STATUS_COMPLETED:
+-        migration_calculate_complete(s);
+         runstate_set(RUN_STATE_POSTMIGRATE);
+         break;
+     case MIGRATION_STATUS_COLO:
+@@ -3189,9 +3194,6 @@ static void bg_migration_iteration_finish(MigrationState *s)
+     bql_lock();
+     switch (s->state) {
+     case MIGRATION_STATUS_COMPLETED:
+-        migration_calculate_complete(s);
+-        break;
+-
+     case MIGRATION_STATUS_ACTIVE:
+     case MIGRATION_STATUS_FAILED:
+     case MIGRATION_STATUS_CANCELLED:
+-- 
+2.35.3
 
 
