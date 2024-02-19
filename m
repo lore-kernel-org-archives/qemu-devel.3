@@ -4,104 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F7A9C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 17:52:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044B4C54764
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 18:16:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc7nz-00044B-JL; Mon, 19 Feb 2024 12:51:51 -0500
+	id 1rc8Ad-00027s-Ba; Mon, 19 Feb 2024 13:15:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rc7nx-00043I-HP
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 12:51:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc8Ab-00027R-9a
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 13:15:13 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rc7nt-00086L-1l
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 12:51:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708365103;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s8H1eFPOhtSw8K5hz/X/ZhKjJEt2LFUFnC9oN0PdPSg=;
- b=bUs0oOvEyCE1aoWDTGwaHsI8kuYWscvwkrFAtgJAT6OP1raUTkBwmraVEtU4W4j5GJfzr4
- zk67R5WVgSODl1ozrEyzBYc4orHE3CvfZyYCyxfDCBo5hlXaKQ9LoAjDqWxjZv0nWmhq/x
- 8rA2TIh3NG+LKfpE7CURyJHU/mdO6ic=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-dzGjr6LvOoS1BFivRZu78w-1; Mon, 19 Feb 2024 12:51:42 -0500
-X-MC-Unique: dzGjr6LvOoS1BFivRZu78w-1
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-3c13db33d54so4797767b6e.0
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 09:51:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708365102; x=1708969902;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s8H1eFPOhtSw8K5hz/X/ZhKjJEt2LFUFnC9oN0PdPSg=;
- b=bNZnMi75kkKRVzTxP+NFIaDwgvEt/PDoSTwZtqek0RrtOkuydQxXfnvMWcVY2pL98l
- fidxvScmAnia4yV7YFXPVEyOJ39Ik59fb8uI48OTgg9ueA64eYfu5AtyrdIlQxXp0oDh
- /k+N7SSZ4L99bKDgeJ6r4q7XfBeLEiELWguKLZX3xtnb8r3fwAn02Kvn5SI/rYVUOPvd
- Z/8Kvs80nEbYhTef8n3qF4yUF85iWuHL0I6d0W1Iq8k3x6K3q8UhOhINiE8mXKaOX4ve
- tY7pP9/mpl0N3GwbllybrLVwLfBuTCPHi3V9sBxdRAgxtvFICopcszZ2bSNpHPHO+v36
- wq8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6mkHQdzHjxbupgHmP/ftdX/j/iQ5FeizmxhZHeMpEl+R4xHNpbDHgT0Cc8rAP20IF5RUAHIGOsZliqf3GW3T1mu4pKbY=
-X-Gm-Message-State: AOJu0Yx370TOI3UGp31rNJB6q/Efkl9tZCzyw0RPVUC7L+YJCvkvL0A8
- itg83E2sgE6Q0gSD9nfksw3iJHJGo2qtsOFI9xTj1gXq18XJo0sEOzXTIbuIWY5n+iCnuBn0xP2
- c2Q0TNjDOTdx2bOU2weiK43cYd5erRh/OFCRhpSWcZ9ZukscxApa2
-X-Received: by 2002:a05:6808:198d:b0:3c1:55ad:dd25 with SMTP id
- bj13-20020a056808198d00b003c155addd25mr5283386oib.59.1708365101807; 
- Mon, 19 Feb 2024 09:51:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFW0jhIH1yFerNZyZRBqTOlc44rLY5TC+d0zzXGiwAfbFXWchyoTQ7O9IQRqhpxWY9LturGGw==
-X-Received: by 2002:a05:6808:198d:b0:3c1:55ad:dd25 with SMTP id
- bj13-20020a056808198d00b003c155addd25mr5283354oib.59.1708365101445; 
- Mon, 19 Feb 2024 09:51:41 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- qp19-20020a056214599300b0068f160a09c5sm1675062qvb.49.2024.02.19.09.51.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 09:51:40 -0800 (PST)
-Message-ID: <750f1f96-5e6f-4ef0-9436-9b7947515e05@redhat.com>
-Date: Mon, 19 Feb 2024 18:51:34 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc8AT-0004Ii-FG
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 13:15:08 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 82BC54E6006;
+ Mon, 19 Feb 2024 19:15:02 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id FTt2HZOuQ5Bl; Mon, 19 Feb 2024 19:15:00 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 84E954E6003; Mon, 19 Feb 2024 19:15:00 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8306A7456B4;
+ Mon, 19 Feb 2024 19:15:00 +0100 (CET)
+Date: Mon, 19 Feb 2024 19:15:00 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
+ 'ich_dmi_pci.h'
+In-Reply-To: <20240219163855.87326-7-philmd@linaro.org>
+Message-ID: <0841e333-3d7d-0440-a8bf-8a7fd2f0011f@eik.bme.hu>
+References: <20240219163855.87326-1-philmd@linaro.org>
+ <20240219163855.87326-7-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH rfcv2 14/18] intel_iommu: Add a framework to check and
- sync host IOMMU cap/ecap
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
- jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- yi.y.sun@intel.com, chao.p.peng@intel.com, Yi Sun
- <yi.y.sun@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240201072818.327930-1-zhenzhong.duan@intel.com>
- <20240201072818.327930-15-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240201072818.327930-15-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-198208574-1708366500=:53903"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,128 +71,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-198208574-1708366500=:53903
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On 2/1/24 08:28, Zhenzhong Duan wrote:
-> From: Yi Liu <yi.l.liu@intel.com>
+On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
+> "hw/pci-bridge/ich_dmi_pci.h" header.
 >
-> Add a framework to check and synchronize host IOMMU cap/ecap with
-> vIOMMU cap/ecap.
->
-> The sequence will be:
->
-> vtd_cap_init() initializes iommu->cap/ecap.
-> vtd_check_hdev() update iommu->cap/ecap based on host cap/ecap.
-> iommu->cap_frozen set when machine create done, iommu->cap/ecap become readonly.
->
-> Implementation details for different backends will be in following patches.
->
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/i386/intel_iommu.h |  1 +
->  hw/i386/intel_iommu.c         | 41 ++++++++++++++++++++++++++++++++++-
->  2 files changed, 41 insertions(+), 1 deletion(-)
+> MAINTAINERS                         |  1 +
+> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
+> include/hw/southbridge/ich9.h       |  2 --
+> hw/pci-bridge/i82801b11.c           | 11 ++++-------
+> 4 files changed, 25 insertions(+), 9 deletions(-)
+> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
 >
-> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-> index bbc7b96add..c71a133820 100644
-> --- a/include/hw/i386/intel_iommu.h
-> +++ b/include/hw/i386/intel_iommu.h
-> @@ -283,6 +283,7 @@ struct IntelIOMMUState {
->  
->      uint64_t cap;                   /* The value of capability reg */
->      uint64_t ecap;                  /* The value of extended capability reg */
-> +    bool cap_frozen;                /* cap/ecap become read-only after frozen */
->  
->      uint32_t context_cache_gen;     /* Should be in [1,MAX] */
->      GHashTable *iotlb;              /* IOTLB */
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index ffa1ad6429..7ed2b79669 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -3819,6 +3819,31 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->      return vtd_dev_as;
->  }
->  
-> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
-> +                                 IOMMULegacyDevice *ldev,
-> +                                 Error **errp)
-> +{
-> +    return 0;
-> +}
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 1b210c5cc1..50507c3dd6 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
+> F: hw/i2c/smbus_ich9.c
+> F: hw/isa/lpc_ich9.c
+> F: include/hw/acpi/ich9*.h
+> +F: include/hw/pci-bridge/ich_dmi_pci.h
+> F: include/hw/southbridge/ich9.h
+>
+> PIIX4 South Bridge (i82371AB)
+> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h b/include/hw/pci-bridge/ich_dmi_pci.h
+> new file mode 100644
+> index 0000000000..7623b32b8e
+> --- /dev/null
+> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
+> @@ -0,0 +1,20 @@
+> +/*
+> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
-> +                                  IOMMUFDDevice *idev,
-> +                                  Error **errp)
-> +{
-> +    return 0;
-> +}
+> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
+> +#define HW_PCI_BRIDGE_ICH_D2P_H
 > +
-> +static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
-> +                          Error **errp)
-> +{
-> +    HostIOMMUDevice *base_dev = vtd_hdev->dev;
+> +#include "qom/object.h"
+> +#include "hw/pci/pci_bridge.h"
 > +
-> +    if (base_dev->type == HID_LEGACY) {
-> +        return vtd_check_legacy_hdev(s, vtd_hdev->ldev, errp);
-> +    }
-> +    return vtd_check_iommufd_hdev(s, vtd_hdev->idev, errp);
-Couldn't we have HostIOMMUDevice ops instead of having this check here?
+> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
+> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
+> +
+> +struct I82801b11Bridge {
+> +    PCIBridge parent_obj;
+> +};
 
-Eric
-> +}
-> +
->  static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->                                      HostIOMMUDevice *base_dev, Error **errp)
->  {
-> @@ -3829,6 +3854,7 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->          .devfn = devfn,
->      };
->      struct vtd_as_key *new_key;
-> +    int ret;
->  
->      assert(base_dev);
->  
-> @@ -3848,6 +3874,13 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->      vtd_hdev->iommu_state = s;
->      vtd_hdev->dev = base_dev;
->  
-> +    ret = vtd_check_hdev(s, vtd_hdev, errp);
-> +    if (ret) {
-> +        g_free(vtd_hdev);
-> +        vtd_iommu_unlock(s);
-> +        return ret;
-> +    }
-> +
->      new_key = g_malloc(sizeof(*new_key));
->      new_key->bus = bus;
->      new_key->devfn = devfn;
-> @@ -4083,7 +4116,9 @@ static void vtd_init(IntelIOMMUState *s)
->      s->iq_dw = false;
->      s->next_frcd_reg = 0;
->  
-> -    vtd_cap_init(s);
-> +    if (!s->cap_frozen) {
-> +        vtd_cap_init(s);
-> +    }
->  
->      /*
->       * Rsvd field masks for spte
-> @@ -4254,6 +4289,10 @@ static int vtd_machine_done_notify_one(Object *child, void *unused)
->  
->  static void vtd_machine_done_hook(Notifier *notifier, void *unused)
->  {
-> +    IntelIOMMUState *iommu = INTEL_IOMMU_DEVICE(x86_iommu_get_default());
-> +
-> +    iommu->cap_frozen = true;
-> +
->      object_child_foreach_recursive(object_get_root(),
->                                     vtd_machine_done_notify_one, NULL);
->  }
+If this class has no fields of its own why does it need its own state 
+struct defined? You could just set .instance_size = sizeof(PCIBridge) in 
+the TypeInfo i82801b11_bridge_info below and delete this struct completely 
+as it's not even used anywhere. One less needless QOM complication :-) For 
+an example see the empty via-mc97 device in hw/audio/via-ac97.c.
 
+Then you can put the OBJECT_DECLARE_SIMPLE_TYPE in 
+hw/pci-bridge/i82801b11.c where this object is defined and the #define 
+TYPE_ICH_DMI_PCI_BRIDGE in hw/southbridge/ich9.h and then you don't need 
+this header at all so you don't end up with:
+
+4 files changed, 25 insertions(+), 9 deletions(-)
+
+but really simplifying it.
+
+Regards,
+BALATON Zoltan
+
+> +
+> +#endif
+> diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+> index bee522a4cf..b2abf483e0 100644
+> --- a/include/hw/southbridge/ich9.h
+> +++ b/include/hw/southbridge/ich9.h
+> @@ -114,8 +114,6 @@ struct ICH9LPCState {
+>
+> #define ICH9_D2P_SECONDARY_DEFAULT              (256 - 8)
+>
+> -#define ICH9_D2P_A2_REVISION                    0x92
+> -
+> /* D31:F0 LPC Processor Interface */
+> #define ICH9_RST_CNT_IOPORT                     0xCF9
+>
+> diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
+> index c140919cbc..dd17e35b0a 100644
+> --- a/hw/pci-bridge/i82801b11.c
+> +++ b/hw/pci-bridge/i82801b11.c
+> @@ -45,7 +45,7 @@
+> #include "hw/pci/pci_bridge.h"
+> #include "migration/vmstate.h"
+> #include "qemu/module.h"
+> -#include "hw/southbridge/ich9.h"
+> +#include "hw/pci-bridge/ich_dmi_pci.h"
+>
+> /*****************************************************************************/
+> /* ICH9 DMI-to-PCI bridge */
+> @@ -53,11 +53,8 @@
+> #define I82801ba_SSVID_SVID     0
+> #define I82801ba_SSVID_SSID     0
+>
+> -typedef struct I82801b11Bridge {
+> -    /*< private >*/
+> -    PCIBridge parent_obj;
+> -    /*< public >*/
+> -} I82801b11Bridge;
+> +
+> +#define ICH9_D2P_A2_REVISION                    0x92
+>
+> static void i82801b11_bridge_realize(PCIDevice *d, Error **errp)
+> {
+> @@ -103,7 +100,7 @@ static void i82801b11_bridge_class_init(ObjectClass *klass, void *data)
+> }
+>
+> static const TypeInfo i82801b11_bridge_info = {
+> -    .name          = "i82801b11-bridge",
+> +    .name          = TYPE_ICH_DMI_PCI_BRIDGE,
+>     .parent        = TYPE_PCI_BRIDGE,
+>     .instance_size = sizeof(I82801b11Bridge),
+>     .class_init    = i82801b11_bridge_class_init,
+>
+--3866299591-198208574-1708366500=:53903--
 
