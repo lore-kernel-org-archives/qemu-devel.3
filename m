@@ -4,54 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4570AC54764
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 10:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05008C54764
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 10:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc1D9-0003rV-IN; Mon, 19 Feb 2024 05:49:23 -0500
+	id 1rc1DA-0003s6-Hz; Mon, 19 Feb 2024 05:49:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc1D8-0003r1-0j
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc1D8-0003rM-OS
  for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:49:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc1D6-00016Z-Kn
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:49:21 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rc1D6-00016d-Ra
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 05:49:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1708339760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=DzoKqRtjrS8IJx8VnjUldBb8dumHoRMmqa/9KkKFbFo=;
- b=TP2pe7GbODVfu0PGbiUn4TIfkxqn7oEg5uaEI77dRyIZaGZ4d3dIEECRgHkQe7jJRPyw65
- zvdjVhT1o5UpIRAUH2tMnmj0LRCi8Wi1R33xMXNYg78T85C9sAjp7iM45eGjPqGZb+s07U
- 3dMYb19BfeE8HZjgZY4wjRlarD83yqs=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uMyzpYmBfZWFh0ciRs954q+ufPaBFCFn1fya/ZkaycU=;
+ b=eXePMez7Rs86GxyfI+jChTa9bZzD/Zjl4YA0qc0VxS0K0DWK3oVjFc5wn8Wxh2OdF4IB+9
+ CgAn0Z+g5WRUc2lo2UvNuwQlDsFGw7BvU3/rY7NPC6cj0L7c8DzAPXFfGvMjPvLMzJXrC7
+ /e1KTvq4QZawneBheaeymr2oK/I/h50=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-jjN0We-UNpehInhsIwXm_g-1; Mon,
- 19 Feb 2024 05:49:16 -0500
-X-MC-Unique: jjN0We-UNpehInhsIwXm_g-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-skJEmgxpNqyQdJv1EYy3nw-1; Mon,
+ 19 Feb 2024 05:49:18 -0500
+X-MC-Unique: skJEmgxpNqyQdJv1EYy3nw-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 07ABC3CBD544;
- Mon, 19 Feb 2024 10:49:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E1FAD383E122;
+ Mon, 19 Feb 2024 10:49:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.115])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 343621C060AF;
- Mon, 19 Feb 2024 10:49:13 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7E8E31C02ECD;
+ Mon, 19 Feb 2024 10:49:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: John Snow <jsnow@redhat.com>,
 	qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org
-Subject: [PATCH 0/7] hw/ide: Clean up hw/ide/qdev.c and
- include/hw/ide/internal.h
-Date: Mon, 19 Feb 2024 11:49:05 +0100
-Message-ID: <20240219104912.378211-1-thuth@redhat.com>
+Subject: [PATCH 1/7] hw/ide: Add the possibility to disable the CompactFlash
+ device in the build
+Date: Mon, 19 Feb 2024 11:49:06 +0100
+Message-ID: <20240219104912.378211-2-thuth@redhat.com>
+In-Reply-To: <20240219104912.378211-1-thuth@redhat.com>
+References: <20240219104912.378211-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
@@ -63,8 +66,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,61 +82,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While trying to make it possible to compile-out the CompactFlash IDE device
-in downstream distributions (first patch), we noticed that there are more
-things in the IDE code that could use a proper clean up:
+For distros like downstream RHEL, it would be helpful to allow to disable
+the CompactFlash device. For making this possible, we need a separate
+Kconfig switch for this device, and the code should reside in a separate
+file. Let's also introduce a new header ide-dev.h which can be used to
+collect definitions related to IDE devices.
 
-First, hw/ide/qdev.c is quite a mix between IDE BUS specific functions
-and (disk) device specific functions. Thus the second patch splits qdev.c
-into two new separate files to make it more obvious which part belongs
-to which kind of devices.
-
-The remaining patches unentangle include/hw/ide/internal.h, which is meant
-as a header that should only be used internally to the IDE subsystem, but
-which is currently exposed to the world since include/hw/ide/pci.h includes
-this header, too. Thus we move the definitions that are also required for
-non-IDE code to other new header files, so we can finally change pci.h to
-stop including internal.h. After these changes, internal.h is only included
-by files in hw/ide/ as it should be.
-
-Thomas Huth (7):
-  hw/ide: Add the possibility to disable the CompactFlash device in the
-    build
-  hw/ide: Split qdev.c into ide-bus.c and ide-dev.c
-  hw/ide: Move IDE device related definitions to ide-dev.h
-  hw/ide: Move IDE bus related definitions to a new header ide-bus.h
-  hw/ide: Move IDE DMA related definitions to a separate header
-    ide-dma.h
-  hw/ide: Remove the include/hw/ide.h legacy file
-  hw/ide: Stop exposing internal.h to non-IDE files
-
- include/hw/ide.h             |   9 --
- include/hw/ide/ide-bus.h     |  41 +++++++
- include/hw/ide/ide-dev.h     | 186 +++++++++++++++++++++++++++++++
- include/hw/ide/ide-dma.h     |  30 +++++
- include/hw/ide/internal.h    | 209 +----------------------------------
- include/hw/ide/pci.h         |   3 +-
- hw/i386/pc.c                 |   2 +-
- hw/ide/cf.c                  |  58 ++++++++++
- hw/ide/cmd646.c              |   1 +
- hw/ide/ide-bus.c             | 111 +++++++++++++++++++
- hw/ide/{qdev.c => ide-dev.c} | 137 +----------------------
- hw/ide/pci.c                 |   1 +
- hw/ide/piix.c                |   1 +
- hw/ide/sii3112.c             |   1 +
- hw/ide/via.c                 |   1 +
- hw/arm/Kconfig               |   2 +
- hw/ide/Kconfig               |  32 ++++--
- hw/ide/meson.build           |   4 +-
- 18 files changed, 465 insertions(+), 364 deletions(-)
- delete mode 100644 include/hw/ide.h
- create mode 100644 include/hw/ide/ide-bus.h
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ include/hw/ide/ide-dev.h | 41 ++++++++++++++++++++++++++++
+ hw/ide/cf.c              | 58 ++++++++++++++++++++++++++++++++++++++++
+ hw/ide/qdev.c            | 51 ++---------------------------------
+ hw/ide/Kconfig           |  4 +++
+ hw/ide/meson.build       |  1 +
+ 5 files changed, 106 insertions(+), 49 deletions(-)
  create mode 100644 include/hw/ide/ide-dev.h
- create mode 100644 include/hw/ide/ide-dma.h
  create mode 100644 hw/ide/cf.c
- create mode 100644 hw/ide/ide-bus.c
- rename hw/ide/{qdev.c => ide-dev.c} (67%)
 
+diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
+new file mode 100644
+index 0000000000..7e9663cda9
+--- /dev/null
++++ b/include/hw/ide/ide-dev.h
+@@ -0,0 +1,41 @@
++/*
++ * ide device definitions
++ *
++ * Copyright (c) 2009 Gerd Hoffmann <kraxel@redhat.com>
++ *
++ * This code is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef IDE_DEV_H
++#define IDE_DEV_H
++
++#include "hw/qdev-properties.h"
++#include "hw/block/block.h"
++#include "hw/ide/internal.h"
++
++typedef struct IDEDrive {
++    IDEDevice dev;
++} IDEDrive;
++
++#define DEFINE_IDE_DEV_PROPERTIES()                     \
++    DEFINE_BLOCK_PROPERTIES(IDEDrive, dev.conf),        \
++    DEFINE_BLOCK_ERROR_PROPERTIES(IDEDrive, dev.conf),  \
++    DEFINE_PROP_STRING("ver",  IDEDrive, dev.version),  \
++    DEFINE_PROP_UINT64("wwn",  IDEDrive, dev.wwn, 0),   \
++    DEFINE_PROP_STRING("serial",  IDEDrive, dev.serial),\
++    DEFINE_PROP_STRING("model", IDEDrive, dev.model)
++
++void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp);
++
++#endif
+diff --git a/hw/ide/cf.c b/hw/ide/cf.c
+new file mode 100644
+index 0000000000..2a425cb0f2
+--- /dev/null
++++ b/hw/ide/cf.c
+@@ -0,0 +1,58 @@
++/*
++ * ide CompactFlash support
++ *
++ * This code is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "qemu/osdep.h"
++#include "hw/ide/ide-dev.h"
++#include "qapi/qapi-types-block.h"
++
++static void ide_cf_realize(IDEDevice *dev, Error **errp)
++{
++    ide_dev_initfn(dev, IDE_CFATA, errp);
++}
++
++static Property ide_cf_properties[] = {
++    DEFINE_IDE_DEV_PROPERTIES(),
++    DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
++    DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
++                IDEDrive, dev.chs_trans, BIOS_ATA_TRANSLATION_AUTO),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void ide_cf_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    IDEDeviceClass *k = IDE_DEVICE_CLASS(klass);
++
++    k->realize  = ide_cf_realize;
++    dc->fw_name = "drive";
++    dc->desc    = "virtual CompactFlash card";
++    device_class_set_props(dc, ide_cf_properties);
++}
++
++static const TypeInfo ide_cf_info = {
++    .name          = "ide-cf",
++    .parent        = TYPE_IDE_DEVICE,
++    .instance_size = sizeof(IDEDrive),
++    .class_init    = ide_cf_class_init,
++};
++
++static void ide_cf_register_type(void)
++{
++    type_register_static(&ide_cf_info);
++}
++
++type_init(ide_cf_register_type)
+diff --git a/hw/ide/qdev.c b/hw/ide/qdev.c
+index 1b3b4da01d..4189313d30 100644
+--- a/hw/ide/qdev.c
++++ b/hw/ide/qdev.c
+@@ -24,12 +24,9 @@
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+-#include "hw/ide/internal.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/ide/ide-dev.h"
+ #include "sysemu/block-backend.h"
+ #include "sysemu/blockdev.h"
+-#include "hw/block/block.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/runstate.h"
+ #include "qapi/visitor.h"
+@@ -158,11 +155,7 @@ int ide_get_bios_chs_trans(BusState *bus, int unit)
+ 
+ /* --------------------------------- */
+ 
+-typedef struct IDEDrive {
+-    IDEDevice dev;
+-} IDEDrive;
+-
+-static void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp)
++void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp)
+ {
+     IDEBus *bus = DO_UPCAST(IDEBus, qbus, dev->qdev.parent_bus);
+     IDEState *s = bus->ifs + dev->unit;
+@@ -283,19 +276,6 @@ static void ide_cd_realize(IDEDevice *dev, Error **errp)
+     ide_dev_initfn(dev, IDE_CD, errp);
+ }
+ 
+-static void ide_cf_realize(IDEDevice *dev, Error **errp)
+-{
+-    ide_dev_initfn(dev, IDE_CFATA, errp);
+-}
+-
+-#define DEFINE_IDE_DEV_PROPERTIES()                     \
+-    DEFINE_BLOCK_PROPERTIES(IDEDrive, dev.conf),        \
+-    DEFINE_BLOCK_ERROR_PROPERTIES(IDEDrive, dev.conf),  \
+-    DEFINE_PROP_STRING("ver",  IDEDrive, dev.version),  \
+-    DEFINE_PROP_UINT64("wwn",  IDEDrive, dev.wwn, 0),   \
+-    DEFINE_PROP_STRING("serial",  IDEDrive, dev.serial),\
+-    DEFINE_PROP_STRING("model", IDEDrive, dev.model)
+-
+ static Property ide_hd_properties[] = {
+     DEFINE_IDE_DEV_PROPERTIES(),
+     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
+@@ -346,32 +326,6 @@ static const TypeInfo ide_cd_info = {
+     .class_init    = ide_cd_class_init,
+ };
+ 
+-static Property ide_cf_properties[] = {
+-    DEFINE_IDE_DEV_PROPERTIES(),
+-    DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
+-    DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
+-                IDEDrive, dev.chs_trans, BIOS_ATA_TRANSLATION_AUTO),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void ide_cf_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    IDEDeviceClass *k = IDE_DEVICE_CLASS(klass);
+-
+-    k->realize  = ide_cf_realize;
+-    dc->fw_name = "drive";
+-    dc->desc    = "virtual CompactFlash card";
+-    device_class_set_props(dc, ide_cf_properties);
+-}
+-
+-static const TypeInfo ide_cf_info = {
+-    .name          = "ide-cf",
+-    .parent        = TYPE_IDE_DEVICE,
+-    .instance_size = sizeof(IDEDrive),
+-    .class_init    = ide_cf_class_init,
+-};
+-
+ static void ide_device_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *k = DEVICE_CLASS(klass);
+@@ -396,7 +350,6 @@ static void ide_register_types(void)
+     type_register_static(&ide_bus_info);
+     type_register_static(&ide_hd_info);
+     type_register_static(&ide_cd_info);
+-    type_register_static(&ide_cf_info);
+     type_register_static(&ide_device_type_info);
+ }
+ 
+diff --git a/hw/ide/Kconfig b/hw/ide/Kconfig
+index dd85fa3619..b93d6743d5 100644
+--- a/hw/ide/Kconfig
++++ b/hw/ide/Kconfig
+@@ -57,3 +57,7 @@ config IDE_SII3112
+     bool
+     select IDE_PCI
+     select IDE_QDEV
++
++config IDE_CF
++    bool
++    default y if IDE_QDEV
+diff --git a/hw/ide/meson.build b/hw/ide/meson.build
+index e050eef942..d2e5b45c9e 100644
+--- a/hw/ide/meson.build
++++ b/hw/ide/meson.build
+@@ -1,6 +1,7 @@
+ system_ss.add(when: 'CONFIG_AHCI', if_true: files('ahci.c'))
+ system_ss.add(when: 'CONFIG_AHCI_ICH9', if_true: files('ich.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('ahci-allwinner.c'))
++system_ss.add(when: 'CONFIG_IDE_CF', if_true: files('cf.c'))
+ system_ss.add(when: 'CONFIG_IDE_CMD646', if_true: files('cmd646.c'))
+ system_ss.add(when: 'CONFIG_IDE_CORE', if_true: files('core.c', 'atapi.c'))
+ system_ss.add(when: 'CONFIG_IDE_ISA', if_true: files('isa.c', 'ioport.c'))
 -- 
 2.43.2
 
