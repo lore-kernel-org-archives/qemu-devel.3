@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FD8C48BC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 03:27:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38F7C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 03:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbuIq-0005HU-BB; Sun, 18 Feb 2024 22:26:48 -0500
+	id 1rbuIi-0005EK-6t; Sun, 18 Feb 2024 22:26:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1rbuIp-0005Fl-5B
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 22:26:47 -0500
+ id 1rbuIg-0005Du-E1
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 22:26:38 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1rbuIn-0000ZA-IM
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 22:26:46 -0500
+ id 1rbuIe-0000YX-Qj
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 22:26:38 -0500
 Received: from mail.andestech.com (ATCPCS16.andestech.com [10.0.1.222])
- by Atcsqr.andestech.com with ESMTP id 41J3QVJ9008393;
- Mon, 19 Feb 2024 11:26:31 +0800 (+08)
+ by Atcsqr.andestech.com with ESMTP id 41J3QL1N008357;
+ Mon, 19 Feb 2024 11:26:21 +0800 (+08)
  (envelope-from alvinga@andestech.com)
 Received: from alvinga-VirtualBox.andestech.com (10.0.13.68) by
  ATCPCS16.andestech.com (10.0.1.222) with Microsoft SMTP Server id 14.3.498.0; 
- Mon, 19 Feb 2024 11:26:31 +0800
+ Mon, 19 Feb 2024 11:26:18 +0800
 To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH 4/4] target/riscv: Apply modularized matching conditions for
- icount trigger
-Date: Mon, 19 Feb 2024 11:25:59 +0800
-Message-ID: <20240219032559.79665-5-alvinga@andestech.com>
+Subject: [PATCH 3/4] target/riscv: Apply modularized matching conditions for
+ watchpoint
+Date: Mon, 19 Feb 2024 11:25:58 +0800
+Message-ID: <20240219032559.79665-4-alvinga@andestech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240219032559.79665-1-alvinga@andestech.com>
 References: <20240219032559.79665-1-alvinga@andestech.com>
@@ -44,7 +44,7 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.0.13.68]
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 41J3QVJ9008393
+X-MAIL: Atcsqr.andestech.com 41J3QL1N008357
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -71,28 +71,72 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 We have implemented trigger_common_match(), which checks if the enabled
-privilege levels of the trigger match CPU's current privilege level. We
-can invoke trigger_common_match() to check the privilege levels of the
-type 3 triggers.
+privilege levels of the trigger match CPU's current privilege level.
+Remove the related code in riscv_cpu_debug_check_watchpoint() and invoke
+trigger_common_match() to check the privilege levels of the type 2 and
+type 6 triggers for the watchpoints.
+
+Only load/store bits and loaded/stored address should be further checked
+in riscv_cpu_debug_check_watchpoint().
 
 Signed-off-by: Alvin Chang <alvinga@andestech.com>
 ---
- target/riscv/debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/debug.c | 26 ++++++--------------------
+ 1 file changed, 6 insertions(+), 20 deletions(-)
 
 diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 67ba19c966..de996a393c 100644
+index b971ed5d7a..67ba19c966 100644
 --- a/target/riscv/debug.c
 +++ b/target/riscv/debug.c
-@@ -624,7 +624,7 @@ void helper_itrigger_match(CPURISCVState *env)
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
--        if (check_itrigger_priv(env, i)) {
-+        if (!trigger_common_match(env, TRIGGER_TYPE_INST_CNT, i)) {
-             continue;
-         }
-         count = itrigger_get_count(env, i);
+@@ -899,13 +899,12 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+     for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+         trigger_type = get_trigger_type(env, i);
+ 
++        if (!trigger_common_match(env, trigger_type, i)) {
++            continue;
++        }
++
+         switch (trigger_type) {
+         case TRIGGER_TYPE_AD_MATCH:
+-            /* type 2 trigger cannot be fired in VU/VS mode */
+-            if (env->virt_enabled) {
+-                return false;
+-            }
+-
+             ctrl = env->tdata1[i];
+             addr = env->tdata2[i];
+             flags = 0;
+@@ -918,10 +917,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+             }
+ 
+             if ((wp->flags & flags) && (wp->vaddr == addr)) {
+-                /* check U/S/M bit against current privilege level */
+-                if ((ctrl >> 3) & BIT(env->priv)) {
+-                    return true;
+-                }
++                return true;
+             }
+             break;
+         case TRIGGER_TYPE_AD_MATCH6:
+@@ -937,17 +933,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+             }
+ 
+             if ((wp->flags & flags) && (wp->vaddr == addr)) {
+-                if (env->virt_enabled) {
+-                    /* check VU/VS bit against current privilege level */
+-                    if ((ctrl >> 23) & BIT(env->priv)) {
+-                        return true;
+-                    }
+-                } else {
+-                    /* check U/S/M bit against current privilege level */
+-                    if ((ctrl >> 3) & BIT(env->priv)) {
+-                        return true;
+-                    }
+-                }
++                return true;
+             }
+             break;
+         default:
 -- 
 2.34.1
 
