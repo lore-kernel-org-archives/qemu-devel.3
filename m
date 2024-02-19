@@ -4,58 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2691AC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EAD3C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc6pn-0006vF-6n; Mon, 19 Feb 2024 11:49:39 -0500
+	id 1rc6r2-0007n0-20; Mon, 19 Feb 2024 11:50:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rc6pl-0006v6-Vw
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:49:38 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rc6qz-0007mf-QJ
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:50:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rc6pi-000589-Ki
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:49:37 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TdpM74qhNz67RYs;
- Tue, 20 Feb 2024 00:45:55 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 1075E140B54;
- Tue, 20 Feb 2024 00:49:29 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Mon, 19 Feb
- 2024 16:49:28 +0000
-Date: Mon, 19 Feb 2024 16:49:27 +0000
-To: <shiju.jose@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v4 2/3] hw/cxl/cxl-mailbox-utils: Add device patrol
- scrub control feature
-Message-ID: <20240219164927.0000753b@Huawei.com>
-In-Reply-To: <20240219150025.1531-3-shiju.jose@huawei.com>
-References: <20240219150025.1531-1-shiju.jose@huawei.com>
- <20240219150025.1531-3-shiju.jose@huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rc6qx-0005XB-Kf
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:50:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708361450;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OafNM43/CbcRoUWeTe5C0aLXqf2ZrrJrUpXEIRCcIk8=;
+ b=dXlaSKNRyYALOJSdo905k+wtp8EoMpHN0TU37lJAHG0Fhk2lg3vlKLPR13KD5rEwtZS+OW
+ pib8N4mTssSGtSOPSY1dSVyJKO1NCUECoxD8In4Q7PUN4ZJQNV2neEu/aLo0W2j3V+Iukk
+ IVTEDv/pqmuy+hy+lzFiSfJMotgOYnI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-Vfw5FLNSMXqpUGYcizltQA-1; Mon, 19 Feb 2024 11:50:48 -0500
+X-MC-Unique: Vfw5FLNSMXqpUGYcizltQA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3247A185A783;
+ Mon, 19 Feb 2024 16:50:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.30])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8724FC35940;
+ Mon, 19 Feb 2024 16:50:47 +0000 (UTC)
+Date: Mon, 19 Feb 2024 16:50:45 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>,
+ Stefan Weil <sw@weilnetz.de>
+Subject: Re: dropping 32-bit Windows host support
+Message-ID: <ZdOG5e5qj-07_IFG@redhat.com>
+References: <CAFEAcA_BB5-eieVGuqqXn3aS-Vmc7OcTFmv5e=i5HgNw3Kp2FQ@mail.gmail.com>
+ <ZdN5cbaqnJMTK5ts@redhat.com>
+ <0a084faf-3685-4134-aecc-5edf13111d89@redhat.com>
+ <CAFEAcA9zkCZVHR21mfSiz4PQG_A2n7GEG9X4SBq4B_ARPkNW2g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEAcA9zkCZVHR21mfSiz4PQG_A2n7GEG9X4SBq4B_ARPkNW2g@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,211 +86,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 23:00:24 +0800
-<shiju.jose@huawei.com> wrote:
-
-> From: Shiju Jose <shiju.jose@huawei.com>
+On Mon, Feb 19, 2024 at 04:40:38PM +0000, Peter Maydell wrote:
+> On Mon, 19 Feb 2024 at 16:26, Thomas Huth <thuth@redhat.com> wrote:
+> >
+> > On 19/02/2024 16.53, Daniel P. Berrangé wrote:
+> > > On Mon, Feb 19, 2024 at 03:37:31PM +0000, Peter Maydell wrote:
+> > >> Our msys2 32-bit Windows host CI job has been failing recently
+> > >> because upstream MSYS2 are starting to phase out 32-bit windows
+> > >> host support and are steadily removing i686 versions of packages.
+> > >> The latest is dtc:
+> > >> https://gitlab.com/qemu-project/qemu/-/issues/2177
+> > >>
+> > >> The writing is clearly on the wall for their 32-bit support, judging
+> > >> from the "2023-12-13 - Starting to drop some 32-bit Packages" news
+> > >> item at https://www.msys2.org/news/ and associated discussion at
+> > >> https://github.com/msys2/MINGW-packages/discussions/19326 .
+> > >>
+> > >> QEMU on a 32-bit host is not likely to be a great experience, and I
+> > >> suspect we don't have many users using 32-bit Windows who couldn't
+> > >> use the 64-bit version instead. Our Download page points users at
+> > >> MSYS2's packages, and they have already dropped the 32-bit QEMU
+> > >> package build. Stefan Weil's binaries page, which is the other thing
+> > >> we link to from Download, has no 32-bit version newer than 7.2.0.
+> > >> So anybody using 32-bit Windows QEMU must be building it themselves.
+> > >> Plus, we've already deprecated system emulation on 32-bit x86 hosts,
+> > >> so the only remaining "supported" config is with the NVMM or WHPX
+> > >> accelerators.
+> > >
+> > > The other data point is that Win11 is 64-bit only, and IIUC,
+> > > Win10 was 64-bit only for new OEM installs too, only upgrades
+> > > or end user installs could choose 32-bit.
+> >
+> > Yes, and considering that there will likely be a Windows 12 at one point in
+> > time, we'll drop support for Win10 and thus 32-bit support anyway.
+> >
+> > >> I suggest that we should:
+> > >>
+> > >>   * remove the msys2-32bit CI job entirely (we will still have at least
+> > >>     compile-time coverage via the cross-win32-system job)
+> > >>   * document that the 32-bit Windows support is deprecated in
+> > >>     docs/about/build-platforms.rst and deprecated.rst
+> > >>   * update our Download page to remove mention of 32-bit Windows
+> > >>
+> > >> Any objections?
+> > >
+> > > I think that's sane.
+> >
+> > Sounds good to me, too.
+> >
+> > Note that we already have an entry for "System emulation on 32-bit x86
+> > hosts" in the deprecation list ... so IMHO we could also justify to drop the
+> > 32-bit Windows support immediately, since that's a subset of that entry.
 > 
-> CXL spec 3.1 section 8.2.9.9.11.1 describes the device patrol scrub control
-> feature. The device patrol scrub proactively locates and makes corrections
-> to errors in regular cycle. The patrol scrub control allows the request to
-> configure patrol scrub input configurations.
-> 
-> The patrol scrub control allows the requester to specify the number of
-> hours for which the patrol scrub cycles must be completed, provided that
-> the requested number is not less than the minimum number of hours for the
-> patrol scrub cycle that the device is capable of. In addition, the patrol
-> scrub controls allow the host to disable and enable the feature in case
-> disabling of the feature is needed for other purposes such as
-> performance-aware operations which require the background operations to be
-> turned off.
-> 
-> Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-> Reviewed-by: Fan Ni <fan.ni@samsung.com>
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+> Mmm. I had initially misread that as only applying to TCG,
+> but it's more general than that. So I think I agree that we
+> should go ahead and mark 32-bit Windows support as definitively
+> dropped.
 
-The data can't be global as we need to have separate controls per CXL type3
-device so that each instance can have different settings. 
-
-Otherwise a few minor comments inline.
-
-Jonathan
-
-> ---
->  hw/cxl/cxl-mailbox-utils.c | 97 +++++++++++++++++++++++++++++++++++++-
->  1 file changed, 96 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 779ce80e3c..908ce16642 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -997,6 +997,7 @@ typedef struct CXLSupportedFeatureEntry {
->  } QEMU_PACKED CXLSupportedFeatureEntry;
->  
->  enum CXL_SUPPORTED_FEATURES_LIST {
-> +    CXL_FEATURE_PATROL_SCRUB = 0,
->      CXL_FEATURE_MAX
->  };
->  
-> @@ -1037,6 +1038,38 @@ enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
->      CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MAX
->  };
->  
-> +/* CXL r3.1 section 8.2.9.9.11.1: Device Patrol Scrub Control Feature */
-> +static const QemuUUID patrol_scrub_uuid = {
-> +    .data = UUID(0x96dad7d6, 0xfde8, 0x482b, 0xa7, 0x33,
-> +                 0x75, 0x77, 0x4e, 0x06, 0xdb, 0x8a)
-> +};
-> +
-> +#define CXL_MEMDEV_PS_GET_FEATURE_VERSION    0x01
-> +#define CXL_MEMDEV_PS_SET_FEATURE_VERSION    0x01
-> +#define CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT    BIT(0)
-> +#define CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT    BIT(1)
-> +#define CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT    12
-> +#define CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT    1
-> +#define CXL_MEMDEV_PS_ENABLE_DEFAULT    0
-> +
-> +/* CXL memdev patrol scrub control attributes */
-> +typedef struct CXLMemPatrolScrubReadAttrs {
-> +        uint8_t scrub_cycle_cap;
-> +        uint16_t scrub_cycle;
-> +        uint8_t scrub_flags;
-> +} QEMU_PACKED CXLMemPatrolScrubReadAttrs;
-> +
-> +typedef struct CXLMemPatrolScrubWriteAttrs {
-> +    uint8_t scrub_cycle_hr;
-> +    uint8_t scrub_flags;
-> +} QEMU_PACKED CXLMemPatrolScrubWriteAttrs;
-> +
-> +typedef struct CXLMemPatrolScrubSetFeature {
-> +        CXLSetFeatureInHeader hdr;
-> +        CXLMemPatrolScrubWriteAttrs feat_data;
-> +} QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
-> +static CXLMemPatrolScrubReadAttrs cxl_memdev_ps_feat_attrs;
-> +
->  /* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
->  static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->                                               uint8_t *payload_in,
-> @@ -1060,7 +1093,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->      uint16_t feat_entries = 0;
->  
->      if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
-> -        get_feats_in->start_index > CXL_FEATURE_MAX) {
-> +        get_feats_in->start_index >= CXL_FEATURE_MAX) {
-
-Change looks valid, but should have been in patch 1.
+Technically our existing deprecation would still allow for 32-bit
+builds of qemu-img, qemu-io, etc tools, on Windows, but that's
+very niche. 
 
 
->          return CXL_MBOX_INVALID_INPUT;
->      }
->      req_entries = (get_feats_in->count -
-> @@ -1072,6 +1105,31 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
->      entry = 0;
->      while (entry < req_entries) {
->          switch (index) {
-> +        case  CXL_FEATURE_PATROL_SCRUB:
-> +            /* Fill supported feature entry for device patrol scrub control */
-> +            get_feats_out->feat_entries[entry] =
-> +                           (struct CXLSupportedFeatureEntry) {
-> +                .uuid = patrol_scrub_uuid,
-> +                .feat_index = index,
-> +                .get_feat_size = sizeof(CXLMemPatrolScrubReadAttrs),
-> +                .set_feat_size = sizeof(CXLMemPatrolScrubWriteAttrs),
-> +                /* Bit[0] : 1, feature attributes changeable */
-> +                .attr_flags = 0x1,
-> +                .get_feat_version = CXL_MEMDEV_PS_GET_FEATURE_VERSION,
-> +                .set_feat_version = CXL_MEMDEV_PS_SET_FEATURE_VERSION,
-> +                .set_feat_effects = 0,
-> +            };
-> +            feat_entries++;
-> +            /* Set default value for device patrol scrub read attributes */
-> +            cxl_memdev_ps_feat_attrs.scrub_cycle_cap =
-> +                                CXL_MEMDEV_PS_SCRUB_CYCLE_CHANGE_CAP_DEFAULT |
-> +                                CXL_MEMDEV_PS_SCRUB_REALTIME_REPORT_CAP_DEFAULT;
-> +            cxl_memdev_ps_feat_attrs.scrub_cycle =
-> +                                CXL_MEMDEV_PS_CUR_SCRUB_CYCLE_DEFAULT |
-> +                                (CXL_MEMDEV_PS_MIN_SCRUB_CYCLE_DEFAULT << 8);
-> +            cxl_memdev_ps_feat_attrs.scrub_flags =
-> +                                CXL_MEMDEV_PS_ENABLE_DEFAULT;
-
-This is general defaults setup - doesn't belong here.
-Not strictly necessary for a driver to have called the query for supported
-features before trying to use them.
-
-Move this to mem/cxl_type3.c as part of the device emulation.
-
- 
-> +            break;
->          default:
->              break;
->          }
-> @@ -1112,6 +1170,20 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
->          return CXL_MBOX_INVALID_INPUT;
->      }
->  
-> +    if (qemu_uuid_is_equal(&get_feature->uuid, &patrol_scrub_uuid)) {
-> +        if (get_feature->offset >= sizeof(CXLMemPatrolScrubReadAttrs)) {
-> +            return CXL_MBOX_INVALID_INPUT;
-> +        }
-> +        bytes_to_copy = sizeof(CXLMemPatrolScrubReadAttrs) -
-> +                                             get_feature->offset;
-> +        bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
-> +        memcpy(payload_out,
-> +               &cxl_memdev_ps_feat_attrs + get_feature->offset,
-> +               bytes_to_copy);
-> +    } else {
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
->      *len_out = bytes_to_copy;
->  
->      return CXL_MBOX_SUCCESS;
-> @@ -1125,6 +1197,29 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
->                                             size_t *len_out,
->                                             CXLCCI *cci)
->  {
-> +    CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
-> +    CXLMemPatrolScrubSetFeature *ps_set_feature;
-> +    CXLSetFeatureInHeader *hdr = (void *)payload_in;
-> +
-> +    if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-> +        if (hdr->version != CXL_MEMDEV_PS_SET_FEATURE_VERSION ||
-> +            (hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK) !=
-> +                               CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER) {
-> +            return CXL_MBOX_UNSUPPORTED;
-> +        }
-> +
-> +        ps_set_feature = (void *)payload_in;
-> +        ps_write_attrs = &ps_set_feature->feat_data;
-> +        cxl_memdev_ps_feat_attrs.scrub_cycle &= ~0xFF;
-
-This needed to be embedded in the Type 3 device structures - not globally shared.
-You'll need to check the device type, then convert cci->d to it.
-
-if (object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
-        CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-
-Add the feature attrs to that structure (as for now it's type 3 specific and
-we don't have a generalized place for memory features beyond that).
-
-
-
-> +        cxl_memdev_ps_feat_attrs.scrub_cycle |=
-> +                          ps_write_attrs->scrub_cycle_hr & 0xFF;
-> +        cxl_memdev_ps_feat_attrs.scrub_flags &= ~0x1;
-> +        cxl_memdev_ps_feat_attrs.scrub_flags |=
-> +                          ps_write_attrs->scrub_flags & 0x1;
-> +    } else {
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
->      return CXL_MBOX_SUCCESS;
->  }
->  
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
