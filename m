@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AE9C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 15:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E7AC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 15:02:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc58f-0007rT-Df; Mon, 19 Feb 2024 10:01:01 -0500
+	id 1rc58d-0007qV-6c; Mon, 19 Feb 2024 10:00:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1rc58a-0007pc-0v
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:00:56 -0500
+ id 1rc58Z-0007pM-Qd
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:00:55 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1rc58X-0000zX-5t
+ id 1rc58W-0000yb-8x
  for qemu-devel@nongnu.org; Mon, 19 Feb 2024 10:00:55 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tdlws1bxGz6D8W0;
- Mon, 19 Feb 2024 22:56:29 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tdlwr44JZz6D8YY;
+ Mon, 19 Feb 2024 22:56:28 +0800 (CST)
 Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
- by mail.maildlp.com (Postfix) with ESMTPS id 8AF57140B38;
- Mon, 19 Feb 2024 23:00:43 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DFC12140B38;
+ Mon, 19 Feb 2024 23:00:42 +0800 (CST)
 Received: from SecurePC30232.china.huawei.com (10.122.247.234) by
  lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 19 Feb 2024 15:00:43 +0000
+ 15.1.2507.35; Mon, 19 Feb 2024 15:00:42 +0000
 To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
 CC: <jonathan.cameron@huawei.com>, <tanxiaofei@huawei.com>,
  <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>, <shiju.jose@huawei.com>
-Subject: [PATCH v4 3/3] hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS control
- feature
-Date: Mon, 19 Feb 2024 23:00:25 +0800
-Message-ID: <20240219150025.1531-4-shiju.jose@huawei.com>
+Subject: [PATCH v4 1/3] hw/cxl/cxl-mailbox-utils: Add support for feature
+ commands (8.2.9.6)
+Date: Mon, 19 Feb 2024 23:00:23 +0800
+Message-ID: <20240219150025.1531-2-shiju.jose@huawei.com>
 X-Mailer: git-send-email 2.35.1.windows.2
 In-Reply-To: <20240219150025.1531-1-shiju.jose@huawei.com>
 References: <20240219150025.1531-1-shiju.jose@huawei.com>
@@ -73,183 +73,219 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shiju Jose <shiju.jose@huawei.com>
 
-CXL spec 3.1 section 8.2.9.9.11.2 describes the DDR5 Error Check Scrub (ECS)
-control feature.
-
-The Error Check Scrub (ECS) is a feature defined in JEDEC DDR5 SDRAM
-Specification (JESD79-5) and allows the DRAM to internally read, correct
-single-bit errors, and write back corrected data bits to the DRAM array
-while providing transparency to error counts. The ECS control feature
-allows the request to configure ECS input configurations during system
-boot or at run-time.
-
-The ECS control allows the requester to change the log entry type, the ECS
-threshold count provided that the request is within the definition
-specified in DDR5 mode registers, change mode between codeword mode and
-row count mode, and reset the ECS counter.
+CXL spec 3.1 section 8.2.9.6 describes optional device specific features.
+CXL devices supports features with changeable attributes.
+Get Supported Features retrieves the list of supported device specific
+features. The settings of a feature can be retrieved using Get Feature and
+optionally modified using Set Feature.
 
 Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 Reviewed-by: Fan Ni <fan.ni@samsung.com>
 Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 100 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 99 insertions(+), 1 deletion(-)
+ hw/cxl/cxl-mailbox-utils.c | 175 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 175 insertions(+)
 
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 908ce16642..2277418c07 100644
+index 80a80f1ec2..779ce80e3c 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -998,6 +998,7 @@ typedef struct CXLSupportedFeatureEntry {
+@@ -66,6 +66,10 @@ enum {
+     LOGS        = 0x04,
+         #define GET_SUPPORTED 0x0
+         #define GET_LOG       0x1
++    FEATURES    = 0x05,
++        #define GET_SUPPORTED 0x0
++        #define GET_FEATURE   0x1
++        #define SET_FEATURE   0x2
+     IDENTIFY    = 0x40,
+         #define MEMORY_DEVICE 0x0
+     CCLS        = 0x41,
+@@ -965,6 +969,165 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
  
- enum CXL_SUPPORTED_FEATURES_LIST {
-     CXL_FEATURE_PATROL_SCRUB = 0,
-+    CXL_FEATURE_ECS,
-     CXL_FEATURE_MAX
- };
- 
-@@ -1070,6 +1071,43 @@ typedef struct CXLMemPatrolScrubSetFeature {
- } QEMU_PACKED QEMU_ALIGNED(16) CXLMemPatrolScrubSetFeature;
- static CXLMemPatrolScrubReadAttrs cxl_memdev_ps_feat_attrs;
- 
++/* CXL r3.1 section 8.2.9.6: Features */
 +/*
-+ * CXL r3.1 section 8.2.9.9.11.2:
-+ * DDR5 Error Check Scrub (ECS) Control Feature
++ * Get Supported Features output payload
++ * CXL r3.1 section 8.2.9.6.1 Table 8-96
 + */
-+static const QemuUUID ecs_uuid = {
-+    .data = UUID(0xe5b13f22, 0x2328, 0x4a14, 0xb8, 0xba,
-+                 0xb9, 0x69, 0x1e, 0x89, 0x33, 0x86)
++typedef struct CXLSupportedFeatureHeader {
++    uint16_t entries;
++    uint16_t nsuppfeats_dev;
++    uint32_t reserved;
++} QEMU_PACKED CXLSupportedFeatureHeader;
++
++/*
++ * Get Supported Features Supported Feature Entry
++ * CXL r3.1 section 8.2.9.6.1 Table 8-97
++ */
++typedef struct CXLSupportedFeatureEntry {
++    QemuUUID uuid;
++    uint16_t feat_index;
++    uint16_t get_feat_size;
++    uint16_t set_feat_size;
++    uint32_t attr_flags;
++    uint8_t get_feat_version;
++    uint8_t set_feat_version;
++    uint16_t set_feat_effects;
++    uint8_t rsvd[18];
++} QEMU_PACKED CXLSupportedFeatureEntry;
++
++enum CXL_SUPPORTED_FEATURES_LIST {
++    CXL_FEATURE_MAX
 +};
 +
-+#define CXL_ECS_GET_FEATURE_VERSION    0x01
-+#define CXL_ECS_SET_FEATURE_VERSION    0x01
-+#define CXL_ECS_LOG_ENTRY_TYPE_DEFAULT    0x01
-+#define CXL_ECS_REALTIME_REPORT_CAP_DEFAULT    1
-+#define CXL_ECS_THRESHOLD_COUNT_DEFAULT    3 /* 3: 256, 4: 1024, 5: 4096 */
-+#define CXL_ECS_MODE_DEFAULT    0
++/* Get Feature CXL 3.1 Spec 8.2.9.6.2 */
++/*
++ * Get Feature input payload
++ * CXL r3.1 section 8.2.9.6.2 Table 8-99
++ */
++/* Get Feature : Payload in selection */
++enum CXL_GET_FEATURE_SELECTION {
++    CXL_GET_FEATURE_SEL_CURRENT_VALUE,
++    CXL_GET_FEATURE_SEL_DEFAULT_VALUE,
++    CXL_GET_FEATURE_SEL_SAVED_VALUE,
++    CXL_GET_FEATURE_SEL_MAX
++};
 +
-+#define CXL_ECS_NUM_MEDIA_FRUS   3
++/* Set Feature CXL 3.1 Spec 8.2.9.6.3 */
++/*
++ * Set Feature input payload
++ * CXL r3.1 section 8.2.9.6.3 Table 8-101
++ */
++typedef struct CXLSetFeatureInHeader {
++        QemuUUID uuid;
++        uint32_t flags;
++        uint16_t offset;
++        uint8_t version;
++        uint8_t rsvd[9];
++} QEMU_PACKED QEMU_ALIGNED(16) CXLSetFeatureInHeader;
 +
-+/* CXL memdev DDR5 ECS control attributes */
-+typedef struct CXLMemECSReadAttrs {
-+        uint8_t ecs_log_cap;
-+        uint8_t ecs_cap;
-+        uint16_t ecs_config;
-+        uint8_t ecs_flags;
-+} QEMU_PACKED CXLMemECSReadAttrs;
++/* Set Feature : Payload in flags */
++#define CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK   0x7
++enum CXL_SET_FEATURE_FLAG_DATA_TRANSFER {
++    CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER,
++    CXL_SET_FEATURE_FLAG_INITIATE_DATA_TRANSFER,
++    CXL_SET_FEATURE_FLAG_CONTINUE_DATA_TRANSFER,
++    CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER,
++    CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER,
++    CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MAX
++};
 +
-+typedef struct CXLMemECSWriteAttrs {
-+    uint8_t ecs_log_cap;
-+    uint16_t ecs_config;
-+} QEMU_PACKED CXLMemECSWriteAttrs;
++/* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
++static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
++                                             uint8_t *payload_in,
++                                             size_t len_in,
++                                             uint8_t *payload_out,
++                                             size_t *len_out,
++                                             CXLCCI *cci)
++{
++    struct {
++        uint32_t count;
++        uint16_t start_index;
++        uint16_t reserved;
++    } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_in = (void *)payload_in;
 +
-+typedef struct CXLMemECSSetFeature {
-+        CXLSetFeatureInHeader hdr;
-+        CXLMemECSWriteAttrs feat_data[];
-+} QEMU_PACKED QEMU_ALIGNED(16) CXLMemECSSetFeature;
-+static CXLMemECSReadAttrs cxl_ecs_feat_attrs[CXL_ECS_NUM_MEDIA_FRUS];
++    struct {
++        CXLSupportedFeatureHeader hdr;
++        CXLSupportedFeatureEntry feat_entries[];
++    } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_out = (void *)payload_out;
++    uint16_t index;
++    uint16_t entry, req_entries;
++    uint16_t feat_entries = 0;
 +
- /* CXL r3.1 section 8.2.9.6.1: Get Supported Features (Opcode 0500h) */
- static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-                                              uint8_t *payload_in,
-@@ -1088,7 +1126,7 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-         CXLSupportedFeatureHeader hdr;
-         CXLSupportedFeatureEntry feat_entries[];
-     } QEMU_PACKED QEMU_ALIGNED(16) * get_feats_out = (void *)payload_out;
--    uint16_t index;
-+    uint16_t count, index;
-     uint16_t entry, req_entries;
-     uint16_t feat_entries = 0;
- 
-@@ -1130,6 +1168,35 @@ static CXLRetCode cmd_features_get_supported(const struct cxl_cmd *cmd,
-             cxl_memdev_ps_feat_attrs.scrub_flags =
-                                 CXL_MEMDEV_PS_ENABLE_DEFAULT;
-             break;
-+        case  CXL_FEATURE_ECS:
-+            /* Fill supported feature entry for device DDR5 ECS control */
-+            get_feats_out->feat_entries[entry] =
-+                         (struct CXLSupportedFeatureEntry) {
-+                .uuid = ecs_uuid,
-+                .feat_index = index,
-+                .get_feat_size = CXL_ECS_NUM_MEDIA_FRUS *
-+                                    sizeof(CXLMemECSReadAttrs),
-+                .set_feat_size = CXL_ECS_NUM_MEDIA_FRUS *
-+                                    sizeof(CXLMemECSWriteAttrs),
-+                .attr_flags = 0x1,
-+                .get_feat_version = CXL_ECS_GET_FEATURE_VERSION,
-+                .set_feat_version = CXL_ECS_SET_FEATURE_VERSION,
-+                .set_feat_effects = 0,
-+            };
-+            feat_entries++;
-+            /* Set default value for DDR5 ECS read attributes */
-+            for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++) {
-+                cxl_ecs_feat_attrs[count].ecs_log_cap =
-+                                    CXL_ECS_LOG_ENTRY_TYPE_DEFAULT;
-+                cxl_ecs_feat_attrs[count].ecs_cap =
-+                                    CXL_ECS_REALTIME_REPORT_CAP_DEFAULT;
-+                cxl_ecs_feat_attrs[count].ecs_config =
-+                                    CXL_ECS_THRESHOLD_COUNT_DEFAULT |
-+                                    (CXL_ECS_MODE_DEFAULT << 3);
-+                /* Reserved */
-+                cxl_ecs_feat_attrs[count].ecs_flags = 0;
-+            }
++    if (get_feats_in->count < sizeof(CXLSupportedFeatureHeader) ||
++        get_feats_in->start_index > CXL_FEATURE_MAX) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++    req_entries = (get_feats_in->count -
++                   sizeof(CXLSupportedFeatureHeader)) /
++                   sizeof(CXLSupportedFeatureEntry);
++    req_entries = MIN(req_entries, CXL_FEATURE_MAX);
++    index = get_feats_in->start_index;
++
++    entry = 0;
++    while (entry < req_entries) {
++        switch (index) {
++        default:
 +            break;
-         default:
-             break;
-         }
-@@ -1180,6 +1247,18 @@ static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
-         memcpy(payload_out,
-                &cxl_memdev_ps_feat_attrs + get_feature->offset,
-                bytes_to_copy);
-+    } else if (qemu_uuid_is_equal(&get_feature->uuid, &ecs_uuid)) {
-+        if (get_feature->offset >=  CXL_ECS_NUM_MEDIA_FRUS *
-+                                sizeof(CXLMemECSReadAttrs)) {
-+            return CXL_MBOX_INVALID_INPUT;
 +        }
-+        bytes_to_copy = CXL_ECS_NUM_MEDIA_FRUS *
-+                        sizeof(CXLMemECSReadAttrs) -
-+                            get_feature->offset;
-+        bytes_to_copy = MIN(bytes_to_copy, get_feature->count);
-+        memcpy(payload_out,
-+               &cxl_ecs_feat_attrs + get_feature->offset,
-+               bytes_to_copy);
-     } else {
-         return CXL_MBOX_UNSUPPORTED;
-     }
-@@ -1197,8 +1276,11 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-                                            size_t *len_out,
-                                            CXLCCI *cci)
- {
-+    uint16_t count;
-     CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
-+    CXLMemECSWriteAttrs *ecs_write_attrs;
-     CXLMemPatrolScrubSetFeature *ps_set_feature;
-+    CXLMemECSSetFeature *ecs_set_feature;
-     CXLSetFeatureInHeader *hdr = (void *)payload_in;
- 
-     if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
-@@ -1216,6 +1298,22 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-         cxl_memdev_ps_feat_attrs.scrub_flags &= ~0x1;
-         cxl_memdev_ps_feat_attrs.scrub_flags |=
-                           ps_write_attrs->scrub_flags & 0x1;
-+    } else if (qemu_uuid_is_equal(&hdr->uuid,
-+                                  &ecs_uuid)) {
-+        if (hdr->version != CXL_ECS_SET_FEATURE_VERSION ||
-+            (hdr->flags & CXL_SET_FEATURE_FLAG_DATA_TRANSFER_MASK) !=
-+                               CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER) {
-+            return CXL_MBOX_UNSUPPORTED;
-+        }
++        index++;
++        entry++;
++    }
 +
-+        ecs_set_feature = (void *)payload_in;
-+        ecs_write_attrs = ecs_set_feature->feat_data;
-+        for (count = 0; count < CXL_ECS_NUM_MEDIA_FRUS; count++) {
-+                cxl_ecs_feat_attrs[count].ecs_log_cap =
-+                                  ecs_write_attrs[count].ecs_log_cap;
-+                cxl_ecs_feat_attrs[count].ecs_config =
-+                                  ecs_write_attrs[count].ecs_config & 0x1F;
-+        }
-     } else {
-         return CXL_MBOX_UNSUPPORTED;
-     }
++    get_feats_out->hdr.nsuppfeats_dev = CXL_FEATURE_MAX;
++    get_feats_out->hdr.entries = feat_entries;
++    *len_out = sizeof(CXLSupportedFeatureHeader) +
++                      feat_entries * sizeof(CXLSupportedFeatureEntry);
++
++    return CXL_MBOX_SUCCESS;
++}
++
++/* CXL r3.1 section 8.2.9.6.2: Get Feature (Opcode 0501h) */
++static CXLRetCode cmd_features_get_feature(const struct cxl_cmd *cmd,
++                                           uint8_t *payload_in,
++                                           size_t len_in,
++                                           uint8_t *payload_out,
++                                           size_t *len_out,
++                                           CXLCCI *cci)
++{
++    struct {
++        QemuUUID uuid;
++        uint16_t offset;
++        uint16_t count;
++        uint8_t selection;
++    } QEMU_PACKED QEMU_ALIGNED(16) * get_feature;
++    uint16_t bytes_to_copy = 0;
++
++    get_feature = (void *)payload_in;
++
++    if (get_feature->selection != CXL_GET_FEATURE_SEL_CURRENT_VALUE) {
++        return CXL_MBOX_UNSUPPORTED;
++    }
++    if (get_feature->offset + get_feature->count > cci->payload_max) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    *len_out = bytes_to_copy;
++
++    return CXL_MBOX_SUCCESS;
++}
++
++/* CXL r3.1 section 8.2.9.6.3: Set Feature (Opcode 0502h) */
++static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
++                                           uint8_t *payload_in,
++                                           size_t len_in,
++                                           uint8_t *payload_out,
++                                           size_t *len_out,
++                                           CXLCCI *cci)
++{
++    return CXL_MBOX_SUCCESS;
++}
++
+ /* CXL r3.1 Section 8.2.9.9.1.1: Identify Memory Device (Opcode 4000h) */
+ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
+                                              uint8_t *payload_in,
+@@ -2166,6 +2329,18 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+     [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported,
+                               0, 0 },
+     [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
++    [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
++                                  cmd_features_get_supported, 0x8, 0 },
++    [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
++                                cmd_features_get_feature, 0x15, 0 },
++    [FEATURES][SET_FEATURE] = { "FEATURES_SET_FEATURE",
++                                cmd_features_set_feature,
++                                ~0,
++                                (CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
++                                 CXL_MBOX_IMMEDIATE_DATA_CHANGE |
++                                 CXL_MBOX_IMMEDIATE_POLICY_CHANGE |
++                                 CXL_MBOX_IMMEDIATE_LOG_CHANGE |
++                                 CXL_MBOX_SECURITY_STATE_CHANGE)},
+     [IDENTIFY][MEMORY_DEVICE] = { "IDENTIFY_MEMORY_DEVICE",
+         cmd_identify_memory_device, 0, 0 },
+     [CCLS][GET_PARTITION_INFO] = { "CCLS_GET_PARTITION_INFO",
 -- 
 2.34.1
 
