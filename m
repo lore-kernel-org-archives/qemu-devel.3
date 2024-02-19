@@ -4,98 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 262EFC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 22:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9192DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 22:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcC3Q-0002s2-4c; Mon, 19 Feb 2024 17:24:04 -0500
+	id 1rcCLO-0006ci-J5; Mon, 19 Feb 2024 17:42:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rcC3O-0002rd-C3
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 17:24:02 -0500
-Received: from wout4-smtp.messagingengine.com ([64.147.123.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rcC3M-0006JM-7D
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 17:24:02 -0500
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailout.west.internal (Postfix) with ESMTP id 1A4BE3200A06;
- Mon, 19 Feb 2024 17:23:58 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Mon, 19 Feb 2024 17:23:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1708381437;
- x=1708467837; bh=v5KkPOivRpp66kSB6p7Aw+l5wab5MAOcIyIXRWi4RPc=; b=
- SeWkSHMDpbQV5qgpPZfuuPRyOD2/0iHieACLat5EcdACjy0SPmZqqGbBPT5p8e3a
- wlVV6mX14pPSw7n2B4W9PqulLD9HHH825NJFcDgEnJraNpqr8675XZ3aSo8oyXCp
- t4dzEcNXmlU9upYRVXj/PmxDuC/zxKeXPEDwvf2+DvPLBzzLswYtI0RRCcX/sCcv
- TVhrqvp945ltBWdzsu7DWwG9nzVqmWK6HC3HrOTi3TPZYQfnzkdHiGTWc18YBLgJ
- J7HwnEwOjDnFaLmuRB4u+K2/7IcFzsvmDmcCbcjMxs60oBfjmpR2CXSJFPZSQEZm
- lo8uBRrcQnL5J9/KY8GR2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1708381437; x=1708467837; bh=v5KkPOivRpp66kSB6p7Aw+l5wab5
- MAOcIyIXRWi4RPc=; b=KUJ7SNc9cJ2RQab3m0ECrAf/Zn3Rcrk2ZUz6QobMEDtu
- YK7oMvLRR7ChaxHzzMue+Bj6K7tXMg2MsfA5qgqSO7KmlFYxpf6VXBEmZcIsR2Dj
- /ixAoXcMVMKrQ7R5lBvVQO+EdpxZU1cbf0Hwu8JGCE0EswsLGzIfHgdbf/VB5kwA
- PFYnsa9ZJqxWv9xTrIj7qjRr+mL5aYxyWx7Bwf4Evg6sxYj+jsMZwZxA+MHDmaWj
- 0/XVzU91l/IQOIIv9pOXpoCB79Dk3Z9vrnPl+luVzoZeAGkcPXtZjfUbo7MbsMlk
- rGJnnrN9xOtLj685oO+theGeCG8MuHO/eX4NlEfxZg==
-X-ME-Sender: <xms:_dTTZYQyy9fpuLwgHK_1AXv4zzK46ZpJ9_zYm30ky5x9gOvN_-64hA>
- <xme:_dTTZVw2jcIkUbNvGhHl90NvJTAo5VXBiYDsp1o-Y4f_lgglzZVeiXFqEDOfXDP9I
- K-ZcZKPSGwXMw>
-X-ME-Received: <xmr:_dTTZV0lJ5E48gMxXKFrcK48tGPIO_I0zR2TlHrRTW4UgyoPoZY1TrKuIRQI26ZmiWhzmMrRGb5Brjjwu4JXMsiu9Gdtuya53Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgdduheekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepofgrrhgv
- khcuofgrrhgtiiihkhhofihskhhiqdfikphrvggtkhhiuceomhgrrhhmrghrvghksehinh
- hvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepgfdu
- leetfeevhfefheeiteeliefhjefhleduveetteekveettddvgeeuteefjedunecuvehluh
- hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrrhhmrghrvghk
- sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:_dTTZcDi21UfuTbGTBGD-1K50X-UcChyHOOGpVM6zHLoXO1AKKNQ-g>
- <xmx:_dTTZRjQm-EE3TDOnknUVr2BpAER8SumyyFAJ2UNhi2qxJCVam9Zbw>
- <xmx:_dTTZYrGUzNJm0DGAq5YhjDDiT31BxCGIKTQvtMo6b6mTXhUwjpyTQ>
- <xmx:_dTTZRcmNPMS508i7npDCL1YB8C8lLpJpMoK5ABN3QYUv6kaUG7maQ>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Feb 2024 17:23:56 -0500 (EST)
-Date: Mon, 19 Feb 2024 23:23:53 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Fr=C3=A9d=C3=A9ric_Pierret_=28fepitre=29?=
- <frederic.pierret@qubes-os.org>, 
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: Re: [PATCH 2/2] xen: fix stubdom PCI addr
-Message-ID: <ZdPU-Yorm66xAN0Z@mail-itl>
-References: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
- <20240219181627.282097-2-marmarek@invisiblethingslab.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcCLL-0006bw-Hm
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 17:42:35 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcCLI-0000fC-Dn
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 17:42:35 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so662890266b.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 14:42:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708382551; x=1708987351; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uVRe4oAbKwnejLsPFxLblgW35fG6IMmK0xh4kag9f0U=;
+ b=AnXxPnZMSfNPObdGJMF8XiwjxCzifrxRyqtHbaZp48yhF6Pz1YhSyXPIMAkR4bhWsH
+ 65qFzLHl9FuCq4RsL3OTVaRvB8D0NX/1ugb0/fmb7gCx3wuSuZr0jeZbGxzznJJ5BedQ
+ QSioK6OXmzeO0zEb4VEF5l8DFB6A6B9zYxWbXhDCOY7vPjVQTuI6qnxxB1R9jWN9nMgl
+ qnTvBqq5AQsQM0FBDlSKtmRmchlBjJzFwD5xjJp0vPGPU4rAWtGMI6tn4i5ZhyuoHlRc
+ tFM3cBg6Mk9TLTZ1hQQNGSGT4DfBqgwQY8GHXN9AyLnaT21qWEH7hEU3DfoB748XOh9H
+ h5Qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708382551; x=1708987351;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uVRe4oAbKwnejLsPFxLblgW35fG6IMmK0xh4kag9f0U=;
+ b=NQ/J5TIE6leZ+iv3w3ONlkZpr+0sVMKrE9yGmu4bGrDuqrAJQvHpm4Yet2jc2/s6Zk
+ 7dIs98JbhOzxG/9t/skNkx1uTCv8VvIqW8j56pgYAYf7M5FqSQdoQkypwg/ZBO9Ktrbv
+ 2/yOnY3cs/A7BSNA4mJUxlPu39bj2DX/jV9dXyhChWq426EhztRGbOIRR9P9NABeztdF
+ 1/6M3SXY+Uk2NMpZevhtYUWf69pfiJyTH3scCHoPS70j/hMp8ckNC/eJj+UJrZt+MFkq
+ nFldwYt3MD5Ku4qxJtHw2hfgbenrXTq8uHR4QK1twpeuovgXXmacgiWSo4KXoSgYMjW2
+ a9IA==
+X-Gm-Message-State: AOJu0YwqPKg0YQNKHNW65jIqGIwEsZN5tST6RLxNE8jz1Nd0QOojpfK3
+ 4KO0Tn65LK8VXK+cDCLy2MRaXWEFsnp0pnAoJCmoVFTcHuIFp2jr
+X-Google-Smtp-Source: AGHT+IGCtlmfQZIGAuHZvp0t92ISZt9h/eImjhcXo7EQ9xe3jzQ5QrNVGko2tUf2NuWNDcpvLsvXOw==
+X-Received: by 2002:a17:906:68d7:b0:a3e:e768:398f with SMTP id
+ y23-20020a17090668d700b00a3ee768398fmr516926ejr.71.1708382550446; 
+ Mon, 19 Feb 2024 14:42:30 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-089-014-244-242.89.14.pool.telefonica.de.
+ [89.14.244.242]) by smtp.gmail.com with ESMTPSA id
+ tl7-20020a170907c30700b00a3e5bcfe5b7sm2240241ejc.134.2024.02.19.14.42.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Feb 2024 14:42:30 -0800 (PST)
+Date: Mon, 19 Feb 2024 22:42:29 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+CC: qemu-devel@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?ISO-8859-1?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
+Subject: Re: [PATCH 0/5] Implement port 92 in south bridges
+In-Reply-To: <35e05c51-6a06-1830-972b-42332e7b7b56@eik.bme.hu>
+References: <20240218131701.91132-1-shentey@gmail.com>
+ <35e05c51-6a06-1830-972b-42332e7b7b56@eik.bme.hu>
+Message-ID: <C3298468-C026-475D-9FF4-18699007CD6C@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="OmIj9+efoChGP1II"
-Content-Disposition: inline
-In-Reply-To: <20240219181627.282097-2-marmarek@invisiblethingslab.com>
-Received-SPF: none client-ip=64.147.123.20;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=wout4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,196 +101,167 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---OmIj9+efoChGP1II
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 19 Feb 2024 23:23:53 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Fr=C3=A9d=C3=A9ric_Pierret_=28fepitre=29?= <frederic.pierret@qubes-os.org>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Anthony Perard <anthony.perard@citrix.com>,
-	Paul Durrant <paul@xen.org>,
-	"open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: Re: [PATCH 2/2] xen: fix stubdom PCI addr
 
-On Mon, Feb 19, 2024 at 07:16:06PM +0100, Marek Marczykowski-G=C3=B3recki w=
-rote:
-> From: Fr=C3=A9d=C3=A9ric Pierret (fepitre) <frederic.pierret@qubes-os.org>
+Am 18=2E Februar 2024 16:12:30 UTC schrieb BALATON Zoltan <balaton@eik=2Eb=
+me=2Ehu>:
+>On Sun, 18 Feb 2024, Bernhard Beschow wrote:
+>> This series attempts to make QEMU's south bridge families PIIX, ICH9, a=
+nd VIA
+>> 82xx more self-contained by integrating IO port 92 like the originals d=
+o=2E
+>>=20
+>> In QEMU, the IO port is currently instantiated as a dedicated device in=
+ common
+>> PC code=2E While this works and even results in less code, it seems cle=
+aner to
+>> model the behavior of the real devices=2E For example, software running=
+ on the
+>> Malta machine, which uses PIIX4, needs to take port 92 into account, ev=
+en if it
+>> doesn't use it (does it?)=2E Moreover, the FDC37M81x used in the origin=
+al Malta
+>> machine provides a port 92 too, which can be activated=2E If QEMU imple=
+mented the
+>> FDC37M81x more closely, one could check if Yamon (or any alternative bo=
+ot
+>> loader) deals correctly with these ports=2E
+>
+>Maybe that's unlikely as this register is for controlling A20 line of Int=
+el CPUs so probably there's no use for it in a MIPS or PPC board but I'm no=
+t sure if it may be used for something else=2E
+>
+>> Moving port 92 into the south bridges might also help with configuratio=
+n-driven
+>> machine creation=2E In such a scenario it is probably desirable if mach=
+ine code
+>> had less of its own idea of which devices it creates=2E
+>
+>The direction is probably good as these chips have a pin for A20 control =
+and handle the register themselves but I'm not sure this series is the righ=
+t way=2E One immediate problem is that TYPE_PORT92 has state which is in th=
+e migration stream so moving it elsewhere would break migration which would=
+ need to be handled=2E Does this series handle that?
 
-This shouldn't be here, it's my patch.
+I've created two migration streams, one before and one after the change=2E=
+ Then I've converted both to JSON with `analyze-migration=2Epy -d desc`=2E =
+The only difference is the position of the port92 record in the devices arr=
+ay (before: 31, after: 14)=2E I'm no migration expert, but telling from the=
+ JSON content, "name" and "instance_id" seem to uniquely identify a device =
+record and changing positions in an array seems rather innocent to me=2E Si=
+nce there will be one port92 record before and after this series, it seems =
+as if migration is not affected=2E But someone's judgment with migration ex=
+pertise may be needed here=2E
 
-> When running in a stubdomain, the config space access via sysfs needs to
-> use BDF as seen inside stubdomain (connected via xen-pcifront), which is
-> different from the real BDF. For other purposes (hypercall parameters
-> etc), the real BDF needs to be used.
-> Get the in-stubdomain BDF by looking up relevant PV PCI xenstore
-> entries.
->=20
-> Signed-off-by: Marek Marczykowski-G=C3=B3recki <marmarek@invisiblethingsl=
-ab.com>
-> ---
->  hw/xen/xen-host-pci-device.c | 77 +++++++++++++++++++++++++++++++++++-
->  hw/xen/xen-host-pci-device.h |  6 +++
->  2 files changed, 82 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/xen/xen-host-pci-device.c b/hw/xen/xen-host-pci-device.c
-> index 8c6e9a1716..3f8a6f84a8 100644
-> --- a/hw/xen/xen-host-pci-device.c
-> +++ b/hw/xen/xen-host-pci-device.c
-> @@ -9,6 +9,7 @@
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
->  #include "qemu/cutils.h"
-> +#include "hw/xen/xen-legacy-backend.h"
->  #include "xen-host-pci-device.h"
-> =20
->  #define XEN_HOST_PCI_MAX_EXT_CAP \
-> @@ -33,13 +34,76 @@
->  #define IORESOURCE_PREFETCH     0x00001000      /* No side effects */
->  #define IORESOURCE_MEM_64       0x00100000
-> =20
-> +static void xen_host_pci_fill_local_addr(XenHostPCIDevice *d, Error **er=
-rp)
-> +{
-> +    unsigned int num_devs, len, i;
-> +    unsigned int domain, bus, dev, func;
-> +    char *be_path =3D NULL;
-> +    char path[80];
-> +    char *msg =3D NULL;
-> +
-> +    be_path =3D qemu_xen_xs_read(xenstore, 0, "device/pci/0/backend", &l=
-en);
-> +    if (!be_path)
-> +        goto err_out;
-> +    snprintf(path, sizeof(path), "%s/num_devs", be_path);
-> +    msg =3D qemu_xen_xs_read(xenstore, 0, path, &len);
-> +    if (!msg)
-> +        goto err_out;
-> +
-> +    if (sscanf(msg, "%u", &num_devs) !=3D 1) {
-> +        error_setg(errp, "Failed to parse %s (%s)\n", msg, path);
-> +        goto err_out;
-> +    }
-> +    free(msg);
-> +
-> +    for (i =3D 0; i < num_devs; i++) {
-> +        snprintf(path, sizeof(path), "%s/dev-%u", be_path, i);
-> +        msg =3D qemu_xen_xs_read(xenstore, 0, path, &len);
-> +        if (!msg) {
-> +            error_setg(errp, "Failed to read %s\n", path);
-> +            goto err_out;
-> +        }
-> +        if (sscanf(msg, "%x:%x:%x.%x", &domain, &bus, &dev, &func) !=3D =
-4) {
-> +            error_setg(errp, "Failed to parse %s (%s)\n", msg, path);
-> +            goto err_out;
-> +        }
-> +        free(msg);
-> +        if (domain !=3D d->domain ||
-> +                bus !=3D d->bus ||
-> +                dev !=3D d->dev ||
-> +                func!=3D d->func)
-> +            continue;
-> +        snprintf(path, sizeof(path), "%s/vdev-%u", be_path, i);
-> +        msg =3D qemu_xen_xs_read(xenstore, 0, path, &len);
-> +        if (!msg) {
-> +            error_setg(errp, "Failed to read %s\n", path);
-> +            goto out;
-> +        }
-> +        if (sscanf(msg, "%x:%x:%x.%x", &domain, &bus, &dev, &func) !=3D =
-4) {
-> +            error_setg(errp, "Failed to parse %s (%s)\n", msg, path);
-> +            goto err_out;
-> +        }
-> +        free(msg);
-> +        d->local_domain =3D domain;
-> +        d->local_bus =3D bus;
-> +        d->local_dev =3D dev;
-> +        d->local_func =3D func;
-> +        goto out;
-> +    }
-> +
-> +err_out:
-> +    free(msg);
-> +out:
-> +    free(be_path);
-> +}
-> +
->  static void xen_host_pci_sysfs_path(const XenHostPCIDevice *d,
->                                      const char *name, char *buf, ssize_t=
- size)
->  {
->      int rc;
-> =20
->      rc =3D snprintf(buf, size, "/sys/bus/pci/devices/%04x:%02x:%02x.%d/%=
-s",
-> -                  d->domain, d->bus, d->dev, d->func, name);
-> +                  d->local_domain, d->local_bus, d->local_dev, d->local_=
-func, name);
->      assert(rc >=3D 0 && rc < size);
->  }
-> =20
-> @@ -342,6 +406,17 @@ void xen_host_pci_device_get(XenHostPCIDevice *d, ui=
-nt16_t domain,
->      d->dev =3D dev;
->      d->func =3D func;
-> =20
-> +    if (xen_is_stubdomain) {
-> +        xen_host_pci_fill_local_addr(d, errp);
-> +        if (*errp)
-> +            goto error;
-> +    } else {
-> +        d->local_domain =3D d->domain;
-> +        d->local_bus =3D d->bus;
-> +        d->local_dev =3D d->dev;
-> +        d->local_func =3D d->func;
-> +    }
-> +
->      xen_host_pci_config_open(d, errp);
->      if (*errp) {
->          goto error;
-> diff --git a/hw/xen/xen-host-pci-device.h b/hw/xen/xen-host-pci-device.h
-> index 4d8d34ecb0..270dcb27f7 100644
-> --- a/hw/xen/xen-host-pci-device.h
-> +++ b/hw/xen/xen-host-pci-device.h
-> @@ -23,6 +23,12 @@ typedef struct XenHostPCIDevice {
->      uint8_t dev;
->      uint8_t func;
-> =20
-> +    /* different from the above in case of stubdomain */
-> +    uint16_t local_domain;
-> +    uint8_t local_bus;
-> +    uint8_t local_dev;
-> +    uint8_t local_func;
-> +
->      uint16_t vendor_id;
->      uint16_t device_id;
->      uint32_t class_code;
-> --=20
-> 2.43.0
->=20
+> I'm not sure it's worth the effort though if it results in more comlex c=
+ode=2E If the migration issue is handled, then I think we should get rid of=
+ TYPE_PORT92 completely and just add the one reg and qemu_irq modeling the =
+output pin as qemu_gpio to the south bridge implementations directly, not e=
+mbedding a separate object for it as these south bridges may already have s=
+ome io region for ports and state where the reg can be stored so it could b=
+e added there instead of just moving the TYPE_PORT92 there=2E
 
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
+I'd rather avoid adding copy'n'paste code=2E Having port 92 wrapped in a d=
+edicated, reusable device model which handles migration seems like the way =
+to go to me=2E
 
---OmIj9+efoChGP1II
-Content-Type: application/pgp-signature; name="signature.asc"
+> But with the migration issue it's probably easier to just leave it as it=
+ is now=2E Even if this would model the real chip better, it would result i=
+n more code and complexity in QEMU so not sure it's a good idea because of =
+that=2E
+>
+>> Moving port 92 from
+>> machine code into a potentially user-creaeable device (where it is part=
+ of per
+>> datasheet) seems like a good direction=2E Of course, machine code still=
+ wires up
+>> port 92 and I don't have a good idea on how to make this user-configura=
+ble=2E
+>> Such insights might provide some input for discussions around
+>> configuration-driven machine creation=2E
+>
+>That's a generic problem for dynamic or declarative machine creation to s=
+olve=2E Likely the machine description will also need to describe the conne=
+ctions between devices, not just what devices to instantiate=2E So that's n=
+ot specific to port92=2E As we're not there yet it's also not urgent to tou=
+ch this port92 stuff=2E
+>
+>Maybe I overestimate the migration issue as I'm not familiar with that so=
+ if others think it's not an issue then I'm not against this series as it w=
+ould bring the model closer to the actual hardware but then go all the way =
+and get rid of TYPE_PORT92 and just implement it in the south bridges=2E Bu=
+t due to how it's currently done and how that's now baked in because of bac=
+kward compatibility requrement for migration, I'm not sure it would really =
+simplify the code, so we may need to live with what we have now=2E But let =
+me know if I'm wrong and missed something=2E
+>
+>Regards,
+>BALATON Zoltan
 
------BEGIN PGP SIGNATURE-----
+Any other opinions?
 
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmXT1PkACgkQ24/THMrX
-1yz4cgf/Rpz3Yf45EIjwMbO5QQaP8hMOP4meVWEvJ3dqrZZ52TFG+ZetC3NMLRsJ
-ul0qdLLfj0T+Dm0pzkhMs8qhs6Ezr40xCx6nYbB+svICLs4SHYY1wqk14Nwg95EN
-2rt8HmqPhJcKg/8mzBq00P/z2q6vmzUe519p62G7rpZIMYQ0baam4RL5YnoMMlZC
-SN3h5w8fMRkN23hQ6i8o7Z/airtnUwDWr4pkvSSs7dN/0cUGvCigIQ0hieAXl2Kc
-3XgLPDIxsAby3nIaep+VK5QVnH7sV29IC0Yu8pLxqfstqkwAsjEnFD8b2wdzZSZn
-1WVrmSzUH2uBWqj/kAjfOYehm5nDuA==
-=twIH
------END PGP SIGNATURE-----
+Best regards,
+Bernhard
 
---OmIj9+efoChGP1II--
+>
+>> This series is structured as follows: Patch 1 moves TYPE_PORT92 into th=
+e isa
+>> directory to make it reusable by other architectures=2E It also adds a
+>> configuration switch=2E Patch 2 integrates TYPE_PORT92 into the PC sout=
+h bridges
+>> and adapts PC code accordingly=2E While at it, patch 3 cleans up wiring=
+ of the
+>> A20 line with the keyboard controller=2E Patch 4 simply adds TYPE_PORT9=
+2 to the
+>> VIA south bridges which is also needed when using the VIA south bridges=
+ in the
+>> pc machine=2E
+>>=20
+>> Testing done:
+>> * `qemu-system-x86_64 -M {q35,pc},i8042=3D{true,false} =2E=2E=2E`
+>>  -> `info mtree` confirms port92 to be present iff i8042=3Dtrue
+>> * `make check`
+>> * `make check-avocado`
+>> * Start amigaone and pegasos2 machines as described in
+>>    https://patchew=2Eorg/QEMU/20240216001019=2E69A524E601F@zero=2Eeik=
+=2Ebme=2Ehu/
+>>  -> no regressions compared to master
+>>=20
+>> Best regards,
+>> Bernhard
+>>=20
+>> Bernhard Beschow (5):
+>>  hw/isa/meson=2Ebuild: Sort alphabetically
+>>  hw/i386/port92: Allow for TYPE_PORT92 to be embedded in devices
+>>  hw/isa: Embed TYPE_PORT92 in south bridges used in PC machines
+>>  hw/i386/pc: Inline i8042_setup_a20_line() and remove it
+>>  hw/isa/vt82c686: Embed TYPE_PORT92
+>>=20
+>> include/hw/i386/pc=2Eh          |  7 +------
+>> include/hw/input/i8042=2Eh      |  1 -
+>> include/hw/isa/port92=2Eh       | 30 ++++++++++++++++++++++++++++++
+>> include/hw/southbridge/ich9=2Eh |  4 ++++
+>> include/hw/southbridge/piix=2Eh |  3 +++
+>> hw/i386/pc=2Ec                  | 21 ++++++++++++++-------
+>> hw/i386/pc_piix=2Ec             |  9 +++++++--
+>> hw/i386/pc_q35=2Ec              |  8 +++++---
+>> hw/input/pckbd=2Ec              |  5 -----
+>> hw/isa/lpc_ich9=2Ec             |  9 +++++++++
+>> hw/isa/piix=2Ec                 |  9 +++++++++
+>> hw/{i386 =3D> isa}/port92=2Ec     | 14 +-------------
+>> hw/isa/vt82c686=2Ec             |  7 +++++++
+>> hw/i386/Kconfig               |  1 +
+>> hw/i386/meson=2Ebuild           |  3 +--
+>> hw/i386/trace-events          |  4 ----
+>> hw/isa/Kconfig                |  6 ++++++
+>> hw/isa/meson=2Ebuild            |  3 ++-
+>> hw/isa/trace-events           |  4 ++++
+>> 19 files changed, 104 insertions(+), 44 deletions(-)
+>> create mode 100644 include/hw/isa/port92=2Eh
+>> rename hw/{i386 =3D> isa}/port92=2Ec (91%)
+>>=20
+>> --
+>> 2=2E43=2E2
+>>=20
+>>=20
+>>=20
 
