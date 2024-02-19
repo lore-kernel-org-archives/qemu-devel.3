@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11835C48BC4
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 01:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A55DFC48BC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 02:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbsIn-0003i5-Dw; Sun, 18 Feb 2024 20:18:37 -0500
+	id 1rbtCt-0007d0-DQ; Sun, 18 Feb 2024 21:16:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1rbsIJ-0003KP-Bq; Sun, 18 Feb 2024 20:18:07 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1rbsIG-0004GN-Je; Sun, 18 Feb 2024 20:18:06 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-607e54b6cf5so21054187b3.0; 
- Sun, 18 Feb 2024 17:18:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708305483; x=1708910283; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vV/9D1aXac11ZqbiBc1dsC3p754BmqNXR2t+etNNnAI=;
- b=U2sjUVHkTJcdw2oZ0EUM19WJwuDy7Ojjp6lNk+JHw9Jr/VN7XhvWEh3op5/+ZpuH6s
- 7Wc0ItPsXDnzpR9PXwJ0gj9/Pn3shu6p/QwnHSzlO3NjDExif/lJjOYv1zHGJoCcfHux
- kQlJhX4A/Q89nHJiZFCL2TEazqfnl58HZ5+/1sV7lE2RpCRa8Mcyxj3TjhcWO0L7eZEN
- 9V/qWIpY7wuKSRyybuHOQVAfW/xgDYcIPBGr39i8EO3VR4ScuDXI7RHZg3C4eqlobK4W
- KDbdofD2MN7gEYCwOsYaFlvF5tNqP6Gp3v8su09j8XgWTfjcpWlEb1GHqfJYNJwSt+Te
- tJ5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708305483; x=1708910283;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vV/9D1aXac11ZqbiBc1dsC3p754BmqNXR2t+etNNnAI=;
- b=ht6lWW9ZuYkcZAh1umCqaVMSfYb11A0m5bTLOTQVIzUh+NY2q7dMF8Jgsxsw93Id4V
- yMJ9XDQeRWbJnoChxqRg/pEp+UPQ5gfUw3+ra6Jj4rLaplev7eaDgX9qNbQlQsGHMIaI
- 6pXgvZNSItiZaB5GMMlG2HTHwTisPLNajOk222k1YIfEYrcx0g3/BCjNf3imZ5/jjwqx
- J2IbShmxJl9HFmjNSiA/Eyx2wqKGASphzwaJ3pLc6BWDjgU7S1DCaz6BmmaQ/b/JT0tb
- dPSaKnB54859iH7WQGYhWPpcMxITLt/QPazdPbw2oJrqu4TzB1Fz3ocoAHBvPo9wpSVZ
- vYaw==
-X-Gm-Message-State: AOJu0Yw88cGLkKd/D5JGMbDBWdIuSR5xMzLOntbU879XlQXy3TjdBdBq
- kQ+hngw+q594Lrwd4Zgtc/rc8ZXAZ4gn2I1kX6JgA/lG/o9ImqO6RwAnoxBR6kQ=
-X-Google-Smtp-Source: AGHT+IGY0e9f3fHe5Vy4GZlPd2JQsqLzm8z6J6UCZfgU+yINBT22DlVKGvuvRb+q2/UumNeDmSbvdQ==
-X-Received: by 2002:a81:a0ce:0:b0:607:d4fe:a9d9 with SMTP id
- x197-20020a81a0ce000000b00607d4fea9d9mr6828883ywg.3.1708305483210; 
- Sun, 18 Feb 2024 17:18:03 -0800 (PST)
-Received: from localhost.localdomain ([201.203.117.224])
- by smtp.gmail.com with ESMTPSA id
- m12-20020a819e0c000000b00607ff905ed3sm1204704ywj.58.2024.02.18.17.18.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Feb 2024 17:18:02 -0800 (PST)
-From: Sergey Kambalin <serg.oker@gmail.com>
-X-Google-Original-From: Sergey Kambalin <sergey.kambalin@auriga.com>
-To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org,
-	Sergey Kambalin <sergey.kambalin@auriga.com>
-Subject: [PATCH v5 13/41] Add BCM2838 PCIE Root Complex
-Date: Sun, 18 Feb 2024 19:17:11 -0600
-Message-Id: <20240219011739.2316619-14-sergey.kambalin@auriga.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
-References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1rbtCr-0007cp-1f
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 21:16:33 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1rbtCm-0005rK-Nb
+ for qemu-devel@nongnu.org; Sun, 18 Feb 2024 21:16:32 -0500
+Received: from loongson.cn (unknown [10.20.42.32])
+ by gateway (Coremail) with SMTP id _____8DxJ+jwudJlHzAOAA--.18255S3;
+ Mon, 19 Feb 2024 10:16:17 +0800 (CST)
+Received: from [10.20.42.32] (unknown [10.20.42.32])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Bx3xPtudJlK7g7AA--.1860S2; 
+ Mon, 19 Feb 2024 10:16:14 +0800 (CST)
+Subject: Re: [PATCH V2] loongarch: Change the UEFI loading mode to loongarch
+To: Andrea Bolognani <abologna@redhat.com>
+Cc: qemu-devel@nongnu.org, maobibo@loongson.cn,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, zhaotianrui@loongson.cn
+References: <20240206021002.208805-1-lixianglai@loongson.cn>
+ <CABJz62MEUeWw2pL9TYKxD8E2qWOrzPegCbRVaAd0P+0=5_46mQ@mail.gmail.com>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <4dd0752f-b5ba-2fbb-6c2f-40c8b638f414@loongson.cn>
+Date: Mon, 19 Feb 2024 10:16:13 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <CABJz62MEUeWw2pL9TYKxD8E2qWOrzPegCbRVaAd0P+0=5_46mQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=serg.oker@gmail.com; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Bx3xPtudJlK7g7AA--.1860S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7trW3Ar4DJFyUGFWUuFW3Jwc_yoW8uF1Upr
+ WSy3WY9r4DJrZxJwnxZayxW39Iyr93KF9xXF1Svry0k398J3W8Xr1rKr1kXF9rJw1xJF1j
+ v3y0k3s8WFW5ZFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QVy3UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.002,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,179 +85,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
----
- hw/arm/bcm2838_pcie.c         | 82 +++++++++++++++++++++++++++++++++++
- hw/arm/meson.build            |  5 ++-
- include/hw/arm/bcm2838_pcie.h | 53 ++++++++++++++++++++++
- 3 files changed, 139 insertions(+), 1 deletion(-)
- create mode 100644 hw/arm/bcm2838_pcie.c
- create mode 100644 include/hw/arm/bcm2838_pcie.h
+Hi Andrea:
 
-diff --git a/hw/arm/bcm2838_pcie.c b/hw/arm/bcm2838_pcie.c
-new file mode 100644
-index 0000000000..cb1370433e
---- /dev/null
-+++ b/hw/arm/bcm2838_pcie.c
-@@ -0,0 +1,82 @@
-+/*
-+ * BCM2838 PCIe Root Complex emulation
-+ *
-+ * Copyright (C) 2022 Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/irq.h"
-+#include "hw/pci-host/gpex.h"
-+#include "hw/qdev-properties.h"
-+#include "migration/vmstate.h"
-+#include "qemu/module.h"
-+#include "hw/arm/bcm2838_pcie.h"
-+#include "trace.h"
-+
-+/*
-+ * RC root part (D0:F0)
-+ */
-+
-+static void bcm2838_pcie_root_port_reset_hold(Object *obj)
-+{
-+    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(obj);
-+    PCIDevice *dev = PCI_DEVICE(obj);
-+    BCM2838PcieRootState *s = BCM2838_PCIE_ROOT(dev);
-+
-+    if (rpc->parent_phases.hold) {
-+        rpc->parent_phases.hold(obj);
-+    }
-+
-+    memset(s->regs, 0xFF, sizeof(s->regs));
-+}
-+
-+static void bcm2838_pcie_root_init(Object *obj)
-+{
-+    PCIBridge *br = PCI_BRIDGE(obj);
-+    br->bus_name = "pcie.1";
-+}
-+
-+static void bcm2838_pcie_root_class_init(ObjectClass *class, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(class);
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(class);
-+    ResettableClass *rc = RESETTABLE_CLASS(class);
-+    PCIERootPortClass *rpc = PCIE_ROOT_PORT_CLASS(class);
-+
-+    dc->desc = "BCM2711 PCIe Bridge";
-+    /*
-+     * PCI-facing part of the host bridge, not usable without the host-facing
-+     * part, which can't be device_add'ed.
-+     */
-+
-+    resettable_class_set_parent_phases(rc, NULL,
-+                                       bcm2838_pcie_root_port_reset_hold,
-+                                       NULL, &rpc->parent_phases);
-+
-+    dc->user_creatable = false;
-+    k->vendor_id = BCM2838_PCIE_VENDOR_ID;
-+    k->device_id = BCM2838_PCIE_DEVICE_ID;
-+    k->revision = BCM2838_PCIE_REVISION;
-+
-+    rpc->exp_offset = BCM2838_PCIE_EXP_CAP_OFFSET;
-+    rpc->aer_offset = BCM2838_PCIE_AER_CAP_OFFSET;
-+}
-+
-+static const TypeInfo bcm2838_pcie_root_info = {
-+    .name = TYPE_BCM2838_PCIE_ROOT,
-+    .parent = TYPE_PCIE_ROOT_PORT,
-+    .instance_size = sizeof(BCM2838PcieRootState),
-+    .instance_init = bcm2838_pcie_root_init,
-+    .class_init = bcm2838_pcie_root_class_init,
-+};
-+
-+static void bcm2838_pcie_register(void)
-+{
-+    type_register_static(&bcm2838_pcie_root_info);
-+}
-+
-+type_init(bcm2838_pcie_register)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 6808135c1f..39f6df7431 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -30,7 +30,10 @@ arm_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('allwinner-a10.c', 'cubi
- arm_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3.c', 'orangepi.c'))
- arm_ss.add(when: 'CONFIG_ALLWINNER_R40', if_true: files('allwinner-r40.c', 'bananapi_m2u.c'))
- arm_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2836.c', 'raspi.c'))
--arm_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c', 'raspi4b.c'))
-+arm_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files(
-+  'bcm2838.c',
-+  'bcm2838_pcie.c',
-+  'raspi4b.c'))
- arm_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
- arm_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
- arm_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
-diff --git a/include/hw/arm/bcm2838_pcie.h b/include/hw/arm/bcm2838_pcie.h
-new file mode 100644
-index 0000000000..39828f817f
---- /dev/null
-+++ b/include/hw/arm/bcm2838_pcie.h
-@@ -0,0 +1,53 @@
-+/*
-+ * BCM2838 PCIe Root Complex emulation
-+ *
-+ * Copyright (C) 2022 Ovchinnikov Vitalii <vitalii.ovchinnikov@auriga.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef BCM2838_PCIE_H
-+#define BCM2838_PCIE_H
-+
-+#include "exec/hwaddr.h"
-+#include "hw/sysbus.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pcie_host.h"
-+#include "hw/pci/pcie_port.h"
-+#include "qom/object.h"
-+
-+#define TYPE_BCM2838_PCIE_ROOT "bcm2838-pcie-root"
-+OBJECT_DECLARE_TYPE(BCM2838PcieRootState, BCM2838PcieRootClass,
-+                    BCM2838_PCIE_ROOT)
-+
-+#define BCM2838_PCIE_VENDOR_ID      0x14E4
-+#define BCM2838_PCIE_DEVICE_ID      0x2711
-+#define BCM2838_PCIE_REVISION       20
-+
-+#define BCM2838_PCIE_REGS_SIZE      0x9310
-+#define BCM2838_PCIE_NUM_IRQS       4
-+
-+#define BCM2838_PCIE_EXP_CAP_OFFSET 0xAC
-+#define BCM2838_PCIE_AER_CAP_OFFSET 0x100
-+
-+#define BCM2838_PCIE_EXT_CFG_DATA   0x8000
-+#define BCM2838_PCIE_EXT_CFG_INDEX  0x9000
-+
-+struct BCM2838PcieRootState {
-+    /*< private >*/
-+    PCIESlot parent_obj;
-+
-+    /*< public >*/
-+    uint8_t regs[BCM2838_PCIE_REGS_SIZE - PCIE_CONFIG_SPACE_SIZE];
-+};
-+
-+struct BCM2838PcieRootClass {
-+    /*< private >*/
-+    PCIERootPortClass parent_obj;
-+
-+    /*< public >*/
-+    void (*parent_realize)(PCIDevice *dev, Error **errp);
-+};
-+
-+
-+#endif /* BCM2838_PCIE_H */
--- 
-2.34.1
+I'm very sorry for the late reply.
+
+I just had the Spring Festival holiday,
+
+so I replied the email as soon as I saw it.
+
+
+> On Tue, Feb 06, 2024 at 10:10:02AM +0800, Xianglai Li wrote:
+>> The UEFI loading mode in loongarch is very different
+>> from that in other architectures:loongarch's UEFI code
+>> is in rom, while other architectures' UEFI code is in flash.
+>>
+>> loongarch UEFI can be loaded as follows:
+>> -machine virt,pflash=pflash0-format
+>> -bios ./QEMU_EFI.fd
+>>
+>> Other architectures load UEFI using the following methods:
+>> -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
+>>
+>> loongarch's UEFI loading method makes qemu and libvirt incompatible
+>> when using NVRAM, and the cost of loongarch's current loading method
+>> far outweighs the benefits, so we decided to use the same UEFI loading
+>> scheme as other architectures.
+>>
+>> Cc: Andrea Bolognani <abologna@redhat.com>
+>> Cc: maobibo@loongson.cn
+>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Cc: Song Gao <gaosong@loongson.cn>
+>> Cc: zhaotianrui@loongson.cn
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+>> ---
+>>   hw/loongarch/acpi-build.c   |  29 +++++++++--
+>>   hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
+>>   include/hw/loongarch/virt.h |  10 ++--
+>>   3 files changed, 107 insertions(+), 33 deletions(-)
+> For future reference, it's usually good practice to keep track of
+> changes between subsequent versions of the same patchset.
+
+OK! Since there is only one patch, I did not add a cover letter.
+
+I saw that you replied test-by later,
+
+so I plan to resend patch V2 and bring the cover letter with change log 
+and your test-by label.
+
+>
+> Can you please confirm that the build of edk2 added with [1] is
+> intended to work with a version of QEMU that contains these changes?
+> I'd like to test things out as soon as I get a moment.
+
+Yes! [1] Works well with qemu with the current patch.
+
+Thanks.
+
+Xianglai.
+
+>
+> Thanks.
+>
+>
+> [1] https://github.com/lixianglai/LoongarchVirtFirmware/commit/985ce19438d9544968c7e921c6acf2c74fd4713e
 
 
