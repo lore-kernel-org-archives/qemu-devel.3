@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EA7DC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87FA0C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc53L-00060Y-Cb; Mon, 19 Feb 2024 09:55:31 -0500
+	id 1rc55A-0006qS-Ow; Mon, 19 Feb 2024 09:57:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rc53I-0005zc-UQ
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:55:29 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rc53G-0008JV-Uk
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:55:28 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso4288609a12.3
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 06:55:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708354525; x=1708959325; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BMCvsVDJbHcWYYwpZtD1yVzcg33BPbr0qCKmGsuZidw=;
- b=NZAaBDO690uMEeB6jzsbk5SZubE6T+cR3bWguESf8eCP9pax3u0sBDuxwz8xNDpD+6
- MvxvDTbSzQbOCRp7je0IwDl47BmblowpTE8R2z0+QpVS3SJOosJjfaDA2TUtzjsJa3O7
- A8U9PrgHfEq4Isbh8LwhAHqVWZx/C85VTXn6Nk7P94NsbY4WNW+Sy0/LxbvDKw8Xq9gA
- Ge2vZstAbNDWjccU32WsTlBIrQ+gB4gZxfLxvw0qjBJ/8mbCG4BJ0uXNGGy/ftJBcjY4
- H36Og8rnmraZ036gQ0P2SLSiEr7NzrxPb1lkFgt5qevKSzFK605VzB1lsS+FbH1VfTFP
- D1CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708354525; x=1708959325;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BMCvsVDJbHcWYYwpZtD1yVzcg33BPbr0qCKmGsuZidw=;
- b=q/fuF8uGXvzfMLswAjgPC2v+lckaXfocuyek5icrYUZrvqEDIu680xNr+hifhyUMbA
- snskdhertZNW6gdzMExYq/ObplPCbPRC207nRBHTh7IUaiD1h9B3LWUE/rOxQ1cSAOAT
- xJsxzs9teG/acD+Us5YbUbS3+v6piTglg6/Hj3FCHVKAN64N4+/YttkR2imHpMC9nG8B
- 5Qei40YsPDVCul2fUky1Prjm4vMh9jpcvpYwA02gHMIbvLnolfp01AcEIJPhNFRhHTZ8
- HrSKvBcMi0dCQLecHemIY+5VfbduP7LnzezkfWgpreRi1iTS3dNUTDncL+Aunb5vpO8g
- CkBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsxFw8Olc1Pr3BD/6/BGF99dvU4kSyI9mwUKcwHDp4SDiVI32sA7uP0FVuZf6QG5FvX7HuUev8e75wY5DexOe3exaPze8=
-X-Gm-Message-State: AOJu0Yx7bYzIczM2GrLRifaurQntJBTOrpwCmKMz9IRo1pLYchuYm43+
- XtU1vyurii0CEDw0IsZvsH2brNv/l3AOnKHV9+Yk6mcRrPbd3EpFNsRFdhCr0lRiTvMSqZwOXdL
- J5R0iW5Va5cVMnvM3uOSC3I2vjjV0yu9M9HBLxw==
-X-Google-Smtp-Source: AGHT+IHMr+iq00gSuTUZj3/LoLblnntZzobTw7wwDS/Enco28C1IuETyxwxQvRPu/vgx1GlT7qDNWRoT58E67ohJRyY=
-X-Received: by 2002:a05:6402:1a4d:b0:564:391:ec1e with SMTP id
- bf13-20020a0564021a4d00b005640391ec1emr1280295edb.17.1708354525178; Mon, 19
- Feb 2024 06:55:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rc557-0006q1-R5
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:57:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rc555-0000BN-Id
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:57:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708354638;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=87WITIc5EzIiMcannHzgsbilOsV+aW8z4CsW7IAr+t4=;
+ b=DOz8fwpKirk4YXskqq8vclEECwwCPYThDqXhyeOnzIxSNPwtbivFTrQtYFnqvRompYUFbd
+ 6LszMh5jeQcaSr9gETadMTG0Xg3WkQOOYSK7N3t3AfgMeBWFQFz8x+8TX47w7e3b7lLdF+
+ kcZph6bEZyazdAYPo+pvvVsi3WQ0xac=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-JT_2Za4hNLm4mO67xhktzA-1; Mon,
+ 19 Feb 2024 09:57:17 -0500
+X-MC-Unique: JT_2Za4hNLm4mO67xhktzA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C4DCA1C05151;
+ Mon, 19 Feb 2024 14:57:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.30])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6D3C52026D06;
+ Mon, 19 Feb 2024 14:57:15 +0000 (UTC)
+Date: Mon, 19 Feb 2024 14:57:13 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: yong.huang@smartx.com, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v4 4/7] block: Support detached LUKS header creation
+ using blockdev-create
+Message-ID: <ZdNsSX2n6fmb7KnD@redhat.com>
+References: <cover.1706586786.git.yong.huang@smartx.com>
+ <9e35e621f12478822072e5c740ed65beb77f1238.1706586786.git.yong.huang@smartx.com>
+ <87v86kjzwb.fsf@pond.sub.org> <87ttm4ik5h.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20240219082938.238302-1-npiggin@gmail.com>
- <20240219082938.238302-23-npiggin@gmail.com>
- <754804d1-8bde-b23b-d136-e93d6d967987@eik.bme.hu>
- <b2820e70-9e58-4087-b072-5049dda7023a@kaod.org>
-In-Reply-To: <b2820e70-9e58-4087-b072-5049dda7023a@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Feb 2024 14:55:13 +0000
-Message-ID: <CAFEAcA93B8cJRhuqROufrrY37d-Rp=grp9mApiX=f1W65mKSag@mail.gmail.com>
-Subject: Re: [PULL 22/49] hw/pci-host/raven.c: Mark raven_io_ops as
- implementing unaligned accesses
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ttm4ik5h.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,44 +84,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 at 14:53, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 2/19/24 15:49, BALATON Zoltan wrote:
-> > On Mon, 19 Feb 2024, Nicholas Piggin wrote:
-> >> From: Peter Maydell <peter.maydell@linaro.org>
-> >>
-> >> The raven_io_ops MemoryRegionOps is the only one in the source tree
-> >> which sets .valid.unaligned to indicate that it should support
-> >> unaligned accesses and which does not also set .impl.unaligned to
-> >> indicate that its read and write functions can do the unaligned
-> >> handling themselves.  This is a problem, because at the moment the
-> >> core memory system does not implement the support for handling
-> >> unaligned accesses by doing a series of aligned accesses and
-> >> combining them (system/memory.c:access_with_adjusted_size() has a
-> >> TODO comment noting this).
-> >>
-> >> Fortunately raven_io_read() and raven_io_write() will correctly deal
-> >> with the case of being passed an unaligned address, so we can fix the
-> >> missing unaligned access support by setting .impl.unaligned in the
-> >> MemoryRegionOps struct.
-> >>
-> >> Fixes: 9a1839164c9c8f06 ("raven: Implement non-contiguous I/O region")
-> >> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> >> Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> >> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> >> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+On Mon, Feb 19, 2024 at 03:49:30PM +0100, Markus Armbruster wrote:
+> One more thing...
+> 
+> Markus Armbruster <armbru@redhat.com> writes:
+> 
+> > yong.huang@smartx.com writes:
 > >
-> > Hm, this seems to be missing the actual patch.
->
-> It's merged already and git knows how to handle this.
+> >> From: Hyman Huang <yong.huang@smartx.com>
+> >>
+> >> Firstly, enable the ability to choose the block device containing
+> >> a detachable LUKS header by adding the 'header' parameter to
+> >> BlockdevCreateOptionsLUKS.
+> >>
+> >> Secondly, when formatting the LUKS volume with a detachable header,
+> >> truncate the payload volume to length without a header size.
+> >>
+> >> Using the qmp blockdev command, create the LUKS volume with a
+> >> detachable header as follows:
+> >>
+> >> 1. add the secret to lock/unlock the cipher stored in the
+> >>    detached LUKS header
+> >> $ virsh qemu-monitor-command vm '{"execute":"object-add",
+> >>> "arguments":{"qom-type": "secret", "id": "sec0", "data": "foo"}}'
+> >>
+> >> 2. create a header img with 0 size
+> >> $ virsh qemu-monitor-command vm '{"execute":"blockdev-create",
+> >>> "arguments":{"job-id":"job0", "options":{"driver":"file",
+> >>> "filename":"/path/to/detached_luks_header.img", "size":0 }}}'
+> >>
+> >> 3. add protocol blockdev node for header
+> >> $ virsh qemu-monitor-command vm '{"execute":"blockdev-add",
+> >>> "arguments": {"driver":"file", "filename":
+> >>> "/path/to/detached_luks_header.img", "node-name":
+> >>> "detached-luks-header-storage"}}'
+> >>
+> >> 4. create a payload img with 0 size
+> >> $ virsh qemu-monitor-command vm '{"execute":"blockdev-create",
+> >>> "arguments":{"job-id":"job1", "options":{"driver":"file",
+> >>> "filename":"/path/to/detached_luks_payload_raw.img", "size":0}}}'
+> >>
+> >> 5. add protocol blockdev node for payload
+> >> $ virsh qemu-monitor-command vm '{"execute":"blockdev-add",
+> >>> "arguments": {"driver":"file", "filename":
+> >>> "/path/to/detached_luks_payload_raw.img", "node-name":
+> >>> "luks-payload-raw-storage"}}'
+> >>
+> >> 6. do the formatting with 128M size
+> >> $ virsh qemu-monitor-command c81_node1 '{"execute":"blockdev-create",
+> >>> "arguments":{"job-id":"job2", "options":{"driver":"luks", "header":
+> >>> "detached-luks-header-storage", "file":"luks-payload-raw-storage",
+> >>> "size":134217728, "preallocation":"full", "key-secret":"sec0" }}}'
+> >>
+> >> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> >> ---
+> >
+> > [...]
+> >
+> >> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> >> index 69a88d613d..eab15d7dd9 100644
+> >> --- a/qapi/block-core.json
+> >> +++ b/qapi/block-core.json
+> >> @@ -4960,6 +4960,8 @@
+> >>  # @file: Node to create the image format on, mandatory except when
+> >>  #        'preallocation' is not requested
+> >>  #
+> >> +# @header: Block device holding a detached LUKS header. (since 9.0)
+> >> +#
+> >
+> > Behavior when @header is present vs. behavior when it's absent?
+> 
+> The next patch adds a member to QCryptoBlockCreateOptionsLUKS, with a
+> similar description, but a different name:
+> 
+>     # @detached-header: create a detached LUKS header. (since 9.0)
+> 
+> Should we name the one added here @detached-header, too?
 
-Mmm, though this is the result of "rebased onto a tree that
-already had the commit" rather than "two merges both contain
-the commit", so we end up with a genuinely empty commit upstream,
-which is a bit odd looking, though harmless.
+Yikes, that's a mistake. When I reviewed this I was somehow under the
+illusion that QCryptoBlockCreateOptionsLUKS was internal use only, for
+the block driver impl to interact with the crypto LUKS impl.
 
--- PMM
+In fact, as the diff context below shows, QCryptoBlockCreateOptionsLUKS
+is a base struct for BlockdevCreateOptionsLUKS. So in effect we have
+one struct with two fields expressing similar concept.
+
+TL;DR: the @detached-header field needs to go, as that's supposed to
+be internal only. The mgmt app should only care about 'header' in the
+BlockdevCreateOptionsLUKS struct.
+
+FYI, this whole series is already merged last week. So this will need
+a fixup. I'll look into it now.
+
+> 
+> >>  # @size: Size of the virtual disk in bytes
+> >>  #
+> >>  # @preallocation: Preallocation mode for the new image (since: 4.2)
+> >> @@ -4970,6 +4972,7 @@
+> >>  { 'struct': 'BlockdevCreateOptionsLUKS',
+> >>    'base': 'QCryptoBlockCreateOptionsLUKS',
+> >>    'data': { '*file':            'BlockdevRef',
+> >> +            '*header':          'BlockdevRef',
+> >>              'size':             'size',
+> >>              '*preallocation':   'PreallocMode' } }
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
