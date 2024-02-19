@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F74C48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18696C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz4M-0004iq-9f; Mon, 19 Feb 2024 03:32:12 -0500
+	id 1rbz3v-0002dH-LL; Mon, 19 Feb 2024 03:31:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz4I-0004Rd-57; Mon, 19 Feb 2024 03:32:06 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1rbz3u-0002ZU-7L; Mon, 19 Feb 2024 03:31:42 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz4F-0002XH-07; Mon, 19 Feb 2024 03:32:05 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6da202aa138so2745969b3a.2; 
- Mon, 19 Feb 2024 00:32:01 -0800 (PST)
+ id 1rbz3s-0002PJ-EB; Mon, 19 Feb 2024 03:31:41 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dbb47852cdso14302865ad.1; 
+ Mon, 19 Feb 2024 00:31:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331520; x=1708936320; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331498; x=1708936298; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PwPtUyKyEVd6AyaLlqPC6tZGZHAetOay6q3kchulGSU=;
- b=OhNbr7EiadrV2Caksoi3i3ibKMdi4lEl3ApxiZUsK5hisw4FkrHqx1Yy2lbQp1naIN
- 4cJle1zheaqDW52q5PBtuitJ5WncU2q7AdwZ2naEZ4/QJ8R0bJeP2L3kjMXbksRiWnft
- /O1y0lDpGPB6PHQ96fNVYzSZHWsyduZRfUmsEiHfXYkXvZcLoB4NyveR9TzHchy1HkAo
- wkkl2nyPNf7LqDq2YBt8Wix7M3GcfK0DDo3TWjK5+vaAKcelrmLLi4ihj/ot4PSrrB0n
- 1QqNOVQ3fgMonFK8n6mut/iYXfnbq0gO9U997D48MSYuWWNqDUOMmJ+akmYxKHhJ5NU8
- CV+A==
+ bh=zHwhu9dJxHLhSujxZEC6wtH94N4t8n8wFK7D5wdRkDo=;
+ b=j7nJM7BbRSXL0ZLGXbxKHNsZMYuxQ+ng+uk8Qy+RFrruWThfp0SDQPxrr2aurY/U3T
+ DTYYafEkRqrCKF6JbB7MStQ9Z433mijnU/DF/AwAtuPeOGCnXXFxN5JcWdMyChOEyRhN
+ PY7DTixOmhB5rCvplUQwZeTvclZxgiR+ZuGmWynY9naApYGO+v85uUAU81H7PVBNGf5K
+ fAyrb7xNx7riNHYqaXjKy8bffzUNxtgkh+9o3x9Q0EjTU6ypIAeYePNVlxk1QRveDFsq
+ VKa/aJ6IcjbcGx8IvgKORvvlx0G+G1Zy6Bg+hSxA7CnAWtrv4wNpg/54O5odPcIM4N2W
+ F2Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331520; x=1708936320;
+ d=1e100.net; s=20230601; t=1708331498; x=1708936298;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PwPtUyKyEVd6AyaLlqPC6tZGZHAetOay6q3kchulGSU=;
- b=bmOg8XePsiHqYxRjXkjFRAiw3UAoS3ExO+kZWFx2rKnhn5Uy6O/KnDhTTy2AbzpYgL
- /BLAkpsv4/OwpqT6V1VfzbImfbHHgRjOsTT5qg8LArwTar9UDL3En2WKYRyQWrcS6Ewx
- LGzr3GcMGWWErlrgcHk4aJfOHBHj3UWbQgzjp+jnSWjFqLCO9w3hheCUR/T7u+pdDkSM
- 175fP8gWhFnVuFIIUTfn+srtJ3zRHDumus6LBuz194gaoL1J/psdw2OBOAcwNVntqZ00
- 4bkCMeZH5M/jqIhI+pGTODPBXL0EtX5l4JkeGjR/jiF5PbRqQtkXGWVROUFfVVILHYVU
- rD1g==
+ bh=zHwhu9dJxHLhSujxZEC6wtH94N4t8n8wFK7D5wdRkDo=;
+ b=EioLAjwVWX9+o9AwVtsdCcha66YD/R5ab5w18ZSnW/40cYzw4lQ6xUetIvc+wdoaR1
+ xHawmmkV750ItGntuKNBU+s42dr+2OhHWqrwhPhuz6xUTOgLP+chgaHdQVE9Uqb41QEJ
+ jfyG8WSV062jDeTjpb7PRGSsDI1WGRLll7/DngViTGnbKdS9MmKtwJfdTWCE0MqZyzdu
+ bdOD0S8R3ZMvnThtokxX/9L+AX+uO+NZM5EJJmaJfb5v7Hdgy3uVv96FAkdzwiiqXniU
+ DyeKHc/tF0v7k09Achn+Fiib5SBeFwJEnNHMg9YYKOlsP0WFIXVcTtHjvI2aUGiAVJBL
+ 2aLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8TIF4oEUwFRnT3UVcPnYMxP+8QhddnupwNleuv3qo1qanZa1osgJjAY98t1ndvPJNzi36zYl+361Olwna75ENGuF3
-X-Gm-Message-State: AOJu0Yyv96G1eJrg3ma/C/UtRXxBu/flRUMw2+AwPypffqU7hOFrlmvy
- ePx+YlDVQDYSk6wkWuVeYbUVkx7x9PIaHb2kEnMYhteec9VeBfJNaPFNttU4
-X-Google-Smtp-Source: AGHT+IFOx4jAkl8yw1lxKn13heUoYIpoH1uCd5iGjtyBTgj9McWTAzvqgsoA3GhYu6BNYFCPO2Qp3g==
-X-Received: by 2002:a05:6a20:a814:b0:19e:39d4:284c with SMTP id
- cb20-20020a056a20a81400b0019e39d4284cmr10917704pzb.29.1708331520478; 
- Mon, 19 Feb 2024 00:32:00 -0800 (PST)
+ AJvYcCUk97IiUvwsul+Gvm9XRwFYRcAUnpwqPhoTwjJgvcZVpf/z8rV0IAz51KEBWyJlj+oxgYRELwsUfXMUHs7e8T7+ePBg
+X-Gm-Message-State: AOJu0YzNHwbWNUSOfJKVH+U7WYIBVMGT1aDOywlDC0fwHE8tnb5MrdCS
+ o9B3D5um+SF0T6YPuM7qBxqgOLtQbm3UdjFeuwoQDDXByjyEFIsTULn513Hs
+X-Google-Smtp-Source: AGHT+IHoQO07VvYJtNhLX41aKUzjCXfdWfbwHdSnIkVsLoIX1v7/mEbesjMWU/hj4e945zR51pU37A==
+X-Received: by 2002:a17:902:a3ce:b0:1db:a94f:903d with SMTP id
+ q14-20020a170902a3ce00b001dba94f903dmr6850219plb.36.1708331498668; 
+ Mon, 19 Feb 2024 00:31:38 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.57
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:32:00 -0800 (PST)
+ Mon, 19 Feb 2024 00:31:38 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>
-Subject: [PULL 27/49] ppc/pnv: Wire up pca9552 GPIO pins for PCIe hotplug
- power control
-Date: Mon, 19 Feb 2024 18:29:16 +1000
-Message-ID: <20240219082938.238302-28-npiggin@gmail.com>
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 22/49] hw/pci-host/raven.c: Mark raven_io_ops as implementing
+ unaligned accesses
+Date: Mon, 19 Feb 2024 18:29:11 +1000
+Message-ID: <20240219082938.238302-23-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,64 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.vnet.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-For power10-rainier, a pca9552 device is used for PCIe slot hotplug
-power control by the Power Hypervisor code.  The code expects that
-some time after it enables power to a PCIe slot by asserting one of
-the pca9552 GPIO pins 0-4, it should see a "power good" signal asserted
-on one of pca9552 GPIO pins 5-9.
+The raven_io_ops MemoryRegionOps is the only one in the source tree
+which sets .valid.unaligned to indicate that it should support
+unaligned accesses and which does not also set .impl.unaligned to
+indicate that its read and write functions can do the unaligned
+handling themselves.  This is a problem, because at the moment the
+core memory system does not implement the support for handling
+unaligned accesses by doing a series of aligned accesses and
+combining them (system/memory.c:access_with_adjusted_size() has a
+TODO comment noting this).
 
-To simulate this behavior, we simply connect the GPIO outputs for
-pins 0-4 to the GPIO inputs for pins 5-9.
+Fortunately raven_io_read() and raven_io_write() will correctly deal
+with the case of being passed an unaligned address, so we can fix the
+missing unaligned access support by setting .impl.unaligned in the
+MemoryRegionOps struct.
 
-Each PCIe slot is assigned 3 GPIO pins on the pca9552 device, for
-control of up to 5 PCIe slots.  The per-slot signal names are:
-
-   SLOTx_EN.......PHYP uses this as an output to enable
-                  slot power.  We connect this to the
-                  SLOTx_PG pin to simulate a PGOOD signal.
-   SLOTx_PG.......PHYP uses this as in input to detect
-                  PGOOD for the slot.  For our purposes
-                  we just connect this to the SLOTx_EN
-                  output.
-   SLOTx_Control..PHYP uses this as an output to prevent
-                  a race condition in the real hotplug
-                  circuitry, but we can ignore this output
-                  for simulation.
-
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+Fixes: 9a1839164c9c8f06 ("raven: Implement non-contiguous I/O region")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/ppc/pnv.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 78f5c6262a..97bdfb2d1e 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1900,7 +1900,19 @@ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
-          * Add a PCA9552 I2C device for PCIe hotplug control
-          * to engine 2, bus 1, address 0x63
-          */
--        i2c_slave_create_simple(chip10->i2c[2].busses[1], "pca9552", 0x63);
-+        I2CSlave *dev = i2c_slave_create_simple(chip10->i2c[2].busses[1],
-+                                                "pca9552", 0x63);
-+
-+        /*
-+         * Connect PCA9552 GPIO pins 0-4 (SLOTx_EN) outputs to GPIO pins 5-9
-+         * (SLOTx_PG) inputs in order to fake the pgood state of PCIe slots
-+         * after hypervisor code sets a SLOTx_EN pin high.
-+         */
-+        qdev_connect_gpio_out(DEVICE(dev), 0, qdev_get_gpio_in(DEVICE(dev), 5));
-+        qdev_connect_gpio_out(DEVICE(dev), 1, qdev_get_gpio_in(DEVICE(dev), 6));
-+        qdev_connect_gpio_out(DEVICE(dev), 2, qdev_get_gpio_in(DEVICE(dev), 7));
-+        qdev_connect_gpio_out(DEVICE(dev), 3, qdev_get_gpio_in(DEVICE(dev), 8));
-+        qdev_connect_gpio_out(DEVICE(dev), 4, qdev_get_gpio_in(DEVICE(dev), 9));
-     }
- }
- 
 -- 
 2.42.0
 
