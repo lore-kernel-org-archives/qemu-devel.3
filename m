@@ -4,94 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5122EC48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 13:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F3C4C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 13:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc3LV-00072g-Cw; Mon, 19 Feb 2024 08:06:09 -0500
+	id 1rc3TT-0001iD-47; Mon, 19 Feb 2024 08:14:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rc3LT-00071i-6t
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:06:07 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rc3LQ-0002oQ-8B
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 08:06:06 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-563c2b2bddbso5724397a12.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 05:06:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708347961; x=1708952761; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lvJENqQxJwJ0qoNic8x/19fJ5CctFxYM4poH/XDfkd0=;
- b=TT/ezoSxEbqmEw3DvFywOVuJliLVRoFmOUqqa5ehvNa6YU4lr0LQkej1vDOn3YLYnY
- GVjZ7COqQfMsPj2MaxVG9LFs/ulmgB9vM4q5nnSjFRhv9pTZVIWIVb6coYcahps7P1KY
- edUTNbToQgdUeFFAMXMxhGS9+OkgAOXsGAak8CD/wkqQf6JB5NfnEHaoTknG3yaogg46
- LQWlFCA8OG4PPvzRvJhI4iIxI4vizTS3QRHuqFs+m2x1kMOLyJFZIUC8lSY3n6MzER6M
- vilCC9URhyvbdf3gNNLnAeHbr2wCWapCEwYOMafxCdQR7HNqNFDd1WQ4cTNu+qW+dKNT
- wujQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708347961; x=1708952761;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lvJENqQxJwJ0qoNic8x/19fJ5CctFxYM4poH/XDfkd0=;
- b=vI1JCH8EZOaUUiiemK6Ig1f9k907WfHS+C0edYx+PvH6XyCINXx+VPg6+96jmDXhAe
- Nc4CAYHCfdbsR/86K8nGmHDaLf2an2nrIjkwq6PaGZNEKPoi65wuBglYE1kQAN81jp/W
- gCXuQ6H8n4d+US+FQSOsaTqAogXw7E4aeyRYYR1YCWtVbaejRI0Yzfu+Xzb6Sqc0T7Ge
- Zam4sI6oDcusSMc72dtkonTUK6bMiS9wqDVE6xy6acaFBLgXBydzwGLk5gzfUc0KPwBS
- AZRvJ2r+1LnqyKuw62oj47GeKdmKL8+6qmqqeNvAjsRSbanxmhkfnn0R5IKHtnPV0sJr
- 6MYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSxJo3DVG5FN8yCLjFQuXuMvUtmk+oVOn0ZXXcrZLLFo8s7MmxkVC8ib4IOdal/ax4DLBo7MZJcvyLnF3nw3jkJpM/A4I=
-X-Gm-Message-State: AOJu0YyJoDc/Nd+LLwhYAroa4/B9lacQA86G68eBMjcbgFyGgLc1AwXy
- 2ZhSu01t/Y3lBoTRiLtQxRmFNl57P1FR+xm/A1qdXe0kv0KhgACxM1GxxG7pVPmVEKyCO/Nsn2R
- szCDrfHpvLNkW5ZBWltNLhs2e1jHqUAWaAfcvdA==
-X-Google-Smtp-Source: AGHT+IG0a56R0m32KsH2yanNp4494mtviVMwKnua2tCjbQig49UxZQOlGaYhAEyFptZRFwQdkSNdXT8JhydyBGbdVmA=
-X-Received: by 2002:aa7:df8e:0:b0:564:6b09:9300 with SMTP id
- b14-20020aa7df8e000000b005646b099300mr2051292edy.15.1708347961461; Mon, 19
- Feb 2024 05:06:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc3TR-0001hA-EV; Mon, 19 Feb 2024 08:14:21 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc3TP-0004TO-3j; Mon, 19 Feb 2024 08:14:21 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 60EBE4E6013;
+ Mon, 19 Feb 2024 14:14:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id favqpBJ_dTtN; Mon, 19 Feb 2024 14:14:12 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6A5994E6003; Mon, 19 Feb 2024 14:14:12 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 68A437456B4;
+ Mon, 19 Feb 2024 14:14:12 +0100 (CET)
+Date: Mon, 19 Feb 2024 14:14:12 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Thomas Huth <thuth@redhat.com>
+cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] tests/qtest: Fix boot-serial-test when using
+ --without-default-devices
+In-Reply-To: <359e3bf6-bd94-42e5-b8e7-06b41805fd03@redhat.com>
+Message-ID: <f551a54a-788c-392a-e9b5-ff486aafa4e3@eik.bme.hu>
+References: <20240219111030.384158-1-thuth@redhat.com>
+ <b56a11d4-ef54-64ae-76ef-25c600255b59@eik.bme.hu>
+ <359e3bf6-bd94-42e5-b8e7-06b41805fd03@redhat.com>
 MIME-Version: 1.0
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
- <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
- <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
- <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
-In-Reply-To: <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Feb 2024 13:05:50 +0000
-Message-ID: <CAFEAcA-Mvd4NVY2yDgNEdjZ_YPrN93PDZRyfCi7JyCjmPs4gAQ@mail.gmail.com>
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-722608179-1708348452=:77986"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,33 +66,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 at 12:49, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
->
-> On 19/02/2024 12:00, BALATON Zoltan wrote:
-> > For new people trying to contribute to QEMU QDev is overwhelming so having some way
-> > to need less of it to do simple things would help them to get started.
->
-> It depends what how you define "simple": for QEMU developers most people search for
-> similar examples in the codebase and copy/paste them. I'd much rather have a slightly
-> longer, but consistent API for setting properties rather than coming up with many
-> special case wrappers that need to be maintained just to keep the line count down for
-> "simplicity".
->
-> I think that Phil's approach here is the best one for now, particularly given that it
-> allows us to take another step towards heterogeneous machines. As the work in this
-> area matures it might be that we can consider other approaches, but that's not a
-> decision that can be made right now and so shouldn't be a reason to block this change.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Mmm. It's unfortunate that we're working with C, so we're a bit limited
-in what tools we have to try to make a better and lower-boilerplate
-interface for the "create, configure, realize and wire up devices" task.
-(I think you could do much better in a higher level language...)
-sysbus_create_simple() was handy at the time, but it doesn't work so
-well for more complicated SoC-based boards. It's noticeable that
-if you look at the code that uses it, it's almost entirely the older
-and less maintained board models, especially those which don't actually
-model an SoC and just have the board code create all the devices.
+--3866299591-722608179-1708348452=:77986
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
--- PMM
+On Mon, 19 Feb 2024, Thomas Huth wrote:
+> On 19/02/2024 12.37, BALATON Zoltan wrote:
+>> On Mon, 19 Feb 2024, Thomas Huth wrote:
+>>> If "configure" has been run with "--without-default-devices", there is
+>>> no e1000 device in the binaries, so the boot-serial-test currently fails
+>>> in that case since it tries to use the e1000 with the sam460ex machine.
+>>> 
+>>> Since we're testing the serial output here, and not the NIC, let's
+>>> simply switch to the "pci-bridge" device here instead, which should
+>>> always be there for PCIe-based machines like the sam460ex.
+>> 
+>> It's not actually testing PCIe but PCI bus but I think that does not 
+>> matter. PCIe on sam460ex does not work yet, I've only implemented it 
+>> partially to pass the firmware init but devices attached to the PCIe bus 
+>> probably won't work. I have some patches to improve that but not yet ready.
+>
+> Ah, ok, I looked at the Kconfig file and saw the "select PCI_EXPRESS" there 
+> that got selected by PPC440 (which gets selected by SAM460EX), that's why I 
+> concluded that it must be "PCIe-based" ... I'll drop the "e" here.
+>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>> tests/qtest/boot-serial-test.c | 2 +-
+>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>> 
+>>> diff --git a/tests/qtest/boot-serial-test.c 
+>>> b/tests/qtest/boot-serial-test.c
+>>> index 6dd06aeaf4..e3b7d65fe5 100644
+>>> --- a/tests/qtest/boot-serial-test.c
+>>> +++ b/tests/qtest/boot-serial-test.c
+>>> @@ -156,7 +156,7 @@ static const testdef_t tests[] = {
+>>>       "Open Firmware" },
+>>>     { "ppc64", "powernv8", "", "OPAL" },
+>>>     { "ppc64", "powernv9", "", "OPAL" },
+>>> -    { "ppc64", "sam460ex", "-device e1000", "8086  100e" },
+>>> +    { "ppc64", "sam460ex", "-device pci-bridge,chassis_nr=2", "1b36 
+>>> 0001" },
+>> 
+>> So if you want to check if PCI bus works then maybe there's no need to add 
+>> a device at all just look for the sm501 display chip ("126f 0501") that's 
+>> soldered on the board so it's always created even with -nodefaults and 
+>> should always present on sam460ex. The -device option just adds a device 
+>> that appears before the sm501 and stops the test there. Not sure if this is 
+>> testing more than looking for a PCI device created by the board code.
+>
+> I was considering the sm501, too, but I thought that we might test a little 
+> bit more if we check that cold-plugging via "-device" works, too, so I'd 
+> prefer to keep it this way.
+
+No problem, if testing -device is adding more coverage than testing for a 
+device created by the board then I'm OK with it but not sure these are 
+really different other than maybe -device going through options parsing 
+but at the end for testing the PCI but they are probably the same.
+
+Regards,
+BALATON Zoltan
+--3866299591-722608179-1708348452=:77986--
 
