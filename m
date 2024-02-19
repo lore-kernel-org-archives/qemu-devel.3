@@ -4,96 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21FBAC48BC4
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Feb 2024 17:37:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE0FC48BC4
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 01:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbl5u-0005YU-JB; Sun, 18 Feb 2024 12:36:50 -0500
+	id 1rbsI9-0003CW-Km; Sun, 18 Feb 2024 20:17:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rbl5n-0005Vm-Nq
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 12:36:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rbl5l-0002b9-Ew
- for qemu-devel@nongnu.org; Sun, 18 Feb 2024 12:36:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708277799;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=20eW7RVW9fifRSYoy+aQFRMy+M+OLoaDuDZmP5yn9cM=;
- b=RRBUGRIbGUJpu4uYdx8riXLuO/CuaglP3i5KIRrKQd2I58pDlnfhb559jJRn9h/iZfDmu9
- ZQ09yOehPaSNzqnYFgPYc+IKcySp58iJLQJYWSWQjc92Hq2jfY5GozOsQTr5JgqyOT3QAo
- amxsScuoU1HRKkuXNtGSuRZknOfYI7k=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-537-nYbflYREOlWLef2nQY8G5g-1; Sun, 18 Feb 2024 12:36:37 -0500
-X-MC-Unique: nYbflYREOlWLef2nQY8G5g-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-410422e8cd1so13074215e9.3
- for <qemu-devel@nongnu.org>; Sun, 18 Feb 2024 09:36:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708277796; x=1708882596;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
+ id 1rbsI7-00039Y-Kj; Sun, 18 Feb 2024 20:17:55 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
+ id 1rbsI5-0004BS-Nv; Sun, 18 Feb 2024 20:17:55 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-60821136c5aso3789977b3.1; 
+ Sun, 18 Feb 2024 17:17:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708305471; x=1708910271; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=20eW7RVW9fifRSYoy+aQFRMy+M+OLoaDuDZmP5yn9cM=;
- b=Fs+p+Or7iDevrPyJgrVUNYp24pPoPNz/Z2cMu3rfE+ijhqrsLVWlp51Btb0BbAdj4J
- g2h8Q5qXcVpzqNjEONctpsWyJZnaXNAviXlwOSgRsKq23cp/aELYf8edtl2AiwoieHcg
- tTqcSvWQO+akXlatsRx3aSbvLEQ8QFArzUnXvFqVXmsUG72HojXIQbTuCq/O7cwX7iw4
- LajDNg2ol0/m45pFMjdYRGV6VPte7HbeB7Iruf1xGXeyPMpv59Zk8Ci+8XtIgPXuwLrJ
- k12Gvs0mWyoa5nO8T91i4Cy9qCUAZERnqJTRz7jnFf/JYBHgPuvnTxkNIONVbNCnMvoS
- LWRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYqRHDQFUHcwYd07DSOme4m4n2r+TnGM3G6wPqdR3fvsPhWOk/h3twTdr3qCo27qyJeEq/9Db8pjoEc8jKhpFAvjufF9g=
-X-Gm-Message-State: AOJu0Yw7NLSkl9PEX0WPiDam7qUcS83fQ9KMpRL+x8xOr3plkLltSZfl
- hi9avjwi2ot3o6WAl76L3ecqunUBxJDtb8yue5D+j7jHOmr2A7EbAjMOnmiLdYtRaU0FG9nlrxK
- yhVu5KBk7yTx/awExAkltIRtXZZkprirmkOig+qMt1dfD5SAoVlJIDSuzDT7E
-X-Received: by 2002:a05:600c:314c:b0:412:65e0:cce5 with SMTP id
- h12-20020a05600c314c00b0041265e0cce5mr381135wmo.24.1708277796005; 
- Sun, 18 Feb 2024 09:36:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIYWtajbKxsI7BMSRhyM91nZhIY1VYvJiGWojr4QdST/5CqNyc+vuEjfwhIHzuOeyEFQ6AIQ==
-X-Received: by 2002:a05:600c:314c:b0:412:65e0:cce5 with SMTP id
- h12-20020a05600c314c00b0041265e0cce5mr381120wmo.24.1708277795657; 
- Sun, 18 Feb 2024 09:36:35 -0800 (PST)
-Received: from redhat.com ([2.52.19.211]) by smtp.gmail.com with ESMTPSA id
- iv6-20020a05600c548600b004103e15441dsm8875132wmb.6.2024.02.18.09.36.33
+ bh=/7tXg8JSXgAu1S2Vd6xAPF7xEtrTQlVck2ztYg0Zya4=;
+ b=JUOGEvJyE3SFxUrsRvVeemTVgGg/t9CqGVnxpQZmTJnerW5MhbUME3D9dRaTVgnW7v
+ 7rz4UWc5iQz62+tRLsjHP6GyfGrcsreVTu2FSd5IIsLNFlOcFHsLXkg/azQORhZxqWoe
+ 3YzSSrirOob9ioDqZ/US+Lhi/62lCPOB3oLuxEOJiTSnkNqz6CgldnWitkxlnpqLN5Gz
+ TahRcGfHVOXThXhPdF/M8+TYRfEznb6RidFb7UU/6qzosJ2YUukKjjSxrM9si9Xg4gak
+ Jndk/FGnRvVFPcw25M4BkS1aU6nCrsGoVosmIp5aa63FvLKQIt/tkBJ6WCbl43Ry/iAi
+ J2fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708305471; x=1708910271;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/7tXg8JSXgAu1S2Vd6xAPF7xEtrTQlVck2ztYg0Zya4=;
+ b=KGuqD38Xn2gvpv5oHmcLftwelFsmd7IeQ+rJ2fniZgMdOlr4W91R3rWZhDXbvFBTAM
+ U9DiKvpryRztsotP2vrOYLwcjVyyWYh02ehrKaqc7Ig1JuRk9q0FM6D+zABJPG6gHAx8
+ tAnSFu7ORdk3IZZe6xaaCn9tbBkYW1P/zoSMjbz8sMKJkVdY6z0kbRROX8aVezUcOUuW
+ k/xkZz/n2LHvPvcOGe4KuodDo0xHtRjyNJlHRJRlBVLm69xLBMxf/Pe4lrFlrmmJmRfQ
+ NsD7V6CTL8GC0fQVYterwCojSJe/9Fc8VmoTK855VkGhQ2K3J90uGy+fpCE7nxc6eUoD
+ 1H2A==
+X-Gm-Message-State: AOJu0YyIW2icSU5XHNDo6R+HM5lyephvkWhpjOfCUcRnbvHmPTrDRJns
+ gxWwQ7XyDf727BpYBxKfz7YlBedtwTHSK5tbLNXlwicNE0mUNSNJl9UdXbtL3iE=
+X-Google-Smtp-Source: AGHT+IGAkeEVrGyBufaPV6fS4FO1XWYG7Y8VK052ODWiYKYU22nbpkhRz2gbpfMxPfxf8flD3qdIOQ==
+X-Received: by 2002:a81:9244:0:b0:607:cb52:9498 with SMTP id
+ j65-20020a819244000000b00607cb529498mr10003076ywg.11.1708305471579; 
+ Sun, 18 Feb 2024 17:17:51 -0800 (PST)
+Received: from localhost.localdomain ([201.203.117.224])
+ by smtp.gmail.com with ESMTPSA id
+ m12-20020a819e0c000000b00607ff905ed3sm1204704ywj.58.2024.02.18.17.17.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Feb 2024 09:36:34 -0800 (PST)
-Date: Sun, 18 Feb 2024 12:36:31 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH v5 02/11] pcie_sriov: Validate NumVFs
-Message-ID: <20240218123556-mutt-send-email-mst@kernel.org>
-References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
- <20240218-reuse-v5-2-e4fc1c19b5a9@daynix.com>
+ Sun, 18 Feb 2024 17:17:51 -0800 (PST)
+From: Sergey Kambalin <serg.oker@gmail.com>
+X-Google-Original-From: Sergey Kambalin <sergey.kambalin@auriga.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org,
+	Sergey Kambalin <sergey.kambalin@auriga.com>
+Subject: [PATCH v5 01/41] Split out common part of BCM283X classes
+Date: Sun, 18 Feb 2024 19:16:59 -0600
+Message-Id: <20240219011739.2316619-2-sergey.kambalin@auriga.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
+References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240218-reuse-v5-2-e4fc1c19b5a9@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=serg.oker@gmail.com; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.077,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,37 +93,303 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 18, 2024 at 01:56:07PM +0900, Akihiko Odaki wrote:
-> The guest may write NumVFs greater than TotalVFs and that can lead
-> to buffer overflow in VF implementations.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/pci/pcie_sriov.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index a1fe65f5d801..da209b7f47fd 100644
-> --- a/hw/pci/pcie_sriov.c
-> +++ b/hw/pci/pcie_sriov.c
-> @@ -176,6 +176,9 @@ static void register_vfs(PCIDevice *dev)
->  
->      assert(sriov_cap > 0);
->      num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-> +    if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-> +        return;
-> +    }
->  
->      dev->exp.sriov_pf.vf = g_new(PCIDevice *, num_vfs);
+Pre setup for BCM2838 introduction
 
+Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+---
+ hw/arm/bcm2836.c         | 103 ++++++++++++++++++++++-----------------
+ hw/arm/raspi.c           |   2 +-
+ include/hw/arm/bcm2836.h |  26 +++++++++-
+ 3 files changed, 84 insertions(+), 47 deletions(-)
 
-This reminds me: how is this num_vfs value set on migration?
-
-
-> 
-> -- 
-> 2.43.1
+diff --git a/hw/arm/bcm2836.c b/hw/arm/bcm2836.c
+index e3ba18a8ec..e9768f2ab9 100644
+--- a/hw/arm/bcm2836.c
++++ b/hw/arm/bcm2836.c
+@@ -31,12 +31,12 @@ struct BCM283XClass {
+ };
+ 
+ static Property bcm2836_enabled_cores_property =
+-    DEFINE_PROP_UINT32("enabled-cpus", BCM283XState, enabled_cpus, 0);
++    DEFINE_PROP_UINT32("enabled-cpus", BCM283XBaseState, enabled_cpus, 0);
+ 
+-static void bcm2836_init(Object *obj)
++static void bcm283x_base_init(Object *obj)
+ {
+-    BCM283XState *s = BCM283X(obj);
+-    BCM283XClass *bc = BCM283X_GET_CLASS(obj);
++    BCM283XBaseState *s = BCM283X_BASE(obj);
++    BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(obj);
+     int n;
+ 
+     for (n = 0; n < bc->core_count; n++) {
+@@ -52,6 +52,11 @@ static void bcm2836_init(Object *obj)
+         object_initialize_child(obj, "control", &s->control,
+                                 TYPE_BCM2836_CONTROL);
+     }
++}
++
++static void bcm283x_init(Object *obj)
++{
++    BCM283XState *s = BCM283X(obj);
+ 
+     object_initialize_child(obj, "peripherals", &s->peripherals,
+                             TYPE_BCM2835_PERIPHERALS);
+@@ -63,10 +68,11 @@ static void bcm2836_init(Object *obj)
+                               "vcram-size");
+ }
+ 
+-static bool bcm283x_common_realize(DeviceState *dev, Error **errp)
++bool bcm283x_common_realize(DeviceState *dev, Error **errp)
+ {
+     BCM283XState *s = BCM283X(dev);
+-    BCM283XClass *bc = BCM283X_GET_CLASS(dev);
++    BCM283XBaseState *s_base = BCM283X_BASE(dev);
++    BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(dev);
+     Object *obj;
+ 
+     /* common peripherals from bcm2835 */
+@@ -79,90 +85,93 @@ static bool bcm283x_common_realize(DeviceState *dev, Error **errp)
+         return false;
+     }
+ 
+-    object_property_add_alias(OBJECT(s), "sd-bus", OBJECT(&s->peripherals),
+-                              "sd-bus");
++    object_property_add_alias(OBJECT(s_base), "sd-bus",
++                              OBJECT(&s->peripherals), "sd-bus");
+ 
+-    sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->peripherals), 0,
+-                            bc->peri_base, 1);
++    sysbus_mmio_map_overlap(SYS_BUS_DEVICE(&s->peripherals),
++                            0, bc->peri_base, 1);
+     return true;
+ }
+ 
+ static void bcm2835_realize(DeviceState *dev, Error **errp)
+ {
+     BCM283XState *s = BCM283X(dev);
++    BCM283XBaseState *s_base = BCM283X_BASE(dev);
+ 
+     if (!bcm283x_common_realize(dev, errp)) {
+         return;
+     }
+ 
+-    if (!qdev_realize(DEVICE(&s->cpu[0].core), NULL, errp)) {
++    if (!qdev_realize(DEVICE(&s_base->cpu[0].core), NULL, errp)) {
+         return;
+     }
+ 
+     /* Connect irq/fiq outputs from the interrupt controller. */
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peripherals), 0,
+-            qdev_get_gpio_in(DEVICE(&s->cpu[0].core), ARM_CPU_IRQ));
++            qdev_get_gpio_in(DEVICE(&s_base->cpu[0].core), ARM_CPU_IRQ));
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peripherals), 1,
+-            qdev_get_gpio_in(DEVICE(&s->cpu[0].core), ARM_CPU_FIQ));
++            qdev_get_gpio_in(DEVICE(&s_base->cpu[0].core), ARM_CPU_FIQ));
+ }
+ 
+ static void bcm2836_realize(DeviceState *dev, Error **errp)
+ {
+-    BCM283XState *s = BCM283X(dev);
+-    BCM283XClass *bc = BCM283X_GET_CLASS(dev);
+     int n;
++    BCM283XState *s = BCM283X(dev);
++    BCM283XBaseState *s_base = BCM283X_BASE(dev);
++    BCM283XBaseClass *bc = BCM283X_BASE_GET_CLASS(dev);
+ 
+     if (!bcm283x_common_realize(dev, errp)) {
+         return;
+     }
+ 
+     /* bcm2836 interrupt controller (and mailboxes, etc.) */
+-    if (!sysbus_realize(SYS_BUS_DEVICE(&s->control), errp)) {
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s_base->control), errp)) {
+         return;
+     }
+ 
+-    sysbus_mmio_map(SYS_BUS_DEVICE(&s->control), 0, bc->ctrl_base);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s_base->control), 0, bc->ctrl_base);
+ 
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peripherals), 0,
+-        qdev_get_gpio_in_named(DEVICE(&s->control), "gpu-irq", 0));
++        qdev_get_gpio_in_named(DEVICE(&s_base->control), "gpu-irq", 0));
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->peripherals), 1,
+-        qdev_get_gpio_in_named(DEVICE(&s->control), "gpu-fiq", 0));
++        qdev_get_gpio_in_named(DEVICE(&s_base->control), "gpu-fiq", 0));
+ 
+     for (n = 0; n < BCM283X_NCPUS; n++) {
+-        object_property_set_int(OBJECT(&s->cpu[n].core), "mp-affinity",
++        object_property_set_int(OBJECT(&s_base->cpu[n].core), "mp-affinity",
+                                 (bc->clusterid << 8) | n, &error_abort);
+ 
+         /* set periphbase/CBAR value for CPU-local registers */
+-        object_property_set_int(OBJECT(&s->cpu[n].core), "reset-cbar",
++        object_property_set_int(OBJECT(&s_base->cpu[n].core), "reset-cbar",
+                                 bc->peri_base, &error_abort);
+ 
+         /* start powered off if not enabled */
+-        object_property_set_bool(OBJECT(&s->cpu[n].core), "start-powered-off",
+-                                 n >= s->enabled_cpus, &error_abort);
++        object_property_set_bool(OBJECT(&s_base->cpu[n].core),
++                                 "start-powered-off",
++                                 n >= s_base->enabled_cpus, &error_abort);
+ 
+-        if (!qdev_realize(DEVICE(&s->cpu[n].core), NULL, errp)) {
++        if (!qdev_realize(DEVICE(&s_base->cpu[n].core), NULL, errp)) {
+             return;
+         }
+ 
+         /* Connect irq/fiq outputs from the interrupt controller. */
+-        qdev_connect_gpio_out_named(DEVICE(&s->control), "irq", n,
+-                qdev_get_gpio_in(DEVICE(&s->cpu[n].core), ARM_CPU_IRQ));
+-        qdev_connect_gpio_out_named(DEVICE(&s->control), "fiq", n,
+-                qdev_get_gpio_in(DEVICE(&s->cpu[n].core), ARM_CPU_FIQ));
++        qdev_connect_gpio_out_named(DEVICE(&s_base->control), "irq", n,
++            qdev_get_gpio_in(DEVICE(&s_base->cpu[n].core), ARM_CPU_IRQ));
++        qdev_connect_gpio_out_named(DEVICE(&s_base->control), "fiq", n,
++            qdev_get_gpio_in(DEVICE(&s_base->cpu[n].core), ARM_CPU_FIQ));
+ 
+         /* Connect timers from the CPU to the interrupt controller */
+-        qdev_connect_gpio_out(DEVICE(&s->cpu[n].core), GTIMER_PHYS,
+-                qdev_get_gpio_in_named(DEVICE(&s->control), "cntpnsirq", n));
+-        qdev_connect_gpio_out(DEVICE(&s->cpu[n].core), GTIMER_VIRT,
+-                qdev_get_gpio_in_named(DEVICE(&s->control), "cntvirq", n));
+-        qdev_connect_gpio_out(DEVICE(&s->cpu[n].core), GTIMER_HYP,
+-                qdev_get_gpio_in_named(DEVICE(&s->control), "cnthpirq", n));
+-        qdev_connect_gpio_out(DEVICE(&s->cpu[n].core), GTIMER_SEC,
+-                qdev_get_gpio_in_named(DEVICE(&s->control), "cntpsirq", n));
++        qdev_connect_gpio_out(DEVICE(&s_base->cpu[n].core), GTIMER_PHYS,
++            qdev_get_gpio_in_named(DEVICE(&s_base->control), "cntpnsirq", n));
++        qdev_connect_gpio_out(DEVICE(&s_base->cpu[n].core), GTIMER_VIRT,
++            qdev_get_gpio_in_named(DEVICE(&s_base->control), "cntvirq", n));
++        qdev_connect_gpio_out(DEVICE(&s_base->cpu[n].core), GTIMER_HYP,
++            qdev_get_gpio_in_named(DEVICE(&s_base->control), "cnthpirq", n));
++        qdev_connect_gpio_out(DEVICE(&s_base->cpu[n].core), GTIMER_SEC,
++            qdev_get_gpio_in_named(DEVICE(&s_base->control), "cntpsirq", n));
+     }
+ }
+ 
+-static void bcm283x_class_init(ObjectClass *oc, void *data)
++static void bcm283x_base_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+ 
+@@ -173,7 +182,7 @@ static void bcm283x_class_init(ObjectClass *oc, void *data)
+ static void bcm2835_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+-    BCM283XClass *bc = BCM283X_CLASS(oc);
++    BCM283XBaseClass *bc = BCM283X_BASE_CLASS(oc);
+ 
+     bc->cpu_type = ARM_CPU_TYPE_NAME("arm1176");
+     bc->core_count = 1;
+@@ -184,7 +193,7 @@ static void bcm2835_class_init(ObjectClass *oc, void *data)
+ static void bcm2836_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+-    BCM283XClass *bc = BCM283X_CLASS(oc);
++    BCM283XBaseClass *bc = BCM283X_BASE_CLASS(oc);
+ 
+     bc->cpu_type = ARM_CPU_TYPE_NAME("cortex-a7");
+     bc->core_count = BCM283X_NCPUS;
+@@ -198,7 +207,7 @@ static void bcm2836_class_init(ObjectClass *oc, void *data)
+ static void bcm2837_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+-    BCM283XClass *bc = BCM283X_CLASS(oc);
++    BCM283XBaseClass *bc = BCM283X_BASE_CLASS(oc);
+ 
+     bc->cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
+     bc->core_count = BCM283X_NCPUS;
+@@ -226,11 +235,17 @@ static const TypeInfo bcm283x_types[] = {
+ #endif
+     }, {
+         .name           = TYPE_BCM283X,
+-        .parent         = TYPE_DEVICE,
++        .parent         = TYPE_BCM283X_BASE,
+         .instance_size  = sizeof(BCM283XState),
+-        .instance_init  = bcm2836_init,
+-        .class_size     = sizeof(BCM283XClass),
+-        .class_init     = bcm283x_class_init,
++        .instance_init  = bcm283x_init,
++        .abstract       = true,
++    }, {
++        .name           = TYPE_BCM283X_BASE,
++        .parent         = TYPE_DEVICE,
++        .instance_size  = sizeof(BCM283XBaseState),
++        .instance_init  = bcm283x_base_init,
++        .class_size     = sizeof(BCM283XBaseClass),
++        .class_init     = bcm283x_base_class_init,
+         .abstract       = true,
+     }
+ };
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index cc4c4ec9bf..af866ebce2 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -252,7 +252,7 @@ static void setup_boot(MachineState *machine, RaspiProcessorId processor_id,
+         s->binfo.firmware_loaded = true;
+     }
+ 
+-    arm_load_kernel(&s->soc.cpu[0].core, machine, &s->binfo);
++    arm_load_kernel(&s->soc.parent_obj.cpu[0].core, machine, &s->binfo);
+ }
+ 
+ static void raspi_machine_init(MachineState *machine)
+diff --git a/include/hw/arm/bcm2836.h b/include/hw/arm/bcm2836.h
+index 6f90cabfa3..5a6717ca91 100644
+--- a/include/hw/arm/bcm2836.h
++++ b/include/hw/arm/bcm2836.h
+@@ -17,8 +17,10 @@
+ #include "target/arm/cpu.h"
+ #include "qom/object.h"
+ 
++#define TYPE_BCM283X_BASE "bcm283x-base"
++OBJECT_DECLARE_TYPE(BCM283XBaseState, BCM283XBaseClass, BCM283X_BASE)
+ #define TYPE_BCM283X "bcm283x"
+-OBJECT_DECLARE_TYPE(BCM283XState, BCM283XClass, BCM283X)
++OBJECT_DECLARE_SIMPLE_TYPE(BCM283XState, BCM283X)
+ 
+ #define BCM283X_NCPUS 4
+ 
+@@ -30,7 +32,7 @@ OBJECT_DECLARE_TYPE(BCM283XState, BCM283XClass, BCM283X)
+ #define TYPE_BCM2836 "bcm2836"
+ #define TYPE_BCM2837 "bcm2837"
+ 
+-struct BCM283XState {
++struct BCM283XBaseState {
+     /*< private >*/
+     DeviceState parent_obj;
+     /*< public >*/
+@@ -41,7 +43,27 @@ struct BCM283XState {
+         ARMCPU core;
+     } cpu[BCM283X_NCPUS];
+     BCM2836ControlState control;
++};
++
++struct BCM283XBaseClass {
++    /*< private >*/
++    DeviceClass parent_class;
++    /*< public >*/
++    const char *name;
++    const char *cpu_type;
++    unsigned core_count;
++    hwaddr peri_base; /* Peripheral base address seen by the CPU */
++    hwaddr ctrl_base; /* Interrupt controller and mailboxes etc. */
++    int clusterid;
++};
++
++struct BCM283XState {
++    /*< private >*/
++    BCM283XBaseState parent_obj;
++    /*< public >*/
+     BCM2835PeripheralState peripherals;
+ };
+ 
++bool bcm283x_common_realize(DeviceState *dev, Error **errp);
++
+ #endif /* BCM2836_H */
+-- 
+2.34.1
 
 
