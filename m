@@ -4,91 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE92C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD8F1C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc4lp-0003fc-Ph; Mon, 19 Feb 2024 09:37:25 -0500
+	id 1rc4oS-0005YG-3R; Mon, 19 Feb 2024 09:40:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4ll-0003e8-No
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:37:23 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4lj-0004dO-5m
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:37:21 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-33d60acfa73so297030f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 06:37:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708353437; x=1708958237; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+amIv0IqAhLn8GDdgFDj51FVtcIHkKcEJOsxW7HYsRo=;
- b=LCExZgaud4pv2PWLoorLGWaNynpWC4+8X+IC8a+KhVDAoyLkUlKlUiJsKDaHZM7YkC
- kSvP6t3zceqsUChdH6b45Wfa6OTq1uJ4TGy+pJalFfX+LpXvD/b7OFaa1+QbJJag67TJ
- clZYxbOnjYaCCp+uQCJU07gB/jGIgKQaywWF/+yBjPIQ700+Hwuusuwu89z+jffYUdzJ
- 3C0AXsUUNrjaIVxC+aWFuSIi7nsPxNIhc7Ugm9doHH9L6ROVaK0DCbZ19KRQWexPeIes
- y3rGvdLondB15e02FpseMvDrucYrc6qaqK60AXWgGUP4HBIFo8fbcsGRhHp0rQ8U2f0W
- Z4zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708353437; x=1708958237;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+amIv0IqAhLn8GDdgFDj51FVtcIHkKcEJOsxW7HYsRo=;
- b=feuoSxOYKXh6J99n3bSWFZbQqAcbS0Pac2lIF5EMv4iPB8ZWk8N0Xt3EdqKyuTZ9jb
- avfx02tSI17i35BySlucY/b4T7ZWz9bPM1t94ZIjBcBQSRBOobhOac1MTwriTc02RIkw
- eqN+GVYFimmOX8ixsHqoAEDtDBAufz8ROI8/btkbQiMsAN5hLRJ8MZ3jbzIfhc4qGuQ/
- E7HaiyCWPu0/7uk+lWUo/j8kCBYbMsGO7HGnSAS3ehTQKTb6DXt2AO5P7BhnlS2Sl/1G
- uLorGu0fwfEni/S8ejn1t0/9NkhXYWTCXJy69BCtxUOjFYyOMNlOwpgNwE/rAjXqAv/o
- EbUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjSL15FceBMOvkuYC+EiOglI7kkAKwjJ49X62UceadOS1xmrIzeIJx+LONY475h/ABhmjQ/R7ANasbGqdRTveBX0i0eX0=
-X-Gm-Message-State: AOJu0YzeMt3GMqpqjme9CX5brvy8RLS66rMAjuU8ylfS4m1hYIdInhEN
- 7YaV34Hgye9b9EHggHD7E8XFth97++1FVZLMj40oN0cotXNo4iLmKbr5OqUWB2A=
-X-Google-Smtp-Source: AGHT+IG7ftUfhCJ7PTIdUUfIf7zUOWx3ePqo5rEUct9Th4cV+IJf/bmVRN4zmyeM4qj6vDev94fL0g==
-X-Received: by 2002:adf:fd48:0:b0:33d:1f9f:afa with SMTP id
- h8-20020adffd48000000b0033d1f9f0afamr6202528wrs.30.1708353437456; 
- Mon, 19 Feb 2024 06:37:17 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.181.220])
- by smtp.gmail.com with ESMTPSA id
- t12-20020a5d460c000000b0033b48190e5esm10519226wrq.67.2024.02.19.06.37.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 06:37:16 -0800 (PST)
-Message-ID: <aebd4e54-099e-4e52-9440-7bd68f2f881d@linaro.org>
-Date: Mon, 19 Feb 2024 15:37:14 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc4oQ-0005XR-7b
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:40:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc4oO-0005Lu-Lw
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:40:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708353603;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=S4TLxisse07JbzyB81c2xChYrNib89DkevZtfOFBm3g=;
+ b=iprgxfA57DPyXsIb/OROgxVwBLPE+Xx4DpJCOFK4UOxvOZdPHemfjq9+/9vKftxzGjrZ8e
+ pAWzz+Cm4tCOfU3XUT3btOxKpdnrFfCcF45G40C74H1TPuBnLc1PH4hWo4uKNCiFQZv5Ow
+ 3JPi5ErU18XUDhR4nMbTStw2L7GRIRk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-LC19aRCFPsqECSLsPDPBsQ-1; Mon,
+ 19 Feb 2024 09:40:00 -0500
+X-MC-Unique: LC19aRCFPsqECSLsPDPBsQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 172863830087;
+ Mon, 19 Feb 2024 14:39:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id D1EED1BDD1;
+ Mon, 19 Feb 2024 14:39:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D3DB621E66D0; Mon, 19 Feb 2024 15:39:57 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Sam Li <faithilikerun@gmail.com>
+Cc: qemu-devel@nongnu.org,  dlemoal@kernel.org,  Hanna Reitz
+ <hreitz@redhat.com>,  dmitry.fomichev@wdc.com,  qemu-block@nongnu.org,
+ Eric Blake <eblake@redhat.com>,  hare@suse.de,  Kevin Wolf
+ <kwolf@redhat.com>,  stefanha@redhat.com
+Subject: Re: [PATCH v7 2/4] qcow2: add configurations for zoned format
+ extension
+In-Reply-To: <CAAAx-8KAD1bygZsnCtkCYO=oNf7W2xnqGU+RD5Afsz8jcBUYhg@mail.gmail.com>
+ (Sam Li's message of "Mon, 19 Feb 2024 13:23:42 +0100")
+References: <20240122184830.40094-1-faithilikerun@gmail.com>
+ <20240122184830.40094-3-faithilikerun@gmail.com>
+ <87plwsfyyv.fsf@pond.sub.org> <87edd8fyme.fsf@pond.sub.org>
+ <CAAAx-8KAD1bygZsnCtkCYO=oNf7W2xnqGU+RD5Afsz8jcBUYhg@mail.gmail.com>
+Date: Mon, 19 Feb 2024 15:39:57 +0100
+Message-ID: <877cj0jz5u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/21] hw/s390x/zpci-bus: Add QOM parentship relation with
- zPCI devices
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20240216110313.17039-1-philmd@linaro.org>
- <20240216110313.17039-20-philmd@linaro.org>
- <84d0375c-b687-4e0a-b7c7-77f1891ea244@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <84d0375c-b687-4e0a-b7c7-77f1891ea244@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,30 +90,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/2/24 14:38, Thomas Huth wrote:
-> On 16/02/2024 12.03, Philippe Mathieu-Daudé wrote:
->> QDev objects created with qdev_*new() need to manually add
->> their parent relationship with object_property_add_child().
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/s390x/s390-pci-bus.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
->> index 3e57d5faca..6d07a7b530 100644
->> --- a/hw/s390x/s390-pci-bus.c
->> +++ b/hw/s390x/s390-pci-bus.c
->> @@ -934,6 +934,7 @@ static S390PCIBusDevice 
->> *s390_pci_device_new(S390pciState *s,
->>                                   "zPCI device could not be created: ");
->>           return NULL;
->>       }
->> +    object_property_add_child(OBJECT(s), "zpci[*]", OBJECT(dev));
-> 
-> I think there can only be one zpci device per PCI device, so do we need 
-> the "[*]" here?
+Sam Li <faithilikerun@gmail.com> writes:
 
-Oh I missed that, I'll change, thanks.
+> Markus Armbruster <armbru@redhat.com> =E4=BA=8E2024=E5=B9=B42=E6=9C=8819=
+=E6=97=A5=E5=91=A8=E4=B8=80 13:05=E5=86=99=E9=81=93=EF=BC=9A
+>>
+>> One more thing...
+>>
+>> Markus Armbruster <armbru@redhat.com> writes:
+>>
+>> > I apologize for the delayed review.
+>
+> No problems. Thanks for reviewing!
+>
+>> >
+>> > Sam Li <faithilikerun@gmail.com> writes:
+>> >
+>> >> To configure the zoned format feature on the qcow2 driver, it
+>> >> requires settings as: the device size, zone model, zone size,
+>> >> zone capacity, number of conventional zones, limits on zone
+>> >> resources (max append bytes, max open zones, and max_active_zones).
+>> >>
+>> >> To create a qcow2 image with zoned format feature, use command like
+>> >> this:
+>> >> qemu-img create -f qcow2 zbc.qcow2 -o size=3D768M \
+>> >> -o zone.size=3D64M -o zone.capacity=3D64M -o zone.conventional_zones=
+=3D0 \
+>> >> -o zone.max_append_bytes=3D4096 -o zone.max_open_zones=3D6 \
+>> >> -o zone.max_active_zones=3D8 -o zone.mode=3Dhost-managed
+>> >>
+>> >> Signed-off-by: Sam Li <faithilikerun@gmail.com>
+>> >
+>> > [...]
+>> >
+>> >> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> >> index ca390c5700..e2e0ec21a5 100644
+>> >> --- a/qapi/block-core.json
+>> >> +++ b/qapi/block-core.json
+>> >> @@ -5038,6 +5038,67 @@
+>> >>  { 'enum': 'Qcow2CompressionType',
+>> >>    'data': [ 'zlib', { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
+>> >>
+>> >> +##
+>> >> +# @Qcow2ZoneModel:
+>> >> +#
+>> >> +# Zoned device model used in qcow2 image file
+>> >> +#
+>> >> +# @host-managed: The host-managed model only allows sequential write=
+ over the
+>> >> +#     device zones.
+>> >> +#
+>> >> +# Since 8.2
+>> >> +##
+>> >> +{ 'enum': 'Qcow2ZoneModel',
+>> >> +  'data': [ 'host-managed'] }
+>> >> +
+>> >> +##
+>> >> +# @Qcow2ZoneHostManaged:
+>> >> +#
+>> >> +# The host-managed zone model.  It only allows sequential writes.
+>> >> +#
+>> >> +# @size: Total number of bytes within zones.
+>> >
+>> > Default?
+>
+> It should be set by users. No default value provided. If it's unset
+> then it is zero and an error will be returned.
+
+If the user must provide @size, why is it optional then?
+
+>> >
+>> >> +#
+>> >> +# @capacity: The number of usable logical blocks within zones
+>> >> +#     in bytes.  A zone capacity is always smaller or equal to the
+>> >> +#     zone size.
+>> >
+>> > Default?
+>
+> Same.
+>
+>> >
+>> >> +# @max-append-bytes: The maximal number of bytes of a zone
+>> >> +#     append request that can be issued to the device.  It must be
+>> >> +#     512-byte aligned and less than the zone capacity.
+>> >
+>> > Default?
+>
+> Same.
+>
+> For those values, I guess it could be set when users provide no
+> information and still want a workable emulated zoned block device.
+>
+>> >
+>> >> +#
+>> >> +# Since 8.2
+>> >> +##
+>> >> +{ 'struct': 'Qcow2ZoneHostManaged',
+>> >> +  'data': { '*size':          'size',
+>> >> +            '*capacity':      'size',
+>> >> +            '*conventional-zones': 'uint32',
+>> >> +            '*max-open-zones':     'uint32',
+>> >> +            '*max-active-zones':   'uint32',
+>> >> +            '*max-append-bytes':   'size' } }
+
+[...]
 
 
