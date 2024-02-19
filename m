@@ -4,99 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F20C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98EBCC48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc4LN-0006jD-Fy; Mon, 19 Feb 2024 09:10:06 -0500
+	id 1rc4Lo-0007SL-Ao; Mon, 19 Feb 2024 09:10:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maddy@linux.ibm.com>)
- id 1rc13r-0002HK-6L; Mon, 19 Feb 2024 05:39:47 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc4Lk-0007Pv-B2
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:10:28 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maddy@linux.ibm.com>)
- id 1rc13o-0007vB-Ro; Mon, 19 Feb 2024 05:39:46 -0500
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41JA15gR022154; Mon, 19 Feb 2024 10:39:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=0FsG32QWeXXytlDX0Lcp+J/rBi+/Vm1lmER1qSdtO+M=;
- b=q3B3AsQIWLKVyqg3uBXfKptnTcZJDSuIMqGfWiIfeIB9tUhOMV+QhwesPD3tXDDcly06
- xnzCJLcr4GlX3OfxR6811qI204H204ugFWQ4WEbEGRqQ76cfRBycZcZfE3u31OatVpYL
- V0MOeT/Pr+hDG2erUXW6s18urG0COO5Q/ZY4ZAAtLvxaWWTEywFavuqHfyYNPSo4+y1Y
- a5epluWwJmti+DvTHIe92EjzhHnWxCeSFskT8niG8jAZks0MTug8x5TowHSjNPUGwTvy
- 2G9Qvie0nJ9rxg9xLJ3DzCIzUK2EnKTN/RPkKKp4MIFvUVqgpF0LWYNLNCsQii45cIch FQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wbdgwe8cb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Feb 2024 10:39:39 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41JAKUe5018968;
- Mon, 19 Feb 2024 10:39:38 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wbdgwe8c0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Feb 2024 10:39:38 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41J8ZdRF017265; Mon, 19 Feb 2024 10:39:37 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb8mm0ffn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Feb 2024 10:39:37 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41JAdWoI32768532
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Feb 2024 10:39:34 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 421202004F;
- Mon, 19 Feb 2024 10:39:32 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D91420043;
- Mon, 19 Feb 2024 10:39:28 +0000 (GMT)
-Received: from li-c439904c-24ed-11b2-a85c-b284a6847472.ibm.com.com (unknown
- [9.171.81.188]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 19 Feb 2024 10:39:28 +0000 (GMT)
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
-To: npiggin@gmail.com, danielhb413@gmail.com, clg@kaod.org
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, atrajeev@linux.vnet.ibm.com,
- kjain@linux.ibm.com, Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH] target/ppc: Add power10 pmu SPRs
-Date: Mon, 19 Feb 2024 16:09:24 +0530
-Message-ID: <20240219103924.445857-1-maddy@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc4Li-0007jp-Cf
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:10:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708351825;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J789yVKcCYi/vQUrSEU1vQVQ5QYWBek3OG0+SnQ6aVk=;
+ b=NkZxBUb4ynMGyTNcxis1Z5dobX9emhh7YEr0rYOgTP5SJprE/TyduGXBPy7H/0oO4dPSan
+ 9YPudAlYN7l5lE3kRoJfxdGN5/IERM03j46TGFldoBGhdFRiWNYFseL4sEHhdXEIZ24f1N
+ M76R3CAy3kaXAU9rTzaaQaIXOjwc0sY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-267-QvqphAVFMHK3oMxn441ZwA-1; Mon,
+ 19 Feb 2024 09:10:19 -0500
+X-MC-Unique: QvqphAVFMHK3oMxn441ZwA-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AC6AE3CBD508;
+ Mon, 19 Feb 2024 14:10:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id F40F2C185C0;
+ Mon, 19 Feb 2024 14:10:16 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B6FC821E66D0; Mon, 19 Feb 2024 15:10:14 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Maksim Davydov <davydov-max@yandex-team.ru>
+Cc: qemu-devel@nongnu.org,  eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com,  philmd@linaro.org,  wangyanan55@huawei.com,
+ jsnow@redhat.com,  eblake@redhat.com,  pbonzini@redhat.com,
+ berrange@redhat.com,  alxndr@bu.edu,  vsementsov@yandex-team.ru,
+ alexander.ivanov@virtuozzo.com,  den@virtuozzo.com,
+ michael.labiuk@virtuozzo.com
+Subject: Re: [PATCH v8 2/4] qmp: add dump machine type compatibility properties
+In-Reply-To: <20240125115610.23697-3-davydov-max@yandex-team.ru> (Maksim
+ Davydov's message of "Thu, 25 Jan 2024 14:56:08 +0300")
+References: <20240125115610.23697-1-davydov-max@yandex-team.ru>
+ <20240125115610.23697-3-davydov-max@yandex-team.ru>
+Date: Mon, 19 Feb 2024 15:10:14 +0100
+Message-ID: <874je4lf3t.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: OcJbSNCsgann8IMaQJ7_ZC3H5KvMPKw2
-X-Proofpoint-ORIG-GUID: ZsPDBsHoUJWjoHL68icBY7QK8rhVq4PW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-19_07,2024-02-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- mlxlogscore=866 lowpriorityscore=0 adultscore=0 priorityscore=1501
- mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402190079
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=maddy@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 19 Feb 2024 09:10:00 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,91 +87,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently in tcg mode, when reading from power10 pmu spr like MMCR3,
-qemu logs this message (when starting qemu with -d guest_errors)
+Maksim Davydov <davydov-max@yandex-team.ru> writes:
 
-	Trying to read invalid spr 754 (0x2f2) at 0000000030056bb0
+> To control that creating new machine type doesn't affect the previous
+> types (their compat_props) and to check complex compat_props inheritance
+> we need qmp command to print machine type compatibility properties.
+> This patch adds the ability to get list of all the compat_props of the
+> corresponding supported machines for their comparison via new optional
+> argument of "query-machines" command.
 
-This is becuase, no read/write call-backs are registered for
-these SPRs. Add support to register generic read/write
-functions to these power10 pmu sprs to fix it.
+Rationale for the argument, please.  You actually provided it during
+review of v6: the additional output is hundreds of KiB.  I then asked
+you to explain this briefly in the commit message, with suggested text:
+"Since information on compatibility properties can increase the command
+output by a factor of 40, add an argument to enable it, default off."
 
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
----
- target/ppc/cpu.h      |  6 ++++++
- target/ppc/cpu_init.c | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+I still wonder whether a separate command would be better than
+complicating query-machines.
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index a44de22ca4..e5d0c8a5ee 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1933,6 +1933,12 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_BOOKE_TLB2CFG     (0x2B2)
- #define SPR_BOOKE_TLB3CFG     (0x2B3)
- #define SPR_BOOKE_EPR         (0x2BE)
-+#define SPR_POWER_USIER2      (0x2E0)
-+#define SPR_POWER_USIER3      (0x2E1)
-+#define SPR_POWER_UMMCR3      (0x2E2)
-+#define SPR_POWER_SIER2       (0x2F0)
-+#define SPR_POWER_SIER3       (0x2F1)
-+#define SPR_POWER_MMCR3       (0x2F2)
- #define SPR_PERF0             (0x300)
- #define SPR_RCPU_MI_RBA0      (0x300)
- #define SPR_MPC_MI_CTR        (0x300)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 9931372a08..d64da75a61 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5308,6 +5308,38 @@ static void register_power8_pmu_user_sprs(CPUPPCState *env)
-                  0x00000000);
- }
- 
-+static void register_power10_pmu_sup_sprs(CPUPPCState *env)
-+{
-+    spr_register_kvm(env, SPR_POWER_MMCR3, "MMCR3",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic,
-+                     KVM_REG_PPC_MMCR3, 0x00000000);
-+    spr_register_kvm(env, SPR_POWER_SIER2, "SIER2",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic,
-+                     KVM_REG_PPC_SIER2, 0x00000000);
-+    spr_register_kvm(env, SPR_POWER_SIER3, "SIER3",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic,
-+                     KVM_REG_PPC_SIER3, 0x00000000);
-+}
-+
-+static void register_power10_pmu_user_sprs(CPUPPCState *env)
-+{
-+    spr_register(env, SPR_POWER_UMMCR3, "UMMCR3",
-+                 &spr_read_generic, &spr_write_generic,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    spr_register(env, SPR_POWER_USIER2, "USIER2",
-+                 &spr_read_generic, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    spr_register(env, SPR_POWER_USIER3, "USIER3",
-+                 &spr_read_generic, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+}
-+
- static void register_power5p_ear_sprs(CPUPPCState *env)
- {
-     /* External access control */
-@@ -6505,6 +6537,8 @@ static void init_proc_POWER10(CPUPPCState *env)
-     register_power9_mmu_sprs(env);
-     register_power10_hash_sprs(env);
-     register_power10_dexcr_sprs(env);
-+    register_power10_pmu_sup_sprs(env);
-+    register_power10_pmu_user_sprs(env);
- 
-     /* FIXME: Filter fields properly based on privilege level */
-     spr_register_kvm_hv(env, SPR_PSSCR, "PSSCR", NULL, NULL, NULL, NULL,
--- 
-2.43.0
+> Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
+> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  hw/core/machine-qmp-cmds.c  | 23 ++++++++++++-
+>  qapi/machine.json           | 64 +++++++++++++++++++++++++++++++++++--
+>  tests/qtest/fuzz/qos_fuzz.c |  2 +-
+>  3 files changed, 85 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+> index 3860a50c3b..a49d0dc362 100644
+> --- a/hw/core/machine-qmp-cmds.c
+> +++ b/hw/core/machine-qmp-cmds.c
+> @@ -66,7 +66,8 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
+>      return head;
+>  }
+>  
+> -MachineInfoList *qmp_query_machines(Error **errp)
+> +MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
+> +                                    Error **errp)
+>  {
+>      GSList *el, *machines = object_class_get_list(TYPE_MACHINE, false);
+>      MachineInfoList *mach_list = NULL;
+> @@ -98,6 +99,26 @@ MachineInfoList *qmp_query_machines(Error **errp)
+>              info->default_ram_id = g_strdup(mc->default_ram_id);
+>          }
+>  
+> +        if (compat_props && mc->compat_props) {
+> +            int i;
+> +            info->compat_props = NULL;
+> +            CompatPropertyList **tail = &(info->compat_props);
+> +            info->has_compat_props = true;
+> +
+> +            for (i = 0; i < mc->compat_props->len; i++) {
+> +                GlobalProperty *mt_prop = g_ptr_array_index(mc->compat_props,
+> +                                                            i);
+> +                CompatProperty *prop;
+> +
+> +                prop = g_malloc0(sizeof(*prop));
+> +                prop->driver = g_strdup(mt_prop->driver);
+> +                prop->property = g_strdup(mt_prop->property);
+> +                prop->value = g_strdup(mt_prop->value);
+> +
+> +                QAPI_LIST_APPEND(tail, prop);
+> +            }
+> +        }
+> +
+>          QAPI_LIST_PREPEND(mach_list, info);
+>      }
+>  
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index b6d634b30d..15a1d62f42 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -135,6 +135,29 @@
+>  ##
+>  { 'command': 'query-cpus-fast', 'returns': [ 'CpuInfoFast' ] }
+>  
+> +##
+> +# @CompatProperty:
+> +#
+> +# Machine type compatibility property that uses in machine
+> +# definitions to specify default values.  It's based on representaion
+> +# of properties in QEMU and created for machine type comparing
+> +# (see scripts/compare-machine-types.py)
+
+Suggest
+
+   # Property default values specific to a machine type, for use by
+   # scripts/compare-machine-types.
+
+> +#
+> +# @driver: name of the driver which default value of certain property
+> +#     is changed in the machine type
+
+Let's name this @qom-type.  Yes, I know it's called @driver in struct
+GlobalProperty, but it has become a QOM type name.  Since object-add
+calls it qom-type, so should query-machines.
+
+> +#
+> +# @property: property name
+> +#
+> +# @value: property value that will be assigned as default to
+> +#     the driver by machine type
+
+Suggest
+
+   # @qom-type: name of the QOM type to which the default applies
+   #
+   # @property: name of its property to which the default applies
+   #
+   # @value: the default value
+
+This is still rather terse.  For instance, it doesn't explain that
+machine-specific defaults override the "default" default, and how to
+query that "default" default.  It'll do for an experimental interface.
+
+> +#
+> +# Since: 9.0
+> +##
+> +{ 'struct': 'CompatProperty',
+> +  'data': { 'driver': 'str',
+> +            'property': 'str',
+> +            'value': 'str' } }
+> +
+>  ##
+>  # @MachineInfo:
+>  #
+> @@ -166,6 +189,13 @@
+>  #
+>  # @acpi: machine type supports ACPI (since 8.0)
+>  #
+> +# @compat-props: List of the machine type's compatibility properties.
+> +#     (since 9.0)
+
+Let's scratch "List of".
+
+Must tell when the member is present.
+
+Taken together:
+
+   # @compat-props: The machine type's compatibility properties.  Only
+   #     present when query-machines argument @compat-props is true.
+   #     (since 9.0)
+
+> +#
+> +# Features:
+> +#
+> +# @unstable: Member @compat-props is experimental.
+> +#
+>  # Since: 1.2
+>  ##
+>  { 'struct': 'MachineInfo',
+> @@ -173,18 +203,48 @@
+>              '*is-default': 'bool', 'cpu-max': 'int',
+>              'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
+>              'deprecated': 'bool', '*default-cpu-type': 'str',
+> -            '*default-ram-id': 'str', 'acpi': 'bool' } }
+> +            '*default-ram-id': 'str', 'acpi': 'bool',
+> +            '*compat-props': { 'type': ['CompatProperty'],
+> +                               'features': ['unstable'] } } }
+>  
+>  ##
+>  # @query-machines:
+>  #
+>  # Return a list of supported machines
+>  #
+> +# @compat-props: if true return will contain information about
+> +#     machine type compatibility properties (since 9.0)
+
+Missing: (default false)
+
+Perhaps
+
+   # @compat-props: if true, also return compatibility properties.
+   #     (default false)
+
+> +#
+>  # Returns: a list of MachineInfo
+>  #
+>  # Since: 1.2
+> +#
+> +# Example:
+> +#
+> +# -> { "execute": "query-machines", "arguments": { "compat-props": true } }
+> +# <- { "return": [
+> +#          {
+> +#              "hotpluggable-cpus": true,
+> +#              "name": "pc-q35-6.2",
+> +#              "compat-props": [
+> +#                  {
+> +#                      "driver": "virtio-mem",
+> +#                      "property": "unplugged-inaccessible",
+> +#                      "value": "off"
+> +#                   }
+> +#               ],
+> +#               "numa-mem-supported": false,
+> +#               "default-cpu-type": "qemu64-x86_64-cpu",
+> +#               "cpu-max": 288,
+> +#               "deprecated": false,
+> +#               "default-ram-id": "pc.ram"
+> +#           },
+> +#           ...
+> +#    }
+>  ##
+> -{ 'command': 'query-machines', 'returns': ['MachineInfo'] }
+> +{ 'command': 'query-machines',
+> +  'data': { '*compat-props': 'bool' },
+
+Make that
+
+     'data': { '*compat-props': { 'type': 'bool',
+                                  'features': [ 'unstable' ] } },
+
+and add
+
+   # Features:
+   #
+   # @unstable: Argument @compat-props is experimental.
+   #
+
+to the doc comment.
+
+> +  'returns': ['MachineInfo'] }
+>  
+>  ##
+>  # @CurrentMachineParams:
+> diff --git a/tests/qtest/fuzz/qos_fuzz.c b/tests/qtest/fuzz/qos_fuzz.c
+> index e403d373a0..b71e945c5f 100644
+> --- a/tests/qtest/fuzz/qos_fuzz.c
+> +++ b/tests/qtest/fuzz/qos_fuzz.c
+> @@ -46,7 +46,7 @@ static void qos_set_machines_devices_available(void)
+>      MachineInfoList *mach_info;
+>      ObjectTypeInfoList *type_info;
+>  
+> -    mach_info = qmp_query_machines(&error_abort);
+> +    mach_info = qmp_query_machines(false, false, &error_abort);
+>      machines_apply_to_node(mach_info);
+>      qapi_free_MachineInfoList(mach_info);
 
 
