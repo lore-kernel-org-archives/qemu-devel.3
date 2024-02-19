@@ -4,70 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDBFC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 20:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC97C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 20:31:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcA6T-0000XQ-Ha; Mon, 19 Feb 2024 15:19:05 -0500
+	id 1rcAHO-0002b6-0J; Mon, 19 Feb 2024 15:30:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rcA6O-0000Ut-LJ; Mon, 19 Feb 2024 15:19:00 -0500
-Received: from zproxy1.enst.fr ([137.194.2.220])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rcAHJ-0002Yg-E2; Mon, 19 Feb 2024 15:30:18 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1rcA6M-0007K4-Ne; Mon, 19 Feb 2024 15:19:00 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id 4A6F6C05B3;
- Mon, 19 Feb 2024 21:18:57 +0100 (CET)
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 1LaT-nSZfeSc; Mon, 19 Feb 2024 21:18:56 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy1.enst.fr (Postfix) with ESMTP id A9497C05BE;
- Mon, 19 Feb 2024 21:18:56 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr A9497C05BE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1708373936;
- bh=fvTA+lCa5pOv8L9/R8qP9VgXl/UlVuCvmYc4FO0wwFs=;
- h=From:To:Date:Message-Id:MIME-Version;
- b=nhn2WuPCt2aTz8Z3aLzf6BoEG0ReDVMtIW4qG/jS+NpXsqCrnGX9CNXxYsaQmGElf
- +QlfrSYWlZH9T2NP/wUYSe4PUb1br6wqKhk7AOvVLPu4Bwu49JPAIAu7vS/MA1+H4g
- U1+kzohh++9dD+mnnDBXVhRNi7wqBtFpwejpac8A=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy1.enst.fr ([IPv6:::1])
- by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id 7T3xTtWiDRcD; Mon, 19 Feb 2024 21:18:56 +0100 (CET)
-Received: from AM-Inspiron-3585.. (cust-west-par-46-193-4-103.cust.wifirst.net
- [46.193.4.103])
- by zproxy1.enst.fr (Postfix) with ESMTPSA id 361EAC05B3;
- Mon, 19 Feb 2024 21:18:56 +0100 (CET)
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Subject: [PATCH v5 8/8] Add tests for the STM32L4x5_RCC
-Date: Mon, 19 Feb 2024 21:09:08 +0100
-Message-Id: <20240219200908.49551-9-arnaud.minier@telecom-paris.fr>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
-References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rcAHF-0001pz-NG; Mon, 19 Feb 2024 15:30:16 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D128F4E6006;
+ Mon, 19 Feb 2024 21:30:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id O2NW_5sJ4Ec0; Mon, 19 Feb 2024 21:30:06 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 8AF8F4E6003; Mon, 19 Feb 2024 21:30:06 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v2] docs/system/ppc: Document running Linux on AmigaNG machines
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.220;
- envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy1.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>, clg@kaod.org
+Message-Id: <20240219203006.8AF8F4E6003@zero.eik.bme.hu>
+Date: Mon, 19 Feb 2024 21:30:06 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,257 +61,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tests:
-- the ability to change the sysclk of the device
-- the ability to enable/disable/configure the PLLs
-- if the clock multiplexers work
-- the register flags and the generation of irqs
+Documentation on how to run Linux on the amigaone, pegasos2 and
+sam460ex machines is currently buried in the depths of the qemu-devel
+mailing list and in the source code. Let's collect the information in
+the QEMU handbook for a one stop solution.
 
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-Acked-by: Thomas Huth <thuth@redhat.com>
+Co-authored-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- tests/qtest/meson.build          |   3 +-
- tests/qtest/stm32l4x5_rcc-test.c | 207 +++++++++++++++++++++++++++++++
- 2 files changed, 209 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/stm32l4x5_rcc-test.c
+v2:
+Move top level title one level up so subsections will be below it in TOC
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 84a055a7d9..36f85c8920 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -201,7 +201,8 @@ qtests_aspeed =3D \
-=20
- qtests_stm32l4x5 =3D \
-   ['stm32l4x5_exti-test',
--   'stm32l4x5_syscfg-test']
-+   'stm32l4x5_syscfg-test',
-+   'stm32l4x5_rcc-test']
-=20
- qtests_arm =3D \
-   (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) =
-+ \
-diff --git a/tests/qtest/stm32l4x5_rcc-test.c b/tests/qtest/stm32l4x5_rcc=
--test.c
+ MAINTAINERS                 |   1 +
+ docs/system/ppc/amigang.rst | 161 ++++++++++++++++++++++++++++++++++++
+ docs/system/target-ppc.rst  |   1 +
+ 3 files changed, 163 insertions(+)
+ create mode 100644 docs/system/ppc/amigang.rst
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7d61fb9319..0aef8cb2a6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1562,6 +1562,7 @@ F: hw/rtc/m41t80.c
+ F: pc-bios/canyonlands.dt[sb]
+ F: pc-bios/u-boot-sam460ex-20100605.bin
+ F: roms/u-boot-sam460ex
++F: docs/system/ppc/amigang.rst
+ 
+ pegasos2
+ M: BALATON Zoltan <balaton@eik.bme.hu>
+diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
 new file mode 100644
-index 0000000000..4157291052
+index 0000000000..738decd0c5
 --- /dev/null
-+++ b/tests/qtest/stm32l4x5_rcc-test.c
-@@ -0,0 +1,207 @@
-+/*
-+ * QTest testcase for STM32L4x5_RCC
-+ *
-+ * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-+ * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-+ * See the COPYING file in the top-level directory.
-+ */
++++ b/docs/system/ppc/amigang.rst
+@@ -0,0 +1,161 @@
++=========================================================
++AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
++=========================================================
 +
-+#include "qemu/osdep.h"
-+#include "hw/registerfields.h"
-+#include "libqtest-single.h"
-+#include "hw/misc/stm32l4x5_rcc_internals.h"
++These PowerPC machines emulate boards that are primarily used for
++running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
++also run Linux which is what this section documents.
 +
-+#define RCC_BASE_ADDR 0x40021000
-+#define NVIC_ISER 0xE000E100
-+#define NVIC_ISPR 0xE000E200
-+#define NVIC_ICPR 0xE000E280
-+#define RCC_IRQ 5
++Eyetech AmigaOne/Mai Logic Teron (``amigaone``)
++===============================================
 +
-+static void enable_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ISER, 1 << n);
-+}
++The ``amigaone`` machine emulates an AmigaOne XE mainboard by Eyetech
++which is a rebranded Mai Logic Teron board with modified U-Boot
++firmware to support AmigaOS 4.
 +
-+static void unpend_nvic_irq(unsigned int n)
-+{
-+    writel(NVIC_ICPR, 1 << n);
-+}
++Emulated devices
++----------------
 +
-+static bool check_nvic_pending(unsigned int n)
-+{
-+    return readl(NVIC_ISPR) & (1 << n);
-+}
++ * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750gx``)
++ * Articia S north bridge
++ * VIA VT82C686B south bridge
++ * PCI VGA compatible card (guests may need other card instead)
++ * PS/2 keyboard and mouse
 +
-+static bool qts_wait_for_flag(QTestState *qts, uint32_t event_addr,
-+                              uint32_t flag, uint32_t value)
-+{
-+    /* Wait at most 5 seconds */
-+    for (int i =3D 0; i < 5000; i++) {
-+        if ((qtest_readl(qts, event_addr) & flag) =3D=3D value) {
-+            return true;
-+        }
-+        g_usleep(1000);
-+    }
++Firmware
++--------
 +
-+    return false;
-+}
++A firmware binary is necessary for the boot process. It is a modified
++U-Boot under GPL but its source is lost so it cannot be included in
++QEMU. A binary is available at
++https://www.hyperion-entertainment.com/index.php/downloads?view=files&parent=28.
++The ROM image is in the last 512kB which can be extracted with the
++following command:
 +
-+static bool rcc_wait_for_flag(uint32_t event_addr, uint32_t flag,
-+                              uint32_t value)
-+{
-+    return qts_wait_for_flag(global_qtest, RCC_BASE_ADDR + event_addr, f=
-lag, value);
-+}
++.. code-block:: bash
 +
-+static void rcc_writel(unsigned int offset, uint32_t value)
-+{
-+    writel(RCC_BASE_ADDR + offset, value);
-+}
++  $ tail -c 524288 updater.image > u-boot-amigaone.bin
 +
-+static uint32_t rcc_readl(unsigned int offset)
-+{
-+    return readl(RCC_BASE_ADDR + offset);
-+}
++The BIOS emulator in the firmware is unable to run QEMU‘s standard
++vgabios so ``VGABIOS-lgpl-latest.bin`` is needed instead which can be
++downloaded from http://www.nongnu.org/vgabios.
 +
-+static void test_init_msi(void)
-+{
-+    /* MSIRANGE can be set only when MSI is OFF or READY */
-+    rcc_writel(A_CR, R_CR_MSION_MASK);
-+    /* Wait until MSI is stable */
-+    g_assert_true(rcc_wait_for_flag(A_CR, R_CR_MSIRDY_MASK, R_CR_MSIRDY_=
-MASK));
-+    /* TODO find a way to test MSI value */
-+}
++Running Linux
++-------------
 +
-+static void test_set_msi_as_sysclk(void)
-+{
-+    /* Clocking from MSI, in case MSI was not the default source */
-+    rcc_writel(A_CFGR, 0);
-+    /* Wait until MSI is selected and stable */
-+    g_assert_true(rcc_wait_for_flag(A_CFGR, R_CFGR_SWS_MASK, 0));
-+}
++There are some Linux images under the following link that work on the
++``amigaone`` machine:
++https://sourceforge.net/projects/amigaone-linux/files/debian-installer/.
++To boot the system run:
 +
-+static void test_init_pll(void)
-+{
-+    uint32_t value;
++.. code-block:: bash
 +
-+    /*
-+     * Update PLL and set MSI as the source clock.
-+     * PLLM =3D 1 --> 000
-+     * PLLN =3D 40 --> 40
-+     * PPLLR =3D 2 --> 00
-+     * PLLDIV =3D unused, PLLP =3D unused (SAI3), PLLQ =3D unused (48M1)
-+     * SRC =3D MSI --> 01
-+     */
-+    rcc_writel(A_PLLCFGR, R_PLLCFGR_PLLREN_MASK |
-+            (40 << R_PLLCFGR_PLLN_SHIFT) |
-+            (0b01 << R_PLLCFGR_PLLSRC_SHIFT));
++  $ qemu-system-ppc -machine amigaone -bios u-boot-amigaone.bin \
++                    -cdrom "A1 Linux Net Installer.iso" \
++                    -device ati-vga,model=rv100,romfile=VGABIOS-lgpl-latest.bin
 +
-+    /* PLL activation */
-+    value =3D rcc_readl(A_CR);
-+    rcc_writel(A_CR, value | R_CR_PLLON_MASK);
++From the firmware menu that appears select ``Boot sequence`` →
++``Amiga Multiboot Options`` and set ``Boot device 1`` to
++``Onboard VIA IDE CDROM``. Then hit escape until the main screen appears again,
++hit escape once more and from the exit menu that appears select either
++``Save settings and exit`` or ``Use settings for this session only``. It may
++take a long time loading the kernel into memory but eventually it boots and the
++installer becomes visible. The ``ati-vga`` RV100 emulation is not
++complete yet so only frame buffer works, DRM and 3D is not available.
 +
-+    /* Waiting for PLL lock. */
-+    g_assert_true(rcc_wait_for_flag(A_CR, R_CR_PLLRDY_MASK, R_CR_PLLRDY_=
-MASK));
++Genesi/bPlan Pegasos II (``pegasos2``)
++======================================
 +
-+    /* Switches on the PLL clock source */
-+    value =3D rcc_readl(A_CFGR);
-+    rcc_writel(A_CFGR, (value & ~R_CFGR_SW_MASK) |
-+        (0b11 << R_CFGR_SW_SHIFT));
++The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
++designed by bPlan. Its schematics are available at
++https://www.powerdeveloper.org/platforms/pegasos/schematics
 +
-+    /* Wait until SYSCLK is stable. */
-+    g_assert_true(rcc_wait_for_flag(A_CFGR, R_CFGR_SWS_MASK,
-+        (0b11 << R_CFGR_SWS_SHIFT)));
-+}
++Emulated devices
++----------------
 +
-+static void test_activate_lse(void)
-+{
-+    /* LSE activation, no LSE Bypass */
-+    rcc_writel(A_BDCR, R_BDCR_LSEDRV_MASK | R_BDCR_LSEON_MASK);
-+    g_assert_true(rcc_wait_for_flag(A_BDCR, R_BDCR_LSERDY_MASK, R_BDCR_L=
-SERDY_MASK));
-+}
++ * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
++ * Marvell MV64361 Discovery II north bridge
++ * VIA VT8231 south bridge
++ * PCI VGA compatible card (guests may need other card instead)
++ * PS/2 keyboard and mouse
 +
-+static void test_irq(void)
-+{
-+    enable_nvic_irq(RCC_IRQ);
++Firmware
++--------
 +
-+    rcc_writel(A_CIER, R_CIER_LSIRDYIE_MASK);
-+    rcc_writel(A_CSR, R_CSR_LSION_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_LSIRDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
++The Pegasos II board has an Open Firmware compliant ROM based on
++SmartFirmware but it has some changes that are not open sourced
++therefore the ROM binary cannot be included in QEMU. An updater was
++available from bPlan, it can be found here:
++http://web.archive.org/web/20071021223056/http://www.bplan-gmbh.de/up050404/up050404
++The ROM image can be extracted from it with the following command:
 +
-+    rcc_writel(A_CIER, R_CIER_LSERDYIE_MASK);
-+    rcc_writel(A_BDCR, R_BDCR_LSEON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_LSERDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
++.. code-block:: bash
 +
-+    /*
-+     * MSI has been enabled by previous tests,
-+     * shouln't generate an interruption.
-+     */
-+    rcc_writel(A_CIER, R_CIER_MSIRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_MSION_MASK);
-+    g_assert_false(check_nvic_pending(RCC_IRQ));
++  $ tail -c +85581 up050404 | head -c 524288 > pegasos2.rom
 +
-+    rcc_writel(A_CIER, R_CIER_HSIRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_HSION_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_HSIRDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
++Running Linux
++-------------
 +
-+    rcc_writel(A_CIER, R_CIER_HSERDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_HSEON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_HSERDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
++The PowerPC version of Debian 8.11 supported Pegasos II. The BIOS
++emulator in the firmware binary is unable to run QEMU‘s standard
++vgabios so it needs to be disabled. To boot the system run:
 +
-+    /*
-+     * PLL has been enabled by previous tests,
-+     * shouln't generate an interruption.
-+     */
-+    rcc_writel(A_CIER, R_CIER_PLLRDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLON_MASK);
-+    g_assert_false(check_nvic_pending(RCC_IRQ));
++.. code-block:: bash
 +
-+    rcc_writel(A_CIER, R_CIER_PLLSAI1RDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLSAI1ON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_PLLSAI1RDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
++  $ qemu-system-ppc -machine pegasos2 -bios pegasos2.rom \
++                    -cdrom debian-8.11.0-powerpc-netinst.iso \
++                    -device VGA,romfile="" -serial stdio
 +
-+    rcc_writel(A_CIER, R_CIER_PLLSAI2RDYIE_MASK);
-+    rcc_writel(A_CR, R_CR_PLLSAI2ON_MASK);
-+    g_assert_true(check_nvic_pending(RCC_IRQ));
-+    rcc_writel(A_CICR, R_CICR_PLLSAI2RDYC_MASK);
-+    unpend_nvic_irq(RCC_IRQ);
-+}
++At the firmware ``ok`` prompt enter ``boot cd install/pegasos``.
 +
-+int main(int argc, char **argv)
-+{
-+    int ret;
++Alternatively it is possible to boot the kernel directly without
++firmware ROM using the QEMU built in minimal Virtual Open Firmware
++(VOF) emulation which is also supported on ``pegasos2``. For this,
++extract the kernel ``install/powerpc/vmlinuz-chrp.initrd`` from the CD
++image then run:
 +
-+    g_test_init(&argc, &argv, NULL);
-+    g_test_set_nonfatal_assertions();
-+    /*
-+     * These test separately that we can enable the plls, change the sys=
-clk,
-+     * and enable different devices.
-+     * They are dependent on one another.
-+     */
-+    qtest_add_func("stm32l4x5/rcc/init_msi", test_init_msi);
-+    qtest_add_func("stm32l4x5/rcc/set_msi_as_sysclk",
-+        test_set_msi_as_sysclk);
-+    qtest_add_func("stm32l4x5/rcc/activate_lse", test_activate_lse);
-+    qtest_add_func("stm32l4x5/rcc/init_pll", test_init_pll);
++.. code-block:: bash
 +
-+    qtest_add_func("stm32l4x5/rcc/irq", test_irq);
++  $ qemu-system-ppc -machine pegasos2 -serial stdio \
++                    -kernel vmlinuz-chrp.initrd -append "---" \
++                    -cdrom debian-8.11.0-powerpc-netinst.iso
 +
-+    qtest_start("-machine b-l475e-iot01a");
-+    ret =3D g_test_run();
-+    qtest_end();
++aCube Sam460ex (``sam460ex``)
++=============================
 +
-+    return ret;
-+}
---=20
-2.34.1
++The ``sam460ex`` machine emulates the Sam460ex board by aCube which is
++based on the AMCC PowerPC 460EX SoC (that despite its name has a
++PPC440 CPU core).
++
++Firmware
++--------
++
++The board has a firmware based on an older U-Boot version with
++modifications to support booting AmigaOS 4. The firmware ROM is
++included with QEMU.
++
++Emulated devices
++----------------
++
++ * PowerPC 460EX SoC
++ * M41T80 serial RTC chip
++ * Silicon Motion SM501 display parts (identical to SM502 on real board)
++ * Silicon Image SiI3112 2 port SATA controller
++ * USB keyboard and mouse
++
++Running Linux
++-------------
++
++The only Linux distro that supported Sam460ex out of box was CruxPPC
++2.x. It can be booted by running:
++
++.. code-block:: bash
++
++  $ qemu-system-ppc -machine sam460ex -serial stdio \
++                    -drive if=none,id=cd,format=raw,file=crux-ppc-2.7a.iso \
++                    -device ide-cd,drive=cd,bus=ide.1
++
++There are some other kernels and instructions for booting other
++distros on aCube's product page at
++https://www.acube-systems.biz/index.php?page=hardware&pid=5
++but those are untested.
+diff --git a/docs/system/target-ppc.rst b/docs/system/target-ppc.rst
+index 4f6eb93b17..87bf412ce5 100644
+--- a/docs/system/target-ppc.rst
++++ b/docs/system/target-ppc.rst
+@@ -17,6 +17,7 @@ help``.
+ .. toctree::
+    :maxdepth: 1
+ 
++   ppc/amigang
+    ppc/embedded
+    ppc/powermac
+    ppc/powernv
+-- 
+2.30.9
 
 
