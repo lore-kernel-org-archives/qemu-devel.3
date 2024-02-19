@@ -4,85 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D883DC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 12:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 386D3C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 12:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc34U-000790-70; Mon, 19 Feb 2024 07:48:34 -0500
+	id 1rc34y-0007UJ-Nr; Mon, 19 Feb 2024 07:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc34T-00078s-BO
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 07:48:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rc34w-0007N7-J1; Mon, 19 Feb 2024 07:49:02 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rc34R-0007MG-P4
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 07:48:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708346910;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8QcQdbJQiRwyXUf1YN0AAQ3gmNVsZVc4jKp1T43zkGs=;
- b=hGDpuIc6YGPGCXzafH2KfL2zfOwUUJjsBuRsxz+nOMWCKGjZTlE1lSj6CSnVwNy23+QmNu
- OuS1sIrckbzsJxnw1YerpcWuE6MkfJvWO4GLFj3GZi4pGt4YZlcqRRO1Hxd8OTRsHjEUXv
- K+WcR5ZPqbgKVVIQkJ/0beSV2ZwSLDc=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-166-kw20aGcYNy--qNOwiAH3Uw-1; Mon, 19 Feb 2024 07:48:27 -0500
-X-MC-Unique: kw20aGcYNy--qNOwiAH3Uw-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0C6EE185A780;
- Mon, 19 Feb 2024 12:48:26 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C699CC185C0;
- Mon, 19 Feb 2024 12:48:25 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B222321E6740; Mon, 19 Feb 2024 13:48:24 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  David Hildenbrand
- <david@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Peter Xu
- <peterx@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Marcelo Tosatti
- <mtosatti@redhat.com>,  qemu-devel@nongnu.org,  kvm@vger.kernel.org,
- Michael Roth <michael.roth@amd.com>,  Sean Christopherson
- <seanjc@google.com>,  Claudio Fontana <cfontana@suse.de>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Isaku Yamahata <isaku.yamahata@gmail.com>,  Chenyi
- Qiang <chenyi.qiang@intel.com>
-Subject: Re: [PATCH v4 29/66] i386/tdx: Support user configurable
- mrconfigid/mrowner/mrownerconfig
-In-Reply-To: <20240125032328.2522472-30-xiaoyao.li@intel.com> (Xiaoyao Li's
- message of "Wed, 24 Jan 2024 22:22:51 -0500")
-References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
- <20240125032328.2522472-30-xiaoyao.li@intel.com>
-Date: Mon, 19 Feb 2024 13:48:24 +0100
-Message-ID: <875xykfwmf.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rc34u-0007OW-GX; Mon, 19 Feb 2024 07:49:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=oJGPiRT63+hXY9RNoSTiKodQ4PAZPM7uwa2SnQiaCP0=; b=fqsWckxXc/rbC1kgLWQQkiTbzP
+ 5sDtVVh0r3Dqkzm+K8VfKkr3s2fA0LZqARTLvG3Ly2TU9mDTCWZROFkY2/0CLBKHIlc1/RlNjtxgr
+ liss5BU3Y041/fu64MRiZQE6tMElUnOPgBGO/KXfsfPq3TWPlh9wWTqZrGG55B4RKIAA2Bi3XXrYu
+ gKlOUdvdD2TVThvtt4BvzGcEayqtWW6AvqTfDS0yR1loqcDTmtoaQ0plYY0HZEBg95cPqp5wtKprh
+ jSZVaxNFlk9edr2OtfgjtneacxLuqJUG+gBwdt0IBf/hY0DaOzotOaZtK3SejKf49BwXz3ZTtKSJi
+ 7o7p+WGTNLPZ0WN5efQzVlh3z5x19iFMfeF0v2P5eIm5rHXk8Ek+zN5lwmAVuQ2+rnNWbMvNqlFH/
+ YcJsSvOR9lcbrg103ymUJ6+0AZmGkLRD+2+jLso15g3R518sw3JJSs8LbJH5Zs8MTVVp2xPwzBnS7
+ EJusgBDb+TbvZJWUY+2OuwITfHPd94cKcUeKvkBE2k4+lgA4AudTnELKA9dGs1GJITAvvtMfI0Kh6
+ ALYo9VbpSW0fKsIYuXojoVeAZ7jRJNPzJZxZgWPOMgG8s/9fhImGkMz1IEXWYIALfJkuIGQDaIDwS
+ JjZKPf+RNn0DIDhLs5gi7G6OsXXKADnlKU8P54ziM=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rc345-0001rZ-KD; Mon, 19 Feb 2024 12:48:13 +0000
+Message-ID: <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
+Date: Mon, 19 Feb 2024 12:48:48 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+To: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20240216153517.49422-1-philmd@linaro.org>
+ <20240216153517.49422-2-philmd@linaro.org>
+ <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
+ <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
+ <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
+ <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
+ <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
+ <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,91 +119,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Xiaoyao Li <xiaoyao.li@intel.com> writes:
+On 19/02/2024 12:00, BALATON Zoltan wrote:
 
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
->
-> Three sha384 hash values, mrconfigid, mrowner and mrownerconfig, of a TD
-> can be provided for TDX attestation. Detailed meaning of them can be
-> found: https://lore.kernel.org/qemu-devel/31d6dbc1-f453-4cef-ab08-4813f4e=
-0ff92@intel.com/
->
-> Allow user to specify those values via property mrconfigid, mrowner and
-> mrownerconfig. They are all in base64 format.
->
-> example
-> -object tdx-guest, \
->   mrconfigid=3DASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRW=
-eJq83v,\
->   mrowner=3DASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRWeJq=
-83v,\
->   mrownerconfig=3DASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wE=
-jRWeJq83v
->
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->
-> ---
-> Changes in v4:
->  - describe more of there fields in qom.json
->  - free the old value before set new value to avoid memory leak in
->    _setter(); (Daniel)
->
-> Changes in v3:
->  - use base64 encoding instread of hex-string;
-> ---
->  qapi/qom.json         | 14 ++++++-
->  target/i386/kvm/tdx.c | 87 +++++++++++++++++++++++++++++++++++++++++++
->  target/i386/kvm/tdx.h |  3 ++
->  3 files changed, 103 insertions(+), 1 deletion(-)
->
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 2177f3101382..15445f9e41fc 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -905,10 +905,22 @@
->  #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
->  #     be set, otherwise they refuse to boot.
->  #
-> +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
-> +#     e.g., run-time or OS configuration.  base64 encoded SHA384 digest.
+> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+>> On 19/2/24 12:27, BALATON Zoltan wrote:
+>>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>> On 16/2/24 20:54, Philippe Mathieu-Daudé wrote:
+>>>>> On 16/2/24 18:14, BALATON Zoltan wrote:
+>>>>>> On Fri, 16 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>>>>> We want to set another qdev property (a link) for the pl110
+>>>>>>> and pl111 devices, we can not use sysbus_create_simple() which
+>>>>>>> only passes sysbus base address and IRQs as arguments. Inline
+>>>>>>> it so we can set the link property in the next commit.
+>>>>>>>
+>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>> ---
+>>>>>>> hw/arm/realview.c    |  5 ++++-
+>>>>>>> hw/arm/versatilepb.c |  6 +++++-
+>>>>>>> hw/arm/vexpress.c    | 10 ++++++++--
+>>>>>>> 3 files changed, 17 insertions(+), 4 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+>>>>>>> index 9058f5b414..77300e92e5 100644
+>>>>>>> --- a/hw/arm/realview.c
+>>>>>>> +++ b/hw/arm/realview.c
+>>>>>>> @@ -238,7 +238,10 @@ static void realview_init(MachineState *machine,
+>>>>>>>     sysbus_create_simple("pl061", 0x10014000, pic[7]);
+>>>>>>>     gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
+>>>>>>>
+>>>>>>> -    sysbus_create_simple("pl111", 0x10020000, pic[23]);
+>>>>>>> +    dev = qdev_new("pl111");
+>>>>>>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>>>>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
+>>>>>>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
+>>>>>>
+>>>>>> Not directly related to this patch but this blows up 1 line into 4 just to 
+>>>>>> allow setting a property. Maybe just to keep some simplicity we'd rather need 
+>>>>>> either a sysbus_realize_simple function that takes a sysbus device instead of 
+>>>>>> the name and does not create the device itself or some way to pass properties 
+>>>>>> to sysbus create simple (but the latter may not be easy to do in a generic way 
+>>>>>> so not sure about that). What do you think?
+>>>>>
+>>>>> Unfortunately sysbus doesn't scale in heterogeneous setup.
+>>>>
+>>>> Regarding the HW modelling API complexity you are pointing at, we'd
+>>>> like to move from the current imperative programming paradigm to a
+>>>> declarative one, likely DSL driven. Meanwhile it is being investigated
+>>>> (as part of "Dynamic Machine"), I'm trying to get the HW APIs right
+>>>
+>>> I'm aware of that activity but we're currently still using board code to construct 
+>>> machines and probably will continue to do so for a while. Also because likely not 
+>>> all current machines will be converted to new declarative way so having a 
+>>> convenient API for that is still useful.
+>>>
+>>> (As for the language to describe the devices of a machine and their connections 
+>>> declaratively the device tree does just that but dts is not a very user friendly 
+>>> descrtiption language so I haven't brought that up as a possibility. But you may 
+>>> still could get some clues by looking at the problems it had to solve to at least 
+>>> get a requirements for the machine description language.)
+>>>
+>>>> for heterogeneous emulation. Current price to pay is a verbose
+>>>> imperative QDev API, hoping we'll get later a trivial declarative one
+>>>> (like this single sysbus_create_simple call), where we shouldn't worry
+>>>> about the order of low level calls, whether to use link or not, etc.
+>>>
+>>> Having a detailed low level API does not prevent a more convenient for current use 
+>>> higher level API on top so keeping that around for current machines would allow 
+>>> you to chnage the low level API without having to change all the board codes 
+>>> because you's only need to update the simple high level API.
+>>
+>> So what is your suggestion here, add a new complex helper to keep
+>> a one-line style?
+>>
+>> DeviceState *sysbus_create_simple_dma_link(const char *typename,
+>>                                           hwaddr baseaddr,
+>>                                           const char *linkname,
+>>                                           Object *linkobj,
+>>                                           qemu_irq irq);
+> 
+> I think just having sysbus_realize_simple that does the same as sysbus_create_simple 
+> minus creating the device would be enough because then the cases where you need to 
+> set properties could still use it after qdev_new or init and property_set but hide 
+> the realize and connecting the device behind this single call.
 
-"base64 encoded SHA384" is not a sentence.
+I can't say I'm a fan of sysbus_create_simple() because its use of varargs to 
+populate qdev properties is based upon the assumptions that the properties defined 
+with device_class_set_props() are stored in a list. I can see there could be 
+potential in future to store properties in other structures such as a hash, and 
+keeping this API would prevent this change. FWIW my personal preference would be to 
+remove this API completely.
 
-Double-checking: the data being hashed here is the "non-owner-defined
-configuration of the guest TD", and the resulting hash is the "ID"?
+>> I wonder why this is that important since you never modified
+>> any of the files changed by this series:
+> 
+> For new people trying to contribute to QEMU QDev is overwhelming so having some way 
+> to need less of it to do simple things would help them to get started.
 
-> +#
-> +# @mrowner: ID for the guest TD=E2=80=99s owner.  base64 encoded SHA384 =
-digest.
+It depends what how you define "simple": for QEMU developers most people search for 
+similar examples in the codebase and copy/paste them. I'd much rather have a slightly 
+longer, but consistent API for setting properties rather than coming up with many 
+special case wrappers that need to be maintained just to keep the line count down for 
+"simplicity".
 
-Likewise.
+I think that Phil's approach here is the best one for now, particularly given that it 
+allows us to take another step towards heterogeneous machines. As the work in this 
+area matures it might be that we can consider other approaches, but that's not a 
+decision that can be made right now and so shouldn't be a reason to block this change.
 
-> +#
-> +# @mrownerconfig: ID for owner-defined configuration of the guest TD,
-> +#     e.g., specific to the workload rather than the run-time or OS.
-> +#     base64 encoded SHA384 digest.
 
-Likewise.
+ATB,
 
-> +#
->  # Since: 9.0
->  ##
->  { 'struct': 'TdxGuestProperties',
-> -  'data': { '*sept-ve-disable': 'bool' } }
-> +  'data': { '*sept-ve-disable': 'bool',
-> +            '*mrconfigid': 'str',
-> +            '*mrowner': 'str',
-> +            '*mrownerconfig': 'str' } }
-
-The new members are optional, but their description in the doc comment
-doesn't explain behavior when present vs. behavior when absent.
-
->=20=20
->  ##
->  # @ThreadContextProperties:
-
-[...]
+Mark.
 
 
