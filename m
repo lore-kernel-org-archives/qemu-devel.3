@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89EC3C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:15:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAC6C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc4Q0-0003fm-Nv; Mon, 19 Feb 2024 09:14:52 -0500
+	id 1rc4Ps-0003bd-34; Mon, 19 Feb 2024 09:14:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4Pz-0003ej-8N
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:14:51 -0500
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4Pq-0003YP-8C
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:14:42 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4Pw-0008Sm-2G
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:14:50 -0500
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2d10ad265d5so44735411fa.0
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 06:14:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc4Po-0008SL-Ti
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:14:42 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5649eb3ab68so828635a12.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 06:14:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708352085; x=1708956885; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708352079; x=1708956879; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=daMydCoKKjW/BM3LMOveVy0d9uKVycJYmVQBhTRBuqo=;
- b=LORgC9+N5hXmGsDhZ7T3uVN+cbwxJCT3tMewfvov5Te5q0EXACBqGg+XlGS+4QPTxJ
- 7IpKo+UntF0Fhl6hx/2qmBoJH9rvCn9QP4iOtdD49rqO/SXNM7NFwIYBSwhGcw5szi5K
- bHe09ERo2ZOlE0uNbaXPy3KtqHrDHsf+q+IaSnUIbHDQP9AlrIc6pI9hfmuNjSYq9Fqa
- 0E7fZg7fnL2MfXGk3HzYktT0ya/Np/11KmKSPNM4ZSik0IyLuj+d4BvnGvHd0AgUnXgl
- Xw1+snYUdTapNhHH0NJYC5fqwp0lg8nUNwsVwbKz/5d8RVimeL/W82Rf3ErjHCjrPsqz
- 5bPQ==
+ bh=19+qnM30bgsd9CC9/msvt9m3ig3W+6Jc4ToSCcgfANA=;
+ b=tN9mSXOxKqMxGPk9JDbRT4NSQdDLxtE0kcF4IsJM8iiek+ieWDY7J+VqmlrH4SJuEO
+ Er+TDVuil7/daLrc4wUvD/IkTESLBkfTOTYQlYLCjgYAeGBsDMuEd+CXxPeGVBPgWyCD
+ 9Osxd7yiV+p4l3hsY4PgzuR9eRdc2v9Akf5+74o+xlkoLoIJIsL0k5cWcK5LNmQ8xbXJ
+ FshnemYOpUpH4U9hi35GTHGBPoN1lLcWdZq5MdgeWXC1DK1tdXchs3vxbMXX8NyKH5NT
+ 9fwqraJw23H6VOpVV8h8ln7A6SMo7s+0y4npnlFzv8XcXBqVamAU/IgGPycIVsXrcFgC
+ pLdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708352085; x=1708956885;
+ d=1e100.net; s=20230601; t=1708352079; x=1708956879;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=daMydCoKKjW/BM3LMOveVy0d9uKVycJYmVQBhTRBuqo=;
- b=K0VL0dRkSDCgN+60rQbQXxHAzkBrCO7nDWxt43thDoe1a2UODhHTbZsXFpegllCPjE
- BPoF4kk9kDmdE3RPV60Ji6PJPdlwP4rRzBwEjdpKfdv4hW7tTZwviNTdIT4dw/fPvmpd
- DyhI2E5yKo1cyizBYahfRKr96vrAmi5UlYv+Af/PDueojdNvTS615GwJVhqKwvY2pIkU
- 28DBtP0DdGyT8Cz5Jw5KFGyDe/HXLL8MJQJxMG3nVrSO9OANoIfA7NbA0LzPROwMe9Bi
- NP8QL0FyFmZt/HHzlG6Z+Nwhn0YCTknXoi3LPBAZPXoWTprCB1UDd8hvguC7FscmqkVa
- RSJg==
-X-Gm-Message-State: AOJu0YzEnLmu7g7Xqplthgrn6B5bcDgY1WGi5eh8Zu3YlvWAr6q21zff
- S/GCYINgitjLocb/ldSNHf7dglhFdFKNSRh0j+iIfJa4sdAfHtBxBnOqoQvyPlQ/6ezKC0TMgDb
- F
-X-Google-Smtp-Source: AGHT+IFAilRjevCe6058c9xDUe1XJi/5FzlEXXDLcFbJHJ8YA+aJL7lvfR89+XQEahFnGOMsKmwffg==
-X-Received: by 2002:a05:6512:e8f:b0:512:be57:6dcf with SMTP id
- bi15-20020a0565120e8f00b00512be576dcfmr820919lfb.8.1708352085061; 
- Mon, 19 Feb 2024 06:14:45 -0800 (PST)
+ bh=19+qnM30bgsd9CC9/msvt9m3ig3W+6Jc4ToSCcgfANA=;
+ b=sf0Auo0Z5tgBA73NLw3Yg0zQf7i1qcC0URRH5e/nNGhUPSiMDciCDz7K+OkGSfdtOY
+ oIs+c+QTq+6F5CB0IijsnfJ9+8cyt7wWw3d0CdeLUHcs7NwNgYN1RnVP9eBHpPdui41e
+ CXPWgj7ZYDnzpeQ1Cd2RxASiVQya9L5algYz5DgaerLw+K8GzQWbO0bYXAhyjP18roxR
+ Z8oMXFQGIGpNjqg/4WteMzuySAMbfcrrtwSlmKbjlEalzuQXMusOor9a0e25iLPtJC5k
+ c9523l8eJQKeVSffUMeypOehg9jHDiKodQy+doirKgNwy++jW7Ot8Y3hflPnfiWPm30z
+ ka6g==
+X-Gm-Message-State: AOJu0Yz460xt2+25m9c3jK1GmPqnChLgHT9Y8NpGMNJJrOpkdKJMIlpE
+ UalRCRrM1bswxA0S4GSMRXFT5B21n4DyEaGvNfvkv1hAAB6kH9c7LfjmPrH3farPmbslqVP10BY
+ 0
+X-Google-Smtp-Source: AGHT+IEfAIpgWYiwqp/BrdqT2nlroolynPNqtlPRvFLUOim9tluhVSl8y4FFAeCiTHVTv+jbLdfvVQ==
+X-Received: by 2002:a17:906:f8d6:b0:a3e:998a:14b with SMTP id
+ lh22-20020a170906f8d600b00a3e998a014bmr1766628ejb.47.1708352079412; 
+ Mon, 19 Feb 2024 06:14:39 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.181.220])
  by smtp.gmail.com with ESMTPSA id
- cx1-20020a170907168100b00a3c456b0c0esm2974171ejd.108.2024.02.19.06.14.43
+ vx10-20020a170907a78a00b00a3edb758561sm144542ejc.129.2024.02.19.06.14.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Feb 2024 06:14:44 -0800 (PST)
+ Mon, 19 Feb 2024 06:14:38 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -66,17 +66,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/5] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
-Date: Mon, 19 Feb 2024 15:14:11 +0100
-Message-ID: <20240219141412.71418-6-philmd@linaro.org>
+Subject: [PATCH 4/5] hw/acpi/ich9_tco: Include missing 'migration/vmstate.h'
+ header
+Date: Mon, 19 Feb 2024 15:14:10 +0100
+Message-ID: <20240219141412.71418-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240219141412.71418-1-philmd@linaro.org>
 References: <20240219141412.71418-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"hw/acpi/acpi.h" is implicitly included. Included it
-explicitly to avoid when refactoring headers:
-
-hw/i386/pc_q35.c:209:43: error: use of undeclared identifier 'ACPI_PM_PROP_ACPI_PCIHP_BRIDGE'
-                              ACPI_PM_PROP_ACPI_PCIHP_BRIDGE,
-                              ^
+We need the VMStateDescription structure definition from
+"migration/vmstate.h" in order to declare vmstate_tco_io_sts.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_q35.c | 1 +
+ include/hw/acpi/ich9_tco.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index d346fa3b1d..a91f414922 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -58,6 +58,7 @@
- #include "hw/hyperv/vmbus-bridge.h"
- #include "hw/mem/nvdimm.h"
- #include "hw/i386/acpi-build.h"
-+#include "hw/acpi/acpi.h"
- #include "target/i386/cpu.h"
+diff --git a/include/hw/acpi/ich9_tco.h b/include/hw/acpi/ich9_tco.h
+index c4393caee0..2562a7cf39 100644
+--- a/include/hw/acpi/ich9_tco.h
++++ b/include/hw/acpi/ich9_tco.h
+@@ -11,6 +11,7 @@
+ #define HW_ACPI_TCO_H
  
- /* ICH9 AHCI has 6 ports */
+ #include "exec/memory.h"
++#include "migration/vmstate.h"
+ 
+ /* As per ICH9 spec, the internal timer has an error of ~0.6s on every tick */
+ #define TCO_TICK_NSEC 600000000LL
 -- 
 2.41.0
 
