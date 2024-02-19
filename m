@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6378C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0338C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 14:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc4Wm-0006rs-O2; Mon, 19 Feb 2024 09:21:52 -0500
+	id 1rc4Ws-0007Ft-Ly; Mon, 19 Feb 2024 09:21:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rc4Wk-0006jM-Fo
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:21:50 -0500
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rc4Wr-0007FD-HE
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:21:57 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rc4Wi-0001Xo-D5
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:21:50 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rc4Wp-0001YX-Sl
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 09:21:57 -0500
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41JELC4g030586; Mon, 19 Feb 2024 14:21:37 GMT
+ 41JDm2xF013563; Mon, 19 Feb 2024 14:21:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=WdWOie/oxi1TLSm/mRzRKNpUHzrObGW1+JZmyeKtNcY=;
- b=lXJU0dswRJVwmgjtAUp5hGKe4BhxDdKQM+33mNluq18IJ0d681T4JvgffxZRcMNnqbJI
- DB39TvWTiwjmWrEzmg1RCnzGAQtOeC0acvcL+4omM7YbeX7a3YKV7QdYNojlCjvRAEM+
- RFelMqWm3KBHwtT+ETVOJ4pn5soDWoYPRldjy5Eow8Hcha0YZmYfoQVFnaJZoukk/WZG
- Vnv40ssjfTnm9RiGR57uwg0UCnDP5J/SuhbqdBt5nl9OqRAm/eJ8SOjdTpzsrOF6gFrf
- mS1rIpy9MJZIqdmZSw2u1DtH/93sldV8vNKG86J9NyJ4hHyqNRdKUTZT3ylSHBoR+T+c Vg== 
+ : date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=pp1; bh=wZiWpuKxoJTJGQ8MEG+Gyeo10ajYjpSZrt+Au4q38Jk=;
+ b=tVOv5STLjwEfED9N22BaMaUYjnoH8Xlds/yXiZuOW+euWIELemUYXDupjhkkH2q5rXen
+ Ut6zGChdj7RQuPWGFeo7NntIFKlCcMHsDyqWQTspt3NCw0710NoILYGPsZjCPfhVkezd
+ 1fak3BSz7KSPTDonQ6odgxGapu5Dfw/pW1cgDQxjeKMsyJnhmnAMumIZdI5AdRYpJ6bN
+ 7k2QvftWJsdFeCjZtLJPkmqWaEb00KTCW6XehQmEvbSgKD8k3ZUMGElantqhQqb72BoJ
+ OE5N+upvVynraFbH2jAiuVOEW479qlT/57BvwnRK20m86vsO+9x7iPKjJqmdGh4FLmHF cw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wc7ygshhc-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wc86jh0ye-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Feb 2024 14:21:35 +0000
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41JELPkO030988;
- Mon, 19 Feb 2024 14:21:25 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wc7ygsey6-1
+ Mon, 19 Feb 2024 14:21:47 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41JELdjE022695;
+ Mon, 19 Feb 2024 14:21:39 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wc86jgxtq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Feb 2024 14:21:25 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41JBXfF3009547; Mon, 19 Feb 2024 14:17:04 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb84p1n4u-1
+ Mon, 19 Feb 2024 14:21:38 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41JDPLju013532; Mon, 19 Feb 2024 14:16:46 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb7h01w68-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Feb 2024 14:17:04 +0000
+ Mon, 19 Feb 2024 14:16:46 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41JEH0BM41550542
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41JEGgsH11928116
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 19 Feb 2024 14:17:02 GMT
+ Mon, 19 Feb 2024 14:16:44 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 40F9D2004F;
- Mon, 19 Feb 2024 14:17:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 25A0F20040;
+ Mon, 19 Feb 2024 14:16:42 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F403D2004D;
- Mon, 19 Feb 2024 14:16:59 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1230920043;
+ Mon, 19 Feb 2024 14:16:39 +0000 (GMT)
 Received: from black.boeblingen.de.ibm.com (unknown [9.155.200.166])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 19 Feb 2024 14:16:59 +0000 (GMT)
+ Mon, 19 Feb 2024 14:16:39 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -76,24 +75,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v4 11/12] gdbstub: Implement follow-fork-mode child
-Date: Mon, 19 Feb 2024 15:15:59 +0100
-Message-ID: <20240219141628.246823-12-iii@linux.ibm.com>
+Subject: [PATCH v4 00/12] gdbstub: Implement follow-fork-mode child
+Date: Mon, 19 Feb 2024 15:15:48 +0100
+Message-ID: <20240219141628.246823-1-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240219141628.246823-1-iii@linux.ibm.com>
-References: <20240219141628.246823-1-iii@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DETNl3mpp5tzWJvPI54gm0WWuCGJR6pE
-X-Proofpoint-GUID: EyrulQb4tV83GkdpklmbMIpqnCEONqKL
+X-Proofpoint-ORIG-GUID: UaEPhbOulORkqKL9iYEFBHx0MHNpkdTb
+X-Proofpoint-GUID: VDupl8xReepigIkq0qBmWi-_F1hnKq2X
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-19_10,2024-02-19_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 adultscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0
- bulkscore=0 spamscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
+ phishscore=0 spamscore=0
+ mlxscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=800
+ clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402190107
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
@@ -120,296 +119,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently it's not possible to use gdbstub for debugging linux-user
-code that runs in a forked child, which is normally done using the `set
-follow-fork-mode child` GDB command. Purely on the protocol level, the
-missing piece is the fork-events feature.
+v3: https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg03142.html
+v3 -> v4: Address the review comments, add R-bs.
+          Add the get_task_state() refactoring.
+          Keep passing CPUState to gdbserver_fork_end() for tb_flush().
+          Patches that need review: 02/12, 09/12-12/12.
 
-However, a deeper problem is supporting $Hg switching between different
-processes - right now it can do only threads. Implementing this for the
-general case would be quite complicated, but, fortunately, for the
-follow-fork-mode case there are a few factors that greatly simplify
-things: fork() happens in the exclusive section, there are only two
-processes involved, and before one of them is resumed, the second one
-is detached.
+v2: https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg00810.html
+v2 -> v3: Rebase on top of master.
+          Fix a typo in the 01/11 commit message.
 
-This makes it possible to implement a simplified scheme: the parent and
-the child share the gdbserver socket, it's used only by one of them at
-any given time, which is coordinated through a separate socketpair. The
-processes can read from the gdbserver socket only one byte at a time,
-which is not great for performance, but, fortunately, the
-follow-fork-mode handling involves only a few messages.
+v1: https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg06646.html
+v1 -> v2: Factor out a number of prep patches;
+          Add a state transition diagram comment (Alex).
+          Improve a few comments;
+          Extend the ts_tid fix to bsd.
 
-Advertise the fork-events support, and remember whether GDB has it
-as well. Implement the state machine that is initialized on fork(),
-decides the current owner of the gdbserver socket, and is terminated
-when one of the two processes is detached. The logic for the parent and
-the child is the same, only the initial state is different.
+Hi,
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- gdbstub/user.c | 212 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 210 insertions(+), 2 deletions(-)
+I needed to debug a linux-user crash between fork() and exec() [1] and
+realized that gdbstub does not allow this. This series lifts this
+restriction (one still cannot debug past exec() though). Patches 1-10
+are preliminary refactorings, patch 11 is the implementation, and patch
+12 is the test.
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 1a7b582a40d..7f9f19a1249 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -25,6 +25,61 @@
- #define GDB_NR_SYSCALLS 1024
- typedef unsigned long GDBSyscallsMask[BITS_TO_LONGS(GDB_NR_SYSCALLS)];
- 
-+/*
-+ * Forked child talks to its parent in order to let GDB enforce the
-+ * follow-fork-mode. This happens inside a start_exclusive() section, so that
-+ * the other threads, which may be forking too, do not interfere. The
-+ * implementation relies on GDB not sending $vCont until it has detached
-+ * either from the parent (follow-fork-mode child) or from the child
-+ * (follow-fork-mode parent).
-+ *
-+ * The parent and the child share the GDB socket; at any given time only one
-+ * of them is allowed to use it, as is reflected in the respective fork_state.
-+ * This is negotiated via the fork_sockets pair as a reaction to $Hg.
-+ *
-+ * Below is a short summary of the possible state transitions:
-+ *
-+ *     ENABLED                     : Terminal state.
-+ *     DISABLED                    : Terminal state.
-+ *     ACTIVE                      : Parent initial state.
-+ *     INACTIVE                    : Child initial state.
-+ *     ACTIVE       -> DEACTIVATING: On $Hg.
-+ *     ACTIVE       -> ENABLING    : On $D.
-+ *     ACTIVE       -> DISABLING   : On $D.
-+ *     ACTIVE       -> DISABLED    : On communication error.
-+ *     DEACTIVATING -> INACTIVE    : On gdb_read_byte() return.
-+ *     DEACTIVATING -> DISABLED    : On communication error.
-+ *     INACTIVE     -> ACTIVE      : On $Hg in the peer.
-+ *     INACTIVE     -> ENABLE      : On $D in the peer.
-+ *     INACTIVE     -> DISABLE     : On $D in the peer.
-+ *     INACTIVE     -> DISABLED    : On communication error.
-+ *     ENABLING     -> ENABLED     : On gdb_read_byte() return.
-+ *     ENABLING     -> DISABLED    : On communication error.
-+ *     DISABLING    -> DISABLED    : On gdb_read_byte() return.
-+ */
-+enum GDBForkState {
-+    /* Fully owning the GDB socket. */
-+    GDB_FORK_ENABLED,
-+    /* Working with the GDB socket; the peer is inactive. */
-+    GDB_FORK_ACTIVE,
-+    /* Handing off the GDB socket to the peer. */
-+    GDB_FORK_DEACTIVATING,
-+    /* The peer is working with the GDB socket. */
-+    GDB_FORK_INACTIVE,
-+    /* Asking the peer to close its GDB socket fd. */
-+    GDB_FORK_ENABLING,
-+    /* Asking the peer to take over, closing our GDB socket fd. */
-+    GDB_FORK_DISABLING,
-+    /* The peer has taken over, our GDB socket fd is closed. */
-+    GDB_FORK_DISABLED,
-+};
-+
-+enum GDBForkMessage {
-+    GDB_FORK_ACTIVATE = 'a',
-+    GDB_FORK_ENABLE = 'e',
-+    GDB_FORK_DISABLE = 'd',
-+};
-+
- /* User-mode specific state */
- typedef struct {
-     int fd;
-@@ -36,6 +91,10 @@ typedef struct {
-      */
-     bool catch_all_syscalls;
-     GDBSyscallsMask catch_syscalls_mask;
-+    bool fork_events;
-+    enum GDBForkState fork_state;
-+    int fork_sockets[2];
-+    pid_t fork_peer_pid, fork_peer_tid;
- } GDBUserState;
- 
- static GDBUserState gdbserver_user_state;
-@@ -358,6 +417,18 @@ int gdbserver_start(const char *port_or_path)
- 
- void gdbserver_fork_start(void)
- {
-+    if (!gdbserver_state.init || gdbserver_user_state.fd < 0) {
-+        return;
-+    }
-+    if (!gdbserver_user_state.fork_events ||
-+            qemu_socketpair(AF_UNIX, SOCK_STREAM, 0,
-+                            gdbserver_user_state.fork_sockets) < 0) {
-+        gdbserver_user_state.fork_state = GDB_FORK_DISABLED;
-+        return;
-+    }
-+    gdbserver_user_state.fork_state = GDB_FORK_INACTIVE;
-+    gdbserver_user_state.fork_peer_pid = getpid();
-+    gdbserver_user_state.fork_peer_tid = qemu_get_thread_id();
- }
- 
- static void disable_gdbstub(CPUState *thread_cpu)
-@@ -376,23 +447,160 @@ static void disable_gdbstub(CPUState *thread_cpu)
- 
- void gdbserver_fork_end(CPUState *cpu, pid_t pid)
- {
--    if (pid != 0 || !gdbserver_state.init || gdbserver_user_state.fd < 0) {
-+    char b;
-+    int fd;
-+
-+    if (!gdbserver_state.init || gdbserver_user_state.fd < 0) {
-         return;
-     }
--    disable_gdbstub(cpu);
-+
-+    if (pid == -1) {
-+        if (gdbserver_user_state.fork_state != GDB_FORK_DISABLED) {
-+            g_assert(gdbserver_user_state.fork_state == GDB_FORK_INACTIVE);
-+            close(gdbserver_user_state.fork_sockets[0]);
-+            close(gdbserver_user_state.fork_sockets[1]);
-+        }
-+        return;
-+    }
-+
-+    if (gdbserver_user_state.fork_state == GDB_FORK_DISABLED) {
-+        if (pid == 0) {
-+            disable_gdbstub(cpu);
-+        }
-+        return;
-+    }
-+
-+    if (pid == 0) {
-+        close(gdbserver_user_state.fork_sockets[0]);
-+        fd = gdbserver_user_state.fork_sockets[1];
-+        g_assert(gdbserver_state.process_num == 1);
-+        g_assert(gdbserver_state.processes[0].pid ==
-+                     gdbserver_user_state.fork_peer_pid);
-+        g_assert(gdbserver_state.processes[0].attached);
-+        gdbserver_state.processes[0].pid = getpid();
-+    } else {
-+        close(gdbserver_user_state.fork_sockets[1]);
-+        fd = gdbserver_user_state.fork_sockets[0];
-+        gdbserver_user_state.fork_state = GDB_FORK_ACTIVE;
-+        gdbserver_user_state.fork_peer_pid = pid;
-+        gdbserver_user_state.fork_peer_tid = pid;
-+
-+        if (!gdbserver_state.allow_stop_reply) {
-+            goto fail;
-+        }
-+        g_string_printf(gdbserver_state.str_buf,
-+                        "T%02xfork:p%02x.%02x;thread:p%02x.%02x;",
-+                        gdb_target_signal_to_gdb(gdb_target_sigtrap()),
-+                        pid, pid, (int)getpid(), qemu_get_thread_id());
-+        gdb_put_strbuf();
-+    }
-+
-+    gdbserver_state.state = RS_IDLE;
-+    gdbserver_state.allow_stop_reply = false;
-+    gdbserver_user_state.running_state = 0;
-+    for (;;) {
-+        switch (gdbserver_user_state.fork_state) {
-+        case GDB_FORK_ENABLED:
-+            if (gdbserver_user_state.running_state) {
-+                return;
-+            }
-+            QEMU_FALLTHROUGH;
-+        case GDB_FORK_ACTIVE:
-+            if (read(gdbserver_user_state.fd, &b, 1) != 1) {
-+                goto fail;
-+            }
-+            gdb_read_byte(b);
-+            break;
-+        case GDB_FORK_DEACTIVATING:
-+            b = GDB_FORK_ACTIVATE;
-+            if (write(fd, &b, 1) != 1) {
-+                goto fail;
-+            }
-+            gdbserver_user_state.fork_state = GDB_FORK_INACTIVE;
-+            break;
-+        case GDB_FORK_INACTIVE:
-+            if (read(fd, &b, 1) != 1) {
-+                goto fail;
-+            }
-+            switch (b) {
-+            case GDB_FORK_ACTIVATE:
-+                gdbserver_user_state.fork_state = GDB_FORK_ACTIVE;
-+                break;
-+            case GDB_FORK_ENABLE:
-+                close(fd);
-+                gdbserver_user_state.fork_state = GDB_FORK_ENABLED;
-+                break;
-+            case GDB_FORK_DISABLE:
-+                gdbserver_user_state.fork_state = GDB_FORK_DISABLED;
-+                break;
-+            default:
-+                g_assert_not_reached();
-+            }
-+            break;
-+        case GDB_FORK_ENABLING:
-+            b = GDB_FORK_DISABLE;
-+            if (write(fd, &b, 1) != 1) {
-+                goto fail;
-+            }
-+            close(fd);
-+            gdbserver_user_state.fork_state = GDB_FORK_ENABLED;
-+            break;
-+        case GDB_FORK_DISABLING:
-+            b = GDB_FORK_ENABLE;
-+            if (write(fd, &b, 1) != 1) {
-+                goto fail;
-+            }
-+            gdbserver_user_state.fork_state = GDB_FORK_DISABLED;
-+            break;
-+        case GDB_FORK_DISABLED:
-+            close(fd);
-+            disable_gdbstub(cpu);
-+            return;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+fail:
-+    close(fd);
-+    if (pid == 0) {
-+        disable_gdbstub(cpu);
-+    }
- }
- 
- void gdb_handle_query_supported_user(const char *gdb_supported)
- {
-+    if (strstr(gdb_supported, "fork-events+")) {
-+        gdbserver_user_state.fork_events = true;
-+    }
-+    g_string_append(gdbserver_state.str_buf, ";fork-events+");
- }
- 
- bool gdb_handle_set_thread_user(uint32_t pid, uint32_t tid)
- {
-+    if (gdbserver_user_state.fork_state == GDB_FORK_ACTIVE &&
-+            pid == gdbserver_user_state.fork_peer_pid &&
-+            tid == gdbserver_user_state.fork_peer_tid) {
-+        gdbserver_user_state.fork_state = GDB_FORK_DEACTIVATING;
-+        gdb_put_packet("OK");
-+        return true;
-+    }
-     return false;
- }
- 
- bool gdb_handle_detach_user(uint32_t pid)
- {
-+    bool enable;
-+
-+    if (gdbserver_user_state.fork_state == GDB_FORK_ACTIVE) {
-+        enable = pid == gdbserver_user_state.fork_peer_pid;
-+        if (enable || pid == getpid()) {
-+            gdbserver_user_state.fork_state = enable ? GDB_FORK_ENABLING :
-+                                                       GDB_FORK_DISABLING;
-+            gdb_put_packet("OK");
-+            return true;
-+        }
-+    }
-     return false;
- }
- 
+[1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg06424.html
+
+Best regards,
+Ilya
+
+Ilya Leoshkevich (12):
+  gdbstub: Support disablement in a multi-threaded process
+  {linux,bsd}-user: Introduce get_task_state()
+  {linux,bsd}-user: Update ts_tid after fork()
+  gdbstub: Introduce gdbserver_fork_start()
+  {linux,bsd}-user: Pass pid to fork_end()
+  {linux,bsd}-user: Pass pid to gdbserver_fork()
+  gdbstub: Call gdbserver_fork() both in parent and in child
+  gdbstub: Introduce gdb_handle_query_supported_user()
+  gdbstub: Introduce gdb_handle_set_thread_user()
+  gdbstub: Introduce gdb_handle_detach_user()
+  gdbstub: Implement follow-fork-mode child
+  tests/tcg: Add two follow-fork-mode tests
+
+ bsd-user/bsd-file.h                           |   2 +-
+ bsd-user/freebsd/os-proc.h                    |   6 +-
+ bsd-user/main.c                               |   9 +-
+ bsd-user/qemu.h                               |   7 +-
+ bsd-user/signal.c                             |  20 +-
+ gdbstub/gdbstub.c                             |  29 ++-
+ gdbstub/internals.h                           |   3 +
+ gdbstub/user-target.c                         |   4 +-
+ gdbstub/user.c                                | 244 +++++++++++++++++-
+ include/gdbstub/user.h                        |  10 +-
+ include/user/safe-syscall.h                   |   2 +-
+ linux-user/aarch64/cpu_loop.c                 |   2 +-
+ linux-user/arm/cpu_loop.c                     |   4 +-
+ linux-user/arm/signal.c                       |   2 +-
+ linux-user/cris/cpu_loop.c                    |   2 +-
+ linux-user/elfload.c                          |   6 +-
+ linux-user/hppa/signal.c                      |   2 +-
+ linux-user/linuxload.c                        |   2 +-
+ linux-user/m68k/cpu_loop.c                    |   2 +-
+ linux-user/m68k/target_cpu.h                  |   2 +-
+ linux-user/main.c                             |   8 +-
+ linux-user/mips/cpu_loop.c                    |   2 +-
+ linux-user/ppc/signal.c                       |   4 +-
+ linux-user/qemu.h                             |   5 +
+ linux-user/riscv/cpu_loop.c                   |   2 +-
+ linux-user/signal-common.h                    |   2 +-
+ linux-user/signal.c                           |  30 +--
+ linux-user/syscall.c                          |  32 +--
+ linux-user/user-internals.h                   |   2 +-
+ linux-user/vm86.c                             |  18 +-
+ linux-user/xtensa/signal.c                    |   2 +-
+ plugins/api.c                                 |   8 +-
+ semihosting/arm-compat-semi.c                 |   8 +-
+ tests/tcg/multiarch/Makefile.target           |  17 +-
+ tests/tcg/multiarch/follow-fork-mode.c        |  56 ++++
+ .../gdbstub/follow-fork-mode-child.py         |  40 +++
+ .../gdbstub/follow-fork-mode-parent.py        |  16 ++
+ 37 files changed, 511 insertions(+), 101 deletions(-)
+ create mode 100644 tests/tcg/multiarch/follow-fork-mode.c
+ create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-child.py
+ create mode 100644 tests/tcg/multiarch/gdbstub/follow-fork-mode-parent.py
+
 -- 
 2.43.2
 
