@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DED0C48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7740C48BC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 16:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc6h9-000579-E6; Mon, 19 Feb 2024 11:40:43 -0500
+	id 1rc6hL-0006Rm-SO; Mon, 19 Feb 2024 11:40:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6h7-000504-QJ
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:40:41 -0500
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rc6hK-0006EU-8P
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:40:54 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rc6h5-0003Po-KT
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:40:41 -0500
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d2387a5408so19228181fa.3
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:40:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rc6hH-0003Rf-W5
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 11:40:53 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-51181d8f52fso5867043e87.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 08:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708360837; x=1708965637; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1708360850; x=1708965650; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z3eeC3bMQM+uCMwmyOtFt5MF4rfCj1kFAANhRaPaRfQ=;
- b=JTsYYdWwk1w/XseV5ouXQjcXXViMNXk5D3gIkCy/fnxzCvHjhh6RAOtPa79LkyGbso
- Pi+6JUneC2fHn1yjJVAhysYbSU7ILhAU/wkgaDtgAdZYwvUKvH6mEszNY8PZh9VS5B2J
- NHExDuU6bY399TdF7mAMPLxObJf37AehMsKX0eJ5loZ+HWTWzlyN/9BWyKH50RDYJdsg
- SgeJU1P2IOITtjd3pbl3YLt4SIrzL8zsaGZR/i/jpeP+y2eSPh/MV3RyTPIVp4Q/tnvZ
- ZBihwGhzyJQMSTeiP+eAMp24G1/A6E27/zm/5eAO+Glf9fGFFMjHEOZhZpJWd9R6g/FJ
- EqnQ==
+ bh=TUdQ7xp7QgHpCDmJh85ReBiVVfoP254Zxjtyb8OjtGA=;
+ b=BhtbTdoVI1+QYZjUGcTCHhnUaGf6usweS53AQ5HtUunJKQjqYVAFITDWeJtb1T/3ql
+ lbDBFQb1ETknDJ0GtyPZiSeRzTi3BN7rlI03U8ID3g1MQmmObWktDhRCtmJkYjM5DaW0
+ dtNQ9EqHgMkvcMCLJ/00I8dd6bmZqllbwNlN08z+CxwtozOp1QwXZck6F2+YerLfCjuB
+ JgGpBZzF9oqZz8ZHEWjf0BDzM69NHYIiySUGXYA4DnX4jVzvTMp4rIUDHF/A1mWwcsQk
+ 4BI4zISQZ52WDmOhPzoOCz71rbkUbvXwAHB4Tj4YVAZ5vxtJNMIVa2MH8nykoJ3N4HVy
+ AH8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708360837; x=1708965637;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1708360850; x=1708965650;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z3eeC3bMQM+uCMwmyOtFt5MF4rfCj1kFAANhRaPaRfQ=;
- b=v32/nyzot9abwaSl/HAnHUAX+x1WtXHdP5O+cGmxsthOYfRHgqI4hVVdfnP5402dDA
- DbWXBqAvvuyBgm+NIjd3NGwIM45gynlaiOw4C3ma/M4oF7jfiHpYxVpJeNX0ZsVTd6ib
- ftxTo1ATg2cYV56Jh4MA/1jGI7d1y93NBaNXMNS0+hAkbfOK+l5Hlgip4kVpTn2hKNQb
- tRUySjrbcC8ChOfLx6wL7sRL7ZouNrSTPxcAAiqWlYRe50itvIX8t6C9AvzutQKpkpxk
- w/JPD1N5iGh1WlKf0QAAdvgOMba1B+M/CB7y7PH35PYV5//kEoGHh7+g1BPkTlJV239H
- wwkw==
-X-Gm-Message-State: AOJu0Yx1PdOf0VGhkbSh+wje39HIUFyY2aV8tR5RxvcLo2XtMTYBgkuk
- VVD4IDSwPj7oWwstQDskYi624L63XMfizhlqK57PDccsEdLIY+ft5Bc6SL5RDNsrAFSCgijunTg
- T
-X-Google-Smtp-Source: AGHT+IFL6PlJw3csmcdmMjRyHWjUkItfN9834nwkTJF95CjSJARUAwoDFRFaXI/3Cln36nCuloJcBg==
-X-Received: by 2002:a2e:2a84:0:b0:2d2:3b6f:3630 with SMTP id
- q126-20020a2e2a84000000b002d23b6f3630mr1760945ljq.2.1708360837185; 
- Mon, 19 Feb 2024 08:40:37 -0800 (PST)
-Received: from m1x-phil.lan ([176.176.181.220])
- by smtp.gmail.com with ESMTPSA id
- bw4-20020a0560001f8400b0033d297c9118sm8300073wrb.24.2024.02.19.08.40.34
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Feb 2024 08:40:36 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Bernhard Beschow <shentey@gmail.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 14/14] hw/southbridge/ich9: Add the LPC / ISA bridge function
-Date: Mon, 19 Feb 2024 17:38:54 +0100
-Message-ID: <20240219163855.87326-15-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240219163855.87326-1-philmd@linaro.org>
-References: <20240219163855.87326-1-philmd@linaro.org>
+ bh=TUdQ7xp7QgHpCDmJh85ReBiVVfoP254Zxjtyb8OjtGA=;
+ b=OiGhjtPNJxk33iSZdJyQ2jkx6QCllk4r3luXDD7Rs7PyzfOst7cp/xcBWaJ/XXmeo/
+ PiqZQt6DBK+F69GJszeZuqctX2X3/EisVmxtNXGvV2bzysw6qF5Gwk929IN1Vi2Qj968
+ J4q1D6keRIYpNEEBUDKLz0dU0r7WYNkzJdR2Vrxld95BMiFjjD6LI+NAxZkZ+fYcDJTs
+ qLp4n1yeEJxOih9EidGNhamuPMx2TlgWZob+/c9Af7QiPr42jt38cUI1zE9uPHK5obow
+ ZWMV5LocZXLePjmKqHckdx0ddHnusDGAizA/2XxRjPz7aTGSpxlJS9g5V6oNH3PF8Uwu
+ NwIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU52fJYVzHJvQ1LksjldU7jQjG4GGtfqXDFjm2O9QJourJT9KGmh86a1JjU3MAFCN5rZ7VC77BEDIjWspi9q1JtCkovRio=
+X-Gm-Message-State: AOJu0Yye9u/182CweBlH50lTxy46O/IgERUsvcI/k7ukUc+uOtS3UuJ9
+ 7fZqOuMxGbPMT8dHD8awtSF5PIIUcFGD3imRi9PQ0mDkzBo0tvLXP0Uatu1Ix9TGXNWfRpnBSPx
+ l5GVRr/BDtZfpHDgswQPiFnZUw5unr7BNrcMLI2/zVva95J5D
+X-Google-Smtp-Source: AGHT+IGkNaYSRXydzl/uTppbLpkghrUVV/RnR1pVsOY2p2VO5+bf0Mjw4HDM6am9tnXBSflB0zb66sCnuA+I0OKufYU=
+X-Received: by 2002:a05:6512:34c9:b0:512:be5a:e33a with SMTP id
+ w9-20020a05651234c900b00512be5ae33amr805984lfr.48.1708360850062; Mon, 19 Feb
+ 2024 08:40:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
+References: <CAFEAcA_BB5-eieVGuqqXn3aS-Vmc7OcTFmv5e=i5HgNw3Kp2FQ@mail.gmail.com>
+ <ZdN5cbaqnJMTK5ts@redhat.com>
+ <0a084faf-3685-4134-aecc-5edf13111d89@redhat.com>
+In-Reply-To: <0a084faf-3685-4134-aecc-5edf13111d89@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Feb 2024 16:40:38 +0000
+Message-ID: <CAFEAcA9zkCZVHR21mfSiz4PQG_A2n7GEG9X4SBq4B_ARPkNW2g@mail.gmail.com>
+Subject: Re: dropping 32-bit Windows host support
+To: Thomas Huth <thuth@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ QEMU Developers <qemu-devel@nongnu.org>, Stefan Weil <sw@weilnetz.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,169 +94,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instantiate TYPE_ICH9_LPC_DEVICE in TYPE_ICH9_SOUTHBRIDGE.
+On Mon, 19 Feb 2024 at 16:26, Thomas Huth <thuth@redhat.com> wrote:
+>
+> On 19/02/2024 16.53, Daniel P. Berrang=C3=A9 wrote:
+> > On Mon, Feb 19, 2024 at 03:37:31PM +0000, Peter Maydell wrote:
+> >> Our msys2 32-bit Windows host CI job has been failing recently
+> >> because upstream MSYS2 are starting to phase out 32-bit windows
+> >> host support and are steadily removing i686 versions of packages.
+> >> The latest is dtc:
+> >> https://gitlab.com/qemu-project/qemu/-/issues/2177
+> >>
+> >> The writing is clearly on the wall for their 32-bit support, judging
+> >> from the "2023-12-13 - Starting to drop some 32-bit Packages" news
+> >> item at https://www.msys2.org/news/ and associated discussion at
+> >> https://github.com/msys2/MINGW-packages/discussions/19326 .
+> >>
+> >> QEMU on a 32-bit host is not likely to be a great experience, and I
+> >> suspect we don't have many users using 32-bit Windows who couldn't
+> >> use the 64-bit version instead. Our Download page points users at
+> >> MSYS2's packages, and they have already dropped the 32-bit QEMU
+> >> package build. Stefan Weil's binaries page, which is the other thing
+> >> we link to from Download, has no 32-bit version newer than 7.2.0.
+> >> So anybody using 32-bit Windows QEMU must be building it themselves.
+> >> Plus, we've already deprecated system emulation on 32-bit x86 hosts,
+> >> so the only remaining "supported" config is with the NVMM or WHPX
+> >> accelerators.
+> >
+> > The other data point is that Win11 is 64-bit only, and IIUC,
+> > Win10 was 64-bit only for new OEM installs too, only upgrades
+> > or end user installs could choose 32-bit.
+>
+> Yes, and considering that there will likely be a Windows 12 at one point =
+in
+> time, we'll drop support for Win10 and thus 32-bit support anyway.
+>
+> >> I suggest that we should:
+> >>
+> >>   * remove the msys2-32bit CI job entirely (we will still have at leas=
+t
+> >>     compile-time coverage via the cross-win32-system job)
+> >>   * document that the 32-bit Windows support is deprecated in
+> >>     docs/about/build-platforms.rst and deprecated.rst
+> >>   * update our Download page to remove mention of 32-bit Windows
+> >>
+> >> Any objections?
+> >
+> > I think that's sane.
+>
+> Sounds good to me, too.
+>
+> Note that we already have an entry for "System emulation on 32-bit x86
+> hosts" in the deprecation list ... so IMHO we could also justify to drop =
+the
+> 32-bit Windows support immediately, since that's a subset of that entry.
 
-Expose the SMM property so the Q35 machine can disable it
-(depending on the accelerator used).
+Mmm. I had initially misread that as only applying to TCG,
+but it's more general than that. So I think I agree that we
+should go ahead and mark 32-bit Windows support as definitively
+dropped.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/southbridge/ich9.h |  4 ----
- hw/i386/pc_q35.c              | 12 +++---------
- hw/isa/lpc_ich9.c             |  3 +++
- hw/southbridge/ich9.c         | 14 ++++++++++++++
- hw/i386/Kconfig               |  1 -
- hw/southbridge/Kconfig        |  1 +
- 6 files changed, 21 insertions(+), 14 deletions(-)
+I'll put together some patches at some point.
 
-diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-index d6c3b5ece3..a8da4a8665 100644
---- a/include/hw/southbridge/ich9.h
-+++ b/include/hw/southbridge/ich9.h
-@@ -16,10 +16,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(ICH9State, ICH9_SOUTHBRIDGE)
- #define ICH9_PCIE_DEV                           28
- #define ICH9_PCIE_FUNC_MAX                      6
- 
--/* D31:F1 LPC controller */
--#define ICH9_LPC_DEV                            31
--#define ICH9_LPC_FUNC                           0
--
- #define ICH9_GPIO_GSI "gsi"
- 
- #define ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP "x-smi-negotiated-features"
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 573a5a0bc0..0fe43e8e2d 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -50,7 +50,6 @@
- #include "hw/ide/ahci-pci.h"
- #include "hw/intc/ioapic.h"
- #include "hw/southbridge/ich9.h"
--#include "hw/isa/ich9_lpc.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "sysemu/numa.h"
-@@ -69,7 +68,6 @@ static void pc_q35_init(MachineState *machine)
-     Object *phb;
-     PCIBus *host_bus;
-     DeviceState *ich9;
--    PCIDevice *lpc;
-     Object *lpc_obj;
-     DeviceState *lpc_dev;
-     BusState *idebus[2] = { };
-@@ -181,6 +179,7 @@ static void pc_q35_init(MachineState *machine)
-     object_property_set_link(OBJECT(ich9), "mch-pcie-bus",
-                              OBJECT(host_bus), &error_abort);
-     qdev_prop_set_bit(ich9, "d2p-enabled", false);
-+    qdev_prop_set_bit(ich9, "smm-enabled", x86_machine_is_smm_enabled(x86ms));
-     qdev_prop_set_bit(ich9, "sata-enabled", pcms->sata_enabled);
-     qdev_prop_set_bit(ich9, "smbus-enabled", pcms->smbus_enabled);
-     /* Should we create 6 UHCI according to ich9 spec? */
-@@ -191,13 +190,8 @@ static void pc_q35_init(MachineState *machine)
-     gsi_state = pc_gsi_create(&x86ms->gsi, true);
- 
-     /* create ISA bus */
--    lpc = pci_new_multifunction(PCI_DEVFN(ICH9_LPC_DEV, ICH9_LPC_FUNC),
--                                TYPE_ICH9_LPC_DEVICE);
--    lpc_obj = OBJECT(lpc);
--    lpc_dev = DEVICE(lpc);
--    qdev_prop_set_bit(lpc_dev, "smm-enabled",
--                      x86_machine_is_smm_enabled(x86ms));
--    pci_realize_and_unref(lpc, host_bus, &error_fatal);
-+    lpc_obj = object_resolve_path_component(OBJECT(ich9), "lpc");
-+    lpc_dev = DEVICE(lpc_obj);
-     for (i = 0; i < IOAPIC_NUM_PINS; i++) {
-         qdev_connect_gpio_out_named(lpc_dev, ICH9_GPIO_GSI, i, x86ms->gsi[i]);
-     }
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 685ac38c72..4d7b5c0c64 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -55,6 +55,9 @@
- #include "hw/acpi/acpi_aml_interface.h"
- #include "trace.h"
- 
-+#define ICH9_LPC_DEV                            31
-+#define ICH9_LPC_FUNC                           0
-+
- #define ICH9_A2_LPC_REVISION                    0x2
- #define ICH9_LPC_NB_PIRQS                       8       /* PCI A-H */
- 
-diff --git a/hw/southbridge/ich9.c b/hw/southbridge/ich9.c
-index 085d75e569..57a05b35e1 100644
---- a/hw/southbridge/ich9.c
-+++ b/hw/southbridge/ich9.c
-@@ -13,6 +13,7 @@
- #include "hw/southbridge/ich9.h"
- #include "hw/pci/pci.h"
- #include "hw/pci-bridge/ich_dmi_pci.h"
-+#include "hw/isa/ich9_lpc.h"
- #include "hw/ide/ahci-pci.h"
- #include "hw/ide.h"
- #include "hw/i2c/smbus_ich9.h"
-@@ -21,6 +22,7 @@
- #include "hw/usb/hcd-uhci.h"
- 
- #define ICH9_D2P_DEVFN          PCI_DEVFN(30, 0)
-+#define ICH9_LPC_DEVFN          PCI_DEVFN(31, 0)
- #define ICH9_SATA1_DEVFN        PCI_DEVFN(31, 2)
- #define ICH9_SMB_DEVFN          PCI_DEVFN(31, 3)
- #define ICH9_EHCI_FUNC          7
-@@ -34,6 +36,7 @@ struct ICH9State {
- 
-     I82801b11Bridge d2p;
-     AHCIPCIState sata0;
-+    ICH9LPCState lpc;
-     ICH9SMBState smb;
-     EHCIPCIState ehci[EHCI_PER_FN];
-     UHCIState uhci[EHCI_PER_FN * UHCI_PER_FN];
-@@ -148,6 +151,13 @@ static bool ich9_realize_usb(ICH9State *s, Error **errp)
- 
- static void ich9_init(Object *obj)
- {
-+    ICH9State *s = ICH9_SOUTHBRIDGE(obj);
-+
-+    object_initialize_child(obj, "lpc", &s->lpc, TYPE_ICH9_LPC_DEVICE);
-+    qdev_prop_set_int32(DEVICE(&s->lpc), "addr", ICH9_LPC_DEVFN);
-+    qdev_prop_set_bit(DEVICE(&s->lpc), "multifunction", true);
-+    object_property_add_alias(obj, "smm-enabled",
-+                              OBJECT(&s->lpc), "smm-enabled");
- }
- 
- static void ich9_realize(DeviceState *dev, Error **errp)
-@@ -163,6 +173,10 @@ static void ich9_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    if (!qdev_realize(DEVICE(&s->lpc), BUS(s->pci_bus), errp)) {
-+        return;
-+    }
-+
-     if (s->sata_enabled && !ich9_realize_sata(s, errp)) {
-         return;
-     }
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index 226d7f6916..eccc834e49 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -100,7 +100,6 @@ config Q35
-     select PC_ACPI
-     select PCI_EXPRESS_Q35
-     select ICH9
--    select LPC_ICH9
-     select DIMM
-     select SMBIOS
-     select FW_CFG_DMA
-diff --git a/hw/southbridge/Kconfig b/hw/southbridge/Kconfig
-index 31eb125bf7..8ce62b703c 100644
---- a/hw/southbridge/Kconfig
-+++ b/hw/southbridge/Kconfig
-@@ -8,3 +8,4 @@ config ICH9
-     select ACPI_ICH9
-     imply USB_EHCI_PCI
-     imply USB_UHCI
-+    select LPC_ICH9
--- 
-2.41.0
-
+-- PMM
 
