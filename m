@@ -4,99 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD5BEC48BF8
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 12:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B336EC48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 12:01:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc2Jl-00036K-88; Mon, 19 Feb 2024 07:00:17 -0500
+	id 1rc2Kb-0004Ov-Vl; Mon, 19 Feb 2024 07:01:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rc2Ji-0002yb-Rt; Mon, 19 Feb 2024 07:00:14 -0500
-Received: from wfout1-smtp.messagingengine.com ([64.147.123.144])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc2KZ-0004OD-In; Mon, 19 Feb 2024 07:01:07 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rc2Jg-0005ea-Bu; Mon, 19 Feb 2024 07:00:14 -0500
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfout.west.internal (Postfix) with ESMTP id E4A1F1C0009A;
- Mon, 19 Feb 2024 07:00:06 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Mon, 19 Feb 2024 07:00:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1708344006; x=
- 1708430406; bh=HuvcFgexHKGbc9cIvMgQB8ZOE6qUxPIIeMZd4MAqNgs=; b=h
- RrgM5i9pFUIE6llNCzcRPyuw+t/+xxktXtRAItNPnc0n0n0/38LpDGG67hoRHlZw
- dOfeL7V97WtbOPyIE2dqPkHYgYpuQ0w5231H78xHvPn5ziKT7JPQgOZ+9A1eICCI
- vCdjRa7SduR4UI50msOH8GV80TvJm95PoesxoAw3VDs4ggwEKtBLu0gNh1PeZWh4
- PsYKek7awURtuPYUvCTZMM4diGhKsrIXAS07aTVbTtBe27pCJuvtiXU49hrG420i
- zc0v8vXYsrqWZwLoQX7k9bIAPQNP7qhx+fOLt+Y4Lr2FN5aDyPbyqxIHPtROGJcs
- Q7VRujARDcfpqY8M2I6Bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1708344006; x=1708430406; bh=HuvcFgexHKGbc9cIvMgQB8ZOE6qU
- xPIIeMZd4MAqNgs=; b=H+tH1aLfm+xqLNllb/8K9JwEn2yxcnL3zdPu1eD/OX1L
- QyPNeOZUrciPUqE55TrYYMTDQj2KFFCNgF0HUUDzK6v33CVqvmp43ioDIKqnZO6l
- wkjOIxuQl1hKe/lA0hVDvDu1nKoL1R1fouCFPDYYtdWTUNyVMtrLRdEADAw7ZYgC
- tmkYDpuP9bTzFTlHiKGhRzQrbpd/NM4d8lzB3eTcaCQ/p849sF95zA1KF6XCmWv4
- YKEgn2gldBOxaHu11cO+wsYbQ0Ndxfda9+OS80ht8y/xuGDhTGvwiiOQvpRkin86
- 0hyNIZ1M2vOw3YAXAqUOMaabbjrHeUEsyPmJUNMYiw==
-X-ME-Sender: <xms:xULTZfYAJc63Afk6QUo8CRTvnqbtoeVw5I_HAewlLrf_sZUjybbJ1w>
- <xme:xULTZeaIXIME3ciw7UTHw4V1jXpc8qy-ZDa-CUW20DyzqvUiUdYuEquRDvj5_ZSdu
- wMYcYtGglL3QwGTvCo>
-X-ME-Received: <xmr:xULTZR9GzbBdCt0cQevS70o3YZ2eWEIVUJeOaLIlOUC5tDC_OAJwzMnKKJoLmg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgdefgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhs
- ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
- gvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffej
- veenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
- hssehirhhrvghlvghvrghnthdrughk
-X-ME-Proxy: <xmx:xULTZVoh3n-4lW3hnqg1b4E_B_AhVZXCpbAA2eXZeVe9RX7V8XWMgw>
- <xmx:xULTZarTxgoVrxc2YW6Qp0pHWfWF8_Ep-T76Zs3H6tpj_3SlCwleIA>
- <xmx:xULTZbR3cUZ_4Cu5fG4_G7qTg_P8-sWFEMLqkjQt1eBVr44JsQvGKQ>
- <xmx:xkLTZYbkeak6m2NhfQwZo4F_x2wUmTA4I7hHpvuKXa9aFbwAF4ihWRaodjw>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 Feb 2024 07:00:05 -0500 (EST)
-Date: Mon, 19 Feb 2024 13:00:00 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH v5 01/11] hw/nvme: Use pcie_sriov_num_vfs()
-Message-ID: <ZdNCwMf406yZpN1X@cormorant.local>
-References: <20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com>
- <20240218-reuse-v5-1-e4fc1c19b5a9@daynix.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc2KW-0005oz-FR; Mon, 19 Feb 2024 07:01:07 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C43534E6003;
+ Mon, 19 Feb 2024 13:01:00 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id HmYGrJ2q1YiC; Mon, 19 Feb 2024 13:00:58 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C9CA84E6026; Mon, 19 Feb 2024 13:00:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C7EBC7456B4;
+ Mon, 19 Feb 2024 13:00:58 +0100 (CET)
+Date: Mon, 19 Feb 2024 13:00:58 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, 
+ kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
+In-Reply-To: <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
+Message-ID: <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
+References: <20240216153517.49422-1-philmd@linaro.org>
+ <20240216153517.49422-2-philmd@linaro.org>
+ <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
+ <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
+ <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
+ <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
+ <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ByGRRSzctGLxWEvB"
-Content-Disposition: inline
-In-Reply-To: <20240218-reuse-v5-1-e4fc1c19b5a9@daynix.com>
-Received-SPF: pass client-ip=64.147.123.144; envelope-from=its@irrelevant.dk;
- helo=wfout1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1407859581-1708344058=:44613"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,118 +79,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---ByGRRSzctGLxWEvB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--3866299591-1407859581-1708344058=:44613
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On Feb 18 13:56, Akihiko Odaki wrote:
-> nvme_sriov_pre_write_ctrl() used to directly inspect SR-IOV
-> configurations to know the number of VFs being disabled due to SR-IOV
-> configuration writes, but the logic was flawed and resulted in
-> out-of-bound memory access.
->=20
-> It assumed PCI_SRIOV_NUM_VF always has the number of currently enabled
-> VFs, but it actually doesn't in the following cases:
-> - PCI_SRIOV_NUM_VF has been set but PCI_SRIOV_CTRL_VFE has never been.
-> - PCI_SRIOV_NUM_VF was written after PCI_SRIOV_CTRL_VFE was set.
-> - VFs were only partially enabled because of realization failure.
->=20
-> It is a responsibility of pcie_sriov to interpret SR-IOV configurations
-> and pcie_sriov does it correctly, so use pcie_sriov_num_vfs(), which it
-> provides, to get the number of enabled VFs before and after SR-IOV
-> configuration writes.
->=20
-> Cc: qemu-stable@nongnu.org
-> Fixes: 11871f53ef8e ("hw/nvme: Add support for the Virtualization Managem=
-ent command")
-> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+> On 19/2/24 12:27, BALATON Zoltan wrote:
+>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>> On 16/2/24 20:54, Philippe Mathieu-Daudé wrote:
+>>>> On 16/2/24 18:14, BALATON Zoltan wrote:
+>>>>> On Fri, 16 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>>>> We want to set another qdev property (a link) for the pl110
+>>>>>> and pl111 devices, we can not use sysbus_create_simple() which
+>>>>>> only passes sysbus base address and IRQs as arguments. Inline
+>>>>>> it so we can set the link property in the next commit.
+>>>>>> 
+>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>> ---
+>>>>>> hw/arm/realview.c    |  5 ++++-
+>>>>>> hw/arm/versatilepb.c |  6 +++++-
+>>>>>> hw/arm/vexpress.c    | 10 ++++++++--
+>>>>>> 3 files changed, 17 insertions(+), 4 deletions(-)
+>>>>>> 
+>>>>>> diff --git a/hw/arm/realview.c b/hw/arm/realview.c
+>>>>>> index 9058f5b414..77300e92e5 100644
+>>>>>> --- a/hw/arm/realview.c
+>>>>>> +++ b/hw/arm/realview.c
+>>>>>> @@ -238,7 +238,10 @@ static void realview_init(MachineState *machine,
+>>>>>>     sysbus_create_simple("pl061", 0x10014000, pic[7]);
+>>>>>>     gpio2 = sysbus_create_simple("pl061", 0x10015000, pic[8]);
+>>>>>> 
+>>>>>> -    sysbus_create_simple("pl111", 0x10020000, pic[23]);
+>>>>>> +    dev = qdev_new("pl111");
+>>>>>> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>>>> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, 0x10020000);
+>>>>>> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, pic[23]);
+>>>>> 
+>>>>> Not directly related to this patch but this blows up 1 line into 4 just 
+>>>>> to allow setting a property. Maybe just to keep some simplicity we'd 
+>>>>> rather need either a sysbus_realize_simple function that takes a sysbus 
+>>>>> device instead of the name and does not create the device itself or some 
+>>>>> way to pass properties to sysbus create simple (but the latter may not 
+>>>>> be easy to do in a generic way so not sure about that). What do you 
+>>>>> think?
+>>>> 
+>>>> Unfortunately sysbus doesn't scale in heterogeneous setup.
+>>> 
+>>> Regarding the HW modelling API complexity you are pointing at, we'd
+>>> like to move from the current imperative programming paradigm to a
+>>> declarative one, likely DSL driven. Meanwhile it is being investigated
+>>> (as part of "Dynamic Machine"), I'm trying to get the HW APIs right
+>> 
+>> I'm aware of that activity but we're currently still using board code to 
+>> construct machines and probably will continue to do so for a while. Also 
+>> because likely not all current machines will be converted to new 
+>> declarative way so having a convenient API for that is still useful.
+>> 
+>> (As for the language to describe the devices of a machine and their 
+>> connections declaratively the device tree does just that but dts is not a 
+>> very user friendly descrtiption language so I haven't brought that up as a 
+>> possibility. But you may still could get some clues by looking at the 
+>> problems it had to solve to at least get a requirements for the machine 
+>> description language.)
+>> 
+>>> for heterogeneous emulation. Current price to pay is a verbose
+>>> imperative QDev API, hoping we'll get later a trivial declarative one
+>>> (like this single sysbus_create_simple call), where we shouldn't worry
+>>> about the order of low level calls, whether to use link or not, etc.
+>> 
+>> Having a detailed low level API does not prevent a more convenient for 
+>> current use higher level API on top so keeping that around for current 
+>> machines would allow you to chnage the low level API without having to 
+>> change all the board codes because you's only need to update the simple 
+>> high level API.
+>
+> So what is your suggestion here, add a new complex helper to keep
+> a one-line style?
+>
+> DeviceState *sysbus_create_simple_dma_link(const char *typename,
+>                                           hwaddr baseaddr,
+>                                           const char *linkname,
+>                                           Object *linkobj,
+>                                           qemu_irq irq);
 
-Thanks Akihiko,
+I think just having sysbus_realize_simple that does the same as 
+sysbus_create_simple minus creating the device would be enough because 
+then the cases where you need to set properties could still use it after 
+qdev_new or init and property_set but hide the realize and connecting the 
+device behind this single call.
 
-I'll pick this up for hw/nvme nvme-next as-is.
+> I wonder why this is that important since you never modified
+> any of the files changed by this series:
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+For new people trying to contribute to QEMU QDev is overwhelming so having 
+some way to need less of it to do simple things would help them to get 
+started.
 
-> ---
->  hw/nvme/ctrl.c | 26 ++++++++------------------
->  1 file changed, 8 insertions(+), 18 deletions(-)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index f026245d1e9e..7a56e7b79b4d 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -8466,36 +8466,26 @@ static void nvme_pci_reset(DeviceState *qdev)
->      nvme_ctrl_reset(n, NVME_RESET_FUNCTION);
->  }
-> =20
-> -static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t address,
-> -                                      uint32_t val, int len)
-> +static void nvme_sriov_post_write_config(PCIDevice *dev, uint16_t old_nu=
-m_vfs)
->  {
->      NvmeCtrl *n =3D NVME(dev);
->      NvmeSecCtrlEntry *sctrl;
-> -    uint16_t sriov_cap =3D dev->exp.sriov_cap;
-> -    uint32_t off =3D address - sriov_cap;
-> -    int i, num_vfs;
-> +    int i;
-> =20
-> -    if (!sriov_cap) {
-> -        return;
-> -    }
-> -
-> -    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
-> -        if (!(val & PCI_SRIOV_CTRL_VFE)) {
-> -            num_vfs =3D pci_get_word(dev->config + sriov_cap + PCI_SRIOV=
-_NUM_VF);
-> -            for (i =3D 0; i < num_vfs; i++) {
-> -                sctrl =3D &n->sec_ctrl_list.sec[i];
-> -                nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
-> -            }
-> -        }
-> +    for (i =3D pcie_sriov_num_vfs(dev); i < old_num_vfs; i++) {
-> +        sctrl =3D &n->sec_ctrl_list.sec[i];
-> +        nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
->      }
->  }
-> =20
->  static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
->                                    uint32_t val, int len)
->  {
-> -    nvme_sriov_pre_write_ctrl(dev, address, val, len);
-> +    uint16_t old_num_vfs =3D pcie_sriov_num_vfs(dev);
-> +
->      pci_default_write_config(dev, address, val, len);
->      pcie_cap_flr_write_config(dev, address, val, len);
-> +    nvme_sriov_post_write_config(dev, old_num_vfs);
->  }
-> =20
->  static const VMStateDescription nvme_vmstate =3D {
->=20
-> --=20
-> 2.43.1
->=20
-
---=20
-One of us - No more doubt, silence or taboo about mental illness.
-
---ByGRRSzctGLxWEvB
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXTQr8ACgkQTeGvMW1P
-DekDDwf+MJTWJX2VUrNmLwSPX6PDwTpNTCgJIHUFDbr35+8a+n543EYf1Zks3UPU
-gnf0sDrvhCVjiy1uUyps3yV3euUXb3NX/wcrXQITg4OnwpD4xDd6fVeXi3vN3l6N
-f+Lk2iw4iYucnh0nV0mQNq91bpAPRJkeSxEAw4Jz3LdSbDz9O+BpgoIHcB0G3KhM
-yvtVQL3c6q4FF+vECKEBR1ecdpsUixJW+lH3vZfaAMZOQt6y2wl7z6VnRgtqMux8
-Tv5i6FRpC9ddDivVPDifXtIYMqFuLL8aqhNJMMFgGsXN3bXFIrx/lundzEVAGxZP
-uEFOgCu/O7rBVeQR5zdPyvhyHtrA+g==
-=ZxhB
------END PGP SIGNATURE-----
-
---ByGRRSzctGLxWEvB--
+Regards,
+BALATON Zoltan
+--3866299591-1407859581-1708344058=:44613--
 
