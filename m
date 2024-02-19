@@ -4,94 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4796DC48BC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 18:26:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994A0C48BF8
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 18:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rc8Lc-0007Ya-8M; Mon, 19 Feb 2024 13:26:36 -0500
+	id 1rc8QU-0001Py-LQ; Mon, 19 Feb 2024 13:31:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1rc8La-0007Vw-6E
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 13:26:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc8Q9-0001NY-EK
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 13:31:25 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1rc8LY-0006m2-Id
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 13:26:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708367191;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dkzV+1257B2FqWosuaxJML+eF4uiBPctHFvHZ4eUl5c=;
- b=PKD5zblPuVzZofkkfGMpZm73McP4VuJkm3FUz9FVI2n+7Su0w7gQExYH+gSL4Va+7oTMWG
- s1Z8KFxpBFKod4ImK8YkynuF5MLtd8ev3roh7+cKazrc3NM0tYtKpL3Rzz+1SohrknUIzQ
- 4eKYvvqbLK1ROf8InUlK1Wx/tBV0TR8=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-uo2Yir1XPCCC1Ho5Koemng-1; Mon, 19 Feb 2024 13:26:29 -0500
-X-MC-Unique: uo2Yir1XPCCC1Ho5Koemng-1
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-3c15074df25so2319156b6e.0
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 10:26:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708367189; x=1708971989;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dkzV+1257B2FqWosuaxJML+eF4uiBPctHFvHZ4eUl5c=;
- b=E4xp6mkz++mFXdIBXy7AwHXTshiATxbacEwjEuBa9sTH9DvtXGQvpqRuO8eY1LUtvg
- 9y5MpxTOETMTVLhflmyv55rqvve6Pq6F2JKYMPTRW6Wpi3OYby9nJZtg82IrKZi1vFGR
- gy+04tEOloFPu02ctIrznVumE47/slfNrzYZWHwDte666wOugLsWviDMqRKvr/suBvQw
- 4acRfjtAKDEjAJFO9xZWlik9POHBbHKmhGYiS22+mAUJ/gQ6VzP4xvAmk9t2LngoqTjA
- zQTHdDNO8qjSgK7XJ5I/b0EG3lCBv5qwLzb0ZXOqOj6i7HMGLu5UsvohS4vOwmxp7Hbr
- zJWQ==
-X-Gm-Message-State: AOJu0YwYJRiGqFTsW8Ld3r2qVW5Qxj793lsIGgRb/YSi+sGl0iNxg+iR
- 9GjhyFfsxks/2pqrgUt3qf8oQHKNW18A9duNe3GLdIsRq88rO/n26sw2QFBToWJK9Gchx2vWk5T
- Lj7UhzpqzqF9X4djPlxRNHAwDvsZR+BylCgs42QUi398sciarV35I
-X-Received: by 2002:aca:d0f:0:b0:3c0:4ac4:d7f1 with SMTP id
- 15-20020aca0d0f000000b003c04ac4d7f1mr10903915oin.35.1708367188853; 
- Mon, 19 Feb 2024 10:26:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHUcmDIBnVAJWCtr5pDItsanYKjAAl2C0WZctAOxXRj4rTSZ4pvFDVgHiVOqpnhS6XDzQef0Q==
-X-Received: by 2002:aca:d0f:0:b0:3c0:4ac4:d7f1 with SMTP id
- 15-20020aca0d0f000000b003c04ac4d7f1mr10903904oin.35.1708367188549; 
- Mon, 19 Feb 2024 10:26:28 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
- ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
- by smtp.gmail.com with ESMTPSA id
- qj22-20020a056214321600b0068cc0b46682sm414273qvb.4.2024.02.19.10.26.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 10:26:28 -0800 (PST)
-Message-ID: <9db64273-d7e6-445c-bfe4-dcf7d90ee892@redhat.com>
-Date: Mon, 19 Feb 2024 19:26:24 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rc8Q6-0007et-Aq
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 13:31:16 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DDAE84E6006;
+ Mon, 19 Feb 2024 19:31:08 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id iyE62chT7ybT; Mon, 19 Feb 2024 19:31:06 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DE0B04E6003; Mon, 19 Feb 2024 19:31:06 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DC7817456B4;
+ Mon, 19 Feb 2024 19:31:06 +0100 (CET)
+Date: Mon, 19 Feb 2024 19:31:06 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 09/14] hw/southbridge/ich9: Add a AHCI function
+In-Reply-To: <20240219163855.87326-10-philmd@linaro.org>
+Message-ID: <6cf6d2f4-5f24-fcb9-16c4-ab66d7b5e724@eik.bme.hu>
+References: <20240219163855.87326-1-philmd@linaro.org>
+ <20240219163855.87326-10-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Trying to write data to i2c bus
-Content-Language: en-US, fr
-To: minyard@acm.org, Paz Offer <poffer@nvidia.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <MW4PR12MB6997A0A111FB6999ACF87F26A0512@MW4PR12MB6997.namprd12.prod.outlook.com>
- <ZdOCkeotwf3EF11u@mail.minyard.net>
- <MW4PR12MB69972BEDF8771C29A1E27C05A0512@MW4PR12MB6997.namprd12.prod.outlook.com>
- <ZdOMZKTd+tZqVpcC@mail.minyard.net>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-In-Reply-To: <ZdOMZKTd+tZqVpcC@mail.minyard.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clegoate@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1783725181-1708367466=:53903"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,41 +73,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/24 18:14, Corey Minyard wrote:
-> On Mon, Feb 19, 2024 at 04:53:47PM +0000, Paz Offer wrote:
->> Thank you very much Corey,
->>
->> I am simulating an external module that wants to communicate with the board management controller (BMC).
->> The real device will be connected to the board using i2c bus, and could initiate communication at any time, by sending bytes over the bus.
-> 
-> And you have a simulated BMC that can do this?  Or is the system running
-> in qemu the BMC.
-> 
->>
->> I am not sure whether the 'Master-side' (the side the initiating communication) needs to simulate a full i2c-master device, or whether my code could 'simply' write directly to the appropriate registers of the guest OS.
->> Are there some examples or documentation on how to implement something like this?
-> 
-> The aspeed i2c controller is capable of having another bus master on an
-> I2C but, but it is the only host that can currently do it.
-> 
-> It is doable, the code is ther for multiple bus masters, but there is no
-> device currently that does it.  I assume that is coming at some point,
-> but no documentation exists on how to do it.
-> 
-> You can look at the git commits in hw/i2c around 37fa5ca42623 "hw/i2c:
-> support multiple masters" for the changes that were done to support
-> this.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--3866299591-1783725181-1708367466=:53903
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-There is an i2c-echo device implementing an I2C slave  and a test,
-test_arm_ast2600_evb_buildroot in tests/avocado/ machine_aspeed.py,
-using it on the ast2600-evb.
+On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+> Instantiate TYPE_ICH9_AHCI in TYPE_ICH9_SOUTHBRIDGE.
+>
+> Since the PC machines can disable SATA (see the
+> PC_MACHINE_SATA dynamic property), add the 'sata-enabled'
+> property to disable it.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> MAINTAINERS                   |  2 ++
+> include/hw/southbridge/ich9.h |  4 ----
+> hw/i386/pc_q35.c              | 25 ++++---------------------
+> hw/southbridge/ich9.c         | 35 +++++++++++++++++++++++++++++++++++
+> hw/i386/Kconfig               |  1 -
+> hw/southbridge/Kconfig        |  1 +
+> 6 files changed, 42 insertions(+), 26 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d1a2eddd4c..937ebb5c96 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2607,9 +2607,11 @@ M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> S: Supported
+> F: hw/acpi/ich9*.c
+> F: hw/i2c/smbus_ich9.c
+> +F: hw/ide/ich.c
+> F: hw/isa/lpc_ich9.c
+> F: hw/southbridge/ich9.c
+> F: include/hw/acpi/ich9*.h
+> +F: include/hw/ide/ahci-pci.h
+> F: include/hw/pci-bridge/ich_dmi_pci.h
+> F: include/hw/southbridge/ich9.h
+>
+> diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+> index b9122d299d..ac7f9f4ff5 100644
+> --- a/include/hw/southbridge/ich9.h
+> +++ b/include/hw/southbridge/ich9.h
+> @@ -166,10 +166,6 @@ struct ICH9LPCState {
+>
+> #define ICH9_GPIO_GSI "gsi"
+>
+> -/* D31:F2 SATA Controller #1 */
+> -#define ICH9_SATA1_DEV                          31
+> -#define ICH9_SATA1_FUNC                         2
+> -
+> /* D31:F0 power management I/O registers
+>    offset from the address ICH9_LPC_PMBASE */
+>
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 2f15af540f..060358d449 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -61,9 +61,6 @@
+> #include "hw/acpi/acpi.h"
+> #include "target/i386/cpu.h"
+>
+> -/* ICH9 AHCI has 6 ports */
+> -#define MAX_SATA_PORTS     6
+> -
+> struct ehci_companions {
+>     const char *name;
+>     int func;
+> @@ -129,7 +126,7 @@ static void pc_q35_init(MachineState *machine)
+>     PCIDevice *lpc;
+>     Object *lpc_obj;
+>     DeviceState *lpc_dev;
+> -    BusState *idebus[MAX_SATA_PORTS];
+> +    BusState *idebus[2] = { };
+>     ISADevice *rtc_state;
+>     MemoryRegion *system_memory = get_system_memory();
+>     MemoryRegion *system_io = get_system_io();
+> @@ -138,7 +135,6 @@ static void pc_q35_init(MachineState *machine)
+>     ISABus *isa_bus;
+>     int i;
+>     ram_addr_t lowmem;
+> -    DriveInfo *hd[MAX_SATA_PORTS];
+>     MachineClass *mc = MACHINE_GET_CLASS(machine);
+>     bool acpi_pcihp;
+>     bool keep_pci_slot_hpc;
+> @@ -239,6 +235,7 @@ static void pc_q35_init(MachineState *machine)
+>     object_property_set_link(OBJECT(ich9), "mch-pcie-bus",
+>                              OBJECT(host_bus), &error_abort);
+>     qdev_prop_set_bit(ich9, "d2p-enabled", false);
+> +    qdev_prop_set_bit(ich9, "sata-enabled", pcms->sata_enabled);
+>     qdev_realize_and_unref(ich9, NULL, &error_fatal);
+>
+>     /* irq lines */
+> @@ -302,22 +299,8 @@ static void pc_q35_init(MachineState *machine)
+>                          0xff0104);
+>
+>     if (pcms->sata_enabled) {
 
+Shouldn't this condition be inverted if you only leave the else leg?
 
-Thanks,
+Regards,.
+BALATON Zoltan
 
-C.
-
-
-
+> -        PCIDevice *pdev;
+> -        AHCIPCIState *ich9;
+> -
+> -        /* ahci and SATA device, for q35 1 ahci controller is built-in */
+> -        pdev = pci_create_simple_multifunction(host_bus,
+> -                                               PCI_DEVFN(ICH9_SATA1_DEV,
+> -                                                         ICH9_SATA1_FUNC),
+> -                                               "ich9-ahci");
+> -        ich9 = ICH9_AHCI(pdev);
+> -        idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
+> -        idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
+> -        g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
+> -        ide_drive_get(hd, ich9->ahci.ports);
+> -        ahci_ide_create_devs(&ich9->ahci, hd);
+> -    } else {
+> -        idebus[0] = idebus[1] = NULL;
+> +        idebus[0] = qdev_get_child_bus(ich9, "ide.0");
+> +        idebus[1] = qdev_get_child_bus(ich9, "ide.1");
+>     }
+>
+>     if (machine_usb(machine)) {
+> diff --git a/hw/southbridge/ich9.c b/hw/southbridge/ich9.c
+> index 6df47e81fb..233dc1c5d7 100644
+> --- a/hw/southbridge/ich9.c
+> +++ b/hw/southbridge/ich9.c
+> @@ -13,22 +13,30 @@
+> #include "hw/southbridge/ich9.h"
+> #include "hw/pci/pci.h"
+> #include "hw/pci-bridge/ich_dmi_pci.h"
+> +#include "hw/ide/ahci-pci.h"
+> +#include "hw/ide.h"
+>
+> #define ICH9_D2P_DEVFN          PCI_DEVFN(30, 0)
+> +#define ICH9_SATA1_DEVFN        PCI_DEVFN(31, 2)
+> +
+> +#define SATA_PORTS              6
+>
+> struct ICH9State {
+>     DeviceState parent_obj;
+>
+>     I82801b11Bridge d2p;
+> +    AHCIPCIState sata0;
+>
+>     PCIBus *pci_bus;
+>     bool d2p_enabled;
+> +    bool sata_enabled;
+> };
+>
+> static Property ich9_props[] = {
+>     DEFINE_PROP_LINK("mch-pcie-bus", ICH9State, pci_bus,
+>                      TYPE_PCIE_BUS, PCIBus *),
+>     DEFINE_PROP_BOOL("d2p-enabled", ICH9State, d2p_enabled, true),
+> +    DEFINE_PROP_BOOL("sata-enabled", ICH9State, sata_enabled, true),
+>     DEFINE_PROP_END_OF_LIST(),
+> };
+>
+> @@ -48,6 +56,29 @@ static bool ich9_realize_d2p(ICH9State *s, Error **errp)
+>     return true;
+> }
+>
+> +static bool ich9_realize_sata(ICH9State *s, Error **errp)
+> +{
+> +    DriveInfo *hd[SATA_PORTS];
+> +
+> +    object_initialize_child(OBJECT(s), "sata[0]", &s->sata0, TYPE_ICH9_AHCI);
+> +    qdev_prop_set_int32(DEVICE(&s->sata0), "addr", ICH9_SATA1_DEVFN);
+> +    if (!qdev_realize(DEVICE(&s->sata0), BUS(s->pci_bus), errp)) {
+> +        return false;
+> +    }
+> +    for (unsigned i = 0; i < SATA_PORTS; i++) {
+> +        g_autofree char *portname = g_strdup_printf("ide.%u", i);
+> +
+> +        object_property_add_alias(OBJECT(s), portname,
+> +                                  OBJECT(&s->sata0), portname);
+> +    }
+> +
+> +    g_assert(SATA_PORTS == s->sata0.ahci.ports);
+> +    ide_drive_get(hd, s->sata0.ahci.ports);
+> +    ahci_ide_create_devs(&s->sata0.ahci, hd);
+> +
+> +    return true;
+> +}
+> +
+> static void ich9_init(Object *obj)
+> {
+> }
+> @@ -64,6 +95,10 @@ static void ich9_realize(DeviceState *dev, Error **errp)
+>     if (s->d2p_enabled && !ich9_realize_d2p(s, errp)) {
+>         return;
+>     }
+> +
+> +    if (s->sata_enabled && !ich9_realize_sata(s, errp)) {
+> +        return;
+> +    }
+> }
+>
+> static void ich9_class_init(ObjectClass *klass, void *data)
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index d21638f4f9..226d7f6916 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -101,7 +101,6 @@ config Q35
+>     select PCI_EXPRESS_Q35
+>     select ICH9
+>     select LPC_ICH9
+> -    select AHCI_ICH9
+>     select DIMM
+>     select SMBIOS
+>     select FW_CFG_DMA
+> diff --git a/hw/southbridge/Kconfig b/hw/southbridge/Kconfig
+> index db7259bf6f..f806033d48 100644
+> --- a/hw/southbridge/Kconfig
+> +++ b/hw/southbridge/Kconfig
+> @@ -4,3 +4,4 @@ config ICH9
+>     bool
+>     depends on PCI_EXPRESS
+>     imply I82801B11
+> +    select AHCI_ICH9
+>
+--3866299591-1783725181-1708367466=:53903--
 
