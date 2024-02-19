@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BD0C54764
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8470C48BF6
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 01:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbsIJ-0003LH-Rc; Sun, 18 Feb 2024 20:18:07 -0500
+	id 1rbsID-0003Fy-Fs; Sun, 18 Feb 2024 20:18:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1rbsIH-0003K7-G4; Sun, 18 Feb 2024 20:18:06 -0500
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1rbsI9-0003Bi-94; Sun, 18 Feb 2024 20:17:57 -0500
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1rbsIF-0004GC-QF; Sun, 18 Feb 2024 20:18:05 -0500
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-60821136c5aso3790267b3.1; 
- Sun, 18 Feb 2024 17:18:03 -0800 (PST)
+ id 1rbsI7-0004CQ-85; Sun, 18 Feb 2024 20:17:57 -0500
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-603fd31f5c2so40092087b3.0; 
+ Sun, 18 Feb 2024 17:17:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708305482; x=1708910282; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708305473; x=1708910273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HgvAf3Bny28gbzls8qX3hW1W5UZnJ79IBUeZtScB5YE=;
- b=freXttGzS8UBciBIB89f0ptv64aY7d/9w6olA13uV7CWLqAZeveqXGy9Y/KnYw1Q5l
- VvF2f0L3hTpWQDHvxCJVQvKcXxVNra4Br9iKSsRhlB9hGO2+P2uEw0HPTnyHCfVf6orD
- L0iQpc5K8Ts7Umdb2iioLumI55sm48wBfnYGkJEElUSYebu/oEGU/ZBGCpUEmcaaHCZ3
- Xj8EpnLyQkxDXWpS1v/Vw2RwvRo2KAOfo/Qo1DtZoGAVMdnfxa9/xP+4KPlXU5zyV0NB
- l7cnO2jBbIZiL1k+qfYJXuCjw01zyuaTzKFCok3NM451qkkxYWrtASJBGRBj+CzCgOaU
- hwKA==
+ bh=7mb12SLyYKgE+GLLI/c9J/vANlZ3FBQt3OE84lYGKOg=;
+ b=Sekq0a0afK6nAdYGoqHOTf8IFYO86wnWMGhhwrv4w23meCSw+bcVZfNnTa7rwsQeto
+ NnK3SNvx6lxFoBeybqZxl5JMiW6Ua0ivxvvCSQ/Szp52sgHOTosTub7FLkpwTCju1Od9
+ FNuneYH+z2Ijbz/ileuPbk7osjUe4QdOmNmsPkA4qXBoFx83Xj7XK2EWT1gaRNKFGiHu
+ 47xPdmuqsudPoZal/HrRv2fhBvRzGgMlsFclPez114ZzdmgI/2Fo1Dfa8b4e770eFA8I
+ pIPbaTmu7XnSalHbAS/tr/2R1BdeIdDKWcgdkUMy6WsVqAfvAWIUKa4mlU6WGUVo8/2f
+ TPaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708305482; x=1708910282;
+ d=1e100.net; s=20230601; t=1708305473; x=1708910273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HgvAf3Bny28gbzls8qX3hW1W5UZnJ79IBUeZtScB5YE=;
- b=D7QZhVzRD4R2woXuW++EigzMlMr3o+QDhdyogJpOXLzEnc7TItFTnCFio37rzEn33m
- HAcGHPSzebg7bIHfZvR+PbzKUN3X1jLIFOjSCRAdvN2G6XoHs+83U5MrV4O5lk0zqnhB
- lAR5C1hJgGqiWKuNjgjd5PkhbL6lecKSGp5kvnNx80/FyPjOnS7LPQ59Se0iR0Dpf00z
- yPPKSD2vpWkxw7Oz95/Gv0wUmNY/TvbgzcacCeYnjMAtwfX2q5yOWnri+Zc2BJGBIL0s
- W4ToOHLBFDTmlHpFoGid5kNNdM9tR9TVoNVZgKZQYqYlcxUOBw9dB1gq3CEtOBBKL6KO
- p21g==
-X-Gm-Message-State: AOJu0YzOQmti3i69vtLtdnbjNk1Pdlu8UkK1B2EvNv0RMHu76OJowrct
- 9I/CybUQ+4/EJP0OKfNty/VgZnnQKHe3GuDjD+qAFY6oiFX4RowDOyfGTPBp2Xw=
-X-Google-Smtp-Source: AGHT+IEUainKH0IeWBPBPrZvLMGgXm74aWBnj976gDgiNPe6L2oW/ptcmpXgt6AZ+g/zVbJFwjLDtQ==
-X-Received: by 2002:a0d:d5d7:0:b0:607:d285:4d7a with SMTP id
- x206-20020a0dd5d7000000b00607d2854d7amr9762550ywd.52.1708305482194; 
- Sun, 18 Feb 2024 17:18:02 -0800 (PST)
+ bh=7mb12SLyYKgE+GLLI/c9J/vANlZ3FBQt3OE84lYGKOg=;
+ b=iaZEBa8dOfeMHK0oV3NChxIonw6tt9m6YIB5YCX3u054m1suiXZkjK9TWtxyzerrNp
+ qHzO6KGfqc1ibDvSHNxidsDQderp4vsclo2I/VxafrWHllVfR2dMfY/CJv/QAUGOMNuI
+ cH6SA1Z7iubtzV1YEGQG+hSe2JCKaPD/AzFhK8m+VxdLxuvccFice8cDRu/rJX+7v5+7
+ mBOVAJsmMgRHzrfELI+FyN143SPo2vR5qwIwuwnDipGtWuIl3uI4geCtfXKx+0iGSYF4
+ JyJFAVtrKp1/J9+t+AMjdayDGqWL/qavm1QYPeIfwH5KYx/tETSYe7mktq6AkpPgF1iq
+ xijw==
+X-Gm-Message-State: AOJu0YyGPau2XwHiKT41YsGl/HTJ1WeOZdrkdgBpOpbKWgblUpWaxss3
+ zon+S2J4wMonQh0juafCEclWjduTkjTswWNUJEO6d/liMvXKLBYRGTQBiTiTpik=
+X-Google-Smtp-Source: AGHT+IEn67q7+LZ64iiTTGc6UKAOJ73m4C9Niv/kdAZTusY3eVYcTLGySxlKasda5tIEwW0xIS80iw==
+X-Received: by 2002:a0d:eb0f:0:b0:607:eab4:e038 with SMTP id
+ u15-20020a0deb0f000000b00607eab4e038mr6789087ywe.23.1708305473536; 
+ Sun, 18 Feb 2024 17:17:53 -0800 (PST)
 Received: from localhost.localdomain ([201.203.117.224])
  by smtp.gmail.com with ESMTPSA id
- m12-20020a819e0c000000b00607ff905ed3sm1204704ywj.58.2024.02.18.17.18.01
+ m12-20020a819e0c000000b00607ff905ed3sm1204704ywj.58.2024.02.18.17.17.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Feb 2024 17:18:01 -0800 (PST)
+ Sun, 18 Feb 2024 17:17:53 -0800 (PST)
 From: Sergey Kambalin <serg.oker@gmail.com>
 X-Google-Original-From: Sergey Kambalin <sergey.kambalin@auriga.com>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org,
 	Sergey Kambalin <sergey.kambalin@auriga.com>
-Subject: [PATCH v5 12/41] Add memory region for BCM2837 RPiVid ASB
-Date: Sun, 18 Feb 2024 19:17:10 -0600
-Message-Id: <20240219011739.2316619-13-sergey.kambalin@auriga.com>
+Subject: [PATCH v5 03/41] Split out raspi machine common part
+Date: Sun, 18 Feb 2024 19:17:01 -0600
+Message-Id: <20240219011739.2316619-4-sergey.kambalin@auriga.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
 References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=serg.oker@gmail.com; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=serg.oker@gmail.com; helo=mail-yw1-x112b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,53 +93,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Pre-setup for raspberry pi 4 introduction
+
 Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 ---
- hw/arm/bcm2838_peripherals.c         | 3 +++
- include/hw/arm/bcm2838_peripherals.h | 2 ++
- include/hw/arm/raspi_platform.h      | 2 +-
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ hw/arm/raspi.c                  | 112 ++++++++++++++++++--------------
+ include/hw/arm/raspi_platform.h |  21 ++++++
+ 2 files changed, 85 insertions(+), 48 deletions(-)
 
-diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
-index 55ae56733f..ca2f37b260 100644
---- a/hw/arm/bcm2838_peripherals.c
-+++ b/hw/arm/bcm2838_peripherals.c
-@@ -185,6 +185,9 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
-         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gpio), 0));
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index af866ebce2..7d04734cd2 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -18,6 +18,7 @@
+ #include "qapi/error.h"
+ #include "hw/arm/boot.h"
+ #include "hw/arm/bcm2836.h"
++#include "hw/arm/raspi_platform.h"
+ #include "hw/registerfields.h"
+ #include "qemu/error-report.h"
+ #include "hw/boards.h"
+@@ -25,6 +26,9 @@
+ #include "hw/arm/boot.h"
+ #include "qom/object.h"
  
-     object_property_add_alias(OBJECT(s), "sd-bus", OBJECT(&s->gpio), "sd-bus");
++#define TYPE_RASPI_MACHINE  MACHINE_TYPE_NAME("raspi-common")
++OBJECT_DECLARE_SIMPLE_TYPE(RaspiMachineState, RASPI_MACHINE)
 +
-+    /* BCM2838 RPiVid ASB must be mapped to prevent kernel crash */
-+    create_unimp(s_base, &s->asb, "bcm2838-asb", BRDG_OFFSET, 0x24);
- }
+ #define SMPBOOT_ADDR    0x300 /* this should leave enough space for ATAGS */
+ #define MVBAR_ADDR      0x400 /* secure vectors */
+ #define BOARDSETUP_ADDR (MVBAR_ADDR + 0x20) /* board setup code */
+@@ -37,25 +41,10 @@
  
- static void bcm2838_peripherals_class_init(ObjectClass *oc, void *data)
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index 86b0d96944..af085934c9 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -69,6 +69,8 @@ struct BCM2838PeripheralState {
-     OrIRQState mmc_irq_orgate;
-     OrIRQState dma_7_8_irq_orgate;
-     OrIRQState dma_9_10_irq_orgate;
-+
-+    UnimplementedDeviceState asb;
+ struct RaspiMachineState {
+     /*< private >*/
+-    MachineState parent_obj;
++    RaspiBaseMachineState parent_obj;
+     /*< public >*/
+     BCM283XState soc;
+-    struct arm_boot_info binfo;
+-};
+-typedef struct RaspiMachineState RaspiMachineState;
+-
+-struct RaspiMachineClass {
+-    /*< private >*/
+-    MachineClass parent_obj;
+-    /*< public >*/
+-    uint32_t board_rev;
+ };
+-typedef struct RaspiMachineClass RaspiMachineClass;
+-
+-#define TYPE_RASPI_MACHINE       MACHINE_TYPE_NAME("raspi-common")
+-DECLARE_OBJ_CHECKERS(RaspiMachineState, RaspiMachineClass,
+-                     RASPI_MACHINE, TYPE_RASPI_MACHINE)
+-
+ 
+ /*
+  * Board revision codes:
+@@ -83,6 +72,11 @@ static const struct {
+     [PROCESSOR_ID_BCM2837] = {TYPE_BCM2837, BCM283X_NCPUS},
  };
  
- struct BCM2838PeripheralClass {
++static void raspi_base_machine_init(MachineState *machine,
++                             BCM283XBaseState *soc);
++static void raspi_machine_class_common_init(MachineClass *mc,
++                                     uint32_t board_rev);
++
+ static uint64_t board_ram_size(uint32_t board_rev)
+ {
+     assert(FIELD_EX32(board_rev, REV_CODE, STYLE)); /* Only new style */
+@@ -200,13 +194,12 @@ static void reset_secondary(ARMCPU *cpu, const struct arm_boot_info *info)
+     cpu_set_pc(cs, info->smp_loader_start);
+ }
+ 
+-static void setup_boot(MachineState *machine, RaspiProcessorId processor_id,
+-                       size_t ram_size)
++static void setup_boot(MachineState *machine, ARMCPU *cpu,
++                       RaspiProcessorId processor_id, size_t ram_size)
+ {
+-    RaspiMachineState *s = RASPI_MACHINE(machine);
++    RaspiBaseMachineState *s = RASPI_BASE_MACHINE(machine);
+     int r;
+ 
+-    s->binfo.board_id = MACH_TYPE_BCM2708;
+     s->binfo.ram_size = ram_size;
+ 
+     if (processor_id <= PROCESSOR_ID_BCM2836) {
+@@ -252,13 +245,13 @@ static void setup_boot(MachineState *machine, RaspiProcessorId processor_id,
+         s->binfo.firmware_loaded = true;
+     }
+ 
+-    arm_load_kernel(&s->soc.parent_obj.cpu[0].core, machine, &s->binfo);
++    arm_load_kernel(cpu, machine, &s->binfo);
+ }
+ 
+-static void raspi_machine_init(MachineState *machine)
++static void raspi_base_machine_init(MachineState *machine,
++                             BCM283XBaseState *soc)
+ {
+-    RaspiMachineClass *mc = RASPI_MACHINE_GET_CLASS(machine);
+-    RaspiMachineState *s = RASPI_MACHINE(machine);
++    RaspiBaseMachineClass *mc = RASPI_BASE_MACHINE_GET_CLASS(machine);
+     uint32_t board_rev = mc->board_rev;
+     uint64_t ram_size = board_ram_size(board_rev);
+     uint32_t vcram_size;
+@@ -279,19 +272,17 @@ static void raspi_machine_init(MachineState *machine)
+                                         machine->ram, 0);
+ 
+     /* Setup the SOC */
+-    object_initialize_child(OBJECT(machine), "soc", &s->soc,
+-                            board_soc_type(board_rev));
+-    object_property_add_const_link(OBJECT(&s->soc), "ram", OBJECT(machine->ram));
+-    object_property_set_int(OBJECT(&s->soc), "board-rev", board_rev,
++    object_property_add_const_link(OBJECT(soc), "ram", OBJECT(machine->ram));
++    object_property_set_int(OBJECT(soc), "board-rev", board_rev,
+                             &error_abort);
+-    object_property_set_str(OBJECT(&s->soc), "command-line",
++    object_property_set_str(OBJECT(soc), "command-line",
+                             machine->kernel_cmdline, &error_abort);
+-    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
++    qdev_realize(DEVICE(soc), NULL, &error_fatal);
+ 
+     /* Create and plug in the SD cards */
+     di = drive_get(IF_SD, 0, 0);
+     blk = di ? blk_by_legacy_dinfo(di) : NULL;
+-    bus = qdev_get_child_bus(DEVICE(&s->soc), "sd-bus");
++    bus = qdev_get_child_bus(DEVICE(soc), "sd-bus");
+     if (bus == NULL) {
+         error_report("No SD bus found in SOC object");
+         exit(1);
+@@ -300,19 +291,32 @@ static void raspi_machine_init(MachineState *machine)
+     qdev_prop_set_drive_err(carddev, "drive", blk, &error_fatal);
+     qdev_realize_and_unref(carddev, bus, &error_fatal);
+ 
+-    vcram_size = object_property_get_uint(OBJECT(&s->soc), "vcram-size",
++    vcram_size = object_property_get_uint(OBJECT(soc), "vcram-size",
+                                           &error_abort);
+-    setup_boot(machine, board_processor_id(mc->board_rev),
++    setup_boot(machine, &soc->cpu[0].core, board_processor_id(board_rev),
+                machine->ram_size - vcram_size);
+ }
+ 
+-static void raspi_machine_class_common_init(MachineClass *mc,
+-                                            uint32_t board_rev)
++static void raspi_machine_init(MachineState *machine)
++{
++    RaspiMachineState *s = RASPI_MACHINE(machine);
++    RaspiBaseMachineState *s_base = RASPI_BASE_MACHINE(machine);
++    RaspiBaseMachineClass *mc = RASPI_BASE_MACHINE_GET_CLASS(machine);
++    BCM283XState *soc = &s->soc;
++
++    s_base->binfo.board_id = MACH_TYPE_BCM2708;
++
++    object_initialize_child(OBJECT(machine), "soc", soc,
++                            board_soc_type(mc->board_rev));
++    raspi_base_machine_init(machine, &soc->parent_obj);
++}
++
++void raspi_machine_class_common_init(MachineClass *mc,
++                                     uint32_t board_rev)
+ {
+     mc->desc = g_strdup_printf("Raspberry Pi %s (revision 1.%u)",
+                                board_type(board_rev),
+                                FIELD_EX32(board_rev, REV_CODE, REVISION));
+-    mc->init = raspi_machine_init;
+     mc->block_default_type = IF_SD;
+     mc->no_parallel = 1;
+     mc->no_floppy = 1;
+@@ -322,50 +326,57 @@ static void raspi_machine_class_common_init(MachineClass *mc,
+     mc->default_ram_id = "ram";
+ };
+ 
++static void raspi_machine_class_init(MachineClass *mc,
++                                     uint32_t board_rev)
++{
++    raspi_machine_class_common_init(mc, board_rev);
++    mc->init = raspi_machine_init;
++};
++
+ static void raspi0_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+-    RaspiMachineClass *rmc = RASPI_MACHINE_CLASS(oc);
++    RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+ 
+     rmc->board_rev = 0x920092; /* Revision 1.2 */
+-    raspi_machine_class_common_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ 
+ static void raspi1ap_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+-    RaspiMachineClass *rmc = RASPI_MACHINE_CLASS(oc);
++    RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+ 
+     rmc->board_rev = 0x900021; /* Revision 1.1 */
+-    raspi_machine_class_common_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ 
+ static void raspi2b_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+-    RaspiMachineClass *rmc = RASPI_MACHINE_CLASS(oc);
++    RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+ 
+     rmc->board_rev = 0xa21041;
+-    raspi_machine_class_common_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ 
+ #ifdef TARGET_AARCH64
+ static void raspi3ap_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+-    RaspiMachineClass *rmc = RASPI_MACHINE_CLASS(oc);
++    RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+ 
+     rmc->board_rev = 0x9020e0; /* Revision 1.0 */
+-    raspi_machine_class_common_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ 
+ static void raspi3b_machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+-    RaspiMachineClass *rmc = RASPI_MACHINE_CLASS(oc);
++    RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+ 
+     rmc->board_rev = 0xa02082;
+-    raspi_machine_class_common_init(mc, rmc->board_rev);
++    raspi_machine_class_init(mc, rmc->board_rev);
+ };
+ #endif /* TARGET_AARCH64 */
+ 
+@@ -394,9 +405,14 @@ static const TypeInfo raspi_machine_types[] = {
+ #endif
+     }, {
+         .name           = TYPE_RASPI_MACHINE,
+-        .parent         = TYPE_MACHINE,
++        .parent         = TYPE_RASPI_BASE_MACHINE,
+         .instance_size  = sizeof(RaspiMachineState),
+-        .class_size     = sizeof(RaspiMachineClass),
++        .abstract       = true,
++    }, {
++        .name           = TYPE_RASPI_BASE_MACHINE,
++        .parent         = TYPE_MACHINE,
++        .instance_size  = sizeof(RaspiBaseMachineState),
++        .class_size     = sizeof(RaspiBaseMachineClass),
+         .abstract       = true,
+     }
+ };
 diff --git a/include/hw/arm/raspi_platform.h b/include/hw/arm/raspi_platform.h
-index 0db146e592..7bc4807fa5 100644
+index ede98e63c3..3018e8fcf3 100644
 --- a/include/hw/arm/raspi_platform.h
 +++ b/include/hw/arm/raspi_platform.h
-@@ -73,7 +73,7 @@ uint64_t board_ram_size(uint32_t board_rev);
- #define MPHI_OFFSET             0x6000   /* Message-based Parallel Host Intf. */
- #define DMA_OFFSET              0x7000   /* DMA controller, channels 0-14 */
- #define ARBA_OFFSET             0x9000
--#define BRDG_OFFSET             0xa000
-+#define BRDG_OFFSET             0xa000   /* RPiVid ASB for BCM2838 (BCM2711) */
- #define ARM_OFFSET              0xB000   /* ARM control block */
- #define ARMCTRL_OFFSET          (ARM_OFFSET + 0x000)
- #define ARMCTRL_IC_OFFSET       (ARM_OFFSET + 0x200) /* Interrupt controller */
+@@ -28,6 +28,27 @@
+ #ifndef HW_ARM_RASPI_PLATFORM_H
+ #define HW_ARM_RASPI_PLATFORM_H
+ 
++#include "hw/boards.h"
++#include "hw/arm/boot.h"
++
++#define TYPE_RASPI_BASE_MACHINE MACHINE_TYPE_NAME("raspi-base")
++OBJECT_DECLARE_TYPE(RaspiBaseMachineState, RaspiBaseMachineClass,
++                    RASPI_BASE_MACHINE)
++
++struct RaspiBaseMachineState {
++    /*< private >*/
++    MachineState parent_obj;
++    /*< public >*/
++    struct arm_boot_info binfo;
++};
++
++struct RaspiBaseMachineClass {
++    /*< private >*/
++    MachineClass parent_obj;
++    /*< public >*/
++    uint32_t board_rev;
++};
++
+ #define MSYNC_OFFSET            0x0000   /* Multicore Sync Block */
+ #define CCPT_OFFSET             0x1000   /* Compact Camera Port 2 TX */
+ #define INTE_OFFSET             0x2000   /* VC Interrupt controller */
 -- 
 2.34.1
 
