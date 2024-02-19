@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E27C48BC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F06C48260
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Feb 2024 08:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rbz41-0002qp-7q; Mon, 19 Feb 2024 03:31:49 -0500
+	id 1rbz5W-0008Nm-Vp; Mon, 19 Feb 2024 03:33:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz3z-0002p1-66; Mon, 19 Feb 2024 03:31:47 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1rbz5S-0007kx-3w; Mon, 19 Feb 2024 03:33:18 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rbz3x-0002Sl-GC; Mon, 19 Feb 2024 03:31:46 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6e0a479a6cbso1965146b3a.0; 
- Mon, 19 Feb 2024 00:31:44 -0800 (PST)
+ id 1rbz5P-0002jh-Fm; Mon, 19 Feb 2024 03:33:17 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d7232dcb3eso19291315ad.2; 
+ Mon, 19 Feb 2024 00:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708331503; x=1708936303; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708331593; x=1708936393; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sDOAPyy/p7ldU2KSryWFNhizVqq3Tur5f2N+VyCj+Jk=;
- b=I/nA/IToSiVWixf75+dOf9gtQbQjsOB4WAGuWAbKCokl1aRG2CHQjNUqECUB37Snbs
- 2c3YIGEauhhpdNaE5Dy9cFWTG+n+RE18wUs5j8Ly4i26rG9OCpXB0KyNA7q/iW+GlmGp
- Y9YL+zzvoi/ewhFspqSLgJR5OUNjd8882boOVXdv2ILUgS3ZzlvOSVpdlT+gOXrgMovK
- ddO2DrmSrZj0HRPWM1tquHSuKFMrcFfyIl/EYPH7C8p6TDKNC6OKEjTOdVF3e34bvKA6
- PNUVnetQQ+bnnfTb2wENufdJtGvE8gfCw4tGrohp9aaBEOtE7RZBUKDqf43EFyDxQsie
- mikw==
+ bh=iZdatq3vYOtwDhs+2bqO9//78PD1EpkdiB+KCSZTTMM=;
+ b=C1I277/LSx5amaU4Doms7HQQDuXqCk6bIzMfjyjnENuDpH9idIlnVJECSgt3hG/Iyi
+ nOB7vd/j/NXHjHkEa39H6XXdl4cGbrKAF/xswr2BuLxMXcgIIvZYC0lcX5e2nIpvpzpr
+ 5KMHZERO1SAZJx+28eSyQAzr4dsa9iAuP/CfORwDsMbOzronN2lEJs+V8oDyEmX6nbbH
+ fYlF0unBANzy+H8815nphUxVSoFJDpX2mlFDfmjx4M6qydzAIigLv391emwlEPl3jdVm
+ t2eG/SMqIKUg3BwUW9+5RDiWMk3Br7i695f3eZF4b55Kkm7m+YPgbrf40yzpKqqg5ozp
+ Oq9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708331503; x=1708936303;
+ d=1e100.net; s=20230601; t=1708331593; x=1708936393;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sDOAPyy/p7ldU2KSryWFNhizVqq3Tur5f2N+VyCj+Jk=;
- b=ZGgIRXn/LO2oJ5i3pTYG87wKgemDoYARcSlimJFWE14WG8X1tI4bAnvZQGL6uDODyt
- 9xOJ9yFgl3Y1r0Lgi9TSM+mbBaFLBlRPKy13clDfELEbwDg5dCnkdQzbWkz4N3FeK+fk
- iBoP3gD2Q03vtVUP1s8mqpstjWyoCNOcpaLunmalvgzL9q/bEXfdQw/bsJsFaGH9G9tX
- MeDzKTbKMDQmF2gvk3sO3hljl2VSb1AxHoBZ4QD6tjZCAdPSUiGTowSRraREYqKhzhxS
- alPJkokdi+KpPqqQWq1nRQt14lh5+0CkwVe7xzng6wwQ4Eu7yK+rdNwyrRzhIBHsFtOu
- DUEg==
+ bh=iZdatq3vYOtwDhs+2bqO9//78PD1EpkdiB+KCSZTTMM=;
+ b=BrRKqKshL86wkZ0h8jsHUgT2GZMOnjtLZ7YqRkHYF+0KZi5eGuwQuuEXtzqghpkVmQ
+ MvRUSJmt30gQMurL5ZBElG1mLBKvBL8ibqjRHUqAWQPD2sLV1qZ93RAk3hZ3w6X75vly
+ YuOjz8R9wdORpTlVhakKvdDUFkdM+hzWGDSAktbYcxSWB21/iIcIcR4WS4fjpOxN0bM4
+ 9LE+ZQ+Xsej+Clf2dADVHsgk34vBpPPel2l3eqT/AKpT7D3j67xtZLVYsHbKNYhihBn1
+ /LHSdr0QXtiFEHRg7dbFz/z7V+yOm1fUMaSbbczs+OFBJDJit5G3XsZnSgEi1cShW5wG
+ B2vA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWp4rAWOkojbYIeI4NOFwTfz35iHl2+w77DmqCYC8bL6i5aDfzObaDwi9vaI0Rmn1P+je3R5SOnsXqkv0X2q8Ik9GAZ
-X-Gm-Message-State: AOJu0YzXkb4b5Rm6K+mqf16t13DTfVjYbs+ZTzJTszqqPUYRWwKvm0sU
- qMD9nOtaFIMb4FOm8f7g/EN3W4pTg1ARg4EiFowfjv2p7w558nEW+kMgi+P0
-X-Google-Smtp-Source: AGHT+IEFSqVxeU7otzcrYd+EsN8sdfE+xDPIubDp2REcfr5M+Ioqj5AUswQ1MT1ceQaovXgMFZvCKA==
-X-Received: by 2002:a05:6a20:a88f:b0:19e:3cbf:b311 with SMTP id
- ca15-20020a056a20a88f00b0019e3cbfb311mr7919030pzb.35.1708331503378; 
- Mon, 19 Feb 2024 00:31:43 -0800 (PST)
+ AJvYcCUet8bRk8KIOFCkXBg1zr9TmHps4qt7WAcD97xfS6sA+2Vw51bc+xYRsCLSl8EbS09+3iAKcRWCWSNQyQL3XxBzDafo
+X-Gm-Message-State: AOJu0YwcRdYFiti6HcT2Rgs93onV2AFqst0g4KRShmJi/gdD/0pZ5MQd
+ E2AeAdStv+H7e6cboEh94cQPhDQaIeTOE6LPXvbo3xCzW2gd2Xy3dg8Z8RIX
+X-Google-Smtp-Source: AGHT+IFnehip4HhP4vfwIG+tKXbhA8V+sZ7bofHry4a7c1HJR04hCLO27Ib9+09DSdbObXtFU6olIA==
+X-Received: by 2002:a17:902:ce01:b0:1db:8eb2:9a11 with SMTP id
+ k1-20020a170902ce0100b001db8eb29a11mr12908334plg.53.1708331592371; 
+ Mon, 19 Feb 2024 00:33:12 -0800 (PST)
 Received: from wheely.local0.net ([1.146.38.93])
  by smtp.gmail.com with ESMTPSA id
- mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.31.39
+ mo7-20020a1709030a8700b001db5ecd115bsm3838348plb.276.2024.02.19.00.33.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 00:31:43 -0800 (PST)
+ Mon, 19 Feb 2024 00:33:12 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 23/49] misc/pca9552: Fix inverted input status
-Date: Mon, 19 Feb 2024 18:29:12 +1000
-Message-ID: <20240219082938.238302-24-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 44/49] target/ppc: Fix 440 tlbwe TLB invalidation gaps
+Date: Mon, 19 Feb 2024 18:29:33 +1000
+Message-ID: <20240219082938.238302-45-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240219082938.238302-1-npiggin@gmail.com>
 References: <20240219082938.238302-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,93 +98,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.vnet.ibm.com>
+The 440 tlbwe (write entry) instruction misses several cases that must
+flush the TCG TLB:
 
-The pca9552 INPUT0 and INPUT1 registers are supposed to
-hold the logical values of the LED pins.  A logical 0
-should be seen in the INPUT0/1 registers for a pin when
-its corresponding LSn bits are set to 0, which is also
-the state needed for turning on an LED in a typical
-usage scenario.  Existing code was doing the opposite
-and setting INPUT0/1 bit to a 1 when the LSn bit was
-set to 0, so this commit fixes that.
+- If the new size is smaller than the existing size, the EA no longer
+  covered should be flushed. This looks like an inverted inequality
+  test.
+- If the TLB PID changes.
+- If the TLB attr bit 0 (translation address space) changes.
+- If low prot (access control) bits change.
 
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+Fix this by removing tricks to avoid TLB flushes, and just invalidate
+the TLB if any valid entry is being changed, similarly to 4xx.
+Optimisations will be introduced in subsequent changes.
+
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/misc/pca9552.c          | 18 +++++++++++++-----
- tests/qtest/pca9552-test.c |  6 +++---
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ target/ppc/mmu_helper.c | 35 ++++++++++-------------------------
+ 1 file changed, 10 insertions(+), 25 deletions(-)
 
-diff --git a/hw/misc/pca9552.c b/hw/misc/pca9552.c
-index 72b653463f..f00a149d61 100644
---- a/hw/misc/pca9552.c
-+++ b/hw/misc/pca9552.c
-@@ -36,7 +36,10 @@ typedef struct PCA955xClass PCA955xClass;
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index f87d35379a..c140f3c96d 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -855,49 +855,34 @@ void helper_440_tlbwe(CPUPPCState *env, uint32_t word, target_ulong entry,
+                       target_ulong value)
+ {
+     ppcemb_tlb_t *tlb;
+-    target_ulong EPN, RPN, size;
+-    int do_flush_tlbs;
  
- DECLARE_CLASS_CHECKERS(PCA955xClass, PCA955X,
-                        TYPE_PCA955X)
--
-+/*
-+ * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
-+ *        chips are the reverse of the PCA953X family of chips.
-+ */
- #define PCA9552_LED_ON   0x0
- #define PCA9552_LED_OFF  0x1
- #define PCA9552_LED_PWM0 0x2
-@@ -112,13 +115,18 @@ static void pca955x_update_pin_input(PCA955xState *s)
- 
-         switch (config) {
-         case PCA9552_LED_ON:
--            qemu_set_irq(s->gpio[i], 1);
--            s->regs[input_reg] |= 1 << input_shift;
--            break;
--        case PCA9552_LED_OFF:
-+            /* Pin is set to 0V to turn on LED */
-             qemu_set_irq(s->gpio[i], 0);
-             s->regs[input_reg] &= ~(1 << input_shift);
-             break;
-+        case PCA9552_LED_OFF:
-+            /*
-+             * Pin is set to Hi-Z to turn off LED and
-+             * pullup sets it to a logical 1.
-+             */
-+            qemu_set_irq(s->gpio[i], 1);
-+            s->regs[input_reg] |= 1 << input_shift;
-+            break;
-         case PCA9552_LED_PWM0:
-         case PCA9552_LED_PWM1:
-             /* TODO */
-diff --git a/tests/qtest/pca9552-test.c b/tests/qtest/pca9552-test.c
-index d80ed93cd3..ccca2b3d91 100644
---- a/tests/qtest/pca9552-test.c
-+++ b/tests/qtest/pca9552-test.c
-@@ -60,7 +60,7 @@ static void send_and_receive(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(value, ==, 0x55);
- 
-     value = i2c_get8(i2cdev, PCA9552_INPUT0);
--    g_assert_cmphex(value, ==, 0x0);
-+    g_assert_cmphex(value, ==, 0xFF);
- 
-     pca9552_init(i2cdev);
- 
-@@ -68,13 +68,13 @@ static void send_and_receive(void *obj, void *data, QGuestAllocator *alloc)
-     g_assert_cmphex(value, ==, 0x54);
- 
-     value = i2c_get8(i2cdev, PCA9552_INPUT0);
--    g_assert_cmphex(value, ==, 0x01);
-+    g_assert_cmphex(value, ==, 0xFE);
- 
-     value = i2c_get8(i2cdev, PCA9552_LS3);
-     g_assert_cmphex(value, ==, 0x54);
- 
-     value = i2c_get8(i2cdev, PCA9552_INPUT1);
--    g_assert_cmphex(value, ==, 0x10);
-+    g_assert_cmphex(value, ==, 0xEF);
- }
- 
- static void pca9552_register_nodes(void)
+     qemu_log_mask(CPU_LOG_MMU, "%s word %d entry %d value " TARGET_FMT_lx "\n",
+                   __func__, word, (int)entry, value);
+-    do_flush_tlbs = 0;
+     entry &= 0x3F;
+     tlb = &env->tlb.tlbe[entry];
++
++    /* Invalidate previous TLB (if it's valid) */
++    if (tlb->prot & PAGE_VALID) {
++        tlb_flush(env_cpu(env));
++    }
++
+     switch (word) {
+     default:
+         /* Just here to please gcc */
+     case 0:
+-        EPN = value & 0xFFFFFC00;
+-        if ((tlb->prot & PAGE_VALID) && EPN != tlb->EPN) {
+-            do_flush_tlbs = 1;
+-        }
+-        tlb->EPN = EPN;
+-        size = booke_tlb_to_page_size((value >> 4) & 0xF);
+-        if ((tlb->prot & PAGE_VALID) && tlb->size < size) {
+-            do_flush_tlbs = 1;
+-        }
+-        tlb->size = size;
++        tlb->EPN = value & 0xFFFFFC00;
++        tlb->size = booke_tlb_to_page_size((value >> 4) & 0xF);
+         tlb->attr &= ~0x1;
+         tlb->attr |= (value >> 8) & 1;
+         if (value & 0x200) {
+             tlb->prot |= PAGE_VALID;
+         } else {
+-            if (tlb->prot & PAGE_VALID) {
+-                tlb->prot &= ~PAGE_VALID;
+-                do_flush_tlbs = 1;
+-            }
++            tlb->prot &= ~PAGE_VALID;
+         }
+         tlb->PID = env->spr[SPR_440_MMUCR] & 0x000000FF;
+-        if (do_flush_tlbs) {
+-            tlb_flush(env_cpu(env));
+-        }
+         break;
+     case 1:
+-        RPN = value & 0xFFFFFC0F;
+-        if ((tlb->prot & PAGE_VALID) && tlb->RPN != RPN) {
+-            tlb_flush(env_cpu(env));
+-        }
+-        tlb->RPN = RPN;
++        tlb->RPN = value & 0xFFFFFC0F;
+         break;
+     case 2:
+         tlb->attr = (tlb->attr & 0x1) | (value & 0x0000FF00);
 -- 
 2.42.0
 
