@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A897BC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7162DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcKdY-0000Y6-2X; Tue, 20 Feb 2024 02:33:56 -0500
+	id 1rcKdy-0000bk-DE; Tue, 20 Feb 2024 02:34:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcKdW-0000Xr-6p
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:33:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcKdU-0003DJ-HT
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:33:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708414431;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OkIpd5Z1QwybCYLV1Bij0G5s2z9HiyDUvG3x8fxik4U=;
- b=BB8IpVdF88KYV5gHaBuL1EoxH/SrZBGWzd6tfGkoktnMVpxuXhT/hHPa1IvWDw7GFQ5LWo
- 9GorvBBjCfsJSjWE0taHjnO23vofPC1lvYi7NEb7GmfjwLiYyyca/GsDYV/oKn0HTrh3nM
- +LcireUHehT4wHhFAO2URWaa/moA2GI=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-Da8NnOETPj-JM7PN8-zmDg-1; Tue, 20 Feb 2024 02:33:48 -0500
-X-MC-Unique: Da8NnOETPj-JM7PN8-zmDg-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-6e2ea6ca499so1799914a34.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:33:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcKdv-0000bY-FN
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:34:19 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcKds-000314-AD
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:34:19 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1dbb47852cdso23733275ad.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:32:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708414332; x=1709019132;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=iDtx/n0c32kuN75bD+iP3DnUNXkzVFNWvXcPFS44MXM=;
+ b=BHJ4lnux+MIA5cKXV2nPna/1QBsDOHQ1TgLajTUU13MvU4k14MTejAlO3CaQPqyW2Z
+ +k9UaZ3uKn9ejdYlxB3HKjL51rCFBBMiOvorROS85bAfBJRe8Z4NTGudKyr0J7edkYE1
+ qNPOXJBnJu7U1Q4/AbEIIBLYQbqJeZ8thMvwqNAyru+oZFx2UZ/joXS6QPgxfjOBbqmK
+ Qj39H3/6F+ZUGnWaIQ4yziXekEK3tVEeCyy/VGHdrxEklhYQV4prpg5VnQfhUsbOR2fS
+ hE9Xo8/CwnLSM8bXWMpKjyW/d5/71SDblw1S7VkutK+ii4GnujhWVZGvYcS4YU8bqk3E
+ u+Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708414428; x=1709019228;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OkIpd5Z1QwybCYLV1Bij0G5s2z9HiyDUvG3x8fxik4U=;
- b=i35HLsYsscGGUbg74M4CJa0v5x8XsvC4evtcsrrMVVNxCnANfLoRu0Mkip1MoJDKhX
- VXT2khTBm2k4jaqX63v9UfOVweRejDmi7+o7LleqWZHH1f7fQ9zigeAi9Z7l2+NoyE7I
- Piy9YzS7d0d2oiyy8e+A5p/qkxf2RUT9rzHrRcx33B31/L8XE855A72afWISID+XV+DB
- cEQ+/d/5uPKRWWE6gGmx5xdFZFU87qh94IG/pKTriLkkdg2UCh/AjhwpwdY3LhHOt2Zt
- Xqd7PAL+t21I8X8ilLwgz28Zm89Rpipa5YBXKfRSXibuZoL1VgvYEIMmaT/g7MbWNIp1
- UgRA==
-X-Gm-Message-State: AOJu0YwOEqPXkqX/enU8GhUjrjv0a6cSL/FSWVLSj2W2+5uSl480jiYv
- 3XIKprTuiEczelIFyFOh3PjL0BuTwp62oaMofZeqNFrBtDEB7Zq34iCZdwLvrsQhTELj1dKK2cy
- mBjaetqVHarT+xqZwXSdfgJbfUgPWl0r1HbNH0jpgBFhPgYXATxA4
-X-Received: by 2002:a05:6358:e49a:b0:176:c1e1:7556 with SMTP id
- by26-20020a056358e49a00b00176c1e17556mr14621473rwb.0.1708414428036; 
- Mon, 19 Feb 2024 23:33:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGPqEUIJoGrTqdMMz6EwCUyMRyU5pv67emKgzmJUyH5RQl6cSyvcwtm5wu4mpm+NH3EGPImOQ==
-X-Received: by 2002:a05:6358:e49a:b0:176:c1e1:7556 with SMTP id
- by26-20020a056358e49a00b00176c1e17556mr14621451rwb.0.1708414427621; 
- Mon, 19 Feb 2024 23:33:47 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- b18-20020aa78ed2000000b006e39d08cad9sm5035043pfr.176.2024.02.19.23.33.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 23:33:47 -0800 (PST)
-Date: Tue, 20 Feb 2024 15:33:35 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH V3 10/13] migration: stop vm for cpr
-Message-ID: <ZdRVz7gvh-qGNxXZ@x1n>
-References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
- <1707418446-134863-11-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1708414332; x=1709019132;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iDtx/n0c32kuN75bD+iP3DnUNXkzVFNWvXcPFS44MXM=;
+ b=XU3rDqB0bDugkokI7JZ65xxogDm95HbWMUUNnPRVlSmq0fX3Yd4B1IqhAr0larx8Rt
+ u5w5ukqfL8wdgekYWy+sG+MUOxbAAGNOsNED9eQzUdY6lBnc0NAbK5hgZTcZyZF1ULpn
+ lvD0arhjZnsUmwMuF9doVLpFH5OwhpfKmaYWmUwaSbrYki6cJUpdyANrZZDBlOnueH6g
+ zGqVkK3bfU55oNu7F0N92DQqKUJIgLXVyMMhdQxzOFsaDpBUdX539fFo4aw8+sl4mOPz
+ GzpwdTR2o6KyBc0AzOgonquAtOiRXT0bGSdPhugZ7BKHligFg3gN+MEjbwM7+QOoykDK
+ 2rEg==
+X-Gm-Message-State: AOJu0Yx8k2fwNCjQ19m/eHC+dUdjPEVA08tAIDRvNZ1TUjWcf7JkMFX8
+ /Tb3EgdGg8/zPfH21PHyrPJ2iJyXBq+7NpYdnjq3jfd+rqxmF+U5Qd/tX2HJ94IY/H9pFe2deVK
+ PVIpGRqJfTKOUR9/3V+znxtsrMQwGq+8YONkx7g==
+X-Google-Smtp-Source: AGHT+IEBBFa/O7aej8OyEuFvMFtmFx2lHB2H8Cr6XK7ngttO9asgctyVvxndM2I96M14EItP4B2j3tCJNA10OXMgkjk=
+X-Received: by 2002:a17:90a:bb0f:b0:298:d21a:976c with SMTP id
+ u15-20020a17090abb0f00b00298d21a976cmr11038634pjr.17.1708414331022; Mon, 19
+ Feb 2024 23:32:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1707418446-134863-11-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <cover.1706586786.git.yong.huang@smartx.com>
+ <af7253711254128efbc37b25fb5c47b851367ce7.1706586786.git.yong.huang@smartx.com>
+ <87zfvwjzzd.fsf@pond.sub.org>
+In-Reply-To: <87zfvwjzzd.fsf@pond.sub.org>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 20 Feb 2024 15:31:54 +0800
+Message-ID: <CAK9dgmY0rExYg+hfTY_okNvTTArZdn60jsWjCABgbbAG6XZiDw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/7] qapi: Make parameter 'file' optional for
+ BlockdevCreateOptionsLUKS
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000005481a10611cb35a7"
+Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=yong.huang@smartx.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,106 +94,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 10:54:03AM -0800, Steve Sistare wrote:
-> When migration for cpr is initiated, stop the vm and set state
-> RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
-> possibility of ram and device state being out of sync, and guarantees
-> that a guest in the suspended state remains suspended, because qmp_cont
-> rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  include/migration/misc.h |  1 +
->  migration/migration.c    | 32 +++++++++++++++++++++++++-------
->  2 files changed, 26 insertions(+), 7 deletions(-)
-> 
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index 6dc234b..54c99a3 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -60,6 +60,7 @@ void migration_object_init(void);
->  void migration_shutdown(void);
->  bool migration_is_idle(void);
->  bool migration_is_active(MigrationState *);
-> +bool migrate_mode_is_cpr(MigrationState *);
->  
->  typedef enum MigrationEventType {
->      MIG_EVENT_PRECOPY_SETUP,
-> diff --git a/migration/migration.c b/migration/migration.c
-> index d1fce9e..fc5c587 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1603,6 +1603,11 @@ bool migration_is_active(MigrationState *s)
->              s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
->  }
->  
-> +bool migrate_mode_is_cpr(MigrationState *s)
-> +{
-> +    return s->parameters.mode == MIG_MODE_CPR_REBOOT;
-> +}
-> +
->  int migrate_init(MigrationState *s, Error **errp)
->  {
->      int ret;
-> @@ -2651,13 +2656,14 @@ static int migration_completion_precopy(MigrationState *s,
->      bql_lock();
->      migration_downtime_start(s);
->  
-> -    s->vm_old_state = runstate_get();
-> -    global_state_store();
-> -
-> -    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
-> -    trace_migration_completion_vm_stop(ret);
-> -    if (ret < 0) {
-> -        goto out_unlock;
-> +    if (!migrate_mode_is_cpr(s)) {
-> +        s->vm_old_state = runstate_get();
-> +        global_state_store();
-> +        ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
-> +        trace_migration_completion_vm_stop(ret);
-> +        if (ret < 0) {
-> +            goto out_unlock;
-> +        }
->      }
->  
->      ret = migration_maybe_pause(s, current_active_state,
-> @@ -3576,6 +3582,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
->      Error *local_err = NULL;
->      uint64_t rate_limit;
->      bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
-> +    int ret;
->  
->      /*
->       * If there's a previous error, free it and prepare for another one.
-> @@ -3651,6 +3658,17 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
->          goto fail;
->      }
->  
-> +    if (migrate_mode_is_cpr(s)) {
-> +        s->vm_old_state = runstate_get();
-> +        global_state_store();
-> +        ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
-> +        trace_migration_completion_vm_stop(ret);
-> +        if (ret < 0) {
-> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-> +            goto fail;
-> +        }
-> +    }
+--0000000000005481a10611cb35a7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Could we have a helper function for the shared codes?
+On Tue, Feb 20, 2024 at 2:31=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-How about postcopy?  I know it's nonsense to enable postcopy for cpr.. but
-iiuc we don't yet forbid an user doing so.  Maybe we should?
+> yong.huang@smartx.com writes:
+>
+> > From: Hyman Huang <yong.huang@smartx.com>
+> >
+> > To support detached LUKS header creation, make the existing 'file'
+> > field in BlockdevCreateOptionsLUKS optional.
+> >
+> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+> [...]
+>
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index ae604c6019..69a88d613d 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
+> > @@ -4957,7 +4957,8 @@
+> >  #
+> >  # Driver specific image creation options for LUKS.
+> >  #
+> > -# @file: Node to create the image format on
+> > +# @file: Node to create the image format on, mandatory except when
+> > +#        'preallocation' is not requested
+>
+> You mean when @preallocation is "off"?
+>
+> Cases:
+>
+> 1. @file is mandatory
+>
 
-> +
->      if (migrate_background_snapshot()) {
->          qemu_thread_create(&s->thread, "bg_snapshot",
->                  bg_migration_thread, s, QEMU_THREAD_JOINABLE);
-> -- 
-> 1.8.3.1
-> 
+When @preallocation is specified to PREALLOC_MODE_ON, file
+is mandatory because preallocation aims to act on payload data that
+@file holds.
 
--- 
-Peter Xu
 
+> 2. @file is optional and present
+>
+
+When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
+@file if optional.
+If @file present=EF=BC=8Cthere are two cases:
+1. @header is absent,  the creation process degenerate to the origin action=
+.
+2. @header is present,  the creation process would trunk the payload data
+image that @file holds and do the LUKS formatting on the image that
+@header refers;
+
+
+>
+> 3. @file is optional and absent
+>
+
+When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
+@file if optional.
+If @file is absent, do the LUKS formatting only.
+Note that Either the parameter 'header' or 'file' must be specified.
+
+Here's my interpretation; do let me know if any of the points are off or
+need to be refactored.
+
+
+>
+> Ignorant question: behavior in each case?
+>
+> >  #
+> >  # @size: Size of the virtual disk in bytes
+> >  #
+> > @@ -4968,7 +4969,7 @@
+> >  ##
+> >  { 'struct': 'BlockdevCreateOptionsLUKS',
+> >    'base': 'QCryptoBlockCreateOptionsLUKS',
+> > -  'data': { 'file':             'BlockdevRef',
+> > +  'data': { '*file':            'BlockdevRef',
+> >              'size':             'size',
+> >              '*preallocation':   'PreallocMode' } }
+>
+>
+Thanks,
+
+Yong
+
+--=20
+Best regards
+
+--0000000000005481a10611cb35a7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 20, 20=
+24 at 2:31=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat=
+.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-=
+style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"><a href=3D=
+"mailto:yong.huang@smartx.com" target=3D"_blank">yong.huang@smartx.com</a> =
+writes:<br>
+<br>
+&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
+=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt;<br>
+&gt; To support detached LUKS header creation, make the existing &#39;file&=
+#39;<br>
+&gt; field in BlockdevCreateOptionsLUKS optional.<br>
+&gt;<br>
+&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
+" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@re=
+dhat.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
+<br>
+[...]<br>
+<br>
+&gt; diff --git a/qapi/block-core.json b/qapi/block-core.json<br>
+&gt; index ae604c6019..69a88d613d 100644<br>
+&gt; --- a/qapi/block-core.json<br>
+&gt; +++ b/qapi/block-core.json<br>
+&gt; @@ -4957,7 +4957,8 @@<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # Driver specific image creation options for LUKS.<br>
+&gt;=C2=A0 #<br>
+&gt; -# @file: Node to create the image format on<br>
+&gt; +# @file: Node to create the image format on, mandatory except when<br=
+>
+&gt; +#=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;preallocation&#39; is not requested=
+<br>
+<br>
+You mean when @preallocation is &quot;off&quot;?<br>
+<br>
+Cases:<br>
+<br>
+1. @file is mandatory<br></blockquote><div><br></div><div class=3D"gmail_de=
+fault" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">When=C2=
+=A0@preallocation is specified to=C2=A0PREALLOC_MODE_ON, file</div><div cla=
+ss=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
+rif">is mandatory because preallocation aims to act on payload data that</d=
+iv><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&qu=
+ot;,sans-serif">@file holds.=C2=A0</div><div class=3D"gmail_default" style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:=
+1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left=
+:1ex">
+<br>
+2. @file is optional and present<br></blockquote><div><br></div><div><div c=
+lass=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-=
+serif">When @preallocation<span class=3D"gmail-Apple-converted-space">=C2=
+=A0is not specified or equals to=C2=A0</span>PREALLOC_MODE_OFF,</div><div c=
+lass=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-=
+serif">@file if optional.=C2=A0</div><div class=3D"gmail_default" style=3D"=
+font-family:&quot;comic sans ms&quot;,sans-serif">If <a class=3D"gmail_plus=
+reply" id=3D"plusReplyChip-4">@file</a>=C2=A0present=EF=BC=8Cthere are two =
+cases:</div><div class=3D"gmail_default" style=3D"font-family:&quot;comic s=
+ans ms&quot;,sans-serif">1. @header is absent, =C2=A0the creation process d=
+egenerate to the origin action.</div><div class=3D"gmail_default" style=3D"=
+font-family:&quot;comic sans ms&quot;,sans-serif">2. @header is present, =
+=C2=A0the creation process would trunk the payload data</div><div class=3D"=
+gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">i=
+mage that=C2=A0@file holds and do the LUKS formatting on the image that</di=
+v><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quo=
+t;,sans-serif">@header refers;=C2=A0</div></div><div>=C2=A0</div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width=
+:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-lef=
+t:1ex">
+<br>
+3. @file is optional and absent<br></blockquote><div><br></div><div><div cl=
+ass=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-s=
+erif">When @preallocation<span class=3D"gmail-Apple-converted-space">=C2=A0=
+is not specified or equals to=C2=A0</span>PREALLOC_MODE_OFF,</div><div clas=
+s=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-ser=
+if">@file if optional.=C2=A0</div></div><div class=3D"gmail_default" style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif">If=C2=A0<a class=3D"g=
+mail_plusreply" id=3D"gmail-plusReplyChip-4">@file is=C2=A0</a>absent, do t=
+he LUKS formatting only.</div><div class=3D"gmail_default" style=3D"font-fa=
+mily:&quot;comic sans ms&quot;,sans-serif">Note that=C2=A0Either the parame=
+ter &#39;header&#39; or &#39;file&#39; must=C2=A0be specified.</div><div cl=
+ass=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-s=
+erif"><br></div><div class=3D"gmail_default" style=3D"font-family:&quot;com=
+ic sans ms&quot;,sans-serif">Here&#39;s my interpretation; do let me know i=
+f any of the points are off or</div><div class=3D"gmail_default" style=3D"f=
+ont-family:&quot;comic sans ms&quot;,sans-serif">need to be refactored.</di=
+v><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color=
+:rgb(204,204,204);padding-left:1ex">
+<br>
+Ignorant question: behavior in each case?<br>
+<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # @size: Size of the virtual disk in bytes<br>
+&gt;=C2=A0 #<br>
+&gt; @@ -4968,7 +4969,7 @@<br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 { &#39;struct&#39;: &#39;BlockdevCreateOptionsLUKS&#39;,<br>
+&gt;=C2=A0 =C2=A0 &#39;base&#39;: &#39;QCryptoBlockCreateOptionsLUKS&#39;,<=
+br>
+&gt; -=C2=A0 &#39;data&#39;: { &#39;file&#39;:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0&#39;BlockdevRef&#39;,<br>
+&gt; +=C2=A0 &#39;data&#39;: { &#39;*file&#39;:=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 &#39;BlockdevRef&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;size&#39;:=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;size&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;*preallocation&#3=
+9;:=C2=A0 =C2=A0&#39;PreallocMode&#39; } }<br>
+<br>
+</blockquote></div><div><br></div><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif">Thanks,</div><div class=3D"g=
+mail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif"><b=
+r></div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sans =
+ms&quot;,sans-serif">Yong</div><div><br></div><span class=3D"gmail_signatur=
+e_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=
+=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font></div>=
+</div></div>
+
+--0000000000005481a10611cb35a7--
 
