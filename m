@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D86AC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97534C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcRzb-0003ax-SW; Tue, 20 Feb 2024 10:25:12 -0500
+	id 1rcS0H-0004oV-9X; Tue, 20 Feb 2024 10:25:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRzN-0003Uz-P8
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:24:57 -0500
+ id 1rcS0D-0004le-I9
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:25:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRzM-0006u5-6I
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:24:57 -0500
+ id 1rcS0C-0007Dk-0Y
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:25:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708442695;
+ s=mimecast20190719; t=1708442747;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7bhkALHmCgcBAReqwkiaeTQcm74H68Nm0EyEY/GJKZc=;
- b=WowHy0D9qQFW75ktIN7lsnlRWHNUXWIOC3B9I8TmbXYa2lMOKMqPRLVvGiAEBAMEpD8M+R
- 5aFi1voAqXWY3HAqti94hx+oZACsrDjYZ8Dy6J+8qgpJ5tLY76K5dwA1Syzl721R7DTh3o
- 6RT2wQ9InkfIm5B7Afy+n6RdlbKluSw=
+ bh=gI7ZKLNNQeK0mPjkkPY21k6GsO8VNr8GNrp4jxtMbGs=;
+ b=DTbTvwO/w3PFxqfi4qj4cZ7DMWyrc6eUa+WaL2pNq2lHzYJHWltKuhF7gwhRuc/hmGAgAw
+ ekQPRAjcZxJ1LgDF/vs6oZm4ti8x2il5/KkJ0mhh9NSXpPOmknWgmSqk9ihrQZKzGNEctt
+ m1KOhWoUrScPVvWl2q29RsNiuH2Hx+o=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-T0Y5KaZpMEaNmwUFAgaEUw-1; Tue,
- 20 Feb 2024 10:24:51 -0500
-X-MC-Unique: T0Y5KaZpMEaNmwUFAgaEUw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-cCr-AVy9Pf2uiw3Tqj_N2w-1; Tue,
+ 20 Feb 2024 10:25:42 -0500
+X-MC-Unique: cCr-AVy9Pf2uiw3Tqj_N2w-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6B826299E74A;
- Tue, 20 Feb 2024 15:24:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0731629AC03D;
+ Tue, 20 Feb 2024 15:25:42 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8CD6B401A77C;
- Tue, 20 Feb 2024 15:24:50 +0000 (UTC)
-Date: Tue, 20 Feb 2024 15:24:48 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A6702201154D;
+ Tue, 20 Feb 2024 15:25:40 +0000 (UTC)
+Date: Tue, 20 Feb 2024 15:25:38 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com,
  eblake@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH 15/16] qapi: Reject multiple and empty feature descriptions
-Message-ID: <ZdTEQIxiH94VPazM@redhat.com>
+Subject: Re: [PATCH 16/16] qapi: Divorce QAPIDoc from QAPIParseError
+Message-ID: <ZdTEciiUzzPcndDf@redhat.com>
 References: <20240216145841.2099240-1-armbru@redhat.com>
- <20240216145841.2099240-16-armbru@redhat.com>
+ <20240216145841.2099240-17-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240216145841.2099240-16-armbru@redhat.com>
+In-Reply-To: <20240216145841.2099240-17-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -88,32 +88,30 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 03:58:39PM +0100, Markus Armbruster wrote:
-> The parser recognizes only the first "Features:" line.  Any subsequent
-> ones are treated as ordinary text, as visible in test case
-> doc-duplicate-features.  Recognize "Features:" lines anywhere.  A
-> second one is an error.
+On Fri, Feb 16, 2024 at 03:58:40PM +0100, Markus Armbruster wrote:
+> QAPIDoc stores a reference to QAPIParser just to pass it to
+> QAPIParseError.  The resulting error position depends on the state of
+> the parser.  It happens to be the current comment line.  Servicable,
+> but action at a distance.
 > 
-> A 'Features:' line without any features is useless, but not an error.
-> Make it an error.  This makes detecting a second "Features:" line
-> easier.
+> The commit before previous moved most uses of QAPIParseError from
+> QAPIDoc to QAPIParser.  There are just three left.  Convert them to
+> QAPISemError.  This involves passing info to a few methods.  Then drop
+> the reference to QAPIParser.
 > 
-> qapi/run-state.json actually has an instance of this since commit
-> fe17522d854 (qapi: Remove deprecated 'singlestep' member of
-> StatusInfo).  Clean it up.
+> The three errors lose the column number.  Not really interesting here:
+> it's the comment line's indentation.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  qapi/run-state.json                          |  2 --
->  scripts/qapi/parser.py                       |  8 ++++++-
->  tests/qapi-schema/doc-duplicate-features.err |  1 +
->  tests/qapi-schema/doc-duplicate-features.out | 22 --------------------
->  tests/qapi-schema/doc-empty-features.err     |  1 +
->  tests/qapi-schema/doc-empty-features.out     | 17 ---------------
->  6 files changed, 9 insertions(+), 42 deletions(-)
+>  scripts/qapi/parser.py                      | 66 +++++++++------------
+>  tests/qapi-schema/doc-duplicated-arg.err    |  2 +-
+>  tests/qapi-schema/doc-duplicated-return.err |  2 +-
+>  tests/qapi-schema/doc-duplicated-since.err  |  2 +-
+>  tests/qapi-schema/doc-empty-arg.err         |  2 +-
+>  5 files changed, 32 insertions(+), 42 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
 
 With regards,
 Daniel
