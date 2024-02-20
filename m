@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD60C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69FC0C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVlE-0006SR-Oe; Tue, 20 Feb 2024 14:26:38 -0500
+	id 1rcVlU-0006Yj-GK; Tue, 20 Feb 2024 14:26:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcVkz-0006OV-Gk
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:21 -0500
-Received: from mail-io1-xd2c.google.com ([2607:f8b0:4864:20::d2c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVlP-0006XP-5a
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:49 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcVkt-0006Th-Qo
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:19 -0500
-Received: by mail-io1-xd2c.google.com with SMTP id
- ca18e2360f4ac-7c745af8f1cso117593839f.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:26:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVlN-0006Z6-Jx
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:46 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d228a132acso48085091fa.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:26:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708457174; x=1709061974; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KH6FwagXPISB5V5N/gfnHCV4noWWen5LvAfwzlCmLdM=;
- b=ijlbBgokLvaFJ5y78vi0gCJI75eLJuEwX54tCN/sI+c/nHeMeC+RyhrJywWlXRSk2R
- m/IhsZnYAI12hGQq0x/BrZgMcHR9LTroGSzw916Kveo7Skr98nR+4DhP9+C3hPhIOKBt
- Awl48J/o/ExaCN4WWkzNE2RgYukrS9WDMIuX8cUWi/OQJfAICpFTsWDl4Gdf22J5eciP
- ygi0b7kpzqzRIeyyt8j73HcRaC5cDpUI+nvqwfpSKyfBk64894UhA/u3dMd17VvVTwew
- 0p0oCKKBj7la4pcjAQYmPxbvflZa53Ielqj5bCJKqBn7FUS/xVyAXfk1iHOpN7EiAcER
- flmQ==
+ d=linaro.org; s=google; t=1708457201; x=1709062001; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2hUt/YzOZmeP2AC1y1qRNyEeuFDCyV/aUnZ8Viy/DjY=;
+ b=OTkJS3+M0Q0KRbMc7hAIOzKOU/B6vt8mFMLSG2IHRki3R/tJRa2kDNC2aLveL8xuxS
+ 6ImbjdJVj4zU0j22gJHPriSmibS/ou+nCBJfHUuPJzOLLcjMh15Aa3w7mjK4MX+GJTpu
+ hqQgblmNPKlKKy1jqBdYoTS2OQWBjItVGckvHSwQF3j+QoBGYEILQjyYio+KL4wApyKx
+ Mp1NxHsaHWmHEMVKLfnWntB98vqABUFhE5+yulgtL/4dZry8TdNWkiFUUro+ZsA9DWLX
+ VQn4PFST6TZimh2+87pYu1DRbe7rtZB3ax1UMTOGc1wyNTgQKxQyreaCK/bpqj6/oQpf
+ a3pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708457174; x=1709061974;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KH6FwagXPISB5V5N/gfnHCV4noWWen5LvAfwzlCmLdM=;
- b=ZglwS5OzVXpWViFCxKJmJbW7d5FGqBpNMz7Ocwcrlahj8jsZWp/OfU1wVlSA6WV/gj
- X31AoRSC03qftF9JEQmjPHXozvQgebVrRBEQ8MPJsAoxan8qnbkDf51doZIRvnp0axMS
- b4ROGYPPql5BbaM+3TnXx+wpO7VT+aIdFS74g2gi7AL16fCaapvoQeU8/LeD+3/GFOzV
- JF/GC+XTZ3ExdR1Y4K57h8HJtMdmLXQd/mT38/VERpjUzh1GCxUG08/AjkUPsxWscAJC
- TAugfN/ncHwOXV0rhymUpcF+tjploE6tnMkA9O35+EMvZbw7QiJ7JagYvoKc3KEkPWVq
- y8jw==
-X-Gm-Message-State: AOJu0YzElWXcouxBUJRrgWXn+iHLHmnqoqjJSVrr/PJ8pI6oj7KnfgDt
- g627RBdLMby8Ljt2sWOpS+rio4zBZZQmv4f4gu+JE/1sB5d1/xaR7KsqDILe3qzleDPYcymV/5U
- Y
-X-Google-Smtp-Source: AGHT+IG9RGtEO0wcMKxnhVfiU842/235wgZqlM+NbTTko1+lE/d/dhTOx31FFTd2n7p1QUaGIvjWgQ==
-X-Received: by 2002:a05:6e02:1d8f:b0:365:858:d6d1 with SMTP id
- h15-20020a056e021d8f00b003650858d6d1mr19938040ila.1.1708457173950; 
- Tue, 20 Feb 2024 11:26:13 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- i73-20020a636d4c000000b005b458aa0541sm6943005pgc.15.2024.02.20.11.26.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 11:26:13 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1708457201; x=1709062001;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2hUt/YzOZmeP2AC1y1qRNyEeuFDCyV/aUnZ8Viy/DjY=;
+ b=RVF1qD93W4ftzWqBGx/qrytpBGTMosJO6d1mO7L60ShmDhN7avjgcyvzQuGPCE7vjp
+ zJSeQRldM8kGcuJF2ebZy05Jc6hLMqpENuF2TVANmgV8kkD33NjJQj7nWLUzkPM/9zzA
+ p01h2kx/8sisGHDuVv6Ki+7IILFCwYLdTM3zGK25VQWdmPhwaW6rPIFQ6tKHR/ynP4DH
+ mMGfaMCpkWn6cV+Y5fKFHcEdjatcOgSCEIpiw6j/iMKKNIdoKC8Wzmlvcz/ww0GXT0Vy
+ 3H/lx+/qlR/szBcNDZHpkWjQfJ18oM1QZZF7W7QFmqoUyL8t+Zb53J5mPjVisDh3Qptd
+ pMWw==
+X-Gm-Message-State: AOJu0Yyn3Lq+m9CgplPvAHPJd+IRt7KD1GTDWKNbHq+W6mvkfwhACmcN
+ rLbwqzbCWoSZEYen9Sf2XjWKb+KgDvjsgb3eJPihUk++efU/b/YBxgkZ/qZnulFAbVakbS0y9qs
+ 8
+X-Google-Smtp-Source: AGHT+IG3s/xpgkwMsR8rsCm87wdO6rXaSA7VLSIkNEuw8kVHsUmxKU6SwgIaBR3ABGS6Nfn/cwCLnw==
+X-Received: by 2002:a2e:8ec8:0:b0:2d2:2ee5:8212 with SMTP id
+ e8-20020a2e8ec8000000b002d22ee58212mr6154400ljl.13.1708457200813; 
+ Tue, 20 Feb 2024 11:26:40 -0800 (PST)
+Received: from m1x-phil.lan (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
+ [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
+ m8-20020a05600c4f4800b00411fb769583sm15737715wmq.27.2024.02.20.11.26.39
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 20 Feb 2024 11:26:40 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, max.chou@sifive.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v3 0/5] riscv: set vstart_eq_zero on mark_vs_dirty
-Date: Tue, 20 Feb 2024 16:26:02 -0300
-Message-ID: <20240220192607.141880-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.43.2
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 2/2] hw/alpha/typhoon: Set CPU IRQs using QDev API
+Date: Tue, 20 Feb 2024 20:26:25 +0100
+Message-ID: <20240220192625.17944-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240220192625.17944-1-philmd@linaro.org>
+References: <20240220192625.17944-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-io1-xd2c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,59 +101,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Keep a reference of CPU IRQs in the TyphoonCchip state.
+Resolve them once in typhoon_init(), and access them with
+the qemu_irq API.
 
-In this new version I decided to scrap patch 3 from v2 and added a patch
-that Ivan Klokov sent back in December [1]. In that patch Ivan was
-already doing things that Richard suggested to be done in patch 3 of v2.
-This is done in patch 5.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/alpha/typhoon.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-Patches 1 and 2 were suggestions from Richard that I'm adding as
-cleanup. Patch 2 in particular helped to clean up quite a bit of code.
-
-Patch 3 is a fix in GEN_VEXT_VSLIDEUP_VX() that I caught while doing
-code inspection to assert that all helpers were setting env->vstart = 0
-in the end.
-
-Patch 4 is patch 2 from v2 without any changes.
-
-Patches based on alistair/riscv-to-apply.next.
-
-Changes from v2:
-- patches 1 and 3 from v2 were dropped, patch 2 from v2 is now patch 4
-- patch 1: new
-  - dirty vs state before stores
-- patch 2: new
-  - remove redundant conditionals
-- patch 3: new
-  - assign env->vstart = 0 in GEN_VEXT_VSLIDEUP_VX() 
-- patch 5: taken from [1] with the following changes:
-  - fixed conflicts with alistair/riscv-to-apply.next
-  - changed "finalize_rrv_inst" instances to "finalize_rvv_inst" to fix
-    trans_rvvk.c.inc build
-  - set_vstart_eq_zero() removed; finalize_rvv_inst() will do a direct
-    ctx->vstart_eq_zero = true instead;
-  - finalize_rvv_inst() is removed from the #ifdef block since it's now
-    relevant to linux-user
-- v2 link: https://lore.kernel.org/qemu-riscv/20240216135719.1034289-1-dbarboza@ventanamicro.com/
-
-Daniel Henrique Barboza (4):
-  trans_rvv.c.inc: mark_vs_dirty() before stores
-  target/riscv: remove 'over' brconds from vector trans
-  target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
-  trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
-
-Ivan Klokov (1):
-  target/riscv: Clear vstart_qe_zero flag
-
- target/riscv/insn_trans/trans_rvbf16.c.inc |   6 +-
- target/riscv/insn_trans/trans_rvv.c.inc    | 224 +++++----------------
- target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +--
- target/riscv/translate.c                   |   6 +
- target/riscv/vector_helper.c               |   1 +
- 5 files changed, 70 insertions(+), 197 deletions(-)
-
+diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
+index e8711ae16a..f038b6f000 100644
+--- a/hw/alpha/typhoon.c
++++ b/hw/alpha/typhoon.c
+@@ -26,6 +26,8 @@ typedef struct TyphoonCchip {
+     uint64_t dim[4];
+     uint32_t iic[4];
+     AlphaCPU *cpu[4];
++    qemu_irq cpu_tmr[4];
++    qemu_irq cpu_smp[4];
+ } TyphoonCchip;
+ 
+ typedef struct TyphoonWindow {
+@@ -343,17 +345,16 @@ static MemTxResult cchip_write(void *opaque, hwaddr addr,
+             for (i = 0; i < 4; ++i) {
+                 AlphaCPU *cpu = s->cchip.cpu[i];
+                 if (cpu != NULL) {
+-                    CPUState *cs = CPU(cpu);
+                     /* IPI can be either cleared or set by the write.  */
+                     if (newval & (1 << (i + 8))) {
+-                        cpu_interrupt(cs, CPU_INTERRUPT_SMP);
++                        qemu_irq_raise(s->cchip.cpu_smp[i]);
+                     } else {
+-                        cpu_reset_interrupt(cs, CPU_INTERRUPT_SMP);
++                        qemu_irq_lower(s->cchip.cpu_smp[i]);
+                     }
+ 
+                     /* ITI can only be cleared by the write.  */
+                     if ((newval & (1 << (i + 4))) == 0) {
+-                        cpu_reset_interrupt(cs, CPU_INTERRUPT_TIMER);
++                        qemu_irq_lower(s->cchip.cpu_tmr[i]);
+                     }
+                 }
+             }
+@@ -802,7 +803,7 @@ static void typhoon_set_timer_irq(void *opaque, int irq, int level)
+                 /* Set the ITI bit for this cpu.  */
+                 s->cchip.misc |= 1 << (i + 4);
+                 /* And signal the interrupt.  */
+-                cpu_interrupt(CPU(cpu), CPU_INTERRUPT_TIMER);
++                qemu_irq_raise(s->cchip.cpu_tmr[i]);
+             }
+         }
+     }
+@@ -815,7 +816,7 @@ static void typhoon_alarm_timer(void *opaque)
+ 
+     /* Set the ITI bit for this cpu.  */
+     s->cchip.misc |= 1 << (cpu + 4);
+-    cpu_interrupt(CPU(s->cchip.cpu[cpu]), CPU_INTERRUPT_TIMER);
++    qemu_irq_raise(s->cchip.cpu_tmr[cpu]);
+ }
+ 
+ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+@@ -845,6 +846,8 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+             cpu->alarm_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                                  typhoon_alarm_timer,
+                                                  (void *)((uintptr_t)s + i));
++            s->cchip.cpu_tmr[i] = qdev_get_gpio_in_named(DEVICE(cpu), "TMR", 0);
++            s->cchip.cpu_smp[i] = qdev_get_gpio_in_named(DEVICE(cpu), "SMP", 0);
+         }
+     }
+ 
 -- 
-2.43.2
+2.41.0
 
 
