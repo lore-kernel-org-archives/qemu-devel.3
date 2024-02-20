@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA34C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:48:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0409C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:50:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcTH6-0007mV-Rc; Tue, 20 Feb 2024 11:47:20 -0500
+	id 1rcTJW-0000c3-VS; Tue, 20 Feb 2024 11:49:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcTH4-0007m4-3Y
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:47:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcTJP-0000Yl-Qe
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:49:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcTH2-00044U-1i
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:47:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcTJO-0004KL-7l
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:49:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708447634;
+ s=mimecast20190719; t=1708447781;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=lqUxo03A0QGr5YhjQ0UZLJ10kh/EHHkhJt9b0NN1thw=;
- b=A/YBf5AajV43hQk9amOBC8kJRe52zxz7rm3uCDyJOagX7qwPxaGjPMGVO0LpzZ7Og5zUpN
- DNZ43Odvexnj+sD7TD+HrshAYAi8a6LAax3ZUw/ZE+z0UykdIjqDXyBV29MtxGh6p0K+6Q
- F6o4CToNLJHKDswNDVzkStsldK+3Q38=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AGjgtD0kdfQAAbF0TUT/geu7CepL1zBro4NauZNJwFo=;
+ b=QfF7HAY8ZFfRowbq/Www3sY4DnefUxc7jwXVVlerol6E5dfz9DlG93eSOA2k0pv1LiJUxF
+ hDNPmAL+LvFE1yzD6phy8hsC9ztgLnsSIR1IgWzCk7Z+veczcCFcqNIN15FKvUJ2z6+Jlz
+ t+zfB2rh0j6i1dCBqnWvQzD6pzynVwM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-D51k0Q3SMDi0sVHll5apgQ-1; Tue, 20 Feb 2024 11:47:12 -0500
-X-MC-Unique: D51k0Q3SMDi0sVHll5apgQ-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7830ab8fb5aso492559385a.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:47:12 -0800 (PST)
+ us-mta-204-FYWRQi-kOvOyzN1sJq-3eA-1; Tue, 20 Feb 2024 11:49:39 -0500
+X-MC-Unique: FYWRQi-kOvOyzN1sJq-3eA-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-78732274d13so490359685a.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:49:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708447632; x=1709052432;
+ d=1e100.net; s=20230601; t=1708447779; x=1709052579;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lqUxo03A0QGr5YhjQ0UZLJ10kh/EHHkhJt9b0NN1thw=;
- b=CS0P6rFEsoEjJ15PspCytpkSjhFe/2+wNu+V4tN7arASgefF99qHYympYA4A8kc3eh
- 2vn9TwfZKgpIcwzie2X0h2GzQcEloXE++I57ZrozthV0EaCcqoYWULwXfpO49OaTZovJ
- 2ON8OWx1kUf874K0c9tLnxJHktUHOlQ6Qq+1Y7uHDq/xjcr/DIx3yUqxG92ICEc14HyC
- sOZxLE3mI65pGGF2X1KZk2+wdzDQ5lPNlG98eud07ISOKur0BcF1ziJCWJSne7ErRqc9
- P7bPaeePq32366OaGFYVdKiM5wZbghnNETN85HmsbO/lW1MdMrECk8UjMgQLOyXVdIHL
- VE/A==
-X-Gm-Message-State: AOJu0Yyz5gV3euoQUtWsAb3oPgsJrFcYQKwriWt0x4JdOEyZtWETsjLn
- eRcbUdmSMQGhOaFkqipf0XtwaXykCIUKlCbRuvkZ4t2NHJOk/Z4hsXamMd9lcoVRcenU6yuR+m3
- HVdSggKH3wBPfjHj40pkUvm9+LWCkmhuZjxOeNfcKApeOhMxn9YVl
-X-Received: by 2002:a05:620a:225:b0:787:4173:a7ea with SMTP id
- u5-20020a05620a022500b007874173a7eamr13073540qkm.70.1708447632006; 
- Tue, 20 Feb 2024 08:47:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGeMS7I2bBMylebjKjandgm1gg/Iovsrbw04sRMnyp8K4dZRySSvu1iYZlHQppgAh0g+SdV2w==
-X-Received: by 2002:a05:620a:225:b0:787:4173:a7ea with SMTP id
- u5-20020a05620a022500b007874173a7eamr13073526qkm.70.1708447631737; 
- Tue, 20 Feb 2024 08:47:11 -0800 (PST)
+ bh=AGjgtD0kdfQAAbF0TUT/geu7CepL1zBro4NauZNJwFo=;
+ b=Z1jLo3k1AJrWq+BekULiOu9hLdmBjUo3ad10MQq0gEKOrW7WA5M0uTkS1vjiCsUzhA
+ 1iwDTw45SLHq5TBgX5KqGVhTaIxMCLEMye4DxnF+dnkmH+2hH1SoEAWZKFd8IG4PqyDe
+ hwbqCs+ms8Mqc2cmyknrS3Iiibw+hZsu+3bblqT0v47cmTkoIp2pGomMYcrlwR7BEhMn
+ H7o9+GIlNqsYZHHglydX1QnkYWQqbk0OncYp2au/wdTqUG4Mx40J9j/Gnuh3dYmNVPsP
+ o9xVYVWNAkp7MA3sxPiNG3EgO0eo3QV+ujtNECGWhNsVRnNADxBjo4cY1xe9EB3LhtFX
+ 3FYg==
+X-Gm-Message-State: AOJu0YyMGmzdN/S1rw2RkkKtGoMlitg2e94husB11nOy57njbn+qe5Nx
+ JkHkc9voYy/kc/dcjgNOezx5cbrVhx0Feule6tdACRBvsdiu3jnV6RW0YtmsHNA7iIQLzuCOnOr
+ bp3IPCBYT1SjNCY1K4jNHR2kjnr6NZVp7dygMdNGT1U8ITwXhA4y4
+X-Received: by 2002:a05:620a:1026:b0:787:2259:bdb8 with SMTP id
+ a6-20020a05620a102600b007872259bdb8mr15878957qkk.59.1708447779425; 
+ Tue, 20 Feb 2024 08:49:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0T6ZBh7FTx+xjwGEIeE8FPs1htCChFlrCCctr43lTj5X0/DNrFbyKx8sD0afKXUkpuny6Xw==
+X-Received: by 2002:a05:620a:1026:b0:787:2259:bdb8 with SMTP id
+ a6-20020a05620a102600b007872259bdb8mr15878944qkk.59.1708447779207; 
+ Tue, 20 Feb 2024 08:49:39 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
  [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- d11-20020a05620a240b00b00787797f8f2asm574575qkn.74.2024.02.20.08.47.10
+ v9-20020ae9e309000000b007877cc523f3sm468873qkf.127.2024.02.20.08.49.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 08:47:11 -0800 (PST)
-Message-ID: <5b6950e7-1b32-43b1-aff7-08f54b52a056@redhat.com>
-Date: Tue, 20 Feb 2024 17:47:08 +0100
+ Tue, 20 Feb 2024 08:49:38 -0800 (PST)
+Message-ID: <bb22a358-b281-42ed-ba38-9d394495491b@redhat.com>
+Date: Tue, 20 Feb 2024 17:49:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] hw/loongarch: Set minimium memory size as 256M
+Subject: Re: [PATCH 5/5] tests: Add migration test for loongarch64
 Content-Language: en-US
 To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org
 References: <20240220124126.1164081-1-maobibo@loongson.cn>
- <20240220124126.1164081-5-maobibo@loongson.cn>
+ <20240220124126.1164081-6-maobibo@loongson.cn>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -118,7 +118,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240220124126.1164081-5-maobibo@loongson.cn>
+In-Reply-To: <20240220124126.1164081-6-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -147,46 +147,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/02/2024 13.41, Bibo Mao wrote:
-> The minium memory size for LoongArch UEFI bios is 256M, also some
-> test cases such as migration and qos uses parameter 256M.
+> This patch adds migration test support for loongarch64. The test code
+> comes from aarch64 mostly, only that it it booted as bios in qemu since
+> kernel requires elf format and bios uses binary format.
 > 
-> Here set minium memory size for Loongarch VirtMachine with 256M,
-> also default memory size is changed with 256M.
+> In addition to providing the binary, this patch also includes the source
+> code and the build script in tests/migration/loongarch64. So users can
+> change the source and/or re-compile the binary as they wish.
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/loongarch/virt.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index a7d700497d..5bc332f4e3 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -815,8 +815,8 @@ static void virt_init(MachineState *machine)
->           cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
->       }
->   
-> -    if (ram_size < 1 * GiB) {
-> -        error_report("ram_size must be greater than 1G.");
-> +    if (ram_size < 256 * MiB) {
-> +        error_report("ram_size must be greater than 256M.");
->           exit(1);
->       }
->       create_fdt(vms);
-> @@ -1144,7 +1144,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
->       HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
->   
->       mc->init = virt_init;
-> -    mc->default_ram_size = 1 * GiB;
-> +    mc->default_ram_size = 256 * MiB;
+>   tests/migration/Makefile                 |  2 +-
+>   tests/migration/loongarch64/Makefile     | 18 ++++++++++
+>   tests/migration/loongarch64/a-b-kernel.S | 46 ++++++++++++++++++++++++
+>   tests/migration/loongarch64/a-b-kernel.h | 13 +++++++
+>   tests/migration/migration-test.h         |  3 ++
+>   tests/qtest/meson.build                  |  4 +++
+>   tests/qtest/migration-test.c             | 10 ++++++
+>   7 files changed, 95 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/migration/loongarch64/Makefile
+>   create mode 100644 tests/migration/loongarch64/a-b-kernel.S
+>   create mode 100644 tests/migration/loongarch64/a-b-kernel.h
 
-While changing the minimum ram_size in the first hunk is certainly a good 
-idea, you should maybe consider twice whether you also want to change the 
-default_ram_size here. 256 MiB is often not enough to run a guest OS like 
-Linux, so for most users it might be more convenient if you have a 
-default_ram_size of 1GiB instead. At least that's what I've seen on other 
-architectures. YMMV.
-
-  Thomas
+FWIW:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
