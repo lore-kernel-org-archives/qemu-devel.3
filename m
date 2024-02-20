@@ -4,85 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543E3C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 11:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC61C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 11:28:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcNzz-0002ms-HO; Tue, 20 Feb 2024 06:09:19 -0500
+	id 1rcOI9-0005zG-7a; Tue, 20 Feb 2024 06:28:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1rcNzy-0002md-A3
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 06:09:18 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1rcNzw-0006qa-M8
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 06:09:18 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e34d12404eso2099630b3a.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 03:09:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1708427354; x=1709032154; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Iui6nq54rQcDsgj6jB1Rh+Xvf6Zd3r0QRh6O0u+AHAk=;
- b=BLn5q2Be/HX0aVE7i65cy1qgKtFhnp+bm/hAlxBFetfPeRyYokwmwRtclANEtPvjvA
- GzifG2DYF4zVy28/8SR8eIWrnV0uUQc/PHDaKmZ+j4awKJ19LjrQJfzhImlJ71/3M90a
- htOo5AsNXDhGw7/jOwlY0bMm5vMK7aXxAFGlgc3EURWVJGA9+G7OVwMcMxUzPBKvMQPZ
- W3mOCJGBAFEVDZTa/PdZj3r5UNG1VUSWn0C9hqjnsijH6qwcG0Nm1C8F7LkG4XR2xlpX
- vb4ERlXigdzRCaVGAMO3zxCgexvIggY3nVTsZtqDdjIKpFgyfrbjaYlxAu//E+3jl8JD
- Kp7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708427354; x=1709032154;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Iui6nq54rQcDsgj6jB1Rh+Xvf6Zd3r0QRh6O0u+AHAk=;
- b=sztS4olhtyDKJhzA+u9t9loSFvnd0gse0z9xRiUYJIzoPTq9sTKCk4P9jXTjdKJQ7L
- mhdEOgjkeTx56wIC8Ltt2VimdFDx+ESQUp5MAQnaVM3MggU1SHEGGnH38xBCv1eEuQkl
- jEbmQbBQysX7jaYXeZj/bmAlN/dobgv5bNOzDtHIQefRdunexFY49SbEgQXmUQEN+A1u
- c6L4JoTDS/8GnW0hkZCMZaONxTzde2dcaokg8NGOyj8Vc7Be6qfYdOaCPwtA0rVpB7IC
- 8PGt2gRiXSJyTUutv5xoedm8ZchwdGLK453RxzrBPI5XKEvFL/UZQpwFep1/Jd4kVuHt
- Itmg==
-X-Gm-Message-State: AOJu0Yx7VSR8dYFMg77bk5YSf0QlYUwMncF6CMIPGw3G4Kjtqxx9Rrwl
- enq1diSxhjX4oHjQww/8cWnKKAxPxS+UrGHCpDEBgwHrEfhovHnM7O3j+vDdNm6HCbd2mk+yWIb
- /sD39qIWIY5/C+MUhR02l3ln9mpCc4ep+x97SCg3smn3LrNn4FU5zZN9yVIIGOS7iGU+vcFjFdK
- n1/XwSXQtJ396RTjucUVpZUGBwbYdU0Y0xFUt1KE2PwA==
-X-Google-Smtp-Source: AGHT+IEhDHyTtTyA7mKiib5e41UpkSt7CpTe0Lwlrk5mAl590hlxjG5lmBQ2eOSrshL/JFDZqLhO3g==
-X-Received: by 2002:a05:6a00:10c3:b0:6dd:d1fa:ff17 with SMTP id
- d3-20020a056a0010c300b006ddd1faff17mr18134394pfu.32.1708427354496; 
- Tue, 20 Feb 2024 03:09:14 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- a12-20020a63d40c000000b005d34cf68664sm6347246pgh.25.2024.02.20.03.09.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 03:09:14 -0800 (PST)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH] target/riscv: Add missing include guard in pmu.h
-Date: Tue, 20 Feb 2024 19:08:55 +0800
-Message-ID: <20240220110907.10479-1-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <maxime.coquelin@redhat.com>)
+ id 1rcOI8-0005z4-DE
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 06:28:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <maxime.coquelin@redhat.com>)
+ id 1rcOI6-0002Dr-Ir
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 06:28:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708428481;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mmBdXkYvm/2hdJfmdZmTAFUjROb7y7PfWmkTuCukLxw=;
+ b=SWWRf0SabsDIQPcQOQQUZTst7bMNUlAJe/DzWCKF/cu4PDSSKfMXqZjfxU+IuvxfgFcaFL
+ aLhfMhZSsyZ6or5KU7NxtHsWrO3h00IzuFHCi7pCYtO2tfxvnydW0FHnZTFvAy6sT8haWK
+ GCG/elYQ/He+Ng4ey181+4FH/ZdvjQo=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-tNlv7GkZMx6y4g-U6jm9JA-1; Tue, 20 Feb 2024 06:26:52 -0500
+X-MC-Unique: tNlv7GkZMx6y4g-U6jm9JA-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 948F585A589;
+ Tue, 20 Feb 2024 11:26:52 +0000 (UTC)
+Received: from [10.39.208.27] (unknown [10.39.208.27])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 48B822166AEE;
+ Tue, 20 Feb 2024 11:26:50 +0000 (UTC)
+Message-ID: <5176a8e4-dbdc-45e0-a1f2-d9cb3b71a6b1@redhat.com>
+Date: Tue, 20 Feb 2024 12:26:49 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=frank.chang@sifive.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vhost-user: fix the issue of vhost deadlock in nested
+ virtualization
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>, Hao Chen <chenh@yusur.tech>
+Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ huangml@yusur.tech, zy@yusur.tech
+References: <20240126100737.2509847-1-chenh@yusur.tech>
+ <20240213050258-mutt-send-email-mst@kernel.org>
+From: Maxime Coquelin <maxime.coquelin@redhat.com>
+Autocrypt: addr=maxime.coquelin@redhat.com; keydata=
+ xsFNBFOEQQIBEADjNLYZZqghYuWv1nlLisptPJp+TSxE/KuP7x47e1Gr5/oMDJ1OKNG8rlNg
+ kLgBQUki3voWhUbMb69ybqdMUHOl21DGCj0BTU3lXwapYXOAnsh8q6RRM+deUpasyT+Jvf3a
+ gU35dgZcomRh5HPmKMU4KfeA38cVUebsFec1HuJAWzOb/UdtQkYyZR4rbzw8SbsOemtMtwOx
+ YdXodneQD7KuRU9IhJKiEfipwqk2pufm2VSGl570l5ANyWMA/XADNhcEXhpkZ1Iwj3TWO7XR
+ uH4xfvPl8nBsLo/EbEI7fbuUULcAnHfowQslPUm6/yaGv6cT5160SPXT1t8U9QDO6aTSo59N
+ jH519JS8oeKZB1n1eLDslCfBpIpWkW8ZElGkOGWAN0vmpLfdyiqBNNyS3eGAfMkJ6b1A24un
+ /TKc6j2QxM0QK4yZGfAxDxtvDv9LFXec8ENJYsbiR6WHRHq7wXl/n8guyh5AuBNQ3LIK44x0
+ KjGXP1FJkUhUuruGyZsMrDLBRHYi+hhDAgRjqHgoXi5XGETA1PAiNBNnQwMf5aubt+mE2Q5r
+ qLNTgwSo2dpTU3+mJ3y3KlsIfoaxYI7XNsPRXGnZi4hbxmeb2NSXgdCXhX3nELUNYm4ArKBP
+ LugOIT/zRwk0H0+RVwL2zHdMO1Tht1UOFGfOZpvuBF60jhMzbQARAQABzSxNYXhpbWUgQ29x
+ dWVsaW4gPG1heGltZS5jb3F1ZWxpbkByZWRoYXQuY29tPsLBeAQTAQIAIgUCV3u/5QIbAwYL
+ CQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQyjiNKEaHD4ma2g/+P+Hg9WkONPaY1J4AR7Uf
+ kBneosS4NO3CRy0x4WYmUSLYMLx1I3VH6SVjqZ6uBoYy6Fs6TbF6SHNc7QbB6Qjo3neqnQR1
+ 71Ua1MFvIob8vUEl3jAR/+oaE1UJKrxjWztpppQTukIk4oJOmXbL0nj3d8dA2QgHdTyttZ1H
+ xzZJWWz6vqxCrUqHU7RSH9iWg9R2iuTzii4/vk1oi4Qz7y/q8ONOq6ffOy/t5xSZOMtZCspu
+ Mll2Szzpc/trFO0pLH4LZZfz/nXh2uuUbk8qRIJBIjZH3ZQfACffgfNefLe2PxMqJZ8mFJXc
+ RQO0ONZvwoOoHL6CcnFZp2i0P5ddduzwPdGsPq1bnIXnZqJSl3dUfh3xG5ArkliZ/++zGF1O
+ wvpGvpIuOgLqjyCNNRoR7cP7y8F24gWE/HqJBXs1qzdj/5Hr68NVPV1Tu/l2D1KMOcL5sOrz
+ 2jLXauqDWn1Okk9hkXAP7+0Cmi6QwAPuBT3i6t2e8UdtMtCE4sLesWS/XohnSFFscZR6Vaf3
+ gKdWiJ/fW64L6b9gjkWtHd4jAJBAIAx1JM6xcA1xMbAFsD8gA2oDBWogHGYcScY/4riDNKXi
+ lw92d6IEHnSf6y7KJCKq8F+Jrj2BwRJiFKTJ6ChbOpyyR6nGTckzsLgday2KxBIyuh4w+hMq
+ TGDSp2rmWGJjASrOwU0EVPSbkwEQAMkaNc084Qvql+XW+wcUIY+Dn9A2D1gMr2BVwdSfVDN7
+ 0ZYxo9PvSkzh6eQmnZNQtl8WSHl3VG3IEDQzsMQ2ftZn2sxjcCadexrQQv3Lu60Tgj7YVYRM
+ H+fLYt9W5YuWduJ+FPLbjIKynBf6JCRMWr75QAOhhhaI0tsie3eDsKQBA0w7WCuPiZiheJaL
+ 4MDe9hcH4rM3ybnRW7K2dLszWNhHVoYSFlZGYh+MGpuODeQKDS035+4H2rEWgg+iaOwqD7bg
+ CQXwTZ1kSrm8NxIRVD3MBtzp9SZdUHLfmBl/tLVwDSZvHZhhvJHC6Lj6VL4jPXF5K2+Nn/Su
+ CQmEBisOmwnXZhhu8ulAZ7S2tcl94DCo60ReheDoPBU8PR2TLg8rS5f9w6mLYarvQWL7cDtT
+ d2eX3Z6TggfNINr/RTFrrAd7NHl5h3OnlXj7PQ1f0kfufduOeCQddJN4gsQfxo/qvWVB7PaE
+ 1WTIggPmWS+Xxijk7xG6x9McTdmGhYaPZBpAxewK8ypl5+yubVsE9yOOhKMVo9DoVCjh5To5
+ aph7CQWfQsV7cd9PfSJjI2lXI0dhEXhQ7lRCFpf3V3mD6CyrhpcJpV6XVGjxJvGUale7+IOp
+ sQIbPKUHpB2F+ZUPWds9yyVxGwDxD8WLqKKy0WLIjkkSsOb9UBNzgRyzrEC9lgQ/ABEBAAHC
+ wV8EGAECAAkFAlT0m5MCGwwACgkQyjiNKEaHD4nU8hAAtt0xFJAy0sOWqSmyxTc7FUcX+pbD
+ KVyPlpl6urKKMk1XtVMUPuae/+UwvIt0urk1mXi6DnrAN50TmQqvdjcPTQ6uoZ8zjgGeASZg
+ jj0/bJGhgUr9U7oG7Hh2F8vzpOqZrdd65MRkxmc7bWj1k81tOU2woR/Gy8xLzi0k0KUa8ueB
+ iYOcZcIGTcs9CssVwQjYaXRoeT65LJnTxYZif2pfNxfINFzCGw42s3EtZFteczClKcVSJ1+L
+ +QUY/J24x0/ocQX/M1PwtZbB4c/2Pg/t5FS+s6UB1Ce08xsJDcwyOPIH6O3tccZuriHgvqKP
+ yKz/Ble76+NFlTK1mpUlfM7PVhD5XzrDUEHWRTeTJSvJ8TIPL4uyfzhjHhlkCU0mw7Pscyxn
+ DE8G0UYMEaNgaZap8dcGMYH/96EfE5s/nTX0M6MXV0yots7U2BDb4soLCxLOJz4tAFDtNFtA
+ wLBhXRSvWhdBJZiig/9CG3dXmKfi2H+wdUCSvEFHRpgo7GK8/Kh3vGhgKmnnxhl8ACBaGy9n
+ fxjSxjSO6rj4/MeenmlJw1yebzkX8ZmaSi8BHe+n6jTGEFNrbiOdWpJgc5yHIZZnwXaW54QT
+ UhhSjDL1rV2B4F28w30jYmlRmm2RdN7iCZfbyP3dvFQTzQ4ySquuPkIGcOOHrvZzxbRjzMx1
+ Mwqu3GQ=
+In-Reply-To: <20240213050258-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=maxime.coquelin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +130,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
 
-Add missing include guard in pmu.h to avoid the problem of double
-inclusion.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
----
- target/riscv/pmu.h | 5 +++++
- 1 file changed, 5 insertions(+)
+On 2/13/24 11:05, Michael S. Tsirkin wrote:
+> On Fri, Jan 26, 2024 at 06:07:37PM +0800, Hao Chen wrote:
+>> I run "dpdk-vdpa" and "qemur-L2" in "qemu-L1".
+>>
+>> In a nested virtualization environment, "qemu-L2" vhost-user socket sends
+>> a "VHOST_USER_IOTLB_MSG" message to "dpdk-vdpa" and blocks waiting for
+>> "dpdk-vdpa" to process the message.
+>> If "dpdk-vdpa" doesn't complete the processing of the "VHOST_USER_IOTLB_MSG"
+>> message and sends a message that needs to be replied in another thread,
+>> such as "VHOST_USER_SLAVE_VRING_HOST_NOTIFIER_MSG", "dpdk-vdpa" will also
+>> block and wait for "qemu-L2" to process this message. However, "qemu-L2"
+>> vhost-user's socket is blocking while waiting for a reply from "dpdk-vdpa"
+>> after processing the message "VHOSTr_USER_IOTLB_MSG", and
+>> "VHOST_USER_SLAVE_VRING_HOST_NOTIFIER_MSG" will not be processed.
+>> In this case, both "dpdk-vdpa" and "qemu-L2" are blocked on the
+>> vhost read, resulting in a deadlock.
+>>
+>> You can modify "VHOST_USER_SLAVE_VRING_HOST_NOTIFIER_MSG" or
+>> "VHOST_USER_IOTLB_MSG" to "no need reply" to fix this issue.
+>> There are too many messages in dpdk that are similar to
+>> "VHOST_USER_SLAVE_VRING_HOST_NOTIFIER_MSG", and I would prefer the latter.
+>>
+>> Fixes: 24e34754eb78 ("vhost-user: factor out msg head and payload")
+>>
+>> Signed-off-by: Hao Chen <chenh@yusur.tech>
+> 
+> I would be very worried that IOTLB becomes stale and
+> guest memory is corrupted if we just proceed without waiting.
+> 
+> Maxime what do you think? How would you address the issue?
 
-diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index 505fc850d3..7c0ad661e0 100644
---- a/target/riscv/pmu.h
-+++ b/target/riscv/pmu.h
-@@ -16,6 +16,9 @@
-  * this program.  If not, see <http://www.gnu.org/licenses/>.
-  */
- 
-+#ifndef RISCV_PMU_H
-+#define RISCV_PMU_H
-+
- #include "cpu.h"
- #include "qapi/error.h"
- 
-@@ -31,3 +34,5 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
- void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
- int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
-+
-+#endif /* RISCV_PMU_H */
--- 
-2.43.0
+I agree with you, this is not possible.
+For example, in case of IOTLB invalidate, the frontend relies on the
+backend reply to ensure it is no more accessing the memory before
+proceeding.
+
+The reply-ack for VHOST_USER_BACKEND_VRING_HOST_NOTIFIER_MSG request is
+less important, if it fails the host notifications won't work but would
+not risk corruption. Maybe on Qemu side we could fail init if processing
+the request fails, as I think that if negotiated, we can expect it to
+succeed.
+
+What do you think about this proposal?
+
+Regards,
+Maxime
+
+> 
+> 
+>> ---
+>>   hw/virtio/vhost-user.c | 10 ++--------
+>>   1 file changed, 2 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>> index f214df804b..02caa94b6c 100644
+>> --- a/hw/virtio/vhost-user.c
+>> +++ b/hw/virtio/vhost-user.c
+>> @@ -2371,20 +2371,14 @@ static int vhost_user_net_set_mtu(struct vhost_dev *dev, uint16_t mtu)
+>>   static int vhost_user_send_device_iotlb_msg(struct vhost_dev *dev,
+>>                                               struct vhost_iotlb_msg *imsg)
+>>   {
+>> -    int ret;
+>>       VhostUserMsg msg = {
+>>           .hdr.request = VHOST_USER_IOTLB_MSG,
+>>           .hdr.size = sizeof(msg.payload.iotlb),
+>> -        .hdr.flags = VHOST_USER_VERSION | VHOST_USER_NEED_REPLY_MASK,
+>> +        .hdr.flags = VHOST_USER_VERSION,
+>>           .payload.iotlb = *imsg,
+>>       };
+>>   
+>> -    ret = vhost_user_write(dev, &msg, NULL, 0);
+>> -    if (ret < 0) {
+>> -        return ret;
+>> -    }
+>> -
+>> -    return process_message_reply(dev, &msg);
+>> +    return vhost_user_write(dev, &msg, NULL, 0);
+>>   }
+>>   
+>>   
+>> -- 
+>> 2.27.0
+> 
 
 
