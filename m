@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03152C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA375C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLsZ-0000QS-Dr; Tue, 20 Feb 2024 03:53:31 -0500
+	id 1rcLur-0007cD-Bs; Tue, 20 Feb 2024 03:55:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsX-0000NE-Hs
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:29 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsR-0008DP-Fb
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:29 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-563b7b3e3ecso6296397a12.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708419202; x=1709024002; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tZji5wyrV5xt58PDS30yI8Y6P72XZ/u9rGD8EwbSOro=;
- b=sbj+UnOzJtD3AikVf3btL27l8M86HLTS0o88w9xAZtXQHnnFeGno13Hqkt0eePKjDf
- t/ungRJjDezBPdNHBwPq4tUNu3t+5zqJZSELlGiGvhTJ1L+BioJP8CK8Tri7y3d17RUt
- G9KAOrHHZxM+Ad2LQO8lkRhjExKfefoke/9SiI7/bgUDM4O5frv9kGabrVceReXl3tQh
- ugGpVZi4x/7R89Nh8mGxAqP/10VFX5GYTc8lVPuE1+XX8ng07IVFtU9cZ/AwqR1dtEdD
- VVqkjooomPyPAQq8+pUVgtLssq4/GAMb9D6eRWHl5Ywkn/uDsXQNGuhyTexcW1x6HAZj
- MWYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708419202; x=1709024002;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tZji5wyrV5xt58PDS30yI8Y6P72XZ/u9rGD8EwbSOro=;
- b=sH8kf6l9TssKaAMggeZmmPD10f6RC0Xo8LD7IUr1Nkn64V6tTGFKXxfxnXIaqsxxla
- WwqKlNq1YcWQ/pFZxt1sDyS/OmkXWhyEI7PAtXU47XvDfxL453eeBT0hRL04sdKUywMd
- k17H4pyBTopAoRO138nNhDdFZTEMDXKUGKPgHojsLpJszZu4uwfRBXqX3NLWtJufIlWB
- 865Rs5IdRO1rGUWOCshDplej+4HtQ/s+82zTXQ+IB1Mhroo8w+51evjyMTPVa5NREJjN
- oJtwQ4homhyKcUZKuf4xyR29SkpcHQbKMlcwH+FGJD3zXAVruEsH6gD9PVmmodrAxSeQ
- vOyw==
-X-Gm-Message-State: AOJu0Yzx0ggAeBrjtouXSyMLVC5AIViP3e7zN0+c+8H93tzskYx04mOo
- 9jpMOO9/m45DF2yMEOx5w4tH5uPh8v7OJ146QtMzEm5A14v68eBN4RaVeWlQBMw=
-X-Google-Smtp-Source: AGHT+IElUnqH7706lYh8AhZYGRobTHibllu2I17T9nZLMCgOAlENqiN1aYsFpZ0vQR6rBOeeY9+XYA==
-X-Received: by 2002:a17:906:ff52:b0:a3e:9c2e:40d5 with SMTP id
- zo18-20020a170906ff5200b00a3e9c2e40d5mr3099984ejb.5.1708419202262; 
- Tue, 20 Feb 2024 00:53:22 -0800 (PST)
-Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
- [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
- cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 00:53:22 -0800 (PST)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-trivial@nongnu.org
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Jason Wang <jasowang@redhat.com>, qemu-arm@nongnu.org
-Subject: [PATCH v1 12/21] hw/net/npcm_gmac.h: correct typos
-Date: Tue, 20 Feb 2024 10:52:19 +0200
-Message-Id: <c81005d5160a7f312d8e0f7120d601219e4e5e09.1708419115.git.manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
-References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuW-00071N-2m
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuT-0000I9-Nd
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708419329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FoQZCrHn76kQ0L24PKpIrZS3dfIntbhV5HgfKWI89iE=;
+ b=WNMeNVisv66m5JpxcM7WNVc6xIEzqb4DXAH6X18ex9cYXdAgUfTn55Lo7OPLuSSI8M0OPl
+ YPmb87brz9gytD4hhyTcKefoGwaC0iTLoeBSzIBvrU18GOtr2BZQqA1cWOTp7w6SNYTwsM
+ 4QnCIRL4BuvoAA405DCqWFfk/+6yz8U=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-160-TQqePnNKN1Gp1LtlU8P8RQ-1; Tue, 20 Feb 2024 03:55:24 -0500
+X-MC-Unique: TQqePnNKN1Gp1LtlU8P8RQ-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C1FC210201ED;
+ Tue, 20 Feb 2024 08:55:23 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.168])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id F2B55492BE2;
+ Tue, 20 Feb 2024 08:55:21 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: John Snow <jsnow@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org
+Subject: [PATCH v2 7/7] hw/ide: Stop exposing internal.h to non-IDE files
+Date: Tue, 20 Feb 2024 09:55:05 +0100
+Message-ID: <20240220085505.30255-8-thuth@redhat.com>
+In-Reply-To: <20240220085505.30255-1-thuth@redhat.com>
+References: <20240220085505.30255-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,37 +83,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Correct typos automatically found with the `typos` tool
-<https://crates.io/crates/typos>
+include/hw/ide/internal.h is currently included by include/hw/ide/pci.h
+and thus exposed to a lot of files that are not part of the IDE subsystem.
+Stop including internal.h there and use the appropriate new headers
+ide-bus.h and ide-dma.h instead.
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/net/npcm_gmac.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/hw/ide/pci.h | 2 +-
+ hw/i386/pc.c         | 2 +-
+ hw/ide/cmd646.c      | 1 +
+ hw/ide/pci.c         | 1 +
+ hw/ide/piix.c        | 1 +
+ hw/ide/sii3112.c     | 1 +
+ hw/ide/via.c         | 1 +
+ 7 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/net/npcm_gmac.h b/include/hw/net/npcm_gmac.h
-index f2d9f08ec1..6340ffe92c 100644
---- a/include/hw/net/npcm_gmac.h
-+++ b/include/hw/net/npcm_gmac.h
-@@ -81,7 +81,7 @@ struct NPCMGMACRxDesc {
+diff --git a/include/hw/ide/pci.h b/include/hw/ide/pci.h
+index a814a0a7c3..ef03764caa 100644
+--- a/include/hw/ide/pci.h
++++ b/include/hw/ide/pci.h
+@@ -1,7 +1,7 @@
+ #ifndef HW_IDE_PCI_H
+ #define HW_IDE_PCI_H
  
- /* Disable Interrupt on Completion */
- #define RX_DESC_RDES1_DIS_INTR_COMP_MASK BIT(31)
--/* Recieve end of ring */
-+/* Receive end of ring */
- #define RX_DESC_RDES1_RC_END_RING_MASK BIT(25)
- /* Second Address Chained */
- #define RX_DESC_RDES1_SEC_ADDR_CHND_MASK BIT(24)
-@@ -213,7 +213,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(NPCMGMACState, NPCM_GMAC)
- #define NPCM_DMA_STATUS_FBI BIT(13)
- /* Early transmit Interrupt */
- #define NPCM_DMA_STATUS_ETI BIT(10)
--/* Receive Watchdog Timout */
-+/* Receive Watchdog Timeout */
- #define NPCM_DMA_STATUS_RWT BIT(9)
- /* Receive Process Stopped */
- #define NPCM_DMA_STATUS_RPS BIT(8)
+-#include "hw/ide/internal.h"
++#include "hw/ide/ide-bus.h"
+ #include "hw/pci/pci_device.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 196827531a..22d0c29575 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -31,7 +31,7 @@
+ #include "hw/i386/fw_cfg.h"
+ #include "hw/i386/vmport.h"
+ #include "sysemu/cpus.h"
+-#include "hw/ide/internal.h"
++#include "hw/ide/ide-bus.h"
+ #include "hw/timer/hpet.h"
+ #include "hw/loader.h"
+ #include "hw/rtc/mc146818rtc.h"
+diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
+index c0bcfa4414..23d213ff01 100644
+--- a/hw/ide/cmd646.c
++++ b/hw/ide/cmd646.c
+@@ -33,6 +33,7 @@
+ #include "sysemu/reset.h"
+ 
+ #include "hw/ide/pci.h"
++#include "hw/ide/internal.h"
+ #include "trace.h"
+ 
+ /* CMD646 specific */
+diff --git a/hw/ide/pci.c b/hw/ide/pci.c
+index ca85d8474c..73efeec7f4 100644
+--- a/hw/ide/pci.c
++++ b/hw/ide/pci.c
+@@ -30,6 +30,7 @@
+ #include "sysemu/dma.h"
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
++#include "hw/ide/internal.h"
+ #include "hw/ide/pci.h"
+ #include "trace.h"
+ 
+diff --git a/hw/ide/piix.c b/hw/ide/piix.c
+index 4e5e12935f..1773a068c3 100644
+--- a/hw/ide/piix.c
++++ b/hw/ide/piix.c
+@@ -30,6 +30,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "hw/pci/pci.h"
++#include "hw/ide/internal.h"
+ #include "hw/ide/piix.h"
+ #include "hw/ide/pci.h"
+ #include "trace.h"
+diff --git a/hw/ide/sii3112.c b/hw/ide/sii3112.c
+index 63dc4a0494..321b9e46a1 100644
+--- a/hw/ide/sii3112.c
++++ b/hw/ide/sii3112.c
+@@ -13,6 +13,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "hw/ide/internal.h"
+ #include "hw/ide/pci.h"
+ #include "qemu/module.h"
+ #include "trace.h"
+diff --git a/hw/ide/via.c b/hw/ide/via.c
+index 3f3c484253..cf151e70ec 100644
+--- a/hw/ide/via.c
++++ b/hw/ide/via.c
+@@ -25,6 +25,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "hw/ide/internal.h"
+ #include "hw/pci/pci.h"
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
 -- 
-γαῖα πυρί μιχθήτω
+2.43.2
 
 
