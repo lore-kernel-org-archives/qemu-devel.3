@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF99C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 12:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA973C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 12:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcP6j-00010M-KM; Tue, 20 Feb 2024 07:20:21 -0500
+	id 1rcP7B-0001Kr-RA; Tue, 20 Feb 2024 07:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcP6h-0000zr-60
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:20:19 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcP6Z-0004sn-H4
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:20:15 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4126fda8ef8so2978615e9.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 04:20:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708431609; x=1709036409; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=en4M2z59ORJxnfwO0sqQooTGqZaI9mV3tBiE1WfXXyo=;
- b=BPTiifJQeWiqcmD7iWw51J1KZwv0encMuRmaN36SPHyiGt3wLL15hfa2mkGyBwYes6
- HmRB/H04igDv7YWaaQM0NoFsIfg+S8oFAgwZcGlulbSjHENwAuEBbfsf5W1s9b3D/i+v
- WjcNSC6biACGLfoAgFjhLaJijT4krqvlC5Jfbx6HKPy9GWcc/uD0rsrteKxdgThvY2x1
- Ab/3H2GPwQke8gFigr22UG42d/cOfb1vbpuYcZqADN0cKUPqHNXcmVbbjVuekm27T4yq
- YpsenUd7GReBRKtatSDrIz9atWbtwOXyaueVDCc//NoCqzx72oEeNabhX+yL2HhfuSQ/
- /4bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708431609; x=1709036409;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=en4M2z59ORJxnfwO0sqQooTGqZaI9mV3tBiE1WfXXyo=;
- b=VRgrFQwiHNnw82hy/FR+zCNjpxjPnzSpfVKwWjEJVBWnf1is9rSDqAToD32uqXp/T2
- 4IHId+ZC10gR7exodt9aX3ltR8ROIFbjAxzJzdvEgwmFKxjMZxySn5nX5QbdumAK+tdo
- 7x2LG9Y/qRiRmEh138fUfBc4hD8YoyIekyrbJNlRlFCrOYP0YEK5RkUy12EN/Q1RW11K
- rodcQ1p05Q+MWwHzTl+V7sjcyKyNN/apHUpe0t8cl2t6bQRoaE1j9rXDRR6MMszGMbKs
- 58Qk9ZSZaShnwn1PuwHrNq6OaSjhCOiakOE7DyyzG7RH+Fd4tOdayad2kWhY/RBbFlec
- 9/uw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDYW17ZDv5VMLc6gz90CBXtg34D+XXaosWcLDbb1wtGtG/8NLgKy+J/dewcVLffxH/VX+Rak2rKSVVQ8aw3QpXXMcco6g=
-X-Gm-Message-State: AOJu0Yyd/BhLS+g4jD2+kOHQog6ZcmyaMnlxBp0la9Y+K+xeFtmHIUeC
- 2LXoBmBdAKOvoHsUz8WfCuEmXicu5+iez6lqG6hP27yrbpuB64yU0cqudqiChbI=
-X-Google-Smtp-Source: AGHT+IHwzxjgKJ00sjIlYJBm3oz94NkdqV85y6tx2+TlFKI3jsI0GvUfjSUst1wFZUM7HhYhRKbOOQ==
-X-Received: by 2002:a5d:4389:0:b0:33d:3b83:6ca3 with SMTP id
- i9-20020a5d4389000000b0033d3b836ca3mr4647585wrq.64.1708431609143; 
- Tue, 20 Feb 2024 04:20:09 -0800 (PST)
-Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
- [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- a7-20020adfeec7000000b0033b483d1abcsm13193952wrp.53.2024.02.20.04.20.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 04:20:08 -0800 (PST)
-Message-ID: <3d446080-6be2-4a05-bc52-a2b131e84a4a@linaro.org>
-Date: Tue, 20 Feb 2024 13:20:07 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rcP79-0001AP-8o
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:20:47 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rcP76-0005BG-Pl
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:20:47 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B74C14E6006;
+ Tue, 20 Feb 2024 13:20:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id xyGYHAEmMtKS; Tue, 20 Feb 2024 13:20:40 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B99AD4E6004; Tue, 20 Feb 2024 13:20:40 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B81B87456FE;
+ Tue, 20 Feb 2024 13:20:40 +0100 (CET)
+Date: Tue, 20 Feb 2024 13:20:40 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
+ 'ich_dmi_pci.h'
+In-Reply-To: <cee6951f-234e-4806-b6a1-147c39455f07@linaro.org>
+Message-ID: <055d34b8-64c6-fcc4-9bf9-b8491a50ce5f@eik.bme.hu>
+References: <20240219163855.87326-1-philmd@linaro.org>
+ <20240219163855.87326-7-philmd@linaro.org>
+ <0841e333-3d7d-0440-a8bf-8a7fd2f0011f@eik.bme.hu>
+ <19500c79-8e4a-2160-3622-dbf145655046@eik.bme.hu>
+ <cee6951f-234e-4806-b6a1-147c39455f07@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 15/21] qapi/ui: correct typos
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>, Eric Blake <eblake@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
- <2b12236539211bfa887364cf7b621586addbb42e.1708419115.git.manos.pitsidianakis@linaro.org>
- <87a5nvcw0p.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87a5nvcw0p.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1559365269-1708431640=:46614"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +81,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 10:41, Markus Armbruster wrote:
-> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
-> 
->> Correct typos automatically found with the `typos` tool
->> <https://crates.io/crates/typos>
->>
->> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> ---
->>   qapi/ui.json | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/qapi/ui.json b/qapi/ui.json
->> index b6d7e142b7..1448eaca73 100644
->> --- a/qapi/ui.json
->> +++ b/qapi/ui.json
->> @@ -63,7 +63,7 @@
->>   ##
->>   # @SetPasswordOptionsVnc:
->>   #
->> -# Options for set_password specific to the VNC procotol.
->> +# Options for set_password specific to the VNC protocol.
->>   #
->>   # @display: The id of the display where the password should be
->>   #     changed.  Defaults to the first.
->> @@ -125,7 +125,7 @@
->>   ##
->>   # @ExpirePasswordOptionsVnc:
->>   #
->> -# Options for expire_password specific to the VNC procotol.
->> +# Options for expire_password specific to the VNC protocol.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Too bad, I remember reading few times the procotol, it was
-funny.
+--3866299591-1559365269-1708431640=:46614
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
->>   #
->>   # @display: The id of the display where the expiration should be
->>   #     changed.  Defaults to the first.
-> 
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> 
-> 
+On Tue, 20 Feb 2024, Philippe Mathieu-Daudé wrote:
+> On 19/2/24 19:24, BALATON Zoltan wrote:
+>> On Mon, 19 Feb 2024, BALATON Zoltan wrote:
+>>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
+>>>> "hw/pci-bridge/ich_dmi_pci.h" header.
+>>>> 
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> MAINTAINERS                         |  1 +
+>>>> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
+>>>> include/hw/southbridge/ich9.h       |  2 --
+>>>> hw/pci-bridge/i82801b11.c           | 11 ++++-------
+>>>> 4 files changed, 25 insertions(+), 9 deletions(-)
+>>>> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
+>>>> 
+>>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>>> index 1b210c5cc1..50507c3dd6 100644
+>>>> --- a/MAINTAINERS
+>>>> +++ b/MAINTAINERS
+>>>> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
+>>>> F: hw/i2c/smbus_ich9.c
+>>>> F: hw/isa/lpc_ich9.c
+>>>> F: include/hw/acpi/ich9*.h
+>>>> +F: include/hw/pci-bridge/ich_dmi_pci.h
+>>>> F: include/hw/southbridge/ich9.h
+>>>> 
+>>>> PIIX4 South Bridge (i82371AB)
+>>>> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h 
+>>>> b/include/hw/pci-bridge/ich_dmi_pci.h
+>>>> new file mode 100644
+>>>> index 0000000000..7623b32b8e
+>>>> --- /dev/null
+>>>> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
+>>>> @@ -0,0 +1,20 @@
+>>>> +/*
+>>>> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
+>>>> + *
+>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>> + */
+>>>> +
+>>>> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
+>>>> +#define HW_PCI_BRIDGE_ICH_D2P_H
+>>>> +
+>>>> +#include "qom/object.h"
+>>>> +#include "hw/pci/pci_bridge.h"
+>>>> +
+>>>> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
+>>>> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
+>>>> +
+>>>> +struct I82801b11Bridge {
+>>>> +    PCIBridge parent_obj;
+>>>> +};
+>>> 
+>>> If this class has no fields of its own why does it need its own state 
+>>> struct defined? You could just set .instance_size = sizeof(PCIBridge) in 
+>>> the TypeInfo i82801b11_bridge_info below and delete this struct completely 
+>>> as it's not even used anywhere. One less needless QOM complication :-) For 
+>>> an example see the empty via-mc97 device in hw/audio/via-ac97.c.
+>>> 
+>>> Then you can put the OBJECT_DECLARE_SIMPLE_TYPE in 
+>>> hw/pci-bridge/i82801b11.c where this object is defined and the #define 
+>>> TYPE_ICH_DMI_PCI_BRIDGE in
+>> 
+>> You don't even need OBJECT_DECLARE_SIMPLE_TYPE if there's no state struct. 
+>> But on second look what is this object at all? It's never instantiated 
+>> anywhere. Is it used somewhere?
+>
+> Here my view is we should always define QOM type names in headers
+> and use them, in particular in the TypeInfo registration. To unify
+> style and copy/pasting, better use the QOM DECLARE_TYPE macros.
+> I envision that might help moving toward DSL and have HW modelling
+> checks done externally, before starting QEMU. But then this is my
+> view and I dunno about when we'll get that DSL in so I'm OK to
+> revisit this patch.
 
+The question here is more if we need this object at all because it wasn't 
+enstantiated before, and after your series it could be instantiated by a 
+property that's never set. So unless I misunderstood somthing this whole 
+thing could just be removed as dead code and let it be re-added later when 
+it's actually implemented following whatever conventions we'll have then. 
+No need to keep around empty placeholders that aren't used. Or does it 
+serve any purpose?
+
+Regards,
+BALATON Zoltan
+--3866299591-1559365269-1708431640=:46614--
 
