@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD7BC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A50C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcMAq-0000sb-JA; Tue, 20 Feb 2024 04:12:24 -0500
+	id 1rcMAY-0000jc-Pd; Tue, 20 Feb 2024 04:12:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcMAn-0000rT-5y; Tue, 20 Feb 2024 04:12:22 -0500
+ id 1rcMAW-0000il-Mp; Tue, 20 Feb 2024 04:12:04 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcMAl-0003Nd-Ay; Tue, 20 Feb 2024 04:12:20 -0500
+ id 1rcMAU-0003Nd-Sg; Tue, 20 Feb 2024 04:12:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708420339; x=1739956339;
+ t=1708420323; x=1739956323;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=sh2QkQ5wss3HOjZ8fhY8YalRgTw6t25jX5kKa/RtD7I=;
- b=BgM+jP6b0g3VoqDecxvtYsczNbqZ2Ev/g3KHu+9ioOkwlhyVugh6/TjP
- g9QmMH04g+JICvPWE6Xh0vpzZyzCUoIHlyrToxHNIrl3z9NJOT8AX0DTt
- ghHFfMBzgC/o3EjodkoJEqLLKav+9tB8+uHIcWygw3vKGDAOQuo+KIloh
- 4FuYRvl/owqBosg5t7z6VIw2MWxVnf2ZRcztBIav7oVC0wACLGhttSi3h
- /gitxlMQnR86yhuB2Mgw9cqMFisRfSm185EL4wtOVfyCXV13yJV3tB+Jk
- triCOQ+dqY31oUgvWlzcLTIvRJROFF9IrqTkON5M99CuOkFEtTUmQLkh5 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="2375017"
+ bh=ZUUAxB4sXVe45cGLGYGHp6RoRiuaOzKNjOeO96oXZvg=;
+ b=k4xJPgy5morXTuYWqX+3yCo26JSMJ2CSPXRKvuR+TfbMwLcg/r8YV7jC
+ mMrbArsoNrXfn1f/yuZWKF6kbLm1Nt+TLRbmf0l50BwwUm8gdfP95iZZg
+ vyW54xLTxyemlyn/fYqdm1zTq3aAa0yF8XO4cpMBTFojMqRFkOZdQ0ymg
+ 953C8sh98VZ3W8WK2QM5rHQFZ4OfbSF2ju1VUzmxpWh0zDiHzswwcVk83
+ ozpJjDAb2AjFR1N400Ch58Sj7nQdqLr5IVHJ/roJbCocyHORusaPCtppL
+ XUfunMTUwS5oYNNriic4sBJhFM2tGf9DeAQoBKJTy5F3oq72IPLRIRBgy Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="2374984"
 X-IronPort-AV: E=Sophos;i="6.06,172,1705392000"; 
-   d="scan'208";a="2375017"
+   d="scan'208";a="2374984"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Feb 2024 01:12:17 -0800
+ 20 Feb 2024 01:12:01 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,172,1705392000"; 
-   d="scan'208";a="5013057"
+   d="scan'208";a="5012944"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa007.jf.intel.com with ESMTP; 20 Feb 2024 01:12:11 -0800
+ by orviesa007.jf.intel.com with ESMTP; 20 Feb 2024 01:11:55 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -60,9 +60,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 6/8] i386/cpu: Update cache topology with machine's configuration
-Date: Tue, 20 Feb 2024 17:25:02 +0800
-Message-Id: <20240220092504.726064-7-zhao1.liu@linux.intel.com>
+Subject: [RFC 3/8] hw/core: Define cache topology for machine
+Date: Tue, 20 Feb 2024 17:24:59 +0800
+Message-Id: <20240220092504.726064-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
 References: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
@@ -93,48 +93,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-User will configure SMP cache topology via -smp.
+Define the cache topology based on CPU topology level for two reasons:
 
-For this case, update the x86 CPUs' cache topology with user's
-configuration in MachineState.
+1. In practice, a cache will always be bound to the CPU container
+   (either private in the CPU container or shared among multiple
+   containers), and CPU container is often expressed in terms of CPU
+   topology level.
+2. The x86's cache-related CPUIDs encode cache topology based on APIC
+   ID's CPU topology layout. And the ACPI PPTT table that ARM/RISCV
+   relies on also requires CPU containers to help indicate the private
+   shared hierarchy of the cache. Therefore, for SMP systems, it is
+   natural to use the CPU topology hierarchy directly in QEMU to define
+   the cache topology.
+
+Currently, separated L1 cache (L1 data cache and L1 instruction cache)
+with unified higher-level cache (e.g., unified L2 and L3 caches), is the
+most common cache architectures.
+
+Therefore, define the topology for L1 D-cache, L1 I-cache, L2 cache and
+L3 cache in machine as the basic cache topology support.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ hw/core/machine.c   |  5 +++++
+ include/hw/boards.h | 25 +++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index d7cb0f1e49b4..4b5c551fe7f0 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7582,6 +7582,27 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index b3199c710194..426f71770a84 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1163,6 +1163,11 @@ static void machine_initfn(Object *obj)
+     ms->smp.cores = 1;
+     ms->smp.threads = 1;
  
- #ifndef CONFIG_USER_ONLY
-     MachineState *ms = MACHINE(qdev_get_machine());
++    ms->smp_cache.l1d = CPU_TOPO_LEVEL_INVALID;
++    ms->smp_cache.l1i = CPU_TOPO_LEVEL_INVALID;
++    ms->smp_cache.l2 = CPU_TOPO_LEVEL_INVALID;
++    ms->smp_cache.l3 = CPU_TOPO_LEVEL_INVALID;
 +
-+    if (ms->smp_cache.l1d != CPU_TOPO_LEVEL_INVALID) {
-+        env->cache_info_cpuid4.l1d_cache->share_level = ms->smp_cache.l1d;
-+        env->cache_info_amd.l1d_cache->share_level = ms->smp_cache.l1d;
-+    }
-+
-+    if (ms->smp_cache.l1i != CPU_TOPO_LEVEL_INVALID) {
-+        env->cache_info_cpuid4.l1i_cache->share_level = ms->smp_cache.l1i;
-+        env->cache_info_amd.l1i_cache->share_level = ms->smp_cache.l1i;
-+    }
-+
-+    if (ms->smp_cache.l2 != CPU_TOPO_LEVEL_INVALID) {
-+        env->cache_info_cpuid4.l2_cache->share_level = ms->smp_cache.l2;
-+        env->cache_info_amd.l2_cache->share_level = ms->smp_cache.l2;
-+    }
-+
-+    if (ms->smp_cache.l3 != CPU_TOPO_LEVEL_INVALID) {
-+        env->cache_info_cpuid4.l3_cache->share_level = ms->smp_cache.l3;
-+        env->cache_info_amd.l3_cache->share_level = ms->smp_cache.l3;
-+    }
-+
-     qemu_register_reset(x86_cpu_machine_reset_cb, cpu);
+     machine_copy_boot_config(ms, &(BootConfiguration){ 0 });
+ }
  
-     if (cpu->env.features[FEAT_1_EDX] & CPUID_APIC || ms->smp.cpus > 1) {
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index e63dec919da2..8558b88aea52 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -10,6 +10,7 @@
+ #include "qemu/module.h"
+ #include "qom/object.h"
+ #include "hw/core/cpu.h"
++#include "hw/core/cpu-topology.h"
+ 
+ #define TYPE_MACHINE_SUFFIX "-machine"
+ 
+@@ -144,6 +145,12 @@ typedef struct {
+  * @books_supported - whether books are supported by the machine
+  * @drawers_supported - whether drawers are supported by the machine
+  * @modules_supported - whether modules are supported by the machine
++ * @l1_separated_cache_supported - whether l1 data and instruction cache
++ *                                 topology are supported by the machine
++ * @l2_unified_cache_supported - whether l2 unified cache topology are
++ *                               supported by the machine
++ * @l3_unified_cache_supported - whether l3 unified cache topology are
++ *                               supported by the machine
+  */
+ typedef struct {
+     bool prefer_sockets;
+@@ -153,6 +160,9 @@ typedef struct {
+     bool books_supported;
+     bool drawers_supported;
+     bool modules_supported;
++    bool l1_separated_cache_supported;
++    bool l2_unified_cache_supported;
++    bool l3_unified_cache_supported;
+ } SMPCompatProps;
+ 
+ /**
+@@ -358,6 +368,20 @@ typedef struct CPUTopology {
+     unsigned int max_cpus;
+ } CPUTopology;
+ 
++/**
++ * CPUTopology:
++ * @l1d: the CPU topology hierarchy the L1 data cache is shared at.
++ * @l1i: the CPU topology hierarchy the L1 instruction cache is shared at.
++ * @l2: the CPU topology hierarchy the L2 (unified) cache is shared at.
++ * @l3: the CPU topology hierarchy the L3 (unified) cache is shared at.
++ */
++typedef struct CacheTopology {
++    CPUTopoLevel l1d;
++    CPUTopoLevel l1i;
++    CPUTopoLevel l2;
++    CPUTopoLevel l3;
++} CacheTopology;
++
+ /**
+  * MachineState:
+  */
+@@ -408,6 +432,7 @@ struct MachineState {
+     AccelState *accelerator;
+     CPUArchIdList *possible_cpus;
+     CPUTopology smp;
++    CacheTopology smp_cache;
+     struct NVDIMMState *nvdimms_state;
+     struct NumaState *numa_state;
+ };
 -- 
 2.34.1
 
