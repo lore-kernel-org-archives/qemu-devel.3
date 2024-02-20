@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B93C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:44:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8677BC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcW2G-0004cU-2v; Tue, 20 Feb 2024 14:44:12 -0500
+	id 1rcW4f-0005fa-Fx; Tue, 20 Feb 2024 14:46:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcW2E-0004cB-GI
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:44:10 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1rcW4e-0005fE-75
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:46:40 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcW2C-0001fl-Rm
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:44:10 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e45d0c9676so1787201b3a.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:44:08 -0800 (PST)
+ id 1rcW4c-0002D0-SK
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:46:39 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1d93edfa76dso35895145ad.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:46:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708458247; x=1709063047; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708458397; x=1709063197; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mxxAiJVk0L3DMmaqxsNJbuVgD3c7yBtiNwg6tqs/Lhg=;
- b=V40psfU1a1ZLBbeiJEdI+qsGBg7VpNKrCokHCk1xJzrXqkJgmc0Ta/rMbuyhfhdY7g
- 3tOANlNd/WgASr0A5vY85IHraZF4wHxKmAMWbirXfEAZ4vIq61VQdzssnoEfslCTOUPL
- jxERekP4rJGA5AD7PCDxWyHPDpA/rSvTFmARozFX/Pbb5OihLJIPwQzpUnvRYwH7FPWi
- Gnw6RJe6demWj1AYgU8L45CU87cWiLKUGqve2P9yoV9sYkEDCVKoQCq0+JqTkS14rmcB
- FXYX2RgLRp6XLt5/7hLZlet/8IvsUymoSc/MGMG6ATnvbbSa56op6nd6+LUjzZqLsAWp
- k1jA==
+ bh=Svy2+Y6ZTeY+jRmIJJ6lw+I/KoA4S1zb08w5yXDMej4=;
+ b=IQn7L3ACalxZXwZ1fW8E9jJb4CS/0Q7hBSqNzh4RW+GiOykepQKXF/56Km6vx2wnFa
+ 2Z4fWNfWUIaTlEQoqoW27tJlLyzcDMVE8QcCWc0gjmwSVVjowZVammpRtUducH9zWchk
+ LLgj1yyPI9lFvt5mTe35R3h7yMRZ41+/Uj6wEj6NtrqS2ymhNurHdvE6kiNyNu4nOUJZ
+ gy1CST3A36AnZQg/lai+QC8mMqQXWKqmmye8AvsCd+V4ER6k9NEwDtw8fILvNa5LkPve
+ VtTuVEz4C71/P6M2gc3boKIyXsdYOS1nTTuoIDMo3IAo/yBHfSirEGL8RWaKJNd3oGWC
+ hsJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708458247; x=1709063047;
+ d=1e100.net; s=20230601; t=1708458397; x=1709063197;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mxxAiJVk0L3DMmaqxsNJbuVgD3c7yBtiNwg6tqs/Lhg=;
- b=GV/OkYL57zKX4FUUM9eEIXHMgvxlU5vGGPpr+U5lTWtknS54czn2osBLeeOcbAFMjN
- xH5FAqRJWTJEm5mcBQQPcFlgfmqJ8MKbqVvd3cvt1VxlWXPlgP22nmMBJTANdlu3PfI4
- IYNVTPyJVVHjmTRhz67+zUhFcps1FxCX4XKtn3sqWJMK4/Pb9XbvFVSwTsz3cC3IVjp1
- siQP2rLRrMf/SQahAZn62pihQAeg5diNIVqjO28I1nOuzEoSQiEhWokJCG0YY42lSCS4
- NEpLqWm2733pTNn8Tfe7McbmIyOfP14FYf7yvNsKwLSROwC91WmEIa4QpAFvEexkn4xu
- rUWg==
+ bh=Svy2+Y6ZTeY+jRmIJJ6lw+I/KoA4S1zb08w5yXDMej4=;
+ b=eNhNMIUKsQv7XHpw32vnXYuAb72ojD1eXqIL3Z4f4akw0vwj2LEaEr8Mi+MmshogGF
+ taeSojuKJPxY6Vrxa1IRQSoL74Zei2vR76AqbQ1bFkZ9oJF/C2HDLX8EilX1E4Y+ZG58
+ uBDs8Sfkn3VHmNLn3WxpKnnruEE7hRo8AXwT95tqtAPmjDpBHxkWvyYGlwySEGmC4oWD
+ A/DjCh2XhLMqgLR+FUsHYLJYRa/qUnrsOcBRg1UHLihe3BEbzBZCdahUeA2V4xnCnodl
+ 01B0bqPUbRbPe4MIOIHxrcUc9B5gPjvgJWNYEtEqVmPw1Cx64bV9qCQFHuxQtdsepO9v
+ p4AA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLxvHIfEY52O5GG5irCB4m8ixs7ZOnYt0WytJ2291OfuR4L1cHvJYt/F4kgsjkWjv8XNImiLJgmK7Po6e2k9XHQUQ18/g=
-X-Gm-Message-State: AOJu0YxIVAU8sTP1Q7vtfhBo8Dw0MIxknjnhzCh6g+jrlqxGkBK/ZS7l
- LSBt1AwHMUI42LWGyu8wV6MLrI7MbCwTjr/KconCDE7qR7V/rdg/tDykpSdI/HeNbnuwYH0ljbL
- 8
-X-Google-Smtp-Source: AGHT+IGJ6PkEsKR/EV+cG3o8phJBV7+UkoF2Mmn9fPO+1yCMlqG4UOd6K5bLtqcrPNtGUPbTq3UWRQ==
-X-Received: by 2002:a05:6a20:d043:b0:199:7628:286d with SMTP id
- hv3-20020a056a20d04300b001997628286dmr22893761pzb.30.1708458247393; 
- Tue, 20 Feb 2024 11:44:07 -0800 (PST)
+ AJvYcCXFrTF4GF1UjhCZUwt9K8umqridNvOPbYZugei54kc5SqrroEWgKhb2m8+uXzO0n/qyrG6CzYmmYFzMZf4krXsAjBR1jiw=
+X-Gm-Message-State: AOJu0Yxj/7u3PycCHjVT0QJp5m8zTNQv9EpcnjlEW/J0kvZiVHj9OgDW
+ Ddypnrb26lYdIEGIn7xzaYU2/L9EXrGOIC8QIijFbY67mEMMZDfRm0KfHrg+k5M=
+X-Google-Smtp-Source: AGHT+IHeobD7SwdxLLxHuYUqlI/a/gPd2gDtwS3EyTiqOZXOF8pbBMnMPE2Vo3mAUw6tfnxIyiMJOw==
+X-Received: by 2002:a17:902:d4cc:b0:1dc:93b:8981 with SMTP id
+ o12-20020a170902d4cc00b001dc093b8981mr6152121plg.14.1708458397298; 
+ Tue, 20 Feb 2024 11:46:37 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- v18-20020a63f852000000b005dc87643cc3sm6978278pgj.27.2024.02.20.11.44.05
+ kv5-20020a17090328c500b001db5fc51d71sm6654986plb.160.2024.02.20.11.46.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 11:44:06 -0800 (PST)
-Message-ID: <75a4c6a5-8d13-4300-86cb-aba6235881de@linaro.org>
-Date: Tue, 20 Feb 2024 09:43:58 -1000
+ Tue, 20 Feb 2024 11:46:36 -0800 (PST)
+Message-ID: <b428c48b-578c-46e2-a0b7-c648b012f3d3@linaro.org>
+Date: Tue, 20 Feb 2024 09:46:33 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 06/10] hw/core: Add ResetContainer which holds objects
@@ -82,8 +81,8 @@ From: Richard Henderson <richard.henderson@linaro.org>
 In-Reply-To: <20240220160622.114437-7-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,37 +106,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/20/24 06:06, Peter Maydell wrote:
-> Implement a ResetContainer.  This is a subclass of Object, and it
-> implements the Resettable interface.  The container holds a list of
-> arbitrary other objects which implement Resettable, and when the
-> container is reset, all the objects it contains are also reset.
-> 
-> This will allow us to have a 3-phase-reset equivalent of the old
-> qemu_register_reset() API: we will have a single "simulation reset"
-> top level ResetContainer, and objects in it are the equivalent of the
-> old QEMUResetHandler functions.
-> 
-> The qemu_register_reset() API manages its list of callbacks using a
-> QTAILQ, but here we use a GPtrArray for our list of Resettable
-> children: we expect the "remove" operation (which will need to do an
-> iteration through the list) to be fairly uncommon, and we get simpler
-> code with fewer memory allocations.
-> 
-> Since there is currently no listed owner in MAINTAINERS for the
-> existing reset-related source files, create a new section for
-> them, and add these new files there also.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   MAINTAINERS                      | 10 +++++
->   include/hw/core/resetcontainer.h | 48 ++++++++++++++++++++
->   hw/core/resetcontainer.c         | 76 ++++++++++++++++++++++++++++++++
->   hw/core/meson.build              |  1 +
->   4 files changed, 135 insertions(+)
->   create mode 100644 include/hw/core/resetcontainer.h
->   create mode 100644 hw/core/resetcontainer.c
+> +void resettable_container_add(ResettableContainer *rc, Object *obj)
+> +{
+> +    g_ptr_array_add(rc->children, obj);
+> +}
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Did you want to assert here that obj does in fact implement Resettable?
+
 
 r~
 
