@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF09C48BF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 00:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5075AC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 01:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcE77-0005L3-VU; Mon, 19 Feb 2024 19:36:02 -0500
+	id 1rcEhA-0003wg-Vp; Mon, 19 Feb 2024 20:13:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rcE75-0005KY-IC; Mon, 19 Feb 2024 19:35:59 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rcEh8-0003w5-Ei
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 20:13:14 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rcE72-0003G2-V7; Mon, 19 Feb 2024 19:35:59 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d51ba18e1bso49919115ad.0; 
- Mon, 19 Feb 2024 16:35:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rcEh6-0000S6-Uc
+ for qemu-devel@nongnu.org; Mon, 19 Feb 2024 20:13:14 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1dbae7b8ff2so16112725ad.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 17:13:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708389355; x=1708994155; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=gmail.com; s=20230601; t=1708391591; x=1708996391; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o2hztUQncJTOuSKyJKDJZqOvT7q5diaQVZZC11llcuU=;
- b=J+4G28w6zjvEuXOoqxnHi0/b2vpcBBdE0Y2uwWreYPpWkvyqZK2KsoCEOTyq8ST2OB
- ZWqn9D+2faBxtKb4HxZlXu0Asv56T7d/eqb5hWTPTDTmlfY8OSWf/bfBA5u31/awcUbc
- NTxXslcv17oHCoocA7WwGKz+SG3xsh11d6pYneUGn3i+cxOZ4w1Aa/cIAa6BHmnrX0if
- /P3qnmu3yKAJHM++5D06UNJf4S52HpNzW7t+9nxJVmpa6IK4XuBRL7prvF1CvXXFGNaB
- gOuZ9VtQuAbmj05iJDQYDrIfxEua8SmMK/PFBSx0mPbwhV5fKf/Rde3xlgg8wyvRcmdP
- GAXA==
+ bh=K6nOob6L4iGmLzDenZjN+btQD5TlzgcGlePVs0qtux4=;
+ b=DbmxrZ28jV0k/2moydk9l3TBt6GC9TvgxUuiSYRJyWbf/8yjBT0OCahHY3YopAgIBc
+ F2m1vialcZVSaQaDNc83TmwWOPqSVdLWkUjj1vmftnB6WQ6R6i9QBafPYPHYYkf6UcVQ
+ LS+n2Ingonkguc1IldYJEGGoy6gXbk7eFjvmRim1pceh3/bhAVLgbaEC9oWKGOYiH/tb
+ HsWMCrYJk+mdXbBKoqPnsEkhBi9su29OjAuCAxVP4a7Cr+P1GaJwg/C7gqvmtG225Pze
+ fzHf/Ag2VGuzlmW2q+l9P8iFM/e2ohOD+C012oIJU6I6yCJ8iDmG8OuCZE006A20L0Zb
+ bFxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708389355; x=1708994155;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=1e100.net; s=20230601; t=1708391591; x=1708996391;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=o2hztUQncJTOuSKyJKDJZqOvT7q5diaQVZZC11llcuU=;
- b=JVs4OBUKmEI6hntQ9j4Q5Yc22LdrLfWQ2YYDEWAD0nwwyAoNeuj0JcU4U8/MFR4j3D
- qXilzzsCEy2TL3B9mi3DTaPap8NDgfaUqY+RovVzizrZJX49XsEJ2ubxzlkQm2cjswUR
- NjOqFg5Q4dbeV3QWZB/yragq1nB1nkM9kHKjTeiW9zjKxfI4W3XVbZa9C3aXydHWWGkR
- gNxnQC/LvKq6f+deEP9E9B0DFOUy+Z0M0SCi7AS8m43GN/h9uW8gI6vT7xDUF0r8tvGn
- a7y0KtBW2q7xk8YU18ew9v4f1JqpW0qq0Pk9HfX8AxfshaGWDPh2pPQbfFmwNisqaMcX
- 1CXA==
+ bh=K6nOob6L4iGmLzDenZjN+btQD5TlzgcGlePVs0qtux4=;
+ b=oBG/3JQV5Il5nofWxECrXSf0MwMPU8pfQE6I4UtIrWYeY3kZ+UtAqgHTMTqbkfWtVU
+ ULA4lFCu+Fq3cx+9XKXHbHZe/oCjn3HBaFJvjuTw/Mn9cITkRZleSfYjDr2gevmliuTQ
+ szhmAC7ys1PHHpK1cSq0xNMTXOnzE2WMlpKeE4u7QM2itwSlB1wWt83hxHNlD8BZIGJ3
+ /CqB5NuLFQ/Sw1eeVzo2m/f2th7fbvZZ8+cxvfAGRNbFStZ+Ei/05vym8QwZcKXLEyc5
+ 8OwV7Djp+NvbYaAAX629QjjmrnYA9T+L7KiSw3akG45EBZF+b8u3qmO/16sYFCshvjcz
+ BfUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+M342mgbacjSJNSjfj40uOH5bbZSfEXCgsbFJK2dy/xhHy5TYhAyGAMneP3sz+0zb01ngNZP11nvRQmlUpGC8TNaA0uA=
-X-Gm-Message-State: AOJu0YyM9WrWCgQxPVh2EYzSXkJbpUCAO1tP3nnkCAhQZJDmCxjXxNiE
- T9otwsIvYFeKiw1FqFXNUAiO4gYT06L5d7kXk/8NURq58UJyfHgutl9TpUSD
-X-Google-Smtp-Source: AGHT+IETj3TvuB8u0MNGWUulBjzksaxujHEFI5X3q78cA8NJaw5vx/+ohSQh409a3n1hvLsHLNmHzQ==
-X-Received: by 2002:a17:903:2341:b0:1dc:6db:e268 with SMTP id
- c1-20020a170903234100b001dc06dbe268mr3003898plh.31.1708389354865; 
- Mon, 19 Feb 2024 16:35:54 -0800 (PST)
+ AJvYcCVskJAbMaffuBTajMf5W+ML80ym2LagfMCT0SsBn6uoChSIo9ZAejYqkQXL4YApDWekAZtmvG3aDEEi6B0EIoH1Gx95+Jk=
+X-Gm-Message-State: AOJu0Yxo+SaBpUnL+XdjnzA4LwQ9xsua6pGBEaTaqvz/5H6wL1RrDBo5
+ aE2jPl9kfgbVlkfum3Nf9t1nH34i5nJUAmEpgou8T0E2zLIWMPSk
+X-Google-Smtp-Source: AGHT+IHQX3DA15403w9Nn6vQFLq0Cp77jp6n8I88Ouo1WNzqj9K+EFUA8DRBnaHIyE22oJLt4xGWGg==
+X-Received: by 2002:a17:903:230f:b0:1dc:15f5:fddf with SMTP id
+ d15-20020a170903230f00b001dc15f5fddfmr410764plh.7.1708391591482; 
+ Mon, 19 Feb 2024 17:13:11 -0800 (PST)
 Received: from localhost (123-243-155-241.static.tpgi.com.au.
  [123.243.155.241]) by smtp.gmail.com with ESMTPSA id
- x9-20020a170902b40900b001d94c709738sm4950074plr.217.2024.02.19.16.35.52
+ s4-20020a17090330c400b001db9cb62f7bsm5038242plc.153.2024.02.19.17.13.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 16:35:54 -0800 (PST)
+ Mon, 19 Feb 2024 17:13:11 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 20 Feb 2024 10:35:50 +1000
-Message-Id: <CZ9HHCWQR3MT.1U5CJ7CBIR1EH@wheely>
-To: "Peter Maydell" <peter.maydell@linaro.org>
-Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>, "Glenn Miles"
- <milesg@linux.vnet.ibm.com>
-Subject: Re: [PATCH] target/ppc: BHRB avoid using host pointer in translated
- code
+Date: Tue, 20 Feb 2024 11:13:04 +1000
+Message-Id: <CZ9I9VE1A542.30BIYSXFQT963@wheely>
+Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "Peter Xu" <peterx@redhat.com>,
+ "David Hildenbrand" <david@redhat.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Dr . David
+ Alan Gilbert" <dgilbert@redhat.com>, "Juan Quintela" <quintela@redhat.com>
+Subject: Re: [PATCH] system/physmem: Fix migration dirty bitmap coherency
+ with TCG memory access
 From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Thomas Huth" <thuth@redhat.com>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.15.2
-References: <20240215171512.800892-1-npiggin@gmail.com>
- <CAFEAcA_m=xZEh0gS8ttfPiuRGWJrow7A303GiLG44W4LQZ10xw@mail.gmail.com>
-In-Reply-To: <CAFEAcA_m=xZEh0gS8ttfPiuRGWJrow7A303GiLG44W4LQZ10xw@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+References: <20240219061731.232570-1-npiggin@gmail.com>
+ <c15b1b35-c613-4811-b76f-faed6c7ac942@redhat.com>
+In-Reply-To: <c15b1b35-c613-4811-b76f-faed6c7ac942@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,33 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Feb 16, 2024 at 3:50 AM AEST, Peter Maydell wrote:
-> On Thu, 15 Feb 2024 at 17:16, Nicholas Piggin <npiggin@gmail.com> wrote:
-> >
-> > Calculate the BHRB base from arithmetic on the tcg_env target ptr.
-> >
+On Tue Feb 20, 2024 at 12:10 AM AEST, Thomas Huth wrote:
+> On 19/02/2024 07.17, Nicholas Piggin wrote:
+> > The fastpath in cpu_physical_memory_sync_dirty_bitmap() to test large
+> > aligned ranges forgot to bring the TCG TLB up to date after clearing
+> > some of the dirty memory bitmap bits. This can result in stores though
+> > the TCG TLB not setting the dirty memory bitmap and ultimately causes
+> > memory corruption / lost updates during migration from a TCG host.
+> >=20
+> > Fix this by exporting an abstracted function to call when dirty bits
+> > have been cleared.
+> >=20
+> > Fixes: aa8dc044772 ("migration: synchronize memory bitmap 64bits at a t=
+ime")
 > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > > ---
-> > Hi Glenn,
-> >
-> > I think I have to squash this into the BHRB series. 32-bit host
-> > compile shows up a size mismatch warning... I think it's not quite
-> > right to be using host pointer directly in target code. The change
-> > of offset and mask to 32-bit is needed due to to seemingly missing
-> > tl->ptr conversion helpers, but 32-bit is okay for those anyway.
 >
-> There's nothing inherently wrong with it (depending on what the
-> pointer is pointing to!), but you need to use the right type.
+> Sounds promising! ... but it doesn't seem to fix the migration-test qtest=
+=20
+> with s390x when it gets enabled again:
 
-Ah okay, thanks for the correction.
+Did it fix kvm-unit-tests for you?
 
-> target_ulong and the _tl suffix are for the type which
-> depends on the size of the target's 'long'. The TCG type which is
-> "size of a host pointer" is TCG_TYPE_PTR, and you want the _ptr
-> suffix functions and to pass it around with TCGv_ptr.
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -3385,15 +3385,6 @@ int main(int argc, char **argv)
+>           return g_test_run();
+>       }
+>
+> -    /*
+> -     * Similar to ppc64, s390x seems to be touchy with TCG, so disable i=
+t
+> -     * there until the problems are resolved
+> -     */
+> -    if (g_str_equal(arch, "s390x") && !has_kvm) {
+> -        g_test_message("Skipping test: s390x host with KVM is required")=
+;
+> -        return g_test_run();
+> -    }
+> -
+>       tmpfs =3D g_dir_make_tmp("migration-test-XXXXXX", &err);
+>       if (!tmpfs) {
+>           g_test_message("Can't create temporary directory in %s: %s",
+>
+> I wonder whether there is more stuff like this necessary somewhere?
 
-In that case, original approach may be better with small fixes
-for 32-bit host.
+Possibly. That's what the commit logs for the TCG disable indicate. I
+have found another dirty bitmap TCG race too. I'll send it out after
+some more testing.
+
+> Did you try to re-enable tests/qtest/migration-test.c for ppc64 with TCG =
+to=20
+> see whether that works fine now?
+
+Hmm, I did try and so far ppc64 is not failing even with upstream QEMU.
+I'll try with s390x. Any additional build or runtime options to make it
+break? How long does it take for breakage to be evident?
 
 Thanks,
 Nick
