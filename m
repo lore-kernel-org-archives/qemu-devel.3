@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F5CC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA37EC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcKOR-00054z-0l; Tue, 20 Feb 2024 02:18:19 -0500
+	id 1rcKRc-0006fK-Ka; Tue, 20 Feb 2024 02:21:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKOO-00053f-SB
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:18:16 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKRb-0006fB-Ty
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:21:35 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKON-0000j7-AN
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:18:16 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4126dd40a54so3609175e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:18:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKRa-0001S1-9W
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:21:35 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33d26da3e15so1807313f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:21:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708413493; x=1709018293; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708413691; x=1709018491; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1ommEHBrmlQfSpSXN2k868MSNzg+rE7yK5rCTU10i3U=;
- b=j/J85w5bndxyS+flnShYe3gtkSaOJCJdrXcELJHrVE5OdfJQJ6OsVrH2Y5bOgXtRiE
- 7wWqwJ2GxjfMKhwWe4Z5HTYsWQk0huWVdISa8PQRroeYV8DtIosacO5y5PVETnGpn9I3
- yl3ObW0S/LvhXP8afqpeovoA/tLH2t90WQQ4JDp6kJgJkjW05O5KDQno7R6t7muDL3XP
- fK/aihLvj5+mnhldAA7uPy45j0E+WVusXMSOlH9iMaqakRbGo+0OtfP8YH6uoozMQaSf
- XB1/SaGuNGAO6ZJIsSh0VyGjfULRdJXBb6Gii3RJWeNlVUWRU9k9VBbK1G/vLPEqdEpO
- nW3g==
+ bh=tu6RZcNt5ObmPXePVEytT9pQJIWKovTC0PE5W/fiYq0=;
+ b=Af42XXe4a9dh9lIHjwK2bONBwQ5tNxfGwSK7/CyTtLoIBDHPtzOZl/4WbPs1TtmERQ
+ THZVjBn4H+CqiW5AEPtnklp/RtET/GqugEjcQrqBemeCauMRLFM3Pdf51hS2rViBldxh
+ oxy7xwPsVzNojY2PNNahx8CUIH/roeH4elwhV3IXdrxwVaP745ZpMV61gFkPOKLE0bCf
+ 4sL1+FidSvZYwXQaoWBjkAUIcMCP/Z5l8pLDVcOOKQ560+jHOloh5C+Ii78RcYzgBmMo
+ Q6jTA2ayEpc5GoslVMHUodiHFqlJAlFkT09ukzxBqlwaZsL4aUPFjoanyguubH3xwt7S
+ V1lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708413493; x=1709018293;
+ d=1e100.net; s=20230601; t=1708413691; x=1709018491;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1ommEHBrmlQfSpSXN2k868MSNzg+rE7yK5rCTU10i3U=;
- b=asCGDBxkggkzilvAFGijSE8ur7IrVbSdWfnuK9/gxYg1JaNhNUBY30Jgqv4wFv9C9v
- k7nJBP5SNBbuYyGR1I9nmUSAc9/xauKzdOD+6i4c1U0EmhU6yKx8IgzEz8Bh8jFGif8c
- ha8X6Gjwuzd90NMd68OMbSaNCaX/F5A/WxVqt0VwXx7SpM4iWeyyyXG+YryKC/MOJVdt
- YhP8FkVRZ1tcay7q8L3BJGd82o84tXCHaBwVMTsC9qjuWHfVa3SY/jXfIpRMAfQ+Asl9
- rhU9c3Wz+0ha+vtckICYN5O+180r8IQZ09c61jun0coA5J5aYNgmypE2EJpEKNE9MpEr
- cKvA==
+ bh=tu6RZcNt5ObmPXePVEytT9pQJIWKovTC0PE5W/fiYq0=;
+ b=BxzJ5xnBWEHrpBXUyOJabeuzIeUx8xQOjXpwxyHKqO9Xw53E1lbkhBbC3BXPtgoov9
+ FW67PYpkXp8rpAIfPioIZupFezSEzt6R2erb/B47N8HBf6sY7v+mBCm148wFP88OAuB7
+ qlgdSoinEgWleb3RpJS4kwvU643oye5P/CGuBcfNmAWGutqwosJO+HyvWGV0vG7PXVQH
+ rIVQ+2mO9jq23ZACW2pvS5BU47AR47h68tmbX3868J8mr6Y2aPF1ZZ6Tf5tzF3RBqI5Q
+ NTD0NMkj2M0SyU6jC77SjbZV5+m/B0pyTe0dulUmaHWOHr0fiNyOkl+WuS7XC2EqCV44
+ 6+5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPXfXwnf4gbRYoY1l7HJQ2HgN9CmPlqOXP28Xt2y1Nqde00w7JBJHfEc8mKU+g0E/Iz76mXHUP//1+QXO7MEvGusM/q68=
-X-Gm-Message-State: AOJu0YyxZCdoF+l+LB4U1HV6u+tnpUsqroBZaTBotOKhrGNstUd2avO+
- x0+pSgKzFwyFrhSRtUUCNS8anu7PnqazNqhVbNSiWC/HjBEoAGuOOpVLEAvd5Aw=
-X-Google-Smtp-Source: AGHT+IFefGAiLw2JRR3hv5SG+AxKmGYeRNmjzzs2M5hz4n+3LS4+jQqFP6X6C3r2bwauVZjXbRFYRA==
-X-Received: by 2002:a5d:5487:0:b0:33d:3ee3:cc0b with SMTP id
- h7-20020a5d5487000000b0033d3ee3cc0bmr5810637wrv.49.1708413493455; 
- Mon, 19 Feb 2024 23:18:13 -0800 (PST)
+ AJvYcCXzLF2fj4f0uL4Vs1pl528zX24qwlFKe/+2r58G+eneXftZuzS1LVcKaaO15Vrvdh0LOAszozLdE0fq0+UrkK9v9NJqd4o=
+X-Gm-Message-State: AOJu0YwZfNYe/jyBbLlM/Z4yXn0xVmBM3GKwR81nI3r9gmQsQbLASYKL
+ f0UFO7ahH1ZQ0iww6nrsrH2AXaOtpKV8AT1NgIvCDu1mi3XUGgIV6MwxO6kbR6k=
+X-Google-Smtp-Source: AGHT+IF6iPxRrjAgt/Wy3fE3qhvuoYEtM20B76dR3D4bmrOIOYdCp6i2jREOXpyIOEY9qG/LnI5e1Q==
+X-Received: by 2002:a5d:5748:0:b0:33d:32f2:dcac with SMTP id
+ q8-20020a5d5748000000b0033d32f2dcacmr6149201wrw.33.1708413690035; 
+ Mon, 19 Feb 2024 23:21:30 -0800 (PST)
 Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
  [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- x11-20020adff64b000000b0033d157bb26esm12504553wrp.32.2024.02.19.23.18.12
+ z2-20020a5d4c82000000b0033d07edbaa6sm12508752wrs.110.2024.02.19.23.21.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 23:18:13 -0800 (PST)
-Message-ID: <b17649cb-c124-49de-b391-4d3bd88bcb54@linaro.org>
-Date: Tue, 20 Feb 2024 08:18:11 +0100
+ Mon, 19 Feb 2024 23:21:29 -0800 (PST)
+Message-ID: <530ac857-19a7-40fa-87c0-049696cb3714@linaro.org>
+Date: Tue, 20 Feb 2024 08:21:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] hw/ide: Move IDE device related definitions to
- ide-dev.h
+Subject: Re: [PATCH 1/5] hw/isa/meson.build: Sort alphabetically
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-block@nongnu.org
-References: <20240219104912.378211-1-thuth@redhat.com>
- <20240219104912.378211-4-thuth@redhat.com>
- <f89c3710-5bb5-4060-93f0-84024ffd5038@linaro.org>
- <f1ca2012-c01f-48e0-9d3e-e9a7faa8736e@redhat.com>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+References: <20240218131701.91132-1-shentey@gmail.com>
+ <20240218131701.91132-2-shentey@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f1ca2012-c01f-48e0-9d3e-e9a7faa8736e@redhat.com>
+In-Reply-To: <20240218131701.91132-2-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,61 +102,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/2/24 20:17, Thomas Huth wrote:
-> On 19/02/2024 12.32, Philippe Mathieu-Daudé wrote:
->> On 19/2/24 11:49, Thomas Huth wrote:
->>> Let's start to unentangle internal.h by moving public IDE device
->>> related definitions to ide-dev.h.
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   include/hw/ide/ide-dev.h  | 145 +++++++++++++++++++++++++++++++++++++-
->>>   include/hw/ide/internal.h | 145 +-------------------------------------
->>>   hw/ide/ide-dev.c          |   1 +
->>>   3 files changed, 146 insertions(+), 145 deletions(-)
->>>
->>> diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
->>> index 7e9663cda9..de88784a25 100644
->>> --- a/include/hw/ide/ide-dev.h
->>> +++ b/include/hw/ide/ide-dev.h
->>> @@ -20,9 +20,152 @@
->>>   #ifndef IDE_DEV_H
->>>   #define IDE_DEV_H
->>> +#include "sysemu/dma.h"
->>
->> Not required.
+On 18/2/24 14:16, Bernhard Beschow wrote:
+> Fixes: fbd758008f0f "hw/isa: extract FDC37M81X to a separate file"
 > 
-> It's required for QEMUSGList that is used in struct IDEState.
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/isa/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Oh, OK.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
->>>   #include "hw/qdev-properties.h"
->>>   #include "hw/block/block.h"
->>> -#include "hw/ide/internal.h"
->>> +
->>> +typedef struct IDEDevice IDEDevice;
->>> +typedef struct IDEState IDEState;
->>
->>> +typedef struct IDEDMA IDEDMA;
->>> +typedef struct IDEDMAOps IDEDMAOps;
->>> +typedef struct IDEBus IDEBus;
->>
->> Looking at next patches, better forward-declare IDEBus and
->> IDEDMA in "qemu/typedefs.h".
-> 
-> I really dislike using qemu/typedefs.h for things that are not really 
-> part of the core framework, since it's a 
-> touch-it-once-and-everything-gets-recompiled header. So IMHO the 
-> typedefs here are the lesser evil.
+$ git grep -i alphab docs/devel/build-system.rst
+$
 
-OK then.
-
->> IDEDMAOps and "sysemu/dma.h" belong to "hw/ide/ide-dma.h.
-> 
-> Ok, I can move the typedef for IDEDMAOps to ide-dma.h instead.
-> 
->   Thomas
-> 
-> 
-
+Should we document this?
 
