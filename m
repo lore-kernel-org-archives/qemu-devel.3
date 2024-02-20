@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2732C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC7CC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVlM-0006Wg-O8; Tue, 20 Feb 2024 14:26:44 -0500
+	id 1rcVlM-0006Wb-9z; Tue, 20 Feb 2024 14:26:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVlI-0006Tz-9A
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:41 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVlH-0006TM-D5
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:39 -0500
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVlF-0006YJ-Am
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:40 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41271096976so5420125e9.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:26:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVlA-0006WA-Sd
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:39 -0500
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d2305589a2so40421881fa.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:26:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708457195; x=1709061995; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0RVEkk0ogowsJDDVW8v8EcldTsxXvilqXAuAAWzLt3Q=;
- b=NY+du7T46AqjeUgJFPaKf7G+EmRMSVst4J9BmNCBncaqtOnZMfbbg1Wlp9uaFzUGIo
- jHvftrUhtVvYCALWB1Uu25xIUmoKEZxGg/0G9sK58Ni7oplx+WPGVvK33XBQGg7V6/+6
- Y2n9QcA9FF9r8WcW75hMVGLauZr0v92LY38r1omqMj+H8aXgJdr1TDrlBrEFVBTayAUu
- 9a29RQF1qloQdTnZQS2IYI3V3zT48dGdkPazPpq27Gcq+4/AFZEOysJ512Id9isI3yMj
- 65U5l9yf1WtPZocWZNquacJ2wZ6S0UYOz0qxjjbXPaa3fgJ/22skldS/08ATD1e8De4k
- kuHA==
+ d=linaro.org; s=google; t=1708457189; x=1709061989; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=klPLDuAVvcz01mju7wAUAL6HT5lr3iGXlqrlWFnxNvY=;
+ b=TShazIIJMvrIHiQtKzaRu/dFrPXLmZ5OrtougzjPstDA+u7unnUE/gs7Qq5qKvEMxn
+ rersXui0DZKn2/rYjisBlgdCIqbOc+mHsDq45ODbYKsiQgVDzhHKQq+eUstGgvaMsLH+
+ qMQmj/PfzBJuhwUBskpBdTL4kkIdpS5pg+lrjGJx9BcKP9X/dRA/iPv7eRN0aQIxopBD
+ Cw4pqibQSx4tNjApM3+Clui57sfz4KX+aI04O7HtZA6PC+BjMz3tOziFFz0SmEOsJrS+
+ PmBiupJw/GEBxH6/A36pQh5DiX+D3YneIHMGxNSihBBPoFcnpt3ldcNgL7ktIXXPxxQE
+ 4rwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708457195; x=1709061995;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0RVEkk0ogowsJDDVW8v8EcldTsxXvilqXAuAAWzLt3Q=;
- b=oltCqkMJuTNq4TPihijNUHR2jOzsqfyK816JeSA6KnZWjn/6Ue/gTjaBA/0vQ/mWQf
- /OnJv5pC0bYbxXv4XoUs8Hw5OR2aqU0kxrgrH3quKGQlUhZ5EsR/i649pTbNGRP5lUzu
- T0MK51nsyPrsY7b8XsxFNVAUEK3trUEZ3pB6fV8LIDYumrRwQVihZ5OJC1mveBNyX7vZ
- APjsGfItUxej+B8BQrSgYZBX35cgi5RzXT78h7rlGb3B2kEfpVFcRbiWWx7+iQ0CUdgH
- CRuCn5jTmO+jfYlWytMd3HZX0GV+/E2aDjPJajQ4xwspGTCX9bLOBHQJXXsy+dRztau+
- u9cg==
-X-Gm-Message-State: AOJu0Yx8/7PS9NeIwNfvPt51Hg4E9T5FZb4FE9PVhgI7eCJpgMIlVM1o
- c0u2EJT+uvFvq0oWi9fNAxOhXKhnPV6vTt6Gg6UC3Q+A+by8giW1WP8H8gxuMqLZw7MKa1U8ylV
- W
-X-Google-Smtp-Source: AGHT+IFox4Q9/V4AdMzkU6lVT6BShOrcavRkGAyHvZxrcUWfxCk8r0+a6Z/ZBS7SzB+9Yh6T0i3Ryw==
-X-Received: by 2002:a5d:430d:0:b0:33a:eb10:e9e8 with SMTP id
- h13-20020a5d430d000000b0033aeb10e9e8mr10366269wrq.43.1708457194876; 
- Tue, 20 Feb 2024 11:26:34 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708457189; x=1709061989;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=klPLDuAVvcz01mju7wAUAL6HT5lr3iGXlqrlWFnxNvY=;
+ b=ixwQSd+FmALeJZTHhihbd0s5D9Uw+mK7Ww62wnD/YPLVaowRWEK9vqpG9GtAzNVTz4
+ VVqLc20UVKxxkqhXkxxBnIkb5TgMtzWwysC6hB3xAq+P6f6dy8KCs3XCLV+htOAkrgY9
+ N0Fvmxen5A+4J7lYy9jwpWb+wxy+CaqiMkz+W7z3rtGIK2WheSnzz+RJgNe8N6nZ0fzr
+ h4r852V/elM1o/0qeTbqUoFCr3fK+HlV3JBpzmbAGtVnTsDHhVM5f1VBTuEaJAoAO6WI
+ S2BZFkC7idQ0B10vHKUkHLCOce3etCLj0ZMY6X/fW0Ma+9J472FH+8ZjWmU/y8WNS8HL
+ 80rw==
+X-Gm-Message-State: AOJu0YwWxFZ/Y32Fpaad1qyqXg+EcGfpEASzR8uTBSidaHW/okjY19tF
+ pMTYy49T2Ubf7HtyWkIO2ZF6FbzXl5Zp6ttWXbAuOg7HVIDmOm7fmfId6T6v40FiNBDCPVkF5hD
+ C
+X-Google-Smtp-Source: AGHT+IHZYF51u3Ns0jcicfbB6UESoCGintFU1q9mQkcEtnSEeaY6Q4uXz9HnNUj/lnYZyxNDKdyTfg==
+X-Received: by 2002:a2e:a9a6:0:b0:2d2:2e7a:e070 with SMTP id
+ x38-20020a2ea9a6000000b002d22e7ae070mr7911737ljq.10.1708457188930; 
+ Tue, 20 Feb 2024 11:26:28 -0800 (PST)
 Received: from m1x-phil.lan (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
  [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- cc3-20020a5d5c03000000b0033d5e3c6835sm5702004wrb.5.2024.02.20.11.26.33
+ v16-20020a05600c471000b004126f8c68eesm2925856wmo.3.2024.02.20.11.26.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 20 Feb 2024 11:26:34 -0800 (PST)
+ Tue, 20 Feb 2024 11:26:28 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -68,17 +67,16 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 1/2] target/alpha: Expose TMR and SMP IRQ lines via QDev
-Date: Tue, 20 Feb 2024 20:26:24 +0100
-Message-ID: <20240220192625.17944-2-philmd@linaro.org>
+Subject: [RFC PATCH 0/2] hw: Replace cpu_interrupt() calls by qemu_irq(QDev
+ GPIO)
+Date: Tue, 20 Feb 2024 20:26:23 +0100
+Message-ID: <20240220192625.17944-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240220192625.17944-1-philmd@linaro.org>
-References: <20240220192625.17944-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,62 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to remove calls to cpu_interrupt() from hw/ code,
-expose the TMR and SMP interrupts via QDev as named GPIOs.
+Hi,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+cpu_interrupt() doesn't scale well with heterogenous machines
+because its mask is target specific (defined in target/ARCH/cpu.h).
+
+While it is (often...) used by target-specific hw to notify cpu,
+there is no restriction to use such target-specific hw in a
+heterogeneous setup, where it'd still target the same kind of
+target cpus.
+
+The Alpha Typhoon HW is unlikely to be used heterogeneously,
+but it is the simplest case I found to illustrate how I plan
+to remove cpu_interrupt() calls from hw/: use the QDev GPIO API.
+
+Does that sound good enough?
+
+Thanks,
+
+Phil.
+
+Philippe Mathieu-Daudé (2):
+  target/alpha: Expose TMR and SMP IRQ lines via QDev
+  hw/alpha/typhoon: Set CPU IRQs using QDev API
+
+ hw/alpha/typhoon.c | 15 +++++++++------
  target/alpha/cpu.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ 2 files changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index bf70173a25..619cd54593 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -25,6 +25,31 @@
- #include "cpu.h"
- #include "exec/exec-all.h"
- 
-+#ifndef CONFIG_USER_ONLY
-+static void alpha_cpu_tmr_irq(void *opaque, int irq, int level)
-+{
-+    DeviceState *dev = opaque;
-+    CPUState *cs = CPU(dev);
-+
-+    if (level) {
-+        cs->interrupt_request |= CPU_INTERRUPT_TIMER;
-+    } else {
-+        cs->interrupt_request &= ~CPU_INTERRUPT_TIMER;
-+    }
-+}
-+
-+static void alpha_cpu_smp_irq(void *opaque, int irq, int level)
-+{
-+    DeviceState *dev = opaque;
-+    CPUState *cs = CPU(dev);
-+
-+    if (level) {
-+        cs->interrupt_request |= CPU_INTERRUPT_SMP;
-+    } else {
-+        cs->interrupt_request &= ~CPU_INTERRUPT_SMP;
-+    }
-+}
-+#endif
- 
- static void alpha_cpu_set_pc(CPUState *cs, vaddr value)
- {
-@@ -89,6 +114,11 @@ static void alpha_cpu_realizefn(DeviceState *dev, Error **errp)
- 
-     qemu_init_vcpu(cs);
- 
-+#ifndef CONFIG_USER_ONLY
-+    qdev_init_gpio_in_named(dev, alpha_cpu_tmr_irq, "TMR", 1);
-+    qdev_init_gpio_in_named(dev, alpha_cpu_smp_irq, "SMP", 1);
-+#endif
-+
-     acc->parent_realize(dev, errp);
- }
- 
 -- 
 2.41.0
 
