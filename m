@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11451C5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 13:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 361EDC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 13:32:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcQBt-00024r-Cl; Tue, 20 Feb 2024 08:29:46 -0500
+	id 1rcQEL-000390-Du; Tue, 20 Feb 2024 08:32:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcQBf-00023p-2q
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:29:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcQBd-0000yr-9g
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:29:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708435768;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=msqOxMmBZMJYvWdOz1JEBqBlNI1V12lAmU701UTeeVs=;
- b=LXrhiTcC9wPNZD7QFvF1+6F5Oe/5VE7S2vosu5RAzsLXIAsgteATAiRzZcS4HBXXxEC6P9
- jSdMba2Pu4mj07HmRlY4cJ1Z+6yd8VxTUu3OgDqpl/4H8hbucNpL4pz/HRUvCGQ0FwZRnB
- w+xPkbuk4UlbYW06yzkD3O+oq3EnX00=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-4_mIIIPEMmmX1cIluQ_kAw-1; Tue, 20 Feb 2024 08:29:26 -0500
-X-MC-Unique: 4_mIIIPEMmmX1cIluQ_kAw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6AD2A83B86F;
- Tue, 20 Feb 2024 13:29:26 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 202C620229A4;
- Tue, 20 Feb 2024 13:29:26 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 02C7C21E66D5; Tue, 20 Feb 2024 14:29:24 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH v3 13/20] qapi/schema: split "checked" field into
- "checking" and "checked"
-In-Reply-To: <20240201224246.39480-14-jsnow@redhat.com> (John Snow's message
- of "Thu, 1 Feb 2024 17:42:39 -0500")
-References: <20240201224246.39480-1-jsnow@redhat.com>
- <20240201224246.39480-14-jsnow@redhat.com>
-Date: Tue, 20 Feb 2024 14:29:23 +0100
-Message-ID: <87cysr9scs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rcQED-00038P-2R
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:32:09 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rcQE3-0001mW-4e
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:32:08 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-563cb3ba9daso5439151a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 05:31:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708435917; x=1709040717; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=BAJGdYtpYyL/Q1kNF26aw0+oXulhkKJp6xrIWjfrmSo=;
+ b=XAd1hWmChmDS/VS8VhW+iTo+0KE9fUHDA820lfkJRJ5SgRX5D6mrrFBPpxP/GVMDHD
+ eRsz6pRlojT0IUW0wZhod9IUQgJNH1kCnMSqMNHBMKezB5O+B0eeLMJOiEuKmEiXl+v/
+ 8MK+m5Ol38N9qBd4n4viYOXFR6zF+pjaJv8c+kX7stxpvuAmqa514dPszVWDYjLRERn8
+ 9QTUhX879Qz2YoNKdMaVlp7CAejX8YF8fBQeB7d7qjkqG90Cqkc3GdCRfKEeliwb7YN2
+ r2jjuf/Lyk+OZorfGz/KrJp7skAZGYGop+YCUOgQmLR6R98EVegQ8LiE06HFnFgGj7/F
+ tc/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708435917; x=1709040717;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BAJGdYtpYyL/Q1kNF26aw0+oXulhkKJp6xrIWjfrmSo=;
+ b=Hkcf6Y/eHzKZji2rY/8gR0K2mo0dGFVL8a4N6t6LIy0dsUWyym+cmbH45C8Bcj/vOw
+ 5Oexsa9BSaIQsPJCa0jvMxNq5Neqgnj9betCeCMJTKgh1VFJ6tvjIlO7oB9ZqV/sfY4r
+ RflmJCQYBQTu7B8dbgohZkt7T0cagw94nSlr6S44aka0O5I5nK8QP6T5Pjqep4TIagjh
+ miX5MSHVQ5uBkxtv2tsIAZt9Gdyt+RWlg4UgHXio1i6gHHrwcgP1v6vdWx7dUYwcmRsa
+ 8nBMNieWud42xja1Xp3QnA2cN2EhoCGVUqGdfyClwFotDhUNByOQJa49DiQ0fho1A1Wd
+ C06w==
+X-Gm-Message-State: AOJu0YzDpqTR2fMqipDIormjy/IdlGSj0cUMih7dgAK47K2b2meCb4j9
+ rDGAb58/q8FBIh/Px/b/sf6f0mE6kv81Dw5Qd7r9aEg5XKorsuxFvME7N51y0D4368EGTuIEMku
+ uIFnLW9I2OTakwYC4wLdLom+MMSVEwfLG0A4=
+X-Google-Smtp-Source: AGHT+IFWTShOIGmjQqc36ujn7nmHcUMw4pVHlwVHCoyZ2wzSnytJ3UqWEp2tiBykhOZ4k0htmRq9/FME2cOhysNoiZA=
+X-Received: by 2002:a05:6402:38a:b0:563:dd8f:996d with SMTP id
+ o10-20020a056402038a00b00563dd8f996dmr8321029edv.9.1708435917083; Tue, 20 Feb
+ 2024 05:31:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Faiq Ali Sayed <faiqueali.109@gmail.com>
+Date: Tue, 20 Feb 2024 14:31:46 +0100
+Message-ID: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
+Subject: QNX VM hang on Qemu
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f59aae0611d03bd4"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,160 +84,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+--000000000000f59aae0611d03bd4
+Content-Type: text/plain; charset="UTF-8"
 
-> Instead of using the None value for the members field, use a dedicated
-> "checking" value to detect recursive misconfigurations.
->
-> This is intended to assist with subsequent patches which will seek to
-> remove the "None" value from the members field (which can never be set
-> legally after the final call to check()) in order to simplify static
-> typing of that field, by avoiding needing assertions littered at many
-> callsites.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  scripts/qapi/schema.py | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
->
-> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-> index d4d3c3bbcee..a459016e148 100644
-> --- a/scripts/qapi/schema.py
-> +++ b/scripts/qapi/schema.py
-> @@ -458,19 +458,21 @@ def __init__(self, name, info, doc, ifcond, features,
->          self.local_members = local_members
->          self.variants = variants
->          self.members = None
-> +        self._checking = False
->  
->      def check(self, schema):
->          # This calls another type T's .check() exactly when the C
->          # struct emitted by gen_object() contains that T's C struct
->          # (pointers don't count).
-> -        if self.members is not None:
-> -            # A previous .check() completed: nothing to do
-> -            return
-> -        if self._checked:
-> +        if self._checking:
->              # Recursed: C struct contains itself
->              raise QAPISemError(self.info,
->                                 "object %s contains itself" % self.name)
-> +        if self._checked:
-> +            # A previous .check() completed: nothing to do
-> +            return
+Hi everyone,
+I am facing an issue during booting QNX VM using Qemu,
+I have an image to Boot the VM. and when I trigger a Qemu command to create
+a VM it is stuck.
+I also used a debugger to investigate but I can not see any result by GDB.
 
-The diff would be easier to read if you could keep the order...  You
-don't due to the subtle change of the state predicates.  More on that
-below.
+Here is the output of first windows
 
->  
-> +        self._checking = True
->          super().check(schema)
->          assert self._checked and self.members is None
->  
-> @@ -495,7 +497,8 @@ def check(self, schema):
->              self.variants.check(schema, seen)
->              self.variants.check_clash(self.info, seen)
->  
-> -        self.members = members  # mark completed
-> +        self.members = members
-> +        self._checking = False  # mark completed
->  
->      # Check that the members of this type do not cause duplicate JSON members,
->      # and update seen to track the members seen so far. Report any errors
+qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display none
+-device loader,file=QNX-IFS,addr=0x00100000,cpu-num=0 -drive
+file=/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=sd,format=raw,index=1
+-boot mode=5 -net nic,model=cadence_gem -net nic,model=cadence_gem -net
+nic,model=cadence_gem -net nic,model=cadence_gem,netdev=xzynq0 -netdev
+user,id=xzynq0,tftp=/tftpboot  -nographic -global
+xlnx,zynqmp-boot.cpu-num=0 -global 'xlnx,zynqmp-boot.use-pmufw=true' -s -S
 
-We .check() entities on after the other.  *Except*
-QAPISchemaObjectType.check() "calls another type T's .check() exactly
-when the C struct emitted by gen_object() contains that T's C struct".
-If the recursion loops, the schema asks for C structs containing
-themselves.  To catch this, we have QAPISchemaType objects go through
-three states:
+qemu-system-aarch64: warning: hub 0 is not connected to host network
 
-1. Not yet checked.
+on the other hand, here is the output of GDB:
 
-2. Being checked; object.check() is on the call stack.
+(gdb) target remote :1234
+Remote debugging using :1234
+warning: No executable has been specified and target does not support
+determining executable automatically.  Try using the "file" command.
+0x0000000000100000 in ?? ()
+(gdb) c
+Continuing.
 
-3. Checked, i.e. object.check() completed.
+-- 
+Kind Regard-
+Faiq Ali Sayed
 
-How to recognize the states before the patch:
+--000000000000f59aae0611d03bd4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-1. not ._checked and .members is None
+<div dir=3D"ltr"><div>Hi everyone, <br></div><div>I am facing an issue duri=
+ng booting QNX VM using Qemu,</div><div>I have an image to Boot the VM. and=
+ when I trigger a Qemu command to create a VM it is stuck.</div><div>I also=
+ used a debugger to investigate but I can not see any result by GDB.</div><=
+div><br></div><div>Here is the output of first windows</div><div><br></div>=
+<div><div><span style=3D"background-color:rgb(238,238,238)">qemu-system-aar=
+ch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display none -device loader,f=
+ile=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive file=3D/home/faiq/Downlo=
+ads/install/BootSD/qemu-boot_sd.img,if=3Dsd,format=3Draw,index=3D1
+ -boot mode=3D5 -net nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -=
+net
+ nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netd=
+ev user,id=3Dxzynq0,tftp=3D/tftpboot =C2=A0-nographic -global xlnx,zynqmp-b=
+oot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.use-pmufw=3Dtrue&#39; -s -S</=
+span></div><span class=3D"gmail-im"><div><span style=3D"background-color:rg=
+b(238,238,238)"><br></span></div><div><span style=3D"background-color:rgb(2=
+38,238,238)">qemu-system-aarch64: warning: hub 0 is not connected to host n=
+etwork</span><br></div><div><br></div></span><div>on the other hand, here i=
+s the output of GDB:</div><div><span style=3D"background-color:rgb(204,204,=
+204)"><br></span></div><div><span style=3D"background-color:rgb(238,238,238=
+)">(gdb) target remote :1234<br>Remote debugging using :1234<br>warning: No=
+ executable has been specified and target does not support<br>determining e=
+xecutable automatically.=C2=A0 Try using the &quot;file&quot; command.<br>0=
+x0000000000100000 in ?? ()<br>(gdb) c<br>Continuing.</span></div></div><div=
+><br><span class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" =
+class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"lt=
+r"><div dir=3D"ltr">
+<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
+lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
+=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
+v></div></div></div>
+<div><font style=3D"background-color:#ffffff" size=3D"1"><br></font></div><=
+br></div></div></div></div></div>
 
-2. ._checked and .members is None
-
-3. ._checked and .members is not None
-
-   Since .members is not None implies .checked, we simply use
-   .members is not None.
-
-We go from state 1. to 2. in super().check().
-
-We go from state 2. to 3. at # mark completed.
-
-Note that .checked becomes true well before we finish checking.  This is
-admittedly confusing.  If you can think of a less confusing name, ...
-
-The patch's aim is to avoid use of .members, to enable the next patch.
-
-I don't doubt that your solution works, but trying to understand how it
-works makes my tired brain go owww!
-
-State invariants (I think):
-
-1. not ._checked and .members is None and not ._checking
-
-2. ._checked and .members is None and ._checking
-
-3. ._checked and .members is not None and not ._checking
-
-We can then recognize states without use of .members:
-
-1. not ._checked and not ._checking
-
-   Since not ._checked implies not .checking, we can simply use
-   not ._checked.
-
-2. ._checked and ._checking
-
-   A deliciously confusing predicate, isn't it?
-
-3. ._checked and not ._checking
-
-Deep breath...  alright, here's the stupidest replacement for use of
-.members that could possibly work: add a flag, ensure it's True exactly
-when .members is not None.  Like this:
-
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index d4d3c3bbce..095831baf2 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -458,12 +458,13 @@ def __init__(self, name, info, doc, ifcond, features,
-         self.local_members = local_members
-         self.variants = variants
-         self.members = None
-+        self._check_complete = False
- 
-     def check(self, schema):
-         # This calls another type T's .check() exactly when the C
-         # struct emitted by gen_object() contains that T's C struct
-         # (pointers don't count).
--        if self.members is not None:
-+        if self._check_complete:
-             # A previous .check() completed: nothing to do
-             return
-         if self._checked:
-@@ -495,7 +496,8 @@ def check(self, schema):
-             self.variants.check(schema, seen)
-             self.variants.check_clash(self.info, seen)
- 
--        self.members = members  # mark completed
-+        self.members = members
-+        self._check_complete = True  # mark completed
- 
-     # Check that the members of this type do not cause duplicate JSON members,
-     # and update seen to track the members seen so far. Report any errors
-
-
-Thoughts?
-
+--000000000000f59aae0611d03bd4--
 
