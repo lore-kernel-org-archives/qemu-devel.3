@@ -4,78 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D41C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9319C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:17:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSmC-00037Z-Gs; Tue, 20 Feb 2024 11:15:24 -0500
+	id 1rcSne-0003yp-02; Tue, 20 Feb 2024 11:16:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcSls-00035r-ND
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:15:06 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rcSnU-0003uy-1u
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:16:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcSlq-0006dx-FI
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:15:04 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rcSnS-00076U-EP
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:16:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708445701;
+ s=mimecast20190719; t=1708445801;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T7u28xwIheG3uxovuWZOpEtSYb8aZ/auv1OID/d5NrA=;
- b=epE+I2EVnjdC1JhU+soqHdtvMNC9uSmu51WG0J0MwgqFdJo14ryCcpi4trr0We3/6WsDgg
- gMCVpSIoZi4xwhBLF1aBw8LQyGpCUWYAr52CiBeO9dbjj0jHHw89oRmLC+RSXZ1QGcYLr4
- iNyr8xSfpAjo0elTPB05CYjzkov7up8=
+ bh=1vYugwfRiC4aOtBvm+W5UWPeRXOpDUyHcNTscSm9M5M=;
+ b=hoS06RSMvyDqjOsjeflsYlq/2CQwikTt89pU72wpNjbnZAXNyvTeMzZjFnrbulyDLgPs2r
+ 7+pMQIYUnrlitPTBjvChsJ1BHiHxoPzXwRFqm51vtIlGVC8ApLq2Z2CswztZ79bhXxCPCS
+ gFh+M0oVUDTc9nOFwAZSvvY6/DsQOL0=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-jbZ68DtwOku-M8uuakTlmw-1; Tue,
- 20 Feb 2024 11:14:58 -0500
-X-MC-Unique: jbZ68DtwOku-M8uuakTlmw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-8EZsoaUmN0ipZd_uxTUv_w-1; Tue,
+ 20 Feb 2024 11:16:39 -0500
+X-MC-Unique: 8EZsoaUmN0ipZd_uxTUv_w-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 99F3E3814582;
- Tue, 20 Feb 2024 16:14:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3C22810802;
- Tue, 20 Feb 2024 16:14:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 07D0B21E6740; Tue, 20 Feb 2024 17:14:55 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  David Hildenbrand
- <david@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Peter Xu
- <peterx@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
- <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Marcelo Tosatti
- <mtosatti@redhat.com>,  qemu-devel@nongnu.org,  kvm@vger.kernel.org,
- Michael Roth <michael.roth@amd.com>,  Sean Christopherson
- <seanjc@google.com>,  Claudio Fontana <cfontana@suse.de>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Isaku Yamahata <isaku.yamahata@gmail.com>,  Chenyi
- Qiang <chenyi.qiang@intel.com>
-Subject: Re: [PATCH v4 29/66] i386/tdx: Support user configurable
- mrconfigid/mrowner/mrownerconfig
-In-Reply-To: <cf9e91ea-825a-444c-9625-a571fdc3265a@intel.com> (Xiaoyao Li's
- message of "Tue, 20 Feb 2024 23:10:29 +0800")
-References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
- <20240125032328.2522472-30-xiaoyao.li@intel.com>
- <875xykfwmf.fsf@pond.sub.org>
- <cf9e91ea-825a-444c-9625-a571fdc3265a@intel.com>
-Date: Tue, 20 Feb 2024 17:14:55 +0100
-Message-ID: <87le7f3yf4.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7E18E28C976A;
+ Tue, 20 Feb 2024 16:16:39 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.193.175])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id BD06BC01644;
+ Tue, 20 Feb 2024 16:16:38 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 8A9A41800DCF; Tue, 20 Feb 2024 17:16:37 +0100 (CET)
+Date: Tue, 20 Feb 2024 17:16:37 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Igor Mammedov <imammedo@redhat.com>, Julia Suvorova <jusual@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] pc: q35: Bump max_cpus to 4096 vcpus
+Message-ID: <vp63d36mcuib6trlqyjqpy72ysxb7ftlodr3eldhqklfg7bqi6@zc74olpzwknw>
+References: <20240220154204.29676-1-anisinha@redhat.com>
+ <ZdTKYV5AuhYxvi1Q@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZdTKYV5AuhYxvi1Q@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -100,123 +90,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Xiaoyao Li <xiaoyao.li@intel.com> writes:
+On Tue, Feb 20, 2024 at 03:50:57PM +0000, Daniel P. Berrangé wrote:
+> On Tue, Feb 20, 2024 at 09:12:04PM +0530, Ani Sinha wrote:
+> > Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
+> > Linux kernel can support upto a maximum number of 4096 vCPUS when MAXSMP is
+> > enabled in the kernel. At present, QEMU has been tested to correctly boot a
+> > linux guest with 4096 vcpus both with edk2 and seabios firmwares.
+> > So bump up the value max_cpus to 4096 for q35 machines versions 9 and newer.
+> > Q35 machines versions 8.2 and older continue to support 1024 maximum vcpus
+> > as before for compatibility reasons.
+> > 
+> > If KVM is not able to support the specified number of vcpus, QEMU would
+> > return the following error messages:
+> > 
+> > $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
+> > qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> > qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> > Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
+> > 
+> > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > Cc: Igor Mammedov <imammedo@redhat.com>
+> > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > Cc: Julia Suvorova <jusual@redhat.com>
+> > Cc: kraxel@redhat.com
+> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> > ---
+> >  hw/i386/pc_q35.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > 
+> > Changelog:
+> > v3: bump up to 4096 vcpus. It has now been tested to work with edk2.
+> > See RH Jira: https://issues.redhat.com/browse/RHEL-22202
+> 
+> That bug indicates a dependancy on a EDK2 patch
+> 
+>   https://github.com/kraxel/edk2/commit/7a03c17f0f4f4a9003d77db2660c8e087604b2f0
+> 
+> we'll need to rebase the EDK2 ROMs in QEMU to get that included.
 
-> On 2/19/2024 8:48 PM, Markus Armbruster wrote:
->> Xiaoyao Li <xiaoyao.li@intel.com> writes:
->>=20
->>> From: Isaku Yamahata <isaku.yamahata@intel.com>
->>>
->>> Three sha384 hash values, mrconfigid, mrowner and mrownerconfig, of a TD
->>> can be provided for TDX attestation. Detailed meaning of them can be
->>> found: https://lore.kernel.org/qemu-devel/31d6dbc1-f453-4cef-ab08-4813f=
-4e0ff92@intel.com/
->>>
->>> Allow user to specify those values via property mrconfigid, mrowner and
->>> mrownerconfig. They are all in base64 format.
->>>
->>> example
->>> -object tdx-guest, \
->>>    mrconfigid=3DASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wE=
-jRWeJq83v,\
->>>    mrowner=3DASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN7wEjRW=
-eJq83v,\
->>>    mrownerconfig=3DASNFZ4mrze8BI0VniavN7wEjRWeJq83vASNFZ4mrze8BI0VniavN=
-7wEjRWeJq83v
->>>
->>> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
->>> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>
->>> ---
->>> Changes in v4:
->>>   - describe more of there fields in qom.json
->>>   - free the old value before set new value to avoid memory leak in
->>>     _setter(); (Daniel)
->>>
->>> Changes in v3:
->>>   - use base64 encoding instread of hex-string;
->>> ---
->>>   qapi/qom.json         | 14 ++++++-
->>>   target/i386/kvm/tdx.c | 87 +++++++++++++++++++++++++++++++++++++++++++
->>>   target/i386/kvm/tdx.h |  3 ++
->>>   3 files changed, 103 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/qapi/qom.json b/qapi/qom.json
->>> index 2177f3101382..15445f9e41fc 100644
->>> --- a/qapi/qom.json
->>> +++ b/qapi/qom.json
->>> @@ -905,10 +905,22 @@
->>>   #     pages.  Some guest OS (e.g., Linux TD guest) may require this to
->>>   #     be set, otherwise they refuse to boot.
->>>   #
->>> +# @mrconfigid: ID for non-owner-defined configuration of the guest TD,
->>> +#     e.g., run-time or OS configuration.  base64 encoded SHA384 diges=
-t.
->>=20
->> "base64 encoded SHA384" is not a sentence.
->>=20
->> Double-checking: the data being hashed here is the "non-owner-defined
->> configuration of the guest TD", and the resulting hash is the "ID"?
->
-> yes. The "ID" here means the resulting hash.
->
-> The reason to use "ID" here because in the TDX spec, it's description is
->
->    Software-defined ID for non-owner-defined configuration of the guest
->    TD - e.g., run-time or OS configuration.
->
-> If ID is confusing, how about
->
->    SHA384 hash of non-owner-defined configuration of the guest TD, e.g.,
->    run-time of OS configuration.  It's base64 encoded.
+Which will btw take a while.  edk2 is in freeze for the 2024-02 release
+right now, I expect the changes land upstream shortly thereafter and
+will be part of the 2024-05 release.  So end may / early june would be
+the time when rebasing to release, or somewhen in march or april when we
+rebase to a git snapshot ...
 
-I guess staying close to the TDX spec makes sense.
+> Meanwhile, plesae at least call out this EDK2 commit as a
+> pre-requisite in the commit message, so people know the
+> EDK2 ROMs in QEMU won't work (yet).
 
-We still need to mention the base64 encoding.
+That surely makes sense.
 
-What about something like
+Oh, and it's more than just that one commit.  I don't think it makes
+sense to compile a list of commits given this is a moving target
+(upstream review is in progress right now).
 
-     ID for non-owner-defined configuration of the guest TD, e.g.,
-     run-time or OS configuration (base64 encoded SHA384 digest)
-
-or, if we decide that the fact it's SHA384 digest is irrelevant for QMP
-
-     ID for non-owner-defined configuration of the guest TD, e.g.,
-     run-time or OS configuration (base64 encoded)
-
->>> +#
->>> +# @mrowner: ID for the guest TD=E2=80=99s owner.  base64 encoded SHA38=
-4 digest.
->>=20
->> Likewise.
->>=20
->>> +#
->>> +# @mrownerconfig: ID for owner-defined configuration of the guest TD,
->>> +#     e.g., specific to the workload rather than the run-time or OS.
->>> +#     base64 encoded SHA384 digest.
->>=20
->> Likewise.
->>=20
->>> +#
->>>   # Since: 9.0
->>>   ##
->>>   { 'struct': 'TdxGuestProperties',
->>> -  'data': { '*sept-ve-disable': 'bool' } }
->>> +  'data': { '*sept-ve-disable': 'bool',
->>> +            '*mrconfigid': 'str',
->>> +            '*mrowner': 'str',
->>> +            '*mrownerconfig': 'str' } }
->>=20
->> The new members are optional, but their description in the doc comment
->> doesn't explain behavior when present vs. behavior when absent.
->>=20
->>>=20=20=20
->>>   ##
->>>   # @ThreadContextProperties:
->>=20
->> [...]
->>=20
->>=20
+take care,
+  Gerd
 
 
