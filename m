@@ -4,75 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB69FC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:34:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA34C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcT3v-0003Pv-B1; Tue, 20 Feb 2024 11:33:43 -0500
+	id 1rcTH6-0007mV-Rc; Tue, 20 Feb 2024 11:47:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcT3s-0003OZ-S1
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:33:41 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcT3q-0001PV-Is
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:33:40 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-563ed3d221aso6879702a12.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:33:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708446817; x=1709051617; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9ZLzu7169Vwwm4i9x1nQEJef5YVdBcM25bwOHWlwq90=;
- b=LyAngFE8la7BZIBL4d2QYIXbvF0w4AeizFgEfg7KNDhPWw2K3dDHAI/Voie8I1oX7r
- BXo7izsKEcUIua/0wgbf+tHTpLwARVCh3TCh9YTAVvaH+POWVST2OwJ209ikbE1B6MV0
- fQTl+fxtDIaDG7c7UiEjq4a6zqc4Z5P+Cjb+sDpl8+4ffC/jh+qFdEMynA1hc3K/zzBM
- aYKFLUDnF/Ypueolgm3EKDpaRn8Jh0VZ/cmKW5IkpGD0lpOL2sdrYY3sLkjo2by5qdXz
- Es9B1pdnBACOnaKXPSCm3XSeyWdeRbwgpiiCqE/U1lCVrYLnDgKRVPiROMaM5oyA6lbn
- gm4w==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcTH4-0007m4-3Y
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:47:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcTH2-00044U-1i
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:47:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708447634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=lqUxo03A0QGr5YhjQ0UZLJ10kh/EHHkhJt9b0NN1thw=;
+ b=A/YBf5AajV43hQk9amOBC8kJRe52zxz7rm3uCDyJOagX7qwPxaGjPMGVO0LpzZ7Og5zUpN
+ DNZ43Odvexnj+sD7TD+HrshAYAi8a6LAax3ZUw/ZE+z0UykdIjqDXyBV29MtxGh6p0K+6Q
+ F6o4CToNLJHKDswNDVzkStsldK+3Q38=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-556-D51k0Q3SMDi0sVHll5apgQ-1; Tue, 20 Feb 2024 11:47:12 -0500
+X-MC-Unique: D51k0Q3SMDi0sVHll5apgQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7830ab8fb5aso492559385a.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:47:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708446817; x=1709051617;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9ZLzu7169Vwwm4i9x1nQEJef5YVdBcM25bwOHWlwq90=;
- b=meAhBmNYjOlGIMsOQNT6GmKiWJ8bPYiI9K+SddaoGdaOy4RyGzsdITQ4F8Z0cd/Oln
- Gl26VbdVqwOvOC6paqFqeasd9v35KMdU+TE2TA6vy1D+uY55yRl0nCz57Dapw04cEasY
- IkPETID2/fOGd0FfxqyyGl0QmD11Cnnn6NzDt4HniA8HN5WN9CkazfmEMb14F+OHeCHJ
- caM4AI+gk5P/lCkL5qQD5vcktxDvEuPHU9MOa/C5DlQa1TQwSCJUedl/N4wPx+bPyBrh
- b0Spj5scPeCORUi/cXs0/0/DaHTBxQpgKBfDHNTdguXW/rAiHNohdC5+qdhj8homeMm/
- zmgw==
-X-Gm-Message-State: AOJu0YzQN1hydQS440g6rCVtjtGBIDsTeefCnFj5UDbtCirrhj21vrYq
- q+nE8OAsPsPPvWfUHkNxgrleK2v7/449zL2TQlpW+8d2vsQyA9ek0iqckfXTek++tzrUTV2pBsw
- L19TjyjvYiICmThRfrORxl3dtsXBDdlB9Hjw=
-X-Google-Smtp-Source: AGHT+IFUqbbn0zP5YYQt02+Bo4nt6ev8Xlile+o+oZQi5wYosf6FuqF9xhQkScMHaGAQm8BRC5LKWtAKlXq18Hg7Aog=
-X-Received: by 2002:aa7:de0e:0:b0:564:b9be:5c16 with SMTP id
- h14-20020aa7de0e000000b00564b9be5c16mr3001508edv.8.1708446816652; Tue, 20 Feb
- 2024 08:33:36 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708447632; x=1709052432;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lqUxo03A0QGr5YhjQ0UZLJ10kh/EHHkhJt9b0NN1thw=;
+ b=CS0P6rFEsoEjJ15PspCytpkSjhFe/2+wNu+V4tN7arASgefF99qHYympYA4A8kc3eh
+ 2vn9TwfZKgpIcwzie2X0h2GzQcEloXE++I57ZrozthV0EaCcqoYWULwXfpO49OaTZovJ
+ 2ON8OWx1kUf874K0c9tLnxJHktUHOlQ6Qq+1Y7uHDq/xjcr/DIx3yUqxG92ICEc14HyC
+ sOZxLE3mI65pGGF2X1KZk2+wdzDQ5lPNlG98eud07ISOKur0BcF1ziJCWJSne7ErRqc9
+ P7bPaeePq32366OaGFYVdKiM5wZbghnNETN85HmsbO/lW1MdMrECk8UjMgQLOyXVdIHL
+ VE/A==
+X-Gm-Message-State: AOJu0Yyz5gV3euoQUtWsAb3oPgsJrFcYQKwriWt0x4JdOEyZtWETsjLn
+ eRcbUdmSMQGhOaFkqipf0XtwaXykCIUKlCbRuvkZ4t2NHJOk/Z4hsXamMd9lcoVRcenU6yuR+m3
+ HVdSggKH3wBPfjHj40pkUvm9+LWCkmhuZjxOeNfcKApeOhMxn9YVl
+X-Received: by 2002:a05:620a:225:b0:787:4173:a7ea with SMTP id
+ u5-20020a05620a022500b007874173a7eamr13073540qkm.70.1708447632006; 
+ Tue, 20 Feb 2024 08:47:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGeMS7I2bBMylebjKjandgm1gg/Iovsrbw04sRMnyp8K4dZRySSvu1iYZlHQppgAh0g+SdV2w==
+X-Received: by 2002:a05:620a:225:b0:787:4173:a7ea with SMTP id
+ u5-20020a05620a022500b007874173a7eamr13073526qkm.70.1708447631737; 
+ Tue, 20 Feb 2024 08:47:11 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
+ [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
+ d11-20020a05620a240b00b00787797f8f2asm574575qkn.74.2024.02.20.08.47.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 08:47:11 -0800 (PST)
+Message-ID: <5b6950e7-1b32-43b1-aff7-08f54b52a056@redhat.com>
+Date: Tue, 20 Feb 2024 17:47:08 +0100
 MIME-Version: 1.0
-References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
- <87a5nvci5n.fsf@draig.linaro.org>
-In-Reply-To: <87a5nvci5n.fsf@draig.linaro.org>
-From: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Date: Tue, 20 Feb 2024 17:33:25 +0100
-Message-ID: <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
-Subject: Re: QNX VM hang on Qemu
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] hw/loongarch: Set minimium memory size as 256M
+Content-Language: en-US
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
 Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000009ff20b0611d2c5a9"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240220124126.1164081-1-maobibo@loongson.cn>
+ <20240220124126.1164081-5-maobibo@loongson.cn>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240220124126.1164081-5-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,237 +146,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009ff20b0611d2c5a9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 20/02/2024 13.41, Bibo Mao wrote:
+> The minium memory size for LoongArch UEFI bios is 256M, also some
+> test cases such as migration and qos uses parameter 256M.
+> 
+> Here set minium memory size for Loongarch VirtMachine with 256M,
+> also default memory size is changed with 256M.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/loongarch/virt.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index a7d700497d..5bc332f4e3 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -815,8 +815,8 @@ static void virt_init(MachineState *machine)
+>           cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+>       }
+>   
+> -    if (ram_size < 1 * GiB) {
+> -        error_report("ram_size must be greater than 1G.");
+> +    if (ram_size < 256 * MiB) {
+> +        error_report("ram_size must be greater than 256M.");
+>           exit(1);
+>       }
+>       create_fdt(vms);
+> @@ -1144,7 +1144,7 @@ static void virt_class_init(ObjectClass *oc, void *data)
+>       HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
+>   
+>       mc->init = virt_init;
+> -    mc->default_ram_size = 1 * GiB;
+> +    mc->default_ram_size = 256 * MiB;
 
-Alex thanks for the reply,
+While changing the minimum ram_size in the first hunk is certainly a good 
+idea, you should maybe consider twice whether you also want to change the 
+default_ram_size here. 256 MiB is often not enough to run a guest OS like 
+Linux, so for most users it might be more convenient if you have a 
+default_ram_size of 1GiB instead. At least that's what I've seen on other 
+architectures. YMMV.
 
-I don't know what the debug symbol is, but my target system is QNX aarch64
-below are the configuration of GDB,
+  Thomas
 
-(gdb) show configuration
-This GDB was configured as follows:
-   configure --host=3Dx86_64-pc-linux-gnu
---target=3Daarch64-unknown-nto-qnx7.1.0
-             --with-auto-load-dir=3D$debugdir:$datadir/auto-load
-             --with-auto-load-safe-path=3D$debugdir:$datadir/auto-load
-             --without-expat
-             --with-gdb-datadir=3D/opt/qnx710/host/linux/x86_64/usr/share/g=
-db
-(relocatable)
-
- --with-jit-reader-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb
-(relocatable)
-             --without-libunwind-ia64
-             --without-lzma
-             --without-babeltrace
-             --without-intel-pt
-             --disable-libmcheck
-             --without-mpfr
-             --with-python=3D/opt/qnx710/host/linux/x86_64/usr (relocatable=
-)
-             --without-guile
-
- --with-separate-debug-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug
-(relocatable)
-             --with-sysroot=3D/opt/qnx710/target/qnx7/aarch64
-
-while I got the below result, after executing the x/10i $pc
-
-(gdb) x/10i $pc
-=3D> 0x100000: .inst 0x5371242b ; undefined
-   0x100004: fcmla v21.8h, v3.8h, v16.h[1], #270
-   0x100008: .inst 0x64657472 ; undefined
-   0x10000c: ldnp d26, d27, [x9, #-176]
-   0x100010: .inst 0x72706974 ; undefined
-   0x100014: .inst 0x7365636f ; undefined
-   0x100018: .inst 0x733b2b73 ; undefined
-   0x10001c: fnmls z23.h, p0/m, z19.h, z18.h
-   0x100020: .inst 0x3b2b6b61 ; undefined
-   0x100024: .inst 0x72627768 ; undefined
-
-Can you please let me know how I can step in ?
-When I press c it does not execute further and hangs..
-
-
-Faiq
-
-On Tue, Feb 20, 2024 at 3:41=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
-
-> Faiq Ali Sayed <faiqueali.109@gmail.com> writes:
->
-> > Hi everyone,
-> > I am facing an issue during booting QNX VM using Qemu,
-> > I have an image to Boot the VM. and when I trigger a Qemu command to
-> create a VM it is stuck.
-> > I also used a debugger to investigate but I can not see any result by
-> GDB.
-> >
-> > Here is the output of first windows
-> >
-> > qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display
-> none -device
-> > loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive
-> >
-> file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=3Dsd,forma=
-t=3Draw,index=3D1
-> -boot mode=3D5 -net
-> > nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net
-> nic,model=3Dcadence_gem -net
-> > nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev
-> user,id=3Dxzynq0,tftp=3D/tftpboot  -nographic -global
-> > xlnx,zynqmp-boot.cpu-num=3D0 -global 'xlnx,zynqmp-boot.use-pmufw=3Dtrue=
-' -s
-> -S
-> >
-> > qemu-system-aarch64: warning: hub 0 is not connected to host network
->
-> Is this QNX VM image built for the xlnx-zcu102 board?
->
-> > on the other hand, here is the output of GDB:
-> >
-> > (gdb) target remote :1234
-> > Remote debugging using :1234
-> > warning: No executable has been specified and target does not support
-> > determining executable automatically.  Try using the "file" command.
-> > 0x0000000000100000 in ?? ()
-> > (gdb) c
-> > Continuing.
->
-> You'll either want the debug symbols for your image or tell GDB what the
-> target arch is. Check you are somewhere sane by doing:
->
->   x/10i $pc
->
-> and step through the instructions and see where it goes. If you hit
-> Ctrl-C are you executing nonsense instructions or in a tight loop
-> hanging?
->
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
-
-
---=20
-Kind Regard-
-Faiq Ali Sayed
-
---0000000000009ff20b0611d2c5a9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Alex thanks for the reply,</div><div><br></div><div>I=
- don&#39;t know what the debug symbol is, but my target system is QNX aarch=
-64 <br></div><div>below are the configuration of GDB,</div><div><br></div><=
-div><span style=3D"background-color:rgb(238,238,238)">(gdb) show configurat=
-ion<br>This GDB was configured as follows:<br>=C2=A0 =C2=A0configure --host=
-=3Dx86_64-pc-linux-gnu --target=3Daarch64-unknown-nto-qnx7.1.0<br>=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-auto-load-dir=3D$debugdir:$=
-datadir/auto-load<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with=
--auto-load-safe-path=3D$debugdir:$datadir/auto-load<br>=C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-expat<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0--with-gdb-datadir=3D/opt/qnx710/host/linux/x86_64/usr/=
-share/gdb (relocatable)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
---with-jit-reader-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb (relocata=
-ble)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-libunwind=
--ia64<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-lzma<br>=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-babeltrace<br>=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-intel-pt<br>=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--disable-libmcheck<br>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-mpfr<br>=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-python=3D/opt/qnx710/host/linux/x86_6=
-4/usr (relocatable)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--wi=
-thout-guile<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-separ=
-ate-debug-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug (relocatable)<b=
-r>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-sysroot=3D/opt/qnx=
-710/target/qnx7/aarch64</span><br></div><div><br></div><div>while I got the=
- below result, after executing the <span style=3D"background-color:rgb(238,=
-238,238)">x/10i $pc <br></span></div><div><span style=3D"background-color:r=
-gb(238,238,238)"><br></span></div><div><span style=3D"background-color:rgb(=
-238,238,238)">(gdb) x/10i $pc<br>=3D&gt; 0x100000:	.inst	0x5371242b ; undef=
-ined<br>=C2=A0 =C2=A00x100004:	fcmla	v21.8h, v3.8h, v16.h[1], #270<br>=C2=
-=A0 =C2=A00x100008:	.inst	0x64657472 ; undefined<br>=C2=A0 =C2=A00x10000c:	=
-ldnp	d26, d27, [x9, #-176]<br>=C2=A0 =C2=A00x100010:	.inst	0x72706974 ; und=
-efined<br>=C2=A0 =C2=A00x100014:	.inst	0x7365636f ; undefined<br>=C2=A0 =C2=
-=A00x100018:	.inst	0x733b2b73 ; undefined<br>=C2=A0 =C2=A00x10001c:	fnmls	z=
-23.h, p0/m, z19.h, z18.h<br>=C2=A0 =C2=A00x100020:	.inst	0x3b2b6b61 ; undef=
-ined<br>=C2=A0 =C2=A00x100024:	.inst	0x72627768 ; undefined</span></div><di=
-v><br></div><div>Can you please let me know how I can step in ?</div><div>W=
-hen I press c it does not execute further and hangs..</div><div><br></div><=
-div></div><div><br></div><div>Faiq<br></div><div><span style=3D"background-=
-color:rgb(238,238,238)"></span></div></div><br><div class=3D"gmail_quote"><=
-div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 20, 2024 at 3:41=E2=80=AFP=
-M Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.benne=
-e@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">Faiq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gmail.com" t=
-arget=3D"_blank">faiqueali.109@gmail.com</a>&gt; writes:<br>
-<br>
-&gt; Hi everyone, <br>
-&gt; I am facing an issue during booting QNX VM using Qemu,<br>
-&gt; I have an image to Boot the VM. and when I trigger a Qemu command to c=
-reate a VM it is stuck.<br>
-&gt; I also used a debugger to investigate but I can not see any result by =
-GDB.<br>
-&gt;<br>
-&gt; Here is the output of first windows<br>
-&gt;<br>
-&gt; qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display n=
-one -device<br>
-&gt; loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive<br>
-&gt; file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=3Dsd,fo=
-rmat=3Draw,index=3D1 -boot mode=3D5 -net<br>
-&gt; nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net nic,model=3D=
-cadence_gem -net<br>
-&gt; nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev user,id=3Dxzynq0,tftp=
-=3D/tftpboot=C2=A0 -nographic -global<br>
-&gt; xlnx,zynqmp-boot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.use-pmufw=
-=3Dtrue&#39; -s -S<br>
-&gt;<br>
-&gt; qemu-system-aarch64: warning: hub 0 is not connected to host network<b=
-r>
-<br>
-Is this QNX VM image built for the xlnx-zcu102 board?<br>
-<br>
-&gt; on the other hand, here is the output of GDB:<br>
-&gt;<br>
-&gt; (gdb) target remote :1234<br>
-&gt; Remote debugging using :1234<br>
-&gt; warning: No executable has been specified and target does not support<=
-br>
-&gt; determining executable automatically.=C2=A0 Try using the &quot;file&q=
-uot; command.<br>
-&gt; 0x0000000000100000 in ?? ()<br>
-&gt; (gdb) c<br>
-&gt; Continuing.<br>
-<br>
-You&#39;ll either want the debug symbols for your image or tell GDB what th=
-e<br>
-target arch is. Check you are somewhere sane by doing:<br>
-<br>
-=C2=A0 x/10i $pc<br>
-<br>
-and step through the instructions and see where it goes. If you hit<br>
-Ctrl-C are you executing nonsense instructions or in a tight loop<br>
-hanging?<br>
-<br>
-<br>
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"l=
-tr"><div dir=3D"ltr">
-<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
-lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
-=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
-v></div></div></div>
-<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
-t></div><br></div></div></div>
-
---0000000000009ff20b0611d2c5a9--
 
