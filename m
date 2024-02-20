@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7B3C48BF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 02:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4328DC48BF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 02:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcFjw-0000Qv-Pj; Mon, 19 Feb 2024 21:20:12 -0500
+	id 1rcFlt-0001H2-Hh; Mon, 19 Feb 2024 21:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rcFjv-0000Qj-Ul; Mon, 19 Feb 2024 21:20:11 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
+ id 1rcFlr-0001Go-Lh; Mon, 19 Feb 2024 21:22:11 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rcFjt-0002cB-Ek; Mon, 19 Feb 2024 21:20:11 -0500
+ id 1rcFlm-0002zk-Rr; Mon, 19 Feb 2024 21:22:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708395609; x=1739931609;
+ t=1708395726; x=1739931726;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=eIxhzRNIhpXSQjjzS7oPfx/F2HmtZfaZ6GhUtvFpXHs=;
- b=bHmhORv2GoUHgr4hkX14ORKW5O9pxBQTKft99FbwSe3C4uU6L7HVZwzZ
- byVAqZPONibDtiDe7wkd6EO/gzPuF3HRXHAk4hA4lMoPX0v21Y2nirrIs
- 9QZ4RFXTR7mYHhBjQ04IZHhFn4Ha1qccqDyEmjnCq+7/6hTOnv7N32Mad
- VAtALDTZaNzdigwoedsfKrBEPOYFNxmAxiZZn8f8wWe9hA8+rb5VPpeMn
- H3/Ew7vvT60XbDkxIiEmyxmWM+OJjYtNPRn8jHGHOVYe9v/UYdNJ7ec8x
- fph50nmjWZNsP8+uKbXl9jfOzZgeNW72LVe90sbnIf+P20B7PV4m1+zym g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="2938170"
+ bh=wdKso9Yyh0fncbmY2mtBksRKA7a9Lr0g7IJql9iDKwc=;
+ b=PtlFNVh4uoycgfgGrE0d49eITEhR5vfwVjYiIq+RjzqpuIBhIHi9Uhw8
+ PpPNns67477uvt0HwxKKl0ecxws/yKAzvZml7UAIOfDX9EQsyvD0Ztz/v
+ E1HNtS2I7eh1tM+ZPmNF1xqlP05EEAL8J39dDJmA5lPn70TbJkTpDK4QM
+ 5wZLffNHvo+6GcpswMKF0u0STAl0XVj8DXldapmRElkkdAy/mm+pNM64U
+ OhCi9IFk50zIZ6kru3ibMZ+EnIHhWh+UGyOB2cgFXHt/2wi1qQEQRT7GR
+ ZJSafIc8N6HdD/gisbw3dvTwS3YtjcEMOTO4cymdGcWySrA0T38XXo03A g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="2346405"
 X-IronPort-AV: E=Sophos;i="6.06,171,1705392000"; 
-   d="scan'208";a="2938170"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Feb 2024 18:20:06 -0800
+   d="scan'208";a="2346405"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Feb 2024 18:22:04 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="827086514"
-X-IronPort-AV: E=Sophos;i="6.06,171,1705392000"; d="scan'208";a="827086514"
+X-IronPort-AV: E=Sophos;i="6.06,171,1705392000"; 
+   d="scan'208";a="9305282"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orsmga001.jf.intel.com with ESMTP; 19 Feb 2024 18:20:02 -0800
-Date: Tue, 20 Feb 2024 10:33:41 +0800
+ by orviesa004.jf.intel.com with ESMTP; 19 Feb 2024 18:22:01 -0800
+Date: Tue, 20 Feb 2024 10:35:40 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -51,24 +51,25 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org
-Subject: Re: [PATCH 3/5] hw/acpi/ich9: Include missing headers
-Message-ID: <ZdQPhcB28MsDdFfu@intel.com>
+Subject: Re: [PATCH 4/5] hw/acpi/ich9_tco: Include missing
+ 'migration/vmstate.h' header
+Message-ID: <ZdQP/HaBa1MfRgIP@intel.com>
 References: <20240219141412.71418-1-philmd@linaro.org>
- <20240219141412.71418-4-philmd@linaro.org>
+ <20240219141412.71418-5-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240219141412.71418-4-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240219141412.71418-5-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,66 +85,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
-
-On Mon, Feb 19, 2024 at 03:14:09PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Mon, 19 Feb 2024 15:14:09 +0100
+On Mon, Feb 19, 2024 at 03:14:10PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Mon, 19 Feb 2024 15:14:10 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 3/5] hw/acpi/ich9: Include missing headers
+> Subject: [PATCH 4/5] hw/acpi/ich9_tco: Include missing
+>  'migration/vmstate.h' header
 > X-Mailer: git-send-email 2.41.0
 > 
-> The ICH9LPCPMRegs structure has MemoryRegion and
-> Notifier fields, so requires the "qemu/notify.h"
-> and "exec/memory.h" headers.
-> 
-> However nothing from "hw/acpi/acpi_dev_interface.h"
-> is required, so reduce its inclusion to hw/acpi/ich9.c
-> source file where it is used.
+> We need the VMStateDescription structure definition from
+> "migration/vmstate.h" in order to declare vmstate_tco_io_sts.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/acpi/ich9.h | 3 ++-
->  hw/acpi/ich9.c         | 2 +-
->  2 files changed, 3 insertions(+), 2 deletions(-)
+>  include/hw/acpi/ich9_tco.h | 1 +
+>  1 file changed, 1 insertion(+)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 > 
-> diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-> index 2faf7f0cae..215de3c91f 100644
-> --- a/include/hw/acpi/ich9.h
-> +++ b/include/hw/acpi/ich9.h
-> @@ -21,12 +21,13 @@
->  #ifndef HW_ACPI_ICH9_H
->  #define HW_ACPI_ICH9_H
+> diff --git a/include/hw/acpi/ich9_tco.h b/include/hw/acpi/ich9_tco.h
+> index c4393caee0..2562a7cf39 100644
+> --- a/include/hw/acpi/ich9_tco.h
+> +++ b/include/hw/acpi/ich9_tco.h
+> @@ -11,6 +11,7 @@
+>  #define HW_ACPI_TCO_H
 >  
-> +#include "qemu/notify.h"
-> +#include "exec/memory.h"
->  #include "hw/acpi/acpi.h"
->  #include "hw/acpi/cpu_hotplug.h"
->  #include "hw/acpi/cpu.h"
->  #include "hw/acpi/pcihp.h"
->  #include "hw/acpi/memory_hotplug.h"
-> -#include "hw/acpi/acpi_dev_interface.h"
->  #include "hw/acpi/ich9_tco.h"
+>  #include "exec/memory.h"
+> +#include "migration/vmstate.h"
 >  
->  #define ACPI_PCIHP_ADDR_ICH9 0x0cc0
-> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-> index 573d032e8e..be375a8b9d 100644
-> --- a/hw/acpi/ich9.c
-> +++ b/hw/acpi/ich9.c
-> @@ -35,7 +35,7 @@
->  #include "sysemu/runstate.h"
->  #include "hw/acpi/acpi.h"
->  #include "hw/acpi/ich9_tco.h"
-> -
-> +#include "hw/acpi/acpi_dev_interface.h"
-
-Do we have the requirement for included header ordering?
-If so, it would be better to put it before "hw/acpi/ich9_tco.h".
-
--Zhao
-
->  #include "hw/southbridge/ich9.h"
->  #include "hw/mem/pc-dimm.h"
->  #include "hw/mem/nvdimm.h"
+>  /* As per ICH9 spec, the internal timer has an error of ~0.6s on every tick */
+>  #define TCO_TICK_NSEC 600000000LL
 > -- 
 > 2.41.0
 > 
