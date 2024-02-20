@@ -4,70 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B798C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C149FC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:37:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLYO-0000mG-TY; Tue, 20 Feb 2024 03:32:42 -0500
+	id 1rcLcF-00030r-Gd; Tue, 20 Feb 2024 03:36:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rcLYI-0000lr-SO
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:32:35 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rcLcE-0002yt-9T; Tue, 20 Feb 2024 03:36:38 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rcLYF-0004VJ-8c
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:32:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708417951; x=1739953951;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=4i3wXuUUCZl45VDOs9eLSI3djwSURdciX6oeG3Vvx9M=;
- b=KvY+QxNkcFgkzh7xF9HUarvhEl/zYmS1GWU8YPHkRlzEvNPL2AfF6w9Z
- IdY8dV5xsqbwCcY+4RacDNYoOUutSYYIxpRS6zfJ5jEoZBL6kk5UhV8s1
- 4ujAvCWb6dbXEdt5d+rg21IGH9kX9BBzBoOrNg2rfZZipn3XUB0fy5VaC
- SfjAGLGu3dVskrPWSmgEAqa3yGYWgKe/oacL8gGNPf3d2vn4Nw+wDhu/2
- 0Tcz1cHJsparF0hvCGoPzv3iIQNpSQq1CBFD54E56Ps5SZUNB+blXr3Zs
- qwcENQ2729z40rCo9kzXrpSMGSTd+GeC3aZcB4RSDBzaNmUSS5N5yOcrf Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="20040934"
-X-IronPort-AV: E=Sophos;i="6.06,172,1705392000"; d="scan'208";a="20040934"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Feb 2024 00:32:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,172,1705392000"; 
-   d="scan'208";a="4679611"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.93.12.199])
- ([10.93.12.199])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Feb 2024 00:32:08 -0800
-Message-ID: <b041fdb3-5b08-4a85-913a-ebb3c7dfbe1d@intel.com>
-Date: Tue, 20 Feb 2024 16:32:03 +0800
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rcLcB-00054S-GN; Tue, 20 Feb 2024 03:36:37 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41K8Pqd9032054; Tue, 20 Feb 2024 08:36:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=iuC9bGUQvgHWePDIGVhAI+TtmxrTGZpH+PUSMol64HE=;
+ b=RtF93tbK0VPKovYOAtCrnCMPQhXALKOkzbOi7H25mE8yGcG2WcYQC6MbxqBIT7kKgmA0
+ KiIn4hxB4kXTnyIMbUd141/AvDa8PvOP2cyLrv0g+d4vpIjNexjYc8eVnytXrS+oC3WH
+ B9wHxSpUmx0/x831EtdeFRX8jhwB/BwfTDU7XKJw+b3MO6McunGPYJUFXFVht0V6H6sz
+ H4RJZz51HLgJ2NVkvRJVlSwNw8Zvu72gk7lrDjOpAtiQK4gRrcYrRqWciyp9wa4S2kt9
+ m/72TGSVea7aqcpoqhS1yHU9jYluGZdyedD7Z4C/TKEZkyPw1i0g3/0t3Aui7oRvP1Q8 xw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcqsd97ap-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Feb 2024 08:36:30 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41K8PoKZ031773;
+ Tue, 20 Feb 2024 08:36:29 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcqsd97a5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Feb 2024 08:36:29 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41K5bYLQ009547; Tue, 20 Feb 2024 08:36:28 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb84p6xbm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Feb 2024 08:36:28 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41K8aM6V20513486
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Feb 2024 08:36:24 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 53AB920040;
+ Tue, 20 Feb 2024 08:36:22 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC90220043;
+ Tue, 20 Feb 2024 08:36:20 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
+ [9.109.243.35]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Feb 2024 08:36:20 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: npiggin@gmail.com, qemu-ppc@nongnu.org
+Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH v4 02/15] spapr: nested: move nested part of spapr_get_pate
+ into spapr_nested.c
+Date: Tue, 20 Feb 2024 14:05:56 +0530
+Message-Id: <20240220083609.748325-3-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240220083609.748325-1-harshpb@linux.ibm.com>
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-To: EwanHai <ewanhai-oc@zhaoxin.com>, pbonzini@redhat.com,
- mtosatti@redhat.com, kvm@vger.kernel.org, zhao1.liu@intel.com
-Cc: qemu-devel@nongnu.org, cobechen@zhaoxin.com, ewanhai@zhaoxin.com
-References: <20231127034326.257596-1-ewanhai-oc@zhaoxin.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20231127034326.257596-1-ewanhai-oc@zhaoxin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: x7jidl9ZptJNPCcV3o-6WOG3PKUfHaYV
+X-Proofpoint-ORIG-GUID: 1rWeAYZ1IwUh-jvOjUMXMkn4i_mCOp4b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 mlxlogscore=999
+ clxscore=1015 lowpriorityscore=0 adultscore=0 priorityscore=1501
+ bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 impostorscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402200061
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,83 +115,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/27/2023 11:43 AM, EwanHai wrote:
-> Commit 4a910e1 ("target/i386: do not set unsupported VMX secondary
-> execution controls") implemented a workaround for hosts that have
-> specific CPUID features but do not support the corresponding VMX
-> controls, e.g., hosts support RDSEED but do not support RDSEED-Exiting.
-> 
-> In detail, commit 4a910e1 introduced a flag `has_msr_vmx_procbased_clts2`.
-> If KVM has `MSR_IA32_VMX_PROCBASED_CTLS2` in its msr list, QEMU would
-> use KVM's settings, avoiding any modifications to this MSR.
-> 
-> However, this commit (4a910e1) didn't account for cases in older Linux
-> kernels(<5.3) where `MSR_IA32_VMX_PROCBASED_CTLS2` is in
-> `kvm_feature_msrs`-obtained by ioctl(KVM_GET_MSR_FEATURE_INDEX_LIST),
-> but not in `kvm_msr_list`-obtained by ioctl(KVM_GET_MSR_INDEX_LIST).
-> As a result,it did not set the `has_msr_vmx_procbased_clts2` flag based
-> on `kvm_msr_list` alone, even though KVM maintains the value of this MSR.
-> 
-> This patch supplements the above logic, ensuring that
-> `has_msr_vmx_procbased_clts2` is correctly set by checking both MSR
-> lists, thus maintaining compatibility with older kernels.
-> 
-> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
-> ---
-> In response to the suggestions from ZhaoLiu(zhao1.liu@intel.com),
-> the following changes have been implemented in v2:
-> - Adjusted some punctuation in the commit message as per the
->    suggestions.
-> - Added comments to the newly added code to indicate that it is a
->    compatibility fix.
-> 
-> v1 link:
-> https://lore.kernel.org/all/20230925071453.14908-1-ewanhai-oc@zhaoxin.com/
-> ---
->   target/i386/kvm/kvm.c | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 11b8177eff..c8f6c0b531 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -2296,6 +2296,7 @@ void kvm_arch_do_init_vcpu(X86CPU *cpu)
->   static int kvm_get_supported_feature_msrs(KVMState *s)
->   {
->       int ret = 0;
-> +    int i;
->   
->       if (kvm_feature_msrs != NULL) {
->           return 0;
-> @@ -2330,6 +2331,19 @@ static int kvm_get_supported_feature_msrs(KVMState *s)
->           return ret;
->       }
->   
-> +    /*
-> +     * Compatibility fix:
-> +     * Older Linux kernels(<5.3) include the MSR_IA32_VMX_PROCBASED_CTLS2
+Most of the nested code has already been moved to spapr_nested.c
+This logic inside spapr_get_pate is related to nested guests and
+better suited for spapr_nested.c, hence moving there.
 
-we can be more accurate, that kernel version 4.17 to 5.2, reports 
-MSR_IA32_VMX_PROCBASED_CTLS2 in KVM_GET_MSR_FEATURE_INDEX_LIST but not 
-KVM_GET_MSR_INDEX_LIST.
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ include/hw/ppc/spapr_nested.h |  3 ++-
+ hw/ppc/spapr.c                | 28 ++-------------------------
+ hw/ppc/spapr_nested.c         | 36 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 27 deletions(-)
 
-> +     * only in feature msr list, but not in regular msr list. This lead to
-> +     * an issue in older kernel versions where QEMU, through the regular
-> +     * MSR list check, assumes the kernel doesn't maintain this msr,
-> +     * resulting in incorrect settings by QEMU for this msr.
-> +     */
-> +    for (i = 0; i < kvm_feature_msrs->nmsrs; i++) {
-> +        if (kvm_feature_msrs->indices[i] == MSR_IA32_VMX_PROCBASED_CTLS2) {
-> +            has_msr_vmx_procbased_ctls2 = true;
-> +        }
-> +    }
-
-I'm wondering should we move all the initialization of has_msr_*, that 
-associated with feature MSRs, to here. e.g., has_msr_arch_capabs, 
-has_msr_vmx_vmfunc,...
-
->       return 0;
->   }
->   
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index 09d95182b2..1df1ce14f6 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -96,5 +96,6 @@ struct nested_ppc_state {
+ };
+ 
+ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
+-
++bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
++                              target_ulong lpid, ppc_v3_pate_t *entry);
+ #endif /* HW_SPAPR_NESTED_H */
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 0d72d286d8..97b69c0e42 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1362,7 +1362,6 @@ void spapr_init_all_lpcrs(target_ulong value, target_ulong mask)
+     }
+ }
+ 
+-
+ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
+                            target_ulong lpid, ppc_v3_pate_t *entry)
+ {
+@@ -1375,33 +1374,10 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
+         /* Copy PATE1:GR into PATE0:HR */
+         entry->dw0 = spapr->patb_entry & PATE0_HR;
+         entry->dw1 = spapr->patb_entry;
+-
++        return true;
+     } else {
+-        uint64_t patb, pats;
+-
+-        assert(lpid != 0);
+-
+-        patb = spapr->nested_ptcr & PTCR_PATB;
+-        pats = spapr->nested_ptcr & PTCR_PATS;
+-
+-        /* Check if partition table is properly aligned */
+-        if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
+-            return false;
+-        }
+-
+-        /* Calculate number of entries */
+-        pats = 1ull << (pats + 12 - 4);
+-        if (pats <= lpid) {
+-            return false;
+-        }
+-
+-        /* Grab entry */
+-        patb += 16 * lpid;
+-        entry->dw0 = ldq_phys(CPU(cpu)->as, patb);
+-        entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
++        return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+     }
+-
+-    return true;
+ }
+ 
+ #define HPTE(_table, _i)   (void *)(((uint64_t *)(_table)) + ((_i) * 2))
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index a071092eff..b38e2d0be5 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -6,8 +6,38 @@
+ #include "hw/ppc/spapr.h"
+ #include "hw/ppc/spapr_cpu_core.h"
+ #include "hw/ppc/spapr_nested.h"
++#include "mmu-book3s-v3.h"
+ 
+ #ifdef CONFIG_TCG
++
++bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
++                              target_ulong lpid, ppc_v3_pate_t *entry)
++{
++    uint64_t patb, pats;
++
++    assert(lpid != 0);
++
++    patb = spapr->nested_ptcr & PTCR_PATB;
++    pats = spapr->nested_ptcr & PTCR_PATS;
++
++    /* Check if partition table is properly aligned */
++    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
++        return false;
++    }
++
++    /* Calculate number of entries */
++    pats = 1ull << (pats + 12 - 4);
++    if (pats <= lpid) {
++        return false;
++    }
++
++    /* Grab entry */
++    patb += 16 * lpid;
++    entry->dw0 = ldq_phys(CPU(cpu)->as, patb);
++    entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
++    return true;
++}
++
+ #define PRTS_MASK      0x1f
+ 
+ static target_ulong h_set_ptbl(PowerPCCPU *cpu,
+@@ -405,4 +435,10 @@ void spapr_unregister_nested_hv(void)
+ {
+     /* DO NOTHING */
+ }
++
++bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
++                              target_ulong lpid, ppc_v3_pate_t *entry)
++{
++    return false;
++}
+ #endif
+-- 
+2.39.3
 
 
