@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B91B8C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 17:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882ACC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:02:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcUNV-0000EY-UB; Tue, 20 Feb 2024 12:58:01 -0500
+	id 1rcURb-0001gK-JZ; Tue, 20 Feb 2024 13:02:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcUNV-0000EI-7Q
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 12:58:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcUNT-0007h2-Gj
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 12:58:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708451878;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=+AEO5jNywDtEIc3OcE9+vpjIAwaou6Br8nkxSal1ls4=;
- b=LTJwJs8hnz92LbyIziHshSBfRbWqa24YbeiTubY6eKvnSwEuHag/3kiobXDQwnrmvChXir
- 7XmKeyp6qehCcqFJPS9pSmCDjfW13/z7AIBFIdmIaUivQntojdAsql4Pkg9dbK0fLm6X8A
- Bx6N8lnFbMGSxGFOw9zHkH5pEezzxk4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-Y0e1oTiVM3eXVswNNOR_Hg-1; Tue, 20 Feb 2024 12:57:55 -0500
-X-MC-Unique: Y0e1oTiVM3eXVswNNOR_Hg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 566CA185A780;
- Tue, 20 Feb 2024 17:57:55 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B84E010800;
- Tue, 20 Feb 2024 17:57:54 +0000 (UTC)
-Date: Tue, 20 Feb 2024 17:57:52 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 15/23] qemu-img: resize: do not always eat last argument
-Message-ID: <ZdToIERLC8RaHhhg@redhat.com>
-References: <cover.1707513011.git.mjt@tls.msk.ru>
- <7e0e7cb2470d572e8c0a48ba85c993be3bdb1c07.1707513011.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rcURT-0001fL-1o
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 13:02:07 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rcURR-0000D4-IN
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 13:02:06 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d0cdbd67f0so81317351fa.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 10:02:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708452123; x=1709056923; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q83jTzfZSF5Rw1ObSelqDU+22TG8z19cj0NLvRMXHJ0=;
+ b=yxDZqL22A9rFyNDF0osjV9fc7O0sqsEdzPFibuECMotOEbwofwBPOQmkNQPyAmrnaL
+ pb1Fh3K+cBG8XFHhyfVfEk+WvWXSciVWIaCAexnEJTCgFvP+7JFeSKvWVBHAlHMEHwcx
+ s/HDyzck1ykoicatv4fZqO4POTzikCTRGYlvxBDZ5DkFFix0lLhpbpVFKA49oaR0jTOZ
+ L8LXxbASTl+vvwNO2tqHcbV3ARWY3qVLLGN4rCDdX/EpohuZFBFAoHgWjeDW/SJmu4FB
+ 3iu9DTpG8VWKVWWqIWt0jAWwYMiKE2i4GepF8H5vNuAGaWVdT67AM9m9Z2pW9voNZ2hM
+ 1o7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708452123; x=1709056923;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Q83jTzfZSF5Rw1ObSelqDU+22TG8z19cj0NLvRMXHJ0=;
+ b=L4sNlDmlX0UfHcDoO+ZnarofpG9hyb7iL3NO4DahGuoVbPEsDt2ZVrGhX1Ri82//gH
+ VEg5sGmWZzyiiKqcEwWkvaMTiHq0o4S4+URj4VWDHxZfnEdC1NjivSu2pTcj5jmFUwho
+ L8nUizoVM2VeH8BkcqVKyuCINHjeHgJlOfUNqNXxrTv5dn71EEkwBxLs/VCy4XBAbcz4
+ LbO9hwmM5++IyB3jgs5RfjhPvtHEWp9J91nfkroejB+gAM0Uf1Wj2AKEWIh4NkjMCI3z
+ KZY5AlFaDXqds8B0/zCM6DOtlfqhn8g1b2ic1uGE3VUjtrCp/BOl+cb29Q4hKwjj2983
+ 6ebg==
+X-Gm-Message-State: AOJu0YwcD9aqJVF/P/xC7/om1/j2uy2FkpCA1dQWSnTV/Q+K5L2skHT1
+ XtnWde900YBO8WqcNKnjcyuOEXWxe9BRugpqwZb2+oHyX7afWd3COG8I24fppEM=
+X-Google-Smtp-Source: AGHT+IGQXrkMtJ5cs9+shO65wJzORvRC9uJ4JmSQjFHY9OMcosd+4UOpbFVZuwQ0v+4mEHoBQEKK+g==
+X-Received: by 2002:a2e:a4b8:0:b0:2d2:3d31:220f with SMTP id
+ g24-20020a2ea4b8000000b002d23d31220fmr3050783ljm.25.1708452123260; 
+ Tue, 20 Feb 2024 10:02:03 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ w3-20020a05600c014300b0040fccf7e8easm15191938wmm.36.2024.02.20.10.02.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 10:02:03 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8A2A95F85F;
+ Tue, 20 Feb 2024 18:02:02 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
+Subject: Re: [PATCH 1/3] docs: Document that 32-bit Windows is unsupported
+In-Reply-To: <20240220174412.155885-2-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Tue, 20 Feb 2024 17:44:10 +0000")
+References: <20240220174412.155885-1-peter.maydell@linaro.org>
+ <20240220174412.155885-2-peter.maydell@linaro.org>
+User-Agent: mu4e 1.11.28; emacs 29.1
+Date: Tue, 20 Feb 2024 18:02:02 +0000
+Message-ID: <87msrvauat.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7e0e7cb2470d572e8c0a48ba85c993be3bdb1c07.1707513011.git.mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,91 +96,19 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 10, 2024 at 12:22:36AM +0300, Michael Tokarev wrote:
-> 'qemu-img resize --help' does not work, since it wants more arguments.
-> Only eat last option at the beginning if it starts like -N.., and allow
-> getopt() to do its work, and eat it up at the end if not already eaten.
-> This will not allow to mix options and size anyway, but it is better
-> than now.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Peter Maydell <peter.maydell@linaro.org> writes:
+
 > ---
->  qemu-img.c | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
-> 
-> diff --git a/qemu-img.c b/qemu-img.c
-> index 69d41e0a92..929a25a021 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -4271,13 +4271,13 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
->  
->      /* Remove size from argv manually so that negative numbers are not treated
->       * as options by getopt. */
-> -    if (argc < 3) {
-> -        error_exit(ccmd, "Not enough arguments");
-> -        return 1;
-> +    if (argc > 1 && argv[argc - 1][0] == '-'
-> +        && argv[argc-1][1] >= '0' && argv[argc-1][1] <= '9') {
-> +        size = argv[--argc];
-> +    } else {
-> +        size = NULL;
->      }
+>  docs/about/build-platforms.rst  |  2 ++
+>  docs/about/removed-features.rst | 15 +++++++++++++++
+>  2 files changed, 17 insertions(+)
 
-We already have a variable 'int relative' that is set to '-1'
-or '+1' depending on whether we have a -ve or +ve size.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-I think it is clearer to follow if we just set 'relative' much
-earlier before parsing by moving this chunk of code to before
-the getopt:
-
-    switch (size[0]) {
-    case '+':
-        relative = 1;
-        size++;
-        break;
-    case '-':
-        relative = -1;
-        size++;
-        break;
-    default:
-        relative = 0;
-        break;
-    }
-
-once we've done that we can simply replace the '-' with '+'
-to stop getopt getting upset.
-
->  
-> -    size = argv[--argc];
-> -
->      /* Parse getopt arguments */
->      fmt = NULL;
->      for(;;) {
-> @@ -4329,10 +4329,13 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
->              break;
->          }
->      }
-> -    if (optind != argc - 1) {
-> +    if (optind + 1 + (size == NULL) != argc) {
->          error_exit(ccmd, "Expecting image file name and size");
->      }
->      filename = argv[optind++];
-> +    if (!size) {
-> +        size = argv[optind++];
-> +    }
->  
->      /* Choose grow, shrink, or absolute resize mode */
->      switch (size[0]) {
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
