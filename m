@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2322C54764
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A86A7C48BC3
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLdI-0004mc-DC; Tue, 20 Feb 2024 03:37:44 -0500
+	id 1rcLd8-0003zA-2D; Tue, 20 Feb 2024 03:37:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rcLdH-0004kX-28
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:37:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rcLcw-0003dw-Ea; Tue, 20 Feb 2024 03:37:23 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rcLdF-0005E3-6a
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:37:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708418259;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=o5zH5xgE2VAb5ZwR78F7Diau66PyAUHwOynR1KXbx7E=;
- b=fPAStalkQWNkQhS/9ZfpheJQHKMxx3O/XeH+AJSTxYGDCB1rOHto0z4pUo2MuacxEdgBbA
- 47QR80L+CSSGO7f/3gElgka7pGJC4X0wu1I8H6+zvP9f/E69bsoNerRHZiBCg+OE0NNqkC
- +bW32WDFurVfT1hT48KIijy+m/aedjo=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-NO4ciaKIPnaU3hKtzZCoXg-1; Tue, 20 Feb 2024 03:37:37 -0500
-X-MC-Unique: NO4ciaKIPnaU3hKtzZCoXg-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-5116d7eb706so4185042e87.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:37:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708418255; x=1709023055;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o5zH5xgE2VAb5ZwR78F7Diau66PyAUHwOynR1KXbx7E=;
- b=sf1IL3rZfm2/24p0DTIH5cxYHJklPx/KFm1bYtkpdEYiW6voVtG65nCSb/LaFiW4oI
- 6qnucDPMWTipQjGvBqhm4/cSH0EDW5lfoD9TYEizQggf2Xtwnxv7tbnkv2mMQBcLq1St
- V0dN2g8WV3xgttgQ/wWW08UO9dinQ2ai1YRuk8QVD8hN4mKz0KfoibrRVuyQYFTV3G3M
- gcKzaqd2szp0euDQ7OdN6wqe+Zu/Y+LkwyJSMhLMZ55QGIp/83LSPjAztq2ZTIk+6FxU
- lAsgyitQY0J7YYRaeueKKovvysgQDV+cNjtrNljzB4nLa3hw4uw0tJgF8aexrGOYkvdz
- 0myg==
-X-Gm-Message-State: AOJu0YyTWpieh33wA8qVPwZfWGDhBVKQfKhlq4o9QnDpZqG4PFu1ytAT
- 6K6BfIlLSCAHA/2716iKnVQC6FHxIPeSq/7eDPZxsOPToh4F83BBe2mKE5a8Ku9hVV+d6TP9/9S
- cVlsZcNF8wyAIgP/S5jFqtmBFouKc4oOHdLTofaYV08Cr9nOYDhlNuYz1YYFQDzdCCUGBM3JlUh
- omgrNNeEIgSoL0x4ZlFsuVcU9vPtk=
-X-Received: by 2002:a05:6512:1190:b0:512:bea2:f002 with SMTP id
- g16-20020a056512119000b00512bea2f002mr1955254lfr.6.1708418255734; 
- Tue, 20 Feb 2024 00:37:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEI3lMGNA1stGQRxvBng5Rzii5iqNxsHRHYMgjQP2gbBApychFNvOR2pcZo/bWAmBdacYO4BgkaCszkqoe/kyY=
-X-Received: by 2002:a05:6512:1190:b0:512:bea2:f002 with SMTP id
- g16-20020a056512119000b00512bea2f002mr1955220lfr.6.1708418255394; Tue, 20 Feb
- 2024 00:37:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rcLcq-0005AB-6h; Tue, 20 Feb 2024 03:37:18 -0500
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41K8V8CJ017998; Tue, 20 Feb 2024 08:37:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=qrPdOoK/u2VyXya3e3cb8CF9yq1FIQ90Ky2qTNIJtjY=;
+ b=qoVaJwkocAzRO9CMZ03+aoMIVWdy+f83zyhJKi7bhp/DKssf2F509EAs7lYbv5hp2dnF
+ jofTKrDdUOxcdiqg0ZFrEvnESnya06G2xDuSvKnLZxUbk/llsI5lisRLc+zL6Wfn1TJz
+ R/sP9ofac/2U3y6Uh6rfTwfciBOPjLxo80YMIMrvadm0mFBt5taEqTJSbVES7M/tx9pL
+ GkNMGi91S1LD2cQ4zYAhL++cVIc/n34dHTEuz7AYPXFj57yWxEFb9vy/l28TFbJhxMKo
+ /tThLFBPEMdoIPezbq6MB0Dk5BWM+igwVVPsS6YICVL3rWGbDClZlZpxxUKg0LdLzyYE 6g== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcnp745mv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Feb 2024 08:37:08 +0000
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41K8b8DH004630;
+ Tue, 20 Feb 2024 08:37:08 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcnp745ca-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Feb 2024 08:37:08 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41K65qvj017344; Tue, 20 Feb 2024 08:36:37 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb8mm6sp0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Feb 2024 08:36:37 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41K8aWwk41157208
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Feb 2024 08:36:34 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F1DB42004F;
+ Tue, 20 Feb 2024 08:36:31 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 570F92004B;
+ Tue, 20 Feb 2024 08:36:30 +0000 (GMT)
+Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
+ [9.109.243.35]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Feb 2024 08:36:30 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: npiggin@gmail.com, qemu-ppc@nongnu.org
+Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH v4 07/15] spapr: nested: Introduce H_GUEST_[CREATE|DELETE]
+ hcalls.
+Date: Tue, 20 Feb 2024 14:06:01 +0530
+Message-Id: <20240220083609.748325-8-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240220083609.748325-1-harshpb@linux.ibm.com>
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240205074709.3613229-1-armbru@redhat.com>
- <20240205074709.3613229-8-armbru@redhat.com>
-In-Reply-To: <20240205074709.3613229-8-armbru@redhat.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 20 Feb 2024 10:37:24 +0200
-Message-ID: <CAPMcbCr3sTG4sXtrdd0sx2kpSxY5HSw-A=azJ0BMeJ83E+hcxQ@mail.gmail.com>
-Subject: Re: [PATCH 07/15] qga/qapi-schema: Clean up documentation of
- guest-set-memory-blocks
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, berrange@redhat.com, 
- eblake@redhat.com, eduardo@habkost.net, fan.ni@samsung.com, farosas@suse.de, 
- hreitz@redhat.com, jasowang@redhat.com, jiri@resnulli.us, 
- jonathan.cameron@huawei.com, kraxel@redhat.com, kwolf@redhat.com, 
- lukasstraub2@web.de, marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com, 
- michael.roth@amd.com, mst@redhat.com, pbonzini@redhat.com, 
- peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org, 
- pizhenwei@bytedance.com, qemu-block@nongnu.org, stefanb@linux.ibm.com, 
- wangyanan55@huawei.com
-Content-Type: multipart/alternative; boundary="0000000000003dab0f0611cc1fa2"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: FPc87KkfQhquHpxoCVJs2cVvxeidsRBZ
+X-Proofpoint-ORIG-GUID: 7ZaUzrZAgrymgHMkzMqBLYj2d00wxgIL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=653 phishscore=0
+ mlxscore=0 adultscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402200061
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,140 +115,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003dab0f0611cc1fa2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Introduce the nested PAPR hcalls:
+    - H_GUEST_CREATE which is used to create and allocate resources for
+nested guest being created.
+    - H_GUEST_DELETE which is used to delete and deallocate resources
+for the nested guest being deleted. It also supports deleting all nested
+guests at once using a deleteAll flag.
 
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Signed-off-by: Michael Neuling <mikey@neuling.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ include/hw/ppc/spapr.h        |   4 +-
+ include/hw/ppc/spapr_nested.h |   7 +++
+ hw/ppc/spapr_nested.c         | 101 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 111 insertions(+), 1 deletion(-)
 
-On Mon, Feb 5, 2024 at 9:47=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
-
-> The command's doc comment describes the argument, but it's not marked
-> up as such.  Easy enough to fix.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  qga/qapi-schema.json | 19 ++++++++++---------
->  1 file changed, 10 insertions(+), 9 deletions(-)
->
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index b9501c8c81..35bde36a1f 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -43,7 +43,6 @@
->          'GuestDiskSmart',
->          'GuestDiskStatsInfo',
->          'GuestNVMeSmart',
-> -        'guest-set-memory-blocks',
->          'guest-set-vcpus' ] } }
->
->  ##
-> @@ -1174,14 +1173,16 @@
->  # Attempt to reconfigure (currently: enable/disable) state of memory
->  # blocks inside the guest.
->  #
-> -# The input list is processed node by node in order.  In each node
-> -# @phys-index is used to look up the guest MEMORY BLOCK, for which
-> -# @online specifies the requested state.  The set of distinct
-> -# @phys-index's is only required to be a subset of the guest-supported
-> -# identifiers.  There's no restriction on list length or on repeating
-> -# the same @phys-index (with possibly different @online field).
-> -# Preferably the input list should describe a modified subset of
-> -# @guest-get-memory-blocks' return value.
-> +# @mem-blks: The memory blocks to be reconfigured.  This list is
-> +#     processed node by node in order.  In each node @phys-index is
-> +#     used to look up the guest MEMORY BLOCK, for which @online
-> +#     specifies the requested state.  The set of distinct
-> +#     @phys-index's is only required to be a subset of the
-> +#     guest-supported identifiers.  There's no restriction on list
-> +#     length or on repeating the same @phys-index (with possibly
-> +#     different @online field).  Preferably the input list should
-> +#     describe a modified subset of @guest-get-memory-blocks' return
-> +#     value.
->  #
->  # Returns: The operation results, it is a list of
->  #     @GuestMemoryBlockResponse, which is corresponding to the input
-> --
-> 2.43.0
->
->
-
---0000000000003dab0f0611cc1fa2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Reviewed-by: Konstantin Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
-v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Feb 5=
-, 2024 at 9:47=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@re=
-dhat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">The command&#39;s doc comment describes the argu=
-ment, but it&#39;s not marked<br>
-up as such.=C2=A0 Easy enough to fix.<br>
-<br>
-Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
-arget=3D"_blank">armbru@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/qapi-schema.json | 19 ++++++++++---------<br>
-=C2=A01 file changed, 10 insertions(+), 9 deletions(-)<br>
-<br>
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
-index b9501c8c81..35bde36a1f 100644<br>
---- a/qga/qapi-schema.json<br>
-+++ b/qga/qapi-schema.json<br>
-@@ -43,7 +43,6 @@<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;GuestDiskSmart&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;GuestDiskStatsInfo&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;GuestNVMeSmart&#39;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;guest-set-memory-blocks&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;guest-set-vcpus&#39; ] } }<br>
-<br>
-=C2=A0##<br>
-@@ -1174,14 +1173,16 @@<br>
-=C2=A0# Attempt to reconfigure (currently: enable/disable) state of memory<=
-br>
-=C2=A0# blocks inside the guest.<br>
-=C2=A0#<br>
--# The input list is processed node by node in order.=C2=A0 In each node<br=
->
--# @phys-index is used to look up the guest MEMORY BLOCK, for which<br>
--# @online specifies the requested state.=C2=A0 The set of distinct<br>
--# @phys-index&#39;s is only required to be a subset of the guest-supported=
-<br>
--# identifiers.=C2=A0 There&#39;s no restriction on list length or on repea=
-ting<br>
--# the same @phys-index (with possibly different @online field).<br>
--# Preferably the input list should describe a modified subset of<br>
--# @guest-get-memory-blocks&#39; return value.<br>
-+# @mem-blks: The memory blocks to be reconfigured.=C2=A0 This list is<br>
-+#=C2=A0 =C2=A0 =C2=A0processed node by node in order.=C2=A0 In each node @=
-phys-index is<br>
-+#=C2=A0 =C2=A0 =C2=A0used to look up the guest MEMORY BLOCK, for which @on=
-line<br>
-+#=C2=A0 =C2=A0 =C2=A0specifies the requested state.=C2=A0 The set of disti=
-nct<br>
-+#=C2=A0 =C2=A0 =C2=A0@phys-index&#39;s is only required to be a subset of =
-the<br>
-+#=C2=A0 =C2=A0 =C2=A0guest-supported identifiers.=C2=A0 There&#39;s no res=
-triction on list<br>
-+#=C2=A0 =C2=A0 =C2=A0length or on repeating the same @phys-index (with pos=
-sibly<br>
-+#=C2=A0 =C2=A0 =C2=A0different @online field).=C2=A0 Preferably the input =
-list should<br>
-+#=C2=A0 =C2=A0 =C2=A0describe a modified subset of @guest-get-memory-block=
-s&#39; return<br>
-+#=C2=A0 =C2=A0 =C2=A0value.<br>
-=C2=A0#<br>
-=C2=A0# Returns: The operation results, it is a list of<br>
-=C2=A0#=C2=A0 =C2=A0 =C2=A0@GuestMemoryBlockResponse, which is correspondin=
-g to the input<br>
--- <br>
-2.43.0<br>
-<br>
-</blockquote></div>
-
---0000000000003dab0f0611cc1fa2--
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index d745d487a1..c4a79a1785 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -586,8 +586,10 @@ struct SpaprMachineState {
+ #define H_WATCHDOG              0x45C
+ #define H_GUEST_GET_CAPABILITIES 0x460
+ #define H_GUEST_SET_CAPABILITIES 0x464
++#define H_GUEST_CREATE           0x470
++#define H_GUEST_DELETE           0x488
+ 
+-#define MAX_HCALL_OPCODE         H_GUEST_SET_CAPABILITIES
++#define MAX_HCALL_OPCODE         H_GUEST_DELETE
+ 
+ /* The hcalls above are standardized in PAPR and implemented by pHyp
+  * as well.
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index 599373692b..f282479275 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -9,8 +9,13 @@ typedef struct SpaprMachineStateNested {
+ #define NESTED_API_KVM_HV  1
+     bool capabilities_set;
+     uint32_t pvr_base;
++    GHashTable *guests;
+ } SpaprMachineStateNested;
+ 
++typedef struct SpaprMachineStateNestedGuest {
++    uint32_t pvr_logical;
++} SpaprMachineStateNestedGuest;
++
+ /* Nested PAPR API related macros */
+ #define H_GUEST_CAPABILITIES_COPY_MEM 0x8000000000000000
+ #define H_GUEST_CAPABILITIES_P9_MODE  0x4000000000000000
+@@ -20,6 +25,8 @@ typedef struct SpaprMachineStateNested {
+ #define H_GUEST_CAP_COPY_MEM_BMAP     0
+ #define H_GUEST_CAP_P9_MODE_BMAP      1
+ #define H_GUEST_CAP_P10_MODE_BMAP     2
++#define PAPR_NESTED_GUEST_MAX         4096
++#define H_GUEST_DELETE_ALL_FLAG       0x8000000000000000ULL
+ 
+ /*
+  * Register state for entering a nested guest with H_ENTER_NESTED.
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index 012af27881..09c4a35908 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -514,6 +514,105 @@ static target_ulong h_guest_set_capabilities(PowerPCCPU *cpu,
+     }
+ }
+ 
++static void
++destroy_guest_helper(gpointer value)
++{
++    struct SpaprMachineStateNestedGuest *guest = value;
++    g_free(guest);
++}
++
++static target_ulong h_guest_create(PowerPCCPU *cpu,
++                                   SpaprMachineState *spapr,
++                                   target_ulong opcode,
++                                   target_ulong *args)
++{
++    CPUPPCState *env = &cpu->env;
++    target_ulong flags = args[0];
++    target_ulong continue_token = args[1];
++    uint64_t guestid;
++    int nguests = 0;
++    struct SpaprMachineStateNestedGuest *guest;
++
++    if (flags) { /* don't handle any flags for now */
++        return H_UNSUPPORTED_FLAG;
++    }
++
++    if (continue_token != -1) {
++        return H_P2;
++    }
++
++    if (!spapr->nested.capabilities_set) {
++        return H_STATE;
++    }
++
++    if (!spapr->nested.guests) {
++        spapr->nested.guests = g_hash_table_new_full(NULL,
++                                                     NULL,
++                                                     NULL,
++                                                     destroy_guest_helper);
++    }
++
++    nguests = g_hash_table_size(spapr->nested.guests);
++
++    if (nguests == PAPR_NESTED_GUEST_MAX) {
++        return H_NO_MEM;
++    }
++
++    /* Lookup for available guestid */
++    for (guestid = 1; guestid < PAPR_NESTED_GUEST_MAX; guestid++) {
++        if (!(g_hash_table_lookup(spapr->nested.guests,
++                                  GINT_TO_POINTER(guestid)))) {
++            break;
++        }
++    }
++
++    if (guestid == PAPR_NESTED_GUEST_MAX) {
++        return H_NO_MEM;
++    }
++
++    guest = g_try_new0(struct SpaprMachineStateNestedGuest, 1);
++    if (!guest) {
++        return H_NO_MEM;
++    }
++
++    guest->pvr_logical = spapr->nested.pvr_base;
++    g_hash_table_insert(spapr->nested.guests, GINT_TO_POINTER(guestid), guest);
++    env->gpr[4] = guestid;
++
++    return H_SUCCESS;
++}
++
++static target_ulong h_guest_delete(PowerPCCPU *cpu,
++                                   SpaprMachineState *spapr,
++                                   target_ulong opcode,
++                                   target_ulong *args)
++{
++    target_ulong flags = args[0];
++    target_ulong guestid = args[1];
++    struct SpaprMachineStateNestedGuest *guest;
++
++    /*
++     * handle flag deleteAllGuests, if set:
++     * guestid is ignored and all guests are deleted
++     *
++     */
++    if (flags & ~H_GUEST_DELETE_ALL_FLAG) {
++        return H_UNSUPPORTED_FLAG; /* other flag bits reserved */
++    } else if (flags & H_GUEST_DELETE_ALL_FLAG) {
++        g_hash_table_destroy(spapr->nested.guests);
++        return H_SUCCESS;
++    }
++
++    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
++    if (!guest) {
++        return H_P2;
++    }
++
++    g_hash_table_remove(spapr->nested.guests, GINT_TO_POINTER(guestid));
++
++    return H_SUCCESS;
++}
++
+ void spapr_register_nested_hv(void)
+ {
+     spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
+@@ -534,6 +633,8 @@ void spapr_register_nested_papr(void)
+ {
+     spapr_register_hypercall(H_GUEST_GET_CAPABILITIES, h_guest_get_capabilities);
+     spapr_register_hypercall(H_GUEST_SET_CAPABILITIES, h_guest_set_capabilities);
++    spapr_register_hypercall(H_GUEST_CREATE          , h_guest_create);
++    spapr_register_hypercall(H_GUEST_DELETE          , h_guest_delete);
+ }
+ 
+ #else
+-- 
+2.39.3
 
 
