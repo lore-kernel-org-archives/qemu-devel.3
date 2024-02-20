@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41F8C5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E5A5C54788
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSdc-00026k-G0; Tue, 20 Feb 2024 11:06:32 -0500
+	id 1rcSdb-00026U-Nd; Tue, 20 Feb 2024 11:06:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSdb-00024v-5N
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:31 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ id 1rcSdZ-00022r-59
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:29 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSdZ-0005F5-8c
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:30 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d247c31e1aso11086971fa.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:28 -0800 (PST)
+ id 1rcSdX-0005Di-47
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:28 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2d23a22233fso27535541fa.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708445187; x=1709049987; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708445185; x=1709049985; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6eEhRf5RLTQy0GPZo/ROl5SoGHEpglCPsB5KIAdpHko=;
- b=iUJQQq00zo4oqxdp9VrlBNa2jQvbD0wkbfzIXNUCYCqLre5TuGcdM15+cPBoUMUmuY
- A8gYeMyc2bixHOD4CjttYCEhdA/OIEhXqqacWD3hR4y7IqhGz3LGnXBHY/cdVUtgXZ0R
- U0OVCSB7edOQP82oZEzhkGVW/JNyz5OjWq60xbGf3/wcgHv3G4HUeDH5mv8YfaCdHtkE
- jPv/Ja82Sb07dTHSwcqS158nVA7nma10kIx4FbHmNvrRpfHB2DEGvOdoU2XzcaGP9MIz
- ZS/AK91oUMDdjzqRBD5i5xiW0arVknT/MBXZsIBiRUHEygX41npUG8N0a+XatlW7AshJ
- 9BIA==
+ bh=9wiR3lcsTzDl1fZCKpUeESX9s4fyTRWelZyXZYZsdUc=;
+ b=hCqcg+VhEj9bNSzHXRngiEI+kzjuYP/r/h2eMFzxLSJ2nPiKhgRbKCgopu4c3NVAuG
+ eHc9vShHcYqfdOVYRAK5g06gorKzzlFQJYoPoxI4Ze0rYYeFr+5030dDm4SmPaF6zuPO
+ 5deQOvW+YuV+cvRsZzFyfsSqS3/+N2DUggIEC/hqiRSR9Upjh6HMbN/U066Gh+7xOnXD
+ EDJRMAfoe4NgCgbLhwLVNdnKhButVsri2YPJLScr3t/l7OfP1jUI//ahbsoiGDhoEVzo
+ 9DKLMySDZqPUik7Ezt8lxIxsN0BbcKcoQIlh2bUh67YDxa9NmwveEiSdDJALOiL0zieQ
+ lF0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708445187; x=1709049987;
+ d=1e100.net; s=20230601; t=1708445185; x=1709049985;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6eEhRf5RLTQy0GPZo/ROl5SoGHEpglCPsB5KIAdpHko=;
- b=iQoPBCYGU8V8f7Y88qBj4pDbz1qKZqoWDKzi0HtIROiBPXUpT+CFX3a9nstZ5DjWU6
- jdQvC+xnIRA0lD4Xb4Op5m6bU943SO0u6klneQhjUtobNymKIuj3Wof5xSKKp75w4yhF
- qaw+L/Jv9CnzNJ/CObrS9R9TO9PRwCrQl+DEh4qo3P2V9LMsT+6/eK8XcEV0rUDyXmvx
- ElTdkEfQoN9OinYnOmnC2nUbpRdpJGsegdhH8DNNPHW/wU8B27GD20EhY8R4YtiWz4aj
- zvtB48gGy1brjXXQXD2nA2AfjDjKPC/u4LC3FqCMqbRU2hwQt9vC8WL+1NMYP/I5mDmt
- /5Rg==
-X-Gm-Message-State: AOJu0YxRKzkzwS6dar3O2/ENstQljRSoEKmDNU0Gd53rbcKdC/eElfwh
- xdNmVkXWZeq37fp97ASKQjGppdt9FNAtV9YzuppNB6dMRYob2YgsLQLLz4hUSX/aEpTvJynI2de
- M
-X-Google-Smtp-Source: AGHT+IHwbQ9Hn11Sq+J07tdJD8fw914RMFtsVXd5msWZGyp8lT7DUIy6GIm0djo5y9A6PIT6m5j+EQ==
-X-Received: by 2002:a2e:b165:0:b0:2d2:3ec0:29dd with SMTP id
- a5-20020a2eb165000000b002d23ec029ddmr3254741ljm.39.1708445187580; 
- Tue, 20 Feb 2024 08:06:27 -0800 (PST)
+ bh=9wiR3lcsTzDl1fZCKpUeESX9s4fyTRWelZyXZYZsdUc=;
+ b=e4pDCqJvFGyaXeQKC/owEwjdImHEASsfzJncb6wX/x5WwV8lXOgRG9RcUG6dJ9pcpP
+ aYAZv+kLOOerktTr2/6VRhiME8ODX8kvFG+ig+bnOcw0IPT1ha40EStWhyz4EfBd8EF9
+ vuD06qcBZm3iz/zTi2NJGw3ddJP4eB4lnIGNcEpAGV/EFVPW1nfl6OXNL03r0ped1ZaN
+ xAbb2hYTAajf7TYTU9IgHdfIwz8xYB0nGGOZCuNjUBI5lgyIzn1Ar6PUW/TS5OeqeHY8
+ SyMbKop36B7uOOjT4AUSWtUGmbhcw74EzAqMTPbeSRNk0/ubYu2UqU/XESwjbUq9qsG6
+ Q8lQ==
+X-Gm-Message-State: AOJu0Yy79KlcIrI8d+iiBJONyPLLlsY5DKbr5LrSGA6XiC+EKKKil4K6
+ edZvwsanMd5N0LY30aFGE1zg/5Bi7uz6FJTGRCwS5uj1PteWebHmXdc4iEXOt3W6XMhCVtiUR/e
+ +
+X-Google-Smtp-Source: AGHT+IEamTj4KBKl/bX2+Tk1qjNpSTaAcx2EquDav82UUZz/ymddyRrGhPGy5TNCZXL/ra7HBU2M0A==
+X-Received: by 2002:a2e:920a:0:b0:2d2:2888:17eb with SMTP id
+ k10-20020a2e920a000000b002d2288817ebmr7101957ljg.6.1708445185181; 
+ Tue, 20 Feb 2024 08:06:25 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.27
+ f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 08:06:27 -0800 (PST)
+ Tue, 20 Feb 2024 08:06:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,17 +68,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: [PATCH 05/10] hw/core: Add documentation and license comments to
- reset.h
-Date: Tue, 20 Feb 2024 16:06:17 +0000
-Message-Id: <20240220160622.114437-6-peter.maydell@linaro.org>
+Subject: [PATCH 01/10] hw/i386: Store pointers to IDE buses in PCMachineState
+Date: Tue, 20 Feb 2024 16:06:13 +0000
+Message-Id: <20240220160622.114437-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220160622.114437-1-peter.maydell@linaro.org>
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,111 +100,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the usual boilerplate license/copyright comment to reset.h (using
-the text from reset.c), and document the existing functions.
+Add the two IDE bus BusState pointers to the set we keep in PCMachineState.
+This allows us to avoid passing them to pc_cmos_init(), and also will
+allow a refactoring of how we call pc_cmos_init_late().
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/sysemu/reset.h | 79 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+ include/hw/i386/pc.h |  4 +++-
+ hw/i386/pc.c         |  5 ++---
+ hw/i386/pc_piix.c    | 16 +++++++---------
+ hw/i386/pc_q35.c     |  9 ++++-----
+ 4 files changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
-index 609e4d50c26..6aa11846a69 100644
---- a/include/sysemu/reset.h
-+++ b/include/sysemu/reset.h
-@@ -1,3 +1,29 @@
-+/*
-+ *  Reset handlers.
-+ *
-+ * Copyright (c) 2003-2008 Fabrice Bellard
-+ * Copyright (c) 2016 Red Hat, Inc.
-+ * Copyright (c) 2024 Linaro, Ltd.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
- #ifndef QEMU_SYSEMU_RESET_H
- #define QEMU_SYSEMU_RESET_H
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index ec0e5efcb28..8f8ac894b10 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -17,6 +17,8 @@
  
-@@ -5,9 +31,62 @@
+ #define HPET_INTCAP "hpet-intcap"
  
- typedef void QEMUResetHandler(void *opaque);
++#define MAX_IDE_BUS 2
++
+ /**
+  * PCMachineState:
+  * @acpi_dev: link to ACPI PM device that performs ACPI hotplug handling
+@@ -37,6 +39,7 @@ typedef struct PCMachineState {
+     PFlashCFI01 *flash[2];
+     ISADevice *pcspk;
+     DeviceState *iommu;
++    BusState *idebus[MAX_IDE_BUS];
  
-+/**
-+ * qemu_register_reset: Register a callback for system reset
-+ * @func: function to call
-+ * @opaque: opaque data to pass to @func
-+ *
-+ * Register @func on the list of functions which are called when the
-+ * entire system is reset. The functions are called in the order in
-+ * which they are registered.
-+ *
-+ * In general this function should not be used in new code where possible;
-+ * for instance device model reset is better accomplished using the
-+ * methods on DeviceState.
-+ *
-+ * It is not permitted to register or unregister reset functions from
-+ * within the @func callback.
-+ *
-+ * We assume that the caller holds the BQL.
-+ */
- void qemu_register_reset(QEMUResetHandler *func, void *opaque);
-+
-+/**
-+ * qemu_register_reset_nosnapshotload: Register a callback for system reset
-+ * @func: function to call
-+ * @opaque: opaque data to pass to @func
-+ *
-+ * This is the same as qemu_register_reset(), except that @func is
-+ * not called if the reason that the system is being reset is to
-+ * put it into a clean state prior to loading a snapshot (i.e. for
-+ * SHUTDOWN_CAUSE_SNAPSHOT_LOAD).
-+ */
- void qemu_register_reset_nosnapshotload(QEMUResetHandler *func, void *opaque);
-+
-+/**
-+ * qemu_unregister_reset: Unregister a system reset callback
-+ * @func: function registered with qemu_register_reset()
-+ * @opaque: the same opaque data that was passed to qemu_register_reset()
-+ *
-+ * Undo the effects of a qemu_register_reset(). The @func and @opaque
-+ * must both match the arguments originally used with qemu_register_reset().
-+ *
-+ * We assume that the caller holds the BQL.
-+ */
- void qemu_unregister_reset(QEMUResetHandler *func, void *opaque);
-+
-+/**
-+ * qemu_devices_reset: Perform a complete system reset
-+ * @reason: reason for the reset
-+ *
-+ * This function performs the low-level work needed to do a complete reset
-+ * of the system (calling all the callbacks registered with
-+ * qemu_register_reset()). It should only be called by the code in a
-+ * MachineClass reset method.
-+ *
-+ * If you want to trigger a system reset from, for instance, a device
-+ * model, don't use this function. Use qemu_system_reset_request().
-+ */
- void qemu_devices_reset(ShutdownCause reason);
+     /* Configuration options: */
+     uint64_t max_ram_below_4g;
+@@ -182,7 +185,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+                           bool create_fdctrl,
+                           uint32_t hpet_irqs);
+ void pc_cmos_init(PCMachineState *pcms,
+-                  BusState *ide0, BusState *ide1,
+                   ISADevice *s);
+ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus);
  
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 196827531a5..8b0f54e284c 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -574,7 +574,6 @@ static void pc_cmos_init_late(void *opaque)
+ }
+ 
+ void pc_cmos_init(PCMachineState *pcms,
+-                  BusState *idebus0, BusState *idebus1,
+                   ISADevice *rtc)
+ {
+     int val;
+@@ -634,8 +633,8 @@ void pc_cmos_init(PCMachineState *pcms,
+ 
+     /* hard drives and FDC */
+     arg.rtc_state = s;
+-    arg.idebus[0] = idebus0;
+-    arg.idebus[1] = idebus1;
++    arg.idebus[0] = pcms->idebus[0];
++    arg.idebus[1] = pcms->idebus[1];
+     qemu_register_reset(pc_cmos_init_late, &arg);
+ }
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 999b7b806ca..8df88a6ccd1 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -68,7 +68,6 @@
+ #include "kvm/kvm-cpu.h"
+ #include "target/i386/cpu.h"
+ 
+-#define MAX_IDE_BUS 2
+ #define XEN_IOAPIC_NUM_PIRQS 128ULL
+ 
+ #ifdef CONFIG_IDE_ISA
+@@ -114,7 +113,6 @@ static void pc_init1(MachineState *machine,
+     Object *piix4_pm = NULL;
+     qemu_irq smi_irq;
+     GSIState *gsi_state;
+-    BusState *idebus[MAX_IDE_BUS];
+     ISADevice *rtc_state;
+     MemoryRegion *ram_memory;
+     MemoryRegion *pci_memory = NULL;
+@@ -299,8 +297,8 @@ static void pc_init1(MachineState *machine,
+         piix4_pm = object_resolve_path_component(OBJECT(pci_dev), "pm");
+         dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
+         pci_ide_create_devs(PCI_DEVICE(dev));
+-        idebus[0] = qdev_get_child_bus(dev, "ide.0");
+-        idebus[1] = qdev_get_child_bus(dev, "ide.1");
++        pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
++        pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
+     } else {
+         isa_bus = isa_bus_new(NULL, system_memory, system_io,
+                               &error_abort);
+@@ -312,8 +310,8 @@ static void pc_init1(MachineState *machine,
+ 
+         i8257_dma_init(OBJECT(machine), isa_bus, 0);
+         pcms->hpet_enabled = false;
+-        idebus[0] = NULL;
+-        idebus[1] = NULL;
++        pcms->idebus[0] = NULL;
++        pcms->idebus[1] = NULL;
+     }
+ 
+     if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
+@@ -342,7 +340,7 @@ static void pc_init1(MachineState *machine,
+     pc_nic_init(pcmc, isa_bus, pci_bus);
+ 
+     if (pcmc->pci_enabled) {
+-        pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
++        pc_cmos_init(pcms, rtc_state);
+     }
+ #ifdef CONFIG_IDE_ISA
+     else {
+@@ -361,9 +359,9 @@ static void pc_init1(MachineState *machine,
+              * second one.
+              */
+             busname[4] = '0' + i;
+-            idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
++            pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+         }
+-        pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
++        pc_cmos_init(pcms, rtc_state);
+     }
  #endif
+ 
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index d346fa3b1d6..71402c36eb2 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -126,7 +126,6 @@ static void pc_q35_init(MachineState *machine)
+     PCIBus *host_bus;
+     PCIDevice *lpc;
+     DeviceState *lpc_dev;
+-    BusState *idebus[MAX_SATA_PORTS];
+     ISADevice *rtc_state;
+     MemoryRegion *system_memory = get_system_memory();
+     MemoryRegion *system_io = get_system_io();
+@@ -300,13 +299,13 @@ static void pc_q35_init(MachineState *machine)
+                                                          ICH9_SATA1_FUNC),
+                                                "ich9-ahci");
+         ich9 = ICH9_AHCI(pdev);
+-        idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
+-        idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
++        pcms->idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
++        pcms->idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
+         g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
+         ide_drive_get(hd, ich9->ahci.ports);
+         ahci_ide_create_devs(&ich9->ahci, hd);
+     } else {
+-        idebus[0] = idebus[1] = NULL;
++        pcms->idebus[0] = pcms->idebus[1] = NULL;
+     }
+ 
+     if (machine_usb(machine)) {
+@@ -327,7 +326,7 @@ static void pc_q35_init(MachineState *machine)
+         smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
+     }
+ 
+-    pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
++    pc_cmos_init(pcms, rtc_state);
+ 
+     /* the rest devices to which pci devfn is automatically assigned */
+     pc_vga_init(isa_bus, host_bus);
 -- 
 2.34.1
 
