@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326EFC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB69FC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcStf-0000KC-JV; Tue, 20 Feb 2024 11:23:07 -0500
+	id 1rcT3v-0003Pv-B1; Tue, 20 Feb 2024 11:33:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcStc-0000Jx-Ig
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:23:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcSta-0008Fj-Pd
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:23:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708446182;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1F1z1O8PNQARbXh+sl4w7wt6+VSFgguGMGJMrJH6MtU=;
- b=dq1etirZrhZ3UZITzTKonhr7TXFG7ThbNFMDtmgyM6RGswuJQwbTpJTtcgaeeM0HeWWjId
- +IcFvg8G556DmQKxHCDC/Te825ltnf0MZcjcAIT64YhPY0b9wBLFrNrSPVmvhAi3aTgabM
- IL/AVwUYvyD2DAj2XOwOQXV/lGcOEOw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-75-OJdQ0CP1NYq1SsLuDRMtEQ-1; Tue, 20 Feb 2024 11:22:57 -0500
-X-MC-Unique: OJdQ0CP1NYq1SsLuDRMtEQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3C44C885657;
- Tue, 20 Feb 2024 16:22:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7024E2166AEE;
- Tue, 20 Feb 2024 16:22:55 +0000 (UTC)
-Date: Tue, 20 Feb 2024 16:22:53 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3] pc: q35: Bump max_cpus to 4096 vcpus
-Message-ID: <ZdTR3UPT-iHms9of@redhat.com>
-References: <20240220154204.29676-1-anisinha@redhat.com>
- <ZdTKYV5AuhYxvi1Q@redhat.com>
- <vp63d36mcuib6trlqyjqpy72ysxb7ftlodr3eldhqklfg7bqi6@zc74olpzwknw>
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rcT3s-0003OZ-S1
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:33:41 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rcT3q-0001PV-Is
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:33:40 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-563ed3d221aso6879702a12.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:33:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708446817; x=1709051617; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=9ZLzu7169Vwwm4i9x1nQEJef5YVdBcM25bwOHWlwq90=;
+ b=LyAngFE8la7BZIBL4d2QYIXbvF0w4AeizFgEfg7KNDhPWw2K3dDHAI/Voie8I1oX7r
+ BXo7izsKEcUIua/0wgbf+tHTpLwARVCh3TCh9YTAVvaH+POWVST2OwJ209ikbE1B6MV0
+ fQTl+fxtDIaDG7c7UiEjq4a6zqc4Z5P+Cjb+sDpl8+4ffC/jh+qFdEMynA1hc3K/zzBM
+ aYKFLUDnF/Ypueolgm3EKDpaRn8Jh0VZ/cmKW5IkpGD0lpOL2sdrYY3sLkjo2by5qdXz
+ Es9B1pdnBACOnaKXPSCm3XSeyWdeRbwgpiiCqE/U1lCVrYLnDgKRVPiROMaM5oyA6lbn
+ gm4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708446817; x=1709051617;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9ZLzu7169Vwwm4i9x1nQEJef5YVdBcM25bwOHWlwq90=;
+ b=meAhBmNYjOlGIMsOQNT6GmKiWJ8bPYiI9K+SddaoGdaOy4RyGzsdITQ4F8Z0cd/Oln
+ Gl26VbdVqwOvOC6paqFqeasd9v35KMdU+TE2TA6vy1D+uY55yRl0nCz57Dapw04cEasY
+ IkPETID2/fOGd0FfxqyyGl0QmD11Cnnn6NzDt4HniA8HN5WN9CkazfmEMb14F+OHeCHJ
+ caM4AI+gk5P/lCkL5qQD5vcktxDvEuPHU9MOa/C5DlQa1TQwSCJUedl/N4wPx+bPyBrh
+ b0Spj5scPeCORUi/cXs0/0/DaHTBxQpgKBfDHNTdguXW/rAiHNohdC5+qdhj8homeMm/
+ zmgw==
+X-Gm-Message-State: AOJu0YzQN1hydQS440g6rCVtjtGBIDsTeefCnFj5UDbtCirrhj21vrYq
+ q+nE8OAsPsPPvWfUHkNxgrleK2v7/449zL2TQlpW+8d2vsQyA9ek0iqckfXTek++tzrUTV2pBsw
+ L19TjyjvYiICmThRfrORxl3dtsXBDdlB9Hjw=
+X-Google-Smtp-Source: AGHT+IFUqbbn0zP5YYQt02+Bo4nt6ev8Xlile+o+oZQi5wYosf6FuqF9xhQkScMHaGAQm8BRC5LKWtAKlXq18Hg7Aog=
+X-Received: by 2002:aa7:de0e:0:b0:564:b9be:5c16 with SMTP id
+ h14-20020aa7de0e000000b00564b9be5c16mr3001508edv.8.1708446816652; Tue, 20 Feb
+ 2024 08:33:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <vp63d36mcuib6trlqyjqpy72ysxb7ftlodr3eldhqklfg7bqi6@zc74olpzwknw>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
+ <87a5nvci5n.fsf@draig.linaro.org>
+In-Reply-To: <87a5nvci5n.fsf@draig.linaro.org>
+From: Faiq Ali Sayed <faiqueali.109@gmail.com>
+Date: Tue, 20 Feb 2024 17:33:25 +0100
+Message-ID: <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
+Subject: Re: QNX VM hang on Qemu
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000009ff20b0611d2c5a9"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,76 +86,240 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 05:16:37PM +0100, Gerd Hoffmann wrote:
-> On Tue, Feb 20, 2024 at 03:50:57PM +0000, Daniel P. Berrangé wrote:
-> > On Tue, Feb 20, 2024 at 09:12:04PM +0530, Ani Sinha wrote:
-> > > Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
-> > > Linux kernel can support upto a maximum number of 4096 vCPUS when MAXSMP is
-> > > enabled in the kernel. At present, QEMU has been tested to correctly boot a
-> > > linux guest with 4096 vcpus both with edk2 and seabios firmwares.
-> > > So bump up the value max_cpus to 4096 for q35 machines versions 9 and newer.
-> > > Q35 machines versions 8.2 and older continue to support 1024 maximum vcpus
-> > > as before for compatibility reasons.
-> > > 
-> > > If KVM is not able to support the specified number of vcpus, QEMU would
-> > > return the following error messages:
-> > > 
-> > > $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
-> > > qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-> > > qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-> > > Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
-> > > 
-> > > Cc: Daniel P. Berrangé <berrange@redhat.com>
-> > > Cc: Igor Mammedov <imammedo@redhat.com>
-> > > Cc: Michael S. Tsirkin <mst@redhat.com>
-> > > Cc: Julia Suvorova <jusual@redhat.com>
-> > > Cc: kraxel@redhat.com
-> > > Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> > > ---
-> > >  hw/i386/pc_q35.c | 3 ++-
-> > >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > > 
-> > > Changelog:
-> > > v3: bump up to 4096 vcpus. It has now been tested to work with edk2.
-> > > See RH Jira: https://issues.redhat.com/browse/RHEL-22202
-> > 
-> > That bug indicates a dependancy on a EDK2 patch
-> > 
-> >   https://github.com/kraxel/edk2/commit/7a03c17f0f4f4a9003d77db2660c8e087604b2f0
-> > 
-> > we'll need to rebase the EDK2 ROMs in QEMU to get that included.
-> 
-> Which will btw take a while.  edk2 is in freeze for the 2024-02 release
-> right now, I expect the changes land upstream shortly thereafter and
-> will be part of the 2024-05 release.  So end may / early june would be
-> the time when rebasing to release, or somewhen in march or april when we
-> rebase to a git snapshot ...
-> 
-> > Meanwhile, plesae at least call out this EDK2 commit as a
-> > pre-requisite in the commit message, so people know the
-> > EDK2 ROMs in QEMU won't work (yet).
-> 
-> That surely makes sense.
-> 
-> Oh, and it's more than just that one commit.  I don't think it makes
-> sense to compile a list of commits given this is a moving target
-> (upstream review is in progress right now).
+--0000000000009ff20b0611d2c5a9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ok, lets just mention something hand-wavy like
+Alex thanks for the reply,
 
- "pending various upstream EDK2 fixes which will probably be
-  in the 2024-05 release"
+I don't know what the debug symbol is, but my target system is QNX aarch64
+below are the configuration of GDB,
+
+(gdb) show configuration
+This GDB was configured as follows:
+   configure --host=3Dx86_64-pc-linux-gnu
+--target=3Daarch64-unknown-nto-qnx7.1.0
+             --with-auto-load-dir=3D$debugdir:$datadir/auto-load
+             --with-auto-load-safe-path=3D$debugdir:$datadir/auto-load
+             --without-expat
+             --with-gdb-datadir=3D/opt/qnx710/host/linux/x86_64/usr/share/g=
+db
+(relocatable)
+
+ --with-jit-reader-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb
+(relocatable)
+             --without-libunwind-ia64
+             --without-lzma
+             --without-babeltrace
+             --without-intel-pt
+             --disable-libmcheck
+             --without-mpfr
+             --with-python=3D/opt/qnx710/host/linux/x86_64/usr (relocatable=
+)
+             --without-guile
+
+ --with-separate-debug-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug
+(relocatable)
+             --with-sysroot=3D/opt/qnx710/target/qnx7/aarch64
+
+while I got the below result, after executing the x/10i $pc
+
+(gdb) x/10i $pc
+=3D> 0x100000: .inst 0x5371242b ; undefined
+   0x100004: fcmla v21.8h, v3.8h, v16.h[1], #270
+   0x100008: .inst 0x64657472 ; undefined
+   0x10000c: ldnp d26, d27, [x9, #-176]
+   0x100010: .inst 0x72706974 ; undefined
+   0x100014: .inst 0x7365636f ; undefined
+   0x100018: .inst 0x733b2b73 ; undefined
+   0x10001c: fnmls z23.h, p0/m, z19.h, z18.h
+   0x100020: .inst 0x3b2b6b61 ; undefined
+   0x100024: .inst 0x72627768 ; undefined
+
+Can you please let me know how I can step in ?
+When I press c it does not execute further and hangs..
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Faiq
 
+On Tue, Feb 20, 2024 at 3:41=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+
+> Faiq Ali Sayed <faiqueali.109@gmail.com> writes:
+>
+> > Hi everyone,
+> > I am facing an issue during booting QNX VM using Qemu,
+> > I have an image to Boot the VM. and when I trigger a Qemu command to
+> create a VM it is stuck.
+> > I also used a debugger to investigate but I can not see any result by
+> GDB.
+> >
+> > Here is the output of first windows
+> >
+> > qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display
+> none -device
+> > loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive
+> >
+> file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=3Dsd,forma=
+t=3Draw,index=3D1
+> -boot mode=3D5 -net
+> > nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net
+> nic,model=3Dcadence_gem -net
+> > nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev
+> user,id=3Dxzynq0,tftp=3D/tftpboot  -nographic -global
+> > xlnx,zynqmp-boot.cpu-num=3D0 -global 'xlnx,zynqmp-boot.use-pmufw=3Dtrue=
+' -s
+> -S
+> >
+> > qemu-system-aarch64: warning: hub 0 is not connected to host network
+>
+> Is this QNX VM image built for the xlnx-zcu102 board?
+>
+> > on the other hand, here is the output of GDB:
+> >
+> > (gdb) target remote :1234
+> > Remote debugging using :1234
+> > warning: No executable has been specified and target does not support
+> > determining executable automatically.  Try using the "file" command.
+> > 0x0000000000100000 in ?? ()
+> > (gdb) c
+> > Continuing.
+>
+> You'll either want the debug symbols for your image or tell GDB what the
+> target arch is. Check you are somewhere sane by doing:
+>
+>   x/10i $pc
+>
+> and step through the instructions and see where it goes. If you hit
+> Ctrl-C are you executing nonsense instructions or in a tight loop
+> hanging?
+>
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+>
+
+
+--=20
+Kind Regard-
+Faiq Ali Sayed
+
+--0000000000009ff20b0611d2c5a9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Alex thanks for the reply,</div><div><br></div><div>I=
+ don&#39;t know what the debug symbol is, but my target system is QNX aarch=
+64 <br></div><div>below are the configuration of GDB,</div><div><br></div><=
+div><span style=3D"background-color:rgb(238,238,238)">(gdb) show configurat=
+ion<br>This GDB was configured as follows:<br>=C2=A0 =C2=A0configure --host=
+=3Dx86_64-pc-linux-gnu --target=3Daarch64-unknown-nto-qnx7.1.0<br>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-auto-load-dir=3D$debugdir:$=
+datadir/auto-load<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with=
+-auto-load-safe-path=3D$debugdir:$datadir/auto-load<br>=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-expat<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0--with-gdb-datadir=3D/opt/qnx710/host/linux/x86_64/usr/=
+share/gdb (relocatable)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+--with-jit-reader-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb (relocata=
+ble)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-libunwind=
+-ia64<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-lzma<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-babeltrace<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-intel-pt<br>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--disable-libmcheck<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--without-mpfr<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-python=3D/opt/qnx710/host/linux/x86_6=
+4/usr (relocatable)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--wi=
+thout-guile<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-separ=
+ate-debug-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug (relocatable)<b=
+r>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--with-sysroot=3D/opt/qnx=
+710/target/qnx7/aarch64</span><br></div><div><br></div><div>while I got the=
+ below result, after executing the <span style=3D"background-color:rgb(238,=
+238,238)">x/10i $pc <br></span></div><div><span style=3D"background-color:r=
+gb(238,238,238)"><br></span></div><div><span style=3D"background-color:rgb(=
+238,238,238)">(gdb) x/10i $pc<br>=3D&gt; 0x100000:	.inst	0x5371242b ; undef=
+ined<br>=C2=A0 =C2=A00x100004:	fcmla	v21.8h, v3.8h, v16.h[1], #270<br>=C2=
+=A0 =C2=A00x100008:	.inst	0x64657472 ; undefined<br>=C2=A0 =C2=A00x10000c:	=
+ldnp	d26, d27, [x9, #-176]<br>=C2=A0 =C2=A00x100010:	.inst	0x72706974 ; und=
+efined<br>=C2=A0 =C2=A00x100014:	.inst	0x7365636f ; undefined<br>=C2=A0 =C2=
+=A00x100018:	.inst	0x733b2b73 ; undefined<br>=C2=A0 =C2=A00x10001c:	fnmls	z=
+23.h, p0/m, z19.h, z18.h<br>=C2=A0 =C2=A00x100020:	.inst	0x3b2b6b61 ; undef=
+ined<br>=C2=A0 =C2=A00x100024:	.inst	0x72627768 ; undefined</span></div><di=
+v><br></div><div>Can you please let me know how I can step in ?</div><div>W=
+hen I press c it does not execute further and hangs..</div><div><br></div><=
+div></div><div><br></div><div>Faiq<br></div><div><span style=3D"background-=
+color:rgb(238,238,238)"></span></div></div><br><div class=3D"gmail_quote"><=
+div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 20, 2024 at 3:41=E2=80=AFP=
+M Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.benne=
+e@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">Faiq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gmail.com" t=
+arget=3D"_blank">faiqueali.109@gmail.com</a>&gt; writes:<br>
+<br>
+&gt; Hi everyone, <br>
+&gt; I am facing an issue during booting QNX VM using Qemu,<br>
+&gt; I have an image to Boot the VM. and when I trigger a Qemu command to c=
+reate a VM it is stuck.<br>
+&gt; I also used a debugger to investigate but I can not see any result by =
+GDB.<br>
+&gt;<br>
+&gt; Here is the output of first windows<br>
+&gt;<br>
+&gt; qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display n=
+one -device<br>
+&gt; loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive<br>
+&gt; file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=3Dsd,fo=
+rmat=3Draw,index=3D1 -boot mode=3D5 -net<br>
+&gt; nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net nic,model=3D=
+cadence_gem -net<br>
+&gt; nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev user,id=3Dxzynq0,tftp=
+=3D/tftpboot=C2=A0 -nographic -global<br>
+&gt; xlnx,zynqmp-boot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.use-pmufw=
+=3Dtrue&#39; -s -S<br>
+&gt;<br>
+&gt; qemu-system-aarch64: warning: hub 0 is not connected to host network<b=
+r>
+<br>
+Is this QNX VM image built for the xlnx-zcu102 board?<br>
+<br>
+&gt; on the other hand, here is the output of GDB:<br>
+&gt;<br>
+&gt; (gdb) target remote :1234<br>
+&gt; Remote debugging using :1234<br>
+&gt; warning: No executable has been specified and target does not support<=
+br>
+&gt; determining executable automatically.=C2=A0 Try using the &quot;file&q=
+uot; command.<br>
+&gt; 0x0000000000100000 in ?? ()<br>
+&gt; (gdb) c<br>
+&gt; Continuing.<br>
+<br>
+You&#39;ll either want the debug symbols for your image or tell GDB what th=
+e<br>
+target arch is. Check you are somewhere sane by doing:<br>
+<br>
+=C2=A0 x/10i $pc<br>
+<br>
+and step through the instructions and see where it goes. If you hit<br>
+Ctrl-C are you executing nonsense instructions or in a tight loop<br>
+hanging?<br>
+<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"l=
+tr"><div dir=3D"ltr">
+<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
+lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
+=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
+v></div></div></div>
+<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
+t></div><br></div></div></div>
+
+--0000000000009ff20b0611d2c5a9--
 
