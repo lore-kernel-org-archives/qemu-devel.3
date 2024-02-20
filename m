@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46361C5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0ACC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcRpk-00046E-On; Tue, 20 Feb 2024 10:15:00 -0500
+	id 1rcRqB-0004Lu-7W; Tue, 20 Feb 2024 10:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRpg-00045w-QP
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:14:56 -0500
+ id 1rcRq3-0004Cm-Pd
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:15:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRpe-0004mD-Kh
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:14:56 -0500
+ id 1rcRq1-000518-TT
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:15:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708442093;
+ s=mimecast20190719; t=1708442117;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q7qKjG5Zwhw+OBnoyqf6aZcMN0YC9B1bFWHzWc+kepM=;
- b=M/zUJ76F3crE0UDQpBdWrgqiRc39PPubApoMSSnle7bC81Nx7jLjIoSo3J1yTJft5EoTy2
- loUmy3u0eygoyrU/7q26a4tgFaRofw8QFU5RQAWh0OrSxB9NJpIXW6of4zUQVC1cxlW6Cu
- odZpVIxtGP0sur8vL5XZE7NUmWEtg2E=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-WXX4vdKPP4y6EpjhrK30HQ-1; Tue, 20 Feb 2024 10:14:51 -0500
-X-MC-Unique: WXX4vdKPP4y6EpjhrK30HQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ bh=XYwl+gkOaSZGdYjypl37pS9xlyG1vevAD5kJtHdnu10=;
+ b=FW16swnlq2cCE+d20v8C6LAt+6a2dScX4krBJY9FtjmKzA07TqVvn64acZJX+4tOhIuspS
+ 3ZvxiqbLllRQTk0joyo2BIMiuW6UHjA84Op6xJOr2bpdd9ZKbpesc3dZOr59xKrmefLFX3
+ v12lETncM3sOt3r+JeJIK6zrn7Z09uI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-qjHzD6OhNzWKWsPcXfliag-1; Tue,
+ 20 Feb 2024 10:15:13 -0500
+X-MC-Unique: qjHzD6OhNzWKWsPcXfliag-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1E3C984ACA2;
- Tue, 20 Feb 2024 15:14:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5C8CD3813BDD;
+ Tue, 20 Feb 2024 15:15:12 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4ADD410F57;
- Tue, 20 Feb 2024 15:14:50 +0000 (UTC)
-Date: Tue, 20 Feb 2024 15:14:48 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 863842166AF0;
+ Tue, 20 Feb 2024 15:15:10 +0000 (UTC)
+Date: Tue, 20 Feb 2024 15:15:08 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com,
  eblake@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH 05/16] qapi: Improve error position for bogus argument
- descriptions
-Message-ID: <ZdTB6IWq8Q8fJQ79@redhat.com>
+Subject: Re: [PATCH 06/16] qapi: Improve error position for bogus invalid
+ "Returns" section
+Message-ID: <ZdTB_Ewr4tB9flFJ@redhat.com>
 References: <20240216145841.2099240-1-armbru@redhat.com>
- <20240216145841.2099240-6-armbru@redhat.com>
+ <20240216145841.2099240-7-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240216145841.2099240-6-armbru@redhat.com>
+In-Reply-To: <20240216145841.2099240-7-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -88,25 +88,18 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 03:58:29PM +0100, Markus Armbruster wrote:
-> When documented arguments don't exist, the error message points to the
-> beginning of the definition comment.  Point to the first bogus
-> argument description instead.
+On Fri, Feb 16, 2024 at 03:58:30PM +0100, Markus Armbruster wrote:
+> When something other than a command has a "Returns" section, the error
+> message points to the beginning of the definition comment.  Point to
+> the "Returns" section instead.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  scripts/qapi/parser.py                          | 4 +++-
->  tests/qapi-schema/doc-bad-alternate-member.err  | 2 +-
->  tests/qapi-schema/doc-bad-boxed-command-arg.err | 2 +-
->  tests/qapi-schema/doc-bad-command-arg.err       | 2 +-
->  tests/qapi-schema/doc-bad-enum-member.err       | 2 +-
->  tests/qapi-schema/doc-bad-event-arg.err         | 2 +-
->  tests/qapi-schema/doc-bad-feature.err           | 2 +-
->  tests/qapi-schema/doc-bad-union-member.err      | 2 +-
->  8 files changed, 10 insertions(+), 8 deletions(-)
+>  scripts/qapi/parser.py                   | 10 +++++++---
+>  tests/qapi-schema/doc-invalid-return.err |  2 +-
+>  2 files changed, 8 insertions(+), 4 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
 
 With regards,
 Daniel
