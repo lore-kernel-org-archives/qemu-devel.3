@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E88C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C01C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcRwo-00012Y-JQ; Tue, 20 Feb 2024 10:22:18 -0500
+	id 1rcRxY-0001W7-Gh; Tue, 20 Feb 2024 10:23:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRwn-00012O-6w
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:22:17 -0500
+ id 1rcRxL-0001LA-F9
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:22:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRwk-0006SS-Kd
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:22:16 -0500
+ id 1rcRxG-0006Xc-49
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:22:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708442534;
+ s=mimecast20190719; t=1708442565;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BVyNAl89MUxiHEn6yEpDl+j7Xvg8M1GxKet1iL+ILY4=;
- b=e++d2WTTgQDKvxWP9X8KuYao3EOOp29Z/61gXnfnC11Mb0Y+zX8U+Lnwj3MR6BvX94B/6a
- qEOK+Cggdgz4u7+3tEn+tpxMepAFInnV6p6zB1XLYfybL2L5PlOiJbJi78fJz67SDHz0pu
- vjM3ioV28PVIApCM97BzF/pLle2BrpU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-18-QuKfvedmN_iKLm1u0C5n8A-1; Tue, 20 Feb 2024 10:22:10 -0500
-X-MC-Unique: QuKfvedmN_iKLm1u0C5n8A-1
+ bh=k72YDGK/qoT7WRljAU+tXcjo2v8g7/AYNFXi34LXe20=;
+ b=ifs08YIKoICJIq9wqd9QbKeeCu9SHDwFhiiy6tBkiP5u4rVK4LT/vdneVCbnaa0CSxzrKs
+ TfhSDYU4qcB/NWpejTQDX3AI8e2tAaxX0fS80SQWQi3iqWoHrABJ4ZznNt4yPeLRCbSVJM
+ lf+d0iw5K/ZbyaHJUHdlxBq7tKt2uSI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-EsdwDZqwOjqmr5-hP--RHw-1; Tue,
+ 20 Feb 2024 10:22:41 -0500
+X-MC-Unique: EsdwDZqwOjqmr5-hP--RHw-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2D85985A58A;
- Tue, 20 Feb 2024 15:22:10 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0B97E299E753;
+ Tue, 20 Feb 2024 15:22:41 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5A7191C10C0E;
- Tue, 20 Feb 2024 15:22:09 +0000 (UTC)
-Date: Tue, 20 Feb 2024 15:22:07 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1275E1C10C0E;
+ Tue, 20 Feb 2024 15:22:39 +0000 (UTC)
+Date: Tue, 20 Feb 2024 15:22:38 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com,
  eblake@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH 11/16] qapi: Recognize section tags and 'Features:' only
- after blank line
-Message-ID: <ZdTDn05noU8Ah7lK@redhat.com>
+Subject: Re: [PATCH 12/16] qapi: Call QAPIDoc.check() always
+Message-ID: <ZdTDvvvP134fL-aO@redhat.com>
 References: <20240216145841.2099240-1-armbru@redhat.com>
- <20240216145841.2099240-12-armbru@redhat.com>
+ <20240216145841.2099240-13-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240216145841.2099240-12-armbru@redhat.com>
+In-Reply-To: <20240216145841.2099240-13-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -89,43 +88,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 03:58:35PM +0100, Markus Armbruster wrote:
-> Putting a blank line before section tags and 'Features:' is good,
-> existing practice.  Enforce it.
+On Fri, Feb 16, 2024 at 03:58:36PM +0100, Markus Armbruster wrote:
+> We currently call QAPIDoc.check() only for definition documentation.
+> Calling it for free-form documentation as well is simpler.  No change,
+> because it doesn't actually do anything there.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  docs/devel/qapi-code-gen.rst                 | 15 +++++++++------
->  scripts/qapi/parser.py                       | 11 ++++++++---
->  tests/qapi-schema/doc-duplicated-return.err  |  2 +-
->  tests/qapi-schema/doc-duplicated-return.json |  1 +
->  tests/qapi-schema/doc-duplicated-since.err   |  2 +-
->  tests/qapi-schema/doc-duplicated-since.json  |  1 +
->  tests/qapi-schema/doc-good.json              |  9 +++++++++
->  tests/qapi-schema/doc-invalid-return.err     |  2 +-
->  tests/qapi-schema/doc-invalid-return.json    |  1 +
->  9 files changed, 32 insertions(+), 12 deletions(-)
+>  scripts/qapi/schema.py | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
-> @@ -574,9 +577,11 @@ def end_comment(self) -> None:
->      def _match_at_name_colon(string: str) -> Optional[Match[str]]:
->          return re.match(r'@([^:]*): *', string)
->  
-> -    @staticmethod
-> -    def _match_section_tag(string: str) -> Optional[Match[str]]:
-> -        return re.match(r'(Returns|Since|Notes?|Examples?|TODO): *', string)
-> +    def _match_section_tag(self, string: str) -> Optional[Match[str]]:
-> +        if not self._first_line_in_paragraph:
-> +            return None
-> +        return re.match(r'(Returns|Since|Notes?|Examples?|TODO): *',
-> +                        string)
-
-I guess I have a minor worry that we're silently ignoring
-these tags when there's no blank line. Could result in
-docs silently rendering in the wrong way if (when) someone
-forgets the blank line.
 
 
 With regards,
