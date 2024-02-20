@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 099A0C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DB4C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVlK-0006Uo-Bf; Tue, 20 Feb 2024 14:26:42 -0500
+	id 1rcVp1-00042b-Jo; Tue, 20 Feb 2024 14:30:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcVl9-0006Re-29
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:31 -0500
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcVof-00041u-Ug
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:30:10 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcVl5-0006VD-1F
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:26:30 -0500
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-6e445b4f80bso2114208a34.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:26:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcVoe-00070R-FH
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:30:09 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1dc0e5b223eso14242685ad.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:30:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708457184; x=1709061984; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XaRxf4QxF/RQQCFPfCuUqg+JQRy+ntcwvI04fnfpoXQ=;
- b=DZFE9aoSifay1b+Vxx7K6cuLNcJf2vOGQWbDxDuE7GCASpZNfKf0gsTA1M+LFPZh1R
- MdJK+qVC0Ra5cMZJCgXu5EW4dRw3boHLi5r5VdYgvONVFmWmwPnNb0fEcCd6F9Lk9ifH
- 0JkfM+pjPlrTUyT4XIkHRs/CY5RhJbHl8twe6snx6nxbghyl8oi2Qo78SX11fCpxzmKY
- pcx8WCWzW9iecS87ulVC11iE1Rs/HwZbRqS20pLwkk9QSf9+KCNWUTjqYlMIqoTjV7jM
- az6dVwjaBgkOONSAYstKkDK2Iu+5DdHKdFHq1MwtUkH0QBXoWa8eVXb24Kk3VsMvIlym
- 3nxA==
+ d=linaro.org; s=google; t=1708457407; x=1709062207; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KYLAWuYLscVyyFL7cmoAaFCNQY7kAVj3hjTzinkbW68=;
+ b=pw+hSLGBEhY6o5IppEqqarGS9QTsMhh/6GtAxnD9YEyBS066jLWUg9dRnug98/aRca
+ zDXkcA3+YA0D3y73Nusf55ipR5Nx0t3ouiE75TPTkZpR6mgPWP+ybti1R1CVhXuGWWub
+ uXODj0aYTOmG+zoB+xFERjtZ1DV3kGBiyZjDqvCGEsa3lMCj05jcGvHVK+KfMH+JgWLc
+ enJ8/ubRi0N7LaRTlX5wQ7JE3jXS7KK/+lDfI3NmKTwX7/o3frNbSH4pJXa0/2W6e+s/
+ 1CM7Wcb7hWkUzIp6B9AyN3lLSvBNBqUoptHm1hFoY1tobTvy+pLm2eAKAKJW58hi5zgi
+ Fqkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708457184; x=1709061984;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XaRxf4QxF/RQQCFPfCuUqg+JQRy+ntcwvI04fnfpoXQ=;
- b=xKgIADq+mY2g/qumup1ZwCxPewF6vDtM9A7E6Tzuvqxih7xiwt9s1i80Odge+p0A4C
- DajEhiuztxw3trPGgRTweG5RDr3tdrmVADf3iHbFZtbEK4fHHn6LqAMN7ZeZmhqqPk1N
- 8Bx61DTVo1gvxIMm4rcjrrWO6RGio3vvdGz+sQjT9FMVjBk52mPrb+3384rrUh73NBXz
- +r71ncS/TwEPEDvzQF37oQSJMn+OO5eI459wx66YeZu/kKSkWD58XswkT4dJoRsTON6k
- 1MTgYcBY5eZnpuDK21KrMPGgqoYsZhqKZA0Zvcd3ByFzq4Mt0FdembTzpUjQcy/H0bhC
- GoZg==
-X-Gm-Message-State: AOJu0YxRVpktEBtwb5lPUmgNljW27975Ecv/uOjdDsgRmUUxHSeXMVqm
- H2qGpKAaRgxM4P0Czs2aoAy/ndqQJX695Bq8ng2mXcuXhs28YNb27x5oRU0nFekh2XmIn4Fopgl
- m
-X-Google-Smtp-Source: AGHT+IHBOLxTgS7aS/BQYrTVPTnoKynzQBx9YOH+qNBXRXhaAkYZnK+Bgs90VxBnFLB0EAJxzBV+vg==
-X-Received: by 2002:a9d:4d19:0:b0:6e2:d8ec:a23c with SMTP id
- n25-20020a9d4d19000000b006e2d8eca23cmr17373672otf.13.1708457184072; 
- Tue, 20 Feb 2024 11:26:24 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- i73-20020a636d4c000000b005b458aa0541sm6943005pgc.15.2024.02.20.11.26.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 11:26:23 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, max.chou@sifive.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v3 3/5] target/riscv/vector_helper.c: set vstart = 0 in
- GEN_VEXT_VSLIDEUP_VX()
-Date: Tue, 20 Feb 2024 16:26:05 -0300
-Message-ID: <20240220192607.141880-4-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240220192607.141880-1-dbarboza@ventanamicro.com>
-References: <20240220192607.141880-1-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1708457407; x=1709062207;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KYLAWuYLscVyyFL7cmoAaFCNQY7kAVj3hjTzinkbW68=;
+ b=JBHoxhpFruvW3HsGWJCZ8n7KLy4S2FjLMrUMI3FDFpH1dH6OyLpKqM+xH1yW1uu1Ix
+ ZDeUdHYDJDaiykWlmpOMEt9DrbO4fdapmrr43gCMlfaecLk8CyM5/7YUVBqQqJTh/IVe
+ 9ytPfjpbFdVHCLsJhhnaGsKGRko4k4y2QulvbxzwHmWcZS36+b95jxQchN48hNnLCWni
+ LYco+syfZI8LRE15UPm+wpHK6auvlJgfD64gmj2ybFhRtk0s9clj2z8gpdvCdxxH1Kwk
+ cwwqJkjj9Dao9cuqSh6DbfOI57l65NUl/d44cUQwlTUpIX8fPvyb6QgNhCydttavsAby
+ a/gA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUOF3IuuSXOwYHF+7wPrKcMoIIrVRbKIRAuzaDybTrXusHRkTsB+15xpok1n9byDzBTIXB9/VDaTTDHt0k0Zws17pHcqdc=
+X-Gm-Message-State: AOJu0YzjAJQANH2gxME5IkbY2da0rAeHOSxqZkFu32SU7K6IpEhTegH1
+ 3y2ccmUUNZK8kxqSJhz7V4lB7xFrsJGboazhtS8YMXtYSUMej+wPbf/WhYhGuA0=
+X-Google-Smtp-Source: AGHT+IEtIxJ+8XVdsMlC15qaScBAoeFEM3hN/r1d9CsETFDduF8XMXafDGDg6a9YvTa8Ns4B0m7H/w==
+X-Received: by 2002:a17:902:e5c3:b0:1db:fcc8:7d96 with SMTP id
+ u3-20020a170902e5c300b001dbfcc87d96mr7014247plf.14.1708457407016; 
+ Tue, 20 Feb 2024 11:30:07 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ kj4-20020a17090306c400b001db9c3d6506sm6661754plb.209.2024.02.20.11.30.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 11:30:06 -0800 (PST)
+Message-ID: <7566853d-e9d5-45df-9fbd-9ba71ad83f4c@linaro.org>
+Date: Tue, 20 Feb 2024 09:30:03 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x32f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] hw/i386: Store pointers to IDE buses in
+ PCMachineState
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-2-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240220160622.114437-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,27 +105,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The helper isn't setting env->vstart = 0 after its execution, as it is
-expected from every vector instruction that completes successfully.
+On 2/20/24 06:06, Peter Maydell wrote:
+> Add the two IDE bus BusState pointers to the set we keep in PCMachineState.
+> This allows us to avoid passing them to pc_cmos_init(), and also will
+> allow a refactoring of how we call pc_cmos_init_late().
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   include/hw/i386/pc.h |  4 +++-
+>   hw/i386/pc.c         |  5 ++---
+>   hw/i386/pc_piix.c    | 16 +++++++---------
+>   hw/i386/pc_q35.c     |  9 ++++-----
+>   4 files changed, 16 insertions(+), 18 deletions(-)
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/vector_helper.c | 1 +
- 1 file changed, 1 insertion(+)
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 84cec73eb2..cc7290a1bb 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4782,6 +4782,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
-         }                                                                 \
-         *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(i - offset));          \
-     }                                                                     \
-+    env->vstart = 0;                                                      \
-     /* set tail elements to 1s */                                         \
-     vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
- }
--- 
-2.43.2
-
+r~
 
