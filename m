@@ -4,71 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D6ACC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F58C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcRfG-00034E-9C; Tue, 20 Feb 2024 10:04:10 -0500
+	id 1rcRjk-0004LK-KN; Tue, 20 Feb 2024 10:08:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcRfB-00033u-4b
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:04:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcRf8-000375-FY
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:04:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708441441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=78BikkyALO9iFBQ6S0+WLiFPvYMI43HBO7+hazm6yEc=;
- b=dFzUZnPbgeUhJ+UvTJ+P7IUdguMkG2j7dMh80o+f+UfNr2bQtzFv3wXqlX4/2vc2ju50bZ
- pJ72S0RmY+t3PL3gd9WKSJO6c6hBfCfcyg12aHHPexJRYMJ8nLlbyEKs+yd8zr64iAwSXe
- sI5io4sIzyJGKN/lh1s5jTaB9Fi2EaE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-2Gto6mXgNEKLblTmvMSzrg-1; Tue, 20 Feb 2024 10:03:57 -0500
-X-MC-Unique: 2Gto6mXgNEKLblTmvMSzrg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C164E1078502;
- Tue, 20 Feb 2024 15:03:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9E997400D784;
- Tue, 20 Feb 2024 15:03:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 983E421E66D0; Tue, 20 Feb 2024 16:03:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH v3 14/20] qapi/schema: Don't initialize "members" with
- `None`
-In-Reply-To: <20240201224246.39480-15-jsnow@redhat.com> (John Snow's message
- of "Thu, 1 Feb 2024 17:42:40 -0500")
-References: <20240201224246.39480-1-jsnow@redhat.com>
- <20240201224246.39480-15-jsnow@redhat.com>
-Date: Tue, 20 Feb 2024 16:03:54 +0100
-Message-ID: <87y1bf5g9x.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcRjj-0004KX-5r
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:08:47 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcRjh-0003mS-Iy
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:08:46 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-412698ac6f9so10493695e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 07:08:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708441723; x=1709046523; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DoQEZxzYJVlRUc/fG+BPKnGGJWFI0zTUpD/ARH6eLL4=;
+ b=KP0m2D4Ed2bg28mqz31xflJtUHaMQ5c6BRiduFN3AP8h+K4g3w+GKRvfpIVcEZkEuk
+ k4cAw+lYv4Zvrhe44+BQk+/hiv/2BwODXh/6TyE0wh6Xx7+Ba2O+Vb0c4eMGWCTRbrQa
+ cw9jKW+JhoCo7PQ6HUFvX9kVodkQu9p9M3Vmssw7LXOQQZzLrFY4zqGDVistZfirk25y
+ JfO1SngW8E9F76ySZROqgAHn5ki6hetr0q/5Rkew1WTjAROwTtyc4TpQgEvwrIq9eiyP
+ c0VKg5UbVr5fbN+CRglqRCUU9ZkDVufBq6QWTumVewRxrma3KyPUUsw0kwKEFAzcq7xg
+ hmGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708441723; x=1709046523;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DoQEZxzYJVlRUc/fG+BPKnGGJWFI0zTUpD/ARH6eLL4=;
+ b=bKGCgADiOqLO2XJDAV74r71ibSShljbWTifVMXCC8V5EJ3eagmtb7gpGd8RazvfTWJ
+ EePn0IfPFLqiQOESVmRy1daNIGrP7uTsF+PMU9HJ3BxELtMej2nCiQt4MAXzuBcmiZ5n
+ 5JWFQa+rXXEsvhYWhfgOVFAZjFRKo+S1RY3AiR4x27X8tbIyNEqJF0GSUWPQWhOXJS9p
+ S70u0fVj5DGMeld8vThX0exHJeC/CktN/C9kYEG7L/+QEzKjzZBBIRuyRkjnPtZpZ5vG
+ YVq37HyhGGfgHR+bepvsaJ9V3+kgCkdbyygKZUm5bieJYpA78/xOOM/UA4jcBHwZ8rdW
+ /c/A==
+X-Gm-Message-State: AOJu0Yw1t8eubmeEVZYkX85bcw4FgSXKUZ/M9SzHDedPM52JVCsmn1WX
+ /OA8ImrOdfkAylmZypzjlUm6/z7m86wpZaLAlzihntv0A88l3O09EWZgScEJXduY8K15kinkAdN
+ V
+X-Google-Smtp-Source: AGHT+IFRgFHA7ibg2iRgyjF2izbBJs5D33IFOcLFWt4tqEfyIBON1t7f/Mq3qYZjvAa+TLMTqVKcBA==
+X-Received: by 2002:a05:600c:3513:b0:412:5f5f:1729 with SMTP id
+ h19-20020a05600c351300b004125f5f1729mr6633567wmq.20.1708441722947; 
+ Tue, 20 Feb 2024 07:08:42 -0800 (PST)
+Received: from m1x-phil.lan (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
+ [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
+ s10-20020a05600c044a00b004122fbf9253sm14710257wmb.39.2024.02.20.07.08.41
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 20 Feb 2024 07:08:42 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/4] hw/nmi: Use object_child_foreach_recursive() in
+ nmi_children()
+Date: Tue, 20 Feb 2024 16:08:30 +0100
+Message-ID: <20240220150833.13674-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240220150833.13674-1-philmd@linaro.org>
+References: <20240220150833.13674-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,123 +97,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Replace object_child_foreach() and recursion by a single
+object_child_foreach_recursive() call.
+Propagate the returned value so callers can check it.
 
-> Declare, but don't initialize the "members" field with type
-> List[QAPISchemaObjectTypeMember].
->
-> This simplifies the typing from what would otherwise be
-> Optional[List[T]] to merely List[T]. This removes the need to add
-> assertions to several callsites that this value is not None - which it
-> never will be after the delayed initialization in check() anyway.
->
-> The type declaration without initialization trick will cause accidental
-> uses of this field prior to full initialization to raise an
-> AttributeError.
->
-> (Note that it is valid to have an empty members list, see the internal
-> q_empty object as an example. For this reason, we cannot use the empty
-> list as a replacement test for full initialization and instead rely on
-> the _checked/_checking fields.)
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  scripts/qapi/schema.py | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
->
-> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-> index a459016e148..947e7efb1a8 100644
-> --- a/scripts/qapi/schema.py
-> +++ b/scripts/qapi/schema.py
-> @@ -20,7 +20,7 @@
->  from collections import OrderedDict
->  import os
->  import re
-> -from typing import List, Optional
-> +from typing import List, Optional, cast
->  
->  from .common import (
->      POINTER_SUFFIX,
-> @@ -457,7 +457,7 @@ def __init__(self, name, info, doc, ifcond, features,
->          self.base = None
->          self.local_members = local_members
->          self.variants = variants
-> -        self.members = None
-> +        self.members: List[QAPISchemaObjectTypeMember]
->          self._checking = False
->  
->      def check(self, schema):
-> @@ -474,7 +474,7 @@ def check(self, schema):
->  
->          self._checking = True
->          super().check(schema)
-> -        assert self._checked and self.members is None
-> +        assert self._checked
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/core/nmi.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-This asserts state is "2. Being checked:.
-
-The faithful update would be
-
-           assert self._checked and self._checking
-
-Or with my alternative patch
-
-           assert self._checked and not self._check_complete
->  
->          seen = OrderedDict()
->          if self._base_name:
-> @@ -491,7 +491,10 @@ def check(self, schema):
->          for m in self.local_members:
->              m.check(schema)
->              m.check_clash(self.info, seen)
-> -        members = seen.values()
-> +
-> +        # check_clash is abstract, but local_members is asserted to be
-> +        # List[QAPISchemaObjectTypeMember]. Cast to the narrower type.
-
-What do you mean by "check_clash is abstract"?
-
-> +        members = cast(List[QAPISchemaObjectTypeMember], list(seen.values()))
-
-Do we actually need this *now*, or only later when we have more type
-hints?
-
->  
->          if self.variants:
->              self.variants.check(schema, seen)
-> @@ -524,11 +527,9 @@ def is_implicit(self):
->          return self.name.startswith('q_')
->  
->      def is_empty(self):
-> -        assert self.members is not None
-
-This asserts state is "3. Checked".
-
-The faithful update would be
-
-           assert self._checked and not self._checking
-
-Or with my alternative patch
-
-           assert self._check_complete
-
->          return not self.members and not self.variants
->  
->      def has_conditional_members(self):
-> -        assert self.members is not None
-
-Likewise.
-
->          return any(m.ifcond.is_present() for m in self.members)
->  
->      def c_name(self):
-
-This patch does two things:
-
-1. Replace test of self.members (enabled by the previous patch)
-
-2. Drop initialization of self.members and simplify the typing
-
-Observation, not demand.  Wouldn't *mind* a split, though :)
+diff --git a/hw/core/nmi.c b/hw/core/nmi.c
+index a7bce8a04a..f5220111c1 100644
+--- a/hw/core/nmi.c
++++ b/hw/core/nmi.c
+@@ -31,8 +31,6 @@ struct do_nmi_s {
+     bool handled;
+ };
+ 
+-static void nmi_children(Object *o, struct do_nmi_s *ns);
+-
+ static int do_nmi(Object *o, void *opaque)
+ {
+     struct do_nmi_s *ns = opaque;
+@@ -47,14 +45,13 @@ static int do_nmi(Object *o, void *opaque)
+             return -1;
+         }
+     }
+-    nmi_children(o, ns);
+ 
+     return 0;
+ }
+ 
+-static void nmi_children(Object *o, struct do_nmi_s *ns)
++static int nmi_children(Object *o, struct do_nmi_s *ns)
+ {
+-    object_child_foreach(o, do_nmi, ns);
++    return object_child_foreach_recursive(o, do_nmi, ns);
+ }
+ 
+ void nmi_monitor_handle(int cpu_index, Error **errp)
+@@ -65,10 +62,9 @@ void nmi_monitor_handle(int cpu_index, Error **errp)
+         .handled = false
+     };
+ 
+-    nmi_children(object_get_root(), &ns);
+-    if (ns.handled) {
++    if (nmi_children(object_get_root(), &ns)) {
+         error_propagate(errp, ns.err);
+-    } else {
++    } else if (!ns.handled) {
+         error_setg(errp, "machine does not provide NMIs");
+     }
+ }
+-- 
+2.41.0
 
 
