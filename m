@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7343BC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E045C54764
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcYos-0003y3-1y; Tue, 20 Feb 2024 17:42:34 -0500
+	id 1rcYpE-0005Ar-1w; Tue, 20 Feb 2024 17:42:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYop-0003lc-Vw
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:32 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYpB-000548-Ib
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:53 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYon-0006MW-VP
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:31 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYpA-0006Q3-5y
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:53 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 892771FD64;
- Tue, 20 Feb 2024 22:42:28 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 19EC522260;
+ Tue, 20 Feb 2024 22:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708468948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1708468971; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohuWdlJcu0dwg63rQ3ay7lscIVfrPEECXbytyXa4Byw=;
- b=vzSJjL7oaYezfUeGKKsClcvWOsdX4jPOKFZcGDSLkvxq/qED2+dCHp1sWgMZc6dzedKteU
- GNWQ34ChppQKAESkGQTpTdXvO1xa8GO44EBFBM/NCD+2a3cjzw8xu55Lb6O98AAOYzV47m
- 53Kva+3gx68c4mLvbFFd1PL86iP2xsw=
+ bh=/G6ThC3N+nnfX7FJ2t0KT5ydaj0Xe0MiFJ+bC9uw3Bk=;
+ b=nM1y/GoKo65bryCqtQ78BdeRrjgDM7nCc2rTqHH/Dnns3M/pwC4njLRnkbf2Cqe51ZdlPA
+ KrXC4yF6Rl3fDCQKg5U8hyvB5gFvoIVSVEemyra4iDfTCDKJKv8HDgwOXCxZrpYyYxJ4PZ
+ LsCBHsDZJBXpos8KFxuIWEHCYEcCn70=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708468948;
+ s=susede2_ed25519; t=1708468971;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohuWdlJcu0dwg63rQ3ay7lscIVfrPEECXbytyXa4Byw=;
- b=Z0VGOhAK6eyxeDnqW8ZogkQWNrqwP8wD8q3pWGPITYZToMX74wgN6XYfgWh4Ibl7cOOGnc
- /WpkuN0G09KOqKDw==
+ bh=/G6ThC3N+nnfX7FJ2t0KT5ydaj0Xe0MiFJ+bC9uw3Bk=;
+ b=wTaoonG7gCrkU4Fsbog2NmlIf7YjBIKW709owkqiOCBlmq6nrbT1nB83leT274yB8DlPVg
+ JoppppUBaLGY6oAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708468948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1708468971; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohuWdlJcu0dwg63rQ3ay7lscIVfrPEECXbytyXa4Byw=;
- b=vzSJjL7oaYezfUeGKKsClcvWOsdX4jPOKFZcGDSLkvxq/qED2+dCHp1sWgMZc6dzedKteU
- GNWQ34ChppQKAESkGQTpTdXvO1xa8GO44EBFBM/NCD+2a3cjzw8xu55Lb6O98AAOYzV47m
- 53Kva+3gx68c4mLvbFFd1PL86iP2xsw=
+ bh=/G6ThC3N+nnfX7FJ2t0KT5ydaj0Xe0MiFJ+bC9uw3Bk=;
+ b=nM1y/GoKo65bryCqtQ78BdeRrjgDM7nCc2rTqHH/Dnns3M/pwC4njLRnkbf2Cqe51ZdlPA
+ KrXC4yF6Rl3fDCQKg5U8hyvB5gFvoIVSVEemyra4iDfTCDKJKv8HDgwOXCxZrpYyYxJ4PZ
+ LsCBHsDZJBXpos8KFxuIWEHCYEcCn70=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708468948;
+ s=susede2_ed25519; t=1708468971;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohuWdlJcu0dwg63rQ3ay7lscIVfrPEECXbytyXa4Byw=;
- b=Z0VGOhAK6eyxeDnqW8ZogkQWNrqwP8wD8q3pWGPITYZToMX74wgN6XYfgWh4Ibl7cOOGnc
- /WpkuN0G09KOqKDw==
+ bh=/G6ThC3N+nnfX7FJ2t0KT5ydaj0Xe0MiFJ+bC9uw3Bk=;
+ b=wTaoonG7gCrkU4Fsbog2NmlIf7YjBIKW709owkqiOCBlmq6nrbT1nB83leT274yB8DlPVg
+ JoppppUBaLGY6oAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E9814139D0;
- Tue, 20 Feb 2024 22:42:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7AF99139D0;
+ Tue, 20 Feb 2024 22:42:49 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uPRjK9Iq1WUlKwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:42:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EKOvEOkq1WUlKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:42:49 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
  Claudio Fontana <cfontana@suse.de>
-Subject: [PATCH v4 20/34] migration/multifd: Add outgoing QIOChannelFile
- support
-Date: Tue, 20 Feb 2024 19:41:24 -0300
-Message-Id: <20240220224138.24759-21-farosas@suse.de>
+Subject: [PATCH v4 30/34] monitor: Honor QMP request for fd removal immediately
+Date: Tue, 20 Feb 2024 19:41:34 -0300
+Message-Id: <20240220224138.24759-31-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240220224138.24759-1-farosas@suse.de>
 References: <20240220224138.24759-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [1.90 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_THREE(0.00)[3];
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="nM1y/GoK";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wTaoonG7
+X-Spamd-Result: default: False [4.39 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ BAYES_HAM(-0.30)[75.09%]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 19EC522260
+X-Spamd-Bar: ++++
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,214 +127,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow multifd to open file-backed channels. This will be used when
-enabling the fixed-ram migration stream format which expects a
-seekable transport.
+We're currently only removing an fd from the fdset if the VM is
+running. This causes a QMP call to "remove-fd" to not actually remove
+the fd if the VM happens to be stopped.
 
-The QIOChannel read and write methods will use the preadv/pwritev
-versions which don't update the file offset at each call so we can
-reuse the fd without re-opening for every channel.
+While the fd would eventually be removed when monitor_fdset_cleanup()
+is called again, the user request should be honored and the fd
+actually removed. Calling remove-fd + query-fdset shows a recently
+removed fd still present.
 
-Contrary to the socket migration, the file migration doesn't need an
-asynchronous channel creation process, so expose
-multifd_channel_connect() and call it directly.
+The runstate_is_running() check was introduced by commit ebe52b592d
+("monitor: Prevent removing fd from set during init"), which by the
+shortlog indicates that they were trying to avoid removing an
+yet-unduplicated fd too early.
 
-Note that this is just setup code and multifd cannot yet make use of
-the file channels.
+I don't see why an fd explicitly removed with qmp_remove_fd() should
+be under runstate_is_running(). I'm assuming this was a mistake when
+adding the parenthesis around the expression.
+
+Move the runstate_is_running() check to apply only to the
+QLIST_EMPTY(dup_fds) side of the expression and ignore it when
+mon_fdset_fd->removed has been explicitly set.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/file.c    | 40 ++++++++++++++++++++++++++++++++++++++--
- migration/file.h    |  5 +++++
- migration/multifd.c | 27 ++++++++++++++++++++++-----
- migration/multifd.h |  2 ++
- 4 files changed, 67 insertions(+), 7 deletions(-)
+ monitor/fds.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/migration/file.c b/migration/file.c
-index 22d052a71f..ac9f6ae40a 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -12,12 +12,17 @@
- #include "channel.h"
- #include "file.h"
- #include "migration.h"
-+#include "multifd.h"
- #include "io/channel-file.h"
- #include "io/channel-util.h"
- #include "trace.h"
+diff --git a/monitor/fds.c b/monitor/fds.c
+index d86c2c674c..4ec3b7eea9 100644
+--- a/monitor/fds.c
++++ b/monitor/fds.c
+@@ -173,9 +173,9 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+     MonFdsetFd *mon_fdset_fd_next;
  
- #define OFFSET_OPTION ",offset="
- 
-+static struct FileOutgoingArgs {
-+    char *fname;
-+} outgoing_args;
-+
- /* Remove the offset option from @filespec and return it in @offsetp. */
- 
- int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
-@@ -37,6 +42,34 @@ int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
-     return 0;
- }
- 
-+int file_send_channel_destroy(QIOChannel *ioc)
-+{
-+    if (ioc) {
-+        qio_channel_close(ioc, NULL);
-+    }
-+    g_free(outgoing_args.fname);
-+    outgoing_args.fname = NULL;
-+
-+    return 0;
-+}
-+
-+bool file_send_channel_create(gpointer opaque, Error **errp)
-+{
-+    QIOChannelFile *ioc;
-+    int flags = O_WRONLY;
-+
-+    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-+    if (!ioc) {
-+        return false;
-+    }
-+
-+    if (!multifd_channel_connect(opaque, QIO_CHANNEL(ioc), errp)) {
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
- void file_start_outgoing_migration(MigrationState *s,
-                                    FileMigrationArgs *file_args, Error **errp)
- {
-@@ -44,15 +77,18 @@ void file_start_outgoing_migration(MigrationState *s,
-     g_autofree char *filename = g_strdup(file_args->filename);
-     uint64_t offset = file_args->offset;
-     QIOChannel *ioc;
-+    int flags = O_CREAT | O_TRUNC | O_WRONLY;
-+    mode_t mode = 0660;
- 
-     trace_migration_file_outgoing(filename);
- 
--    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC,
--                                     0600, errp);
-+    fioc = qio_channel_file_new_path(filename, flags, mode, errp);
-     if (!fioc) {
-         return;
-     }
- 
-+    outgoing_args.fname = g_strdup(filename);
-+
-     ioc = QIO_CHANNEL(fioc);
-     if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
-         return;
-diff --git a/migration/file.h b/migration/file.h
-index 37d6a08bfc..90794b494b 100644
---- a/migration/file.h
-+++ b/migration/file.h
-@@ -9,10 +9,15 @@
- #define QEMU_MIGRATION_FILE_H
- 
- #include "qapi/qapi-types-migration.h"
-+#include "io/task.h"
-+#include "channel.h"
- 
- void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp);
- 
- void file_start_outgoing_migration(MigrationState *s,
-                                    FileMigrationArgs *file_args, Error **errp);
- int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
-+
-+bool file_send_channel_create(gpointer opaque, Error **errp);
-+int file_send_channel_destroy(QIOChannel *ioc);
- #endif
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 45a0c7aaa8..507b497d52 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -17,6 +17,7 @@
- #include "exec/ramblock.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "file.h"
- #include "ram.h"
- #include "migration.h"
- #include "migration-stats.h"
-@@ -28,6 +29,7 @@
- #include "threadinfo.h"
- #include "options.h"
- #include "qemu/yank.h"
-+#include "io/channel-file.h"
- #include "io/channel-socket.h"
- #include "yank_functions.h"
- 
-@@ -680,6 +682,9 @@ static void multifd_send_terminate_threads(void)
- 
- static int multifd_send_channel_destroy(QIOChannel *send)
- {
-+    if (!multifd_use_packets()) {
-+        return file_send_channel_destroy(send);
-+    }
-     return socket_send_channel_destroy(send);
- }
- 
-@@ -959,9 +964,8 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
-     return true;
- }
- 
--static bool multifd_channel_connect(MultiFDSendParams *p,
--                                    QIOChannel *ioc,
--                                    Error **errp)
-+bool multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc,
-+                             Error **errp)
- {
-     qio_channel_set_delay(ioc, false);
- 
-@@ -1031,9 +1035,14 @@ out:
-     error_free(local_err);
- }
- 
--static void multifd_new_send_channel_create(gpointer opaque)
-+static bool multifd_new_send_channel_create(gpointer opaque, Error **errp)
- {
-+    if (!multifd_use_packets()) {
-+        return file_send_channel_create(opaque, errp);
-+    }
-+
-     socket_send_channel_create(multifd_new_send_channel_async, opaque);
-+    return true;
- }
- 
- bool multifd_send_setup(void)
-@@ -1082,7 +1091,15 @@ bool multifd_send_setup(void)
-         p->page_size = qemu_target_page_size();
-         p->page_count = page_count;
-         p->write_flags = 0;
--        multifd_new_send_channel_create(p);
-+
-+        if (!multifd_new_send_channel_create(p, &local_err)) {
-+            /*
-+             * File channel creation is synchronous, we don't need the
-+             * semaphore below, it's safe to return now.
-+             */
-+            assert(migrate_fixed_ram());
-+            return -1;
-+        }
-     }
- 
-     if (use_packets) {
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 19188815a3..135f6ed098 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -228,5 +228,7 @@ static inline void multifd_send_prepare_header(MultiFDSendParams *p)
-     p->iovs_num++;
- }
- 
-+bool multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc,
-+                             Error **errp);
- 
- #endif
+     QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
+-        if ((mon_fdset_fd->removed ||
+-                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
+-                runstate_is_running()) {
++        if (mon_fdset_fd->removed ||
++            (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0 &&
++             runstate_is_running())) {
+             close(mon_fdset_fd->fd);
+             g_free(mon_fdset_fd->opaque);
+             QLIST_REMOVE(mon_fdset_fd, next);
 -- 
 2.35.3
 
