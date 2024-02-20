@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01301C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 06:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA80EC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 06:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcJmO-0007ZQ-Sh; Tue, 20 Feb 2024 01:39:00 -0500
+	id 1rcJq8-0008U5-9F; Tue, 20 Feb 2024 01:42:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJmN-0007Z4-IJ
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:38:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJq3-0008To-Rt
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:42:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJmM-0002vs-2T
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:38:59 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJpz-0003cB-U6
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:42:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708411136;
+ s=mimecast20190719; t=1708411356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=0BmqrMREPpQhfu/AKmxbVmfwkfdulwmcCMb4PezywGk=;
- b=jCMPbVTsWWL/10w5nBQNsNkAy1+Airuusm/nAbJZNwX8A2fsInyBnXK9SiGgJ0aF7lEFxQ
- 82tBbg9waJ3ktAvEILdM7o4srM6ZZmfnYAZUhduQmB9zGkarHrI+Gw12l3EcNFSqgez5VF
- nZNRIkrLF/hVNpMegVrlq6SPsKD9SBU=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5hDqhHpONTvD7A+nB9XgprKd1CjE0cpS6mugOaN5w5g=;
+ b=TdL68g1FrnUqyKb64FkUtXfe501t+g88gxGmuxBde+cRrn8bP/Japp64vNBbYo/+Xh9ig7
+ 5bFvssiRbyMSBnFGtTK8CI0Qka8gSnglo4aOSf270R5ZNdyVwgqwiG1TwzdAnLoda/2bq2
+ y2WvUOtwowS8sUb08zQtryCg8v9LWAc=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-wGnSMz4jNiGgr89Yqz8xag-1; Tue, 20 Feb 2024 01:38:54 -0500
-X-MC-Unique: wGnSMz4jNiGgr89Yqz8xag-1
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-6db0e05548fso1398695b3a.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 22:38:54 -0800 (PST)
+ us-mta-287-tmsIpV9VM0mGu4zrfiCOTQ-1; Tue, 20 Feb 2024 01:42:35 -0500
+X-MC-Unique: tmsIpV9VM0mGu4zrfiCOTQ-1
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-5cf53f904f9so1354551a12.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 22:42:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708411134; x=1709015934;
+ d=1e100.net; s=20230601; t=1708411354; x=1709016154;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0BmqrMREPpQhfu/AKmxbVmfwkfdulwmcCMb4PezywGk=;
- b=h3CCDw3HjtLfCqFSwqEGNRKWjVO4bfLAAo+P+1bOcXv7zyFxk+8p660myh6R5VXqJ/
- TvzwoI0YcUpdePnIYcDtKnWJ7CicC03mwxtfya0oO3wTiZ4+k4cztDRn/Wi81/LSnfpn
- pQju8wwpBSrat5KiFILroMiIKSJFpAAiOCV7s4GX9VYTD+7MqBrqtKPh+FRcdnHZwejD
- zqWVJBnLuHQ5OXIiLe2daanUJmPm2+8sgBTLrX9osrwMuAHqZzr+P9hpi9sTaGjagVLW
- s+i9+fg28JGNxc571FGQYXzJ4rPVyFKesEJ3qI2xA45tbjmJnxdZAH7vN4lzGOI5sisD
- Tj+A==
-X-Gm-Message-State: AOJu0YwNQ3dKfQ88ZWTIoJ1PRbpCj3XxJxLDm3f3FkaFDFolOP5g0SVY
- 5xqzWixDZlVd7lwqiHEsSXV6JPSIcBMABGyEYroeNnVwJ//TRL3eL1ZKvD89/mlF101X8G51mM7
- /UqMWUcVijkhlEEVREtN4h3rHvWAJU7JJhwjIkvGt0ZOuGfhSzd+v
-X-Received: by 2002:a05:6a00:189c:b0:6e4:7148:508d with SMTP id
- x28-20020a056a00189c00b006e47148508dmr3065200pfh.3.1708411133750; 
- Mon, 19 Feb 2024 22:38:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHb7/WtIp8pDfhx6czKErfL9GCDWbgFGiZ4DsH7/aUFq9STiXImm+07Fh9L+6pquGPbHzEftw==
-X-Received: by 2002:a05:6a00:189c:b0:6e4:7148:508d with SMTP id
- x28-20020a056a00189c00b006e47148508dmr3065186pfh.3.1708411133366; 
- Mon, 19 Feb 2024 22:38:53 -0800 (PST)
+ bh=5hDqhHpONTvD7A+nB9XgprKd1CjE0cpS6mugOaN5w5g=;
+ b=TAz+gBjpHeedU9p64SToSNRGk04q66jYqc9LmuqEC+OwJFXBxxFLDp3siBXhTBNVS6
+ 1vcDSGjqwH3Z6tWVqOUuoe3WYVvh0CYX2EHGLb6KJ0dtqh6EVei32yXi3fZlj6Kj48t+
+ N661PBho3O2I0Cf2FpM8Qcq4U17YdAUJDWBNJsyZVt9Z6kbnbbGdG6nBAR1izEf0I7G0
+ xT0oXR1+JunAzN1ZvYVEyhUKOK0DnWBMfYw0mQ90KXLSfkxgN3zP23aLMm9pFWPUqQGx
+ u5ziCO9xqUFTipyqihkU74oST0Md8zRpDnQPnncODpK2e+EP1rnN4mEVuJOpZ61cPE2C
+ mN5g==
+X-Gm-Message-State: AOJu0Yz6HdUBMso7cptfbiGeAwIWYn4W4TfQmzrqmZQm0wYZVuFofBqi
+ /C+DAfg/hOBqV8LbE4i4xnMyZBA676HZvFIdC8hQtWMBqaDg3syAkNkUbNecHozw73Ox+9l9g3Q
+ Qt28jlR5bzGWd66XHuOiMHXoNsYqXlWM9bAd5VoljiCzgwPgYswV5
+X-Received: by 2002:a05:6a21:7886:b0:19e:c428:929f with SMTP id
+ bf6-20020a056a21788600b0019ec428929fmr17056395pzc.1.1708411354153; 
+ Mon, 19 Feb 2024 22:42:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEzvhM5GhV/OdUrqMHJa5s8UHps40IjlvWr4mrq7qLeuDf9xrYMQs/VtjxJ4OT3MOUJkLHY+g==
+X-Received: by 2002:a05:6a21:7886:b0:19e:c428:929f with SMTP id
+ bf6-20020a056a21788600b0019ec428929fmr17056384pzc.1.1708411353784; 
+ Mon, 19 Feb 2024 22:42:33 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- e24-20020a656898000000b005ce998b9391sm4860982pgt.67.2024.02.19.22.38.49
+ lc11-20020a170902fa8b00b001d8a93fa5b1sm5459355plb.131.2024.02.19.22.42.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 22:38:52 -0800 (PST)
-Date: Tue, 20 Feb 2024 14:38:41 +0800
+ Mon, 19 Feb 2024 22:42:33 -0800 (PST)
+Date: Tue, 20 Feb 2024 14:42:22 +0800
 From: Peter Xu <peterx@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -70,14 +70,14 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>,
  David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH V3 04/13] migration: MigrationEvent for notifiers
-Message-ID: <ZdRI8VEorWRZGe5N@x1n>
+Subject: Re: [PATCH V3 05/13] migration: remove postcopy_after_devices
+Message-ID: <ZdRJzmiKw-JWgwQD@x1n>
 References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
- <1707418446-134863-5-git-send-email-steven.sistare@oracle.com>
+ <1707418446-134863-6-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1707418446-134863-5-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1707418446-134863-6-git-send-email-steven.sistare@oracle.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -6
@@ -103,13 +103,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 10:53:57AM -0800, Steve Sistare wrote:
-> Passing MigrationState to notifiers is unsound because they could access
-> unstable migration state internals or even modify the state.  Instead, pass
-> the minimal info needed in a new MigrationEvent struct, which could be
-> extended in the future if needed.
+On Thu, Feb 08, 2024 at 10:53:58AM -0800, Steve Sistare wrote:
+> postcopy_after_devices and migration_in_postcopy_after_devices are no
+> longer used, so delete them.
 > 
-> Suggested-by: Peter Xu <peterx@redhat.com>
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
