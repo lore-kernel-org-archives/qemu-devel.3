@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344C8C48BC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D82C54764
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVS0-0007uV-8s; Tue, 20 Feb 2024 14:06:44 -0500
+	id 1rcVSK-0008Lo-Tc; Tue, 20 Feb 2024 14:07:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcVRx-0007qw-MW
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:06:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcVRs-0002hg-Ig
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:06:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708455995;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sO8R3OzUB1H3wBdHR615YvIz8eF8WRxI63ti1vq6aV0=;
- b=iuRAgkH7TcykFGmeP+0S1/aOUBdmUEfnfG0EoZTNVXZKQ3wIzNf6BqPvWpP30/kOR/AAPu
- dFh14gt4g8nJN73KwDXtQzv0l0Mvu50DRHDFjVOII7b54WBTjiUFWGBjbd2BikKoaf38zt
- BGzulaA8+rtiPeo6WncE+RXISqw2r1I=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-ss9RuhPhPySJusnJ9Ugz0g-1; Tue,
- 20 Feb 2024 14:06:32 -0500
-X-MC-Unique: ss9RuhPhPySJusnJ9Ugz0g-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1305B1C54037;
- Tue, 20 Feb 2024 19:06:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 681BD400D784;
- Tue, 20 Feb 2024 19:06:28 +0000 (UTC)
-Date: Tue, 20 Feb 2024 19:06:26 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 23/23] qemu-img: inline list of supported commands,
- remove qemu-img-cmds.h include
-Message-ID: <ZdT4Muc9M5kQ1S9J@redhat.com>
-References: <cover.1707513011.git.mjt@tls.msk.ru>
- <a7e67594e748d1b91f755dd971f222afa09f5443.1707513012.git.mjt@tls.msk.ru>
- <ZdT0A3b9-JrMd6aI@redhat.com>
- <00cd5770-29f1-451c-8d13-2b9e987e6c7f@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVSI-0008IS-FQ
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:07:02 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVSF-0002mD-Nu
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:07:01 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33d118a181fso2925424f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:06:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708456017; x=1709060817; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=biUbDf1nUaz9JvarQjOtcLfzwcwLgPZ/henEN5dcJlo=;
+ b=vYN0TGREABSYsnhZSMmYRVps6asi4e3PMq9qsGEQn3zDVUjYCVYAani3qpcxK795GF
+ 1/AO0RRFievfrm1Y7eo4vxzom/68KnkXHZBrJV4xQ34sG9PPgKUkldXsEEEo3goXx0lW
+ ZhmFIVFZwAqa0vhjIsBo4invbzd7TY8LzhjOpRgzrQYpmoAoDE1EvYsqeQv52Rguttpx
+ 2eI9S2a7Me1kNM8QBtoQpyIixN9DbhD2lWeIr5DfuTrIvXsQlz5H0R7ivhazujsBtzzo
+ fwnWXcqmj11ypWcXXnuad3IVNHb6OxopzTXUxvFJmxxNjhE5IuSDKHM5yKXpb+AM3MOS
+ tzmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708456017; x=1709060817;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=biUbDf1nUaz9JvarQjOtcLfzwcwLgPZ/henEN5dcJlo=;
+ b=clVoVbEtXIL1k9jfW5T0QNKkOzEqkhKicSgQA/nP8KyXb7QEwWV64CsfvIoggZLLCI
+ U+veVZFijCrzGxiNaSOnpufUOpEjlC/eFjTNJ+Q/kqTEc0Wj7bsLDT5Hyu24yFe9R5Ei
+ O7Oz7vZGigdhPi8XQm8Ta2pVyAfTwPawTZK2LLUi1OXIRtB7iWfGqqB93KHWFl76//Qi
+ 90n6fGACQF4DMGObwSO3kbeOJIgUNz2PXBzMPR2urzzu4XzJnYavNPSSqlifc2Nc8ZPx
+ 6Nj77JSD1shGPu4fqKe/paavHnhqliu94sL8QzkheNn+ZUlQhBTpz36Wo8QnUxZsb8p2
+ 9GYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvm0OWEKz+ht2y1fqd8tGPEp5lIQPgo1fVKH4yAKdOhy1j8Hb0cLiUqtxn5nLi40gGQ58jrqZfRNRTN2yGD99N2AvhA80=
+X-Gm-Message-State: AOJu0Yw+v6X1o3urYb6Bf+SRXL8tejUNUhmzlD+WyfYaH0l82kgrycbU
+ VpV8OAf9W/JzUFlfTHLTcIeJnIcmsXtVSdCin1CwCapjbj4EkBp1O4khTLnrgtg=
+X-Google-Smtp-Source: AGHT+IEgNbDyrXIx4i4kXQA/xn32Tf6YwhqvuV1+hDd43pC01yKngmEzn3gRnxCo/oRU884bEwEewA==
+X-Received: by 2002:a5d:67c8:0:b0:33d:5250:71b3 with SMTP id
+ n8-20020a5d67c8000000b0033d525071b3mr4469220wrw.57.1708456017608; 
+ Tue, 20 Feb 2024 11:06:57 -0800 (PST)
+Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
+ [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
+ co18-20020a0560000a1200b0033d4c3b0beesm8499364wrb.19.2024.02.20.11.06.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 11:06:56 -0800 (PST)
+Message-ID: <18996dba-a47c-4e68-b9cf-5e0ae5e9cd43@linaro.org>
+Date: Tue, 20 Feb 2024 20:06:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <00cd5770-29f1-451c-8d13-2b9e987e6c7f@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] hw/core/machine: Use qemu_register_resettable for
+ sysbus reset
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-10-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240220160622.114437-10-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,65 +99,72 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 10:02:32PM +0300, Michael Tokarev wrote:
-> 20.02.2024 21:48, Daniel P. Berrangé:
-> ...
-> > $ ./build/qemu-img check --help
-> > Check basic image integrity.
-> > 
-> > Usage:
-> > 
-> >    qemu-img check [-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]
-> >          [--output human|json] [--object OBJDEF] FILENAME
-> > 
-> > Arguments:
+On 20/2/24 17:06, Peter Maydell wrote:
+> Move the reset of the sysbus (and thus all devices and buses anywhere
+> on the qbus tree) from qemu_register_reset() to qemu_register_resettable().
 > 
-> $ ./build/qemu-img check --help
-> Check basic image integrity.  Usage:
+> This is a behaviour change: because qemu_register_resettable() is
+> aware of three-phase reset, this now means that:
+>   * 'enter' phase reset methods of devices and buses are called
+>     before any legacy reset callbacks registered with qemu_register_reset()
+>   * 'exit' phase reset methods of devices and buses are called
+>     after any legacy qemu_register_reset() callbacks
 > 
->    qemu-img check [-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]
->           [--output human|json] [--object OBJDEF] FILENAME
+> Put another way, a qemu_register_reset() callback is now correctly
+> ordered in the 'hold' phase along with any other 'hold' phase methods.
 > 
-> Arguments:
-> ...
+> The motivation for doing this is that we will now be able to resolve
+> some reset-ordering issues using the three-phase mechanism, because
+> the 'exit' phase is always after the 'hold' phase, even when the
+> 'hold' phase function was registered with qemu_register_reset().
 > 
-> Or just:
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I believe that given we don't make much use of enter/exit phases
+> currently that this is unlikely to cause unexpected regressions due
+> to an accidental reset-order dependency that is no longer satisfied,
+> but it's always possible...
+> ---
+>   hw/core/machine.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 > 
-> Check basic image integrity:
-> 
->  qemu-img check...
-> 
-> 
-> In all cases I tried to make the whole thing as compact as possible,
-> to (almost) fit on a standard terminal.  The extra empty lines between
-> different arguments makes it almost impossible.
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index fb5afdcae4c..9ac5d5389a6 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -1577,14 +1577,13 @@ void qdev_machine_creation_done(void)
+>       /* TODO: once all bus devices are qdevified, this should be done
+>        * when bus is created by qdev.c */
+>       /*
+> -     * TODO: If we had a main 'reset container' that the whole system
+> -     * lived in, we could reset that using the multi-phase reset
+> -     * APIs. For the moment, we just reset the sysbus, which will cause
+> +     * This is where we arrange for the sysbus to be reset when the
+> +     * whole simulation is reset. In turn, resetting the sysbus will cause
+>        * all devices hanging off it (and all their child buses, recursively)
+>        * to be reset. Note that this will *not* reset any Device objects
+>        * which are not attached to some part of the qbus tree!
+>        */
+> -    qemu_register_reset(resettable_cold_reset_fn, sysbus_get_default());
 
-IMHO fitting on a "standard" terminal is OK in terms of width, but
-should be a non-goal in terms of height. Readability is more important
-than avoiding vertical scroll.
+Interestingly after this patch TYPE_S390_IPL is the last device
+using resettable_cold_reset_fn(). Per commit cd45c506c8e:
 
-> > >              "Arguments:\n"
-> > >              " -h|--help - print this help and exit\n"
-> 
-> btw, the common way is to use comma here, not "|", --
->   -h,--help - ...
-> 
-> Again, I especially omitted space after "|" to make it
-> more compact.  Maybe for no good.
+     /*
+      * Because this Device is not on any bus in the qbus tree (it is
+      * not a sysbus device and it's not on some other bus like a PCI
+      * bus) it will not be automatically reset by the 'reset the
+      * sysbus' hook registered by vl.c like most devices. So we must
+      * manually register a reset hook for it.
+      * TODO: there should be a better way to do this.
+      */
 
-Yes, a comma with a space would look nicer. If we have the
-description on the following line, then there's no width
-limit problems there.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +    qemu_register_resettable(OBJECT(sysbus_get_default()));
+>   
+>       notifier_list_notify(&machine_init_done_notifiers, NULL);
+>   
 
 
