@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E539C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:42:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60460C54764
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcV4H-0007vg-3J; Tue, 20 Feb 2024 13:42:14 -0500
+	id 1rcV4N-0007yo-8T; Tue, 20 Feb 2024 13:42:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rcV46-0007rH-A4; Tue, 20 Feb 2024 13:42:05 -0500
-Received: from zproxy2.enst.fr ([2001:660:330f:2::dd])
+ id 1rcV46-0007rG-8r; Tue, 20 Feb 2024 13:42:05 -0500
+Received: from zproxy2.enst.fr ([137.194.2.221])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1rcV44-0007JW-AW; Tue, 20 Feb 2024 13:42:02 -0500
+ id 1rcV44-0007IK-AG; Tue, 20 Feb 2024 13:42:02 -0500
 Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id E289980673;
+ by zproxy2.enst.fr (Postfix) with ESMTP id 6873E80603;
  Tue, 20 Feb 2024 19:41:54 +0100 (CET)
 Received: from zproxy2.enst.fr ([IPv6:::1])
  by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 9po80ZR-aNkv; Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+ id W41KJoo3gUJq; Tue, 20 Feb 2024 19:41:54 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id 6C9B180682;
- Tue, 20 Feb 2024 19:41:54 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr 6C9B180682
+ by zproxy2.enst.fr (Postfix) with ESMTP id E716980662;
+ Tue, 20 Feb 2024 19:41:53 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr E716980662
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
  s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1708454514;
- bh=QueERqoWbl+z3zS/6H26qwczTL2+98k7rJBK6el/njs=;
+ bh=OTbBZYmQUWM13WJNxLCM/jwplynIgnpCD8rkYnjcGe0=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=GTR3vhZIioslm5PYaxvOGXWJ+Uat3FkAXIQsmTkNYH/IRvz9DlH1yjy2LxM0tRnQp
- Yoz969+ASJ8PL7dsPU7eSVzyXSGpl4aJ8lg+HDzMBvdFrCq9XrtGlPBuDbtSejaT+Z
- AaK45In4X4Y/yL43CprJxseWCAV3Ov992x8+hm8o=
+ b=8Hrylc5ssyoUTBoP/Aziit2/O32AMB9vy/N1Yogtd5e8FFeUbzJEYK+8W8DbrpPE1
+ YGdW53l/PQphgehNRPQ3vztz5DKFweeX72RA051iXRneIVc1z/ykPXrLunneIRmTMs
+ R99/E5k+GBzUSUseXTmsRcDm5sWQEvzoQ8BeTKbA=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy2.enst.fr ([IPv6:::1])
  by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id 3gPawhELsegw; Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+ id SpndP6v43cjW; Tue, 20 Feb 2024 19:41:53 +0100 (CET)
 Received: from inesv-Inspiron-3501.lan (unknown
  [IPv6:2001:861:4680:b1b0:6f1f:d69d:dd9c:e973])
- by zproxy2.enst.fr (Postfix) with ESMTPSA id 17397805FE;
- Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+ by zproxy2.enst.fr (Postfix) with ESMTPSA id 52CA8805FE;
+ Tue, 20 Feb 2024 19:41:53 +0100 (CET)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
@@ -53,24 +53,23 @@ Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Subject: [PATCH v2 2/2] tests/qtest: Check that EXTI fan-in irqs are correctly
- connected
-Date: Tue, 20 Feb 2024 19:34:36 +0100
-Message-ID: <20240220184145.106107-3-ines.varhol@telecom-paris.fr>
+Subject: [PATCH v2 0/2] hw/arm: Fix STM32L4x5 EXTI to CPU irq fan-in
+ connections
+Date: Tue, 20 Feb 2024 19:34:34 +0100
+Message-ID: <20240220184145.106107-1-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240220184145.106107-1-ines.varhol@telecom-paris.fr>
-References: <20240220184145.106107-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dd;
+Received-SPF: pass client-ip=137.194.2.221;
  envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy2.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,89 +85,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a QTest that verifies each input line of a specific
-EXTI OR gate can influence the output line.
+The original code was connecting several outbounds qemu_irqs to the
+same qemu_irq without using a TYPE_OR_IRQ.
 
+This patch fixes the issue by using OR gates when necessary (1st commit).
+
+I attempted to check that the problem is fixed by using a QTest (2nd comm=
+it)
+but actually the test is passing even before the fix :
+when any fan-in input line is raised, the output is raised too.
+
+Changes from v1 :
+- using SoC State fields for EXTI OR gates
+- correcting length of array `exti_or_gates_num_lines_in`
+- using a for loop in the test for more clarity
+- correcting typo in test comment
+
+Fixes: 52671f69f7a4 ("[PATCH v8 0/3] Add device STM32L4x5 EXTI")
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
----
 
-Hello,
+In=C3=A8s Varhol (2):
+  hw/arm: Use TYPE_OR_IRQ when connecting STM32L4x5 EXTI fan-in IRQs
+  tests/qtest: Check that EXTI fan-in irqs are correctly connected
 
-I expected this test to fail after switching the two patch commits,
-but it didn't.
-I'm mentionning it in case it reveals a problem with the test I didn't no=
-tice.
+ include/hw/arm/stm32l4x5_soc.h    |  4 ++
+ hw/arm/stm32l4x5_soc.c            | 80 +++++++++++++++++++++++++++----
+ tests/qtest/stm32l4x5_exti-test.c | 37 ++++++++++++++
+ 3 files changed, 111 insertions(+), 10 deletions(-)
 
-
- tests/qtest/stm32l4x5_exti-test.c | 37 +++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
-
-diff --git a/tests/qtest/stm32l4x5_exti-test.c b/tests/qtest/stm32l4x5_ex=
-ti-test.c
-index c390077713..81830be8ae 100644
---- a/tests/qtest/stm32l4x5_exti-test.c
-+++ b/tests/qtest/stm32l4x5_exti-test.c
-@@ -31,6 +31,7 @@
-=20
- #define EXTI0_IRQ 6
- #define EXTI1_IRQ 7
-+#define EXTI5_9_IRQ 23
- #define EXTI35_IRQ 1
-=20
- static void enable_nvic_irq(unsigned int n)
-@@ -499,6 +500,40 @@ static void test_interrupt(void)
-     g_assert_false(check_nvic_pending(EXTI1_IRQ));
- }
-=20
-+static void test_orred_interrupts(void)
-+{
-+    /*
-+     * For lines EXTI5..9 (fanned-in to NVIC irq 23),
-+     * test that raising the line pends interrupt
-+     * 23 in NVIC.
-+     */
-+    enable_nvic_irq(EXTI5_9_IRQ);
-+    /* Check that there are no interrupts already pending in PR */
-+    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+    /* Check that this specific interrupt isn't pending in NVIC */
-+    g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
-+
-+    /* Enable interrupt lines EXTI[5..9] */
-+    exti_writel(EXTI_IMR1, (0x1F << 5));
-+
-+    /* Configure interrupt on rising edge */
-+    exti_writel(EXTI_RTSR1, (0x1F << 5));
-+
-+    /* Raise GPIO line i, check that the interrupt is pending */
-+    for (unsigned i =3D 5; i < 10; i++) {
-+        exti_set_irq(i, 1);
-+        g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << i);
-+        g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
-+
-+        exti_writel(EXTI_PR1, 1 << i);
-+        g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
-+        g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
-+
-+        unpend_nvic_irq(EXTI5_9_IRQ);
-+        g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
-+    }
-+}
-+
- int main(int argc, char **argv)
- {
-     int ret;
-@@ -515,6 +550,8 @@ int main(int argc, char **argv)
-     qtest_add_func("stm32l4x5/exti/masked_interrupt", test_masked_interr=
-upt);
-     qtest_add_func("stm32l4x5/exti/interrupt", test_interrupt);
-     qtest_add_func("stm32l4x5/exti/test_edge_selector", test_edge_select=
-or);
-+    qtest_add_func("stm32l4x5/exti/test_orred_interrupts",
-+                   test_orred_interrupts);
-=20
-     qtest_start("-machine b-l475e-iot01a");
-     ret =3D g_test_run();
 --=20
 2.43.2
 
