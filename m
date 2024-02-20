@@ -4,69 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BAFEC54764
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E79EC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLuS-0006kx-4l; Tue, 20 Feb 2024 03:55:29 -0500
+	id 1rcLsM-0008KW-4J; Tue, 20 Feb 2024 03:53:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuL-00060e-3H
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuI-0000EF-9Y
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708419317;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EOiW8q7P4pzVVYwIaTT/LehnKlk46W0+av4ne1E04p0=;
- b=KigbNH/k59oDEQJEU5VHBKjjlR9x2XlJ22wY+H9P2gcv4Vvjy0FfD/JkD7dONoIlONE/hm
- esx1D+co78/VMjlvY+EPi5FejJjuZjGjuXxIrHthaAHRbfsKMfyPCatVwjJvXq5UHevOBi
- BcAoQdzOcE04sQK8bZazaRBVTv8rCIw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-23VwSxKhN96O42tTYRtH0Q-1; Tue, 20 Feb 2024 03:55:13 -0500
-X-MC-Unique: 23VwSxKhN96O42tTYRtH0Q-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8E5DD185A78E;
- Tue, 20 Feb 2024 08:55:13 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.168])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AFA15492BE2;
- Tue, 20 Feb 2024 08:55:11 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: John Snow <jsnow@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org
-Subject: [PATCH v2 2/7] hw/ide: Split qdev.c into ide-bus.c and ide-dev.c
-Date: Tue, 20 Feb 2024 09:55:00 +0100
-Message-ID: <20240220085505.30255-3-thuth@redhat.com>
-In-Reply-To: <20240220085505.30255-1-thuth@redhat.com>
-References: <20240220085505.30255-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rcLsI-0008Ge-0t
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:14 -0500
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rcLsF-00089G-Hz
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:13 -0500
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-564647bcdbfso2148912a12.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708419190; x=1709023990; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=74P+PKZ6orTLj/5plkkdrxWuHnGI5wedPF2+fgfkjP0=;
+ b=IProdb+RTIenez6FNm/luv2riechFOQy4SBgLCZYgZKC9/ulzrR24aw/F7GEY44GkK
+ gr4WSZrmXAp+nPb4Mn3Jclpi+kAzNMQAQAcMBUsFuFqRA4f5an1DWphZsSCI6SedPzNA
+ TiKMeimSN714tnG+yIWJuEPGPNVt4+GzWqOZMuL2Tb4TyNYm1zjgBGFEZGeyZVWxGAB7
+ yE01gMuyFHbrF8rbCgCmLFhOqg9unUZNVaiH4RbpXHB7SuclHqAT5qz5Kkf3ddldCboo
+ XmQ2oIC8A9guz5bYQomUiQlDNK4hct3sH1KsuEkQo9FnC5k7T34nHQhQaVPZ2UCwbtYG
+ qGPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708419190; x=1709023990;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=74P+PKZ6orTLj/5plkkdrxWuHnGI5wedPF2+fgfkjP0=;
+ b=WhcSvHeiey5PIZPeQZXhvQnzYGQI0bffjfu99hC68jyggR/brOIMSfWodTECrntdHB
+ sJStrmlY5cWZLXnoZt9oUKKOa1ztNLU0LCsH/X3gZGWwtrSNgtiXg5eOR/Ch/1/eN/Z8
+ 2oBZ9QqVTV7M34ECuvLjnkmwA0RkClsbxgysr3YDUyXtVAGIvXGQ9/6ZAYWp6zZ66bss
+ yzwrI+edi5mIn10NOldppp/etdvD7TRequXXMg0Vcdk+DDPkkjZf0Xjn1jjFDuivMLQV
+ pJ+bqI7Wz761pyykFXe3zhxbQaslOuYnDTZaPW1L/tWsMkWPRco1wAmLB1mLNcAibdIF
+ MzOg==
+X-Gm-Message-State: AOJu0Yz83lmFE29WaKdcIbDi8b0+PMFR+RFiA0zpJ/U6Mi1bI/OU6+Bg
+ TWXWRUXlFx8aaxBkiw/7tkqGPVjyrZkoewCshUx1Oc89dRhYwTPovTQgiAlEHsQ=
+X-Google-Smtp-Source: AGHT+IH0/5iDtgDsLwpGN/YmUhRGA55XSWPIdNMzHkhCmG1fsWPv29/an+50Zc6oVwnQznVwV1dJEg==
+X-Received: by 2002:a17:906:57ca:b0:a3f:ce8:1234 with SMTP id
+ u10-20020a17090657ca00b00a3f0ce81234mr403891ejr.68.1708419190280; 
+ Tue, 20 Feb 2024 00:53:10 -0800 (PST)
+Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
+ [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
+ cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 00:53:10 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ xen-devel@lists.xenproject.org
+Subject: [PATCH v1 03/21] Xen headers: correct typos
+Date: Tue, 20 Feb 2024 10:52:10 +0200
+Message-Id: <dca380ada7f7eabfb473828eccafc2902b1985b7.1708419115.git.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,393 +97,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qdev.c is a mixture between IDE bus specific functions and IDE device
-functions. Let's split it up to make it more obvious which part is
-related to bus handling and which part is related to device handling.
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- hw/ide/ide-bus.c             | 111 +++++++++++++++++++++++++++++++++++
- hw/ide/{qdev.c => ide-dev.c} |  87 +--------------------------
- hw/arm/Kconfig               |   2 +
- hw/ide/Kconfig               |  30 ++++++----
- hw/ide/meson.build           |   3 +-
- 5 files changed, 134 insertions(+), 99 deletions(-)
- create mode 100644 hw/ide/ide-bus.c
- rename hw/ide/{qdev.c => ide-dev.c} (78%)
+ include/hw/xen/interface/arch-x86/xen-x86_64.h | 2 +-
+ include/hw/xen/interface/arch-x86/xen.h        | 2 +-
+ include/hw/xen/interface/event_channel.h       | 2 +-
+ include/hw/xen/interface/grant_table.h         | 2 +-
+ include/hw/xen/interface/hvm/hvm_op.h          | 2 +-
+ include/hw/xen/interface/io/blkif.h            | 4 ++--
+ include/hw/xen/interface/io/fbif.h             | 2 +-
+ include/hw/xen/interface/io/kbdif.h            | 2 +-
+ include/hw/xen/interface/io/ring.h             | 2 +-
+ include/hw/xen/interface/memory.h              | 2 +-
+ include/hw/xen/interface/physdev.h             | 4 ++--
+ include/hw/xen/interface/xen.h                 | 4 ++--
+ 12 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/hw/ide/ide-bus.c b/hw/ide/ide-bus.c
-new file mode 100644
-index 0000000000..57fe67b29c
---- /dev/null
-+++ b/hw/ide/ide-bus.c
-@@ -0,0 +1,111 @@
-+/*
-+ * ide bus support for qdev.
-+ *
-+ * Copyright (c) 2009 Gerd Hoffmann <kraxel@redhat.com>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/module.h"
-+#include "hw/ide/internal.h"
-+#include "sysemu/block-backend.h"
-+#include "sysemu/blockdev.h"
-+#include "sysemu/runstate.h"
-+
-+static char *idebus_get_fw_dev_path(DeviceState *dev);
-+static void idebus_unrealize(BusState *qdev);
-+
-+static void ide_bus_class_init(ObjectClass *klass, void *data)
-+{
-+    BusClass *k = BUS_CLASS(klass);
-+
-+    k->get_fw_dev_path = idebus_get_fw_dev_path;
-+    k->unrealize = idebus_unrealize;
-+}
-+
-+static void idebus_unrealize(BusState *bus)
-+{
-+    IDEBus *ibus = IDE_BUS(bus);
-+
-+    if (ibus->vmstate) {
-+        qemu_del_vm_change_state_handler(ibus->vmstate);
-+    }
-+}
-+
-+static const TypeInfo ide_bus_info = {
-+    .name = TYPE_IDE_BUS,
-+    .parent = TYPE_BUS,
-+    .instance_size = sizeof(IDEBus),
-+    .class_init = ide_bus_class_init,
-+};
-+
-+void ide_bus_init(IDEBus *idebus, size_t idebus_size, DeviceState *dev,
-+                 int bus_id, int max_units)
-+{
-+    qbus_init(idebus, idebus_size, TYPE_IDE_BUS, dev, NULL);
-+    idebus->bus_id = bus_id;
-+    idebus->max_units = max_units;
-+}
-+
-+static char *idebus_get_fw_dev_path(DeviceState *dev)
-+{
-+    char path[30];
-+
-+    snprintf(path, sizeof(path), "%s@%x", qdev_fw_name(dev),
-+             ((IDEBus *)dev->parent_bus)->bus_id);
-+
-+    return g_strdup(path);
-+}
-+
-+IDEDevice *ide_bus_create_drive(IDEBus *bus, int unit, DriveInfo *drive)
-+{
-+    DeviceState *dev;
-+
-+    dev = qdev_new(drive->media_cd ? "ide-cd" : "ide-hd");
-+    qdev_prop_set_uint32(dev, "unit", unit);
-+    qdev_prop_set_drive_err(dev, "drive", blk_by_legacy_dinfo(drive),
-+                            &error_fatal);
-+    qdev_realize_and_unref(dev, &bus->qbus, &error_fatal);
-+    return DO_UPCAST(IDEDevice, qdev, dev);
-+}
-+
-+int ide_get_geometry(BusState *bus, int unit,
-+                     int16_t *cyls, int8_t *heads, int8_t *secs)
-+{
-+    IDEState *s = &DO_UPCAST(IDEBus, qbus, bus)->ifs[unit];
-+
-+    if (s->drive_kind != IDE_HD || !s->blk) {
-+        return -1;
-+    }
-+
-+    *cyls = s->cylinders;
-+    *heads = s->heads;
-+    *secs = s->sectors;
-+    return 0;
-+}
-+
-+int ide_get_bios_chs_trans(BusState *bus, int unit)
-+{
-+    return DO_UPCAST(IDEBus, qbus, bus)->ifs[unit].chs_trans;
-+}
-+
-+static void ide_bus_register_type(void)
-+{
-+    type_register_static(&ide_bus_info);
-+}
-+
-+type_init(ide_bus_register_type)
-diff --git a/hw/ide/qdev.c b/hw/ide/ide-dev.c
-similarity index 78%
-rename from hw/ide/qdev.c
-rename to hw/ide/ide-dev.c
-index 4189313d30..15d088fd06 100644
---- a/hw/ide/qdev.c
-+++ b/hw/ide/ide-dev.c
-@@ -1,5 +1,5 @@
- /*
-- * ide bus support for qdev.
-+ * IDE device functions
+diff --git a/include/hw/xen/interface/arch-x86/xen-x86_64.h b/include/hw/xen/interface/arch-x86/xen-x86_64.h
+index 5d9035ed22..3e94eeb0bf 100644
+--- a/include/hw/xen/interface/arch-x86/xen-x86_64.h
++++ b/include/hw/xen/interface/arch-x86/xen-x86_64.h
+@@ -89,7 +89,7 @@
+  *   RING1 -> RING3 kernel mode.
+  *   RING2 -> RING3 kernel mode.
+  *   RING3 -> RING3 user mode.
+- * However RING0 indicates that the guest kernel should return to iteself
++ * However RING0 indicates that the guest kernel should return to itself
+  * directly with
+  *      orb   $3,1*8(%rsp)
+  *      iretq
+diff --git a/include/hw/xen/interface/arch-x86/xen.h b/include/hw/xen/interface/arch-x86/xen.h
+index c0f4551247..323bd06a63 100644
+--- a/include/hw/xen/interface/arch-x86/xen.h
++++ b/include/hw/xen/interface/arch-x86/xen.h
+@@ -156,7 +156,7 @@ typedef uint64_t tsc_timestamp_t; /* RDTSC timestamp */
+  * information in this structure is updated, the fields read include: fpu_ctxt
+  * (if VGCT_I387_VALID is set), flags, user_regs and debugreg[*].
   *
-  * Copyright (c) 2009 Gerd Hoffmann <kraxel@redhat.com>
+- * Note: VCPUOP_initialise for HVM guests is non-symetric with
++ * Note: VCPUOP_initialise for HVM guests is non-symmetric with
+  * DOMCTL_setvcpucontext, and uses struct vcpu_hvm_context from hvm/hvm_vcpu.h
+  */
+ struct vcpu_guest_context {
+diff --git a/include/hw/xen/interface/event_channel.h b/include/hw/xen/interface/event_channel.h
+index 0d91a1c4af..d446863230 100644
+--- a/include/hw/xen/interface/event_channel.h
++++ b/include/hw/xen/interface/event_channel.h
+@@ -302,7 +302,7 @@ typedef struct evtchn_set_priority evtchn_set_priority_t;
+  * ` enum neg_errnoval
+  * ` HYPERVISOR_event_channel_op_compat(struct evtchn_op *op)
+  * `
+- * Superceded by new event_channel_op() hypercall since 0x00030202.
++ * Superseded by new event_channel_op() hypercall since 0x00030202.
+  */
+ struct evtchn_op {
+     uint32_t cmd; /* enum event_channel_op */
+diff --git a/include/hw/xen/interface/grant_table.h b/include/hw/xen/interface/grant_table.h
+index 1dfa17a6d0..7652e8bf81 100644
+--- a/include/hw/xen/interface/grant_table.h
++++ b/include/hw/xen/interface/grant_table.h
+@@ -607,7 +607,7 @@ DEFINE_XEN_GUEST_HANDLE(gnttab_cache_flush_t);
+  /*
+   * GNTMAP_contains_pte subflag:
+   *  0 => This map request contains a host virtual address.
+-  *  1 => This map request contains the machine addess of the PTE to update.
++  *  1 => This map request contains the machine address of the PTE to update.
+   */
+ #define _GNTMAP_contains_pte    (4)
+ #define GNTMAP_contains_pte     (1<<_GNTMAP_contains_pte)
+diff --git a/include/hw/xen/interface/hvm/hvm_op.h b/include/hw/xen/interface/hvm/hvm_op.h
+index e22adf0319..3defe1c108 100644
+--- a/include/hw/xen/interface/hvm/hvm_op.h
++++ b/include/hw/xen/interface/hvm/hvm_op.h
+@@ -337,7 +337,7 @@ struct xen_hvm_altp2m_op {
+ #define HVMOP_altp2m_vcpu_disable_notify  13
+ /* Get the active vcpu p2m index */
+ #define HVMOP_altp2m_get_p2m_idx          14
+-/* Set the "Supress #VE" bit for a range of pages */
++/* Set the "Suppress #VE" bit for a range of pages */
+ #define HVMOP_altp2m_set_suppress_ve_multi 15
+ /* Set visibility for a given altp2m view */
+ #define HVMOP_altp2m_set_visibility       16
+diff --git a/include/hw/xen/interface/io/blkif.h b/include/hw/xen/interface/io/blkif.h
+index 22f1eef0c0..4356956975 100644
+--- a/include/hw/xen/interface/io/blkif.h
++++ b/include/hw/xen/interface/io/blkif.h
+@@ -42,7 +42,7 @@
+  * All data in the XenStore is stored as strings.  Nodes specifying numeric
+  * values are encoded in decimal.  Integer value ranges listed below are
+  * expressed as fixed sized integer types capable of storing the conversion
+- * of a properly formated node string, without loss of information.
++ * of a properly formatted node string, without loss of information.
   *
-@@ -18,71 +18,21 @@
+  * Any specified default value is in effect if the corresponding XenBus node
+  * is not present in the XenStore.
+@@ -406,7 +406,7 @@
+  *     further requests may reuse these grants and require write permissions.
+  * (9) Linux implementation doesn't have a limit on the maximum number of
+  *     grants that can be persistently mapped in the frontend driver, but
+- *     due to the frontent driver implementation it should never be bigger
++ *     due to the frontend driver implementation it should never be bigger
+  *     than RING_SIZE * BLKIF_MAX_SEGMENTS_PER_REQUEST.
+  *(10) The discard-secure property may be present and will be set to 1 if the
+  *     backing device supports secure discard.
+diff --git a/include/hw/xen/interface/io/fbif.h b/include/hw/xen/interface/io/fbif.h
+index 93c73195d8..46046f6775 100644
+--- a/include/hw/xen/interface/io/fbif.h
++++ b/include/hw/xen/interface/io/fbif.h
+@@ -72,7 +72,7 @@ union xenfb_out_event
+  * just ignore it.  Frontends that use the advice should immediately
+  * refresh the framebuffer (and send an update notification event if
+  * those have been requested), then use the update frequency to guide
+- * their periodical refreshs.
++ * their periodical refresh.
+  */
+ #define XENFB_TYPE_REFRESH_PERIOD 1
+ #define XENFB_NO_REFRESH 0
+diff --git a/include/hw/xen/interface/io/kbdif.h b/include/hw/xen/interface/io/kbdif.h
+index 4bde6b3821..5794cc33f8 100644
+--- a/include/hw/xen/interface/io/kbdif.h
++++ b/include/hw/xen/interface/io/kbdif.h
+@@ -22,7 +22,7 @@
+  * All data in XenStore is stored as strings.  Nodes specifying numeric
+  * values are encoded in decimal. Integer value ranges listed below are
+  * expressed as fixed sized integer types capable of storing the conversion
+- * of a properly formated node string, without loss of information.
++ * of a properly formatted node string, without loss of information.
+  *
+  *****************************************************************************
+  *                            Backend XenBus Nodes
+diff --git a/include/hw/xen/interface/io/ring.h b/include/hw/xen/interface/io/ring.h
+index 025939278b..6d8f63d7a5 100644
+--- a/include/hw/xen/interface/io/ring.h
++++ b/include/hw/xen/interface/io/ring.h
+@@ -145,7 +145,7 @@ typedef struct __name##_back_ring __name##_back_ring_t
+  *
+  * N.B. these macros do NO INTERLOCKS OR FLOW CONTROL.
+  * This is OK in 1-for-1 request-response situations where the
+- * requestor (front end) never has more than RING_SIZE()-1
++ * requester (front end) never has more than RING_SIZE()-1
+  * outstanding requests.
   */
  
- #include "qemu/osdep.h"
--#include "sysemu/dma.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-block.h"
- #include "qemu/error-report.h"
--#include "qemu/main-loop.h"
- #include "qemu/module.h"
- #include "hw/ide/ide-dev.h"
- #include "sysemu/block-backend.h"
- #include "sysemu/blockdev.h"
- #include "sysemu/sysemu.h"
--#include "sysemu/runstate.h"
- #include "qapi/visitor.h"
+diff --git a/include/hw/xen/interface/memory.h b/include/hw/xen/interface/memory.h
+index 29cf5c8239..ad11573d90 100644
+--- a/include/hw/xen/interface/memory.h
++++ b/include/hw/xen/interface/memory.h
+@@ -167,7 +167,7 @@ struct xen_machphys_mfn_list {
  
--/* --------------------------------- */
--
--static char *idebus_get_fw_dev_path(DeviceState *dev);
--static void idebus_unrealize(BusState *qdev);
--
- static Property ide_props[] = {
-     DEFINE_PROP_UINT32("unit", IDEDevice, unit, -1),
-     DEFINE_PROP_END_OF_LIST(),
- };
+     /*
+      * Pointer to buffer to fill with list of extent starts. If there are
+-     * any large discontiguities in the machine address space, 2MB gaps in
++     * any large discontinuities in the machine address space, 2MB gaps in
+      * the machphys table will be represented by an MFN base of zero.
+      */
+     XEN_GUEST_HANDLE(xen_pfn_t) extent_start;
+diff --git a/include/hw/xen/interface/physdev.h b/include/hw/xen/interface/physdev.h
+index f0c0d4727c..053c045cf5 100644
+--- a/include/hw/xen/interface/physdev.h
++++ b/include/hw/xen/interface/physdev.h
+@@ -206,7 +206,7 @@ typedef struct physdev_manage_pci_ext physdev_manage_pci_ext_t;
+ DEFINE_XEN_GUEST_HANDLE(physdev_manage_pci_ext_t);
  
--static void ide_bus_class_init(ObjectClass *klass, void *data)
--{
--    BusClass *k = BUS_CLASS(klass);
--
--    k->get_fw_dev_path = idebus_get_fw_dev_path;
--    k->unrealize = idebus_unrealize;
--}
--
--static void idebus_unrealize(BusState *bus)
--{
--    IDEBus *ibus = IDE_BUS(bus);
--
--    if (ibus->vmstate) {
--        qemu_del_vm_change_state_handler(ibus->vmstate);
--    }
--}
--
--static const TypeInfo ide_bus_info = {
--    .name = TYPE_IDE_BUS,
--    .parent = TYPE_BUS,
--    .instance_size = sizeof(IDEBus),
--    .class_init = ide_bus_class_init,
--};
--
--void ide_bus_init(IDEBus *idebus, size_t idebus_size, DeviceState *dev,
--                 int bus_id, int max_units)
--{
--    qbus_init(idebus, idebus_size, TYPE_IDE_BUS, dev, NULL);
--    idebus->bus_id = bus_id;
--    idebus->max_units = max_units;
--}
--
--static char *idebus_get_fw_dev_path(DeviceState *dev)
--{
--    char path[30];
--
--    snprintf(path, sizeof(path), "%s@%x", qdev_fw_name(dev),
--             ((IDEBus*)dev->parent_bus)->bus_id);
--
--    return g_strdup(path);
--}
--
- static void ide_qdev_realize(DeviceState *qdev, Error **errp)
- {
-     IDEDevice *dev = IDE_DEVICE(qdev);
-@@ -121,40 +71,6 @@ static void ide_qdev_realize(DeviceState *qdev, Error **errp)
-     dc->realize(dev, errp);
- }
+ /*
+- * Argument to physdev_op_compat() hypercall. Superceded by new physdev_op()
++ * Argument to physdev_op_compat() hypercall. Superseded by new physdev_op()
+  * hypercall since 0x00030202.
+  */
+ struct physdev_op {
+@@ -332,7 +332,7 @@ DEFINE_XEN_GUEST_HANDLE(physdev_dbgp_op_t);
  
--IDEDevice *ide_bus_create_drive(IDEBus *bus, int unit, DriveInfo *drive)
--{
--    DeviceState *dev;
--
--    dev = qdev_new(drive->media_cd ? "ide-cd" : "ide-hd");
--    qdev_prop_set_uint32(dev, "unit", unit);
--    qdev_prop_set_drive_err(dev, "drive", blk_by_legacy_dinfo(drive),
--                            &error_fatal);
--    qdev_realize_and_unref(dev, &bus->qbus, &error_fatal);
--    return DO_UPCAST(IDEDevice, qdev, dev);
--}
--
--int ide_get_geometry(BusState *bus, int unit,
--                     int16_t *cyls, int8_t *heads, int8_t *secs)
--{
--    IDEState *s = &DO_UPCAST(IDEBus, qbus, bus)->ifs[unit];
--
--    if (s->drive_kind != IDE_HD || !s->blk) {
--        return -1;
--    }
--
--    *cyls = s->cylinders;
--    *heads = s->heads;
--    *secs = s->sectors;
--    return 0;
--}
--
--int ide_get_bios_chs_trans(BusState *bus, int unit)
--{
--    return DO_UPCAST(IDEBus, qbus, bus)->ifs[unit].chs_trans;
--}
--
--/* --------------------------------- */
--
- void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp)
- {
-     IDEBus *bus = DO_UPCAST(IDEBus, qbus, dev->qdev.parent_bus);
-@@ -347,7 +263,6 @@ static const TypeInfo ide_device_type_info = {
- 
- static void ide_register_types(void)
- {
--    type_register_static(&ide_bus_info);
-     type_register_static(&ide_hd_info);
-     type_register_static(&ide_cd_info);
-     type_register_static(&ide_device_type_info);
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 29abe1da29..b372b819a4 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -275,6 +275,8 @@ config SBSA_REF
-     select USB_XHCI_SYSBUS
-     select WDT_SBSA
-     select BOCHS_DISPLAY
-+    select IDE_BUS
-+    select IDE_DEV
- 
- config SABRELITE
-     bool
-diff --git a/hw/ide/Kconfig b/hw/ide/Kconfig
-index b93d6743d5..6dfc5a2129 100644
---- a/hw/ide/Kconfig
-+++ b/hw/ide/Kconfig
-@@ -1,51 +1,58 @@
- config IDE_CORE
-     bool
- 
--config IDE_QDEV
-+config IDE_BUS
-     bool
-     select IDE_CORE
- 
-+config IDE_DEV
-+    bool
-+    depends on IDE_BUS
-+
- config IDE_PCI
-     bool
-     depends on PCI
--    select IDE_QDEV
-+    select IDE_BUS
-+    select IDE_DEV
- 
- config IDE_ISA
-     bool
-     depends on ISA_BUS
--    select IDE_QDEV
-+    select IDE_BUS
-+    select IDE_DEV
- 
- config IDE_PIIX
-     bool
-     select IDE_PCI
--    select IDE_QDEV
- 
- config IDE_CMD646
-     bool
-     select IDE_PCI
--    select IDE_QDEV
- 
- config IDE_MACIO
-     bool
--    select IDE_QDEV
-+    select IDE_BUS
-+    select IDE_DEV
- 
- config IDE_MMIO
-     bool
--    select IDE_QDEV
-+    select IDE_BUS
-+    select IDE_DEV
- 
- config IDE_VIA
-     bool
-     select IDE_PCI
--    select IDE_QDEV
- 
- config MICRODRIVE
-     bool
--    select IDE_QDEV
-+    select IDE_BUS
-+    select IDE_DEV
-     depends on PCMCIA
- 
- config AHCI
-     bool
--    select IDE_QDEV
-+    select IDE_BUS
-+    select IDE_DEV
- 
- config AHCI_ICH9
-     bool
-@@ -56,8 +63,7 @@ config AHCI_ICH9
- config IDE_SII3112
-     bool
-     select IDE_PCI
--    select IDE_QDEV
- 
- config IDE_CF
-     bool
--    default y if IDE_QDEV
-+    default y if IDE_BUS
-diff --git a/hw/ide/meson.build b/hw/ide/meson.build
-index d2e5b45c9e..d09705cac0 100644
---- a/hw/ide/meson.build
-+++ b/hw/ide/meson.build
-@@ -1,15 +1,16 @@
- system_ss.add(when: 'CONFIG_AHCI', if_true: files('ahci.c'))
- system_ss.add(when: 'CONFIG_AHCI_ICH9', if_true: files('ich.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('ahci-allwinner.c'))
-+system_ss.add(when: 'CONFIG_IDE_BUS', if_true: files('ide-bus.c'))
- system_ss.add(when: 'CONFIG_IDE_CF', if_true: files('cf.c'))
- system_ss.add(when: 'CONFIG_IDE_CMD646', if_true: files('cmd646.c'))
- system_ss.add(when: 'CONFIG_IDE_CORE', if_true: files('core.c', 'atapi.c'))
-+system_ss.add(when: 'CONFIG_IDE_DEV', if_true: files('ide-dev.c'))
- system_ss.add(when: 'CONFIG_IDE_ISA', if_true: files('isa.c', 'ioport.c'))
- system_ss.add(when: 'CONFIG_IDE_MACIO', if_true: files('macio.c'))
- system_ss.add(when: 'CONFIG_IDE_MMIO', if_true: files('mmio.c'))
- system_ss.add(when: 'CONFIG_IDE_PCI', if_true: files('pci.c'))
- system_ss.add(when: 'CONFIG_IDE_PIIX', if_true: files('piix.c', 'ioport.c'))
--system_ss.add(when: 'CONFIG_IDE_QDEV', if_true: files('qdev.c'))
- system_ss.add(when: 'CONFIG_IDE_SII3112', if_true: files('sii3112.c'))
- system_ss.add(when: 'CONFIG_IDE_VIA', if_true: files('via.c'))
- system_ss.add(when: 'CONFIG_MICRODRIVE', if_true: files('microdrive.c'))
+ #if __XEN_INTERFACE_VERSION__ < 0x00040600
+ /*
+- * These all-capitals physdev operation names are superceded by the new names
++ * These all-capitals physdev operation names are superseded by the new names
+  * (defined above) since interface version 0x00030202. The guard above was
+  * added post-4.5 only though and hence shouldn't check for 0x00030202.
+  */
+diff --git a/include/hw/xen/interface/xen.h b/include/hw/xen/interface/xen.h
+index 920567e006..b8fe746f78 100644
+--- a/include/hw/xen/interface/xen.h
++++ b/include/hw/xen/interface/xen.h
+@@ -733,8 +733,8 @@ struct shared_info {
+      * are delivered by this mechanism:
+      *  1. Bi-directional inter- and intra-domain connections. Domains must
+      *     arrange out-of-band to set up a connection (usually by allocating
+-     *     an unbound 'listener' port and avertising that via a storage service
+-     *     such as xenstore).
++     *     an unbound 'listener' port and advertising that via a storage
++     *     service such as xenstore).
+      *  2. Physical interrupts. A domain with suitable hardware-access
+      *     privileges can bind an event-channel port to a physical interrupt
+      *     source.
 -- 
-2.43.2
+γαῖα πυρί μιχθήτω
 
 
