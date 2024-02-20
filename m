@@ -4,69 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 361EDC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 13:32:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09832C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 13:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcQEL-000390-Du; Tue, 20 Feb 2024 08:32:17 -0500
+	id 1rcQOA-0007sK-W7; Tue, 20 Feb 2024 08:42:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcQED-00038P-2R
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:32:09 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1rcQO8-0007ps-TW; Tue, 20 Feb 2024 08:42:24 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcQE3-0001mW-4e
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:32:08 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso5439151a12.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 05:31:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1rcQO6-0004C3-9k; Tue, 20 Feb 2024 08:42:24 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-564d9b0e96dso505310a12.2; 
+ Tue, 20 Feb 2024 05:42:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708435917; x=1709040717; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=BAJGdYtpYyL/Q1kNF26aw0+oXulhkKJp6xrIWjfrmSo=;
- b=XAd1hWmChmDS/VS8VhW+iTo+0KE9fUHDA820lfkJRJ5SgRX5D6mrrFBPpxP/GVMDHD
- eRsz6pRlojT0IUW0wZhod9IUQgJNH1kCnMSqMNHBMKezB5O+B0eeLMJOiEuKmEiXl+v/
- 8MK+m5Ol38N9qBd4n4viYOXFR6zF+pjaJv8c+kX7stxpvuAmqa514dPszVWDYjLRERn8
- 9QTUhX879Qz2YoNKdMaVlp7CAejX8YF8fBQeB7d7qjkqG90Cqkc3GdCRfKEeliwb7YN2
- r2jjuf/Lyk+OZorfGz/KrJp7skAZGYGop+YCUOgQmLR6R98EVegQ8LiE06HFnFgGj7/F
- tc/A==
+ d=gmail.com; s=20230601; t=1708436540; x=1709041340; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IQ6XwSAjva49cmwTUlopjulzt/RruLvkkCiwYvTtDUk=;
+ b=kd9YSwl6CkVJ1YT8APf2DxbebER8Z0Z0mJmcLXPAmwP5qhdWUxbP7o73Ft+jfwo8kP
+ o5ZWD43QKmQBRAlFuvHGvvIBgJNMtHvUpps80ctrCevk0XT10hysXizSvS1wXm+SUjgm
+ tjXLv66/ZFnGCRMM4ZshqI3ep2Mzv8bE1B3LEcqxroIhMQIqsjOQ7S/CF1nU9GEJOZBV
+ +EE80p/DNxFdCcmdAYlwsXwY5wk3kEQhEr1739e89QysIk3lol/C98nub9WBAiUS6l7h
+ jVa0dATC+McduOBD1PVY63g5AuNAT4umbciEIWFdBIbrbM+SRe5KUBDmT+sZJ7t4bIbF
+ ITJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708435917; x=1709040717;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BAJGdYtpYyL/Q1kNF26aw0+oXulhkKJp6xrIWjfrmSo=;
- b=Hkcf6Y/eHzKZji2rY/8gR0K2mo0dGFVL8a4N6t6LIy0dsUWyym+cmbH45C8Bcj/vOw
- 5Oexsa9BSaIQsPJCa0jvMxNq5Neqgnj9betCeCMJTKgh1VFJ6tvjIlO7oB9ZqV/sfY4r
- RflmJCQYBQTu7B8dbgohZkt7T0cagw94nSlr6S44aka0O5I5nK8QP6T5Pjqep4TIagjh
- miX5MSHVQ5uBkxtv2tsIAZt9Gdyt+RWlg4UgHXio1i6gHHrwcgP1v6vdWx7dUYwcmRsa
- 8nBMNieWud42xja1Xp3QnA2cN2EhoCGVUqGdfyClwFotDhUNByOQJa49DiQ0fho1A1Wd
- C06w==
-X-Gm-Message-State: AOJu0YzDpqTR2fMqipDIormjy/IdlGSj0cUMih7dgAK47K2b2meCb4j9
- rDGAb58/q8FBIh/Px/b/sf6f0mE6kv81Dw5Qd7r9aEg5XKorsuxFvME7N51y0D4368EGTuIEMku
- uIFnLW9I2OTakwYC4wLdLom+MMSVEwfLG0A4=
-X-Google-Smtp-Source: AGHT+IFWTShOIGmjQqc36ujn7nmHcUMw4pVHlwVHCoyZ2wzSnytJ3UqWEp2tiBykhOZ4k0htmRq9/FME2cOhysNoiZA=
-X-Received: by 2002:a05:6402:38a:b0:563:dd8f:996d with SMTP id
- o10-20020a056402038a00b00563dd8f996dmr8321029edv.9.1708435917083; Tue, 20 Feb
- 2024 05:31:57 -0800 (PST)
-MIME-Version: 1.0
-From: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Date: Tue, 20 Feb 2024 14:31:46 +0100
-Message-ID: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
-Subject: QNX VM hang on Qemu
+ d=1e100.net; s=20230601; t=1708436540; x=1709041340;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IQ6XwSAjva49cmwTUlopjulzt/RruLvkkCiwYvTtDUk=;
+ b=lF9lHq2BM64gPfQnFYcDGPle4EPY+OGhGLug05YF/+MhlbwQwRjW6YQ7jno6296i7R
+ KEyeHlzjFmUKSKqPWkv1TYUok4VW+LDUo9TJ8JGsMEdtPPbQORiT7+5PYUI6oZ5E4bPs
+ qcVeIHvscAYkBc8SJ8mw3AbfK+HaRNumMBlYxJN9Z3PxZfwPW6dma54aKYmnU3kIWB/5
+ g2AWrdCTFGzC2cNTTztCrCZhtm80TVPweY6WGVBKRroE1NecYrjBYKVHYd7PxnxRgQV3
+ TA20w3ahRWTa0hE4eNIPCXqAJsSN9M4+aPIaPP2nHHDnmpiLsic0CX+/WyMVPE/X3tkj
+ E2OQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWam0tg3biuxxs4yBXgSDc97xWNaljzkZ2BIttJgY8hsejWFkyuhWjYz18a7zU4r67hJ353LoIzKSSy0/jdM/9KSD1N
+X-Gm-Message-State: AOJu0Yx5tlnpc5zJHEh+PFb5Kcu66a9+9bPenU7BjqLNhoowq7LDBsUq
+ pVffFWAazHX6DR0gb6UzT+8OzlfU3w4NFy4VjZk8wiKstAH1yF1JUo5ZzgLF
+X-Google-Smtp-Source: AGHT+IErwaCBSqyxFoBMqMMxDEWpafynE8f/4Xq78j6QXJXhFQJ/qF0BbkiWT3ijQB135MFKiw9gHA==
+X-Received: by 2002:a17:906:b154:b0:a3e:cb72:b6fd with SMTP id
+ bt20-20020a170906b15400b00a3ecb72b6fdmr2648242ejb.23.1708436539844; 
+ Tue, 20 Feb 2024 05:42:19 -0800 (PST)
+Received: from localhost.localdomain ([37.186.51.232])
+ by smtp.gmail.com with ESMTPSA id
+ h23-20020a170906591700b00a3ef17464b1sm728449ejq.9.2024.02.20.05.42.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 05:42:19 -0800 (PST)
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
 To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f59aae0611d03bd4"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+Cc: peter.maydell@linaro.org, philmd@linaro.org, pbonzini@redhat.com,
+ qemu-arm@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>
+Subject: [PATCH v3 1/3] hw/i2c: Implement Broadcom Serial Controller (BSC)
+Date: Tue, 20 Feb 2024 19:11:18 +0530
+Message-Id: <20240220134120.2961059-2-rayhan.faizel@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240220134120.2961059-1-rayhan.faizel@gmail.com>
+References: <20240220134120.2961059-1-rayhan.faizel@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,78 +94,429 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f59aae0611d03bd4
-Content-Type: text/plain; charset="UTF-8"
+A few deficiencies in the current device model need to be noted.
 
-Hi everyone,
-I am facing an issue during booting QNX VM using Qemu,
-I have an image to Boot the VM. and when I trigger a Qemu command to create
-a VM it is stuck.
-I also used a debugger to investigate but I can not see any result by GDB.
+1. FIFOs are not used. All sends and receives are done directly.
+2. Repeated starts are not emulated. Repeated starts can be triggered in real
+hardware by sending a new read transfer request in the window time between
+transfer active set of write transfer request and done bit set of the same.
 
-Here is the output of first windows
+Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+---
+ docs/system/arm/raspi.rst    |   1 +
+ hw/i2c/Kconfig               |   4 +
+ hw/i2c/bcm2835_i2c.c         | 278 +++++++++++++++++++++++++++++++++++
+ hw/i2c/meson.build           |   1 +
+ include/hw/i2c/bcm2835_i2c.h |  80 ++++++++++
+ 5 files changed, 364 insertions(+)
+ create mode 100644 hw/i2c/bcm2835_i2c.c
+ create mode 100644 include/hw/i2c/bcm2835_i2c.h
 
-qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display none
--device loader,file=QNX-IFS,addr=0x00100000,cpu-num=0 -drive
-file=/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=sd,format=raw,index=1
--boot mode=5 -net nic,model=cadence_gem -net nic,model=cadence_gem -net
-nic,model=cadence_gem -net nic,model=cadence_gem,netdev=xzynq0 -netdev
-user,id=xzynq0,tftp=/tftpboot  -nographic -global
-xlnx,zynqmp-boot.cpu-num=0 -global 'xlnx,zynqmp-boot.use-pmufw=true' -s -S
-
-qemu-system-aarch64: warning: hub 0 is not connected to host network
-
-on the other hand, here is the output of GDB:
-
-(gdb) target remote :1234
-Remote debugging using :1234
-warning: No executable has been specified and target does not support
-determining executable automatically.  Try using the "file" command.
-0x0000000000100000 in ?? ()
-(gdb) c
-Continuing.
-
+diff --git a/docs/system/arm/raspi.rst b/docs/system/arm/raspi.rst
+index d0a6f08b2b..f2c0d6d6b8 100644
+--- a/docs/system/arm/raspi.rst
++++ b/docs/system/arm/raspi.rst
+@@ -34,6 +34,7 @@ Implemented devices
+  * MailBox controller (MBOX)
+  * VideoCore firmware (property)
+  * Peripheral SPI controller (SPI)
++ * Broadcom Serial Controller (I2C)
+ 
+ 
+ Missing devices
+diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
+index 14886b35da..596a7a3165 100644
+--- a/hw/i2c/Kconfig
++++ b/hw/i2c/Kconfig
+@@ -45,3 +45,7 @@ config PCA954X
+ config PMBUS
+     bool
+     select SMBUS
++
++config BCM2835_I2C
++    bool
++    select I2C
+diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
+new file mode 100644
+index 0000000000..d6b9bf887a
+--- /dev/null
++++ b/hw/i2c/bcm2835_i2c.c
+@@ -0,0 +1,278 @@
++/*
++ * Broadcom Serial Controller (BSC)
++ *
++ * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
++ *
++ * SPDX-License-Identifier: MIT
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "hw/i2c/bcm2835_i2c.h"
++#include "hw/irq.h"
++#include "migration/vmstate.h"
++
++static void bcm2835_i2c_update_interrupt(BCM2835I2CState *s)
++{
++    int do_interrupt = 0;
++    /* Interrupt on RXR (Needs reading) */
++    if (s->c & BCM2835_I2C_C_INTR && s->s & BCM2835_I2C_S_RXR) {
++        do_interrupt = 1;
++    }
++
++    /* Interrupt on TXW (Needs writing) */
++    if (s->c & BCM2835_I2C_C_INTT && s->s & BCM2835_I2C_S_TXW) {
++        do_interrupt = 1;
++    }
++
++    /* Interrupt on DONE (Transfer complete) */
++    if (s->c & BCM2835_I2C_C_INTD && s->s & BCM2835_I2C_S_DONE) {
++        do_interrupt = 1;
++    }
++    qemu_set_irq(s->irq, do_interrupt);
++}
++
++static void bcm2835_i2c_begin_transfer(BCM2835I2CState *s)
++{
++    int direction = s->c & BCM2835_I2C_C_READ;
++    if (i2c_start_transfer(s->bus, s->a, direction)) {
++        s->s |= BCM2835_I2C_S_ERR;
++    }
++    s->s |= BCM2835_I2C_S_TA;
++
++    if (direction) {
++        s->s |= BCM2835_I2C_S_RXR | BCM2835_I2C_S_RXD;
++    } else {
++        s->s |= BCM2835_I2C_S_TXW;
++    }
++}
++
++static void bcm2835_i2c_finish_transfer(BCM2835I2CState *s)
++{
++    /*
++     * STOP is sent when DLEN counts down to zero.
++     *
++     * https://github.com/torvalds/linux/blob/master/drivers/i2c/busses/i2c-bcm2835.c#L223-L261
++     * It is possible to initiate repeated starts on real hardware.
++     * However, this requires sending another ST request before the bytes in
++     * TX FIFO are shifted out.
++     *
++     * This is not emulated currently.
++     */
++    i2c_end_transfer(s->bus);
++    s->s |= BCM2835_I2C_S_DONE;
++
++    /* Ensure RXD is cleared, otherwise the driver registers an error */
++    s->s &= ~(BCM2835_I2C_S_TA | BCM2835_I2C_S_RXR |
++              BCM2835_I2C_S_TXW | BCM2835_I2C_S_RXD);
++}
++
++static uint64_t bcm2835_i2c_read(void *opaque, hwaddr addr, unsigned size)
++{
++    BCM2835I2CState *s = opaque;
++    uint32_t readval = 0;
++
++    switch (addr) {
++    case BCM2835_I2C_C:
++        readval = s->c;
++        break;
++    case BCM2835_I2C_S:
++        readval = s->s;
++        break;
++    case BCM2835_I2C_DLEN:
++        readval = s->dlen;
++        break;
++    case BCM2835_I2C_A:
++        readval = s->a;
++        break;
++    case BCM2835_I2C_FIFO:
++        /* We receive I2C messages directly instead of using FIFOs */
++        if (s->s & BCM2835_I2C_S_TA) {
++            readval = i2c_recv(s->bus);
++            s->dlen -= 1;
++
++            if (s->dlen == 0) {
++                bcm2835_i2c_finish_transfer(s);
++            }
++        }
++        bcm2835_i2c_update_interrupt(s);
++        break;
++    case BCM2835_I2C_DIV:
++        readval = s->div;
++        break;
++    case BCM2835_I2C_DEL:
++        readval = s->del;
++        break;
++    case BCM2835_I2C_CLKT:
++        readval = s->clkt;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, addr);
++    }
++
++    return readval;
++}
++
++static void bcm2835_i2c_write(void *opaque, hwaddr addr,
++                              uint64_t value, unsigned int size)
++{
++    BCM2835I2CState *s = opaque;
++    uint32_t writeval = value;
++
++    switch (addr) {
++    case BCM2835_I2C_C:
++        /* ST is a one-shot operation; it must read back as 0 */
++        s->c = writeval & ~BCM2835_I2C_C_ST;
++
++        /* Start transfer */
++        if (writeval & (BCM2835_I2C_C_ST | BCM2835_I2C_C_I2CEN)) {
++            bcm2835_i2c_begin_transfer(s);
++            /*
++             * Handle special case where transfer starts with zero data length.
++             * Required for zero length i2c quick messages to work.
++             */
++            if (s->dlen == 0) {
++                bcm2835_i2c_finish_transfer(s);
++            }
++        }
++
++        bcm2835_i2c_update_interrupt(s);
++        break;
++    case BCM2835_I2C_S:
++        if (writeval & BCM2835_I2C_S_DONE && s->s & BCM2835_I2C_S_DONE) {
++            /* When DONE is cleared, DLEN should read last written value. */
++            s->dlen = s->last_dlen;
++        }
++
++        /* Clear DONE, CLKT and ERR by writing 1 */
++        s->s &= ~(writeval & (BCM2835_I2C_S_DONE |
++                  BCM2835_I2C_S_ERR | BCM2835_I2C_S_CLKT));
++        break;
++    case BCM2835_I2C_DLEN:
++        s->dlen = writeval;
++        s->last_dlen = writeval;
++        break;
++    case BCM2835_I2C_A:
++        s->a = writeval;
++        break;
++    case BCM2835_I2C_FIFO:
++        /* We send I2C messages directly instead of using FIFOs */
++        if (s->s & BCM2835_I2C_S_TA) {
++            if (s->s & BCM2835_I2C_S_TXD) {
++                if (!i2c_send(s->bus, writeval & 0xff)) {
++                    s->dlen -= 1;
++                } else {
++                    s->s |= BCM2835_I2C_S_ERR;
++                }
++            }
++
++            if (s->dlen == 0) {
++                bcm2835_i2c_finish_transfer(s);
++            }
++        }
++        bcm2835_i2c_update_interrupt(s);
++        break;
++    case BCM2835_I2C_DIV:
++        s->div = writeval;
++        break;
++    case BCM2835_I2C_DEL:
++        s->del = writeval;
++        break;
++    case BCM2835_I2C_CLKT:
++        s->clkt = writeval;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, addr);
++    }
++}
++
++static const MemoryRegionOps bcm2835_i2c_ops = {
++    .read = bcm2835_i2c_read,
++    .write = bcm2835_i2c_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++};
++
++static void bcm2835_i2c_realize(DeviceState *dev, Error **errp)
++{
++    BCM2835I2CState *s = BCM2835_I2C(dev);
++    s->bus = i2c_init_bus(dev, NULL);
++
++    memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
++                          TYPE_BCM2835_I2C, 0x24);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
++    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
++}
++
++static void bcm2835_i2c_reset(DeviceState *dev)
++{
++    BCM2835I2CState *s = BCM2835_I2C(dev);
++
++    /* Reset values according to BCM2835 Peripheral Documentation */
++    s->c = 0x0;
++    s->s = BCM2835_I2C_S_TXD | BCM2835_I2C_S_TXE;
++    s->dlen = 0x0;
++    s->a = 0x0;
++    s->div = 0x5dc;
++    s->del = 0x00300030;
++    s->clkt = 0x40;
++}
++
++static const VMStateDescription vmstate_bcm2835_i2c = {
++    .name = TYPE_BCM2835_I2C,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(c, BCM2835I2CState),
++        VMSTATE_UINT32(s, BCM2835I2CState),
++        VMSTATE_UINT32(dlen, BCM2835I2CState),
++        VMSTATE_UINT32(a, BCM2835I2CState),
++        VMSTATE_UINT32(div, BCM2835I2CState),
++        VMSTATE_UINT32(del, BCM2835I2CState),
++        VMSTATE_UINT32(clkt, BCM2835I2CState),
++        VMSTATE_UINT32(last_dlen, BCM2835I2CState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void bcm2835_i2c_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->reset = bcm2835_i2c_reset;
++    dc->realize = bcm2835_i2c_realize;
++    dc->vmsd = &vmstate_bcm2835_i2c;
++}
++
++static const TypeInfo bcm2835_i2c_info = {
++    .name = TYPE_BCM2835_I2C,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(BCM2835I2CState),
++    .class_init = bcm2835_i2c_class_init,
++};
++
++static void bcm2835_i2c_register_types(void)
++{
++    type_register_static(&bcm2835_i2c_info);
++}
++
++type_init(bcm2835_i2c_register_types)
+diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
+index b58bc167db..c459adcb59 100644
+--- a/hw/i2c/meson.build
++++ b/hw/i2c/meson.build
+@@ -17,4 +17,5 @@ i2c_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files('ppc4xx_i2c.c'))
+ i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
+ i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
++i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
+ system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
+diff --git a/include/hw/i2c/bcm2835_i2c.h b/include/hw/i2c/bcm2835_i2c.h
+new file mode 100644
+index 0000000000..0a56df4720
+--- /dev/null
++++ b/include/hw/i2c/bcm2835_i2c.h
+@@ -0,0 +1,80 @@
++/*
++ * Broadcom Serial Controller (BSC)
++ *
++ * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
++ *
++ * SPDX-License-Identifier: MIT
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * The above copyright notice and this permission notice shall be included in
++ * all copies or substantial portions of the Software.
++ *
++ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
++ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++ * THE SOFTWARE.
++ */
++
++#include "hw/sysbus.h"
++#include "hw/i2c/i2c.h"
++#include "qom/object.h"
++
++#define TYPE_BCM2835_I2C "bcm2835-i2c"
++OBJECT_DECLARE_SIMPLE_TYPE(BCM2835I2CState, BCM2835_I2C)
++
++#define BCM2835_I2C_C       0x0                   /* Control */
++#define BCM2835_I2C_S       0x4                   /* Status */
++#define BCM2835_I2C_DLEN    0x8                   /* Data Length */
++#define BCM2835_I2C_A       0xc                   /* Slave Address */
++#define BCM2835_I2C_FIFO    0x10                  /* FIFO */
++#define BCM2835_I2C_DIV     0x14                  /* Clock Divider */
++#define BCM2835_I2C_DEL     0x18                  /* Data Delay */
++#define BCM2835_I2C_CLKT    0x20                  /* Clock Stretch Timeout */
++
++#define BCM2835_I2C_C_I2CEN     BIT(15)           /* I2C enable */
++#define BCM2835_I2C_C_INTR      BIT(10)           /* Interrupt on RXR */
++#define BCM2835_I2C_C_INTT      BIT(9)            /* Interrupt on TXW */
++#define BCM2835_I2C_C_INTD      BIT(8)            /* Interrupt on DONE */
++#define BCM2835_I2C_C_ST        BIT(7)            /* Start transfer */
++#define BCM2835_I2C_C_CLEAR     (BIT(5) | BIT(4)) /* Clear FIFO */
++#define BCM2835_I2C_C_READ      BIT(0)            /* I2C read mode */
++
++#define BCM2835_I2C_S_CLKT      BIT(9)            /* Clock stretch timeout */
++#define BCM2835_I2C_S_ERR       BIT(8)            /* Slave error */
++#define BCM2835_I2C_S_RXF       BIT(7)            /* RX FIFO full */
++#define BCM2835_I2C_S_TXE       BIT(6)            /* TX FIFO empty */
++#define BCM2835_I2C_S_RXD       BIT(5)            /* RX bytes available */
++#define BCM2835_I2C_S_TXD       BIT(4)            /* TX space available */
++#define BCM2835_I2C_S_RXR       BIT(3)            /* RX FIFO needs reading */
++#define BCM2835_I2C_S_TXW       BIT(2)            /* TX FIFO needs writing */
++#define BCM2835_I2C_S_DONE      BIT(1)            /* I2C Transfer complete */
++#define BCM2835_I2C_S_TA        BIT(0)            /* I2C Transfer active */
++
++struct BCM2835I2CState {
++    /* <private> */
++    SysBusDevice parent_obj;
++
++    /* <public> */
++    MemoryRegion iomem;
++    I2CBus *bus;
++    qemu_irq irq;
++
++    uint32_t c;
++    uint32_t s;
++    uint32_t dlen;
++    uint32_t a;
++    uint32_t div;
++    uint32_t del;
++    uint32_t clkt;
++
++    uint32_t last_dlen;
++};
 -- 
-Kind Regard-
-Faiq Ali Sayed
+2.34.1
 
---000000000000f59aae0611d03bd4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi everyone, <br></div><div>I am facing an issue duri=
-ng booting QNX VM using Qemu,</div><div>I have an image to Boot the VM. and=
- when I trigger a Qemu command to create a VM it is stuck.</div><div>I also=
- used a debugger to investigate but I can not see any result by GDB.</div><=
-div><br></div><div>Here is the output of first windows</div><div><br></div>=
-<div><div><span style=3D"background-color:rgb(238,238,238)">qemu-system-aar=
-ch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display none -device loader,f=
-ile=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive file=3D/home/faiq/Downlo=
-ads/install/BootSD/qemu-boot_sd.img,if=3Dsd,format=3Draw,index=3D1
- -boot mode=3D5 -net nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -=
-net
- nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netd=
-ev user,id=3Dxzynq0,tftp=3D/tftpboot =C2=A0-nographic -global xlnx,zynqmp-b=
-oot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.use-pmufw=3Dtrue&#39; -s -S</=
-span></div><span class=3D"gmail-im"><div><span style=3D"background-color:rg=
-b(238,238,238)"><br></span></div><div><span style=3D"background-color:rgb(2=
-38,238,238)">qemu-system-aarch64: warning: hub 0 is not connected to host n=
-etwork</span><br></div><div><br></div></span><div>on the other hand, here i=
-s the output of GDB:</div><div><span style=3D"background-color:rgb(204,204,=
-204)"><br></span></div><div><span style=3D"background-color:rgb(238,238,238=
-)">(gdb) target remote :1234<br>Remote debugging using :1234<br>warning: No=
- executable has been specified and target does not support<br>determining e=
-xecutable automatically.=C2=A0 Try using the &quot;file&quot; command.<br>0=
-x0000000000100000 in ?? ()<br>(gdb) c<br>Continuing.</span></div></div><div=
-><br><span class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" =
-class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"lt=
-r"><div dir=3D"ltr">
-<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
-lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
-=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
-v></div></div></div>
-<div><font style=3D"background-color:#ffffff" size=3D"1"><br></font></div><=
-br></div></div></div></div></div>
-
---000000000000f59aae0611d03bd4--
 
