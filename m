@@ -4,83 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29C8C54764
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD6A0C48BC3
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:55:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLsj-0000jS-5u; Tue, 20 Feb 2024 03:53:41 -0500
+	id 1rcLuJ-0005kt-J6; Tue, 20 Feb 2024 03:55:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsh-0000hK-FQ
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:39 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLse-0008Ho-66
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:39 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a36126ee41eso683564166b.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708419215; x=1709024015; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GDgHSGvtF7qGWqMyv82hrdTgzPdhn+1HJ5vS2mvdT+k=;
- b=WFs8ucruAXeC3ZWMKBzM8JO8YHKEN6OVm6dPuxfGoCggWu+h2kT4yNwRUx3+2ijAG5
- HxNNCGy8XjlP9k34lYSla/pj6olcheJqfHpqEEZobRtJ1XRoyUy/HqYu+zqXi3MyqL13
- Jsd3VONaZNZ0ZzdYRUFurXwXY44y7dLdPfUtXFbEjVZmFL7lelGyqTCAF6qfXtTw4NVJ
- mnccoNirNMYe5wMNcSPCO+lM4IIyoosGOKKeWISM1DH1Tw9wIXiTe9XaiqgSiONg7Ytl
- zIxJvFJLhPXsgdPF9wdWfZVlEWzN0hgKnegwjYEgj2qvrxpR7qs2avFe4hKKoF1Rro0g
- 42tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708419215; x=1709024015;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GDgHSGvtF7qGWqMyv82hrdTgzPdhn+1HJ5vS2mvdT+k=;
- b=FrGtEFVZu8b4TWIud6Jxpx8bFEGs89btXaPowC/vTs+5bDjIFa12+VWFNeRE42h9xh
- zN27YNDsiQiKVfPqycvP5FIsZ4KkxHnlDh66eFWCuWwTI5b7WT8MBAJfeMzs7r77BcOY
- rrk2MvUmTFN0tJf3uBlkciLJfjwWxvqgkoUQ3T1Y9IRVO6HwLXsBdK4MhqIQSTEHix0O
- z/ov8qSSXVMpJTHZ+GS2/dIQANMbBn3gxD48ZppAZtftgxSPRVVX2UgbrbxEp1O93dJ5
- bCiPYcaXZ9aGIwFA0GCbIOEnHzrNhFV61w9BRu33Ik0/vpzjmz5llDL3OntCgTZ+SQ7e
- lIGQ==
-X-Gm-Message-State: AOJu0YzgtebJxAB3y16AQa/f/NPPtNMl61kQRKZboSNJfsINzXXbHkbn
- irGTwWb0pmfVcNgsJZUQv7GUX+y0+FkSO0MI9G2/WX8kUORAKH8r5V8rrklA6+I=
-X-Google-Smtp-Source: AGHT+IF05Jr+3eODfG9nVaaMLbz71kgqZc91A+v3oTf+OAYzS9zC6++fOVnHWqwv1rRNXeKZHLqYuw==
-X-Received: by 2002:a17:907:100b:b0:a3e:876d:1b1 with SMTP id
- ox11-20020a170907100b00b00a3e876d01b1mr3944482ejb.20.1708419214949; 
- Tue, 20 Feb 2024 00:53:34 -0800 (PST)
-Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
- [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
- cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 00:53:34 -0800 (PST)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-trivial@nongnu.org
-Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH v1 21/21] target/sparc: correct typos
-Date: Tue, 20 Feb 2024 10:52:28 +0200
-Message-Id: <deda57f7d7dde2b88e2975ed6dee6cd85fb0ff96.1708419115.git.manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
-References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuG-0005Nm-O0
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuE-0000BY-E1
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708419313;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=dYif9xIO2mh9ywAuepSn2/3QtxzSuxc/VMCW42YOAMQ=;
+ b=W4spvVwQELo81KEQZCt69/xYnZeaLGORdfcWVWO815ySCngf+lf3haNJ+OjJuVj4+Qt+EW
+ apyEO8YvzVTN4nZOSSxushydgAar0UnVt52M2ljuvNVriieLDGRTMlJag31skV0NnalaFS
+ Y8mQJfFYoMxTUWo0fs6GXJiL13vGVh8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-zqKdoZhLM42Shd5zM_K45Q-1; Tue, 20 Feb 2024 03:55:09 -0500
+X-MC-Unique: zqKdoZhLM42Shd5zM_K45Q-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2F4B910201E9;
+ Tue, 20 Feb 2024 08:55:09 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.168])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8F6AD492BE3;
+ Tue, 20 Feb 2024 08:55:06 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: John Snow <jsnow@redhat.com>,
+	qemu-devel@nongnu.org
+Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org
+Subject: [PATCH v2 0/7] hw/ide: Clean up hw/ide/qdev.c and
+ include/hw/ide/internal.h
+Date: Tue, 20 Feb 2024 09:54:58 +0100
+Message-ID: <20240220085505.30255-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,38 +80,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Correct typos automatically found with the `typos` tool
-<https://crates.io/crates/typos>
+While trying to make it possible to compile-out the CompactFlash IDE device
+in downstream distributions (first patch), we noticed that there are more
+things in the IDE code that could use a proper clean up:
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- target/sparc/asi.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+First, hw/ide/qdev.c is quite a mix between IDE BUS specific functions
+and (disk) device specific functions. Thus the second patch splits qdev.c
+into two new separate files to make it more obvious which part belongs
+to which kind of devices.
 
-diff --git a/target/sparc/asi.h b/target/sparc/asi.h
-index 3270ed0c7f..a66829674b 100644
---- a/target/sparc/asi.h
-+++ b/target/sparc/asi.h
-@@ -145,14 +145,14 @@
-  * and later ASIs.
-  */
- #define ASI_REAL                0x14 /* Real address, cacheable          */
--#define ASI_PHYS_USE_EC		0x14 /* PADDR, E-cachable		*/
--#define ASI_REAL_IO             0x15 /* Real address, non-cachable      */
-+#define ASI_PHYS_USE_EC		0x14 /* PADDR, E-cacheable		*/
-+#define ASI_REAL_IO             0x15 /* Real address, non-cacheable      */
- #define ASI_PHYS_BYPASS_EC_E	0x15 /* PADDR, E-bit			*/
- #define ASI_BLK_AIUP_4V		0x16 /* (4V) Prim, user, block ld/st	*/
- #define ASI_BLK_AIUS_4V		0x17 /* (4V) Sec, user, block ld/st	*/
- #define ASI_REAL_L              0x1c /* Real address, cacheable, LE      */
--#define ASI_PHYS_USE_EC_L	0x1c /* PADDR, E-cachable, little endian*/
--#define ASI_REAL_IO_L           0x1d /* Real address, non-cachable, LE  */
-+#define ASI_PHYS_USE_EC_L	0x1c /* PADDR, E-cacheable, little endian*/
-+#define ASI_REAL_IO_L           0x1d /* Real address, non-cacheable, LE  */
- #define ASI_PHYS_BYPASS_EC_E_L	0x1d /* PADDR, E-bit, little endian	*/
- #define ASI_BLK_AIUP_L_4V	0x1e /* (4V) Prim, user, block, l-endian*/
- #define ASI_BLK_AIUS_L_4V	0x1f /* (4V) Sec, user, block, l-endian	*/
+The remaining patches unentangle include/hw/ide/internal.h, which is meant
+as a header that should only be used internally to the IDE subsystem, but
+which is currently exposed to the world since include/hw/ide/pci.h includes
+this header, too. Thus we move the definitions that are also required for
+non-IDE code to other new header files, so we can finally change pci.h to
+stop including internal.h. After these changes, internal.h is only included
+by files in hw/ide/ as it should be.
+
+v2:
+- Change the order of the DMA patch and move typedef struct IDEDMAOps
+  and typedef struct IDEDMA IDEDMA into ide-dma.h, too
+- Make sure that the headers are self-contained (i.e. #include the
+  right other headers)
+- Remove some more remnants of include/hw/ide.h
+
+Thomas Huth (7):
+  hw/ide: Add the possibility to disable the CompactFlash device in the
+    build
+  hw/ide: Split qdev.c into ide-bus.c and ide-dev.c
+  hw/ide: Move IDE DMA related definitions to a separate header
+    ide-dma.h
+  hw/ide: Move IDE device related definitions to ide-dev.h
+  hw/ide: Move IDE bus related definitions to a new header ide-bus.h
+  hw/ide: Remove the include/hw/ide.h legacy file
+  hw/ide: Stop exposing internal.h to non-IDE files
+
+ MAINTAINERS                  |   1 -
+ include/hw/ide.h             |   9 --
+ include/hw/ide/ide-bus.h     |  42 +++++++
+ include/hw/ide/ide-dev.h     | 184 ++++++++++++++++++++++++++++++
+ include/hw/ide/ide-dma.h     |  37 ++++++
+ include/hw/ide/internal.h    | 211 +----------------------------------
+ include/hw/ide/pci.h         |   2 +-
+ hw/i386/pc.c                 |   2 +-
+ hw/ide/cf.c                  |  58 ++++++++++
+ hw/ide/cmd646.c              |   1 +
+ hw/ide/ide-bus.c             | 111 ++++++++++++++++++
+ hw/ide/{qdev.c => ide-dev.c} | 137 +----------------------
+ hw/ide/pci.c                 |   1 +
+ hw/ide/piix.c                |   1 +
+ hw/ide/sii3112.c             |   1 +
+ hw/ide/via.c                 |   1 +
+ hw/arm/Kconfig               |   2 +
+ hw/ide/Kconfig               |  32 ++++--
+ hw/ide/meson.build           |   4 +-
+ 19 files changed, 470 insertions(+), 367 deletions(-)
+ delete mode 100644 include/hw/ide.h
+ create mode 100644 include/hw/ide/ide-bus.h
+ create mode 100644 include/hw/ide/ide-dev.h
+ create mode 100644 include/hw/ide/ide-dma.h
+ create mode 100644 hw/ide/cf.c
+ create mode 100644 hw/ide/ide-bus.c
+ rename hw/ide/{qdev.c => ide-dev.c} (67%)
+
 -- 
-γαῖα πυρί μιχθήτω
+2.43.2
 
 
