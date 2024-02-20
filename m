@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E97EC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 14:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56AF2C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 14:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcQsM-00029B-0E; Tue, 20 Feb 2024 09:13:38 -0500
+	id 1rcQsG-00027f-Fv; Tue, 20 Feb 2024 09:13:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcP5f-0008Tw-3v; Tue, 20 Feb 2024 07:19:15 -0500
-Received: from szxga07-in.huawei.com ([45.249.212.35])
+ id 1rcP5j-00009A-A0; Tue, 20 Feb 2024 07:19:21 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcP5b-0004MQ-Ct; Tue, 20 Feb 2024 07:19:14 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4TfJLD4PPGz1X2lH;
- Tue, 20 Feb 2024 20:16:52 +0800 (CST)
+ id 1rcP5b-0004MS-Em; Tue, 20 Feb 2024 07:19:18 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TfJLF6gQgz2Bd4t;
+ Tue, 20 Feb 2024 20:16:53 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id EE7F6140118;
- Tue, 20 Feb 2024 20:19:00 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id EE37618001A;
+ Tue, 20 Feb 2024 20:19:01 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 20 Feb
- 2024 20:19:00 +0800
+ 2024 20:19:01 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH 2/3] target/arm: Add NMI exception and handle
- PSTATE.ALLINT on taking an exception
-Date: Tue, 20 Feb 2024 12:17:51 +0000
-Message-ID: <20240220121752.490665-3-ruanjinjie@huawei.com>
+Subject: [RFC PATCH 3/3] hw/intc/arm_gicv3: Implement FEAT_GICv3_NMI feature
+ to support FEAT_NMI
+Date: Tue, 20 Feb 2024 12:17:52 +0000
+Message-ID: <20240220121752.490665-4-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220121752.490665-1-ruanjinjie@huawei.com>
 References: <20240220121752.490665-1-ruanjinjie@huawei.com>
@@ -45,14 +45,14 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.35; envelope-from=ruanjinjie@huawei.com;
- helo=szxga07-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 20 Feb 2024 09:13:26 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,288 +71,588 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new exception called NMI for Arm PE.
+Connect NMI wire from GICv3 to every Arm PE.
 
-Set/clear PSTATE.ALLINT on taking an exception to ELx according to the
-SCTLR_ELx.SPINTMASK bit.
+         +-------------------------------------------------+
+         |               Distributor                       |
+         +-------------------------------------------------+
+                 |  NMI                         |  NMI
+                \ /                            \ /
+            +--------+                     +-------+
+            | redist |                     | redist|
+            +--------+                     +-------+
+                 | NMI                         | NMI
+                \ /                           \ /
+          +-------------+             +---------------+
+          |CPU interface|   ...       | CPU interface |
+          +-------------+             +---------------+
+               | NMI                          | NMI
+              \ /                            \ /
+            +-----+                       +-----+
+            |  PE |                       |  PE |
+            +-----+                       +-----+
 
-Mask IRQ/FIQ/NMI with ALLINT and PSTATE.SP & SCTLR_SPINTMASK in addition
-to PSTATE.DAIF.
+Support the superpriority property for SPI/SGI/PPI interrupt and these
+interrupts with a NMI high priority.
 
-Save to and restore from SPSR_ELx with PSTATE.ALLINT on taking an exception
-to ELx and executing an exception return operation in ELx.
+Also support configure a interrupt with superpriority property with
+GICR_INMIR0 or GICD_INMIR register.
+
+Support ack a NMI interrupt with ICC_NMIAR1_EL1 register. and support PE to
+distinguish IRQ from FIQ for a NMI.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- target/arm/cpu-qom.h   |  1 +
- target/arm/cpu.c       | 43 +++++++++++++++++++++++++++++++++++++-----
- target/arm/cpu.h       | 10 ++++++++--
- target/arm/helper.c    | 26 ++++++++++++++++++++++++-
- target/arm/internals.h |  3 +++
- 5 files changed, 75 insertions(+), 8 deletions(-)
+ hw/arm/virt.c                      |  2 +
+ hw/intc/arm_gicv3.c                | 61 ++++++++++++++++++++++++++----
+ hw/intc/arm_gicv3_common.c         |  4 ++
+ hw/intc/arm_gicv3_cpuif.c          | 57 ++++++++++++++++++++++++++--
+ hw/intc/arm_gicv3_dist.c           | 39 +++++++++++++++++++
+ hw/intc/arm_gicv3_redist.c         | 23 +++++++++++
+ hw/intc/gicv3_internal.h           |  5 +++
+ include/hw/core/cpu.h              |  1 +
+ include/hw/intc/arm_gic_common.h   |  1 +
+ include/hw/intc/arm_gicv3_common.h |  6 +++
+ target/arm/helper.c                |  5 ++-
+ 11 files changed, 191 insertions(+), 13 deletions(-)
 
-diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
-index 8e032691db..5a7f876bf8 100644
---- a/target/arm/cpu-qom.h
-+++ b/target/arm/cpu-qom.h
-@@ -41,6 +41,7 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
- #define ARM_CPU_FIQ 1
- #define ARM_CPU_VIRQ 2
- #define ARM_CPU_VFIQ 3
-+#define ARM_CPU_NMI 4
- 
- /* For M profile, some registers are banked secure vs non-secure;
-  * these are represented as a 2-element array where the first element
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 5fa86bc8d5..947efa76c1 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -128,7 +128,7 @@ static bool arm_cpu_has_work(CPUState *cs)
- 
-     return (cpu->power_state != PSCI_OFF)
-         && cs->interrupt_request &
--        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
-+        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI
-          | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
-          | CPU_INTERRUPT_EXITTB);
- }
-@@ -357,6 +357,10 @@ static void arm_cpu_reset_hold(Object *obj)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0af1943697..5f2683a553 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -848,6 +848,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+                            qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+         sysbus_connect_irq(gicbusdev, i + 3 * smp_cpus,
+                            qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
++        sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
      }
-     env->daif = PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F;
  
-+    if (cpu_isar_feature(aa64_nmi, cpu)) {
-+        env->allint = PSTATE_ALLINT;
+     fdt_add_gic_node(vms);
+diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
+index 0b8f79a122..e3281cffdc 100644
+--- a/hw/intc/arm_gicv3.c
++++ b/hw/intc/arm_gicv3.c
+@@ -21,7 +21,7 @@
+ #include "hw/intc/arm_gicv3.h"
+ #include "gicv3_internal.h"
+ 
+-static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
++static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio, bool is_nmi)
+ {
+     /* Return true if this IRQ at this priority should take
+      * precedence over the current recorded highest priority
+@@ -33,11 +33,21 @@ static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
+     if (prio < cs->hppi.prio) {
+         return true;
+     }
++
++    /*
++     * Current highest prioirity pending interrupt is not a NMI
++     * and the new IRQ is a NMI with same priority.
++     */
++    if (prio == cs->hppi.prio && !cs->hppi.superprio && is_nmi) {
++        return true;
 +    }
 +
-     /* AArch32 has a hard highvec setting of 0xFFFF0000.  If we are currently
-      * executing as AArch32 then check if highvecs are enabled and
-      * adjust the PC accordingly.
-@@ -668,6 +672,7 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
-     CPUARMState *env = cpu_env(cs);
-     bool pstate_unmasked;
-     bool unmasked = false;
-+    bool nmi_unmasked = false;
- 
-     /*
-      * Don't take exceptions if they target a lower EL.
-@@ -678,13 +683,29 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
-         return false;
+     /* If multiple pending interrupts have the same priority then it is an
+      * IMPDEF choice which of them to signal to the CPU. We choose to
+      * signal the one with the lowest interrupt number.
+      */
+-    if (prio == cs->hppi.prio && irq <= cs->hppi.irq) {
++    if (prio == cs->hppi.prio && !cs->hppi.superprio &&
++        !is_nmi && irq <= cs->hppi.irq) {
+         return true;
      }
+     return false;
+@@ -141,6 +151,8 @@ static void gicv3_redist_update_noirqset(GICv3CPUState *cs)
+     uint8_t prio;
+     int i;
+     uint32_t pend;
++    bool is_nmi = 0;
++    uint32_t superprio = 0;
  
-+    nmi_unmasked = (!(env->allint & PSTATE_ALLINT)) &
-+                   (!((env->cp15.sctlr_el[target_el] & SCTLR_SPINTMASK) &&
-+                   (env->pstate & PSTATE_SP) && cur_el == target_el));
+     /* Find out which redistributor interrupts are eligible to be
+      * signaled to the CPU interface.
+@@ -152,10 +164,26 @@ static void gicv3_redist_update_noirqset(GICv3CPUState *cs)
+             if (!(pend & (1 << i))) {
+                 continue;
+             }
+-            prio = cs->gicr_ipriorityr[i];
+-            if (irqbetter(cs, i, prio)) {
++            superprio = extract32(cs->gicr_isuperprio, i, 1);
 +
-     switch (excp_idx) {
-+    case EXCP_NMI:
-+        pstate_unmasked = nmi_unmasked;
-+        break;
++            /* NMI */
++            if (superprio) {
++                is_nmi = 1;
 +
-     case EXCP_FIQ:
--        pstate_unmasked = !(env->daif & PSTATE_F);
-+        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
-+            pstate_unmasked = (!(env->daif & PSTATE_F)) & nmi_unmasked;
-+        } else {
-+            pstate_unmasked = !(env->daif & PSTATE_F);
-+        }
-         break;
- 
-     case EXCP_IRQ:
--        pstate_unmasked = !(env->daif & PSTATE_I);
-+        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
-+            pstate_unmasked = (!(env->daif & PSTATE_I)) & nmi_unmasked;
-+        } else {
-+            pstate_unmasked = !(env->daif & PSTATE_I);
-+        }
-         break;
- 
-     case EXCP_VFIQ:
-@@ -804,6 +825,16 @@ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- 
-     /* The prioritization of interrupts is IMPLEMENTATION DEFINED. */
- 
-+    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
-+        if (interrupt_request & CPU_INTERRUPT_NMI) {
-+            excp_idx = EXCP_NMI;
-+            target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
-+            if (arm_excp_unmasked(cs, excp_idx, target_el,
-+                                  cur_el, secure, hcr_el2)) {
-+                goto found;
++                /* DS = 0 & Non-secure NMI */
++                if ((!(cs->gic->gicd_ctlr & GICD_CTLR_DS)) &&
++                    extract32(cs->gicr_igroupr0, i, 1))
++                    prio = 0x80;
++                else
++                    prio = 0x0;
++            } else {
++               is_nmi = 0;
++               prio = cs->gicr_ipriorityr[i];
 +            }
++            if (irqbetter(cs, i, prio, is_nmi)) {
+                 cs->hppi.irq = i;
+                 cs->hppi.prio = prio;
++                cs->hppi.superprio = is_nmi;
+                 seenbetter = true;
+             }
+         }
+@@ -168,7 +196,7 @@ static void gicv3_redist_update_noirqset(GICv3CPUState *cs)
+     if ((cs->gicr_ctlr & GICR_CTLR_ENABLE_LPIS) && cs->gic->lpi_enable &&
+         (cs->gic->gicd_ctlr & GICD_CTLR_EN_GRP1NS) &&
+         (cs->hpplpi.prio != 0xff)) {
+-        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio)) {
++        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio, false)) {
+             cs->hppi.irq = cs->hpplpi.irq;
+             cs->hppi.prio = cs->hpplpi.prio;
+             cs->hppi.grp = cs->hpplpi.grp;
+@@ -212,7 +240,9 @@ static void gicv3_update_noirqset(GICv3State *s, int start, int len)
+ {
+     int i;
+     uint8_t prio;
++    bool is_nmi = 0;
+     uint32_t pend = 0;
++    uint32_t superprio = 0;
+ 
+     assert(start >= GIC_INTERNAL);
+     assert(len > 0);
+@@ -240,10 +270,27 @@ static void gicv3_update_noirqset(GICv3State *s, int start, int len)
+              */
+             continue;
+         }
+-        prio = s->gicd_ipriority[i];
+-        if (irqbetter(cs, i, prio)) {
++
++        superprio = *gic_bmp_ptr32(s->superprio, i);
++        /* NMI */
++        if (superprio & (1 << (i & 0x1f))) {
++            is_nmi = 1;
++
++            /* DS = 0 & Non-secure NMI */
++            if ((!(s->gicd_ctlr & GICD_CTLR_DS)) &&
++                gicv3_gicd_group_test(s, i))
++                    prio = 0x80;
++            else
++                    prio = 0x0;
++        } else {
++            is_nmi = 0;
++            prio = s->gicd_ipriority[i];
++        }
++
++        if (irqbetter(cs, i, prio, is_nmi)) {
+             cs->hppi.irq = i;
+             cs->hppi.prio = prio;
++            cs->hppi.superprio = is_nmi;
+             cs->seenbetter = true;
+         }
+     }
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index cb55c72681..4a56140f4c 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -299,6 +299,9 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
+     for (i = 0; i < s->num_cpu; i++) {
+         sysbus_init_irq(sbd, &s->cpu[i].parent_vfiq);
+     }
++    for (i = 0; i < s->num_cpu; i++) {
++        sysbus_init_irq(sbd, &s->cpu[i].parent_nmi);
++    }
+ 
+     memory_region_init_io(&s->iomem_dist, OBJECT(s), ops, s,
+                           "gicv3_dist", 0x10000);
+@@ -563,6 +566,7 @@ static Property arm_gicv3_common_properties[] = {
+     DEFINE_PROP_UINT32("num-irq", GICv3State, num_irq, 32),
+     DEFINE_PROP_UINT32("revision", GICv3State, revision, 3),
+     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
++    DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 1),
+     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
+     /*
+      * Compatibility property: force 8 bits of physical priority, even
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index e1a60d8c15..9b0ee0cfec 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -931,6 +931,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     /* Tell the CPU about its highest priority pending interrupt */
+     int irqlevel = 0;
+     int fiqlevel = 0;
++    int nmilevel = 0;
+     ARMCPU *cpu = ARM_CPU(cs->cpu);
+     CPUARMState *env = &cpu->env;
+ 
+@@ -967,7 +968,14 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+             g_assert_not_reached();
+         }
+ 
+-        if (isfiq) {
++        if (cs->hppi.superprio) {
++            nmilevel = 1;
++            if (isfiq) {
++                cs->cpu->nmi_irq = false;
++            } else {
++                cs->cpu->nmi_irq = true;
++            }
++        } else if (isfiq) {
+             fiqlevel = 1;
+         } else {
+             irqlevel = 1;
+@@ -978,6 +986,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ 
+     qemu_set_irq(cs->parent_fiq, fiqlevel);
+     qemu_set_irq(cs->parent_irq, irqlevel);
++    qemu_set_irq(cs->parent_nmi, nmilevel);
+ }
+ 
+ static uint64_t icc_pmr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+@@ -1097,7 +1106,8 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+     return cs->hppi.irq;
+ }
+ 
+-static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
++static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env,
++                                 bool is_nmi, bool is_hppi)
+ {
+     /* Return the highest priority pending interrupt register value
+      * for group 1.
+@@ -1108,6 +1118,16 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+         return INTID_SPURIOUS;
+     }
+ 
++    if (!is_hppi) {
++        if (is_nmi && (!cs->hppi.superprio)) {
++            return INTID_SPURIOUS;
++        }
++
++        if ((!is_nmi) && cs->hppi.superprio) {
++            return INTID_NMI;
 +        }
 +    }
-     if (interrupt_request & CPU_INTERRUPT_FIQ) {
-         excp_idx = EXCP_FIQ;
-         target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
-@@ -929,7 +960,8 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
-         [ARM_CPU_IRQ] = CPU_INTERRUPT_HARD,
-         [ARM_CPU_FIQ] = CPU_INTERRUPT_FIQ,
-         [ARM_CPU_VIRQ] = CPU_INTERRUPT_VIRQ,
--        [ARM_CPU_VFIQ] = CPU_INTERRUPT_VFIQ
-+        [ARM_CPU_VFIQ] = CPU_INTERRUPT_VFIQ,
-+        [ARM_CPU_NMI] = CPU_INTERRUPT_NMI
-     };
- 
-     if (!arm_feature(env, ARM_FEATURE_EL2) &&
-@@ -957,6 +989,7 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
-         break;
-     case ARM_CPU_IRQ:
-     case ARM_CPU_FIQ:
-+    case ARM_CPU_NMI:
-         if (level) {
-             cpu_interrupt(cs, mask[irq]);
-         } else {
-@@ -1355,7 +1388,7 @@ static void arm_cpu_initfn(Object *obj)
-          */
-         qdev_init_gpio_in(DEVICE(cpu), arm_cpu_kvm_set_irq, 4);
++
+     /* Check whether we can return the interrupt or if we should return
+      * a special identifier, as per the CheckGroup1ForSpecialIdentifiers
+      * pseudocode. (We can simplify a little because for us ICC_SRE_EL1.RM
+@@ -1168,7 +1188,30 @@ static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     if (!icc_hppi_can_preempt(cs)) {
+         intid = INTID_SPURIOUS;
      } else {
--        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 4);
-+        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 5);
-     }
- 
-     qdev_init_gpio_out(DEVICE(cpu), cpu->gt_timer_outputs,
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index ea6e8d6501..b6af1380d3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -60,6 +60,7 @@
- #define EXCP_DIVBYZERO      23   /* v7M DIVBYZERO UsageFault */
- #define EXCP_VSERR          24
- #define EXCP_GPC            25   /* v9 Granule Protection Check Fault */
-+#define EXCP_NMI            26
- /* NB: add new EXCP_ defines to the array in arm_log_exception() too */
- 
- #define ARMV7M_EXCP_RESET   1
-@@ -79,6 +80,7 @@
- #define CPU_INTERRUPT_VIRQ  CPU_INTERRUPT_TGT_EXT_2
- #define CPU_INTERRUPT_VFIQ  CPU_INTERRUPT_TGT_EXT_3
- #define CPU_INTERRUPT_VSERR CPU_INTERRUPT_TGT_INT_0
-+#define CPU_INTERRUPT_NMI   CPU_INTERRUPT_TGT_EXT_4
- 
- /* The usual mapping for an AArch64 system register to its AArch32
-  * counterpart is for the 32 bit world to have access to the lower
-@@ -1471,6 +1473,8 @@ FIELD(CPTR_EL3, TCPAC, 31, 1)
- #define CPSR_N (1U << 31)
- #define CPSR_NZCV (CPSR_N | CPSR_Z | CPSR_C | CPSR_V)
- #define CPSR_AIF (CPSR_A | CPSR_I | CPSR_F)
-+#define ISR_FS (1U << 9)
-+#define ISR_IS (1U << 10)
- 
- #define CPSR_IT (CPSR_IT_0_1 | CPSR_IT_2_7)
- #define CACHED_CPSR_BITS (CPSR_T | CPSR_AIF | CPSR_GE | CPSR_IT | CPSR_Q \
-@@ -1557,7 +1561,8 @@ FIELD(VTCR, SL2, 33, 1)
- #define PSTATE_N (1U << 31)
- #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
- #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
--#define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
-+#define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_ALLINT | \
-+                            PSTATE_BTYPE)
- /* Mode values for AArch64 */
- #define PSTATE_MODE_EL3h 13
- #define PSTATE_MODE_EL3t 12
-@@ -1597,7 +1602,7 @@ static inline uint32_t pstate_read(CPUARMState *env)
-     ZF = (env->ZF == 0);
-     return (env->NF & 0x80000000) | (ZF << 30)
-         | (env->CF << 29) | ((env->VF & 0x80000000) >> 3)
--        | env->pstate | env->daif | (env->btype << 10);
-+        | env->pstate | env->allint | env->daif | (env->btype << 10);
- }
- 
- static inline void pstate_write(CPUARMState *env, uint32_t val)
-@@ -1607,6 +1612,7 @@ static inline void pstate_write(CPUARMState *env, uint32_t val)
-     env->CF = (val >> 29) & 1;
-     env->VF = (val << 3) & 0x80000000;
-     env->daif = val & PSTATE_DAIF;
-+    env->allint = val & PSTATE_ALLINT;
-     env->btype = (val >> 10) & 3;
-     env->pstate = val & ~CACHED_PSTATE_BITS;
- }
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 1194e1e2db..8d525c6b82 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -2022,6 +2022,10 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-         if (cs->interrupt_request & CPU_INTERRUPT_HARD) {
-             ret |= CPSR_I;
-         }
+-        intid = icc_hppir1_value(cs, env);
++        intid = icc_hppir1_value(cs, env, false, false);
++    }
 +
-+        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
-+            ret |= ISR_IS;
-+        }
-     }
- 
-     if (hcr_el2 & HCR_FMO) {
-@@ -2032,6 +2036,10 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-         if (cs->interrupt_request & CPU_INTERRUPT_FIQ) {
-             ret |= CPSR_F;
-         }
++    if (!gicv3_intid_is_special(intid)) {
++        icc_activate_irq(cs, intid);
++    }
 +
-+        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
-+            ret |= ISR_FS;
-+        }
-     }
- 
-     if (hcr_el2 & HCR_AMO) {
-@@ -4626,6 +4634,11 @@ static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     }
- }
- 
-+static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    return env->allint & PSTATE_ALLINT;
++    trace_gicv3_icc_iar1_read(gicv3_redist_affid(cs), intid);
++    return intid;
 +}
 +
- static CPAccessResult aa64_allint_access(CPUARMState *env,
-                                          const ARMCPRegInfo *ri, bool isread)
- {
-@@ -5464,7 +5477,8 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-       .type = ARM_CP_NO_RAW,
-       .access = PL1_RW, .accessfn = aa64_allint_access,
-       .fieldoffset = offsetof(CPUARMState, allint),
--      .writefn = aa64_allint_write, .resetfn = arm_cp_reset_ignore },
-+      .writefn = aa64_allint_write, .readfn = aa64_allint_read,
-+      .resetfn = arm_cp_reset_ignore },
-     { .name = "FPCR", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 3, .opc2 = 0, .crn = 4, .crm = 4,
-       .access = PL0_RW, .type = ARM_CP_FPU | ARM_CP_SUPPRESS_TB_END,
-@@ -10622,6 +10636,7 @@ void arm_log_exception(CPUState *cs)
-             [EXCP_DIVBYZERO] = "v7M DIVBYZERO UsageFault",
-             [EXCP_VSERR] = "Virtual SERR",
-             [EXCP_GPC] = "Granule Protection Check",
-+            [EXCP_NMI] = "NMI"
-         };
- 
-         if (idx >= 0 && idx < ARRAY_SIZE(excnames)) {
-@@ -11517,6 +11532,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-         }
-     }
- 
-+    if (cpu_isar_feature(aa64_nmi, cpu) &&
-+        (env->cp15.sctlr_el[new_el] & SCTLR_NMI)) {
-+        if (!(env->cp15.sctlr_el[new_el] & SCTLR_SPINTMASK)) {
-+            new_mode |= PSTATE_ALLINT;
-+        } else {
-+            new_mode &= ~PSTATE_ALLINT;
-+        }
++static uint64_t icc_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    GICv3CPUState *cs = icc_cs_from_env(env);
++    uint64_t intid;
++
++    if (icv_access(env, HCR_IMO)) {
++        return icv_iar_read(env, ri);
 +    }
 +
-     pstate_write(env, PSTATE_DAIF | new_mode);
-     env->aarch64 = true;
-     aarch64_restore_sp(env, new_el);
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 2b9f287c52..28894ba6ea 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1078,6 +1078,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
-     if (isar_feature_aa64_mte(id)) {
-         valid |= PSTATE_TCO;
++    if (!icc_hppi_can_preempt(cs)) {
++        intid = INTID_SPURIOUS;
++    } else {
++        intid = icc_hppir1_value(cs, env, true, false);
      }
-+    if (isar_feature_aa64_nmi(id)) {
-+        valid |= PSTATE_ALLINT;
-+    }
  
-     return valid;
+     if (!gicv3_intid_is_special(intid)) {
+@@ -1555,7 +1598,7 @@ static uint64_t icc_hppir1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+         return icv_hppir_read(env, ri);
+     }
+ 
+-    value = icc_hppir1_value(cs, env);
++    value = icc_hppir1_value(cs, env, false, true);
+     trace_gicv3_icc_hppir1_read(gicv3_redist_affid(cs), value);
+     return value;
  }
+@@ -2344,6 +2387,12 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
+       .access = PL1_R, .accessfn = gicv3_irq_access,
+       .readfn = icc_iar1_read,
+     },
++    { .name = "ICC_NMIAR1_EL1", .state = ARM_CP_STATE_BOTH,
++      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 9, .opc2 = 5,
++      .type = ARM_CP_IO | ARM_CP_NO_RAW,
++      .access = PL1_R, .accessfn = gicv3_irq_access,
++      .readfn = icc_nmiar1_read,
++    },
+     { .name = "ICC_EOIR1_EL1", .state = ARM_CP_STATE_BOTH,
+       .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 12, .opc2 = 1,
+       .type = ARM_CP_IO | ARM_CP_NO_RAW,
+diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
+index 35e850685c..a234df44dd 100644
+--- a/hw/intc/arm_gicv3_dist.c
++++ b/hw/intc/arm_gicv3_dist.c
+@@ -89,6 +89,29 @@ static int gicd_ns_access(GICv3State *s, int irq)
+     return extract32(s->gicd_nsacr[irq / 16], (irq % 16) * 2, 2);
+ }
+ 
++static void gicd_write_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
++                                  uint32_t *bmp, maskfn *maskfn,
++                                  int offset, uint32_t val)
++{
++    /*
++     * Helper routine to implement writing to a "set" register
++     * (GICD_INMIR, etc).
++     * Semantics implemented here:
++     * RAZ/WI for SGIs, PPIs, unimplemented IRQs
++     * Bits corresponding to Group 0 or Secure Group 1 interrupts RAZ/WI.
++     * offset should be the offset in bytes of the register from the start
++     * of its group.
++     */
++    int irq = offset * 8;
++
++    if (irq < GIC_INTERNAL || irq >= s->num_irq) {
++        return;
++    }
++    val &= mask_group_and_nsacr(s, attrs, maskfn, irq);
++    *gic_bmp_ptr32(bmp, irq) = val;
++    gicv3_update(s, irq, 32);
++}
++
+ static void gicd_write_set_bitmap_reg(GICv3State *s, MemTxAttrs attrs,
+                                       uint32_t *bmp,
+                                       maskfn *maskfn,
+@@ -402,6 +425,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+         bool dvis = s->revision >= 4;
+ 
+         *data = (1 << 25) | (1 << 24) | (dvis << 18) | (sec_extn << 10) |
++            (s->nmi_support << GICD_TYPER_NMI_SHIFT) |
+             (s->lpi_enable << GICD_TYPER_LPIS_SHIFT) |
+             (0xf << 19) | itlinesnumber;
+         return true;
+@@ -543,6 +567,14 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+         /* RAZ/WI since affinity routing is always enabled */
+         *data = 0;
+         return true;
++    case GICD_INMIR ... GICD_INMIR + 0x7f:
++        if (!s->nmi_support) {
++            *data = 0;
++            return true;
++        }
++        *data = gicd_read_bitmap_reg(s, attrs, s->superprio, NULL,
++                                     offset - GICD_INMIR);
++        return true;
+     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
+     {
+         uint64_t r;
+@@ -752,6 +784,13 @@ static bool gicd_writel(GICv3State *s, hwaddr offset,
+     case GICD_SPENDSGIR ... GICD_SPENDSGIR + 0xf:
+         /* RAZ/WI since affinity routing is always enabled */
+         return true;
++    case GICD_INMIR ... GICD_INMIR + 0x7f:
++        if (!s->nmi_support) {
++            return true;
++        }
++        gicd_write_bitmap_reg(s, attrs, s->superprio, NULL,
++                              offset - GICD_INMIR, value);
++        return true;
+     case GICD_IROUTER ... GICD_IROUTER + 0x1fdf:
+     {
+         uint64_t r;
+diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
+index 8153525849..87e7823f34 100644
+--- a/hw/intc/arm_gicv3_redist.c
++++ b/hw/intc/arm_gicv3_redist.c
+@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
+     return extract32(cs->gicr_nsacr, irq * 2, 2);
+ }
+ 
++static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
++                                  uint32_t *reg, uint32_t val)
++{
++    /* Helper routine to implement writing to a "set" register */
++    val &= mask_group(cs, attrs);
++    *reg = val;
++    gicv3_redist_update(cs);
++}
++
+ static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
+                                       uint32_t *reg, uint32_t val)
+ {
+@@ -406,6 +415,13 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
+         *data = value;
+         return MEMTX_OK;
+     }
++    case GICR_INMIR0:
++        if (!cs->gic->nmi_support) {
++            *data = 0;
++            return MEMTX_OK;
++        }
++        *data = gicr_read_bitmap_reg(cs, attrs, cs->gicr_isuperprio);
++        return MEMTX_OK;
+     case GICR_ICFGR0:
+     case GICR_ICFGR1:
+     {
+@@ -555,6 +571,13 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
+         gicv3_redist_update(cs);
+         return MEMTX_OK;
+     }
++    case GICR_INMIR0:
++        if (!cs->gic->nmi_support) {
++            return MEMTX_OK;
++        }
++        gicr_write_bitmap_reg(cs, attrs, &cs->gicr_isuperprio, value);
++        return MEMTX_OK;
++
+     case GICR_ICFGR0:
+         /* Register is all RAZ/WI or RAO/WI bits */
+         return MEMTX_OK;
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 29d5cdc1b6..93e56b3726 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -52,6 +52,8 @@
+ #define GICD_SGIR            0x0F00
+ #define GICD_CPENDSGIR       0x0F10
+ #define GICD_SPENDSGIR       0x0F20
++#define GICD_INMIR           0x0F80
++#define GICD_INMIRnE         0x3B00
+ #define GICD_IROUTER         0x6000
+ #define GICD_IDREGS          0xFFD0
+ 
+@@ -68,6 +70,7 @@
+ #define GICD_CTLR_E1NWF             (1U << 7)
+ #define GICD_CTLR_RWP               (1U << 31)
+ 
++#define GICD_TYPER_NMI_SHIFT           9
+ #define GICD_TYPER_LPIS_SHIFT          17
+ 
+ /* 16 bits EventId */
+@@ -109,6 +112,7 @@
+ #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
+ #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
+ #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
++#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
+ 
+ /* VLPI redistributor registers, offsets from VLPI_base */
+ #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
+@@ -507,6 +511,7 @@ FIELD(VTE, RDBASE, 42, RDBASE_PROCNUM_LENGTH)
+ /* Special interrupt IDs */
+ #define INTID_SECURE 1020
+ #define INTID_NONSECURE 1021
++#define INTID_NMI 1022
+ #define INTID_SPURIOUS 1023
+ 
+ /* Functions internal to the emulated GICv3 */
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 4385ce54c9..6c9dc25e5b 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -541,6 +541,7 @@ struct CPUState {
+     uint32_t tcg_cflags;
+     uint32_t halted;
+     int32_t exception_index;
++    bool nmi_irq;
+ 
+     AccelCPUState *accel;
+     /* shared by kvm and hvf */
+diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
+index 7080375008..140f531758 100644
+--- a/include/hw/intc/arm_gic_common.h
++++ b/include/hw/intc/arm_gic_common.h
+@@ -69,6 +69,7 @@ struct GICState {
+ 
+     qemu_irq parent_irq[GIC_NCPU];
+     qemu_irq parent_fiq[GIC_NCPU];
++    qemu_irq parent_nmi[GIC_NCPU];
+     qemu_irq parent_virq[GIC_NCPU];
+     qemu_irq parent_vfiq[GIC_NCPU];
+     qemu_irq maintenance_irq[GIC_NCPU];
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 4e2fb518e7..8f9bcdfac9 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -146,6 +146,7 @@ typedef struct {
+     int irq;
+     uint8_t prio;
+     int grp;
++    bool superprio;
+ } PendingIrq;
+ 
+ struct GICv3CPUState {
+@@ -155,6 +156,7 @@ struct GICv3CPUState {
+     qemu_irq parent_fiq;
+     qemu_irq parent_virq;
+     qemu_irq parent_vfiq;
++    qemu_irq parent_nmi;
+ 
+     /* Redistributor */
+     uint32_t level;                  /* Current IRQ level */
+@@ -170,6 +172,7 @@ struct GICv3CPUState {
+     uint32_t gicr_ienabler0;
+     uint32_t gicr_ipendr0;
+     uint32_t gicr_iactiver0;
++    uint32_t gicr_isuperprio;
+     uint32_t edge_trigger; /* ICFGR0 and ICFGR1 even bits */
+     uint32_t gicr_igrpmodr0;
+     uint32_t gicr_nsacr;
+@@ -247,6 +250,7 @@ struct GICv3State {
+     uint32_t num_irq;
+     uint32_t revision;
+     bool lpi_enable;
++    bool nmi_support;
+     bool security_extn;
+     bool force_8bit_prio;
+     bool irq_reset_nonsecure;
+@@ -272,6 +276,7 @@ struct GICv3State {
+     GIC_DECLARE_BITMAP(active);       /* GICD_ISACTIVER */
+     GIC_DECLARE_BITMAP(level);        /* Current level */
+     GIC_DECLARE_BITMAP(edge_trigger); /* GICD_ICFGR even bits */
++    GIC_DECLARE_BITMAP(superprio);    /* GICD_INMIR */
+     uint8_t gicd_ipriority[GICV3_MAXIRQ];
+     uint64_t gicd_irouter[GICV3_MAXIRQ];
+     /* Cached information: pointer to the cpu i/f for the CPUs specified
+@@ -311,6 +316,7 @@ GICV3_BITMAP_ACCESSORS(pending)
+ GICV3_BITMAP_ACCESSORS(active)
+ GICV3_BITMAP_ACCESSORS(level)
+ GICV3_BITMAP_ACCESSORS(edge_trigger)
++GICV3_BITMAP_ACCESSORS(superprio)
+ 
+ #define TYPE_ARM_GICV3_COMMON "arm-gicv3-common"
+ typedef struct ARMGICv3CommonClass ARMGICv3CommonClass;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 8d525c6b82..9bf0073840 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2023,7 +2023,7 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+             ret |= CPSR_I;
+         }
+ 
+-        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
++        if ((cs->interrupt_request & CPU_INTERRUPT_NMI) && cs->nmi_irq) {
+             ret |= ISR_IS;
+         }
+     }
+@@ -2037,7 +2037,7 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+             ret |= CPSR_F;
+         }
+ 
+-        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
++        if ((cs->interrupt_request & CPU_INTERRUPT_NMI) && !cs->nmi_irq) {
+             ret |= ISR_FS;
+         }
+     }
+@@ -11452,6 +11452,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+         break;
+     case EXCP_IRQ:
+     case EXCP_VIRQ:
++    case EXCP_NMI:
+         addr += 0x80;
+         break;
+     case EXCP_FIQ:
 -- 
 2.34.1
 
