@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7745CC54764
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D173C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLse-0000bC-C9; Tue, 20 Feb 2024 03:53:36 -0500
+	id 1rcLsd-0000Zu-92; Tue, 20 Feb 2024 03:53:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsb-0000VR-Kc
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:33 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1rcLsc-0000X6-2b
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:34 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsX-0008F8-9d
+ id 1rcLsY-0008G0-NF
  for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:33 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a3cc2f9621aso548708166b.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:28 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so707967766b.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708419207; x=1709024007; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708419209; x=1709024009; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iVGSDDuh83CPH0ZtXdDBtmjkmYoWaBhCuelQOBGBJXM=;
- b=r4brvH6HJ/GfZN3mMe2U2ZhGV8FSuZPNeHNWOqVQLi873SInP4UmJ3gqWRKK/iv3NC
- oubYY67Pmd9kPcaOYUbVJMW8xbEHTmn5Id/OUISQWWD3YLr/oe22ryWA7ReJMn2ItLIR
- HCR3piTowuMkSqTz1yD4pi3RiD2KXMF6Vm52/ROUSNrSvhNvSCRUa/Y6pM7HpYx+Pwtz
- hhAjzqBdhecIm5agHgpIWBi5+fixR4uEmcCSKQjVVZM71mg2YqRy2ai/5gWRc3CTXf4X
- hUaInymicWdSQ9XJCpyw3xuWRFJCrFz5wBIxqWrw2idDGiZlUKiGVhIlwrn8M60ZLtkm
- qkVQ==
+ bh=vAkF59EwY8fUX/a1Fp7pYk/1Z9QBW83OQ84YuPeKoyg=;
+ b=qWeQ/MeNtR1jE9NFHt+d0iHNu7YE7z9BpesW9tNYBvcPDYjs1Ay+73Rc3vk0mGwHmZ
+ G6JPq0hgKXJd0Lv0bDex7vsuFJw98hX39MDZbOm0OKsooVeJSx/9IKcp3Nq29jGk3VmT
+ cZPMOBkOhsxmO8hJxYAth1rOOCDt8gurT1KwM8WvT6SYROLiBC9toTqK4plxpHEkWIrh
+ gl1MoL8jTKGX40al8e0t+iQu4egbIOetKcsrldq64w2BF4bS6IW6f4vF22RpNKLCOGLj
+ cD8OViB2Tat6RBURIOTKSMJKhbczxWE7lB+BW/WjSLG+1Q0kt9FW/YmnVvd69P+LuAtp
+ kt8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708419207; x=1709024007;
+ d=1e100.net; s=20230601; t=1708419209; x=1709024009;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iVGSDDuh83CPH0ZtXdDBtmjkmYoWaBhCuelQOBGBJXM=;
- b=AFZo4kXxfg8SHN8bf8VxGAo2NvnJmmp5RvcHrgfPAkc4GGr6sw/XOwD30Wm4zvFUSV
- 9dKej+rBlgh0U6qtyK0U63CCY+QCUBY0iFXJfh56+lSM4CG+0+H9kt7vdS4TF8jWV+Jw
- RBapziRli60PSwvnKKpugC6JYJJb2jLw7M06YtbwviBc4zcMGNXf1ZLOj42JGNjus3IG
- RCSRF27Eb2bBus+Ni6m+e7/LwUybr/Rn8j6QxNmcS/MOX3/QJvzMx/SgJXVSqYrm2lM3
- j+OhsCC0gU4s6rqhwLAR2dTGgNnhvSrDCUDE4WqAVi7r7KViS1xpGBmGn+jPOQ4YRhIr
- NY7A==
-X-Gm-Message-State: AOJu0YzEP04VrRBspVnSG7MVWfbBW9JjkhWRgISy9vbfKJEMVoY8RmAP
- GJatVhUcZ8f56yhopOhEk86WOvoMCilyXrcAXAEVxZ9iUCpa0X8SvgLlU5hRrUpFpZdBohj6b0U
- FC4Y=
-X-Google-Smtp-Source: AGHT+IHE6LTWqTn4TCP9TiKtgZGQ3JJ/Tt0dG5+iRdrHh49z7Am7MlQk6hJZ4pYios2ZDJ/NaMIrvw==
-X-Received: by 2002:a17:906:2785:b0:a3e:b523:6c8 with SMTP id
- j5-20020a170906278500b00a3eb52306c8mr2124297ejc.67.1708419206913; 
- Tue, 20 Feb 2024 00:53:26 -0800 (PST)
+ bh=vAkF59EwY8fUX/a1Fp7pYk/1Z9QBW83OQ84YuPeKoyg=;
+ b=YSDbk/Jkx2Ms9RiinF0100zUJ3oBK8tXrFKsB1U5PkCj/qbnStZMBzBa2v2ZSnjxGb
+ 6R9CBll8LN8hewFp2rs1cnhix1auYWrPcTmhGAKV7HP54Mle/x0P/NKNlpFenJwK7PWM
+ To2bYL6s/8HGUj4PMVZtIY1ughM8mbBGD3lMwy8D7sJz6z7mJqTtJDZeXRDFWpW4VaRc
+ kUklO1uv1KK4btqSt5AagFHMJ7QsNo6Lwo7njNyJZSlpEH1XDcPRx8qSGMqoqW2P5gfv
+ VX4LngmtG5lQ19/K+YoYLYDZ5SPNMtqTxrRtNqR5m6ASsMnRTNQu/cM6Vr19DUiQJ4W7
+ jCKQ==
+X-Gm-Message-State: AOJu0YxM7LoblB/CJpwR1c6gNE8qSjzqmswP8CrHYulFY9oE0lrVOh09
+ M9ly+pRmVkluU6LCqipL18f4G1UUNP6CmsAgAWOaxXNhlO/bL6sCTOggBQH4ZNc=
+X-Google-Smtp-Source: AGHT+IFVNV4VkPgHeK7Q36xRCLjSLsuWQVy25lUslwaUxEQijO3QqmVboW0ePWIP8MGtoBOZZfhW4Q==
+X-Received: by 2002:a17:906:1249:b0:a3b:e8f3:25d with SMTP id
+ u9-20020a170906124900b00a3be8f3025dmr8895757eja.75.1708419209539; 
+ Tue, 20 Feb 2024 00:53:29 -0800 (PST)
 Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
  [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
- cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.25
+ cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 00:53:26 -0800 (PST)
+ Tue, 20 Feb 2024 00:53:29 -0800 (PST)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-trivial@nongnu.org
 Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v1 15/21] qapi/ui: correct typos
-Date: Tue, 20 Feb 2024 10:52:22 +0200
-Message-Id: <2b12236539211bfa887364cf7b621586addbb42e.1708419115.git.manos.pitsidianakis@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH v1 17/21] ci/gitlab-pipeline-status: correct typos
+Date: Tue, 20 Feb 2024 10:52:24 +0200
+Message-Id: <5f804fdf765bd656296743315293695ed803ee0c.1708419115.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,31 +104,22 @@ Correct typos automatically found with the `typos` tool
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- qapi/ui.json | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/ci/gitlab-pipeline-status | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index b6d7e142b7..1448eaca73 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -63,7 +63,7 @@
- ##
- # @SetPasswordOptionsVnc:
- #
--# Options for set_password specific to the VNC procotol.
-+# Options for set_password specific to the VNC protocol.
- #
- # @display: The id of the display where the password should be
- #     changed.  Defaults to the first.
-@@ -125,7 +125,7 @@
- ##
- # @ExpirePasswordOptionsVnc:
- #
--# Options for expire_password specific to the VNC procotol.
-+# Options for expire_password specific to the VNC protocol.
- #
- # @display: The id of the display where the expiration should be
- #     changed.  Defaults to the first.
+diff --git a/scripts/ci/gitlab-pipeline-status b/scripts/ci/gitlab-pipeline-status
+index e3343b0510..39f3c22c66 100755
+--- a/scripts/ci/gitlab-pipeline-status
++++ b/scripts/ci/gitlab-pipeline-status
+@@ -131,7 +131,7 @@ def create_parser():
+                               'checks of the pipeline status.  Defaults '
+                               'to %(default)s'))
+     parser.add_argument('-w', '--wait', action='store_true', default=False,
+-                        help=('Wether to wait, instead of checking only once '
++                        help=('Whether to wait, instead of checking only once '
+                               'the status of a pipeline'))
+     parser.add_argument('-p', '--project-id', type=int, default=11167699,
+                         help=('The GitLab project ID. Defaults to the project '
 -- 
 γαῖα πυρί μιχθήτω
 
