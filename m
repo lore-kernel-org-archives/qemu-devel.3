@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C95CC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FFDC54764
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcMFz-0001VV-Ob; Tue, 20 Feb 2024 04:17:43 -0500
+	id 1rcMFv-0001Tt-Ot; Tue, 20 Feb 2024 04:17:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
- id 1rcMFx-0001Uo-R3; Tue, 20 Feb 2024 04:17:41 -0500
-Received: from mail-bn7nam10on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2009::601]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ id 1rcMFt-0001Sr-VB; Tue, 20 Feb 2024 04:17:37 -0500
+Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::600]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
- id 1rcMFv-0004M0-Qw; Tue, 20 Feb 2024 04:17:41 -0500
+ id 1rcMFs-0004Le-5q; Tue, 20 Feb 2024 04:17:37 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Pc7UD9uJBfufNftCmwnZM84t2g1MTjnyQCBZjU9eqrkvR6dIKVVL43zaFjnBC+ucM/ehdhBBxyV6MwgoXp2n7p5M0buMCtf3cdBbBI4oh0lhjVu4ebV/3GcRtqQ6bfX5siOazzIDuVrnO5Q9rfV+o3PllE3iJsglYunjQZzlcO331uIVgbohw3yosZQkSBnGDeo2M4/EJbI57XXZe+s2ZXCdtN2tqnFllxl0pF3Bbv5JqpoipDSknNmg0zuv6mHAkzfjzFijsyk/v/QhgyCOknxaNYR5KNah4YDd16LhXDnU/2o1HarCFCEzeZ1xix29axGIWk6cRsS0QpFknnG9ZA==
+ b=HYnXlN150N+NZH1dyFtgz86jOdW5sUgFw66uV/oHbkjUDkm7B+U0DKtHfk1kY+qOYPMkHBMZ8Xw9JCckbSqXDHwGEC4hQfVeUpLbtPjdBbnrciixpieWCdC40Cy44G4HMnodA02X2NQ0GyAQehVNRWSyMv4cj+l9J5vTAsYwo5qLLFClgi3319IP2FaYzmTWJB5H0bHSRc+Rx9ZQ59XrIbfvvD0UGK7slj+3q8GknFOx0gywhFP3f8XS6sCIghe74uxF+aZ8/ZTO0YGrvtAzDaWi1sY7tZT+CfySL4UUyJ2rVYmeGxo7VtJmHANVxLuBQhi5VqFY0NMwOk//f7BngQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2vJKcaJkKs4tEOhv8zStBTduiifpunVPf6JP9nL+yhs=;
- b=Y06lYu32aiQKK3n23/kUyta1SwJLAuXq0FaCXEMweCMTr1/PvSCQnuNVTuKChOrf4KFwWKLUHpIbQmD/ABhcOt9lL3tYLLyzHaBRXZWG2geOz8K2aQsNI+aKAR6CwaSOyNc3nGSaE3jTvuyELnKvcbLFdvYoWbUmV09cL/cUEr3m1nl37q2eujgw40yAyQKxUpEAHOc7kouYeV9hZrCAK2cFWw/CgfI8NLAuCKklCwu1ijKUk/R9RKMpblxyIPK8nJ2e0kcK1umjXuLA2iD2OGOnnsgD9A10CiOdJgcdTyI9anfw2TefXpQKCN9meCz4EE1XQyBNZTOdqacRlyX0yA==
+ bh=g0od/PrEcbSIF8ofbEoWOY+H2cDNF/S9ZlA1rOMDabY=;
+ b=Wq6gf89Aqr43dGgikkOhaGEvqf52xhYXOen6MCcE4JXtgmDixnCbCXJmRXXQlEraa/FW+dChkol64M5tENaKoTC/IGMzhD1DsGacPT86Oy6klNlCmZoJr6VJH35uoDhIYN7U0GbDV5r+41BOycV5dD6UeVOCtto3M71JrRTiXv54iythsb514ONWO5nPsYOAEIYi8qsrjICqiSu0YoCXA1zZgh8/U4oWuqfyFn5iCwdu7XgAo+MVu5lyJG/l+U9WBmXGuabG6+gm8l/eNz0df6l6JMXKCsEVRAa+Y8O8y+Kkkci5QmeHR13DDS6QDD48bBZEEgZPMUUX8fX1mN+RUw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2vJKcaJkKs4tEOhv8zStBTduiifpunVPf6JP9nL+yhs=;
- b=yOZOzpRSugRsQF+hSnu0SN714KzsdXNfj40p7xbF6HFxk4F2GN3hGV4ERMICudyu8cpZdl+FgnIp0yqtWMz0WeI9vV6QTCk/1QRdcmkJLPYd9PFpK9ettm7/fuSZeIls2Pg5DxA31Zhcq1WaQi8WmL1vyqhvM9YEOTfkJ34ckrw=
-Received: from DM6PR02CA0045.namprd02.prod.outlook.com (2603:10b6:5:177::22)
- by PH7PR12MB6956.namprd12.prod.outlook.com (2603:10b6:510:1b9::19) with
+ bh=g0od/PrEcbSIF8ofbEoWOY+H2cDNF/S9ZlA1rOMDabY=;
+ b=w9LXiIrtr7G6UW9CBwXY4TYSWO11NnPjilQi6VM7d9gWS6vVA4P05VS3m3dFIJYp7cPcHlF9NUImtrGCHcomu93nFMYKJcNIcsySRyr7rYnIjtJzBSk3jbY87g8HJ4frIUc3kRGhoOUbWwCOXwvjpJ3Hs++/9tRGHBBV3GDvc7w=
+Received: from DM6PR07CA0127.namprd07.prod.outlook.com (2603:10b6:5:330::28)
+ by SJ0PR12MB7036.namprd12.prod.outlook.com (2603:10b6:a03:483::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.19; Tue, 20 Feb
- 2024 09:17:35 +0000
-Received: from CY4PEPF0000E9D9.namprd05.prod.outlook.com
- (2603:10b6:5:177:cafe::6) by DM6PR02CA0045.outlook.office365.com
- (2603:10b6:5:177::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.20; Tue, 20 Feb
+ 2024 09:17:33 +0000
+Received: from CY4PEPF0000E9D8.namprd05.prod.outlook.com
+ (2603:10b6:5:330:cafe::b1) by DM6PR07CA0127.outlook.office365.com
+ (2603:10b6:5:330::28) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.39 via Frontend
- Transport; Tue, 20 Feb 2024 09:17:35 +0000
+ Transport; Tue, 20 Feb 2024 09:17:32 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
 Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000E9D9.mail.protection.outlook.com (10.167.241.77) with Microsoft
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ CY4PEPF0000E9D8.mail.protection.outlook.com (10.167.241.83) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 20 Feb 2024 09:17:35 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ 15.20.7292.25 via Frontend Transport; Tue, 20 Feb 2024 09:17:32 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 20 Feb
- 2024 03:17:34 -0600
+ 2024 03:17:31 -0600
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 20 Feb
+ 2024 03:17:31 -0600
 Received: from xhdvaralaxm41-docker.xilinx.com (10.180.168.240) by
  SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35
- via Frontend Transport; Tue, 20 Feb 2024 03:17:31 -0600
+ via Frontend Transport; Tue, 20 Feb 2024 03:17:29 -0600
 From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <qemu-block@nongnu.org>
 CC: Peter Maydell <peter.maydell@linaro.org>, Alistair Francis
  <alistair@alistair23.me>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
  Kevin Wolf <kwolf@redhat.com>, Francisco Iglesias
  <frasse.iglesias@gmail.com>, <sai.pavan.boddu@amd.com>
-Subject: [PATCH v2 2/2] arm: xlnx-versal-virt: Add machine property ospi-flash
-Date: Tue, 20 Feb 2024 09:17:21 +0000
-Message-ID: <20240220091721.82954-3-sai.pavan.boddu@amd.com>
+Subject: [PATCH v2 1/2] block: m25p80: Add support of mt35xu02gbba
+Date: Tue, 20 Feb 2024 09:17:20 +0000
+Message-ID: <20240220091721.82954-2-sai.pavan.boddu@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240220091721.82954-1-sai.pavan.boddu@amd.com>
 References: <20240220091721.82954-1-sai.pavan.boddu@amd.com>
@@ -79,28 +83,28 @@ Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D9:EE_|PH7PR12MB6956:EE_
-X-MS-Office365-Filtering-Correlation-Id: 73fc1f09-322b-4d0e-5146-08dc31f4c67b
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D8:EE_|SJ0PR12MB7036:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7fd93676-6978-4663-6824-08dc31f4c4ed
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: +oSNFgeqUX6rYy9SQGlBceQXjCsM6hsBuPccVDxgZwzziyZEI2qupUCrwvktN4a9W6P9IrnQFWkYmsKy0XHnMKAq+OO024WNTmihWLSdYMfjTE/ADc9i6AsKlK2Fh0pTT6QNpFReS2JJARLNbSFUVsS1oppfdeUDIXiqGwLOIj6fbiw6gjWcCUlRO5iuQriTBtU+neTp6hUPNYp0YhCs99a5MhxdA5kDcnlA2J8k+BdLI7VidrYPx7hHJwUBKx4CL0J8D2eAn5Ioviitr8oxwE/LBqQRDztLsakx2QFk36ltjvzWPAs9hWy8BL6MG/HWiHE1oju3B9KGExZ4s37TNWnjlXH6ZM5/10NwT0cHhG1b1/bpwlGaM2y9jyvi70r1Wm8UyZjD+C/011D2+2h8Zcomnu3wLOCkq4Oud8+sntuNjCPOEHB115CG7Myw+MT5sy9GBTiI0JxOaYe8d2iAthkGDArZFptxrgDz6iRXxj0Xjf5ryroRHer38Rf93q4pt69D1aCfH7BA34/JoOG36RqX2xIq0miGQw1kiGnkNraCfzV4YdPVP9BErFyjZ+psTMLHvOfr/t05T8lM0Gxf2nInQuLkc8T6hSkbzDXjcEP1EWaVKQk3vXrcJG5gqsbZ3HUniaMG3iSIzYZiFVj81WIBsTtT+B7KTBvmpQZvNNU=
+X-Microsoft-Antispam-Message-Info: fcCXhdgeL+wAIEEobmh1j00LX4mdib8nv1Dg5pO+9QjKqLpPg49B9kJ3HvpP6yZlE/hJVdprOyf3ltfX29/MaBfELVyhZEm0j/f4plG2ySSzsiKsPR6V6OUrAUO7qouegGBd/OFeDaIL4jdzS798OMy+Xf74tIViB3P2LMNO/ojqA7AFKI67dbP8OfrBXD+1iQqEVrwOzO2+63YHRl5Mk1UngnhNbvbN446GhR+VnpJQEzZtX8UUsONJpN8wysQXnoIzBdyqKuCjsCOGOsc5/6RfG/xotunZ0GiNP6MqIdEvRAvyW5IU5w4dNIlCZHJnyWtd4QICsJnKW4zw9H6cTL1aFuRCuVZozkGel+MDiU9s9mD8i2izkGNWcj9D3MitlXTZEPkCLwKDohJgyqUk2odcjNLB22fESnXShPqFOHBv9qrf8mlcTDt9sHGi2EReyjfbnZJNguy3RwGZsV85hJo06rtisj1cYq0ZvlEDg1rMcOTZeQ+sDoct0gmgXpiVaZqWBWc6PnxUugFn84D73la5xjTQ3+Ms1vnNPTi6WmtP5rfKgyO9NRGCz+IdtjL4hvs6UNuA+Up3sVzEYJc9x4KVv3T5ckTRfaxFaDo/TW/Mj3YsJt7MYZP+Ng++Xhuk9/2uzGKJxsYTZuqb5GL6QACWIAlfJXlDOE2pdxN4huM=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230031)(36860700004)(46966006)(40470700004); DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2024 09:17:35.0582 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 73fc1f09-322b-4d0e-5146-08dc31f4c67b
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2024 09:17:32.4504 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7fd93676-6978-4663-6824-08dc31f4c4ed
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000E9D9.namprd05.prod.outlook.com
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000E9D8.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6956
-Received-SPF: softfail client-ip=2a01:111:f403:2009::601;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB7036
+Received-SPF: softfail client-ip=2a01:111:f403:2418::600;
  envelope-from=sai.pavan.boddu@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -123,111 +127,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This property allows users to change flash model on command line as
-below.
-
-   ex: "-M xlnx-versal-virt,ospi-flash=mt35xu02gbba"
+Add Micro 2Gb OSPI flash part with sfdp data.
 
 Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Reviewed-by: Francisco Iglesias <frasse.iglesias@gmail.com>
 ---
- hw/arm/xlnx-versal-virt.c | 44 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 43 insertions(+), 1 deletion(-)
+ hw/block/m25p80_sfdp.h |  1 +
+ hw/block/m25p80.c      |  3 +++
+ hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+)
 
-diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
-index 94942c55df..bfaed1aebf 100644
---- a/hw/arm/xlnx-versal-virt.c
-+++ b/hw/arm/xlnx-versal-virt.c
-@@ -49,6 +49,7 @@ struct VersalVirt {
-     struct {
-         bool secure;
-     } cfg;
-+    char *ospi_model;
+diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+index 011a880f66..1733b56950 100644
+--- a/hw/block/m25p80_sfdp.h
++++ b/hw/block/m25p80_sfdp.h
+@@ -16,6 +16,7 @@
+ #define M25P80_SFDP_MAX_SIZE  (1 << 24)
+ 
+ uint8_t m25p80_sfdp_n25q256a(uint32_t addr);
++uint8_t m25p80_sfdp_mt35xu02g(uint32_t addr);
+ 
+ uint8_t m25p80_sfdp_mx25l25635e(uint32_t addr);
+ uint8_t m25p80_sfdp_mx25l25635f(uint32_t addr);
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 0a12030a3a..08a00a6d9b 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -267,6 +267,9 @@ static const FlashPartInfo known_devices[] = {
+     { INFO("mt25ql512ab", 0x20ba20, 0x1044, 64 << 10, 1024, ER_4K | ER_32K) },
+     { INFO_STACKED("mt35xu01g", 0x2c5b1b, 0x104100, 128 << 10, 1024,
+                    ER_4K | ER_32K, 2) },
++    { INFO_STACKED("mt35xu02gbba", 0x2c5b1c, 0x104100, 128 << 10, 2048,
++                   ER_4K | ER_32K, 4),
++                   .sfdp_read = m25p80_sfdp_mt35xu02g },
+     { INFO_STACKED("n25q00",    0x20ba21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
+     { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
+     { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
+diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+index b33811a4f5..6ee2cfaf11 100644
+--- a/hw/block/m25p80_sfdp.c
++++ b/hw/block/m25p80_sfdp.c
+@@ -57,6 +57,42 @@ static const uint8_t sfdp_n25q256a[] = {
  };
+ define_sfdp_read(n25q256a);
  
- static void fdt_create(VersalVirt *s)
-@@ -638,6 +639,22 @@ static void sd_plugin_card(SDHCIState *sd, DriveInfo *di)
-                            &error_fatal);
- }
++static const uint8_t sfdp_mt35xu02g[] = {
++    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
++    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
++    0x84, 0x00, 0x01, 0x02, 0x80, 0x00, 0x00, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xe5, 0x20, 0x8a, 0xff, 0xff, 0xff, 0xff, 0x7f,
++    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
++    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x11, 0xd8,
++    0x0f, 0x52, 0x00, 0x00, 0x24, 0x5a, 0x99, 0x00,
++    0x8b, 0x8e, 0x03, 0xe1, 0xac, 0x01, 0x27, 0x38,
++    0x7a, 0x75, 0x7a, 0x75, 0xfb, 0xbd, 0xd5, 0x5c,
++    0x00, 0x00, 0x70, 0xff, 0x81, 0xb0, 0x38, 0x36,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0x43, 0x0e, 0xff, 0xff, 0x21, 0xdc, 0x5c, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++};
++
++define_sfdp_read(mt35xu02g);
  
-+static char *versal_get_ospi_model(Object *obj, Error **errp)
-+{
-+    VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
-+
-+    return g_strdup(s->ospi_model);
-+}
-+
-+static void versal_set_ospi_model(Object *obj, const char *value, Error **errp)
-+{
-+    VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
-+
-+    g_free(s->ospi_model);
-+    s->ospi_model = g_strdup(value);
-+}
-+
-+
- static void versal_virt_init(MachineState *machine)
- {
-     VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(machine);
-@@ -732,12 +749,25 @@ static void versal_virt_init(MachineState *machine)
-     for (i = 0; i < XLNX_VERSAL_NUM_OSPI_FLASH; i++) {
-         BusState *spi_bus;
-         DeviceState *flash_dev;
-+        ObjectClass *flash_klass;
-         qemu_irq cs_line;
-         DriveInfo *dinfo = drive_get(IF_MTD, 0, i);
- 
-         spi_bus = qdev_get_child_bus(DEVICE(&s->soc.pmc.iou.ospi), "spi0");
- 
--        flash_dev = qdev_new("mt35xu01g");
-+        if (s->ospi_model) {
-+            flash_klass = object_class_by_name(s->ospi_model);
-+            if (!flash_klass ||
-+                object_class_is_abstract(flash_klass) ||
-+                !object_class_dynamic_cast(flash_klass, "m25p80-generic")) {
-+                error_setg(&error_fatal, "'%s' is either abstract or"
-+                       " not a subtype of m25p80", s->ospi_model);
-+                return;
-+            }
-+        }
-+
-+        flash_dev = qdev_new(s->ospi_model ? s->ospi_model : "mt35xu01g");
-+
-         if (dinfo) {
-             qdev_prop_set_drive_err(flash_dev, "drive",
-                                     blk_by_legacy_dinfo(dinfo), &error_fatal);
-@@ -770,6 +800,13 @@ static void versal_virt_machine_instance_init(Object *obj)
-                              0);
- }
- 
-+static void versal_virt_machine_finalize(Object *obj)
-+{
-+    VersalVirt *s = XLNX_VERSAL_VIRT_MACHINE(obj);
-+
-+    g_free(s->ospi_model);
-+}
-+
- static void versal_virt_machine_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-@@ -781,6 +818,10 @@ static void versal_virt_machine_class_init(ObjectClass *oc, void *data)
-     mc->default_cpus = XLNX_VERSAL_NR_ACPUS + XLNX_VERSAL_NR_RCPUS;
-     mc->no_cdrom = true;
-     mc->default_ram_id = "ddr";
-+    object_class_property_add_str(oc, "ospi-flash", versal_get_ospi_model,
-+                                   versal_set_ospi_model);
-+    object_class_property_set_description(oc, "ospi-flash",
-+                                          "Change the OSPI Flash model");
- }
- 
- static const TypeInfo versal_virt_machine_init_typeinfo = {
-@@ -789,6 +830,7 @@ static const TypeInfo versal_virt_machine_init_typeinfo = {
-     .class_init = versal_virt_machine_class_init,
-     .instance_init = versal_virt_machine_instance_init,
-     .instance_size = sizeof(VersalVirt),
-+    .instance_finalize = versal_virt_machine_finalize,
- };
- 
- static void versal_virt_machine_init_register_types(void)
+ /*
+  * Matronix
 -- 
 2.25.1
 
