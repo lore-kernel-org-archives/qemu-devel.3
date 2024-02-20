@@ -4,67 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD6A0C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC07C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLuJ-0005kt-J6; Tue, 20 Feb 2024 03:55:19 -0500
+	id 1rcLsj-0000jU-8h; Tue, 20 Feb 2024 03:53:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuG-0005Nm-O0
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuE-0000BY-E1
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708419313;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=dYif9xIO2mh9ywAuepSn2/3QtxzSuxc/VMCW42YOAMQ=;
- b=W4spvVwQELo81KEQZCt69/xYnZeaLGORdfcWVWO815ySCngf+lf3haNJ+OjJuVj4+Qt+EW
- apyEO8YvzVTN4nZOSSxushydgAar0UnVt52M2ljuvNVriieLDGRTMlJag31skV0NnalaFS
- Y8mQJfFYoMxTUWo0fs6GXJiL13vGVh8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-zqKdoZhLM42Shd5zM_K45Q-1; Tue, 20 Feb 2024 03:55:09 -0500
-X-MC-Unique: zqKdoZhLM42Shd5zM_K45Q-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2F4B910201E9;
- Tue, 20 Feb 2024 08:55:09 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.168])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 8F6AD492BE3;
- Tue, 20 Feb 2024 08:55:06 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: John Snow <jsnow@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org
-Subject: [PATCH v2 0/7] hw/ide: Clean up hw/ide/qdev.c and
- include/hw/ide/internal.h
-Date: Tue, 20 Feb 2024 09:54:58 +0100
-Message-ID: <20240220085505.30255-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rcLsh-0000h2-8T
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:39 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rcLsd-0008HQ-1i
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:38 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5648d92919dso2214442a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708419213; x=1709024013; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ziY8Jw6EXE5hHrClCqTsAlncUS9FIpDkSwZM2WtkVaQ=;
+ b=lUzLHf+T7784UUflbBgOF/O90in0Gw2hHEf9aGWjOnBmNJ7gt+jaTMQyiPVm106V3W
+ lafzyeaasSeV4rqZplFKM2nO3V8ZwE6fG1NbgKMbUZplc56rWlQX+/EUePjRYCJwA/8z
+ +40irqFoU33sYwsJs/0+heVErPqrrJhR0uouyqmIsBUdP+eIWQMHwtpuWJYLYkO26CLy
+ ci7jQrrpIy2V68Nnma9bcJQFollNyMNtoQ1r29DWp373SEz/CH76BjHIWOwZ4IMJ00iV
+ kkurkgIaQwOGL06NnOzmsf4ivdjgUtx0hI10G88SciSCH2DSnm5jNgixk2fQhdzRogkC
+ rdaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708419213; x=1709024013;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ziY8Jw6EXE5hHrClCqTsAlncUS9FIpDkSwZM2WtkVaQ=;
+ b=INZV7GFK2a+RZsmGR6R6/jVqWXiPjA6B348VjmWHoUuhIyPiGmfZ5yMddHbbJxg3Dg
+ 3u577/rVXyYOQINjN/kwBTffg6THHwnJt0hwYhX8OfMqv9+Mw7Purw+4mykCcLCN8KhX
+ /MN31BJQ7/7UcSvglyK4qACskMZWrCYCDmVl9ovAns4iP8/ByRqND6P9v7XGSG8QsMlR
+ QmQ860sYakE01aL2PJhL3Cnxvja+4V4CyjBCYBsH/3aoYRhBZDj9DrC1EfnKLMOo7HFe
+ mwO/JFfu5U86Yd2OdFmnfEiaNtzNBPzuzcqt/g2IMXBgYYHQZZQ7w/8XZ5f7/a4El8vr
+ o7ig==
+X-Gm-Message-State: AOJu0YzA175OpCMVNaA9Js+PoFzN9NQPAkChUh9vyb3ZPJokCURkT8Ne
+ bBiOzBOS9YDt7k94rIlhce5Ej3ZGK+pZ0W+lWflCzdKi87PY1uLU76nTbc2RU1A=
+X-Google-Smtp-Source: AGHT+IFs+obNRLn2DlVizb4uoIAG0u5rk3shlnPOJbhDry9L0AbiIOXWZE19Uyl74IlUIfaXFolvhg==
+X-Received: by 2002:a17:906:57ca:b0:a3f:ce8:1234 with SMTP id
+ u10-20020a17090657ca00b00a3f0ce81234mr404484ejr.68.1708419213706; 
+ Tue, 20 Feb 2024 00:53:33 -0800 (PST)
+Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
+ [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
+ cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 00:53:33 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
+Subject: [PATCH v1 20/21] s390x: correct typos
+Date: Tue, 20 Feb 2024 10:52:27 +0200
+Message-Id: <73c534c8b6cdd769ab4d0220f505da8ec7470983.1708419115.git.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,70 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While trying to make it possible to compile-out the CompactFlash IDE device
-in downstream distributions (first patch), we noticed that there are more
-things in the IDE code that could use a proper clean up:
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
-First, hw/ide/qdev.c is quite a mix between IDE BUS specific functions
-and (disk) device specific functions. Thus the second patch splits qdev.c
-into two new separate files to make it more obvious which part belongs
-to which kind of devices.
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ target/s390x/cpu_features_def.h.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The remaining patches unentangle include/hw/ide/internal.h, which is meant
-as a header that should only be used internally to the IDE subsystem, but
-which is currently exposed to the world since include/hw/ide/pci.h includes
-this header, too. Thus we move the definitions that are also required for
-non-IDE code to other new header files, so we can finally change pci.h to
-stop including internal.h. After these changes, internal.h is only included
-by files in hw/ide/ as it should be.
-
-v2:
-- Change the order of the DMA patch and move typedef struct IDEDMAOps
-  and typedef struct IDEDMA IDEDMA into ide-dma.h, too
-- Make sure that the headers are self-contained (i.e. #include the
-  right other headers)
-- Remove some more remnants of include/hw/ide.h
-
-Thomas Huth (7):
-  hw/ide: Add the possibility to disable the CompactFlash device in the
-    build
-  hw/ide: Split qdev.c into ide-bus.c and ide-dev.c
-  hw/ide: Move IDE DMA related definitions to a separate header
-    ide-dma.h
-  hw/ide: Move IDE device related definitions to ide-dev.h
-  hw/ide: Move IDE bus related definitions to a new header ide-bus.h
-  hw/ide: Remove the include/hw/ide.h legacy file
-  hw/ide: Stop exposing internal.h to non-IDE files
-
- MAINTAINERS                  |   1 -
- include/hw/ide.h             |   9 --
- include/hw/ide/ide-bus.h     |  42 +++++++
- include/hw/ide/ide-dev.h     | 184 ++++++++++++++++++++++++++++++
- include/hw/ide/ide-dma.h     |  37 ++++++
- include/hw/ide/internal.h    | 211 +----------------------------------
- include/hw/ide/pci.h         |   2 +-
- hw/i386/pc.c                 |   2 +-
- hw/ide/cf.c                  |  58 ++++++++++
- hw/ide/cmd646.c              |   1 +
- hw/ide/ide-bus.c             | 111 ++++++++++++++++++
- hw/ide/{qdev.c => ide-dev.c} | 137 +----------------------
- hw/ide/pci.c                 |   1 +
- hw/ide/piix.c                |   1 +
- hw/ide/sii3112.c             |   1 +
- hw/ide/via.c                 |   1 +
- hw/arm/Kconfig               |   2 +
- hw/ide/Kconfig               |  32 ++++--
- hw/ide/meson.build           |   4 +-
- 19 files changed, 470 insertions(+), 367 deletions(-)
- delete mode 100644 include/hw/ide.h
- create mode 100644 include/hw/ide/ide-bus.h
- create mode 100644 include/hw/ide/ide-dev.h
- create mode 100644 include/hw/ide/ide-dma.h
- create mode 100644 hw/ide/cf.c
- create mode 100644 hw/ide/ide-bus.c
- rename hw/ide/{qdev.c => ide-dev.c} (67%)
-
+diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+index e68da9b8ff..c53ac13352 100644
+--- a/target/s390x/cpu_features_def.h.inc
++++ b/target/s390x/cpu_features_def.h.inc
+@@ -142,7 +142,7 @@ DEF_FEAT(SIE_CEI, "cei", SCLP_CPU, 43, "SIE: Conditional-external-interception f
+ 
+ /*
+  * Features exposed via no feature bit (but e.g., instruction sensing)
+- * -> the feature bit number is irrelavant
++ * -> the feature bit number is irrelevant
+  */
+ DEF_FEAT(DAT_ENH_2, "dateh2", MISC, 0, "DAT-enhancement facility 2")
+ DEF_FEAT(CMM, "cmm", MISC, 0, "Collaborative-memory-management facility")
 -- 
-2.43.2
+γαῖα πυρί μιχθήτω
 
 
