@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F14C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 20:10:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A0D1C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 20:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcWRE-0007hj-LR; Tue, 20 Feb 2024 15:10:00 -0500
+	id 1rcWUM-0000P0-HH; Tue, 20 Feb 2024 15:13:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcWRD-0007hN-3K
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:09:59 -0500
-Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
+ id 1rcWUK-0000Op-SS
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:13:12 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcWRB-0005w4-Im
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:09:58 -0500
-Received: by mail-oo1-xc2c.google.com with SMTP id
- 006d021491bc7-599f5e71d85so3765458eaf.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 12:09:57 -0800 (PST)
+ id 1rcWUJ-0006Xt-AI
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:13:12 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-290d59df3f0so5121731a91.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 12:13:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708459796; x=1709064596; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708459989; x=1709064789; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IAuxyBrCJ/lUuzB5sld+Gg4n/afAKejGR+X7bc5rpXc=;
- b=bshYhVSvlGvtxsWFn/QHdPyqWqNVntdCIYvD5DXEvN8jhn31sLBu+00wLzfp4s+KGr
- k+iXOREgwMYlj3zmb+OSgm/fU752dadlSfB1IUSOdANi30mZTzSvs8u4+yXAaM1kSUWr
- WPDg1SfaCMCG79++Y1j2BRGNjGRzJXY0ZC+cpnbhGBzAZnx5B9KWCNNWpslTGGyzZF79
- /1xQT0NqsvouXyaI0b+gDc1Xxr/1TPCChOVjAMyyxCG5v/n2rq8SdkZ2B1ErmQSWFXYR
- c+xoQ0LV20ASJvk13Vfy2OSaZIm3O0CLgWcyF1NbIs/c01JSu85z7OEWcGuik066Z/NO
- EAmg==
+ bh=HQoDLWE+tHXmr61iG9SGA2MUAvCUj1IQ1kM2npPoaGQ=;
+ b=etd6SNpi9dgdD2dv/By3Cxc4vbVKMT+CURtgl8Nh2Ei/sLSxgsEL9jB9glsVJdOhCD
+ 3XwVkN5SbhmPAKNkYJIX1O7QMnytsLmsofO48bd7I31TDJl/lWs8GFwiQ6KQjB1HV1no
+ 2wYm78Oo7yNSkVQTUBXcVXFZ/WOEeXjQVWQ1cgVGsnHwV3b5l0qyB6gvuWSoQrHeSX13
+ wAGE8hAYn7wFhKGAyl604vlA/kL316T4uDMuDtcETwU6kIhiIWKbiteK4iDa5eKuJfhX
+ HkmSpBuuTWJkkN9uBx76r9CeqYzlA4KIkSjrcKcyU/I6cJpyb70ftkNRl51WxqHoSBHk
+ BubQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708459796; x=1709064596;
+ d=1e100.net; s=20230601; t=1708459989; x=1709064789;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IAuxyBrCJ/lUuzB5sld+Gg4n/afAKejGR+X7bc5rpXc=;
- b=SlZP3e00SeTBh0mhkn9deCxZpMxZ057m1s/ud46M10cFsVFfemlbIkqz61f5mZY8jO
- M9pJvw0C1Hs+jQ/VIiPNtXexqA/4YYV2qFkO3GhlXx6OD2UEMF+TMcejjVwv2ebOP1qF
- 0k0ulqd79seH71XvMZwJvyDqq3xmxm2hOFjjMofdLeVe1YpFsakRKJn8MDA/6yHgdcti
- y6b22IGM9jy/A9/Ery+fN6aIvelKQsPSPRCwT1DXVndT+rdiDH11Qx6CZBuh6Y4ZVXpQ
- eQQOgjVtDhB2f+lvJ+uMCkRDlcJCJ4Q7k/5psD5nN5wPTjr/FnrA1v4S+qhPSD/vZI71
- wDiA==
+ bh=HQoDLWE+tHXmr61iG9SGA2MUAvCUj1IQ1kM2npPoaGQ=;
+ b=jbwYVBQCrqKenGyNTropIqBM5QnMEfjCqM9RBhSXLY5oc8wVRRUvXLmwQzMhys7lz3
+ CdPz37l6O28ovSO2qWtrc6a2QnjVoyjJsyNZvP0mmoYJ1f1XkLtwtxxfJM3pU0mrqc8V
+ 4+bNVBpkrpLG0FbwXaYnxaRrrRqIM3oxWtUO56DeTO2VJVW8L9oPmNuArherYkr+BQeQ
+ jrQNjBiKKNUpp2tRkiO3aa24svWLTEIAYIr2qhk98PsZRT9a5b5VTJXXkySRZDd7Gfnx
+ XoptozoDBvqAFSb5kKymQjXlOr/G/1C8JOwfOVjFkI3XK4B8ZaURnV9ZAOQqd68ehtSm
+ Lk5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjkFkq9pLmb6yQ99PzNDTvk0hMgX5JVGuj3SI5creyIu3lyPdzTe07PEKcTzzh30fGWAvb29ySwnp9Rc/DcnRQgZYsCfM=
-X-Gm-Message-State: AOJu0YwAjpvLlNYs9BUFwC/xKZ15oswUl/q4660d8yfAA7GwhFsPusiE
- ek/L2Ig/7xGBd87Mt7MMkNpPFd4Lvg/ya9fZdzM+lKghGBkKPWyL0cIX8UDLHuc=
-X-Google-Smtp-Source: AGHT+IEqjNpTUTCfpTnXKlLzZeEr0DzM1XbhVax1+7El1fnFnsMtlSkORKjrXmNPV8+RJMI+sWiGnw==
-X-Received: by 2002:a05:6358:6a46:b0:17b:2d12:74d9 with SMTP id
- c6-20020a0563586a4600b0017b2d1274d9mr12553492rwh.27.1708459796276; 
- Tue, 20 Feb 2024 12:09:56 -0800 (PST)
+ AJvYcCV6HydRQsbZ1eutoQ/H41g7eSJaHlfiHA84i9IHqKXo00H240KE9gZBTM9Atp2A0TQIJO09VrQjG/cbIZngcehc400A1MA=
+X-Gm-Message-State: AOJu0YzJWMqL0kVL/28GuAAssjFLUHQ6ZO4QacyCAm7vH/3LuY1kItlr
+ HkyZp/J+eGCIdaohsw2hcuNtgt2XaP5uVWkV8WDpxurXq4UawemFqTHF5XMsbmM=
+X-Google-Smtp-Source: AGHT+IGBLAyitnP7Osc8SmMB1jVmvWEbeqtDcLMLITcK4l3e+cbSkT+o2SMjqkVQiov4zlAyE9dMVg==
+X-Received: by 2002:a17:90a:77c3:b0:298:c118:c3d1 with SMTP id
+ e3-20020a17090a77c300b00298c118c3d1mr14683314pjs.22.1708459989140; 
+ Tue, 20 Feb 2024 12:13:09 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- m25-20020a638c19000000b005ca0ae17983sm7151639pgd.8.2024.02.20.12.09.53
+ sv6-20020a17090b538600b00299d4856e6asm50079pjb.1.2024.02.20.12.13.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 12:09:55 -0800 (PST)
-Message-ID: <b2186b56-50f9-4e0e-a8cb-dfc764f4d221@linaro.org>
-Date: Tue, 20 Feb 2024 10:09:51 -1000
+ Tue, 20 Feb 2024 12:13:08 -0800 (PST)
+Message-ID: <e2fa1121-eb3f-46ec-9e46-f3da42ef56a8@linaro.org>
+Date: Tue, 20 Feb 2024 10:13:05 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] hw/core/machine: Use qemu_register_resettable for
- sysbus reset
+Subject: Re: [PATCH 10/10] docs/devel/reset: Update to discuss system reset
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -76,13 +75,13 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-10-peter.maydell@linaro.org>
+ <20240220160622.114437-11-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240220160622.114437-10-peter.maydell@linaro.org>
+In-Reply-To: <20240220160622.114437-11-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,33 +105,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/20/24 06:06, Peter Maydell wrote:
-> Move the reset of the sysbus (and thus all devices and buses anywhere
-> on the qbus tree) from qemu_register_reset() to qemu_register_resettable().
-> 
-> This is a behaviour change: because qemu_register_resettable() is
-> aware of three-phase reset, this now means that:
->   * 'enter' phase reset methods of devices and buses are called
->     before any legacy reset callbacks registered with qemu_register_reset()
->   * 'exit' phase reset methods of devices and buses are called
->     after any legacy qemu_register_reset() callbacks
-> 
-> Put another way, a qemu_register_reset() callback is now correctly
-> ordered in the 'hold' phase along with any other 'hold' phase methods.
-> 
-> The motivation for doing this is that we will now be able to resolve
-> some reset-ordering issues using the three-phase mechanism, because
-> the 'exit' phase is always after the 'hold' phase, even when the
-> 'hold' phase function was registered with qemu_register_reset().
+> Now that system reset uses a three-phase-reset, update the reset
+> documentation to include a section describing how this works.
+> Include documentation of the current major beartrap in reset, which
+> is that only devices on the qbus tree will get automatically reset.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
-> I believe that given we don't make much use of enter/exit phases
-> currently that this is unlikely to cause unexpected regressions due
-> to an accidental reset-order dependency that is no longer satisfied,
-> but it's always possible...
+> This merely documents the current situation, and says nothing
+> about what we might like to do with it in future...
 > ---
->   hw/core/machine.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
+>   docs/devel/reset.rst | 44 ++++++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 42 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
