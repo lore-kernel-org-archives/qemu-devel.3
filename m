@@ -4,73 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC94FC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C0CC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSpq-0005Lz-OQ; Tue, 20 Feb 2024 11:19:10 -0500
+	id 1rcSrI-0006ft-1I; Tue, 20 Feb 2024 11:20:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcSpn-0005JR-3Y
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:19:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcSpl-0007Rs-EK
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:19:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708445944;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4Mi7cLP3QSeU6iE8UWmIcWDrgbGzIXJPaMku76HZZCg=;
- b=dl4fueUNQv1ijYEQZT6umOr0kLVtgQuCbgl8peV7c8wGjLGR155L6T6jVcSwIRwiRnEiqI
- e6RiJPJm2fEWcAGomOAo3PSmgIZG1mcuba9gRM/DSAUXZg2vOkjEVfu5SJzI/udslMnJKw
- HxJNZJYYU9G7R7zivnaffPuRs534Jvo=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-VVXrGA3gMvKa-jIFHkuspQ-1; Tue,
- 20 Feb 2024 11:19:00 -0500
-X-MC-Unique: VVXrGA3gMvKa-jIFHkuspQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4002B29AC02F;
- Tue, 20 Feb 2024 16:19:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6ACA110802;
- Tue, 20 Feb 2024 16:18:59 +0000 (UTC)
-Date: Tue, 20 Feb 2024 16:18:57 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com,
- eblake@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH 14/16] qapi: Rewrite doc comment parser
-Message-ID: <ZdTQ8cuJEkWXS8y3@redhat.com>
-References: <20240216145841.2099240-1-armbru@redhat.com>
- <20240216145841.2099240-15-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rcSrG-0006dv-Ic
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:20:38 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rcSrA-0007wO-Vt
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:20:38 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e0a37751cbso4290461b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:20:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1708446030; x=1709050830; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ASTCwZycZbDMgor8OFU1QIyaB6Iz5bzuzC5Qiyw7G0A=;
+ b=hUrffK7vt3TcQYjbul4zLbmYygS+9qZdjS6EP2hhrFiWiYFlgGyOZHTqXH5DAnta8O
+ G+da0zZfR1xLxFkPmj31NBC8X8yPZO6QWdM4hMSgWmcr3eUfFVHL5G/WGlGDj06NSoex
+ ui1IyhzW3pxzkbAC83WbaZwGy5RO+bvftm3A3LQvaNrpQvWuYNMukOHcCMIaFP6HCZQB
+ U7IMuSm/hcty1sOqT57d2tT57vFDDDnel+BXZFco6fQGxd+rkmJV/3EyXlRzwTtSqVYW
+ Ub1QvoJjFc5/7aggQ8V2Sl5taBicl/5JhnEDTLuRIz+JTLIF3asdu4RWl1OkvwKEP4nQ
+ lsow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708446030; x=1709050830;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ASTCwZycZbDMgor8OFU1QIyaB6Iz5bzuzC5Qiyw7G0A=;
+ b=R3BSnp/yudUvV66BakpYC0CBRfXB1ZmNnE9wNjXzSyuH9+1dEeFlEHXx/ZA8a/CCWF
+ yN3VCasuMoKl70ySg4HVr9JJDzhjHtlRXEqQUlAs+HcKTBwJ16y5YSWrnXmtioavDSfr
+ I+cMrsuzLxEUgmt928+karIBqENCiDkVhyG+lW3RiCGGGYFFNr4VIJb/np13eSw8szmo
+ hfNYwuaqt06+DwEUrFYWTst8EDYBnAOUxrMy6BD7hHj4SFHlnMwauv5bM+/eOCoh10Pq
+ GyY/nue12N6PPFQFygzYCeP/E1bSs2nqmXXWZFVjkFiLGXp5k9jdLrf47yMcE20EfGb6
+ xAug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyJs0LXpIZy5FOAJiCQ/zH13qOFitJvAyBBe5mSr5rtR7LL9Ilsmkylnm0MqAxuVCVRQ31bottpmMGxvvgu6j4AoWijRc=
+X-Gm-Message-State: AOJu0YzFn1DLTJ89eCr8UXHez3yxB2voj6hR8WGuUODvwVL6mrEWGbkT
+ l2f+aH7iXS97j2h3bIII923H8522g7gwJIdwvfCOgLIGSYeMpNdK3Nqr3878cH0=
+X-Google-Smtp-Source: AGHT+IEM6637sI44YihRW94sSVF+1yYYloLNqTBLY/iqNQ/yGJHoPbiVj0LZwyQt60ejL8YD5WcHAw==
+X-Received: by 2002:a05:6a00:2d9b:b0:6e4:6dcd:8d28 with SMTP id
+ fb27-20020a056a002d9b00b006e46dcd8d28mr5580508pfb.0.1708446030334; 
+ Tue, 20 Feb 2024 08:20:30 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ n28-20020a056a000d5c00b006e477b4a16csm2088925pfv.44.2024.02.20.08.20.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 08:20:29 -0800 (PST)
+Message-ID: <9df86826-44c2-4816-ae59-189773c51d95@ventanamicro.com>
+Date: Tue, 20 Feb 2024 13:20:22 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240216145841.2099240-15-armbru@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Add missing include guard in pmu.h
+Content-Language: en-US
+To: frank.chang@sifive.com, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240220110907.10479-1-frank.chang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240220110907.10479-1-frank.chang@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,42 +97,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 03:58:38PM +0100, Markus Armbruster wrote:
-> QAPISchemaParser is a conventional recursive descent parser.  Except
-> QAPISchemaParser.get_doc() delegates most of the doc comment parsing
-> work to a state machine in QAPIDoc.  The state machine doesn't get
-> tokens like a recursive descent parser, it is fed tokens.
+
+
+On 2/20/24 08:08, frank.chang@sifive.com wrote:
+> From: Frank Chang <frank.chang@sifive.com>
 > 
-> I find this state machine rather opaque and hard to maintain.
+> Add missing include guard in pmu.h to avoid the problem of double
+> inclusion.
 > 
-> Replace it by a conventional parser, all in QAPISchemaParser.  Less
-> code, and (at least in my opinion) easier to understand.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
 > ---
->  scripts/qapi/parser.py | 478 ++++++++++++++++++-----------------------
->  1 file changed, 210 insertions(+), 268 deletions(-)
 
-Reviewing parsing code typically gives me a headache, and reviewing
-diffs of parsing code is even worse. Thus instead of R-b I'll give
-a
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-  Tested-by: Daniel P. Berrangé <berrange@redhat.com>
-
-on the basis that we've got great test coverage and I think that's
-the real killer requirement for parsing code. The tests still pass
-with this commit, so functionally it is working as expected.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+>   target/riscv/pmu.h | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
+> index 505fc850d3..7c0ad661e0 100644
+> --- a/target/riscv/pmu.h
+> +++ b/target/riscv/pmu.h
+> @@ -16,6 +16,9 @@
+>    * this program.  If not, see <http://www.gnu.org/licenses/>.
+>    */
+>   
+> +#ifndef RISCV_PMU_H
+> +#define RISCV_PMU_H
+> +
+>   #include "cpu.h"
+>   #include "qapi/error.h"
+>   
+> @@ -31,3 +34,5 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+>   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+>   int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+>                             uint32_t ctr_idx);
+> +
+> +#endif /* RISCV_PMU_H */
 
