@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FA1C54764
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06EAC5478B
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcMAV-0000ha-0Z; Tue, 20 Feb 2024 04:12:03 -0500
+	id 1rcMAP-0000gQ-2O; Tue, 20 Feb 2024 04:11:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcMAT-0000gy-7r; Tue, 20 Feb 2024 04:12:01 -0500
+ id 1rcMAM-0000ex-HF; Tue, 20 Feb 2024 04:11:54 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcMAQ-0003Nd-S5; Tue, 20 Feb 2024 04:12:00 -0500
+ id 1rcMAK-0003Km-NL; Tue, 20 Feb 2024 04:11:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708420319; x=1739956319;
+ t=1708420313; x=1739956313;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=nXvdPraIKnI4AFbDZfobt0iujTMEBz7nDxXX+7ZH9uk=;
- b=UJ/7NA1KfbmAjgOheCdA/GdD08YsSQuzZanI8XZ7wt5wPG3BjBod6S9Y
- 66M8ix0wJ8jk3eXAWuaWCiHsIgmfPwm7J96dIN9zjXZa2hPGFuCl8UEeD
- izE4bHiJRSEROx44iNCF/ZshlyXIVfcPNIQ3Gj/dEu5tUJBpAPOucPVYy
- hggEXffiaPUy7d5fdhME8bB1CCOk8r2R2eaUxx6yJKKOvY2MmJYLWfwct
- m6T7fr8W9aHczHFhk0v2T8/t5P3QXapjYEouXSQHJfxkITiJ8GrKXwZhh
- aKgLZtpYFr7cpxcnI4Rb7/SyrlAipTrEIfcSAeyI01CLeugUAnoco52Xs g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="2374972"
+ bh=f72SFWwq+PohiF2H5sIw0CnPQG3e0SkCa+ntNndt4BU=;
+ b=CYFkUtdvqtkF2iTN5WRcDRgTEmqz7XZYy/SWLfZRQjqA8ppNbSJlWd1v
+ Dj2tkOopIy92IftTwS1XW4crgriEmS2ZGancmZHFiE42GFLB5mAXHCSUU
+ kVip0229cjiCAdv0bSz87roOz4NgOK0oG8DC4NtJ33C+H3UJXYNcFm61Y
+ 0WmIVxuh2wgeJg/Us2hzP9405z1CmAyJG/+XlAUs3s1Ac8B4voBDIH8Nn
+ o4la0iWk+xcbSLZwyDWQA5sh6xTkOarv9ravPiLQ2wAc6BJ1a0D5MC0Fp
+ L7oZmQXOESMiOSEez08dksSt/SExsbPi1d6JjF4W2yraF0hiu/wU2rWHE w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="2374958"
 X-IronPort-AV: E=Sophos;i="6.06,172,1705392000"; 
-   d="scan'208";a="2374972"
+   d="scan'208";a="2374958"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Feb 2024 01:11:56 -0800
+ 20 Feb 2024 01:11:50 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,172,1705392000"; 
-   d="scan'208";a="5012880"
+   d="scan'208";a="5012851"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa007.jf.intel.com with ESMTP; 20 Feb 2024 01:11:50 -0800
+ by orviesa007.jf.intel.com with ESMTP; 20 Feb 2024 01:11:45 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>,
@@ -60,10 +60,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org,
  qemu-arm@nongnu.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 2/8] hw/core: Move CPU topology enumeration into arch-agnostic
- file
-Date: Tue, 20 Feb 2024 17:24:58 +0800
-Message-Id: <20240220092504.726064-3-zhao1.liu@linux.intel.com>
+Subject: [RFC 1/8] hw/core: Rename CpuTopology to CPUTopology
+Date: Tue, 20 Feb 2024 17:24:57 +0800
+Message-Id: <20240220092504.726064-2-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
 References: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
@@ -94,339 +93,170 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Cache topology needs to be defined based on CPU topology levels. Thus,
-move CPU topology enumeration into a common header.
-
-To match the general topology naming style, rename CPU_TOPO_LEVEL_SMT
-and CPU_TOPO_LEVEL_PACKAGE to CPU_TOPO_LEVEL_THREAD and
-CPU_TOPO_LEVEL_SOCKET.
-
-Also, enumerate additional topology levels for non-i386 arches, and add
-helpers for topology enumeration and string conversion.
+Use CPUTopology to honor the generic style of CPU capitalization
+abbreviations.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- MAINTAINERS                    |  2 ++
- hw/core/cpu-topology.c         | 56 ++++++++++++++++++++++++++++++++++
- hw/core/meson.build            |  1 +
- include/hw/core/cpu-topology.h | 40 ++++++++++++++++++++++++
- include/hw/i386/topology.h     | 18 +----------
- target/i386/cpu.c              | 24 +++++++--------
- target/i386/cpu.h              |  2 +-
- tests/unit/meson.build         |  3 +-
- 8 files changed, 115 insertions(+), 31 deletions(-)
- create mode 100644 hw/core/cpu-topology.c
- create mode 100644 include/hw/core/cpu-topology.h
+ hw/s390x/cpu-topology.c         |  6 +++---
+ include/hw/boards.h             |  8 ++++----
+ include/hw/s390x/cpu-topology.h |  6 +++---
+ tests/unit/test-smp-parse.c     | 14 +++++++-------
+ 4 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d61fb93194b..4b1cce938915 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1871,6 +1871,7 @@ R: Yanan Wang <wangyanan55@huawei.com>
- S: Supported
- F: hw/core/cpu-common.c
- F: hw/core/cpu-sysemu.c
-+F: hw/core/cpu-topology.c
- F: hw/core/machine-qmp-cmds.c
- F: hw/core/machine.c
- F: hw/core/machine-smp.c
-@@ -1882,6 +1883,7 @@ F: qapi/machine-common.json
- F: qapi/machine-target.json
- F: include/hw/boards.h
- F: include/hw/core/cpu.h
-+F: include/hw/core/cpu-topology.h
- F: include/hw/cpu/cluster.h
- F: include/sysemu/numa.h
- F: tests/unit/test-smp-parse.c
-diff --git a/hw/core/cpu-topology.c b/hw/core/cpu-topology.c
-new file mode 100644
-index 000000000000..ca1361d13c16
---- /dev/null
-+++ b/hw/core/cpu-topology.c
-@@ -0,0 +1,56 @@
-+/*
-+ * QEMU CPU Topology Representation
-+ *
-+ * Copyright (c) 2024 Intel Corporation
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License,
-+ * or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/core/cpu-topology.h"
-+
-+typedef struct CPUTopoInfo {
-+    const char *name;
-+} CPUTopoInfo;
-+
-+CPUTopoInfo cpu_topo_descriptors[] = {
-+    [CPU_TOPO_LEVEL_INVALID] = { .name = "invalid", },
-+    [CPU_TOPO_LEVEL_THREAD]  = { .name = "thread",  },
-+    [CPU_TOPO_LEVEL_CORE]    = { .name = "core",    },
-+    [CPU_TOPO_LEVEL_MODULE]  = { .name = "module",  },
-+    [CPU_TOPO_LEVEL_CLUSTER] = { .name = "cluster", },
-+    [CPU_TOPO_LEVEL_DIE]     = { .name = "die",     },
-+    [CPU_TOPO_LEVEL_SOCKET]  = { .name = "socket",  },
-+    [CPU_TOPO_LEVEL_BOOK]    = { .name = "book",    },
-+    [CPU_TOPO_LEVEL_DRAWER]  = { .name = "drawer",  },
-+    [CPU_TOPO_LEVEL_MAX]     = { .name = NULL,      },
-+};
-+
-+const char *cpu_topo_to_string(CPUTopoLevel topo)
-+{
-+    return cpu_topo_descriptors[topo].name;
-+}
-+
-+CPUTopoLevel string_to_cpu_topo(char *str)
-+{
-+    for (int i = 0; i < ARRAY_SIZE(cpu_topo_descriptors); i++) {
-+        CPUTopoInfo *info = &cpu_topo_descriptors[i];
-+
-+        if (!strcmp(info->name, str)) {
-+            return (CPUTopoLevel)i;
-+        }
-+    }
-+    return CPU_TOPO_LEVEL_MAX;
-+}
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 67dad04de559..3b1d5ffab3e3 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -23,6 +23,7 @@ else
- endif
- 
- common_ss.add(files('cpu-common.c'))
-+common_ss.add(files('cpu-topology.c'))
- common_ss.add(files('machine-smp.c'))
- system_ss.add(when: 'CONFIG_FITLOADER', if_true: files('loader-fit.c'))
- system_ss.add(when: 'CONFIG_GENERIC_LOADER', if_true: files('generic-loader.c'))
-diff --git a/include/hw/core/cpu-topology.h b/include/hw/core/cpu-topology.h
-new file mode 100644
-index 000000000000..cc6ca186ce3f
---- /dev/null
-+++ b/include/hw/core/cpu-topology.h
-@@ -0,0 +1,40 @@
-+/*
-+ * QEMU CPU Topology Representation Header
-+ *
-+ * Copyright (c) 2024 Intel Corporation
-+ * Author: Zhao Liu <zhao1.liu@intel.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation; either version 2 of the License,
-+ * or (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License
-+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef CPU_TOPOLOGY_H
-+#define CPU_TOPOLOGY_H
-+
-+typedef enum CPUTopoLevel {
-+    CPU_TOPO_LEVEL_INVALID,
-+    CPU_TOPO_LEVEL_THREAD,
-+    CPU_TOPO_LEVEL_CORE,
-+    CPU_TOPO_LEVEL_MODULE,
-+    CPU_TOPO_LEVEL_CLUSTER,
-+    CPU_TOPO_LEVEL_DIE,
-+    CPU_TOPO_LEVEL_SOCKET,
-+    CPU_TOPO_LEVEL_BOOK,
-+    CPU_TOPO_LEVEL_DRAWER,
-+    CPU_TOPO_LEVEL_MAX,
-+} CPUTopoLevel;
-+
-+const char *cpu_topo_to_string(CPUTopoLevel topo);
-+CPUTopoLevel string_to_cpu_topo(char *str);
-+
-+#endif /* CPU_TOPOLOGY_H */
-diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-index dff49fce1154..c6ff75f23991 100644
---- a/include/hw/i386/topology.h
-+++ b/include/hw/i386/topology.h
-@@ -39,7 +39,7 @@
-  *  CPUID Fn8000_0008_ECX[ApicIdCoreIdSize[3:0]] is set to apicid_core_width().
+diff --git a/hw/s390x/cpu-topology.c b/hw/s390x/cpu-topology.c
+index f16bdf65faa0..016f6c1c15ac 100644
+--- a/hw/s390x/cpu-topology.c
++++ b/hw/s390x/cpu-topology.c
+@@ -86,7 +86,7 @@ bool s390_has_topology(void)
   */
- 
--
-+#include "hw/core/cpu-topology.h"
- #include "qemu/bitops.h"
- 
- /*
-@@ -62,22 +62,6 @@ typedef struct X86CPUTopoInfo {
-     unsigned threads_per_core;
- } X86CPUTopoInfo;
- 
--/*
-- * CPUTopoLevel is the general i386 topology hierarchical representation,
-- * ordered by increasing hierarchical relationship.
-- * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-- * or AMD (CPUID[0x80000026]).
-- */
--enum CPUTopoLevel {
--    CPU_TOPO_LEVEL_INVALID,
--    CPU_TOPO_LEVEL_SMT,
--    CPU_TOPO_LEVEL_CORE,
--    CPU_TOPO_LEVEL_MODULE,
--    CPU_TOPO_LEVEL_DIE,
--    CPU_TOPO_LEVEL_PACKAGE,
--    CPU_TOPO_LEVEL_MAX,
--};
--
- /* Return the bit width needed for 'count' IDs */
- static unsigned apicid_bitwidth_for_count(unsigned count)
+ static void s390_topology_init(MachineState *ms)
  {
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index ac0a10abd45f..725d7e70182d 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -247,7 +247,7 @@ static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
-     case CPU_TOPO_LEVEL_DIE:
-         num_ids = 1 << apicid_die_offset(topo_info);
-         break;
--    case CPU_TOPO_LEVEL_PACKAGE:
-+    case CPU_TOPO_LEVEL_SOCKET:
-         num_ids = 1 << apicid_pkg_offset(topo_info);
-         break;
-     default:
-@@ -304,7 +304,7 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
-                                           enum CPUTopoLevel topo_level)
+-    CpuTopology *smp = &ms->smp;
++    CPUTopology *smp = &ms->smp;
+ 
+     s390_topology.cores_per_socket = g_new0(uint8_t, smp->sockets *
+                                             smp->books * smp->drawers);
+@@ -181,7 +181,7 @@ void s390_topology_reset(void)
+  */
+ static bool s390_topology_cpu_default(S390CPU *cpu, Error **errp)
  {
-     switch (topo_level) {
--    case CPU_TOPO_LEVEL_SMT:
-+    case CPU_TOPO_LEVEL_THREAD:
-         return 1;
-     case CPU_TOPO_LEVEL_CORE:
-         return topo_info->threads_per_core;
-@@ -313,7 +313,7 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
-     case CPU_TOPO_LEVEL_DIE:
-         return topo_info->threads_per_core * topo_info->cores_per_module *
-                topo_info->modules_per_die;
--    case CPU_TOPO_LEVEL_PACKAGE:
-+    case CPU_TOPO_LEVEL_SOCKET:
-         return topo_info->threads_per_core * topo_info->cores_per_module *
-                topo_info->modules_per_die * topo_info->dies_per_pkg;
-     default:
-@@ -326,7 +326,7 @@ static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
-                                             enum CPUTopoLevel topo_level)
+-    CpuTopology *smp = &current_machine->smp;
++    CPUTopology *smp = &current_machine->smp;
+     CPUS390XState *env = &cpu->env;
+ 
+     /* All geometry topology attributes must be set or all unset */
+@@ -234,7 +234,7 @@ static bool s390_topology_check(uint16_t socket_id, uint16_t book_id,
+                                 uint16_t drawer_id, uint16_t entitlement,
+                                 bool dedicated, Error **errp)
  {
-     switch (topo_level) {
--    case CPU_TOPO_LEVEL_SMT:
-+    case CPU_TOPO_LEVEL_THREAD:
-         return 0;
-     case CPU_TOPO_LEVEL_CORE:
-         return apicid_core_offset(topo_info);
-@@ -334,7 +334,7 @@ static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
-         return apicid_module_offset(topo_info);
-     case CPU_TOPO_LEVEL_DIE:
-         return apicid_die_offset(topo_info);
--    case CPU_TOPO_LEVEL_PACKAGE:
-+    case CPU_TOPO_LEVEL_SOCKET:
-         return apicid_pkg_offset(topo_info);
-     default:
-         g_assert_not_reached();
-@@ -347,7 +347,7 @@ static uint32_t cpuid1f_topo_type(enum CPUTopoLevel topo_level)
-     switch (topo_level) {
-     case CPU_TOPO_LEVEL_INVALID:
-         return CPUID_1F_ECX_TOPO_LEVEL_INVALID;
--    case CPU_TOPO_LEVEL_SMT:
-+    case CPU_TOPO_LEVEL_THREAD:
-         return CPUID_1F_ECX_TOPO_LEVEL_SMT;
-     case CPU_TOPO_LEVEL_CORE:
-         return CPUID_1F_ECX_TOPO_LEVEL_CORE;
-@@ -380,7 +380,7 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
-     level = CPU_TOPO_LEVEL_INVALID;
-     for (int i = 0; i <= count; i++) {
-         level = find_next_bit(env->avail_cpu_topo,
--                              CPU_TOPO_LEVEL_PACKAGE,
-+                              CPU_TOPO_LEVEL_SOCKET,
-                               level + 1);
+-    CpuTopology *smp = &current_machine->smp;
++    CPUTopology *smp = &current_machine->smp;
  
-         /*
-@@ -388,7 +388,7 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
-          * and it just encode the invalid level (all fields are 0)
-          * into the last subleaf of 0x1f.
-          */
--        if (level == CPU_TOPO_LEVEL_PACKAGE) {
-+        if (level == CPU_TOPO_LEVEL_SOCKET) {
-             level = CPU_TOPO_LEVEL_INVALID;
-             break;
-         }
-@@ -401,7 +401,7 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
-         unsigned long next_level;
+     if (socket_id >= smp->sockets) {
+         error_setg(errp, "Unavailable socket: %d", socket_id);
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 78dea50054a1..e63dec919da2 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -333,7 +333,7 @@ typedef struct DeviceMemoryState {
+ } DeviceMemoryState;
  
-         next_level = find_next_bit(env->avail_cpu_topo,
--                                   CPU_TOPO_LEVEL_PACKAGE,
-+                                   CPU_TOPO_LEVEL_SOCKET,
-                                    level + 1);
-         num_threads_next_level = num_threads_by_topo_level(topo_info,
-                                                            next_level);
-@@ -6290,7 +6290,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+ /**
+- * CpuTopology:
++ * CPUTopology:
+  * @cpus: the number of present logical processors on the machine
+  * @drawers: the number of drawers on the machine
+  * @books: the number of books in one drawer
+@@ -345,7 +345,7 @@ typedef struct DeviceMemoryState {
+  * @threads: the number of threads in one core
+  * @max_cpus: the maximum number of logical processors on the machine
+  */
+-typedef struct CpuTopology {
++typedef struct CPUTopology {
+     unsigned int cpus;
+     unsigned int drawers;
+     unsigned int books;
+@@ -356,7 +356,7 @@ typedef struct CpuTopology {
+     unsigned int cores;
+     unsigned int threads;
+     unsigned int max_cpus;
+-} CpuTopology;
++} CPUTopology;
  
-                     /* Share the cache at package level. */
-                     *eax |= max_thread_ids_for_cache(&topo_info,
--                                CPU_TOPO_LEVEL_PACKAGE) << 14;
-+                                CPU_TOPO_LEVEL_SOCKET) << 14;
-                 }
-             }
-         } else if (cpu->vendor_cpuid_only && IS_AMD_CPU(env)) {
-@@ -7756,9 +7756,9 @@ static void x86_cpu_init_default_topo(X86CPU *cpu)
-     env->nr_dies = 1;
+ /**
+  * MachineState:
+@@ -407,7 +407,7 @@ struct MachineState {
+     const char *cpu_type;
+     AccelState *accelerator;
+     CPUArchIdList *possible_cpus;
+-    CpuTopology smp;
++    CPUTopology smp;
+     struct NVDIMMState *nvdimms_state;
+     struct NumaState *numa_state;
+ };
+diff --git a/include/hw/s390x/cpu-topology.h b/include/hw/s390x/cpu-topology.h
+index c064f427e948..ff09c57a4428 100644
+--- a/include/hw/s390x/cpu-topology.h
++++ b/include/hw/s390x/cpu-topology.h
+@@ -63,17 +63,17 @@ static inline void s390_topology_reset(void)
  
-     /* SMT, core and package levels are set by default. */
--    set_bit(CPU_TOPO_LEVEL_SMT, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_THREAD, env->avail_cpu_topo);
-     set_bit(CPU_TOPO_LEVEL_CORE, env->avail_cpu_topo);
--    set_bit(CPU_TOPO_LEVEL_PACKAGE, env->avail_cpu_topo);
-+    set_bit(CPU_TOPO_LEVEL_SOCKET, env->avail_cpu_topo);
+ extern S390Topology s390_topology;
+ 
+-static inline int s390_std_socket(int n, CpuTopology *smp)
++static inline int s390_std_socket(int n, CPUTopology *smp)
+ {
+     return (n / smp->cores) % smp->sockets;
  }
  
- static void x86_cpu_initfn(Object *obj)
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4b4cc70c8859..fcbf278b49e6 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1596,7 +1596,7 @@ typedef struct CPUCacheInfo {
-      * Used to encode CPUID[4].EAX[bits 25:14] or
-      * CPUID[0x8000001D].EAX[bits 25:14].
-      */
--    enum CPUTopoLevel share_level;
-+    CPUTopoLevel share_level;
- } CPUCacheInfo;
+-static inline int s390_std_book(int n, CpuTopology *smp)
++static inline int s390_std_book(int n, CPUTopology *smp)
+ {
+     return (n / (smp->cores * smp->sockets)) % smp->books;
+ }
  
+-static inline int s390_std_drawer(int n, CpuTopology *smp)
++static inline int s390_std_drawer(int n, CPUTopology *smp)
+ {
+     return (n / (smp->cores * smp->sockets * smp->books)) % smp->drawers;
+ }
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index 24972666a74d..f660d6b0df45 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -86,8 +86,8 @@
+  */
+ typedef struct SMPTestData {
+     SMPConfiguration config;
+-    CpuTopology expect_prefer_sockets;
+-    CpuTopology expect_prefer_cores;
++    CPUTopology expect_prefer_sockets;
++    CPUTopology expect_prefer_cores;
+     const char *expect_error;
+ } SMPTestData;
  
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index cae925c13259..4fe0aaff3a5e 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -138,7 +138,8 @@ if have_system
-     'test-util-sockets': ['socket-helpers.c'],
-     'test-base64': [],
-     'test-bufferiszero': [],
--    'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c'],
-+    'test-smp-parse': [qom, meson.project_source_root() / 'hw/core/machine-smp.c',
-+                       meson.project_source_root() / 'hw/core/cpu-topology.c'],
-     'test-vmstate': [migration, io],
-     'test-yank': ['socket-helpers.c', qom, io, chardev]
-   }
+@@ -395,7 +395,7 @@ static char *smp_config_to_string(const SMPConfiguration *config)
+ }
+ 
+ /* Use the different calculation than machine_topo_get_threads_per_socket(). */
+-static unsigned int cpu_topology_get_threads_per_socket(const CpuTopology *topo)
++static unsigned int cpu_topology_get_threads_per_socket(const CPUTopology *topo)
+ {
+     /* Check the divisor to avoid invalid topology examples causing SIGFPE. */
+     if (!topo->sockets) {
+@@ -406,7 +406,7 @@ static unsigned int cpu_topology_get_threads_per_socket(const CpuTopology *topo)
+ }
+ 
+ /* Use the different calculation than machine_topo_get_cores_per_socket(). */
+-static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
++static unsigned int cpu_topology_get_cores_per_socket(const CPUTopology *topo)
+ {
+     /* Check the divisor to avoid invalid topology examples causing SIGFPE. */
+     if (!topo->threads) {
+@@ -416,12 +416,12 @@ static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
+     }
+ }
+ 
+-static char *cpu_topology_to_string(const CpuTopology *topo,
++static char *cpu_topology_to_string(const CPUTopology *topo,
+                                     unsigned int threads_per_socket,
+                                     unsigned int cores_per_socket)
+ {
+     return g_strdup_printf(
+-        "(CpuTopology) {\n"
++        "(CPUTopology) {\n"
+         "    .cpus               = %u,\n"
+         "    .sockets            = %u,\n"
+         "    .dies               = %u,\n"
+@@ -438,7 +438,7 @@ static char *cpu_topology_to_string(const CpuTopology *topo,
+ }
+ 
+ static void check_parse(MachineState *ms, const SMPConfiguration *config,
+-                        const CpuTopology *expect_topo, const char *expect_err,
++                        const CPUTopology *expect_topo, const char *expect_err,
+                         bool is_valid)
+ {
+     g_autofree char *config_str = smp_config_to_string(config);
 -- 
 2.34.1
 
