@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BFAC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 05:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1317CC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 05:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcIS2-0005PO-Id; Tue, 20 Feb 2024 00:13:54 -0500
+	id 1rcIgE-0007yN-RL; Tue, 20 Feb 2024 00:28:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcIRx-0005P7-SH
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 00:13:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcIRu-0006YM-Th
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 00:13:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708406025;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XZRZmCW2Z5hbVk/OfhpU6ngnLeVK3g57Zs1cFOuiZ8s=;
- b=NJczoelWJ9ZKZ2uLrr2c3w2YGftfWOR2Ctv4A4z0MJisrQW1VbI/HR3lpHm7i2X8iJk8sG
- NSjmAIBV/vdUnAYFrhVO4BMYumZYkbhukVNOTQ8VLo07l975giEfe3YVkSCNeOFsdyG0x9
- LZEvqG8wsaAJJW5r7EFQL9oahg84ul8=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-22ZN5RZPOma_GUWv5h86sg-1; Tue, 20 Feb 2024 00:13:44 -0500
-X-MC-Unique: 22ZN5RZPOma_GUWv5h86sg-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1da0dd1dec4so18621175ad.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 21:13:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1rcIgD-0007yA-UZ
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 00:28:33 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1rcIgC-0000Qp-Ix
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 00:28:33 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3c031c24fbeso4172512b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 21:28:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1708406911; x=1709011711; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=pofCApDA92bnAzECVa8Bi5ZCZR8XkvJ2CaFWnPAH+JI=;
+ b=af/B8CstTclUS+ZzPPspI+6V8aXWDZAZo8LlP6jQG9BKgc858GP+d3b1qssIrT3VJf
+ QtzrEXbOsXuwQqzm9iyVXEkjNLYX7sCtAEKe2B9wSG78tVPYYzfSq0+700rej0sOZ6UQ
+ /9mKcPh4FYMoMjSlaxKRei9WIPfrDOHDF7M8a1YU5DjGTDXUdv2d9sGe4XOYkW3AjKh3
+ y+4f+qOCu8ujkqwO/SLkbZTL6WJJEwN8nwJpfFb7iPE8sCB1yQTaXe9NokK0XnvXw65N
+ Kh43EUhhRnU22O8KtgKZPg7IjVhRR83VjeoYlmCfduLsSf6GoKkG0ekOM7Su4mAfNMjP
+ w0xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708406023; x=1709010823;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XZRZmCW2Z5hbVk/OfhpU6ngnLeVK3g57Zs1cFOuiZ8s=;
- b=fqXYH8FObDMW8W5PvhFXb5/xFpPzGEPe1Z2VamBlLU+HNw8GEqdq3EEWiTuzkSSjc2
- O8L+eq+85hngTSlYqJphJpYzRTP8eZ3YfiMqpJxTm4aXb/H9b+PCCQAbVUSi71tfYBUE
- mJdESftTedhyfiMecyHW2iWAavTZchS89dQrvD7icpeByS04RTmU+V0PYH4cYBm6wIu/
- /s0DsMfb3FAmgNBeiHKCAMzmslizzwNDeMhzdXiDYYxDklcwLFx3fFRKZI/OFX/GnEFI
- NA05T9xo6dL+ah64lnf3kI8akCfgS+pR/xFlHDAnh76uBwkpNET4ftcESIU6Y7hVguPx
- WF2w==
-X-Gm-Message-State: AOJu0YwK79liHnhEf3SN8vzgd41ZDyQ8ls6ZJegCznS7BuiyW4rYuDR2
- e4USG82vULGT8oQasz+1zGoBU6PPGkxaRtXRXU6DsjBogIqB+cyg0RYYiu5xECXQn2/6j/FbB6p
- BrdjU8rDzYqdNrIwhJokN/FD5eDeclIp0MeXJhub85QNWwzNqYAmh
-X-Received: by 2002:a17:902:c24d:b0:1db:5b21:dcef with SMTP id
- 13-20020a170902c24d00b001db5b21dcefmr12786040plg.5.1708406023036; 
- Mon, 19 Feb 2024 21:13:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEe0FiSvmvnWryws+anxxt4Q2Z6vrTodiYQHYu2Q3fnTs5uT3Fjo69jpzBuAbdZh+BiLgWZkA==
-X-Received: by 2002:a17:902:c24d:b0:1db:5b21:dcef with SMTP id
- 13-20020a170902c24d00b001db5b21dcefmr12786030plg.5.1708406022720; 
- Mon, 19 Feb 2024 21:13:42 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- lo5-20020a170903434500b001db715d3bf2sm5259386plb.137.2024.02.19.21.13.40
+ d=1e100.net; s=20230601; t=1708406911; x=1709011711;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pofCApDA92bnAzECVa8Bi5ZCZR8XkvJ2CaFWnPAH+JI=;
+ b=YnuUW5SVkL37q/fbSJ5pSiaUz07c+KWMDQ4RHu5TstOMcoJrDTPp/d05gQgqWYiFdF
+ SdurQAxRlnoGCf1thGJElG6rAzBC+34Oxb8P4UCWj9BLCIYUwQqMeQYVZNI24ebCX5KG
+ A/MwKPqI5ZYzNj5g1p+ZqLJBUd+rdBl93oiL4PR1HcuxcegfZDwycWVliURtIDcF2sPN
+ 10vbA/PwFCbmOuCY1GTR5Kgbxt9Q3zjxB0L8VDC6cS7ECjnlB28EJTV9umu7+UeQQ6Yj
+ fPC69iQswuO31hjo6pP5eULE0B8ejXkzZumgGOcuIfbR7SNB8e6GpK6SpvXecxeKtrWc
+ /ZIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvuix1EjUtI9kpcbdvo8k2MyydO/Vjue6JSBsELF6KM5BbmJXXcafirJEQEpvcmWfmaKoICIInjJg66BsDS5v2oweg9Jc=
+X-Gm-Message-State: AOJu0YyT0U0jGVgFkYYQzEGHDib2xiVeU4Fa4ssygsWpph11SB8dFsFK
+ +ysl+2vLsDNMILOD1Jubck9tbNdfiE6MEuUI0aSHznnNzGJAL6o/XGLPnPbPd7A=
+X-Google-Smtp-Source: AGHT+IGj1uw6Hh8KHUwJUoEmkhVetnyfSwfBvJpCmvnoa3EtRLTCDp3sNPr7HTpSKVx/1M6Jv6qIfQ==
+X-Received: by 2002:a05:6808:14d4:b0:3c1:5df1:577d with SMTP id
+ f20-20020a05680814d400b003c15df1577dmr4373479oiw.7.1708406910776; 
+ Mon, 19 Feb 2024 21:28:30 -0800 (PST)
+Received: from sunil-laptop ([106.51.184.12]) by smtp.gmail.com with ESMTPSA id
+ x4-20020a05680801c400b003c032d96b6dsm1098158oic.6.2024.02.19.21.28.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 21:13:42 -0800 (PST)
-Date: Tue, 20 Feb 2024 13:13:34 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, berrange@redhat.com
-Subject: Re: [PATCH] ci: Fix again build-previous-qemu
-Message-ID: <ZdQ0_rGwnUDeCG-t@x1n>
-References: <20240213154901.109780-1-pbonzini@redhat.com>
+ Mon, 19 Feb 2024 21:28:30 -0800 (PST)
+Date: Tue, 20 Feb 2024 10:58:22 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: X512 <danger_mail@list.ru>, qemu-devel@nongnu.org,
+ qemu-riscv <qemu-riscv@nongnu.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH] target/riscv: fix ACPI MCFG table
+Message-ID: <ZdQ4dlMovqdrN+kz@sunil-laptop>
+References: <180d236d-c8e4-411a-b4d2-632eb82092fa@list.ru>
+ <6960207f-eaaa-4cfd-a4e3-3118da697ef7@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240213154901.109780-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6960207f-eaaa-4cfd-a4e3-3118da697ef7@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,25 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 13, 2024 at 04:49:01PM +0100, Paolo Bonzini wrote:
-> The build-previous-qemu job is now trying to fetch from the upstream
-> repository, but the tag is only fetched into FETCH_HEAD:
+On Mon, Feb 19, 2024 at 05:43:56PM +0100, Philippe Mathieu-Daudé wrote:
+> On 19/2/24 17:09, X512 via wrote:
+> > MCFG segments should point to PCI configuration range, not BAR MMIO.
+> > 
 > 
-> $ git remote add upstream https://gitlab.com/qemu-project/qemu 00:00
-> $ git fetch upstream $QEMU_PREV_VERSION 00:02
-> warning: redirecting to https://gitlab.com/qemu-project/qemu.git/
-> From https://gitlab.com/qemu-project/qemu
->  * tag                     v8.2.0     -> FETCH_HEAD
-> $ git checkout $QEMU_PREV_VERSION 00:02
-> error: pathspec v8.2.0 did not match any file(s) known to git
+> Fixes: 55ecd83b36 ("hw/riscv/virt-acpi-build.c: Add IO controllers and
+> devices")
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> Fix by fetching the tag into the checkout itself.
+> > Signed-off-by: Ilya Chugin <danger_mail@list.ru>
+> > ---
+> >   hw/riscv/virt-acpi-build.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> > index fb8baf64f6..fe01b626ea 100644
+> > --- a/hw/riscv/virt-acpi-build.c
+> > +++ b/hw/riscv/virt-acpi-build.c
+> > @@ -558,8 +558,8 @@ static void virt_acpi_build(RISCVVirtState *s,
+> > AcpiBuildTables *tables)
+> >       acpi_add_table(table_offsets, tables_blob);
+> >       {
+> >           AcpiMcfgInfo mcfg = {
+> > -           .base = s->memmap[VIRT_PCIE_MMIO].base,
+> > -           .size = s->memmap[VIRT_PCIE_MMIO].size,
+> > +           .base = s->memmap[VIRT_PCIE_ECAM].base,
+> > +           .size = s->memmap[VIRT_PCIE_ECAM].size,
+Thanks!.
+
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+
+> >           };
+> >           build_mcfg(tables_blob, tables->linker, &mcfg, s->oem_id,
+> >                      s->oem_table_id);
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Oops..  queued, thanks!
-
--- 
-Peter Xu
-
 
