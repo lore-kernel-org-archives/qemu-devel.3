@@ -4,100 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC49C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787E3C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:43:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcYou-0004Fd-V9; Tue, 20 Feb 2024 17:42:37 -0500
+	id 1rcYp1-0004lz-S3; Tue, 20 Feb 2024 17:42:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYop-0003fl-Dh
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:32 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYp0-0004eX-5j
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:42 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYol-0006MN-QA
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:30 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYoy-0006P4-Iu
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:41 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7DE031FB40;
- Tue, 20 Feb 2024 22:42:26 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 140CE1FB53;
+ Tue, 20 Feb 2024 22:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708468946; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1708468959; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UenDAZ738sri/YmAXwitcXH7YXeGtm0e2QfiSBYnaYc=;
- b=L4ONCg7Ic5eKWt4l18yl1QMJ0YKGH76gu6ol/6TSck/Bqvrm3K/JDmCkELQCeOWdOd4As1
- PjQvYePTq65XWNKHb+ZM8WRATZqYaQOnRRyxz01OrEMaZSgTumuTyg7w5sIhFEwsQUXeUJ
- IHyGQNokYIQvG7obqobcEIAqV/a7zug=
+ bh=087pFkDPQX1LVXFotOh4QCXvp5YTxQZVjf2xUD+QFvM=;
+ b=s8QSInhartax+2OgLzD8+SSn07+gd2mLy8q9Uw2VY4N3xFCIL2FvWZ2cdeLfNNhve9fRxg
+ Zf2OyfhM9RDSdU4Img4mUCFu1PLhPOtOa2xUNX+2FZ5wBhE6jIBZBbfFiFAOkuyET/IOV/
+ pT0OwDm4VyDAYSvi2ILxkZSi6HZdH2w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708468946;
+ s=susede2_ed25519; t=1708468959;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UenDAZ738sri/YmAXwitcXH7YXeGtm0e2QfiSBYnaYc=;
- b=7n1f76YQ6DlVBlWWkHIjQJCRSru3yiQ73Rglx51hAVQF5qMMfncpOH459J3u4xYKhB4Nz2
- j5HxJglnkYZ+1OAA==
+ bh=087pFkDPQX1LVXFotOh4QCXvp5YTxQZVjf2xUD+QFvM=;
+ b=clhNsi7360tSL5xPGEVrZDjHQ0V5mBBoMFFGL7EIIbDofNqvN60o6YR6fakTMwg/cCX/xH
+ L2mr7WwTfZkyJ1Aw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708468946; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1708468959; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UenDAZ738sri/YmAXwitcXH7YXeGtm0e2QfiSBYnaYc=;
- b=L4ONCg7Ic5eKWt4l18yl1QMJ0YKGH76gu6ol/6TSck/Bqvrm3K/JDmCkELQCeOWdOd4As1
- PjQvYePTq65XWNKHb+ZM8WRATZqYaQOnRRyxz01OrEMaZSgTumuTyg7w5sIhFEwsQUXeUJ
- IHyGQNokYIQvG7obqobcEIAqV/a7zug=
+ bh=087pFkDPQX1LVXFotOh4QCXvp5YTxQZVjf2xUD+QFvM=;
+ b=s8QSInhartax+2OgLzD8+SSn07+gd2mLy8q9Uw2VY4N3xFCIL2FvWZ2cdeLfNNhve9fRxg
+ Zf2OyfhM9RDSdU4Img4mUCFu1PLhPOtOa2xUNX+2FZ5wBhE6jIBZBbfFiFAOkuyET/IOV/
+ pT0OwDm4VyDAYSvi2ILxkZSi6HZdH2w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708468946;
+ s=susede2_ed25519; t=1708468959;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UenDAZ738sri/YmAXwitcXH7YXeGtm0e2QfiSBYnaYc=;
- b=7n1f76YQ6DlVBlWWkHIjQJCRSru3yiQ73Rglx51hAVQF5qMMfncpOH459J3u4xYKhB4Nz2
- j5HxJglnkYZ+1OAA==
+ bh=087pFkDPQX1LVXFotOh4QCXvp5YTxQZVjf2xUD+QFvM=;
+ b=clhNsi7360tSL5xPGEVrZDjHQ0V5mBBoMFFGL7EIIbDofNqvN60o6YR6fakTMwg/cCX/xH
+ L2mr7WwTfZkyJ1Aw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D28C0139D0;
- Tue, 20 Feb 2024 22:42:24 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6E247139D0;
+ Tue, 20 Feb 2024 22:42:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CHd+JdAq1WUlKwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:42:24 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KAU0Dd0q1WUlKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:42:37 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
  Claudio Fontana <cfontana@suse.de>
-Subject: [PATCH v4 19/34] migration/multifd: Allow receiving pages without
- packets
-Date: Tue, 20 Feb 2024 19:41:23 -0300
-Message-Id: <20240220224138.24759-20-farosas@suse.de>
+Subject: [PATCH v4 25/34] migration/multifd: Add fixed-ram support to fd: URI
+Date: Tue, 20 Feb 2024 19:41:29 -0300
+Message-Id: <20240220224138.24759-26-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240220224138.24759-1-farosas@suse.de>
 References: <20240220224138.24759-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: /
 Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [1.90 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[5];
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=s8QSInha;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=clhNsi73
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [0.49 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
+ RCPT_COUNT_FIVE(0.00)[5]; NEURAL_HAM_LONG(-1.00)[-1.000];
  RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-3.00)[100.00%]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
+X-Rspamd-Queue-Id: 140CE1FB53
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,312 +128,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently multifd does not need to have knowledge of pages on the
-receiving side because all the information needed is within the
-packets that come in the stream.
+If we receive a file descriptor that points to a regular file, there's
+nothing stopping us from doing multifd migration with fixed-ram to
+that file.
 
-We're about to add support to fixed-ram migration, which cannot use
-packets because it expects the ramblock section in the migration file
-to contain only the guest pages data.
-
-Add a data structure to transfer pages between the ram migration code
-and the multifd receiving threads.
-
-We don't want to reuse MultiFDPages_t for two reasons:
-
-a) multifd threads don't really need to know about the data they're
-   receiving.
-
-b) the receiving side has to be stopped to load the pages, which means
-   we can experiment with larger granularities than page size when
-   transferring data.
+Enable the fd: URI to work with multifd + fixed-ram.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
-@Peter: a 'quit' flag cannot be used instead of pending_job. The
-receiving thread needs know there's no more data coming. If the
-migration thread sets a 'quit' flag, the multifd thread would see the
-flag right away and exit. The only way is to clear pending_job on the
-thread and spin once more.
----
- migration/file.c    |   1 +
- migration/multifd.c | 122 +++++++++++++++++++++++++++++++++++++++++---
- migration/multifd.h |  15 ++++++
- 3 files changed, 131 insertions(+), 7 deletions(-)
+ migration/fd.c        | 30 ++++++++++++++++++++++++++++++
+ migration/fd.h        |  1 +
+ migration/file.c      | 12 +++++++++---
+ migration/migration.c |  4 ++++
+ 4 files changed, 44 insertions(+), 3 deletions(-)
 
-diff --git a/migration/file.c b/migration/file.c
-index 5d4975f43e..22d052a71f 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -6,6 +6,7 @@
-  */
+diff --git a/migration/fd.c b/migration/fd.c
+index 0eb677dcae..b7e4d071a4 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -19,14 +19,28 @@
+ #include "fd.h"
+ #include "migration.h"
+ #include "monitor/monitor.h"
++#include "io/channel-file.h"
+ #include "io/channel-util.h"
++#include "options.h"
+ #include "trace.h"
  
- #include "qemu/osdep.h"
-+#include "exec/ramblock.h"
- #include "qemu/cutils.h"
- #include "qapi/error.h"
- #include "channel.h"
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 0a5279314d..45a0c7aaa8 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -81,9 +81,15 @@ struct {
  
- struct {
-     MultiFDRecvParams *params;
-+    MultiFDRecvData *data;
-     /* number of created threads */
-     int count;
--    /* syncs main thread and channels */
-+    /*
-+     * For sockets: this is posted once for each MULTIFD_FLAG_SYNC flag.
-+     *
-+     * For files: this is only posted at the end of the file load to mark
-+     *            completion of the load process.
-+     */
-     QemuSemaphore sem_sync;
-     /* global number of generated multifd packets */
-     uint64_t packet_num;
-@@ -1110,6 +1116,53 @@ bool multifd_send_setup(void)
-     return true;
- }
- 
-+bool multifd_recv(void)
++static struct FdOutgoingArgs {
++    int fd;
++} outgoing_args;
++
++int fd_args_get_fd(void)
 +{
-+    int i;
-+    static int next_recv_channel;
-+    MultiFDRecvParams *p = NULL;
-+    MultiFDRecvData *data = multifd_recv_state->data;
-+
-+    /*
-+     * next_channel can remain from a previous migration that was
-+     * using more channels, so ensure it doesn't overflow if the
-+     * limit is lower now.
-+     */
-+    next_recv_channel %= migrate_multifd_channels();
-+    for (i = next_recv_channel;; i = (i + 1) % migrate_multifd_channels()) {
-+        if (multifd_recv_should_exit()) {
-+            return false;
-+        }
-+
-+        p = &multifd_recv_state->params[i];
-+
-+        /*
-+         * Safe to read atomically without a lock because the flag is
-+         * only set by this function below. Reading an old value of
-+         * true is not an issue because it would only send us looking
-+         * for the next idle channel.
-+         */
-+        if (qatomic_read(&p->pending_job) == false) {
-+            next_recv_channel = (i + 1) % migrate_multifd_channels();
-+            break;
-+        }
-+    }
-+
-+    assert(!p->data->size);
-+    multifd_recv_state->data = p->data;
-+    p->data = data;
-+
-+    qatomic_set(&p->pending_job, true);
-+    qemu_sem_post(&p->sem);
-+
-+    return true;
++    return outgoing_args.fd;
 +}
 +
-+MultiFDRecvData *multifd_get_recv_data(void)
-+{
-+    return multifd_recv_state->data;
-+}
-+
- static void multifd_recv_terminate_threads(Error *err)
+ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **errp)
  {
-     int i;
-@@ -1134,11 +1187,26 @@ static void multifd_recv_terminate_threads(Error *err)
-         MultiFDRecvParams *p = &multifd_recv_state->params[i];
- 
-         /*
--         * multifd_recv_thread may hung at MULTIFD_FLAG_SYNC handle code,
--         * however try to wakeup it without harm in cleanup phase.
-+         * The migration thread and channels interact differently
-+         * depending on the presence of packets.
-          */
-         if (multifd_use_packets()) {
-+            /*
-+             * The channel receives as long as there are packets. When
-+             * packets end (i.e. MULTIFD_FLAG_SYNC is reached), the
-+             * channel waits for the migration thread to sync. If the
-+             * sync never happens, do it here.
-+             */
-             qemu_sem_post(&p->sem_sync);
-+        } else {
-+            /*
-+             * The channel waits for the migration thread to give it
-+             * work. When the migration thread runs out of work, it
-+             * releases the channel and waits for any pending work to
-+             * finish. If we reach here (e.g. due to error) before the
-+             * work runs out, release the channel.
-+             */
-+            qemu_sem_post(&p->sem);
-         }
- 
-         /*
-@@ -1167,6 +1235,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     p->c = NULL;
-     qemu_mutex_destroy(&p->mutex);
-     qemu_sem_destroy(&p->sem_sync);
-+    qemu_sem_destroy(&p->sem);
-     g_free(p->name);
-     p->name = NULL;
-     p->packet_len = 0;
-@@ -1184,6 +1253,8 @@ static void multifd_recv_cleanup_state(void)
-     qemu_sem_destroy(&multifd_recv_state->sem_sync);
-     g_free(multifd_recv_state->params);
-     multifd_recv_state->params = NULL;
-+    g_free(multifd_recv_state->data);
-+    multifd_recv_state->data = NULL;
-     g_free(multifd_recv_state);
-     multifd_recv_state = NULL;
- }
-@@ -1251,11 +1322,11 @@ static void *multifd_recv_thread(void *opaque)
-         bool has_data = false;
-         p->normal_num = 0;
- 
--        if (multifd_recv_should_exit()) {
--            break;
--        }
--
-         if (use_packets) {
-+            if (multifd_recv_should_exit()) {
-+                break;
-+            }
+     QIOChannel *ioc;
+     int fd = monitor_get_fd(monitor_cur(), fdname, errp);
 +
-             ret = qio_channel_read_all_eof(p->c, (void *)p->packet,
-                                            p->packet_len, &local_err);
-             if (ret == 0 || ret == -1) {   /* 0: EOF  -1: Error */
-@@ -1274,6 +1345,26 @@ static void *multifd_recv_thread(void *opaque)
-             p->flags &= ~MULTIFD_FLAG_SYNC;
-             has_data = !!p->normal_num;
-             qemu_mutex_unlock(&p->mutex);
-+        } else {
-+            /*
-+             * No packets, so we need to wait for the vmstate code to
-+             * give us work.
-+             */
-+            qemu_sem_wait(&p->sem);
++    outgoing_args.fd = -1;
 +
-+            if (multifd_recv_should_exit()) {
-+                break;
-+            }
-+
-+            /*
-+             * Migration thread did not send work, break and signal
-+             * sem_sync so it knows we're not lagging behind.
-+             */
-+            if (!qatomic_read(&p->pending_job)) {
-+                break;
-+            }
-+
-+            has_data = !!p->data->size;
-         }
- 
-         if (has_data) {
-@@ -1288,9 +1379,17 @@ static void *multifd_recv_thread(void *opaque)
-                 qemu_sem_post(&multifd_recv_state->sem_sync);
-                 qemu_sem_wait(&p->sem_sync);
-             }
-+        } else {
-+            p->total_normal_pages += p->data->size / qemu_target_page_size();
-+            p->data->size = 0;
-+            qatomic_set(&p->pending_job, false);
-         }
+     if (fd == -1) {
+         return;
+     }
+@@ -38,6 +52,8 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+         return;
      }
  
-+    if (!use_packets) {
-+        qemu_sem_post(&p->sem_sync);
++    outgoing_args.fd = fd;
++
+     qio_channel_set_name(ioc, "migration-fd-outgoing");
+     migration_channel_connect(s, ioc, NULL, NULL);
+     object_unref(OBJECT(ioc));
+@@ -73,4 +89,18 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+                                fd_accept_incoming_migration,
+                                NULL, NULL,
+                                g_main_context_get_thread_default());
++
++    if (migrate_multifd()) {
++        int channels = migrate_multifd_channels();
++
++        while (channels--) {
++            ioc = QIO_CHANNEL(qio_channel_file_new_fd(fd));
++
++            qio_channel_set_name(ioc, "migration-fd-incoming");
++            qio_channel_add_watch_full(ioc, G_IO_IN,
++                                       fd_accept_incoming_migration,
++                                       NULL, NULL,
++                                       g_main_context_get_thread_default());
++        }
 +    }
+ }
+diff --git a/migration/fd.h b/migration/fd.h
+index b901bc014e..1be980c130 100644
+--- a/migration/fd.h
++++ b/migration/fd.h
+@@ -20,4 +20,5 @@ void fd_start_incoming_migration(const char *fdname, Error **errp);
+ 
+ void fd_start_outgoing_migration(MigrationState *s, const char *fdname,
+                                  Error **errp);
++int fd_args_get_fd(void);
+ #endif
+diff --git a/migration/file.c b/migration/file.c
+index 1a18e608fc..27ccfc6a1d 100644
+--- a/migration/file.c
++++ b/migration/file.c
+@@ -11,6 +11,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "channel.h"
++#include "fd.h"
+ #include "file.h"
+ #include "migration.h"
+ #include "io/channel-file.h"
+@@ -58,10 +59,15 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
+ {
+     QIOChannelFile *ioc;
+     int flags = O_WRONLY;
++    int fd = fd_args_get_fd();
+ 
+-    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
+-    if (!ioc) {
+-        return false;
++    if (fd && fd != -1) {
++        ioc = qio_channel_file_new_fd(fd);
++    } else {
++        ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
++        if (!ioc) {
++            return false;
++        }
+     }
+ 
+     if (!multifd_channel_connect(opaque, QIO_CHANNEL(ioc), errp)) {
+diff --git a/migration/migration.c b/migration/migration.c
+index 32b291a282..ce7e6f5065 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -134,6 +134,10 @@ static bool transport_supports_multi_channels(MigrationAddress *addr)
+     if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+         SocketAddress *saddr = &addr->u.socket;
+ 
++        if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
++            return migrate_fixed_ram();
++        }
 +
-     if (local_err) {
-         multifd_recv_terminate_threads(local_err);
-         error_free(local_err);
-@@ -1320,6 +1419,10 @@ int multifd_recv_setup(Error **errp)
-     thread_count = migrate_multifd_channels();
-     multifd_recv_state = g_malloc0(sizeof(*multifd_recv_state));
-     multifd_recv_state->params = g_new0(MultiFDRecvParams, thread_count);
-+
-+    multifd_recv_state->data = g_new0(MultiFDRecvData, 1);
-+    multifd_recv_state->data->size = 0;
-+
-     qatomic_set(&multifd_recv_state->count, 0);
-     qatomic_set(&multifd_recv_state->exiting, 0);
-     qemu_sem_init(&multifd_recv_state->sem_sync, 0);
-@@ -1330,8 +1433,13 @@ int multifd_recv_setup(Error **errp)
- 
-         qemu_mutex_init(&p->mutex);
-         qemu_sem_init(&p->sem_sync, 0);
-+        qemu_sem_init(&p->sem, 0);
-+        p->pending_job = false;
-         p->id = i;
- 
-+        p->data = g_new0(MultiFDRecvData, 1);
-+        p->data->size = 0;
-+
-         if (use_packets) {
-             p->packet_len = sizeof(MultiFDPacket_t)
-                 + sizeof(uint64_t) * page_count;
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 9a6a7a72df..19188815a3 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -13,6 +13,8 @@
- #ifndef QEMU_MIGRATION_MULTIFD_H
- #define QEMU_MIGRATION_MULTIFD_H
- 
-+typedef struct MultiFDRecvData MultiFDRecvData;
-+
- bool multifd_send_setup(void);
- void multifd_send_shutdown(void);
- int multifd_recv_setup(Error **errp);
-@@ -23,6 +25,8 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp);
- void multifd_recv_sync_main(void);
- int multifd_send_sync_main(void);
- bool multifd_queue_page(RAMBlock *block, ram_addr_t offset);
-+bool multifd_recv(void);
-+MultiFDRecvData *multifd_get_recv_data(void);
- 
- /* Multifd Compression flags */
- #define MULTIFD_FLAG_SYNC (1 << 0)
-@@ -63,6 +67,13 @@ typedef struct {
-     RAMBlock *block;
- } MultiFDPages_t;
- 
-+struct MultiFDRecvData {
-+    void *opaque;
-+    size_t size;
-+    /* for preadv */
-+    off_t file_offset;
-+};
-+
- typedef struct {
-     /* Fields are only written at creating/deletion time */
-     /* No lock required for them, they are read only */
-@@ -154,6 +165,8 @@ typedef struct {
- 
-     /* syncs main thread and channels */
-     QemuSemaphore sem_sync;
-+    /* sem where to wait for more work */
-+    QemuSemaphore sem;
- 
-     /* this mutex protects the following parameters */
-     QemuMutex mutex;
-@@ -163,6 +176,8 @@ typedef struct {
-     uint32_t flags;
-     /* global number of generated multifd packets */
-     uint64_t packet_num;
-+    int pending_job;
-+    MultiFDRecvData *data;
- 
-     /* thread local variables. No locking required */
- 
+         return (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
+                 saddr->type == SOCKET_ADDRESS_TYPE_UNIX ||
+                 saddr->type == SOCKET_ADDRESS_TYPE_VSOCK);
 -- 
 2.35.3
 
