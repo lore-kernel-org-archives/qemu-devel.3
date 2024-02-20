@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69BA7C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 06:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D9AC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 06:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcJFk-0007jE-8y; Tue, 20 Feb 2024 01:05:16 -0500
+	id 1rcJK1-0000IE-5g; Tue, 20 Feb 2024 01:09:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJFi-0007j2-NV
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:05:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJFh-000636-Cr
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:05:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708409112;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=A2yt10IBctzhFDq1L7QMYkvCFbT5+k5GL2IFUM4ZcHw=;
- b=HpN5IMm4GHHVXEtyWwtnpw/wakFHSciD9dShhRmcvJOEGWDzZDMRMn5JdXswiBRmojW7W6
- kBAbckxMqsRDQIti8G6AGxKnPEtjwjhX9mq1sJJGFdaHnDtsKl7r4ueuytrGL2UQmCxG/k
- 5rIkWKnoOB5eG7v4mq+ED2y66nzS20s=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-aT8NXYN_PrSSE9032-FaeQ-1; Tue, 20 Feb 2024 01:05:08 -0500
-X-MC-Unique: aT8NXYN_PrSSE9032-FaeQ-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-29999b97b39so842023a91.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 22:05:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcJJy-0000Hw-6g
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:09:38 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcJJv-0006ga-FH
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:09:37 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4126ea3b812so1969465e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 22:09:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708409363; x=1709014163; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=muzvncswgk08dapAN0iqRiFau0hMMeJpToiMAwgnXHI=;
+ b=ri1XUfC3sXlhbSlLgw6JVPRH/4Z8IFEQQ+Fp4XxDAsd4YIroJVmXad+OtpBzLIwXR4
+ XZbgsDXGkSmKk5pIrm7pitsnq1zlvGfzzAoN9fWGmdxa5u4FxXRf6aoQ0Y82vh2TQNf9
+ BB0Ok5GjC9Q5duSpDa69SI6Fe1vmy8ZX4vntGAYcBwjZl0AJhjHzmkvs6sbC6BiZxQJm
+ J29Ovg09EPauJErFcOHb9qs45Eid35lZ7E6Y2ocTclnPu/4dbZFz7bE0aXza4UYfetfw
+ +4u9fXJD+pN7qvCI2yEnaaaWIZf/smaz3KJ6kyVQF0TeZu56/e5ds5kMIonvneZlR3ez
+ AFig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708409107; x=1709013907;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=A2yt10IBctzhFDq1L7QMYkvCFbT5+k5GL2IFUM4ZcHw=;
- b=OZl4j2l0PQTggRlUHENvfklhOg0l760fTMEj8IcKFfPx1jUDULxas1MAI670AstBv7
- 3PxjA8xpg66ghqGLl6SyQcZJDnGLDghCqaZ7AcDS9zjDGzJ1X/7e7sE4oKnyZwP+oJk6
- 9mWLdbJT9xna/5hXkM9xVXsBceVf7Q71hpMkKtTbVVfrwOupivAbKSJoHoJNFXSXaz4k
- yBjgHYHqP63i+0FbmtAHz69+p3QdDYQfPIUOO9OUTPAbC+QDjXcLUgamTjM1A4IiUPoa
- lYhqPn4ChrhMdsUzFsu0SaNAJF+9bsqMXWfspNODFNTKpBNat0dnGcgAjHkyX+OjzxZA
- h9DA==
-X-Gm-Message-State: AOJu0Yx4N0JXAib9rj4uHYdRXLcW/2FlsUsRxaZ6T150ydzCfFTd+yp2
- H+/fsglV3DYN8gJHPMuM+iZBXFSw7xcxEf+TD3b5xBvvSs0b+D0ZmJ8v8k9ji8HfZo2tjC79psx
- KdSUUDaF0vr+yN7LGmdftV5AxEJLBjSyGnnlTSk819zRxmxXrIARq
-X-Received: by 2002:a17:90b:116:b0:299:4a1:ca9a with SMTP id
- p22-20020a17090b011600b0029904a1ca9amr11675875pjz.0.1708409107583; 
- Mon, 19 Feb 2024 22:05:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH2LFA8BvrrOh2SHwshsOOs0brqn66vJPag3PuK/cKlMeMT/wB6+QuZG/a0nNhbRtfnkd77xw==
-X-Received: by 2002:a17:90b:116:b0:299:4a1:ca9a with SMTP id
- p22-20020a17090b011600b0029904a1ca9amr11675860pjz.0.1708409107262; 
- Mon, 19 Feb 2024 22:05:07 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- qn11-20020a17090b3d4b00b00298f88c3e48sm6330695pjb.11.2024.02.19.22.05.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Feb 2024 22:05:06 -0800 (PST)
-Date: Tue, 20 Feb 2024 14:04:57 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, berrange@redhat.com,
- farosas@suse.de
-Subject: Re: [PATCH 2/3] qtest: migration: Introduce 'connect_channels' in
- MigrateCommon struct
-Message-ID: <ZdRBCYIOiOV39i2x@x1n>
-References: <20240216090624.75445-1-het.gala@nutanix.com>
- <20240216090624.75445-3-het.gala@nutanix.com>
+ d=1e100.net; s=20230601; t=1708409363; x=1709014163;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=muzvncswgk08dapAN0iqRiFau0hMMeJpToiMAwgnXHI=;
+ b=PJGo/D7uOH99akhgiqGDF9deC5elVkhyDmZHnHqQ4wHyIMapjJhEmSPB3Dc3/+kml6
+ CyIOSAKeAuzmjdDgY2Dde0NgIo4cE7rg+1fW8NlNV0mNVZWbCtFbeJTEoyIY18bWUSJw
+ krv/LNeztg1zr32nZ77sc5Pk8KMmQ/SQhniN/DzZ0MGQ1k8MjDwLgNw2iUJufvSxJ3Wt
+ hwQUT0klSDtPNjhiS1TkQ5pCYAMnQWRV8VjYAkkoobjqaTsLZrRo2h9Ow8DwvVKkO6o5
+ z4fRKUckbheIft/Evl5tY15DwOzblDN9HY/rm1s7G64yL/edzpwmwkzs80e8cB7ubxNy
+ 5d2w==
+X-Gm-Message-State: AOJu0Yw4latJbrxNmlwzkYNA8yYTOioPcTdb1ymhp1xGZsHF0zBza3bH
+ uw5hD+IPUZzGL0F1Ca7UwjVJSMPoZIPASKD428Mt782VsDNZTuseLFAOcj5jRAY=
+X-Google-Smtp-Source: AGHT+IGvxxxRyY48DvS/val+w+I4SbEnZcb0PTeIFo/MzdFuqkkhCDv/A5sErWT6rH4gL29fyQgyag==
+X-Received: by 2002:a05:600c:1c1e:b0:412:1d7d:6c51 with SMTP id
+ j30-20020a05600c1c1e00b004121d7d6c51mr10064121wms.6.1708409362466; 
+ Mon, 19 Feb 2024 22:09:22 -0800 (PST)
+Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
+ [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
+ s8-20020a7bc388000000b00412260889d9sm13337417wmj.1.2024.02.19.22.09.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Feb 2024 22:09:22 -0800 (PST)
+Message-ID: <cee6951f-234e-4806-b6a1-147c39455f07@linaro.org>
+Date: Tue, 20 Feb 2024 07:09:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240216090624.75445-3-het.gala@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
+ 'ich_dmi_pci.h'
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240219163855.87326-1-philmd@linaro.org>
+ <20240219163855.87326-7-philmd@linaro.org>
+ <0841e333-3d7d-0440-a8bf-8a7fd2f0011f@eik.bme.hu>
+ <19500c79-8e4a-2160-3622-dbf145655046@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <19500c79-8e4a-2160-3622-dbf145655046@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,37 +108,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 09:06:23AM +0000, Het Gala wrote:
-> migration QAPIs can now work with either 'channels' or 'uri' as their
-> argument.
+On 19/2/24 19:24, BALATON Zoltan wrote:
+> On Mon, 19 Feb 2024, BALATON Zoltan wrote:
+>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
+>>> "hw/pci-bridge/ich_dmi_pci.h" header.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> MAINTAINERS                         |  1 +
+>>> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
+>>> include/hw/southbridge/ich9.h       |  2 --
+>>> hw/pci-bridge/i82801b11.c           | 11 ++++-------
+>>> 4 files changed, 25 insertions(+), 9 deletions(-)
+>>> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 1b210c5cc1..50507c3dd6 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
+>>> F: hw/i2c/smbus_ich9.c
+>>> F: hw/isa/lpc_ich9.c
+>>> F: include/hw/acpi/ich9*.h
+>>> +F: include/hw/pci-bridge/ich_dmi_pci.h
+>>> F: include/hw/southbridge/ich9.h
+>>>
+>>> PIIX4 South Bridge (i82371AB)
+>>> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h 
+>>> b/include/hw/pci-bridge/ich_dmi_pci.h
+>>> new file mode 100644
+>>> index 0000000000..7623b32b8e
+>>> --- /dev/null
+>>> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
+>>> @@ -0,0 +1,20 @@
+>>> +/*
+>>> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
+>>> + *
+>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>> + */
+>>> +
+>>> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
+>>> +#define HW_PCI_BRIDGE_ICH_D2P_H
+>>> +
+>>> +#include "qom/object.h"
+>>> +#include "hw/pci/pci_bridge.h"
+>>> +
+>>> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
+>>> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
+>>> +
+>>> +struct I82801b11Bridge {
+>>> +    PCIBridge parent_obj;
+>>> +};
+>>
+>> If this class has no fields of its own why does it need its own state 
+>> struct defined? You could just set .instance_size = sizeof(PCIBridge) 
+>> in the TypeInfo i82801b11_bridge_info below and delete this struct 
+>> completely as it's not even used anywhere. One less needless QOM 
+>> complication :-) For an example see the empty via-mc97 device in 
+>> hw/audio/via-ac97.c.
+>>
+>> Then you can put the OBJECT_DECLARE_SIMPLE_TYPE in 
+>> hw/pci-bridge/i82801b11.c where this object is defined and the #define 
+>> TYPE_ICH_DMI_PCI_BRIDGE in
 > 
-> Signed-off-by: Het Gala <het.gala@nutanix.com>
-> ---
->  tests/qtest/migration-test.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+> You don't even need OBJECT_DECLARE_SIMPLE_TYPE if there's no state 
+> struct. But on second look what is this object at all? It's never 
+> instantiated anywhere. Is it used somewhere?
+
+Here my view is we should always define QOM type names in headers
+and use them, in particular in the TypeInfo registration. To unify
+style and copy/pasting, better use the QOM DECLARE_TYPE macros.
+I envision that might help moving toward DSL and have HW modelling
+checks done externally, before starting QEMU. But then this is my
+view and I dunno about when we'll get that DSL in so I'm OK to
+revisit this patch.
+
+> Regards,
+> BALATON Zoltan
 > 
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index e7f2719dcf..0bc69b1943 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -704,6 +704,13 @@ typedef struct {
->       */
->      const char *connect_uri;
->  
-> +    /*
-> +     * Optional: list of migration stream channels, each connected
-> +     * to a dst QEMU. It can be used instead of URI to carry out
-> +     * the same task as listen_uri or connect_uri.
-> +     */
-> +    MigrationChannelList *connect_channels;
-> +
->      /* Optional: callback to run at start to set migration parameters */
->      TestMigrateStartHook start_hook;
->      /* Optional: callback to run at finish to cleanup */
-
-Please squash this patch into the follow up patch that uses it.  Thanks,
-
--- 
-Peter Xu
+>> hw/southbridge/ich9.h and then you don't need this header at all so 
+>> you don't end up with:
+>>
+>> 4 files changed, 25 insertions(+), 9 deletions(-)
+>>
+>> but really simplifying it.
+>>
+>> Regards,
+>> BALATON Zoltan
+>>
+>>> +
+>>> +#endif
+>>> diff --git a/include/hw/southbridge/ich9.h 
+>>> b/include/hw/southbridge/ich9.h
+>>> index bee522a4cf..b2abf483e0 100644
+>>> --- a/include/hw/southbridge/ich9.h
+>>> +++ b/include/hw/southbridge/ich9.h
+>>> @@ -114,8 +114,6 @@ struct ICH9LPCState {
+>>>
+>>> #define ICH9_D2P_SECONDARY_DEFAULT              (256 - 8)
+>>>
+>>> -#define ICH9_D2P_A2_REVISION                    0x92
+>>> -
+>>> /* D31:F0 LPC Processor Interface */
+>>> #define ICH9_RST_CNT_IOPORT                     0xCF9
+>>>
+>>> diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/i82801b11.c
+>>> index c140919cbc..dd17e35b0a 100644
+>>> --- a/hw/pci-bridge/i82801b11.c
+>>> +++ b/hw/pci-bridge/i82801b11.c
+>>> @@ -45,7 +45,7 @@
+>>> #include "hw/pci/pci_bridge.h"
+>>> #include "migration/vmstate.h"
+>>> #include "qemu/module.h"
+>>> -#include "hw/southbridge/ich9.h"
+>>> +#include "hw/pci-bridge/ich_dmi_pci.h"
+>>>
+>>> /*****************************************************************************/
+>>> /* ICH9 DMI-to-PCI bridge */
+>>> @@ -53,11 +53,8 @@
+>>> #define I82801ba_SSVID_SVID     0
+>>> #define I82801ba_SSVID_SSID     0
+>>>
+>>> -typedef struct I82801b11Bridge {
+>>> -    /*< private >*/
+>>> -    PCIBridge parent_obj;
+>>> -    /*< public >*/
+>>> -} I82801b11Bridge;
+>>> +
+>>> +#define ICH9_D2P_A2_REVISION                    0x92
+>>>
+>>> static void i82801b11_bridge_realize(PCIDevice *d, Error **errp)
+>>> {
+>>> @@ -103,7 +100,7 @@ static void 
+>>> i82801b11_bridge_class_init(ObjectClass *klass, void *data)
+>>> }
+>>>
+>>> static const TypeInfo i82801b11_bridge_info = {
+>>> -    .name          = "i82801b11-bridge",
+>>> +    .name          = TYPE_ICH_DMI_PCI_BRIDGE,
+>>>     .parent        = TYPE_PCI_BRIDGE,
+>>>     .instance_size = sizeof(I82801b11Bridge),
+>>>     .class_init    = i82801b11_bridge_class_init,
+>>
 
 
