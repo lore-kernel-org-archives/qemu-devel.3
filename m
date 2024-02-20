@@ -4,84 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C45C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344C8C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVPC-0004pQ-6A; Tue, 20 Feb 2024 14:03:50 -0500
+	id 1rcVS0-0007uV-8s; Tue, 20 Feb 2024 14:06:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcVP1-0004gD-0s
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:03:39 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcVOy-00027i-5L
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:03:38 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e471f5f1a5so1235251b3a.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:03:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708455811; x=1709060611; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+g+GZVafJ1oguRWp2Kg/YwMwzgEJPqO2nFWJGRm1jow=;
- b=mFxjAyVvUFq1KqalSnmEBoYZYJy04eTUfRLkSrGNaJS7x6jRqjI7vJkP/L6s+x3+gr
- qy+Ri9Oj7XxZwgoc8dbXmG5i+/WKiT6i4hqCYgQIjCQnDJ/WJmkWAn/qwQBVLsBhxEPN
- SxYH4Seu3tr0CqFmvlC97CK5G9Ak0idiHKvArcOSGkANvapoaQFioQG2quJjOsri2z8i
- NsY5GbeQbKuD7cmAPmZk8LrYvMjeSCmZcfOGDHcP8hJz7tV3TQOYQqqsKjq88iZHhDyW
- DtqmOyoHDLok54Rquro28QcGXgNrQGE0JZsqovDCrIpUKh8qE7xfuI7uBFPsR1T3K8Rf
- nCLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708455811; x=1709060611;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+g+GZVafJ1oguRWp2Kg/YwMwzgEJPqO2nFWJGRm1jow=;
- b=Z97N7wbqMbkdksV0Qr4EEnGBOeEuKyUltrsPdAEAB2N5URUwdEsZ+v+X2192Yz2Man
- 38WGMI3bCW66AeF5mfovGN0sSONaoyDuR93/WmZipfcAjSptRPiuSyHu4fVuayb8O7Sb
- f/57JOy2ik4Y53ZFeJcknq5r5h6TgilBz/r6yNCaEduxp/gQQs2CWHYFozGFmiMuAm35
- 8+ospoqphVaWmEM8aSmtgUncGnTxhH0PQUDkAio8f04DQimZpqOiWCJQj7eDixMYAbdT
- vBNTq+Mq8NwwOYJWq5RsP7Tol7rmwYcs+DI66PWHw4lqlFWjyWhtKZlcEsJYLgQeDnF6
- 45dQ==
-X-Gm-Message-State: AOJu0YxK0mL4liz9Ejhz2QpAcssGU8R3hlZU6a4pL1Bqy4lCYJ9vJ9wj
- 9px4OpgM1Obn1vd/IpV0kHrhooRT7xlZafcAVuQVHohpLwBthHn6Voko98bG27Q=
-X-Google-Smtp-Source: AGHT+IH7VKiSpvM9ogj93SoBUPkaZOZu8v6BqchMhHprVzb80g/KmBQkFEVotgT7/ns1iXotUmPoIQ==
-X-Received: by 2002:a05:6a00:2196:b0:6e4:5dc0:233c with SMTP id
- h22-20020a056a00219600b006e45dc0233cmr8594776pfi.6.1708455811038; 
- Tue, 20 Feb 2024 11:03:31 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- f10-20020a056a000b0a00b006e02f4bb4e4sm7457346pfu.18.2024.02.20.11.03.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 11:03:30 -0800 (PST)
-Message-ID: <0aa2515e-55ef-4472-a567-1545c7e5f1ed@linaro.org>
-Date: Tue, 20 Feb 2024 09:03:27 -1000
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rcVRx-0007qw-MW
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:06:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rcVRs-0002hg-Ig
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:06:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708455995;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sO8R3OzUB1H3wBdHR615YvIz8eF8WRxI63ti1vq6aV0=;
+ b=iuRAgkH7TcykFGmeP+0S1/aOUBdmUEfnfG0EoZTNVXZKQ3wIzNf6BqPvWpP30/kOR/AAPu
+ dFh14gt4g8nJN73KwDXtQzv0l0Mvu50DRHDFjVOII7b54WBTjiUFWGBjbd2BikKoaf38zt
+ BGzulaA8+rtiPeo6WncE+RXISqw2r1I=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-ss9RuhPhPySJusnJ9Ugz0g-1; Tue,
+ 20 Feb 2024 14:06:32 -0500
+X-MC-Unique: ss9RuhPhPySJusnJ9Ugz0g-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1305B1C54037;
+ Tue, 20 Feb 2024 19:06:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.50])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 681BD400D784;
+ Tue, 20 Feb 2024 19:06:28 +0000 (UTC)
+Date: Tue, 20 Feb 2024 19:06:26 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH 23/23] qemu-img: inline list of supported commands,
+ remove qemu-img-cmds.h include
+Message-ID: <ZdT4Muc9M5kQ1S9J@redhat.com>
+References: <cover.1707513011.git.mjt@tls.msk.ru>
+ <a7e67594e748d1b91f755dd971f222afa09f5443.1707513012.git.mjt@tls.msk.ru>
+ <ZdT0A3b9-JrMd6aI@redhat.com>
+ <00cd5770-29f1-451c-8d13-2b9e987e6c7f@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/3] target/ppc: Implement reservation protection for
- larx/stcx
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20240220041922.373029-1-npiggin@gmail.com>
- <20240220041922.373029-4-npiggin@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240220041922.373029-4-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <00cd5770-29f1-451c-8d13-2b9e987e6c7f@tls.msk.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,59 +86,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/24 18:19, Nicholas Piggin wrote:
-> +    env->access_type = ACCESS_RES;
-> +    host = probe_access(env, addr, size, MMU_DATA_LOAD, mmu_idx, raddr);
-> +    if (host) {
-> +        cpu_set_llsc_prot(cs, qemu_ram_addr_from_host_nofail(host));
-> +    } else {
-> +        /* XXX: fault? */
-> +        g_assert_not_reached();
-> +    }
+On Tue, Feb 20, 2024 at 10:02:32PM +0300, Michael Tokarev wrote:
+> 20.02.2024 21:48, Daniel P. Berrangé:
+> ...
+> > $ ./build/qemu-img check --help
+> > Check basic image integrity.
+> > 
+> > Usage:
+> > 
+> >    qemu-img check [-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]
+> >          [--output human|json] [--object OBJDEF] FILENAME
+> > 
+> > Arguments:
+> 
+> $ ./build/qemu-img check --help
+> Check basic image integrity.  Usage:
+> 
+>    qemu-img check [-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]
+>           [--output human|json] [--object OBJDEF] FILENAME
+> 
+> Arguments:
+> ...
+> 
+> Or just:
+> 
+> Check basic image integrity:
+> 
+>  qemu-img check...
+> 
+> 
+> In all cases I tried to make the whole thing as compact as possible,
+> to (almost) fit on a standard terminal.  The extra empty lines between
+> different arguments makes it almost impossible.
 
-probe_access will not return a host address for lots of reasons, including watchpoints, 
-plugins, etc.
+IMHO fitting on a "standard" terminal is OK in terms of width, but
+should be a non-goal in terms of height. Readability is more important
+than avoiding vertical scroll.
 
-> +
-> +    if (unlikely(size == 16)) {
-> +        Int128 val16;
-> +        val16 = cpu_ld16_mmu(env, addr,
-> +                     make_memop_idx(DEF_MEMOP(env, MO_128 | MO_ALIGN), mmu_idx),
-> +                     raddr);
-> +        env->gpr[reg] = int128_gethi(val16);
-> +        env->gpr[reg + 1] = int128_getlo(val16);
-> +        return;
-> +    }
-> +
-> +    switch (size) {
-> +    case 1:
-> +        val = ldub_p(host);
-> +        break;
-> +    case 2:
-> +        val = FIELD_EX64(env->msr, MSR, LE) ? lduw_le_p(host) : lduw_be_p(host);
-> +        break;
-> +    case 4:
-> +        val = FIELD_EX64(env->msr, MSR, LE) ? ldl_le_p(host) : ldl_be_p(host);
-> +        break;
-> +    case 8:
-> +        val = FIELD_EX64(env->msr, MSR, LE) ? ldq_le_p(host) : ldq_be_p(host);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +    env->gpr[reg] = val;
+> > >              "Arguments:\n"
+> > >              " -h|--help - print this help and exit\n"
+> 
+> btw, the common way is to use comma here, not "|", --
+>   -h,--help - ...
+> 
+> Again, I especially omitted space after "|" to make it
+> more compact.  Maybe for no good.
 
-Passing in size and performing a switch on it is not the best organization.
-You should use multiple helper functions with a common subroutine to handle the llsc 
-setup.  You should pass in the whole MemOpIdx.
+Yes, a comma with a space would look nicer. If we have the
+description on the following line, then there's no width
+limit problems there.
 
-> +#define MEMOP_GET_SIZE(x)  (1 << ((x) & MO_SIZE))
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-This is memop_size().
-
-
-r~
 
