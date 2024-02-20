@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51769C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F15ACC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcL1e-0006qI-1Y; Tue, 20 Feb 2024 02:58:50 -0500
+	id 1rcL8o-0002en-53; Tue, 20 Feb 2024 03:06:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcL1c-0006q1-5M
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:58:48 -0500
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcL1a-0007Zz-2U
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:58:47 -0500
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-51197ca63f5so5254541e87.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:58:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708415924; x=1709020724; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sc4inLeKe01Y6gt6dvht8v818QXz6DqMFhhT7z2fVzg=;
- b=A/WRGgFuiaIx+zSyfp7xKJUphRU8ayO8AkBotzaL63WEPkdZ25bcyuPm9wFUnZFOW4
- ij2NYtHydv+WBphaRAZZp9vGPjrEDlTSU+Z+OXzzP4lAhZKdm5pVsOdXZlTwHhKdNkDw
- zOmysVD4IvyS4/o3DChSU5LEu2xDERrxA27klLNSPttBdApt2w4Nmi/cIfR3pScSTE76
- UaTnyHRJsUmtqQbSqkulso+5o6KoiUzxtp5J24IDI9kn4iBZGNuehnWuTB78cq/tVIZA
- QNpli7yo7RVRfJd93jtD3YF0KyRJS2ezEge8v1kNCRJIfm237eaffoyWAi3/pTF/6fFB
- vD0g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rcL8m-0002d9-03
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:06:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rcL8j-0000Mb-1n
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:06:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708416367;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=v3pJu2vTudPnKcG+w3eV2U8dIOCns2Bhsw8Qrv9GaA0=;
+ b=R2n8e6+GJsypMEynAfHe7NTEL8+FnOIVTZZIerpo/rdLwk1Nqy96Hdl8k+X3GzlZWVqTwF
+ UhMTgSDtQ4o/bCuHX93YQL8wRYZeflw3xWHxsC8Ns1B1A9LWPRyDDCYUAVgq1O4K5CJ2LX
+ Rwk9G6V4kl4Fr/rVL0SToI5Pjg9oIpc=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-313-T9XA_tCrN8O6f8gw1IMsYQ-1; Tue, 20 Feb 2024 03:06:05 -0500
+X-MC-Unique: T9XA_tCrN8O6f8gw1IMsYQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a3ec1d8b1e2so85962766b.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:06:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708415924; x=1709020724;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sc4inLeKe01Y6gt6dvht8v818QXz6DqMFhhT7z2fVzg=;
- b=vOLd5o4MnRdZAMHWIrXIJNJwbiT7DIO5xg75axQDs/Fupd6GMOneukE+3UH2v8dxRC
- tfPBY3gCO6I6vm1Hn1i+vC8OPyjiX6QZwD2ReuKisOfDTjsSuEIbc0I5cwTZDEqeNaSu
- Gv+VYeyGMb/oPaU7eVo8qI7cmSRdSwirEVbS+qYvVAzl929OugQW7p1dzh0RFZYNkXNw
- ajFnd9UsBEkIxCHqbJYCfJStF8qcOmiCggOjbSwwcl/i3TlyMINSbiI4OyOnH4aI88Aw
- VGwMuFGF6hC38zpMPKINpl0tf1mLjxHYIs77YwllXZMgwWpFtW31/6nMNgvCjM2j9T5Q
- upqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDno+dC8Sq4ak2E+vJ1vTbGDsQXjIQJgeKjmlcQ4RiHS97hFYC891sdpymtTXja8RLG66IW27RXOjSmvweJhuqcXWX3g0=
-X-Gm-Message-State: AOJu0YzQ8mFyTqoWV9JrlM1WYXPC7odSxuCOvnteSfDoYjZ0JZfLtdZG
- OrkI2JwEBaqnKmCKE2LTeK+LZxjU4EPvmOv3OVHWoTzmx0M3CTmEMlMRMMC3oSY=
-X-Google-Smtp-Source: AGHT+IGhBCSUAJcYX875HjLuQPd+UFQuQHIRKRDS/eKMdzzCgMELAPOSC7En8Ft3zZT0nQi6ttjsPw==
-X-Received: by 2002:a05:6512:39d1:b0:512:c2e7:27a3 with SMTP id
- k17-20020a05651239d100b00512c2e727a3mr1216082lfu.33.1708415923951; 
- Mon, 19 Feb 2024 23:58:43 -0800 (PST)
-Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
- [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- b7-20020a05600c11c700b00411c3c2fc55sm13481152wmi.45.2024.02.19.23.58.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 23:58:43 -0800 (PST)
-Message-ID: <50ad98bf-cee9-44f7-bf4d-ada2a02e330b@linaro.org>
-Date: Tue, 20 Feb 2024 08:58:41 +0100
+ d=1e100.net; s=20230601; t=1708416363; x=1709021163;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v3pJu2vTudPnKcG+w3eV2U8dIOCns2Bhsw8Qrv9GaA0=;
+ b=fMAIgiC4WtvN4BHpfzwF07OxadYwlNuw83a0tiqSDso7huDQxsZWttUAUlz+xOdxyD
+ 1TscxmyPqwj9DATYvK7ItdRD6scKG012vQdjhd4Qq/8CaUvOskMiSrMN6M4O/mBXPLlZ
+ 6RG3RF+uHRS/HG/Ol1GkxW13B41Mg8UBLHlbKDrrYBGKcOGo9rqnepG3CIOr0/1DVcvT
+ xstAncsu0N0pnTgnYi+1koztjdAfe6KlSolvZiSemZuGC8gIIYcmiQs8FNHncMjO27kA
+ LuloJvRxbHNztqKLs/NuI5YrjjkFozNUPSBou2MKWL1syT9YPIswi62BfX/D0JPDoOtk
+ J15w==
+X-Gm-Message-State: AOJu0Yz3GmTdpz9tG3JIyGr+hS5sLaACuJnR2DZ43XFaglq2AAGfxNyi
+ mTVt23sMgiD6OwItx+CTrPdCa62PVL32SegNWWE3rwqBfjq4FVe3+5EORqp/HwzzBJZwBQcgMUl
+ LDLI/UknLKaxf0aUPDKMRkmUNsf5OnBvxAhOqa5Gq8ms1oAHmp5tukYrNh8BtIp3lUgsuKDBDsO
+ alv1BYG1OnGpwi38rgRU+207VyTANGg7dEItSY
+X-Received: by 2002:a17:906:b0d9:b0:a38:63d4:2273 with SMTP id
+ bk25-20020a170906b0d900b00a3863d42273mr10200833ejb.35.1708416363473; 
+ Tue, 20 Feb 2024 00:06:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG6NkT51WHUu5Fh9vKRsDqacWPxr5FSJQjS8yPCh9X190t2gJbdmyNFxPcLvh5rG6e/SyHEkQ==
+X-Received: by 2002:a17:906:b0d9:b0:a38:63d4:2273 with SMTP id
+ bk25-20020a170906b0d900b00a3863d42273mr10200813ejb.35.1708416363034; 
+ Tue, 20 Feb 2024 00:06:03 -0800 (PST)
+Received: from [192.168.10.118] ([2001:b07:6468:f312:1c09:f536:3de6:228c])
+ by smtp.gmail.com with ESMTPSA id
+ jj12-20020a170907984c00b00a3e64bcd2c1sm2463283ejc.142.2024.02.20.00.05.59
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 00:06:02 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/17] Build, x86 patches for 2024-02-16
+Date: Tue, 20 Feb 2024 09:05:41 +0100
+Message-ID: <20240220080558.365903-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/3] hw/isa/lpc_ich9: add broadcast SMI feature
-Content-Language: en-US
-To: Laszlo Ersek <lersek@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu devel list <qemu-devel@nongnu.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-References: <20170126014416.11211-1-lersek@redhat.com>
- <20170126014416.11211-3-lersek@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20170126014416.11211-3-lersek@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,132 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Laszlo, Igor, Gerd,
+The following changes since commit 3ff11e4dcabe2b5b4c26e49d741018ec326f127f:
 
-(old patch, now commit 5ce45c7a2b)
+  Merge tag 'pull-target-arm-20240215' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-02-15 17:36:30 +0000)
 
-On 26/1/17 02:44, Laszlo Ersek wrote:
-> The generic edk2 SMM infrastructure prefers
-> EFI_SMM_CONTROL2_PROTOCOL.Trigger() to inject an SMI on each processor. If
-> Trigger() only brings the current processor into SMM, then edk2 handles it
-> in the following ways:
-> 
-> (1) If Trigger() is executed by the BSP (which is guaranteed before
->      ExitBootServices(), but is not necessarily true at runtime), then:
-> 
->      (a) If edk2 has been configured for "traditional" SMM synchronization,
->          then the BSP sends directed SMIs to the APs with APIC delivery,
->          bringing them into SMM individually. Then the BSP runs the SMI
->          handler / dispatcher.
-> 
->      (b) If edk2 has been configured for "relaxed" SMM synchronization,
->          then the APs that are not already in SMM are not brought in, and
->          the BSP runs the SMI handler / dispatcher.
-> 
-> (2) If Trigger() is executed by an AP (which is possible after
->      ExitBootServices(), and can be forced e.g. by "taskset -c 1
->      efibootmgr"), then the AP in question brings in the BSP with a
->      directed SMI, and the BSP runs the SMI handler / dispatcher.
-> 
-> The smaller problem with (1a) and (2) is that the BSP and AP
-> synchronization is slow. For example, the "taskset -c 1 efibootmgr"
-> command from (2) can take more than 3 seconds to complete, because
-> efibootmgr accesses non-volatile UEFI variables intensively.
-> 
-> The larger problem is that QEMU's current behavior diverges from the
-> behavior usually seen on physical hardware, and that keeps exposing
-> obscure corner cases, race conditions and other instabilities in edk2,
-> which generally expects / prefers a software SMI to affect all CPUs at
-> once.
-> 
-> Therefore introduce the "broadcast SMI" feature that causes QEMU to inject
-> the SMI on all VCPUs.
+are available in the Git repository at:
 
-I'm trying to remove cpu_interrupt() API from hw/ and found this odd
-case.
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-IIUC, the code you added is closer to what real HW is doing:
+for you to fetch changes up to 5f9beb5001738d9d32bb8a617ed0528d99d7f09a:
 
-   CPU_FOREACH(cs) { cpu_interrupt(cs, CPU_INTERRUPT_SMI); }
+  ci: Fix again build-previous-qemu (2024-02-16 13:56:09 +0100)
 
-and previous implementation was bogus:
+----------------------------------------------------------------
+* Some hw/isa cleanups
+* Fixes for x86 CPUID
+* Cleanups for configure, hw/isa and x86
 
-   cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
+----------------------------------------------------------------
+Paolo Bonzini (8):
+      mips: remove unnecessary "select PTIMER"
+      isa-superio: validate floppy.count value
+      smc37c669: remove useless is_enabled functions
+      configure: do not create legacy symlinks
+      configure: put all symlink creation together
+      i386: xen: fix compilation --without-default-devices
+      usb: inline device creation functions
+      ci: Fix again build-previous-qemu
 
-but to avoid breaking older VMs ready to deal with bogus impl,
-you have to add a virtual (non-HW) ICH9_LPC_SMI_F_BROADCAST bit
-so new VMs can detect (negotiating) it and use normal expected
-HW behavior.
+Xiaoyao Li (8):
+      i386/cpu: Clear FEAT_XSAVE_XSS_LO/HI leafs when CPUID_EXT_XSAVE is not available
+      i386/cpu: Mask with XCR0/XSS mask for FEAT_XSAVE_XCR0_HI and FEAT_XSAVE_XSS_HI leafs
+      target/i386: Add support of KVM_FEATURE_ASYNC_PF_VMEXIT for guest
+      i386/pc: Drop pc_machine_kvm_type()
+      physmem: replace function name with __func__ in ram_block_discard_range()
+      i386/cpuid: Decrease cpuid_i when skipping CPUID leaf 1F
+      i386/cpuid: Remove subleaf constraint on CPUID leaf 1F
+      i386/cpuid: Move leaf 7 to correct group
 
-If so, and since this change was almost 7 years ago, can we
-expect that most of today's VMs use ICH9_LPC_SMI_F_BROADCAST_BIT,
-and would it be possible to deprecate it, so it become the only
-possibility, allowing us to remove this bogus call?
+Ziqiao Kong (1):
+      target/i386: Generate an illegal opcode exception on cmp instructions with lock prefix
 
-   cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-
-> While the original posting of this patch
-> <http://lists.nongnu.org/archive/html/qemu-devel/2015-10/msg05658.html>
-> only intended to speed up (2), based on our recent "stress testing" of SMM
-> this patch actually provides functional improvements.
-> 
-> Cc: "Michael S. Tsirkin" <mst@redhat.com>
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Igor Mammedov <imammedo@redhat.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Laszlo Ersek <lersek@redhat.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> ---
-> 
-> Notes:
->      v7:
->      - no changes, pick up Igor's R-b
->      
->      v6:
->      - no changes, pick up Michael's R-b
->      
->      v5:
->      - replace the ICH9_LPC_SMI_F_BROADCAST bit value with the
->        ICH9_LPC_SMI_F_BROADCAST_BIT bit position (necessary for
->        DEFINE_PROP_BIT() in the next patch)
-> 
->   include/hw/i386/ich9.h |  3 +++
->   hw/isa/lpc_ich9.c      | 10 +++++++++-
->   2 files changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/i386/ich9.h b/include/hw/i386/ich9.h
-> index da1118727146..18dcca7ebcbf 100644
-> --- a/include/hw/i386/ich9.h
-> +++ b/include/hw/i386/ich9.h
-> @@ -250,4 +250,7 @@ Object *ich9_lpc_find(void);
->   #define ICH9_SMB_HST_D1                         0x06
->   #define ICH9_SMB_HOST_BLOCK_DB                  0x07
->   
-> +/* bit positions used in fw_cfg SMI feature negotiation */
-> +#define ICH9_LPC_SMI_F_BROADCAST_BIT            0
-> +
->   #endif /* HW_ICH9_H */
-> diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-> index 376b7801a42c..ced6f803a4f2 100644
-> --- a/hw/isa/lpc_ich9.c
-> +++ b/hw/isa/lpc_ich9.c
-> @@ -437,7 +437,15 @@ static void ich9_apm_ctrl_changed(uint32_t val, void *arg)
->   
->       /* SMI_EN = PMBASE + 30. SMI control and enable register */
->       if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
-> -        cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-> +        if (lpc->smi_negotiated_features &
-> +            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
-> +            CPUState *cs;
-> +            CPU_FOREACH(cs) {
-> +                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
-> +            }
-> +        } else {
-> +            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-> +        }
->       }
->   }
->   
+ configure                   | 20 +++++---------------
+ include/hw/i386/pc.h        |  3 ---
+ include/hw/usb.h            | 27 ++++++++++++++++++++++++---
+ hw/i386/pc.c                |  5 -----
+ hw/isa/isa-superio.c        |  4 +++-
+ hw/isa/smc37c669-superio.c  | 18 ------------------
+ hw/usb/bus.c                | 23 -----------------------
+ system/physmem.c            | 38 +++++++++++++++++---------------------
+ target/i386/cpu.c           |  8 +++++---
+ target/i386/kvm/kvm.c       |  7 ++-----
+ target/i386/tcg/translate.c | 11 ++++++-----
+ .gitlab-ci.d/buildtest.yml  |  2 +-
+ accel/Kconfig               |  1 +
+ hw/mips/Kconfig             |  1 -
+ 14 files changed, 64 insertions(+), 104 deletions(-)
+-- 
+2.43.0
 
 
