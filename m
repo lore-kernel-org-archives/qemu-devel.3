@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C559C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 02:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AADCC48BF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 02:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcFpY-0002U2-Eu; Mon, 19 Feb 2024 21:26:00 -0500
+	id 1rcFvD-0003h4-U2; Mon, 19 Feb 2024 21:31:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1rcFpO-0002Q9-Vv; Mon, 19 Feb 2024 21:25:51 -0500
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rcFv8-0003gb-8S; Mon, 19 Feb 2024 21:31:46 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1rcFpM-0003ou-Td; Mon, 19 Feb 2024 21:25:50 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 9C889CE1742;
- Tue, 20 Feb 2024 02:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8270CC433C7;
- Tue, 20 Feb 2024 02:25:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1708395938;
- bh=Mofg09nfXhlm6YjjbwEDvN412J+w36WUYYeeTd2nICE=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=ADO7dcbyyznlUQMq1wR8j/7mN3hWmgcvlG3Q1YxxRFOUCl2BAgOgwkGg/6mL9rC5S
- C5Bm+u+k7zd28kz8T2GTYpkWgU3aWwhqXtoH06XwnVcHzqim8Lrz7dDwaVSWDRgcRB
- I2JvbZwIAgxDevj+0Z2iUyZ9pBlVn4TK1wNhqIxmrL2UNqi/Jex9wmCLyRmCqA5rlV
- fI7qIWk+JaaJHMG0RgZUMes4LFTOTPPrswulhlcYTaxYAHE98+rTfG/8SyfKOoXhqb
- ay4a4z+ytQapyZHdoOymlLUeViKGDnt/ThXEvRFA9EwNFBfcTwcXPn6ZIJg2Hsjtpb
- HOFu3erIjxb9A==
-Message-ID: <768197a3-bfdb-4bca-a550-acad6a94c726@kernel.org>
-Date: Tue, 20 Feb 2024 11:25:36 +0900
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rcFv4-0004lU-2y; Mon, 19 Feb 2024 21:31:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708396302; x=1739932302;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=lupXvcMC5x30SUwTP4I8Mb7Ore8HGeqzgojVyTH4XrQ=;
+ b=S8CHn3NCmmykug92TVOeXQuS8pwRrhpcGXTdJ3585hlpQ4rziIXBBilg
+ pD8tfs3N2lKkh1DeRkAu64YTXwrlicifwcOLRsbn1k/9d5YTS0SpbCuxd
+ Q7VOq4c/STph2NNxEQWWG+Sa0GaVTXaRSnx4XdUpD9sdPJkbjJwKxSK/L
+ v3A5hxX+T41LD8J72u+5/XFyxDU2WVkimEA+fxoJM+rMZsJaGLF6qN2MZ
+ Ftr6orFkiTUjh2Pp4rZGRyK9jft8Jsi47XriebMQUp9C0m5f6ZFoKnE7M
+ k7NJxtn3Xyek3HODWvAqwtm6ib+Fda3iYZnj9xf5MjHBIZFiJqFedOLhW w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10989"; a="13035178"
+X-IronPort-AV: E=Sophos;i="6.06,171,1705392000"; d="scan'208";a="13035178"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Feb 2024 18:31:38 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,171,1705392000"; 
+   d="scan'208";a="4608640"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa009.fm.intel.com with ESMTP; 19 Feb 2024 18:31:35 -0800
+Date: Tue, 20 Feb 2024 10:45:14 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org
+Subject: Re: [PATCH 5/5] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
+Message-ID: <ZdQSOiQiRxoEoR58@intel.com>
+References: <20240219141412.71418-1-philmd@linaro.org>
+ <20240219141412.71418-6-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/4] qcow2: add configurations for zoned format
- extension
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, Sam Li <faithilikerun@gmail.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- dmitry.fomichev@wdc.com, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>, hare@suse.de, Kevin Wolf <kwolf@redhat.com>,
- stefanha@redhat.com
-References: <20240122184830.40094-1-faithilikerun@gmail.com>
- <20240122184830.40094-3-faithilikerun@gmail.com>
- <87plwsfyyv.fsf@pond.sub.org> <87edd8fyme.fsf@pond.sub.org>
- <CAAAx-8KAD1bygZsnCtkCYO=oNf7W2xnqGU+RD5Afsz8jcBUYhg@mail.gmail.com>
- <877cj0jz5u.fsf@pond.sub.org>
- <CAAAx-8JYR2r7BzWWVtcY9h8ZgNq1an4=eTCwBnDNe+HwbkgHeg@mail.gmail.com>
- <87a5nwh2h6.fsf@pond.sub.org>
- <CAAAx-8+Am5ehs6tyA64Vms713+34iq44yR6SvWr7CpHX_dq-MA@mail.gmail.com>
- <87o7ccfaok.fsf@pond.sub.org>
- <CAAAx-8KvZv=vfGB8+h73Nh=8DwsyD-nD_FjgGrgW2O+h66FdeA@mail.gmail.com>
- <871q98f94t.fsf@pond.sub.org>
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <871q98f94t.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=dlemoal@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240219141412.71418-6-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,47 +83,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/20/24 06:15, Markus Armbruster wrote:
->>>>> Making this member @size mandatory means we must specify it when
->>>>> BlockdevCreateOptionsQcow2 member @zone is present and @zone's member
->>>>> @mode is "host-managed".  Feels right to me.  Am I missing anything?
->>>>
->>>> That's right. And the checks when creating such an img can help do
->>>> that. It's not specified in the .json file directly.
->>>
->>> What would break if we did specify it in the QAPI schema directly?
->>
->> Nothing I think. We can keep the current schema and add a default zone
->> size like 131072.
+Hi Philippe,
+
+On Mon, Feb 19, 2024 at 03:14:11PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Mon, 19 Feb 2024 15:14:11 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH 5/5] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
+> X-Mailer: git-send-email 2.41.0
 > 
-> I believe making the member mandatory makes a lot more sense.
+> "hw/acpi/acpi.h" is implicitly included.
+> Included it
+
+I'm guessing it's an imperative and shouldn't be in passive form. ;-) So,
+
+s/Included/Include/
+
+> explicitly to avoid when refactoring headers:
+
+s/to avoid/to avoid the following error/
+
 > 
-> I guess we can keep @capacity and @max-append-bytes keep optional *if*
-> we can come up with sensible defaults.
+> hw/i386/pc_q35.c:209:43: error: use of undeclared identifier 'ACPI_PM_PROP_ACPI_PCIHP_BRIDGE'
+>                               ACPI_PM_PROP_ACPI_PCIHP_BRIDGE,
+>                               ^
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/i386/pc_q35.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index d346fa3b1d..a91f414922 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -58,6 +58,7 @@
+>  #include "hw/hyperv/vmbus-bridge.h"
+>  #include "hw/mem/nvdimm.h"
+>  #include "hw/i386/acpi-build.h"
+> +#include "hw/acpi/acpi.h"
+>  #include "target/i386/cpu.h"
 
-Yes, @capacity can be optional and default to the zone size.  @max-append-bytes
-can also be optional and default to the regular read/write max size.
+Here it is unordered, and similarly, does it need to be sorted
+alphabetically here?
 
-However, defining a "sensible" default for the zone size is rather tricky. The
-reason is that zones are generally sized according to the device speed. Zones
-are 256MB on HDDs (which takes about 1s to fully write sequentially) while NVMe
-ZNS devices will more likely have a zone size of 1-2 GB (because the device is
-much faster). If we stick with such approach, a sensible zone size would depend
-on how fast the qcow2 image backing is. I.e. 256 MB would be more appropriate
-for a qcow2 image on a file stored on HDD while larger sizes may be better for
-SSD backed images. But that is also not accounting for the host page caching
-which can "show" the qcow2 image as being much faster than its backing storage
-really is.
+Regards,
+Zhao
 
-So I would be tempted to say that defaulting to 0 to force the user to specify a
-zone size would be safer. But if you really want a non-0 default, then maybe
-256MB or so may be OK as that is the most commonly used value out there for
-zoned storage (there are literally millions of SMR drives running in production
-systems out there and NVMe ZNS devices are not widely used yet).
-
-
--- 
-Damien Le Moal
-Western Digital Research
-
+>  
+>  /* ICH9 AHCI has 6 ports */
+> -- 
+> 2.41.0
+> 
+> 
 
