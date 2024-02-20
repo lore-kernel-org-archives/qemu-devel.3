@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387B8C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 23:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D852C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 23:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcZsF-0001pP-TX; Tue, 20 Feb 2024 18:50:07 -0500
+	id 1rcZsc-0001rb-MC; Tue, 20 Feb 2024 18:50:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcZsE-0001oz-Ku
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:50:06 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1rcZsa-0001r2-R7
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:50:28 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcZsB-0000zb-OR
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:50:06 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6e46e07ff07so1643763b3a.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 15:50:02 -0800 (PST)
+ id 1rcZsZ-0001IL-7N
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:50:28 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3c0a36077a5so3734837b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 15:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708473001; x=1709077801; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708473026; x=1709077826; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xlywUXRiZth4Y9UaD707yyWHwY/b1gf8xdgz+YzbwlM=;
- b=RJoGSQsfMzyNxWgQ6KOMoABeP1RIfGSg9QQEbHx4FK5vwPSmSCGjN5cEx68exPsTPH
- 4hCP+1DLBwIyqppJhi6HSHLEFM4WWR/FVaShCrdFWF8PgG1DJID+AKVwnFyGMFShMKGp
- NjZjYU10ihyw9TcA8mAcYyufs26SAhq50uV288Dad/Qs2f3gT2JIXWhqp+re1WPKbzAE
- Jgmsmvi2Uh4kVb/EnLWjWGkhjnogAJLU/stO5l1wh9gUSYq3IO6+RWoF4wZFW+afR+Jz
- h+i2h+JABm/1SKV2Q0Vj9CR4jF8anl17COHIoRFqRlHYBz0svUlcuoXSUazJx3JhZsnc
- OSkA==
+ bh=lWyrBptwjusPHJmkv3FMwY+gN8w1Mbe56nWTBZqxu+0=;
+ b=HzQAcYk6jxrcQh3v0sg1LmGMkqK6mTV8nC+yz5Q+0NCb+totx90AD6DAm8qm7PJGGB
+ TEv7y9WygUd2MGe6vh/u3gMLnsQ3TovBksZ7poaHk8TJ7VxI4ZBYXUd2jtdqdrHycp65
+ rbIbqwKJGtisPKempxAhwTuGnQwO8TK7+KfhiDU2YYat0+B55pcCAUgEMerJWXSdW7xE
+ IlWVmqF/uvs8OuV+aDJ/Zebc4P6EUQeQQMcrkpAEzNXF8Cxmp32n6ScxYmrkckGJ5lO5
+ Jz/piKwk14A5bQA5VNYGVRyXi7BAV1nsWolEpzAU5joAUG/yKwLWFBrAVJCXex0HjwUR
+ Qvlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708473001; x=1709077801;
+ d=1e100.net; s=20230601; t=1708473026; x=1709077826;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xlywUXRiZth4Y9UaD707yyWHwY/b1gf8xdgz+YzbwlM=;
- b=gO21th4YhLealh7At5SDQ/LPLGYdzGzefscn0IxQU6Ey2GPSDq2bVOvkPhzcLGRIqE
- 4pvCg7gv3Xag5MViMKF5xta+d6N8QH62NwILdI8xuQA1khSpxfYPhY2SpovkBBJaa2J4
- /y8/qNLS/SUn7eYRwNbeTQWFtiJBhJCemkclecbiQfiPvRBWX+cVuRrrxBvjGVLB+7Ty
- VhHSj5lgpZ1/koUq1AhY+T2nyVbh//XaBnWuDpreMFbOfQfRGy1euRKIak0sXwSmCUt4
- OIujhXtz6ChS3FdUU8up0mtqflpT5+oUYv1Qf3ih1Drga6dShGmvi8GZ1tNwB8n0RHgh
- Pj0g==
+ bh=lWyrBptwjusPHJmkv3FMwY+gN8w1Mbe56nWTBZqxu+0=;
+ b=TRkYDc2Povl26IskJTiAU1g5hVBtllYbiBsQ/JLMKKit73yiBnG2I0Vc/u6IDIll/8
+ KiBTjwvjx3B2YXak9lz/gIB4FTz05vvPaQPfOiQafS9xBOTtI2NZ9ISAcWmWjlKEkZp2
+ LAS21N29b6UYC/cvpLDkxMroB5yzL0izRplM3lIjwLqltZl0P/H4HgbBTNk9wAQQjzhp
+ cKj2Mel9iP3YGcKMiipTK9hUevuD/YhZpC91phOETwp+Gx9/MGQXN62Upyf8caONY4xN
+ z+QCuB1AZ8cFRXeV4sPYInfUD7EL3+8nt8T2CL91KD6nclg9ihtbRu/banOGPs11oRP0
+ DN0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXkFHZ+u+D0c2DUOAJXgMOzBba38IDiOkiSkyrkcMs8bYglZnmFgy7MILEMSVXNALCIWdqVRdST7t+jJ4Rv/QnrPnfqYCc=
-X-Gm-Message-State: AOJu0YzZ1V/5UF6OB89DVNLXi5JEbhjZAdHzV1fSW0eXOPioa5oZXjdf
- Ezx1Kr5E18k81WKkm3VTMwto6/xvUk5EaOUxxyqzbNHQD8vehjFrtf7K5LJ/+EPFSTEGqosfrKI
- g
-X-Google-Smtp-Source: AGHT+IHKLu8oY6ug1NnsVvE02rYTlFzKnZ9z2Ro3UyLYOryWQXxLsjzpTfLZ0VxVxeOte5CLcnfWqA==
-X-Received: by 2002:a05:6a00:93a7:b0:6e4:6c3f:d769 with SMTP id
- ka39-20020a056a0093a700b006e46c3fd769mr6866356pfb.29.1708473001433; 
- Tue, 20 Feb 2024 15:50:01 -0800 (PST)
+ AJvYcCUu30Jj5YnSIWzXimyinRvREf0v8EihP9RUrDS7GtzR2kIw1iVffOrIZ3NwtcnEfwe6/I6Ta5S2ZrUC+Viv+1b+Jzpb3WQ=
+X-Gm-Message-State: AOJu0YwgpoZuPnuJu+uOK2m9FBY10aKHTp563gluv9lQGK0UD6uL+TQj
+ FbV1VrAl8eDoLphpCXgHzjBX2NrnHruUlk+SdgkfkeBNWz2wtReZI5DYik5+0es=
+X-Google-Smtp-Source: AGHT+IEk8/CCQQoitRZdR1QsSk47OVehyjGutPuIObgFPjq2Jx4lO2FibjcktFElRC46hCca0IfmPQ==
+X-Received: by 2002:a05:6808:130c:b0:3bf:da3a:cf15 with SMTP id
+ y12-20020a056808130c00b003bfda3acf15mr22254910oiv.40.1708473025781; 
+ Tue, 20 Feb 2024 15:50:25 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- w2-20020a62c702000000b006e089bb3619sm7817082pfg.112.2024.02.20.15.49.58
+ w2-20020a62c702000000b006e089bb3619sm7817082pfg.112.2024.02.20.15.50.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 15:50:00 -0800 (PST)
-Message-ID: <f5d3ea8b-8aa5-4ee5-b895-67eec6d140ee@linaro.org>
-Date: Tue, 20 Feb 2024 13:49:56 -1000
+ Tue, 20 Feb 2024 15:50:25 -0800 (PST)
+Message-ID: <15f50bc1-f154-4b4e-8eb2-23d7e07c7915@linaro.org>
+Date: Tue, 20 Feb 2024 13:50:22 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] trans_rvv.c.inc: mark_vs_dirty() before loads and
- stores
+Subject: Re: [PATCH v4 2/6] trans_rvv.c.inc: remove 'is_store' bool from
+ load/store fns
 Content-Language: en-US
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  max.chou@sifive.com
 References: <20240220222510.209448-1-dbarboza@ventanamicro.com>
- <20240220222510.209448-2-dbarboza@ventanamicro.com>
+ <20240220222510.209448-3-dbarboza@ventanamicro.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240220222510.209448-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240220222510.209448-3-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,30 +102,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/20/24 12:25, Daniel Henrique Barboza wrote:
-> While discussing a problem with how we're (not) setting vstart_eq_zero
-> Richard had the following to say w.r.t the conditional mark_vs_dirty()
-> calls on load/store functions [1]:
+> After the 'mark_vs_dirty' changes from the previous patch the 'is_store'
+> bool is unused in all load/store functions that were changed. Remove it.
 > 
-> "I think it's required to have stores set dirty unconditionally, before
-> the operation.
-> 
-> Consider a store that traps on the 2nd element, leaving vstart = 2, and
-> exiting to the main loop via exception. The exception enters the kernel
-> page fault handler. The kernel may need to fault in the page for the
-> process, and in the meantime task switch.
-> 
-> If vs dirty is not already set, the kernel won't know to save vector
-> state on task switch."
-> 
-> Do a mark_vs_dirty() before both loads and stores.
-> 
-> [1]https://lore.kernel.org/qemu-riscv/72c7503b-0f43-44b8-aa82-fbafed2aac0c@linaro.org/
-> 
-> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
 > Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
 > ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 23 ++++++++---------------
->   1 file changed, 8 insertions(+), 15 deletions(-)
+>   target/riscv/insn_trans/trans_rvv.c.inc | 69 ++++++++++++-------------
+>   1 file changed, 34 insertions(+), 35 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
