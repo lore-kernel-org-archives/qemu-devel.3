@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60439C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C45C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVOA-00045w-0O; Tue, 20 Feb 2024 14:02:46 -0500
+	id 1rcVPC-0004pQ-6A; Tue, 20 Feb 2024 14:03:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcVO3-00044x-QD; Tue, 20 Feb 2024 14:02:40 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcVO1-0001vx-Ck; Tue, 20 Feb 2024 14:02:39 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F81D4F14B;
- Tue, 20 Feb 2024 22:02:54 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 84D7C85510;
- Tue, 20 Feb 2024 22:02:32 +0300 (MSK)
-Message-ID: <00cd5770-29f1-451c-8d13-2b9e987e6c7f@tls.msk.ru>
-Date: Tue, 20 Feb 2024 22:02:32 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcVP1-0004gD-0s
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:03:39 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcVOy-00027i-5L
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:03:38 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e471f5f1a5so1235251b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:03:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708455811; x=1709060611; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+g+GZVafJ1oguRWp2Kg/YwMwzgEJPqO2nFWJGRm1jow=;
+ b=mFxjAyVvUFq1KqalSnmEBoYZYJy04eTUfRLkSrGNaJS7x6jRqjI7vJkP/L6s+x3+gr
+ qy+Ri9Oj7XxZwgoc8dbXmG5i+/WKiT6i4hqCYgQIjCQnDJ/WJmkWAn/qwQBVLsBhxEPN
+ SxYH4Seu3tr0CqFmvlC97CK5G9Ak0idiHKvArcOSGkANvapoaQFioQG2quJjOsri2z8i
+ NsY5GbeQbKuD7cmAPmZk8LrYvMjeSCmZcfOGDHcP8hJz7tV3TQOYQqqsKjq88iZHhDyW
+ DtqmOyoHDLok54Rquro28QcGXgNrQGE0JZsqovDCrIpUKh8qE7xfuI7uBFPsR1T3K8Rf
+ nCLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708455811; x=1709060611;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+g+GZVafJ1oguRWp2Kg/YwMwzgEJPqO2nFWJGRm1jow=;
+ b=Z97N7wbqMbkdksV0Qr4EEnGBOeEuKyUltrsPdAEAB2N5URUwdEsZ+v+X2192Yz2Man
+ 38WGMI3bCW66AeF5mfovGN0sSONaoyDuR93/WmZipfcAjSptRPiuSyHu4fVuayb8O7Sb
+ f/57JOy2ik4Y53ZFeJcknq5r5h6TgilBz/r6yNCaEduxp/gQQs2CWHYFozGFmiMuAm35
+ 8+ospoqphVaWmEM8aSmtgUncGnTxhH0PQUDkAio8f04DQimZpqOiWCJQj7eDixMYAbdT
+ vBNTq+Mq8NwwOYJWq5RsP7Tol7rmwYcs+DI66PWHw4lqlFWjyWhtKZlcEsJYLgQeDnF6
+ 45dQ==
+X-Gm-Message-State: AOJu0YxK0mL4liz9Ejhz2QpAcssGU8R3hlZU6a4pL1Bqy4lCYJ9vJ9wj
+ 9px4OpgM1Obn1vd/IpV0kHrhooRT7xlZafcAVuQVHohpLwBthHn6Voko98bG27Q=
+X-Google-Smtp-Source: AGHT+IH7VKiSpvM9ogj93SoBUPkaZOZu8v6BqchMhHprVzb80g/KmBQkFEVotgT7/ns1iXotUmPoIQ==
+X-Received: by 2002:a05:6a00:2196:b0:6e4:5dc0:233c with SMTP id
+ h22-20020a056a00219600b006e45dc0233cmr8594776pfi.6.1708455811038; 
+ Tue, 20 Feb 2024 11:03:31 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ f10-20020a056a000b0a00b006e02f4bb4e4sm7457346pfu.18.2024.02.20.11.03.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 11:03:30 -0800 (PST)
+Message-ID: <0aa2515e-55ef-4472-a567-1545c7e5f1ed@linaro.org>
+Date: Tue, 20 Feb 2024 09:03:27 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/23] qemu-img: inline list of supported commands, remove
- qemu-img-cmds.h include
+Subject: Re: [RFC PATCH 3/3] target/ppc: Implement reservation protection for
+ larx/stcx
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <cover.1707513011.git.mjt@tls.msk.ru>
- <a7e67594e748d1b91f755dd971f222afa09f5443.1707513012.git.mjt@tls.msk.ru>
- <ZdT0A3b9-JrMd6aI@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <ZdT0A3b9-JrMd6aI@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20240220041922.373029-1-npiggin@gmail.com>
+ <20240220041922.373029-4-npiggin@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240220041922.373029-4-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,56 +97,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-20.02.2024 21:48, Daniel P. Berrangé:
-...
-> $ ./build/qemu-img check --help
-> Check basic image integrity.
-> 
-> Usage:
-> 
->    qemu-img check [-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]
->          [--output human|json] [--object OBJDEF] FILENAME
-> 
-> Arguments:
+On 2/19/24 18:19, Nicholas Piggin wrote:
+> +    env->access_type = ACCESS_RES;
+> +    host = probe_access(env, addr, size, MMU_DATA_LOAD, mmu_idx, raddr);
+> +    if (host) {
+> +        cpu_set_llsc_prot(cs, qemu_ram_addr_from_host_nofail(host));
+> +    } else {
+> +        /* XXX: fault? */
+> +        g_assert_not_reached();
+> +    }
 
-$ ./build/qemu-img check --help
-Check basic image integrity.  Usage:
+probe_access will not return a host address for lots of reasons, including watchpoints, 
+plugins, etc.
 
-    qemu-img check [-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]
-           [--output human|json] [--object OBJDEF] FILENAME
+> +
+> +    if (unlikely(size == 16)) {
+> +        Int128 val16;
+> +        val16 = cpu_ld16_mmu(env, addr,
+> +                     make_memop_idx(DEF_MEMOP(env, MO_128 | MO_ALIGN), mmu_idx),
+> +                     raddr);
+> +        env->gpr[reg] = int128_gethi(val16);
+> +        env->gpr[reg + 1] = int128_getlo(val16);
+> +        return;
+> +    }
+> +
+> +    switch (size) {
+> +    case 1:
+> +        val = ldub_p(host);
+> +        break;
+> +    case 2:
+> +        val = FIELD_EX64(env->msr, MSR, LE) ? lduw_le_p(host) : lduw_be_p(host);
+> +        break;
+> +    case 4:
+> +        val = FIELD_EX64(env->msr, MSR, LE) ? ldl_le_p(host) : ldl_be_p(host);
+> +        break;
+> +    case 8:
+> +        val = FIELD_EX64(env->msr, MSR, LE) ? ldq_le_p(host) : ldq_be_p(host);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +    env->gpr[reg] = val;
 
-Arguments:
-...
+Passing in size and performing a switch on it is not the best organization.
+You should use multiple helper functions with a common subroutine to handle the llsc 
+setup.  You should pass in the whole MemOpIdx.
 
-Or just:
+> +#define MEMOP_GET_SIZE(x)  (1 << ((x) & MO_SIZE))
 
-Check basic image integrity:
-
-  qemu-img check...
+This is memop_size().
 
 
-In all cases I tried to make the whole thing as compact as possible,
-to (almost) fit on a standard terminal.  The extra empty lines between
-different arguments makes it almost impossible.
-
-I think if indentation will be larger, it will be easier to read.
-Let me experiment a bit..
-
->>              "Arguments:\n"
->>              " -h|--help - print this help and exit\n"
-
-btw, the common way is to use comma here, not "|", --
-   -h,--help - ...
-
-Again, I especially omitted space after "|" to make it
-more compact.  Maybe for no good.
-
-We've really big amount of options here, conflicting and illogical
-in some cases, which's been added without much thinking.  All this
-makes me think it will be difficult to automate generation of all
-this text for both code and docs..
-
-Thanks!
-
-/mjt
+r~
 
