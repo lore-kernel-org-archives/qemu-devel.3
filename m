@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2761DC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDFCC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:26:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcYVG-0001aC-Qc; Tue, 20 Feb 2024 17:22:18 -0500
+	id 1rcYYd-0002TR-GW; Tue, 20 Feb 2024 17:25:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcYVF-0001a1-Mm
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:22:17 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rcYYN-0002Pg-VG
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:25:32 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcYVE-0002xL-0x
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:22:17 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-563d32ee33aso6597969a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 14:22:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rcYYL-0003Xk-1z
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:25:30 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dba94f9201so39099575ad.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 14:25:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708467732; x=1709072532; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=EoXgfZWN8hEQdPIbTxIIUtmVyGshj4bWDRnk2KYh35U=;
- b=CE3izgB+UpDNS1Fv7uh5KaQ7PLTYYyq5ZwAqjy1xDIa/FQ2lffY4OrbKNmop0OTVNl
- xuCcAiK9LSzreMywWD+DEzbxasx3Yy63KKd8YGkbk3J9om0rFrB6/y0z5J3yMoc+vgFm
- 5VRqADAb/rCuN5LWpnUFo854U4g9OMKq7EF1Auw+Txt93LlhuIYP993CWygf6JSH0XnU
- kgCRaSlqynnWYYM60Uc5MDomDL3NIHbmwq8ZNwoUuxLmTIDY6dQj6aH6SkzOLaG/tHxy
- X8oF6pPcHclpIIu19Qe4FO6KJ9a202SXo9tnTybGqp2plH+xQfTRHKnRSLAS9uQXD4WJ
- jHxQ==
+ d=ventanamicro.com; s=google; t=1708467924; x=1709072724; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pztqgJbiUkV/hJi7o1zBM7DA1XiTtD4zGsAJDwvJtmc=;
+ b=jBgn+t+KHi8WpoI3WANHqA0S4QeDF4KYoizFkwuX60Q7Fr8IPSI9vKhJPtINaB1+ag
+ FSTrePhpHnPMa0jIajvqZag8kaCeVsGfHL7OizaoyANqgsBkVwBSIxbo+jJBk3HMp0hr
+ pvATOm5vJoiMhyDgvInGqiOXoxwTgCmF7GhOLdH4qvECqDaKEv18zE1bkjOC5iQpTJhb
+ Fi5JzBqDBpfvqozPbGNwqY1z8ZLcBuI1FOEgaU5ZwUQh4YIa2+rA+s14osZd8mMizuLf
+ 0ew8H4Y+h6QJA3huGso9QzRhguYEVHjiOHmaOUdi2DdgwKqYgyCI5WneqLQEZVbXszfN
+ L8bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708467732; x=1709072532;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EoXgfZWN8hEQdPIbTxIIUtmVyGshj4bWDRnk2KYh35U=;
- b=dTiFEiMCGNzRBvxMFxdz/m3OtLsLL7CQZrQImc/UU1rta2COi/SVw48empsp7mC3Rm
- k/jBw8d4RYHhFarCOIDzYIaE36xwo5fEq8mTa7isPqpSI9QyC8PeDrngEIZAfOiZd7gb
- /vXzx534c5Yj/W1/5y5FcJ79opbLXTtW2TYgpLD6n2Yl0zrNo9WMKudNDEE30jIZwf5u
- FDmng/Vwmm1KqjoxKVG1m2jWr5Bx/5/Yf8YZuOUrFQbWrZwHueNlMHa2bOT27dq/UQny
- HGoJTjuqEzUScuoQsGGd3p6U0/575xjlXfAOgO3m16tEVR2LOfChRVUroQHcVIZ/gpaU
- kTPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXocJELszCZxcMF20sP2pdvWn9tW8DaxlTRwLW1xAMF6vL5Y1nPG3lBRCg2i6kMURk7H5xBpwG3Id17/TS5q4a8tvrV3U=
-X-Gm-Message-State: AOJu0Yz+vufQ/fVscJHYs/RrOpDX5CiD6I8lZfYSg0EhPo2QzqfRxk5j
- /NbKlfoqPg43QkTcKX4L75UsW3+TwE0vwCvnhqDi+kbpHcNR1XoYZo1Ikoa/bxpCJHuUMwVRfD7
- GSZM62W2d8octKDT6kaFbehh6twg+z9YDzfA=
-X-Google-Smtp-Source: AGHT+IF+l+b7ncTy27X+mUyIVu1gn7WTsNGhIYEc2R9vG7m3qm6reL486AfBASSplUlOXKZCfYri5OtAdZclDWSvGj8=
-X-Received: by 2002:a05:6402:31f6:b0:564:dd13:56e9 with SMTP id
- dy22-20020a05640231f600b00564dd1356e9mr1277953edb.29.1708467732155; Tue, 20
- Feb 2024 14:22:12 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708467924; x=1709072724;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pztqgJbiUkV/hJi7o1zBM7DA1XiTtD4zGsAJDwvJtmc=;
+ b=Zzis3kyMqOKfVx3zpvjPAOvKUSaRPodIuVbYFAULvvM4L8z/3a5tetzPTIS3w8+V2C
+ ea7sGW0AREg/XDeVUK26UsRAXGg4ej8DW/O/ZO50hcgjg4r8/E5hwWjoCEeYPeIaqlm/
+ jbKk8eTup0YrLpKiWaOes7QYtmmlnh8qaQ4IYsrOHyEjkmE7E8y6h8Sm+SPI0p9qE1nj
+ oe0sDIcej/waNxIgBWzbD+hby5FzG+URc4lqi5C9SyFao6bOE8btdxg0Ue2sF/JHVeAb
+ TAP/wo39Vi88jcoj7favzCzQbRCRU13cMcsLEWrao2G5tUYVkpxrAOUxpZaorRHKyRGt
+ PM6A==
+X-Gm-Message-State: AOJu0Yz4shbv+mdMh9svCqlMcezI4I7We4OlzFJe7DyZzNQ5velbvqOk
+ 7H3PEr2rI3ev5cFxKKw3aJ/XN+PbQl5xH3UO77iyMwpP/8XTSP3Ve2ZKE2meKkkloq21v3XpUqT
+ a
+X-Google-Smtp-Source: AGHT+IEdAEXSkSk5NdS1ahFj0aqFn9i6RhUFL5ZgCa+05JuWQcS+Yeecy1lg34GeHGNuTLqituGxug==
+X-Received: by 2002:a17:902:fc85:b0:1db:cbdd:53f5 with SMTP id
+ mf5-20020a170902fc8500b001dbcbdd53f5mr12649456plb.21.1708467924395; 
+ Tue, 20 Feb 2024 14:25:24 -0800 (PST)
+Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ iw20-20020a170903045400b001dbb86b88e5sm6761044plb.124.2024.02.20.14.25.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 14:25:23 -0800 (PST)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ richard.henderson@linaro.org, max.chou@sifive.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v4 2/6] trans_rvv.c.inc: remove 'is_store' bool from
+ load/store fns
+Date: Tue, 20 Feb 2024 19:25:06 -0300
+Message-ID: <20240220222510.209448-3-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240220222510.209448-1-dbarboza@ventanamicro.com>
+References: <20240220222510.209448-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
- <87a5nvci5n.fsf@draig.linaro.org>
- <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
- <87y1bfawik.fsf@draig.linaro.org>
- <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
- <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
-In-Reply-To: <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
-From: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Date: Tue, 20 Feb 2024 23:22:01 +0100
-Message-ID: <CAOpGCn+vQ7wupMqeH8ZLarT0c4gD85R6cgRqBMhVeAXtZ1F_Mg@mail.gmail.com>
-Subject: Re: QNX VM hang on Qemu
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004911c80611d7a49c"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,128 +98,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004911c80611d7a49c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+After the 'mark_vs_dirty' changes from the previous patch the 'is_store'
+bool is unused in all load/store functions that were changed. Remove it.
 
-The real hardware ( xlnx-zcu102 ) is being used for our software. The
-software is in the development phase, and for that, I need to create a VM
-for simulation purposes.
-Qemu has a machine type (-M xlnx-zcu102) which is supported with the
-board/hardware.
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/insn_trans/trans_rvv.c.inc | 69 ++++++++++++-------------
+ 1 file changed, 34 insertions(+), 35 deletions(-)
 
-I have two more images for the same hardware and I can create a VM using
-these two images, but in the VM some basic binaries are missing like mkdir
-and virtual disk etc.
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 7a98f1caa6..15ccebf3fc 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -609,8 +609,7 @@ typedef void gen_helper_ldst_us(TCGv_ptr, TCGv_ptr, TCGv,
+                                 TCGv_env, TCGv_i32);
+ 
+ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+-                          gen_helper_ldst_us *fn, DisasContext *s,
+-                          bool is_store)
++                          gen_helper_ldst_us *fn, DisasContext *s)
+ {
+     TCGv_ptr dest, mask;
+     TCGv base;
+@@ -673,7 +672,7 @@ static bool ld_us_op(DisasContext *s, arg_r2nfvm *a, uint8_t eew)
+     data = FIELD_DP32(data, VDATA, NF, a->nf);
+     data = FIELD_DP32(data, VDATA, VTA, s->vta);
+     data = FIELD_DP32(data, VDATA, VMA, s->vma);
+-    return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
++    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
+ }
+ 
+ static bool ld_us_check(DisasContext *s, arg_r2nfvm* a, uint8_t eew)
+@@ -710,7 +709,7 @@ static bool st_us_op(DisasContext *s, arg_r2nfvm *a, uint8_t eew)
+     data = FIELD_DP32(data, VDATA, VM, a->vm);
+     data = FIELD_DP32(data, VDATA, LMUL, emul);
+     data = FIELD_DP32(data, VDATA, NF, a->nf);
+-    return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
++    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
+ }
+ 
+ static bool st_us_check(DisasContext *s, arg_r2nfvm* a, uint8_t eew)
+@@ -739,7 +738,7 @@ static bool ld_us_mask_op(DisasContext *s, arg_vlm_v *a, uint8_t eew)
+     /* Mask destination register are always tail-agnostic */
+     data = FIELD_DP32(data, VDATA, VTA, s->cfg_vta_all_1s);
+     data = FIELD_DP32(data, VDATA, VMA, s->vma);
+-    return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
++    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
+ }
+ 
+ static bool ld_us_mask_check(DisasContext *s, arg_vlm_v *a, uint8_t eew)
+@@ -756,7 +755,7 @@ static bool st_us_mask_op(DisasContext *s, arg_vsm_v *a, uint8_t eew)
+     /* EMUL = 1, NFIELDS = 1 */
+     data = FIELD_DP32(data, VDATA, LMUL, 0);
+     data = FIELD_DP32(data, VDATA, NF, 1);
+-    return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
++    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
+ }
+ 
+ static bool st_us_mask_check(DisasContext *s, arg_vsm_v *a, uint8_t eew)
+@@ -776,7 +775,7 @@ typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
+ 
+ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
+                               uint32_t data, gen_helper_ldst_stride *fn,
+-                              DisasContext *s, bool is_store)
++                              DisasContext *s)
+ {
+     TCGv_ptr dest, mask;
+     TCGv base, stride;
+@@ -823,7 +822,7 @@ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+     data = FIELD_DP32(data, VDATA, NF, a->nf);
+     data = FIELD_DP32(data, VDATA, VTA, s->vta);
+     data = FIELD_DP32(data, VDATA, VMA, s->vma);
+-    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
++    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
+ }
+ 
+ static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+@@ -857,7 +856,7 @@ static bool st_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+         return false;
+     }
+ 
+-    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
++    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
+ }
+ 
+ static bool st_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+@@ -880,7 +879,7 @@ typedef void gen_helper_ldst_index(TCGv_ptr, TCGv_ptr, TCGv,
+ 
+ static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+                              uint32_t data, gen_helper_ldst_index *fn,
+-                             DisasContext *s, bool is_store)
++                             DisasContext *s)
+ {
+     TCGv_ptr dest, mask, index;
+     TCGv base;
+@@ -947,7 +946,7 @@ static bool ld_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+     data = FIELD_DP32(data, VDATA, NF, a->nf);
+     data = FIELD_DP32(data, VDATA, VTA, s->vta);
+     data = FIELD_DP32(data, VDATA, VMA, s->vma);
+-    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
++    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
+ }
+ 
+ static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+@@ -999,7 +998,7 @@ static bool st_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
+     data = FIELD_DP32(data, VDATA, VM, a->vm);
+     data = FIELD_DP32(data, VDATA, LMUL, emul);
+     data = FIELD_DP32(data, VDATA, NF, a->nf);
+-    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
++    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
+ }
+ 
+ static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
+@@ -1078,7 +1077,7 @@ typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
+ 
+ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+                              uint32_t width, gen_helper_ldst_whole *fn,
+-                             DisasContext *s, bool is_store)
++                             DisasContext *s)
+ {
+     uint32_t evl = s->cfg_ptr->vlenb * nf / width;
+     TCGLabel *over = gen_new_label();
+@@ -1109,42 +1108,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+  * load and store whole register instructions ignore vtype and vl setting.
+  * Thus, we don't need to check vill bit. (Section 7.9)
+  */
+-#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH, IS_STORE)               \
++#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH)               \
+ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                 \
+ {                                                                         \
+     if (require_rvv(s) &&                                                 \
+         QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                 \
+         return ldst_whole_trans(a->rd, a->rs1, ARG_NF, WIDTH,             \
+-                                gen_helper_##NAME, s, IS_STORE);          \
++                                gen_helper_##NAME, s);                    \
+     }                                                                     \
+     return false;                                                         \
+ }
+ 
+-GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1, false)
+-GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2, false)
+-GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4, false)
+-GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8, false)
+-GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1, false)
+-GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2, false)
+-GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4, false)
+-GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8, false)
+-GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1, false)
+-GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2, false)
+-GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4, false)
+-GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8, false)
+-GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1, false)
+-GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2, false)
+-GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4, false)
+-GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8, false)
++GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1)
++GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2)
++GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4)
++GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8)
++GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1)
++GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2)
++GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4)
++GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8)
++GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1)
++GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2)
++GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4)
++GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8)
++GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1)
++GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2)
++GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4)
++GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8)
+ 
+ /*
+  * The vector whole register store instructions are encoded similar to
+  * unmasked unit-stride store of elements with EEW=8.
+  */
+-GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1, true)
+-GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1, true)
+-GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1, true)
+-GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1, true)
++GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1)
++GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1)
++GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1)
++GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1)
+ 
+ /*
+  *** Vector Integer Arithmetic Instructions
+-- 
+2.43.2
 
-Now, the image for which I want to create a VM is currently working on
-board and everything is working fine on real hardware.
-I am not sure whether I can use this image for Qemu because this is created
-particularly for hardware.
-and giving a try to create a VM.
-
-Your valuable suggestions in this regard will be appreciated and mean a lot
-to me :)
-
-
-br!
-Faiq
-
-
-
-On Tue, Feb 20, 2024 at 10:24=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org>
-wrote:
-
-> On Tue, 20 Feb 2024 at 20:56, Faiq Ali Sayed <faiqueali.109@gmail.com>
-> wrote:
-> >
-> > The image I am using is currently in use for real hardware, and
-> > I received it from a third party/vendor.
->
-> OK, so what exactly is the real hardware it's for?
->
-> > Could you please suggest to me what I can do now?
->
-> If QEMU has a model of the hardware the image is for:
->  - use that QEMU machine type (and issues with getting it running
->    will be related to making sure you're loading it at the right
->    address and starting it the way it wants to be started)
-> If QEMU does not have a model of the hardware the image is for:
->  - ask your vendor for a build that targets some machine QEMU
->    does have a model of
->
-> Unfortunately in general in the Arm world guest OSes are
-> not "runs on anything", but only "runs on the hardware
-> they were built to run on". This remains true under emulation.
->
-> thanks
-> -- PMM
->
-
-
---=20
-Kind Regard-
-Faiq Ali Sayed
-
---0000000000004911c80611d7a49c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">The real hardware (
-
-xlnx-zcu102 ) is being used for our software. The software is in the develo=
-pment phase, and for that, I need to create a VM for simulation purposes.<d=
-iv>Qemu has a machine type (-M xlnx-zcu102) which is supported with the boa=
-rd/hardware.</div><div><br></div><div>I have two more images for the same h=
-ardware and I can create a VM using these two images,=C2=A0but in the VM so=
-me basic binaries are missing like mkdir and virtual disk etc.</div><div><b=
-r></div><div>Now, the image for which I want to create a VM is currently wo=
-rking on board and everything is working fine on real hardware.</div><div>I=
- am not sure whether I can use this image for Qemu because this is created =
-particularly for hardware.</div><div>and giving a try to create a VM.</div>=
-<div><br></div><div>Your valuable=C2=A0suggestions in this regard will be=
-=C2=A0appreciated and mean a lot to=C2=A0me :)</div><div><br></div><div><br=
-></div><div>br!</div><div>Faiq</div><div><br></div><div><br></div></div><br=
-><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, F=
-eb 20, 2024 at 10:24=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.m=
-aydell@linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">On Tue, 20 Feb 2024 at 20:56, Fa=
-iq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gmail.com" target=3D"_blan=
-k">faiqueali.109@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; The image I am using is currently in use for real hardware, and<br>
-&gt; I received it from a third party/vendor.<br>
-<br>
-OK, so what exactly is the real hardware it&#39;s for?<br>
-<br>
-&gt; Could you please suggest to me what I can do now?<br>
-<br>
-If QEMU has a model of the hardware the image is for:<br>
-=C2=A0- use that QEMU machine type (and issues with getting it running<br>
-=C2=A0 =C2=A0will be related to making sure you&#39;re loading it at the ri=
-ght<br>
-=C2=A0 =C2=A0address and starting it the way it wants to be started)<br>
-If QEMU does not have a model of the hardware the image is for:<br>
-=C2=A0- ask your vendor for a build that targets some machine QEMU<br>
-=C2=A0 =C2=A0does have a model of<br>
-<br>
-Unfortunately in general in the Arm world guest OSes are<br>
-not &quot;runs on anything&quot;, but only &quot;runs on the hardware<br>
-they were built to run on&quot;. This remains true under emulation.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><div dir=3D"ltr">
-<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
-lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
-=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
-v></div></div></div>
-<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
-t></div><br></div></div></div>
-
---0000000000004911c80611d7a49c--
 
