@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDFCC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B644FC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcYYd-0002TR-GW; Tue, 20 Feb 2024 17:25:51 -0500
+	id 1rcYYl-0002UV-5f; Tue, 20 Feb 2024 17:26:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcYYN-0002Pg-VG
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:25:32 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1rcYYL-0002Ot-AJ
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:25:30 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcYYL-0003Xk-1z
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:25:30 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1dba94f9201so39099575ad.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 14:25:27 -0800 (PST)
+ id 1rcYYB-0003T8-UF
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:25:27 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1d731314e67so42911725ad.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 14:25:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708467924; x=1709072724; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pztqgJbiUkV/hJi7o1zBM7DA1XiTtD4zGsAJDwvJtmc=;
- b=jBgn+t+KHi8WpoI3WANHqA0S4QeDF4KYoizFkwuX60Q7Fr8IPSI9vKhJPtINaB1+ag
- FSTrePhpHnPMa0jIajvqZag8kaCeVsGfHL7OizaoyANqgsBkVwBSIxbo+jJBk3HMp0hr
- pvATOm5vJoiMhyDgvInGqiOXoxwTgCmF7GhOLdH4qvECqDaKEv18zE1bkjOC5iQpTJhb
- Fi5JzBqDBpfvqozPbGNwqY1z8ZLcBuI1FOEgaU5ZwUQh4YIa2+rA+s14osZd8mMizuLf
- 0ew8H4Y+h6QJA3huGso9QzRhguYEVHjiOHmaOUdi2DdgwKqYgyCI5WneqLQEZVbXszfN
- L8bA==
+ d=ventanamicro.com; s=google; t=1708467917; x=1709072717; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SpkN0ilkIdZABSfxaQ1WQMJCJ39fGGQfiBR1AGMRMMM=;
+ b=RggGo0JP90qYWj6HKQKcA2xJdc5gZjBXKPLL/Snrk+cUNj+sD1S95n3wULByN/m7Pv
+ ut74vzFb73ADO0iWxFZRMvdkg2nQ+ONaRRynAulaxrWJnB1qh/vUc8VswQ+H/6Brchx3
+ HQyXSNsQQ0hCdNEq78vb3RSfEMFT+hV/1sXql0CWNvXJH/z+uSPT1uoHtoYt7hq4vzIT
+ MM2+0RdOohMHQxn0fq3DXL03XcW4Ft/Ti5fkUojlJ1jC/dWE1jYcoOVUnq9nQVd3UPHZ
+ s789+za3eOG36/F1RcThX/ZMKOCYdMe9eiQzxJ0ZvHVJjMpiIF8nSWktbdzN0/3IGXA+
+ J/zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708467924; x=1709072724;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pztqgJbiUkV/hJi7o1zBM7DA1XiTtD4zGsAJDwvJtmc=;
- b=Zzis3kyMqOKfVx3zpvjPAOvKUSaRPodIuVbYFAULvvM4L8z/3a5tetzPTIS3w8+V2C
- ea7sGW0AREg/XDeVUK26UsRAXGg4ej8DW/O/ZO50hcgjg4r8/E5hwWjoCEeYPeIaqlm/
- jbKk8eTup0YrLpKiWaOes7QYtmmlnh8qaQ4IYsrOHyEjkmE7E8y6h8Sm+SPI0p9qE1nj
- oe0sDIcej/waNxIgBWzbD+hby5FzG+URc4lqi5C9SyFao6bOE8btdxg0Ue2sF/JHVeAb
- TAP/wo39Vi88jcoj7favzCzQbRCRU13cMcsLEWrao2G5tUYVkpxrAOUxpZaorRHKyRGt
- PM6A==
-X-Gm-Message-State: AOJu0Yz4shbv+mdMh9svCqlMcezI4I7We4OlzFJe7DyZzNQ5velbvqOk
- 7H3PEr2rI3ev5cFxKKw3aJ/XN+PbQl5xH3UO77iyMwpP/8XTSP3Ve2ZKE2meKkkloq21v3XpUqT
- a
-X-Google-Smtp-Source: AGHT+IEdAEXSkSk5NdS1ahFj0aqFn9i6RhUFL5ZgCa+05JuWQcS+Yeecy1lg34GeHGNuTLqituGxug==
-X-Received: by 2002:a17:902:fc85:b0:1db:cbdd:53f5 with SMTP id
- mf5-20020a170902fc8500b001dbcbdd53f5mr12649456plb.21.1708467924395; 
- Tue, 20 Feb 2024 14:25:24 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708467917; x=1709072717;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SpkN0ilkIdZABSfxaQ1WQMJCJ39fGGQfiBR1AGMRMMM=;
+ b=nBNR6QgZnWKPIPrtN71faHbZ5GqfgMSyDxvF3KkGBj+dS/ThQBH4CzxEoBeHbNxq/e
+ 8PBo5NEeMEDj+ZL2CJkIcYJiDwTO9Cb+ELJALQQ46B/qwVZibP25Z/L1jGcTvwkmdIPf
+ 9b6nV43yno4Q4tBCvQA3s9NZO8ld7s19xKx64pdTeusECpXJGXHZivW2Y/jLeseR0sh4
+ k2RCOymolKBQjdMn+EyMMeQrNi8IPGo+3W0Qrlt7YdA5QkOEechsMCxmOMGFTFw0zIf1
+ iPlY5mIR6Y6llCKVV1SIOcEKZLMkovvEgv0XJ3rIGMXvhIZr55qpKduJpS5sqJt0F6fz
+ PpRw==
+X-Gm-Message-State: AOJu0YwLmJMefIhkZiimBVzO7nFxrzHJr/sz/b0/KuJGElyNVIioPTb0
+ zg15TCcbMcoDDTMPdWRon97NHjJzNbVnt8ZJos6Ce1BwctDyChvAkrjFZiLEnkHZ5KomnzFEiWe
+ p
+X-Google-Smtp-Source: AGHT+IFdVKTBKq0Xy4kIAQ0xipS1se2tW1pzFseFawjHx8qIFiIl+wSk7mVcDwS3O5Zyp/RCh39bsg==
+X-Received: by 2002:a17:902:e952:b0:1db:cf8c:d462 with SMTP id
+ b18-20020a170902e95200b001dbcf8cd462mr10395944pll.63.1708467917667; 
+ Tue, 20 Feb 2024 14:25:17 -0800 (PST)
 Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
  by smtp.gmail.com with ESMTPSA id
- iw20-20020a170903045400b001dbb86b88e5sm6761044plb.124.2024.02.20.14.25.21
+ iw20-20020a170903045400b001dbb86b88e5sm6761044plb.124.2024.02.20.14.25.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 14:25:23 -0800 (PST)
+ Tue, 20 Feb 2024 14:25:17 -0800 (PST)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org, max.chou@sifive.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v4 2/6] trans_rvv.c.inc: remove 'is_store' bool from
- load/store fns
-Date: Tue, 20 Feb 2024 19:25:06 -0300
-Message-ID: <20240220222510.209448-3-dbarboza@ventanamicro.com>
+Subject: [PATCH v4 0/6] riscv: set vstart_eq_zero on mark_vs_dirty
+Date: Tue, 20 Feb 2024 19:25:04 -0300
+Message-ID: <20240220222510.209448-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240220222510.209448-1-dbarboza@ventanamicro.com>
-References: <20240220222510.209448-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,192 +94,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After the 'mark_vs_dirty' changes from the previous patch the 'is_store'
-bool is unused in all load/store functions that were changed. Remove it.
+Hi,
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 69 ++++++++++++-------------
- 1 file changed, 34 insertions(+), 35 deletions(-)
+In this v4 we changed patch 1 to do mark_vs_dirty() after both loads and
+stores, not just stores.
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 7a98f1caa6..15ccebf3fc 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -609,8 +609,7 @@ typedef void gen_helper_ldst_us(TCGv_ptr, TCGv_ptr, TCGv,
-                                 TCGv_env, TCGv_i32);
- 
- static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
--                          gen_helper_ldst_us *fn, DisasContext *s,
--                          bool is_store)
-+                          gen_helper_ldst_us *fn, DisasContext *s)
- {
-     TCGv_ptr dest, mask;
-     TCGv base;
-@@ -673,7 +672,7 @@ static bool ld_us_op(DisasContext *s, arg_r2nfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool ld_us_check(DisasContext *s, arg_r2nfvm* a, uint8_t eew)
-@@ -710,7 +709,7 @@ static bool st_us_op(DisasContext *s, arg_r2nfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, VM, a->vm);
-     data = FIELD_DP32(data, VDATA, LMUL, emul);
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool st_us_check(DisasContext *s, arg_r2nfvm* a, uint8_t eew)
-@@ -739,7 +738,7 @@ static bool ld_us_mask_op(DisasContext *s, arg_vlm_v *a, uint8_t eew)
-     /* Mask destination register are always tail-agnostic */
-     data = FIELD_DP32(data, VDATA, VTA, s->cfg_vta_all_1s);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool ld_us_mask_check(DisasContext *s, arg_vlm_v *a, uint8_t eew)
-@@ -756,7 +755,7 @@ static bool st_us_mask_op(DisasContext *s, arg_vsm_v *a, uint8_t eew)
-     /* EMUL = 1, NFIELDS = 1 */
-     data = FIELD_DP32(data, VDATA, LMUL, 0);
-     data = FIELD_DP32(data, VDATA, NF, 1);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool st_us_mask_check(DisasContext *s, arg_vsm_v *a, uint8_t eew)
-@@ -776,7 +775,7 @@ typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
- 
- static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
-                               uint32_t data, gen_helper_ldst_stride *fn,
--                              DisasContext *s, bool is_store)
-+                              DisasContext *s)
- {
-     TCGv_ptr dest, mask;
-     TCGv base, stride;
-@@ -823,7 +822,7 @@ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
-+    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -857,7 +856,7 @@ static bool st_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-         return false;
-     }
- 
--    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
-+    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool st_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -880,7 +879,7 @@ typedef void gen_helper_ldst_index(TCGv_ptr, TCGv_ptr, TCGv,
- 
- static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-                              uint32_t data, gen_helper_ldst_index *fn,
--                             DisasContext *s, bool is_store)
-+                             DisasContext *s)
- {
-     TCGv_ptr dest, mask, index;
-     TCGv base;
-@@ -947,7 +946,7 @@ static bool ld_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
-+    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -999,7 +998,7 @@ static bool st_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, VM, a->vm);
-     data = FIELD_DP32(data, VDATA, LMUL, emul);
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
--    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
-+    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -1078,7 +1077,7 @@ typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
- 
- static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-                              uint32_t width, gen_helper_ldst_whole *fn,
--                             DisasContext *s, bool is_store)
-+                             DisasContext *s)
- {
-     uint32_t evl = s->cfg_ptr->vlenb * nf / width;
-     TCGLabel *over = gen_new_label();
-@@ -1109,42 +1108,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-  * load and store whole register instructions ignore vtype and vl setting.
-  * Thus, we don't need to check vill bit. (Section 7.9)
-  */
--#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH, IS_STORE)               \
-+#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH)               \
- static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                 \
- {                                                                         \
-     if (require_rvv(s) &&                                                 \
-         QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                 \
-         return ldst_whole_trans(a->rd, a->rs1, ARG_NF, WIDTH,             \
--                                gen_helper_##NAME, s, IS_STORE);          \
-+                                gen_helper_##NAME, s);                    \
-     }                                                                     \
-     return false;                                                         \
- }
- 
--GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1, false)
--GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2, false)
--GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4, false)
--GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8, false)
--GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1, false)
--GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2, false)
--GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4, false)
--GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8, false)
--GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1, false)
--GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2, false)
--GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4, false)
--GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8, false)
--GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1, false)
--GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2, false)
--GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4, false)
--GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8, false)
-+GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1)
-+GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2)
-+GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4)
-+GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8)
-+GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1)
-+GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2)
-+GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4)
-+GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8)
-+GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1)
-+GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2)
-+GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4)
-+GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8)
-+GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1)
-+GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2)
-+GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4)
-+GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8)
- 
- /*
-  * The vector whole register store instructions are encoded similar to
-  * unmasked unit-stride store of elements with EEW=8.
-  */
--GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1, true)
--GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1, true)
--GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1, true)
--GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1, true)
-+GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1)
-+GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1)
-+GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1)
-+GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1)
- 
- /*
-  *** Vector Integer Arithmetic Instructions
+A new patch, patch 2, was added to clean-up the now unused 'is_store'
+argument from these functions. 
+
+All other patches unchanged. 
+
+Patches missing reviews/acks: patches 1 and 2.
+
+Changes from v3:
+- patch 1: do mark_vs_dirty() for both loads and stores
+- patch 2 (new): remove the now unused 'is_store' arg from load/store
+  functions
+- v3 link: https://lore.kernel.org/qemu-riscv/20240220192607.141880-1-dbarboza@ventanamicro.com/
+
+Daniel Henrique Barboza (5):
+  trans_rvv.c.inc: mark_vs_dirty() before loads and stores
+  trans_rvv.c.inc: remove 'is_store' bool from load/store fns
+  target/riscv: remove 'over' brconds from vector trans
+  target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+  trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+
+Ivan Klokov (1):
+  target/riscv: Clear vstart_qe_zero flag
+
+ target/riscv/insn_trans/trans_rvbf16.c.inc |   6 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 292 ++++++---------------
+ target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +--
+ target/riscv/translate.c                   |   6 +
+ target/riscv/vector_helper.c               |   1 +
+ 5 files changed, 99 insertions(+), 236 deletions(-)
+
 -- 
 2.43.2
 
