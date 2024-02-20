@@ -4,87 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E314DC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 23:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B035C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 23:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcZFi-0003oK-Iz; Tue, 20 Feb 2024 18:10:18 -0500
+	id 1rcZRI-00015e-Ll; Tue, 20 Feb 2024 18:22:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcZFg-0003nK-JL
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:10:16 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcZFb-0002QZ-NR
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:10:16 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5648d92919dso53880a12.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 15:10:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708470608; x=1709075408; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n8UcYpOUiQ0/DmlCXatWDpjMbWBRzbWwPcpErFxT4RI=;
- b=c/Sjy2sPOhKRqwxsCLDRP5MTSwpH1eHigOqBYSiBiop0GfRdB/NVVjVwB2heuEM56g
- g3GZu9njXUJDUqebosMIem2OY7xy4uJRq4CIJL15BVKqVy2ZYZKEMbpgRffoR1OHA4bn
- grqIyXo+3eg2Gyyj+sfVTOUw8Pe/kGn3eFXyksJi8SKkl293iY1iR9xxYNBepbSmgUb0
- a1VouafXK3cC6uI06tSKG4YI2gsuGlm0j3qTVKIssdKS47igRaucPG6eY6xRZV4fcGZU
- Z7lH9HhJHO/8BMJNnc9ztvjPiiXLSozAJZVt0BVDJ3ykZ1bNcUyJDR2Bb/ttjhS0Rsm2
- 6Tnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708470608; x=1709075408;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n8UcYpOUiQ0/DmlCXatWDpjMbWBRzbWwPcpErFxT4RI=;
- b=vD7V1DyQl3suk6RId0gaKMjj/goHrTeVDVaaQQaGjoV4LwDpDNNVXKqu/IPPt8kdOP
- OmC5FLmGeBbMDVfwFi/+maANIlJd16ayqaaxgWDccMYDFS0zlR3IIXW1kGfHNsY9DcGC
- oP/TBnH14DT6KxncuG1yiaK+2RKEl7EkGnxEzxLBAZnnxxYVUyREUO7M0h6ztENxXfqx
- wyTwfBVpzo3g3/WoFNKx7heKje6Qt7bGqSCinRHxr8ZoZBwUB4ivdxaI8NDGKnaIMnk3
- MVkPTs+TBnZ9GjRGHmsnMFRwBrLq90z5gtftqyyS13+aeb5vM6eowNEWstwjuiwACBOu
- 6pXQ==
-X-Gm-Message-State: AOJu0Yzed895JXZO2jrk8FAqEXvGN7zId5DvkF1taOFrDBj7qb6FVVQt
- cf7bqEnFEweqq/x20urghH3UfW3MonEZToJp3KkcJF1+Qi9AwDPpZ+w93Det
-X-Google-Smtp-Source: AGHT+IE87FLj1dpM0aoW6VhbMphTh2s62LIkE9SOqy1BpMe59EMVAeh0WFsNaHa1jQvixXQPRkvbDg==
-X-Received: by 2002:a05:6402:34f:b0:564:66d3:530f with SMTP id
- r15-20020a056402034f00b0056466d3530fmr4898989edw.28.1708470608073; 
- Tue, 20 Feb 2024 15:10:08 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-089-014-092-079.89.14.pool.telefonica.de.
- [89.14.92.79]) by smtp.gmail.com with ESMTPSA id
- er25-20020a056402449900b00563f8233ba8sm4076733edb.7.2024.02.20.15.10.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 15:10:07 -0800 (PST)
-Date: Tue, 20 Feb 2024 23:10:05 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_02/10=5D_hw/i386/pc=3A_Do_pc=5Fc?=
- =?US-ASCII?Q?mos=5Finit=5Flate=28=29_from_pc=5Fmachine=5Fdone=28=29?=
-In-Reply-To: <20240220160622.114437-3-peter.maydell@linaro.org>
-References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-3-peter.maydell@linaro.org>
-Message-ID: <5BB60433-8117-4AEA-ABDC-973B6305BC4C@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rcZRE-00014t-VP; Tue, 20 Feb 2024 18:22:12 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rcZRC-0004nn-3B; Tue, 20 Feb 2024 18:22:12 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 57D154E6006;
+ Wed, 21 Feb 2024 00:22:02 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id JZAahI9Bc3W6; Wed, 21 Feb 2024 00:22:00 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 042DA4E6005; Wed, 21 Feb 2024 00:22:00 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v3] docs/system/ppc: Document running Linux on AmigaNG machines
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: qemu-devel@nongnu.org,
+    qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Bernhard Beschow <shentey@gmail.com>, clg@kaod.org
+Message-Id: <20240220232200.042DA4E6005@zero.eik.bme.hu>
+Date: Wed, 21 Feb 2024 00:22:00 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,149 +61,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Documentation on how to run Linux on the amigaone, pegasos2 and
+sam460ex machines is currently buried in the depths of the qemu-devel
+mailing list and in the source code. Let's collect the information in
+the QEMU handbook for a one stop solution.
 
+Co-authored-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Bernhard Beschow <shentey@gmail.com>
+---
+v3: Apply changes and Tested-by tag from Bernhard
+v2: Move top level title one level up so subsections will be below it in TOC
 
-Am 20=2E Februar 2024 16:06:14 UTC schrieb Peter Maydell <peter=2Emaydell@=
-linaro=2Eorg>:
->In the i386 PC machine, we want to run the pc_cmos_init_late()
->function only once the IDE and floppy drive devices have been set up=2E
->We currently do this using qemu_register_reset(), and then have the
->function call qemu_unregister_reset() on itself, so it runs exactly
->once=2E
->
->This was an expedient way to do it back in 2010 when we first added
->this (in commit c0897e0cb94e8), but now we have a more obvious point
->to do "machine initialization that has to happen after generic device
->init": the machine-init-done hook=2E
->
->Do the pc_cmos_init_late() work from our existing PC machine init
->done hook function, so we can drop the use of qemu_register_reset()
->and qemu_unregister_reset()=2E
->
->Because the pointers to the devices we need (the IDE buses and the
->RTC) are now all in the machine state, we don't need the
->pc_cmos_init_late_arg struct and can just pass the PCMachineState
->pointer=2E
->
->Signed-off-by: Peter Maydell <peter=2Emaydell@linaro=2Eorg>
->---
-> hw/i386/pc=2Ec | 39 ++++++++++++++++-----------------------
-> 1 file changed, 16 insertions(+), 23 deletions(-)
->
->diff --git a/hw/i386/pc=2Ec b/hw/i386/pc=2Ec
->index 8b0f54e284c=2E=2E4c3cfe9fc35 100644
->--- a/hw/i386/pc=2Ec
->+++ b/hw/i386/pc=2Ec
->@@ -465,11 +465,6 @@ static void pc_cmos_init_floppy(MC146818RtcState *rt=
-c_state, ISADevice *floppy)
->     mc146818rtc_set_cmos_data(rtc_state, REG_EQUIPMENT_BYTE, val);
-> }
->=20
->-typedef struct pc_cmos_init_late_arg {
->-    MC146818RtcState *rtc_state;
->-    BusState *idebus[2];
->-} pc_cmos_init_late_arg;
->-
-> typedef struct check_fdc_state {
->     ISADevice *floppy;
->     bool multiple;
->@@ -530,23 +525,25 @@ static ISADevice *pc_find_fdc0(void)
->     return state=2Efloppy;
-> }
->=20
->-static void pc_cmos_init_late(void *opaque)
->+static void pc_cmos_init_late(PCMachineState *pcms)
-> {
->-    pc_cmos_init_late_arg *arg =3D opaque;
->-    MC146818RtcState *s =3D arg->rtc_state;
->+    X86MachineState *x86ms =3D X86_MACHINE(pcms);
->+    MC146818RtcState *s =3D MC146818_RTC(x86ms->rtc);
->     int16_t cylinders;
->     int8_t heads, sectors;
->     int val;
->     int i, trans;
->=20
->     val =3D 0;
->-    if (arg->idebus[0] && ide_get_geometry(arg->idebus[0], 0,
->-                                           &cylinders, &heads, &sectors)=
- >=3D 0) {
->+    if (pcms->idebus[0] &&
->+        ide_get_geometry(pcms->idebus[0], 0,
->+                         &cylinders, &heads, &sectors) >=3D 0) {
->         cmos_init_hd(s, 0x19, 0x1b, cylinders, heads, sectors);
->         val |=3D 0xf0;
->     }
->-    if (arg->idebus[0] && ide_get_geometry(arg->idebus[0], 1,
->-                                           &cylinders, &heads, &sectors)=
- >=3D 0) {
->+    if (pcms->idebus[0] &&
->+        ide_get_geometry(pcms->idebus[0], 1,
->+                         &cylinders, &heads, &sectors) >=3D 0) {
->         cmos_init_hd(s, 0x1a, 0x24, cylinders, heads, sectors);
->         val |=3D 0x0f;
->     }
->@@ -558,10 +555,11 @@ static void pc_cmos_init_late(void *opaque)
->            geometry=2E  It is always such that: 1 <=3D sects <=3D 63, 1
->            <=3D heads <=3D 16, 1 <=3D cylinders <=3D 16383=2E The BIOS
->            geometry can be different if a translation is done=2E */
->-        if (arg->idebus[i / 2] &&
->-            ide_get_geometry(arg->idebus[i / 2], i % 2,
->+        BusState *idebus =3D pcms->idebus[i / 2];
->+        if (idebus &&
->+            ide_get_geometry(idebus, i % 2,
->                              &cylinders, &heads, &sectors) >=3D 0) {
->-            trans =3D ide_get_bios_chs_trans(arg->idebus[i / 2], i % 2) =
-- 1;
->+            trans =3D ide_get_bios_chs_trans(idebus, i % 2) - 1;
->             assert((trans & ~3) =3D=3D 0);
->             val |=3D trans << (i * 2);
->         }
->@@ -569,15 +567,12 @@ static void pc_cmos_init_late(void *opaque)
->     mc146818rtc_set_cmos_data(s, 0x39, val);
->=20
->     pc_cmos_init_floppy(s, pc_find_fdc0());
->-
->-    qemu_unregister_reset(pc_cmos_init_late, opaque);
-> }
->=20
-> void pc_cmos_init(PCMachineState *pcms,
->                   ISADevice *rtc)
-> {
->     int val;
->-    static pc_cmos_init_late_arg arg;
->     X86MachineState *x86ms =3D X86_MACHINE(pcms);
->     MC146818RtcState *s =3D MC146818_RTC(rtc);
->=20
->@@ -631,11 +626,7 @@ void pc_cmos_init(PCMachineState *pcms,
->     val |=3D 0x04; /* PS/2 mouse installed */
->     mc146818rtc_set_cmos_data(s, REG_EQUIPMENT_BYTE, val);
->=20
->-    /* hard drives and FDC */
->-    arg=2Ertc_state =3D s;
->-    arg=2Eidebus[0] =3D pcms->idebus[0];
->-    arg=2Eidebus[1] =3D pcms->idebus[1];
->-    qemu_register_reset(pc_cmos_init_late, &arg);
->+    /* hard drives and FDC are handled by pc_cmos_init_late() */
-> }
->=20
-> static void handle_a20_line_change(void *opaque, int irq, int level)
->@@ -703,6 +694,8 @@ void pc_machine_done(Notifier *notifier, void *data)
->         /* update FW_CFG_NB_CPUS to account for -device added CPUs */
->         fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpu=
-s);
->     }
->+
->+    pc_cmos_init_late(pcms);
+ MAINTAINERS                 |   1 +
+ docs/system/ppc/amigang.rst | 161 ++++++++++++++++++++++++++++++++++++
+ docs/system/target-ppc.rst  |   1 +
+ 3 files changed, 163 insertions(+)
+ create mode 100644 docs/system/ppc/amigang.rst
 
-Nice=2E With https://patchew=2Eorg/QEMU/20240208220349=2E4948-1-shentey@gm=
-ail=2Ecom/20240208220349=2E4948-9-shentey@gmail=2Ecom/ on top it might be p=
-ossible to merge pc_cmos_init_late() and pc_cmos_init(), thus freeing pc_pi=
-ix and pc_q35 entirely from having to deal with it=2E
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7d61fb9319..0aef8cb2a6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1562,6 +1562,7 @@ F: hw/rtc/m41t80.c
+ F: pc-bios/canyonlands.dt[sb]
+ F: pc-bios/u-boot-sam460ex-20100605.bin
+ F: roms/u-boot-sam460ex
++F: docs/system/ppc/amigang.rst
+ 
+ pegasos2
+ M: BALATON Zoltan <balaton@eik.bme.hu>
+diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
+new file mode 100644
+index 0000000000..ba1a3d80b9
+--- /dev/null
++++ b/docs/system/ppc/amigang.rst
+@@ -0,0 +1,161 @@
++=========================================================
++AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
++=========================================================
++
++These PowerPC machines emulate boards that are primarily used for
++running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
++also run Linux which is what this section documents.
++
++Eyetech AmigaOne/Mai Logic Teron (``amigaone``)
++===============================================
++
++The ``amigaone`` machine emulates an AmigaOne XE mainboard by Eyetech
++which is a rebranded Mai Logic Teron board with modified U-Boot
++firmware to support AmigaOS 4.
++
++Emulated devices
++----------------
++
++ * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750gx``)
++ * Articia S north bridge
++ * VIA VT82C686B south bridge
++ * PCI VGA compatible card (guests may need other card instead)
++ * PS/2 keyboard and mouse
++
++Firmware
++--------
++
++A firmware binary is necessary for the boot process. It is a modified
++U-Boot under GPL but its source is lost so it cannot be included in
++QEMU. A binary is available at
++https://www.hyperion-entertainment.com/index.php/downloads?view=files&parent=28.
++The ROM image is in the last 512kB which can be extracted with the
++following command:
++
++.. code-block:: bash
++
++  $ tail -c 524288 updater.image > u-boot-amigaone.bin
++
++The BIOS emulator in the firmware is unable to run QEMU‘s standard
++vgabios so ``VGABIOS-lgpl-latest.bin`` is needed instead which can be
++downloaded from http://www.nongnu.org/vgabios.
++
++Running Linux
++-------------
++
++There are some Linux images under the following link that work on the
++``amigaone`` machine:
++https://sourceforge.net/projects/amigaone-linux/files/debian-installer/.
++To boot the system run:
++
++.. code-block:: bash
++
++  $ qemu-system-ppc -machine amigaone -bios u-boot-amigaone.bin \
++                    -cdrom "A1 Linux Net Installer.iso" \
++                    -device ati-vga,model=rv100,romfile=VGABIOS-lgpl-latest.bin
++
++From the firmware menu that appears select ``Boot sequence`` →
++``Amiga Multiboot Options`` and set ``Boot device 1`` to
++``Onboard VIA IDE CDROM``. Then hit escape until the main screen appears again,
++hit escape once more and from the exit menu that appears select either
++``Save settings and exit`` or ``Use settings for this session only``. It may
++take a long time loading the kernel into memory but eventually it boots and the
++installer becomes visible. The ``ati-vga`` RV100 emulation is not
++complete yet so only frame buffer works, DRM and 3D is not available.
++
++Genesi/bPlan Pegasos II (``pegasos2``)
++======================================
++
++The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
++designed by bPlan. Its schematics are available at
++https://www.powerdeveloper.org/platforms/pegasos/schematics.
++
++Emulated devices
++----------------
++
++ * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
++ * Marvell MV64361 Discovery II north bridge
++ * VIA VT8231 south bridge
++ * PCI VGA compatible card (guests may need other card instead)
++ * PS/2 keyboard and mouse
++
++Firmware
++--------
++
++The Pegasos II board has an Open Firmware compliant ROM based on
++SmartFirmware with some changes that are not open-sourced therefore
++the ROM binary cannot be included in QEMU. An updater was available
++from bPlan, it can be found in the `Internet Archive
++<http://web.archive.org/web/20071021223056/http://www.bplan-gmbh.de/up050404/up050404>`_.
++The ROM image can be extracted from it with the following command:
++
++.. code-block:: bash
++
++  $ tail -c +85581 up050404 | head -c 524288 > pegasos2.rom
++
++Running Linux
++-------------
++
++The PowerPC version of Debian 8.11 supported Pegasos II. The BIOS
++emulator in the firmware binary is unable to run QEMU‘s standard
++vgabios so it needs to be disabled. To boot the system run:
++
++.. code-block:: bash
++
++  $ qemu-system-ppc -machine pegasos2 -bios pegasos2.rom \
++                    -cdrom debian-8.11.0-powerpc-netinst.iso \
++                    -device VGA,romfile="" -serial stdio
++
++At the firmware ``ok`` prompt enter ``boot cd install/pegasos``.
++
++Alternatively, it is possible to boot the kernel directly without
++firmware ROM using the QEMU built-in minimal Virtual Open Firmware
++(VOF) emulation which is also supported on ``pegasos2``. For this,
++extract the kernel ``install/powerpc/vmlinuz-chrp.initrd`` from the CD
++image, then run:
++
++.. code-block:: bash
++
++  $ qemu-system-ppc -machine pegasos2 -serial stdio \
++                    -kernel vmlinuz-chrp.initrd -append "---" \
++                    -cdrom debian-8.11.0-powerpc-netinst.iso
++
++aCube Sam460ex (``sam460ex``)
++=============================
++
++The ``sam460ex`` machine emulates the Sam460ex board by aCube which is
++based on the AMCC PowerPC 460EX SoC (that despite its name has a
++PPC440 CPU core).
++
++Firmware
++--------
++
++The board has a firmware based on an older U-Boot version with
++modifications to support booting AmigaOS 4. The firmware ROM is
++included with QEMU.
++
++Emulated devices
++----------------
++
++ * PowerPC 460EX SoC
++ * M41T80 serial RTC chip
++ * Silicon Motion SM501 display parts (identical to SM502 on real board)
++ * Silicon Image SiI3112 2 port SATA controller
++ * USB keyboard and mouse
++
++Running Linux
++-------------
++
++The only Linux distro that supported Sam460ex out of box was CruxPPC
++2.x. It can be booted by running:
++
++.. code-block:: bash
++
++  $ qemu-system-ppc -machine sam460ex -serial stdio \
++                    -drive if=none,id=cd,format=raw,file=crux-ppc-2.7a.iso \
++                    -device ide-cd,drive=cd,bus=ide.1
++
++There are some other kernels and instructions for booting other
++distros on aCube's product page at
++https://www.acube-systems.biz/index.php?page=hardware&pid=5
++but those are untested.
+diff --git a/docs/system/target-ppc.rst b/docs/system/target-ppc.rst
+index 4f6eb93b17..87bf412ce5 100644
+--- a/docs/system/target-ppc.rst
++++ b/docs/system/target-ppc.rst
+@@ -17,6 +17,7 @@ help``.
+ .. toctree::
+    :maxdepth: 1
+ 
++   ppc/amigang
+    ppc/embedded
+    ppc/powermac
+    ppc/powernv
+-- 
+2.30.9
 
-Best regards,
-Bernhard
-
-> }
->=20
-> void pc_guest_info_init(PCMachineState *pcms)
 
