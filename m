@@ -4,70 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390F4C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C1DC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLun-0007LD-Vv; Tue, 20 Feb 2024 03:55:50 -0500
+	id 1rcLsd-0000a9-HF; Tue, 20 Feb 2024 03:53:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuS-0006r0-5r
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcLuQ-0000H8-5u
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:55:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708419325;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9vkV3sEnLSykwaV3Bl8KUF+agsW/xGneNvBODKpFcVU=;
- b=fCWRyOVAFQhAF0J1253IkLNx3XGGQdTVPnl8wQOw3HFsP07uJpvdZhC2TKbfO4stXFL4jX
- AnnrOBzyvkCmKs/p5O9vkESNUFgob+ibcRpE6w3Dd2ynRJNSsA61jRLOdhxbmKLxpB/pZR
- EHlqeseEGgG83VJjJUbbzcRxgGBBbIM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-418-GSvnlPXlPv2XjIxCp_aYGg-1; Tue, 20 Feb 2024 03:55:21 -0500
-X-MC-Unique: GSvnlPXlPv2XjIxCp_aYGg-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5D39185A58F;
- Tue, 20 Feb 2024 08:55:21 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.168])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CDB29492BE3;
- Tue, 20 Feb 2024 08:55:19 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: John Snow <jsnow@redhat.com>,
-	qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org
-Subject: [PATCH v2 6/7] hw/ide: Remove the include/hw/ide.h legacy file
-Date: Tue, 20 Feb 2024 09:55:04 +0100
-Message-ID: <20240220085505.30255-7-thuth@redhat.com>
-In-Reply-To: <20240220085505.30255-1-thuth@redhat.com>
-References: <20240220085505.30255-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rcLsZ-0000Qr-SS
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:31 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rcLsW-0008EQ-Nc
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:31 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a3e87b2de41so179889566b.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708419205; x=1709024005; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7oYRntaNNMgPCCT0SX7UleETmeevTDso1L5CoXCo2/4=;
+ b=YdmdMeXFVFsik+IorgnDv1Rfftp5D1jHNwHI+T0DElK5He75N+DihWNTfVvMyNHaP7
+ k+5oj/64mIS4Kd+Ym6q7qbvC4qV6SwZQoYf6sGQrT7qsArJ6YnH5JvvfFqhvzPCvvWic
+ F7573fOQG6Q8PhYnvvgtg2jafdaxPZm94rRt5dOP5++oqBZ4kTwAOHylrPLuEX1NLI5a
+ gz13NLl4Q6393iBC/jeY2fyBvuW0ZajLjaVJRDOFkbykkVvQkZ17YeSmhRlsjjkmmfkf
+ F1lvVO7ivSoOErTxMQFynxQ8g9ScnaqL3dMC0lyl5wAbrrztA5HQh+U/QAtlRgU+HpQT
+ iAEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708419205; x=1709024005;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7oYRntaNNMgPCCT0SX7UleETmeevTDso1L5CoXCo2/4=;
+ b=E1PMkvCeOhIRpRIj9q44P5ZVjIYGnFJLqtHGA1MBJ35mUHGd+58LmEI8k8nDmhSTaJ
+ ZicJSgOk5EgalEVkgSir6fwPeHX8sDI3KUEH+bZ8ph61sMcXK/JPgppuKUzvHAP9kHLB
+ GHBfWtqick/+wSwWIcGQuPgqei3wrygIEE9rFhem14FfPWDJFF8hbRTQWF/Kw9blwAun
+ eTQpFK4DA3KTh200yCPXvY40CE335BHJuG5BAj+D84ClZeAtLNwcO/M1xPvHET+1FJD5
+ K8FqgwW06rxmbbS2YANzQKpQd+bgSEJttr0FqUqtHA7j1P0OUUYigV4NZO/nbZWgt7Ns
+ lK6g==
+X-Gm-Message-State: AOJu0Yzda4y5e+Kw5B8pi2QbEHnHRzE39dj6GDQwOCYUXIaeQgHE+309
+ 28rskJElgzx94z/fcjiK2bmd+d6XOewR2uPRDQTQwGXoYnthnTL95w2bjLRnCxU=
+X-Google-Smtp-Source: AGHT+IF8Ry0+Beac6Sx8cCpRJ1SkbxslngVsRNPeqT9w56ggTuQWHIkBuMu0GrqaICsOmH09ZkIb5w==
+X-Received: by 2002:a17:906:ae55:b0:a3e:ff4d:6302 with SMTP id
+ lf21-20020a170906ae5500b00a3eff4d6302mr834173ejb.9.1708419205351; 
+ Tue, 20 Feb 2024 00:53:25 -0800 (PST)
+Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
+ [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
+ cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 00:53:25 -0800 (PST)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH v1 14/21] pc-bios/README: correct typos
+Date: Tue, 20 Feb 2024 10:52:21 +0200
+Message-Id: <300815e3494a5f016137a09f331bc4137f1ed9ff.1708419115.git.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,74 +95,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There was only one prototype left in this legacy file. Move it to
-ide-dev.h to finally get rid of it.
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- MAINTAINERS               | 1 -
- include/hw/ide.h          | 9 ---------
- include/hw/ide/ide-dev.h  | 2 ++
- include/hw/ide/internal.h | 3 +--
- 4 files changed, 3 insertions(+), 12 deletions(-)
- delete mode 100644 include/hw/ide.h
+ pc-bios/README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d61fb9319..f3cbfb8818 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1936,7 +1936,6 @@ IDE
- M: John Snow <jsnow@redhat.com>
- L: qemu-block@nongnu.org
- S: Odd Fixes
--F: include/hw/ide.h
- F: include/hw/ide/
- F: hw/ide/
- F: hw/block/block.c
-diff --git a/include/hw/ide.h b/include/hw/ide.h
-deleted file mode 100644
-index db963bdb77..0000000000
---- a/include/hw/ide.h
-+++ /dev/null
-@@ -1,9 +0,0 @@
--#ifndef HW_IDE_H
--#define HW_IDE_H
--
--#include "exec/memory.h"
--
--/* ide/core.c */
--void ide_drive_get(DriveInfo **hd, int max_bus);
--
--#endif /* HW_IDE_H */
-diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
-index 1f62e58ebc..708cc0fda3 100644
---- a/include/hw/ide/ide-dev.h
-+++ b/include/hw/ide/ide-dev.h
-@@ -179,4 +179,6 @@ typedef struct IDEDrive {
+diff --git a/pc-bios/README b/pc-bios/README
+index 4189bb28cc..b8a0210d24 100644
+--- a/pc-bios/README
++++ b/pc-bios/README
+@@ -67,7 +67,7 @@
+   and enable the use of well-known bootloaders such as U-Boot.
+   OpenSBI is distributed under the terms of the BSD 2-clause license
+   ("Simplified BSD License" or "FreeBSD License", SPDX: BSD-2-Clause). OpenSBI
+-  source code also contains code reused from other projects desribed here:
++  source code also contains code reused from other projects described here:
+   https://github.com/riscv/opensbi/blob/master/ThirdPartyNotices.md.
  
- void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp);
- 
-+void ide_drive_get(DriveInfo **hd, int max_bus);
-+
- #endif
-diff --git a/include/hw/ide/internal.h b/include/hw/ide/internal.h
-index d3ec16a945..20dde37f45 100644
---- a/include/hw/ide/internal.h
-+++ b/include/hw/ide/internal.h
-@@ -4,10 +4,9 @@
- /*
-  * QEMU IDE Emulation -- internal header file
-  * only files in hw/ide/ are supposed to include this file.
-- * non-internal declarations are in hw/ide.h
-+ * non-internal declarations are in hw/include/ide-*.h
-  */
- 
--#include "hw/ide.h"
- #include "hw/ide/ide-bus.h"
- 
- /* debug IDE devices */
+ - npcm7xx_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for Nuvoton
 -- 
-2.43.2
+γαῖα πυρί μιχθήτω
 
 
