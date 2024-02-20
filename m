@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB47C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E610DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSdg-00029R-Ez; Tue, 20 Feb 2024 11:06:36 -0500
+	id 1rcSdb-00025r-Ik; Tue, 20 Feb 2024 11:06:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSdc-00027B-I1
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:32 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1rcSda-00024E-2B
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:30 -0500
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSda-0005FJ-FP
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:32 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-512cba0f953so583809e87.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:29 -0800 (PST)
+ id 1rcSdX-0005En-Ik
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:29 -0500
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2d23114b19dso31699451fa.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708445188; x=1709049988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708445186; x=1709049986; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ddKtqyWJkcgxhf/BG7mdQTStu44ETF+Ta3q791Jg39I=;
- b=i7ki35Gg07AFoxj5eJLneHeWqWUoWsDZJiCRzLkRUH4vVKEiF5MYXkAfSuUzPjhc7B
- S9hPqfn+gUU2LcSQy8RilnMl+poszhMEYeiIgdi7xWS7m/6hOVKRNqPElL/e7eLCAxS7
- HT/KIs7P0/kKi5AtLJdm2He/9gxo37m/0aF5UOjyKCD/8dD0VR0u3ncjSO/yxC7TzHSv
- +N5UTOr3E++V8EmprvcFD5S3fnjc9J5+7Wie2UTDJKxZ14eHkIp9z6yXA06TbKyVh5Hz
- Q/0wldsUqAiUQLtGTyW0rlQo1j2iXr4laY0EMVPyeDjBMZLpY1mbtfmXLXpZv+ItAnGF
- 3WZg==
+ bh=fbwlnbkTELmw0yuCS8YQeiT81oI84UQospsJeFLv0YU=;
+ b=nJ4ap+3Scjx3YWWryHjsn/arO4mJ3aWqlLktScKPo8/4AFLhpmWDmimA32SiLgFOdz
+ 8FyXCzBWaVLm9pw4JWrlLU4apu6vf0VYPwGUYSATnPCOBQroLaGPt8x25lz9yNRjdsYx
+ brACJu/eoAdI6CHdKFXajFlmV7Ax3EGWOaBbnRV1iES8T9peOjqW0Iy6IPPoyOOlxtDr
+ mHsaYp67vhp3ncd7AScEIGQLoofeRaIsTEPzw/lVD1B5nTqRqlAiqrU9/zhFy4bzRARb
+ cjHFMDPqDBdUIdDTDSJYiDw/ZKaawYror9HcH5WLmhZ/IKyn4vNO8cZvKrggnkzxmLyR
+ erKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708445188; x=1709049988;
+ d=1e100.net; s=20230601; t=1708445186; x=1709049986;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ddKtqyWJkcgxhf/BG7mdQTStu44ETF+Ta3q791Jg39I=;
- b=iUHm+3/nGvNum6QLQd3sJr85kraKvU0x8uUbtYQSLd71qmS+8CXSYy8cyXwzWRyQmB
- 85fmc1CJHZfkRmAjfWYgubHPDaFBJGDphhiaASMYRC69M6VMlQMftVybEbaf2EmPN67d
- YyC0IUmongU+3QXhRBqsUpFs5k2y/G/iViEGDIMhtOWZQmMdC2RKcgX7g4X2apyo6lim
- w9UuF3IBLmu8ZyK1p7ZRW4K6/XAi3Bnio+7rLWLD087LZ0zn0iCSSik4i5P+TsUCemCV
- SbV3+BphP0yyzvGnHL7BZCMkNmXM5MP/1vTsMGAXq/2ancmQtNO48wkmXZoMRSoJuHLO
- O/Ng==
-X-Gm-Message-State: AOJu0YxtYnFchQN8Bpb8CJQsmPh+d+85mCUK4rELvJ9mdztgU5jDYr8y
- phoAOkrUx11vZKdzdgODClBl4374YNfdIyBGdUzXh4YS+eW+66yOulydmnv93an0/JEHS6H3ApV
- n
-X-Google-Smtp-Source: AGHT+IErMCe2fH02jbYeG2pO/xVhKdENQOdZQ8KAKyjjSXf7QXft1BX3kKRnDdY85G4R4Bw6+R286w==
-X-Received: by 2002:ac2:446d:0:b0:512:bf09:5ea9 with SMTP id
- y13-20020ac2446d000000b00512bf095ea9mr2607364lfl.63.1708445188220; 
- Tue, 20 Feb 2024 08:06:28 -0800 (PST)
+ bh=fbwlnbkTELmw0yuCS8YQeiT81oI84UQospsJeFLv0YU=;
+ b=L1uSzihshyLW/pyPs1oxj9bkVRySMpmxmXdU7fB/8wuyVlUO8clh+T6a5jYX0fxiRe
+ 6Hlyby8CykgFjK0wAVWUIXoet5dSL4ybHIsoBUwvwgRG8c5DkCJafsl1SNfnPiM0qNzq
+ GhUnNZuJKNcy9Gj7mLJCfGcPvN+3Ho+97aKNS0qjqhqwBYsR8HG9fCBUDy7MirHFZpO3
+ ZW2YSxglJuJ9UGvzbGzSUOESuAjwmN0JaGUQcuH/G6aLMsXrQCmKdznULjyNueGivtlL
+ KAfoWVdg4f5OQjJvlVDiS2N/T/0RUVEk9J3hc1bmTsRxmQVdNpppxIESmeBGL+aIuq31
+ BbkA==
+X-Gm-Message-State: AOJu0Yw1Lq2gY5dVfe2nb/2vjrCD3rGrz+dEF7GrcZh1SMkK/uL5+CiQ
+ pFg/bTxU8myJLoSjw/4qQphjXKZrD2Ki6St8LSGiwD2HrSj3KSpQ3FdHqEr9l3Bv2lSTwyXNJy2
+ 9
+X-Google-Smtp-Source: AGHT+IEqgrymnA16eKPoYPJ9nEqD5pDnpQUglY2tnRRJJJWx4Yf1pQRqyLbb9uQif3AzgEOtdzX8Iw==
+X-Received: by 2002:a2e:9446:0:b0:2d2:4c72:b24 with SMTP id
+ o6-20020a2e9446000000b002d24c720b24mr1628879ljh.50.1708445185881; 
+ Tue, 20 Feb 2024 08:06:25 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.27
+ f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 08:06:27 -0800 (PST)
+ Tue, 20 Feb 2024 08:06:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,17 +68,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: [PATCH 06/10] hw/core: Add ResetContainer which holds objects
- implementing Resettable
-Date: Tue, 20 Feb 2024 16:06:18 +0000
-Message-Id: <20240220160622.114437-7-peter.maydell@linaro.org>
+Subject: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
+ pc_machine_done()
+Date: Tue, 20 Feb 2024 16:06:14 +0000
+Message-Id: <20240220160622.114437-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220160622.114437-1-peter.maydell@linaro.org>
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,205 +101,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement a ResetContainer.  This is a subclass of Object, and it
-implements the Resettable interface.  The container holds a list of
-arbitrary other objects which implement Resettable, and when the
-container is reset, all the objects it contains are also reset.
+In the i386 PC machine, we want to run the pc_cmos_init_late()
+function only once the IDE and floppy drive devices have been set up.
+We currently do this using qemu_register_reset(), and then have the
+function call qemu_unregister_reset() on itself, so it runs exactly
+once.
 
-This will allow us to have a 3-phase-reset equivalent of the old
-qemu_register_reset() API: we will have a single "simulation reset"
-top level ResetContainer, and objects in it are the equivalent of the
-old QEMUResetHandler functions.
+This was an expedient way to do it back in 2010 when we first added
+this (in commit c0897e0cb94e8), but now we have a more obvious point
+to do "machine initialization that has to happen after generic device
+init": the machine-init-done hook.
 
-The qemu_register_reset() API manages its list of callbacks using a
-QTAILQ, but here we use a GPtrArray for our list of Resettable
-children: we expect the "remove" operation (which will need to do an
-iteration through the list) to be fairly uncommon, and we get simpler
-code with fewer memory allocations.
+Do the pc_cmos_init_late() work from our existing PC machine init
+done hook function, so we can drop the use of qemu_register_reset()
+and qemu_unregister_reset().
 
-Since there is currently no listed owner in MAINTAINERS for the
-existing reset-related source files, create a new section for
-them, and add these new files there also.
+Because the pointers to the devices we need (the IDE buses and the
+RTC) are now all in the machine state, we don't need the
+pc_cmos_init_late_arg struct and can just pass the PCMachineState
+pointer.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                      | 10 +++++
- include/hw/core/resetcontainer.h | 48 ++++++++++++++++++++
- hw/core/resetcontainer.c         | 76 ++++++++++++++++++++++++++++++++
- hw/core/meson.build              |  1 +
- 4 files changed, 135 insertions(+)
- create mode 100644 include/hw/core/resetcontainer.h
- create mode 100644 hw/core/resetcontainer.c
+ hw/i386/pc.c | 39 ++++++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 23 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d61fb93194..df8a526905b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3667,6 +3667,16 @@ F: hw/core/clock-vmstate.c
- F: hw/core/qdev-clock.c
- F: docs/devel/clocks.rst
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 8b0f54e284c..4c3cfe9fc35 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -465,11 +465,6 @@ static void pc_cmos_init_floppy(MC146818RtcState *rtc_state, ISADevice *floppy)
+     mc146818rtc_set_cmos_data(rtc_state, REG_EQUIPMENT_BYTE, val);
+ }
  
-+Reset framework
-+M: Peter Maydell <peter.maydell@linaro.org>
-+S: Maintained
-+F: include/hw/resettable.h
-+F: include/hw/core/resetcontainer.h
-+F: include/sysemu/reset.h
-+F: hw/core/reset.c
-+F: hw/core/resettable.c
-+F: hw/core/resetcontainer.c
+-typedef struct pc_cmos_init_late_arg {
+-    MC146818RtcState *rtc_state;
+-    BusState *idebus[2];
+-} pc_cmos_init_late_arg;
+-
+ typedef struct check_fdc_state {
+     ISADevice *floppy;
+     bool multiple;
+@@ -530,23 +525,25 @@ static ISADevice *pc_find_fdc0(void)
+     return state.floppy;
+ }
+ 
+-static void pc_cmos_init_late(void *opaque)
++static void pc_cmos_init_late(PCMachineState *pcms)
+ {
+-    pc_cmos_init_late_arg *arg = opaque;
+-    MC146818RtcState *s = arg->rtc_state;
++    X86MachineState *x86ms = X86_MACHINE(pcms);
++    MC146818RtcState *s = MC146818_RTC(x86ms->rtc);
+     int16_t cylinders;
+     int8_t heads, sectors;
+     int val;
+     int i, trans;
+ 
+     val = 0;
+-    if (arg->idebus[0] && ide_get_geometry(arg->idebus[0], 0,
+-                                           &cylinders, &heads, &sectors) >= 0) {
++    if (pcms->idebus[0] &&
++        ide_get_geometry(pcms->idebus[0], 0,
++                         &cylinders, &heads, &sectors) >= 0) {
+         cmos_init_hd(s, 0x19, 0x1b, cylinders, heads, sectors);
+         val |= 0xf0;
+     }
+-    if (arg->idebus[0] && ide_get_geometry(arg->idebus[0], 1,
+-                                           &cylinders, &heads, &sectors) >= 0) {
++    if (pcms->idebus[0] &&
++        ide_get_geometry(pcms->idebus[0], 1,
++                         &cylinders, &heads, &sectors) >= 0) {
+         cmos_init_hd(s, 0x1a, 0x24, cylinders, heads, sectors);
+         val |= 0x0f;
+     }
+@@ -558,10 +555,11 @@ static void pc_cmos_init_late(void *opaque)
+            geometry.  It is always such that: 1 <= sects <= 63, 1
+            <= heads <= 16, 1 <= cylinders <= 16383. The BIOS
+            geometry can be different if a translation is done. */
+-        if (arg->idebus[i / 2] &&
+-            ide_get_geometry(arg->idebus[i / 2], i % 2,
++        BusState *idebus = pcms->idebus[i / 2];
++        if (idebus &&
++            ide_get_geometry(idebus, i % 2,
+                              &cylinders, &heads, &sectors) >= 0) {
+-            trans = ide_get_bios_chs_trans(arg->idebus[i / 2], i % 2) - 1;
++            trans = ide_get_bios_chs_trans(idebus, i % 2) - 1;
+             assert((trans & ~3) == 0);
+             val |= trans << (i * 2);
+         }
+@@ -569,15 +567,12 @@ static void pc_cmos_init_late(void *opaque)
+     mc146818rtc_set_cmos_data(s, 0x39, val);
+ 
+     pc_cmos_init_floppy(s, pc_find_fdc0());
+-
+-    qemu_unregister_reset(pc_cmos_init_late, opaque);
+ }
+ 
+ void pc_cmos_init(PCMachineState *pcms,
+                   ISADevice *rtc)
+ {
+     int val;
+-    static pc_cmos_init_late_arg arg;
+     X86MachineState *x86ms = X86_MACHINE(pcms);
+     MC146818RtcState *s = MC146818_RTC(rtc);
+ 
+@@ -631,11 +626,7 @@ void pc_cmos_init(PCMachineState *pcms,
+     val |= 0x04; /* PS/2 mouse installed */
+     mc146818rtc_set_cmos_data(s, REG_EQUIPMENT_BYTE, val);
+ 
+-    /* hard drives and FDC */
+-    arg.rtc_state = s;
+-    arg.idebus[0] = pcms->idebus[0];
+-    arg.idebus[1] = pcms->idebus[1];
+-    qemu_register_reset(pc_cmos_init_late, &arg);
++    /* hard drives and FDC are handled by pc_cmos_init_late() */
+ }
+ 
+ static void handle_a20_line_change(void *opaque, int irq, int level)
+@@ -703,6 +694,8 @@ void pc_machine_done(Notifier *notifier, void *data)
+         /* update FW_CFG_NB_CPUS to account for -device added CPUs */
+         fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+     }
 +
- Usermode Emulation
- ------------------
- Overall usermode emulation
-diff --git a/include/hw/core/resetcontainer.h b/include/hw/core/resetcontainer.h
-new file mode 100644
-index 00000000000..23db0c7a880
---- /dev/null
-+++ b/include/hw/core/resetcontainer.h
-@@ -0,0 +1,48 @@
-+/*
-+ * Reset container
-+ *
-+ * Copyright (c) 2024 Linaro, Ltd
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_RESETCONTAINER_H
-+#define HW_RESETCONTAINER_H
-+
-+/*
-+ * The "reset container" is an object which implements the Resettable
-+ * interface. It contains a list of arbitrary other objects which also
-+ * implement Resettable. Resetting the reset container resets all the
-+ * objects in it.
-+ */
-+
-+#include "qom/object.h"
-+
-+#define TYPE_RESETTABLE_CONTAINER "resettable-container"
-+OBJECT_DECLARE_TYPE(ResettableContainer, ResettableContainerClass, RESETTABLE_CONTAINER)
-+
-+/**
-+ * resettable_container_add: Add a resettable object to the container
-+ * @rc: container
-+ * @obj: object to add to the container
-+ *
-+ * Add @obj to the ResettableContainer @rc. @obj must implement the
-+ * Resettable interface.
-+ *
-+ * When @rc is reset, it will reset every object that has been added
-+ * to it, in the order they were added.
-+ */
-+void resettable_container_add(ResettableContainer *rc, Object *obj);
-+
-+/**
-+ * resettable_container_remove: Remove an object from the container
-+ * @rc: container
-+ * @obj: object to remove from the container
-+ *
-+ * Remove @obj from the ResettableContainer @rc. @obj must have been
-+ * previously added to this container.
-+ */
-+void resettable_container_remove(ResettableContainer *rc, Object *obj);
-+
-+#endif
-diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
-new file mode 100644
-index 00000000000..cd627f16f0e
---- /dev/null
-+++ b/hw/core/resetcontainer.c
-@@ -0,0 +1,76 @@
-+/*
-+ * Reset container
-+ *
-+ * Copyright (c) 2024 Linaro, Ltd
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+/*
-+ * The "reset container" is an object which implements the Resettable
-+ * interface. It contains a list of arbitrary other objects which also
-+ * implement Resettable. Resetting the reset container resets all the
-+ * objects in it.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/resettable.h"
-+#include "hw/core/resetcontainer.h"
-+
-+struct ResettableContainer {
-+    Object parent;
-+    ResettableState reset_state;
-+    GPtrArray *children;
-+};
-+
-+OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(ResettableContainer, resettable_container, RESETTABLE_CONTAINER, OBJECT, { TYPE_RESETTABLE_INTERFACE }, { })
-+
-+void resettable_container_add(ResettableContainer *rc, Object *obj)
-+{
-+    g_ptr_array_add(rc->children, obj);
-+}
-+
-+void resettable_container_remove(ResettableContainer *rc, Object *obj)
-+{
-+    g_ptr_array_remove(rc->children, obj);
-+}
-+
-+static ResettableState *resettable_container_get_state(Object *obj)
-+{
-+    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
-+    return &rc->reset_state;
-+}
-+
-+static void resettable_container_child_foreach(Object *obj,
-+                                               ResettableChildCallback cb,
-+                                               void *opaque, ResetType type)
-+{
-+    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
-+    unsigned int len = rc->children->len;
-+
-+    for (unsigned int i = 0; i < len; i++) {
-+        cb(g_ptr_array_index(rc->children, i), opaque, type);
-+        /* Detect callbacks trying to unregister themselves */
-+        assert(len == rc->children->len);
-+    }
-+}
-+
-+static void resettable_container_init(Object *obj)
-+{
-+    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
-+
-+    rc->children = g_ptr_array_new();
-+}
-+
-+static void resettable_container_finalize(Object *obj)
-+{
-+}
-+
-+static void resettable_container_class_init(ObjectClass *klass, void *data)
-+{
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->get_state = resettable_container_get_state;
-+    rc->child_foreach = resettable_container_child_foreach;
-+}
-diff --git a/hw/core/meson.build b/hw/core/meson.build
-index 67dad04de55..e26f2e088c3 100644
---- a/hw/core/meson.build
-+++ b/hw/core/meson.build
-@@ -4,6 +4,7 @@ hwcore_ss.add(files(
-   'qdev-properties.c',
-   'qdev.c',
-   'reset.c',
-+  'resetcontainer.c',
-   'resettable.c',
-   'vmstate-if.c',
-   # irq.c needed for qdev GPIO handling:
++    pc_cmos_init_late(pcms);
+ }
+ 
+ void pc_guest_info_init(PCMachineState *pcms)
 -- 
 2.34.1
 
