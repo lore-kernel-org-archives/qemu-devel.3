@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21AEEC54787
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 14:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DFCFC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 14:05:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcQgJ-0005DY-5Q; Tue, 20 Feb 2024 09:01:11 -0500
+	id 1rcQjK-0006cT-S5; Tue, 20 Feb 2024 09:04:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rcQgG-0005D5-2Q
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 09:01:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1rcQgC-00082M-Tj
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 09:01:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708437663;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SNQOrREmmc7fW4KUko02bOVeoRrX7si9lnTdwGFk91g=;
- b=VQbYa8raW739CRLwyP0PcLKJ/Y9fwNJWgEMoNIsR3Eq9bNcsMGM165JMGwoS872bHm94O1
- hRtE87jzv8bimqa/wA8tEbKVcD/HlcUTR6TBVbZdKRUivgftW+OMJzh7ivfYlZmfL8LqO5
- tNqSerkW2i72vTZuyCTVP+qPFBl6bOk=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-sKwuGdmgPBacPzPnLHRZpQ-1; Tue, 20 Feb 2024 09:01:01 -0500
-X-MC-Unique: sKwuGdmgPBacPzPnLHRZpQ-1
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-36516d55c5fso26610055ab.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 06:01:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rcQjI-0006bz-Lf
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 09:04:16 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rcQjH-0008OL-1l
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 09:04:16 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-55f279dca99so7389925a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 06:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708437853; x=1709042653; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7HcYmC+O/kaq/mMhRCiy/822wCYlWWBDeIseRTPuWak=;
+ b=QekDMBxxE+6VE3Z9Fr4GjbM67Rhikk/3j62w79AJjrcKxSy67MRx0OvaTx7274PAW5
+ qfc68PzLxQTzvwjDJ6MvSqTd9LdLri4RQmorUm/Zdw4ud7b9Kc9DTL1W8jfT7WqrJxme
+ 7RZVFMVrbUoyy/SzJR8S3KVmqQNSUK8zcwQK6ExrPEx3KbPzSftSIuYGD3lo47jfKS8U
+ cCcK8eqotFBZn44f9IDQImkSE6XkisjVOPaV/jsYaQpsOxaU+pXNb6+Tpa9JxnkfxIXW
+ G9f0w26ZteZozDTkkRIjEl3YAkOTlRdBKJTEtErOUnbDvLma2R9G1P5lWciCUvNyO2yY
+ kSVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708437660; x=1709042460;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=SNQOrREmmc7fW4KUko02bOVeoRrX7si9lnTdwGFk91g=;
- b=O9f34ITAEHdCXkE6KV218w3t03V45YHkyPehWohQB3CeK5Q3qVSXidVxMc0vY787SF
- hFIGZuCiO2gl4uYFe3jUN1sCR5qlW9Qf1e5Ra9A0wTJeVdAQR5W8WCkli9taGoLv51U5
- juB+qa6Pr6PvEzhijwx9f5OaUfGzeHyPGZPBrH8TaxO5QE6CEAT+J1FJsq4DPonl/BAi
- pTCPBiCQW4Nttp/KPw23Hs8ZGnd8578T1Ke7f/mH1Cf0r/lKSBO/Z63c/MKfKI17HzZE
- D3F3BXS9OIUPSiVrGgOXSjQ0rAxuEwdV73fKIVAgmpRJaejco9E6inz7R8iJKxntFm5x
- Jfew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViUgi5chOHEWoBtRmhBcDpGy2yWZF+q61NKQw7fa3yDDACjGYL3Oz1t7NUo3aeX3225/x9RvsqMWQOflcZb0fS/+fsYAk=
-X-Gm-Message-State: AOJu0Yw7DqHxCHynX5C7uopB8DkcphQabAQaqgrZkA9jpo87O9f+uHfB
- t2vGbzWCqFlOIqZBNQ2RBr92BmghFXS7PrmibdGubb5PZ9oj40MMoWBAv01dNXLqgBWbNQcP/93
- 7NBhAgLo2VV45z0uPD3pak4ArSGlNRhYeDio9OcbkfV9aiVxhQtry
-X-Received: by 2002:a05:6e02:1206:b0:365:1d36:91d7 with SMTP id
- a6-20020a056e02120600b003651d3691d7mr7359760ilq.27.1708437659825; 
- Tue, 20 Feb 2024 06:00:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWEfLjlT68vft3NEd96QXnHLiIeJqMUYv5G0C/jbBvCzvdlq74unJ68dDtGQiB61l+3Hze5w==
-X-Received: by 2002:a05:6e02:1206:b0:365:1d36:91d7 with SMTP id
- a6-20020a056e02120600b003651d3691d7mr7359717ilq.27.1708437659381; 
- Tue, 20 Feb 2024 06:00:59 -0800 (PST)
-Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
- by smtp.gmail.com with ESMTPSA id
- f16-20020a02cad0000000b004742452a382sm1259870jap.45.2024.02.20.06.00.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 06:00:58 -0800 (PST)
-Mime-Version: 1.0
+ d=1e100.net; s=20230601; t=1708437853; x=1709042653;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7HcYmC+O/kaq/mMhRCiy/822wCYlWWBDeIseRTPuWak=;
+ b=JRBPqbD6Me7uLxomSSiiK2PfSb9+WXE0TPiwPFO8JYL/Yhfkr8zLzwhFPcZptUnGOW
+ BqtYy+LmDTiDSV1h5uPQo9AGqaW8wLtGPADaqVNW+vCkegv5FfqTr3khCt4AuVTd3luI
+ W4nWjVSJELH/q26pSKhkCgG4IDYTF1Bgr13VlptCfXePgmHAFO75tNC7vySpqWRs6Hyb
+ HqdkoLWisOQFcDqW318zUZyoHl5qRmV2aqv/Eaut3byWk96W82/3j8thDQLWN5LaSx+g
+ mwDcg9OCqi/mOhdpslGJIacEpxQN+Qa+94p3UqPSEDrieFwYpUgQXMmcHsT8p9rz4t4V
+ hWGA==
+X-Gm-Message-State: AOJu0YwHeqESppfhnw40v9x0TKjwbIA+FJTdL05q4yIug72IfP9moWWi
+ D8N+hmQmro0RXf40FH4+bJ7GUpAEaYIoJMp86W1prBiwpwGEc2fvWUwtg4VcfV5Yi7LV74p9VcS
+ QjBUpGfZa75ixCf6s0CWk/qcqOYOn4mzW36lE3A==
+X-Google-Smtp-Source: AGHT+IE3+Uo4bJoUcdMjVLgsrEPiRA1kRe4srUUoPb0q0r62EC6koPVaMf8zABaj4H18OjrZFBXRQVM4BsOHSwHfMTI=
+X-Received: by 2002:a05:6402:1b1a:b0:55f:f94d:cf76 with SMTP id
+ by26-20020a0564021b1a00b0055ff94dcf76mr10101954edb.27.1708437852739; Tue, 20
+ Feb 2024 06:04:12 -0800 (PST)
+MIME-Version: 1.0
+References: <20240216150441.45681-1-philmd@linaro.org>
+In-Reply-To: <20240216150441.45681-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 20 Feb 2024 14:04:01 +0000
+Message-ID: <CAFEAcA-SYyXN94cH2mmVynW7LPB-YoSQTZ_E0WH18ra0UGB7-g@mail.gmail.com>
+Subject: Re: [PATCH] hw/sysbus: Inline and remove sysbus_add_io()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, kvm@vger.kernel.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 20 Feb 2024 15:00:56 +0100
-Message-Id: <CZ9YLSITF57Y.2WGV9XEFH7755@fedora>
-Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
- <vchundur@redhat.com>
-Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
-From: "Anthony Harivel" <aharivel@redhat.com>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
-X-Mailer: aerc/0.15.2-111-g39195000e213
-References: <20240125072214.318382-1-aharivel@redhat.com>
- <20240125072214.318382-4-aharivel@redhat.com> <Zbf8hradcHeeEXae@redhat.com>
-In-Reply-To: <Zbf8hradcHeeEXae@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aharivel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,53 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9, Jan 29, 2024 at 20:29:
-> On Thu, Jan 25, 2024 at 08:22:14AM +0100, Anthony Harivel wrote:
-> > diff --git a/docs/specs/rapl-msr.rst b/docs/specs/rapl-msr.rst
-> > new file mode 100644
-> > index 000000000000..04d27c198fc0
-> > --- /dev/null
-> > +++ b/docs/specs/rapl-msr.rst
-> > @@ -0,0 +1,133 @@
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +RAPL MSR support
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On Fri, 16 Feb 2024 at 15:05, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> > +
-> > +Current Limitations
-> > +-------------------
-> > +
-> > +- Works only on Intel host CPUs because AMD CPUs are using different M=
-SR
-> > +  addresses.
+> sysbus_add_io(...) is a simple wrapper to
+> memory_region_add_subregion(get_system_io(), ...).
+> It is used in 3 places; inline it directly.
 >
-> The privileged helper program is validating an allow list of MSRs.
->
-> If those MSRs are only correct on Intel hosts, then the validation
-> is incomplete, and it could be allowing unprivileged processes on
-> AMD hosts to access forbidden MSRS whose address happen to clash
-> with the Intel RAPL MSRs.
->
-> IOW, the privileged helper needs to call cpuid() and validate that
-> the current host vendor is Intel.
->
-> I suspect we also need a feature check of some kind to validate
-> that the intel processor supports this features, since old ones
-> definitely didn't, and we shouldn't assume all future ones will
-> either.
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  include/hw/sysbus.h | 2 --
+>  hw/core/sysbus.c    | 6 ------
+>  hw/i386/kvmvapic.c  | 2 +-
+>  hw/mips/mipssim.c   | 2 +-
+>  hw/nvram/fw_cfg.c   | 5 +++--
+>  5 files changed, 5 insertions(+), 12 deletions(-)
 >
 
-To validate that the processor supports the RAPL feature I propose
-to check this on the Host:
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-$ cat /sys/class/powercap/intel-rapl/enabled
-1
-
-
-The only down side is that INTEL RAPL drivers needs to be
-mounted then. We don't need it because we directly read the MSRs.
-
-Regards,
-Anthony
-
+thanks
+-- PMM
 
