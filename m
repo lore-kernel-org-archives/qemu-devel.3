@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B56C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 17:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F899C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 17:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcTmM-0001gt-RZ; Tue, 20 Feb 2024 12:19:38 -0500
+	id 1rcTp3-0003Gk-Tw; Tue, 20 Feb 2024 12:22:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rcTmL-0001ga-7m
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 12:19:37 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rcTmJ-00014M-KQ
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 12:19:37 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41272d42207so1543825e9.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 09:19:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708449574; x=1709054374; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fR6hPfm1ZobdqDTDbD36laIpSvCWjOIWMnppowp7ZMw=;
- b=f0tckOfY8cFLwTPSfPFGYFjsEJXfSo+U4MsEgmUg05EOUj6p4w6SMV3rLDozAPyQbd
- EATNerADDVES5bwPz1wG8IiF54guS28O1NzwnTjKovkeAXjMeJdSMGkXa3OYuXMbeujf
- 5nBuCBDcX2YAKN0n4RQxahA5CjzZ3p3zbUDIaZC3bOXamU7FX6vm5Pe2gV9+VIxW/Qm6
- dqWUYl6q3+4apOIselRAzfWkVEWMigAbBxvFOlSOeGSp6VeLRW8PT4nnOUEpQtbz/Zoj
- q0FRwG1jjuc5oKhOJ6ticj478VpQQLqTrI0/gmxrm9OMnMfJPZKyudYOtMhBJi1ZYF1g
- FdvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708449574; x=1709054374;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fR6hPfm1ZobdqDTDbD36laIpSvCWjOIWMnppowp7ZMw=;
- b=mw8iR9jXWiNe6X0Hj9psv7EaABpC0PUYaMUlTHB1OKZqytBPsuZ2sF3Y7hOpkIMi1U
- 7VxUHCOyyvCMR/F7Nfn5wEP77jqcO4C5QrFHnGj0DxMCQ8ut9qEcSp7wu4XolvmG/oIt
- C5p0yIeZqrYD50PW2lvlDUcN/qqEs/ItcDc36XhmgSfL6cBSNbqvOutgPiDvmFfBj3pX
- iwNMa6575IisKKhakVt0CWlRchBJ0CzoUgdSgAv/3G3g+Mcnfkt6iB/TgmvXazk7Sil0
- KIQhExFkSOugXIV1+BDw4wyxcHYeu2q/IKEYxWrEglAbZSkcE+pp66Be5G4GlW2B+qCX
- +kHw==
-X-Gm-Message-State: AOJu0YzyDDbemCSH5wiE5hdhqkMYvbSYwZn4G+vi1pZXMqepEoIItXhN
- X4fvvP+gXJFnMn9GBkCcBaJbnG6Lw0oP3tro6VtaB39kHbfHBcFoWcw+EtBmMNQ=
-X-Google-Smtp-Source: AGHT+IFrgj6x0QBYYs2Hpqlg3McEkF/ZG4DeI7g+G/k5gylCBpVcXmKtsDEIPWjcElG/4Z7IqOXsJw==
-X-Received: by 2002:a05:600c:45d3:b0:410:2d72:63b3 with SMTP id
- s19-20020a05600c45d300b004102d7263b3mr11484450wmo.23.1708449573988; 
- Tue, 20 Feb 2024 09:19:33 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- u12-20020a05600c19cc00b0041061f094a2sm15344613wmq.11.2024.02.20.09.19.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 09:19:33 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 462A25F85F;
- Tue, 20 Feb 2024 17:19:33 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-stable@nongnu.org,  Yonggang Luo
- <luoyonggang@gmail.com>
-Subject: Re: [PATCH] .gitlab-ci.d/windows.yml: Drop msys2-32bit job
-In-Reply-To: <20240220165602.135695-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Tue, 20 Feb 2024 16:56:02 +0000")
-References: <20240220165602.135695-1-peter.maydell@linaro.org>
-User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Tue, 20 Feb 2024 17:19:33 +0000
-Message-ID: <87sf1naw9m.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcTp2-0003GJ-Cn; Tue, 20 Feb 2024 12:22:24 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcTp0-0001ng-Kd; Tue, 20 Feb 2024 12:22:24 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A4404F088;
+ Tue, 20 Feb 2024 20:22:32 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 18CA185485;
+ Tue, 20 Feb 2024 20:22:12 +0300 (MSK)
+Message-ID: <83c9cdfa-c60e-4215-9d7d-0dcc43fed96a@tls.msk.ru>
+Date: Tue, 20 Feb 2024 20:22:11 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 01/21] docs: correct typos
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-trivial@nongnu.org, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Hongren (Zenithal) Zheng" <i@zenithal.me>,
+ "Canokeys.org" <contact@canokeys.org>
+References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+ <135bbfcb6dd09377cfd39fb73c862cd0fb66bb20.1708419115.git.manos.pitsidianakis@linaro.org>
+ <20240220053538-mutt-send-email-mst@kernel.org>
+ <95hul.sppswhjb0hah@linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <95hul.sppswhjb0hah@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,30 +95,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+20.02.2024 13:42, Manos Pitsidianakis wrote:
+..
+>>>  Set this variable to 2 to create the pipelines and run all
+>>> -the jobs immediately, as was historicaly behaviour
+>>> +the jobs immediately, as was historically behaviour
+>>
+>> as long as we do this let's fix grammar too?
+>>
+>> as was historically the behaviour
+> 
+> After the fact, I think it should be "as was historical behaviour".
 
-> MSYS2 is dropping support for 32-bit Windows.  This shows up for us
-> as various packages we were using in our CI job no longer being
-> available to install, which causes the job to fail.  In commit
-> 8e31b744fdf we dropped the dependency on libusb and spice, but the
-> dtc package has also now been removed.
->
-> For us as QEMU upstream, "32 bit x86 hosts for system emulation" have
-> already been deprecated as of QEMU 8.0, so we are ready to drop them
-> anyway.
->
-> Drop the msys2-32bit CI job, as the first step in doing this.
->
-> This is cc'd to stable, because this job will also be broken for CI
-> on the stable branches.  We can't drop 32-bit support entirely there,
-> but we will still be covering at least compilation for 32-bit Windows
-> via the cross-win32-system job.
+That's exactly what I suggested on IRC right after you sent this patch.
+Plus "the", so the final version reads
 
-Queued to testing/next, unless you wish to apply directly in which case:
+  the jobs immediately, as was the historical behaviour
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> I will re-spin with only this change, and keep the Acks/RoBs if that is okay with everyone.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+If that's the only change, let me just pick it all with the above fix,
+to avoid additional SPAM :)
+
+Either way, I'm picking up this series to trivial-patches@, please
+resend just the "changed changes" if needs to be.
+
+Thanks,
+
+/mjt
 
