@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E34C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13229C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcKHC-0000nH-WC; Tue, 20 Feb 2024 02:10:51 -0500
+	id 1rcKJ9-00024q-4J; Tue, 20 Feb 2024 02:12:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKHB-0000mt-TA
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:10:49 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKHA-0008JN-AC
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:10:49 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a26fa294e56so805774866b.0
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:10:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708413045; x=1709017845; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v+S6ZJERfThL4wLhWONge+QXGq/6LbhlTg2kdjWmYNg=;
- b=I5wejuz2/fUcuUx5y/PLIEZYg8udlS0ubsFebONQPJGyqm7QJVO/L2Bdp1NQG/PXZe
- V9I1FediOTeG5y92wVDTZMTW2vroIHgVbCPs3P4subumce9gX8SZBB0qYuJeVy1eRJFo
- E7pB8jXMceLgrWhsyNSx3hIaYHGrvop3bYO8sDIwW3vfHrSoegCYF3MpM50mcaTq3JZF
- fiCYyGQK/OeYHsbAcvNRzsJUcEmBSc7Bg7xC7XeUS11BNcj61qklBd0Bx/I12TXagcSf
- nMiOhT310KGBWm2o7h0KyURQfL2+9J0W/JiTa8gyyF8dwgEU17nkdYC1uDnNgMb5LOFQ
- 6erw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcKJ7-00023c-Pd
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:12:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcKJ5-0008WK-Uw
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:12:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708413166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=58lUXYm48EPcP9tAKX9PIdVB6lTzPS5wA6nq7la3S7s=;
+ b=AAfr2NyvbqRH10PyG9Pn5lCflom8usUuK7xYl+2+Cyg4ZB7+T5Vh/cd+0EooFc8774TbwT
+ qofhlS+bQ3B74I03Iwbqa+v2OAsZXYoIn9nqPDYXyXNlOOnQKWYnfebF579FTpxzi45EsF
+ nPkQnfLCuHku/XksOCunnKxwT0GtEGE=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-197-kGG4QWPeN3eaSNeznk_dRQ-1; Tue, 20 Feb 2024 02:12:44 -0500
+X-MC-Unique: kGG4QWPeN3eaSNeznk_dRQ-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-6da5a9defd5so2142830b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:12:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708413045; x=1709017845;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v+S6ZJERfThL4wLhWONge+QXGq/6LbhlTg2kdjWmYNg=;
- b=Osifgcoz1JyQbt9AdnTA/vl7OeiyV+Eea+9pl27DqjRinIdO9PXJuH9Cf7alloUTKT
- 7WsMVxaYmPdz4SJ4LH0zt/L344DhvIIzwdVFpSEAHRrbX0CTgWIxU94+aQuSoRrRPSBB
- QafYSsWmfi9WpV2pChHhlZiRJY76y4TXhk0VdHoOtnWLTB2V0ghWuAnjHn78laeWliYu
- 7bW5q8wfHA/bwLtQQ06kgZI1EDWTY7VNqAc7gxxPJ90s91TYW7zpGF9VMGePrR9MIvuk
- G4iFhyebBYTraXVPJLcPX3SRYuPtp4AelSdi7gaK7zM90bHBFa72SeTTP+DTBeQlFF4P
- iWkA==
-X-Gm-Message-State: AOJu0Yw6pWYEs9z8thtIy1KLDIXNI8ZVUynbsc/fsefJfko/ayUbACvA
- kWgANQBecW7XSJnYNLw+msgwjNXUZoKw9fHFOdO6h9kbxbFX8hX1QCI7jZynx/M=
-X-Google-Smtp-Source: AGHT+IEr6xEJn0c+v5xmNJyx0k3J5t5yBhNCoOWzRaBU0KZwZs+nNIzx06G601uc7XrZWvddMSScPQ==
-X-Received: by 2002:a17:906:3616:b0:a3e:4e48:43a with SMTP id
- q22-20020a170906361600b00a3e4e48043amr6699497ejb.55.1708413044984; 
- Mon, 19 Feb 2024 23:10:44 -0800 (PST)
-Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
- [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- qw23-20020a170906fcb700b00a3e426149a1sm2878011ejb.50.2024.02.19.23.10.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 23:10:44 -0800 (PST)
-Message-ID: <7cae30fb-2a84-4a59-b7d9-d02c0807cede@linaro.org>
-Date: Tue, 20 Feb 2024 08:10:43 +0100
+ d=1e100.net; s=20230601; t=1708413163; x=1709017963;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=58lUXYm48EPcP9tAKX9PIdVB6lTzPS5wA6nq7la3S7s=;
+ b=IWv4ZMfPUIK9488LTwa8PI/6+3sUZshaA+XQqCAwKF5RW8Z6A0jRSDkKDqXmA7J3V7
+ fMYzccCFBkOe1cj6JhPYK3dhOajTS9mIFXCtjuOGgxwrXZ1YmFwZtyXHfTiPJNoZUi/1
+ eL2SIbAxMR8uTKVGy7PZilYd/a1AbJrIlxCzgmiWxVNE2BbIEKS5lzDDV3B2Uf8fIO71
+ xnMLDf2R5xLf2KzZ568eyZywDpNCXly5tO2ahre12jaFVBesCP/1ZP/6eHwM4SjrTWYE
+ MeiwpK2iarM2Vopt9EQNV2ZG2ajz4kkbE+49yOvaJkK9dnBb1BLixKAT3TaN9ZWS0hZY
+ qaig==
+X-Gm-Message-State: AOJu0YwnqYb3xLblkZFc6jtSaFyVQBpQjeNgmgevYSLKUaZp7qFb7bcr
+ rIq69E2bOXxGNqrIqbthE43CS8jbRDHwKcYxxDoDYlNJKVK/pYawhWwoKanyZbztHMj9FpHhTS1
+ I3s3Wl17OKfcJzLisxvGK12+7pTyHU8nLC3ydxUxj0jfM+EFCjlVA
+X-Received: by 2002:a05:6a21:a5a0:b0:1a0:88b9:fc09 with SMTP id
+ gd32-20020a056a21a5a000b001a088b9fc09mr14737995pzc.6.1708413163439; 
+ Mon, 19 Feb 2024 23:12:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEbJwjVhHr01veWphMpuOfLnU1XuhlcPAQ7DUOQEbaDEJnQeJK74Da9YVWwyvehOr6V6L6zhw==
+X-Received: by 2002:a05:6a21:a5a0:b0:1a0:88b9:fc09 with SMTP id
+ gd32-20020a056a21a5a000b001a088b9fc09mr14737983pzc.6.1708413163110; 
+ Mon, 19 Feb 2024 23:12:43 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ q2-20020a170902e30200b001db2d598eedsm5466252plc.77.2024.02.19.23.12.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 19 Feb 2024 23:12:42 -0800 (PST)
+Date: Tue, 20 Feb 2024 15:12:31 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH V3 09/13] migration: notifier error checking
+Message-ID: <ZdRQ35ygQU4rUgnD@x1n>
+References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
+ <1707418446-134863-10-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org
-References: <20240219141412.71418-1-philmd@linaro.org>
- <20240219141412.71418-6-philmd@linaro.org> <ZdQSOiQiRxoEoR58@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZdQSOiQiRxoEoR58@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1707418446-134863-10-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,53 +102,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 03:45, Zhao Liu wrote:
-> Hi Philippe,
+On Thu, Feb 08, 2024 at 10:54:02AM -0800, Steve Sistare wrote:
+> Check the status returned by migration notifiers and report errors.
+> If notifiers fail, call the notifiers again so they can clean up.
+> None of the notifiers return an error status at this time.
 > 
-> On Mon, Feb 19, 2024 at 03:14:11PM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Mon, 19 Feb 2024 15:14:11 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: [PATCH 5/5] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
->> X-Mailer: git-send-email 2.41.0
->>
->> "hw/acpi/acpi.h" is implicitly included.
->> Included it
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  include/migration/misc.h |  3 ++-
+>  migration/migration.c    | 40 +++++++++++++++++++++++++++++-----------
+>  2 files changed, 31 insertions(+), 12 deletions(-)
 > 
-> I'm guessing it's an imperative and shouldn't be in passive form. ;-) So,
-> 
-> s/Included/Include/
-> 
->> explicitly to avoid when refactoring headers:
-> 
-> s/to avoid/to avoid the following error/
+> diff --git a/include/migration/misc.h b/include/migration/misc.h
+> index 0ea1902..6dc234b 100644
+> --- a/include/migration/misc.h
+> +++ b/include/migration/misc.h
+> @@ -82,7 +82,8 @@ void migration_add_notifier(NotifierWithReturn *notify,
+>  void migration_add_notifier_mode(NotifierWithReturn *notify,
+>                                   MigrationNotifyFunc func, MigMode mode);
+>  void migration_remove_notifier(NotifierWithReturn *notify);
+> -void migration_call_notifiers(MigrationState *s, MigrationEventType type);
+> +int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+> +                             Error **errp);
+>  bool migration_in_setup(MigrationState *);
+>  bool migration_has_finished(MigrationState *);
+>  bool migration_has_failed(MigrationState *);
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 01d8867..d1fce9e 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1318,6 +1318,8 @@ void migrate_set_state(int *state, int old_state, int new_state)
+>  
+>  static void migrate_fd_cleanup(MigrationState *s)
+>  {
+> +    Error *local_err = NULL;
+> +
+>      g_free(s->hostname);
+>      s->hostname = NULL;
+>      json_writer_free(s->vmdesc);
+> @@ -1362,13 +1364,23 @@ static void migrate_fd_cleanup(MigrationState *s)
+>                            MIGRATION_STATUS_CANCELLED);
+>      }
+>  
+> +    if (!migration_has_failed(s) &&
+> +        migration_call_notifiers(s, MIG_EVENT_PRECOPY_DONE, &local_err)) {
+> +
+> +        migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
+> +        migrate_set_error(s, local_err);
+> +        error_free(local_err);
+> +    }
+> +
+>      if (s->error) {
+>          /* It is used on info migrate.  We can't free it */
+>          error_report_err(error_copy(s->error));
+>      }
+> -    migration_call_notifiers(s, s->state == MIGRATION_STATUS_COMPLETED ?
+> -                             MIG_EVENT_PRECOPY_DONE :
+> -                             MIG_EVENT_PRECOPY_FAILED);
+> +
+> +    if (migration_has_failed(s)) {
+> +        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+> +    }
 
-Oops, thanks :)
+AFAIU, the whole point of such split is, allowing DONE notifies to fail too
+and then if that happens we can invoke FAIL notifiers again.
 
-> 
->>
->> hw/i386/pc_q35.c:209:43: error: use of undeclared identifier 'ACPI_PM_PROP_ACPI_PCIHP_BRIDGE'
->>                                ACPI_PM_PROP_ACPI_PCIHP_BRIDGE,
->>                                ^
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/i386/pc_q35.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
->> index d346fa3b1d..a91f414922 100644
->> --- a/hw/i386/pc_q35.c
->> +++ b/hw/i386/pc_q35.c
->> @@ -58,6 +58,7 @@
->>   #include "hw/hyperv/vmbus-bridge.h"
->>   #include "hw/mem/nvdimm.h"
->>   #include "hw/i386/acpi-build.h"
->> +#include "hw/acpi/acpi.h"
->>   #include "target/i386/cpu.h"
-> 
-> Here it is unordered, and similarly, does it need to be sorted
-> alphabetically here?
+Perhaps we can avoid that complexity, but rather document only SETUP
+notifiers can fail?
 
-It shouldn't hurt ;)
+The problem is that failing a notifier at this stage (if migration already
+finished) can already be too late; dest QEMU can already have started
+running, so no way to roll back.  We can document that, check and assert
+for !SETUP cases to make sure error is never hit?
+
+> +
+>      block_cleanup_parameters();
+>      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+>  }
+> @@ -1481,13 +1493,15 @@ void migration_remove_notifier(NotifierWithReturn *notify)
+>      }
+>  }
+>  
+> -void migration_call_notifiers(MigrationState *s, MigrationEventType type)
+> +int migration_call_notifiers(MigrationState *s, MigrationEventType type,
+> +                             Error **errp)
+>  {
+>      MigMode mode = s->parameters.mode;
+>      MigrationEvent e;
+>  
+>      e.type = type;
+> -    notifier_with_return_list_notify(&migration_state_notifiers[mode], &e, 0);
+> +    return notifier_with_return_list_notify(&migration_state_notifiers[mode],
+> +                                            &e, errp);
+>  }
+>  
+>  bool migration_in_setup(MigrationState *s)
+> @@ -2535,7 +2549,9 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>       * at the transition to postcopy and after the device state; in particular
+>       * spice needs to trigger a transition now
+>       */
+> -    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE);
+> +    if (migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, errp)) {
+> +        goto fail;
+> +    }
+>  
+>      migration_downtime_end(ms);
+>  
+> @@ -2555,11 +2571,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+>  
+>      ret = qemu_file_get_error(ms->to_dst_file);
+>      if (ret) {
+> -        error_setg(errp, "postcopy_start: Migration stream errored");
+> -        migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+> -                              MIGRATION_STATUS_FAILED);
+> +        error_setg_errno(errp, -ret, "postcopy_start: Migration stream error");
+> +        bql_lock();
+> +        goto fail;
+>      }
+> -
+>      trace_postcopy_preempt_enabled(migrate_postcopy_preempt());
+>  
+>      return ret;
+> @@ -2580,6 +2595,7 @@ fail:
+>              error_report_err(local_err);
+>          }
+>      }
+> +    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+>      bql_unlock();
+>      return -1;
+>  }
+> @@ -3594,7 +3610,9 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>          rate_limit = migrate_max_bandwidth();
+>  
+>          /* Notify before starting migration thread */
+> -        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP);
+> +        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
+> +            goto fail;
+> +        }
+>      }
+>  
+>      migration_rate_set(rate_limit);
+> -- 
+> 1.8.3.1
+> 
+
+-- 
+Peter Xu
 
 
