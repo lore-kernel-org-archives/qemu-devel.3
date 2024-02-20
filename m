@@ -4,78 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED50C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA7EC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLvG-0000PS-K1; Tue, 20 Feb 2024 03:56:18 -0500
+	id 1rcLxJ-0008JQ-0h; Tue, 20 Feb 2024 03:58:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcLvF-0000Ci-2r
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:56:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcLv1-0000S8-Ga
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:56:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708419360;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Gxt5ZYw2h95J0F7OawIZiKr2hLJwNBBaXxLoUe7n10w=;
- b=EuZVfJWyn7D4uzRVjYMhYXPUj9I/c38mc2KGx+8ykbP4CbJAraSO/zZ0zWHitjQPRrh2tX
- aI2WXq9JDI2kXs16fhmY+Y7VPGDz6+XSbI3eIQyijr8uiKQs3J4uOIpRH4rz383IZl96e4
- CyYU/34DbnqMlZCxzd8eEpHkIjy7eRk=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-44-r12Rug4zM1i7AU-5g2OCtw-1; Tue, 20 Feb 2024 03:55:56 -0500
-X-MC-Unique: r12Rug4zM1i7AU-5g2OCtw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 73BC5185A786;
- Tue, 20 Feb 2024 08:55:56 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 125CC107CCE0;
- Tue, 20 Feb 2024 08:55:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B8AED21E66D5; Tue, 20 Feb 2024 09:55:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eric
- Blake <eblake@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Kevin Wolf
- <kwolf@redhat.com>
-Subject: Re: [PATCH v4 2/7] qapi: Make parameter 'file' optional for
- BlockdevCreateOptionsLUKS
-In-Reply-To: <CAK9dgmY0rExYg+hfTY_okNvTTArZdn60jsWjCABgbbAG6XZiDw@mail.gmail.com>
- (Yong Huang's message of "Tue, 20 Feb 2024 15:31:54 +0800")
-References: <cover.1706586786.git.yong.huang@smartx.com>
- <af7253711254128efbc37b25fb5c47b851367ce7.1706586786.git.yong.huang@smartx.com>
- <87zfvwjzzd.fsf@pond.sub.org>
- <CAK9dgmY0rExYg+hfTY_okNvTTArZdn60jsWjCABgbbAG6XZiDw@mail.gmail.com>
-Date: Tue, 20 Feb 2024 09:55:54 +0100
-Message-ID: <87wmqzcy5h.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
+ id 1rcLxD-0007z3-Qd; Tue, 20 Feb 2024 03:58:20 -0500
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
+ id 1rcLxA-0000he-IU; Tue, 20 Feb 2024 03:58:19 -0500
+Received: from [10.12.102.111] (unknown [85.142.117.226])
+ by mail.ispras.ru (Postfix) with ESMTPSA id B3EAE40737C5;
+ Tue, 20 Feb 2024 08:57:50 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru B3EAE40737C5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1708419470;
+ bh=elkSpOAmlNJJ3p1ebAxvciRm89hULlvZlNqyvN3LONE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=fK1nnW6+w2QSND08LkPuBWYDr26+T0CzQuXDMYtIuY8GXBEW7jZI3b7Nb90PSa5e8
+ mpVWxpIxf+8wSCC2AQGi5IyDbqtHhnoUrwXv8BRCBQS9HtvJs89vsrtZBYGxgx4VJ6
+ buPggvMn29XNfI5Gs7GUvQKooRv3eBg6thGHnWGc=
+Message-ID: <26a43eca-4bf3-4b35-a00b-b2b085c8ea8b@ispras.ru>
+Date: Tue, 20 Feb 2024 11:57:50 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 02/21] tests: correct typos
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+ <723e7a4b522cebce583e924fbd965f110cbc2af4.1708419115.git.manos.pitsidianakis@linaro.org>
+From: Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
+In-Reply-To: <723e7a4b522cebce583e924fbd965f110cbc2af4.1708419115.git.manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=83.149.199.84;
+ envelope-from=pavel.dovgalyuk@ispras.ru; helo=mail.ispras.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,78 +71,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yong Huang <yong.huang@smartx.com> writes:
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
 
-> On Tue, Feb 20, 2024 at 2:31=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> yong.huang@smartx.com writes:
->>
->> > From: Hyman Huang <yong.huang@smartx.com>
->> >
->> > To support detached LUKS header creation, make the existing 'file'
->> > field in BlockdevCreateOptionsLUKS optional.
->> >
->> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
->> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->>
->> [...]
->>
->> > diff --git a/qapi/block-core.json b/qapi/block-core.json
->> > index ae604c6019..69a88d613d 100644
->> > --- a/qapi/block-core.json
->> > +++ b/qapi/block-core.json
->> > @@ -4957,7 +4957,8 @@
->> >  #
->> >  # Driver specific image creation options for LUKS.
->> >  #
->> > -# @file: Node to create the image format on
->> > +# @file: Node to create the image format on, mandatory except when
->> > +#        'preallocation' is not requested
->>
->> You mean when @preallocation is "off"?
->>
->> Cases:
->>
->> 1. @file is mandatory
->>
->
-> When @preallocation is specified to PREALLOC_MODE_ON, file
-> is mandatory because preallocation aims to act on payload data that
-> @file holds.
->
->
->> 2. @file is optional and present
->>
->
-> When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
-> @file if optional.
-> If @file present=EF=BC=8Cthere are two cases:
-> 1. @header is absent,  the creation process degenerate to the origin acti=
-on.
-> 2. @header is present,  the creation process would trunk the payload data
-> image that @file holds and do the LUKS formatting on the image that
-> @header refers;
->
->
->>
->> 3. @file is optional and absent
->>
->
-> When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
-> @file if optional.
-> If @file is absent, do the LUKS formatting only.
-> Note that Either the parameter 'header' or 'file' must be specified.
->
-> Here's my interpretation; do let me know if any of the points are off or
-> need to be refactored.
->
->
->>
->> Ignorant question: behavior in each case?
-
-Thanks!  Would it make sense to work the above into the documentation?
-
-[...]
+On 20.02.2024 11:52, Manos Pitsidianakis wrote:
+> Correct typos automatically found with the `typos` tool
+> <https://crates.io/crates/typos>
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>   tests/avocado/acpi-bits/bits-tests/smbios.py2 | 2 +-
+>   tests/avocado/mem-addr-space-check.py         | 6 +++---
+>   tests/avocado/reverse_debugging.py            | 2 +-
+>   3 files changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/tests/avocado/acpi-bits/bits-tests/smbios.py2 b/tests/avocado/acpi-bits/bits-tests/smbios.py2
+> index fc623de072..5868a7137a 100644
+> --- a/tests/avocado/acpi-bits/bits-tests/smbios.py2
+> +++ b/tests/avocado/acpi-bits/bits-tests/smbios.py2
+> @@ -1060,7 +1060,7 @@ class EventLogDescriptor(unpack.Struct):
+>               0x16: 'Log Area Reset/Cleared',
+>               0x17: 'System boot',
+>               xrange(0x18, 0x7F): 'Unused, available for assignment',
+> -            xrange(0x80, 0xFE): 'Availalbe for system- and OEM-specific assignments',
+> +            xrange(0x80, 0xFE): 'Available for system- and OEM-specific assignments',
+>               0xFF: 'End of log'
+>           }
+>           yield 'log_type', u.unpack_one('B'), unpack.format_table("{}", _event_log_type_descriptors)
+> diff --git a/tests/avocado/mem-addr-space-check.py b/tests/avocado/mem-addr-space-check.py
+> index 363c3f12a6..af019969c0 100644
+> --- a/tests/avocado/mem-addr-space-check.py
+> +++ b/tests/avocado/mem-addr-space-check.py
+> @@ -165,7 +165,7 @@ def test_phybits_low_tcg_q35_70_amd(self):
+>           For q35-7.0 machines, "above 4G" memory starts are 4G.
+>           pci64_hole size is 32 GiB. Since TCG_PHYS_ADDR_BITS is defined to
+>           be 40, TCG emulated CPUs have maximum of 1 TiB (1024 GiB) of
+> -        directly addressible memory.
+> +        directly addressable memory.
+>           Hence, maxmem value at most can be
+>           1024 GiB - 4 GiB - 1 GiB per slot for alignment - 32 GiB + 0.5 GiB
+>           which is equal to 987.5 GiB. Setting the value to 988 GiB should
+> @@ -190,7 +190,7 @@ def test_phybits_low_tcg_q35_71_amd(self):
+>           AMD_HT_START is defined to be at 1012 GiB. So for q35 machines
+>           version > 7.0 and AMD cpus, instead of 1024 GiB limit for 40 bit
+>           processor address space, it has to be 1012 GiB , that is 12 GiB
+> -        less than the case above in order to accomodate HT hole.
+> +        less than the case above in order to accommodate HT hole.
+>           Make sure QEMU fails when maxmem size is 976 GiB (12 GiB less
+>           than 988 GiB).
+>           """
+> @@ -297,7 +297,7 @@ def test_phybits_ok_tcg_q35_71_amd_41bits(self):
+>           :avocado: tags=arch:x86_64
+>   
+>           AMD processor with 41 bits. Max cpu hw address = 2 TiB.
+> -        Same as above but by setting maxram beween 976 GiB and 992 Gib,
+> +        Same as above but by setting maxram between 976 GiB and 992 Gib,
+>           QEMU should start fine.
+>           """
+>           self.vm.add_args('-S', '-cpu', 'EPYC-v4,phys-bits=41',
+> diff --git a/tests/avocado/reverse_debugging.py b/tests/avocado/reverse_debugging.py
+> index 4cce5a5598..92855a02a5 100644
+> --- a/tests/avocado/reverse_debugging.py
+> +++ b/tests/avocado/reverse_debugging.py
+> @@ -191,7 +191,7 @@ def reverse_debugging(self, shift=7, args=None):
+>           self.check_pc(g, steps[-1])
+>           logger.info('successfully reached %x' % steps[-1])
+>   
+> -        logger.info('exitting gdb and qemu')
+> +        logger.info('exiting gdb and qemu')
+>           vm.shutdown()
+>   
+>   class ReverseDebugging_X86_64(ReverseDebugging):
 
 
