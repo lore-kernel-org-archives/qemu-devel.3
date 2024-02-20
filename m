@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857A6C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9D6C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSdf-00028R-AR; Tue, 20 Feb 2024 11:06:35 -0500
+	id 1rcSdf-00028S-BA; Tue, 20 Feb 2024 11:06:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSdd-000282-EB
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:33 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1rcSdb-00026W-QT
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:31 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSda-0005FV-Fp
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:33 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-41272d42297so971095e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:29 -0800 (PST)
+ id 1rcSdY-0005F0-J8
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:31 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4126f48411dso4930975e9.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708445189; x=1709049989; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708445187; x=1709049987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7iDhlmBEzf3/xjobdXXs7/XL4KcZXNtIkpWLjY9SBqw=;
- b=nk9txZuTgu3FPyEybvjiLPjw2/+cQ6lI2a4ivr6/bne6iP842lcPDbfFbjERubcptP
- H3ET/Ik6g9wS/JfQiwGF53q79ucLda4728FTH/1ePUjyGJh9dmVic0DwZpA8IsOXTPJy
- px9VZR2jNbwwW7BeOuTUD38wQsLzTLTnWCOeLoVj1Ijwsm+0k+9eBl6k5ZCory6MSPc5
- BlUCJxATNreYYUxOCb8G8PWbnYqEzwTMhMJjV3U7JVoHZDU26jTEqtX4SUG5VgDkMbzD
- uAZFzea+N2tWF4ecqu18I1xzbz6z0bMleUsxNd1OYcTdD6EbJCGwpgvtH4WczW6wZa1L
- 9Z2g==
+ bh=0HnwHWnmE66bJ5KZzVID8fJ3qSazlGzlBgZNC57rU+s=;
+ b=ACo7/si7HBiM8/Z93QSdbXr4HZD0caSv3Kbp6ryPVeUf7rbSr9OifnR+SCoV8GqYEg
+ gEeUtEua84mNz9fQkaSwa6i65F5N1/s6o9ViOWZb4aGFvB0bLhdk2JyHqWhwaKPOi5SN
+ huZAvyGA9tOm/YPxClqZpsoZZyXPuu126bkTuAm6MGqzDGWktxjMjJnRdpd66TnYITM2
+ sQ9fgu5JrsBD186rS8Ca+8ugT1rrr5ViQMD5eGfdcnNNxBnVwtviID/Hvba84JLF/OBD
+ n+Iw34pgPU1NUhFypy8LSAu7XMDuUVaOLzGtl2yAvKL2oIvkG1KbYxf5Hj2Te3Pz8xjj
+ KJuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708445189; x=1709049989;
+ d=1e100.net; s=20230601; t=1708445187; x=1709049987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7iDhlmBEzf3/xjobdXXs7/XL4KcZXNtIkpWLjY9SBqw=;
- b=hwL7KFY9t5EannQ9slMHQ0J3qiq9PVH7jF90OP6ar3/aNncC0BckyyjJ4oLmd8QkPO
- nWXBpEep8Nk5n+dwFBSKEmAFm+gf2csVKAH4Ck1enw8I0H1vYJTUGbIoyGJ4JB4FbAnk
- w+6CCdUL3BEj6FgSFwi9lviKtZIMymHwTVbBxyXZKFzEQR5MaMnBbn8LtaBqyo31KnXB
- FDFj3OVXkLbP3VpeHCzfAWvyEP9fFSGbJtECM/NZyGDiZbIL1XaOhoXVZ5yrwfGCvGcW
- /qndhawW+flZm5cCtZ1qXaIcvFbnwTIVWalH07eCdOEXDCcQT7dpxWM0C93mwYzeS/b9
- xmYg==
-X-Gm-Message-State: AOJu0YyUQC6YI4wEgaRysEpgvyQr+oCNAGcBWzUmYTo2Nzk5b84qu7o6
- sRYn7asVcr0z4hA430rIb/AvZEksi4hOGlp8g+VUhCaGeb8OmZwHRIKPiQyCP7nMYm0T55ffDv0
- 4
-X-Google-Smtp-Source: AGHT+IFhbp32+urjWmiHk+LhHvhYxqjAeV+S+XjnXe27CZnd9SUUsyGN6hbjafc6lc8LCiOGVIjsaA==
-X-Received: by 2002:a05:600c:4746:b0:412:7012:ee14 with SMTP id
- w6-20020a05600c474600b004127012ee14mr1308072wmo.0.1708445188805; 
- Tue, 20 Feb 2024 08:06:28 -0800 (PST)
+ bh=0HnwHWnmE66bJ5KZzVID8fJ3qSazlGzlBgZNC57rU+s=;
+ b=Rnn2G9KXoCKRdS2i6t5MAcQ7B3Uh3Ayg2pfpaOFLo4jDEZ3nBiuqCQTR0u8BdvtnK8
+ mh5l+s4FbKN0I6xxjqrdoUL/Vn1xsbEPH48Ak3HYA0eqZZJmRvNtOJ+jYf5bWkn3JWXI
+ 9AIiLkdyeV3BctjO004TkvJv5koSC6muzOX5mBdEAgb8HlpsIK6pQ4M+jD4GTvyBneit
+ vlCmSQFVKwWAntoYELSJIkh6Pdi/01+RLM3r9LDs4QBATklop3qiP896nmmXa1s0oOpp
+ Z5oEJRa46gQjQARVBe3TtMMh9+H09XSHtA6ZosCjYmXKbFpzYcLzDEpIrW7dfUsC5lwW
+ cNmg==
+X-Gm-Message-State: AOJu0YxJk+z1kJcNaZ4f/iNl9kb3knYQ1szMOsqKtgNzitpbsu/OPwIi
+ 6K5K40vBlsW3WlipoOoWKVztbbSJfogtivtGrzsZaCaikq2tZTelvGlXP+S2XqAqmwcKvWCv8C/
+ g
+X-Google-Smtp-Source: AGHT+IHWwpEYkU3V3rbr6dCWboC6iHviqdeymbJ31jTDGnEHxvy1lDWm4eqU/SefGIZ7VxM3rq8z6w==
+X-Received: by 2002:a05:600c:358b:b0:412:6e83:b89d with SMTP id
+ p11-20020a05600c358b00b004126e83b89dmr2125103wmq.8.1708445187036; 
+ Tue, 20 Feb 2024 08:06:27 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.28
+ f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 08:06:28 -0800 (PST)
+ Tue, 20 Feb 2024 08:06:26 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,17 +68,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: [PATCH 07/10] hw/core/reset: Add qemu_{register,
- unregister}_resettable()
-Date: Tue, 20 Feb 2024 16:06:19 +0000
-Message-Id: <20240220160622.114437-8-peter.maydell@linaro.org>
+Subject: [PATCH 04/10] include/qom/object.h: New OBJECT_DEFINE_SIMPLE_TYPE{,
+ _WITH_INTERFACES} macros
+Date: Tue, 20 Feb 2024 16:06:16 +0000
+Message-Id: <20240220160622.114437-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220160622.114437-1-peter.maydell@linaro.org>
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,141 +102,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement new functions qemu_register_resettable() and
-qemu_unregister_resettable().  These are intended to be
-three-phase-reset aware equivalents of the old qemu_register_reset()
-and qemu_unregister_reset().  Instead of passing in a function
-pointer and opaque, you register any QOM object that implements the
-Resettable interface.
+We have an OBJECT_DEFINE_TYPE_EXTENDED macro, plus several variations
+on it, which emits the boilerplate for the TypeInfo and ensures it is
+registered with the type system.  However, all the existing macros
+insist that the type being defined has its own FooClass struct, so
+they aren't useful for the common case of a simple leaf class which
+doesn't have any new methods or any other need for its own class
+struct (that is, for the kind of type that OBJECT_DECLARE_SIMPLE_TYPE
+declares).
 
-The implementation is simple: we have a single global instance of a
-ResettableContainer, which we reset in qemu_devices_reset(), and
-the Resettable objects passed to qemu_register_resettable() are
-added to it.
+Pull the actual implementation of OBJECT_DEFINE_TYPE_EXTENDED out
+into a new DO_OBJECT_DEFINE_TYPE_EXTENDED which parameterizes the
+value we use for the class_size field.  This lets us add a new
+OBJECT_DEFINE_SIMPLE_TYPE which does the same job as the various
+existing OBJECT_DEFINE_*_TYPE_* family macros for this kind of simple
+type, and the variant OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES for
+when the type will implement some interfaces.
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/sysemu/reset.h | 37 ++++++++++++++++++++++++++++++++++---
- hw/core/reset.c        | 31 +++++++++++++++++++++++++++++--
- 2 files changed, 63 insertions(+), 5 deletions(-)
+ docs/devel/qom.rst   |  34 +++++++++++--
+ include/qom/object.h | 114 +++++++++++++++++++++++++++++++++----------
+ 2 files changed, 117 insertions(+), 31 deletions(-)
 
-diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
-index 6aa11846a69..a3de48cb9cf 100644
---- a/include/sysemu/reset.h
-+++ b/include/sysemu/reset.h
-@@ -31,6 +31,36 @@
+diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
+index 9918fac7f21..0889ca949c1 100644
+--- a/docs/devel/qom.rst
++++ b/docs/devel/qom.rst
+@@ -348,12 +348,14 @@ used. This does the same as OBJECT_DECLARE_SIMPLE_TYPE(), but without
+ the 'struct MyDeviceClass' definition.
  
- typedef void QEMUResetHandler(void *opaque);
+ To implement the type, the OBJECT_DEFINE macro family is available.
+-In the simple case the OBJECT_DEFINE_TYPE macro is suitable:
++For the simplest case of a leaf class which doesn't need any of its
++own virtual functions (i.e. which was declared with OBJECT_DECLARE_SIMPLE_TYPE)
++the OBJECT_DEFINE_SIMPLE_TYPE macro is suitable:
  
-+/**
-+ * qemu_register_resettable: Register an object to be reset
-+ * @obj: object to be reset: it must implement the Resettable interface
-+ *
-+ * Register @obj on the list of objects which will be reset when the
-+ * simulation is reset. These objects will be reset in the order
-+ * they were added, using the three-phase Resettable protocol,
-+ * so first all objects go through the enter phase, then all objects
-+ * go through the hold phase, and then finally all go through the
-+ * exit phase.
-+ *
-+ * It is not permitted to register or unregister reset functions or
-+ * resettable objects from within any of the reset phase methods of @obj.
-+ *
-+ * We assume that the caller holds the BQL.
-+ */
-+void qemu_register_resettable(Object *obj);
+ .. code-block:: c
+    :caption: Defining a simple type
+ 
+-   OBJECT_DEFINE_TYPE(MyDevice, my_device, MY_DEVICE, DEVICE)
++   OBJECT_DEFINE_SIMPLE_TYPE(MyDevice, my_device, MY_DEVICE, DEVICE)
+ 
+ This is equivalent to the following:
+ 
+@@ -370,7 +372,6 @@ This is equivalent to the following:
+        .instance_size = sizeof(MyDevice),
+        .instance_init = my_device_init,
+        .instance_finalize = my_device_finalize,
+-       .class_size = sizeof(MyDeviceClass),
+        .class_init = my_device_class_init,
+    };
+ 
+@@ -385,13 +386,36 @@ This is sufficient to get the type registered with the type
+ system, and the three standard methods now need to be implemented
+ along with any other logic required for the type.
+ 
++If the class needs its own virtual methods, or has some other
++per-class state it needs to store in its own class struct,
++then you can use the OBJECT_DEFINE_TYPE macro. This does the
++same thing as OBJECT_DEFINE_SIMPLE_TYPE, but it also sets the
++class_size of the type to the size of the class struct.
 +
++.. code-block:: c
++   :caption: Defining a type which needs a class struct
++
++   OBJECT_DEFINE_TYPE(MyDevice, my_device, MY_DEVICE, DEVICE)
++
+ If the type needs to implement one or more interfaces, then the
+-OBJECT_DEFINE_TYPE_WITH_INTERFACES() macro can be used instead.
+-This accepts an array of interface type names.
++OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES() and
++OBJECT_DEFINE_TYPE_WITH_INTERFACES() macros can be used instead.
++These accept an array of interface type names. The difference between
++them is that the former is for simple leaf classes that don't need
++a class struct, and the latter is for when you will be defining
++a class struct.
+ 
+ .. code-block:: c
+    :caption: Defining a simple type implementing interfaces
+ 
++   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(MyDevice, my_device,
++                                             MY_DEVICE, DEVICE,
++                                             { TYPE_USER_CREATABLE },
++                                             { NULL })
++
++.. code-block:: c
++   :caption: Defining a type implementing interfaces
++
+    OBJECT_DEFINE_TYPE_WITH_INTERFACES(MyDevice, my_device,
+                                       MY_DEVICE, DEVICE,
+                                       { TYPE_USER_CREATABLE },
+diff --git a/include/qom/object.h b/include/qom/object.h
+index afccd24ca7a..f52ab216cdd 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -258,6 +258,51 @@ struct Object
+     DECLARE_INSTANCE_CHECKER(InstanceType, MODULE_OBJ_NAME, TYPE_##MODULE_OBJ_NAME)
+ 
+ 
 +/**
-+ * qemu_unregister_resettable: Unregister an object to be reset
-+ * @obj: object to unregister
++ * DO_OBJECT_DEFINE_TYPE_EXTENDED:
++ * @ModuleObjName: the object name with initial caps
++ * @module_obj_name: the object name in lowercase with underscore separators
++ * @MODULE_OBJ_NAME: the object name in uppercase with underscore separators
++ * @PARENT_MODULE_OBJ_NAME: the parent object name in uppercase with underscore
++ *                          separators
++ * @ABSTRACT: boolean flag to indicate whether the object can be instantiated
++ * @CLASS_SIZE: size of the type's class
++ * @...: list of initializers for "InterfaceInfo" to declare implemented interfaces
 + *
-+ * Remove @obj from the list of objects which are reset when the
-+ * simulation is reset. It must have been previously added to
-+ * the list via qemu_register_resettable().
-+ *
-+ * We assume that the caller holds the BQL.
++ * This is the base macro used to implement all the OBJECT_DEFINE_*
++ * macros. It should never be used directly in a source file.
 + */
-+void qemu_unregister_resettable(Object *obj);
++#define DO_OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
++                                       MODULE_OBJ_NAME, \
++                                       PARENT_MODULE_OBJ_NAME, \
++                                       ABSTRACT, CLASS_SIZE, ...) \
++    static void \
++    module_obj_name##_finalize(Object *obj); \
++    static void \
++    module_obj_name##_class_init(ObjectClass *oc, void *data); \
++    static void \
++    module_obj_name##_init(Object *obj); \
++    \
++    static const TypeInfo module_obj_name##_info = { \
++        .parent = TYPE_##PARENT_MODULE_OBJ_NAME, \
++        .name = TYPE_##MODULE_OBJ_NAME, \
++        .instance_size = sizeof(ModuleObjName), \
++        .instance_align = __alignof__(ModuleObjName), \
++        .instance_init = module_obj_name##_init, \
++        .instance_finalize = module_obj_name##_finalize, \
++        .class_size = CLASS_SIZE, \
++        .class_init = module_obj_name##_class_init, \
++        .abstract = ABSTRACT, \
++        .interfaces = (InterfaceInfo[]) { __VA_ARGS__ } , \
++    }; \
++    \
++    static void \
++    module_obj_name##_register_types(void) \
++    { \
++        type_register_static(&module_obj_name##_info); \
++    } \
++    type_init(module_obj_name##_register_types);
 +
  /**
-  * qemu_register_reset: Register a callback for system reset
-  * @func: function to call
-@@ -44,8 +74,8 @@ typedef void QEMUResetHandler(void *opaque);
-  * for instance device model reset is better accomplished using the
-  * methods on DeviceState.
-  *
-- * It is not permitted to register or unregister reset functions from
-- * within the @func callback.
-+ * It is not permitted to register or unregister reset functions or
-+ * resettable objects from within the @func callback.
-  *
-  * We assume that the caller holds the BQL.
-  */
-@@ -81,7 +111,8 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque);
-  *
-  * This function performs the low-level work needed to do a complete reset
-  * of the system (calling all the callbacks registered with
-- * qemu_register_reset()). It should only be called by the code in a
-+ * qemu_register_reset() and resetting all the Resettable objects registered
-+ * with qemu_register_resettable()). It should only be called by the code in a
-  * MachineClass reset method.
-  *
-  * If you want to trigger a system reset from, for instance, a device
-diff --git a/hw/core/reset.c b/hw/core/reset.c
-index d3263b613e6..a9b30e705fe 100644
---- a/hw/core/reset.c
-+++ b/hw/core/reset.c
-@@ -26,8 +26,23 @@
- #include "qemu/osdep.h"
- #include "qemu/queue.h"
- #include "sysemu/reset.h"
-+#include "hw/resettable.h"
-+#include "hw/core/resetcontainer.h"
+  * OBJECT_DEFINE_TYPE_EXTENDED:
+  * @ModuleObjName: the object name with initial caps
+@@ -284,32 +329,10 @@ struct Object
+ #define OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
+                                     MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
+                                     ABSTRACT, ...) \
+-    static void \
+-    module_obj_name##_finalize(Object *obj); \
+-    static void \
+-    module_obj_name##_class_init(ObjectClass *oc, void *data); \
+-    static void \
+-    module_obj_name##_init(Object *obj); \
+-    \
+-    static const TypeInfo module_obj_name##_info = { \
+-        .parent = TYPE_##PARENT_MODULE_OBJ_NAME, \
+-        .name = TYPE_##MODULE_OBJ_NAME, \
+-        .instance_size = sizeof(ModuleObjName), \
+-        .instance_align = __alignof__(ModuleObjName), \
+-        .instance_init = module_obj_name##_init, \
+-        .instance_finalize = module_obj_name##_finalize, \
+-        .class_size = sizeof(ModuleObjName##Class), \
+-        .class_init = module_obj_name##_class_init, \
+-        .abstract = ABSTRACT, \
+-        .interfaces = (InterfaceInfo[]) { __VA_ARGS__ } , \
+-    }; \
+-    \
+-    static void \
+-    module_obj_name##_register_types(void) \
+-    { \
+-        type_register_static(&module_obj_name##_info); \
+-    } \
+-    type_init(module_obj_name##_register_types);
++    DO_OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
++                                   MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
++                                   ABSTRACT, sizeof(ModuleObjName##Class), \
++                                   __VA_ARGS__)
  
--/* reset/shutdown handler */
-+/*
-+ * Return a pointer to the singleton container that holds all the Resettable
-+ * items that will be reset when qemu_devices_reset() is called.
+ /**
+  * OBJECT_DEFINE_TYPE:
+@@ -368,6 +391,45 @@ struct Object
+                                 MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
+                                 true, { NULL })
+ 
++/**
++ * OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES:
++ * @ModuleObjName: the object name with initial caps
++ * @module_obj_name: the object name in lowercase with underscore separators
++ * @MODULE_OBJ_NAME: the object name in uppercase with underscore separators
++ * @PARENT_MODULE_OBJ_NAME: the parent object name in uppercase with underscore
++ *                          separators
++ *
++ * This is a variant of OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for
++ * the case of a non-abstract type, with interfaces, and with no requirement
++ * for a class struct.
 + */
-+static ResettableContainer *get_root_reset_container(void)
-+{
-+    static ResettableContainer *root_reset_container;
++#define OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(ModuleObjName, \
++                                                  module_obj_name, \
++                                                  MODULE_OBJ_NAME, \
++                                                  PARENT_MODULE_OBJ_NAME, ...) \
++    DO_OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
++                                   MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
++                                   false, 0, __VA_ARGS__)
 +
-+    if (!root_reset_container) {
-+        root_reset_container =
-+            RESETTABLE_CONTAINER(object_new(TYPE_RESETTABLE_CONTAINER));
-+    }
-+    return root_reset_container;
-+}
- 
- typedef struct QEMUResetEntry {
-     QTAILQ_ENTRY(QEMUResetEntry) entry;
-@@ -71,6 +86,16 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque)
-     }
- }
- 
-+void qemu_register_resettable(Object *obj)
-+{
-+    resettable_container_add(get_root_reset_container(), obj);
-+}
++/**
++ * OBJECT_DEFINE_SIMPLE_TYPE:
++ * @ModuleObjName: the object name with initial caps
++ * @module_obj_name: the object name in lowercase with underscore separators
++ * @MODULE_OBJ_NAME: the object name in uppercase with underscore separators
++ * @PARENT_MODULE_OBJ_NAME: the parent object name in uppercase with underscore
++ *                          separators
++ *
++ * This is a variant of OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for
++ * the common case of a non-abstract type, without any interfaces, and with
++ * no requirement for a class struct. If you declared your type with
++ * OBJECT_DECLARE_SIMPLE_TYPE then this is probably the right choice for
++ * defining it.
++ */
++#define OBJECT_DEFINE_SIMPLE_TYPE(ModuleObjName, module_obj_name, \
++                                  MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME) \
++    OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(ModuleObjName, module_obj_name, \
++        MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, { NULL })
 +
-+void qemu_unregister_resettable(Object *obj)
-+{
-+    resettable_container_remove(get_root_reset_container(), obj);
-+}
-+
- void qemu_devices_reset(ShutdownCause reason)
- {
-     QEMUResetEntry *re, *nre;
-@@ -83,5 +108,7 @@ void qemu_devices_reset(ShutdownCause reason)
-         }
-         re->func(re->opaque);
-     }
--}
- 
-+    /* Reset the simulation */
-+    resettable_reset(OBJECT(get_root_reset_container()), RESET_TYPE_COLD);
-+}
+ /**
+  * struct TypeInfo:
+  * @name: The name of the type.
 -- 
 2.34.1
 
