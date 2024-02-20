@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86ABCC54787
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 12:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE89C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 12:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcPC3-0005Un-0R; Tue, 20 Feb 2024 07:25:51 -0500
+	id 1rcPDA-0003XT-AA; Tue, 20 Feb 2024 07:27:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rcPBt-0004y0-Di
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:25:41 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rcPD4-00035R-QG; Tue, 20 Feb 2024 07:26:57 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rcPBo-0006CO-WF
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:25:40 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dc1ff58fe4so1910365ad.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 04:25:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rcPD0-0006Oj-QQ; Tue, 20 Feb 2024 07:26:53 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e46e07ff07so1082235b3a.3; 
+ Tue, 20 Feb 2024 04:26:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708431932; x=1709036732;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=512kyfl4mUEUDTsjiH69u6gvpMmtttv5Fvemo/ortGY=;
- b=2HDGulXnp25LpqRH1sWLEg4cKRVfyS9eehraPvTLs6itaCqEwv4Hv614/7LH+mkyO/
- F1rcVa3pNrxa8JGDnWkXBIQCIpFXZ2i3ximxjFl1R7u2nImvy5LwvQndFq/XB85FitRp
- uDYifQRmBRrYOkN1+gANesDLVUKZvtAeP304VwKWzdzukwlSHPggfQRh1VYChqoKtGm0
- poZDA+KyoeOduKbiPzxethPAtcIGuGWX9/JXIGnJad7F6R5e7wuo4qzPAgXD01O+45/s
- EMknEBpw7xGq6cl5eAK66dje8xj4usOEgLDWnRkeYgzBpJem5CF0jmdC7YQD1OgYIPdA
- wcmg==
+ d=gmail.com; s=20230601; t=1708432008; x=1709036808; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Swmg1pthiO2vneKYWTfj9agVDiIMgVPosPcSkRKiMwo=;
+ b=Lp3AMM+OS/BOYlQ8u5t/N7m28/avvxPu4EhgQaxpWZqeKi/XvAtihgLJwAHhBgy6IF
+ aDGfQj7JvPGSBd/H8u9USJ5wKO8Cje4BqTYattCqScuSY6mzrMRoeO3vLl1ZHJ1mb1sT
+ Kuj+sGCplhwutqqYto3AmPo6vAXWkEUcFRErJ+JQA2kKI+lMZmLitaUBPHtOauT0mRRZ
+ INiSItcmBSzXvyKfVjZiSSxx/ya4UG3QDRv8OVMGYsaXa6Q0mp6lZgx7VVU9Xc9PA/FU
+ 2ciX5yIPclr38jCyFaqmnfy7h3qZlf6o9tz1gyLeJFr1B++Nz0pZBe1LfXqQFOo4ObH2
+ ++jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708431932; x=1709036732;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=512kyfl4mUEUDTsjiH69u6gvpMmtttv5Fvemo/ortGY=;
- b=C0Bzyi75TU6t5BkLO5fa2O2WLj/dWULMDB0MdNjPgmY7XgWFl0f/o2+yFrQY9oXH8R
- 7jIIrHL+DcXLm3bghE2cyURKIyrGmzfUc24Fg6jJ34ydqoerjMoN5pmG6XQlvMEvMj2f
- jtjqRGF3KXsGtv0G1gKUd5krpmhPc02H33+nLiHDyypw6QeokWQQ0DzKbIOrEAUVoGmW
- tFzLlKC03kcgPHeJd9tTNQDhTyJ6kKsZ8yzgE4ZY+qJYPPjSLfD+TE09RkwpZGBXg31S
- rB6yMFVUW1EfL/hiUMy0K/4YIo8yMQEOkD0L56VseNATBth9xs6qPXchXEodrGC2rALi
- PI0A==
-X-Gm-Message-State: AOJu0YxWA+KfMvbBHQvj1IUAJ6Bc1X8+ANA7Pki1FYZXdqCB7/k5K7Bg
- 1WauIwr3PJ4nnLsW3pLdAkTM1k5mZrYLbSP9d0/Angzy72zcwbJvlTFsRdSTmN8=
-X-Google-Smtp-Source: AGHT+IFcerYaere4MoEb1neV0nibrzO5aaN3XS/9Trj5bnEhHRzp0e7S+UB9VruYJEwk6eaIy1AnWQ==
-X-Received: by 2002:a17:903:2350:b0:1db:fcc8:7d70 with SMTP id
- c16-20020a170903235000b001dbfcc87d70mr4898089plh.49.1708431932274; 
- Tue, 20 Feb 2024 04:25:32 -0800 (PST)
-Received: from localhost ([157.82.203.206])
- by smtp.gmail.com with UTF8SMTPSA id
- e19-20020a170902ed9300b001dbbe63ff12sm6080541plj.66.2024.02.20.04.25.29
+ d=1e100.net; s=20230601; t=1708432008; x=1709036808;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Swmg1pthiO2vneKYWTfj9agVDiIMgVPosPcSkRKiMwo=;
+ b=q2qGQJFItw+GCgpFId4PE5pkHPVgv0hiLEgueeTAWXtCGdcP4oHx7u4SvYRV+66d3O
+ 4pjVPFDoarh2W/VGg6cAxsfNHi2aA9zQNB/e5DHQei7RA4RnMk7n1Xf//EcgZlW8bWvx
+ uQ6ycF78TflXvYABGBNrHf2quQkQrTfWcKuDjApZxpZgZo+3T9KMNH7EUm1wY6S5Hf7y
+ wbAKS5KR1W4ZxKkDN/F4EVsp0vWteg0qYp+CvbHEtYSOmTfmmCE1UHiGAsJnOA5Z5AsT
+ YgrTeatSA+HvseYxPgjlkWbccQYSz3Vh0bDNWtwP8uNMggLZLU4g6TxtpNKXXurQlM86
+ 0/CA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgsXvTmKTKPfKyLb0GH7+d2vIWcMbIc+/dgA89fLAffld3ozTjfQuM0NmzVRFtafiJGSbdFauA1WaXeQ7wMKknTvxps8E=
+X-Gm-Message-State: AOJu0YxdezNZMZ8zDHEN7/JBHn5OcVOMkLTn9Vg7cV1WrpDlz/mbeu5K
+ Jrvdd7fcPLXdrLI69963zjMOuU047cYIdee7uMrizK0aMy6+T8la
+X-Google-Smtp-Source: AGHT+IEXcJ3sYRsJFKqMPh/5B63u4kGgHRseezvhz1aNTFI1mdcETmqpIsg+XS+OfvcM71JN+Z3mTw==
+X-Received: by 2002:a17:90a:eb15:b0:299:17a7:c441 with SMTP id
+ j21-20020a17090aeb1500b0029917a7c441mr11950254pjz.42.1708432008340; 
+ Tue, 20 Feb 2024 04:26:48 -0800 (PST)
+Received: from localhost (123-243-155-241.static.tpgi.com.au.
+ [123.243.155.241]) by smtp.gmail.com with ESMTPSA id
+ mj5-20020a17090b368500b002997c1ec62csm5409398pjb.16.2024.02.20.04.26.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 04:25:32 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 20 Feb 2024 21:24:45 +0900
-Subject: [PATCH v6 10/15] pcie_sriov: Remove num_vfs from PCIESriovPF
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240220-reuse-v6-10-2e42a28b0cf2@daynix.com>
-References: <20240220-reuse-v6-0-2e42a28b0cf2@daynix.com>
-In-Reply-To: <20240220-reuse-v6-0-2e42a28b0cf2@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ Tue, 20 Feb 2024 04:26:48 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 20 Feb 2024 22:26:42 +1000
+Message-Id: <CZ9WLN0L85VW.16ODYXIMLHEX1@wheely>
+Cc: <qemu-ppc@nongnu.org>, <groug@kaod.org>, <danielhb413@gmail.com>,
+ <clg@kaod.org>, <david@gibson.dropbear.id.au>, <saif.abrar@in.ibm.com>
+Subject: Re: [PATCH] target/ppc: Update gdbstub to read SPR's CFAR, DEC,
+ HDEC, TB-L/U
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Saif Abrar" <saif.abrar@linux.vnet.ibm.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20230918092616.15398-1-saif.abrar@linux.vnet.ibm.com>
+In-Reply-To: <20230918092616.15398-1-saif.abrar@linux.vnet.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,129 +96,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-num_vfs is not migrated so use PCI_SRIOV_CTRL_VFE and PCI_SRIOV_NUM_VF
-instead.
+On Mon Sep 18, 2023 at 7:26 PM AEST, Saif Abrar wrote:
+> SPR's CFAR, DEC, HDEC, TB-L/U are not implemented as part of CPUPPCState.
+> Hence, gdbstub is not able to access them using (CPUPPCState *)env->spr[]=
+ array.
+> Update gdb_get_spr_reg() method to handle these SPR's specifically.
+>
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/hw/pci/pcie_sriov.h |  1 -
- hw/pci/pcie_sriov.c         | 28 ++++++++++++++++++++--------
- hw/pci/trace-events         |  2 +-
- 3 files changed, 21 insertions(+), 10 deletions(-)
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 4b1133f79e15..793d03c5f12e 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -16,7 +16,6 @@
- #include "hw/pci/pci.h"
- 
- struct PCIESriovPF {
--    uint16_t num_vfs;   /* Number of virtual functions created */
-     uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
-     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
- };
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 8710ee95b26d..fb48c1a18c9a 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -44,7 +44,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-     pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
-                         offset, PCI_EXT_CAP_SRIOV_SIZEOF);
-     dev->exp.sriov_cap = offset;
--    dev->exp.sriov_pf.num_vfs = 0;
-     dev->exp.sriov_pf.vf = NULL;
- 
-     pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
-@@ -173,6 +172,12 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
-     }
- }
- 
-+static void clear_ctrl_vfe(PCIDevice *dev)
-+{
-+    uint8_t *ctrl = dev->config + dev->exp.sriov_cap + PCI_SRIOV_CTRL;
-+    pci_set_word(ctrl, pci_get_word(ctrl) & ~PCI_SRIOV_CTRL_VFE);
-+}
-+
- static void register_vfs(PCIDevice *dev)
- {
-     uint16_t num_vfs;
-@@ -182,6 +187,7 @@ static void register_vfs(PCIDevice *dev)
-     assert(sriov_cap > 0);
-     num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-     if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-+        clear_ctrl_vfe(dev);
-         return;
-     }
- 
-@@ -190,20 +196,18 @@ static void register_vfs(PCIDevice *dev)
-     for (i = 0; i < num_vfs; i++) {
-         pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
-     }
--    dev->exp.sriov_pf.num_vfs = num_vfs;
- }
- 
- static void unregister_vfs(PCIDevice *dev)
- {
--    uint16_t num_vfs = dev->exp.sriov_pf.num_vfs;
-     uint16_t i;
-+    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
- 
-     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
--                               PCI_FUNC(dev->devfn), num_vfs);
--    for (i = 0; i < num_vfs; i++) {
-+                               PCI_FUNC(dev->devfn));
-+    for (i = 0; i < pci_get_word(cfg + PCI_SRIOV_TOTAL_VF); i++) {
-         pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
-     }
--    dev->exp.sriov_pf.num_vfs = 0;
- }
- 
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-@@ -229,6 +233,9 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-         } else {
-             unregister_vfs(dev);
-         }
-+    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
-+        clear_ctrl_vfe(dev);
-+        unregister_vfs(dev);
-     }
- }
- 
-@@ -291,7 +298,7 @@ PCIDevice *pcie_sriov_get_pf(PCIDevice *dev)
- PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
- {
-     assert(!pci_is_vf(dev));
--    if (n < dev->exp.sriov_pf.num_vfs) {
-+    if (n < pcie_sriov_num_vfs(dev)) {
-         return dev->exp.sriov_pf.vf[n];
-     }
-     return NULL;
-@@ -299,5 +306,10 @@ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
- 
- uint16_t pcie_sriov_num_vfs(PCIDevice *dev)
- {
--    return dev->exp.sriov_pf.num_vfs;
-+    uint16_t sriov_cap = dev->exp.sriov_cap;
-+    uint8_t *cfg = dev->config + sriov_cap;
-+
-+    return sriov_cap &&
-+           (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) ?
-+           pci_get_word(cfg + PCI_SRIOV_NUM_VF) : 0;
- }
-diff --git a/hw/pci/trace-events b/hw/pci/trace-events
-index 42430869ce05..b30e31619787 100644
---- a/hw/pci/trace-events
-+++ b/hw/pci/trace-events
-@@ -14,5 +14,5 @@ msix_write_config(char *name, bool enabled, bool masked) "dev %s enabled %d mask
- 
- # hw/pci/pcie_sriov.c
- sriov_register_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: creating %d vf devs"
--sriov_unregister_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: Unregistering %d vf devs"
-+sriov_unregister_vfs(const char *name, int slot, int function) "%s %02x:%x: Unregistering vf devs"
- sriov_config_write(const char *name, int slot, int fun, uint32_t offset, uint32_t val, uint32_t len) "%s %02x:%x: sriov offset 0x%x val 0x%x len %d"
+I had a minor comment but NBD for now.
 
--- 
-2.43.1
-
+Thanks,
+Nick
 
