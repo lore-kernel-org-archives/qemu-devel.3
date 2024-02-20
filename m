@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C13DC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:51:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3D8DC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVCb-00065W-5n; Tue, 20 Feb 2024 13:50:49 -0500
+	id 1rcVDS-0006kE-3D; Tue, 20 Feb 2024 13:51:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVCY-000658-Vs
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 13:50:47 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcVCX-0000GP-9k
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 13:50:46 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4127109694aso4929005e9.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 10:50:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708455044; x=1709059844; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=50us755/NbBPTEkZqWuSUvSVfTzxG7Z56CsHKPyJ9PQ=;
- b=ecP+aN2Kb4+aHWRmoXoj0a1XCQX1OBd/S8SPwBFSXatnFjTuvyAu+SoFzQ/ne6lOtF
- TOfr2U/4ff5Pgx+fSh5bna1DeBLOqWKHSGgroPJksFsFCND0JDI5pCmWLBdrjpw+t3Fd
- MdkhASURiQzmIONiWpHYnhAe+IgUWFh7+Owi+18Yj8P7muCscki+tVZCC0bEqCWMYpMz
- 8vZ29bf7HPO7bt6Iyixd/6KLyrm49/5zJmywRrBKvWOTTD0vIhiC6nQYsCRXXBDSaVTO
- r3qMHFd3w1Bf5aPYRMGniPsr4Q+c1pDReEjsrg4HF8uwQzOrR1Jx3swBxejTKWC/GJSz
- 3Ohg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708455044; x=1709059844;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=50us755/NbBPTEkZqWuSUvSVfTzxG7Z56CsHKPyJ9PQ=;
- b=IVIuxpunBzPdf6st9HMJml0CZTeF2hISjRM68Srmtn8xTw60/AT+j//2gj6/njTe2J
- JNtHdlg3uMyttYvgoORyFX5copM5J1HAgq2G3yrM2WH/PZ0nWaHrUgHq8DY4bAFz3fKF
- 5Hd2UYcqMBjTD3eVHQDROlfOldWf4k17lFiPgD54HIS2DfDDVl/xIVm5Mo2HedOYHSdk
- 1lP+NMBy7VV24xDscvBmI5m1hO66okOftJdADjipXRk8srkS2ZzF6GzTHHPGfpUEtmOh
- mJ/sP69uQ3OUudjTUI1+iOaoc0FByjLOZA26PwQ9+cmVjXmN5Knvq5svcv2JCNMl4waJ
- 5nrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNlJa3btv6s0pvVOZ+dnTyfWWbTN6DZyH4p7eDFHpKIHMemE/kMc1QIVl0FUi/I1j4w1FXVy2APC0RpVv/ASS3c1IPlIk=
-X-Gm-Message-State: AOJu0Yxc17wDraxrgEevq9B4N9Um27NdLE9wHotE+EGd7FjTlpSWriHL
- o2+SpLBvOx04hAR+pBP9YI+Hw6gVIpJ5nn8dTXe8vXoE0KebjV5aZR5LwOzqjs2rR39O20zx9PY
- A
-X-Google-Smtp-Source: AGHT+IFx7GfClFTcszQYdc5abq0d0RjgHokUFWVKJ26XDMzUD61aOp94iBCmJN50/2xh3vaZ0tAuQQ==
-X-Received: by 2002:a05:600c:1c87:b0:412:171a:f9a4 with SMTP id
- k7-20020a05600c1c8700b00412171af9a4mr11187881wms.16.1708455043707; 
- Tue, 20 Feb 2024 10:50:43 -0800 (PST)
-Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
- [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- o20-20020a05600c4fd400b00412590eee7csm12495402wmq.10.2024.02.20.10.50.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 10:50:42 -0800 (PST)
-Message-ID: <e434d7fc-d215-4537-b594-784155ebadfb@linaro.org>
-Date: Tue, 20 Feb 2024 19:50:41 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcVDL-0006jD-RL; Tue, 20 Feb 2024 13:51:37 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcVD5-0000Jq-Ha; Tue, 20 Feb 2024 13:51:35 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D40954F0CF;
+ Tue, 20 Feb 2024 21:51:35 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B20F785500;
+ Tue, 20 Feb 2024 21:51:15 +0300 (MSK)
+Message-ID: <0d55ced8-4295-4388-9fcd-4cab8f70f849@tls.msk.ru>
+Date: Tue, 20 Feb 2024 21:51:15 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] .gitlab-ci.d/windows.yml: Remove shared-msys2
- abstraction
+Subject: Re: [PATCH 12/23] qemu-img: make -l (list) the default for "snapshot"
+ subcommand
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>
-References: <20240220174412.155885-1-peter.maydell@linaro.org>
- <20240220174412.155885-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240220174412.155885-4-peter.maydell@linaro.org>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <cover.1707513011.git.mjt@tls.msk.ru>
+ <71d69214d43897e5649fed00804a5969b0fd718b.1707513011.git.mjt@tls.msk.ru>
+ <ZdTlVnQ2YvTLctDp@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <ZdTlVnQ2YvTLctDp@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,53 +86,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 18:44, Peter Maydell wrote:
-> Now we don't build msys2-32bit we don't need the abstraction out of the
-> common msys2 handling from the 32-vs-64-bit specifics. Collapse it
-> down into the msys2-64bit job definition.
+20.02.2024 20:45, Daniel P. Berrangé wrote:
+> On Sat, Feb 10, 2024 at 12:22:33AM +0300, Michael Tokarev wrote:
+>> also remove bdrv_oflags handling (only list can use RO mode)
+>> ---
+>>   qemu-img.c | 13 ++++++++-----
+>>   1 file changed, 8 insertions(+), 5 deletions(-)
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   .gitlab-ci.d/windows.yml | 84 +++++++++++++++++++---------------------
->   1 file changed, 40 insertions(+), 44 deletions(-)
-> 
-> diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-> index 8fc08218d28..e784d5a68cd 100644
-> --- a/.gitlab-ci.d/windows.yml
-> +++ b/.gitlab-ci.d/windows.yml
-> @@ -1,4 +1,4 @@
-> -.shared_msys2_builder:
-> +msys2-64bit:
->     extends: .base_job_template
->     tags:
->     - shared-windows
-> @@ -14,9 +14,19 @@
->     stage: build
->     timeout: 100m
->     variables:
-> +    MINGW_TARGET: mingw-w64-x86_64
+> I'd suggest docs/tools/qemu-img.rst should also be updated to say
 
-You expanded $MINGW_TARGET so we can remove it.
+qemu-img.rst needs to be updated, significantly more than this.
+I especially avoided updating this one for now because I'd love
+to agree with the options first, more or less, or else it'd be
+large double-work.  Also, there's an open question still, if
+we prefer to keep docs and code in sync manually or to use some
+automation like qemu-img-cmdx.hx now.  I for one don't see how
+this can be done in a reasonable way.
 
-> +    MSYSTEM: MINGW64
->       # This feature doesn't (currently) work with PowerShell, it stops
->       # the echo'ing of commands being run and doesn't show any timing
->       FF_SCRIPT_SECTIONS: 0
-> +    # do not remove "--without-default-devices"!
-> +    # commit 9f8e6cad65a6 ("gitlab-ci: Speed up the msys2-64bit job by using --without-default-devices"
-> +    # changed to compile QEMU with the --without-default-devices switch
-> +    # for the msys2 64-bit job, due to the build could not complete within
+I plan to update it past this series.
 
-s/the msys2 64-bit/this/, although it seems this sentence got truncated.
+Thanks!
 
-> +    CONFIGURE_ARGS:  --target-list=x86_64-softmmu --without-default-devices -Ddebug=false -Doptimization=0
-> +    # qTests don't run successfully with "--without-default-devices",
-> +    # so let's exclude the qtests from CI for now.
-> +    TEST_ARGS: --no-suite qtest
->     artifacts:
->       name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
->       expire_in: 7 days
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+/mjt
 
