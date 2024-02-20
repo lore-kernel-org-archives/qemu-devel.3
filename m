@@ -4,83 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D2BC48BC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD0AC5475B
 	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVdk-0004GR-Dm; Tue, 20 Feb 2024 14:18:52 -0500
+	id 1rcVdk-0004GQ-Kl; Tue, 20 Feb 2024 14:18:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcVde-0004DW-2d
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:18:49 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcVdQ-00056j-GZ
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:18:45 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-512b29f82d1so3708922e87.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:18:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708456710; x=1709061510; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pyCaNxySkOUWpGuc9oH4PJykwp3ULCdSIjMM/dXphSI=;
- b=wcXcqxUvCbar7+iy0HyPuGhWJXLtZgloj2iPgcZIPE+a1aRV+WVIPBtzkzGMI4LkPD
- kdSAwek7WBPtygNQZHU9RID6zAB1qtEnwbw5E7verq+TodlBKwRFK1uc3DUZhySBaJuD
- IVfnsCwuj4mYcOwq+VvjQggrtVjiN5SHelBmbiG65UccoXjKV+UHHwX7CWpUGPEumlEX
- Hl90e7hX8fszj4oIosHElRXopXsVBw+hIyrgjtonrF/PbHLOlTYDaQUK9B37MvjHiO6p
- pqQnr1F4XqinLZrEmJr7hOxachQmzOzBTQfUMWgPGT8c34samBgkWr+TAeRnpNmakbYk
- hFPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708456710; x=1709061510;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pyCaNxySkOUWpGuc9oH4PJykwp3ULCdSIjMM/dXphSI=;
- b=nu9lYJq1BvcV9gExdx6jjNiwrChNts88Sz+4OpEGvqxaHDLVt53qngZuOVS9KaXuM3
- xbJVz9wlfBHjef41Qf/LFMCBvt80alQytWu/J8t5MEjUcub87qcPwalL+bdUD9W4mWv5
- +NEHsjDK9hmtcbDSqlRr+dRzi4A1n4z0VAhgCeGctswaI4ITQoyndqLxRLs6wz0NyMb4
- vyXGJY6yHIeIqK4zS0JHI80v0Qj94OkAnqOHanB37TAXCR+KwFIz2yrDY/vBnCZN2HN9
- hL1aqgj+86qPVoh4e3IQj+gQ2aPpkNCGQgEOHX1kOCHUtQc+UCpGCzJU+Gm5lEsHST00
- sdKQ==
-X-Gm-Message-State: AOJu0YxN2ajMo8uReUWf4suXyvBQtmJIaNijFIjZbrGS2VhqiYIZvtP2
- +w2evDpkVbiuMh9l83o8wWFMUAMn9Oi1GBW6aT/T7omhNjfKIXXFKHVKpRJmr2ID9t+b/Jo2vgH
- sv/6Mjd6XCTk5mYvuLDLfeqPkJl+MX00qoCGiew==
-X-Google-Smtp-Source: AGHT+IHsw0T4i+ypWcR6CPJyzQdiulxCa81nZXhvcWyWvs9PYoAIOQld/5wAwwGe8VMpWpfXiS3JPwrvm/HVSThnlUA=
-X-Received: by 2002:ac2:4942:0:b0:512:b354:c5ea with SMTP id
- o2-20020ac24942000000b00512b354c5eamr4108516lfi.24.1708456710269; Tue, 20 Feb
- 2024 11:18:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcVdi-0004Eg-C4; Tue, 20 Feb 2024 14:18:50 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcVdf-00056u-PU; Tue, 20 Feb 2024 14:18:49 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5C0CE4F154;
+ Tue, 20 Feb 2024 22:19:03 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5D82585555;
+ Tue, 20 Feb 2024 22:18:42 +0300 (MSK)
+Message-ID: <e3b3b720-96e3-42dc-8e94-3d875e89c26f@tls.msk.ru>
+Date: Tue, 20 Feb 2024 22:18:42 +0300
 MIME-Version: 1.0
-References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-10-peter.maydell@linaro.org>
- <18996dba-a47c-4e68-b9cf-5e0ae5e9cd43@linaro.org>
-In-Reply-To: <18996dba-a47c-4e68-b9cf-5e0ae5e9cd43@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Feb 2024 19:18:19 +0000
-Message-ID: <CAFEAcA9dVvXcW6GD13a0K=+BnQ84AEtV-2foFAcCgsw8WjUsog@mail.gmail.com>
-Subject: Re: [PATCH 09/10] hw/core/machine: Use qemu_register_resettable for
- sysbus reset
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 00/21] Trivial tree wide typo fixes
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
+References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,81 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Feb 2024 at 19:06, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 20/2/24 17:06, Peter Maydell wrote:
-> > Move the reset of the sysbus (and thus all devices and buses anywhere
-> > on the qbus tree) from qemu_register_reset() to qemu_register_resettabl=
-e().
-> >
-> > This is a behaviour change: because qemu_register_resettable() is
-> > aware of three-phase reset, this now means that:
-> >   * 'enter' phase reset methods of devices and buses are called
-> >     before any legacy reset callbacks registered with qemu_register_res=
-et()
-> >   * 'exit' phase reset methods of devices and buses are called
-> >     after any legacy qemu_register_reset() callbacks
-> >
-> > Put another way, a qemu_register_reset() callback is now correctly
-> > ordered in the 'hold' phase along with any other 'hold' phase methods.
-> >
-> > The motivation for doing this is that we will now be able to resolve
-> > some reset-ordering issues using the three-phase mechanism, because
-> > the 'exit' phase is always after the 'hold' phase, even when the
-> > 'hold' phase function was registered with qemu_register_reset().
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > I believe that given we don't make much use of enter/exit phases
-> > currently that this is unlikely to cause unexpected regressions due
-> > to an accidental reset-order dependency that is no longer satisfied,
-> > but it's always possible...
-> > ---
-> >   hw/core/machine.c | 7 +++----
-> >   1 file changed, 3 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index fb5afdcae4c..9ac5d5389a6 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -1577,14 +1577,13 @@ void qdev_machine_creation_done(void)
-> >       /* TODO: once all bus devices are qdevified, this should be done
-> >        * when bus is created by qdev.c */
-> >       /*
-> > -     * TODO: If we had a main 'reset container' that the whole system
-> > -     * lived in, we could reset that using the multi-phase reset
-> > -     * APIs. For the moment, we just reset the sysbus, which will caus=
-e
-> > +     * This is where we arrange for the sysbus to be reset when the
-> > +     * whole simulation is reset. In turn, resetting the sysbus will c=
-ause
-> >        * all devices hanging off it (and all their child buses, recursi=
-vely)
-> >        * to be reset. Note that this will *not* reset any Device object=
-s
-> >        * which are not attached to some part of the qbus tree!
-> >        */
-> > -    qemu_register_reset(resettable_cold_reset_fn, sysbus_get_default()=
-);
->
-> Interestingly after this patch TYPE_S390_IPL is the last device
-> using resettable_cold_reset_fn(). Per commit cd45c506c8e:
->
->      /*
->       * Because this Device is not on any bus in the qbus tree (it is
->       * not a sysbus device and it's not on some other bus like a PCI
->       * bus) it will not be automatically reset by the 'reset the
->       * sysbus' hook registered by vl.c like most devices. So we must
->       * manually register a reset hook for it.
->       * TODO: there should be a better way to do this.
->       */
+20.02.2024 11:52, Manos Pitsidianakis wrote:
+..
 
-Mmm, we could now have that s390 code call
-qemu_register_resettable(OBJECT(dev)).
-Though the "better way" remark still applies, because ideally we shouldn't
-be doing reset only via the qbus tree.
+So I picked up this series, to reduce the list SPAM.
+With the following details:
 
-thanks
--- PMM
+>    docs: correct typos
+
+fixed "the historical behaviour"
+(why my spell checker continues marking "behaviour"?
+
+>    tests: correct typos
+>    Xen headers: correct typos
+
+*not* picked up
+
+>    accel/tcg: correct typos
+>    loongson3: correct typos
+>    ppc: correct typos
+
+remove 2 hooks "arbitrer" as suggested by BALATON
+
+>    sh4: correct typos
+>    include/exec/memory.h: correct typos
+>    include/exec/plugin-gen.h: correct typos
+
+*not* picked up
+
+>    hw/arm/omap.h: correct typos
+
+fix comment style
+
+>    hw/cxl/cxl_device.h: correct typos
+>    hw/net/npcm_gmac.h: correct typos
+>    hw/riscv/virt.h: correct typos
+>    pc-bios/README: correct typos
+>    qapi/ui: correct typos
+>    qemu-options.hx: correct typos
+>    ci/gitlab-pipeline-status: correct typos
+>    hexagon: correct typos
+>    m68k: correct typos
+
+correct "covers" as suggested by Thomas
+
+>    s390x: correct typos
+>    target/sparc: correct typos
+
 
