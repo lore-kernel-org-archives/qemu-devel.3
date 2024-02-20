@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81697C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EAF6C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 07:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcKFv-00081n-TQ; Tue, 20 Feb 2024 02:09:31 -0500
+	id 1rcKGB-00086m-5p; Tue, 20 Feb 2024 02:09:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKFu-00080N-9C
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:09:30 -0500
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcKFp-0007yc-RI
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:09:29 -0500
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a3ea7616097so200605566b.1
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 23:09:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708412964; x=1709017764; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A2ti6MU64ste7HF3pHVEAvtgCFlRo8bHIyKHvxSphvo=;
- b=zKLJJ626snowECQbCC/lwGUOUrUUq3a27AfDmJqrsJUl5m8EMY5A0zk1dMqvZl6em2
- qyvQJHjFjnTWkAa1bT1qLid6M8dQ81XMPyykWBOT81d9gik2igUbz/ZnRmIZwsJ5wMSr
- XIxhTlorFN6bOjYdlRGkGkzAdbY0QlVpsx65ygz4clZ9xiiedr66ncKIuvB8PbNkszMl
- nPGmJufUV+ZiSsA84n1tXTpAnw5bZiQKsjM1ARzNvV2hfHrmgIbZvvzPSn9d5t/CCoBQ
- xX1VSX+LtGiIwOwBEHBvWgYDCBPs9qdzr7MWKw4fmeOVHCbc4n+oQ/+ol5rx4SZGcwin
- iqmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708412964; x=1709017764;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A2ti6MU64ste7HF3pHVEAvtgCFlRo8bHIyKHvxSphvo=;
- b=oEgsPylDo/UyUT3LhfW5mVLkBZulYY0KQo2BSAwZeBipNQ79rQieJpW4XW3NyQNXfl
- S2jufqs/WwTD4UV+37QVEQkqxZNiCjC9IhFnpWMpCap6T46fcwRCiMbMp7RLCGPx0OMf
- XoMjmpVjAaUc1t1xhMDz65N5KtHnAs5V6qgTrPhZ44ghhklSEb4YPj/OjhFZob4mPAiF
- 0sA963R90Em8JmFPNNyYr9GDPJ1jpXrFJJ6TPjPPBg+97H/iob1No9uQP4qUFaffEn1m
- snZ770uNk3h3364RXMZY3aiQTkUFNlRLmjomOwH/Mhg1SpYneDnfQkAHYXV5D2ooXRGW
- QQ2w==
-X-Gm-Message-State: AOJu0YzDqpMMv7PpDZAUsTQ6wRwOD2nbdm37uq9lMybU6rOS7Q4Z8Xdm
- R35M4iOS1r5EaYJnC1zokMVQ1/AlJmZjLJLpFdH4MEdUKxQQ6XMTKXaL+e428DE=
-X-Google-Smtp-Source: AGHT+IGZsoVfd+CQZp+MzSF0QWw06ZL275/DQLuJNvdn6cdf/Y3MgayB45QiMchgRpvrByf76yLRqg==
-X-Received: by 2002:a17:906:b154:b0:a3e:cbba:fd86 with SMTP id
- bt20-20020a170906b15400b00a3ecbbafd86mr1969169ejb.11.1708412963799; 
- Mon, 19 Feb 2024 23:09:23 -0800 (PST)
-Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
- [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- qw23-20020a170906fcb700b00a3e426149a1sm2878011ejb.50.2024.02.19.23.09.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 23:09:23 -0800 (PST)
-Message-ID: <ef49ed81-fa4c-4f77-b5d8-53d62bae3524@linaro.org>
-Date: Tue, 20 Feb 2024 08:09:20 +0100
+ (Exim 4.90_1) (envelope-from <prvs=978002c08f=schalla@marvell.com>)
+ id 1rcKGA-00086N-AP
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:09:46 -0500
+Received: from mx0a-0016f401.pphosted.com ([67.231.148.174]
+ helo=mx0b-0016f401.pphosted.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=978002c08f=schalla@marvell.com>)
+ id 1rcKG7-0007z7-NA
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 02:09:46 -0500
+Received: from pps.filterd (m0045849.ppops.net [127.0.0.1])
+ by mx0a-0016f401.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 41K3qUJ5005734; Mon, 19 Feb 2024 23:09:39 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marvell.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=pfpt0220; bh=tLzNhQ+o
+ AsfNu7fDJNDGZh1uzfuL9hQ0OaDv5nEqAxQ=; b=TqMv/2Q5YHt4jtkvbj3aJL5+
+ SCQvI8M5dRoojDQGQ3dTxoeksFF+nsQrOtlRg2M/mBW45NwtPVNfR800sufeQVcw
+ JbSY7FQoPgSp/ijN9xc0NeaikWeloj1/KG1PqSpjlWGd9ti6atWcnVnqRqFOyc0Y
+ gruzTm9OrI+0vniTuUr/RNjwzHb7CLsGeNc7SEfsykgg5TP1W0VGS1DqdkOmapkX
+ amBZ5DjMAkEmk1i101+2psYTHx115GUfUhK+nUJlRBahL2awV9TvAEwYyvPCTJrv
+ Z51pdvkAY2uu1ZM6/DYlLpx1uoPVlY64r9GZ2cuX5ZUvp55DIIDQBG3Og94vug==
+Received: from dc5-exch01.marvell.com ([199.233.59.181])
+ by mx0a-0016f401.pphosted.com (PPS) with ESMTPS id 3wcmjcrddf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Mon, 19 Feb 2024 23:09:39 -0800 (PST)
+Received: from DC5-EXCH02.marvell.com (10.69.176.39) by DC5-EXCH01.marvell.com
+ (10.69.176.38) with Microsoft SMTP Server (TLS) id 15.0.1497.48;
+ Mon, 19 Feb 2024 23:09:38 -0800
+Received: from maili.marvell.com (10.69.176.80) by DC5-EXCH02.marvell.com
+ (10.69.176.39) with Microsoft SMTP Server id 15.0.1497.48 via Frontend
+ Transport; Mon, 19 Feb 2024 23:09:38 -0800
+Received: from localhost.localdomain (unknown [10.28.36.175])
+ by maili.marvell.com (Postfix) with ESMTP id 461323F7043;
+ Mon, 19 Feb 2024 23:09:36 -0800 (PST)
+From: Srujana Challa <schalla@marvell.com>
+To: <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <vattunuru@marvell.com>, <jerinj@marvell.com>,
+ <schalla@marvell.com>
+Subject: [PATCH v2] virtio-pci: correctly set virtio pci queue mem multiplier
+Date: Tue, 20 Feb 2024 12:39:35 +0530
+Message-ID: <20240220070935.1617570-1-schalla@marvell.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] hw/acpi/ich9: Include missing headers
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-trivial@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240219141412.71418-1-philmd@linaro.org>
- <20240219141412.71418-4-philmd@linaro.org> <ZdQPhcB28MsDdFfu@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZdQPhcB28MsDdFfu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Proofpoint-ORIG-GUID: PqaqoYjhZNP647250LkCygJWOnh2oG5C
+X-Proofpoint-GUID: PqaqoYjhZNP647250LkCygJWOnh2oG5C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
+Received-SPF: pass client-ip=67.231.148.174;
+ envelope-from=prvs=978002c08f=schalla@marvell.com;
+ helo=mx0b-0016f401.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,60 +87,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 03:33, Zhao Liu wrote:
-> Hi Philippe,
-> 
-> On Mon, Feb 19, 2024 at 03:14:09PM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Mon, 19 Feb 2024 15:14:09 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: [PATCH 3/5] hw/acpi/ich9: Include missing headers
->> X-Mailer: git-send-email 2.41.0
->>
->> The ICH9LPCPMRegs structure has MemoryRegion and
->> Notifier fields, so requires the "qemu/notify.h"
->> and "exec/memory.h" headers.
->>
->> However nothing from "hw/acpi/acpi_dev_interface.h"
->> is required, so reduce its inclusion to hw/acpi/ich9.c
->> source file where it is used.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/acpi/ich9.h | 3 ++-
->>   hw/acpi/ich9.c         | 2 +-
->>   2 files changed, 3 insertions(+), 2 deletions(-)
+Currently, virtio_pci_queue_mem_mult function always returns 4K
+when VIRTIO_PCI_FLAG_PAGE_PER_VQ is set. But this won't
+work for vhost vdpa when host has page size other than 4K.
+This patch introduces a new property(page-per-vdpa-vq) for vdpa
+use case to fix the same.
 
+Signed-off-by: Srujana Challa <schalla@marvell.com>
+---
+v1->v2:
+- Introduced a new property to get virtqueue mem multiplier for
+  vdpa use case.
 
->> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
->> index 573d032e8e..be375a8b9d 100644
->> --- a/hw/acpi/ich9.c
->> +++ b/hw/acpi/ich9.c
->> @@ -35,7 +35,7 @@
->>   #include "sysemu/runstate.h"
->>   #include "hw/acpi/acpi.h"
->>   #include "hw/acpi/ich9_tco.h"
->> -
->> +#include "hw/acpi/acpi_dev_interface.h"
-> 
-> Do we have the requirement for included header ordering?
+ hw/virtio/virtio-pci.c         | 10 ++++++++--
+ include/hw/virtio/virtio-pci.h |  5 +++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-We don't. If headers were properly including requisites and
-self-contained, order shouldn't matter, and we could sort them
-alphabetically to enforce a common style.
-
-> If so, it would be better to put it before "hw/acpi/ich9_tco.h".
-
-Sure, no problem.
-
-> 
-> -Zhao
-> 
->>   #include "hw/southbridge/ich9.h"
->>   #include "hw/mem/pc-dimm.h"
->>   #include "hw/mem/nvdimm.h"
->> -- 
->> 2.41.0
->>
->>
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 1a7039fb0c..28dd6ab8b5 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -320,8 +320,12 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
+ 
+ static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
+ {
+-    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
+-        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
++    if (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)
++        return QEMU_VIRTIO_PCI_QUEUE_MEM_MULT;
++    else if (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VDPA_VQ)
++        return qemu_real_host_page_size();
++    else
++        return 4;
+ }
+ 
+ static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
+@@ -2301,6 +2305,8 @@ static Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_AER_BIT, false),
++    DEFINE_PROP_BIT("page-per-vdpa-vq", VirtIOPCIProxy, flags,
++                    VIRTIO_PCI_FLAG_PAGE_PER_VDPA_VQ_BIT, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 59d88018c1..10a30c26a2 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -43,6 +43,7 @@ enum {
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
++    VIRTIO_PCI_FLAG_PAGE_PER_VDPA_VQ_BIT,
+ };
+ 
+ /* Need to activate work-arounds for buggy guests at vmstate load. */
+@@ -89,6 +90,10 @@ enum {
+ #define VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED \
+   (1 << VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT)
+ 
++/* page per vdpa vq flag to be used for vhost vdpa backends */
++#define VIRTIO_PCI_FLAG_PAGE_PER_VDPA_VQ \
++    (1 << VIRTIO_PCI_FLAG_PAGE_PER_VDPA_VQ_BIT)
++
+ typedef struct {
+     MSIMessage msg;
+     int virq;
+-- 
+2.25.1
 
 
