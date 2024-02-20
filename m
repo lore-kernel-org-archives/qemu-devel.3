@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E610DC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A43C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSdb-00025r-Ik; Tue, 20 Feb 2024 11:06:31 -0500
+	id 1rcSdi-0002Ap-Nc; Tue, 20 Feb 2024 11:06:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSda-00024E-2B
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:30 -0500
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ id 1rcSdf-00028X-7M
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:35 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcSdX-0005En-Ik
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:29 -0500
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2d23114b19dso31699451fa.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:27 -0800 (PST)
+ id 1rcSdc-0005G0-FI
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:34 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-41269c801eeso13266925e9.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708445186; x=1709049986; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708445190; x=1709049990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fbwlnbkTELmw0yuCS8YQeiT81oI84UQospsJeFLv0YU=;
- b=nJ4ap+3Scjx3YWWryHjsn/arO4mJ3aWqlLktScKPo8/4AFLhpmWDmimA32SiLgFOdz
- 8FyXCzBWaVLm9pw4JWrlLU4apu6vf0VYPwGUYSATnPCOBQroLaGPt8x25lz9yNRjdsYx
- brACJu/eoAdI6CHdKFXajFlmV7Ax3EGWOaBbnRV1iES8T9peOjqW0Iy6IPPoyOOlxtDr
- mHsaYp67vhp3ncd7AScEIGQLoofeRaIsTEPzw/lVD1B5nTqRqlAiqrU9/zhFy4bzRARb
- cjHFMDPqDBdUIdDTDSJYiDw/ZKaawYror9HcH5WLmhZ/IKyn4vNO8cZvKrggnkzxmLyR
- erKA==
+ bh=ItiTCkAfmzt4OaTQ5t65CWwnYcleCpOpQ9IF8gCFhuc=;
+ b=jcbstVlL9o8xKfoeXjqHmARA7c8+9YChtFy31J2nwUzA6GcUrjC4HcBy8BUgFBj9KQ
+ av7UHtgv1hIWqtUb7nCDmA8iiTPm05FhXCNeQvo0rO/ELdGxb8GofBxOSbYa0HVG25RH
+ LAjriSnZ1HjwBB1IQYOCt3ZVB3REO240z5PJCovCIRsNpR77EH7gvLdxHWg6evp4IdhZ
+ xHpM/scLG7CxX/pztj1hWFhzPYIX0QF2hCmrhHdIVQjYG23L84wO3DOe1GX2fyysOV3T
+ FKRlPlZQQnt0amakwga3fZH7O78APBcKaZA+tcRv3uTA5aluXUvE4S8TMyp4X/Hhvc+c
+ 3kWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708445186; x=1709049986;
+ d=1e100.net; s=20230601; t=1708445190; x=1709049990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fbwlnbkTELmw0yuCS8YQeiT81oI84UQospsJeFLv0YU=;
- b=L1uSzihshyLW/pyPs1oxj9bkVRySMpmxmXdU7fB/8wuyVlUO8clh+T6a5jYX0fxiRe
- 6Hlyby8CykgFjK0wAVWUIXoet5dSL4ybHIsoBUwvwgRG8c5DkCJafsl1SNfnPiM0qNzq
- GhUnNZuJKNcy9Gj7mLJCfGcPvN+3Ho+97aKNS0qjqhqwBYsR8HG9fCBUDy7MirHFZpO3
- ZW2YSxglJuJ9UGvzbGzSUOESuAjwmN0JaGUQcuH/G6aLMsXrQCmKdznULjyNueGivtlL
- KAfoWVdg4f5OQjJvlVDiS2N/T/0RUVEk9J3hc1bmTsRxmQVdNpppxIESmeBGL+aIuq31
- BbkA==
-X-Gm-Message-State: AOJu0Yw1Lq2gY5dVfe2nb/2vjrCD3rGrz+dEF7GrcZh1SMkK/uL5+CiQ
- pFg/bTxU8myJLoSjw/4qQphjXKZrD2Ki6St8LSGiwD2HrSj3KSpQ3FdHqEr9l3Bv2lSTwyXNJy2
- 9
-X-Google-Smtp-Source: AGHT+IEqgrymnA16eKPoYPJ9nEqD5pDnpQUglY2tnRRJJJWx4Yf1pQRqyLbb9uQif3AzgEOtdzX8Iw==
-X-Received: by 2002:a2e:9446:0:b0:2d2:4c72:b24 with SMTP id
- o6-20020a2e9446000000b002d24c720b24mr1628879ljh.50.1708445185881; 
- Tue, 20 Feb 2024 08:06:25 -0800 (PST)
+ bh=ItiTCkAfmzt4OaTQ5t65CWwnYcleCpOpQ9IF8gCFhuc=;
+ b=gecI4L9b2Aalbn/CvjGkRUO8phKv/m47w5YpnZ8GnbCAbcZzyKm2SKQ5euOAny/yn7
+ rmt4xDEvGoIH25/V3ABldvaGA86y+1Ip9cIxhzNSvb86wXdoGxOrphs1ESEHehCJDzys
+ uVTTJqx5fhbTt2Z8dy8il9KaGsK/zAitBbAB5YgcE2Z6phu8f6/5Pd9I+gSthIstm97J
+ V5y4CQp1ySae2gN0LrfRm46v2Bw4zluBe2cZ144tSRINVggjZ1uZkckbBDubTQFdOnEk
+ iGRBLmdNLSgQt5+rowhLSB3bZkxnJKV1IJjDkoHZgPh4BNbE4oYK/MSE95MLyDnImJcM
+ fuUA==
+X-Gm-Message-State: AOJu0Yyi1t1tg9qu7xXkQ1UqusR6Og02SD5DRw2H05UO2Q6+YST/7kNw
+ nlHMjMIcE7LAvJp8vhW0eSNxtZLFJR3A/baKH97NBWXsKbXXKt4BR5KjFlOR8ml+QbNiCmWRGWd
+ l
+X-Google-Smtp-Source: AGHT+IG5fA8cRiSQZMvAw0nvfAZ0CNed/B4mryIZdzif8FxC3m1+XlnhTHny8WnaRTLLkhdnPDB33g==
+X-Received: by 2002:a05:600c:4706:b0:412:7180:eaf7 with SMTP id
+ v6-20020a05600c470600b004127180eaf7mr792749wmo.6.1708445190608; 
+ Tue, 20 Feb 2024 08:06:30 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.25
+ f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 08:06:25 -0800 (PST)
+ Tue, 20 Feb 2024 08:06:30 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -68,17 +68,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Subject: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
- pc_machine_done()
-Date: Tue, 20 Feb 2024 16:06:14 +0000
-Message-Id: <20240220160622.114437-3-peter.maydell@linaro.org>
+Subject: [PATCH 10/10] docs/devel/reset: Update to discuss system reset
+Date: Tue, 20 Feb 2024 16:06:22 +0000
+Message-Id: <20240220160622.114437-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240220160622.114437-1-peter.maydell@linaro.org>
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,133 +100,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the i386 PC machine, we want to run the pc_cmos_init_late()
-function only once the IDE and floppy drive devices have been set up.
-We currently do this using qemu_register_reset(), and then have the
-function call qemu_unregister_reset() on itself, so it runs exactly
-once.
-
-This was an expedient way to do it back in 2010 when we first added
-this (in commit c0897e0cb94e8), but now we have a more obvious point
-to do "machine initialization that has to happen after generic device
-init": the machine-init-done hook.
-
-Do the pc_cmos_init_late() work from our existing PC machine init
-done hook function, so we can drop the use of qemu_register_reset()
-and qemu_unregister_reset().
-
-Because the pointers to the devices we need (the IDE buses and the
-RTC) are now all in the machine state, we don't need the
-pc_cmos_init_late_arg struct and can just pass the PCMachineState
-pointer.
+Now that system reset uses a three-phase-reset, update the reset
+documentation to include a section describing how this works.
+Include documentation of the current major beartrap in reset, which
+is that only devices on the qbus tree will get automatically reset.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/i386/pc.c | 39 ++++++++++++++++-----------------------
- 1 file changed, 16 insertions(+), 23 deletions(-)
+This merely documents the current situation, and says nothing
+about what we might like to do with it in future...
+---
+ docs/devel/reset.rst | 44 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 42 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 8b0f54e284c..4c3cfe9fc35 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -465,11 +465,6 @@ static void pc_cmos_init_floppy(MC146818RtcState *rtc_state, ISADevice *floppy)
-     mc146818rtc_set_cmos_data(rtc_state, REG_EQUIPMENT_BYTE, val);
- }
+diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+index d4e79718bac..2ea85e7779b 100644
+--- a/docs/devel/reset.rst
++++ b/docs/devel/reset.rst
+@@ -11,8 +11,8 @@ whole group can be reset consistently. Each individual member object does not
+ have to care about others; in particular, problems of order (which object is
+ reset first) are addressed.
  
--typedef struct pc_cmos_init_late_arg {
--    MC146818RtcState *rtc_state;
--    BusState *idebus[2];
--} pc_cmos_init_late_arg;
+-As of now DeviceClass and BusClass implement this interface.
 -
- typedef struct check_fdc_state {
-     ISADevice *floppy;
-     bool multiple;
-@@ -530,23 +525,25 @@ static ISADevice *pc_find_fdc0(void)
-     return state.floppy;
- }
++The main object types which implement this interface are DeviceClass
++and BusClass.
  
--static void pc_cmos_init_late(void *opaque)
-+static void pc_cmos_init_late(PCMachineState *pcms)
- {
--    pc_cmos_init_late_arg *arg = opaque;
--    MC146818RtcState *s = arg->rtc_state;
-+    X86MachineState *x86ms = X86_MACHINE(pcms);
-+    MC146818RtcState *s = MC146818_RTC(x86ms->rtc);
-     int16_t cylinders;
-     int8_t heads, sectors;
-     int val;
-     int i, trans;
- 
-     val = 0;
--    if (arg->idebus[0] && ide_get_geometry(arg->idebus[0], 0,
--                                           &cylinders, &heads, &sectors) >= 0) {
-+    if (pcms->idebus[0] &&
-+        ide_get_geometry(pcms->idebus[0], 0,
-+                         &cylinders, &heads, &sectors) >= 0) {
-         cmos_init_hd(s, 0x19, 0x1b, cylinders, heads, sectors);
-         val |= 0xf0;
-     }
--    if (arg->idebus[0] && ide_get_geometry(arg->idebus[0], 1,
--                                           &cylinders, &heads, &sectors) >= 0) {
-+    if (pcms->idebus[0] &&
-+        ide_get_geometry(pcms->idebus[0], 1,
-+                         &cylinders, &heads, &sectors) >= 0) {
-         cmos_init_hd(s, 0x1a, 0x24, cylinders, heads, sectors);
-         val |= 0x0f;
-     }
-@@ -558,10 +555,11 @@ static void pc_cmos_init_late(void *opaque)
-            geometry.  It is always such that: 1 <= sects <= 63, 1
-            <= heads <= 16, 1 <= cylinders <= 16383. The BIOS
-            geometry can be different if a translation is done. */
--        if (arg->idebus[i / 2] &&
--            ide_get_geometry(arg->idebus[i / 2], i % 2,
-+        BusState *idebus = pcms->idebus[i / 2];
-+        if (idebus &&
-+            ide_get_geometry(idebus, i % 2,
-                              &cylinders, &heads, &sectors) >= 0) {
--            trans = ide_get_bios_chs_trans(arg->idebus[i / 2], i % 2) - 1;
-+            trans = ide_get_bios_chs_trans(idebus, i % 2) - 1;
-             assert((trans & ~3) == 0);
-             val |= trans << (i * 2);
-         }
-@@ -569,15 +567,12 @@ static void pc_cmos_init_late(void *opaque)
-     mc146818rtc_set_cmos_data(s, 0x39, val);
- 
-     pc_cmos_init_floppy(s, pc_find_fdc0());
--
--    qemu_unregister_reset(pc_cmos_init_late, opaque);
- }
- 
- void pc_cmos_init(PCMachineState *pcms,
-                   ISADevice *rtc)
- {
-     int val;
--    static pc_cmos_init_late_arg arg;
-     X86MachineState *x86ms = X86_MACHINE(pcms);
-     MC146818RtcState *s = MC146818_RTC(rtc);
- 
-@@ -631,11 +626,7 @@ void pc_cmos_init(PCMachineState *pcms,
-     val |= 0x04; /* PS/2 mouse installed */
-     mc146818rtc_set_cmos_data(s, REG_EQUIPMENT_BYTE, val);
- 
--    /* hard drives and FDC */
--    arg.rtc_state = s;
--    arg.idebus[0] = pcms->idebus[0];
--    arg.idebus[1] = pcms->idebus[1];
--    qemu_register_reset(pc_cmos_init_late, &arg);
-+    /* hard drives and FDC are handled by pc_cmos_init_late() */
- }
- 
- static void handle_a20_line_change(void *opaque, int irq, int level)
-@@ -703,6 +694,8 @@ void pc_machine_done(Notifier *notifier, void *data)
-         /* update FW_CFG_NB_CPUS to account for -device added CPUs */
-         fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     }
+ Triggering reset
+ ----------------
+@@ -288,3 +288,43 @@ There is currently 2 cases where this function is used:
+ 2. *hot bus change*; it means an existing live device is added, moved or
+    removed in the bus hierarchy. At the moment, it occurs only in the raspi
+    machines for changing the sdbus used by sd card.
 +
-+    pc_cmos_init_late(pcms);
- }
- 
- void pc_guest_info_init(PCMachineState *pcms)
++Reset of the complete system
++----------------------------
++
++Reset of the complete system is a little complicated. The typical
++flow is:
++
++1. Code which wishes to reset the entire system does so by calling
++   ``qemu_system_reset_request()``. This schedules a reset, but the
++   reset will happen asynchronously after the function returns.
++   That makes this safe to call from, for example, device models.
++
++2. The function which is called to make the reset happen is
++   ``qemu_system_reset()``. Generally only core system code should
++   call this directly.
++
++3. ``qemu_system_reset()`` calls the ``MachineClass::reset`` method of
++   the current machine, if it has one. That method must call
++   ``qemu_devices_reset()``. If the machine has no reset method,
++   ``qemu_system_reset()`` calls ``qemu_devices_reset()`` directly.
++
++4. ``qemu_devices_reset()`` performs a reset of the system, using
++   the three-phase mechanism listed above. It resets all objects
++   that were registered with it using ``qemu_register_resettable()``.
++   It also calls all the functions registered with it using
++   ``qemu_register_reset()``. Those functions are called during the
++   "hold" phase of this reset.
++
++5. The most important object that this reset resets is the
++   'sysbus' bus. The sysbus bus is the root of the qbus tree. This
++   means that all devices on the sysbus are reset, and all their
++   child buses, and all the devices on those child buses.
++
++6. Devices which are not on the qbus tree are *not* automatically
++   reset! (The most obvious example of this is CPU objects, but
++   anything that directly inherits from ``TYPE_OBJECT`` or ``TYPE_DEVICE``
++   rather than from ``TYPE_SYS_BUS_DEVICE`` or some other plugs-into-a-bus
++   type will be in this category.) You need to therefore arrange for these
++   to be reset in some other way (e.g. using ``qemu_register_resettable()``
++   or ``qemu_register_reset()``).
 -- 
 2.34.1
 
