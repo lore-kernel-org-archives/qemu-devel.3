@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83CDAC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 06:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16144C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 06:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcJxa-0002mJ-QG; Tue, 20 Feb 2024 01:50:34 -0500
+	id 1rcJyR-000405-7E; Tue, 20 Feb 2024 01:51:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcJxY-0002lo-3z
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:50:32 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcJxW-0004tg-CF
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:50:31 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4126d65ace3so3474345e9.3
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 22:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708411827; x=1709016627; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7IEnePugGgUoICeCL35mG4yEzWVLyAAMfq5V5GWMgX0=;
- b=phA1P7sWn6pcwHLYnsakWjbmzbnnJuoS1V4S7J/eUqkHtOlcOu1+Uv4OoQTv5I+aFK
- tJtYrCS2OItoFMoxStmZDrHB5Y5dK5SDb8q8rn8TLB8Pdsn5KCjANpenGnnix1V5htlT
- OHMhuDSXNWPC7oSuzhw1YwM5McjSTNcipznA3kwFM/Qimtfs3pRkRX4DP41Id9mIfsZz
- 2SB7txVzLBsMtghnxiw5+1BEis9eBQ9O83uiuy+cnvHa06q7XQ2ojIIkN/OhNrykzhVG
- 4jCLT3os7yEjEkjCdGRs53uHyeX6lRo8BSsRrqNnjHCoJFyNGhMuDxbT28ruxzS+HNs+
- fcVA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJyP-0003zi-Bj
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:51:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcJyO-0004y5-3I
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 01:51:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708411883;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZxxdjQANxVC91PzBJOpK0fHUtpAuMkabrrIRYI/uE3c=;
+ b=hJN0YcUhgp2TO6zPsiSwdUDFbnoUemJ2iOHmFuBMgm0ATflDgZZp4CnQhCcTv+v/hPDfeP
+ nmHd5tVHP2j2dWYlHjfODOywkYZC8YWpTtGppWNiX/XRzMk4qySS/8T7T/p2mJ+O21WCml
+ NIH3NUXh7JhctFYONeIp6g48BZPNuqc=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-295-ANrBHBeAOHiFybJLGRXrnA-1; Tue, 20 Feb 2024 01:51:21 -0500
+X-MC-Unique: ANrBHBeAOHiFybJLGRXrnA-1
+Received: by mail-oo1-f69.google.com with SMTP id
+ 006d021491bc7-59f74be84dfso913212eaf.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 22:51:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708411827; x=1709016627;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7IEnePugGgUoICeCL35mG4yEzWVLyAAMfq5V5GWMgX0=;
- b=CohEn0ajXrrHnT6tk6aWjzIaH1p1f6kYySBfLV7boAM2ayUOoJCMpertmFvEuu3VDi
- jOiQBU851Q2zL4mL3CEakpaYmakb7fDYxQiw5MlLgb8rkO0SEf8Iuhx1e0jH4HKVullZ
- C81mrrDO8NnpjdM+QExiPgwjY2AxrNNIgby2KpfjMEBGpkCQD7fE6rL9fhS15HqO65H1
- c/IW4L5osB65UCQVH8U5EXD8goLQ4VrrzQVvpsd5TDsX9u9zpVuAtO/uqxUwGpIEOed9
- 1NXGIZE8rqxrAUd6aI/uOzRsIZj+0oLAIcpZxsTnhxSoqCu3OH5/MNsRvrMA0Kdi5sR3
- x9EQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVKD3sWxaOcJ4jeyzg9GDF7GP7GYSrvkEbqxZcEDNOuvOP1RRWUk70Q17otuMnIjJsF+mHZnQ1MwwnYaOqFmkYj6xC6vN8=
-X-Gm-Message-State: AOJu0YwGpFCfIvBZa9dOABXbaWZONUEe3WqnCL02SKgbgrUpHij3dZKY
- ahDJCLwGxlNT5zbGfzXsjR2ZJlX78KaFr+iSfwaeC+avbcTY0ftOqChIJlcQ1iM=
-X-Google-Smtp-Source: AGHT+IHxO0r30lxscG2YCRQIfJHxQ5ifYp/345djnp2UqyWvY1/X9dmS4mMVsBvkya0ymJckBG5wHw==
-X-Received: by 2002:a05:600c:21d8:b0:411:e398:ca7a with SMTP id
- x24-20020a05600c21d800b00411e398ca7amr11654370wmj.39.1708411827713; 
- Mon, 19 Feb 2024 22:50:27 -0800 (PST)
-Received: from [192.168.69.100] (mek33-h02-176-184-23-7.dsl.sta.abo.bbox.fr.
- [176.184.23.7]) by smtp.gmail.com with ESMTPSA id
- s6-20020a05600c45c600b00412696bd7d9sm3642279wmo.41.2024.02.19.22.50.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 22:50:27 -0800 (PST)
-Message-ID: <429a5a27-21b9-45bd-a1a6-a1c2ccc484c9@linaro.org>
-Date: Tue, 20 Feb 2024 07:50:24 +0100
+ d=1e100.net; s=20230601; t=1708411880; x=1709016680;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZxxdjQANxVC91PzBJOpK0fHUtpAuMkabrrIRYI/uE3c=;
+ b=PaFYaDpNrNisV8dWEwRcYm/Afm3Wec6/KrqaGx8DdPjIYCgqmetlrey04m2fX4x0Go
+ My/S3+6LDPA/bxDlGrxQaCv5dy9RaRn5DFbLZTSRreEKZ1LQOBqZ8h2thUxVGlLlii1q
+ z+juFLfivZUX2jjM1Cmqpqu57usT4xqofYw+ORbwxEd1MSq+N1PgoOYVyunSNg7Zb/S5
+ vY4bowdghgEDn2addG3wPHW7BN35JHJ3xofBWgxHLb0eWBD3JIbMUraV4YIhtN6WWbBn
+ xDQxCcRuEfvNb6Fa9SpNlgfwKcXrP2EU2xy+XMx3EOpGjqrvnoR/sAbUDCFUxpzsszdA
+ +dfg==
+X-Gm-Message-State: AOJu0YxTYexf+KYgDyA+2YwCRJPME+mqaVFCcLi/1geBfsr6yfipL0GW
+ PUdk92SS+i7tT0qGsWDLliBASCjoKo4MyYYZfWdQGe28ieZxiGpPRc/j15cf1bnc50oW1PmIUAV
+ yuGuDCV3Hun4L5igLQACcKCfKVM+1HlSS5VCg+dvdS7n2wZIAt5tk
+X-Received: by 2002:a05:6358:5925:b0:178:f482:6e59 with SMTP id
+ g37-20020a056358592500b00178f4826e59mr13277850rwf.3.1708411880686; 
+ Mon, 19 Feb 2024 22:51:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHbQC+Ch2T/n5UV4G+wEeyynAhNSnp4HVJmWKglreO5EqLBmcyMMHI6y5o28rYHEzXrX+cVew==
+X-Received: by 2002:a05:6358:5925:b0:178:f482:6e59 with SMTP id
+ g37-20020a056358592500b00178f4826e59mr13277836rwf.3.1708411880357; 
+ Mon, 19 Feb 2024 22:51:20 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ u21-20020aa78395000000b006e0ad616be3sm6029019pfm.110.2024.02.19.22.51.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 19 Feb 2024 22:51:20 -0800 (PST)
+Date: Tue, 20 Feb 2024 14:51:09 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH V3 07/13] migration: per-mode notifiers
+Message-ID: <ZdRL3XzXVUS3tYdT@x1n>
+References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
+ <1707418446-134863-8-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/xen: detect when running inside stubdomain
-Content-Language: en-US
-To: =?UTF-8?Q?Marek_Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Claudio Fontana <cfontana@suse.de>
-Cc: Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-References: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1707418446-134863-8-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,115 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/2/24 19:16, Marek Marczykowski-Górecki wrote:
-> Introduce global xen_is_stubdomain variable when qemu is running inside
-> a stubdomain instead of dom0. This will be relevant for subsequent
-> patches, as few things like accessing PCI config space need to be done
-> differently.
+On Thu, Feb 08, 2024 at 10:54:00AM -0800, Steve Sistare wrote:
+> Keep a separate list of migration notifiers for each migration mode.
 > 
-> Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-> ---
->   hw/xen/xen-legacy-backend.c | 15 +++++++++++++++
->   include/hw/xen/xen.h        |  1 +
->   system/globals.c            |  1 +
->   3 files changed, 17 insertions(+)
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-> diff --git a/include/hw/xen/xen.h b/include/hw/xen/xen.h
-> index 37ecc91fc3..ecb89ecfc1 100644
-> --- a/include/hw/xen/xen.h
-> +++ b/include/hw/xen/xen.h
-> @@ -36,6 +36,7 @@ enum xen_mode {
->   extern uint32_t xen_domid;
->   extern enum xen_mode xen_mode;
->   extern bool xen_domid_restrict;
-> +extern bool xen_is_stubdomain;
->   
->   int xen_pci_slot_get_pirq(PCIDevice *pci_dev, int irq_num);
->   int xen_set_pci_link_route(uint8_t link, uint8_t irq);
-> diff --git a/system/globals.c b/system/globals.c
-> index b6d4e72530..ac27d88bd4 100644
-> --- a/system/globals.c
-> +++ b/system/globals.c
-> @@ -62,6 +62,7 @@ bool qemu_uuid_set;
->   uint32_t xen_domid;
->   enum xen_mode xen_mode = XEN_DISABLED;
->   bool xen_domid_restrict;
-> +bool xen_is_stubdomain;
+-- 
+Peter Xu
 
-Note for myself, Paolo and Claudio, IIUC these fields belong
-to TYPE_XEN_ACCEL in accel/xen/xen-all.c. Maybe resulting in
-smth like:
-
--- >8 --
-diff --git a/accel/xen/xen-all.c b/accel/xen/xen-all.c
-index 5ff0cb8bd9..fc25d8c912 100644
---- a/accel/xen/xen-all.c
-+++ b/accel/xen/xen-all.c
-@@ -24,11 +24,31 @@
-  #include "migration/global_state.h"
-  #include "hw/boards.h"
-
--bool xen_allowed;
-+struct XenAccelState
-+{
-+    AccelState parent_obj;
-+
-+    bool xen_allowed;
-+
-+    enum xen_mode xen_mode;
-+
-+    uint32_t xen_domid;
-+    bool xen_domid_restrict;
-
-  xc_interface *xen_xc;
-  xenforeignmemory_handle *xen_fmem;
-  xendevicemodel_handle *xen_dmod;
-+};
-+
-+struct XenAccelOpsClass
-+{
-+    AccelOpsClass parent_class;
-+
-+    struct evtchn_backend_ops *xen_evtchn_ops;
-+    struct gnttab_backend_ops *xen_gnttab_ops;
-+    struct foreignmem_backend_ops *xen_foreignmem_ops;
-+    struct xenstore_backend_ops *xen_xenstore_ops;
-+}
-
-  static void xenstore_record_dm_state(const char *state)
-  {
-@@ -114,6 +134,13 @@ static int xen_init(MachineState *ms)
-      return 0;
-  }
-
-+static void xen_accel_init(Object *obj)
-+{
-+    XenAccelState *s = XEN_ACCEL(obj);
-+
-+    s->xen_mode = XEN_DISABLED;
-+}
-+
-  static void xen_accel_class_init(ObjectClass *oc, void *data)
-  {
-      AccelClass *ac = ACCEL_CLASS(oc);
-@@ -142,6 +169,8 @@ static void xen_accel_class_init(ObjectClass *oc, 
-void *data)
-  static const TypeInfo xen_accel_type = {
-      .name = TYPE_XEN_ACCEL,
-      .parent = TYPE_ACCEL,
-+    .instance_size = sizeof(XenAccelState),
-+    .instance_init = xen_accel_init,
-      .class_init = xen_accel_class_init,
-  };
-
-@@ -157,6 +186,7 @@ static const TypeInfo xen_accel_ops_type = {
-
-      .parent = TYPE_ACCEL_OPS,
-      .class_init = xen_accel_ops_class_init,
-+    .class_size = sizeof(XenAccelOpsClass),
-      .abstract = true,
-  };
-
----
 
