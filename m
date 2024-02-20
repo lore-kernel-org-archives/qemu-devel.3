@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5075AC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 01:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3CD8C48BF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 01:15:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcEhA-0003wg-Vp; Mon, 19 Feb 2024 20:13:17 -0500
+	id 1rcEj5-0004f7-Ck; Mon, 19 Feb 2024 20:15:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rcEh8-0003w5-Ei
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 20:13:14 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rcEj1-0004ep-V0; Mon, 19 Feb 2024 20:15:11 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rcEh6-0000S6-Uc
- for qemu-devel@nongnu.org; Mon, 19 Feb 2024 20:13:14 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1dbae7b8ff2so16112725ad.3
- for <qemu-devel@nongnu.org>; Mon, 19 Feb 2024 17:13:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rcEj0-0000fA-5W; Mon, 19 Feb 2024 20:15:11 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dbd32cff0bso15913295ad.0; 
+ Mon, 19 Feb 2024 17:15:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708391591; x=1708996391; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708391708; x=1708996508; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K6nOob6L4iGmLzDenZjN+btQD5TlzgcGlePVs0qtux4=;
- b=DbmxrZ28jV0k/2moydk9l3TBt6GC9TvgxUuiSYRJyWbf/8yjBT0OCahHY3YopAgIBc
- F2m1vialcZVSaQaDNc83TmwWOPqSVdLWkUjj1vmftnB6WQ6R6i9QBafPYPHYYkf6UcVQ
- LS+n2Ingonkguc1IldYJEGGoy6gXbk7eFjvmRim1pceh3/bhAVLgbaEC9oWKGOYiH/tb
- HsWMCrYJk+mdXbBKoqPnsEkhBi9su29OjAuCAxVP4a7Cr+P1GaJwg/C7gqvmtG225Pze
- fzHf/Ag2VGuzlmW2q+l9P8iFM/e2ohOD+C012oIJU6I6yCJ8iDmG8OuCZE006A20L0Zb
- bFxQ==
+ bh=mU/taw32pGhZm1F0cI013nJwg5RTjM1lNIF55EI92G8=;
+ b=WOqql+GCqvpz7byEAXhLMpS6a4dSJ9ayMiYJ9+9AKsMQ5R5meVSmw7GCQlxQhYluK9
+ vTsZN23zdRC69R3M/ivwIPj+IoiYHdM4EbYoHi5PJZRYbeyCUP5n34CqCNIF8lCfYCZO
+ u9QQfJ3+DI2XSTln9VSZgKMYYzaoFQfNib/3RTbOBSDMc5E7gZ/lyMnatDguHrbXDtPP
+ z0r/QgIIz/G8rjpSQ65IGqosoZe62djlFjGEa0XknB4oE1AKGS1N9PmzkRXB4MgQ2LWJ
+ i9RFn/bRzcVIArNf8mAvTOcP+BETV8zsTCBwmpjn852KXO758w6xjsphLxy8NQNYfNJP
+ b9Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708391591; x=1708996391;
+ d=1e100.net; s=20230601; t=1708391708; x=1708996508;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=K6nOob6L4iGmLzDenZjN+btQD5TlzgcGlePVs0qtux4=;
- b=oBG/3JQV5Il5nofWxECrXSf0MwMPU8pfQE6I4UtIrWYeY3kZ+UtAqgHTMTqbkfWtVU
- ULA4lFCu+Fq3cx+9XKXHbHZe/oCjn3HBaFJvjuTw/Mn9cITkRZleSfYjDr2gevmliuTQ
- szhmAC7ys1PHHpK1cSq0xNMTXOnzE2WMlpKeE4u7QM2itwSlB1wWt83hxHNlD8BZIGJ3
- /CqB5NuLFQ/Sw1eeVzo2m/f2th7fbvZZ8+cxvfAGRNbFStZ+Ei/05vym8QwZcKXLEyc5
- 8OwV7Djp+NvbYaAAX629QjjmrnYA9T+L7KiSw3akG45EBZF+b8u3qmO/16sYFCshvjcz
- BfUw==
+ bh=mU/taw32pGhZm1F0cI013nJwg5RTjM1lNIF55EI92G8=;
+ b=oSzneao20S4ax0j3g3KRRW8Gs6CbQMt9CUJ0nZP0IMgSBrk9TzRbOlRmOBY3gKeT8H
+ siuF7qK60C70+CB1j8a5Pks2oG1f4g0biUXv6/gH2T6QsT98iBUPO8Fn24d+x1oZXHXW
+ QeFAXVzFq8mjZiL6qP9FR1QGOglA0oUW228IU4NaRYo9Es01O1fiuK9Vl94iP4STNehY
+ WNZnHrPObwRv9A7WIED0khcKxNXMyjBupTRFLPp+vwu0Crb2oYTwSZLGtEMojXpy7lXf
+ Fu0Daor/25GgU/nqP+66LNfWKEW3npAFaKzQW8CMIVudK1VLg3PS1+6EccntRBi6xV1H
+ jhsg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVskJAbMaffuBTajMf5W+ML80ym2LagfMCT0SsBn6uoChSIo9ZAejYqkQXL4YApDWekAZtmvG3aDEEi6B0EIoH1Gx95+Jk=
-X-Gm-Message-State: AOJu0Yxo+SaBpUnL+XdjnzA4LwQ9xsua6pGBEaTaqvz/5H6wL1RrDBo5
- aE2jPl9kfgbVlkfum3Nf9t1nH34i5nJUAmEpgou8T0E2zLIWMPSk
-X-Google-Smtp-Source: AGHT+IHQX3DA15403w9Nn6vQFLq0Cp77jp6n8I88Ouo1WNzqj9K+EFUA8DRBnaHIyE22oJLt4xGWGg==
-X-Received: by 2002:a17:903:230f:b0:1dc:15f5:fddf with SMTP id
- d15-20020a170903230f00b001dc15f5fddfmr410764plh.7.1708391591482; 
- Mon, 19 Feb 2024 17:13:11 -0800 (PST)
+ AJvYcCVeDikymzcdw2Yd+PAL6+vphmLzXKy7Z3qtPbDb8zD327J/+F+fKxQi0uVxje+4SgXIo9RHFDX9VvDJszamj8D429V4
+X-Gm-Message-State: AOJu0YzKXJGfjL005nFYVmfh6IRsdvQv/FOvIvotvrMG6nvh51HgI2e7
+ hhxno3nWEUYIok4FtG/Mtx2ePleERXwijASLV7Z4XuerAOgAn4Fb
+X-Google-Smtp-Source: AGHT+IFUwASUWKS3ayWRJJ2xpo74BmdhxzNljpAxVlnHXpJ3XTzIVUYHhX1+exuraoV41eq7yLT1aQ==
+X-Received: by 2002:a17:902:f711:b0:1db:ad25:488 with SMTP id
+ h17-20020a170902f71100b001dbad250488mr12362602plo.19.1708391707895; 
+ Mon, 19 Feb 2024 17:15:07 -0800 (PST)
 Received: from localhost (123-243-155-241.static.tpgi.com.au.
  [123.243.155.241]) by smtp.gmail.com with ESMTPSA id
- s4-20020a17090330c400b001db9cb62f7bsm5038242plc.153.2024.02.19.17.13.07
+ h4-20020a170902eec400b001d911dd145esm5035791plb.219.2024.02.19.17.15.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 17:13:11 -0800 (PST)
+ Mon, 19 Feb 2024 17:15:07 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 20 Feb 2024 11:13:04 +1000
-Message-Id: <CZ9I9VE1A542.30BIYSXFQT963@wheely>
-Cc: "Paolo Bonzini" <pbonzini@redhat.com>, "Peter Xu" <peterx@redhat.com>,
- "David Hildenbrand" <david@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Dr . David
- Alan Gilbert" <dgilbert@redhat.com>, "Juan Quintela" <quintela@redhat.com>
-Subject: Re: [PATCH] system/physmem: Fix migration dirty bitmap coherency
- with TCG memory access
+Date: Tue, 20 Feb 2024 11:15:01 +1000
+Message-Id: <CZ9IBD2D9NIH.1BK4RCHM1B1DU@wheely>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>, "Daniel Henrique
+ Barboza" <danielhb413@gmail.com>, =?utf-8?q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>
+Subject: Re: [PULL 00/49] ppc-for-9.0 queue
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Thomas Huth" <thuth@redhat.com>, <qemu-devel@nongnu.org>
+To: "Peter Maydell" <peter.maydell@linaro.org>
 X-Mailer: aerc 0.15.2
-References: <20240219061731.232570-1-npiggin@gmail.com>
- <c15b1b35-c613-4811-b76f-faed6c7ac942@redhat.com>
-In-Reply-To: <c15b1b35-c613-4811-b76f-faed6c7ac942@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+References: <20240219082938.238302-1-npiggin@gmail.com>
+ <CAFEAcA8q12k99HohX24rGCB0u=UgV5J_3_5aPw77yCsip9VfjQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA8q12k99HohX24rGCB0u=UgV5J_3_5aPw77yCsip9VfjQ@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,63 +97,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Feb 20, 2024 at 12:10 AM AEST, Thomas Huth wrote:
-> On 19/02/2024 07.17, Nicholas Piggin wrote:
-> > The fastpath in cpu_physical_memory_sync_dirty_bitmap() to test large
-> > aligned ranges forgot to bring the TCG TLB up to date after clearing
-> > some of the dirty memory bitmap bits. This can result in stores though
-> > the TCG TLB not setting the dirty memory bitmap and ultimately causes
-> > memory corruption / lost updates during migration from a TCG host.
-> >=20
-> > Fix this by exporting an abstracted function to call when dirty bits
-> > have been cleared.
-> >=20
-> > Fixes: aa8dc044772 ("migration: synchronize memory bitmap 64bits at a t=
-ime")
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
+On Tue Feb 20, 2024 at 3:06 AM AEST, Peter Maydell wrote:
+> On Mon, 19 Feb 2024 at 08:31, Nicholas Piggin <npiggin@gmail.com> wrote:
+> >
+> > The following changes since commit da96ad4a6a2ef26c83b15fa95e7fceef5147=
+269c:
+> >
+> >   Merge tag 'hw-misc-20240215' of https://github.com/philmd/qemu into s=
+taging (2024-02-16 11:05:14 +0000)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.0-20240219
+> >
+> > for you to fetch changes up to 922e408e12315121d3e09304b8b8f462ea051af1=
+:
+> >
+> >   target/ppc: optimise ppcemb_tlb_t flushing (2024-02-19 18:09:19 +1000=
+)
+> >
+> > ----------------------------------------------------------------
+> > * Avocado tests for ppc64 to boot FreeBSD, run guests with emulated
+> >   or nested hypervisor facilities, among other things.
+> > * Update ppc64 CPU defaults to Power10.
+> > * Add a new powernv10-rainier machine to better capture differences
+> >   between the different Power10 systems.
+> > * Implement more device models for powernv.
+> > * 4xx TLB flushing performance and correctness improvements.
+> > * Correct gdb implementation to access some important SPRs.
+> > * Misc cleanups and bug fixes.
+> >
+> > I dropped the BHRB patches, they are very close but minor issue only
+> > noticed recently held them up. Hopefully we can get those and a bunch
+> > of other outstanding submissions in for 9.0 but this PR was taking too
+> > long as it was.
 >
-> Sounds promising! ... but it doesn't seem to fix the migration-test qtest=
-=20
-> with s390x when it gets enabled again:
-
-Did it fix kvm-unit-tests for you?
-
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -3385,15 +3385,6 @@ int main(int argc, char **argv)
->           return g_test_run();
->       }
+> > Peter Maydell (1):
+> >       hw/pci-host/raven.c: Mark raven_io_ops as implementing unaligned =
+accesses
 >
-> -    /*
-> -     * Similar to ppc64, s390x seems to be touchy with TCG, so disable i=
-t
-> -     * there until the problems are resolved
-> -     */
-> -    if (g_str_equal(arch, "s390x") && !has_kvm) {
-> -        g_test_message("Skipping test: s390x host with KVM is required")=
-;
-> -        return g_test_run();
-> -    }
-> -
->       tmpfs =3D g_dir_make_tmp("migration-test-XXXXXX", &err);
->       if (!tmpfs) {
->           g_test_message("Can't create temporary directory in %s: %s",
->
-> I wonder whether there is more stuff like this necessary somewhere?
+> Hi Nick -- this commit went upstream via a different route, and
+> so it now appears in this pullrequest as a commit with a commit
+> message but no contents. Could I ask you to respin the pullreq
+> with that commit dropped, please?
 
-Possibly. That's what the commit logs for the TCG disable indicate. I
-have found another dirty bitmap TCG race too. I'll send it out after
-some more testing.
-
-> Did you try to re-enable tests/qtest/migration-test.c for ppc64 with TCG =
-to=20
-> see whether that works fine now?
-
-Hmm, I did try and so far ppc64 is not failing even with upstream QEMU.
-I'll try with s390x. Any additional build or runtime options to make it
-break? How long does it take for breakage to be evident?
+Yeah, sorry about that :( I think I noticed it when rebasing but did
+not check that I'd fixed it. It's nice to keep gunk out of the upstream
+so I agree, I will respin it.
 
 Thanks,
 Nick
