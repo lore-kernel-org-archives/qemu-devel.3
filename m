@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E368C5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E539C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 18:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcV3h-0007pQ-8M; Tue, 20 Feb 2024 13:41:37 -0500
+	id 1rcV4H-0007vg-3J; Tue, 20 Feb 2024 13:42:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcV3e-0007or-Ct
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 13:41:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rcV46-0007rH-A4; Tue, 20 Feb 2024 13:42:05 -0500
+Received: from zproxy2.enst.fr ([2001:660:330f:2::dd])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcV3Z-0007DB-2C
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 13:41:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708454488;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VZm5r6pciJhG3kTjI75c0UTB4r/bgx8am/Iv0miNqxg=;
- b=OWULESnrJMB2+UOKjb0mmoG5ZERwl+kJ7UpCbfrPS62QuXMlo+Ni9RGCnkyPa36vvWfj+C
- bj5PN+epqBW6p7BexDfK5UD5s9BG+OuvshTx9hGuf+9W3QMBzH8Sd2M2q+OioCUAmxFvxY
- 2c34mW76CgprIvcxCJl6W2fip1qOI+U=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-h_hLQ1nOP7GwMpk_UBWl1Q-1; Tue,
- 20 Feb 2024 13:41:24 -0500
-X-MC-Unique: h_hLQ1nOP7GwMpk_UBWl1Q-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D9AF01C07F2D;
- Tue, 20 Feb 2024 18:41:23 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 4B32A200B436;
- Tue, 20 Feb 2024 18:41:23 +0000 (UTC)
-Date: Tue, 20 Feb 2024 18:41:21 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 02/23] qemu-img: refresh options/--help for "create"
- subcommand
-Message-ID: <ZdTyUVIV0obAL1kG@redhat.com>
-References: <cover.1707513011.git.mjt@tls.msk.ru>
- <43c69e56b65b39da7c9bd878fd9c6fad4f788c1a.1707513011.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rcV44-0007JW-AW; Tue, 20 Feb 2024 13:42:02 -0500
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy2.enst.fr (Postfix) with ESMTP id E289980673;
+ Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+Received: from zproxy2.enst.fr ([IPv6:::1])
+ by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id 9po80ZR-aNkv; Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy2.enst.fr (Postfix) with ESMTP id 6C9B180682;
+ Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr 6C9B180682
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1708454514;
+ bh=QueERqoWbl+z3zS/6H26qwczTL2+98k7rJBK6el/njs=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=GTR3vhZIioslm5PYaxvOGXWJ+Uat3FkAXIQsmTkNYH/IRvz9DlH1yjy2LxM0tRnQp
+ Yoz969+ASJ8PL7dsPU7eSVzyXSGpl4aJ8lg+HDzMBvdFrCq9XrtGlPBuDbtSejaT+Z
+ AaK45In4X4Y/yL43CprJxseWCAV3Ov992x8+hm8o=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy2.enst.fr ([IPv6:::1])
+ by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id 3gPawhELsegw; Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+Received: from inesv-Inspiron-3501.lan (unknown
+ [IPv6:2001:861:4680:b1b0:6f1f:d69d:dd9c:e973])
+ by zproxy2.enst.fr (Postfix) with ESMTPSA id 17397805FE;
+ Tue, 20 Feb 2024 19:41:54 +0100 (CET)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+Subject: [PATCH v2 2/2] tests/qtest: Check that EXTI fan-in irqs are correctly
+ connected
+Date: Tue, 20 Feb 2024 19:34:36 +0100
+Message-ID: <20240220184145.106107-3-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240220184145.106107-1-ines.varhol@telecom-paris.fr>
+References: <20240220184145.106107-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <43c69e56b65b39da7c9bd878fd9c6fad4f788c1a.1707513011.git.mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2001:660:330f:2::dd;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy2.enst.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,179 +83,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Feb 10, 2024 at 12:22:23AM +0300, Michael Tokarev wrote:
-> Add missing long options (eg --format).
-> 
-> Create helper function cmd_help() to display command-specific
-> help text, and use it to print --help for 'create' subcommand.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  qemu-img.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 44 insertions(+), 1 deletion(-)
-> 
-> diff --git a/qemu-img.c b/qemu-img.c
-> index 05f80b6e5b..7edfc56572 100644
-> --- a/qemu-img.c
-> +++ b/qemu-img.c
-> @@ -126,6 +126,25 @@ void unrecognized_option(const img_cmd_t *ccmd, const char *option)
->      error_exit(ccmd, "unrecognized option '%s'", option);
->  }
->  
-> +/*
-> + * Print --help output for a command and exit.
-> + * syntax and description are multi-line with trailing EOL
-> + * (to allow easy extending of the text)
-> + * syntax has each subsequent line starting with \t
-> + * desrciption is indented by one char
-> + */
-> +static G_NORETURN
-> +void cmd_help(const img_cmd_t *ccmd,
-> +              const char *syntax, const char *arguments)
-> +{
-> +    printf("qemu-img %s %s"
+This commit adds a QTest that verifies each input line of a specific
+EXTI OR gate can influence the output line.
 
-I think we want an extra "\n" before & after 'Arguments:'
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
 
-> +           "Arguments:\n"
-> +           " -h|--help - print this help and exit\n"
-> +           "%s",
-> +           ccmd->name, syntax, arguments);
-> +    exit(EXIT_SUCCESS);
-> +}
-> +
->  /* Please keep in synch with docs/tools/qemu-img.rst */
->  static G_NORETURN
->  void help(void)
-> @@ -524,7 +543,13 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
->      for(;;) {
->          static const struct option long_options[] = {
->              {"help", no_argument, 0, 'h'},
-> +            {"quiet", no_argument, 0, 'q'},
->              {"object", required_argument, 0, OPTION_OBJECT},
-> +            {"format", required_argument, 0, 'f'},
-> +            {"backing", required_argument, 0, 'b'},
-> +            {"backing-format", required_argument, 0, 'F'},
-> +            {"backing-unsafe", no_argument, 0, 'u'},
-> +            {"options", required_argument, 0, 'o'},
->              {0, 0, 0, 0}
->          };
->          c = getopt_long(argc, argv, ":F:b:f:ho:qu",
-> @@ -540,7 +565,25 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
->              unrecognized_option(ccmd, argv[optind - 1]);
->              break;
->          case 'h':
-> -            help();
-> +            cmd_help(ccmd,
-> +"[-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]\n"
-> +"	[--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]\n"
-> +,
-> +" -q|--quiet - quiet operations\n"
-> +" -f|--format FMT - specifies format of the new image, default is raw\n"
-> +" -o|--options FMT_OPTS - format-specific options ('-o list' for list)\n"
-> +" -b|--backing BACKING_FILENAME - stack new image on top of BACKING_FILENAME\n"
-> +"  (for formats which support stacking)\n"
-> +" -F|--backing-format BACKING_FMT - specify format of BACKING_FILENAME\n"
-> +" -u|--backing-unsafe - do not fail if BACKING_FMT can not be read\n"
-> +" --object OBJDEF - QEMU user-creatable object (eg encryption key)\n"
-> +" FILENAME - image file to create.  It will be overriden if exists\n"
-> +" SIZE - image size with optional suffix: 'b' (byte, default), 'k' or\n"
-> +"  'K' (kilobyte, 1024b), 'M' (megabyte, 1024K), 'G' (gigabyte, 1024M),\n"
-> +"  'T' (terabyte, 1024G), 'P' (petabyte, 1024T), or 'E' (exabyte, 1024P)\n"
-> +"  SIZE is required unless BACKING_IMG is specified, in which case\n"
-> +"  it will be the same as size of BACKING_IMG\n"
+Hello,
 
-This comes out as a bit of a wall of dense text.
-
-I think we should have 2 space indent for options, and a further
-4 space for continuations, and also put the description on its
-own line.
-
-eg so instead of getting:
-
-$ ./build/qemu-img create --help
-qemu-img create [-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]
-        [--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]
-Arguments:
- -h|--help - print this help and exit
- -q|--quiet - quiet operations
- -f|--format FMT - specifies format of the new image, default is raw
- -o|--options FMT_OPTS - format-specific options ('-o list' for list)
- -b|--backing BACKING_FILENAME - stack new image on top of BACKING_FILENAME
-  (for formats which support stacking)
- -F|--backing-format BACKING_FMT - specify format of BACKING_FILENAME
- -u|--backing-unsafe - do not fail if BACKING_FMT can not be read
- --object OBJDEF - QEMU user-creatable object (eg encryption key)
- FILENAME - image file to create.  It will be overriden if exists
- SIZE - image size with optional suffix: 'b' (byte, default), 'k' or
-  'K' (kilobyte, 1024b), 'M' (megabyte, 1024K), 'G' (gigabyte, 1024M),
-  'T' (terabyte, 1024G), 'P' (petabyte, 1024T), or 'E' (exabyte, 1024P)
-  SIZE is required unless BACKING_IMG is specified, in which case
-  it will be the same as size of BACKING_IMG
+I expected this test to fail after switching the two patch commits,
+but it didn't.
+I'm mentionning it in case it reveals a problem with the test I didn't no=
+tice.
 
 
-we would get:
+ tests/qtest/stm32l4x5_exti-test.c | 37 +++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-$ ./build/qemu-img create --help
-qemu-img create [-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]
-        [--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]
-
-Arguments:
-
-  -h|--help
-      print this help and exit
-
-  -q|--quiet
-      quiet operations
-
-  -f|--format FMT
-      specifies format of the new image, default is raw
-
-  -o|--options FMT_OPTS
-      format-specific options ('-o list' for list)
-
-  -b|--backing BACKING_FILENAME
-      stack new image on top of BACKING_FILENAME
-      (for formats which support stacking)
-
-  -F|--backing-format BACKING_FMT
-      specify format of BACKING_FILENAME
-
-  -u|--backing-unsafe
-      do not fail if BACKING_FMT can not be read
-
-  --object OBJDEF
-      QEMU user-creatable object (eg encryption key)
-      
-  FILENAME
-      image file to create.  It will be overriden if exists
-
-  SIZE
-      image size with optional suffix: 'b' (byte, default), 'k' or
-      'K' (kilobyte, 1024b), 'M' (megabyte, 1024K), 'G' (gigabyte, 1024M),
-      'T' (terabyte, 1024G), 'P' (petabyte, 1024T), or 'E' (exabyte, 1024P)
-      SIZE is required unless BACKING_IMG is specified, in which case
-      it will be the same as size of BACKING_IMG
-
-
-> +);
->              break;
->          case 'F':
->              base_fmt = optarg;
-> -- 
-> 2.39.2
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+diff --git a/tests/qtest/stm32l4x5_exti-test.c b/tests/qtest/stm32l4x5_ex=
+ti-test.c
+index c390077713..81830be8ae 100644
+--- a/tests/qtest/stm32l4x5_exti-test.c
++++ b/tests/qtest/stm32l4x5_exti-test.c
+@@ -31,6 +31,7 @@
+=20
+ #define EXTI0_IRQ 6
+ #define EXTI1_IRQ 7
++#define EXTI5_9_IRQ 23
+ #define EXTI35_IRQ 1
+=20
+ static void enable_nvic_irq(unsigned int n)
+@@ -499,6 +500,40 @@ static void test_interrupt(void)
+     g_assert_false(check_nvic_pending(EXTI1_IRQ));
+ }
+=20
++static void test_orred_interrupts(void)
++{
++    /*
++     * For lines EXTI5..9 (fanned-in to NVIC irq 23),
++     * test that raising the line pends interrupt
++     * 23 in NVIC.
++     */
++    enable_nvic_irq(EXTI5_9_IRQ);
++    /* Check that there are no interrupts already pending in PR */
++    g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
++    /* Check that this specific interrupt isn't pending in NVIC */
++    g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
++
++    /* Enable interrupt lines EXTI[5..9] */
++    exti_writel(EXTI_IMR1, (0x1F << 5));
++
++    /* Configure interrupt on rising edge */
++    exti_writel(EXTI_RTSR1, (0x1F << 5));
++
++    /* Raise GPIO line i, check that the interrupt is pending */
++    for (unsigned i =3D 5; i < 10; i++) {
++        exti_set_irq(i, 1);
++        g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 1 << i);
++        g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
++
++        exti_writel(EXTI_PR1, 1 << i);
++        g_assert_cmpuint(exti_readl(EXTI_PR1), =3D=3D, 0x00000000);
++        g_assert_true(check_nvic_pending(EXTI5_9_IRQ));
++
++        unpend_nvic_irq(EXTI5_9_IRQ);
++        g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
++    }
++}
++
+ int main(int argc, char **argv)
+ {
+     int ret;
+@@ -515,6 +550,8 @@ int main(int argc, char **argv)
+     qtest_add_func("stm32l4x5/exti/masked_interrupt", test_masked_interr=
+upt);
+     qtest_add_func("stm32l4x5/exti/interrupt", test_interrupt);
+     qtest_add_func("stm32l4x5/exti/test_edge_selector", test_edge_select=
+or);
++    qtest_add_func("stm32l4x5/exti/test_orred_interrupts",
++                   test_orred_interrupts);
+=20
+     qtest_start("-machine b-l475e-iot01a");
+     ret =3D g_test_run();
+--=20
+2.43.2
 
 
