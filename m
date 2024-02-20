@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 165C1C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 857A6C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 16:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcSdv-0002GT-Tw; Tue, 20 Feb 2024 11:06:51 -0500
+	id 1rcSdf-00028R-AR; Tue, 20 Feb 2024 11:06:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcSdt-0002Fs-TH
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcSds-0005HS-D1
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708445207;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=32cBanNhjljKy6llJo9YO5zbEMv98kidnmGeKD9ArTE=;
- b=bI0eiVfyGglb/LgRvmgd08HbtrHPGswNWbkDMPQTMqwnTBHrS007BFOKkaxg0foYGQ9LO9
- SDTPsUO+3/Pwn+NKZ+oqCcO+DaGxbKlMofItrLNhyrb3qibe/+lFWbd6oYIu/eDTeqRtwJ
- ooio8+JzgrU+HjDt9zEMiGQqoDX3HKY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-bLB1u6THM6OyG1SbcmtUHQ-1; Tue, 20 Feb 2024 11:06:44 -0500
-X-MC-Unique: bLB1u6THM6OyG1SbcmtUHQ-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 483A285A58E;
- Tue, 20 Feb 2024 16:06:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 261FA1812;
- Tue, 20 Feb 2024 16:06:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0D5E121E6740; Tue, 20 Feb 2024 17:06:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  michael.roth@amd.com,  jsnow@redhat.com,
- eblake@redhat.com,  peter.maydell@linaro.org
-Subject: Re: [PATCH 11/16] qapi: Recognize section tags and 'Features:' only
- after blank line
-In-Reply-To: <ZdTDn05noU8Ah7lK@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 20 Feb 2024 15:22:07 +0000")
-References: <20240216145841.2099240-1-armbru@redhat.com>
- <20240216145841.2099240-12-armbru@redhat.com>
- <ZdTDn05noU8Ah7lK@redhat.com>
-Date: Tue, 20 Feb 2024 17:06:42 +0100
-Message-ID: <87v86j3yst.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rcSdd-000282-EB
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:33 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rcSda-0005FV-Fp
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 11:06:33 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-41272d42297so971095e9.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 08:06:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708445189; x=1709049989; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7iDhlmBEzf3/xjobdXXs7/XL4KcZXNtIkpWLjY9SBqw=;
+ b=nk9txZuTgu3FPyEybvjiLPjw2/+cQ6lI2a4ivr6/bne6iP842lcPDbfFbjERubcptP
+ H3ET/Ik6g9wS/JfQiwGF53q79ucLda4728FTH/1ePUjyGJh9dmVic0DwZpA8IsOXTPJy
+ px9VZR2jNbwwW7BeOuTUD38wQsLzTLTnWCOeLoVj1Ijwsm+0k+9eBl6k5ZCory6MSPc5
+ BlUCJxATNreYYUxOCb8G8PWbnYqEzwTMhMJjV3U7JVoHZDU26jTEqtX4SUG5VgDkMbzD
+ uAZFzea+N2tWF4ecqu18I1xzbz6z0bMleUsxNd1OYcTdD6EbJCGwpgvtH4WczW6wZa1L
+ 9Z2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708445189; x=1709049989;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7iDhlmBEzf3/xjobdXXs7/XL4KcZXNtIkpWLjY9SBqw=;
+ b=hwL7KFY9t5EannQ9slMHQ0J3qiq9PVH7jF90OP6ar3/aNncC0BckyyjJ4oLmd8QkPO
+ nWXBpEep8Nk5n+dwFBSKEmAFm+gf2csVKAH4Ck1enw8I0H1vYJTUGbIoyGJ4JB4FbAnk
+ w+6CCdUL3BEj6FgSFwi9lviKtZIMymHwTVbBxyXZKFzEQR5MaMnBbn8LtaBqyo31KnXB
+ FDFj3OVXkLbP3VpeHCzfAWvyEP9fFSGbJtECM/NZyGDiZbIL1XaOhoXVZ5yrwfGCvGcW
+ /qndhawW+flZm5cCtZ1qXaIcvFbnwTIVWalH07eCdOEXDCcQT7dpxWM0C93mwYzeS/b9
+ xmYg==
+X-Gm-Message-State: AOJu0YyUQC6YI4wEgaRysEpgvyQr+oCNAGcBWzUmYTo2Nzk5b84qu7o6
+ sRYn7asVcr0z4hA430rIb/AvZEksi4hOGlp8g+VUhCaGeb8OmZwHRIKPiQyCP7nMYm0T55ffDv0
+ 4
+X-Google-Smtp-Source: AGHT+IFhbp32+urjWmiHk+LhHvhYxqjAeV+S+XjnXe27CZnd9SUUsyGN6hbjafc6lc8LCiOGVIjsaA==
+X-Received: by 2002:a05:600c:4746:b0:412:7012:ee14 with SMTP id
+ w6-20020a05600c474600b004127012ee14mr1308072wmo.0.1708445188805; 
+ Tue, 20 Feb 2024 08:06:28 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ f8-20020a05600c4e8800b0040f0219c371sm15299927wmq.19.2024.02.20.08.06.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 08:06:28 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: [PATCH 07/10] hw/core/reset: Add qemu_{register,
+ unregister}_resettable()
+Date: Tue, 20 Feb 2024 16:06:19 +0000
+Message-Id: <20240220160622.114437-8-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240220160622.114437-1-peter.maydell@linaro.org>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,54 +101,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Implement new functions qemu_register_resettable() and
+qemu_unregister_resettable().  These are intended to be
+three-phase-reset aware equivalents of the old qemu_register_reset()
+and qemu_unregister_reset().  Instead of passing in a function
+pointer and opaque, you register any QOM object that implements the
+Resettable interface.
 
-> On Fri, Feb 16, 2024 at 03:58:35PM +0100, Markus Armbruster wrote:
->> Putting a blank line before section tags and 'Features:' is good,
->> existing practice.  Enforce it.
->>=20
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>  docs/devel/qapi-code-gen.rst                 | 15 +++++++++------
->>  scripts/qapi/parser.py                       | 11 ++++++++---
->>  tests/qapi-schema/doc-duplicated-return.err  |  2 +-
->>  tests/qapi-schema/doc-duplicated-return.json |  1 +
->>  tests/qapi-schema/doc-duplicated-since.err   |  2 +-
->>  tests/qapi-schema/doc-duplicated-since.json  |  1 +
->>  tests/qapi-schema/doc-good.json              |  9 +++++++++
->>  tests/qapi-schema/doc-invalid-return.err     |  2 +-
->>  tests/qapi-schema/doc-invalid-return.json    |  1 +
->>  9 files changed, 32 insertions(+), 12 deletions(-)
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
->
->> @@ -574,9 +577,11 @@ def end_comment(self) -> None:
->>      def _match_at_name_colon(string: str) -> Optional[Match[str]]:
->>          return re.match(r'@([^:]*): *', string)
->>=20=20
->> -    @staticmethod
->> -    def _match_section_tag(string: str) -> Optional[Match[str]]:
->> -        return re.match(r'(Returns|Since|Notes?|Examples?|TODO): *', st=
-ring)
->> +    def _match_section_tag(self, string: str) -> Optional[Match[str]]:
->> +        if not self._first_line_in_paragraph:
->> +            return None
->> +        return re.match(r'(Returns|Since|Notes?|Examples?|TODO): *',
->> +                        string)
->
-> I guess I have a minor worry that we're silently ignoring
-> these tags when there's no blank line. Could result in
-> docs silently rendering in the wrong way if (when) someone
-> forgets the blank line.
+The implementation is simple: we have a single global instance of a
+ResettableContainer, which we reset in qemu_devices_reset(), and
+the Resettable objects passed to qemu_register_resettable() are
+added to it.
 
-True.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/sysemu/reset.h | 37 ++++++++++++++++++++++++++++++++++---
+ hw/core/reset.c        | 31 +++++++++++++++++++++++++++++--
+ 2 files changed, 63 insertions(+), 5 deletions(-)
 
-We could make it an error.  Can flag occurences in the middle of a
-free-form paragraph that happen to be at the beginning of a line, but
-that seems unlikely.
-
-Of course, rST is full of similar syntactic traps anyway.  To quote
-Paolo, "I find it to be the Perl of ASCII-based markups."
+diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
+index 6aa11846a69..a3de48cb9cf 100644
+--- a/include/sysemu/reset.h
++++ b/include/sysemu/reset.h
+@@ -31,6 +31,36 @@
+ 
+ typedef void QEMUResetHandler(void *opaque);
+ 
++/**
++ * qemu_register_resettable: Register an object to be reset
++ * @obj: object to be reset: it must implement the Resettable interface
++ *
++ * Register @obj on the list of objects which will be reset when the
++ * simulation is reset. These objects will be reset in the order
++ * they were added, using the three-phase Resettable protocol,
++ * so first all objects go through the enter phase, then all objects
++ * go through the hold phase, and then finally all go through the
++ * exit phase.
++ *
++ * It is not permitted to register or unregister reset functions or
++ * resettable objects from within any of the reset phase methods of @obj.
++ *
++ * We assume that the caller holds the BQL.
++ */
++void qemu_register_resettable(Object *obj);
++
++/**
++ * qemu_unregister_resettable: Unregister an object to be reset
++ * @obj: object to unregister
++ *
++ * Remove @obj from the list of objects which are reset when the
++ * simulation is reset. It must have been previously added to
++ * the list via qemu_register_resettable().
++ *
++ * We assume that the caller holds the BQL.
++ */
++void qemu_unregister_resettable(Object *obj);
++
+ /**
+  * qemu_register_reset: Register a callback for system reset
+  * @func: function to call
+@@ -44,8 +74,8 @@ typedef void QEMUResetHandler(void *opaque);
+  * for instance device model reset is better accomplished using the
+  * methods on DeviceState.
+  *
+- * It is not permitted to register or unregister reset functions from
+- * within the @func callback.
++ * It is not permitted to register or unregister reset functions or
++ * resettable objects from within the @func callback.
+  *
+  * We assume that the caller holds the BQL.
+  */
+@@ -81,7 +111,8 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque);
+  *
+  * This function performs the low-level work needed to do a complete reset
+  * of the system (calling all the callbacks registered with
+- * qemu_register_reset()). It should only be called by the code in a
++ * qemu_register_reset() and resetting all the Resettable objects registered
++ * with qemu_register_resettable()). It should only be called by the code in a
+  * MachineClass reset method.
+  *
+  * If you want to trigger a system reset from, for instance, a device
+diff --git a/hw/core/reset.c b/hw/core/reset.c
+index d3263b613e6..a9b30e705fe 100644
+--- a/hw/core/reset.c
++++ b/hw/core/reset.c
+@@ -26,8 +26,23 @@
+ #include "qemu/osdep.h"
+ #include "qemu/queue.h"
+ #include "sysemu/reset.h"
++#include "hw/resettable.h"
++#include "hw/core/resetcontainer.h"
+ 
+-/* reset/shutdown handler */
++/*
++ * Return a pointer to the singleton container that holds all the Resettable
++ * items that will be reset when qemu_devices_reset() is called.
++ */
++static ResettableContainer *get_root_reset_container(void)
++{
++    static ResettableContainer *root_reset_container;
++
++    if (!root_reset_container) {
++        root_reset_container =
++            RESETTABLE_CONTAINER(object_new(TYPE_RESETTABLE_CONTAINER));
++    }
++    return root_reset_container;
++}
+ 
+ typedef struct QEMUResetEntry {
+     QTAILQ_ENTRY(QEMUResetEntry) entry;
+@@ -71,6 +86,16 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque)
+     }
+ }
+ 
++void qemu_register_resettable(Object *obj)
++{
++    resettable_container_add(get_root_reset_container(), obj);
++}
++
++void qemu_unregister_resettable(Object *obj)
++{
++    resettable_container_remove(get_root_reset_container(), obj);
++}
++
+ void qemu_devices_reset(ShutdownCause reason)
+ {
+     QEMUResetEntry *re, *nre;
+@@ -83,5 +108,7 @@ void qemu_devices_reset(ShutdownCause reason)
+         }
+         re->func(re->opaque);
+     }
+-}
+ 
++    /* Reset the simulation */
++    resettable_reset(OBJECT(get_root_reset_container()), RESET_TYPE_COLD);
++}
+-- 
+2.34.1
 
 
