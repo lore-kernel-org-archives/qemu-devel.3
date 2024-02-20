@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C29FC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 231CEC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcXNn-0003Vq-69; Tue, 20 Feb 2024 16:10:31 -0500
+	id 1rcXOo-0003xj-BA; Tue, 20 Feb 2024 16:11:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcXNj-0003V5-En
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:10:27 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from
+ <3fxXVZQcKCjQaecbeTYWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--komlodi.bounces.google.com>)
+ id 1rcXOl-0003vD-97
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:11:31 -0500
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcXNX-0008M6-RM
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:10:27 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1d51ba18e1bso60005135ad.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:10:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <3fxXVZQcKCjQaecbeTYWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--komlodi.bounces.google.com>)
+ id 1rcXOj-0008QC-SR
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:11:31 -0500
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-60802b0afd2so39888157b3.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:11:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708463413; x=1709068213; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hrYafVmPknXj6OBu45DwwkQ8cyY3M2/gxdad8UKpldU=;
- b=LtBoh11iNxKaPDbewQvuUOjiHgWRjAO0y6CKQP+FGfoiiAuiGGKWj4zOWD2lYA2/5H
- kXYWeFkSWpAiYshKSYtRl+CQUTVLuCIS12kiySFRHVT+FhqdB3o/Y9CLXJYlkiecG1z7
- 4/BnNrz9SWyPSUMuarf/34p2sP2rsMANkrXvavmWl92Ywwdbbw9+ycCjbEgXkuiy/n+6
- 6GFgNHCfNt2fg4HMUhsChyIpQxxpwQOWb3rOt5BG22vfQMHQMsAROh+z8z7kP5PXX/XN
- EpAe9lIxuF5teAvJX7TUjZQ41on4SHytno4lfXCxNet558n7rBYoIZFGQsve66wYT3W6
- tu4g==
+ d=google.com; s=20230601; t=1708463487; x=1709068287; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=8wwc0g2kzl5Lc5KX2u5/DCKV1h4w5LnDzJMObYTiZgU=;
+ b=Jmb5/g7bPuBJti77TiXaU/u/zffv7uQiobBGTGqdXV9q86cZP6TXnGC2CtncOupWRo
+ aDL3Tdyqy7vOimIjBs2dBidHelDzqeoSlwtvfgV4JgFBJ46envgRIpy9Uuvg9aXF89p9
+ GFnpJgjKb7G41AtZKbynLex9zhT/nZXTm/HM5edMnDyQmdRf77kpc0JnglWl9PSOh5Pg
+ ycCCKLjVGGyJeIsuySMETdgnAHizdHgOMjVTcW3S+gBahNrHhTQrOYgz0YrJLBu/BHxT
+ H9kKWHHlQaLms2MufZYpIg9EIowqaYD/BMg+bcknh8anN2XrHOpbTYE7h9/FcLPhA5D/
+ PELw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708463413; x=1709068213;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hrYafVmPknXj6OBu45DwwkQ8cyY3M2/gxdad8UKpldU=;
- b=A121032ipMzHBhHodafCzcoDMM263slpjkV6GgN+L+0hikv45H/Wl23wPZQ4v+sd5y
- x1g6TNEozZKceJ7Dy/50jja9kqL7LBIOjnHY0BbPmXr9YixISKAcbM7zUIyll2s1W4gh
- pbz0HY722DO+FD5FRDNF5k8S2B9Xjd7qylLSbV1gyNcbJZd/KBAwvDmdF2VZN3tDeUmc
- ob5QZ/aOoAmmRb8L2Xy4jyZGpyDO0+Ek0H/Lf07zt/guA2mCb60ExeqjupRvNKx8TvJj
- ZNOIoML0AAkLeVNGFfn2rLLWPLWjmFMVRvcQWyFtTJt3bShHEoHW5FBy83M0Vn8aDmf2
- gG7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSfNr7861yWLVaf29IMJZbQPmqTd6ta1J90/WVoskqV2bEaUCxl391XLiGAfhf/S3U8O6w66m7Rz45o/TySQd3lc3ZdNw=
-X-Gm-Message-State: AOJu0YxKTA+ZLRuwbMm3trIr7bu19FxoYlZhANewa2K5z0K//RLp2/fB
- R8wcJJPln8u0cKvDXE8iVCIWEYGFwO55D/j02XDgnanuSSh9DlAamAgqj4/8q1g=
-X-Google-Smtp-Source: AGHT+IHRyCetltwcDJCkO1OoMegCcPaLDBoyLyGML8zd3rnNQtDskxvwirMX1wxF7V+etVxkR4LR/g==
-X-Received: by 2002:a17:903:41ce:b0:1db:dd57:d56 with SMTP id
- u14-20020a17090341ce00b001dbdd570d56mr14112090ple.23.1708463413162; 
- Tue, 20 Feb 2024 13:10:13 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- j6-20020a17090276c600b001da1ecb05f9sm6643377plt.240.2024.02.20.13.10.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 13:10:12 -0800 (PST)
-Message-ID: <ad667881-f55c-468e-b6a1-8138147f71ef@ventanamicro.com>
-Date: Tue, 20 Feb 2024 18:10:08 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] trans_rvv.c.inc: mark_vs_dirty() before stores
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- max.chou@sifive.com
-References: <20240220192607.141880-1-dbarboza@ventanamicro.com>
- <20240220192607.141880-2-dbarboza@ventanamicro.com>
- <32df58bf-cf71-4825-8b56-67108c81944d@linaro.org>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <32df58bf-cf71-4825-8b56-67108c81944d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ d=1e100.net; s=20230601; t=1708463487; x=1709068287;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8wwc0g2kzl5Lc5KX2u5/DCKV1h4w5LnDzJMObYTiZgU=;
+ b=rV3cC2q+qQlZI2AmHJ13YkniC5ewlZEDJqIYeU8Prytgux72NhpVtDLAfqRK81FWoz
+ YWfcN4hxVkDOLsIW//SSWIreYzDKuwcOT3vmCl3STp9SAHHdMuItrHUuoDaAWZODgJqK
+ LUTU7ta2vVYeX7B1hW5ziHh/trtHCVLvDIBExfOqpq5XtWIssIEAHQNxT5FJKyW5JFDf
+ 1Pz+l1d+TkaNZlEbY7VCXEagjzHO1rRrMwn7BmQUqgTwtNlUj3fZbpbHodoCRN3oY0X4
+ QAKvhzJjSnUdH/c37P1kw0PmD8q3AqLUKCED2AO3fcbayEnTJErQlsyDfZA7Rsyk4fbv
+ 3hbg==
+X-Gm-Message-State: AOJu0YwJanO8rY9QCeY8anRTe8uH7d026c0mZI8rjXxUQab3YNKgiW4m
+ 8D1Y1wYL0VQ8bxrIM0f3k0pTCET9hK6wcyJA+tZawQH8aaZRXxaGU25bD/BsP4Up26K4Jxyi1ou
+ 8gfwPLzwXBwOfXxxPOGsvZZR48IHbVY+J9KWR8v4o3sqjvhZHGHXpQZA3/Wa3FCsGRd0Bbw02eW
+ /f8CBztolehWg8KKFJweZjEORYpEIiaN4caTLc
+X-Google-Smtp-Source: AGHT+IFzTnHujQ/EqNFe9ptLqdFqdJxZhWd0kXmpcI+CaGfZ675rAdINE4TdmESUz/twsLY3yGaX7vQoauvF
+X-Received: from komlodi.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
+ (user=komlodi job=sendgmr) by 2002:a05:690c:2f86:b0:608:6b9:bf09 with SMTP id
+ ew6-20020a05690c2f8600b0060806b9bf09mr2037416ywb.1.1708463487655; Tue, 20 Feb
+ 2024 13:11:27 -0800 (PST)
+Date: Tue, 20 Feb 2024 21:11:21 +0000
+In-Reply-To: <20240220211123.2664977-1-komlodi@google.com>
+Mime-Version: 1.0
+References: <20240220211123.2664977-1-komlodi@google.com>
+X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
+Message-ID: <20240220211123.2664977-2-komlodi@google.com>
+Subject: [PATCH v4 1/3] hw/i2c: core: Add reset
+From: Joe Komlodi <komlodi@google.com>
+To: qemu-devel@nongnu.org
+Cc: komlodi@google.com, venture@google.com, minyard@acm.org, 
+ peter.maydell@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3fxXVZQcKCjQaecbeTYWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--komlodi.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,76 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+It's possible for a reset to come in the middle of a transaction, which
+causes the bus to be in an old state when a new transaction comes in.
 
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+---
+ hw/i2c/core.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-On 2/20/24 17:17, Richard Henderson wrote:
-> On 2/20/24 09:26, Daniel Henrique Barboza wrote:
->> While discussing a problem with how we're (not) setting vstart_eq_zero
->> Richard had the following to say w.r.t the conditional mark_vs_dirty()
->> calls on load/store functions [1]:
->>
->> "I think it's required to have stores set dirty unconditionally, before
->> the operation.
->>
->> Consider a store that traps on the 2nd element, leaving vstart = 2, and
->> exiting to the main loop via exception. The exception enters the kernel
->> page fault handler. The kernel may need to fault in the page for the
->> process, and in the meantime task switch.
->>
->> If vs dirty is not already set, the kernel won't know to save vector
->> state on task switch."
->>
->> Do a mark_vs_dirty() before store operations. Keep the mark_vs_dirty()
->> call at the end for loads - the function is a no-op if mstatus_vs is
->> already set to EXT_STATUS_DIRTY so there's no hurt in store functions
->> calling it twice.
->>
->> [1] https://lore.kernel.org/qemu-riscv/72c7503b-0f43-44b8-aa82-fbafed2aac0c@linaro.org/
->>
->> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/insn_trans/trans_rvv.c.inc | 29 +++++++++++++++----------
->>   1 file changed, 17 insertions(+), 12 deletions(-)
->>
->> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
->> index 9e101ab434..2065e9064e 100644
->> --- a/target/riscv/insn_trans/trans_rvv.c.inc
->> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
->> @@ -636,12 +636,13 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
->>       tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
->>       tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
->> -    fn(dest, mask, base, tcg_env, desc);
->> -
->> -    if (!is_store) {
->> +    if (is_store) {
->>           mark_vs_dirty(s);
->>       }
->> +    fn(dest, mask, base, tcg_env, desc);
->> +
->> +    mark_vs_dirty(s);
-> 
-> You misunderstood here, I think.
-> Both loads and stores need to set dirty early, before any exit via exception path.
-> 
-> I see that I did say only stores in the quoted mail, but I believe that was merely in reference to stores not setting dirty *at all* beforehand.
+diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+index 4cf30b2c86..3128067bba 100644
+--- a/hw/i2c/core.c
++++ b/hw/i2c/core.c
+@@ -23,10 +23,29 @@ static Property i2c_props[] = {
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
++static void i2c_bus_hold_reset(Object *obj)
++{
++    I2CBus *bus = I2C_BUS(obj);
++    I2CNode *node, *next;
++
++    bus->broadcast = false;
++    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
++        QLIST_REMOVE(node, next);
++        g_free(node);
++    }
++}
++
++static void i2c_bus_class_init(ObjectClass *klass, void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    rc->phases.hold = i2c_bus_hold_reset;
++}
++
+ static const TypeInfo i2c_bus_info = {
+     .name = TYPE_I2C_BUS,
+     .parent = TYPE_BUS,
+     .instance_size = sizeof(I2CBus),
++    .class_init = i2c_bus_class_init,
+ };
+ 
+ static int i2c_bus_pre_save(void *opaque)
+-- 
+2.44.0.rc0.258.g7320e95886-goog
 
-hmmm it made sense when I read your reply to set just for stores because I thought
-that loads wouldn't trigger page context switches in the kernel. TBH I got too
-caught up by the existing "if (!is_store)" in the code, trying to figure it out
-why it was there.
-
-In another read in the spec there's nothing that indicates that stores needs
-additional handling, which means that we can treat both equally in this regard.
-
-
-I'll change it for v4. Thanks,
-
-
-Daniel
-
-
-> 
-> 
-> r~
 
