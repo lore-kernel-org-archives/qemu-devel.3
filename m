@@ -4,48 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B035C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 23:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387B8C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 23:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcZRI-00015e-Ll; Tue, 20 Feb 2024 18:22:17 -0500
+	id 1rcZsF-0001pP-TX; Tue, 20 Feb 2024 18:50:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rcZRE-00014t-VP; Tue, 20 Feb 2024 18:22:12 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rcZRC-0004nn-3B; Tue, 20 Feb 2024 18:22:12 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 57D154E6006;
- Wed, 21 Feb 2024 00:22:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id JZAahI9Bc3W6; Wed, 21 Feb 2024 00:22:00 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 042DA4E6005; Wed, 21 Feb 2024 00:22:00 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3] docs/system/ppc: Document running Linux on AmigaNG machines
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcZsE-0001oz-Ku
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:50:06 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcZsB-0000zb-OR
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 18:50:06 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6e46e07ff07so1643763b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 15:50:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708473001; x=1709077801; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xlywUXRiZth4Y9UaD707yyWHwY/b1gf8xdgz+YzbwlM=;
+ b=RJoGSQsfMzyNxWgQ6KOMoABeP1RIfGSg9QQEbHx4FK5vwPSmSCGjN5cEx68exPsTPH
+ 4hCP+1DLBwIyqppJhi6HSHLEFM4WWR/FVaShCrdFWF8PgG1DJID+AKVwnFyGMFShMKGp
+ NjZjYU10ihyw9TcA8mAcYyufs26SAhq50uV288Dad/Qs2f3gT2JIXWhqp+re1WPKbzAE
+ Jgmsmvi2Uh4kVb/EnLWjWGkhjnogAJLU/stO5l1wh9gUSYq3IO6+RWoF4wZFW+afR+Jz
+ h+i2h+JABm/1SKV2Q0Vj9CR4jF8anl17COHIoRFqRlHYBz0svUlcuoXSUazJx3JhZsnc
+ OSkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708473001; x=1709077801;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xlywUXRiZth4Y9UaD707yyWHwY/b1gf8xdgz+YzbwlM=;
+ b=gO21th4YhLealh7At5SDQ/LPLGYdzGzefscn0IxQU6Ey2GPSDq2bVOvkPhzcLGRIqE
+ 4pvCg7gv3Xag5MViMKF5xta+d6N8QH62NwILdI8xuQA1khSpxfYPhY2SpovkBBJaa2J4
+ /y8/qNLS/SUn7eYRwNbeTQWFtiJBhJCemkclecbiQfiPvRBWX+cVuRrrxBvjGVLB+7Ty
+ VhHSj5lgpZ1/koUq1AhY+T2nyVbh//XaBnWuDpreMFbOfQfRGy1euRKIak0sXwSmCUt4
+ OIujhXtz6ChS3FdUU8up0mtqflpT5+oUYv1Qf3ih1Drga6dShGmvi8GZ1tNwB8n0RHgh
+ Pj0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXkFHZ+u+D0c2DUOAJXgMOzBba38IDiOkiSkyrkcMs8bYglZnmFgy7MILEMSVXNALCIWdqVRdST7t+jJ4Rv/QnrPnfqYCc=
+X-Gm-Message-State: AOJu0YzZ1V/5UF6OB89DVNLXi5JEbhjZAdHzV1fSW0eXOPioa5oZXjdf
+ Ezx1Kr5E18k81WKkm3VTMwto6/xvUk5EaOUxxyqzbNHQD8vehjFrtf7K5LJ/+EPFSTEGqosfrKI
+ g
+X-Google-Smtp-Source: AGHT+IHKLu8oY6ug1NnsVvE02rYTlFzKnZ9z2Ro3UyLYOryWQXxLsjzpTfLZ0VxVxeOte5CLcnfWqA==
+X-Received: by 2002:a05:6a00:93a7:b0:6e4:6c3f:d769 with SMTP id
+ ka39-20020a056a0093a700b006e46c3fd769mr6866356pfb.29.1708473001433; 
+ Tue, 20 Feb 2024 15:50:01 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ w2-20020a62c702000000b006e089bb3619sm7817082pfg.112.2024.02.20.15.49.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 15:50:00 -0800 (PST)
+Message-ID: <f5d3ea8b-8aa5-4ee5-b895-67eec6d140ee@linaro.org>
+Date: Tue, 20 Feb 2024 13:49:56 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Bernhard Beschow <shentey@gmail.com>, clg@kaod.org
-Message-Id: <20240220232200.042DA4E6005@zero.eik.bme.hu>
-Date: Wed, 21 Feb 2024 00:22:00 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/6] trans_rvv.c.inc: mark_vs_dirty() before loads and
+ stores
+Content-Language: en-US
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ max.chou@sifive.com
+References: <20240220222510.209448-1-dbarboza@ventanamicro.com>
+ <20240220222510.209448-2-dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240220222510.209448-2-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,217 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Documentation on how to run Linux on the amigaone, pegasos2 and
-sam460ex machines is currently buried in the depths of the qemu-devel
-mailing list and in the source code. Let's collect the information in
-the QEMU handbook for a one stop solution.
+On 2/20/24 12:25, Daniel Henrique Barboza wrote:
+> While discussing a problem with how we're (not) setting vstart_eq_zero
+> Richard had the following to say w.r.t the conditional mark_vs_dirty()
+> calls on load/store functions [1]:
+> 
+> "I think it's required to have stores set dirty unconditionally, before
+> the operation.
+> 
+> Consider a store that traps on the 2nd element, leaving vstart = 2, and
+> exiting to the main loop via exception. The exception enters the kernel
+> page fault handler. The kernel may need to fault in the page for the
+> process, and in the meantime task switch.
+> 
+> If vs dirty is not already set, the kernel won't know to save vector
+> state on task switch."
+> 
+> Do a mark_vs_dirty() before both loads and stores.
+> 
+> [1]https://lore.kernel.org/qemu-riscv/72c7503b-0f43-44b8-aa82-fbafed2aac0c@linaro.org/
+> 
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
+> ---
+>   target/riscv/insn_trans/trans_rvv.c.inc | 23 ++++++++---------------
+>   1 file changed, 8 insertions(+), 15 deletions(-)
 
-Co-authored-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Tested-by: Bernhard Beschow <shentey@gmail.com>
----
-v3: Apply changes and Tested-by tag from Bernhard
-v2: Move top level title one level up so subsections will be below it in TOC
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
- MAINTAINERS                 |   1 +
- docs/system/ppc/amigang.rst | 161 ++++++++++++++++++++++++++++++++++++
- docs/system/target-ppc.rst  |   1 +
- 3 files changed, 163 insertions(+)
- create mode 100644 docs/system/ppc/amigang.rst
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7d61fb9319..0aef8cb2a6 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1562,6 +1562,7 @@ F: hw/rtc/m41t80.c
- F: pc-bios/canyonlands.dt[sb]
- F: pc-bios/u-boot-sam460ex-20100605.bin
- F: roms/u-boot-sam460ex
-+F: docs/system/ppc/amigang.rst
- 
- pegasos2
- M: BALATON Zoltan <balaton@eik.bme.hu>
-diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
-new file mode 100644
-index 0000000000..ba1a3d80b9
---- /dev/null
-+++ b/docs/system/ppc/amigang.rst
-@@ -0,0 +1,161 @@
-+=========================================================
-+AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
-+=========================================================
-+
-+These PowerPC machines emulate boards that are primarily used for
-+running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
-+also run Linux which is what this section documents.
-+
-+Eyetech AmigaOne/Mai Logic Teron (``amigaone``)
-+===============================================
-+
-+The ``amigaone`` machine emulates an AmigaOne XE mainboard by Eyetech
-+which is a rebranded Mai Logic Teron board with modified U-Boot
-+firmware to support AmigaOS 4.
-+
-+Emulated devices
-+----------------
-+
-+ * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750gx``)
-+ * Articia S north bridge
-+ * VIA VT82C686B south bridge
-+ * PCI VGA compatible card (guests may need other card instead)
-+ * PS/2 keyboard and mouse
-+
-+Firmware
-+--------
-+
-+A firmware binary is necessary for the boot process. It is a modified
-+U-Boot under GPL but its source is lost so it cannot be included in
-+QEMU. A binary is available at
-+https://www.hyperion-entertainment.com/index.php/downloads?view=files&parent=28.
-+The ROM image is in the last 512kB which can be extracted with the
-+following command:
-+
-+.. code-block:: bash
-+
-+  $ tail -c 524288 updater.image > u-boot-amigaone.bin
-+
-+The BIOS emulator in the firmware is unable to run QEMU‘s standard
-+vgabios so ``VGABIOS-lgpl-latest.bin`` is needed instead which can be
-+downloaded from http://www.nongnu.org/vgabios.
-+
-+Running Linux
-+-------------
-+
-+There are some Linux images under the following link that work on the
-+``amigaone`` machine:
-+https://sourceforge.net/projects/amigaone-linux/files/debian-installer/.
-+To boot the system run:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine amigaone -bios u-boot-amigaone.bin \
-+                    -cdrom "A1 Linux Net Installer.iso" \
-+                    -device ati-vga,model=rv100,romfile=VGABIOS-lgpl-latest.bin
-+
-+From the firmware menu that appears select ``Boot sequence`` →
-+``Amiga Multiboot Options`` and set ``Boot device 1`` to
-+``Onboard VIA IDE CDROM``. Then hit escape until the main screen appears again,
-+hit escape once more and from the exit menu that appears select either
-+``Save settings and exit`` or ``Use settings for this session only``. It may
-+take a long time loading the kernel into memory but eventually it boots and the
-+installer becomes visible. The ``ati-vga`` RV100 emulation is not
-+complete yet so only frame buffer works, DRM and 3D is not available.
-+
-+Genesi/bPlan Pegasos II (``pegasos2``)
-+======================================
-+
-+The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
-+designed by bPlan. Its schematics are available at
-+https://www.powerdeveloper.org/platforms/pegasos/schematics.
-+
-+Emulated devices
-+----------------
-+
-+ * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
-+ * Marvell MV64361 Discovery II north bridge
-+ * VIA VT8231 south bridge
-+ * PCI VGA compatible card (guests may need other card instead)
-+ * PS/2 keyboard and mouse
-+
-+Firmware
-+--------
-+
-+The Pegasos II board has an Open Firmware compliant ROM based on
-+SmartFirmware with some changes that are not open-sourced therefore
-+the ROM binary cannot be included in QEMU. An updater was available
-+from bPlan, it can be found in the `Internet Archive
-+<http://web.archive.org/web/20071021223056/http://www.bplan-gmbh.de/up050404/up050404>`_.
-+The ROM image can be extracted from it with the following command:
-+
-+.. code-block:: bash
-+
-+  $ tail -c +85581 up050404 | head -c 524288 > pegasos2.rom
-+
-+Running Linux
-+-------------
-+
-+The PowerPC version of Debian 8.11 supported Pegasos II. The BIOS
-+emulator in the firmware binary is unable to run QEMU‘s standard
-+vgabios so it needs to be disabled. To boot the system run:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine pegasos2 -bios pegasos2.rom \
-+                    -cdrom debian-8.11.0-powerpc-netinst.iso \
-+                    -device VGA,romfile="" -serial stdio
-+
-+At the firmware ``ok`` prompt enter ``boot cd install/pegasos``.
-+
-+Alternatively, it is possible to boot the kernel directly without
-+firmware ROM using the QEMU built-in minimal Virtual Open Firmware
-+(VOF) emulation which is also supported on ``pegasos2``. For this,
-+extract the kernel ``install/powerpc/vmlinuz-chrp.initrd`` from the CD
-+image, then run:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine pegasos2 -serial stdio \
-+                    -kernel vmlinuz-chrp.initrd -append "---" \
-+                    -cdrom debian-8.11.0-powerpc-netinst.iso
-+
-+aCube Sam460ex (``sam460ex``)
-+=============================
-+
-+The ``sam460ex`` machine emulates the Sam460ex board by aCube which is
-+based on the AMCC PowerPC 460EX SoC (that despite its name has a
-+PPC440 CPU core).
-+
-+Firmware
-+--------
-+
-+The board has a firmware based on an older U-Boot version with
-+modifications to support booting AmigaOS 4. The firmware ROM is
-+included with QEMU.
-+
-+Emulated devices
-+----------------
-+
-+ * PowerPC 460EX SoC
-+ * M41T80 serial RTC chip
-+ * Silicon Motion SM501 display parts (identical to SM502 on real board)
-+ * Silicon Image SiI3112 2 port SATA controller
-+ * USB keyboard and mouse
-+
-+Running Linux
-+-------------
-+
-+The only Linux distro that supported Sam460ex out of box was CruxPPC
-+2.x. It can be booted by running:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine sam460ex -serial stdio \
-+                    -drive if=none,id=cd,format=raw,file=crux-ppc-2.7a.iso \
-+                    -device ide-cd,drive=cd,bus=ide.1
-+
-+There are some other kernels and instructions for booting other
-+distros on aCube's product page at
-+https://www.acube-systems.biz/index.php?page=hardware&pid=5
-+but those are untested.
-diff --git a/docs/system/target-ppc.rst b/docs/system/target-ppc.rst
-index 4f6eb93b17..87bf412ce5 100644
---- a/docs/system/target-ppc.rst
-+++ b/docs/system/target-ppc.rst
-@@ -17,6 +17,7 @@ help``.
- .. toctree::
-    :maxdepth: 1
- 
-+   ppc/amigang
-    ppc/embedded
-    ppc/powermac
-    ppc/powernv
--- 
-2.30.9
-
+r~
 
