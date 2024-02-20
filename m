@@ -4,71 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F7CC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 10:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2071C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 10:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcN4m-0000d7-Re; Tue, 20 Feb 2024 05:10:12 -0500
+	id 1rcN6k-0001sc-8j; Tue, 20 Feb 2024 05:12:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1rcN4l-0000c5-ND
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 05:10:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1rcN4h-0004qi-7h
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 05:10:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708423805;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WviwbfnYiQKw83K3PlycIGYEYjHbaSnV2B+xO7//bO0=;
- b=fBsZI+mxfzn3TXBdzPqdcGJxRlj7PDuw4Xj5osCAgZ58cIJ7dwyZ+LQ5HvvVP4RMbYYlPT
- RM7eelg91RNsKYTSvJJTiUZD1BEM4bcAk0sCqP1i9s4n1TBF8f1ZBFdFVxV/Zac3duXgMo
- j+sZQuDbH4IgnAoX7GWsMddeepNt4F8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-322-dPlujTMmMMuSH4jdUZGuZA-1; Tue, 20 Feb 2024 05:10:03 -0500
-X-MC-Unique: dPlujTMmMMuSH4jdUZGuZA-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EFCA31065223;
- Tue, 20 Feb 2024 10:10:02 +0000 (UTC)
-Received: from [10.39.195.16] (unknown [10.39.195.16])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id DFD241121306;
- Tue, 20 Feb 2024 10:10:00 +0000 (UTC)
-Message-ID: <e0c25486-a369-f8d5-c9ce-5984083d475a@redhat.com>
-Date: Tue, 20 Feb 2024 11:09:59 +0100
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcN6e-0001sL-Fs
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 05:12:08 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcN6a-0004pF-KU
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 05:12:08 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6da9c834646so4707405b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 02:10:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708423800; x=1709028600;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=S+IkuOX6QscYoZTac05+HhAUXBQvWtkgrzozGDmzg/E=;
+ b=wJ6BZ12T5CG8F5UZFNf25YngrO+YdBVHf0nqQ9g4omigE4DlFBeOhWBVNRliI1pqEW
+ 3CTGBzk6g4pbg2vx2YiP7ZWxxQUQOjos4TyeIAEELr0c3kPlEMiknITwoorfM2+2Qj0U
+ XIqcddFT3f2uZA3ufqipPtxQPRXcPxxDlOuY7yJ2TyM++ZNYNxv/Sv8D4sqIjxOXEg3W
+ TxXmTwnntDTvmND5aMph68dYigzUbsl7BWv0C/3afXtBKItgIsuunUr1wd6jAj6D4IUu
+ FI8CZILgjY/Pod1tG8FNmRSZzK87JH6Hf2RtmzEd9kfFyXzk85kZfpWa29iXgV/DdxRZ
+ Oxww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708423800; x=1709028600;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=S+IkuOX6QscYoZTac05+HhAUXBQvWtkgrzozGDmzg/E=;
+ b=ARg5uA/ZJyznFN0Ho4DEn4fA78CrlTnpmQOjFEIZqEXscYJZbMco7Uanms0ji3615u
+ WfEAmon1YsbLkd0LIUvdgUOBOjdGPobNXk96OkjR2jJAeoNM6DFEfcJV3r4hHBpuTgF0
+ oQRb9hzottmGbrQ9Kc8FLEkIUFXwh4P+uM+DC5dgCe3tist+jwP1OBbAXuP8k9U19cWb
+ qWZo3VfpYam8pgyhjBnnqgJFlakBF+0M6t4gZ5QbrwcdSl644HSaXJn1FFeJgatAy7NW
+ 6CkcKtRLMB/0elTybfrq12ypxrXowatbDZN6+4sqYFR7c+hB0eyRhlhNu3/m5PXdZQXY
+ MldA==
+X-Gm-Message-State: AOJu0YzlopLHi4DtpHh2z36eGG9GH+myr+M7bCHOAHEysufmGD9QAiTQ
+ Em8oBE5E1Z16QNpQ6hE3bar34GysGNes3ZO1ukS5e4VZeII5vtmu9QLCfe3NfoVJR87t7kfTfXC
+ HrUODRaZAh+NDJjNvNZMvCKtoasK4C8SGaH60yw==
+X-Google-Smtp-Source: AGHT+IF6xaLaoQsoCNiL18FU8agybkXqZ4LPizLthQ89lbr6Ie3xGcQrEGzl/3peuy5IErvOq2+DMnXiLwUhB9M3i5I=
+X-Received: by 2002:a05:6a21:3409:b0:19e:4ed7:127a with SMTP id
+ yn9-20020a056a21340900b0019e4ed7127amr18394169pzb.46.1708423798447; Tue, 20
+ Feb 2024 02:09:58 -0800 (PST)
 MIME-Version: 1.0
-Subject: Re: [PATCH v7 2/3] hw/isa/lpc_ich9: add broadcast SMI feature
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu devel list <qemu-devel@nongnu.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-References: <20170126014416.11211-1-lersek@redhat.com>
- <20170126014416.11211-3-lersek@redhat.com>
- <50ad98bf-cee9-44f7-bf4d-ada2a02e330b@linaro.org>
-Content-Language: en-US
-From: Laszlo Ersek <lersek@redhat.com>
-In-Reply-To: <50ad98bf-cee9-44f7-bf4d-ada2a02e330b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lersek@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <cover.1706586786.git.yong.huang@smartx.com>
+ <af7253711254128efbc37b25fb5c47b851367ce7.1706586786.git.yong.huang@smartx.com>
+ <87zfvwjzzd.fsf@pond.sub.org>
+ <CAK9dgmY0rExYg+hfTY_okNvTTArZdn60jsWjCABgbbAG6XZiDw@mail.gmail.com>
+ <87wmqzcy5h.fsf@pond.sub.org>
+ <CAK9dgmaD_3vbOvv9cFzPq-BzQ7xejB-McaD8C9v4Wt_0xnF9kw@mail.gmail.com>
+ <87edd7cw1w.fsf@pond.sub.org>
+In-Reply-To: <87edd7cw1w.fsf@pond.sub.org>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 20 Feb 2024 18:09:42 +0800
+Message-ID: <CAK9dgmaAgaU=BcPuF48R+vPeBjLxGixDVdytVE=eJqHY_z3Q-Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/7] qapi: Make parameter 'file' optional for
+ BlockdevCreateOptionsLUKS
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000a1f4970611cd699c"
+Received-SPF: none client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,185 +98,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/20/24 08:58, Philippe Mathieu-Daudé wrote:
-> Hi Laszlo, Igor, Gerd,
-> 
-> (old patch, now commit 5ce45c7a2b)
-> 
-> On 26/1/17 02:44, Laszlo Ersek wrote:
->> The generic edk2 SMM infrastructure prefers
->> EFI_SMM_CONTROL2_PROTOCOL.Trigger() to inject an SMI on each
->> processor. If
->> Trigger() only brings the current processor into SMM, then edk2
->> handles it
->> in the following ways:
->>
->> (1) If Trigger() is executed by the BSP (which is guaranteed before
->>      ExitBootServices(), but is not necessarily true at runtime), then:
->>
->>      (a) If edk2 has been configured for "traditional" SMM
->> synchronization,
->>          then the BSP sends directed SMIs to the APs with APIC delivery,
->>          bringing them into SMM individually. Then the BSP runs the SMI
->>          handler / dispatcher.
->>
->>      (b) If edk2 has been configured for "relaxed" SMM synchronization,
->>          then the APs that are not already in SMM are not brought in, and
->>          the BSP runs the SMI handler / dispatcher.
->>
->> (2) If Trigger() is executed by an AP (which is possible after
->>      ExitBootServices(), and can be forced e.g. by "taskset -c 1
->>      efibootmgr"), then the AP in question brings in the BSP with a
->>      directed SMI, and the BSP runs the SMI handler / dispatcher.
->>
->> The smaller problem with (1a) and (2) is that the BSP and AP
->> synchronization is slow. For example, the "taskset -c 1 efibootmgr"
->> command from (2) can take more than 3 seconds to complete, because
->> efibootmgr accesses non-volatile UEFI variables intensively.
->>
->> The larger problem is that QEMU's current behavior diverges from the
->> behavior usually seen on physical hardware, and that keeps exposing
->> obscure corner cases, race conditions and other instabilities in edk2,
->> which generally expects / prefers a software SMI to affect all CPUs at
->> once.
->>
->> Therefore introduce the "broadcast SMI" feature that causes QEMU to
->> inject
->> the SMI on all VCPUs.
-> 
-> I'm trying to remove cpu_interrupt() API from hw/ and found this odd
-> case.
-> 
-> IIUC, the code you added is closer to what real HW is doing:
-> 
->   CPU_FOREACH(cs) { cpu_interrupt(cs, CPU_INTERRUPT_SMI); }
-> 
-> and previous implementation was bogus:
-> 
->   cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
-> 
-> but to avoid breaking older VMs ready to deal with bogus impl,
-> you have to add a virtual (non-HW) ICH9_LPC_SMI_F_BROADCAST bit
-> so new VMs can detect (negotiating) it and use normal expected
-> HW behavior.
-> 
-> If so, and since this change was almost 7 years ago, can we
-> expect that most of today's VMs use ICH9_LPC_SMI_F_BROADCAST_BIT,
-> and would it be possible to deprecate it, so it become the only
-> possibility, allowing us to remove this bogus call?
-> 
->   cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
+--000000000000a1f4970611cd699c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-For OVMF guests: yes, said deprecation should be safe.
+On Tue, Feb 20, 2024 at 5:47=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-Note however that the "current_cpu" case (the original case) had been in
-place minimally for SeaBIOS. I don't know how exactly the deprecation /
-removal in QEMU would work, but if you build SeaBIOS with
-CONFIG_USE_SMM, it might still depend on the "current_cpu" branch.
+> Yong Huang <yong.huang@smartx.com> writes:
+>
+> > On Tue, Feb 20, 2024 at 4:56=E2=80=AFPM Markus Armbruster <armbru@redha=
+t.com>
+> wrote:
+> >
+> >> Yong Huang <yong.huang@smartx.com> writes:
+> >>
+> >> > On Tue, Feb 20, 2024 at 2:31=E2=80=AFPM Markus Armbruster <armbru@re=
+dhat.com>
+> >> wrote:
+> >> >
+> >> >> yong.huang@smartx.com writes:
+> >> >>
+> >> >> > From: Hyman Huang <yong.huang@smartx.com>
+> >> >> >
+> >> >> > To support detached LUKS header creation, make the existing 'file=
+'
+> >> >> > field in BlockdevCreateOptionsLUKS optional.
+> >> >> >
+> >> >> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> >> >> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> >> >>
+> >> >> [...]
+> >> >>
+> >> >> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> >> >> > index ae604c6019..69a88d613d 100644
+> >> >> > --- a/qapi/block-core.json
+> >> >> > +++ b/qapi/block-core.json
+> >> >> > @@ -4957,7 +4957,8 @@
+> >> >> >  #
+> >> >> >  # Driver specific image creation options for LUKS.
+> >> >> >  #
+> >> >> > -# @file: Node to create the image format on
+> >> >> > +# @file: Node to create the image format on, mandatory except wh=
+en
+> >> >> > +#        'preallocation' is not requested
+> >> >>
+> >> >> You mean when @preallocation is "off"?
+> >> >>
+> >> >> Cases:
+> >> >>
+> >> >> 1. @file is mandatory
+> >> >>
+> >> >
+> >> > When @preallocation is specified to PREALLOC_MODE_ON, file
+> >> > is mandatory because preallocation aims to act on payload data that
+> >> > @file holds.
+> >> >
+> >> >
+> >> >> 2. @file is optional and present
+> >> >>
+> >> >
+> >> > When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
+> >> > @file if optional.
+> >> > If @file present=EF=BC=8Cthere are two cases:
+> >> > 1. @header is absent,  the creation process degenerate to the origin
+> action.
+> >> > 2. @header is present,  the creation process would trunk the payload
+> data
+> >> > image that @file holds and do the LUKS formatting on the image that
+> >> > @header refers;
+> >> >
+> >> >
+> >> >>
+> >> >> 3. @file is optional and absent
+> >> >>
+> >> >
+> >> > When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
+> >> > @file if optional.
+> >> > If @file is absent, do the LUKS formatting only.
+> >> > Note that Either the parameter 'header' or 'file' must be specified.
+> >> >
+> >> > Here's my interpretation; do let me know if any of the points are of=
+f
+> or
+> >> > need to be refactored.
+> >> >
+> >> >
+> >> >>
+> >> >> Ignorant question: behavior in each case?
+> >>
+> >> Thanks!  Would it make sense to work the above into the documentation?
+> >>
+> >
+> > You mean adding the above interpretation to the following patch?
+> >
+> >
+> https://patchew.org/QEMU/c2049499aa05758b4cf18dcec942694ed454a980.1708358=
+310.git.yong.huang@smartx.com/
+>
+> To the doc comments.
+>
+> The doc comments are the source code for the "QEMU QMP Reference
+> Manual".  That manual should fully explain what the QMP commands do.
 
-FWIW, "roms/config.seabios-128k" and "roms/config.seabios-microvm" both
-contain CONFIG_USE_SMM=n, so the deprecation likely wouldn't matter for
-those SeaBIOS binaries (bundled with QEMU). But it could matter for
-SeaBIOS binaries from other sources; plus "roms/config.seabios-256k"
-does *not* contain a setting like that (and the SeaBIOS default is "y",
-when building for QEMU).
 
-For another data point: as far as I remember, we had disabled
-CONFIG_USE_SMM in RHEL; there had been stability issues.
+> Information on how to best use the commands, or an introduction to
+> concepts behind the commands can also be useful, but is often a bad fit
+> for a *reference* manual.  We can put it elsewhere then.
+>
+> Makes sense?
+>
+>
+Of course yes, it can be somewhat complex to use the LUKS volume with
+a detachable header, but users may find some relief from the
+interpretation.
 
-... I can't describe *all* the uses that SeaBIOS has for SMM. *One* use
-is from commit 55215cd425d3 ("Implement call32 mechanism using SMIs.",
-2014-10-15) -- "this allows SeaBIOS to transition to 32bit mode even
-when called in vm86 mode". Because that commit modifies "stacks.c", I
-think it must be related to the "cooperative multi-tasking system"
-described here: <https://www.seabios.org/Execution_and_code_flow#Threads>.
+I'll try it.
 
-I'm really rusty on this [*], but here's one potential symptom I can
-theorize about: assuming you silently make broadcast SMI the default in
-QEMU, and SeaBIOS raises an SMI (expecting it to only affect the BSP),
-the SMI could become pending on all the APs (which would all be in RESET
-state at that point [**]). And when Linux booted those APs with
-INIT-SIPI-SIPI sequences, the pending SMIs could be delivered
-immediately, and the APs would launch immediately into SMM. That would
-likely not be expected.
+--=20
+Best regards
 
-[*] Using earlier edk2 commit cbccf995920a ("OvmfPkg/CpuHotplugSmm: fix
-CPU hotplug race just after SMI broadcast", 2020-08-27) as cheat-sheet.
-IIRC, I consulted the Intel SDM extensively back when I was working on
-that patch.
+--000000000000a1f4970611cd699c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-[**] Hm... wait. It seems SeaBIOS does boot all APs in the system. The
-APs apparently end up penned in a HLT-loop; see at the end of
-"entry_smp" in "romlayout.S". In that case, the problem could be worse I
-guess? The broadcast SMI could wake all APs from their halted states.
-SeaBIOS doesn't seem to relocate SMBASE for the APs, so if multiple
-processors start executing in SMM at the same time, the results are not
-going to be stellar.
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 20, 20=
+24 at 5:47=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat=
+.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-=
+style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">Yong Huang=
+ &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yong.huang@=
+smartx.com</a>&gt; writes:<br>
+<br>
+&gt; On Tue, Feb 20, 2024 at 4:56=E2=80=AFPM Markus Armbruster &lt;<a href=
+=3D"mailto:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</a>&gt; w=
+rote:<br>
+&gt;<br>
+&gt;&gt; Yong Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"=
+_blank">yong.huang@smartx.com</a>&gt; writes:<br>
+&gt;&gt;<br>
+&gt;&gt; &gt; On Tue, Feb 20, 2024 at 2:31=E2=80=AFPM Markus Armbruster &lt=
+;<a href=3D"mailto:armbru@redhat.com" target=3D"_blank">armbru@redhat.com</=
+a>&gt;<br>
+&gt;&gt; wrote:<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt; <a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank=
+">yong.huang@smartx.com</a> writes:<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; &gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@s=
+martx.com" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt;&gt; &gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt; &gt; To support detached LUKS header creation, make the e=
+xisting &#39;file&#39;<br>
+&gt;&gt; &gt;&gt; &gt; field in BlockdevCreateOptionsLUKS optional.<br>
+&gt;&gt; &gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt; &gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yon=
+g.huang@smartx.com" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt;&gt; &gt;&gt; &gt; Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"=
+mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com</a>&gt;<b=
+r>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; [...]<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; &gt; diff --git a/qapi/block-core.json b/qapi/block-core.=
+json<br>
+&gt;&gt; &gt;&gt; &gt; index ae604c6019..69a88d613d 100644<br>
+&gt;&gt; &gt;&gt; &gt; --- a/qapi/block-core.json<br>
+&gt;&gt; &gt;&gt; &gt; +++ b/qapi/block-core.json<br>
+&gt;&gt; &gt;&gt; &gt; @@ -4957,7 +4957,8 @@<br>
+&gt;&gt; &gt;&gt; &gt;=C2=A0 #<br>
+&gt;&gt; &gt;&gt; &gt;=C2=A0 # Driver specific image creation options for L=
+UKS.<br>
+&gt;&gt; &gt;&gt; &gt;=C2=A0 #<br>
+&gt;&gt; &gt;&gt; &gt; -# @file: Node to create the image format on<br>
+&gt;&gt; &gt;&gt; &gt; +# @file: Node to create the image format on, mandat=
+ory except when<br>
+&gt;&gt; &gt;&gt; &gt; +#=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;preallocation&#39=
+; is not requested<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; You mean when @preallocation is &quot;off&quot;?<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; Cases:<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; 1. @file is mandatory<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; When @preallocation is specified to PREALLOC_MODE_ON, file<br=
+>
+&gt;&gt; &gt; is mandatory because preallocation aims to act on payload dat=
+a that<br>
+&gt;&gt; &gt; @file holds.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt; 2. @file is optional and present<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; When @preallocation is not specified or equals to PREALLOC_MO=
+DE_OFF,<br>
+&gt;&gt; &gt; @file if optional.<br>
+&gt;&gt; &gt; If @file present=EF=BC=8Cthere are two cases:<br>
+&gt;&gt; &gt; 1. @header is absent,=C2=A0 the creation process degenerate t=
+o the origin action.<br>
+&gt;&gt; &gt; 2. @header is present,=C2=A0 the creation process would trunk=
+ the payload data<br>
+&gt;&gt; &gt; image that @file holds and do the LUKS formatting on the imag=
+e that<br>
+&gt;&gt; &gt; @header refers;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; 3. @file is optional and absent<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; When @preallocation is not specified or equals to PREALLOC_MO=
+DE_OFF,<br>
+&gt;&gt; &gt; @file if optional.<br>
+&gt;&gt; &gt; If @file is absent, do the LUKS formatting only.<br>
+&gt;&gt; &gt; Note that Either the parameter &#39;header&#39; or &#39;file&=
+#39; must be specified.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; Here&#39;s my interpretation; do let me know if any of the po=
+ints are off or<br>
+&gt;&gt; &gt; need to be refactored.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt;<br>
+&gt;&gt; &gt;&gt; Ignorant question: behavior in each case?<br>
+&gt;&gt;<br>
+&gt;&gt; Thanks!=C2=A0 Would it make sense to work the above into the docum=
+entation?<br>
+&gt;&gt;<br>
+&gt;<br>
+&gt; You mean adding the above interpretation to the following patch?<br>
+&gt;<br>
+&gt; <a href=3D"https://patchew.org/QEMU/c2049499aa05758b4cf18dcec942694ed4=
+54a980.1708358310.git.yong.huang@smartx.com/" rel=3D"noreferrer" target=3D"=
+_blank">https://patchew.org/QEMU/c2049499aa05758b4cf18dcec942694ed454a980.1=
+708358310.git.yong.huang@smartx.com/</a><br>
+<br>
+To the doc comments.<br>
+<br>
+The doc comments are the source code for the &quot;QEMU QMP Reference<br>
+Manual&quot;.=C2=A0 That manual should fully explain what the QMP commands =
+do.=C2=A0</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-co=
+lor:rgb(204,204,204);padding-left:1ex">
+<br>
+Information on how to best use the commands, or an introduction to<br>
+concepts behind the commands can also be useful, but is often a bad fit<br>
+for a *reference* manual.=C2=A0 We can put it elsewhere then.<br>
+<br>
+Makes sense?<br>
+<br>
+</blockquote></div><div><br></div><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif">Of course yes, it can be som=
+ewhat complex to use the LUKS volume with</div><div class=3D"gmail_default"=
+ style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">a detachable he=
+ader, but users may find some relief from the interpretation.=C2=A0</div><d=
+iv class=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,s=
+ans-serif"><br></div><div class=3D"gmail_default" style=3D"font-family:&quo=
+t;comic sans ms&quot;,sans-serif">I&#39;ll try it.</div><div><br></div><spa=
+n class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"=
+gmail_signature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">=
+Best regards</font></div></div></div>
 
-Laszlo
-
-> 
->> While the original posting of this patch
->> <http://lists.nongnu.org/archive/html/qemu-devel/2015-10/msg05658.html>
->> only intended to speed up (2), based on our recent "stress testing" of
->> SMM
->> this patch actually provides functional improvements.
->>
->> Cc: "Michael S. Tsirkin" <mst@redhat.com>
->> Cc: Gerd Hoffmann <kraxel@redhat.com>
->> Cc: Igor Mammedov <imammedo@redhat.com>
->> Cc: Paolo Bonzini <pbonzini@redhat.com>
->> Signed-off-by: Laszlo Ersek <lersek@redhat.com>
->> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
->> ---
->>
->> Notes:
->>      v7:
->>      - no changes, pick up Igor's R-b
->>           v6:
->>      - no changes, pick up Michael's R-b
->>           v5:
->>      - replace the ICH9_LPC_SMI_F_BROADCAST bit value with the
->>        ICH9_LPC_SMI_F_BROADCAST_BIT bit position (necessary for
->>        DEFINE_PROP_BIT() in the next patch)
->>
->>   include/hw/i386/ich9.h |  3 +++
->>   hw/isa/lpc_ich9.c      | 10 +++++++++-
->>   2 files changed, 12 insertions(+), 1 deletion(-)
->>
->> diff --git a/include/hw/i386/ich9.h b/include/hw/i386/ich9.h
->> index da1118727146..18dcca7ebcbf 100644
->> --- a/include/hw/i386/ich9.h
->> +++ b/include/hw/i386/ich9.h
->> @@ -250,4 +250,7 @@ Object *ich9_lpc_find(void);
->>   #define ICH9_SMB_HST_D1                         0x06
->>   #define ICH9_SMB_HOST_BLOCK_DB                  0x07
->>   +/* bit positions used in fw_cfg SMI feature negotiation */
->> +#define ICH9_LPC_SMI_F_BROADCAST_BIT            0
->> +
->>   #endif /* HW_ICH9_H */
->> diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
->> index 376b7801a42c..ced6f803a4f2 100644
->> --- a/hw/isa/lpc_ich9.c
->> +++ b/hw/isa/lpc_ich9.c
->> @@ -437,7 +437,15 @@ static void ich9_apm_ctrl_changed(uint32_t val,
->> void *arg)
->>         /* SMI_EN = PMBASE + 30. SMI control and enable register */
->>       if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
->> -        cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
->> +        if (lpc->smi_negotiated_features &
->> +            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
->> +            CPUState *cs;
->> +            CPU_FOREACH(cs) {
->> +                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
->> +            }
->> +        } else {
->> +            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
->> +        }
->>       }
->>   }
->>   
-> 
-
+--000000000000a1f4970611cd699c--
 
