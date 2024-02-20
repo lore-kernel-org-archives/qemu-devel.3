@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961E2C5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D433DC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcXbB-0001Uj-QV; Tue, 20 Feb 2024 16:24:21 -0500
+	id 1rcXp0-0005fv-TG; Tue, 20 Feb 2024 16:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcXbA-0001UX-Jb
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:24:20 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcXb9-0001lw-3A
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:24:20 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-563e6131140so5730263a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:24:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708464257; x=1709069057; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MJI9omaxiEcfzvSVsoLDG4WoW/kVvZXv9KOhUn97YF4=;
- b=MoTIH1q4IV6DoLeNk8HAVS+OIMQTn15hVIyeGe1LKzhMDB7dyP1Ez/FYMHfRMtJDAo
- 8U8CNMpSr1tauBoYIX13QEssysDwMOv9u6DHmeY+ki0EX7qe+4W7p12FaD5N4gUODsYz
- gJ9Pfz2jz5/FEO/ahObRnY4pKD+9toobjtam9+vwI+QBd9e6mhLPx/56mKYM/HINgjhA
- 1jJMlF8FTKYsygSYV3nRfXw+xxhfCFKDREJTZLE1ZHKUMnA7jc+JTCWmtwjeumt0HY/5
- AyeKqxnSnjp/Ct6VwC0pKMu1e/MngaJjtQeF2Eavbu7DPDuDyF00rfT+LRE9vUvz1m4K
- owMA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rcXow-0005es-Je
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:38:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rcXos-0004G0-OB
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:38:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708465109;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MmOwF+DAyMIdSV9DcRGz70bKDrXBdZ9noerZKo7mWzU=;
+ b=QBuijgWg39NrCOG6Og9p3z5JStCMg5MD1c5aSPUJTIu/EA4qLRw4Yn9O8qW3cBgSk2MoMG
+ h0yZbuee8zX/pUuWeLw6IbNnbaLBOP+dlLXbArm55Nv3gmDXsxWFftk5e5TlPLZgBXCxpA
+ YW4Gi7UagoUbDTFjNtRBP9SW5ka/Rl8=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-212-kajozs2zPqiYiXrLTuuQVA-1; Tue, 20 Feb 2024 16:38:27 -0500
+X-MC-Unique: kajozs2zPqiYiXrLTuuQVA-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-56451e5801dso1183011a12.3
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:38:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708464257; x=1709069057;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MJI9omaxiEcfzvSVsoLDG4WoW/kVvZXv9KOhUn97YF4=;
- b=dYFp2cIOCHLKrK6m+1Jvk+S6EhfaTWArQtsDziHzr7YAfCBOoU0CRdfwUJ5IJks2mz
- YlRX9BTVWuryFIBQ+Eq/FlMDtJ0+K6HrI2dEcHNXwvbcrGvdHF5/T86Uhvag33A46jSn
- Gl0qkiiHa+/8ewEpfzAaHiwEiCuz/vvvirHc54NtyR3xaa6ITr/kadNqLlirOMgamI0I
- KBKqORm2uEn8cct41f9ToNPJXKtYY6b1FVak2/oQYX8ORsVRZqHf4hodF8ysOYXJqwXE
- h3/+cKKlqOqWGB3QdjMK+b4WgMEjLe9kXDgH880Hfs3s4fV0wkPdMcw/MmSm9Wfdwx0J
- Z08w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMIjQnj3R0NusfTFwmc1nyHU+vLwEhBx+Z8cetoe2xTWzqx+DfHYu23Ays6jZ+TddUSDfV/+b7fxDnvgCcUixiZHbmlW4=
-X-Gm-Message-State: AOJu0YxR2Wnwv8HZN5I6iseZA7xi30MUZQBEK8XXjnE2KTSD6+MjJcOr
- zDvnqVuHTAk49b7mUK6oT2f9XsTMpFFkpJqRvN3P5rp7/jQQ7PDUxzshRH+qAZrLcJrJmEzCiFY
- 8mmH839lEiX8vdd3LE3b2uuqCNXSQXcxMewrkgQ==
-X-Google-Smtp-Source: AGHT+IEtadCOijPzWTXXn1/GQp5CwmT59BKh1Z2bqnGYV4Tp1diO3VgE+05drwS8CF5AvisgOV3HxNyp6o/TvN0OR+M=
-X-Received: by 2002:aa7:d046:0:b0:563:f606:3b36 with SMTP id
- n6-20020aa7d046000000b00563f6063b36mr8792017edo.8.1708464257625; Tue, 20 Feb
- 2024 13:24:17 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708465106; x=1709069906;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MmOwF+DAyMIdSV9DcRGz70bKDrXBdZ9noerZKo7mWzU=;
+ b=iYr8ZqnYZfiRbFHJ7Qv7Nb8wRa4sNI3x+kBzGjZbtKYS2LbhXeq79yOP1HNsAg2R+f
+ +l1tjHJikHw14h6J8WqHbj4lez4WiH6kQwDsWfk1qX0SHXtP7OnOZmwUXqz53tQS2YD/
+ VEA4vWiZnYiMKyAwDXZ9hYaqAiFbwCB5IZaXv6FfREgLt1LBAVF7eweRfQlNeLqzNxTv
+ QYjVcmUEQ9bTu/qNmPaX+D9/JCGilWyr3ytgLqkxZPpyxXIG+SVBm0GeXbrTsAzHtIyB
+ /WSLHKFaWWNuelTIusuG+xD58x9ymfHLy1jIEeDe4W9xYnuLreDghfSXaZaXWKPAki3I
+ OwTA==
+X-Gm-Message-State: AOJu0YwlsqaQ6oFWEFaDFn+u81pH5L+U2+KrEHSZfz/oBiA2onKX4eid
+ FywMdB0LhuJzFVUA80a7llGx9tztD+6ZVABiK0F/7Hiv0yIHjiVHk9JyTXRZZqBjtyCWJrPk8wI
+ Xfgkgb65ARKhiZzkLeAvl0EXCuFy2jxdsoypO+nwJ2ft9UXGF6VTK
+X-Received: by 2002:aa7:d508:0:b0:564:5407:ce22 with SMTP id
+ y8-20020aa7d508000000b005645407ce22mr5101471edq.21.1708465106714; 
+ Tue, 20 Feb 2024 13:38:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGNJM7+bjae7odHHnifREhjLQ8pkr72rW97xUSsgTE1F1R8/njXgtT7AgmZA6VADdJXPP1ZFw==
+X-Received: by 2002:aa7:d508:0:b0:564:5407:ce22 with SMTP id
+ y8-20020aa7d508000000b005645407ce22mr5101464edq.21.1708465106325; 
+ Tue, 20 Feb 2024 13:38:26 -0800 (PST)
+Received: from redhat.com ([2a02:14f:1f0:1091:ae5:ff2a:ccd0:5e19])
+ by smtp.gmail.com with ESMTPSA id
+ fd5-20020a056402388500b00564bd1724cesm1070713edb.65.2024.02.20.13.38.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 13:38:25 -0800 (PST)
+Date: Tue, 20 Feb 2024 16:38:21 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: Re: [PATCH 00/10] reset: Make whole system three-phase-reset aware
+Message-ID: <20240220163700-mutt-send-email-mst@kernel.org>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
- <87a5nvci5n.fsf@draig.linaro.org>
- <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
- <87y1bfawik.fsf@draig.linaro.org>
- <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
-In-Reply-To: <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Feb 2024 21:24:06 +0000
-Message-ID: <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
-Subject: Re: QNX VM hang on Qemu
-To: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240220160622.114437-1-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,27 +104,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Feb 2024 at 20:56, Faiq Ali Sayed <faiqueali.109@gmail.com> wrote:
->
-> The image I am using is currently in use for real hardware, and
-> I received it from a third party/vendor.
+On Tue, Feb 20, 2024 at 04:06:12PM +0000, Peter Maydell wrote:
+> This patchset is an incremental improvement to our reset handling that
+> tries to roll out the "three-phase-reset" design we have for devices
+> to a wider scope.
+> 
+> At the moment devices and buses have a three-phase reset system, with
+> separate 'enter', 'hold' and 'exit' phases. When the qbus tree is
+> reset, first all the devices on it have their 'enter' method called,
+> then they all have 'enter' called, and finally 'exit'. The idea is
+> that we can use this, among other things, as a way to resolve annoying
+> "this bit of reset work needs to happen before this other bit of reset
+> work" ordering issues.
+> 
+> However, there is still a "legacy" reset option, where you register a
+> callback function with qemu_register_reset(). These functions know
+> nothing about the three-phase system, and "reset the qbus" is just one
+> of the things set up to happen at reset via qemu_register_reset().
+> That means that a qemu_register_reset() function might happen before
+> all the enter/hold/exit phases of device reset, or it might happen after
+> all of them.
+> 
+> This patchset provides a new way to register a three-phase-aware reset
+> in this list of "reset the whole system" actions, and reimplements
+> qemu_register_reset() in terms of that new mechanism. This means that
+> qemu_register_reset() functions are now all called in the 'hold' phase
+> of system reset. (This is an ordering change, so in theory it could
+> introduce new bugs if we are accidentally depending on the current
+> ordering; but we have very few enter and exit phase methods at the
+> moment so I don't expect much trouble, if any.)
+> 
+> The first three patches remove the only two places in the codebase
+> that rely on "a reset callback can unregister itself within the
+> callback"; this is awkward to continue to support in the new
+> implementation, and an unusual thing to do given that reset is in
+> principle supposed to be something you can do as many times as you
+> like, not something that behaves differently the first time through.
+> 
+> Patch 4 is an improvement to the QOM macros that's been on list as an
+> RFC already.
+> Patches 5 and 6 are the "new mechanism": qemu_register_resettable()
+> takes any object that implements the Resettable interface. System
+> reset is then doing 3-phase reset on all of these, so everything
+> gets its 'enter' phase called, then everything gets 'hold', then
+> everything gets 'exit'.
+> 
+> Patch 7 reimplements the qemu_register_reset() API to be
+> "qemu_register_resettable(), and the callback function is called
+> in the 'hold' phase".
+> 
+> Patch 8 makes the first real use of the new API: instead of
+> doing the qbus reset via qemu_register_reset(), we pass the
+> root of the qbus to qemu_register_resettable(). (This is where
+> the ordering change I mention above happens, as device enter and
+> exit method calls will now happen before and after all the
+> qemu_register_reset() function callbacks, rather than in the
+> middle of them.)
+> 
+> Finally, patch 9 updates the developer docs to describe how a
+> complete system reset currently works.
+> 
+> This series doesn't actually do a great deal as it stands, but I
+> think it's a necessary foundation for some cleanups:
+>  * the vfio reset ordering problem discussed on list a while back
+>    should now hopefully be solvable by having the vfio code use
+>    qemu_register_resettable() so it can arrange to do the "needs to
+>    happen last" stuff in an exit phase method
+>  * there are some other missing pieces here, but eventually I think
+>    it should be possible to get rid of the workarounds for
+>    dependencies between ROM image loading and CPUs that want to
+>    read an initial PC/SP on reset (eg arm, m68k)
+> I also think it's a good idea to get it into the tree so that we
+> have a chance to see if there are any unexpected regressions
+> before we start putting in bugfixes etc that depend on it :-)
+> 
+> After this, I think the next thing I'm going to look at is whether
+> we can move the MachineState class from inheriting from TYPE_OBJECT
+> to TYPE_DEVICE. This would allow us to have machine-level reset
+> (and would bring "machine as a container of devices" into line
+> with "SoC object as container of devices").
+> 
+> thanks
+> -- PMM
 
-OK, so what exactly is the real hardware it's for?
 
-> Could you please suggest to me what I can do now?
+Like this overall and the pc cleanup is nice.
 
-If QEMU has a model of the hardware the image is for:
- - use that QEMU machine type (and issues with getting it running
-   will be related to making sure you're loading it at the right
-   address and starting it the way it wants to be started)
-If QEMU does not have a model of the hardware the image is for:
- - ask your vendor for a build that targets some machine QEMU
-   does have a model of
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-Unfortunately in general in the Arm world guest OSes are
-not "runs on anything", but only "runs on the hardware
-they were built to run on". This remains true under emulation.
 
-thanks
--- PMM
+
+
+> Peter Maydell (10):
+>   hw/i386: Store pointers to IDE buses in PCMachineState
+>   hw/i386/pc: Do pc_cmos_init_late() from pc_machine_done()
+>   system/bootdevice: Don't unregister reset handler in
+>     restore_boot_order()
+>   include/qom/object.h: New OBJECT_DEFINE_SIMPLE_TYPE{,_WITH_INTERFACES}
+>     macros
+>   hw/core: Add documentation and license comments to reset.h
+>   hw/core: Add ResetContainer which holds objects implementing
+>     Resettable
+>   hw/core/reset: Add qemu_{register,unregister}_resettable()
+>   hw/core/reset: Implement qemu_register_reset via
+>     qemu_register_resettable
+>   hw/core/machine: Use qemu_register_resettable for sysbus reset
+>   docs/devel/reset: Update to discuss system reset
+> 
+>  MAINTAINERS                      |  10 ++
+>  docs/devel/qom.rst               |  34 ++++++-
+>  docs/devel/reset.rst             |  44 +++++++-
+>  include/hw/core/resetcontainer.h |  48 +++++++++
+>  include/hw/i386/pc.h             |   4 +-
+>  include/qom/object.h             | 114 ++++++++++++++++-----
+>  include/sysemu/reset.h           | 113 +++++++++++++++++++++
+>  hw/core/machine.c                |   7 +-
+>  hw/core/reset.c                  | 166 +++++++++++++++++++++++++------
+>  hw/core/resetcontainer.c         |  76 ++++++++++++++
+>  hw/i386/pc.c                     |  40 +++-----
+>  hw/i386/pc_piix.c                |  16 ++-
+>  hw/i386/pc_q35.c                 |   9 +-
+>  system/bootdevice.c              |  25 +++--
+>  hw/core/meson.build              |   1 +
+>  15 files changed, 587 insertions(+), 120 deletions(-)
+>  create mode 100644 include/hw/core/resetcontainer.h
+>  create mode 100644 hw/core/resetcontainer.c
+> 
+> -- 
+> 2.34.1
+
 
