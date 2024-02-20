@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D677FC48BF8
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 00:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF09C48BF8
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 00:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcE0H-00036h-DR; Mon, 19 Feb 2024 19:28:57 -0500
+	id 1rcE77-0005L3-VU; Mon, 19 Feb 2024 19:36:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rcE0G-00036N-F2; Mon, 19 Feb 2024 19:28:56 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1rcE75-0005KY-IC; Mon, 19 Feb 2024 19:35:59 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rcE0E-0001x3-Un; Mon, 19 Feb 2024 19:28:56 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e0f803d9dfso2395193b3a.0; 
- Mon, 19 Feb 2024 16:28:54 -0800 (PST)
+ id 1rcE72-0003G2-V7; Mon, 19 Feb 2024 19:35:59 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1d51ba18e1bso49919115ad.0; 
+ Mon, 19 Feb 2024 16:35:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708388933; x=1708993733; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708389355; x=1708994155; darn=nongnu.org;
  h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cS+2XMzeH1XFbOvnGCXDjZDuyLiGM1BUY8YlROUbkak=;
- b=hfcXNR98dQGN8Ft64MnWHeu1yi79AKVPUSCOxw5IG/t6kTMF7/ou2f156Rfu5ax75j
- efKGqd6yzyjTa0NQY3RU04D0WzqNgaD2kWzDWNc9yQR6D6O2Sw2brTUqInG/sePlVQqb
- rKKq2aK32sEWj76mvJ3g7C0z5pG/FRjsdvCyf4+XS1hOUXfUsFR0kmfAFYnGPiiQ2F64
- PFZL5tbKZQa8eSl5sil/do1pmpwAU2QK/3s1qbO85N4lUFp5YswAkIhMHectgqfLyeiQ
- dq1vq6g8nUllF6G4pUg8GCC6J6ZMb/Sirbd0IIyFgB5gjOGnpcnw6Rr47UZulvT32f43
- tq+g==
+ bh=o2hztUQncJTOuSKyJKDJZqOvT7q5diaQVZZC11llcuU=;
+ b=J+4G28w6zjvEuXOoqxnHi0/b2vpcBBdE0Y2uwWreYPpWkvyqZK2KsoCEOTyq8ST2OB
+ ZWqn9D+2faBxtKb4HxZlXu0Asv56T7d/eqb5hWTPTDTmlfY8OSWf/bfBA5u31/awcUbc
+ NTxXslcv17oHCoocA7WwGKz+SG3xsh11d6pYneUGn3i+cxOZ4w1Aa/cIAa6BHmnrX0if
+ /P3qnmu3yKAJHM++5D06UNJf4S52HpNzW7t+9nxJVmpa6IK4XuBRL7prvF1CvXXFGNaB
+ gOuZ9VtQuAbmj05iJDQYDrIfxEua8SmMK/PFBSx0mPbwhV5fKf/Rde3xlgg8wyvRcmdP
+ GAXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708388933; x=1708993733;
+ d=1e100.net; s=20230601; t=1708389355; x=1708994155;
  h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cS+2XMzeH1XFbOvnGCXDjZDuyLiGM1BUY8YlROUbkak=;
- b=Db421H35LkSE4q2NhgpG0ZIi02JlJ2glD2RqESYcrJwRJqSjj4yl0EtT9QQ91d+Cej
- BOwkekQQhSmd7bfWG6FXIM81jmXyjm7LVkjHJtvsHnziztd66N2tDQ4MWRcuF5PHPwAH
- XatMjLX2R6FJTPydV5ZEPZ2Piu+NlHnbxxDUPPKGhy9kW35EG5dMANPfIWwLUYZkesK3
- BS95itsrkosx2fW5Yvn8p0KT8Unm/6zDHvQ69kEG8SjFAkeV/VKfuX7QSoL1Mqb625un
- P/6nyppyWCdYf8niQuK2JtBvx1+9RE4b0itaX66usEM7xJF97T/E50IcLlw8ipQkno8s
- 7xVg==
+ bh=o2hztUQncJTOuSKyJKDJZqOvT7q5diaQVZZC11llcuU=;
+ b=JVs4OBUKmEI6hntQ9j4Q5Yc22LdrLfWQ2YYDEWAD0nwwyAoNeuj0JcU4U8/MFR4j3D
+ qXilzzsCEy2TL3B9mi3DTaPap8NDgfaUqY+RovVzizrZJX49XsEJ2ubxzlkQm2cjswUR
+ NjOqFg5Q4dbeV3QWZB/yragq1nB1nkM9kHKjTeiW9zjKxfI4W3XVbZa9C3aXydHWWGkR
+ gNxnQC/LvKq6f+deEP9E9B0DFOUy+Z0M0SCi7AS8m43GN/h9uW8gI6vT7xDUF0r8tvGn
+ a7y0KtBW2q7xk8YU18ew9v4f1JqpW0qq0Pk9HfX8AxfshaGWDPh2pPQbfFmwNisqaMcX
+ 1CXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVG6UCzM11guqtXVyGnCUXa8eNqS7rPsIQzzhBNSNVfPN2ugPK2jl6acETSz4NjXcCVp01rDu0eF4c0WUbcrrDpPnhK
-X-Gm-Message-State: AOJu0Yy9xLX4brbKS1OcxO3B1gQBYAZqueObZAbbMJ7tGF8unloXyM+o
- t+M6EpTXW3nNQw7ZmybQgvqqQBwwf4et0qiXQzLzzw+vM1M/pj45
-X-Google-Smtp-Source: AGHT+IFWCoNho0IibTTiYB0yNeOQog65NeXuf1U2xoYZrbpXc65vpce/hICedRQRoa4oqgJdnGC5ug==
-X-Received: by 2002:a05:6a20:d905:b0:19e:9d92:b6a6 with SMTP id
- jd5-20020a056a20d90500b0019e9d92b6a6mr19898804pzb.44.1708388932920; 
- Mon, 19 Feb 2024 16:28:52 -0800 (PST)
+ AJvYcCU+M342mgbacjSJNSjfj40uOH5bbZSfEXCgsbFJK2dy/xhHy5TYhAyGAMneP3sz+0zb01ngNZP11nvRQmlUpGC8TNaA0uA=
+X-Gm-Message-State: AOJu0YyM9WrWCgQxPVh2EYzSXkJbpUCAO1tP3nnkCAhQZJDmCxjXxNiE
+ T9otwsIvYFeKiw1FqFXNUAiO4gYT06L5d7kXk/8NURq58UJyfHgutl9TpUSD
+X-Google-Smtp-Source: AGHT+IETj3TvuB8u0MNGWUulBjzksaxujHEFI5X3q78cA8NJaw5vx/+ohSQh409a3n1hvLsHLNmHzQ==
+X-Received: by 2002:a17:903:2341:b0:1dc:6db:e268 with SMTP id
+ c1-20020a170903234100b001dc06dbe268mr3003898plh.31.1708389354865; 
+ Mon, 19 Feb 2024 16:35:54 -0800 (PST)
 Received: from localhost (123-243-155-241.static.tpgi.com.au.
  [123.243.155.241]) by smtp.gmail.com with ESMTPSA id
- c18-20020a056a00009200b006dff3ca9e26sm5435702pfj.102.2024.02.19.16.28.50
+ x9-20020a170902b40900b001d94c709738sm4950074plr.217.2024.02.19.16.35.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Feb 2024 16:28:52 -0800 (PST)
+ Mon, 19 Feb 2024 16:35:54 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 20 Feb 2024 10:28:48 +1000
-Message-Id: <CZ9HBYZ004Q8.3ICH68L1E2IGQ@wheely>
-To: "Richard Henderson" <richard.henderson@linaro.org>, <qemu-ppc@nongnu.org>
-Cc: <qemu-devel@nongnu.org>, "Glenn Miles" <milesg@linux.vnet.ibm.com>
+Date: Tue, 20 Feb 2024 10:35:50 +1000
+Message-Id: <CZ9HHCWQR3MT.1U5CJ7CBIR1EH@wheely>
+To: "Peter Maydell" <peter.maydell@linaro.org>
+Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>, "Glenn Miles"
+ <milesg@linux.vnet.ibm.com>
 Subject: Re: [PATCH] target/ppc: BHRB avoid using host pointer in translated
  code
 From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.15.2
 References: <20240215171512.800892-1-npiggin@gmail.com>
- <eed2094c-32f9-400d-951a-120c06bb58f9@linaro.org>
-In-Reply-To: <eed2094c-32f9-400d-951a-120c06bb58f9@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+ <CAFEAcA_m=xZEh0gS8ttfPiuRGWJrow7A303GiLG44W4LQZ10xw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_m=xZEh0gS8ttfPiuRGWJrow7A303GiLG44W4LQZ10xw@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,60 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Feb 16, 2024 at 5:42 AM AEST, Richard Henderson wrote:
-> On 2/15/24 07:15, Nicholas Piggin wrote:
-> > diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> > index 731dd8df35..3541cd83cd 100644
-> > --- a/target/ppc/machine.c
-> > +++ b/target/ppc/machine.c
-> > @@ -724,7 +724,7 @@ static const VMStateDescription vmstate_bhrb =3D {
-> >       .minimum_version_id =3D 1,
-> >       .needed =3D bhrb_needed,
-> >       .fields =3D (VMStateField[]) {
-> > -        VMSTATE_UINTTL(env.bhrb_offset, PowerPCCPU),
-> > +        VMSTATE_UINT32(env.bhrb_offset, PowerPCCPU),
+On Fri Feb 16, 2024 at 3:50 AM AEST, Peter Maydell wrote:
+> On Thu, 15 Feb 2024 at 17:16, Nicholas Piggin <npiggin@gmail.com> wrote:
+> >
+> > Calculate the BHRB base from arithmetic on the tcg_env target ptr.
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> > Hi Glenn,
+> >
+> > I think I have to squash this into the BHRB series. 32-bit host
+> > compile shows up a size mismatch warning... I think it's not quite
+> > right to be using host pointer directly in target code. The change
+> > of offset and mask to 32-bit is needed due to to seemingly missing
+> > tl->ptr conversion helpers, but 32-bit is okay for those anyway.
 >
-> This requires a version bump.
+> There's nothing inherently wrong with it (depending on what the
+> pointer is pointing to!), but you need to use the right type.
 
-In this case the first patch hasn't gone upstream yet.
+Ah okay, thanks for the correction.
 
-> > diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> > index 81afc892de..05f0f1ac52 100644
-> > --- a/target/ppc/translate.c
-> > +++ b/target/ppc/translate.c
-> > @@ -4167,21 +4167,24 @@ static void gen_rvwinkle(DisasContext *ctx)
-> >   #endif /* defined(CONFIG_USER_ONLY) */
-> >   }
-> >  =20
-> > -static inline TCGv gen_write_bhrb(TCGv base, TCGv offset, TCGv mask, T=
-CGv value)
-> > +static TCGv_i32 gen_write_bhrb(TCGv_i32 offset, TCGv_i32 mask, TCGv_i6=
-4 value)
-> >   {
-> > -    TCGv tmp =3D tcg_temp_new();
-> > +    TCGv_ptr ptr =3D tcg_temp_new_ptr();
-> > +    TCGv_i32 tmp =3D tcg_temp_new_i32();
-> >  =20
-> > -    /* add base and offset to get address of bhrb entry */
-> > -    tcg_gen_add_tl(tmp, base, offset);
-> > +    /* add base and offset to tcg_env to get address of bhrb entry */
-> > +    tcg_gen_addi_i32(tmp, offset, offsetof(CPUPPCState, bhrb));
-> > +    tcg_gen_ext_i32_ptr(ptr, tmp);
-> > +    tcg_gen_add_ptr(ptr, ptr, tcg_env);
-> >  =20
-> >       /* store value into bhrb at bhrb_offset */
-> > -    tcg_gen_st_i64(value, (TCGv_ptr)tmp, 0);
-> > +    tcg_gen_st_i64(value, ptr, 0);
->
-> Better to add the constant with the store offset.
->
->    tcg_gen_ext_i32_ptr(ptr, offset);
->    tcg_gen_add_ptr(ptr, ptr, tcg_env);
->    tcg_gen_st_i64(value, ptr, offsetof(bhrb));
+> target_ulong and the _tl suffix are for the type which
+> depends on the size of the target's 'long'. The TCG type which is
+> "size of a host pointer" is TCG_TYPE_PTR, and you want the _ptr
+> suffix functions and to pass it around with TCGv_ptr.
 
-Good suggestion thanks. Maybe in light of the fact I was wrong
-about not using host pointer here, the original approach is
-better and just needs a smaller fix for 32-bit hosts.
+In that case, original approach may be better with small fixes
+for 32-bit host.
 
 Thanks,
 Nick
