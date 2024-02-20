@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1625DC48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 20:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C29FC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcX9f-0007HK-G2; Tue, 20 Feb 2024 15:55:55 -0500
+	id 1rcXNn-0003Vq-69; Tue, 20 Feb 2024 16:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcX9d-0007H5-MR
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:55:53 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rcXNj-0003V5-En
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:10:27 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
- id 1rcX9b-00060n-Gs
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:55:53 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-55a035669d5so9938992a12.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 12:55:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rcXNX-0008M6-RM
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:10:27 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d51ba18e1bso60005135ad.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:10:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708462549; x=1709067349; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8RcxmYkH/690RycPhKMqwIPFzJAzn5wfWpLyv3zhFvs=;
- b=k0fT90d1T0TYsHRcpkr+doxkGxnzTFIbopCwFEQHC9H0qFCE8UygioXmqls+Jsb+wN
- QZ3+9wp0DMfXFI8oaV3Z+Ar/FNO6LJxWF4HkhCs01E7+24BpicdNZO2btfTHVpoDl5Qj
- RKee8kpuqklNHRtR7Wm/bqoWn4QnDmH2zzPiZDRfvJxAW2rd8QkQzrVjzN56PIi4QRDE
- FqWvsqoayOtbjqGYuOQkbrUwP18Tcynr+Y/nAUN6318vKp+7NJe+4FGK8nT06jHBtrfW
- DdJXKzMIIbDdpFZSF26WBWMP/SQ9PUVR2Qm6zYhA4K+ZCdVRhqj/OMf4nZmWtyo6P6pW
- Kl8g==
+ d=ventanamicro.com; s=google; t=1708463413; x=1709068213; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hrYafVmPknXj6OBu45DwwkQ8cyY3M2/gxdad8UKpldU=;
+ b=LtBoh11iNxKaPDbewQvuUOjiHgWRjAO0y6CKQP+FGfoiiAuiGGKWj4zOWD2lYA2/5H
+ kXYWeFkSWpAiYshKSYtRl+CQUTVLuCIS12kiySFRHVT+FhqdB3o/Y9CLXJYlkiecG1z7
+ 4/BnNrz9SWyPSUMuarf/34p2sP2rsMANkrXvavmWl92Ywwdbbw9+ycCjbEgXkuiy/n+6
+ 6GFgNHCfNt2fg4HMUhsChyIpQxxpwQOWb3rOt5BG22vfQMHQMsAROh+z8z7kP5PXX/XN
+ EpAe9lIxuF5teAvJX7TUjZQ41on4SHytno4lfXCxNet558n7rBYoIZFGQsve66wYT3W6
+ tu4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708462549; x=1709067349;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8RcxmYkH/690RycPhKMqwIPFzJAzn5wfWpLyv3zhFvs=;
- b=OhCjWqOPqlzTBVoyKp2w5y3j0wJG3kVt+jSnUpvQmEGjCQrJN+36g71Y2PJymqxCAb
- /Na4LCqahhhKgbZWS4tmuNTyJdO90E9x+6A7NxeJF/d0KSaVqh0OuHkkvbHwpZPYeWpT
- 3kBBFKJ9m81nStkQI5gAi/N83PYY4uJx5NBWVmo2FMuOIfsJ89lhSN+ie9eexHZElhXC
- GSD34z9pLhNBCn+jJ3vbPMRuNqtkz8PHJ/333Yd8Pkg9XdtV6cqHmcTaO/vlerecODPz
- 63X0NLwY4rCMb/pRarOOeKWqvzfj0AqzqVboBrkxDCNjslIKq/VJdCKAL4FVXvMRA9xc
- eIJA==
-X-Gm-Message-State: AOJu0Ywh+Gk+7b2hksCp+73WGMDg68nDXlBts95/ljrOC5Tpwl6fqzJQ
- jIaKeCt20/CdHpnCBpFSD+bucnnS2x51Ntt+WOBuAbWjgWal7ntEWBNHc9bajQjmXseLx3CoDSR
- XvBsMWapDTweNoKzDePenw1P2wFsNquEf
-X-Google-Smtp-Source: AGHT+IG/w1swZcoXO+5n2nKCad9QX/Xx0WE1kGLZya+VkHDqS41DqBd3ZJQptmiG2s88z4ngz7mG7BBNSaX/iz5b+4c=
-X-Received: by 2002:aa7:d44c:0:b0:55f:4bd7:6a6f with SMTP id
- q12-20020aa7d44c000000b0055f4bd76a6fmr10398429edr.29.1708462549188; Tue, 20
- Feb 2024 12:55:49 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708463413; x=1709068213;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hrYafVmPknXj6OBu45DwwkQ8cyY3M2/gxdad8UKpldU=;
+ b=A121032ipMzHBhHodafCzcoDMM263slpjkV6GgN+L+0hikv45H/Wl23wPZQ4v+sd5y
+ x1g6TNEozZKceJ7Dy/50jja9kqL7LBIOjnHY0BbPmXr9YixISKAcbM7zUIyll2s1W4gh
+ pbz0HY722DO+FD5FRDNF5k8S2B9Xjd7qylLSbV1gyNcbJZd/KBAwvDmdF2VZN3tDeUmc
+ ob5QZ/aOoAmmRb8L2Xy4jyZGpyDO0+Ek0H/Lf07zt/guA2mCb60ExeqjupRvNKx8TvJj
+ ZNOIoML0AAkLeVNGFfn2rLLWPLWjmFMVRvcQWyFtTJt3bShHEoHW5FBy83M0Vn8aDmf2
+ gG7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWSfNr7861yWLVaf29IMJZbQPmqTd6ta1J90/WVoskqV2bEaUCxl391XLiGAfhf/S3U8O6w66m7Rz45o/TySQd3lc3ZdNw=
+X-Gm-Message-State: AOJu0YxKTA+ZLRuwbMm3trIr7bu19FxoYlZhANewa2K5z0K//RLp2/fB
+ R8wcJJPln8u0cKvDXE8iVCIWEYGFwO55D/j02XDgnanuSSh9DlAamAgqj4/8q1g=
+X-Google-Smtp-Source: AGHT+IHRyCetltwcDJCkO1OoMegCcPaLDBoyLyGML8zd3rnNQtDskxvwirMX1wxF7V+etVxkR4LR/g==
+X-Received: by 2002:a17:903:41ce:b0:1db:dd57:d56 with SMTP id
+ u14-20020a17090341ce00b001dbdd570d56mr14112090ple.23.1708463413162; 
+ Tue, 20 Feb 2024 13:10:13 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ j6-20020a17090276c600b001da1ecb05f9sm6643377plt.240.2024.02.20.13.10.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 13:10:12 -0800 (PST)
+Message-ID: <ad667881-f55c-468e-b6a1-8138147f71ef@ventanamicro.com>
+Date: Tue, 20 Feb 2024 18:10:08 -0300
 MIME-Version: 1.0
-References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
- <87a5nvci5n.fsf@draig.linaro.org>
- <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
- <87y1bfawik.fsf@draig.linaro.org>
-In-Reply-To: <87y1bfawik.fsf@draig.linaro.org>
-From: Faiq Ali Sayed <faiqueali.109@gmail.com>
-Date: Tue, 20 Feb 2024 21:55:37 +0100
-Message-ID: <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
-Subject: Re: QNX VM hang on Qemu
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000005b456a0611d66feb"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] trans_rvv.c.inc: mark_vs_dirty() before stores
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ max.chou@sifive.com
+References: <20240220192607.141880-1-dbarboza@ventanamicro.com>
+ <20240220192607.141880-2-dbarboza@ventanamicro.com>
+ <32df58bf-cf71-4825-8b56-67108c81944d@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <32df58bf-cf71-4825-8b56-67108c81944d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,305 +101,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005b456a0611d66feb
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-The image I am using is currently in use for real hardware, and I
-received it from a third party/vendor.
-Could you please suggest to me what I can do now?
 
 
-br!
-Faiq
+On 2/20/24 17:17, Richard Henderson wrote:
+> On 2/20/24 09:26, Daniel Henrique Barboza wrote:
+>> While discussing a problem with how we're (not) setting vstart_eq_zero
+>> Richard had the following to say w.r.t the conditional mark_vs_dirty()
+>> calls on load/store functions [1]:
+>>
+>> "I think it's required to have stores set dirty unconditionally, before
+>> the operation.
+>>
+>> Consider a store that traps on the 2nd element, leaving vstart = 2, and
+>> exiting to the main loop via exception. The exception enters the kernel
+>> page fault handler. The kernel may need to fault in the page for the
+>> process, and in the meantime task switch.
+>>
+>> If vs dirty is not already set, the kernel won't know to save vector
+>> state on task switch."
+>>
+>> Do a mark_vs_dirty() before store operations. Keep the mark_vs_dirty()
+>> call at the end for loads - the function is a no-op if mstatus_vs is
+>> already set to EXT_STATUS_DIRTY so there's no hurt in store functions
+>> calling it twice.
+>>
+>> [1] https://lore.kernel.org/qemu-riscv/72c7503b-0f43-44b8-aa82-fbafed2aac0c@linaro.org/
+>>
+>> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/insn_trans/trans_rvv.c.inc | 29 +++++++++++++++----------
+>>   1 file changed, 17 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+>> index 9e101ab434..2065e9064e 100644
+>> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+>> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+>> @@ -636,12 +636,13 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+>>       tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vd));
+>>       tcg_gen_addi_ptr(mask, tcg_env, vreg_ofs(s, 0));
+>> -    fn(dest, mask, base, tcg_env, desc);
+>> -
+>> -    if (!is_store) {
+>> +    if (is_store) {
+>>           mark_vs_dirty(s);
+>>       }
+>> +    fn(dest, mask, base, tcg_env, desc);
+>> +
+>> +    mark_vs_dirty(s);
+> 
+> You misunderstood here, I think.
+> Both loads and stores need to set dirty early, before any exit via exception path.
+> 
+> I see that I did say only stores in the quoted mail, but I believe that was merely in reference to stores not setting dirty *at all* beforehand.
+
+hmmm it made sense when I read your reply to set just for stores because I thought
+that loads wouldn't trigger page context switches in the kernel. TBH I got too
+caught up by the existing "if (!is_store)" in the code, trying to figure it out
+why it was there.
+
+In another read in the spec there's nothing that indicates that stores needs
+additional handling, which means that we can treat both equally in this regard.
 
 
-On Tue, Feb 20, 2024 at 6:14=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
-
-> Faiq Ali Sayed <faiqueali.109@gmail.com> writes:
->
-> > Alex thanks for the reply,
-> >
-> > I don't know what the debug symbol is, but my target system is QNX
-> aarch64
-> > below are the configuration of GDB,
-> >
-> > (gdb) show configuration
-> > This GDB was configured as follows:
-> >    configure --host=3Dx86_64-pc-linux-gnu
-> --target=3Daarch64-unknown-nto-qnx7.1.0
-> >              --with-auto-load-dir=3D$debugdir:$datadir/auto-load
-> >              --with-auto-load-safe-path=3D$debugdir:$datadir/auto-load
-> >              --without-expat
-> >
-> --with-gdb-datadir=3D/opt/qnx710/host/linux/x86_64/usr/share/gdb (relocat=
-able)
-> >
-> --with-jit-reader-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb
-> (relocatable)
-> >              --without-libunwind-ia64
-> >              --without-lzma
-> >              --without-babeltrace
-> >              --without-intel-pt
-> >              --disable-libmcheck
-> >              --without-mpfr
-> >              --with-python=3D/opt/qnx710/host/linux/x86_64/usr
-> (relocatable)
-> >              --without-guile
-> >
-> --with-separate-debug-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug
-> (relocatable)
-> >              --with-sysroot=3D/opt/qnx710/target/qnx7/aarch64
-> >
-> > while I got the below result, after executing the x/10i $pc
-> >
-> > (gdb) x/10i $pc
-> > =3D> 0x100000: .inst 0x5371242b ; undefined
-> >    0x100004: fcmla v21.8h, v3.8h, v16.h[1], #270
-> >    0x100008: .inst 0x64657472 ; undefined
-> >    0x10000c: ldnp d26, d27, [x9, #-176]
-> >    0x100010: .inst 0x72706974 ; undefined
-> >    0x100014: .inst 0x7365636f ; undefined
-> >    0x100018: .inst 0x733b2b73 ; undefined
-> >    0x10001c: fnmls z23.h, p0/m, z19.h, z18.h
-> >    0x100020: .inst 0x3b2b6b61 ; undefined
-> >    0x100024: .inst 0x72627768 ; undefined
-> >
-> > Can you please let me know how I can step in ?
->
-> step-instruction in gdb, however...
->
-> It very much looks like the image you have built doesn't have any
-> instructions in the correct starting place. It's unsurprising that it
-> hangs running random undefined instructions.
->
-> > When I press c it does not execute further and hangs..
-> >
-> > Faiq
-> >
-> > On Tue, Feb 20, 2024 at 3:41=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@l=
-inaro.org>
-> wrote:
-> >
-> >  Faiq Ali Sayed <faiqueali.109@gmail.com> writes:
-> >
-> >  > Hi everyone,
-> >  > I am facing an issue during booting QNX VM using Qemu,
-> >  > I have an image to Boot the VM. and when I trigger a Qemu command to
-> create a VM it is stuck.
-> >  > I also used a debugger to investigate but I can not see any result b=
-y
-> GDB.
-> >  >
-> >  > Here is the output of first windows
-> >  >
-> >  > qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display
-> none -device
-> >  > loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive
-> >  >
-> file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=3Dsd,forma=
-t=3Draw,index=3D1
-> -boot mode=3D5 -net
-> >  > nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net
-> nic,model=3Dcadence_gem -net
-> >  > nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev
-> user,id=3Dxzynq0,tftp=3D/tftpboot  -nographic -global
-> >  > xlnx,zynqmp-boot.cpu-num=3D0 -global 'xlnx,zynqmp-boot.use-pmufw=3Dt=
-rue'
-> -s -S
-> >  >
-> >  > qemu-system-aarch64: warning: hub 0 is not connected to host network
-> >
-> >  Is this QNX VM image built for the xlnx-zcu102 board?
-> >
-> >  > on the other hand, here is the output of GDB:
-> >  >
-> >  > (gdb) target remote :1234
-> >  > Remote debugging using :1234
-> >  > warning: No executable has been specified and target does not suppor=
-t
-> >  > determining executable automatically.  Try using the "file" command.
-> >  > 0x0000000000100000 in ?? ()
-> >  > (gdb) c
-> >  > Continuing.
-> >
-> >  You'll either want the debug symbols for your image or tell GDB what t=
-he
-> >  target arch is. Check you are somewhere sane by doing:
-> >
-> >    x/10i $pc
-> >
-> >  and step through the instructions and see where it goes. If you hit
-> >  Ctrl-C are you executing nonsense instructions or in a tight loop
-> >  hanging?
-> >
-> >  --
-> >  Alex Benn=C3=A9e
-> >  Virtualisation Tech Lead @ Linaro
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
+I'll change it for v4. Thanks,
 
 
---=20
-Kind Regard-
-Faiq Ali Sayed
+Daniel
 
---0000000000005b456a0611d66feb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">The image I am using is currently=C2=A0in use for real har=
-dware, and I received=C2=A0it from a third party/vendor.=C2=A0<div>Could yo=
-u please suggest to me what I can do now?</div><div><br></div><div><br></di=
-v><div>br!</div><div>Faiq</div><div><br></div></div><br><div class=3D"gmail=
-_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 20, 2024 at 6:14=
-=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">=
-alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">Faiq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gm=
-ail.com" target=3D"_blank">faiqueali.109@gmail.com</a>&gt; writes:<br>
-<br>
-&gt; Alex thanks for the reply,<br>
-&gt;<br>
-&gt; I don&#39;t know what the debug symbol is, but my target system is QNX=
- aarch64 <br>
-&gt; below are the configuration of GDB,<br>
-&gt;<br>
-&gt; (gdb) show configuration<br>
-&gt; This GDB was configured as follows:<br>
-&gt;=C2=A0 =C2=A0 configure --host=3Dx86_64-pc-linux-gnu --target=3Daarch64=
--unknown-nto-qnx7.1.0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-auto-load-dir=
-=3D$debugdir:$datadir/auto-load<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-auto-load-safe-=
-path=3D$debugdir:$datadir/auto-load<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-expat<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-gdb-datadir=3D/=
-opt/qnx710/host/linux/x86_64/usr/share/gdb (relocatable)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-jit-reader-dir=
-=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb (relocatable)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-libunwind-ia=
-64<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-lzma<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-babeltrace<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-intel-pt<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --disable-libmcheck<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-mpfr<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-python=3D/opt/q=
-nx710/host/linux/x86_64/usr (relocatable)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-guile<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-separate-debug-=
-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug (relocatable)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-sysroot=3D/opt/=
-qnx710/target/qnx7/aarch64<br>
-&gt;<br>
-&gt; while I got the below result, after executing the x/10i $pc <br>
-&gt;<br>
-&gt; (gdb) x/10i $pc<br>
-&gt; =3D&gt; 0x100000: .inst 0x5371242b ; undefined<br>
-&gt;=C2=A0 =C2=A0 0x100004: fcmla v21.8h, v3.8h, v16.h[1], #270<br>
-&gt;=C2=A0 =C2=A0 0x100008: .inst 0x64657472 ; undefined<br>
-&gt;=C2=A0 =C2=A0 0x10000c: ldnp d26, d27, [x9, #-176]<br>
-&gt;=C2=A0 =C2=A0 0x100010: .inst 0x72706974 ; undefined<br>
-&gt;=C2=A0 =C2=A0 0x100014: .inst 0x7365636f ; undefined<br>
-&gt;=C2=A0 =C2=A0 0x100018: .inst 0x733b2b73 ; undefined<br>
-&gt;=C2=A0 =C2=A0 0x10001c: fnmls z23.h, p0/m, z19.h, z18.h<br>
-&gt;=C2=A0 =C2=A0 0x100020: .inst 0x3b2b6b61 ; undefined<br>
-&gt;=C2=A0 =C2=A0 0x100024: .inst 0x72627768 ; undefined<br>
-&gt;<br>
-&gt; Can you please let me know how I can step in ?<br>
-<br>
-step-instruction in gdb, however...<br>
-<br>
-It very much looks like the image you have built doesn&#39;t have any<br>
-instructions in the correct starting place. It&#39;s unsurprising that it<b=
-r>
-hangs running random undefined instructions. <br>
-<br>
-&gt; When I press c it does not execute further and hangs..<br>
-&gt;<br>
-&gt; Faiq<br>
-&gt;<br>
-&gt; On Tue, Feb 20, 2024 at 3:41=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=
-=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org=
-</a>&gt; wrote:<br>
-&gt;<br>
-&gt;=C2=A0 Faiq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gmail.com" ta=
-rget=3D"_blank">faiqueali.109@gmail.com</a>&gt; writes:<br>
-&gt;<br>
-&gt;=C2=A0 &gt; Hi everyone, <br>
-&gt;=C2=A0 &gt; I am facing an issue during booting QNX VM using Qemu,<br>
-&gt;=C2=A0 &gt; I have an image to Boot the VM. and when I trigger a Qemu c=
-ommand to create a VM it is stuck.<br>
-&gt;=C2=A0 &gt; I also used a debugger to investigate but I can not see any=
- result by GDB.<br>
-&gt;=C2=A0 &gt;<br>
-&gt;=C2=A0 &gt; Here is the output of first windows<br>
-&gt;=C2=A0 &gt;<br>
-&gt;=C2=A0 &gt; qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio=
- -display none -device<br>
-&gt;=C2=A0 &gt; loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive<=
-br>
-&gt;=C2=A0 &gt; file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img=
-,if=3Dsd,format=3Draw,index=3D1 -boot mode=3D5 -net<br>
-&gt;=C2=A0 &gt; nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net n=
-ic,model=3Dcadence_gem -net<br>
-&gt;=C2=A0 &gt; nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev user,id=3Dx=
-zynq0,tftp=3D/tftpboot=C2=A0 -nographic -global<br>
-&gt;=C2=A0 &gt; xlnx,zynqmp-boot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.=
-use-pmufw=3Dtrue&#39; -s -S<br>
-&gt;=C2=A0 &gt;<br>
-&gt;=C2=A0 &gt; qemu-system-aarch64: warning: hub 0 is not connected to hos=
-t network<br>
-&gt;<br>
-&gt;=C2=A0 Is this QNX VM image built for the xlnx-zcu102 board?<br>
-&gt;<br>
-&gt;=C2=A0 &gt; on the other hand, here is the output of GDB:<br>
-&gt;=C2=A0 &gt;<br>
-&gt;=C2=A0 &gt; (gdb) target remote :1234<br>
-&gt;=C2=A0 &gt; Remote debugging using :1234<br>
-&gt;=C2=A0 &gt; warning: No executable has been specified and target does n=
-ot support<br>
-&gt;=C2=A0 &gt; determining executable automatically.=C2=A0 Try using the &=
-quot;file&quot; command.<br>
-&gt;=C2=A0 &gt; 0x0000000000100000 in ?? ()<br>
-&gt;=C2=A0 &gt; (gdb) c<br>
-&gt;=C2=A0 &gt; Continuing.<br>
-&gt;<br>
-&gt;=C2=A0 You&#39;ll either want the debug symbols for your image or tell =
-GDB what the<br>
-&gt;=C2=A0 target arch is. Check you are somewhere sane by doing:<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 x/10i $pc<br>
-&gt;<br>
-&gt;=C2=A0 and step through the instructions and see where it goes. If you =
-hit<br>
-&gt;=C2=A0 Ctrl-C are you executing nonsense instructions or in a tight loo=
-p<br>
-&gt;=C2=A0 hanging?<br>
-&gt;<br>
-&gt;=C2=A0 -- <br>
-&gt;=C2=A0 Alex Benn=C3=A9e<br>
-&gt;=C2=A0 Virtualisation Tech Lead @ Linaro<br>
-<br>
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><div dir=3D"ltr">
-<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
-lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
-=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
-v></div></div></div>
-<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
-t></div><br></div></div></div>
-
---0000000000005b456a0611d66feb--
+> 
+> 
+> r~
 
