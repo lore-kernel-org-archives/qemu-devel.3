@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B77C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C2AC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcXOt-00042n-CB; Tue, 20 Feb 2024 16:11:39 -0500
+	id 1rcXOt-00042Z-Bx; Tue, 20 Feb 2024 16:11:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3fRXVZQcKCjIYcaZcRWUccUZS.QcaeSai-RSjSZbcbUbi.cfU@flex--komlodi.bounces.google.com>)
- id 1rcXOo-0003yp-Hd
+ <3gRXVZQcKCjYcgedgVaYggYdW.UgeiWem-VWnWdfgfYfm.gjY@flex--komlodi.bounces.google.com>)
+ id 1rcXOo-0003yn-Hl
  for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:11:34 -0500
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3fRXVZQcKCjIYcaZcRWUccUZS.QcaeSai-RSjSZbcbUbi.cfU@flex--komlodi.bounces.google.com>)
- id 1rcXOh-0008Q8-8k
+ <3gRXVZQcKCjYcgedgVaYggYdW.UgeiWem-VWnWdfgfYfm.gjY@flex--komlodi.bounces.google.com>)
+ id 1rcXOm-0008QK-6x
  for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:11:33 -0500
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-60853aafd93so30134527b3.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:11:26 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-5c65e666609so5160396a12.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:11:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1708463486; x=1709068286; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=TML7Jy3/d5bJB/Cd6AIs7tWz+tZ5nfzfNhH5YHq9Da8=;
- b=znCDrIPFVxYegOAz1wDAAKEVSA/HvM+jdOV07nTaIVrgR7oBwIZgaOqpI/LNQQ2e49
- GpROOTWbFn5DfJrNq4baToSAB/3wlG5debOb0YA+NVLSn6BKJXzOs039MM36aLz+qtWq
- C9flALSBu8RFcP+/vMWQ23X7XYNRWSZ3I1YZzLB2WJRlYvLvjq4QolLrtZacN7pCYZWO
- ASDHHGyuhDyQNyXWqz73vUezNsD6T3TGLGIQa8tn/BlV2e/ctGNQgTcsQWDFrD3bYmsx
- pMIKOKvlFSsnk4yKCvo5RN72+W5tAD2eGTv2MuNimpmGqvK+Nz5PwmmFOaTmVvWEkVej
- dKHg==
+ d=google.com; s=20230601; t=1708463490; x=1709068290; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ROn/UHUR1Rw30ZBr5JAvf733dMegwZEnijudzImnin8=;
+ b=UT75fZh268oTh2TK9ni7H6Zi725x+0dllBnlJP+KwL1tyjdlosXyy1bSsVdayCeli4
+ uLs++MjtKkPGUHX9JlwTV0G6WwbZrVdSmK5OY9K6iTgKUQKMVI2jtPEPHY+saJW51pR5
+ 5YcOY/7aqI2usja8ZZQGLhNmY3tNgKZ6QSxSZFnMB15AMC/fj7vfI4vSZmLYOxDgATa5
+ XqTxlPURCpDubASTg0AcSjVnrHqBgv4lBSTAT3CzjueQmXT7QK/pT3NW05m8P/c0a2GB
+ XRnUWesXR6LPOnCoR+7Py3OV2saSzkjeXVZFqQRRgBVjjQfENHx76uT3qJk/fE3mAY1g
+ 0GUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708463486; x=1709068286;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TML7Jy3/d5bJB/Cd6AIs7tWz+tZ5nfzfNhH5YHq9Da8=;
- b=rPJ8hwCHVXHYhltA/L/vy9R+iSLxv4G0Ktn1OV7x0laloaRY1NGE+mJNNCZHb5C6cW
- CvFR9KnQgdeVum9R7yJ56aw71oVsAiBDFMcFMhhOZeMFl+g3f0h3luBYowTTZgLpYuBA
- SRIhyGaydE8CWhu9eesrAkbdtxF8g4MVbplYBxNdMoJDGJulb9jL3bw5mSURl/FWyS+U
- scLsnpTP3i6FSPIwcIj+32Euwop0fobY6tDY2wM/6jpgjpzz58SBUVqxjFJnyLQVwHKh
- +VDK7WQdVkuIBd7eYY2Ouexh0jz/oYgkBswkqIDe90rjXGvsun7+EU7yHV4IZpPJiwm+
- V9pA==
-X-Gm-Message-State: AOJu0YzYarF1jhr/As5uypYWmCurCy+GfAbBqg2Bc++Ysuj3dFYndWqZ
- dINmBJlCTWs1B+bunnDnfUqK3U/558Cvp3t7vco6P+/PMsx68V4Z62xj8KOLFuqrWMm+vO43Lf4
- IhejGCMLXLbuje3hJdTZZ9sI6CXbHHy1sIrJ1Krh7U6o/KB1oz73lQqJtG9XpFIjG9vMVoYY08L
- dvf+3DmeVU5cO7E0LgGrb0xiu2akiK2CnFeAdV
-X-Google-Smtp-Source: AGHT+IGQuCj1kr9h/8hWPu1jC0cbn3plK5nKoOAinU/SB20UCVOrHPa8CKGaLQPE4eWt8JTxEarUAWwSavK4
+ d=1e100.net; s=20230601; t=1708463490; x=1709068290;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ROn/UHUR1Rw30ZBr5JAvf733dMegwZEnijudzImnin8=;
+ b=AopQsC7oIco+PF6vTsXSmKl8tj3N1WWfy4ItzOag/EEnf9Glfg4wajkOxaQNj7/zlb
+ C4iRI2zUd3kGrqEcnZY00jS8ALY64+D0gmEcPq9+A/kYMHiXwQKhZLy6K6QVFab4e3aF
+ 0/ob7ELmOygFBIi5bW1U0PMk0Mmb0fTo1Putd+y+dI4UocUop0i+ZcvVTe8tcYPyNPCQ
+ o6Kd/v+ZBqQE1u0wzgdzmEsHqlwlo4vHEzA6pCeSWPHHFnBGFseMR4No1U16I2t7DDw2
+ IwvWJUnLqwbiPOVKxEsXgOudtKC8LmgccPyiBzRIo90MVdmAxo92YEyOXaexfK+/zUX4
+ uuxw==
+X-Gm-Message-State: AOJu0YwCPfFZWPxt4t45jHIkuUeUEHBtKRTDIw3ogaBRzItHFknxBxuT
+ Rsq/PRHjHF9UHG88Fsf01B6WLQiB0xCY68v1R7FiP7/O5ytXhuMZwavJoi9jadmPwnIag/ltGgB
+ tplBTC5Z6vCHvbG46zGBPFoy2R09nUc0COKhuKvXHNoZTpgfGMOe7pU15zRGcCeQMnpl15l5Gms
+ +acYPW6Ai974Q+zuKw9USU7Kos53EyhuIHNQbL
+X-Google-Smtp-Source: AGHT+IEFk6pV6okFHuuA92zIWwRoT+SWAbczcX0elUKXoKhQDnfca1efDFCFve4ZKDc6sWPXowtAdpiTmkC5
 X-Received: from komlodi.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
- (user=komlodi job=sendgmr) by 2002:a25:ab6b:0:b0:dcd:5e5d:458b with SMTP id
- u98-20020a25ab6b000000b00dcd5e5d458bmr4407537ybi.3.1708463485651; Tue, 20 Feb
- 2024 13:11:25 -0800 (PST)
-Date: Tue, 20 Feb 2024 21:11:20 +0000
+ (user=komlodi job=sendgmr) by 2002:a65:6943:0:b0:5d6:cfc:2f39 with SMTP id
+ w3-20020a656943000000b005d60cfc2f39mr92357pgq.11.1708463489505; Tue, 20 Feb
+ 2024 13:11:29 -0800 (PST)
+Date: Tue, 20 Feb 2024 21:11:22 +0000
+In-Reply-To: <20240220211123.2664977-1-komlodi@google.com>
 Mime-Version: 1.0
+References: <20240220211123.2664977-1-komlodi@google.com>
 X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <20240220211123.2664977-1-komlodi@google.com>
-Subject: [PATCH v4 0/3] hw/i2c: smbus: Reset fixes
+Message-ID: <20240220211123.2664977-3-komlodi@google.com>
+Subject: [PATCH v4 2/3] hw/i2c/smbus_slave: Add object path on error prints
 From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
 Cc: komlodi@google.com, venture@google.com, minyard@acm.org, 
  peter.maydell@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3fRXVZQcKCjIYcaZcRWUccUZS.QcaeSai-RSjSZbcbUbi.cfU@flex--komlodi.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3gRXVZQcKCjYcgedgVaYggYdW.UgeiWem-VWnWdfgfYfm.gjY@flex--komlodi.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -93,60 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changelog:
+The current logging doesn't tell us which specific smbus device is an
+error state.
 
-v3 -> v4
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/i2c/smbus_slave.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Patch 1
-- Removed the rest of the I3CBus class definition that I forgot to
-  remove in v3
-
-v2 -> v3
-Patch 1
-- Removed I3CBus class definition, since it was unneeded.
-- whitespace fixes
-- Changed enter_reset to hold_reset
-
-Patch 2
-- Moved pointer returned by object_get_canonical_path outside of printf
-  so it can be freed
-
-Patch 3
-- Changed enter_reset to hold_reset
-
-v1 -> v2
-- Dropped 4th patch "hw/i2c: smbus: mux: Reset SMBusDevice state
-on reset". After more testing and Corey's comment, I realized it
-wasn't needed.
-
-Original message:
-
-Hi all,
-
-This series adds some resets for SMBus and for the I2C core. Along with
-it, we make SMBus slave error printing a little more helpful.
-
-These reset issues were very infrequent, they would maybe occur in 1 out
-of hundreds of resets in our testing, but the way they happen is pretty
-straightforward.
-
-Basically as long as a reset happens in the middle of a transaction, the
-state of the old transaction would still partially be there after the
-reset. Once a new transaction comes in, the partial stale state can
-cause the new transaction to incorrectly fail.
-
-Thanks,
-Joe
-
-Joe Komlodi (3):
-  hw/i2c: core: Add reset
-  hw/i2c/smbus_slave: Add object path on error prints
-  hw/i2c: smbus_slave: Reset state on reset
-
- hw/i2c/core.c        | 19 +++++++++++++++++++
- hw/i2c/smbus_slave.c | 17 +++++++++++++++--
- 2 files changed, 34 insertions(+), 2 deletions(-)
-
+diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
+index 1300c9ec72..9f9afc25a4 100644
+--- a/hw/i2c/smbus_slave.c
++++ b/hw/i2c/smbus_slave.c
+@@ -25,11 +25,15 @@
+ #define DPRINTF(fmt, ...) \
+ do { printf("smbus(%02x): " fmt , dev->i2c.address, ## __VA_ARGS__); } while (0)
+ #define BADF(fmt, ...) \
+-do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__); exit(1);} while (0)
++do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
++    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
++            exit(1); } while (0)
+ #else
+ #define DPRINTF(fmt, ...) do {} while(0)
+ #define BADF(fmt, ...) \
+-do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__);} while (0)
++do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
++    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
++             } while (0)
+ #endif
+ 
+ enum {
 -- 
 2.44.0.rc0.258.g7320e95886-goog
 
