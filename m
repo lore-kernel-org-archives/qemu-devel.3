@@ -4,106 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00EA7C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07909C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:44:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcYom-0003Wg-9P; Tue, 20 Feb 2024 17:42:28 -0500
+	id 1rcYoV-0003BH-G8; Tue, 20 Feb 2024 17:42:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYok-0003QS-Iu
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:26 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYoM-00033V-9q
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:02 -0500
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYoh-0006M1-JZ
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:25 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYoK-0006Jz-Fx
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:02 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 478C022266;
- Tue, 20 Feb 2024 22:42:22 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2AD0622260;
+ Tue, 20 Feb 2024 22:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708468942; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1708468919; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SvJm8I1xBXaGK0Zp2EyoFRQ4F01lLsPXXzvB131Og8Q=;
- b=ozp4hK7nr3R2hwqZL2nAcvb88evWoEEML75LTepl1EMwFuPrAe2HUkg2K/g2r13NkzgkbK
- Z3ECn2mRq/Mr33OiaxyyEI/MByqI+CpTtwCEslOAj63grf0xv4iz3xUXaiT9MEhpBBHobW
- Z+REQSytW6j/o7fRHS6xpuvLtagLyPk=
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=GqoGqajP0rsr0wHxU6KRCTqedFBj5HT+idQNmE2RyaJIpjwTEVKmJ5s8eNzp+qrK7ukP2M
+ lFY4oA8HGZmFMwXp+rN2/FckuKKMfv+JaHJI+mdJYKdyAfp2Topnkj3dgIjhx78IJF9Gbs
+ QPxwOGrd8Taqfdl3CxF42ys0vlMCJJc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708468942;
+ s=susede2_ed25519; t=1708468919;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SvJm8I1xBXaGK0Zp2EyoFRQ4F01lLsPXXzvB131Og8Q=;
- b=w7epwd7wYU/HdKsAPWzccHmIsuRqKPMvKqH/WNkZgXxMYXMpMbOi7HFgXMTZGSN7LRhYSh
- cBLboWwUjNiP5wAg==
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=mGr17hZPRwP8dlkELO3/1xnyipTzMAX9JWjEh2+tAV9XB/Q0MVcEUFtjRkegpG0MBam8+5
+ SPI4RbaphUKxjdCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708468942; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1708468919; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SvJm8I1xBXaGK0Zp2EyoFRQ4F01lLsPXXzvB131Og8Q=;
- b=ozp4hK7nr3R2hwqZL2nAcvb88evWoEEML75LTepl1EMwFuPrAe2HUkg2K/g2r13NkzgkbK
- Z3ECn2mRq/Mr33OiaxyyEI/MByqI+CpTtwCEslOAj63grf0xv4iz3xUXaiT9MEhpBBHobW
- Z+REQSytW6j/o7fRHS6xpuvLtagLyPk=
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=GqoGqajP0rsr0wHxU6KRCTqedFBj5HT+idQNmE2RyaJIpjwTEVKmJ5s8eNzp+qrK7ukP2M
+ lFY4oA8HGZmFMwXp+rN2/FckuKKMfv+JaHJI+mdJYKdyAfp2Topnkj3dgIjhx78IJF9Gbs
+ QPxwOGrd8Taqfdl3CxF42ys0vlMCJJc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708468942;
+ s=susede2_ed25519; t=1708468919;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SvJm8I1xBXaGK0Zp2EyoFRQ4F01lLsPXXzvB131Og8Q=;
- b=w7epwd7wYU/HdKsAPWzccHmIsuRqKPMvKqH/WNkZgXxMYXMpMbOi7HFgXMTZGSN7LRhYSh
- cBLboWwUjNiP5wAg==
+ bh=M8ETURXN4D66D0HrOGgTSooAccnh4vOt0f/y/PDYZ9Q=;
+ b=mGr17hZPRwP8dlkELO3/1xnyipTzMAX9JWjEh2+tAV9XB/Q0MVcEUFtjRkegpG0MBam8+5
+ SPI4RbaphUKxjdCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4B9E139D0;
- Tue, 20 Feb 2024 22:42:20 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 53937139D0;
+ Tue, 20 Feb 2024 22:41:57 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4JagGswq1WUlKwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:42:20 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id INv9BrUq1WUlKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:41:57 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>
-Subject: [PATCH v4 17/34] migration/multifd: Decouple recv method from pages
-Date: Tue, 20 Feb 2024 19:41:21 -0300
-Message-Id: <20240220224138.24759-18-farosas@suse.de>
+ Claudio Fontana <cfontana@suse.de>, Nikolay Borisov <nborisov@suse.com>
+Subject: [PATCH v4 07/34] io: Add generic pwritev/preadv interface
+Date: Tue, 20 Feb 2024 19:41:11 -0300
+Message-Id: <20240220224138.24759-8-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240220224138.24759-1-farosas@suse.de>
 References: <20240220224138.24759-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ozp4hK7n;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=w7epwd7w
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=GqoGqajP;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mGr17hZP
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [0.49 / 50.00]; ARC_NA(0.00)[];
+X-Spamd-Result: default: False [-3.51 / 50.00]; ARC_NA(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
- RCPT_COUNT_FIVE(0.00)[5]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[6];
  RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,suse.de:dkim,suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
  RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Queue-Id: 478C022266
+X-Rspamd-Queue-Id: 2AD0622260
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -128,150 +127,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Next patch will abstract the type of data being received by the
-channels, so do some cleanup now to remove references to pages and
-dependency on 'normal_num'.
+From: Nikolay Borisov <nborisov@suse.com>
 
+Introduce basic pwritev/preadv support in the generic channel layer.
+Specific implementation will follow for the file channel as this is
+required in order to support migration streams with fixed location of
+each ram page.
+
+Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd-zlib.c |  6 +++---
- migration/multifd-zstd.c |  6 +++---
- migration/multifd.c      | 13 ++++++++-----
- migration/multifd.h      |  4 ++--
- 4 files changed, 16 insertions(+), 13 deletions(-)
+ include/io/channel.h | 82 ++++++++++++++++++++++++++++++++++++++++++++
+ io/channel.c         | 58 +++++++++++++++++++++++++++++++
+ 2 files changed, 140 insertions(+)
 
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 2a8f5fc9a6..6120faad65 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -234,7 +234,7 @@ static void zlib_recv_cleanup(MultiFDRecvParams *p)
+diff --git a/include/io/channel.h b/include/io/channel.h
+index fcb19fd672..7986c49c71 100644
+--- a/include/io/channel.h
++++ b/include/io/channel.h
+@@ -131,6 +131,16 @@ struct QIOChannelClass {
+                            Error **errp);
+ 
+     /* Optional callbacks */
++    ssize_t (*io_pwritev)(QIOChannel *ioc,
++                          const struct iovec *iov,
++                          size_t niov,
++                          off_t offset,
++                          Error **errp);
++    ssize_t (*io_preadv)(QIOChannel *ioc,
++                         const struct iovec *iov,
++                         size_t niov,
++                         off_t offset,
++                         Error **errp);
+     int (*io_shutdown)(QIOChannel *ioc,
+                        QIOChannelShutdown how,
+                        Error **errp);
+@@ -529,6 +539,78 @@ void qio_channel_set_follow_coroutine_ctx(QIOChannel *ioc, bool enabled);
+ int qio_channel_close(QIOChannel *ioc,
+                       Error **errp);
+ 
++/**
++ * qio_channel_pwritev
++ * @ioc: the channel object
++ * @iov: the array of memory regions to write data from
++ * @niov: the length of the @iov array
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error. To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ * Behaves as qio_channel_writev_full, apart from not supporting
++ * sending of file handles as well as beginning the write at the
++ * passed @offset
++ *
++ */
++ssize_t qio_channel_pwritev(QIOChannel *ioc, const struct iovec *iov,
++                            size_t niov, off_t offset, Error **errp);
++
++/**
++ * qio_channel_pwrite
++ * @ioc: the channel object
++ * @buf: the memory region to write data into
++ * @buflen: the number of bytes to @buf
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error. To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ */
++ssize_t qio_channel_pwrite(QIOChannel *ioc, char *buf, size_t buflen,
++                           off_t offset, Error **errp);
++
++/**
++ * qio_channel_preadv
++ * @ioc: the channel object
++ * @iov: the array of memory regions to read data into
++ * @niov: the length of the @iov array
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error.  To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ * Behaves as qio_channel_readv_full, apart from not supporting
++ * receiving of file handles as well as beginning the read at the
++ * passed @offset
++ *
++ */
++ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
++                           size_t niov, off_t offset, Error **errp);
++
++/**
++ * qio_channel_pread
++ * @ioc: the channel object
++ * @buf: the memory region to write data into
++ * @buflen: the number of bytes to @buf
++ * @offset: offset in the channel where writes should begin
++ * @errp: pointer to a NULL-initialized error object
++ *
++ * Not all implementations will support this facility, so may report
++ * an error.  To avoid errors, the caller may check for the feature
++ * flag QIO_CHANNEL_FEATURE_SEEKABLE prior to calling this method.
++ *
++ */
++ssize_t qio_channel_pread(QIOChannel *ioc, char *buf, size_t buflen,
++                          off_t offset, Error **errp);
++
+ /**
+  * qio_channel_shutdown:
+  * @ioc: the channel object
+diff --git a/io/channel.c b/io/channel.c
+index 86c5834510..a1f12f8e90 100644
+--- a/io/channel.c
++++ b/io/channel.c
+@@ -454,6 +454,64 @@ GSource *qio_channel_add_watch_source(QIOChannel *ioc,
  }
  
- /**
-- * zlib_recv_pages: read the data from the channel into actual pages
-+ * zlib_recv: read the data from the channel into actual pages
-  *
-  * Read the compressed buffer, and uncompress it into the actual
-  * pages.
-@@ -244,7 +244,7 @@ static void zlib_recv_cleanup(MultiFDRecvParams *p)
-  * @p: Params for the channel that we are using
-  * @errp: pointer to an error
-  */
--static int zlib_recv_pages(MultiFDRecvParams *p, Error **errp)
-+static int zlib_recv(MultiFDRecvParams *p, Error **errp)
- {
-     struct zlib_data *z = p->compress_data;
-     z_stream *zs = &z->zs;
-@@ -319,7 +319,7 @@ static MultiFDMethods multifd_zlib_ops = {
-     .send_prepare = zlib_send_prepare,
-     .recv_setup = zlib_recv_setup,
-     .recv_cleanup = zlib_recv_cleanup,
--    .recv_pages = zlib_recv_pages
-+    .recv = zlib_recv
- };
  
- static void multifd_zlib_register(void)
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index 593cf290ad..cac236833d 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -232,7 +232,7 @@ static void zstd_recv_cleanup(MultiFDRecvParams *p)
- }
- 
- /**
-- * zstd_recv_pages: read the data from the channel into actual pages
-+ * zstd_recv: read the data from the channel into actual pages
-  *
-  * Read the compressed buffer, and uncompress it into the actual
-  * pages.
-@@ -242,7 +242,7 @@ static void zstd_recv_cleanup(MultiFDRecvParams *p)
-  * @p: Params for the channel that we are using
-  * @errp: pointer to an error
-  */
--static int zstd_recv_pages(MultiFDRecvParams *p, Error **errp)
-+static int zstd_recv(MultiFDRecvParams *p, Error **errp)
- {
-     uint32_t in_size = p->next_packet_size;
-     uint32_t out_size = 0;
-@@ -310,7 +310,7 @@ static MultiFDMethods multifd_zstd_ops = {
-     .send_prepare = zstd_send_prepare,
-     .recv_setup = zstd_recv_setup,
-     .recv_cleanup = zstd_recv_cleanup,
--    .recv_pages = zstd_recv_pages
-+    .recv = zstd_recv
- };
- 
- static void multifd_zstd_register(void)
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 43f0820996..5a38cb222f 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -197,7 +197,7 @@ static void nocomp_recv_cleanup(MultiFDRecvParams *p)
- }
- 
- /**
-- * nocomp_recv_pages: read the data from the channel into actual pages
-+ * nocomp_recv: read the data from the channel
-  *
-  * For no compression we just need to read things into the correct place.
-  *
-@@ -206,7 +206,7 @@ static void nocomp_recv_cleanup(MultiFDRecvParams *p)
-  * @p: Params for the channel that we are using
-  * @errp: pointer to an error
-  */
--static int nocomp_recv_pages(MultiFDRecvParams *p, Error **errp)
-+static int nocomp_recv(MultiFDRecvParams *p, Error **errp)
- {
-     uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
- 
-@@ -228,7 +228,7 @@ static MultiFDMethods multifd_nocomp_ops = {
-     .send_prepare = nocomp_send_prepare,
-     .recv_setup = nocomp_recv_setup,
-     .recv_cleanup = nocomp_recv_cleanup,
--    .recv_pages = nocomp_recv_pages
-+    .recv = nocomp_recv
- };
- 
- static MultiFDMethods *multifd_ops[MULTIFD_COMPRESSION__MAX] = {
-@@ -1216,6 +1216,8 @@ static void *multifd_recv_thread(void *opaque)
- 
-     while (true) {
-         uint32_t flags;
-+        bool has_data = false;
-+        p->normal_num = 0;
- 
-         if (multifd_recv_should_exit()) {
-             break;
-@@ -1237,10 +1239,11 @@ static void *multifd_recv_thread(void *opaque)
-         flags = p->flags;
-         /* recv methods don't know how to handle the SYNC flag */
-         p->flags &= ~MULTIFD_FLAG_SYNC;
-+        has_data = !!p->normal_num;
-         qemu_mutex_unlock(&p->mutex);
- 
--        if (p->normal_num) {
--            ret = multifd_recv_state->ops->recv_pages(p, &local_err);
-+        if (has_data) {
-+            ret = multifd_recv_state->ops->recv(p, &local_err);
-             if (ret != 0) {
-                 break;
-             }
-diff --git a/migration/multifd.h b/migration/multifd.h
-index 6c18732827..9a6a7a72df 100644
---- a/migration/multifd.h
-+++ b/migration/multifd.h
-@@ -199,8 +199,8 @@ typedef struct {
-     int (*recv_setup)(MultiFDRecvParams *p, Error **errp);
-     /* Cleanup for receiving side */
-     void (*recv_cleanup)(MultiFDRecvParams *p);
--    /* Read all pages */
--    int (*recv_pages)(MultiFDRecvParams *p, Error **errp);
-+    /* Read all data */
-+    int (*recv)(MultiFDRecvParams *p, Error **errp);
- } MultiFDMethods;
- 
- void multifd_register_ops(int method, MultiFDMethods *ops);
++ssize_t qio_channel_pwritev(QIOChannel *ioc, const struct iovec *iov,
++                            size_t niov, off_t offset, Error **errp)
++{
++    QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
++
++    if (!klass->io_pwritev) {
++        error_setg(errp, "Channel does not support pwritev");
++        return -1;
++    }
++
++    if (!qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_SEEKABLE)) {
++        error_setg_errno(errp, EINVAL, "Requested channel is not seekable");
++        return -1;
++    }
++
++    return klass->io_pwritev(ioc, iov, niov, offset, errp);
++}
++
++ssize_t qio_channel_pwrite(QIOChannel *ioc, char *buf, size_t buflen,
++                           off_t offset, Error **errp)
++{
++    struct iovec iov = {
++        .iov_base = buf,
++        .iov_len = buflen
++    };
++
++    return qio_channel_pwritev(ioc, &iov, 1, offset, errp);
++}
++
++ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
++                           size_t niov, off_t offset, Error **errp)
++{
++    QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
++
++    if (!klass->io_preadv) {
++        error_setg(errp, "Channel does not support preadv");
++        return -1;
++    }
++
++    if (!qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_SEEKABLE)) {
++        error_setg_errno(errp, EINVAL, "Requested channel is not seekable");
++        return -1;
++    }
++
++    return klass->io_preadv(ioc, iov, niov, offset, errp);
++}
++
++ssize_t qio_channel_pread(QIOChannel *ioc, char *buf, size_t buflen,
++                          off_t offset, Error **errp)
++{
++    struct iovec iov = {
++        .iov_base = buf,
++        .iov_len = buflen
++    };
++
++    return qio_channel_preadv(ioc, &iov, 1, offset, errp);
++}
++
+ int qio_channel_shutdown(QIOChannel *ioc,
+                          QIOChannelShutdown how,
+                          Error **errp)
 -- 
 2.35.3
 
