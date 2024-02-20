@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CEABC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8DCEC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcRns-0002b2-Uj; Tue, 20 Feb 2024 10:13:04 -0500
+	id 1rcRoV-00039z-2W; Tue, 20 Feb 2024 10:13:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRnl-0002XR-58
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:12:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rcRoK-00038F-7i
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:13:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRnh-0004aO-2F
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:12:56 -0500
+ id 1rcRoH-0004e0-Gb
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:13:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708441970;
+ s=mimecast20190719; t=1708442005;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MiY1WcB0G5j6mZTF7fvJGieiin6TaX4fnjZsHOGQp98=;
- b=Pq4C2qJ+MCsf/xz8AG7M+EPkbClZZr2mus86Uklv3pX/+oRZPTRh5oMtKz80FEVbHraTYq
- A+aeMnjxQ7KyN3Ng5o5z1Wub0CIPhkna2CAGs2EZI70K5KFcw3cwEUfgyyDPLEc208sLg5
- cPIp+6nvMBeN2+ItuMpfXDIFiQInXTc=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-Xb0jtmnnND6S2QNDK5w8Tw-1; Tue, 20 Feb 2024 10:12:44 -0500
-X-MC-Unique: Xb0jtmnnND6S2QNDK5w8Tw-1
+ bh=XYfDX7yCBncRhf9jKPykh2s2LmHCpVjiyhgHwQSJ67M=;
+ b=bSTlh6mL97VWneTrBt8YlhHFH1si5OyB6XLc5QHKUI984X48wcVrbx0KLrmK3FNuurBQW1
+ x6JVkeTTQpRXeokqBaEMPyeV3cLhIqwc/tRP/lJVUzYIa9LamuwWUpPgV9epZ6uDDzphO3
+ UWcDMSXZG36lWowwOtXH0iC6YoboOXc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-zY-l1ouMM7ekDttdnTg06A-1; Tue,
+ 20 Feb 2024 10:13:23 -0500
+X-MC-Unique: zY-l1ouMM7ekDttdnTg06A-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5930985A589;
- Tue, 20 Feb 2024 15:12:44 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A96481C0F480;
+ Tue, 20 Feb 2024 15:13:22 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 84F601C060AF;
- Tue, 20 Feb 2024 15:12:43 +0000 (UTC)
-Date: Tue, 20 Feb 2024 15:12:41 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id D55CF1C060AF;
+ Tue, 20 Feb 2024 15:13:21 +0000 (UTC)
+Date: Tue, 20 Feb 2024 15:13:19 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, jsnow@redhat.com,
  eblake@redhat.com, peter.maydell@linaro.org
-Subject: Re: [PATCH 03/16] tests/qapi-schema: Cover 'Features:' not followed
- by descriptions
-Message-ID: <ZdTBaaaY7OuI-Sg_@redhat.com>
+Subject: Re: [PATCH 04/16] sphinx/qapidoc: Drop code to generate doc for
+ simple union branch
+Message-ID: <ZdTBjyLWS3dow09w@redhat.com>
 References: <20240216145841.2099240-1-armbru@redhat.com>
- <20240216145841.2099240-4-armbru@redhat.com>
+ <20240216145841.2099240-5-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240216145841.2099240-4-armbru@redhat.com>
+In-Reply-To: <20240216145841.2099240-5-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,21 +89,17 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 03:58:27PM +0100, Markus Armbruster wrote:
-> A 'Features:' line without any features is useless, but not an error
-> now.  However, a later commit will make it one, because that makes
-> rejecting duplicate 'Features:' easier.
+On Fri, Feb 16, 2024 at 03:58:28PM +0100, Markus Armbruster wrote:
+> Commit 4e99f4b12c0 (qapi: Drop simple unions) eliminated implicitly
+> defined union branch types, except for the empty object type
+> 'q_empty'.  QAPISchemaGenRSTVisitor._nodes_for_members() still has
+> code to generate documentation for implicitly defined union branch
+> types.  It does nothing for 'q_empty'.  Simplify.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  tests/qapi-schema/doc-empty-features.err  |  0
->  tests/qapi-schema/doc-empty-features.json | 10 ++++++++++
->  tests/qapi-schema/doc-empty-features.out  | 19 +++++++++++++++++++
->  tests/qapi-schema/meson.build             |  1 +
->  4 files changed, 30 insertions(+)
->  create mode 100644 tests/qapi-schema/doc-empty-features.err
->  create mode 100644 tests/qapi-schema/doc-empty-features.json
->  create mode 100644 tests/qapi-schema/doc-empty-features.out
+>  docs/sphinx/qapidoc.py | 18 +++++++-----------
+>  1 file changed, 7 insertions(+), 11 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
