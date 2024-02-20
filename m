@@ -4,145 +4,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7ABC48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 12:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F04C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 13:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcPei-0001Wk-IA; Tue, 20 Feb 2024 07:55:29 -0500
+	id 1rcQ0d-0007fz-AF; Tue, 20 Feb 2024 08:18:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcPed-0001WI-17
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:55:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1rcQ0b-0007eJ-Vt
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:18:06 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcPeb-0002jF-2X
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 07:55:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708433718;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=a4iwzyMUSIjvICHOxM7FL/YuAsbTFih25Ki02rewAVM=;
- b=H/hNP91m922qpGi9PrqZd6PFTlffObqUOUxtZH44R6sKKl196YsK12JdZi5kDrm1q1HGsN
- ImSL815ZbM9qNLtFG2d9eKQ6Xwk+bbeDeuaUJRtpAfke9MwUr77pNdIpoypBPt4mBsg98f
- jvvcH58I7P74hL7/UTzsCXDEf6llHYU=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-JvS8XBoUO86qCkYYVEpv8A-1; Tue, 20 Feb 2024 07:55:16 -0500
-X-MC-Unique: JvS8XBoUO86qCkYYVEpv8A-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-68f7b1d981bso18324846d6.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 04:55:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708433716; x=1709038516;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a4iwzyMUSIjvICHOxM7FL/YuAsbTFih25Ki02rewAVM=;
- b=loswamDfEo20NPwz61ydDg71qsLk96Bl5ov8rha5SqN9bLQuij0EKD82kFp3XQOGuU
- IzFGPtgQQ6sehVTCX8sxNx+2h7bby+0tL/Gpnm51EazgMDARRYei9kLpQgTeO3/d5hEb
- ot5cdiobFUy4uDi7d15scJ03qTUE1d5k4/BxYyBUoGk0g5sXj2LUDfwGQYaESAluF8D6
- PnaggwfbHP/GesdISomJvDXTmJqY+SOE3OKNb1mfeQe9PhPu0ZznAHum9h0/8iCzGHnB
- xdtqqspUihkTpt8g1b0QaPYP1+U9ObWvIWU2wu1K2VKK45CK/PMppWGAgnC30D4LW3Gh
- HaBA==
-X-Gm-Message-State: AOJu0YwOvlpI7NCZDH7a3IjpI+0CywZ28+RxYCo20P6Af6zhGjeGcSaW
- 1vBM8oCcjqjMdW3CC0+KtU9MvmD59BfLkFEJAFVV+e236IKQ6mucF9T1P+5kaGMr9Edda09gAy3
- U5Z0L8pncTEFZ+JQx/8iAY8lELaaD7DCA/5fZDB1T1HxtsfiuUcI7
-X-Received: by 2002:a0c:e38d:0:b0:68f:7891:ef39 with SMTP id
- a13-20020a0ce38d000000b0068f7891ef39mr3440151qvl.51.1708433715964; 
- Tue, 20 Feb 2024 04:55:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE5sPzKS6kv+zcL4RoKtq1myJx5o8f0xH9Z6yVzujKN9cLIb/kq58yrNxHymUIb5WtcM/HzOw==
-X-Received: by 2002:a0c:e38d:0:b0:68f:7891:ef39 with SMTP id
- a13-20020a0ce38d000000b0068f7891ef39mr3440144qvl.51.1708433715693; 
- Tue, 20 Feb 2024 04:55:15 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
- [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- lr10-20020a0562145bca00b0068c968c3b33sm4299448qvb.20.2024.02.20.04.55.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 04:55:15 -0800 (PST)
-Message-ID: <5726ea2c-425b-40a3-80a2-9fa3503a7f4c@redhat.com>
-Date: Tue, 20 Feb 2024 13:55:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
- 'ich_dmi_pci.h'
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1rcQ0Z-0007Sk-BA
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 08:18:05 -0500
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41K8wuhX001739; Tue, 20 Feb 2024 13:17:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=l8hlrECKb2uxAwPcgIbrDOmle2SrxrPD0gqIHq/ix00=;
+ b=Uwcd2XJZnX3ePzsGzwhr5uCwhsnPytYt0gWYRsWVkPFPCseLO03DXAFp4MVJRCma7ar7
+ BbhdgOEA73Z+MudQVLSNUcDgq+hkd2idBT5dme/rBJ7euY6jSqfPrCg8GIhAnRQbDFBs
+ BoSFEtoyvjhFOy0HIJEhr9L8H+9g3RXbOlDYOVXf/wAvzyDGtAxTLzNY/uKsapcxy/nN
+ BzYM2M33h2n0G/LkgsyInUa0d6Y+uLzlj3dRIZqY6eD9atqcZzdDJFyeg+ouryvlyITU
+ 5tRG0Co0WKvC+ZpY8H6LFa7hKXtZieMscYnXVmRcKs9KPsHpC/EaCDTLq5uNCaJCvOGK bA== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wakk3xrn7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Feb 2024 13:17:57 +0000
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41KBsGQk032772; Tue, 20 Feb 2024 13:17:57 GMT
+Received: from nam11-co1-obe.outbound.protection.outlook.com
+ (mail-co1nam11lp2169.outbound.protection.outlook.com [104.47.56.169])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wak877qn3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Feb 2024 13:17:57 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CkQ0tfVtojFIzbmKs4GjfmZyDvBOppVRLp3A+QDH+bSUhrZ4t6/0SYDoIXMA6OedyyfA7mw6CMePjMLKvxqGV6g4WiJ/yRyAW03T1ZHZ13L3xYMkMglqP4KAOsVzgXDj/zKUx+I7RV3q0ZTYUmrwzwgCsjb5yKO7csfpuw90O7jWQUFLwA5LF3T6+1cU+ojUQ7P2mOTquraaI3e0vyP3wiI9zbC4AKaUgqhCs006fq9IrpVvNDJxTBWxrgHjYXqe68MyA3u8axWCBKpHEABfyBhx28PYmesu0FhtYu3rm+T5vuRuVYUOtd5QgpJllO3CjEmSQwFyyfPzRmJdHoYSGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=l8hlrECKb2uxAwPcgIbrDOmle2SrxrPD0gqIHq/ix00=;
+ b=Jfa1xdJKtYhZCU6h8fB5bUUOQhSnJz5k85ey7RvwjfVG1qLQpaa1LmsxNmYvtOy12W78dq772Zy0W4oYAe+xfnFFrVyVY0Mih2rfXpuAkKiyt7NWn6/MCSYYznfgwyFzUcKlSFplXsMfpVvq3XGsUJXfXknybT2DPGci3Eg1zRrXSNSkxNGdriBODSGVsMi1zBP9in+HqSof6G6Rk7jkc/wdWw+Vd4tMrKDK+1I1ITTBNucDiFpstXJZ0ELsJEN/lQ8XQSz495fjG2nfrH5BcMDboy14poeFk2P2LmIkyiSe4raOJeyGWTHUHbhXrviHqYCH5ELNxxJtl5zTg7Ed5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=l8hlrECKb2uxAwPcgIbrDOmle2SrxrPD0gqIHq/ix00=;
+ b=DrbLL4FDhsqV9lZQJLnBIk1mgxkazg8dWvTZBtgYtIsHu2YyQcfkG++vLrZ+QZtJfjgxVaGvc6nu0QDaQ0x5t6mMB8C6dNJhmv1c/NNP3SUVk/eOiMmMuvJny70EvNjqf7BiH8WJiHz8pwF4TgwuH9DtxqZpAb0Qy1fD/VpPZqk=
+Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
+ by BY5PR10MB4307.namprd10.prod.outlook.com (2603:10b6:a03:212::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.40; Tue, 20 Feb
+ 2024 13:17:54 +0000
+Received: from PH0PR10MB5893.namprd10.prod.outlook.com
+ ([fe80::3356:4cc1:701e:dde3]) by PH0PR10MB5893.namprd10.prod.outlook.com
+ ([fe80::3356:4cc1:701e:dde3%4]) with mapi id 15.20.7292.036; Tue, 20 Feb 2024
+ 13:17:54 +0000
+Message-ID: <587893f2-6343-448f-9786-18236f3e9e6d@oracle.com>
+Date: Tue, 20 Feb 2024 13:17:47 +0000
+Subject: Re: [PATCH RFCv2 5/8] vfio/iommufd: Implement
+ VFIOIOMMUClass::query_dirty_bitmap support
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <lvivier@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240219163855.87326-1-philmd@linaro.org>
- <20240219163855.87326-7-philmd@linaro.org>
- <0841e333-3d7d-0440-a8bf-8a7fd2f0011f@eik.bme.hu>
- <19500c79-8e4a-2160-3622-dbf145655046@eik.bme.hu>
- <cee6951f-234e-4806-b6a1-147c39455f07@linaro.org>
- <055d34b8-64c6-fcc4-9bf9-b8491a50ce5f@eik.bme.hu>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <055d34b8-64c6-fcc4-9bf9-b8491a50ce5f@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>
+References: <20240212135643.5858-1-joao.m.martins@oracle.com>
+ <20240212135643.5858-6-joao.m.martins@oracle.com>
+ <717d6632-9038-4ffb-8193-511e62da5311@nvidia.com>
+ <096b9798-7534-41aa-ba3d-12f98c00c59f@oracle.com>
+ <8bbe2964-f0f7-4845-bd58-76aeb8067f33@nvidia.com>
+From: Joao Martins <joao.m.martins@oracle.com>
+In-Reply-To: <8bbe2964-f0f7-4845-bd58-76aeb8067f33@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-ClientProxiedBy: LO4P123CA0679.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:351::12) To PH0PR10MB5893.namprd10.prod.outlook.com
+ (2603:10b6:510:149::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|BY5PR10MB4307:EE_
+X-MS-Office365-Filtering-Correlation-Id: bd0f6641-4cf0-4d4f-653e-08dc3216591e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +jb2HDwkqen90X0OYmNnpQk7ds8eKTlnmL+6JGDOje5ggqOLHm4XvTKH9o+G63a8PvXGF4up0hnu77rXb7UAc5R2B19UJIMKl0WlIWxpygmt8RXbiCIu/Dl7NFMKZjcAEK/iZy8eHpSeEoG/w2u3YR9seqwG4iOARuUzavzwznps6WPMVVql4qTiiwhTA8kUJ7gfRR2inD2u4nFoA2RRO+L3xdJAmcKQ0xxhvpFsQPFpMtykQVcSP1J+s06H72YW4BXbk26QN2Br45KZX5BSDUhrXHmoo0h8hjI8ydN32j1vZ2zoOzSqoy8GHvPxhjOpVKHARygiSesHNQWUx7j1R+1LxPzVHUvlf600pyWVg+8pC0POHbHHBG1h4ImQhfAq3OdJ8Ja1ZImElEfWD0vXm/pLtw/EUD0mhTsLf0d+VS7jSD8e1XLkUggrl9qdkVGc7HJgx/sWjTZ+h9WP1YeXx/lpesNUS7ZH1OAoKmYG1L574rC6W02Rym53azh/JMp2+ZmSsfg/IK+AJSwWP9wyC4HcNYU0O4RHRmjtOkX//i55zJtey2E0VdSsAjEFIkf7
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(230273577357003); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cEUvVm85and2TlA5TDB6cTRBeGpncDZ3dlU5dExNVWEyMFVHZkhqeDZXZVJC?=
+ =?utf-8?B?a2lKay9mN1NuSjQrSkNtejQxbDJUSlZtcFRqTlYzQ2pUOTJ1Y21jaktveHUx?=
+ =?utf-8?B?ZEZ5U0ZMakRqYUExMjRKKzR4VDRreUozcU5WOVV6dndOc2FubDhpMnU5MTMw?=
+ =?utf-8?B?Y3hLdzQyMEx5cDR1MXVxM3pwOFlVZ1kxdmVBcW9lTk5vcEsydkZOdHZHakxz?=
+ =?utf-8?B?MldjdFBwLzVSZkd2a3Z2Nk1CbklIQzU1a0wrZ1F5RzFLSDFoallpQUY0TStJ?=
+ =?utf-8?B?bVhnMHZHTkJRWExLZVN1OVRuOUt1VkFxbG9UdGI2eG1VcVpkVXh6aU1RdFNO?=
+ =?utf-8?B?M1VmOENrUEgvNHhHU3hPQUJUbjJkelhYd1BPeUFqN3RvRWlQT2VPMklwd0Zj?=
+ =?utf-8?B?VUZaeDlyRmhNWHZrSGdhaGxuUzZXZzFML0U1WWkrWnBmZTQwa1AvMi9Fb01p?=
+ =?utf-8?B?OXhPUzBheFRBblBPY0MzL2xSYmN4anRuVWMzbmozaTEralo0RTlvcC9RQlQx?=
+ =?utf-8?B?U3p6aGR2V25UVzFMMzVLVjl4a1puZ01lbjJQUFJIa0pXWnd6ZWx3Y21wa3Jh?=
+ =?utf-8?B?MDJES1JjQ0p6RlpWdjdWSGlBa3duZkdiNnJCZFpHSnQ5MnR3TUgwUGdTZTlR?=
+ =?utf-8?B?c2ltbXZVcXNCbjJXTW1vRy90QTlZOS9ucTdIWVJXazBJZ0wwcVBrZU94RVhV?=
+ =?utf-8?B?VUo1Qld1OHZjU01PcU1Sc0grNzQvTjVKREt6MWY3VkFHbnd5ZmJPM0lwVzVz?=
+ =?utf-8?B?TTRWOUNpNUk4TGVsQzBCbG1FSUVNVGZGdm1KQWJjdGk5bkVoMVZqV2pBa3dh?=
+ =?utf-8?B?N0thZDZhN0pXZ29qRWxMQ084dW5tMThLdDAvOFhMM1phcTZldE9pUm41TzJh?=
+ =?utf-8?B?S2E2cVQzQlZVOHpVWndBU044Q2VPWk9UTksrVlJaMGNLSXl6bnkyZGs1T1hX?=
+ =?utf-8?B?c1RIbHEvaHNrblczajNxWW1TcVJEcUczNDF6TTFodHQ1M3JzWlloWDJLU1hx?=
+ =?utf-8?B?b25QV1VaOHhuV1NEQkdoYXVuUTQyUkV3aGFzdVRIY3VkSUo0c3JEQ3JXelBh?=
+ =?utf-8?B?anpoYUpNQkxITEFMa2Q2THJBZldlZFNFZlhQMFh2SkFJaSsvWFFOeFB2cHAz?=
+ =?utf-8?B?M01JN0RaNk1pZHlmWHNjaEYvQkVTdHJRS1owOEw0aHRoUzl3dFkreHJRdXJs?=
+ =?utf-8?B?Q1lncDh3Z1lXZVFXYUhVYUJIck1MamlsQnFyNkJuNkRkc0tUY3pnQWwxLzQ4?=
+ =?utf-8?B?OVFSdzNBOFEvZ25jczBTN09zRWs5eTBlcUVWbFNtb2ZLRUZmUEh1Sm0yVkpv?=
+ =?utf-8?B?eEFIMFEyQVZOYmdSc1Ird2t1Mlh1Y3dtQ25yQmdMOUtyVElqNUc4SEhFTk1j?=
+ =?utf-8?B?RzZJR0swSUpQdG5XUmZtVktpL09rOGJtdkpXbFZHM01mSUlxNGx2WGlLajNW?=
+ =?utf-8?B?Z3NMUjdRM1ZoU0NjbXVaNkViNVFORWYrT2Mwc3pOdnl5TXNSdG4xMHBXcFVL?=
+ =?utf-8?B?SmlrR29TYk1GbXpvQmYxRXFRelFTRWFJMlpDOGxoMzhmb1lOZmQ4Y0YxUmZq?=
+ =?utf-8?B?YzFMRkdyRWJ3QTRTbHZTVzEvQUV3Sm5LTnk0cGo3SGNjQ0crREpQVHZBKytw?=
+ =?utf-8?B?K0JNMVg1UWpsNXNHcG5BblRaUkp3ZFlYdEdESFVId1ZQb0x4MkFJOXc5U1Ru?=
+ =?utf-8?B?QTVGTGFESUt3WDFKbWdXZVlOSW8zZ2ljZy9jWUNBck9DMHNQTW0zVHZidmRC?=
+ =?utf-8?B?NXNWcENqa3QyY1JUQWpSNi9UbE85R2NBc1h1T1lUZVB2bldiUUZua0VlWDY3?=
+ =?utf-8?B?MkthZkZUNzVrNnFkWDJXV1RNV0RNeUprSFM4eExWZkFaZVM4OHp0L3k1Rmo3?=
+ =?utf-8?B?d1h6aG1zRzhVM2lJYnh0MWdzS0pKMmxkZDlEejdXcUhuc0ZlL3VmQS9BeGxY?=
+ =?utf-8?B?bEhCVFAzaTFmb240cWpHak9XbnBKWlUycGUrNFZtby82Y0ZSL1AyZmh1aVVm?=
+ =?utf-8?B?MzJQUXBER2E5bjJQd2RtM3drRUg3akptb0YzOGNwTVpJQzBFY2o2QU4xT3E3?=
+ =?utf-8?B?TnZaR2ZLY3VLWG91V2cvWng1a3lXcEJXTjRZNVRzL0U0ZXJQSksvSEVUalpw?=
+ =?utf-8?B?V2Y0THFQMjZJWFlSdE1lMEtINEJLdjQ3YS9HdEJUc0dwOW1jVkJxT05KWTBM?=
+ =?utf-8?B?MVE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: rAaQupjZxwX9dur5LBuR4z9Sam0qjRRC79uH3RzXeskLsN4SOPvCADiUTunIjdXC4QZ1oZkV+UI9GlaaBimYIT3fTOxiEPxdZ8ujCvcEugX3KjYkmoKxeTufcmFaGKtiByeOqhmAewbo0HCD3NqZPfQJvSUDc2LnPu3E7lGRlDVW+92NAl8isrYzZxd2icbduZHQNk/KfgMMTF5UL2+1vUhU4mAALHRTP7buLW6s7svF8hzhsNPhIpvEl1klohm2hD6Q+iCPK2GLF29Odx1grcjnUE60BwjuD1o7YmasJ8Ddc1KqbjaD6SjjTX9ro5NUJyjAtrUue19ZKwN5ObkicH3WG3m85+U9SevBmSbfnUJ7Xqo4E1llArBrppubEYHhio6oQqu2uCgTxj94/J/R/dELpG1PATZRwRYbajC0JcDxqVGCn22STYOAVBiTAP0Y0wvROR7tMy9QhOQ2vqUvpxMIkHzaYT62Ei1UZ5gWZ6ygw79QYGb7jjpLflfHAXSXa2Wyytx9yzq5SMez6Bf5NjWvZCXHIWemETHssoWWlQyY69ySxjauX/K1dWuDEoqczeerqutpEGdKHrDqE/NMuJa7eAWhani4PYxq03Ok9ho=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd0f6641-4cf0-4d4f-653e-08dc3216591e
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2024 13:17:54.8176 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: F4FXk5q/+tmaCTlF43lkXo06dq2dpESP2ODcFrgJwx//Wp/SQyciMSkwj4sPLE9VZCYuLNzabtKFhmXi9nu8IiDoWIe6eyZnRkOlfb+y0Fc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR10MB4307
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ phishscore=0 malwarescore=0
+ bulkscore=0 adultscore=0 suspectscore=0 spamscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2402200095
+X-Proofpoint-ORIG-GUID: 3_A1ztL7tZe8xHC3y85xSQpx_vwHERQw
+X-Proofpoint-GUID: 3_A1ztL7tZe8xHC3y85xSQpx_vwHERQw
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -160,98 +193,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/02/2024 13.20, BALATON Zoltan wrote:
-> On Tue, 20 Feb 2024, Philippe Mathieu-Daudé wrote:
->> On 19/2/24 19:24, BALATON Zoltan wrote:
->>> On Mon, 19 Feb 2024, BALATON Zoltan wrote:
->>>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>>> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
->>>>> "hw/pci-bridge/ich_dmi_pci.h" header.
->>>>>
->>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>> ---
->>>>> MAINTAINERS                         |  1 +
->>>>> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
->>>>> include/hw/southbridge/ich9.h       |  2 --
->>>>> hw/pci-bridge/i82801b11.c           | 11 ++++-------
->>>>> 4 files changed, 25 insertions(+), 9 deletions(-)
->>>>> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
->>>>>
->>>>> diff --git a/MAINTAINERS b/MAINTAINERS
->>>>> index 1b210c5cc1..50507c3dd6 100644
->>>>> --- a/MAINTAINERS
->>>>> +++ b/MAINTAINERS
->>>>> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
->>>>> F: hw/i2c/smbus_ich9.c
->>>>> F: hw/isa/lpc_ich9.c
->>>>> F: include/hw/acpi/ich9*.h
->>>>> +F: include/hw/pci-bridge/ich_dmi_pci.h
->>>>> F: include/hw/southbridge/ich9.h
->>>>>
->>>>> PIIX4 South Bridge (i82371AB)
->>>>> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h 
->>>>> b/include/hw/pci-bridge/ich_dmi_pci.h
->>>>> new file mode 100644
->>>>> index 0000000000..7623b32b8e
->>>>> --- /dev/null
->>>>> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
->>>>> @@ -0,0 +1,20 @@
->>>>> +/*
->>>>> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
->>>>> + *
->>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>>> + */
->>>>> +
->>>>> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
->>>>> +#define HW_PCI_BRIDGE_ICH_D2P_H
->>>>> +
->>>>> +#include "qom/object.h"
->>>>> +#include "hw/pci/pci_bridge.h"
->>>>> +
->>>>> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
->>>>> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
->>>>> +
->>>>> +struct I82801b11Bridge {
->>>>> +    PCIBridge parent_obj;
->>>>> +};
->>>>
->>>> If this class has no fields of its own why does it need its own state 
->>>> struct defined? You could just set .instance_size = sizeof(PCIBridge) in 
->>>> the TypeInfo i82801b11_bridge_info below and delete this struct 
->>>> completely as it's not even used anywhere. One less needless QOM 
->>>> complication :-) For an example see the empty via-mc97 device in 
->>>> hw/audio/via-ac97.c.
->>>>
->>>> Then you can put the OBJECT_DECLARE_SIMPLE_TYPE in 
->>>> hw/pci-bridge/i82801b11.c where this object is defined and the #define 
->>>> TYPE_ICH_DMI_PCI_BRIDGE in
->>>
->>> You don't even need OBJECT_DECLARE_SIMPLE_TYPE if there's no state 
->>> struct. But on second look what is this object at all? It's never 
->>> instantiated anywhere. Is it used somewhere?
->>
->> Here my view is we should always define QOM type names in headers
->> and use them, in particular in the TypeInfo registration. To unify
->> style and copy/pasting, better use the QOM DECLARE_TYPE macros.
->> I envision that might help moving toward DSL and have HW modelling
->> checks done externally, before starting QEMU. But then this is my
->> view and I dunno about when we'll get that DSL in so I'm OK to
->> revisit this patch.
+On 20/02/2024 12:52, Avihai Horon wrote:
 > 
-> The question here is more if we need this object at all because it wasn't 
-> enstantiated before, and after your series it could be instantiated by a 
-> property that's never set. So unless I misunderstood somthing this whole 
-> thing could just be removed as dead code and let it be re-added later when 
-> it's actually implemented following whatever conventions we'll have then. No 
-> need to keep around empty placeholders that aren't used. Or does it serve 
-> any purpose?
+> On 20/02/2024 12:59, Joao Martins wrote:
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> On 19/02/2024 09:30, Avihai Horon wrote:
+>>> Hi Joao,
+>>>
+>>> On 12/02/2024 15:56, Joao Martins wrote:
+>>>> External email: Use caution opening links or attachments
+>>>>
+>>>>
+>>>> ioctl(iommufd, IOMMU_HWPT_GET_DIRTY_BITMAP, arg) is the UAPI
+>>>> that fetches the bitmap that tells what was dirty in an IOVA
+>>>> range.
+>>>>
+>>>> A single bitmap is allocated and used across all the hwpts
+>>>> sharing an IOAS which is then used in log_sync() to set Qemu
+>>>> global bitmaps.
+>>>>
+>>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>>>> ---
+>>>>    backends/iommufd.c       | 24 ++++++++++++++++++++++++
+>>>>    backends/trace-events    |  1 +
+>>>>    hw/vfio/iommufd.c        | 30 ++++++++++++++++++++++++++++++
+>>>>    include/sysemu/iommufd.h |  3 +++
+>>>>    4 files changed, 58 insertions(+)
+>>>>
+>>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>>>> index 954de61c2da0..dd676d493c37 100644
+>>>> --- a/backends/iommufd.c
+>>>> +++ b/backends/iommufd.c
+>>>> @@ -259,6 +259,30 @@ int iommufd_backend_set_dirty_tracking(IOMMUFDBackend
+>>>> *be, uint32_t hwpt_id,
+>>>>        return !ret ? 0 : -errno;
+>>>>    }
+>>>>
+>>>> +int iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>>>> +                                     uint64_t iova, ram_addr_t size,
+>>>> +                                     uint64_t page_size, uint64_t *data)
+>>>> +{
+>>>> +    int ret;
+>>>> +    struct iommu_hwpt_get_dirty_bitmap get_dirty_bitmap = {
+>>>> +        .size = sizeof(get_dirty_bitmap),
+>>>> +        .hwpt_id = hwpt_id,
+>>>> +        .iova = iova, .length = size,
+>>>> +        .page_size = page_size, .data = (uintptr_t)data,
+>>> Member per line for readability?
+>>>
+>> Yeap
+>>
+>>>> +    };
+>>>> +
+>>>> +    ret = ioctl(be->fd, IOMMU_HWPT_GET_DIRTY_BITMAP, &get_dirty_bitmap);
+>>>> +    trace_iommufd_backend_get_dirty_bitmap(be->fd, hwpt_id, iova, size,
+>>>> +                                           page_size, ret);
+>>>> +    if (ret) {
+>>>> +        error_report("IOMMU_HWPT_GET_DIRTY_BITMAP (iova: 0x%"PRIx64
+>>>> +                     " size: 0x%"PRIx64") failed: %s", iova,
+>>>> +                     size, strerror(errno));
+>>>> +    }
+>>>> +
+>>>> +    return !ret ? 0 : -errno;
+>>>> +}
+>>>> +
+>>>>    static const TypeInfo iommufd_backend_info = {
+>>>>        .name = TYPE_IOMMUFD_BACKEND,
+>>>>        .parent = TYPE_OBJECT,
+>>>> diff --git a/backends/trace-events b/backends/trace-events
+>>>> index feba2baca5f7..11a27cb114b6 100644
+>>>> --- a/backends/trace-events
+>>>> +++ b/backends/trace-events
+>>>> @@ -17,3 +17,4 @@ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id,
+>>>> uint32_t pt_id, uint32_
+>>>>    iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas, int ret) " iommufd=%d
+>>>> ioas=%d (%d)"
+>>>>    iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d
+>>>> id=%d (%d)"
+>>>>    iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int
+>>>> ret) " iommufd=%d hwpt=%d enable=%d (%d)"
+>>>> +iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t
+>>>> iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%d
+>>>> iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+>>> s/hwpt=%d/hwpt=%u
+>>>
+>> /me nods
+>>
+>>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>>> index 361e659288fd..79b13bd262cc 100644
+>>>> --- a/hw/vfio/iommufd.c
+>>>> +++ b/hw/vfio/iommufd.c
+>>>> @@ -25,6 +25,7 @@
+>>>>    #include "qemu/cutils.h"
+>>>>    #include "qemu/chardev_open.h"
+>>>>    #include "pci.h"
+>>>> +#include "exec/ram_addr.h"
+>>>>    #include "migration/migration.h"
+>>>>
+>>>>    static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr
+>>>> iova,
+>>>> @@ -142,6 +143,34 @@ err:
+>>>>        return ret;
+>>>>    }
+>>>>
+>>>> +static int iommufd_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>>>> +                                      VFIOBitmap *vbmap, uint64_t iova,
+>>>> +                                      uint64_t size)
+>>>> +{
+>>>> +    VFIOIOMMUFDContainer *container = container_of(bcontainer,
+>>>> +                                                   VFIOIOMMUFDContainer,
+>>>> +                                                   bcontainer);
+>>>> +    int ret;
+>>>> +    VFIOIOASHwpt *hwpt;
+>>>> +    unsigned long page_size;
+>>>> +
+>>>> +    if (!bcontainer->dirty_pages_supported) {
+>>> Do we need this check?
+>>> IIUC, if we got to iommufd_query_dirty_bitmap(), it means
+>>> bcontainer->dirty_pages_supported is already true.
+>>>
+>> Not quite. Look again at vfio_get_dirty_bitmap(); furthermore
+>> vfio_container_query_dirty_bitmap() doesn't check for dirty_pages_supported.
+> 
+> vfio_get_dirty_bitmap() has this check at the beginning:
+> 
+> if (!bcontainer->dirty_pages_supported && !all_device_dirty_tracking) {
+>     cpu_physical_memory_set_dirty_range(ram_addr, size,
+>                                         tcg_enabled() ? DIRTY_CLIENTS_ALL :
+>                                         DIRTY_CLIENTS_NOCODE);
+>     return 0;
+> }
+> 
+> So if bcontainer->dirty_pages_supported is false we will mark all dirty and
+> return (and not call vfio_container_query_dirty_bitmap()).
+> 
+> Or am I missing something?
+> 
 
-It's apparently used by some q35 configs:
+Nah, I just lacked coffee.
 
-$ grep -r i82801b11 docs/
-docs/config/q35-emulated.cfg:  driver = "i82801b11-bridge"
+You're right, while I read that check there, I misread what
+vfio_devices_all_device_dirty_tracking() returns. And if that returns false it
+means we need IOMMU dirty tracking and it was already tested false, otherwise
+device dirty tracking is used instead.
 
-  Thomas
-
-
+	Joao
 
