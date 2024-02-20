@@ -4,78 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7082C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F106CC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 22:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcYpd-0006Qh-5V; Tue, 20 Feb 2024 17:43:21 -0500
+	id 1rcYoY-0003GU-7M; Tue, 20 Feb 2024 17:42:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcYpb-0006Jx-CS
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:43:19 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYoV-0003FR-Bz
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:12 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rcYpZ-0006Vj-Dq
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:43:19 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-564372fb762so47339a12.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 14:43:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708468993; x=1709073793; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bTK+m10RJ63fhWgeGU2rnro1ZGMOe5siAMS1P2G0NKE=;
- b=SkM9fOQ4qlI/YA0mr04sWxAM16i7Ei8KxSui8heN32EsGvpbWOe1J0SR57f/xWvYCF
- nE5puF9UnwndbWPvtxwOC1LjtD3FbKJLxTmFn3ZC9HPoBu7XwzD3f4fsghnQbnBb77H7
- /fv7ozePqrk8rOvfh8GjM+pgB6b9CBtmFHEUal5J0LH7/Yt7W4fEHRVtjZbpjFUiDm+4
- 3Si5M+JR/y6MoywjTdOiOhcUNlu13Hx9N5iOvhKxu421qlxms1ZcnJdU8v1ViMiARPGj
- /NakN+QnReonC+fIaHbl/e8mqpoh0PWkqrfdSwBHvY8Culg9p3k2TIR/Mt8k38vgoBy7
- 2bdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708468993; x=1709073793;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bTK+m10RJ63fhWgeGU2rnro1ZGMOe5siAMS1P2G0NKE=;
- b=oaE8rq2opbZp1B9QM5h755GdKCYv9nt3WKLzbGfIdrQQtpumyFJ6Bx4qnXwwtcs5x0
- nsnJ0bvVWfjcqAAN5Q3P31qofrvMrIYhLzKARO/Ipn/GN0noMfkyxAbjt4xtmnuMma59
- nUy2W2GRpYKMFsH62XKDphVS2Bvr8KPzhBYd0+JTFBTcqnMtGgFG5bV7DOEgAUHxgps0
- xAJLSEpC9gNkKIX2YYjRfYWWXLT2amjC2e7Kv7PqXSBXCId7beaByROBEuF8bTBtFU4a
- n2XzqP22O7OzJ4dXNHHAaqtPgEOMko92DX7cadJjMj8+Vf9BbkZl368ZAxD9qWkuZ33w
- seqQ==
-X-Gm-Message-State: AOJu0Yw9kK2Wpxx/p+fqvQqc8AyXeU71oIwKwFCQRELpdVyNc5/MgZjR
- h8CtuNsxB+CdT9Zgu/wQx2wJobj1tQB16wjNmDvCH35u7e1359TVWsUtNxUV
-X-Google-Smtp-Source: AGHT+IHCu0o3Gu5t+4jUYyFv89oRzUTNBleaQBqnaElXJptEERFqVk4gnpNLl/Z3ADmcgu0BOyyiqQ==
-X-Received: by 2002:aa7:df14:0:b0:564:6b09:92f6 with SMTP id
- c20-20020aa7df14000000b005646b0992f6mr4455359edy.18.1708468993097; 
- Tue, 20 Feb 2024 14:43:13 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-089-014-092-079.89.14.pool.telefonica.de.
- [89.14.92.79]) by smtp.gmail.com with ESMTPSA id
- x17-20020aa7cd91000000b005649df0654asm1731216edv.21.2024.02.20.14.43.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 14:43:12 -0800 (PST)
-Date: Tue, 20 Feb 2024 22:43:10 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-CC: philmd@linaro.org
-Subject: Re: [PATCH] vl, pc: turn -no-fd-bootchk into a machine property
-In-Reply-To: <20240220155352.416710-1-pbonzini@redhat.com>
-References: <20240220155352.416710-1-pbonzini@redhat.com>
-Message-ID: <8FECF57F-7897-4AF8-9AC1-46A927C0FEC0@gmail.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcYoT-0006Kn-3p
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 17:42:11 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id F16AF1FB40;
+ Tue, 20 Feb 2024 22:42:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708468928; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4rMZwnsxGPC46xABnLIzuiIVK2s50sf9Lrt0fRlj+Nw=;
+ b=vG0C7tfs5Cuw7i4mRTM/xLtP5V/TZayTbcYktw0jYYrjLEJpGgwByLHY8IGLyK7FjtDGdg
+ 0f6CetfdKuA6/0KuqH+OAf4psRHAINIZwy50PXPbnDpEnHQmmgVjyf1MHJImGITlj3tPW2
+ HwwJQ4mX3KNtGbgxxYd1k1ZO6R16hpQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708468928;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4rMZwnsxGPC46xABnLIzuiIVK2s50sf9Lrt0fRlj+Nw=;
+ b=6GEy2wyY7K9U9vv2sdM3nfeCs73dMrJRaj1J5oeiK34WoiCNDIE2vAw5tE5w0mLhu6EUQw
+ QejuQcO2VDwk0NDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708468927; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4rMZwnsxGPC46xABnLIzuiIVK2s50sf9Lrt0fRlj+Nw=;
+ b=Vge+bEPz4hsNC2A7GJ/MBbZvDhzBtzgVE++y5BnFmNJwMkC7c+9LTUtVFbYmFjhyx/wLS6
+ NHrOIoH2bdxHps8mMbZskG/5Rfn14ebBBCOdJOCl9tRlF6kd3wYHGFn4uoDiTotUY9b4RX
+ VPMGWCp8mzcFzEscOKuxPsyX8M342JI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708468927;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4rMZwnsxGPC46xABnLIzuiIVK2s50sf9Lrt0fRlj+Nw=;
+ b=EOp35z02SsxbRyuCUDPgEg+WYWAmNnqUtVlAjOsTnmBYsrS1U9TDh45YL9aMkHJiEGKJAY
+ APacNNBwUgUpQwBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1C4F6139D0;
+ Tue, 20 Feb 2024 22:42:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eAo0Nb0q1WUlKwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 20 Feb 2024 22:42:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>, Eric Blake <eblake@redhat.com>
+Subject: [PATCH v4 11/34] migration/ram: Introduce 'fixed-ram' migration
+ capability
+Date: Tue, 20 Feb 2024 19:41:15 -0300
+Message-Id: <20240220224138.24759-12-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240220224138.24759-1-farosas@suse.de>
+References: <20240220224138.24759-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [1.90 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ BROKEN_CONTENT_TYPE(1.50)[]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,183 +120,303 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add a new migration capability 'fixed-ram'.
 
+The core of the feature is to ensure that each RAM page has a specific
+offset in the resulting migration stream. The reasons why we'd want
+such behavior are:
 
-Am 20=2E Februar 2024 15:53:52 UTC schrieb Paolo Bonzini <pbonzini@redhat=
-=2Ecom>:
->Add a fd-bootchk property to PC machine types, so that -no-fd-bootchk
->returns an error if the machine does not support booting from floppies
->and checking for boot signatures therein=2E
->
->Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
->Signed-off-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
->---
-> include/hw/i386/pc=2Eh |  2 +-
-> hw/i386/pc=2Ec         | 30 +++++++++++++++++++++++++-----
-> system/globals=2Ec     |  1 -
-> system/vl=2Ec          |  2 +-
-> qemu-options=2Ehx      |  2 +-
-> 5 files changed, 28 insertions(+), 9 deletions(-)
->
->diff --git a/include/hw/i386/pc=2Eh b/include/hw/i386/pc=2Eh
->index 02a0deedd3c=2E=2Ee5382a02e7a 100644
->--- a/include/hw/i386/pc=2Eh
->+++ b/include/hw/i386/pc=2Eh
->@@ -50,6 +50,7 @@ typedef struct PCMachineState {
->     bool hpet_enabled;
->     bool i8042_enabled;
->     bool default_bus_bypass_iommu;
->+    bool fd_bootchk;
->     uint64_t max_fw_size;
->=20
->     /* ACPI Memory hotplug IO base address */
->@@ -147,7 +148,6 @@ OBJECT_DECLARE_TYPE(PCMachineState, PCMachineClass, P=
-C_MACHINE)
-> GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
->=20
-> /* pc=2Ec */
->-extern int fd_bootchk;
->=20
-> void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
->=20
->diff --git a/hw/i386/pc=2Ec b/hw/i386/pc=2Ec
->index 28194014f82=2E=2E31f4bb25a3e 100644
->--- a/hw/i386/pc=2Ec
->+++ b/hw/i386/pc=2Ec
->@@ -399,8 +399,8 @@ static int boot_device2nibble(char boot_device)
->     return 0;
-> }
->=20
->-static void set_boot_dev(MC146818RtcState *s, const char *boot_device,
->-                         Error **errp)
->+static void set_boot_dev(PCMachineState *pcms, MC146818RtcState *s,
->+                         const char *boot_device, Error **errp)
-> {
-> #define PC_MAX_BOOT_DEVICES 3
->     int nbds, bds[3] =3D { 0, };
->@@ -420,12 +420,14 @@ static void set_boot_dev(MC146818RtcState *s, const=
- char *boot_device,
->         }
->     }
->     mc146818rtc_set_cmos_data(s, 0x3d, (bds[1] << 4) | bds[0]);
->-    mc146818rtc_set_cmos_data(s, 0x38, (bds[2] << 4) | (fd_bootchk ? 0x0=
- : 0x1));
->+    mc146818rtc_set_cmos_data(s, 0x38, (bds[2] << 4) | !pcms->fd_bootchk=
-);
-> }
->=20
-> static void pc_boot_set(void *opaque, const char *boot_device, Error **e=
-rrp)
-> {
->-    set_boot_dev(opaque, boot_device, errp);
->+    PCMachineState *pcms =3D PC_MACHINE(current_machine);
->+
->+    set_boot_dev(pcms, opaque, boot_device, errp);
-> }
->=20
-> static void pc_cmos_init_floppy(MC146818RtcState *rtc_state, ISADevice *=
-floppy)
->@@ -617,6 +619,9 @@ void pc_cmos_init(PCMachineState *pcms,
->     mc146818rtc_set_cmos_data(s, 0x5c, val >> 8);
->     mc146818rtc_set_cmos_data(s, 0x5d, val >> 16);
->=20
->+    object_property_add_bool(obj, "fd-bootchk", pc_machine_get_fd_bootch=
-k,
->+                             pc_machine_set_fd_bootchk);
+ - The resulting file will have a bounded size, since pages which are
+   dirtied multiple times will always go to a fixed location in the
+   file, rather than constantly being added to a sequential
+   stream. This eliminates cases where a VM with, say, 1G of RAM can
+   result in a migration file that's 10s of GBs, provided that the
+   workload constantly redirties memory.
 
-Isn't it possible to turn this into a class property or add the property i=
-n pc_machine_initfn()? Aggregating properties in one place seems more compr=
-ehensible to me=2E
+ - It paves the way to implement O_DIRECT-enabled save/restore of the
+   migration stream as the pages are ensured to be written at aligned
+   offsets.
 
-Note that I've submitted a series attempting to simplify initialization of=
- the PC machines which still waits for reviews: https://patchew=2Eorg/QEMU/=
-20240208220349=2E4948-1-shentey@gmail=2Ecom/
+ - It allows the usage of multifd so we can write RAM pages to the
+   migration file in parallel.
 
-Thanks,
-Bernhard
+For now, enabling the capability has no effect. The next couple of
+patches implement the core functionality.
 
->+
->     object_property_add_link(OBJECT(pcms), "rtc_state",
->                              TYPE_ISA_DEVICE,
->                              (Object **)&x86ms->rtc,
->@@ -625,7 +630,7 @@ void pc_cmos_init(PCMachineState *pcms,
->     object_property_set_link(OBJECT(pcms), "rtc_state", OBJECT(s),
->                              &error_abort);
->=20
->-    set_boot_dev(s, MACHINE(pcms)->boot_config=2Eorder, &error_fatal);
->+    set_boot_dev(pcms, s, MACHINE(pcms)->boot_config=2Eorder, &error_fat=
-al);
->=20
->     val =3D 0;
->     val |=3D 0x02; /* FPU is there */
->@@ -1559,6 +1564,20 @@ static void pc_machine_set_vmport(Object *obj, Vis=
-itor *v, const char *name,
->     visit_type_OnOffAuto(v, name, &pcms->vmport, errp);
-> }
->=20
->+static bool pc_machine_get_fd_bootchk(Object *obj, Error **errp)
->+{
->+    PCMachineState *pcms =3D PC_MACHINE(obj);
->+
->+    return pcms->fd_bootchk;
->+}
->+
->+static void pc_machine_set_fd_bootchk(Object *obj, bool value, Error **e=
-rrp)
->+{
->+    PCMachineState *pcms =3D PC_MACHINE(obj);
->+
->+    pcms->fd_bootchk =3D value;
->+}
->+
-> static bool pc_machine_get_smbus(Object *obj, Error **errp)
-> {
->     PCMachineState *pcms =3D PC_MACHINE(obj);
->@@ -1747,6 +1766,7 @@ static void pc_machine_initfn(Object *obj)
-> #ifdef CONFIG_HPET
->     pcms->hpet_enabled =3D true;
-> #endif
->+    pcms->fd_bootchk =3D true;
->     pcms->default_bus_bypass_iommu =3D false;
->=20
->     pc_system_flash_create(pcms);
->diff --git a/system/globals=2Ec b/system/globals=2Ec
->index b6d4e72530e=2E=2E5d0046ba105 100644
->--- a/system/globals=2Ec
->+++ b/system/globals=2Ec
->@@ -41,7 +41,6 @@ int vga_interface_type =3D VGA_NONE;
-> bool vga_interface_created;
-> Chardev *parallel_hds[MAX_PARALLEL_PORTS];
-> int win2k_install_hack;
->-int fd_bootchk =3D 1;
-> int graphic_rotate;
-> QEMUOptionRom option_rom[MAX_OPTION_ROMS];
-> int nb_option_roms;
->diff --git a/system/vl=2Ec b/system/vl=2Ec
->index a82555ae155=2E=2E4627004304b 100644
->--- a/system/vl=2Ec
->+++ b/system/vl=2Ec
->@@ -2927,7 +2927,7 @@ void qemu_init(int argc, char **argv)
->                           optarg, FD_OPTS);
->                 break;
->             case QEMU_OPTION_no_fd_bootchk:
->-                fd_bootchk =3D 0;
->+                qdict_put_str(machine_opts_dict, "fd-bootchk", "off");
->                 break;
->             case QEMU_OPTION_netdev:
->                 default_net =3D 0;
->diff --git a/qemu-options=2Ehx b/qemu-options=2Ehx
->index 8547254dbf9=2E=2Ea9e0107b4f0 100644
->--- a/qemu-options=2Ehx
->+++ b/qemu-options=2Ehx
->@@ -2650,7 +2650,7 @@ DEF("no-fd-bootchk", 0, QEMU_OPTION_no_fd_bootchk,
-> SRST
-> ``-no-fd-bootchk``
->     Disable boot signature checking for floppy disks in BIOS=2E May be
->-    needed to boot from old floppy disks=2E
->+    needed to boot from old floppy disks=2E  Synonym of ``-m fd-bootchk=
-=3Doff``=2E
-> ERST
->=20
-> DEF("acpitable", HAS_ARG, QEMU_OPTION_acpitable,
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+- update migration.json to 9.0 and improve wording
+- move docs to a separate file and add use cases information
+---
+ docs/devel/migration/features.rst  |   1 +
+ docs/devel/migration/fixed-ram.rst | 137 +++++++++++++++++++++++++++++
+ migration/options.c                |  34 +++++++
+ migration/options.h                |   1 +
+ migration/savevm.c                 |   1 +
+ qapi/migration.json                |   6 +-
+ 6 files changed, 179 insertions(+), 1 deletion(-)
+ create mode 100644 docs/devel/migration/fixed-ram.rst
+
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index a9acaf618e..4c708b679a 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -10,3 +10,4 @@ Migration has plenty of features to support different use cases.
+    dirty-limit
+    vfio
+    virtio
++   fixed-ram
+diff --git a/docs/devel/migration/fixed-ram.rst b/docs/devel/migration/fixed-ram.rst
+new file mode 100644
+index 0000000000..a6c0e5a360
+--- /dev/null
++++ b/docs/devel/migration/fixed-ram.rst
+@@ -0,0 +1,137 @@
++Fixed-ram
++=========
++
++Fixed-ram is a new stream format for the RAM section designed to
++supplement the existing ``file:`` migration and make it compatible
++with ``multifd``. This enables parallel migration of a guest's RAM to
++a file.
++
++The core of the feature is to ensure that each RAM page has a specific
++offset in the resulting migration file. This enables the ``multifd``
++threads to write exclusively to those offsets even if the guest is
++constantly dirtying pages (i.e. live migration). Another benefit is
++that the resulting file will have a bounded size, since pages which
++are dirtied multiple times will always go to a fixed location in the
++file, rather than constantly being added to a sequential
++stream. Having the pages at fixed offsets also allows the usage of
++O_DIRECT for save/restore of the migration stream as the pages are
++ensured to be written respecting O_DIRECT alignment restrictions.
++
++Usage
++-----
++
++On both source and destination, enable the ``multifd`` and
++``fixed-ram`` capabilities:
++
++    ``migrate_set_capability multifd on``
++
++    ``migrate_set_capability fixed-ram on``
++
++Use a ``file:`` URL for migration:
++
++    ``migrate file:/path/to/migration/file``
++
++Fixed-ram migration is best done non-live, i.e. by stopping the VM on
++the source side before migrating.
++
++For best performance enable the ``direct-io`` capability as well:
++
++    ``migrate_set_capability direct-io on``
++
++Use-cases
++---------
++
++The fixed-ram feature was designed for use cases where the migration
++stream will be directed to a file in the filesystem and not
++immediately restored on the destination VM [#]_. These could be
++thought of as snapshots. We can further categorize them into live and
++non-live.
++
++- Non-live snapshot
++
++If the use case requires a VM to be stopped before taking a snapshot,
++that's the ideal scenario for fixed-ram migration. Not having to track
++dirty pages, the migration will write the RAM pages to the disk as
++fast as it can.
++
++Note: if a snapshot is taken of a running VM, but the VM will be
++stopped after the snapshot by the admin, then consider stopping it
++right before the snapshot to take benefit of the performance gains
++mentioned above.
++
++- Live snapshot
++
++If the use case requires that the VM keeps running during and after
++the snapshot operation, then fixed-ram migration can still be used,
++but will be less performant. Other strategies such as
++background-snapshot should be evaluated as well. One benefit of
++fixed-ram in this scenario is portability since background-snapshot
++depends on async dirty tracking (KVM_GET_DIRTY_LOG) which is not
++supported outside of Linux.
++
++.. [#] While this same effect could be obtained with the usage of
++       snapshots or the ``file:`` migration alone, fixed-ram provides
++       a performance increase for VMs with larger RAM sizes (10s to
++       100s of GiBs), specially if the VM has been stopped beforehand.
++
++RAM section format
++------------------
++
++Instead of having a sequential stream of pages that follow the
++RAMBlock headers, the dirty pages for a RAMBlock follow its header
++instead. This ensures that each RAM page has a fixed offset in the
++resulting migration file.
++
++A bitmap is introduced to track which pages have been written in the
++migration file. Pages are written at a fixed location for every
++ramblock. Zero pages are ignored as they'd be zero in the destination
++migration as well.
++
++::
++
++ Without fixed-ram:                  With fixed-ram:
++
++ ---------------------               --------------------------------
++ | ramblock 1 header |               | ramblock 1 header            |
++ ---------------------               --------------------------------
++ | ramblock 2 header |               | ramblock 1 fixed-ram header  |
++ ---------------------               --------------------------------
++ | ...               |               | padding to next 1MB boundary |
++ ---------------------               | ...                          |
++ | ramblock n header |               --------------------------------
++ ---------------------               | ramblock 1 pages             |
++ | RAM_SAVE_FLAG_EOS |               | ...                          |
++ ---------------------               --------------------------------
++ | stream of pages   |               | ramblock 2 header            |
++ | (iter 1)          |               --------------------------------
++ | ...               |               | ramblock 2 fixed-ram header  |
++ ---------------------               --------------------------------
++ | RAM_SAVE_FLAG_EOS |               | padding to next 1MB boundary |
++ ---------------------               | ...                          |
++ | stream of pages   |               --------------------------------
++ | (iter 2)          |               | ramblock 2 pages             |
++ | ...               |               | ...                          |
++ ---------------------               --------------------------------
++ | ...               |               | ...                          |
++ ---------------------               --------------------------------
++                                     | RAM_SAVE_FLAG_EOS            |
++                                     --------------------------------
++                                     | ...                          |
++                                     --------------------------------
++
++ where:
++  - ramblock header: the generic information for a ramblock, such as
++    idstr, used_len, etc.
++
++  - ramblock fixed-ram header: the information added by this feature:
++    bitmap of pages written, bitmap size and offset of pages in the
++    migration file.
++
++Restrictions
++------------
++
++Since pages are written to their relative offsets and out of order
++(due to the memory dirtying patterns), streaming channels such as
++sockets are not supported. A seekable channel such as a file is
++required. This can be verified in the QIOChannel by the presence of
++the QIO_CHANNEL_FEATURE_SEEKABLE.
+diff --git a/migration/options.c b/migration/options.c
+index 3e3e0b93b4..4909e5c72a 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -204,6 +204,7 @@ Property migration_properties[] = {
+     DEFINE_PROP_MIG_CAP("x-switchover-ack",
+                         MIGRATION_CAPABILITY_SWITCHOVER_ACK),
+     DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_LIMIT),
++    DEFINE_PROP_MIG_CAP("x-fixed-ram", MIGRATION_CAPABILITY_FIXED_RAM),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+@@ -263,6 +264,13 @@ bool migrate_events(void)
+     return s->capabilities[MIGRATION_CAPABILITY_EVENTS];
+ }
+ 
++bool migrate_fixed_ram(void)
++{
++    MigrationState *s = migrate_get_current();
++
++    return s->capabilities[MIGRATION_CAPABILITY_FIXED_RAM];
++}
++
+ bool migrate_ignore_shared(void)
+ {
+     MigrationState *s = migrate_get_current();
+@@ -645,6 +653,32 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+         }
+     }
+ 
++    if (new_caps[MIGRATION_CAPABILITY_FIXED_RAM]) {
++        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
++            error_setg(errp,
++                       "Fixed-ram migration is incompatible with multifd");
++            return false;
++        }
++
++        if (new_caps[MIGRATION_CAPABILITY_XBZRLE]) {
++            error_setg(errp,
++                       "Fixed-ram migration is incompatible with xbzrle");
++            return false;
++        }
++
++        if (new_caps[MIGRATION_CAPABILITY_COMPRESS]) {
++            error_setg(errp,
++                       "Fixed-ram migration is incompatible with compression");
++            return false;
++        }
++
++        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++            error_setg(errp,
++                       "Fixed-ram migration is incompatible with postcopy ram");
++            return false;
++        }
++    }
++
+     return true;
+ }
+ 
+diff --git a/migration/options.h b/migration/options.h
+index 246c160aee..8680a10b79 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -31,6 +31,7 @@ bool migrate_compress(void);
+ bool migrate_dirty_bitmaps(void);
+ bool migrate_dirty_limit(void);
+ bool migrate_events(void);
++bool migrate_fixed_ram(void);
+ bool migrate_ignore_shared(void);
+ bool migrate_late_block_activate(void);
+ bool migrate_multifd(void);
+diff --git a/migration/savevm.c b/migration/savevm.c
+index d612c8a902..4b928dd6bb 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -245,6 +245,7 @@ static bool should_validate_capability(int capability)
+     /* Validate only new capabilities to keep compatibility. */
+     switch (capability) {
+     case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
++    case MIGRATION_CAPABILITY_FIXED_RAM:
+         return true;
+     default:
+         return false;
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 5a565d9b8d..3fce5fe53e 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -531,6 +531,10 @@
+ #     and can result in more stable read performance.  Requires KVM
+ #     with accelerator property "dirty-ring-size" set.  (Since 8.1)
+ #
++# @fixed-ram: Migrate using fixed offsets in the migration file for
++#     each RAM page.  Requires a migration URI that supports seeking,
++#     such as a file.  (since 9.0)
++#
+ # Features:
+ #
+ # @deprecated: Member @block is deprecated.  Use blockdev-mirror with
+@@ -555,7 +559,7 @@
+            { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+            'validate-uuid', 'background-snapshot',
+            'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+-           'dirty-limit'] }
++           'dirty-limit', 'fixed-ram'] }
+ 
+ ##
+ # @MigrationCapabilityStatus:
+-- 
+2.35.3
+
 
