@@ -4,114 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FFDC54764
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E9FC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 09:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcMFv-0001Tt-Ot; Tue, 20 Feb 2024 04:17:39 -0500
+	id 1rcMcv-0000Ew-Pr; Tue, 20 Feb 2024 04:41:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
- id 1rcMFt-0001Sr-VB; Tue, 20 Feb 2024 04:17:37 -0500
-Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2418::600]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcMcu-0000Dx-BP
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 04:41:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
- id 1rcMFs-0004Le-5q; Tue, 20 Feb 2024 04:17:37 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HYnXlN150N+NZH1dyFtgz86jOdW5sUgFw66uV/oHbkjUDkm7B+U0DKtHfk1kY+qOYPMkHBMZ8Xw9JCckbSqXDHwGEC4hQfVeUpLbtPjdBbnrciixpieWCdC40Cy44G4HMnodA02X2NQ0GyAQehVNRWSyMv4cj+l9J5vTAsYwo5qLLFClgi3319IP2FaYzmTWJB5H0bHSRc+Rx9ZQ59XrIbfvvD0UGK7slj+3q8GknFOx0gywhFP3f8XS6sCIghe74uxF+aZ8/ZTO0YGrvtAzDaWi1sY7tZT+CfySL4UUyJ2rVYmeGxo7VtJmHANVxLuBQhi5VqFY0NMwOk//f7BngQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=g0od/PrEcbSIF8ofbEoWOY+H2cDNF/S9ZlA1rOMDabY=;
- b=Wq6gf89Aqr43dGgikkOhaGEvqf52xhYXOen6MCcE4JXtgmDixnCbCXJmRXXQlEraa/FW+dChkol64M5tENaKoTC/IGMzhD1DsGacPT86Oy6klNlCmZoJr6VJH35uoDhIYN7U0GbDV5r+41BOycV5dD6UeVOCtto3M71JrRTiXv54iythsb514ONWO5nPsYOAEIYi8qsrjICqiSu0YoCXA1zZgh8/U4oWuqfyFn5iCwdu7XgAo+MVu5lyJG/l+U9WBmXGuabG6+gm8l/eNz0df6l6JMXKCsEVRAa+Y8O8y+Kkkci5QmeHR13DDS6QDD48bBZEEgZPMUUX8fX1mN+RUw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g0od/PrEcbSIF8ofbEoWOY+H2cDNF/S9ZlA1rOMDabY=;
- b=w9LXiIrtr7G6UW9CBwXY4TYSWO11NnPjilQi6VM7d9gWS6vVA4P05VS3m3dFIJYp7cPcHlF9NUImtrGCHcomu93nFMYKJcNIcsySRyr7rYnIjtJzBSk3jbY87g8HJ4frIUc3kRGhoOUbWwCOXwvjpJ3Hs++/9tRGHBBV3GDvc7w=
-Received: from DM6PR07CA0127.namprd07.prod.outlook.com (2603:10b6:5:330::28)
- by SJ0PR12MB7036.namprd12.prod.outlook.com (2603:10b6:a03:483::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.20; Tue, 20 Feb
- 2024 09:17:33 +0000
-Received: from CY4PEPF0000E9D8.namprd05.prod.outlook.com
- (2603:10b6:5:330:cafe::b1) by DM6PR07CA0127.outlook.office365.com
- (2603:10b6:5:330::28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.39 via Frontend
- Transport; Tue, 20 Feb 2024 09:17:32 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- CY4PEPF0000E9D8.mail.protection.outlook.com (10.167.241.83) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 20 Feb 2024 09:17:32 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 20 Feb
- 2024 03:17:31 -0600
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 20 Feb
- 2024 03:17:31 -0600
-Received: from xhdvaralaxm41-docker.xilinx.com (10.180.168.240) by
- SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35
- via Frontend Transport; Tue, 20 Feb 2024 03:17:29 -0600
-From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <qemu-block@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Alistair Francis
- <alistair@alistair23.me>, "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Francisco Iglesias
- <frasse.iglesias@gmail.com>, <sai.pavan.boddu@amd.com>
-Subject: [PATCH v2 1/2] block: m25p80: Add support of mt35xu02gbba
-Date: Tue, 20 Feb 2024 09:17:20 +0000
-Message-ID: <20240220091721.82954-2-sai.pavan.boddu@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240220091721.82954-1-sai.pavan.boddu@amd.com>
-References: <20240220091721.82954-1-sai.pavan.boddu@amd.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcMcs-0008Bd-Ay
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 04:41:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708422081;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GoYgYdgWWT/rJFB3aEn2jIfS+g6huycDtVnCpwKHaBM=;
+ b=T4VEsJ07eWU6GfiLdrV4k5QTUPZdH/uR6E6FvvOpakWNfZhGhRmd78jc+QenCqiuG0/cY4
+ bobV6hTJ/zsTiq1+nQySeG0hmYf3caH6/BBUQl/8FY70RwQi/KcD+rNiQs1v+kkJ4EUrva
+ kxfoH/3C5oyPw6Ad+as9P9cb3VFKFUQ=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-k1K37WYkM8mAbxHQHLAf5w-1; Tue,
+ 20 Feb 2024 04:41:17 -0500
+X-MC-Unique: k1K37WYkM8mAbxHQHLAf5w-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B0EB6285F985;
+ Tue, 20 Feb 2024 09:41:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8E42E1C060AF;
+ Tue, 20 Feb 2024 09:41:16 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 79A2521E66C8; Tue, 20 Feb 2024 10:41:15 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Yong Huang <yong.huang@smartx.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Daniel P
+ . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v4 2/7] qapi: Make parameter 'file' optional for
+ BlockdevCreateOptionsLUKS
+In-Reply-To: <CAK9dgmaD_3vbOvv9cFzPq-BzQ7xejB-McaD8C9v4Wt_0xnF9kw@mail.gmail.com>
+ (Yong Huang's message of "Tue, 20 Feb 2024 17:13:46 +0800")
+References: <cover.1706586786.git.yong.huang@smartx.com>
+ <af7253711254128efbc37b25fb5c47b851367ce7.1706586786.git.yong.huang@smartx.com>
+ <87zfvwjzzd.fsf@pond.sub.org>
+ <CAK9dgmY0rExYg+hfTY_okNvTTArZdn60jsWjCABgbbAG6XZiDw@mail.gmail.com>
+ <87wmqzcy5h.fsf@pond.sub.org>
+ <CAK9dgmaD_3vbOvv9cFzPq-BzQ7xejB-McaD8C9v4Wt_0xnF9kw@mail.gmail.com>
+Date: Tue, 20 Feb 2024 10:41:15 +0100
+Message-ID: <87edd7cw1w.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9D8:EE_|SJ0PR12MB7036:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7fd93676-6978-4663-6824-08dc31f4c4ed
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: fcCXhdgeL+wAIEEobmh1j00LX4mdib8nv1Dg5pO+9QjKqLpPg49B9kJ3HvpP6yZlE/hJVdprOyf3ltfX29/MaBfELVyhZEm0j/f4plG2ySSzsiKsPR6V6OUrAUO7qouegGBd/OFeDaIL4jdzS798OMy+Xf74tIViB3P2LMNO/ojqA7AFKI67dbP8OfrBXD+1iQqEVrwOzO2+63YHRl5Mk1UngnhNbvbN446GhR+VnpJQEzZtX8UUsONJpN8wysQXnoIzBdyqKuCjsCOGOsc5/6RfG/xotunZ0GiNP6MqIdEvRAvyW5IU5w4dNIlCZHJnyWtd4QICsJnKW4zw9H6cTL1aFuRCuVZozkGel+MDiU9s9mD8i2izkGNWcj9D3MitlXTZEPkCLwKDohJgyqUk2odcjNLB22fESnXShPqFOHBv9qrf8mlcTDt9sHGi2EReyjfbnZJNguy3RwGZsV85hJo06rtisj1cYq0ZvlEDg1rMcOTZeQ+sDoct0gmgXpiVaZqWBWc6PnxUugFn84D73la5xjTQ3+Ms1vnNPTi6WmtP5rfKgyO9NRGCz+IdtjL4hvs6UNuA+Up3sVzEYJc9x4KVv3T5ckTRfaxFaDo/TW/Mj3YsJt7MYZP+Ng++Xhuk9/2uzGKJxsYTZuqb5GL6QACWIAlfJXlDOE2pdxN4huM=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(36860700004)(46966006)(40470700004); DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Feb 2024 09:17:32.4504 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7fd93676-6978-4663-6824-08dc31f4c4ed
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000E9D8.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB7036
-Received-SPF: softfail client-ip=2a01:111:f403:2418::600;
- envelope-from=sai.pavan.boddu@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.072,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,90 +92,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add Micro 2Gb OSPI flash part with sfdp data.
+Yong Huang <yong.huang@smartx.com> writes:
 
-Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Reviewed-by: Francisco Iglesias <frasse.iglesias@gmail.com>
----
- hw/block/m25p80_sfdp.h |  1 +
- hw/block/m25p80.c      |  3 +++
- hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 40 insertions(+)
+> On Tue, Feb 20, 2024 at 4:56=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> Yong Huang <yong.huang@smartx.com> writes:
+>>
+>> > On Tue, Feb 20, 2024 at 2:31=E2=80=AFPM Markus Armbruster <armbru@redh=
+at.com>
+>> wrote:
+>> >
+>> >> yong.huang@smartx.com writes:
+>> >>
+>> >> > From: Hyman Huang <yong.huang@smartx.com>
+>> >> >
+>> >> > To support detached LUKS header creation, make the existing 'file'
+>> >> > field in BlockdevCreateOptionsLUKS optional.
+>> >> >
+>> >> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+>> >> > Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> >>
+>> >> [...]
+>> >>
+>> >> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> >> > index ae604c6019..69a88d613d 100644
+>> >> > --- a/qapi/block-core.json
+>> >> > +++ b/qapi/block-core.json
+>> >> > @@ -4957,7 +4957,8 @@
+>> >> >  #
+>> >> >  # Driver specific image creation options for LUKS.
+>> >> >  #
+>> >> > -# @file: Node to create the image format on
+>> >> > +# @file: Node to create the image format on, mandatory except when
+>> >> > +#        'preallocation' is not requested
+>> >>
+>> >> You mean when @preallocation is "off"?
+>> >>
+>> >> Cases:
+>> >>
+>> >> 1. @file is mandatory
+>> >>
+>> >
+>> > When @preallocation is specified to PREALLOC_MODE_ON, file
+>> > is mandatory because preallocation aims to act on payload data that
+>> > @file holds.
+>> >
+>> >
+>> >> 2. @file is optional and present
+>> >>
+>> >
+>> > When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
+>> > @file if optional.
+>> > If @file present=EF=BC=8Cthere are two cases:
+>> > 1. @header is absent,  the creation process degenerate to the origin a=
+ction.
+>> > 2. @header is present,  the creation process would trunk the payload d=
+ata
+>> > image that @file holds and do the LUKS formatting on the image that
+>> > @header refers;
+>> >
+>> >
+>> >>
+>> >> 3. @file is optional and absent
+>> >>
+>> >
+>> > When @preallocation is not specified or equals to PREALLOC_MODE_OFF,
+>> > @file if optional.
+>> > If @file is absent, do the LUKS formatting only.
+>> > Note that Either the parameter 'header' or 'file' must be specified.
+>> >
+>> > Here's my interpretation; do let me know if any of the points are off =
+or
+>> > need to be refactored.
+>> >
+>> >
+>> >>
+>> >> Ignorant question: behavior in each case?
+>>
+>> Thanks!  Would it make sense to work the above into the documentation?
+>>
+>
+> You mean adding the above interpretation to the following patch?
+>
+> https://patchew.org/QEMU/c2049499aa05758b4cf18dcec942694ed454a980.1708358=
+310.git.yong.huang@smartx.com/
 
-diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
-index 011a880f66..1733b56950 100644
---- a/hw/block/m25p80_sfdp.h
-+++ b/hw/block/m25p80_sfdp.h
-@@ -16,6 +16,7 @@
- #define M25P80_SFDP_MAX_SIZE  (1 << 24)
- 
- uint8_t m25p80_sfdp_n25q256a(uint32_t addr);
-+uint8_t m25p80_sfdp_mt35xu02g(uint32_t addr);
- 
- uint8_t m25p80_sfdp_mx25l25635e(uint32_t addr);
- uint8_t m25p80_sfdp_mx25l25635f(uint32_t addr);
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 0a12030a3a..08a00a6d9b 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -267,6 +267,9 @@ static const FlashPartInfo known_devices[] = {
-     { INFO("mt25ql512ab", 0x20ba20, 0x1044, 64 << 10, 1024, ER_4K | ER_32K) },
-     { INFO_STACKED("mt35xu01g", 0x2c5b1b, 0x104100, 128 << 10, 1024,
-                    ER_4K | ER_32K, 2) },
-+    { INFO_STACKED("mt35xu02gbba", 0x2c5b1c, 0x104100, 128 << 10, 2048,
-+                   ER_4K | ER_32K, 4),
-+                   .sfdp_read = m25p80_sfdp_mt35xu02g },
-     { INFO_STACKED("n25q00",    0x20ba21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
-     { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
-     { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
-diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
-index b33811a4f5..6ee2cfaf11 100644
---- a/hw/block/m25p80_sfdp.c
-+++ b/hw/block/m25p80_sfdp.c
-@@ -57,6 +57,42 @@ static const uint8_t sfdp_n25q256a[] = {
- };
- define_sfdp_read(n25q256a);
- 
-+static const uint8_t sfdp_mt35xu02g[] = {
-+    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
-+    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
-+    0x84, 0x00, 0x01, 0x02, 0x80, 0x00, 0x00, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xe5, 0x20, 0x8a, 0xff, 0xff, 0xff, 0xff, 0x7f,
-+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-+    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
-+    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x11, 0xd8,
-+    0x0f, 0x52, 0x00, 0x00, 0x24, 0x5a, 0x99, 0x00,
-+    0x8b, 0x8e, 0x03, 0xe1, 0xac, 0x01, 0x27, 0x38,
-+    0x7a, 0x75, 0x7a, 0x75, 0xfb, 0xbd, 0xd5, 0x5c,
-+    0x00, 0x00, 0x70, 0xff, 0x81, 0xb0, 0x38, 0x36,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0x43, 0x0e, 0xff, 0xff, 0x21, 0xdc, 0x5c, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
-+};
-+
-+define_sfdp_read(mt35xu02g);
- 
- /*
-  * Matronix
--- 
-2.25.1
+To the doc comments.
+
+The doc comments are the source code for the "QEMU QMP Reference
+Manual".  That manual should fully explain what the QMP commands do.
+
+Information on how to best use the commands, or an introduction to
+concepts behind the commands can also be useful, but is often a bad fit
+for a *reference* manual.  We can put it elsewhere then.
+
+Makes sense?
 
 
