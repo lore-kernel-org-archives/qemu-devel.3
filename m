@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED0BC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D2BC48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:19:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVX6-0002MI-To; Tue, 20 Feb 2024 14:12:00 -0500
+	id 1rcVdk-0004GR-Dm; Tue, 20 Feb 2024 14:18:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <komlodi@google.com>)
- id 1rcVX5-0002M8-Ju
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:11:59 -0500
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rcVde-0004DW-2d
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:18:49 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <komlodi@google.com>)
- id 1rcVX3-000407-Vo
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:11:59 -0500
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-42e2507c6e1so34581cf.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:11:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rcVdQ-00056j-GZ
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:18:45 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-512b29f82d1so3708922e87.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:18:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1708456316; x=1709061116; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708456710; x=1709061510; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pvfWDYut8l6v8KBlWeQCoO3/Y8scb8lJBkXSrP9EqtA=;
- b=RK7LV4IzTBrm91gs/nh1uFgEvHPMilKGXut4KL0UHOTChfFiauVEHDQ4l7dnDPX2nT
- YYi5a2GhU2pTtiBMYf72uzYTQRaLasPvrllxblT/oJGj3VhaYKNNyBUYFd0COQGp09qp
- 0vRSG12HRKeGOlw9lir9dThn5p7GkN2oom7zpEHst+zkLa4lAmHoqkiZbG+r6mUifJDn
- 8OuOWpLntagNvlSAtLd5ffInKyD3TaRIcuDWdEpW9n1q+/tmyilLR4AeNXgwAZg+T+L8
- d5Nww4Maabxmo2Cg8G68XR8JBr5UlIi3A0HG2fqmkDTZy+G1t//OOKTNSV7DKctLsznj
- Rrtg==
+ bh=pyCaNxySkOUWpGuc9oH4PJykwp3ULCdSIjMM/dXphSI=;
+ b=wcXcqxUvCbar7+iy0HyPuGhWJXLtZgloj2iPgcZIPE+a1aRV+WVIPBtzkzGMI4LkPD
+ kdSAwek7WBPtygNQZHU9RID6zAB1qtEnwbw5E7verq+TodlBKwRFK1uc3DUZhySBaJuD
+ IVfnsCwuj4mYcOwq+VvjQggrtVjiN5SHelBmbiG65UccoXjKV+UHHwX7CWpUGPEumlEX
+ Hl90e7hX8fszj4oIosHElRXopXsVBw+hIyrgjtonrF/PbHLOlTYDaQUK9B37MvjHiO6p
+ pqQnr1F4XqinLZrEmJr7hOxachQmzOzBTQfUMWgPGT8c34samBgkWr+TAeRnpNmakbYk
+ hFPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708456316; x=1709061116;
+ d=1e100.net; s=20230601; t=1708456710; x=1709061510;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pvfWDYut8l6v8KBlWeQCoO3/Y8scb8lJBkXSrP9EqtA=;
- b=tucjvXBxaKG9ZpIL9SOADdo97Fa+zc4KgQ6+LoWXuTpKtT7IO0grot6h0fOl71LqQi
- EHgRONDAfXBdmb9wbhsku7WvTkpHEYTYk4iSNxQnb1n5v/0ET16ZVXPjVb7PFgqKycEj
- oRXdF/tC/PG7Hzd1FOrWHBA3ZRIOtpzUMgqQ87YXjmociwXDpJ/8mEyuMinfO0M+5dUR
- 1g97FCrDIj/8atsP7pPSm62o5o/tvRaKcb5puAZMZDDqP2ounerWbIs78O1gPY0WiWzj
- rOf5dCmReEH6CE7uOU6iX3FjUm/gCKxdbERzIo9shuGX518b5e4x8krPVkQaYrOHVsNL
- iw5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX779CPPMs05t1g5EXBPpl2uB1jTtj1aK9aQgE8aUlwMInFFEbIpG+17bdCuMWv3YDkTIUYKNQfiHf3+M8g76xn2l//aSY=
-X-Gm-Message-State: AOJu0YyM9QDMvJQZDWKqtta7Y404uZTbOCCTfWUjMao/QCE0e/nU0cn6
- XHET/zrzf0wO2IX5vHiRqNdm/zDi0FRVHWpZfes0S3uT98l57v/aICtyfOfP+US5tgRZgp3U7vj
- LeknN0JQyuSoji9o0DrFTUpebrP7amXJmPVfr
-X-Google-Smtp-Source: AGHT+IEmM1KmYf4xQAQLmYQxQrvAnDytGMFCrG3217vb7qND8asZJufghQCcEZT5h8Q98oiJcN+phhTnmoyIXpSoIig=
-X-Received: by 2002:ac8:4e36:0:b0:42e:382:8336 with SMTP id
- d22-20020ac84e36000000b0042e03828336mr15269qtw.6.1708456316149; Tue, 20 Feb
- 2024 11:11:56 -0800 (PST)
+ bh=pyCaNxySkOUWpGuc9oH4PJykwp3ULCdSIjMM/dXphSI=;
+ b=nu9lYJq1BvcV9gExdx6jjNiwrChNts88Sz+4OpEGvqxaHDLVt53qngZuOVS9KaXuM3
+ xbJVz9wlfBHjef41Qf/LFMCBvt80alQytWu/J8t5MEjUcub87qcPwalL+bdUD9W4mWv5
+ +NEHsjDK9hmtcbDSqlRr+dRzi4A1n4z0VAhgCeGctswaI4ITQoyndqLxRLs6wz0NyMb4
+ vyXGJY6yHIeIqK4zS0JHI80v0Qj94OkAnqOHanB37TAXCR+KwFIz2yrDY/vBnCZN2HN9
+ hL1aqgj+86qPVoh4e3IQj+gQ2aPpkNCGQgEOHX1kOCHUtQc+UCpGCzJU+Gm5lEsHST00
+ sdKQ==
+X-Gm-Message-State: AOJu0YxN2ajMo8uReUWf4suXyvBQtmJIaNijFIjZbrGS2VhqiYIZvtP2
+ +w2evDpkVbiuMh9l83o8wWFMUAMn9Oi1GBW6aT/T7omhNjfKIXXFKHVKpRJmr2ID9t+b/Jo2vgH
+ sv/6Mjd6XCTk5mYvuLDLfeqPkJl+MX00qoCGiew==
+X-Google-Smtp-Source: AGHT+IHsw0T4i+ypWcR6CPJyzQdiulxCa81nZXhvcWyWvs9PYoAIOQld/5wAwwGe8VMpWpfXiS3JPwrvm/HVSThnlUA=
+X-Received: by 2002:ac2:4942:0:b0:512:b354:c5ea with SMTP id
+ o2-20020ac24942000000b00512b354c5eamr4108516lfi.24.1708456710269; Tue, 20 Feb
+ 2024 11:18:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20240202204847.2062798-1-komlodi@google.com>
- <20240202204847.2062798-2-komlodi@google.com>
- <CAFEAcA8R13bQ7niSXhZPJ3vUD_OdNWpvjpKrWpz-gZsJxO_=dg@mail.gmail.com>
- <ZdAGHThxd2JSyX7b@mail.minyard.net>
-In-Reply-To: <ZdAGHThxd2JSyX7b@mail.minyard.net>
-From: Joe Komlodi <komlodi@google.com>
-Date: Tue, 20 Feb 2024 11:11:43 -0800
-Message-ID: <CAGDLtxvtpTyapH0n-T5Kuvuaeet-5g5nMNUbEEp6qarHfb3M2g@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] hw/i2c: core: Add reset
-To: minyard@acm.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- venture@google.com
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-10-peter.maydell@linaro.org>
+ <18996dba-a47c-4e68-b9cf-5e0ae5e9cd43@linaro.org>
+In-Reply-To: <18996dba-a47c-4e68-b9cf-5e0ae5e9cd43@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 20 Feb 2024 19:18:19 +0000
+Message-ID: <CAFEAcA9dVvXcW6GD13a0K=+BnQ84AEtV-2foFAcCgsw8WjUsog@mail.gmail.com>
+Subject: Re: [PATCH 09/10] hw/core/machine: Use qemu_register_resettable for
+ sysbus reset
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=komlodi@google.com; helo=mail-qt1-x82b.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,110 +96,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 16, 2024 at 5:04=E2=80=AFPM Corey Minyard <minyard@acm.org> wro=
-te:
+On Tue, 20 Feb 2024 at 19:06, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> On Thu, Feb 08, 2024 at 04:39:10PM +0000, Peter Maydell wrote:
-> > On Fri, 2 Feb 2024 at 20:48, Joe Komlodi <komlodi@google.com> wrote:
-> > >
-> > > It's possible for a reset to come in the middle of a transaction, whi=
-ch
-> > > causes the bus to be in an old state when a new transaction comes in.
-> > >
-> > > Signed-off-by: Joe Komlodi <komlodi@google.com>
-> > > ---
-> > >  hw/i2c/core.c        | 19 +++++++++++++++++++
-> > >  include/hw/i2c/i2c.h |  2 +-
-> > >  2 files changed, 20 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-> > > index 4cf30b2c86..3128067bba 100644
-> > > --- a/hw/i2c/core.c
-> > > +++ b/hw/i2c/core.c
-> > > @@ -23,10 +23,29 @@ static Property i2c_props[] =3D {
-> > >      DEFINE_PROP_END_OF_LIST(),
-> > >  };
-> > >
-> > > +static void i2c_bus_hold_reset(Object *obj)
-> > > +{
-> > > +    I2CBus *bus =3D I2C_BUS(obj);
-> > > +    I2CNode *node, *next;
-> > > +
-> > > +    bus->broadcast =3D false;
-> > > +    QLIST_FOREACH_SAFE(node, &bus->current_devs, next, next) {
-> > > +        QLIST_REMOVE(node, next);
-> > > +        g_free(node);
-> > > +    }
-> > > +}
+> On 20/2/24 17:06, Peter Maydell wrote:
+> > Move the reset of the sysbus (and thus all devices and buses anywhere
+> > on the qbus tree) from qemu_register_reset() to qemu_register_resettabl=
+e().
 > >
-> > This does what it says it's going to do; but I think it
-> > would be good to hear from Corey whether it's better to
-> > do this, or instead to call i2c_end_transfer() in the
-> > reset-enter phase.
+> > This is a behaviour change: because qemu_register_resettable() is
+> > aware of three-phase reset, this now means that:
+> >   * 'enter' phase reset methods of devices and buses are called
+> >     before any legacy reset callbacks registered with qemu_register_res=
+et()
+> >   * 'exit' phase reset methods of devices and buses are called
+> >     after any legacy qemu_register_reset() callbacks
+> >
+> > Put another way, a qemu_register_reset() callback is now correctly
+> > ordered in the 'hold' phase along with any other 'hold' phase methods.
+> >
+> > The motivation for doing this is that we will now be able to resolve
+> > some reset-ordering issues using the three-phase mechanism, because
+> > the 'exit' phase is always after the 'hold' phase, even when the
+> > 'hold' phase function was registered with qemu_register_reset().
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > I believe that given we don't make much use of enter/exit phases
+> > currently that this is unlikely to cause unexpected regressions due
+> > to an accidental reset-order dependency that is no longer satisfied,
+> > but it's always possible...
+> > ---
+> >   hw/core/machine.c | 7 +++----
+> >   1 file changed, 3 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > index fb5afdcae4c..9ac5d5389a6 100644
+> > --- a/hw/core/machine.c
+> > +++ b/hw/core/machine.c
+> > @@ -1577,14 +1577,13 @@ void qdev_machine_creation_done(void)
+> >       /* TODO: once all bus devices are qdevified, this should be done
+> >        * when bus is created by qdev.c */
+> >       /*
+> > -     * TODO: If we had a main 'reset container' that the whole system
+> > -     * lived in, we could reset that using the multi-phase reset
+> > -     * APIs. For the moment, we just reset the sysbus, which will caus=
+e
+> > +     * This is where we arrange for the sysbus to be reset when the
+> > +     * whole simulation is reset. In turn, resetting the sysbus will c=
+ause
+> >        * all devices hanging off it (and all their child buses, recursi=
+vely)
+> >        * to be reset. Note that this will *not* reset any Device object=
+s
+> >        * which are not attached to some part of the qbus tree!
+> >        */
+> > -    qemu_register_reset(resettable_cold_reset_fn, sysbus_get_default()=
+);
 >
-> Sorry, I missed this, I'm having major chaos going on right now in my
-> life.
+> Interestingly after this patch TYPE_S390_IPL is the last device
+> using resettable_cold_reset_fn(). Per commit cd45c506c8e:
+>
+>      /*
+>       * Because this Device is not on any bus in the qbus tree (it is
+>       * not a sysbus device and it's not on some other bus like a PCI
+>       * bus) it will not be automatically reset by the 'reset the
+>       * sysbus' hook registered by vl.c like most devices. So we must
+>       * manually register a reset hook for it.
+>       * TODO: there should be a better way to do this.
+>       */
 
-No worries! I also missed this for a bit.
->
-> I don't think i2c_end_transfer() is the right thing to do.  The transfer
-> has not cleanly ended, it is just forgotten.
+Mmm, we could now have that s390 code call
+qemu_register_resettable(OBJECT(dev)).
+Though the "better way" remark still applies, because ideally we shouldn't
+be doing reset only via the qbus tree.
 
-Sounds good to me, I'll send up v4 with the change Peter pointed out.
-
-Thanks,
-Joe
-
->
-> >
-> > Mostly QEMU's "reset" is like power-cycling, in which case
-> > I guess that what we have here where we just forget about
-> > the in-progress transfer and assume the device on the other
-> > end is also going to reset back to a neutral state is what
-> > we want.
-> >
-> > Does i2c have a concept of a bus-level "reset" operation?
->
-> No, it does not.  Most I2C devices don't even have a reset pin.  In a
-> reset situation in real hardware, the operation would be aborted by
-> the lines drifting high after the bus master has been reset.
->
-> So I think this is fine as is.
->
-> -corey
->
-> >
-> > > +
-> > > +static void i2c_bus_class_init(ObjectClass *klass, void *data)
-> > > +{
-> > > +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
-> > > +    rc->phases.hold =3D i2c_bus_hold_reset;
-> > > +}
-> > > +
-> > >  static const TypeInfo i2c_bus_info =3D {
-> > >      .name =3D TYPE_I2C_BUS,
-> > >      .parent =3D TYPE_BUS,
-> > >      .instance_size =3D sizeof(I2CBus),
-> > > +    .class_init =3D i2c_bus_class_init,
-> > >  };
-> >
-> >
-> >
-> > >  static int i2c_bus_pre_save(void *opaque)
-> > > diff --git a/include/hw/i2c/i2c.h b/include/hw/i2c/i2c.h
-> > > index 2a3abacd1b..49580e30e2 100644
-> > > --- a/include/hw/i2c/i2c.h
-> > > +++ b/include/hw/i2c/i2c.h
-> > > @@ -64,7 +64,7 @@ struct I2CSlave {
-> > >  };
-> > >
-> > >  #define TYPE_I2C_BUS "i2c-bus"
-> > > -OBJECT_DECLARE_SIMPLE_TYPE(I2CBus, I2C_BUS)
-> > > +OBJECT_DECLARE_TYPE(I2CBus, I2CBusClass, I2C_BUS)
-> >
-> > I don't think you need this change any more ?
-> >
-> > thanks
-> > -- PMM
-> >
+thanks
+-- PMM
 
