@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DB4C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31445C48BC3
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 19:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcVp1-00042b-Jo; Tue, 20 Feb 2024 14:30:35 -0500
+	id 1rcVqR-0005Lf-Ka; Tue, 20 Feb 2024 14:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcVof-00041u-Ug
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:30:10 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1rcVqN-0005K3-6F
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:31:55 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcVoe-00070R-FH
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:30:09 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1dc0e5b223eso14242685ad.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:30:08 -0800 (PST)
+ id 1rcVqL-0007eh-Np
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 14:31:54 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1d944e8f367so47366225ad.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 11:31:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708457407; x=1709062207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708457512; x=1709062312; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KYLAWuYLscVyyFL7cmoAaFCNQY7kAVj3hjTzinkbW68=;
- b=pw+hSLGBEhY6o5IppEqqarGS9QTsMhh/6GtAxnD9YEyBS066jLWUg9dRnug98/aRca
- zDXkcA3+YA0D3y73Nusf55ipR5Nx0t3ouiE75TPTkZpR6mgPWP+ybti1R1CVhXuGWWub
- uXODj0aYTOmG+zoB+xFERjtZ1DV3kGBiyZjDqvCGEsa3lMCj05jcGvHVK+KfMH+JgWLc
- enJ8/ubRi0N7LaRTlX5wQ7JE3jXS7KK/+lDfI3NmKTwX7/o3frNbSH4pJXa0/2W6e+s/
- 1CM7Wcb7hWkUzIp6B9AyN3lLSvBNBqUoptHm1hFoY1tobTvy+pLm2eAKAKJW58hi5zgi
- Fqkg==
+ bh=8cWrwOM4Hgt7Z7ruudJPdPzW4RxXvLTgRHJaDkd4Ga4=;
+ b=CztUqGJzImmc2vw7cmueHiLPCPTFlTMEJOnBefdLznaWE0w0qk+UBnFA/Ewyh0/ctj
+ szjL7hLJ9vZJQpBxh/YIKrRAIAE/uPmawyx7p0u5w0Cp9OqYLGt5v2dEqqsm4rYSIizf
+ 1UziazhIblTdx2XYBTqEAPB7CjLOCI7VAcWMxb+qKUoNDCElSfqzhYBs8SxSREjVBTOn
+ 9SMaM2kJauBJ9IPfLFwhRZ9R3+5oogSxYN+NzbGUr1E+jD/5CNwZ8EW/gOsUU/dZA6NJ
+ P2+1JF5O6nLOKM/wUBsyu+YKgrag8RMfRxX2x4i4PxQschNT0ABBJ8rx4/6AkBDGZMNQ
+ agsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708457407; x=1709062207;
+ d=1e100.net; s=20230601; t=1708457512; x=1709062312;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KYLAWuYLscVyyFL7cmoAaFCNQY7kAVj3hjTzinkbW68=;
- b=JBHoxhpFruvW3HsGWJCZ8n7KLy4S2FjLMrUMI3FDFpH1dH6OyLpKqM+xH1yW1uu1Ix
- ZDeUdHYDJDaiykWlmpOMEt9DrbO4fdapmrr43gCMlfaecLk8CyM5/7YUVBqQqJTh/IVe
- 9ytPfjpbFdVHCLsJhhnaGsKGRko4k4y2QulvbxzwHmWcZS36+b95jxQchN48hNnLCWni
- LYco+syfZI8LRE15UPm+wpHK6auvlJgfD64gmj2ybFhRtk0s9clj2z8gpdvCdxxH1Kwk
- cwwqJkjj9Dao9cuqSh6DbfOI57l65NUl/d44cUQwlTUpIX8fPvyb6QgNhCydttavsAby
- a/gA==
+ bh=8cWrwOM4Hgt7Z7ruudJPdPzW4RxXvLTgRHJaDkd4Ga4=;
+ b=HeO2N9v/rh8v/66VyjSMIuWDdQ6A9m8wl9f2e8fl+nt1c4C84qEub1ir8UC53bB8Gr
+ BMlNaI/UYgaYDlXW1BFD6798r60z/fYqKGbQpIjkxV/k042QsWGUgtErP2Cc8N1OrPiQ
+ TXYOK2NwL2kVI+xgZSawU+oSFmboZaEj1mPfvVcEcu4QCZ+I2WV8ClT9xbbY/dX/FO0y
+ CIAw8hICQdRlqkEuLJVghTiuYEa/V7HoOgr1UbNInAKr1ZW9jvuioJmA9Sz8K8YmoFXb
+ Qrpf1DCV38F3e1i8ttFGAjukL4K9zU26b/vOtoVfSwyc48Jjf4ydoHXjVhA8HPWP1wa7
+ 3QNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOF3IuuSXOwYHF+7wPrKcMoIIrVRbKIRAuzaDybTrXusHRkTsB+15xpok1n9byDzBTIXB9/VDaTTDHt0k0Zws17pHcqdc=
-X-Gm-Message-State: AOJu0YzjAJQANH2gxME5IkbY2da0rAeHOSxqZkFu32SU7K6IpEhTegH1
- 3y2ccmUUNZK8kxqSJhz7V4lB7xFrsJGboazhtS8YMXtYSUMej+wPbf/WhYhGuA0=
-X-Google-Smtp-Source: AGHT+IEtIxJ+8XVdsMlC15qaScBAoeFEM3hN/r1d9CsETFDduF8XMXafDGDg6a9YvTa8Ns4B0m7H/w==
-X-Received: by 2002:a17:902:e5c3:b0:1db:fcc8:7d96 with SMTP id
- u3-20020a170902e5c300b001dbfcc87d96mr7014247plf.14.1708457407016; 
- Tue, 20 Feb 2024 11:30:07 -0800 (PST)
+ AJvYcCVh9TwHEjFGT4qfN686iuxO0M4RYH1InpfIfVbxs8NkcHLtVMOzUzP8v0XkYRQLfi+Cmg/mJ+uWaSk3mTlSn1qb0hTPzC4=
+X-Gm-Message-State: AOJu0Yxuw4tjDJbGQ7ylAptUerKHt54ZojegUsRWhOVY68oFAzahd0EC
+ KOMzqGPTrBrsXYfYdauj9jOlf7F/DvbFpRMuzJ/8DioMRpTbbYrmPtb8ii9AgNE=
+X-Google-Smtp-Source: AGHT+IHQtAVHkue5TfqkGbHZYH/k68SLvz4P9wwAOCP+BFwhjMbNOQLQbPePuop9f4XJuZtTuaz9AQ==
+X-Received: by 2002:a17:902:b697:b0:1db:9f88:4ce6 with SMTP id
+ c23-20020a170902b69700b001db9f884ce6mr11810818pls.1.1708457511825; 
+ Tue, 20 Feb 2024 11:31:51 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- kj4-20020a17090306c400b001db9c3d6506sm6661754plb.209.2024.02.20.11.30.05
+ kk8-20020a170903070800b001dbb11a5cf3sm6671793plb.63.2024.02.20.11.31.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 11:30:06 -0800 (PST)
-Message-ID: <7566853d-e9d5-45df-9fbd-9ba71ad83f4c@linaro.org>
-Date: Tue, 20 Feb 2024 09:30:03 -1000
+ Tue, 20 Feb 2024 11:31:51 -0800 (PST)
+Message-ID: <1b3708f7-b962-41f5-809c-23f9e48c151a@linaro.org>
+Date: Tue, 20 Feb 2024 09:31:47 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] hw/i386: Store pointers to IDE buses in
- PCMachineState
+Subject: Re: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
+ pc_machine_done()
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -76,13 +76,13 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-2-peter.maydell@linaro.org>
+ <20240220160622.114437-3-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240220160622.114437-2-peter.maydell@linaro.org>
+In-Reply-To: <20240220160622.114437-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,19 +106,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/20/24 06:06, Peter Maydell wrote:
-> Add the two IDE bus BusState pointers to the set we keep in PCMachineState.
-> This allows us to avoid passing them to pc_cmos_init(), and also will
-> allow a refactoring of how we call pc_cmos_init_late().
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   include/hw/i386/pc.h |  4 +++-
->   hw/i386/pc.c         |  5 ++---
->   hw/i386/pc_piix.c    | 16 +++++++---------
->   hw/i386/pc_q35.c     |  9 ++++-----
->   4 files changed, 16 insertions(+), 18 deletions(-)
+> -static void pc_cmos_init_late(void *opaque)
+> +static void pc_cmos_init_late(PCMachineState *pcms)
+>   {
+> -    pc_cmos_init_late_arg *arg = opaque;
+> -    MC146818RtcState *s = arg->rtc_state;
+> +    X86MachineState *x86ms = X86_MACHINE(pcms);
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+We've already done the X86_MACHINE resolution in pc_machine_done -- why not just pass it in?
+
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
