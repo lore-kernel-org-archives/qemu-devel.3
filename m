@@ -4,101 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C55C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 20:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1625DC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 20:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcWvE-0002DV-VJ; Tue, 20 Feb 2024 15:41:01 -0500
+	id 1rcX9f-0007HK-G2; Tue, 20 Feb 2024 15:55:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rcWv7-00029b-4I; Tue, 20 Feb 2024 15:40:53 -0500
-Received: from wfhigh5-smtp.messagingengine.com ([64.147.123.156])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rcWv4-0003D7-Dv; Tue, 20 Feb 2024 15:40:52 -0500
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.west.internal (Postfix) with ESMTP id B34181800261;
- Tue, 20 Feb 2024 15:40:44 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Tue, 20 Feb 2024 15:40:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1708461644; x=
- 1708548044; bh=gwtTGDFqy5zzt4gw2kuf+XbsoXyMfmIJ7YJvKXCBLgA=; b=R
- 8yQ81HfFiy3d8Nv1fzQelLAQOq2/xadBd7+n37w02L4brVEAuDkXEw9CQ10jvtWo
- 3R0d9Qy7HXEIRUmR0xpLVOiZpkk+g/tulytWJO3p3OLCCUtlJ95/dYYzxVio4QaY
- RaUf4EvANZl5/9IrK7+KHoyBfj2fqyREEh1W3m7tVbzdolOvtVP+hfF8w/LsSeWq
- qHaDsOOByK/oIXRSlL/xTL7r6QYD3eR6tv0nIv8Ew4UflV5D+ziKK/5woM/ILsN/
- kbKakqnUwb01D6t+gghgYApf4ruCubpTG6FE+2FT14mRJ1SZf7uODsEdA6nZLP0a
- /aNn7aRiOD6kKobuPbOeg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1708461644; x=1708548044; bh=gwtTGDFqy5zzt4gw2kuf+XbsoXyM
- fmIJ7YJvKXCBLgA=; b=Q2ZMenfOqq3Y9GOXDNPb4tUCRfM27f0n8Z9E6uqeAxwm
- Ir0Qa07Bah0QeYJ+EEsSnxMTkRA3ry61kR3GOl2wGUKMsv7uG+TmCa2yN7eABBrW
- 7BI458X7bYlYNmALx45WV3mVAualkdpKuqGpAdMfAhTPzOwwoZiXq6aKouhcnc5b
- Xh1ZkECZWJF5nccAbEuVh2fOkBXH2K42anr5csJWosqdL9hTAnuBn3BPXalpUMzY
- GvAGm4oD9tR2vBkXKFBNnU0SHLJz3LvUjEtEBAIsdbYqw3Ky704lx66MkURKTcqm
- jMj2U8seqSfQKZ9PnCTjCq6VSZniXyz74ZtQ/PoC4g==
-X-ME-Sender: <xms:Sw7VZbf4eBCNfascVBWd4Z_nya9YUYeFgoxcSCKQfwK3pEZmMTavhg>
- <xme:Sw7VZRNsoPWKqIcUIZ3mE50R9JxFu3pOSbs30eYxuSGLyHJjIeGUT7n37t8uZEk_0
- iOybD0x5Vs2XPfl1rM>
-X-ME-Received: <xmr:Sw7VZUhuS8mR2XvtmpGBJ6Nupsfm5se0DgQ1DMb3EXKp8RGdAl8lz8RLlA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtgddugedtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
- shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
- htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
- jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
- htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:Sw7VZc8QdtmPipoElymO2b0JGav8a4lTuazPp_HX8LvOgQwqxq3CWQ>
- <xmx:Sw7VZXvmduddOqvw4_YTOSc8OGstOLa0Yi5PlKBwFgqrSNwxR6DQXg>
- <xmx:Sw7VZbFA_QRjZb7HRXX4W6zT7YZ0NLv3xkr548Z1nn_GiFbJT4Cf8A>
- <xmx:TA7VZTS3mecG_lI-4DFYyXxmCUm2qVGrfzslHS3q4m65GL7yeG847Oqnj0Q>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Feb 2024 15:40:42 -0500 (EST)
-Date: Tue, 20 Feb 2024 21:40:38 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Kevin Wolf <kwolf@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH v6 01/15] hw/nvme: Use pcie_sriov_num_vfs()
-Message-ID: <ZdUORlAIMpQN0hAk@cormorant.local>
-References: <20240220-reuse-v6-0-2e42a28b0cf2@daynix.com>
- <20240220-reuse-v6-1-2e42a28b0cf2@daynix.com>
- <ZdS3OI9vIu-jvJ37@redhat.com> <ZdS8-VoNPYAMItEy@redhat.com>
- <763f68fa-5c50-4f68-a758-fadcba36b857@daynix.com>
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rcX9d-0007H5-MR
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:55:53 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rcX9b-00060n-Gs
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 15:55:53 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-55a035669d5so9938992a12.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 12:55:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708462549; x=1709067349; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8RcxmYkH/690RycPhKMqwIPFzJAzn5wfWpLyv3zhFvs=;
+ b=k0fT90d1T0TYsHRcpkr+doxkGxnzTFIbopCwFEQHC9H0qFCE8UygioXmqls+Jsb+wN
+ QZ3+9wp0DMfXFI8oaV3Z+Ar/FNO6LJxWF4HkhCs01E7+24BpicdNZO2btfTHVpoDl5Qj
+ RKee8kpuqklNHRtR7Wm/bqoWn4QnDmH2zzPiZDRfvJxAW2rd8QkQzrVjzN56PIi4QRDE
+ FqWvsqoayOtbjqGYuOQkbrUwP18Tcynr+Y/nAUN6318vKp+7NJe+4FGK8nT06jHBtrfW
+ DdJXKzMIIbDdpFZSF26WBWMP/SQ9PUVR2Qm6zYhA4K+ZCdVRhqj/OMf4nZmWtyo6P6pW
+ Kl8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708462549; x=1709067349;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8RcxmYkH/690RycPhKMqwIPFzJAzn5wfWpLyv3zhFvs=;
+ b=OhCjWqOPqlzTBVoyKp2w5y3j0wJG3kVt+jSnUpvQmEGjCQrJN+36g71Y2PJymqxCAb
+ /Na4LCqahhhKgbZWS4tmuNTyJdO90E9x+6A7NxeJF/d0KSaVqh0OuHkkvbHwpZPYeWpT
+ 3kBBFKJ9m81nStkQI5gAi/N83PYY4uJx5NBWVmo2FMuOIfsJ89lhSN+ie9eexHZElhXC
+ GSD34z9pLhNBCn+jJ3vbPMRuNqtkz8PHJ/333Yd8Pkg9XdtV6cqHmcTaO/vlerecODPz
+ 63X0NLwY4rCMb/pRarOOeKWqvzfj0AqzqVboBrkxDCNjslIKq/VJdCKAL4FVXvMRA9xc
+ eIJA==
+X-Gm-Message-State: AOJu0Ywh+Gk+7b2hksCp+73WGMDg68nDXlBts95/ljrOC5Tpwl6fqzJQ
+ jIaKeCt20/CdHpnCBpFSD+bucnnS2x51Ntt+WOBuAbWjgWal7ntEWBNHc9bajQjmXseLx3CoDSR
+ XvBsMWapDTweNoKzDePenw1P2wFsNquEf
+X-Google-Smtp-Source: AGHT+IG/w1swZcoXO+5n2nKCad9QX/Xx0WE1kGLZya+VkHDqS41DqBd3ZJQptmiG2s88z4ngz7mG7BBNSaX/iz5b+4c=
+X-Received: by 2002:aa7:d44c:0:b0:55f:4bd7:6a6f with SMTP id
+ q12-20020aa7d44c000000b0055f4bd76a6fmr10398429edr.29.1708462549188; Tue, 20
+ Feb 2024 12:55:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Lovn/vZY6U9EDIWs"
-Content-Disposition: inline
-In-Reply-To: <763f68fa-5c50-4f68-a758-fadcba36b857@daynix.com>
-Received-SPF: pass client-ip=64.147.123.156; envelope-from=its@irrelevant.dk;
- helo=wfhigh5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
+ <87a5nvci5n.fsf@draig.linaro.org>
+ <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
+ <87y1bfawik.fsf@draig.linaro.org>
+In-Reply-To: <87y1bfawik.fsf@draig.linaro.org>
+From: Faiq Ali Sayed <faiqueali.109@gmail.com>
+Date: Tue, 20 Feb 2024 21:55:37 +0100
+Message-ID: <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
+Subject: Re: QNX VM hang on Qemu
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000005b456a0611d66feb"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,149 +91,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---Lovn/vZY6U9EDIWs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--0000000000005b456a0611d66feb
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Feb 21 00:33, Akihiko Odaki wrote:
-> On 2024/02/20 23:53, Kevin Wolf wrote:
-> > Am 20.02.2024 um 15:29 hat Kevin Wolf geschrieben:
-> > > Am 20.02.2024 um 13:24 hat Akihiko Odaki geschrieben:
-> > > > nvme_sriov_pre_write_ctrl() used to directly inspect SR-IOV
-> > > > configurations to know the number of VFs being disabled due to SR-I=
-OV
-> > > > configuration writes, but the logic was flawed and resulted in
-> > > > out-of-bound memory access.
-> > > >=20
-> > > > It assumed PCI_SRIOV_NUM_VF always has the number of currently enab=
-led
-> > > > VFs, but it actually doesn't in the following cases:
-> > > > - PCI_SRIOV_NUM_VF has been set but PCI_SRIOV_CTRL_VFE has never be=
-en.
-> > > > - PCI_SRIOV_NUM_VF was written after PCI_SRIOV_CTRL_VFE was set.
-> > > > - VFs were only partially enabled because of realization failure.
-> > > >=20
-> > > > It is a responsibility of pcie_sriov to interpret SR-IOV configurat=
-ions
-> > > > and pcie_sriov does it correctly, so use pcie_sriov_num_vfs(), whic=
-h it
-> > > > provides, to get the number of enabled VFs before and after SR-IOV
-> > > > configuration writes.
-> > > >=20
-> > > > Cc: qemu-stable@nongnu.org
-> > > > Fixes: CVE-2024-26328
-> > > > Fixes: 11871f53ef8e ("hw/nvme: Add support for the Virtualization M=
-anagement command")
-> > > > Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > > > ---
-> > > >   hw/nvme/ctrl.c | 26 ++++++++------------------
-> > > >   1 file changed, 8 insertions(+), 18 deletions(-)
-> > > >=20
-> > > > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> > > > index f026245d1e9e..7a56e7b79b4d 100644
-> > > > --- a/hw/nvme/ctrl.c
-> > > > +++ b/hw/nvme/ctrl.c
-> > > > @@ -8466,36 +8466,26 @@ static void nvme_pci_reset(DeviceState *qde=
-v)
-> > > >       nvme_ctrl_reset(n, NVME_RESET_FUNCTION);
-> > > >   }
-> > > > -static void nvme_sriov_pre_write_ctrl(PCIDevice *dev, uint32_t add=
-ress,
-> > > > -                                      uint32_t val, int len)
-> > > > +static void nvme_sriov_post_write_config(PCIDevice *dev, uint16_t =
-old_num_vfs)
-> > > >   {
-> > > >       NvmeCtrl *n =3D NVME(dev);
-> > > >       NvmeSecCtrlEntry *sctrl;
-> > > > -    uint16_t sriov_cap =3D dev->exp.sriov_cap;
-> > > > -    uint32_t off =3D address - sriov_cap;
-> > > > -    int i, num_vfs;
-> > > > +    int i;
-> > > > -    if (!sriov_cap) {
-> > > > -        return;
-> > > > -    }
-> > > > -
-> > > > -    if (range_covers_byte(off, len, PCI_SRIOV_CTRL)) {
-> > > > -        if (!(val & PCI_SRIOV_CTRL_VFE)) {
-> > > > -            num_vfs =3D pci_get_word(dev->config + sriov_cap + PCI=
-_SRIOV_NUM_VF);
-> > > > -            for (i =3D 0; i < num_vfs; i++) {
-> > > > -                sctrl =3D &n->sec_ctrl_list.sec[i];
-> > > > -                nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), f=
-alse);
-> > > > -            }
-> > > > -        }
-> > > > +    for (i =3D pcie_sriov_num_vfs(dev); i < old_num_vfs; i++) {
-> > > > +        sctrl =3D &n->sec_ctrl_list.sec[i];
-> > > > +        nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
-> > > >       }
-> > > >   }
-> > >=20
-> > > Maybe I'm missing something, but if the concern is that 'i' could run
-> > > beyond the end of the array, I don't see anything that limits
-> > > pcie_sriov_num_vfs() to the static size of 127 that n->sec_ctrl_list.=
-sec
-> > > has. register_vfs() seems to just take whatever 16 bit value the guest
-> > > wrote without imposing additional restrictions.
-> > >=20
-> > > If there is some mechanism that makes register_vf() fail if we exceed
-> > > the limit, maybe an assertion with a comment would be in order because
-> > > it doesn't seem obvious. I couldn't find any code that enforces it,
-> > > sriov_max_vfs only ever seems to be used as a hint for the guest.
-> > >=20
-> > > If not, do we need another check that fails gracefully in the error
-> > > case?
-> >=20
-> > Ok, I see now that patch 2 fixes this. But then the commit message is
-> > wrong because it implies that this patch is the only thing you need to
-> > fix the problem with nvme. You can't say "Fixes: CVE-2024-26328" if half
-> > of the fix is still missing.
->=20
-> I didn't assign CVE-2024-26328 for the case that the value of
-> PCI_SRIOV_NUM_VF is greater than PCI_SRIOV_TOTAL_VF; it's what
-> CVE-2024-26327 deals with.
->=20
-> The problem I dealt here is that the value of PCI_SRIOV_NUM_VF may not
-> represent the actual number of enabled VFs because another register
-> (PCI_SRIOV_CTRL_VFE) is not set, for example.
->=20
-> If an assertion to be added, I think it should be in pcie_sriov_num_vfs()
-> and ensure the returning value is less than the value of PCI_SRIOV_TOTAL_=
-VF
-> (aka sriov_max_vfs in hw/nvme/ctrl.c), but I think it's fine without it.
->=20
-> >=20
-> > Maybe asserting old_num_vfs < n->sec_ctrl_list.numcntl would still be a
-> > good idea. But looking at this one, it seems to me that numcntl isn't
-> > completely correct either:
-> >=20
-> >      list->numcntl =3D cpu_to_le16(max_vfs);
-> >=20
-> > Both list->numcntl and max_vfs are uint8_t, so I think this will always
-> > be 0 on big endian hosts?
->=20
-> Indeed it looks wrong. Will you write a patch?
->=20
+The image I am using is currently in use for real hardware, and I
+received it from a third party/vendor.
+Could you please suggest to me what I can do now?
 
-I'll fix it. And give the SR-IOV parts of hw/nvme some love all around.
 
---Lovn/vZY6U9EDIWs
-Content-Type: application/pgp-signature; name="signature.asc"
+br!
+Faiq
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXVDkUACgkQTeGvMW1P
-Denz3Qf+IxRt3S0DFZQfJzqA9xLrr5n/BoiofYcE7Xo2HTBpKO1mR4uFAeHHu4iW
-ysB+r77tjDYIicTanE+iQRxo/2xXmbvvWtLMBJZrISz0IYgDxXtkFVKvzhAn62Jh
-akv6BFu++vWjux1p3Ms6go0M686W87HVi2R1g/HjrzHEFhMl4luX8e0ycXPuzQhH
-ZnWqF8kpiHiMoosZWPieJ1IvSbYlQjnoJHjXcaVGo2lm6xAkgvBKEgP0OITHHVjM
-Ny7XuWbdzRZ8xOUDGn2bbILqLkFJjUn5cASh3l6LcNq2zfnjtyTi4AzJPgjMFmhK
-+Jf9dJ13wMC0j4oYWqBgQSLVSoiWqQ==
-=X+RV
------END PGP SIGNATURE-----
+On Tue, Feb 20, 2024 at 6:14=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
 
---Lovn/vZY6U9EDIWs--
+> Faiq Ali Sayed <faiqueali.109@gmail.com> writes:
+>
+> > Alex thanks for the reply,
+> >
+> > I don't know what the debug symbol is, but my target system is QNX
+> aarch64
+> > below are the configuration of GDB,
+> >
+> > (gdb) show configuration
+> > This GDB was configured as follows:
+> >    configure --host=3Dx86_64-pc-linux-gnu
+> --target=3Daarch64-unknown-nto-qnx7.1.0
+> >              --with-auto-load-dir=3D$debugdir:$datadir/auto-load
+> >              --with-auto-load-safe-path=3D$debugdir:$datadir/auto-load
+> >              --without-expat
+> >
+> --with-gdb-datadir=3D/opt/qnx710/host/linux/x86_64/usr/share/gdb (relocat=
+able)
+> >
+> --with-jit-reader-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb
+> (relocatable)
+> >              --without-libunwind-ia64
+> >              --without-lzma
+> >              --without-babeltrace
+> >              --without-intel-pt
+> >              --disable-libmcheck
+> >              --without-mpfr
+> >              --with-python=3D/opt/qnx710/host/linux/x86_64/usr
+> (relocatable)
+> >              --without-guile
+> >
+> --with-separate-debug-dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug
+> (relocatable)
+> >              --with-sysroot=3D/opt/qnx710/target/qnx7/aarch64
+> >
+> > while I got the below result, after executing the x/10i $pc
+> >
+> > (gdb) x/10i $pc
+> > =3D> 0x100000: .inst 0x5371242b ; undefined
+> >    0x100004: fcmla v21.8h, v3.8h, v16.h[1], #270
+> >    0x100008: .inst 0x64657472 ; undefined
+> >    0x10000c: ldnp d26, d27, [x9, #-176]
+> >    0x100010: .inst 0x72706974 ; undefined
+> >    0x100014: .inst 0x7365636f ; undefined
+> >    0x100018: .inst 0x733b2b73 ; undefined
+> >    0x10001c: fnmls z23.h, p0/m, z19.h, z18.h
+> >    0x100020: .inst 0x3b2b6b61 ; undefined
+> >    0x100024: .inst 0x72627768 ; undefined
+> >
+> > Can you please let me know how I can step in ?
+>
+> step-instruction in gdb, however...
+>
+> It very much looks like the image you have built doesn't have any
+> instructions in the correct starting place. It's unsurprising that it
+> hangs running random undefined instructions.
+>
+> > When I press c it does not execute further and hangs..
+> >
+> > Faiq
+> >
+> > On Tue, Feb 20, 2024 at 3:41=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@l=
+inaro.org>
+> wrote:
+> >
+> >  Faiq Ali Sayed <faiqueali.109@gmail.com> writes:
+> >
+> >  > Hi everyone,
+> >  > I am facing an issue during booting QNX VM using Qemu,
+> >  > I have an image to Boot the VM. and when I trigger a Qemu command to
+> create a VM it is stuck.
+> >  > I also used a debugger to investigate but I can not see any result b=
+y
+> GDB.
+> >  >
+> >  > Here is the output of first windows
+> >  >
+> >  > qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio -display
+> none -device
+> >  > loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive
+> >  >
+> file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img,if=3Dsd,forma=
+t=3Draw,index=3D1
+> -boot mode=3D5 -net
+> >  > nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net
+> nic,model=3Dcadence_gem -net
+> >  > nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev
+> user,id=3Dxzynq0,tftp=3D/tftpboot  -nographic -global
+> >  > xlnx,zynqmp-boot.cpu-num=3D0 -global 'xlnx,zynqmp-boot.use-pmufw=3Dt=
+rue'
+> -s -S
+> >  >
+> >  > qemu-system-aarch64: warning: hub 0 is not connected to host network
+> >
+> >  Is this QNX VM image built for the xlnx-zcu102 board?
+> >
+> >  > on the other hand, here is the output of GDB:
+> >  >
+> >  > (gdb) target remote :1234
+> >  > Remote debugging using :1234
+> >  > warning: No executable has been specified and target does not suppor=
+t
+> >  > determining executable automatically.  Try using the "file" command.
+> >  > 0x0000000000100000 in ?? ()
+> >  > (gdb) c
+> >  > Continuing.
+> >
+> >  You'll either want the debug symbols for your image or tell GDB what t=
+he
+> >  target arch is. Check you are somewhere sane by doing:
+> >
+> >    x/10i $pc
+> >
+> >  and step through the instructions and see where it goes. If you hit
+> >  Ctrl-C are you executing nonsense instructions or in a tight loop
+> >  hanging?
+> >
+> >  --
+> >  Alex Benn=C3=A9e
+> >  Virtualisation Tech Lead @ Linaro
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+>
+
+
+--=20
+Kind Regard-
+Faiq Ali Sayed
+
+--0000000000005b456a0611d66feb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">The image I am using is currently=C2=A0in use for real har=
+dware, and I received=C2=A0it from a third party/vendor.=C2=A0<div>Could yo=
+u please suggest to me what I can do now?</div><div><br></div><div><br></di=
+v><div>br!</div><div>Faiq</div><div><br></div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Feb 20, 2024 at 6:14=
+=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">=
+alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">Faiq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gm=
+ail.com" target=3D"_blank">faiqueali.109@gmail.com</a>&gt; writes:<br>
+<br>
+&gt; Alex thanks for the reply,<br>
+&gt;<br>
+&gt; I don&#39;t know what the debug symbol is, but my target system is QNX=
+ aarch64 <br>
+&gt; below are the configuration of GDB,<br>
+&gt;<br>
+&gt; (gdb) show configuration<br>
+&gt; This GDB was configured as follows:<br>
+&gt;=C2=A0 =C2=A0 configure --host=3Dx86_64-pc-linux-gnu --target=3Daarch64=
+-unknown-nto-qnx7.1.0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-auto-load-dir=
+=3D$debugdir:$datadir/auto-load<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-auto-load-safe-=
+path=3D$debugdir:$datadir/auto-load<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-expat<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-gdb-datadir=3D/=
+opt/qnx710/host/linux/x86_64/usr/share/gdb (relocatable)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-jit-reader-dir=
+=3D/opt/qnx710/host/linux/x86_64/usr/lib/gdb (relocatable)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-libunwind-ia=
+64<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-lzma<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-babeltrace<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-intel-pt<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --disable-libmcheck<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-mpfr<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-python=3D/opt/q=
+nx710/host/linux/x86_64/usr (relocatable)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --without-guile<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-separate-debug-=
+dir=3D/opt/qnx710/host/linux/x86_64/usr/lib/debug (relocatable)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --with-sysroot=3D/opt/=
+qnx710/target/qnx7/aarch64<br>
+&gt;<br>
+&gt; while I got the below result, after executing the x/10i $pc <br>
+&gt;<br>
+&gt; (gdb) x/10i $pc<br>
+&gt; =3D&gt; 0x100000: .inst 0x5371242b ; undefined<br>
+&gt;=C2=A0 =C2=A0 0x100004: fcmla v21.8h, v3.8h, v16.h[1], #270<br>
+&gt;=C2=A0 =C2=A0 0x100008: .inst 0x64657472 ; undefined<br>
+&gt;=C2=A0 =C2=A0 0x10000c: ldnp d26, d27, [x9, #-176]<br>
+&gt;=C2=A0 =C2=A0 0x100010: .inst 0x72706974 ; undefined<br>
+&gt;=C2=A0 =C2=A0 0x100014: .inst 0x7365636f ; undefined<br>
+&gt;=C2=A0 =C2=A0 0x100018: .inst 0x733b2b73 ; undefined<br>
+&gt;=C2=A0 =C2=A0 0x10001c: fnmls z23.h, p0/m, z19.h, z18.h<br>
+&gt;=C2=A0 =C2=A0 0x100020: .inst 0x3b2b6b61 ; undefined<br>
+&gt;=C2=A0 =C2=A0 0x100024: .inst 0x72627768 ; undefined<br>
+&gt;<br>
+&gt; Can you please let me know how I can step in ?<br>
+<br>
+step-instruction in gdb, however...<br>
+<br>
+It very much looks like the image you have built doesn&#39;t have any<br>
+instructions in the correct starting place. It&#39;s unsurprising that it<b=
+r>
+hangs running random undefined instructions. <br>
+<br>
+&gt; When I press c it does not execute further and hangs..<br>
+&gt;<br>
+&gt; Faiq<br>
+&gt;<br>
+&gt; On Tue, Feb 20, 2024 at 3:41=E2=80=AFPM Alex Benn=C3=A9e &lt;<a href=
+=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org=
+</a>&gt; wrote:<br>
+&gt;<br>
+&gt;=C2=A0 Faiq Ali Sayed &lt;<a href=3D"mailto:faiqueali.109@gmail.com" ta=
+rget=3D"_blank">faiqueali.109@gmail.com</a>&gt; writes:<br>
+&gt;<br>
+&gt;=C2=A0 &gt; Hi everyone, <br>
+&gt;=C2=A0 &gt; I am facing an issue during booting QNX VM using Qemu,<br>
+&gt;=C2=A0 &gt; I have an image to Boot the VM. and when I trigger a Qemu c=
+ommand to create a VM it is stuck.<br>
+&gt;=C2=A0 &gt; I also used a debugger to investigate but I can not see any=
+ result by GDB.<br>
+&gt;=C2=A0 &gt;<br>
+&gt;=C2=A0 &gt; Here is the output of first windows<br>
+&gt;=C2=A0 &gt;<br>
+&gt;=C2=A0 &gt; qemu-system-aarch64 -M xlnx-zcu102 -m 16G -serial mon:stdio=
+ -display none -device<br>
+&gt;=C2=A0 &gt; loader,file=3DQNX-IFS,addr=3D0x00100000,cpu-num=3D0 -drive<=
+br>
+&gt;=C2=A0 &gt; file=3D/home/faiq/Downloads/install/BootSD/qemu-boot_sd.img=
+,if=3Dsd,format=3Draw,index=3D1 -boot mode=3D5 -net<br>
+&gt;=C2=A0 &gt; nic,model=3Dcadence_gem -net nic,model=3Dcadence_gem -net n=
+ic,model=3Dcadence_gem -net<br>
+&gt;=C2=A0 &gt; nic,model=3Dcadence_gem,netdev=3Dxzynq0 -netdev user,id=3Dx=
+zynq0,tftp=3D/tftpboot=C2=A0 -nographic -global<br>
+&gt;=C2=A0 &gt; xlnx,zynqmp-boot.cpu-num=3D0 -global &#39;xlnx,zynqmp-boot.=
+use-pmufw=3Dtrue&#39; -s -S<br>
+&gt;=C2=A0 &gt;<br>
+&gt;=C2=A0 &gt; qemu-system-aarch64: warning: hub 0 is not connected to hos=
+t network<br>
+&gt;<br>
+&gt;=C2=A0 Is this QNX VM image built for the xlnx-zcu102 board?<br>
+&gt;<br>
+&gt;=C2=A0 &gt; on the other hand, here is the output of GDB:<br>
+&gt;=C2=A0 &gt;<br>
+&gt;=C2=A0 &gt; (gdb) target remote :1234<br>
+&gt;=C2=A0 &gt; Remote debugging using :1234<br>
+&gt;=C2=A0 &gt; warning: No executable has been specified and target does n=
+ot support<br>
+&gt;=C2=A0 &gt; determining executable automatically.=C2=A0 Try using the &=
+quot;file&quot; command.<br>
+&gt;=C2=A0 &gt; 0x0000000000100000 in ?? ()<br>
+&gt;=C2=A0 &gt; (gdb) c<br>
+&gt;=C2=A0 &gt; Continuing.<br>
+&gt;<br>
+&gt;=C2=A0 You&#39;ll either want the debug symbols for your image or tell =
+GDB what the<br>
+&gt;=C2=A0 target arch is. Check you are somewhere sane by doing:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 x/10i $pc<br>
+&gt;<br>
+&gt;=C2=A0 and step through the instructions and see where it goes. If you =
+hit<br>
+&gt;=C2=A0 Ctrl-C are you executing nonsense instructions or in a tight loo=
+p<br>
+&gt;=C2=A0 hanging?<br>
+&gt;<br>
+&gt;=C2=A0 -- <br>
+&gt;=C2=A0 Alex Benn=C3=A9e<br>
+&gt;=C2=A0 Virtualisation Tech Lead @ Linaro<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><div dir=3D"ltr">
+<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
+lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
+=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
+v></div></div></div>
+<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
+t></div><br></div></div></div>
+
+--0000000000005b456a0611d66feb--
 
