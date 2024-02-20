@@ -4,66 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A997C48BC3
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D6ACC5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 15:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcRcW-0001ra-JO; Tue, 20 Feb 2024 10:01:20 -0500
+	id 1rcRfG-00034E-9C; Tue, 20 Feb 2024 10:04:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRc9-0001rI-4N
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:00:57 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcRfB-00033u-4b
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:04:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rcRc7-0002pO-Bd
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:00:56 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcRf8-000375-FY
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 10:04:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708441253;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1708441441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BP1/D9T5lLOOldU147z4jqqUyEgTgRB4h3BUUOmlTD4=;
- b=bm7cuf+Ao+ENvItoGRsVp5x4OIN18092ZnxOD9iorZszI/vl3zcFP1PTpek5pT7q9zIwEy
- 48Rb5DkC2piiK9rbdaBB9ncaMuApXG3pmmctuphFNPWGZhuv4VaViOnLmCOZ7JZkkXNqJ0
- y/1n0FETIqZuafoU7qF9ojSsHzkacXM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-o4lo3kIAP2KkyvzoareXFg-1; Tue,
- 20 Feb 2024 10:00:45 -0500
-X-MC-Unique: o4lo3kIAP2KkyvzoareXFg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
+ bh=78BikkyALO9iFBQ6S0+WLiFPvYMI43HBO7+hazm6yEc=;
+ b=dFzUZnPbgeUhJ+UvTJ+P7IUdguMkG2j7dMh80o+f+UfNr2bQtzFv3wXqlX4/2vc2ju50bZ
+ pJ72S0RmY+t3PL3gd9WKSJO6c6hBfCfcyg12aHHPexJRYMJ8nLlbyEKs+yd8zr64iAwSXe
+ sI5io4sIzyJGKN/lh1s5jTaB9Fi2EaE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-343-2Gto6mXgNEKLblTmvMSzrg-1; Tue, 20 Feb 2024 10:03:57 -0500
+X-MC-Unique: 2Gto6mXgNEKLblTmvMSzrg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2E4F6280A9A2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 15:00:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6C4B3C185C0;
- Tue, 20 Feb 2024 15:00:42 +0000 (UTC)
-Date: Tue, 20 Feb 2024 15:00:40 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Anthony Harivel <aharivel@redhat.com>
-Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
- vchundur@redhat.com
-Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
-Message-ID: <ZdS-mEbSVZqw0tQY@redhat.com>
-References: <20240125072214.318382-1-aharivel@redhat.com>
- <20240125072214.318382-4-aharivel@redhat.com>
- <Zbf8hradcHeeEXae@redhat.com> <CZ9YLSITF57Y.2WGV9XEFH7755@fedora>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C164E1078502;
+ Tue, 20 Feb 2024 15:03:56 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9E997400D784;
+ Tue, 20 Feb 2024 15:03:56 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 983E421E66D0; Tue, 20 Feb 2024 16:03:54 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH v3 14/20] qapi/schema: Don't initialize "members" with
+ `None`
+In-Reply-To: <20240201224246.39480-15-jsnow@redhat.com> (John Snow's message
+ of "Thu, 1 Feb 2024 17:42:40 -0500")
+References: <20240201224246.39480-1-jsnow@redhat.com>
+ <20240201224246.39480-15-jsnow@redhat.com>
+Date: Tue, 20 Feb 2024 16:03:54 +0100
+Message-ID: <87y1bf5g9x.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CZ9YLSITF57Y.2WGV9XEFH7755@fedora>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,64 +81,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 03:00:56PM +0100, Anthony Harivel wrote:
-> Daniel P. Berrangé, Jan 29, 2024 at 20:29:
-> > On Thu, Jan 25, 2024 at 08:22:14AM +0100, Anthony Harivel wrote:
-> > > diff --git a/docs/specs/rapl-msr.rst b/docs/specs/rapl-msr.rst
-> > > new file mode 100644
-> > > index 000000000000..04d27c198fc0
-> > > --- /dev/null
-> > > +++ b/docs/specs/rapl-msr.rst
-> > > @@ -0,0 +1,133 @@
-> > > +================
-> > > +RAPL MSR support
-> > > +================
-> >
-> > > +
-> > > +Current Limitations
-> > > +-------------------
-> > > +
-> > > +- Works only on Intel host CPUs because AMD CPUs are using different MSR
-> > > +  addresses.
-> >
-> > The privileged helper program is validating an allow list of MSRs.
-> >
-> > If those MSRs are only correct on Intel hosts, then the validation
-> > is incomplete, and it could be allowing unprivileged processes on
-> > AMD hosts to access forbidden MSRS whose address happen to clash
-> > with the Intel RAPL MSRs.
-> >
-> > IOW, the privileged helper needs to call cpuid() and validate that
-> > the current host vendor is Intel.
-> >
-> > I suspect we also need a feature check of some kind to validate
-> > that the intel processor supports this features, since old ones
-> > definitely didn't, and we shouldn't assume all future ones will
-> > either.
-> >
-> 
-> To validate that the processor supports the RAPL feature I propose
-> to check this on the Host:
-> 
-> $ cat /sys/class/powercap/intel-rapl/enabled
-> 1
-> 
-> 
-> The only down side is that INTEL RAPL drivers needs to be
-> mounted then. We don't need it because we directly read the MSRs.
+John Snow <jsnow@redhat.com> writes:
 
-Awkward. I've looked around in the kernel drivers and didn't uncover
-any better option than this.
+> Declare, but don't initialize the "members" field with type
+> List[QAPISchemaObjectTypeMember].
+>
+> This simplifies the typing from what would otherwise be
+> Optional[List[T]] to merely List[T]. This removes the need to add
+> assertions to several callsites that this value is not None - which it
+> never will be after the delayed initialization in check() anyway.
+>
+> The type declaration without initialization trick will cause accidental
+> uses of this field prior to full initialization to raise an
+> AttributeError.
+>
+> (Note that it is valid to have an empty members list, see the internal
+> q_empty object as an example. For this reason, we cannot use the empty
+> list as a replacement test for full initialization and instead rely on
+> the _checked/_checking fields.)
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  scripts/qapi/schema.py | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>
+> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> index a459016e148..947e7efb1a8 100644
+> --- a/scripts/qapi/schema.py
+> +++ b/scripts/qapi/schema.py
+> @@ -20,7 +20,7 @@
+>  from collections import OrderedDict
+>  import os
+>  import re
+> -from typing import List, Optional
+> +from typing import List, Optional, cast
+>  
+>  from .common import (
+>      POINTER_SUFFIX,
+> @@ -457,7 +457,7 @@ def __init__(self, name, info, doc, ifcond, features,
+>          self.base = None
+>          self.local_members = local_members
+>          self.variants = variants
+> -        self.members = None
+> +        self.members: List[QAPISchemaObjectTypeMember]
+>          self._checking = False
+>  
+>      def check(self, schema):
+> @@ -474,7 +474,7 @@ def check(self, schema):
+>  
+>          self._checking = True
+>          super().check(schema)
+> -        assert self._checked and self.members is None
+> +        assert self._checked
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+This asserts state is "2. Being checked:.
+
+The faithful update would be
+
+           assert self._checked and self._checking
+
+Or with my alternative patch
+
+           assert self._checked and not self._check_complete
+>  
+>          seen = OrderedDict()
+>          if self._base_name:
+> @@ -491,7 +491,10 @@ def check(self, schema):
+>          for m in self.local_members:
+>              m.check(schema)
+>              m.check_clash(self.info, seen)
+> -        members = seen.values()
+> +
+> +        # check_clash is abstract, but local_members is asserted to be
+> +        # List[QAPISchemaObjectTypeMember]. Cast to the narrower type.
+
+What do you mean by "check_clash is abstract"?
+
+> +        members = cast(List[QAPISchemaObjectTypeMember], list(seen.values()))
+
+Do we actually need this *now*, or only later when we have more type
+hints?
+
+>  
+>          if self.variants:
+>              self.variants.check(schema, seen)
+> @@ -524,11 +527,9 @@ def is_implicit(self):
+>          return self.name.startswith('q_')
+>  
+>      def is_empty(self):
+> -        assert self.members is not None
+
+This asserts state is "3. Checked".
+
+The faithful update would be
+
+           assert self._checked and not self._checking
+
+Or with my alternative patch
+
+           assert self._check_complete
+
+>          return not self.members and not self.variants
+>  
+>      def has_conditional_members(self):
+> -        assert self.members is not None
+
+Likewise.
+
+>          return any(m.ifcond.is_present() for m in self.members)
+>  
+>      def c_name(self):
+
+This patch does two things:
+
+1. Replace test of self.members (enabled by the previous patch)
+
+2. Drop initialization of self.members and simplify the typing
+
+Observation, not demand.  Wouldn't *mind* a split, though :)
 
 
