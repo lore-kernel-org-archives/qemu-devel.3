@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DD8C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 961E2C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcXXm-0000Tf-Ja; Tue, 20 Feb 2024 16:20:50 -0500
+	id 1rcXbB-0001Uj-QV; Tue, 20 Feb 2024 16:24:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcXXj-0000Ps-OE
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:20:48 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1rcXbA-0001UX-Jb
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:24:20 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcXXh-0001Th-29
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:20:47 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-512b42b6697so3104306e87.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:20:38 -0800 (PST)
+ id 1rcXb9-0001lw-3A
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:24:20 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-563e6131140so5730263a12.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:24:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708464037; x=1709068837; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708464257; x=1709069057; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=us3PHfw6uuC7qJAMn7pkS5Fi/QoUxqHzqfQ60LSSPfw=;
- b=wWSolZueeBQiN3wOg8mgkeGXpsXWJRizogoEuqCwpX7aHhrgD/Awgz5BHm5mQ2yiTk
- cQr8z42XWaH7I1pHLLySStDVuC0V9iCg/mopALJKKBVt8wkIRdzaxX1hm8tG5QcRzC9m
- 3w7ZaMDkkjTW5g6vaB3FH8ewfVgHd/myBmfUKogqELhj1kNKGavvDbEO+8mb4zg1KLA0
- NNJ1hhh3zUxJw86MpFPCATc9pl1A+HbN+C4HbbLEOO+T08pKlBa3QpjtEr7M9VwmN4Ze
- IKsmlLkTfO/zPFU4EzbI5jqOLg86qRSMDGI8NfmbPT+hi4Z+B7rpFQHLByhN0Rq5Y7rY
- bQxA==
+ bh=MJI9omaxiEcfzvSVsoLDG4WoW/kVvZXv9KOhUn97YF4=;
+ b=MoTIH1q4IV6DoLeNk8HAVS+OIMQTn15hVIyeGe1LKzhMDB7dyP1Ez/FYMHfRMtJDAo
+ 8U8CNMpSr1tauBoYIX13QEssysDwMOv9u6DHmeY+ki0EX7qe+4W7p12FaD5N4gUODsYz
+ gJ9Pfz2jz5/FEO/ahObRnY4pKD+9toobjtam9+vwI+QBd9e6mhLPx/56mKYM/HINgjhA
+ 1jJMlF8FTKYsygSYV3nRfXw+xxhfCFKDREJTZLE1ZHKUMnA7jc+JTCWmtwjeumt0HY/5
+ AyeKqxnSnjp/Ct6VwC0pKMu1e/MngaJjtQeF2Eavbu7DPDuDyF00rfT+LRE9vUvz1m4K
+ owMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708464037; x=1709068837;
+ d=1e100.net; s=20230601; t=1708464257; x=1709069057;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=us3PHfw6uuC7qJAMn7pkS5Fi/QoUxqHzqfQ60LSSPfw=;
- b=cR6+yzWqp5kHtXccS/0KzR6p7AbdA5Tq1IOuc+XfWez67Xijz6M0eigfTMqBg6eTqM
- fYT+E8qs15GwXsJh2u3tAT8i6QVN6H82YIpfPmiUVjqa9fqpPhsrNLe0KKuzN9/X/n5I
- Jnne4vQuu35OXxVHV0BFdpmJjoc93H7D+Z42WT96eWkrI83jfgNvcXHtin/nigYMHX0R
- qxDspDZepuZE9IVN/+S8LK5PnjQ5BCKKwv2G1e+LXJo6j1yb0Ndo9/Lo53CylQ/yBG8k
- lDBCPoNUDIioNEo35CeKJAqFm8rrIMd8PNMoMFLh7IPn04HKGrhIzpxqktcMCzAcVfCM
- T7MA==
-X-Gm-Message-State: AOJu0YxAMwVpEgTNDerBs+PrB4fA3JRptSKHlqTAlw5IRvSYKIkJg44w
- bepkGp3xlBuwniLmeXTQ0TWen0XiRIckPDvc3itJL+3SQberDxosKRH/RbHQZV2CqaFvyO6stYZ
- +d889U5UpimOMh/46LyX+fCukAwu9gGgH0sWHPA==
-X-Google-Smtp-Source: AGHT+IHCGV+h5otv4p2LOu6ux2vcvhvUZslZLUwIodYDA6v9NCrlHtG1HBZpUfeWJUDnqiWhtKjSWjCX9Zn4B/UBuWA=
-X-Received: by 2002:a05:6512:12c7:b0:512:bc14:6b80 with SMTP id
- p7-20020a05651212c700b00512bc146b80mr4458422lfg.25.1708464037152; Tue, 20 Feb
- 2024 13:20:37 -0800 (PST)
+ bh=MJI9omaxiEcfzvSVsoLDG4WoW/kVvZXv9KOhUn97YF4=;
+ b=dYFp2cIOCHLKrK6m+1Jvk+S6EhfaTWArQtsDziHzr7YAfCBOoU0CRdfwUJ5IJks2mz
+ YlRX9BTVWuryFIBQ+Eq/FlMDtJ0+K6HrI2dEcHNXwvbcrGvdHF5/T86Uhvag33A46jSn
+ Gl0qkiiHa+/8ewEpfzAaHiwEiCuz/vvvirHc54NtyR3xaa6ITr/kadNqLlirOMgamI0I
+ KBKqORm2uEn8cct41f9ToNPJXKtYY6b1FVak2/oQYX8ORsVRZqHf4hodF8ysOYXJqwXE
+ h3/+cKKlqOqWGB3QdjMK+b4WgMEjLe9kXDgH880Hfs3s4fV0wkPdMcw/MmSm9Wfdwx0J
+ Z08w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMIjQnj3R0NusfTFwmc1nyHU+vLwEhBx+Z8cetoe2xTWzqx+DfHYu23Ays6jZ+TddUSDfV/+b7fxDnvgCcUixiZHbmlW4=
+X-Gm-Message-State: AOJu0YxR2Wnwv8HZN5I6iseZA7xi30MUZQBEK8XXjnE2KTSD6+MjJcOr
+ zDvnqVuHTAk49b7mUK6oT2f9XsTMpFFkpJqRvN3P5rp7/jQQ7PDUxzshRH+qAZrLcJrJmEzCiFY
+ 8mmH839lEiX8vdd3LE3b2uuqCNXSQXcxMewrkgQ==
+X-Google-Smtp-Source: AGHT+IEtadCOijPzWTXXn1/GQp5CwmT59BKh1Z2bqnGYV4Tp1diO3VgE+05drwS8CF5AvisgOV3HxNyp6o/TvN0OR+M=
+X-Received: by 2002:aa7:d046:0:b0:563:f606:3b36 with SMTP id
+ n6-20020aa7d046000000b00563f6063b36mr8792017edo.8.1708464257625; Tue, 20 Feb
+ 2024 13:24:17 -0800 (PST)
 MIME-Version: 1.0
-References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-7-peter.maydell@linaro.org>
- <b428c48b-578c-46e2-a0b7-c648b012f3d3@linaro.org>
-In-Reply-To: <b428c48b-578c-46e2-a0b7-c648b012f3d3@linaro.org>
+References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
+ <87a5nvci5n.fsf@draig.linaro.org>
+ <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
+ <87y1bfawik.fsf@draig.linaro.org>
+ <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
+In-Reply-To: <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Feb 2024 21:20:26 +0000
-Message-ID: <CAFEAcA8++iLJ+LMjN_GzoctdvA-+XraA1O1CSTGm3b62Do8JtQ@mail.gmail.com>
-Subject: Re: [PATCH 06/10] hw/core: Add ResetContainer which holds objects
- implementing Resettable
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Date: Tue, 20 Feb 2024 21:24:06 +0000
+Message-ID: <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
+Subject: Re: QNX VM hang on Qemu
+To: Faiq Ali Sayed <faiqueali.109@gmail.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,19 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Feb 2024 at 19:46, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Tue, 20 Feb 2024 at 20:56, Faiq Ali Sayed <faiqueali.109@gmail.com> wrote:
 >
-> On 2/20/24 06:06, Peter Maydell wrote:
-> > +void resettable_container_add(ResettableContainer *rc, Object *obj)
-> > +{
-> > +    g_ptr_array_add(rc->children, obj);
-> > +}
->
-> Did you want to assert here that obj does in fact implement Resettable?
+> The image I am using is currently in use for real hardware, and
+> I received it from a third party/vendor.
 
-I guess that makes for a nicer detection of that class of bug,
-so sure.
+OK, so what exactly is the real hardware it's for?
 
+> Could you please suggest to me what I can do now?
+
+If QEMU has a model of the hardware the image is for:
+ - use that QEMU machine type (and issues with getting it running
+   will be related to making sure you're loading it at the right
+   address and starting it the way it wants to be started)
+If QEMU does not have a model of the hardware the image is for:
+ - ask your vendor for a build that targets some machine QEMU
+   does have a model of
+
+Unfortunately in general in the Arm world guest OSes are
+not "runs on anything", but only "runs on the hardware
+they were built to run on". This remains true under emulation.
+
+thanks
 -- PMM
 
