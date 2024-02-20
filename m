@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC07C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26FCC48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLsj-0000jU-8h; Tue, 20 Feb 2024 03:53:41 -0500
+	id 1rcLsY-0000OE-0G; Tue, 20 Feb 2024 03:53:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsh-0000h2-8T
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:39 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1rcLsU-00009Q-8P
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:26 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1rcLsd-0008HQ-1i
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:38 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5648d92919dso2214442a12.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:34 -0800 (PST)
+ id 1rcLsL-0008Bs-G1
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 03:53:25 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a293f2280c7so725417766b.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 00:53:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708419213; x=1709024013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708419195; x=1709023995; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ziY8Jw6EXE5hHrClCqTsAlncUS9FIpDkSwZM2WtkVaQ=;
- b=lUzLHf+T7784UUflbBgOF/O90in0Gw2hHEf9aGWjOnBmNJ7gt+jaTMQyiPVm106V3W
- lafzyeaasSeV4rqZplFKM2nO3V8ZwE6fG1NbgKMbUZplc56rWlQX+/EUePjRYCJwA/8z
- +40irqFoU33sYwsJs/0+heVErPqrrJhR0uouyqmIsBUdP+eIWQMHwtpuWJYLYkO26CLy
- ci7jQrrpIy2V68Nnma9bcJQFollNyMNtoQ1r29DWp373SEz/CH76BjHIWOwZ4IMJ00iV
- kkurkgIaQwOGL06NnOzmsf4ivdjgUtx0hI10G88SciSCH2DSnm5jNgixk2fQhdzRogkC
- rdaw==
+ bh=w8LOpUQSDLdq/Q7FHXx+eaDcvqKGP+tp/efzoaFLimQ=;
+ b=pw5577pTpXp8k0vN6O1zMaqxu8cIHmD+bmp68hoXP5va+pzHFYOL/uJTbpx/RHjxwS
+ PYSWVlSJrxeg3D517OF9jHQtkHv8kDgOH3RSXWie8FYaZiRj/OXXZe7ZZ0WGr5fA6eL2
+ GTAYsZ38ML2DtCJjYtRpO7xzF9KCsrX1dtKjX2DAqNS5kbnLIW9pH95ch/HrrtdVo/Ok
+ a7gTpcRW/C+d65TEQIoD+HOaVBU6qqQmK8V0CJFvQP6IMSlg9x2WtUV8GWyWm5Z++6OJ
+ zsic+ShfmW1cTz7Lb8NC0ks9/wWF0KRKYUD0uQjVggnUUbtTdul7jS1gRlYcgJ8ig5X3
+ 42KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708419213; x=1709024013;
+ d=1e100.net; s=20230601; t=1708419195; x=1709023995;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ziY8Jw6EXE5hHrClCqTsAlncUS9FIpDkSwZM2WtkVaQ=;
- b=INZV7GFK2a+RZsmGR6R6/jVqWXiPjA6B348VjmWHoUuhIyPiGmfZ5yMddHbbJxg3Dg
- 3u577/rVXyYOQINjN/kwBTffg6THHwnJt0hwYhX8OfMqv9+Mw7Purw+4mykCcLCN8KhX
- /MN31BJQ7/7UcSvglyK4qACskMZWrCYCDmVl9ovAns4iP8/ByRqND6P9v7XGSG8QsMlR
- QmQ860sYakE01aL2PJhL3Cnxvja+4V4CyjBCYBsH/3aoYRhBZDj9DrC1EfnKLMOo7HFe
- mwO/JFfu5U86Yd2OdFmnfEiaNtzNBPzuzcqt/g2IMXBgYYHQZZQ7w/8XZ5f7/a4El8vr
- o7ig==
-X-Gm-Message-State: AOJu0YzA175OpCMVNaA9Js+PoFzN9NQPAkChUh9vyb3ZPJokCURkT8Ne
- bBiOzBOS9YDt7k94rIlhce5Ej3ZGK+pZ0W+lWflCzdKi87PY1uLU76nTbc2RU1A=
-X-Google-Smtp-Source: AGHT+IFs+obNRLn2DlVizb4uoIAG0u5rk3shlnPOJbhDry9L0AbiIOXWZE19Uyl74IlUIfaXFolvhg==
-X-Received: by 2002:a17:906:57ca:b0:a3f:ce8:1234 with SMTP id
- u10-20020a17090657ca00b00a3f0ce81234mr404484ejr.68.1708419213706; 
- Tue, 20 Feb 2024 00:53:33 -0800 (PST)
+ bh=w8LOpUQSDLdq/Q7FHXx+eaDcvqKGP+tp/efzoaFLimQ=;
+ b=TbA2e+wjlj5okrJMXzQ8wMrqxuG7CdrElmjZwzkSJV0pzPb0/pciW/pbps2dsaW4yu
+ pNSO/uxJYMIYgSvCWCH0TDQvyZPRE5TuB1jh1xNRVFs07Ure1qLGt06+bopwxIrrq4q3
+ B+6yGRwfx9O/+9auqU43ms2bt0Kzf1IEYMaemq0nvTpZvo1oZvZxqhuTZ0O5FanHCEdm
+ uP+l2BA8yUAII6rTMsbVmJYA/I9UBq1DtyBBtIvfVuknL8cpSRePlcdECK6aPwITIyYG
+ uvu+dWdoC96hW6dzjcMFpoJAJ81n315GnLb+BS72VtCprI7Po/9cPOZzrQpNI5Gt2fRT
+ OvBA==
+X-Gm-Message-State: AOJu0Yy1Xjyjtfj7OC17Wg2SpR2wU5iNcRfaVU7XMSfYuP/TB/uJ6qKZ
+ 6JhgtzEIquuxQxhRmYgj6FX1rqWNQEh8LEeHNDCiV017sWLnCM07I7DPY41QhtM=
+X-Google-Smtp-Source: AGHT+IG8qqcWkwXHQPyB+uR9bclG1G2vyQ7VRpW2+xiFcPJu44K6+Becb2NE5IJuMLHAhYyUAdVFLg==
+X-Received: by 2002:a17:906:68cb:b0:a3e:482b:1b9b with SMTP id
+ y11-20020a17090668cb00b00a3e482b1b9bmr4588271ejr.75.1708419195707; 
+ Tue, 20 Feb 2024 00:53:15 -0800 (PST)
 Received: from localhost.localdomain (adsl-245.37.6.163.tellas.gr.
  [37.6.163.245]) by smtp.gmail.com with ESMTPSA id
- cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.32
+ cu3-20020a170906ba8300b00a3d014fa12esm3747876ejd.196.2024.02.20.00.53.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 00:53:33 -0800 (PST)
+ Tue, 20 Feb 2024 00:53:15 -0800 (PST)
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-trivial@nongnu.org
 Cc: qemu-devel@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
-Subject: [PATCH v1 20/21] s390x: correct typos
-Date: Tue, 20 Feb 2024 10:52:27 +0200
-Message-Id: <73c534c8b6cdd769ab4d0220f505da8ec7470983.1708419115.git.manos.pitsidianakis@linaro.org>
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH v1 07/21] sh4: correct typos
+Date: Tue, 20 Feb 2024 10:52:14 +0200
+Message-Id: <12425416adca441b07f7e3ecd4bb339096a7568b.1708419115.git.manos.pitsidianakis@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 References: <cover.1708419115.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,22 +100,22 @@ Correct typos automatically found with the `typos` tool
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- target/s390x/cpu_features_def.h.inc | 2 +-
+ hw/sh4/sh7750_regs.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index e68da9b8ff..c53ac13352 100644
---- a/target/s390x/cpu_features_def.h.inc
-+++ b/target/s390x/cpu_features_def.h.inc
-@@ -142,7 +142,7 @@ DEF_FEAT(SIE_CEI, "cei", SCLP_CPU, 43, "SIE: Conditional-external-interception f
+diff --git a/hw/sh4/sh7750_regs.h b/hw/sh4/sh7750_regs.h
+index edb5d18f00..946ad7b3aa 100644
+--- a/hw/sh4/sh7750_regs.h
++++ b/hw/sh4/sh7750_regs.h
+@@ -172,7 +172,7 @@
+ 
  
  /*
-  * Features exposed via no feature bit (but e.g., instruction sensing)
-- * -> the feature bit number is irrelavant
-+ * -> the feature bit number is irrelevant
+- * Exeption-related registers
++ * Exception-related registers
   */
- DEF_FEAT(DAT_ENH_2, "dateh2", MISC, 0, "DAT-enhancement facility 2")
- DEF_FEAT(CMM, "cmm", MISC, 0, "Collaborative-memory-management facility")
+ 
+ /* Immediate data for TRAPA instruction - TRA */
 -- 
 γαῖα πυρί μιχθήτω
 
