@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF932C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 588B2C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 08:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcLc8-0002x6-Q6; Tue, 20 Feb 2024 03:36:32 -0500
+	id 1rcLcT-0003Aj-BI; Tue, 20 Feb 2024 03:36:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rcLc6-0002wD-TT; Tue, 20 Feb 2024 03:36:30 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1rcLcO-00036b-C0; Tue, 20 Feb 2024 03:36:49 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rcLc3-0004zX-9b; Tue, 20 Feb 2024 03:36:30 -0500
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ id 1rcLcK-00056h-N7; Tue, 20 Feb 2024 03:36:46 -0500
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41K8Z9HX018055; Tue, 20 Feb 2024 08:36:20 GMT
+ 41K7VAhj005047; Tue, 20 Feb 2024 08:36:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : content-transfer-encoding : mime-version; s=pp1;
- bh=t2jLY1FONlHzmVHk6RZD2J6VOtbfJqqkgGj+pTAzSZY=;
- b=FLk1Rpna+LOjJj+YP2VjhukXHl+TZhXFybLTS/tktAfxdiPpSzlEW60L2PS1mYwHZONL
- z+PjuJkpcCcZg6q8IOT/rCQOUTzRlaNLtBcYApIHrWKAhYFIja33usc6y/Fi4V7HOJG2
- DoKzpvyo59f4a+XDXfoNDUfz598Vuz8s0DEk8UG/0VJOF7YXVc2o3fCM8iAQn88KO2zK
- MMTC2+dOOg+2ZncoU3P7rETCZWYP+nTPJJyntiktLprZ9VgDyiDCX6A+4rTdbVni+BWy
- 2t0jGbmChXfBxHua3s1tCFmeaTPUhu3OUP5YmXCps+wi5+tx9oJ5DrANO/fMkpyiTzqi Fw== 
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=6jps+aY1PetzDdZ/4d+uAZfFQCxF4IF3LiCKWjKulRU=;
+ b=MT8mcu35oIVgcrBYs0OnxbgBhkedOmSMmID5sjEVO25ZjlnP5cs0PpR6jFeKIB4fDS1y
+ e6GxH4B1JU3QApwXqpilu5inlPdR3qN+WAcfpzVY3WFC+Kvkxl1k/xRZr7CTLP9hvfmo
+ rR0WYydorKF3ShtzXSi/BavtDkSYgOMjiHeht2EM5LmOgmtLcV3/Wn/mQ/ipkk137O+8
+ YGqLlHR6pHoiN9GAsh5D+NwDi8Us5UtjcmpAvrwsddz3oDpxPRwM+MIV5CQIo3mc1yx6
+ AKJ+mNpxypGAayGjrYKhItBP4E2QAhxJo/ufi4Ai/UWPJXyQOiu7+a9CSg8oHx6cmh97 fA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcrk9r8yt-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcpf7ubrv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Feb 2024 08:36:20 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41K8TGkO025049;
- Tue, 20 Feb 2024 08:36:20 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcrk9r8ya-1
+ Tue, 20 Feb 2024 08:36:40 +0000
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41K8UGRW004343;
+ Tue, 20 Feb 2024 08:36:40 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wcpf7ubrf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Feb 2024 08:36:20 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41K7PYaV014339; Tue, 20 Feb 2024 08:36:19 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wb9u2edyv-1
+ Tue, 20 Feb 2024 08:36:40 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41K7s076003623; Tue, 20 Feb 2024 08:36:39 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wb74tf9a4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Feb 2024 08:36:19 +0000
+ Tue, 20 Feb 2024 08:36:39 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41K8aDN722086220
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41K8aX8o6030020
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 20 Feb 2024 08:36:15 GMT
+ Tue, 20 Feb 2024 08:36:36 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 89E0720043;
- Tue, 20 Feb 2024 08:36:13 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DF0FF2004D;
+ Tue, 20 Feb 2024 08:36:33 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E121320040;
- Tue, 20 Feb 2024 08:36:11 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4459C20040;
+ Tue, 20 Feb 2024 08:36:32 +0000 (GMT)
 Received: from li-1901474c-32f3-11b2-a85c-fc5ff2c001f3.in.ibm.com (unknown
  [9.109.243.35]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 20 Feb 2024 08:36:11 +0000 (GMT)
+ Tue, 20 Feb 2024 08:36:32 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: npiggin@gmail.com, qemu-ppc@nongnu.org
 Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
  vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
  qemu-devel@nongnu.org
-Subject: [PATCH v4 00/15] Nested PAPR API (KVM on PowerVM)
-Date: Tue, 20 Feb 2024 14:05:54 +0530
-Message-Id: <20240220083609.748325-1-harshpb@linux.ibm.com>
+Subject: [PATCH v4 08/15] spapr: nested: Introduce H_GUEST_CREATE_VCPU hcall.
+Date: Tue, 20 Feb 2024 14:06:02 +0530
+Message-Id: <20240220083609.748325-9-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: cwoO1KVuKc2xLTImEfl2exbsG2nPdlpz
-X-Proofpoint-ORIG-GUID: 006mLDkFbTFZlNPeWU1fPYa7m8viMbIN
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+In-Reply-To: <20240220083609.748325-1-harshpb@linux.ibm.com>
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Yns1nqgYpwzinUqJMrbaBHmRcoFsqnqJ
+X-Proofpoint-GUID: nwFHQLZPAYqMq0ElYqW7nhEPr29yRaki
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-20_06,2024-02-19_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0
- clxscore=1011 impostorscore=0 phishscore=0 spamscore=0 mlxlogscore=950
- mlxscore=0 bulkscore=0 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402200060
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ clxscore=1015 spamscore=0
+ mlxlogscore=826 phishscore=0 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 suspectscore=0
+ mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402200061
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -112,80 +114,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is an existing Nested-HV API to enable nested guests on powernv
-machines. However, that is not supported on pseries/PowerVM LPARs.
-This patch series implements required hcall interfaces to enable nested
-guests with KVM on PowerVM.
-Unlike Nested-HV, with this API, entire L2 state is retained by L0
-during guest entry/exit and uses pre-defined Guest State Buffer (GSB)
-format to communicate guest state between L1 and L2 via L0.
+Introduce the nested PAPR hcall H_GUEST_CREATE_VCPU which is used to
+create and initialize the specified VCPU resource for the previously
+created guest. Each guest can have multiple VCPUs upto max 2048.
+All VCPUs for a guest gets deallocated on guest delete.
 
-L0 here refers to the phyp/PowerVM, or launching a Qemu TCG L0 with the
-newly introduced option cap-nested-papr=true.
-L1 refers to the LPAR host on PowerVM or Linux booted on Qemu TCG with
-above mentioned option cap-nested-papr=true.
-L2 refers to nested guest running on top of L1 using KVM.
-No SW changes needed for Qemu running in L1 Linux as well as L2 Kernel.
-
-Linux Kernel side support is already merged upstream:
+Signed-off-by: Michael Neuling <mikey@neuling.org>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
-commit 19d31c5f115754c369c0995df47479c384757f82
-Author: Jordan Niethe <jniethe5@gmail.com>
-Date:   Thu Sep 14 13:05:59 2023 +1000
+ include/hw/ppc/spapr.h        |  2 +
+ include/hw/ppc/spapr_nested.h | 10 ++++
+ hw/ppc/spapr_nested.c         | 96 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 108 insertions(+)
 
-    KVM: PPC: Add support for nestedv2 guests
----
-For more details, documentation can be referred in either of patch
-series.
-
-There are scripts available to assist in setting up an environment for
-testing nested guests at https://github.com/iamjpn/kvm-powervm-test
-
-A tree with this series is available at:
-https://github.com/planetharsh/qemu/tree/upstream-0219-v4
-
-Thanks to Michael Neuling, Shivaprasad Bhat, Amit Machhiwal, Kautuk
-Consul, Vaibhav Jain and Jordan Niethe.
-
-Changelog:
-v4: added hcall unreg helper to allow hcall re-registrations in caps apply.
-v3: https://lore.kernel.org/qemu-devel/20240118052438.1475437-1-harshpb@linux.ibm.com/
-v2: https://lore.kernel.org/qemu-devel/20231012104951.194876-1-harshpb@linux.ibm.com/
-v1: https://lore.kernel.org/qemu-devel/20230906043333.448244-1-harshpb@linux.ibm.com/
-
-Amit Machhiwal (1):
-  spapr: nested: Set the PCR when logical PVR is set
-
-Harsh Prateek Bora (14):
-  spapr: nested: register nested-hv api hcalls only for cap-nested-hv
-  spapr: nested: move nested part of spapr_get_pate into spapr_nested.c
-  spapr: nested: Introduce SpaprMachineStateNested to store related
-    info.
-  spapr: nested: keep nested-hv related code restricted to its API.
-  spapr: nested: Document Nested PAPR API
-  spapr: nested: Introduce H_GUEST_[GET|SET]_CAPABILITIES hcalls.
-  spapr: nested: Introduce H_GUEST_[CREATE|DELETE] hcalls.
-  spapr: nested: Introduce H_GUEST_CREATE_VCPU hcall.
-  spapr: nested: Extend nested_ppc_state for nested PAPR API
-  spapr: nested: Initialize the GSB elements lookup table.
-  spapr: nested: Introduce H_GUEST_[GET|SET]_STATE hcalls.
-  spapr: nested: Use correct source for parttbl info for nested PAPR
-    API.
-  spapr: nested: Introduce H_GUEST_RUN_VCPU hcall.
-  spapr: nested: Introduce cap-nested-papr for Nested PAPR API
-
- docs/devel/nested-papr.txt    |  514 +++++++++++
- include/hw/ppc/spapr.h        |   26 +-
- include/hw/ppc/spapr_nested.h |  430 ++++++++-
- target/ppc/cpu.h              |    4 +
- hw/ppc/ppc.c                  |   10 +
- hw/ppc/spapr.c                |   35 +-
- hw/ppc/spapr_caps.c           |   59 ++
- hw/ppc/spapr_hcall.c          |   24 +-
- hw/ppc/spapr_nested.c         | 1552 ++++++++++++++++++++++++++++++++-
- 9 files changed, 2599 insertions(+), 55 deletions(-)
- create mode 100644 docs/devel/nested-papr.txt
-
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index c4a79a1785..82b077bdd2 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -365,6 +365,7 @@ struct SpaprMachineState {
+ #define H_UNSUPPORTED     -67
+ #define H_OVERLAP         -68
+ #define H_STATE           -75
++#define H_IN_USE          -77
+ #define H_UNSUPPORTED_FLAG -256
+ #define H_MULTI_THREADS_ACTIVE -9005
+ 
+@@ -587,6 +588,7 @@ struct SpaprMachineState {
+ #define H_GUEST_GET_CAPABILITIES 0x460
+ #define H_GUEST_SET_CAPABILITIES 0x464
+ #define H_GUEST_CREATE           0x470
++#define H_GUEST_CREATE_VCPU      0x474
+ #define H_GUEST_DELETE           0x488
+ 
+ #define MAX_HCALL_OPCODE         H_GUEST_DELETE
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index f282479275..24e87bca08 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -14,6 +14,8 @@ typedef struct SpaprMachineStateNested {
+ 
+ typedef struct SpaprMachineStateNestedGuest {
+     uint32_t pvr_logical;
++    unsigned long vcpus;
++    struct SpaprMachineStateNestedGuestVcpu *vcpu;
+ } SpaprMachineStateNestedGuest;
+ 
+ /* Nested PAPR API related macros */
+@@ -27,6 +29,7 @@ typedef struct SpaprMachineStateNestedGuest {
+ #define H_GUEST_CAP_P10_MODE_BMAP     2
+ #define PAPR_NESTED_GUEST_MAX         4096
+ #define H_GUEST_DELETE_ALL_FLAG       0x8000000000000000ULL
++#define PAPR_NESTED_GUEST_VCPU_MAX    2048
+ 
+ /*
+  * Register state for entering a nested guest with H_ENTER_NESTED.
+@@ -118,8 +121,15 @@ struct nested_ppc_state {
+     uint64_t ppr;
+ 
+     int64_t tb_offset;
++    /* Nested PAPR API */
++    uint64_t pvr;
+ };
+ 
++typedef struct SpaprMachineStateNestedGuestVcpu {
++    bool enabled;
++    struct nested_ppc_state state;
++} SpaprMachineStateNestedGuestVcpu;
++
+ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
+ typedef struct SpaprMachineState SpaprMachineState;
+ bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index 09c4a35908..3cc704adda 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -428,6 +428,41 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+     }
+ }
+ 
++static
++SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *spapr,
++                                                     target_ulong guestid)
++{
++    SpaprMachineStateNestedGuest *guest;
++
++    guest = g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(guestid));
++    return guest;
++}
++
++static bool spapr_nested_vcpu_check(SpaprMachineStateNestedGuest *guest,
++                                    target_ulong vcpuid)
++{
++    struct SpaprMachineStateNestedGuestVcpu *vcpu;
++    /*
++     * Perform sanity checks for the provided vcpuid of a guest.
++     * For now, ensure its valid, allocated and enabled for use.
++     */
++
++    if (vcpuid >= PAPR_NESTED_GUEST_VCPU_MAX) {
++        return false;
++    }
++
++    if (!(vcpuid < guest->vcpus)) {
++        return false;
++    }
++
++    vcpu = &guest->vcpu[vcpuid];
++    if (!vcpu->enabled) {
++        return false;
++    }
++
++    return true;
++}
++
+ static target_ulong h_guest_get_capabilities(PowerPCCPU *cpu,
+                                              SpaprMachineState *spapr,
+                                              target_ulong opcode,
+@@ -518,6 +553,7 @@ static void
+ destroy_guest_helper(gpointer value)
+ {
+     struct SpaprMachineStateNestedGuest *guest = value;
++    g_free(guest->vcpu);
+     g_free(guest);
+ }
+ 
+@@ -613,6 +649,65 @@ static target_ulong h_guest_delete(PowerPCCPU *cpu,
+     return H_SUCCESS;
+ }
+ 
++static target_ulong h_guest_create_vcpu(PowerPCCPU *cpu,
++                                        SpaprMachineState *spapr,
++                                        target_ulong opcode,
++                                        target_ulong *args)
++{
++    CPUPPCState *env = &cpu->env;
++    struct nested_ppc_state *l2_state;
++    target_ulong flags = args[0];
++    target_ulong guestid = args[1];
++    target_ulong vcpuid = args[2];
++    SpaprMachineStateNestedGuest *guest;
++
++    if (flags) { /* don't handle any flags for now */
++        return H_UNSUPPORTED_FLAG;
++    }
++
++    guest = spapr_get_nested_guest(spapr, guestid);
++    if (!guest) {
++        return H_P2;
++    }
++
++    if (vcpuid < guest->vcpus) {
++        return H_IN_USE;
++    }
++
++    if (guest->vcpus >= PAPR_NESTED_GUEST_VCPU_MAX) {
++        return H_P3;
++    }
++
++    if (guest->vcpus) {
++        SpaprMachineStateNestedGuestVcpu *vcpus;
++        vcpus = g_try_renew(struct SpaprMachineStateNestedGuestVcpu,
++                            guest->vcpu,
++                            guest->vcpus + 1);
++        if (!vcpus) {
++            return H_NO_MEM;
++        }
++        memset(&vcpus[guest->vcpus], 0,
++               sizeof(SpaprMachineStateNestedGuestVcpu));
++        guest->vcpu = vcpus;
++    } else {
++        guest->vcpu = g_try_new0(SpaprMachineStateNestedGuestVcpu, 1);
++        if (guest->vcpu == NULL) {
++            return H_NO_MEM;
++        }
++    }
++    l2_state = &guest->vcpu[guest->vcpus].state;
++    guest->vcpus++;
++    assert(vcpuid < guest->vcpus); /* linear vcpuid allocation only */
++    /* Set L1 PVR as L2 default */
++    l2_state->pvr = env->spr[SPR_PVR];
++    guest->vcpu[vcpuid].enabled = true;
++
++    if (!spapr_nested_vcpu_check(guest, vcpuid)) {
++        return H_PARAMETER;
++    }
++    return H_SUCCESS;
++}
++
+ void spapr_register_nested_hv(void)
+ {
+     spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
+@@ -635,6 +730,7 @@ void spapr_register_nested_papr(void)
+     spapr_register_hypercall(H_GUEST_SET_CAPABILITIES, h_guest_set_capabilities);
+     spapr_register_hypercall(H_GUEST_CREATE          , h_guest_create);
+     spapr_register_hypercall(H_GUEST_DELETE          , h_guest_delete);
++    spapr_register_hypercall(H_GUEST_CREATE_VCPU     , h_guest_create_vcpu);
+ }
+ 
+ #else
 -- 
 2.39.3
 
