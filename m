@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C97C48BC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DD8C48BC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 20 Feb 2024 21:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcXWj-0008Mo-3l; Tue, 20 Feb 2024 16:19:45 -0500
+	id 1rcXXm-0000Tf-Ja; Tue, 20 Feb 2024 16:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcXWg-0008Mb-V2
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:19:42 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1rcXXj-0000Ps-OE
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:20:48 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcXWf-00019r-Fd
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:19:42 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5648d92919dso3459755a12.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:19:40 -0800 (PST)
+ id 1rcXXh-0001Th-29
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 16:20:47 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-512b42b6697so3104306e87.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 13:20:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708463979; x=1709068779; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708464037; x=1709068837; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=wax8OEADFyujbQ5rl75TkVpgcrBubP2k/60rzBnDK6w=;
- b=vwswrbH+m1zrxJGnEK/u0fPwibNvITT5yB+I8ZhdvcYJx5KY3Xyq3WYfe9KAWoPAtZ
- KAM7vtCe5JjIbzn25A4XhLHh3q4ksAFG/hARBT69s3+CTgZizr2DZJX9hevWyWkukiiX
- XqkcZHR2/Wjqyf/LtXd/3GJks7rHGYem0nW34F1Mttfl+EcCYmCm9AxNoRQ+2hAkpq9W
- uDyTa9nUiZ4ZJ+OsBQOmqXBXEoAIegTmta6T6rzyT4nsPt6sIVLNqWvFU5OCqUcRnKUW
- mspzjfv22MRa+ZnUnS3/6I+T7cD3Z98s1JyECjvHoMCe5/62HNn+3zuJiOzhvzONHwEr
- h4ug==
+ bh=us3PHfw6uuC7qJAMn7pkS5Fi/QoUxqHzqfQ60LSSPfw=;
+ b=wWSolZueeBQiN3wOg8mgkeGXpsXWJRizogoEuqCwpX7aHhrgD/Awgz5BHm5mQ2yiTk
+ cQr8z42XWaH7I1pHLLySStDVuC0V9iCg/mopALJKKBVt8wkIRdzaxX1hm8tG5QcRzC9m
+ 3w7ZaMDkkjTW5g6vaB3FH8ewfVgHd/myBmfUKogqELhj1kNKGavvDbEO+8mb4zg1KLA0
+ NNJ1hhh3zUxJw86MpFPCATc9pl1A+HbN+C4HbbLEOO+T08pKlBa3QpjtEr7M9VwmN4Ze
+ IKsmlLkTfO/zPFU4EzbI5jqOLg86qRSMDGI8NfmbPT+hi4Z+B7rpFQHLByhN0Rq5Y7rY
+ bQxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708463979; x=1709068779;
+ d=1e100.net; s=20230601; t=1708464037; x=1709068837;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wax8OEADFyujbQ5rl75TkVpgcrBubP2k/60rzBnDK6w=;
- b=c5UGlGj+zkngCHXlYOOh66wRDsMjy1xBCqHq6GoLt6cnlUHLQAg53MrTCdvZAw/kTO
- C0zIaO1xslQtPwHEQXz2g/FQyvgg/QqgSYS+/bRxbj+W1Twf/3+FzOBgR0aQFk0jRknJ
- rDKiDBYC1vforD1+FbIs7tS4cHkq1dvH8FQmD6gW5pZFgpQcwRvZRZHiWYu4Wi+x8Ed8
- 3olB3hSX3H9XvAEQremhU8WFD0I2gnavjm8QSpLxQQBfTMgcNrOqQjbCgeJmgD3UJ3DV
- JfqzcBXuT6CkU4SWKP15Kh7zG3pGu7QUvEX0LJJLtoU0j8khJyTzX5EXT+WLSTiqQ1Ns
- RRew==
-X-Gm-Message-State: AOJu0YzJ2KK7zW/4VF8jjI9sYOBldEzs5g8qkVCKEXa+xrNy9+rEXrDC
- 5rQ7/hXEu+zHV0yJSkdzEejDIzGzK/JM2z38hcS58OhOzCD+dVXfGBRWxIAGTgY0+Ml4Ttz18rG
- YEMZSZiuP8449DklhAoPtz3IYU/7Zsecf37ozyQ==
-X-Google-Smtp-Source: AGHT+IHdFAjDpOAc5m3a+TrO5pNeWPWFg4sZRIDeFaNS3kXQf7et/Y/viG0lYqqEvaw25aNqYK8NPow/nuYnDUFdP4s=
-X-Received: by 2002:a05:6402:34f:b0:564:66d3:530f with SMTP id
- r15-20020a056402034f00b0056466d3530fmr4783269edw.28.1708463978659; Tue, 20
- Feb 2024 13:19:38 -0800 (PST)
+ bh=us3PHfw6uuC7qJAMn7pkS5Fi/QoUxqHzqfQ60LSSPfw=;
+ b=cR6+yzWqp5kHtXccS/0KzR6p7AbdA5Tq1IOuc+XfWez67Xijz6M0eigfTMqBg6eTqM
+ fYT+E8qs15GwXsJh2u3tAT8i6QVN6H82YIpfPmiUVjqa9fqpPhsrNLe0KKuzN9/X/n5I
+ Jnne4vQuu35OXxVHV0BFdpmJjoc93H7D+Z42WT96eWkrI83jfgNvcXHtin/nigYMHX0R
+ qxDspDZepuZE9IVN/+S8LK5PnjQ5BCKKwv2G1e+LXJo6j1yb0Ndo9/Lo53CylQ/yBG8k
+ lDBCPoNUDIioNEo35CeKJAqFm8rrIMd8PNMoMFLh7IPn04HKGrhIzpxqktcMCzAcVfCM
+ T7MA==
+X-Gm-Message-State: AOJu0YxAMwVpEgTNDerBs+PrB4fA3JRptSKHlqTAlw5IRvSYKIkJg44w
+ bepkGp3xlBuwniLmeXTQ0TWen0XiRIckPDvc3itJL+3SQberDxosKRH/RbHQZV2CqaFvyO6stYZ
+ +d889U5UpimOMh/46LyX+fCukAwu9gGgH0sWHPA==
+X-Google-Smtp-Source: AGHT+IHCGV+h5otv4p2LOu6ux2vcvhvUZslZLUwIodYDA6v9NCrlHtG1HBZpUfeWJUDnqiWhtKjSWjCX9Zn4B/UBuWA=
+X-Received: by 2002:a05:6512:12c7:b0:512:bc14:6b80 with SMTP id
+ p7-20020a05651212c700b00512bc146b80mr4458422lfg.25.1708464037152; Tue, 20 Feb
+ 2024 13:20:37 -0800 (PST)
 MIME-Version: 1.0
 References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-3-peter.maydell@linaro.org>
- <1b3708f7-b962-41f5-809c-23f9e48c151a@linaro.org>
-In-Reply-To: <1b3708f7-b962-41f5-809c-23f9e48c151a@linaro.org>
+ <20240220160622.114437-7-peter.maydell@linaro.org>
+ <b428c48b-578c-46e2-a0b7-c648b012f3d3@linaro.org>
+In-Reply-To: <b428c48b-578c-46e2-a0b7-c648b012f3d3@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 20 Feb 2024 21:19:27 +0000
-Message-ID: <CAFEAcA8JpNs0vmFb5LZ2M1+1zSuLtDq+ito8GYdGho4HazDdJA@mail.gmail.com>
-Subject: Re: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
- pc_machine_done()
+Date: Tue, 20 Feb 2024 21:20:26 +0000
+Message-ID: <CAFEAcA8++iLJ+LMjN_GzoctdvA-+XraA1O1CSTGm3b62Do8JtQ@mail.gmail.com>
+Subject: Re: [PATCH 06/10] hw/core: Add ResetContainer which holds objects
+ implementing Resettable
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
@@ -72,8 +72,8 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
  "Gonglei (Arei)" <arei.gonglei@huawei.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,22 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 Feb 2024 at 19:31, Richard Henderson
+On Tue, 20 Feb 2024 at 19:46, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
 > On 2/20/24 06:06, Peter Maydell wrote:
-> > -static void pc_cmos_init_late(void *opaque)
-> > +static void pc_cmos_init_late(PCMachineState *pcms)
-> >   {
-> > -    pc_cmos_init_late_arg *arg = opaque;
-> > -    MC146818RtcState *s = arg->rtc_state;
-> > +    X86MachineState *x86ms = X86_MACHINE(pcms);
+> > +void resettable_container_add(ResettableContainer *rc, Object *obj)
+> > +{
+> > +    g_ptr_array_add(rc->children, obj);
+> > +}
 >
-> We've already done the X86_MACHINE resolution in pc_machine_done -- why not just pass it in?
+> Did you want to assert here that obj does in fact implement Resettable?
 
-We want both the PCMachineState and X86MachineState and I think
-our usual style is not to pass in two arguments that are the
-same object under different pointer types.
+I guess that makes for a nicer detection of that class of bug,
+so sure.
 
 -- PMM
 
