@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6621C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A278BC48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:18:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchmO-0007Pj-FM; Wed, 21 Feb 2024 03:16:36 -0500
+	id 1rchoC-0008Nz-7T; Wed, 21 Feb 2024 03:18:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rchmM-0007PD-MH
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:16:34 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcho5-0008N4-Ag
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:18:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rchmL-0001L1-8Y
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:16:34 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcho3-0001Up-Qj
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:18:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708503392;
+ s=mimecast20190719; t=1708503499;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rUu7oaOtLiWt7k+XZOu+dh6dlaANTkoWtU+LKeANKh4=;
- b=BqLGkA4/y/kjbVQwpqtK8SaxJjB8SXvllKpMK7gi9MYt/qVlVyEppVNVkVAzz7pXXf6GQt
- 4yQnLZncrlisN+WpuQPKza+js4Lgbl6VtXergGyV9D/DZVqZq2nKhEL++5a6Srcz8u2nV+
- sZMSoO1VNNm+2vakWyLuKrnNJJPLrMs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-bdzRHgYXN1qGgoV_DF1M6w-1; Wed, 21 Feb 2024 03:16:28 -0500
-X-MC-Unique: bdzRHgYXN1qGgoV_DF1M6w-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ bh=RWL4amZhA6Tx0uaapwvU+/203Fs6lJZqVHFHDaWk19E=;
+ b=M58iJZNJpEVg7eiL6RhiDhhlXi46sOG0SiSxB45/tqPDRKWxmZ1OvFyx6FaGpWASdNSNnx
+ mr7U8CgKmVtr7KROOY4vcmPwFXEt+E4P2RQkFAZ3zroBhU2USd5TxiQm1DWmIjmasKUa9L
+ CVHFdYyazECUU+XlJYKVlQoCsrAAVu4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-mek8KUImNu2L2N8BSM40Hg-1; Wed,
+ 21 Feb 2024 03:18:16 -0500
+X-MC-Unique: mek8KUImNu2L2N8BSM40Hg-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A8F701064FAC;
- Wed, 21 Feb 2024 08:16:27 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 240E41C04B70;
+ Wed, 21 Feb 2024 08:18:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 83E82492BD7;
- Wed, 21 Feb 2024 08:16:27 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id EF63F1C1A803;
+ Wed, 21 Feb 2024 08:18:15 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7EF3221E66D5; Wed, 21 Feb 2024 09:16:26 +0100 (CET)
+ id E21F521E66C8; Wed, 21 Feb 2024 09:18:14 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
@@ -56,17 +57,18 @@ Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
  Sriram Yagnaraman <sriram.yagnaraman@est.tech>,  Jason Wang
  <jasowang@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
  <its@irrelevant.dk>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org
-Subject: Re: [PATCH v6 14/15] vfio: Avoid inspecting option QDict for rombar
-In-Reply-To: <20240220-reuse-v6-14-2e42a28b0cf2@daynix.com> (Akihiko Odaki's
- message of "Tue, 20 Feb 2024 21:24:49 +0900")
+Subject: Re: [PATCH v6 15/15] hw/qdev: Remove opts member
+In-Reply-To: <20240220-reuse-v6-15-2e42a28b0cf2@daynix.com> (Akihiko Odaki's
+ message of "Tue, 20 Feb 2024 21:24:50 +0900")
 References: <20240220-reuse-v6-0-2e42a28b0cf2@daynix.com>
- <20240220-reuse-v6-14-2e42a28b0cf2@daynix.com>
-Date: Wed, 21 Feb 2024 09:16:26 +0100
-Message-ID: <87wmqyz0yt.fsf@pond.sub.org>
+ <20240220-reuse-v6-15-2e42a28b0cf2@daynix.com>
+Date: Wed, 21 Feb 2024 09:18:14 +0100
+Message-ID: <87sf1mz0vt.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -76,7 +78,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,42 +96,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-> Use pci_rom_bar_explicitly_enabled() to determine if rombar is explicitly
-> enabled.
+> It is no longer used.
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  hw/vfio/pci.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  include/hw/qdev-core.h |  4 ----
+>  hw/core/qdev.c         |  1 -
+>  system/qdev-monitor.c  | 12 +++++++-----
+>  3 files changed, 7 insertions(+), 10 deletions(-)
 >
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 4fa387f0430d..647f15b2a060 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1012,7 +1012,6 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
->  {
->      uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
->      off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
-> -    DeviceState *dev = DEVICE(vdev);
->      char *name;
->      int fd = vdev->vbasedev.fd;
->  
-> @@ -1046,7 +1045,7 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+> index 9228e96c87e9..5954404dcbfe 100644
+> --- a/include/hw/qdev-core.h
+> +++ b/include/hw/qdev-core.h
+> @@ -237,10 +237,6 @@ struct DeviceState {
+>       * @pending_deleted_expires_ms: optional timeout for deletion events
+>       */
+>      int64_t pending_deleted_expires_ms;
+> -    /**
+> -     * @opts: QDict of options for the device
+> -     */
+> -    QDict *opts;
+>      /**
+>       * @hotplugged: was device added after PHASE_MACHINE_READY?
+>       */
+> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> index c68d0f7c512f..7349c9a86be8 100644
+> --- a/hw/core/qdev.c
+> +++ b/hw/core/qdev.c
+> @@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
+>          dev->canonical_path =3D NULL;
 >      }
->  
->      if (vfio_opt_rom_in_denylist(vdev)) {
-> -        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
-> +        if (pci_rom_bar_explicitly_enabled(&vdev->pdev)) {
->              warn_report("Device at %s is known to cause system instability"
->                          " issues during option rom execution",
->                          vdev->vbasedev.name);
+>=20=20
+> -    qobject_unref(dev->opts);
+>      g_free(dev->id);
+>  }
+>=20=20
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index a13db763e5dd..71c00f62ee38 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -625,6 +625,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *=
+opts,
+>      char *id;
+>      DeviceState *dev =3D NULL;
+>      BusState *bus =3D NULL;
+> +    QDict *properties;
+>=20=20
+>      driver =3D qdict_get_try_str(opts, "driver");
+>      if (!driver) {
+> @@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict=
+ *opts,
+>      }
+>=20=20
+>      /* set properties */
+> -    dev->opts =3D qdict_clone_shallow(opts);
+> -    qdict_del(dev->opts, "driver");
+> -    qdict_del(dev->opts, "bus");
+> -    qdict_del(dev->opts, "id");
+> +    properties =3D qdict_clone_shallow(opts);
+> +    qdict_del(properties, "driver");
+> +    qdict_del(properties, "bus");
+> +    qdict_del(properties, "id");
+>=20=20
+> -    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_=
+json,
+> +    object_set_properties_from_keyval(&dev->parent_obj, properties, from=
+_json,
+>                                        errp);
+> +    qobject_unref(properties);
+>      if (*errp) {
+>          goto err_del_dev;
+>      }
 
-Consider -device ...,rombar=0xffffffff.
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
-Before the patch, the condition is true.
-
-Afterwards, it's false.
-
-Do we care?
+Depends on the previous few patches, of course.
 
 
