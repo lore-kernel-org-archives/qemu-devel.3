@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC92C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 22:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EDB5C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 22:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuvM-0006LG-Tj; Wed, 21 Feb 2024 17:18:45 -0500
+	id 1rcuyj-0002Ih-HP; Wed, 21 Feb 2024 17:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rcuvL-0006Kc-6k
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 17:18:43 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1rcuyi-0002IY-EZ
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 17:22:12 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rcuvJ-00052O-DD
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 17:18:42 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e4670921a4so2569885b3a.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 14:18:41 -0800 (PST)
+ id 1rcuyc-0005pQ-UG
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 17:22:11 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e3ffafa708so4376505b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 14:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708553920; x=1709158720; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3eOoPoBtiVXDT6AV5oY9oRUy6gnV0e2NQmiQBMRCPgQ=;
- b=CMffqOAetoghoFLva0S5YmV0XXqWZp9kwMc1eeXLpcQKhOi3XMPCP5wi+1C+aNXEpB
- NGn0wa9HmIdP32yW9qR2R6wbWIE3Viax61AuBrnxlrCylyCQdYqMCCnJ0VZSPYJh5XpQ
- IObRmWYm7/+a0gtd5+O6dhM2yd3nyPNsbA7gMbYnVhQYdu5uQekf7J4QfNcG17P6m0ux
- atXJVBtAIdSbTLCFTHBv+bTv/yoh/7z0u2QH6fe/52QdX0jc9N06M0TCtcE9neUTs3Ft
- 8K54tN75w7P2f1CirOOZGsYPUvTg1GATvxYcwEXFtO7ohM+cuB3HEqMk91wyKr/7PLdd
- 7wjQ==
+ d=gmail.com; s=20230601; t=1708554125; x=1709158925; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Q/PnaOwqVbcHGb/A3Q8ZzkQufGjjKSkGSQi76MFXAs0=;
+ b=Y+bnNoW8IR9WPS11A7KC8t9WHO7jw/xikhnLoZY8X8Qg+JPenxySK7qTfSxmg1D+b8
+ PZDkrTLhUZ+RyexVyEadugQvLNqmkWZl+C56ngu8uAbnK/jDIyQMry3PF1yPSJb40UKj
+ pHS3VKdLgBV8pVD8o7tWwwYJBUr5QiQ7bcTudTJzE89cqW8sJrUWswtuXSF4GCaONjjE
+ DREwyG5lEU7LvKV/Zd48rYeNOJKxQeafcrKKkIcCqLJ/xMEX7O6KLluh9wcHIlUedVrs
+ Pnwx6y8KZQzoMHQRMmlWXzRRR9LDtaEitxtmea/jrJ0D1OQnQmrebohJSAGBqC7ehm08
+ dXeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708553920; x=1709158720;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3eOoPoBtiVXDT6AV5oY9oRUy6gnV0e2NQmiQBMRCPgQ=;
- b=jB9XRApjRHuS4mkEZ/oPb429oTCbpEHtuB93TWpUaouoc3+bBRHrB/Y/flVrX/x4tH
- 8qK+BpzQEsfYSSON091xYXzbGfVQgDv6LEH0cv14R+RDj3YlOsw/E+pm8DnA5A9nDCv2
- Y+QvkdgbxdZTyOgcKR7AK9Lcz+LzSwSFYh9EwndiVuQdjGVlAJd2ymt1lHmWQdpfMabr
- msHeQPetSxtm7XNl6Ehg1C4ZDXA20b/Woc7QAnP/dFUMDeWO7WPHfN8XGZeg42jVWMoX
- PFCoLGytvfhn5SfO4khwpeUAsmMYH3Dr46zVDcDSnF5QnkwOhwBH9CRe25Je0xD5v/7n
- 6VTQ==
-X-Gm-Message-State: AOJu0YxEs//BTNUdsk9cT3AEVnTp0UJtl6S+rSVnkCT7gFB/g5Vyd8VI
- lsD8aA5OzQ++xs2ISFE/HXXBK+ctikjtM1Vzoethu5hwDcEvZZGMuljZBsFe
-X-Google-Smtp-Source: AGHT+IFsr8K1nO/2YAfQgcGS4KCkKl0rtcFgGDEJYzvTIO3VbMJ8KMSGzsH6Rz4SfpK0xt8N3ycTIg==
-X-Received: by 2002:a05:6a20:55a1:b0:19e:9966:228d with SMTP id
- kk33-20020a056a2055a100b0019e9966228dmr16525661pzb.20.1708553919772; 
- Wed, 21 Feb 2024 14:18:39 -0800 (PST)
-Received: from localhost.localdomain ([2601:641:300:14de:11c8:8961:5acd:73dd])
+ d=1e100.net; s=20230601; t=1708554125; x=1709158925;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q/PnaOwqVbcHGb/A3Q8ZzkQufGjjKSkGSQi76MFXAs0=;
+ b=tT5vqD+37n3DILJvxbS/Mzj6Ewu3PAoFM3nZ3pTzd3eyMQGNbiv59jhtLEBIHoqCol
+ axH5owrfj53slYdQRAZrx0DIQoGB5uF5LIcLswoRczajW1yEgwHUBoABgB1gPzUjhxSf
+ dVJGhIeBgOCfv65SPf9CJy7CIhmd0wMB2kabrytHzHFcLaOaYc+M3PXNp9765E2pBeeE
+ lSaS+TCGyG8ZlumutEUt7EswguTFOFKIAikkSXA0CRxPKpDzuhyX3oN6977wf/rJ6S3O
+ +ZMDzewNoFpBGqNxgouQEyszn3/S+9djQvnax6dPlGAabYuw4vvSAsjyfpdoeeuoyeJM
+ JDJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9mRtKUrF+kudlhKu8gtHmWSlFCh3eotyK0B7XPSZAV+Wn8zrtuvWcLSgrYzZ5hqxc7LHZQ5S2KIX7rRI43KF1Zk99DRU=
+X-Gm-Message-State: AOJu0Yy9WJ6xg0GrjO6ExQCyRvoXm+Ad3V6nBxlDYynlu4v3MGDQ/i/R
+ kw7/KksezoMIHowIEmZubMv7b2uVX/z05iIPnLzyhoNw36ysTLxGwsYYt4oT
+X-Google-Smtp-Source: AGHT+IHwURnOx6QyZcZrkDLAflwFBQLraM1k3g9+2oQZu9DUxd+ecXDo6UBD9GZ2wROSr9YhnDCdUQ==
+X-Received: by 2002:a05:6a21:9102:b0:1a0:b05d:2d04 with SMTP id
+ tn2-20020a056a21910200b001a0b05d2d04mr7815249pzb.26.1708554125276; 
+ Wed, 21 Feb 2024 14:22:05 -0800 (PST)
+Received: from debian ([2601:641:300:14de:11c8:8961:5acd:73dd])
  by smtp.gmail.com with ESMTPSA id
- x22-20020a056a000bd600b006e47664b05dsm4635952pfu.212.2024.02.21.14.18.38
+ t33-20020a056a0013a100b006e3635c5641sm8708717pfg.25.2024.02.21.14.22.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Feb 2024 14:18:39 -0800 (PST)
-From: nifan.cxl@gmail.com
-To: qemu-devel@nongnu.org
-Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
- a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
- nifan.cxl@gmail.com, jim.harris@samsung.com, Fan Ni <fan.ni@samsung.com>
-Subject: [PATCH v2] hw/cxl/cxl-mailbox-utils: remove unneeded mailbox output
+ Wed, 21 Feb 2024 14:22:05 -0800 (PST)
+From: fan <nifan.cxl@gmail.com>
+X-Google-Original-From: fan <fan@debian>
+Date: Wed, 21 Feb 2024 14:21:54 -0800
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ linux-cxl@vger.kernel.org, gregory.price@memverge.com,
+ ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net,
+ nmtadam.samsung@gmail.com, jim.harris@samsung.com,
+ Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH] hw/cxl/cxl-mailbox-utils: remove unneeded mailbox output
  payload space zeroing
-Date: Wed, 21 Feb 2024 14:18:11 -0800
-Message-ID: <20240221221824.1092966-1-nifan.cxl@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Message-ID: <ZdZ3gvK-ExEYkNSI@debian>
+References: <20240221185425.1088766-1-nifan.cxl@gmail.com>
+ <5c0bbc43-b5bb-41b8-8c4c-3d58efb687ce@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x435.google.com
+In-Reply-To: <5c0bbc43-b5bb-41b8-8c4c-3d58efb687ce@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,79 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+On Wed, Feb 21, 2024 at 09:59:49PM +0100, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> On 21/2/24 19:53, nifan.cxl@gmail.com wrote:
+> > From: Fan Ni <fan.ni@samsung.com>
+> > 
+> > The whole mailbox output payload space is already zeroed after copying
+> > out the input payload, which happens before processing the specific mailbox
+> > command:
+> > https://elixir.bootlin.com/qemu/latest/source/hw/cxl/cxl-device-utils.c#L204
+> 
+> Since "latest" isn't stable, this link won't be accurate in 6 months.
+> 
+> Please use the current release:
+> https://elixir.bootlin.com/qemu/v8.2.1/source/hw/cxl/cxl-device-utils.c#L204
+> 
 
-The whole mailbox output payload space is already zeroed after copying
-out the input payload, which happens before processing the specific mailbox
-command:
-https://elixir.bootlin.com/qemu/v8.2.1/source/hw/cxl/cxl-device-utils.c#L204
+Thanks, Philippe. 
 
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c | 7 -------
- 1 file changed, 7 deletions(-)
+Just sent out v2 as you suggested.
+https://lore.kernel.org/linux-cxl/20240221221824.1092966-1-nifan.cxl@gmail.com/T/#u
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index e5eb97cb91..fda88470a3 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -226,7 +226,6 @@ static CXLRetCode cmd_events_get_records(const struct cxl_cmd *cmd,
-     log_type = payload_in[0];
- 
-     pl = (CXLGetEventPayload *)payload_out;
--    memset(pl, 0, sizeof(*pl));
- 
-     max_recs = (cxlds->payload_size - CXL_EVENT_PAYLOAD_HDR_SIZE) /
-                 CXL_EVENT_RECORD_SIZE;
-@@ -264,7 +263,6 @@ static CXLRetCode cmd_events_get_interrupt_policy(const struct cxl_cmd *cmd,
-     CXLEventLog *log;
- 
-     policy = (CXLEventInterruptPolicy *)payload_out;
--    memset(policy, 0, sizeof(*policy));
- 
-     log = &cxlds->event_logs[CXL_EVENT_TYPE_INFO];
-     if (log->irq_enabled) {
-@@ -363,7 +361,6 @@ static CXLRetCode cmd_infostat_identify(const struct cxl_cmd *cmd,
-     QEMU_BUILD_BUG_ON(sizeof(*is_identify) != 18);
- 
-     is_identify = (void *)payload_out;
--    memset(is_identify, 0, sizeof(*is_identify));
-     is_identify->pcie_vid = class->vendor_id;
-     is_identify->pcie_did = class->device_id;
-     if (object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_USP)) {
-@@ -597,7 +594,6 @@ static CXLRetCode cmd_infostat_bg_op_sts(const struct cxl_cmd *cmd,
-     QEMU_BUILD_BUG_ON(sizeof(*bg_op_status) != 8);
- 
-     bg_op_status = (void *)payload_out;
--    memset(bg_op_status, 0, sizeof(*bg_op_status));
-     bg_op_status->status = cci->bg.complete_pct << 1;
-     if (cci->bg.runtime > 0) {
-         bg_op_status->status |= 1U << 0;
-@@ -636,7 +632,6 @@ static CXLRetCode cmd_firmware_update_get_info(const struct cxl_cmd *cmd,
-     }
- 
-     fw_info = (void *)payload_out;
--    memset(fw_info, 0, sizeof(*fw_info));
- 
-     fw_info->slots_supported = 2;
-     fw_info->slot_info = BIT(0) | BIT(3);
-@@ -792,7 +787,6 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-     }
- 
-     id = (void *)payload_out;
--    memset(id, 0, sizeof(*id));
- 
-     snprintf(id->fw_revision, 0x10, "BWFW VERSION %02d", 0);
- 
-@@ -1079,7 +1073,6 @@ static CXLRetCode cmd_media_get_poison_list(const struct cxl_cmd *cmd,
-     out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-     assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
- 
--    memset(out, 0, out_pl_len);
-     QLIST_FOREACH(ent, poison_list, node) {
-         uint64_t start, stop;
- 
--- 
-2.43.0
+Fan
 
+> > 
+> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> > ---
+> >   hw/cxl/cxl-mailbox-utils.c | 7 -------
+> >   1 file changed, 7 deletions(-)
+> 
 
