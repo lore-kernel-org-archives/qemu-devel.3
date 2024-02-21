@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E9FC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ACC8C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchtZ-0007R9-LG; Wed, 21 Feb 2024 03:24:01 -0500
+	id 1rchra-0001xi-Fl; Wed, 21 Feb 2024 03:21:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchtU-0007Hy-S6; Wed, 21 Feb 2024 03:23:57 -0500
+ id 1rchrP-0001bQ-Ln; Wed, 21 Feb 2024 03:21:47 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchtS-0002YY-PN; Wed, 21 Feb 2024 03:23:56 -0500
+ id 1rchrO-0002Cj-3A; Wed, 21 Feb 2024 03:21:47 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E4A24F3E0;
- Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C8FBC4F3CC;
+ Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 08CCF860BF;
- Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
-Received: (nullmailer pid 2142091 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 92F06860AB;
+ Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
+Received: (nullmailer pid 2142028 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 34/60] virtio-gpu: Correct
- virgl_renderer_resource_get_info() error check
-Date: Wed, 21 Feb 2024 11:20:22 +0300
-Message-Id: <20240221082058.2141850-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sven Schnelle <svens@stackframe.org>,
+ Thomas Huth <thuth@redhat.com>, Helge Deller <deller@gmx.de>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 14/60] hw/scsi/lsi53c895a: add missing decrement of
+ reentrancy counter
+Date: Wed, 21 Feb 2024 11:20:02 +0300
+Message-Id: <20240221082058.2141850-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,64 +63,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Sven Schnelle <svens@stackframe.org>
 
-virgl_renderer_resource_get_info() returns errno and not -1 on error.
-Correct the return-value check.
+When the maximum count of SCRIPTS instructions is reached, the code
+stops execution and returns, but fails to decrement the reentrancy
+counter. This effectively renders the SCSI controller unusable
+because on next entry the reentrancy counter is still above the limit.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-Id: <20240129073921.446869-1-dmitry.osipenko@collabora.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 574b64aa6754ba491f51024c5a823a674d48a658)
+This bug was seen on HP-UX 10.20 which seems to trigger SCRIPTS
+loops.
+
+Fixes: b987718bbb ("hw/scsi/lsi53c895a: Fix reentrancy issues in the LSI controller (CVE-2023-0330)")
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Message-ID: <20240128202214.2644768-1-svens@stackframe.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit 8b09b7fe47082c69295a0fc0cc01b041b6385025)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
-index d1ccdf7d06..51da0e3667 100644
---- a/contrib/vhost-user-gpu/virgl.c
-+++ b/contrib/vhost-user-gpu/virgl.c
-@@ -327,7 +327,7 @@ virgl_get_resource_info_modifiers(uint32_t resource_id,
- #ifdef VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION
-     struct virgl_renderer_resource_info_ext info_ext;
-     ret = virgl_renderer_resource_get_info_ext(resource_id, &info_ext);
--    if (ret < 0) {
-+    if (ret) {
-         return ret;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 634ed49c2e..afbea0fefa 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -1159,6 +1159,7 @@ again:
+         lsi_script_scsi_interrupt(s, LSI_SIST0_UDC, 0);
+         lsi_disconnect(s);
+         trace_lsi_execute_script_stop();
++        reentrancy_level--;
+         return;
      }
- 
-@@ -335,7 +335,7 @@ virgl_get_resource_info_modifiers(uint32_t resource_id,
-     *modifiers = info_ext.modifiers;
- #else
-     ret = virgl_renderer_resource_get_info(resource_id, info);
--    if (ret < 0) {
-+    if (ret) {
-         return ret;
-     }
- 
-@@ -372,7 +372,7 @@ virgl_cmd_set_scanout(VuGpu *g,
-         uint64_t modifiers = 0;
-         ret = virgl_get_resource_info_modifiers(ss.resource_id, &info,
-                                                 &modifiers);
--        if (ret == -1) {
-+        if (ret) {
-             g_critical("%s: illegal resource specified %d\n",
-                        __func__, ss.resource_id);
-             cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 8bb7a2c21f..9f34d0e661 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -181,7 +181,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
-         memset(&info, 0, sizeof(info));
-         ret = virgl_renderer_resource_get_info(ss.resource_id, &info);
- #endif
--        if (ret == -1) {
-+        if (ret) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "%s: illegal resource specified %d\n",
-                           __func__, ss.resource_id);
+     insn = read_dword(s, s->dsp);
 -- 
 2.39.2
 
