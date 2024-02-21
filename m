@@ -4,90 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987EFC5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C965C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:56:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoVu-0004cd-6w; Wed, 21 Feb 2024 10:28:02 -0500
+	id 1rcoZm-00045J-M6; Wed, 21 Feb 2024 10:32:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcoMr-0004vi-5i
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcoP0-0004ab-Cp; Wed, 21 Feb 2024 10:20:54 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcjN4-00085m-Oo
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 04:58:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708509514;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tQq2OGiEvUR13+YGwxea3l3F67Nk2MzZ6m4iHz1Wq60=;
- b=Zcs60qdinuldoKIJlBp3LyqVEccxJuhA2a+uNLburv8+RISM2fCabM0PkYo4zM5bSLx7k/
- 460rRNr6vrQPy21Gs8dnfi+AuwlUTIJxRkEtwlpWJ6P3rrYuGFrfVuBxX6zRA28bLgvTk9
- nfgKqlUEG18faev56hY2LPuBi7B5yqY=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-HuCYohnkNsaVK7zufSTYIQ-1; Wed, 21 Feb 2024 04:58:32 -0500
-X-MC-Unique: HuCYohnkNsaVK7zufSTYIQ-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-5ce9b15f4ccso2810042a12.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 01:58:32 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708509511; x=1709114311;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tQq2OGiEvUR13+YGwxea3l3F67Nk2MzZ6m4iHz1Wq60=;
- b=f7DVjK13syebTN9OoWxa6rNYmal0odxyGcd8A4yjhQkdC1AGh56thhcn3UlPO4iB9R
- vxI+XGdB2G5CFxoEV8uz5pyWW0/UEhsZJl1cf9H8MD0uXDXWBiPaE7WxHY9/MEAQUw5w
- EqXmMr6IJ5pc6bet9731Mb4pOYg9VJqluq2x3HiQhlcV8OwRKh3FsL8x66npGlhYylGA
- Kyot3jhFtipKrXbdOwtudy70nf4bpPGhApQhRx6jd+RDMyas/fgurt70NwakW6aLk7e7
- P2I8igEq4maOsSFpTPZrS4THOy3OpEZbv4/aCrJwkG+76nmL9lj96nFjjluM2fIMTOd0
- De+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1FIi4zU/r8CBo7h+/cLqRFTzB/pnSpsBnbFGmN447QC+Hw3xyz9yC0coWRs6Tc/1kucHXOfi52a/kHcQURdysMGyIcrw=
-X-Gm-Message-State: AOJu0YzoZXxC3npFWizZ9Hb/4Hr/xMi3WBCsPEm2Qz6Zh8YO9UgjNMB2
- U/COen39qHzHvj2RChZuWMUkMiSaqdssNMVmraWxyiq5l2nPOLxrhuqi5CcUJ9BTfkL6hJiPJl3
- /taCsnk6OxpmcxDt8FOuwLp2M7pdMeOh1oqU+aRot6KtAzHWwLlKC
-X-Received: by 2002:a05:6a20:72a5:b0:1a0:b3c0:a080 with SMTP id
- o37-20020a056a2072a500b001a0b3c0a080mr5303689pzk.4.1708509511417; 
- Wed, 21 Feb 2024 01:58:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVNbfgzu+D14nGvoXEMtul3WAzdFIrhuIYWZii7HbKGziAkmdU7hbJIzn9A6t25J9w/gK59g==
-X-Received: by 2002:a05:6a20:72a5:b0:1a0:b3c0:a080 with SMTP id
- o37-20020a056a2072a500b001a0b3c0a080mr5303678pzk.4.1708509511062; 
- Wed, 21 Feb 2024 01:58:31 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- bn23-20020a056a00325700b006e0416c42c3sm8456508pfb.198.2024.02.21.01.58.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Feb 2024 01:58:30 -0800 (PST)
-Date: Wed, 21 Feb 2024 17:58:24 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] qapi: Misc cleanups to migrate QAPIs
-Message-ID: <ZdXJQEK5jd_nVyWo@x1n>
-References: <20240216195659.189091-1-het.gala@nutanix.com>
- <87edd61ezt.fsf@pond.sub.org>
- <b1ce8254-24e8-487e-8da0-d8916f53fcb4@nutanix.com>
- <ZdWzmbOuCVk8GZMn@x1n> <87sf1mxlqb.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchus-0002pk-N6; Wed, 21 Feb 2024 03:25:24 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 102D74F3EC;
+ Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id CF1B7860CB;
+ Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
+Received: (nullmailer pid 2142128 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 46/60] target/arm: Don't get MDCR_EL2 in
+ pmu_counter_enabled() before checking ARM_FEATURE_PMU
+Date: Wed, 21 Feb 2024 11:20:34 +0300
+Message-Id: <20240221082058.2141850-46-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87sf1mxlqb.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,23 +65,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 21, 2024 at 09:30:52AM +0100, Markus Armbruster wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > Thanks, Markus.
-> 
-> [...]
-> 
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> >
-> > Markus, do you want us to pick it up, or let it go via qapi?
-> 
-> I can stick it into my next qapi PR in a few days, if you guys don't
-> beat me to the punch.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-That works, thanks!
+It doesn't make sense to read the value of MDCR_EL2 on a non-A-profile
+CPU, and in fact if you try to do it we will assert:
 
+#6  0x00007ffff4b95e96 in __GI___assert_fail
+    (assertion=0x5555565a8c70 "!arm_feature(env, ARM_FEATURE_M)", file=0x5555565a6e5c "../../target/arm/helper.c", line=12600, function=0x5555565a9560 <__PRETTY_FUNCTION__.0> "arm_security_space_below_el3") at ./assert/assert.c:101
+#7  0x0000555555ebf412 in arm_security_space_below_el3 (env=0x555557bc8190) at ../../target/arm/helper.c:12600
+#8  0x0000555555ea6f89 in arm_is_el2_enabled (env=0x555557bc8190) at ../../target/arm/cpu.h:2595
+#9  0x0000555555ea942f in arm_mdcr_el2_eff (env=0x555557bc8190) at ../../target/arm/internals.h:1512
+
+We might call pmu_counter_enabled() on an M-profile CPU (for example
+from the migration pre/post hooks in machine.c); this should always
+return false because these CPUs don't set ARM_FEATURE_PMU.
+
+Avoid the assertion by not calling arm_mdcr_el2_eff() before we
+have done the early return for "PMU not present".
+
+This fixes an assertion failure if you try to do a loadvm or
+savevm for an M-profile board.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2155
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240208153346.970021-1-peter.maydell@linaro.org
+(cherry picked from commit ac1d88e9e7ca0bed83e91e07ce6d0597f10cc77d)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 6515c5e89c..df1646de3a 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -1169,13 +1169,21 @@ static bool pmu_counter_enabled(CPUARMState *env, uint8_t counter)
+     bool enabled, prohibited = false, filtered;
+     bool secure = arm_is_secure(env);
+     int el = arm_current_el(env);
+-    uint64_t mdcr_el2 = arm_mdcr_el2_eff(env);
+-    uint8_t hpmn = mdcr_el2 & MDCR_HPMN;
++    uint64_t mdcr_el2;
++    uint8_t hpmn;
+ 
++    /*
++     * We might be called for M-profile cores where MDCR_EL2 doesn't
++     * exist and arm_mdcr_el2_eff() will assert, so this early-exit check
++     * must be before we read that value.
++     */
+     if (!arm_feature(env, ARM_FEATURE_PMU)) {
+         return false;
+     }
+ 
++    mdcr_el2 = arm_mdcr_el2_eff(env);
++    hpmn = mdcr_el2 & MDCR_HPMN;
++
+     if (!arm_feature(env, ARM_FEATURE_EL2) ||
+             (counter < hpmn || counter == 31)) {
+         e = env->cp15.c9_pmcr & PMCRE;
 -- 
-Peter Xu
+2.39.2
 
 
