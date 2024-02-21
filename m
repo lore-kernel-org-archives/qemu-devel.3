@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71EE7C54788
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7F1C48BEB
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuTP-0002r8-R2; Wed, 21 Feb 2024 16:49:51 -0500
+	id 1rcuU9-0005MD-Ta; Wed, 21 Feb 2024 16:50:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuTG-0001aY-Tz; Wed, 21 Feb 2024 16:49:43 -0500
+ id 1rcuTv-0004tn-B1; Wed, 21 Feb 2024 16:50:24 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuTF-0007hD-74; Wed, 21 Feb 2024 16:49:42 -0500
+ id 1rcuTo-0007yp-HX; Wed, 21 Feb 2024 16:50:22 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA7444F877;
- Thu, 22 Feb 2024 00:47:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3F6D44F87D;
+ Thu, 22 Feb 2024 00:47:48 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 7506A869F8;
+ by tsrv.corpit.ru (Postfix) with SMTP id DDBFA869FE;
  Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
-Received: (nullmailer pid 2339905 invoked by uid 1000);
+Received: (nullmailer pid 2339924 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 27/33] i386/cpuid: Move leaf 7 to correct group
-Date: Thu, 22 Feb 2024 00:47:10 +0300
-Message-Id: <20240221214723.2339742-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 33/33] audio: Depend on dbus_display1_dep
+Date: Thu, 22 Feb 2024 00:47:16 +0300
+Message-Id: <20240221214723.2339742-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,46 +63,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-CPUID leaf 7 was grouped together with SGX leaf 0x12 by commit
-b9edbadefb9e ("i386: Propagate SGX CPUID sub-leafs to KVM") by mistake.
+dbusaudio needs dbus_display1_dep.
 
-SGX leaf 0x12 has its specific logic to check if subleaf (starting from 2)
-is valid or not by checking the bit 0:3 of corresponding EAX is 1 or
-not.
-
-Leaf 7 follows the logic that EAX of subleaf 0 enumerates the maximum
-valid subleaf.
-
-Fixes: b9edbadefb9e ("i386: Propagate SGX CPUID sub-leafs to KVM")
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20240125024016.2521244-4-xiaoyao.li@intel.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 0729857c707535847d7fe31d3d91eb8b2a118e3c)
+Fixes: 739362d4205c ("audio: add "dbus" audio backend")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20240214-dbus-v7-1-7eff29f04c34@daynix.com>
+(cherry picked from commit d67611907590a1e6c998b7c5a5cb4394acf84329)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: fixup in audio/meson.build due to missing v8.0.0-2306-ga95a464777
+ "audio: dbus requires pixman")
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 5779b80ecb..4d83bb5784 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -1900,7 +1900,6 @@ int kvm_arch_init_vcpu(CPUState *cs)
-                 c = &cpuid_data.entries[cpuid_i++];
-             }
-             break;
--        case 0x7:
-         case 0x12:
-             for (j = 0; ; j++) {
-                 c->function = i;
-@@ -1920,6 +1919,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
-                 c = &cpuid_data.entries[cpuid_i++];
-             }
-             break;
-+        case 0x7:
-         case 0x14:
-         case 0x1d:
-         case 0x1e: {
+diff --git a/audio/meson.build b/audio/meson.build
+index 34aed78342..ce171f710d 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -29,7 +29,8 @@ endforeach
+ 
+ if dbus_display
+     module_ss = ss.source_set()
+-    module_ss.add(when: gio, if_true: files('dbusaudio.c'))
++    module_ss.add(when: [gio, dbus_display1_dep],
++                  if_true: files('dbusaudio.c'))
+     audio_modules += {'dbus': module_ss}
+ endif
+ 
 -- 
 2.39.2
 
