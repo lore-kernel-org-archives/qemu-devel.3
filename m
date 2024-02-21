@@ -4,85 +4,174 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0604C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C91C5478B
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcpxc-0006Ve-Hs; Wed, 21 Feb 2024 12:00:44 -0500
+	id 1rcpzS-0000px-D7; Wed, 21 Feb 2024 12:02:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3MizWZQwKChkCz0763HI34zC5DD5A3.1DBF3BJ-23K3ACDC5CJ.DG5@flex--nabihestefan.bounces.google.com>)
- id 1rcpxY-0006Os-DX
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:00:40 -0500
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3MizWZQwKChkCz0763HI34zC5DD5A3.1DBF3BJ-23K3ACDC5CJ.DG5@flex--nabihestefan.bounces.google.com>)
- id 1rcpxW-00038K-CS
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:00:40 -0500
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-608405e0340so14801997b3.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:00:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rcpyx-000071-S3
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:02:08 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rcpyu-0003Kj-KC
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:02:07 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41LDjKsH004937; Wed, 21 Feb 2024 17:02:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=LW73YH1DX/1JkAjV/dRpCZo2f8Vpjy2MiX7MYrO9xuU=;
+ b=W3/nYdkoi4eY+Pqyiv0A1/xZ7xtskWfzujIEVhQxVB/nvxNGy66oaR9zGTtb+PsP7XKg
+ 6/F5mLGd2L69ddHmkzecln8NUfwSY14nQMkvyTe2K1jrClmhKuRedZZVU8UX8w3F+fSm
+ 1gIRWLLSTHg4OYWptvOF5DQyoz+WbR++sQci4zYOnMIS0xLASOj/j9KlrmxUAjecNAww
+ py3HfA0jJxF+74j+JOwedRznZQFrV67bpzdpaRpSA+qkZCi63xzFIsPLNFt/bzk6zyXz
+ xzsKLOEip6XJwuXb4aGcFjAe7LTgaaymAzxiTutImyBwElvyIxDGKYQnYkT6mIbafZdk Tw== 
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wakd2ad5t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 21 Feb 2024 17:02:01 +0000
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41LGXueK037804; Wed, 21 Feb 2024 17:02:00 GMT
+Received: from nam02-dm3-obe.outbound.protection.outlook.com
+ (mail-dm3nam02lp2041.outbound.protection.outlook.com [104.47.56.41])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wak8991fr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 21 Feb 2024 17:02:00 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=j6wgUJzSw3wjfniaWB4ADIieEL7HJcSSxCSQiY6Rx1LCGjJAsVdBv7E9a4P1++BamPZmBdHTMqKLWSsL6EmqluFWC8SpZxKLKn8JWhZDa5VPQ72apdI1d8Otdsyus8tLsIDPqVbBhzLoxLKvUe43KjNSKyF2yxRKZ7E6feFBJ+GMm8iSIvZ3pFCV52VQhkxLk2ER08LyT/wGTWn/s1iu9vCWLxmUzfOPgZU1vqJjwjMBo2r5W2oyu/E4yzejS+MnbcNS35njoct3/4tssVr1UU9I7oeQw+fzCDc9d+kORgmKovoUafBfBQj73InvDSbFGN/mDTiv7Z/9Ca+FKY9tzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LW73YH1DX/1JkAjV/dRpCZo2f8Vpjy2MiX7MYrO9xuU=;
+ b=jtsax5gASzMaAc7tStZElsLUOaDIWsQ2/OC6+04CPg3ulNNd04/nGKNq2y/nZyZ9J/QIiuuRihV9HkZ9j1UJn0VfMQ4kO1tUo89WRKZ0mkv+sm5cGz4DPxKHEFdvyxYYy+/YcdDJjQiyqnJQo2CJrWk+YiOI8e3YGTy7I/pSx5pUBTPaLillLgdNwesDGJG/gcgKIJjezUAuy4cGwCLX3Dsn7kFlptN6TJ4asu5HSvetPKpuoQX3ZRCUw2w8yAV8hR7U4HGHJIXIW8tN/lbk5NYQhOJN9S5AyrNidrFykae/YAcVm95KMasJtKSYS7HI+vvVxr05OJWE7iQOZo6VbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1708534834; x=1709139634; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=pUXKy3XKiq+5p9TeSf8xJ6UxKnHtPGAsZsl63BQGiN8=;
- b=WcEJD6hlJGhEWv7Mf2v1HpEr9gBwOeGZ/C0zuemAUlWm5w9om1lBtVf53c+HxdiY9s
- 398LoKzhlbWpuoszx7As/WouCCkpDvMIH86VNvAoyYk5zbbSx0KUuo1edXpNx4JJRr/F
- Z8c9230E09V2kLTc4egrCDSpgAS3Tmeje5buuWDRsav+ff02I6fTS595ko+fibfPDWPK
- FpY2k6chR7RnJBZsk3FkxY/cfpVxQ4D4WKRjo+8aSUlJYPUcd43r15MIXjIOESCRWqkB
- W9nt/J8mJL+tfV9f2IkHROqMiBkhw9nd44p5y4K7Hg3ERO6A5N0ovg7/dSrtIMjMhBH0
- jAUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708534834; x=1709139634;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pUXKy3XKiq+5p9TeSf8xJ6UxKnHtPGAsZsl63BQGiN8=;
- b=fAEZarx0oEae9tEHEvoBwsfxryMPkeBTgVV05T46JH3pjO4pVozwPxt5QpqkuvV7Cs
- w/NObmZ2IBc8v2H0UEABBITSVDV5wLwk82dnXxVVE/p9X0FZGzLRu6KRzkyYsHrMQrCg
- K5jiUH8l0Pox7jw0yGyNDNksV8f1GkpQk5WNRGskV7F0v0ATCXkpd+1JR9XBO6EUjfWg
- HqdYf2+cjrPi5R7eU86AxYwd40vT90eU7xbjly495BAWNmZxC41ACuJO4Q66qOETDY6U
- NAH7PkFmt+bciLO6xoxeGSbjcHxbSICcbdV4qnyJ4lf/ixzZNOyQt4Xr9WZS6SZY5C27
- kjyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVsNuZhHVpaeGn2/VyWvVAq1w5AZPphaN8Rv6+Mom3eMVqqEw4JpRXhebfTzz5kg89iZGEehPont2NK0xfOYdmgy8diQo=
-X-Gm-Message-State: AOJu0YzbVI254ieShk434/fsBlLHVo43i6/hI9VjRfpax5+4sXt2esZM
- jrWNpmglTS3GF7TfSnC8Z1Ol7DJnJkORlU5HUvUKUc9kY5cQy76gYkM7hWPGAnir5NZMRvquVxu
- gEzX4zD28CtF+pr++CZmv/Uy8yg==
-X-Google-Smtp-Source: AGHT+IFundAyljS/0wGrrnfcyT5GcT6rdSWJljtZkw5WVSSIhsb9mZPjsepb6jSIQlTswmaHnKHFWEmABs8g07C4VQo=
-X-Received: from nabihestefan.c.googlers.com
- ([fda3:e722:ac3:cc00:20:ed76:c0a8:2737])
- (user=nabihestefan job=sendgmr) by 2002:a0d:e692:0:b0:608:6894:120 with SMTP
- id p140-20020a0de692000000b0060868940120mr1008189ywe.4.1708534834637; Wed, 21
- Feb 2024 09:00:34 -0800 (PST)
-Date: Wed, 21 Feb 2024 17:00:27 +0000
-In-Reply-To: <20240221170027.1027325-1-nabihestefan@google.com>
-Mime-Version: 1.0
-References: <20240221170027.1027325-1-nabihestefan@google.com>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <20240221170027.1027325-3-nabihestefan@google.com>
-Subject: [PATCH 2/2] Implement SMBIOS type 9 v2.6
-From: Nabih Estefan <nabihestefan@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- its@irrelevant.dk, kbusch@kernel.org, eric.auger@redhat.com, mst@redhat.com, 
- imammedo@redhat.com, anisinha@redhat.com, flwu@google.com, 
- nabihestefan@google.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3MizWZQwKChkCz0763HI34zC5DD5A3.1DBF3BJ-23K3ACDC5CJ.DG5@flex--nabihestefan.bounces.google.com;
- helo=mail-yw1-x114a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LW73YH1DX/1JkAjV/dRpCZo2f8Vpjy2MiX7MYrO9xuU=;
+ b=N3NUrwpxmYB3ga/KCRK/G6wqKtmZxw4q+iYYcHjw1Q520ld3yXeM4r1uza0Fk2mPYbBmjG7iH0aZ15xPF4TyT8VjPtIr71W/WSxghcfa/4gjyH7s+wXYMXxU7H7RLeCkdsNgXoj5cCuPI91I5p2stnS2Zc/jX3n+gOazwFhfHVE=
+Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
+ by LV8PR10MB7775.namprd10.prod.outlook.com (2603:10b6:408:1ed::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.39; Wed, 21 Feb
+ 2024 17:01:58 +0000
+Received: from SA2PR10MB4684.namprd10.prod.outlook.com
+ ([fe80::c3ce:7c28:7db1:656b]) by SA2PR10MB4684.namprd10.prod.outlook.com
+ ([fe80::c3ce:7c28:7db1:656b%6]) with mapi id 15.20.7292.036; Wed, 21 Feb 2024
+ 17:01:58 +0000
+Message-ID: <e9dcfbd3-e491-4d63-a1ec-7f3b2a00605d@oracle.com>
+Date: Wed, 21 Feb 2024 12:01:57 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 5/5] migration: simplify exec migration functions
+Content-Language: en-US
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <1705099758-211963-1-git-send-email-steven.sistare@oracle.com>
+ <1705099758-211963-6-git-send-email-steven.sistare@oracle.com>
+ <87msrtc479.fsf@suse.de> <87edd5byob.fsf@suse.de>
+From: Steven Sistare <steven.sistare@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <87edd5byob.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY3PR03CA0025.namprd03.prod.outlook.com
+ (2603:10b6:a03:39a::30) To SA2PR10MB4684.namprd10.prod.outlook.com
+ (2603:10b6:806:119::14)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|LV8PR10MB7775:EE_
+X-MS-Office365-Filtering-Correlation-Id: af6ba696-1401-4c77-e781-08dc32fed083
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 8nhsVjLjA9aA0BkQgEDsmuUVpmYKqp/yGp3rSTMTaR3xfoKHHIKzm46rmB8sdU4PbhFy1aN4egDPN5Cq7mywxzf0I3GwwP2ItGEmmJeQEO/pGK0p0vaAo019/QQdTNNHQ1/9kcgraY4qMUekKvrtNjGyPUjsqz2OXPXAZJcjy593EvGKi+ADMVQOtlQTmukglXDn6GIAHlcw0Z1x4QfZ1Dsev7bTneciUQwWxAUBMF1plHSQHppIHwVTJdx8zK4YhCY+kZbL/+25bfVW+Emw5hheA0oIuHAeOnp5ACSM3BWK+3aM8DZ68v/E6bG4cBl06EgOj/rYte3o9ni7taBaUpYGwTNxgFKGCLov5jJUAYW902azv7Sv01mg4OxJC7CPlAg32IJgnsSOrOAJNfFMa+h/ZaOCG0K8ua73f9RmCsFxuuPrPtql0G6vWNe2oqPq64kIsdQZf+cOCMGklBGACDUbBAu26hOWhZhTHJ9Fa7ku9R7NiDJ5/VKxJLj1egicQjoofWmC3jbJ5MV/XnlBJHFRMrdY7LnUTJQitYLeaL0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U29Lby9CbUVVNGVPaE9BV0U1MDArNURMSGxHb0NWU3Q1Qk95bzBCREZEYXF2?=
+ =?utf-8?B?bkJhaFBlMWtxZ0tsUlhaanVrNmpjWWwyY3pXeVdYa0haWDZZMUFySDRISk83?=
+ =?utf-8?B?b1NxVFlOR0VUNHRNc2RLQjhrZUdFbS9VR29KNUNZQzBHVi9Oak56bjlXNC9v?=
+ =?utf-8?B?NHQ2UCttRXdCSXBQRGx5NWxOenhXTFdMdytpZVJ5WndIdG1ldGxaN3I4bWc1?=
+ =?utf-8?B?Und1MEdjMGJVelNaQnBROStnV3k3UVhTTFNqT2JmZmY4UW82cHZaYzVXZko5?=
+ =?utf-8?B?VXk1cmdEdHY4TEEwdC9ncldtQ1Q1Y1ZuWExpOEVGSEFwN3c3bFRxSTErYWZJ?=
+ =?utf-8?B?cVdOa0FyMFJqcm9yYytVUU5XOFJ3ZnRTMjFHT2xuS043bjl6bHZsbE5uQWNT?=
+ =?utf-8?B?VU92NWttdkdmQlE0Y1puZE5kY1lvQkV4WHczS2U5KzJnbVFDY3M0bmxiOUlw?=
+ =?utf-8?B?OEtJMGdtd3NsaFJCbCt4WGZtY2tUOVdzcGNsUmVkS0JpcWVZY0N1N1BVZ2RT?=
+ =?utf-8?B?RE9wUDBVTG9wOWdVNTg1L2ZmaStJQUt3TXVXTWVmNXcydWdxZWcxMkVIVjlE?=
+ =?utf-8?B?elBBV1V6UWh3b2VBVzlaK29Jb094Wm5hVkRaNlRhVWQwTGgrK24rdmpSeEFh?=
+ =?utf-8?B?SWgyQmJTYUsxRzdqQlplWmRIeHBaRVZGRnc2V2Z1VmlYU0Qrd0tDV0ZBTlEy?=
+ =?utf-8?B?OFpqcldmRnJralkzT1VFeVNNN1MvMWlKNllKYUdvMWwyai9ocko0WENzbWpz?=
+ =?utf-8?B?NWhjNE0zcGJUc09aeFAzekZmbVQ1SWlyK3dNV3lONDdLSnFwTStNRlFhZUpX?=
+ =?utf-8?B?VWswTlZOKzRYQkticTBKRURvbWhxMHNGMjlSclVoUjRQdzZnb1A0ZSsvVmZ5?=
+ =?utf-8?B?RFdkMnlMQ1FhUUtwTmpmSTlNcVFIaE4wOVR5Smd0SzBlb3JOeDlndFQ0b2Fs?=
+ =?utf-8?B?eGZVMXM3eTVxTnlvb0tHZGlwL0tFN0RjdkhScWFsNXYwN2d4TkFpS2VRaFBY?=
+ =?utf-8?B?aVRqMlBEa0NEVFFZVFM5M1h5SlBBb20wUFJWVXNTalQyYWNJQWdYaFN5Z2VO?=
+ =?utf-8?B?bE1URkVwMm9hb3Z0WmwwcHdVOXZCdHdzT2tPWWkvd29wT2xlYWoyQVFmM0dJ?=
+ =?utf-8?B?ODVJQitMR0wyNGNsL3hYditpQlFFS010OUtRT2VmV2xxM1E2SGFZMldpOWhx?=
+ =?utf-8?B?M0U0c1piZkp0eWNXVkd3b3c1WE1BMlhEMkF0ZENLclI1OTdkVUdlRGh4Tkdo?=
+ =?utf-8?B?cTJwQzFyNS9CL0pNQ1h1R2o4aVJXYUhrOTVuVW13elA0UmhxM1UyZFl5M0ZF?=
+ =?utf-8?B?a1pWbzVaak9WeVh5S0llK3ozeC9GbTBVL01hb2xiemlwRUFFNG52VjFmRUhp?=
+ =?utf-8?B?SlZ5Mm5vd3JvSGdBRUR0L3J0MkJSY1c3TWhxeWZtQnFvZHoyR1I3b0dVS3VC?=
+ =?utf-8?B?b3BJRk9NQ2s2eTUvQzVNNm9GVWtnK1RGUDJQUjBRejVNRFFiYWdCQ2VZbzJk?=
+ =?utf-8?B?Y1lDUWs2eTgxeEp1MEVYTEVzek9IdjIyOTBUSFVOTGxlUWNuNFdWalI3ZUVv?=
+ =?utf-8?B?T3dPN0h1WDcvVldnZzRUM1RzdmhxVzFLdjZkTDhKUHYrdVVYZzhpVDNkOTNh?=
+ =?utf-8?B?QXlLdFJoSVpPY0U1RlRNeFNSOWRya0RpWnlQMkYreGNiMDZmQnByOGFnWVdQ?=
+ =?utf-8?B?V2JGYlpMem52M0xSTUloUkNjMlFMQUkwckNKTU4way9rZzFxZ0NDTWV3NkU1?=
+ =?utf-8?B?enZOVkx5R3hMbUMwaVhqOCtoR29kZ2JUMThkNmtKY0NUUHFMNGRRTzVLd3By?=
+ =?utf-8?B?Ylc2UWcxRk1GK0xGVGFEeWZUQUFvNy9mR2Nza2FIRWY4ME1OdW50YWkyK3hn?=
+ =?utf-8?B?QUltSnBFNDhVWGQ2eHZJZjJEV2RuMWVEVG1ibWh5Uk1CYlF6UWdBZnlFU2ZL?=
+ =?utf-8?B?ZW1yUU1xOHk0bys1cDV0dGw0L2ErZ2pXbm11VW1mbEZFMWZSMzlGenc2aEp4?=
+ =?utf-8?B?RzVPeVpvZDl6aGZPdlR5WXNUQlNyVE1kbDBUQkw5SmNhYVN0YUZBSmN3OUo2?=
+ =?utf-8?B?L1kwOTB4MlREdmpiQnhrZUI3RXlHQlFwRGQyaTBtYWpLZFZhUFdmcURqMEQr?=
+ =?utf-8?B?Vm5MaTVRVnplRTlSTU9EK1RRNnZkSE80b2lwS0JaNzBSRXN3eEdFeHZpU0ZD?=
+ =?utf-8?B?QUE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: xnLV+jtqg8tawQ0brjtHTx/3HdteEaXn3F8SaprilFpIClslscM1Br5UY+2Mp4ob5jk1W3ZskiiaXmYtv+d9t57qhCccs/dlvJTwQkbl+4PgGxKS+7Jq1r3vxx0P75r1XM2A18HwrAAuiPHRuR8eKDhW88SMGUiEKjtQ8yeTssGlCAB/znFac0i/l8a1eqbhW+OXPVK6OIXS8SFb6QdRbcpK4xR2xWULqj1F4ocHYN8L12xA5aU3yErHRqC/Jeg77Z02qkirlVy5d7u4jkha/nnz5tDeQtSH/ZvPrNNe7lYO3WyW1a1C2byBgnACKDrtisjPGjrPu0IJvYmdgYcG5mUaxX4NBjYPlPKyEY8mAkDtxJkG9kIuP5gJsOm/BJ93GlLSlPdHxqK2w9QcPa6DT7aIOPaFaqAfaMJXIkaIjyWW/yVPBld6iRtR1xrLpNqNpoebd/743W5GWP/f+h/WBMsUfJClsoF+x9xlAF8vVnqFzH2PnpS84irD+Tw40GcoBT14/yZhg/isP3+4L4izLUCGsmKByYr5PqwZ3voXkkQwNSbHf2MVLFBLqcLDcJlFeLgRZkO0grgRlorLs8ww8bZYq/Tj5dga+EPmBqmVmfg=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: af6ba696-1401-4c77-e781-08dc32fed083
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2024 17:01:58.2204 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: s6XQBivWITtiqFwfCsDBBx5JruYzlIjVFE0rntVZAkrAMdKxGkyF5STk1Da2W//9nx2AqpCFmVmFOQPRw77bI7tjgRIHqGJEPSurWPLYJB4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR10MB7775
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-21_04,2024-02-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0
+ adultscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0 malwarescore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402210132
+X-Proofpoint-GUID: d9_rbYZ1mpjjOpRyPrdhLCln7aKRtojY
+X-Proofpoint-ORIG-GUID: d9_rbYZ1mpjjOpRyPrdhLCln7aKRtojY
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,140 +187,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Felix Wu <flwu@google.com>
+On 2/21/2024 10:54 AM, Fabiano Rosas wrote:
+> Fabiano Rosas <farosas@suse.de> writes:
+> 
+>> Steve Sistare <steven.sistare@oracle.com> writes:
+>>
+>>> Simplify the exec migration code by using list utility functions.
+>>>
+>>> As a side effect, this also fixes a minor memory leak.  On function return,
+>>> "g_auto(GStrv) argv" frees argv and each element, which is wrong, because
+>>> the function does not own the individual elements.  To compensate, the code
+>>> uses g_steal_pointer which NULLs argv and prevents the destructor from
+>>> running, but argv is leaked.
+>>>
+>>> Fixes: cbab4face57b ("migration: convert exec backend ...")
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> 
+> You'll have to reintroduce the qemu/cutils.h include:
+> 
+> ../migration/exec.c: In function 'exec_get_cmd_path':
+> ../migration/exec.c:37:5: error: implicit declaration of function 'pstrcat'; did you mean 'strcat'? [-Werror=implicit-function-declaration]
+>    37 |     pstrcat(detected_path, MAX_PATH, "\\cmd.exe");
+>       |     ^~~~~~~
+>       |     strcat
+> ../migration/exec.c:37:5: error: nested extern declaration of 'pstrcat' [-Werror=nested-externs]
 
-Signed-off-by: Felix Wu <flwu@google.com>
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- hw/smbios/smbios.c           | 49 +++++++++++++++++++++++++++++++++---
- include/hw/firmware/smbios.h |  4 +++
- qemu-options.hx              |  2 +-
- 3 files changed, 51 insertions(+), 4 deletions(-)
+Thanks, I will rebase to the tip and verify all is well before I post V5.
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index 38b3ea172c..e3d5d8f2e2 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -123,7 +123,7 @@ static QTAILQ_HEAD(, type8_instance) type8 = QTAILQ_HEAD_INITIALIZER(type8);
- 
- /* type 9 instance for parsing */
- struct type9_instance {
--    const char *slot_designation;
-+    const char *slot_designation, *pcidev;
-     uint8_t slot_type, slot_data_bus_width, current_usage, slot_length,
-             slot_characteristics1, slot_characteristics2;
-     uint16_t slot_id;
-@@ -436,6 +436,11 @@ static const QemuOptDesc qemu_smbios_type9_opts[] = {
-         .type = QEMU_OPT_NUMBER,
-         .help = "slot characteristics2, see the spec",
-     },
-+    {
-+        .name = "pci_device",
-+        .type = QEMU_OPT_STRING,
-+        .help = "PCI device, if provided."
-+    }
- };
- 
- static const QemuOptDesc qemu_smbios_type11_opts[] = {
-@@ -866,7 +871,7 @@ static void smbios_build_type_8_table(void)
-     }
- }
- 
--static void smbios_build_type_9_table(void)
-+static void smbios_build_type_9_table(Error **errp)
- {
-     unsigned instance = 0;
-     struct type9_instance *t9;
-@@ -883,6 +888,43 @@ static void smbios_build_type_9_table(void)
-         t->slot_characteristics1 = t9->slot_characteristics1;
-         t->slot_characteristics2 = t9->slot_characteristics2;
- 
-+        if (t9->pcidev) {
-+            PCIDevice *pdev = NULL;
-+            int rc = pci_qdev_find_device(t9->pcidev, &pdev);
-+            if (rc != 0) {
-+                error_setg(errp,
-+                           "No PCI device %s for SMBIOS type 9 entry %s",
-+                           t9->pcidev, t9->slot_designation);
-+                return;
-+            }
-+            /*
-+             * We only handle the case were the device is attached to
-+             * the PCI root bus. The general case is more complex as
-+             * bridges are enumerated later and the table would need
-+             * to be updated at this moment.
-+             */
-+            if (!pci_bus_is_root(pci_get_bus(pdev))) {
-+                error_setg(errp,
-+                           "Cannot create type 9 entry for PCI device %s: "
-+                           "not attached to the root bus",
-+                           t9->pcidev);
-+                return;
-+            }
-+            t->segment_group_number = cpu_to_le16(0);
-+            t->bus_number = pci_dev_bus_num(pdev);
-+            t->device_number = pdev->devfn;
-+        } else {
-+            /*
-+             * Per SMBIOS spec, For slots that are not of the PCI, AGP, PCI-X,
-+             * or PCI-Express type that do not have bus/device/function
-+             * information, 0FFh should be populated in the fields of Segment
-+             * Group Number, Bus Number, Device/Function Number.
-+             */
-+            t->segment_group_number = 0xff;
-+            t->bus_number = 0xff;
-+            t->device_number = 0xff;
-+        }
-+
-         SMBIOS_BUILD_TABLE_POST;
-         instance++;
-     }
-@@ -1207,7 +1249,7 @@ void smbios_get_tables(MachineState *ms,
-         }
- 
-         smbios_build_type_8_table();
--        smbios_build_type_9_table();
-+        smbios_build_type_9_table(errp);
-         smbios_build_type_11_table();
- 
- #define MAX_DIMM_SZ (16 * GiB)
-@@ -1556,6 +1598,7 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
-             t->slot_id = qemu_opt_get_number(opts, "slot_id", 0);
-             t->slot_characteristics1 = qemu_opt_get_number(opts, "slot_characteristics1", 0);
-             t->slot_characteristics2 = qemu_opt_get_number(opts, "slot_characteristics2", 0);
-+            save_opt(&t->pcidev, opts, "pcidev");
-             QTAILQ_INSERT_TAIL(&type9, t, next);
-             return;
-         }
-diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-index 9ab114aea2..c21b8d3285 100644
---- a/include/hw/firmware/smbios.h
-+++ b/include/hw/firmware/smbios.h
-@@ -222,6 +222,10 @@ struct smbios_type_9 {
-     uint16_t slot_id;
-     uint8_t slot_characteristics1;
-     uint8_t slot_characteristics2;
-+    /* SMBIOS spec v2.6+ */
-+    uint16_t segment_group_number;
-+    uint8_t bus_number;
-+    uint8_t device_number;
- } QEMU_PACKED;
- 
- /* SMBIOS type 11 - OEM strings */
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 9ddb1b1fb3..6a16b808cf 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2717,7 +2717,7 @@ SRST
- ``-smbios type=4[,sock_pfx=str][,manufacturer=str][,version=str][,serial=str][,asset=str][,part=str][,processor-family=%d][,processor-id=%d]``
-     Specify SMBIOS type 4 fields
- 
--``-smbios type=9[,slot_designation=str][,slot_type=%d][,slot_data_bus_width=%d][,current_usage=%d][,slot_length=%d][,slot_id=%d][,slot_characteristics1=%d][,slot_characteristics12=%d]``
-+``-smbios type=9[,slot_designation=str][,slot_type=%d][,slot_data_bus_width=%d][,current_usage=%d][,slot_length=%d][,slot_id=%d][,slot_characteristics1=%d][,slot_characteristics12=%d][,pci_device=str]``
-     Specify SMBIOS type 9 fields
- 
- ``-smbios type=11[,value=str][,path=filename]``
--- 
-2.44.0.rc0.258.g7320e95886-goog
-
+- Steve
 
