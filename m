@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4242C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E0AC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuTK-0001tN-7p; Wed, 21 Feb 2024 16:49:46 -0500
+	id 1rcuSN-0004o1-9s; Wed, 21 Feb 2024 16:48:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuTH-0001aZ-6t; Wed, 21 Feb 2024 16:49:43 -0500
+ id 1rcuSK-0004c1-Nb; Wed, 21 Feb 2024 16:48:44 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuTF-0007hJ-Hm; Wed, 21 Feb 2024 16:49:42 -0500
+ id 1rcuSJ-0007X6-14; Wed, 21 Feb 2024 16:48:44 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA5724F878;
+ by isrv.corpit.ru (Postfix) with ESMTP id 31F7A4F86E;
  Thu, 22 Feb 2024 00:47:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 84223869F9;
- Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
-Received: (nullmailer pid 2339908 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id D0E72869EF;
+ Thu, 22 Feb 2024 00:47:24 +0300 (MSK)
+Received: (nullmailer pid 2339877 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ziqiao Kong <ziqiaokong@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 28/33] target/i386: Generate an illegal opcode
- exception on cmp instructions with lock prefix
-Date: Thu, 22 Feb 2024 00:47:11 +0300
-Message-Id: <20240221214723.2339742-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 18/33] tests/acpi: Update DSDT.cxl to reflect change
+ _STA return value.
+Date: Thu, 22 Feb 2024 00:47:01 +0300
+Message-Id: <20240221214723.2339742-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -62,42 +62,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ziqiao Kong <ziqiaokong@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-target/i386: As specified by Intel Manual Vol2 3-180, cmp instructions
-are not allowed to have lock prefix and a `UD` should be raised. Without
-this patch, s1->T0 will be uninitialized and used in the case OP_CMPL.
+_STA will now return 0xB (in common with most other devices)
+rather than not setting the bits to indicate this fake device
+has not been enabled, and self tests haven't passed.
 
-Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
-Message-ID: <20240215095015.570748-2-ziqiaokong@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 99d0dcd7f102c07a510200d768cae65e5db25d23)
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240126120132.24248-13-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit b24a981b9f1c4767aaea815e504a2c7aeb405d72)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: rebuild tests/data/acpi/q35/DSDT.cxl for 7.2.x)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 68c42fd9ff..abacb91ddf 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1501,12 +1501,13 @@ static bool check_iopl(DisasContext *s)
- /* if d == OR_TMP0, it means memory operand (address in A0) */
- static void gen_op(DisasContext *s1, int op, MemOp ot, int d)
- {
-+    /* Invalid lock prefix when destination is not memory or OP_CMPL. */
-+    if ((d != OR_TMP0 || op == OP_CMPL) && s1->prefix & PREFIX_LOCK) {
-+        gen_illegal_opcode(s1);
-+        return;
-+    }
-+
-     if (d != OR_TMP0) {
--        if (s1->prefix & PREFIX_LOCK) {
--            /* Lock prefix when destination is not memory.  */
--            gen_illegal_opcode(s1);
--            return;
--        }
-         gen_op_mov_v_reg(s1, ot, s1->T0, d);
-     } else if (!(s1->prefix & PREFIX_LOCK)) {
-         gen_op_ld_v(s1, ot, s1->T0, s1->A0);
+diff --git a/tests/data/acpi/q35/DSDT.cxl b/tests/data/acpi/q35/DSDT.cxl
+index f9c6dd4ee0..267709e4e4 100644
+Binary files a/tests/data/acpi/q35/DSDT.cxl and b/tests/data/acpi/q35/DSDT.cxl differ
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 9ce0f596cc..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/q35/DSDT.cxl",
 -- 
 2.39.2
 
