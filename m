@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD385C48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFC9C5478A
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctxv-0002tR-NX; Wed, 21 Feb 2024 16:17:19 -0500
+	id 1rctz6-0007tD-J1; Wed, 21 Feb 2024 16:18:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctxg-0002ct-Bk
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:04 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctz4-0007oV-NC
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:18:30 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctxd-0000sg-ME
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:03 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4126f486429so17014975e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:17:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctz2-00019d-6I
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:18:30 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-41275971886so8637945e9.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:18:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550220; x=1709155020; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708550306; x=1709155106; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rri7DRJiOpDcuu3Ysur7tkTebJnDy+J9NH64dvVvHsc=;
- b=yKuCK9IZMXL7RWbQNfHHu6bio1XXVij196jfanWQDD+Jq5c+ye+bFj/6L5wPPtdf8M
- ABf6Jnj+ndrPaoDDobrVBBKXHgpQhDLXVf4SR2bWDOQmXhbliW4qzoKtpemndlKK6OC2
- k3Eqm5isHtkrjORy9epKN5lLWJbzBsa3+E94frBaFl4qVe+TwW3DWHi0/oo19HTKF1VI
- wm7GSTN1HLZUhi2SiwoQZIJk65sshlhrbB1ks/0/DkgP/rZ8U4pBLEWGy7SLvC+kH+jD
- vDYZ25rfvdfFSON5kD85/bgHt8dSR33dPazkCMFWoVc5oZ4v9oSZS1uR6i3FYUu0D6Ab
- UEGg==
+ bh=el8jSU/WeUKeTdfPo2BhG3KsHF8nK1ocI6Kjqh4/a/E=;
+ b=ThuE/8q9DfSfcpFLvOukCe4ulkoRZK3mM1OqWxQrdxnhqFcPx29NhOcdkYUO5oYdBE
+ xc9dX4ZidNbyghsr+Q8BswaK2+P7Xa2RNxnY05wJSFGQP9hfPBTKrZDfYiy7WbuKqZyG
+ LXO00XquRWqSYHkz90vPvbXuthFMdAXmzax72zhwRK3SegzPUVm/46bt17ilDkcn62wA
+ Tl0T9EGZAm+Qw/jLxezKzMhjl2xh+Skc2nPwlQADriB2CCtlL5avdHonkQq7M0niQeH9
+ jlWghRNxGwZTsTej5w9vhWaCVUmSaw8L4/+fTRYeF4MNppnCu0z3lf3SFZXTi9KvKjCe
+ VWJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550220; x=1709155020;
+ d=1e100.net; s=20230601; t=1708550306; x=1709155106;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Rri7DRJiOpDcuu3Ysur7tkTebJnDy+J9NH64dvVvHsc=;
- b=PfiE2Y2BDVrIG9XsbUpdvKcwU6M29VJZFeG0JEV2R1zI8NS6BGqWXGr//sy28xozlu
- tmRd2ZDbJy/dvXC8ZpJZ0V/5QSLccZn7UiYFKbZSqpduVcRYFkbAd+8NEe1mINyuf9+f
- 70gFQPeyoLky/arq0acACf2t3dq4GQ/ahC0CdkmMZ0qzfENbmXa8VtOpsxughQSEWN14
- XczjOs1LpA2gnpazvxq1m65jgqRav1umwAWsxNFKCM6irOoReyhKt+p1BBA2CVyrZUWD
- 3iwIOI8W6JtYACGl9mdIpnMRBp7ExtObEwdJkZ7xyBC5p/LRSs6i5bRYMUGM7iAZFRTg
- +sxQ==
-X-Gm-Message-State: AOJu0YwqIaiE2avN06UjqREJhZSRKTFNQ1zvqg9iyNbfmLyyuXhrKAXt
- l+Yb0+5oNSVItbRP0LUE80919sxdgHyUkRz7QDFs3zAPkNtpt9CzJRfXRlwW06IWLjZAQhe7RyD
- v+hw=
-X-Google-Smtp-Source: AGHT+IH1Wh8xBW9ugZWWO2zkrqqPqjgp/yg3oSNB2LxswJR5aKQKpvaOlBlAD4XlsyNmVDVL3CuUag==
-X-Received: by 2002:a05:600c:4455:b0:412:7045:64c9 with SMTP id
- v21-20020a05600c445500b00412704564c9mr3946267wmn.8.1708550219867; 
- Wed, 21 Feb 2024 13:16:59 -0800 (PST)
+ bh=el8jSU/WeUKeTdfPo2BhG3KsHF8nK1ocI6Kjqh4/a/E=;
+ b=NB8zG9Z4Zdd7nqqC+xbfp6Kr+4jiThS50jAqQcauEgjZLKVQo8JJRJjKX2MuNc4VXi
+ wbj5vrRdNiPEkEdx4szRfi8iCxr1GodrgC/ei0BYQl098r9p3VBogoXQVJNet4iNIERx
+ IjB2mG6nf7lEwAfmOzSAPlCKeXFpnEgtwRwkheFphAfYuvg1HPgE/sZWRnLWOTlBDUSh
+ 1y8wfZx458RR586U4dS2MlNwQoG0tId25z6tpu2Qeg/23MwCyQ3FtLnDj0rcFcRCR95w
+ 1CdpjxJX3bkLvv3Aq+UT30zNbfvhueDgJ6I07AMs4cnNRFOWVZV/Tep7xVtB7q2+ny/n
+ AvcA==
+X-Gm-Message-State: AOJu0YzAZPVqskN4x2kQGATMT49aH9x+7NISZmFalJbZRfi0TP4nl8o1
+ 4HzxwT5FyC2JgTBen0J1h/By1/9zXhxMcEjxD1YXcB62YGEt5NzVaKf5MywydYMMHTGYRogRdNn
+ /1pw=
+X-Google-Smtp-Source: AGHT+IH3racoaH5Ihl5Puf//D7KmUV+Gbi8QkKzZg7KDODdcGekQd/PPZzySz+BahZ4e5K1/Gxg9kg==
+X-Received: by 2002:a05:600c:a01a:b0:412:78da:8abe with SMTP id
+ jg26-20020a05600ca01a00b0041278da8abemr1487738wmb.30.1708550306443; 
+ Wed, 21 Feb 2024 13:18:26 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- bt27-20020a056000081b00b0033d1b653e4csm18877936wrb.54.2024.02.21.13.16.58
+ n3-20020a05600c4f8300b00410395dc7d1sm3817423wmq.7.2024.02.21.13.18.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 21 Feb 2024 13:16:59 -0800 (PST)
+ Wed, 21 Feb 2024 13:18:25 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 05/25] hw/ppc/ppc4xx_pci: Move ppc4xx_pci.c to hw/pci-host/
-Date: Wed, 21 Feb 2024 22:16:05 +0100
-Message-ID: <20240221211626.48190-6-philmd@linaro.org>
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 15/25] hw/i386/pc_sysfw: Inline pc_system_flash_create() and
+ remove it
+Date: Wed, 21 Feb 2024 22:16:15 +0100
+Message-ID: <20240221211626.48190-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
 References: <20240221211626.48190-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,139 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ppc4xx_pci.c is moved from the target specific ppc_ss[] meson
-source set to pci_ss[] which is common to all targets: the
-object is built once.
+From: Bernhard Beschow <shentey@gmail.com>
 
-Declare PPC4XX_PCI selector in pci-host/Kconfig.
+pc_system_flash_create() checked for pcmc->pci_enabled which is redundant since
+its caller already checked it. The method can be turned into just two lines, so
+inline and remove it.
 
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240208220349.4948-8-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240215105017.57748-4-philmd@linaro.org>
 ---
- MAINTAINERS                       | 1 +
- hw/{ppc => pci-host}/ppc4xx_pci.c | 0
- hw/pci-host/ppce500.c             | 2 +-
- hw/pci-host/Kconfig               | 4 ++++
- hw/pci-host/meson.build           | 1 +
- hw/pci-host/trace-events          | 4 ++++
- hw/ppc/Kconfig                    | 2 +-
- hw/ppc/meson.build                | 1 -
- hw/ppc/trace-events               | 4 ----
- 9 files changed, 12 insertions(+), 7 deletions(-)
- rename hw/{ppc => pci-host}/ppc4xx_pci.c (100%)
+ hw/i386/pc_sysfw.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9b6ce9a934..8d9ccd5073 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1423,6 +1423,7 @@ Bamboo
- L: qemu-ppc@nongnu.org
- S: Orphan
- F: hw/ppc/ppc440_bamboo.c
-+F: hw/pci-host/ppc4xx_pci.c
- F: tests/avocado/ppc_bamboo.py
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index b4c3833352..2dcaa116ad 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -91,18 +91,6 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+     return PFLASH_CFI01(dev);
+ }
  
- e500
-diff --git a/hw/ppc/ppc4xx_pci.c b/hw/pci-host/ppc4xx_pci.c
-similarity index 100%
-rename from hw/ppc/ppc4xx_pci.c
-rename to hw/pci-host/ppc4xx_pci.c
-diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
-index fa0d67b342..95b983b2b3 100644
---- a/hw/pci-host/ppce500.c
-+++ b/hw/pci-host/ppce500.c
-@@ -5,7 +5,7 @@
-  *
-  * Author: Yu Liu,     <yu.liu@freescale.com>
-  *
-- * This file is derived from hw/ppc4xx_pci.c,
-+ * This file is derived from ppc4xx_pci.c,
-  * the copyright for that material belongs to the original owners.
-  *
-  * This is free software; you can redistribute it and/or modify
-diff --git a/hw/pci-host/Kconfig b/hw/pci-host/Kconfig
-index f046d76a68..0a221e719e 100644
---- a/hw/pci-host/Kconfig
-+++ b/hw/pci-host/Kconfig
-@@ -6,6 +6,10 @@ config XEN_IGD_PASSTHROUGH
-     default y
-     depends on XEN && PCI_I440FX
- 
-+config PPC4XX_PCI
-+    bool
-+    select PCI
-+
- config RAVEN_PCI
-     bool
-     select PCI
-diff --git a/hw/pci-host/meson.build b/hw/pci-host/meson.build
-index 36d5ab756f..eb6dc71c88 100644
---- a/hw/pci-host/meson.build
-+++ b/hw/pci-host/meson.build
-@@ -14,6 +14,7 @@ pci_ss.add(when: 'CONFIG_REMOTE_PCIHOST', if_true: files('remote.c'))
- pci_ss.add(when: 'CONFIG_SH_PCI', if_true: files('sh_pci.c'))
- 
- # PPC devices
-+pci_ss.add(when: 'CONFIG_PPC4XX_PCI', if_true: files('ppc4xx_pci.c'))
- pci_ss.add(when: 'CONFIG_RAVEN_PCI', if_true: files('raven.c'))
- pci_ss.add(when: 'CONFIG_GRACKLE_PCI', if_true: files('grackle.c'))
- # NewWorld PowerMac
-diff --git a/hw/pci-host/trace-events b/hw/pci-host/trace-events
-index b2f47e6335..90a37ebff0 100644
---- a/hw/pci-host/trace-events
-+++ b/hw/pci-host/trace-events
-@@ -37,6 +37,10 @@ unin_data_read(uint64_t addr, unsigned len, uint64_t val) "read addr 0x%"PRIx64
- unin_write(uint64_t addr, uint64_t value) "addr=0x%" PRIx64 " val=0x%"PRIx64
- unin_read(uint64_t addr, uint64_t value) "addr=0x%" PRIx64 " val=0x%"PRIx64
- 
-+# ppc4xx_pci.c
-+ppc4xx_pci_map_irq(int32_t devfn, int irq_num, int slot) "devfn 0x%x irq %d -> %d"
-+ppc4xx_pci_set_irq(int irq_num) "PCI irq %d"
-+
- # pnv_phb4.c
- pnv_phb4_xive_notify(uint64_t notif_port, uint64_t data) "notif=@0x%"PRIx64" data=0x%"PRIx64
- pnv_phb4_xive_notify_ic(uint64_t addr, uint64_t data) "addr=@0x%"PRIx64" data=0x%"PRIx64
-diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-index 44263a58c4..82e847d22c 100644
---- a/hw/ppc/Kconfig
-+++ b/hw/ppc/Kconfig
-@@ -53,7 +53,7 @@ config PPC440
- config PPC4XX
-     bool
-     select BITBANG_I2C
--    select PCI
-+    select PPC4XX_PCI
-     select PPC_UIC
- 
- config SAM460EX
-diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-index eba3406e7f..d0efc0aba5 100644
---- a/hw/ppc/meson.build
-+++ b/hw/ppc/meson.build
-@@ -63,7 +63,6 @@ ppc_ss.add(when: 'CONFIG_PPC440', if_true: files(
-   'ppc440_pcix.c', 'ppc440_uc.c'))
- ppc_ss.add(when: 'CONFIG_PPC4XX', if_true: files(
-   'ppc4xx_devs.c',
--  'ppc4xx_pci.c',
-   'ppc4xx_sdram.c'))
- ppc_ss.add(when: 'CONFIG_SAM460EX', if_true: files('sam460ex.c'))
- # PReP
-diff --git a/hw/ppc/trace-events b/hw/ppc/trace-events
-index f670e8906c..b59fbf340f 100644
---- a/hw/ppc/trace-events
-+++ b/hw/ppc/trace-events
-@@ -146,10 +146,6 @@ rs6000mc_size_read(uint32_t addr, uint32_t val) "read addr=0x%x val=0x%x"
- rs6000mc_size_write(uint32_t addr, uint32_t val) "write addr=0x%x val=0x%x"
- rs6000mc_parity_read(uint32_t addr, uint32_t val) "read addr=0x%x val=0x%x"
- 
--# ppc4xx_pci.c
--ppc4xx_pci_map_irq(int32_t devfn, int irq_num, int slot) "devfn 0x%x irq %d -> %d"
--ppc4xx_pci_set_irq(int irq_num) "PCI irq %d"
+-static void pc_system_flash_create(PCMachineState *pcms)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
 -
- # ppc440_pcix.c
- ppc440_pcix_map_irq(int32_t devfn, int irq_num, int slot) "devfn 0x%x irq %d -> %d"
- ppc440_pcix_set_irq(int irq_num) "PCI irq %d"
+-    if (pcmc->pci_enabled) {
+-        pcms->flash[0] = pc_pflash_create(pcms, "system.flash0",
+-                                          "pflash0");
+-        pcms->flash[1] = pc_pflash_create(pcms, "system.flash1",
+-                                          "pflash1");
+-    }
+-}
+-
+ static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+ {
+     char *prop_name;
+@@ -212,7 +200,8 @@ void pc_system_firmware_init(PCMachineState *pcms,
+         return;
+     }
+ 
+-    pc_system_flash_create(pcms);
++    pcms->flash[0] = pc_pflash_create(pcms, "system.flash0", "pflash0");
++    pcms->flash[1] = pc_pflash_create(pcms, "system.flash1", "pflash1");
+ 
+     /* Map legacy -drive if=pflash to machine properties */
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
 -- 
 2.41.0
 
