@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8919C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A99C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoUT-0002j7-KF; Wed, 21 Feb 2024 10:26:33 -0500
+	id 1rcoOx-0004P0-NN; Wed, 21 Feb 2024 10:20:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoNJ-0004a7-96
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:19:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcoL4-0000wC-Jq; Wed, 21 Feb 2024 10:16:52 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcimJ-0002PX-H0
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 04:20:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708507233;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IbVA983qG5V0mhfN/x3Yqgmnz7pzu+jOg20vLG6y+h0=;
- b=VKY7yfX8QBb3++2gzITE/xkTHvIUlIIq0awJozGrVBYl6kZi2Q9CdlsAdil4robvqrU33X
- CYDmTJ0a1vw0/ak1Ng47jJox02H5sx7AjmNAvAHBBWRTLdkzNnzfVj/iCPLLsH5ThWr/KF
- 19Y8NYsBdxeGgJDHz3W28MYrgLRLdGw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-2ZxXltRtMBCmlfsrSMznEw-1; Wed, 21 Feb 2024 04:20:28 -0500
-X-MC-Unique: 2ZxXltRtMBCmlfsrSMznEw-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 43FFE85A58B;
- Wed, 21 Feb 2024 09:20:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 20E32492BD7;
- Wed, 21 Feb 2024 09:20:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B437221E6740; Wed, 21 Feb 2024 10:20:26 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  Peter Xu
- <peterx@redhat.com>,  Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v4 30/34] monitor: Honor QMP request for fd removal
- immediately
-In-Reply-To: <20240220224138.24759-31-farosas@suse.de> (Fabiano Rosas's
- message of "Tue, 20 Feb 2024 19:41:34 -0300")
-References: <20240220224138.24759-1-farosas@suse.de>
- <20240220224138.24759-31-farosas@suse.de>
-Date: Wed, 21 Feb 2024 10:20:26 +0100
-Message-ID: <87cysqxjfp.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcivZ-0003dX-FC; Wed, 21 Feb 2024 04:30:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708507810; x=1740043810;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=2YsbLPL6v1xok/8Kc8flnuoxreDppreVjYDnHHeyris=;
+ b=Yfay+RoJn4xf7Uqghcitv/0NrPGwqS3pe2gclIHoiu8BbKU4ssOcL6Ar
+ mT2IOokXv3BKM1pMpoge/yL6v15mR5no8XVVvDPQyyWmcZFAobDIXE4yv
+ g3q5K3YHam8P10XxoEZpbYdymTlQpD1QY3sSABDKiwwHbs0rTovXC48vl
+ RRn4BeiBwHmsJpFLqagkrnQ3sv6377q3Bj4gRHmmZZkkNOCAKtMupmAVF
+ NI1FVJS0iFyJYV/osjOtvTxSn0zZACrRMBv5i7KiC2UGe7xe4GnWVQjF7
+ BjxKJx+beTRTbjaENkd1WW2fNogI06QUAxk9x50GDVdsJlglZgavwHkFw w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="2795502"
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="2795502"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2024 01:30:05 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="9720155"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 21 Feb 2024 01:30:01 -0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 5/6] hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD() in
+ cxl_usp_realize()
+Date: Wed, 21 Feb 2024 17:43:16 +0800
+Message-Id: <20240221094317.994454-6-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=192.198.163.15;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,55 +88,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+From: Zhao Liu <zhao1.liu@intel.com>
 
-> We're currently only removing an fd from the fdset if the VM is
-> running. This causes a QMP call to "remove-fd" to not actually remove
-> the fd if the VM happens to be stopped.
->
-> While the fd would eventually be removed when monitor_fdset_cleanup()
-> is called again, the user request should be honored and the fd
-> actually removed. Calling remove-fd + query-fdset shows a recently
-> removed fd still present.
->
-> The runstate_is_running() check was introduced by commit ebe52b592d
-> ("monitor: Prevent removing fd from set during init"), which by the
-> shortlog indicates that they were trying to avoid removing an
-> yet-unduplicated fd too early.
->
-> I don't see why an fd explicitly removed with qmp_remove_fd() should
-> be under runstate_is_running(). I'm assuming this was a mistake when
-> adding the parenthesis around the expression.
->
-> Move the runstate_is_running() check to apply only to the
-> QLIST_EMPTY(dup_fds) side of the expression and ignore it when
-> mon_fdset_fd->removed has been explicitly set.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
-Eric, Kevin, your fingerprints are on commit ebe52b592d.  Could you have
-a look at this fix?
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+* - It should not be passed to error_prepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
 
-> ---
->  monitor/fds.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/monitor/fds.c b/monitor/fds.c
-> index d86c2c674c..4ec3b7eea9 100644
-> --- a/monitor/fds.c
-> +++ b/monitor/fds.c
-> @@ -173,9 +173,9 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
->      MonFdsetFd *mon_fdset_fd_next;
->  
->      QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
-> -        if ((mon_fdset_fd->removed ||
-> -                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
-> -                runstate_is_running()) {
-> +        if (mon_fdset_fd->removed ||
-> +            (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0 &&
-> +             runstate_is_running())) {
->              close(mon_fdset_fd->fd);
->              g_free(mon_fdset_fd->opaque);
->              QLIST_REMOVE(mon_fdset_fd, next);
+Currently, since cxl_usp_realize() - as a PCIDeviceClass.realize()
+method - doesn't get the NULL errp parameter, it doesn't trigger the
+dereference issue.
+
+To follow the requirement of errp, add missing ERRP_GUARD() in
+cxl_usp_realize()().
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+Suggested by credit:
+ Markus: Referred his explanation about ERRP_GUARD().
+---
+ hw/pci-bridge/cxl_upstream.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index e87eb4017713..03d123cca0ef 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -289,6 +289,7 @@ static void free_default_cdat_table(CDATSubHeader **cdat_table, int num,
+ 
+ static void cxl_usp_realize(PCIDevice *d, Error **errp)
+ {
++    ERRP_GUARD();
+     PCIEPort *p = PCIE_PORT(d);
+     CXLUpstreamPort *usp = CXL_USP(d);
+     CXLComponentState *cxl_cstate = &usp->cxl_cstate;
+-- 
+2.34.1
 
 
