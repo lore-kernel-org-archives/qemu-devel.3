@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4508C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A995C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchrU-0001i9-2f; Wed, 21 Feb 2024 03:21:53 -0500
+	id 1rchrq-0002KR-KR; Wed, 21 Feb 2024 03:22:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrM-0001ZL-G2; Wed, 21 Feb 2024 03:21:45 -0500
+ id 1rchrp-0002Iz-6j; Wed, 21 Feb 2024 03:22:13 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrK-0002Bj-JM; Wed, 21 Feb 2024 03:21:44 -0500
+ id 1rchrn-0002DR-Ii; Wed, 21 Feb 2024 03:22:12 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A7FC34F3CA;
- Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 05F454F3CF;
+ Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 74664860A9;
+ by tsrv.corpit.ru (Postfix) with SMTP id C36A4860AE;
  Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
-Received: (nullmailer pid 2142022 invoked by uid 1000);
+Received: (nullmailer pid 2142038 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 12/60] tcg/loongarch64: Set vector registers call
- clobbered
-Date: Wed, 21 Feb 2024 11:20:00 +0300
-Message-Id: <20240221082058.2141850-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 17/60] virtio-scsi: Attach event vq notifier with
+ no_poll
+Date: Wed, 21 Feb 2024 11:20:05 +0300
+Message-Id: <20240221082058.2141850-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
@@ -62,36 +63,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Because there are more call clobbered registers than
-call saved registers, we begin with all registers as
-call clobbered and then reset those that are saved.
+As of commit 38738f7dbbda90fbc161757b7f4be35b52205552 ("virtio-scsi:
+don't waste CPU polling the event virtqueue"), we only attach an io_read
+notifier for the virtio-scsi event virtqueue instead, and no polling
+notifiers.  During operation, the event virtqueue is typically
+non-empty, but none of the buffers are intended to be used immediately.
+Instead, they only get used when certain events occur.  Therefore, it
+makes no sense to continuously poll it when non-empty, because it is
+supposed to be and stay non-empty.
 
-This was missed when we introduced the LSX support.
+We do this by using virtio_queue_aio_attach_host_notifier_no_poll()
+instead of virtio_queue_aio_attach_host_notifier() for the event
+virtqueue.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 16288ded944 ("tcg/loongarch64: Lower basic tcg vec ops to LSX")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2136
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240201233414.500588-1-richard.henderson@linaro.org>
-(cherry picked from commit 45bf0e7aa648369cf8ab2333bd20144806fc1be3)
+Commit 766aa2de0f29b657148e04599320d771c36fd126 ("virtio-scsi: implement
+BlockDevOps->drained_begin()") however has virtio_scsi_drained_end() use
+virtio_queue_aio_attach_host_notifier() for all virtqueues, including
+the event virtqueue.  This can lead to it being polled again, undoing
+the benefit of commit 38738f7dbbda90fbc161757b7f4be35b52205552.
+
+Fix it by using virtio_queue_aio_attach_host_notifier_no_poll() for the
+event virtqueue.
+
+Reported-by: Fiona Ebner <f.ebner@proxmox.com>
+Fixes: 766aa2de0f29b657148e04599320d771c36fd126
+       ("virtio-scsi: implement BlockDevOps->drained_begin()")
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20240202153158.788922-2-hreitz@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit c42c3833e0cfdf2b80fb3ca410acfd392b6874ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index bab0a173a3..dcf0205458 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -2327,7 +2327,7 @@ static void tcg_target_init(TCGContext *s)
-     tcg_target_available_regs[TCG_TYPE_I32] = ALL_GENERAL_REGS;
-     tcg_target_available_regs[TCG_TYPE_I64] = ALL_GENERAL_REGS;
+diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+index 9c751bf296..4b0d476c8d 100644
+--- a/hw/scsi/virtio-scsi.c
++++ b/hw/scsi/virtio-scsi.c
+@@ -1149,6 +1149,7 @@ static void virtio_scsi_drained_begin(SCSIBus *bus)
+ static void virtio_scsi_drained_end(SCSIBus *bus)
+ {
+     VirtIOSCSI *s = container_of(bus, VirtIOSCSI, bus);
++    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
+     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+     uint32_t total_queues = VIRTIO_SCSI_VQ_NUM_FIXED +
+                             s->parent_obj.conf.num_queues;
+@@ -1166,7 +1167,11 @@ static void virtio_scsi_drained_end(SCSIBus *bus)
  
--    tcg_target_call_clobber_regs = ALL_GENERAL_REGS;
-+    tcg_target_call_clobber_regs = ALL_GENERAL_REGS | ALL_VECTOR_REGS;
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S0);
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S1);
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S2);
+     for (uint32_t i = 0; i < total_queues; i++) {
+         VirtQueue *vq = virtio_get_queue(vdev, i);
+-        virtio_queue_aio_attach_host_notifier(vq, s->ctx);
++        if (vq == vs->event_vq) {
++            virtio_queue_aio_attach_host_notifier_no_poll(vq, s->ctx);
++        } else {
++            virtio_queue_aio_attach_host_notifier(vq, s->ctx);
++        }
+     }
+ }
+ 
 -- 
 2.39.2
 
