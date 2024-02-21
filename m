@@ -4,81 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A278BC48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39930C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchoC-0008Nz-7T; Wed, 21 Feb 2024 03:18:28 -0500
+	id 1rchqk-000125-GZ; Wed, 21 Feb 2024 03:21:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcho5-0008N4-Ag
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:18:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchqh-00010g-Sy; Wed, 21 Feb 2024 03:21:03 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcho3-0001Up-Qj
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:18:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708503499;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RWL4amZhA6Tx0uaapwvU+/203Fs6lJZqVHFHDaWk19E=;
- b=M58iJZNJpEVg7eiL6RhiDhhlXi46sOG0SiSxB45/tqPDRKWxmZ1OvFyx6FaGpWASdNSNnx
- mr7U8CgKmVtr7KROOY4vcmPwFXEt+E4P2RQkFAZ3zroBhU2USd5TxiQm1DWmIjmasKUa9L
- CVHFdYyazECUU+XlJYKVlQoCsrAAVu4=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-mek8KUImNu2L2N8BSM40Hg-1; Wed,
- 21 Feb 2024 03:18:16 -0500
-X-MC-Unique: mek8KUImNu2L2N8BSM40Hg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 240E41C04B70;
- Wed, 21 Feb 2024 08:18:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id EF63F1C1A803;
- Wed, 21 Feb 2024 08:18:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E21F521E66C8; Wed, 21 Feb 2024 09:18:14 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
- S. Tsirkin"
- <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
- Williamson <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,  Jason Wang
- <jasowang@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
- <its@irrelevant.dk>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org
-Subject: Re: [PATCH v6 15/15] hw/qdev: Remove opts member
-In-Reply-To: <20240220-reuse-v6-15-2e42a28b0cf2@daynix.com> (Akihiko Odaki's
- message of "Tue, 20 Feb 2024 21:24:50 +0900")
-References: <20240220-reuse-v6-0-2e42a28b0cf2@daynix.com>
- <20240220-reuse-v6-15-2e42a28b0cf2@daynix.com>
-Date: Wed, 21 Feb 2024 09:18:14 +0100
-Message-ID: <87sf1mz0vt.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchqf-00027K-25; Wed, 21 Feb 2024 03:21:03 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E04B14F3BE;
+ Wed, 21 Feb 2024 11:21:19 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id A668B8609D;
+ Wed, 21 Feb 2024 11:20:58 +0300 (MSK)
+Received: (nullmailer pid 2141984 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 v0 00/60] Patch Round-up for stable 8.2.2,
+ freeze on 2024-03-02
+Date: Wed, 21 Feb 2024 11:19:48 +0300
+Message-Id: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,84 +60,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+The following patches are queued for QEMU stable v8.2.2:
 
-> It is no longer used.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/hw/qdev-core.h |  4 ----
->  hw/core/qdev.c         |  1 -
->  system/qdev-monitor.c  | 12 +++++++-----
->  3 files changed, 7 insertions(+), 10 deletions(-)
->
-> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-> index 9228e96c87e9..5954404dcbfe 100644
-> --- a/include/hw/qdev-core.h
-> +++ b/include/hw/qdev-core.h
-> @@ -237,10 +237,6 @@ struct DeviceState {
->       * @pending_deleted_expires_ms: optional timeout for deletion events
->       */
->      int64_t pending_deleted_expires_ms;
-> -    /**
-> -     * @opts: QDict of options for the device
-> -     */
-> -    QDict *opts;
->      /**
->       * @hotplugged: was device added after PHASE_MACHINE_READY?
->       */
-> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-> index c68d0f7c512f..7349c9a86be8 100644
-> --- a/hw/core/qdev.c
-> +++ b/hw/core/qdev.c
-> @@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
->          dev->canonical_path =3D NULL;
->      }
->=20=20
-> -    qobject_unref(dev->opts);
->      g_free(dev->id);
->  }
->=20=20
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index a13db763e5dd..71c00f62ee38 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -625,6 +625,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *=
-opts,
->      char *id;
->      DeviceState *dev =3D NULL;
->      BusState *bus =3D NULL;
-> +    QDict *properties;
->=20=20
->      driver =3D qdict_get_try_str(opts, "driver");
->      if (!driver) {
-> @@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict=
- *opts,
->      }
->=20=20
->      /* set properties */
-> -    dev->opts =3D qdict_clone_shallow(opts);
-> -    qdict_del(dev->opts, "driver");
-> -    qdict_del(dev->opts, "bus");
-> -    qdict_del(dev->opts, "id");
-> +    properties =3D qdict_clone_shallow(opts);
-> +    qdict_del(properties, "driver");
-> +    qdict_del(properties, "bus");
-> +    qdict_del(properties, "id");
->=20=20
-> -    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_=
-json,
-> +    object_set_properties_from_keyval(&dev->parent_obj, properties, from=
-_json,
->                                        errp);
-> +    qobject_unref(properties);
->      if (*errp) {
->          goto err_del_dev;
->      }
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Patch freeze is 2024-03-02, and the release is planned for 2024-03-04:
 
-Depends on the previous few patches, of course.
+  https://wiki.qemu.org/Planning/8.2
 
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 918f620d30a9 Markus Armbruster:
+   migration: Plug memory leak on HMP migrate error path
+02 27eb8499edb2 Fabiano Rosas:
+   migration: Fix use-after-free of migration state object
+03 d2b668fca565 Cédric Le Goater:
+   vfio/pci: Clear MSI-X IRQ index always
+04 57fd4b4e1075 Het Gala:
+   Make 'uri' optional for migrate QAPI
+05 db101376af52 Yihuan Pan:
+   qemu-docs: Update options for graphical frontends
+06 615eaeab3d31 Richard W.M. Jones:
+   block/blkio: Make s->mem_region_alignment be 64 bits
+07 f670be1aad33 Jan Klötzke:
+   target/arm: fix exception syndrome for AArch32 bkpt insn
+08 d2019a9d0c34 Peter Maydell:
+   system/vl.c: Fix handling of '-serial none -serial something'
+09 747bfaf3a9d2 Peter Maydell:
+   qemu-options.hx: Improve -serial option documentation
+10 185e3fdf8d10 Peter Maydell:
+   target/arm: Reinstate "vfp" property on AArch32 CPUs
+11 8a7315202033 Guenter Roeck:
+   pci-host: designware: Limit value range of iATU viewport register
+12 45bf0e7aa648 Richard Henderson:
+   tcg/loongarch64: Set vector registers call clobbered
+13 6400be014f80 Richard Henderson:
+   linux-user/aarch64: Add padding before __kernel_rt_sigreturn
+14 8b09b7fe4708 Sven Schnelle:
+   hw/scsi/lsi53c895a: add missing decrement of reentrancy counter
+15 c645bac4e06b Daniel P. Berrangé:
+   iotests: fix leak of tmpdir in dry-run mode
+16 7d2faf0ce2cc Daniel P. Berrangé:
+   iotests: give tempdir an identifying name
+17 c42c3833e0cf Hanna Czenczek:
+   virtio-scsi: Attach event vq notifier with no_poll
+18 5bdbaebcce18 Hanna Czenczek:
+   virtio: Re-enable notifications after drain
+19 bfa36802d170 Stefan Hajnoczi:
+   virtio-blk: avoid using ioeventfd state in irqfd conditional
+20 3205bebd4fc6 Avihai Horon:
+   migration: Fix logic of channels and transport compatibility check
+21 1a49762c07d0 Daniel Henrique Barboza:
+   hw/riscv/virt-acpi-build.c: fix leak in build_rhct()
+22 7485508341f4 Fabiano Rosas:
+   tests/docker: Add sqlite3 module to openSUSE Leap container
+23 15cc10336249 Paolo Bonzini:
+   configure: run plugin TCG tests again
+24 cd8a35b913c2 Akihiko Odaki:
+   hw/smbios: Fix OEM strings table option validation
+25 196578c9d051 Akihiko Odaki:
+   hw/smbios: Fix port connector option validation
+26 9b60a3ed5569 Sven Schnelle:
+   hw/net/tulip: add chip status register values
+27 c0e688153f29 Richard Henderson:
+   tcg: Increase width of temp_subindex
+28 e41f1825b437 Richard Henderson:
+   tcg/arm: Fix goto_tb for large translation blocks
+29 aa05bd9ef407 Andrey Ignatov:
+   vhost-user.rst: Fix vring address description
+30 c62926f730d0 Ira Weiny:
+   cxl/cdat: Handle cdat table build errors
+31 64fdad5e6758 Ira Weiny:
+   cxl/cdat: Fix header sum value in CDAT checksum
+32 f7509f462c78 Hyeonggon Yoo:
+   hw/cxl/device: read from register values in mdev_reg_read()
+33 729d45a6af06 Li Zhijian:
+   hw/cxl: Pass CXLComponentState to cache_mem_ops
+34 574b64aa6754 Dmitry Osipenko:
+   virtio-gpu: Correct virgl_renderer_resource_get_info() error check
+35 9a457383ce9d Zhenzhong Duan:
+   virtio_iommu: Clear IOMMUPciBus pointer cache when system reset
+36 8a6b3f4dc95a Zhenzhong Duan:
+   smmu: Clear SMMUPciBus pointer cache when system reset
+37 14ec4ff3e429 Jonathan Cameron:
+   tests/acpi: Allow update of DSDT.cxl
+38 d9ae5802f656 Jonathan Cameron:
+   hw/i386: Fix _STA return value for ACPI0017
+39 b24a981b9f1c Jonathan Cameron:
+   tests/acpi: Update DSDT.cxl to reflect change _STA return value.
+40 681dfc0d5529 Richard Henderson:
+   linux-user/aarch64: Choose SYNC as the preferred MTE mode
+41 64c6e7444dff Richard Henderson:
+   target/arm: Fix nregs computation in do_{ld,st}_zpa
+42 b12a7671b609 Richard Henderson:
+   target/arm: Adjust and validate mtedesc sizem1
+43 96fcc9982b4a Richard Henderson:
+   target/arm: Split out make_svemte_desc
+44 623507ccfcfe Richard Henderson:
+   target/arm: Handle mte in do_ldrq, do_ldro
+45 855f94eca80c Richard Henderson:
+   target/arm: Fix SVE/SME gross MTE suppression checks
+46 ac1d88e9e7ca Peter Maydell:
+   target/arm: Don't get MDCR_EL2 in pmu_counter_enabled() before checking 
+   ARM_FEATURE_PMU
+47 cc29c12ec629 Kevin Wolf:
+   iotests: Make 144 deterministic again
+48 8e31b744fdf2 Peter Maydell:
+   .gitlab-ci/windows.yml: Don't install libusb or spice packages on 32-bit
+49 81f5cad3858f Xiaoyao Li:
+   i386/cpu: Clear FEAT_XSAVE_XSS_LO/HI leafs when CPUID_EXT_XSAVE is not 
+   available
+50 a11a365159b9 Xiaoyao Li:
+   i386/cpu: Mask with XCR0/XSS mask for FEAT_XSAVE_XCR0_HI and 
+   FEAT_XSAVE_XSS_HI leafs
+51 10f92799af8b Xiaoyao Li:
+   i386/cpuid: Decrease cpuid_i when skipping CPUID leaf 1F
+52 0729857c7075 Xiaoyao Li:
+   i386/cpuid: Move leaf 7 to correct group
+53 99d0dcd7f102 Ziqiao Kong:
+   target/i386: Generate an illegal opcode exception on cmp instructions 
+   with lock prefix
+54 4cba8388968b Daniel P. Berrangé:
+   ui: reject extended clipboard message if not activated
+55 405484b29f65 Fiona Ebner:
+   ui/clipboard: mark type as not available when there is no data
+56 9c416582611b Fiona Ebner:
+   ui/clipboard: add asserts for update and request
+57 95b08fee8f68 Tianlan Zhou:
+   ui/console: Fix console resize with placeholder surface
+58 d67611907590 Akihiko Odaki:
+   audio: Depend on dbus_display1_dep
+59 7aee57df930d Akihiko Odaki:
+   meson: Explicitly specify dbus-display1.h dependency
+60 186acfbaf7f3 Akihiko Odaki:
+   tests/qtest: Depend on dbus_display1_dep
 
