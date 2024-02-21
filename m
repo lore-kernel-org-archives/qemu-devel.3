@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81738C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB94C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcglk-0001sJ-Ok; Wed, 21 Feb 2024 02:11:52 -0500
+	id 1rcgqL-00053E-Qa; Wed, 21 Feb 2024 02:16:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcglj-0001rU-97
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:11:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgqF-000510-Rp
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:16:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcglh-0006JA-Tx
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:11:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgqE-00077f-BX
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:16:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708499509;
+ s=mimecast20190719; t=1708499788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=62Mb2OlfKN4UDaAuc6PsP06x7aQo7hLlvw4h8qPSDB4=;
- b=LycrRDk7JU59rraNt5WgjjbD+1DBIxpAOeZQ7wVvBE3I+buk5TlsaHK6kCo7qPNJm3/8JO
- WR8CbAD/4g3KqRyAjvZg2dBDfUCo9cmMjlM2LMEL14M7ezkQ+JlRJbh371BmF2Rf6pSi3h
- sghss3Nd6wcoU50xwoTHe9AGVh7VUoI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TjYX//FZ7Op6zzAuS38Az7p1gyhJt+2lWcBgORzp7qA=;
+ b=HPmKNig5nROKpLGC1AXbRllV7QcgJehmuhq/jRdn58ziPqcUjATSrOF+dery7zzq+/zP9d
+ rTOt9VICPwhC/4IcAn5MgSIch7nDdBKXlh1fUVtsyhILcQU8m6ipcg5uxA32JJk/DxI5yQ
+ be7ec5W8WOjHWoE9xWVoXuX2ECjW0mk=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-0uMJz--6PZqvtn0qNTA21g-1; Wed, 21 Feb 2024 02:11:47 -0500
-X-MC-Unique: 0uMJz--6PZqvtn0qNTA21g-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a30f9374db7so744205166b.0
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:11:47 -0800 (PST)
+ us-mta-490-Ai4-kTfIN3q9s0hcqJnzfA-1; Wed, 21 Feb 2024 02:16:26 -0500
+X-MC-Unique: Ai4-kTfIN3q9s0hcqJnzfA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a3f52ebbb6cso3013166b.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:16:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708499506; x=1709104306;
+ d=1e100.net; s=20230601; t=1708499785; x=1709104585;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=62Mb2OlfKN4UDaAuc6PsP06x7aQo7hLlvw4h8qPSDB4=;
- b=vwDnMeRIvQV4afNZec9fUTAvz3tqlDS8ekhXtxD7A5c5l4CpT9IzSe/InSYxNl/9IU
- pf3DPrm4G/+LtOEL5z5v5j6Vt202w6kadX3vg0mgTqq7z8HjrDCCcNu2sFYUGnenQ+PO
- NiMKewge/pSfQi+eVFEqW54l3O/VN8bQ2sYNp2vbLJKTqMYKsfjWq9hLe1QZoMUOIK4x
- gpnTG9KJ6GXQpOKJ66OULTyWA9VBs7RkHxIl4PqaqblRVIf2Ppc2p96XLswiigHMSTma
- aQcMRPJ8G/3FS5BH3GWZx01YILMnNoAAvEyCzH5aHJsj1kOr3iVFd5KqZCUdmFLHO4x/
- AUKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUT2hlgoVeY+Krh0LIGZzhoskWdz34/cP1hQxbAE7LNrEree3d1W0y7AQHbDdFxn6l0o86tBSSjNZFTiqWAM1HfM4coPXI=
-X-Gm-Message-State: AOJu0YyKRzWXJTflpK0lricTPulqa30g5jch7EWNtgbgKIAZ3HhU5pNw
- /DJm85RS47+F9RVVsojii/64DJJqZ2662R5mxR+BU06UWFoC3jPHgLLIuYhUj+tb78snKMb4iai
- kg51WPVbl/ThIXilRqhQq4HUyrpm0/M5cheFAbPB5vPhIZWeAaRFT
-X-Received: by 2002:a17:907:d91:b0:a3e:ec63:8fa9 with SMTP id
- go17-20020a1709070d9100b00a3eec638fa9mr5498845ejc.16.1708499506432; 
- Tue, 20 Feb 2024 23:11:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgFHNqoZDOs1geVXACmUbEoK0iaI0E+R888Gh3/zKLZJJ0peHbWRAQ3qCKl9VCy99NZmhuDA==
-X-Received: by 2002:a17:907:d91:b0:a3e:ec63:8fa9 with SMTP id
- go17-20020a1709070d9100b00a3eec638fa9mr5498824ejc.16.1708499506184; 
- Tue, 20 Feb 2024 23:11:46 -0800 (PST)
+ bh=TjYX//FZ7Op6zzAuS38Az7p1gyhJt+2lWcBgORzp7qA=;
+ b=EpRv58BGlyS9IDLf4KhKoFuQdQ6yygf2xnG/nvDOcQzac5errMDr6nbhdSmhunoZ+P
+ upGyiwzsKEUYKrL+5s5ZtrQQ6ULeceEwxZQuVCYm79ChmDf4MaB/nG9PnnfNp64J7ZG/
+ wAJ3k+tPaqRqNSzvEld51bL8ZVVibURz8y6yLxSzc8FxJv0lNbvv3o5eWuBdUUAJX01C
+ T4fO4ReoQdMrxiF2KWWpzI9+96m3wd8zwyfLGvSKGIy07Y6kSL2QR1P7uSMydfNDA8Bk
+ KsbgB7Vonnwm7Fp9SRcPT5eZuPOH+rhIwRPtkN4fD2fkcbCmUovTYtV/fdrlnzv3IMq7
+ MOJA==
+X-Gm-Message-State: AOJu0YwB0N1wDWNBZls4N5pzYZ2KX7kdYvr51MpOjFgWmEFQsYyTtLUU
+ B0AvskuoEbnFVl89EqPwq4KKLOPpd6I9W6LKeLiau56GWNeudvZAmnlwBPLpBI/2Gg5qdJsiHI8
+ ynjijS2Y162ErfaMhhtcCGykeJrf+tCboI9M5bz08faEA8caMCnEW
+X-Received: by 2002:a17:907:100b:b0:a3e:876d:1b1 with SMTP id
+ ox11-20020a170907100b00b00a3e876d01b1mr6079215ejb.20.1708499785574; 
+ Tue, 20 Feb 2024 23:16:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG0LbfXMEOqIFIahmcWWZs6OO3K0+GaSmEBW+DAav9a331/Wq4BBfSWgzIA1/nKCfGOTxBOoQ==
+X-Received: by 2002:a17:907:100b:b0:a3e:876d:1b1 with SMTP id
+ ox11-20020a170907100b00b00a3e876d01b1mr6079200ejb.20.1708499785283; 
+ Tue, 20 Feb 2024 23:16:25 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
  [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- f6-20020a170906560600b00a3f106b6de9sm1043963ejq.216.2024.02.20.23.11.45
+ g16-20020a170906c19000b00a3cee88ddc7sm4744454ejz.147.2024.02.20.23.16.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 23:11:45 -0800 (PST)
-Message-ID: <8bb8fc26-a408-4405-928f-5c87c3096ccf@redhat.com>
-Date: Wed, 21 Feb 2024 08:11:45 +0100
+ Tue, 20 Feb 2024 23:16:24 -0800 (PST)
+Message-ID: <ceb828d1-9283-4ad0-9833-2316b024d00e@redhat.com>
+Date: Wed, 21 Feb 2024 08:16:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] .gitlab-ci.d: Drop cross-win32-system job
+Subject: Re: [PATCH 3/3] .gitlab-ci.d/windows.yml: Remove shared-msys2
+ abstraction
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Yonggang Luo <luoyonggang@gmail.com>
 References: <20240220174412.155885-1-peter.maydell@linaro.org>
- <20240220174412.155885-3-peter.maydell@linaro.org>
+ <20240220174412.155885-4-peter.maydell@linaro.org>
+ <ZdTqNmZvM_S9SwDB@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,9 +119,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240220174412.155885-3-peter.maydell@linaro.org>
+In-Reply-To: <ZdTqNmZvM_S9SwDB@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -147,20 +147,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/02/2024 18.44, Peter Maydell wrote:
-> We don't support 32-bit Windows any more, so we don't need to defend it
-> with this CI job.
+On 20/02/2024 19.06, Daniel P. Berrangé wrote:
+> On Tue, Feb 20, 2024 at 05:44:12PM +0000, Peter Maydell wrote:
+>> Now we don't build msys2-32bit we don't need the abstraction out of the
+>> common msys2 handling from the 32-vs-64-bit specifics. Collapse it
+>> down into the msys2-64bit job definition.
+>>
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+>>   .gitlab-ci.d/windows.yml | 84 +++++++++++++++++++---------------------
+>>   1 file changed, 40 insertions(+), 44 deletions(-)
+>>
+>> diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+>> index 8fc08218d28..e784d5a68cd 100644
+>> --- a/.gitlab-ci.d/windows.yml
+>> +++ b/.gitlab-ci.d/windows.yml
+>> @@ -1,4 +1,4 @@
+>> -.shared_msys2_builder:
+>> +msys2-64bit:
+>>     extends: .base_job_template
+>>     tags:
+>>     - shared-windows
+>> @@ -14,9 +14,19 @@
+>>     stage: build
+>>     timeout: 100m
+>>     variables:
+>> +    MINGW_TARGET: mingw-w64-x86_64
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   .gitlab-ci.d/container-cross.yml              |   5 -
->   .gitlab-ci.d/crossbuilds.yml                  |  14 ---
->   .../dockerfiles/fedora-win32-cross.docker     | 111 ------------------
->   tests/lcitool/refresh                         |   5 -
->   4 files changed, 135 deletions(-)
->   delete mode 100644 tests/docker/dockerfiles/fedora-win32-cross.docker
+> This var isn't needed since you remove the only usage of it.
+> 
+>> +    MSYSTEM: MINGW64
+> 
+> I'm fuzzy on whether this is needed or not ?   We don't use it,
+> but perhaps it is something MSys wants set ?
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+We've had this in the very first version of this file already:
+
+  - $env:MSYSTEM = 'MINGW64'     # Start a 64 bit Mingw environment
+
+So I think this is required by MSYS.
+
+  Thomas
 
 
 
