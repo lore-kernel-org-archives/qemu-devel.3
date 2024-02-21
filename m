@@ -4,50 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3DAC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD56C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoZz-0004ww-8a; Wed, 21 Feb 2024 10:32:16 -0500
+	id 1rcocz-0008Hs-U5; Wed, 21 Feb 2024 10:35:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoPo-0006YT-ER; Wed, 21 Feb 2024 10:21:44 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcob0-0002md-NX
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:33:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchuw-00033j-42; Wed, 21 Feb 2024 03:25:27 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 427844F3EF;
- Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 0D02C860CE;
- Wed, 21 Feb 2024 11:21:02 +0300 (MSK)
-Received: (nullmailer pid 2142137 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- Yang Weijiang <weijiang.yang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 49/60] i386/cpu: Clear FEAT_XSAVE_XSS_LO/HI leafs when
- CPUID_EXT_XSAVE is not available
-Date: Wed, 21 Feb 2024 11:20:37 +0300
-Message-Id: <20240221082058.2141850-49-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcmQh-0005fr-Bc
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:14:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708521270;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eJAEW1CVsEUDJ8NvEH259oewIERAgHAVG1IR1MjnwxY=;
+ b=Wt9fytlJJBeuJWn56k3XKZpwDEl/4McMYqxX+xKP4/djZ9oGSRjGWYLSC6eY9YfyhFr807
+ h5PeGXuC1dR9IZh0YfugATBvSX6ftBx2ZmcqcQ1Trsv6rVVRmvtliDwfvpQcw2nHgaKv+m
+ aCqPIWmA936PUrEFgqlDhpkU6vLbSi8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-55-qs-FrTo_Mg2zOmSuj8oc0A-1; Wed, 21 Feb 2024 08:14:24 -0500
+X-MC-Unique: qs-FrTo_Mg2zOmSuj8oc0A-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D2FFF86306E;
+ Wed, 21 Feb 2024 13:14:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 850B6492BDA;
+ Wed, 21 Feb 2024 13:14:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 61EC721E6740; Wed, 21 Feb 2024 14:14:21 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Peter Xu
+ <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  =?utf-8?Q?Marc-An?=
+ =?utf-8?Q?dr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH V4 3/5] util: strv_from_strList
+In-Reply-To: <1705099758-211963-4-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Fri, 12 Jan 2024 14:49:16 -0800")
+References: <1705099758-211963-1-git-send-email-steven.sistare@oracle.com>
+ <1705099758-211963-4-git-send-email-steven.sistare@oracle.com>
+Date: Wed, 21 Feb 2024 14:14:21 +0100
+Message-ID: <87le7e3qoi.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,34 +86,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Leaf FEAT_XSAVE_XSS_LO and FEAT_XSAVE_XSS_HI also need to be cleared
-when CPUID_EXT_XSAVE is not set.
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  include/qemu/strList.h |  6 ++++++
+>  util/strList.c         | 14 ++++++++++++++
+>  2 files changed, 20 insertions(+)
+>
+> diff --git a/include/qemu/strList.h b/include/qemu/strList.h
+> index 010237f..4b86aa6 100644
+> --- a/include/qemu/strList.h
+> +++ b/include/qemu/strList.h
+> @@ -21,4 +21,10 @@
+>   */
+>  strList *strList_from_string(const char *in, const char *delim);
+>=20=20
+> +/*
+> + * Produce and return a NULL-terminated array of strings from @args.
+> + * The result is g_malloc'd and all strings are g_strdup'd.
+> + */
+> +GStrv strv_from_strList(const strList *args);
+> +
+>  #endif
+> diff --git a/util/strList.c b/util/strList.c
+> index 7991de3..bad4187 100644
+> --- a/util/strList.c
+> +++ b/util/strList.c
+> @@ -22,3 +22,17 @@ strList *strList_from_string(const char *str, const ch=
+ar *delim)
+>=20=20
+>      return res;
+>  }
+> +
+> +GStrv strv_from_strList(const strList *args)
 
-Fixes: 301e90675c3f ("target/i386: Enable support for XSAVES based features")
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Yang Weijiang <weijiang.yang@intel.com>
-Message-ID: <20240115091325.1904229-2-xiaoyao.li@intel.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 81f5cad3858f27623b1b14467926032d229b76cc)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Suggest to name the argument @list.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index cd16cb893d..8b9ef218d3 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6927,6 +6927,8 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
-     if (!(env->features[FEAT_1_ECX] & CPUID_EXT_XSAVE)) {
-         env->features[FEAT_XSAVE_XCR0_LO] = 0;
-         env->features[FEAT_XSAVE_XCR0_HI] = 0;
-+        env->features[FEAT_XSAVE_XSS_LO] = 0;
-+        env->features[FEAT_XSAVE_XSS_HI] = 0;
-         return;
-     }
- 
--- 
-2.39.2
+> +{
+> +    const strList *arg;
+
+Suggest to name this @tail.
+
+> +    int i =3D 0;
+> +    GStrv argv =3D g_new(char *, QAPI_LIST_LENGTH(args) + 1);
+> +
+> +    for (arg =3D args; arg !=3D NULL; arg =3D arg->next) {
+> +        argv[i++] =3D g_strdup(arg->value);
+> +    }
+> +    argv[i] =3D NULL;
+> +
+> +    return argv;
+> +}
+
+Can we use char ** instread of GStrv?  I'd find that clearer.  For what
+it's worth, GLib documentation of functions like g_strsplit() doesn't
+use the GStrv typedef, either.
 
 
