@@ -4,47 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 249ECC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB71C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyy-0007G8-U4; Wed, 21 Feb 2024 16:18:25 -0500
+	id 1rctxw-0002tn-Fd; Wed, 21 Feb 2024 16:17:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyt-0006p0-Sa; Wed, 21 Feb 2024 16:18:19 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyr-00011I-FI; Wed, 21 Feb 2024 16:18:19 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 31EB94F7FE;
- Thu, 22 Feb 2024 00:16:46 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DC756869B6;
- Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
-Received: (nullmailer pid 2335310 invoked by uid 1000);
- Wed, 21 Feb 2024 21:16:22 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 22/28] qemu-img: bench: refresh options/--help
-Date: Thu, 22 Feb 2024 00:16:03 +0300
-Message-Id: <20240221211622.2335170-22-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctxU-0002JV-9X
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:16:53 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctxM-0000mi-Lv
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:16:51 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33ce8cbf465so3658823f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:16:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708550202; x=1709155002; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=krMCnSm7PN59WBp42omeBRDoSFldcCIH3sGDX1JOTwc=;
+ b=jKfhZQRbt1eKbTCvF9Je8+ri8dt6VB+D+IRj6Cu2tlUepxVWMweW3sE05LdIuZyqmF
+ hpeHylPBYwllg71C0ze4o5r5T/Tq+dK6tDZg5yQTVLIIxmHtVvI1x4X6d3pDazLC3oYT
+ g5sBdBRJf4OsYxu7QtP5Ybgf8d3k3IXLneL2Psup+KKJFibLI9ewVk5gMgAehZ91sfRw
+ nS7vRy5CtUfHuoBT9g0Ca5Y4Em1mcaEPIWdeEOozTIWq/Hg41znfaP0H1bM5lUCTeD5g
+ A56/36hxPf+902Vrhc22+qgV/ZOdNtmP2xgmEmSu9lRiX+tj7wqrO7uE3ECqem5vicJy
+ 5N4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708550202; x=1709155002;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=krMCnSm7PN59WBp42omeBRDoSFldcCIH3sGDX1JOTwc=;
+ b=R9A+/bvLOSgm58RTnyp+Hin0OKsMclXgmYHulwFSprfsTtC5OxxfB8P7peQFIz87SW
+ 0sK7KxIVFb0u/b6ZYKcVAEoIYSBIKXYeQaEVnBsurf5PLeH7vidgtyIJ9blGqNHz0tx/
+ nJwjVPWrGLx30ITrugH+o3+5TAlJgo7x+zFn7CkkEEG3mlmigP7KwNyNgVytwNsjJkqo
+ TnG2v1rJo1OOqadpE+xvYgINSFV4q31QnR4kczCS+cWQkjpTMDNdzkm0+mHelWdGNyPK
+ QPpozTgQnzh4zf0LOdC5suhnYOGibLzDtSTc5sMLr0h/K77+Kj14Sxmq2tUWGjUh/ixi
+ SBhw==
+X-Gm-Message-State: AOJu0Yz802VBcgnItScxw1FaRXixu/WwXrWCMfeeoxtSYuXLDo6VvOiv
+ +hkjS6B/dgOMF/flExuhqNsqVSqrlA+x2lnXvKjqC2H8GVKvrsCZU7Kb5OsASOXPiGg0i9pxme8
+ JHNw=
+X-Google-Smtp-Source: AGHT+IGZf8Qtrl4tZWmdwUIeSK1cDaEYgeGvhmoolrdmoUSN1r0xO5Kbs+SYa2GK0wYLV2zGb/OPJQ==
+X-Received: by 2002:a5d:648e:0:b0:33d:3bc2:7acc with SMTP id
+ o14-20020a5d648e000000b0033d3bc27accmr9430955wri.11.1708550202692; 
+ Wed, 21 Feb 2024 13:16:42 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.211.34])
+ by smtp.gmail.com with ESMTPSA id
+ ba20-20020a0560001c1400b0033d640c8942sm7735227wrb.10.2024.02.21.13.16.40
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 21 Feb 2024 13:16:42 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, kvm@vger.kernel.org
+Subject: [PULL 02/25] hw/sysbus: Inline and remove sysbus_add_io()
+Date: Wed, 21 Feb 2024 22:16:02 +0100
+Message-ID: <20240221211626.48190-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
+References: <20240221211626.48190-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,108 +103,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
+sysbus_add_io(...) is a simple wrapper to
+memory_region_add_subregion(get_system_io(), ...).
+It is used in 3 places; inline it directly.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Rationale: we want to move to an explicit I/O bus,
+rather that an implicit one. Besides in heterogeneous
+setup we can have more than one I/O bus.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20240216150441.45681-1-philmd@linaro.org>
 ---
- qemu-img.c | 64 +++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 54 insertions(+), 10 deletions(-)
+ include/hw/sysbus.h | 2 --
+ hw/core/sysbus.c    | 6 ------
+ hw/i386/kvmvapic.c  | 2 +-
+ hw/mips/mipssim.c   | 2 +-
+ hw/nvram/fw_cfg.c   | 5 +++--
+ 5 files changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/qemu-img.c b/qemu-img.c
-index 0d17738fb6..8455832d34 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -4847,28 +4847,70 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-     for (;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
--            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"cache", required_argument, 0, 't'},
-+            {"count", required_argument, 0, 'c'},
-+            {"depth", required_argument, 0, 'd'},
-+            {"offset", required_argument, 0, 'o'},
-+            {"buffer-size", required_argument, 0, 's'},
-+            {"step-size", required_argument, 0, 'S'},
-+            {"aio", required_argument, 0, 'i'},
-+            {"native", no_argument, 0, 'n'},
-+            {"write", no_argument, 0, 'w'},
-             {"pattern", required_argument, 0, OPTION_PATTERN},
-+            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
-             {"no-drain", no_argument, 0, OPTION_NO_DRAIN},
-             {"force-share", no_argument, 0, 'U'},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":hc:d:f:ni:o:qs:S:t:wU", long_options,
--                        NULL);
-+        c = getopt_long(argc, argv, "hc:d:f:ni:o:qs:S:t:wU",
-+                        long_options, NULL);
-         if (c == -1) {
-             break;
-         }
+diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
+index 3564b7b6a2..14dbc22d0c 100644
+--- a/include/hw/sysbus.h
++++ b/include/hw/sysbus.h
+@@ -83,8 +83,6 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr);
+ void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
+                              int priority);
+ void sysbus_mmio_unmap(SysBusDevice *dev, int n);
+-void sysbus_add_io(SysBusDevice *dev, hwaddr addr,
+-                   MemoryRegion *mem);
+ MemoryRegion *sysbus_address_space(SysBusDevice *dev);
  
-         switch (c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
--            break;
-         case 'h':
--            help();
-+            cmd_help(ccmd,
-+"[-f FMT | --image-opts] [-t CACHE] [-c COUNT] [-d DEPTH]\n"
-+"        [-o OFFSET] [-s BUFFER_SIZE] [-S STEP_SIZE] [-i AIO] [-n]\n"
-+"        [-w [--pattern PATTERN] [--flush-interval INTERVAL [--no-drain]]]\n"
-+,
-+"  -q, --quiet\n"
-+"     quiet operations\n"
-+"  -f, --format FMT\n"
-+"     specify FILENAME format explicitly\n"
-+"  --image-opts\n"
-+"     indicates that FILENAME is a complete image specification\n"
-+"     instead of a file name (incompatible with --format)\n"
-+"  -t, --cache CACHE\n"
-+"     cache mode for FILENAME (" BDRV_DEFAULT_CACHE ")\n"
-+"  -c, --count COUNT\n"
-+"     number of I/O requests to perform\n"
-+"  -s, --buffer-size BUFFER_SIZE\n"
-+"     size of each I/O request\n"
-+"  -d, --depth DEPTH\n"
-+"     number of requests to perform in parallel\n"
-+"  -o, --offset OFFSET\n"
-+"     start first request at this OFFSET\n"
-+"  -S, --step-size STEP_SIZE\n"
-+"     each next request offset increment\n"
-+"  -i, --aio AIO\n"
-+"     async-io backend (threads, native, io_uring)\n"
-+"  -n, --native\n"
-+"     use native AIO backend if possible\n"
-+"  -w, --write\n"
-+"     perform write test (default is read)\n"
-+"  --pattern PATTERN\n"
-+"     write this pattern byte instead of zero\n"
-+"  --flush-interval FLUSH_INTERVAL\n"
-+"     issue flush after this number of requests\n"
-+"  --no-drain\n"
-+"     do not wait when flushing pending requests\n"
-+"  -U, --force-share\n"
-+"     open images in shared mode for concurrent access\n"
-+);
-             break;
-         case 'c':
-         {
-@@ -4985,6 +5027,8 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_IMAGE_OPTS:
-             image_opts = true;
-             break;
-+        default:
-+            tryhelp(argv[0]);
-         }
+ bool sysbus_realize(SysBusDevice *dev, Error **errp);
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index 35f902b582..9f1d5b2d6d 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -298,12 +298,6 @@ static char *sysbus_get_fw_dev_path(DeviceState *dev)
+     return g_strdup(qdev_fw_name(dev));
+ }
+ 
+-void sysbus_add_io(SysBusDevice *dev, hwaddr addr,
+-                       MemoryRegion *mem)
+-{
+-    memory_region_add_subregion(get_system_io(), addr, mem);
+-}
+-
+ MemoryRegion *sysbus_address_space(SysBusDevice *dev)
+ {
+     return get_system_memory();
+diff --git a/hw/i386/kvmvapic.c b/hw/i386/kvmvapic.c
+index f2b0aff479..3be64fba3b 100644
+--- a/hw/i386/kvmvapic.c
++++ b/hw/i386/kvmvapic.c
+@@ -727,7 +727,7 @@ static void vapic_realize(DeviceState *dev, Error **errp)
+     VAPICROMState *s = VAPIC(dev);
+ 
+     memory_region_init_io(&s->io, OBJECT(s), &vapic_ops, s, "kvmvapic", 2);
+-    sysbus_add_io(sbd, VAPIC_IO_PORT, &s->io);
++    memory_region_add_subregion(get_system_io(), VAPIC_IO_PORT, &s->io);
+     sysbus_init_ioports(sbd, VAPIC_IO_PORT, 2);
+ 
+     option_rom[nb_option_roms].name = "kvmvapic.bin";
+diff --git a/hw/mips/mipssim.c b/hw/mips/mipssim.c
+index a12427b6c8..57c8c33e2b 100644
+--- a/hw/mips/mipssim.c
++++ b/hw/mips/mipssim.c
+@@ -226,7 +226,7 @@ mips_mipssim_init(MachineState *machine)
+         qdev_prop_set_uint8(dev, "endianness", DEVICE_LITTLE_ENDIAN);
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, env->irq[4]);
+-        sysbus_add_io(SYS_BUS_DEVICE(dev), 0x3f8,
++        memory_region_add_subregion(get_system_io(), 0x3f8,
+                       sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
      }
  
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index e85493d513..6d6b17462d 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1142,6 +1142,7 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+     SysBusDevice *sbd;
+     FWCfgIoState *ios;
+     FWCfgState *s;
++    MemoryRegion *iomem = get_system_io();
+     bool dma_requested = dma_iobase && dma_as;
+ 
+     dev = qdev_new(TYPE_FW_CFG_IO);
+@@ -1155,7 +1156,7 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+     sbd = SYS_BUS_DEVICE(dev);
+     sysbus_realize_and_unref(sbd, &error_fatal);
+     ios = FW_CFG_IO(dev);
+-    sysbus_add_io(sbd, iobase, &ios->comb_iomem);
++    memory_region_add_subregion(iomem, iobase, &ios->comb_iomem);
+ 
+     s = FW_CFG(dev);
+ 
+@@ -1163,7 +1164,7 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+         /* 64 bits for the address field */
+         s->dma_as = dma_as;
+         s->dma_addr = 0;
+-        sysbus_add_io(sbd, dma_iobase, &s->dma_iomem);
++        memory_region_add_subregion(iomem, dma_iobase, &s->dma_iomem);
+     }
+ 
+     return s;
 -- 
-2.39.2
+2.41.0
 
 
