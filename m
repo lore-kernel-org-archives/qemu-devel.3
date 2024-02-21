@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776FBC48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 02:24:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9C53C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 02:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rccGO-00034k-4r; Tue, 20 Feb 2024 21:23:12 -0500
+	id 1rccHu-00052y-Gy; Tue, 20 Feb 2024 21:24:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rccGM-000347-0i
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:23:10 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rccGK-0001G9-5G
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:23:09 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6da9c834646so135065b3a.3
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 18:23:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708482186; x=1709086986; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pztqgJbiUkV/hJi7o1zBM7DA1XiTtD4zGsAJDwvJtmc=;
- b=Xys04fJ0ZyiFY5Tv9FXJnD9u1/1AVwC1Z0dwS0wxcPPs0rE50QACF8eO6LWlM/9NR4
- 5UYJiTapDfSLotq/TRa+68STmxe/ZIUPiTO0F3U3ce49bjD2ohn+lXyzLcn00HdRVdtg
- H1QZUj5oKmUCdflAtXdVDVsjii3HCARWMGAvalloyVgz0/njtsQOfaAANap/jbOrrOn4
- X7FltSoxbBWp4yLo0vjZTDCuIQn6WGiDPmLlVgNJluplwIi0KzR+90TE8aptGRqi1Uvx
- tQYsMfB3LiNYzHgXsZU5iLN87LK3O84dXbL3FxEOVX9sIDz1RvMfB2HCPhQJe0ML1H2v
- 6YNw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rccHn-0004nG-PW
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:24:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rccHl-0001PO-K3
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:24:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708482275;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=huio2ALf2p4uXHpD5A6ndGQ7nmt9yq2mMZgAu46/gDY=;
+ b=C4GSF7AYIo7/2xoUPw2p6VYv6kLRiblpI7Vdt3SQEgVrdlLiOA1Wd7aLyP7dScYnGPWomp
+ /Pco5TY+10vy2MVmX3yaSHKPCiIV2COgTK4Yj/ipSJLzhV5v75L5tmoQKx1Znm+Am8jHSO
+ x3Sj+VnO08DR1keVllo/7eVFbfiKL1g=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-470-KTG3S2A0OGuRQHx-dHOj7g-1; Tue, 20 Feb 2024 21:24:34 -0500
+X-MC-Unique: KTG3S2A0OGuRQHx-dHOj7g-1
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-6e46eae042bso275563b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 18:24:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708482186; x=1709086986;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pztqgJbiUkV/hJi7o1zBM7DA1XiTtD4zGsAJDwvJtmc=;
- b=A1GaDDMNz7VcpG8YxNSMouqwxw4q0pPRhuHvahvXcX2DOaJxBLyKMZCNPSzDFfDUzT
- fNwb8SpQwHGhr39AUXVdI9dA98zaNxHBhisji7kItEoMsmTq1vzv5lTE/PbSCGV0x8o+
- u0Hq6NZ1HKU40h1Drbsqw9GvCNaDj70mwDLIOpXCKwSbcV0YW52cQp0niF91C/XnfKt2
- B3tOFP01jpHhMOqxGPO6eFF6fp11FAB3LTzhLLT3Z7VPHSv0lt148ZECN2zC37YsWrQu
- g9GBl4LNE5uhMtkzIilfoP+Xn/YFjT4yF0dOEXF5XkgCereeofYePmYXTbPJRMW+WDhy
- 6THg==
-X-Gm-Message-State: AOJu0YxFaEly/1YusGjDhkyZHpDjv7WI1gg5oNh9PQHqJZXnyGMkjvT3
- 5E/3R7fHAgCt8Dn0J68dqFTeG8cMMqIyL9U88hIPTDUEV7U1BvjvtryMNcA5qu20eD9qZ5066zW
- s
-X-Google-Smtp-Source: AGHT+IE/yZT414SXU8u6g9041/M+mgXVZyigU3yfbDzERWf/wzq1BPEmRpvVZm/PrAF/POCSmwdM+A==
-X-Received: by 2002:aa7:93ca:0:b0:6e4:7bc3:8a70 with SMTP id
- y10-20020aa793ca000000b006e47bc38a70mr3825389pff.17.1708482185943; 
- Tue, 20 Feb 2024 18:23:05 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- y5-20020a634945000000b005dc48e56191sm7183355pgk.11.2024.02.20.18.23.02
+ d=1e100.net; s=20230601; t=1708482273; x=1709087073;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=huio2ALf2p4uXHpD5A6ndGQ7nmt9yq2mMZgAu46/gDY=;
+ b=LxyzkHeCwAWVDxWg/vsmoSDgDdiluMItph9fhY0fO4iVHiyEv9fnGuNblgaknxRH1J
+ PwE2upXGdWzFor3P4SzamXhsU9NYkSFDFijJzJbsQ+JLcLD/Vj53DkK6tx4TQzmTbzJw
+ GG6LPxTPyD4T2009OyAWLFzlFd4mlFRHLBpfXcCgUw+ag5IodIF+gKZp8itp8bSoKmMf
+ iEec+sEgU3m8bnS86f2n5BRUHOU8Hr9Cqz1F8NROMdhBIBLGmWCsg1C1HoC8UlPWK0A6
+ G4WFkptKUl6W40lyRvqtjoi9j3BjyvJoS3qwVk68AYJMkVVNmvqtnuwFVny9hauu5UXK
+ OJbQ==
+X-Gm-Message-State: AOJu0YydXhPiLuNi3Q8sJ5m78bKQ12jsaNvnNxNT8M+ZDE8YSqTx/Av4
+ m1D5xqXN8Cpj9xatbpM0G0Z9kiNnab1Rr0TSV8nY/TsnrKApoRwhjalv0CZype8elIjgddkVxHM
+ wNQYA7QA6+/zc9HmsFNH1+RlbP+mKSMNH3fCYgRidPAMuh/9ZPqkC
+X-Received: by 2002:a05:6a20:4286:b0:1a0:57d2:1f96 with SMTP id
+ o6-20020a056a20428600b001a057d21f96mr16926033pzj.0.1708482272783; 
+ Tue, 20 Feb 2024 18:24:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGeSOMSP8pa2eXuOz9/6+u8RTew7pYTCdgq68NwIqsbk23PXw689rlAxmcKQDMZcUhPxRtrmA==
+X-Received: by 2002:a05:6a20:4286:b0:1a0:57d2:1f96 with SMTP id
+ o6-20020a056a20428600b001a057d21f96mr16926018pzj.0.1708482272448; 
+ Tue, 20 Feb 2024 18:24:32 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ sk17-20020a17090b2dd100b00298d2182f1asm390025pjb.55.2024.02.20.18.24.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 20 Feb 2024 18:23:05 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, max.chou@sifive.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v5 2/7] trans_rvv.c.inc: remove 'is_store' bool from
- load/store fns
-Date: Tue, 20 Feb 2024 23:22:47 -0300
-Message-ID: <20240221022252.252872-3-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240221022252.252872-1-dbarboza@ventanamicro.com>
-References: <20240221022252.252872-1-dbarboza@ventanamicro.com>
+ Tue, 20 Feb 2024 18:24:32 -0800 (PST)
+Date: Wed, 21 Feb 2024 10:24:26 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Het Gala <het.gala@nutanix.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "farosas@suse.de" <farosas@suse.de>
+Subject: Re: [PATCH 1/3] qtest: migration: Enhance qtest migration functions
+ to support 'channels' argument
+Message-ID: <ZdVe2lC0xkxGgGJy@x1n>
+References: <20240216090624.75445-1-het.gala@nutanix.com>
+ <20240216090624.75445-2-het.gala@nutanix.com>
+ <ZdRAo3XJ9xvs6Z4Q@x1n>
+ <SJ2PR02MB9955B1E7FDF128EE745F121E98502@SJ2PR02MB9955.namprd02.prod.outlook.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <SJ2PR02MB9955B1E7FDF128EE745F121E98502@SJ2PR02MB9955.namprd02.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,193 +106,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After the 'mark_vs_dirty' changes from the previous patch the 'is_store'
-bool is unused in all load/store functions that were changed. Remove it.
+On Tue, Feb 20, 2024 at 06:14:46PM +0000, Het Gala wrote:
+> 
+> 
+> From: Peter Xu <peterx@redhat.com>
+> Date: Tuesday, 20 February 2024 at 11:33 AM
+> To: Het Gala <het.gala@nutanix.com>
+> Cc: qemu-devel@nongnu.org <qemu-devel@nongnu.org>, armbru@redhat.com <armbru@redhat.com>, berrange@redhat.com <berrange@redhat.com>, farosas@suse.de <farosas@suse.de>
+> Subject: Re: [PATCH 1/3] qtest: migration: Enhance qtest migration functions to support 'channels' argument
+> On Fri, Feb 16, 2024 at 09:06:22AM +0000, Het Gala wrote:
+> > Introduce support for adding a 'channels' argument to migrate_qmp_fail
+> > and migrate_qmp functions within the migration qtest framework, enabling
+> > enhanced control over migration scenarios.
+> >
+> > Signed-off-by: Het Gala <het.gala@nutanix.com>
+> > ---
+> >  tests/qtest/dbus-vmstate-test.c |  2 +-
+> >  tests/qtest/migration-helpers.c | 93 ++++++++++++++++++++++++++++++---
+> >  tests/qtest/migration-helpers.h | 11 ++--
+> >  tests/qtest/migration-test.c    | 33 ++++++------
+> >  4 files changed, 112 insertions(+), 27 deletions(-)
+> >
+> > diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
+> > index 6c990864e3..0ca572e29b 100644
+> > --- a/tests/qtest/dbus-vmstate-test.c
+> > +++ b/tests/qtest/dbus-vmstate-test.c
+> > @@ -229,7 +229,7 @@ test_dbus_vmstate(Test *test)
+> >
+> >      thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
+> >
+> > -    migrate_qmp(src_qemu, uri, "{}");
+> > +    migrate_qmp(src_qemu, uri, NULL, "{}");
+> >      test->src_qemu = src_qemu;
+> >      if (test->migrate_fail) {
+> >          wait_for_migration_fail(src_qemu, true);
+> > diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> > index e451dbdbed..d153677887 100644
+> > --- a/tests/qtest/migration-helpers.c
+> > +++ b/tests/qtest/migration-helpers.c
+> > @@ -13,6 +13,7 @@
+> >  #include "qemu/osdep.h"
+> >  #include "qemu/ctype.h"
+> >  #include "qapi/qmp/qjson.h"
+> > +#include "qapi/qmp/qlist.h"
+> >
+> >  #include "migration-helpers.h"
+> >
+> > @@ -43,7 +44,70 @@ bool migrate_watch_for_events(QTestState *who, const char *name,
+> >      return false;
+> >  }
+> >
+> > -void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
+> > +static char *socketAddressType_to_str(SocketAddressType type)
+> > +{
+> > +    switch (type) {
+> > +    case SOCKET_ADDRESS_TYPE_INET:
+> > +        return g_strdup("inet");
+> > +    case SOCKET_ADDRESS_TYPE_UNIX:
+> > +        return g_strdup("unix");
+> > +    case SOCKET_ADDRESS_TYPE_FD:
+> > +        return g_strdup("fd");
+> > +    case SOCKET_ADDRESS_TYPE_VSOCK:
+> > +        return g_strdup("vsock");
+> > +    default:
+> > +        return g_strdup("unknown address type");
+> > +    }
+> > +}
+> 
+> Use SocketAddressType_lookup?
+> Ack, I guess combination of using qapi_enum_parse() and qapi_enum_lookup() would help me eliminate the need for creating this function itself. Let me do the changes in the next patch.  Thanks!
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/insn_trans/trans_rvv.c.inc | 69 ++++++++++++-------------
- 1 file changed, 34 insertions(+), 35 deletions(-)
+Ah, what I wanted to say was actually SocketAddressType_str.
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 7a98f1caa6..15ccebf3fc 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -609,8 +609,7 @@ typedef void gen_helper_ldst_us(TCGv_ptr, TCGv_ptr, TCGv,
-                                 TCGv_env, TCGv_i32);
- 
- static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
--                          gen_helper_ldst_us *fn, DisasContext *s,
--                          bool is_store)
-+                          gen_helper_ldst_us *fn, DisasContext *s)
- {
-     TCGv_ptr dest, mask;
-     TCGv base;
-@@ -673,7 +672,7 @@ static bool ld_us_op(DisasContext *s, arg_r2nfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool ld_us_check(DisasContext *s, arg_r2nfvm* a, uint8_t eew)
-@@ -710,7 +709,7 @@ static bool st_us_op(DisasContext *s, arg_r2nfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, VM, a->vm);
-     data = FIELD_DP32(data, VDATA, LMUL, emul);
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool st_us_check(DisasContext *s, arg_r2nfvm* a, uint8_t eew)
-@@ -739,7 +738,7 @@ static bool ld_us_mask_op(DisasContext *s, arg_vlm_v *a, uint8_t eew)
-     /* Mask destination register are always tail-agnostic */
-     data = FIELD_DP32(data, VDATA, VTA, s->cfg_vta_all_1s);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool ld_us_mask_check(DisasContext *s, arg_vlm_v *a, uint8_t eew)
-@@ -756,7 +755,7 @@ static bool st_us_mask_op(DisasContext *s, arg_vsm_v *a, uint8_t eew)
-     /* EMUL = 1, NFIELDS = 1 */
-     data = FIELD_DP32(data, VDATA, LMUL, 0);
-     data = FIELD_DP32(data, VDATA, NF, 1);
--    return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
-+    return ldst_us_trans(a->rd, a->rs1, data, fn, s);
- }
- 
- static bool st_us_mask_check(DisasContext *s, arg_vsm_v *a, uint8_t eew)
-@@ -776,7 +775,7 @@ typedef void gen_helper_ldst_stride(TCGv_ptr, TCGv_ptr, TCGv,
- 
- static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
-                               uint32_t data, gen_helper_ldst_stride *fn,
--                              DisasContext *s, bool is_store)
-+                              DisasContext *s)
- {
-     TCGv_ptr dest, mask;
-     TCGv base, stride;
-@@ -823,7 +822,7 @@ static bool ld_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
-+    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool ld_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -857,7 +856,7 @@ static bool st_stride_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-         return false;
-     }
- 
--    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
-+    return ldst_stride_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool st_stride_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -880,7 +879,7 @@ typedef void gen_helper_ldst_index(TCGv_ptr, TCGv_ptr, TCGv,
- 
- static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-                              uint32_t data, gen_helper_ldst_index *fn,
--                             DisasContext *s, bool is_store)
-+                             DisasContext *s)
- {
-     TCGv_ptr dest, mask, index;
-     TCGv base;
-@@ -947,7 +946,7 @@ static bool ld_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
-     data = FIELD_DP32(data, VDATA, VTA, s->vta);
-     data = FIELD_DP32(data, VDATA, VMA, s->vma);
--    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, false);
-+    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool ld_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -999,7 +998,7 @@ static bool st_index_op(DisasContext *s, arg_rnfvm *a, uint8_t eew)
-     data = FIELD_DP32(data, VDATA, VM, a->vm);
-     data = FIELD_DP32(data, VDATA, LMUL, emul);
-     data = FIELD_DP32(data, VDATA, NF, a->nf);
--    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s, true);
-+    return ldst_index_trans(a->rd, a->rs1, a->rs2, data, fn, s);
- }
- 
- static bool st_index_check(DisasContext *s, arg_rnfvm* a, uint8_t eew)
-@@ -1078,7 +1077,7 @@ typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
- 
- static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-                              uint32_t width, gen_helper_ldst_whole *fn,
--                             DisasContext *s, bool is_store)
-+                             DisasContext *s)
- {
-     uint32_t evl = s->cfg_ptr->vlenb * nf / width;
-     TCGLabel *over = gen_new_label();
-@@ -1109,42 +1108,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-  * load and store whole register instructions ignore vtype and vl setting.
-  * Thus, we don't need to check vill bit. (Section 7.9)
-  */
--#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH, IS_STORE)               \
-+#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH)               \
- static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                 \
- {                                                                         \
-     if (require_rvv(s) &&                                                 \
-         QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                 \
-         return ldst_whole_trans(a->rd, a->rs1, ARG_NF, WIDTH,             \
--                                gen_helper_##NAME, s, IS_STORE);          \
-+                                gen_helper_##NAME, s);                    \
-     }                                                                     \
-     return false;                                                         \
- }
- 
--GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1, false)
--GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2, false)
--GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4, false)
--GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8, false)
--GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1, false)
--GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2, false)
--GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4, false)
--GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8, false)
--GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1, false)
--GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2, false)
--GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4, false)
--GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8, false)
--GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1, false)
--GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2, false)
--GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4, false)
--GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8, false)
-+GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1)
-+GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2)
-+GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4)
-+GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8)
-+GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1)
-+GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2)
-+GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4)
-+GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8)
-+GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1)
-+GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2)
-+GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4)
-+GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8)
-+GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1)
-+GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2)
-+GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4)
-+GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8)
- 
- /*
-  * The vector whole register store instructions are encoded similar to
-  * unmasked unit-stride store of elements with EEW=8.
-  */
--GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1, true)
--GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1, true)
--GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1, true)
--GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1, true)
-+GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1)
-+GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1)
-+GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1)
-+GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1)
- 
- /*
-  *** Vector Integer Arithmetic Instructions
+> 
+> > +
+> > +static QList *MigrationChannelList_to_QList(MigrationChannelList *channels)
+> > +{
+> > +    MigrationChannel *channel = NULL;
+> > +    MigrationAddress *addr = NULL;
+> > +    SocketAddress *saddr = NULL;
+> > +    g_autofree const char *addr_type = NULL;
+> > +    QList *channelList = qlist_new();
+> > +    QDict *channelDict = qdict_new();
+> > +    QDict *addrDict = qdict_new();
+> > +
+> > +    channel = channels->value;
+> > +    if (!channel || channel->channel_type == MIGRATION_CHANNEL_TYPE__MAX) {
+> > +        fprintf(stderr, "%s: Channel or its type is NULL\n",
+> > +                __func__);
+> > +    }
+> > +    g_assert(channel);
+> > +    if (channel->channel_type == MIGRATION_CHANNEL_TYPE_MAIN) {
+> > +        qdict_put_str(channelDict, "channel-type", g_strdup("main"));
+> > +    }
+> > +
+> > +    addr = channel->addr;
+> > +    if (!addr || addr->transport == MIGRATION_ADDRESS_TYPE__MAX) {
+> > +        fprintf(stderr, "%s: addr or its transport is NULL\n",
+> > +                __func__);
+> > +    }
+> > +    g_assert(addr);
+> > +    if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+> > +        qdict_put_str(addrDict, "transport", g_strdup("socket"));
+> > +    }
+> > +
+> > +    saddr = &addr->u.socket;
+> > +    if (!saddr) {
+> > +        fprintf(stderr, "%s: saddr is NULL\n", __func__);
+> > +    }
+> > +    g_assert(saddr);
+> > +    addr_type = socketAddressType_to_str(saddr->type);
+> > +    qdict_put_str(addrDict, "type", addr_type);
+> > +    qdict_put_str(addrDict, "port", saddr->u.inet.port);
+> > +    qdict_put_str(addrDict, "host", saddr->u.inet.host);
+> > +
+> > +    qdict_put_obj(channelDict, "addr", QOBJECT(addrDict));
+> > +    qlist_append_obj(channelList, QOBJECT(channelDict));
+> > +
+> > +    return channelList;
+> > +}
+> > +
+> > +void migrate_qmp_fail(QTestState *who, const char *uri,
+> > +                      MigrationChannelList *channels, const char *fmt, ...)
+> >  {
+> >      va_list ap;
+> >      QDict *args, *err;
+> > @@ -52,8 +116,16 @@ void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
+> >      args = qdict_from_vjsonf_nofail(fmt, ap);
+> >      va_end(ap);
+> >
+> > -    g_assert(!qdict_haskey(args, "uri"));
+> > -    qdict_put_str(args, "uri", uri);
+> > +    if (uri) {
+> > +        g_assert(!qdict_haskey(args, "uri"));
+> 
+> IMHO we don't need to assert here?
+> 
+> Rather than doing this, we can also have tests covering when both are set,
+> or when none are set, to make sure we fail properly in those wrong cases.
+> (Neglecting your comments here based on Patch 3/3 comment).
+> 
+> > +        qdict_put_str(args, "uri", uri);
+> > +    }
+> > +
+> > +    if (channels) {
+> > +        g_assert(!qdict_haskey(args, "channels"));
+> > +        QList *channelList = MigrationChannelList_to_QList(channels);
+> > +        qdict_put_obj(args, "channels", QOBJECT(channelList));
+> > +    }
+> >
+> >      err = qtest_qmp_assert_failure_ref(
+> >          who, "{ 'execute': 'migrate', 'arguments': %p}", args);
+> > @@ -68,7 +140,8 @@ void migrate_qmp_fail(QTestState *who, const char *uri, const char *fmt, ...)
+> >   * Arguments are built from @fmt... (formatted like
+> >   * qobject_from_jsonf_nofail()) with "uri": @uri spliced in.
+> >   */
+> > -void migrate_qmp(QTestState *who, const char *uri, const char *fmt, ...)
+> > +void migrate_qmp(QTestState *who, const char *uri,
+> > +                 MigrationChannelList *channels, const char *fmt, ...)
+> >  {
+> >      va_list ap;
+> >      QDict *args;
+> > @@ -77,8 +150,16 @@ void migrate_qmp(QTestState *who, const char *uri, const char *fmt, ...)
+> >      args = qdict_from_vjsonf_nofail(fmt, ap);
+> >      va_end(ap);
+> >
+> > -    g_assert(!qdict_haskey(args, "uri"));
+> > -    qdict_put_str(args, "uri", uri);
+> > +    if (uri) {
+> > +        g_assert(!qdict_haskey(args, "uri"));
+> > +        qdict_put_str(args, "uri", uri);
+> > +    }
+> > +
+> > +    if (channels) {
+> > +        g_assert(!qdict_haskey(args, "channels"));
+> > +        QList *channelList = MigrationChannelList_to_QList(channels);
+> > +        qdict_put_obj(args, "channels", QOBJECT(channelList));
+> > +    }
+> 
+> Duplicated chunks; sign of adding some helper?
+> I didn’t think of adding a helper function here as it was just 2 lines of code, already calling MigrationChannelList_to_QList() to avoid duplication. Even then if you have something in your mind to create some helper function, please suggest :)
+
+migrate_qmp_attach_ports(QDict *args, const char *uri,
+                         MigrationChannelList *channels)
+{
+    if (uri) {
+        g_assert(!qdict_haskey(args, "uri"));
+        qdict_put_str(args, "uri", uri);
+    }
+
+    if (channels) {
+        g_assert(!qdict_haskey(args, "channels"));
+        QList *channelList = MigrationChannelList_to_QList(channels);
+        qdict_put_obj(args, "channels", QOBJECT(channelList));
+    }
+}
+
+If you plan to work on migrate_incoming_qmp(), it'll also be reusable
+there.
+
+> 
+> >
+> >      qtest_qmp_assert_success(who,
+> >                               "{ 'execute': 'migrate', 'arguments': %p}", args);
+> > diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+> > index 3bf7ded1b9..52243bd2df 100644
+> > --- a/tests/qtest/migration-helpers.h
+> > +++ b/tests/qtest/migration-helpers.h
+> > @@ -14,6 +14,7 @@
+> >  #define MIGRATION_HELPERS_H
+> >
+> >  #include "libqtest.h"
+> > +#include "migration/migration.h"
+> >
+> >  typedef struct QTestMigrationState {
+> >      bool stop_seen;
+> > @@ -25,15 +26,17 @@ typedef struct QTestMigrationState {
+> >  bool migrate_watch_for_events(QTestState *who, const char *name,
+> >                                QDict *event, void *opaque);
+> >
+> > -G_GNUC_PRINTF(3, 4)
+> > -void migrate_qmp(QTestState *who, const char *uri, const char *fmt, ...);
+> > +G_GNUC_PRINTF(4, 5)
+> > +void migrate_qmp(QTestState *who, const char *uri,
+> > +                 MigrationChannelList *channels, const char *fmt, ...);
+> >
+> >  G_GNUC_PRINTF(3, 4)
+> >  void migrate_incoming_qmp(QTestState *who, const char *uri,
+> >                            const char *fmt, ...);
+> Just thinking, should also add ‘channels’ argument here I guess, would be helpful in future to add some tests where only ‘channels’ parameter wants to be added to the function ?
+
+Sounds good.
+
+Thanks,
+
 -- 
-2.43.2
+Peter Xu
 
 
