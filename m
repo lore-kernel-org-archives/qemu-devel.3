@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9815EC5478B
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A908FC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoTx-0008EW-Ck; Wed, 21 Feb 2024 10:26:01 -0500
+	id 1rcoco-0007B1-71; Wed, 21 Feb 2024 10:35:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcoMz-0000nB-7V
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:51 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rciNI-0006hP-54
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:54:45 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-412748b183aso3617075e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 00:54:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708505682; x=1709110482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IL4qO7MOcVi4MGpjEojSBfFz5U68QnGi75B1lq5XjZU=;
- b=GISvUosUT1g3fGRsnuTbEt2RDCzBZD7+FVcyakzL4TpSGPLTirYpiqb8SCTolAa5VE
- DcukzmnVI0wptl5XgmYTsJFMMIxL+kgjRhcqIN2pyL7HawMK7rozU1+hcUL3WTZgI51t
- ch5kD3okN4n0+iYLBjgOp2LyxyL2PqtfjrH9NV/efW7SpB08UZlO6faFqgYdXt8Vyin0
- UbVAjKTeh9MdDKS11lrzpj1WNlXbGJoeAypS/iazA/oIwI4N/3nerAoQGNE9682YJDoC
- jFyQxguy+qrAz/pY9W/QKGepsBNPZbQ4jX3RdP4ay03lSO1ULgWiM1olpNgNpvHUWeh9
- wb+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708505682; x=1709110482;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IL4qO7MOcVi4MGpjEojSBfFz5U68QnGi75B1lq5XjZU=;
- b=TR9ea4OGkjVJwxy+njnuRbSomCe5XCIPhB8J/i/BTOlbiroTMCPTA8yGYVF1XkN1OX
- Qq0m8g8IHy3/QjSDoTuiqKWeFEK10PNIzsab5BZ8toWZSwTrkyd6syWETus02K3oqVfB
- 98kqvPWUnh1FFD3BSB37RMxw/SX15lW100IqFeLkwBOHx6PBN1aDbY7pXLaUUJFdtEu9
- hfVW+kkP/tbxAlYt4ExJITGKR1ZYBxcMrgGxDgtwwxofmulQHZ18uLEn1/Bl9arMd1To
- ss9X6tgrdHtj2SYtWbgbVizpT5DHkGoaQZeJ7h8an+SUpNWXmoabCYiSH8jceVmOUHzp
- BJTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVH3vUnXXCFJtwLqK+VW3OpokK4/ejVrLnHPixbiMGPYnFL2H3TDkKg48XxVOqgL4NNFaHCNko31tp9w3jum3EXO/TTo1E=
-X-Gm-Message-State: AOJu0Yw8GboZhpzBgCIzKCPCU8t3ibJ/6KadH5wNFHDm4obVlNuOSvVQ
- 8Nx2VDyMGLYzpuBnQtU7HTZN5tFnQVIg3XaZXEQ26UsIHS6RCSg7H1WpwCEoTsI=
-X-Google-Smtp-Source: AGHT+IFI9UYRfzbsWl+N286cqalQ65LKK+hxQxVmy+3XCz0FPOCs+XzO3eke16fuHHS9J1x7fwXNWw==
-X-Received: by 2002:a05:600c:511f:b0:410:d6c7:e003 with SMTP id
- o31-20020a05600c511f00b00410d6c7e003mr12449107wms.32.1708505682381; 
- Wed, 21 Feb 2024 00:54:42 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.159])
- by smtp.gmail.com with ESMTPSA id
- w2-20020adfec42000000b0033d13530134sm16037706wrn.106.2024.02.21.00.54.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 00:54:41 -0800 (PST)
-Message-ID: <9a386049-17e9-4181-b0a8-050c69d0be20@linaro.org>
-Date: Wed, 21 Feb 2024 09:54:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
- 'ich_dmi_pci.h'
-Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcoa2-0005LV-SN; Wed, 21 Feb 2024 10:32:19 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcivf-0003QN-Kc; Wed, 21 Feb 2024 04:30:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708507816; x=1740043816;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=ZoOw7oZSsgWoryzBsNZfJlqiBLjXl5nzRum0ygARlNs=;
+ b=fucxyC/kNOGG6zBZBp6QY7JL4y4k6Nc2z3CbbORIU6cMAiXjUsHnVk/c
+ zusNW4sNfRmI7Mvi2QC14UziiPoxjAJL7o7krHuALJZ2wXBcSWJhzkJ3z
+ OH5/3oWGQzGa8iE76rWradcmutHC0S6VkF4sO1qxbA9KHEqs2051u28/Z
+ OBvfPDPpFbSZQrAA26QDckXXdFyDV/FqnpISc89zUU7aUukyjiS2nR/IC
+ BVNnc3Is3tDXbT1fdQgUnAOTo+tFoguZ7yW/IAKczFOuxi+6kr8srJ4m0
+ kOm80KH9sgQ7P3vQ6s2k4+vaeNLsbiCs9I0dVRC2utwUYvu5mJerGcOv3 Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="2795509"
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="2795509"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2024 01:30:10 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="9720217"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 21 Feb 2024 01:30:06 -0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-References: <20240219163855.87326-1-philmd@linaro.org>
- <20240219163855.87326-7-philmd@linaro.org>
- <C977DC8F-8731-4ED4-8FFC-85241ABED160@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <C977DC8F-8731-4ED4-8FFC-85241ABED160@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 6/6] hw/vfio/iommufd: Fix missing ERRP_GUARD() in
+ iommufd_cdev_getfd()
+Date: Wed, 21 Feb 2024 17:43:17 +0800
+Message-Id: <20240221094317.994454-7-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: none client-ip=192.198.163.15;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,52 +87,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 20:25, Bernhard Beschow wrote:
-> 
-> 
-> Am 19. Februar 2024 16:38:46 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
->> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
->> "hw/pci-bridge/ich_dmi_pci.h" header.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> MAINTAINERS                         |  1 +
->> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
->> include/hw/southbridge/ich9.h       |  2 --
->> hw/pci-bridge/i82801b11.c           | 11 ++++-------
->> 4 files changed, 25 insertions(+), 9 deletions(-)
->> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 1b210c5cc1..50507c3dd6 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
->> F: hw/i2c/smbus_ich9.c
->> F: hw/isa/lpc_ich9.c
->> F: include/hw/acpi/ich9*.h
->> +F: include/hw/pci-bridge/ich_dmi_pci.h
->> F: include/hw/southbridge/ich9.h
->>
->> PIIX4 South Bridge (i82371AB)
->> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h b/include/hw/pci-bridge/ich_dmi_pci.h
->> new file mode 100644
->> index 0000000000..7623b32b8e
->> --- /dev/null
->> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
-> 
-> Shouldn't we name the new header like its source file, i.e. i82801b11.h?
+From: Zhao Liu <zhao1.liu@intel.com>
 
-I'll rename sources to use the "ichX_FOO.c" pattern.
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
->> @@ -0,0 +1,20 @@
->> +/*
->> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
->> +#define HW_PCI_BRIDGE_ICH_D2P_H
-...
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+* - It should not be passed to error_prepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
+
+Currently, since vfio_attach_device() - the caller of
+iommufd_cdev_getfd() - is always called in DeviceClass.realize() context
+and won't get the NULL errp parameter, iommufd_cdev_getfd()
+doesn't trigger the dereference issue.
+
+To follow the requirement of errp, add missing ERRP_GUARD() in
+iommufd_cdev_getfd().
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+Suggested by credit:
+ Markus: Referred his explanation about ERRP_GUARD().
+---
+ hw/vfio/iommufd.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 9bfddc136089..7baf49e6ee9e 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -116,6 +116,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+ 
+ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+ {
++    ERRP_GUARD();
+     long int ret = -ENOTTY;
+     char *path, *vfio_dev_path = NULL, *vfio_path = NULL;
+     DIR *dir = NULL;
+-- 
+2.34.1
+
 
