@@ -4,85 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFA7C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:16:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD69C5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctwU-0001Op-8j; Wed, 21 Feb 2024 16:15:50 -0500
+	id 1rctxb-0002Yo-M4; Wed, 21 Feb 2024 16:16:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctwS-0001Nz-IO
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:15:48 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctwQ-0000bC-0B
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:15:48 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5650ac9a440so1403864a12.3
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:15:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550144; x=1709154944; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Jr+eux/dBX8kmIR3Ayd3qq7P8Y3vpvqeXNoEhGDigII=;
- b=RZXEDt0+lDXGNpHF8Rw4phcFqHns/oTEF+IBq0/B2Cdkc39PPqq/hOavehr1J52IJo
- gs16lC1H2lBTXk3rgCMDOwco3GKwz+uXI2sG12W+NRVAxMZvgLIvCo/ppiPaUJMy9H2G
- 5Y47nOeFrPHLOM+b46bMPA6GYY5wGAZi+AxVcyzpIAwBi/PK9K+HG/YIqR9apPT2mV+6
- vSpVNi5tcdZf1+1vXuIzB7gktrumLOMNxQlCB2ICAEeZiuABaBTq/H55Ow22hTN6FFfQ
- Mo5qVqxoqb0TfvvwXTX/6TbU+TGT/2qERc65UBaVS8kEIXM75YE5NNf0f9HhavyfNRfa
- ngbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550144; x=1709154944;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jr+eux/dBX8kmIR3Ayd3qq7P8Y3vpvqeXNoEhGDigII=;
- b=QmdpOygVDHy4xf1mZ6RBVree4Z+rlnte8nnKZhaejKdY0Tg8Y3LbNpg0XPPVWboiT9
- T6bFI6k0x6T7WPfOejkEliVHZ6dXc47Ckpr6f2UCXemtFbzr8kovQymXAG05Sox6H90n
- HdtHZiBIUw5ecnDjPttpW0/EZjOSKaTejbzNBrMRMsk5MCUGfDhc1lvOzgVTXKS7JhP5
- DbjW6GDh5EiiTMaLDRYHbQSM7A4GWPT3AVhNCvP6ASFiKsD19Unxm2rfLmHz9ElPqxjg
- bNy7Hqrfnp5DexTDmRoR4KPwCSX0j8vrUiGp9w8yaxxw6WbBKnXV/ejvnQy2+AmVaZxC
- DEhw==
-X-Gm-Message-State: AOJu0Yx8WST0GJvnoe2wdRX7Jw5DNUr/cQ0hktMt81S7mBE/EOR39RZn
- cQsF6nvy3Kq7RNnxBxyOaYOQQh17+/sN+et3JksrTMPZevIVYHf1GgUmK533zF+cR1OnqWFe/CR
- /wF4=
-X-Google-Smtp-Source: AGHT+IF7IT6dJ/MB7YgezzT9dXxWa55gV+7lqZvp/6nPFZbCXN4b7h7tUXetXJAOSWGI1So9NlLw1Q==
-X-Received: by 2002:a50:bb2e:0:b0:565:11c5:c7db with SMTP id
- y43-20020a50bb2e000000b0056511c5c7dbmr1375982ede.5.1708550144108; 
- Wed, 21 Feb 2024 13:15:44 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- f23-20020a50a6d7000000b0056392b7d85fsm5242896edc.9.2024.02.21.13.15.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 13:15:43 -0800 (PST)
-Message-ID: <79cfbd5b-2be8-4688-9d62-869955116433@linaro.org>
-Date: Wed, 21 Feb 2024 22:15:41 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctxK-000252-Oe; Wed, 21 Feb 2024 16:16:43 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctxH-0000lj-UI; Wed, 21 Feb 2024 16:16:42 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 28D744F7EC;
+ Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id D39D4869A5;
+ Thu, 22 Feb 2024 00:16:22 +0300 (MSK)
+Received: (nullmailer pid 2335259 invoked by uid 1000);
+ Wed, 21 Feb 2024 21:16:22 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 05/28] qemu-img: pass current cmd info into command handlers
+Date: Thu, 22 Feb 2024 00:15:46 +0300
+Message-Id: <20240221211622.2335170-5-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
+References: <cover.1708544927.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] hw/pci-host: Build ppc4xx_pci.c/ppc440_pcix.c once
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20240215105017.57748-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240215105017.57748-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,14 +60,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/2/24 11:50, Philippe Mathieu-Daudé wrote:
+This info will be used to generate --help output.
 
-> Philippe Mathieu-Daudé (4):
->    hw/ppc/ppc4xx_pci: Remove unused "hw/ppc/ppc.h" header
->    hw/ppc/ppc4xx_pci: Extract PCI host definitions to
->      hw/pci-host/ppc4xx.h
->    hw/ppc/ppc4xx_pci: Move ppc4xx_pci.c to hw/pci-host/
->    hw/ppc/ppc440_pcix: Move ppc440_pcix.c to hw/pci-host/
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ qemu-img.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-Series queued.
+diff --git a/qemu-img.c b/qemu-img.c
+index 44dbf5be4f..38ac0f1845 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -60,7 +60,7 @@
+ 
+ typedef struct img_cmd_t {
+     const char *name;
+-    int (*handler)(int argc, char **argv);
++    int (*handler)(const struct img_cmd_t *ccmd, int argc, char **argv);
+ } img_cmd_t;
+ 
+ enum {
+@@ -514,7 +514,7 @@ static int64_t cvtnum(const char *name, const char *value)
+     return cvtnum_full(name, value, 0, INT64_MAX);
+ }
+ 
+-static int img_create(int argc, char **argv)
++static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c;
+     int64_t img_size = -1;
+@@ -719,7 +719,7 @@ static int collect_image_check(BlockDriverState *bs,
+  *  3 - Check completed, image has leaked clusters, but is good otherwise
+  * 63 - Checks are not supported by the image format
+  */
+-static int img_check(int argc, char **argv)
++static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c, ret;
+     OutputFormat output_format = OFORMAT_HUMAN;
+@@ -951,7 +951,7 @@ static void run_block_job(BlockJob *job, Error **errp)
+     }
+ }
+ 
+-static int img_commit(int argc, char **argv)
++static int img_commit(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c, ret, flags;
+     const char *filename, *fmt, *cache, *base;
+@@ -1358,7 +1358,7 @@ static int check_empty_sectors(BlockBackend *blk, int64_t offset,
+  * 1 - Images differ
+  * >1 - Error occurred
+  */
+-static int img_compare(int argc, char **argv)
++static int img_compare(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     const char *fmt1 = NULL, *fmt2 = NULL, *cache, *filename1, *filename2;
+     BlockBackend *blk1, *blk2;
+@@ -2234,7 +2234,7 @@ static void set_rate_limit(BlockBackend *blk, int64_t rate_limit)
+     blk_set_io_limits(blk, &cfg);
+ }
+ 
+-static int img_convert(int argc, char **argv)
++static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c, bs_i, flags, src_flags = BDRV_O_NO_SHARE;
+     const char *fmt = NULL, *out_fmt = NULL, *cache = "unsafe",
+@@ -3002,7 +3002,7 @@ err:
+     return NULL;
+ }
+ 
+-static int img_info(int argc, char **argv)
++static int img_info(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c;
+     OutputFormat output_format = OFORMAT_HUMAN;
+@@ -3227,7 +3227,7 @@ static inline bool entry_mergeable(const MapEntry *curr, const MapEntry *next)
+     return true;
+ }
+ 
+-static int img_map(int argc, char **argv)
++static int img_map(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c;
+     OutputFormat output_format = OFORMAT_HUMAN;
+@@ -3376,7 +3376,7 @@ out:
+ #define SNAPSHOT_APPLY  3
+ #define SNAPSHOT_DELETE 4
+ 
+-static int img_snapshot(int argc, char **argv)
++static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     BlockBackend *blk;
+     BlockDriverState *bs;
+@@ -3534,7 +3534,7 @@ static int img_snapshot(int argc, char **argv)
+     return 0;
+ }
+ 
+-static int img_rebase(int argc, char **argv)
++static int img_rebase(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     BlockBackend *blk = NULL, *blk_old_backing = NULL, *blk_new_backing = NULL;
+     uint8_t *buf_old = NULL;
+@@ -4028,7 +4028,7 @@ out:
+     return 0;
+ }
+ 
+-static int img_resize(int argc, char **argv)
++static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     Error *err = NULL;
+     int c, ret, relative;
+@@ -4241,7 +4241,7 @@ static int print_amend_option_help(const char *format)
+     return 0;
+ }
+ 
+-static int img_amend(int argc, char **argv)
++static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     Error *err = NULL;
+     int c, ret = 0;
+@@ -4505,7 +4505,7 @@ static void bench_cb(void *opaque, int ret)
+     }
+ }
+ 
+-static int img_bench(int argc, char **argv)
++static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int c, ret = 0;
+     const char *fmt = NULL, *filename;
+@@ -4775,7 +4775,7 @@ typedef struct ImgBitmapAction {
+     QSIMPLEQ_ENTRY(ImgBitmapAction) next;
+ } ImgBitmapAction;
+ 
+-static int img_bitmap(int argc, char **argv)
++static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     Error *err = NULL;
+     int c, ret = 1;
+@@ -5075,7 +5075,7 @@ static int img_dd_skip(const char *arg,
+     return 0;
+ }
+ 
+-static int img_dd(int argc, char **argv)
++static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     int ret = 0;
+     char *arg = NULL;
+@@ -5341,7 +5341,7 @@ static void dump_json_block_measure_info(BlockMeasureInfo *info)
+     g_string_free(str, true);
+ }
+ 
+-static int img_measure(int argc, char **argv)
++static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+ {
+     static const struct option long_options[] = {
+         {"help", no_argument, 0, 'h'},
+@@ -5603,7 +5603,7 @@ int main(int argc, char **argv)
+     for (cmd = img_cmds; cmd->name != NULL; cmd++) {
+         if (!strcmp(cmdname, cmd->name)) {
+             argv[0] = g_strdup_printf("%s %s", argv[0], cmdname);
+-            return cmd->handler(argc, argv);
++            return cmd->handler(cmd, argc, argv);
+         }
+     }
+ 
+-- 
+2.39.2
+
 
