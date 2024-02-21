@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C1CC5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9208CC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcqR2-0003z7-6V; Wed, 21 Feb 2024 12:31:08 -0500
+	id 1rcqTj-0001B1-2A; Wed, 21 Feb 2024 12:33:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcqQy-0003y2-Vy
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:31:05 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from
+ <36DPWZQwKCt0M9AHGDRSDE9MFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--nabihestefan.bounces.google.com>)
+ id 1rcqTU-0000t8-NC
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:33:45 -0500
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcqQj-0001yv-2c
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:31:04 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso7087581a12.3
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:30:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <36DPWZQwKCt0M9AHGDRSDE9MFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--nabihestefan.bounces.google.com>)
+ id 1rcqTM-0002T7-9q
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:33:40 -0500
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-60804b369c7so72029487b3.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708536644; x=1709141444; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sGD50sVu3CFlDs4SMrbA/+esZxp8nCcncxRA7tspcPM=;
- b=vOjryKzW22WexknjMxHz9xHnFOhwp9jk7Kgb8HRFb3YIbXeCCXoy2IeFcg6BzASOpB
- kmy1mooyqgfZIKd474OG2W1UI/WNGVw+sxVEU3iJtJVWfUY6FJ0peo5pINpcIu15KAM2
- b/jX13tS5JsuIdopyp2L053+dpw/5M1FX0mrnyGWYynYZRX/iQsioz82zPAHtZV2lHqI
- WYcW4f4kQW+lW9JsDRQ6ZHdBbdC0ieJySKXse+pjWE159vxaTxS2ueJJHpVawkr+L4qM
- Qebb0LikKEeaxyqS3XasfKyvzhk7FXJVqqMcbQybDzEpc7FuHeXXJsLVfDRfCZEGsSNw
- onFw==
+ d=google.com; s=20230601; t=1708536808; x=1709141608; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=EcwbTVhF6/jNkSn+Rl6HkgY4LLv3UGKGBJOpP0BckOc=;
+ b=2g6ftT0n9W10ghhB5oapRHhPqiTQ/Xcn2r2HW3GizciK44erXLrqcTaKVoiclJPozb
+ Ky92/SKflwmh1wkK21G109aBlyrJne5zzLrqQxmKj4ztPUlloIz2IUg9xPTXcWoeT2b5
+ hJHejD7DaqgdG60Y9OaRjZCw5Rm+90QPDJhdJgqCuJKyUjWRVjBsBfyOO434iXVAmyqQ
+ Php7bt9+SW9WUUJPgPFqXSDhW0dzZxf/PqIwTH4UgstJjY2soJQZteSR6teERZpVRteD
+ T3pBOnDZHInk5q2I8eRBWB73GKBN7ktZXf9MRcSKiEWx+kgHhfZ1WBeKFwVbaOdgi3kG
+ F3RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708536644; x=1709141444;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sGD50sVu3CFlDs4SMrbA/+esZxp8nCcncxRA7tspcPM=;
- b=Wnz9gAH1/Njl2SQsoqze95eoesFxGoH0hyVVnBad7P4rOg/LeZfCgLn4+5O/gWQXPl
- HogxVOpTjQsszlRNH4yQ0Cb0/ZX5LSbNMM/hbOL9Z8jd3ESCU2+67FdvHkJhs3VO9HlL
- 7o0FfO6nFbGeZLNAVlRJ4MDhfng8xSj//8HFYQU3EkT/UlPW0c+Yf7UXMzVAV26GTZWq
- Fe0WkW31hVuaYljj2NOb97xSK6v1TD49YVJtyrh2OZA4Yk/MTeC5tTmmef6LMofUhcwk
- T9T5D68gJrsuKUL1gmHPaiQ99km91ex0B5paypgkV4fvMN0qLwA2g/G21K6mhbBhi31k
- tdZQ==
+ d=1e100.net; s=20230601; t=1708536808; x=1709141608;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EcwbTVhF6/jNkSn+Rl6HkgY4LLv3UGKGBJOpP0BckOc=;
+ b=dQapnBoDcGpv4sp+5YR5oiUeqEluj5G4XI8lnEZhOnd5C8RYg6RI1OKjrsKP9pcBoa
+ z714rZEOR6oRndssCd/h3HZuZmI5sqlew0Opo2kK6uUAYUn2SqJtpkEztaKWgxwGsabt
+ ogx9OZ83lUKKIfkuGZfIzYof0cahux4vZHmABO0BSjoHRTBSk77Y3GfQ6JaFF8kpAfD7
+ 69QUl7N+0xlWdybX7nCNMt9+kM6qOhw0w/HyuoybWwXwBZN+YZI/SpSYjDOARu43TkMO
+ SOUzrP7m7TkU31qO2zQjjLvg0lwQWHiPzQ1+bFfqFfJtSjPTO2M5yVXKmj5yvcepy79h
+ qcOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZSYBBkjg2zxhmFVTtH3ZUxZTtv19anS6oK6Oor1p1fMiseUl36+muIARwqw9RLmVoPtPjzSqnE4TIy+fpGdppg047zAY=
-X-Gm-Message-State: AOJu0YzPw333TMH46iGQIPwdx12ukCjdHv7PTdCT5a2iMOOucsurgcSy
- Y7ZoIgXdm1EaPSQ8KjEfGCBTA7ZgluJA+Qoi765EJiZWh+mkX4FglLe2uOAZykA=
-X-Google-Smtp-Source: AGHT+IEnC7o+F8NShHK0e2v8E173wbviavgo26RuYr6AFyvH8MyqmMoGzH4/O83cYnbG6LF90yrHXQ==
-X-Received: by 2002:a50:ec95:0:b0:564:caed:75a4 with SMTP id
- e21-20020a50ec95000000b00564caed75a4mr1039229edr.41.1708536644359; 
- Wed, 21 Feb 2024 09:30:44 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- p4-20020a05640243c400b00560c6ff443esm4697358edc.66.2024.02.21.09.30.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 09:30:43 -0800 (PST)
-Message-ID: <edaea1af-b42e-438e-8f82-8c1fbe95f874@linaro.org>
-Date: Wed, 21 Feb 2024 18:30:41 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] meson: Enable -Wvla
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>
-Cc: qemu-ppc@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240221162636.173136-1-thuth@redhat.com>
- <20240221162636.173136-4-thuth@redhat.com>
- <8dac5c1a-5780-45ca-90fe-147f1ab2fe28@redhat.com>
- <e38c7fa5-8dc8-4e7a-a4a9-06a88206b325@linaro.org>
-In-Reply-To: <e38c7fa5-8dc8-4e7a-a4a9-06a88206b325@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ AJvYcCW49AJu5vn0hkJ4hi44KenyqeHERMZinLOu5s5qtvpnyVqYJBA2FRaK4+VOJ6ABU9gnr8MdZpqhH0Xpq3JRgo1tMdxCB7U=
+X-Gm-Message-State: AOJu0Yy1DPCRhHgkHndu6KCIrKOQrjaHyqhwMHIF09FtX7OFBKv+FOD9
+ lWG6oiJt6DS/QN7NrBFP7To8doB9ZlXa0l9u+cP6w2sfhdt+f0xGRXTtr8pkOGLMHl4HYplgUBl
+ NH7B77k9JprjoMd8Xt6A/WoF3QA==
+X-Google-Smtp-Source: AGHT+IG6WE3zV5svLQ76mxt52tZmeFvCHce6AV3kOrbEWjl9Jlp5P4EA3uPqqGtss7y3JBSiCxSj2FjjNcDRfwVl0aI=
+X-Received: from nabihestefan.c.googlers.com
+ ([fda3:e722:ac3:cc00:20:ed76:c0a8:2737])
+ (user=nabihestefan job=sendgmr) by 2002:a81:a196:0:b0:604:9b11:ff2 with SMTP
+ id y144-20020a81a196000000b006049b110ff2mr4882082ywg.6.1708536808694; Wed, 21
+ Feb 2024 09:33:28 -0800 (PST)
+Date: Wed, 21 Feb 2024 17:33:23 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
+Message-ID: <20240221173325.1494895-1-nabihestefan@google.com>
+Subject: [PATCH 0/2] ARM GICv3 ITS DeviceID modification implementation
+From: Nabih Estefan <nabihestefan@google.com>
+To: peter.maydell@linaro.org
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ its@irrelevant.dk, kbusch@kernel.org, roqueh@google.com, 
+ nabihestefan@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=36DPWZQwKCt0M9AHGDRSDE9MFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--nabihestefan.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,140 +95,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/2/24 18:27, Philippe Mathieu-Daudé wrote:
+This patch series modifies the ARM GICv3 ITS to use the already existing
+send_msi virtual function when writing the GITS_TRANSLATER in order to be able
+to modify the final DeviceID to an implementation specific version that requires
+extra information besides the BDF that comes in the requester_id. This is
+achieved by using inheritance and redefinition of the send_msi while the
+parent's send_msi could still be used to inject the modified DeviceID.
 
-> Clément, ResetData::entry isn't used, so we can simplify removing
-> the whole ResetData structure, but I'm not sure this is intended:
-> 
-> -- >8 --
-> diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-> index 4873b59b6c..1ff6b5d63d 100644
-> --- a/hw/sparc/leon3.c
-> +++ b/hw/sparc/leon3.c
-> @@ -68,14 +68,6 @@
->   #define LEON3_APB_PNP_OFFSET (0x800FF000)
->   #define LEON3_AHB_PNP_OFFSET (0xFFFFF000)
-> 
-> -typedef struct ResetData {
-> -    struct CPUResetData {
-> -        int id;
-> -        SPARCCPU *cpu;
-> -    } info[MAX_CPUS];
-> -    uint32_t entry;             /* save kernel entry in case of reset */
-> -} ResetData;
-> -
->   static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
->   {
->       stl_p(code++, 0x82100000); /* mov %g0, %g1                */
-> @@ -148,17 +140,14 @@ static void write_bootloader(void *ptr, hwaddr 
-> kernel_addr)
-> 
->   static void leon3_cpu_reset(void *opaque)
->   {
-> -    struct CPUResetData *info = (struct CPUResetData *) opaque;
-> -    int id = info->id;
-> -    ResetData *s = (ResetData *)DO_UPCAST(ResetData, info[id], info);
-> -    CPUState *cpu = CPU(s->info[id].cpu);
-> +    CPUState *cpu = opaque;
->       CPUSPARCState *env = cpu_env(cpu);
-> 
->       cpu_reset(cpu);
-> 
->       cpu->halted = cpu->cpu_index != 0;
-> -    env->pc = s->entry;
-> -    env->npc = s->entry + 4;
-> +    env->pc = LEON3_PROM_OFFSET;
-> +    env->npc = LEON3_PROM_OFFSET + 4;
->   }
-> 
->   static void leon3_cache_control_int(CPUSPARCState *env)
-> @@ -259,7 +248,7 @@ static void leon3_generic_hw_init(MachineState 
-> *machine)
->       ram_addr_t ram_size = machine->ram_size;
->       const char *bios_name = machine->firmware ?: LEON3_PROM_FILENAME;
->       const char *kernel_filename = machine->kernel_filename;
-> -    SPARCCPU *cpu;
-> +    SPARCCPU *cpu[MAX_CPUS];
->       CPUSPARCState   *env;
->       MemoryRegion *address_space_mem = get_system_memory();
->       MemoryRegion *prom = g_new(MemoryRegion, 1);
-> @@ -267,28 +256,22 @@ static void leon3_generic_hw_init(MachineState 
-> *machine)
->       char       *filename;
->       int         bios_size;
->       int         prom_size;
-> -    ResetData  *reset_info;
->       DeviceState *dev, *irqmpdev;
->       int i;
->       AHBPnp *ahb_pnp;
->       APBPnp *apb_pnp;
-> 
-> -    reset_info = g_malloc0(sizeof(ResetData));
-> -
->       for (i = 0; i < machine->smp.cpus; i++) {
->           /* Init CPU */
-> -        cpu = SPARC_CPU(object_new(machine->cpu_type));
-> -        qdev_init_gpio_in_named(DEVICE(cpu), leon3_start_cpu, 
-> "start_cpu", 1);
-> -        qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
-> -        qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-> -        env = &cpu->env;
-> +        cpu[i] = SPARC_CPU(object_new(machine->cpu_type));
-> +        qdev_init_gpio_in_named(DEVICE(cpu[i]), leon3_start_cpu, 
-> "start_cpu", 1);
-> +        qdev_init_gpio_in_named(DEVICE(cpu[i]), leon3_set_pil_in, 
-> "pil", 1);
-> +        qdev_realize(DEVICE(cpu[i]), NULL, &error_fatal);
-> +        env = &cpu[i]->env;
-> 
->           cpu_sparc_set_id(env, i);
-> 
-> -        /* Reset data */
-> -        reset_info->info[i].id = i;
-> -        reset_info->info[i].cpu = cpu;
-> -        qemu_register_reset(leon3_cpu_reset, &reset_info->info[i]);
-> +        qemu_register_reset(leon3_cpu_reset, cpu[i]);
+Roque Arcudia Hernandez (2):
+  hw/intc/arm_gicv3_its_common: Increase DeviceID to 32 bits
+  hw/intc/arm_gicv3_its: Use send_msi in the GITS_TRANSLATER write
 
-           qemu_register_reset(leon3_cpu_reset, CPU(cpu[i]));
+ hw/intc/arm_gicv3_its.c                | 20 +++++++++-----------
+ hw/intc/arm_gicv3_its_kvm.c            |  2 +-
+ include/hw/intc/arm_gicv3_its_common.h | 15 ++++++++++++---
+ 3 files changed, 22 insertions(+), 15 deletions(-)
 
->       }
-> 
->       ahb_pnp = GRLIB_AHB_PNP(qdev_new(TYPE_GRLIB_AHB_PNP));
-> @@ -312,13 +295,12 @@ static void leon3_generic_hw_init(MachineState 
-> *machine)
->       sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
-> 
->       for (i = 0; i < machine->smp.cpus; i++) {
-> -        cpu = reset_info->info[i].cpu;
-> -        env = &cpu->env;
-> +        env = &cpu[i]->env;
->           qdev_connect_gpio_out_named(irqmpdev, "grlib-start-cpu", i,
-> -                                    qdev_get_gpio_in_named(DEVICE(cpu),
-> +                                    qdev_get_gpio_in_named(DEVICE(cpu[i]),
-> 
-> "start_cpu", 0));
->           qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", i,
-> -                                    qdev_get_gpio_in_named(DEVICE(cpu),
-> +                                    qdev_get_gpio_in_named(DEVICE(cpu[i]),
->                                                              "pil", 0));
->           env->irq_manager = irqmpdev;
->           env->qemu_irq_ack = leon3_irq_manager;
-> @@ -396,11 +378,6 @@ static void leon3_generic_hw_init(MachineState 
-> *machine)
->                * bootloader.
->                */
->               write_bootloader(memory_region_get_ram_ptr(prom), entry);
-> -            reset_info->entry = LEON3_PROM_OFFSET;
-> -            for (i = 0; i < machine->smp.cpus; i++) {
-> -                reset_info->info[i].cpu->env.pc = LEON3_PROM_OFFSET;
-> -                reset_info->info[i].cpu->env.npc = LEON3_PROM_OFFSET + 4;
-> -            }
->           }
->       }
-> ---
-> 
-> Regards,
-> 
-> Phil.
+-- 
+2.44.0.rc0.258.g7320e95886-goog
 
 
