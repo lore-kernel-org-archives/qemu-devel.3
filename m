@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A61ACC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBFA1C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoaV-0008Sm-Te; Wed, 21 Feb 2024 10:32:48 -0500
+	id 1rcooT-0005ZL-77; Wed, 21 Feb 2024 10:47:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoPl-0006DD-Bh
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:21:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rclON-00032e-Qb
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 07:08:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708517283;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0EBh+xv5H6WGacyPuyUU4qOiPGvzcOIXjAFokD2rarI=;
- b=DlMUBQLZinYr88qHLc2WkTIueVQDebmHeVbKSpNRw84A4SKSf/EUNrT/8dwpHfuVCqcC5Z
- VzJ7GPpJjnmRACwNzbl1yxjA9VH4v+mu22HMHgpIbU2ETT5G0F5Fj7dn+FIr5ohGCghSV4
- rvHHOfr04WoWGIvdLe+uJHug6yiyR3s=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-Z0MeJWdNP-6BrizmblRDhQ-1; Wed,
- 21 Feb 2024 07:07:59 -0500
-X-MC-Unique: Z0MeJWdNP-6BrizmblRDhQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 97DE83C0F229;
- Wed, 21 Feb 2024 12:07:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 428D510800;
- Wed, 21 Feb 2024 12:07:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1ACA521E6740; Wed, 21 Feb 2024 13:07:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Hao Xiang <hao.xiang@bytedance.com>
-Cc: pbonzini@redhat.com,  berrange@redhat.com,  eduardo@habkost.net,
- peterx@redhat.com,  farosas@suse.de,  eblake@redhat.com,
- thuth@redhat.com,  lvivier@redhat.com,  qemu-devel@nongnu.org,
- jdenemar@redhat.com
-Subject: Re: [PATCH v2 6/7] migration/multifd: Add zero pages and zero bytes
- counter to migration status interface.
-In-Reply-To: <20240216224002.1476890-7-hao.xiang@bytedance.com> (Hao Xiang's
- message of "Fri, 16 Feb 2024 22:40:01 +0000")
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-7-hao.xiang@bytedance.com>
-Date: Wed, 21 Feb 2024 13:07:54 +0100
-Message-ID: <87plwqt3z9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1rcooR-0005TI-DE
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:47:11 -0500
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1rcooO-0001Y9-32
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:47:11 -0500
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-599f5e71d85so4252125eaf.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 07:47:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708530426; x=1709135226; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Pfv1dZFyfCzFvTo4r/H4ijZvY83rwxX5cvs6EjIVmzY=;
+ b=bUwUYisZsC9OZWlkiT4a+AJHdWky2ty0JjMe5npGH602Tax/WupCI/Gdx7He254Zat
+ dpGJ+gMtnhzz2aaTLSL6cg2Pr73K22MqLAXvy7m6ii+glY2lsbnAjRJMq3zK2XStINU9
+ s2eNAnvzMHfLavTJQFuV/u1UGQzoPuhnAWbchMX5lCQLkjm8P7GI0aDEBPVcyoI61I5r
+ avEncVqf7sk197oclL/yzfUrRwEGxp1AYwsFb8h0IruwAXXaDVJAFvyvTrkZmmOcgtfI
+ HLBT0DP2a5ceOhYF/vz2n1iKM3tU1UclzbZ95XyNWT71Bmq2eVL9t1e/WhGNcfCRA4M4
+ tbuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708530426; x=1709135226;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Pfv1dZFyfCzFvTo4r/H4ijZvY83rwxX5cvs6EjIVmzY=;
+ b=WgUIPa845c1nuTB6hKqMwcNECYSv0T+ClN4lwJMqbO14iV3hbEi+Hn/GycSN4gLjuE
+ D3ifoajrYGC/k/1blB66D8vcXcj+9L14z4xUmXMvNa4jLRGsTOlKD3PmP0G1PF7wv/5b
+ P7Fy+pfoFPeiNhGbUVYHbyKawHHJy7zBXPn8JhsFVQWUmIfOgPDEggE8SiTQs+7UnyjH
+ 9l9NsGJsf7vn4XcoZtuD6s6t+/C14QU+twm4zeioyDCYMNSualudiPu4kGD9zj04YaII
+ PI5JLeq/K5r12rB7OcJdcBmGKtcLYVM793tnPGCpK9lEnaSlurGg1Rku33BY568BH8GH
+ ntxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAWZceMWu8TkBzmC0dB6QdmUGoaMPIQgbAqOO9CC/2yebITHUadfx6DGtlK0c85weAXQL54VjimZwheiYMwuavmEBqCZM=
+X-Gm-Message-State: AOJu0YyDwHQ3zI9Alx6jgWa3ZfzrK818G6+TFsgFU2+Kw7HVpFDSAzz1
+ f7csnb81TkvFAjmW+OE7a7yCbHedJdcSZxzTmhs2rcPdDaIDnLW3jjDlPrtybGc=
+X-Google-Smtp-Source: AGHT+IGTuSVlsC8F7gIex/13YPt6po79ajFJwGQt585GpGEczdKz1eIlPzdgW6EIhwqBG7x5uHkDig==
+X-Received: by 2002:a05:6358:786:b0:176:5cad:a2e1 with SMTP id
+ n6-20020a056358078600b001765cada2e1mr21794821rwj.26.1708530425734; 
+ Wed, 21 Feb 2024 07:47:05 -0800 (PST)
+Received: from ?IPv6:2804:7f0:b400:285a:db64:c298:9515:1427?
+ ([2804:7f0:b400:285a:db64:c298:9515:1427])
+ by smtp.gmail.com with ESMTPSA id
+ c13-20020a63350d000000b005e17cad83absm6965186pga.74.2024.02.21.07.47.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 07:47:05 -0800 (PST)
+Subject: Re: [PATCH] test/qtest: Add an API function to capture IRQ toggling
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: lvivier@redhat.com, pbonzini@redhat.com
+References: <20231112013801.293970-1-gustavo.romero@linaro.org>
+ <ddb3f1c5-28d1-472d-b491-703a3e1c6711@redhat.com>
+ <d79587a5-ae52-4832-9859-aad3e8b7182d@linaro.org>
+ <048454b2-86c3-4bda-5197-bfe44e864586@linaro.org>
+ <2ebd589c-f25c-4751-823c-10d7ddcb2a02@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <ac89c47f-4956-0bca-cdca-5ae492cf0215@linaro.org>
+Date: Wed, 21 Feb 2024 12:47:01 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <2ebd589c-f25c-4751-823c-10d7ddcb2a02@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-oo1-xc2f.google.com
+X-Spam_score_int: -53
+X-Spam_score: -5.4
+X-Spam_bar: -----
+X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.297,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,128 +104,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@bytedance.com> writes:
+Hi Phil,
 
-> This change extends the MigrationStatus interface to track zero pages
-> and zero bytes counter.
->
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> ---
->  migration/migration-hmp-cmds.c      |  4 ++++
->  migration/migration.c               |  2 ++
->  qapi/migration.json                 | 15 ++++++++++++++-
->  tests/migration/guestperf/engine.py |  2 ++
->  4 files changed, 22 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 7e96ae6ffd..abe035c9f2 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -111,6 +111,10 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
->                         info->ram->normal);
->          monitor_printf(mon, "normal bytes: %" PRIu64 " kbytes\n",
->                         info->ram->normal_bytes >> 10);
-> +        monitor_printf(mon, "zero: %" PRIu64 " pages\n",
-> +                       info->ram->zero);
-> +        monitor_printf(mon, "zero bytes: %" PRIu64 " kbytes\n",
-> +                       info->ram->zero_bytes >> 10);
->          monitor_printf(mon, "dirty sync count: %" PRIu64 "\n",
->                         info->ram->dirty_sync_count);
->          monitor_printf(mon, "page size: %" PRIu64 " kbytes\n",
-> diff --git a/migration/migration.c b/migration/migration.c
-> index ab21de2cad..1968ea7075 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1112,6 +1112,8 @@ static void populate_ram_info(MigrationInfo *info, MigrationState *s)
->      info->ram->skipped = 0;
->      info->ram->normal = stat64_get(&mig_stats.normal_pages);
->      info->ram->normal_bytes = info->ram->normal * page_size;
-> +    info->ram->zero = stat64_get(&mig_stats.zero_pages);
-> +    info->ram->zero_bytes = info->ram->zero * page_size;
->      info->ram->mbps = s->mbps;
->      info->ram->dirty_sync_count =
->          stat64_get(&mig_stats.dirty_sync_count);
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index e2450b92d4..892875da18 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -63,6 +63,10 @@
->  #     between 0 and @dirty-sync-count * @multifd-channels.  (since
->  #     7.1)
->  #
-> +# @zero: number of zero pages (since 9.0)
-> +#
-> +# @zero-bytes: number of zero bytes sent (since 9.0)
+Apologies, I missed this and I just found it when preparing
+now the v3 for ivshmem-flat.
 
-Awfully terse.  How are these two related?
 
-Recommend to name the first one @zero-pages.
+On 12/13/23 6:15 AM, Philippe Mathieu-Daudé wrote:
+> On 13/11/23 18:33, Gustavo Romero wrote:
+>>>>> Currently the QTest API does not provide a function to allow capturing
+>>>>> when an IRQ line is toggled (raised then lowered). Functions like
+>>>>> qtest_get_irq() read the current state of the intercepted IRQ lines,
+>>>>> which is already low when the function is called, since the line is
+>>>>> toggled.
+>>>>>
+>>>>> This commit introduces a new function, qtest_get_irq_trigger_counter(),
+>>>>> which returns the number of times a given intercepted IRQ line was
+>>>>> triggered (raised), hence allowing to capture when an IRQ line was
+>>>>> toggled.
+>>>>>
+>>>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>>>> ---
+>>>>>   tests/qtest/libqtest.c | 12 ++++++++++++
+>>>>>   tests/qtest/libqtest.h |  9 +++++++++
+>>>>>   2 files changed, 21 insertions(+)
+>>>>>
+>>>>> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+>>>>> index f33a210861..21891b52f1 100644
+>>>>> --- a/tests/qtest/libqtest.c
+>>>>> +++ b/tests/qtest/libqtest.c
+>>>>> @@ -82,6 +82,7 @@ struct QTestState
+>>>>>       int expected_status;
+>>>>>       bool big_endian;
+>>>>>       bool irq_level[MAX_IRQ];
+>>>>> +    uint64_t irq_trigger_counter[MAX_IRQ];
+>>>>>       GString *rx;
+>>>>>       QTestTransportOps ops;
+>>>>>       GList *pending_events;
+>>>>> @@ -498,6 +499,7 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+>>>>>       s->rx = g_string_new("");
+>>>>>       for (i = 0; i < MAX_IRQ; i++) {
+>>>>>           s->irq_level[i] = false;
+>>>>> +        s->irq_trigger_counter[i] = 0;
+>>>>>       }
+>>>>>       /*
+>>>>> @@ -690,6 +692,7 @@ redo:
+>>>>>           if (strcmp(words[1], "raise") == 0) {
+>>>>>               s->irq_level[irq] = true;
+>>>>> +            s->irq_trigger_counter[irq]++;
+>>>
+>>> This is 'irq_raised_counter',
+>>>
+>>>> Not sure whether you can get some "raise" events in a row without some "lower" events in between ... but just in case, I wonder whether it would make sense to check whether it is really a rising edge, i.e.:
+>>>>
+>>>>             if (strcmp(words[1], "raise") == 0) {
+>>>>                 if (!s->irq_level[irq]) {
+>>>>                     s->irq_trigger_counter[irq]++;
+>>>>                 }
+>>>>                 s->irq_level[irq] = true;
+>>>>
+>>>> What do you think?
+>>>
+>>> This is 'irq_pulsed_counter'. 'irq_lowered_counter' could also be
+>>> useful (at least for completeness).
+>>
+>> I understand that the code provided by Thomas actually has the exactly same
+>> effect as my code. This happens because a "raise" (or "low) message is
+>> not sent by the "server" side unless a transition state low -> high happens,
+>> so the check 'if (!s->irq_level[irq]) { ... }' is always true. So it's still
+>> capturing the raising state transition (as a side note, when one intercepts
+>> an IRQ the current state of the IRQ line is saved -- so the old IRQ state is
+>> always valid). Therefore, also as a consequence, like Thomas said, it's not
+>> possible to get a 'raise' event in a row without a 'lower' event in between.
+>>
+>> Based on your comments, I gave a second thought on 'trigger' meaning. I think
+>> 'trigger' refers to an event or action that automatically initiates a
+>> procedure. Since raising an IRQ line does not always mean to generate an IRQ,
+>> since the like can be active low in a device, maybe I should avoid using
+>> trigger and synonymous for raising.
+>>
+>> I think since 'toggle' means to switch back and forth between two modes or
+>> states, yep, it seems ok to me to use it as a synonymous for 'pulse'.
+> 
+> One definition of "to toggle" is:
+> '''
+> switch from one effect, feature, or state to another by using a toggle.
+> '''
+> 
+> "pulsate":
+> '''
+> expand and contract with strong regular movements.
+> '''
+> 
+> Maybe 'pulse' is simpler to understand?
 
-> +#
->  # Features:
->  #
->  # @deprecated: Member @skipped is always zero since 1.5.3
-> @@ -81,7 +85,8 @@
->             'multifd-bytes': 'uint64', 'pages-per-second': 'uint64',
->             'precopy-bytes': 'uint64', 'downtime-bytes': 'uint64',
->             'postcopy-bytes': 'uint64',
-> -           'dirty-sync-missed-zero-copy': 'uint64' } }
-> +           'dirty-sync-missed-zero-copy': 'uint64',
-> +           'zero': 'int', 'zero-bytes': 'int' } }
+I prefer 'toggle' (as you suggested initially). However, for v2,
+I didn't add an API function to detect a pulse/trigger/toggle.
+Instead, for v2, there are only qtest_get_irq_raised_counter() and
+qtest_get_irq_lowered_counter(), as you suggested. The user can
+then use these functions to create such a detector:
 
-Please use 'size' for byte counts such as @zero-bytes.
+https://lists.gnu.org/archive/html/qemu-devel/2023-11/msg03176.html
 
->  
->  ##
->  # @XBZRLECacheStats:
-> @@ -332,6 +337,8 @@
->  #           "duplicate":123,
->  #           "normal":123,
->  #           "normal-bytes":123456,
-> +#           "zero":123,
-> +#           "zero-bytes":123456,
->  #           "dirty-sync-count":15
->  #         }
->  #      }
-> @@ -358,6 +365,8 @@
->  #             "duplicate":123,
->  #             "normal":123,
->  #             "normal-bytes":123456,
-> +#             "zero":123,
-> +#             "zero-bytes":123456,
->  #             "dirty-sync-count":15
->  #          }
->  #       }
-> @@ -379,6 +388,8 @@
->  #             "duplicate":123,
->  #             "normal":123,
->  #             "normal-bytes":123456,
-> +#             "zero":123,
-> +#             "zero-bytes":123456,
->  #             "dirty-sync-count":15
->  #          },
->  #          "disk":{
-> @@ -405,6 +416,8 @@
->  #             "duplicate":10,
->  #             "normal":3333,
->  #             "normal-bytes":3412992,
-> +#             "zero":3333,
-> +#             "zero-bytes":3412992,
->  #             "dirty-sync-count":15
->  #          },
->  #          "xbzrle-cache":{
-> diff --git a/tests/migration/guestperf/engine.py b/tests/migration/guestperf/engine.py
-> index 608d7270f6..75315b99b7 100644
-> --- a/tests/migration/guestperf/engine.py
-> +++ b/tests/migration/guestperf/engine.py
-> @@ -92,6 +92,8 @@ def _migrate_progress(self, vm):
->                  info["ram"].get("skipped", 0),
->                  info["ram"].get("normal", 0),
->                  info["ram"].get("normal-bytes", 0),
-> +                info["ram"].get("zero", 0);
-> +                info["ram"].get("zero-bytes", 0);
->                  info["ram"].get("dirty-pages-rate", 0),
->                  info["ram"].get("mbps", 0),
->                  info["ram"].get("dirty-sync-count", 0)
+... as we do in the ivshmem-flat qtest (test_ivshmem_flat_irq_positive_pulse).
 
+If you're ok with v2, could you please bless it? :)
+
+
+> 
+>> Hence, I removed the word 'trigger' from the API function name and elsewhere.
+>>
+>> Right, I think having a qtest_get_irq_lowered_counter() is better and also,
+>> when used together with qtest_get_irq_raised_counter(), it's possible for a
+>> test to check pulses on the IRQ lines.
+>>
+>>
+>>> Per Gustavo's description, he indeed wants irq_pulsed_counter (or
+>>> irq_toggled_counter'.
+>>>
+>>
+>> That's a good point. So far I was testing just the high -> low transition,
+>> but in fact the most correct way to test the device is also check for
+>> a high -> low transition (so, yeah, indeed test a pulse).
+>>
+>> In the device I have:
+>>
+>> [...]
+>>      /*
+>>       * Toggle device's output line, which is connected to interrupt controller,
+>>       * generating an interrupt request to the CPU.
+>>       */
+>>      qemu_set_irq(s->irq, true);
+>>      qemu_set_irq(s->irq, false);
+> 
+> This is qemu_irq_pulse() from include/hw/irq.h.
+
+oh! cool, totally missed that. I'm using it for the ivshmem-flat v3 series!
+
+
+> 
+>> }
+>>
+>> Thus having both qtest_get_irq_{lowered,raised}_counter() allows capturing
+>> an IRQ toggle, for instance, as the following, where exactly 1 pulse is tested:
+>>
+>>      uint64_t num_raises;
+>>      uint64_t num_lows;
+>>
+>>      while (1) {
+>>          if ((num_raises = qtest_get_irq_raised_counter(qts, 0))) {
+>>              num_lows = qtest_get_irq_lowered_counter(qts, 0);
+>>              if (num_raises == num_lows && num_lows == 1) {
+>>                  printf("Detected correct number of pulses.\n");
+>>                  return 0;
+>>              } else {
+>>                  printf("Detected incorrect number of pulses.\n");
+>>                  return 1;
+>>              }
+>>          }
+>>      }
+>>
+>>>>
+>>>>>           } else {
+>>>>>               s->irq_level[irq] = false;
+>>>>>           }
+>>>>
+>>>> Anyway:
+>>>> Acked-by: Thomas Huth <thuth@redhat.com>
+>> I'm sending a v2 with qtest_get_irq_lowered_counter().
+>>
+>> Thanks!
+>>
+>>
+>> Cheers,
+>> Gustavo
+> 
 
