@@ -4,62 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80284C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C508C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoTy-0008LY-8O; Wed, 21 Feb 2024 10:26:02 -0500
+	id 1rcoWf-0006hk-H0; Wed, 21 Feb 2024 10:28:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rcoNE-0001hh-P8
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:19:06 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rcoN7-0000wD-B1; Wed, 21 Feb 2024 10:19:02 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rcld6-0005OG-CC
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 07:23:18 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 21FDC4E6006;
- Wed, 21 Feb 2024 13:23:11 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id X2afBcmoLxhu; Wed, 21 Feb 2024 13:23:09 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2A42C4E6004; Wed, 21 Feb 2024 13:23:09 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 27F527456B4;
- Wed, 21 Feb 2024 13:23:09 +0100 (CET)
-Date: Wed, 21 Feb 2024 13:23:09 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
-Subject: Re: [PATCH 3/5] hw/isa: Embed TYPE_PORT92 in south bridges used in
- PC machines
-In-Reply-To: <6a2333d7-9dea-4a0e-9d91-0889e6205128@ilande.co.uk>
-Message-ID: <477ea9cd-7f2b-b09a-db60-f13defa5c6d3@eik.bme.hu>
-References: <20240218131701.91132-1-shentey@gmail.com>
- <20240218131701.91132-4-shentey@gmail.com>
- <6a2333d7-9dea-4a0e-9d91-0889e6205128@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rcj8A-0005gM-L1; Wed, 21 Feb 2024 04:43:13 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41L8VBo2011104; Wed, 21 Feb 2024 09:42:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=2mcUGsz+G/CH4UyajAvWqzY66myYuYr8IqB6Vvmo+tU=;
+ b=cccbxpE/p50MM/EYEwEnrRNQQE4TyELPF1N4yYjQtamHcIn4WYC+7DYVFb/gbrnMI52G
+ M9lR5ILRtW/ghiMuFACRejlJSkOWKkwO5Kxu0rxYkp5aplRrj9J9CoPZ2Gb5na0VRerV
+ u8kk6g7zNm7CO07pu/x7S8Ok9ABknX2C1R0BgTnpgYzmLWVvJ502FqsHWYPKFJYo/HrB
+ JSWbFr9NmVErmMzWMAEvz35Q4UrjWa7GDxgeeotMhegwJYPWsF8jUHpAkA1qvdEwVFAk
+ WyPAXTaqBcOOaEEOqhY88398jvWr+TJ4SUgOMAh2xw1PREBtGCRUoWfrhIDXOJWJyfdS 6Q== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wdcqp31ur-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Feb 2024 09:42:50 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41L9Vghn015773;
+ Wed, 21 Feb 2024 09:42:50 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wdcqp31ud-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Feb 2024 09:42:50 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41L7DuOV031153; Wed, 21 Feb 2024 09:42:49 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wb9bkws6t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 21 Feb 2024 09:42:49 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41L9gkpV18219564
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 21 Feb 2024 09:42:48 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7792A58055;
+ Wed, 21 Feb 2024 09:42:46 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B44558076;
+ Wed, 21 Feb 2024 09:42:44 +0000 (GMT)
+Received: from [9.171.84.200] (unknown [9.171.84.200])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 21 Feb 2024 09:42:43 +0000 (GMT)
+Message-ID: <1309d0d0-f887-4634-9ba5-f3b9bb1eee1b@linux.ibm.com>
+Date: Wed, 21 Feb 2024 15:12:42 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 5/9] target/ppc: Simplify syscall exception handlers
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
+References: <cover.1705614747.git.balaton@eik.bme.hu>
+ <62f95b82597580aadc559114992675bee721e887.1705614747.git.balaton@eik.bme.hu>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <62f95b82597580aadc559114992675bee721e887.1705614747.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: lYG7DE7XiPMFS8ilEiYZLrSawSjL3JM_
+X-Proofpoint-GUID: FX-ty8OAZ9bc1U2sttzmU1Hs0Ag2TZ_I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxscore=0
+ phishscore=0 impostorscore=0 malwarescore=0 mlxlogscore=772
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 spamscore=0
+ suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2402210075
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,93 +117,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Feb 2024, Mark Cave-Ayland wrote:
-> On 18/02/2024 13:16, Bernhard Beschow wrote:
->> Port 92 is an integral part of the PIIX and ICH south bridges, so 
->> instantiate it
->> there. The isapc machine now needs to instantiate it explicitly, analoguous 
->> to
->> the RTC.
->> 
->> Note that due to migration compatibility, port92 is optional in the south
->> bridges. It is always instantiated the isapc machine for simplicity.
->> 
->> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->> ---
->>   include/hw/i386/pc.h          |  2 +-
->>   include/hw/southbridge/ich9.h |  4 ++++
->>   include/hw/southbridge/piix.h |  3 +++
->>   hw/i386/pc.c                  | 18 ++++++++++++------
->>   hw/i386/pc_piix.c             |  9 +++++++--
->>   hw/i386/pc_q35.c              |  8 +++++---
->>   hw/isa/lpc_ich9.c             |  9 +++++++++
->>   hw/isa/piix.c                 |  9 +++++++++
->>   hw/isa/Kconfig                |  2 ++
->>   9 files changed, 52 insertions(+), 12 deletions(-)
-[...] 
->> diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
->> index efdf43e92c..f42a087c07 100644
->> --- a/hw/isa/Kconfig
->> +++ b/hw/isa/Kconfig
->> @@ -47,6 +47,7 @@ config PIIX
->>       select IDE_PIIX
->>       select ISA_BUS
->>       select MC146818RTC
->> +    select PORT92
->>       select USB_UHCI
->>     config PORT92
->> @@ -78,3 +79,4 @@ config LPC_ICH9
->>       select ISA_BUS
->>       select ACPI_ICH9
->>       select MC146818RTC
->> +    select PORT92
->
-> I had a look at this (and did a bit of revision around 8042 and A20), and I 
-> am starting to wonder if the PORT92 device isn't something that belongs to 
-> the southbridge, but more specifically to the superio chip?
->
-> A couple of thoughts as to why I came to this conclusion: firstly the superio 
-> chip is generally considered to be a single integrated implementation of 
-> legacy IO devices, so this feels like a natural home for the PORT92 device. 
-> Secondly the value of the "has-port92" property is controlled by 
-> pcms->i8042_enabled, and this value is already passed into functions such as 
-> pc_superio_init() for example.
 
-One more argument for that may be that this A20 gate was originally 
-controlled by the keyboard controller and that's part of the superio. The 
-VIA southbridge docs even mention something about the KBC and this port92 
-register controlling the A20 gate together. So to implement that correctly 
-it may need to be in the same device. However this may be specific to the 
-VIA chip so not sure if this implementation can be shared by all the 
-southbridge devices.
 
-> I think this would also help reduce the changes required for the individual 
-> machines, however the devil is always in the details particularly when 
-> migration is involved.
+On 1/19/24 03:31, BALATON Zoltan wrote:
+> After previous changes the hypercall handling in 7xx and 74xx
+> exception handlers can be folded into one if statement to simpilfy
+> this code. Also add "unlikely" to mark the less freqiently used branch
+> for the compiler.
+> 
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-One thing that bothers me very much about this port92 device is that we 
-have about 100 lines of code of which the actual functionality is just a 
-qemu_irq and an uint8_t controlling it and storing the register value. 
-That shouldn't be more than 10 lines or maybe 20 with migration support, 
-it's only 100 lines because it's wrapped in a QDev. Bernhard wanted to 
-move it out from the PC machines to clean those up but as a result this 
-mess is just pushed down in the southbridge (or into superio as you 
-propose). It could easily be implemented in the southbridge or superio by 
-just adding the qemu_irq and the register value and maybe export it as a 
-property so the machine can set it for migration compatibility and then we 
-don't need a separate QDev wrapper around it as the superio or southbridge 
-is already a QDev and has the needed stuff to store this.
+Nice cleanup.
 
-But one could also argue that while these southbridges implement this 
-functionality, it's only used on the PC machines so as we already have it 
-modelled in a separate object we could just let the PC machines 
-instantiate it and leave it as it is and don't add this to other machines 
-where it's not needed.
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-(I like Mark's proposal a bit better only because that leaves the 
-southbridge untouched and changes the superio instead that I care less 
-about but the issue is the same there.)
-
-Regards,
-BALATON Zoltan
+> ---
+>   target/ppc/excp_helper.c | 24 ++++++++----------------
+>   1 file changed, 8 insertions(+), 16 deletions(-)
+> 
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 411d67376c..035a9fd968 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -762,26 +762,22 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
+>       case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+>       {
+>           int lev = env->error_code;
+> -
+> -        if (lev == 1 && cpu->vhyp) {
+> -            dump_hcall(env);
+> -        } else {
+> -            dump_syscall(env);
+> -        }
+>           /*
+>            * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+>            * instruction to communicate with QEMU. The pegasos2 machine
+>            * uses VOF and the 7xx CPUs, so although the 7xx don't have
+>            * HV mode, we need to keep hypercall support.
+>            */
+> -        if (lev == 1 && cpu->vhyp) {
+> +        if (unlikely(lev == 1 && cpu->vhyp)) {
+>               PPCVirtualHypervisorClass *vhc =
+>                   PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+> +            dump_hcall(env);
+>               vhc->hypercall(cpu->vhyp, cpu);
+>               powerpc_reset_excp_state(cpu);
+>               return;
+> +        } else {
+> +            dump_syscall(env);
+>           }
+> -
+>           break;
+>       }
+>       case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+> @@ -907,26 +903,22 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
+>       case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+>       {
+>           int lev = env->error_code;
+> -
+> -        if (lev == 1 && cpu->vhyp) {
+> -            dump_hcall(env);
+> -        } else {
+> -            dump_syscall(env);
+> -        }
+>           /*
+>            * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+>            * instruction to communicate with QEMU. The pegasos2 machine
+>            * uses VOF and the 74xx CPUs, so although the 74xx don't have
+>            * HV mode, we need to keep hypercall support.
+>            */
+> -        if (lev == 1 && cpu->vhyp) {
+> +        if (unlikely(lev == 1 && cpu->vhyp)) {
+>               PPCVirtualHypervisorClass *vhc =
+>                   PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+> +            dump_hcall(env);
+>               vhc->hypercall(cpu->vhyp, cpu);
+>               powerpc_reset_excp_state(cpu);
+>               return;
+> +        } else {
+> +            dump_syscall(env);
+>           }
+> -
+>           break;
+>       }
+>       case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
 
