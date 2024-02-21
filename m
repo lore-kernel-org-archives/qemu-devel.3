@@ -4,85 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE6FC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5804CC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyd-0004wW-5B; Wed, 21 Feb 2024 16:18:03 -0500
+	id 1rctzY-0001xh-9v; Wed, 21 Feb 2024 16:19:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyZ-0004dH-9o
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:59 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyX-00011N-Mn
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:59 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-412698cdd77so1284735e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:17:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550276; x=1709155076; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eeX4i0DK4SphSxibAwB75cUwYg+pHr9ZvM93pY2qrKc=;
- b=YsthKlxpwx0ABbNuvx5StoyKbvdEd9X3dCodQt0+hypP4OTiIJibDZHDuMpK9mPWhO
- g87nAYrNkl0HZcJwW6wqRwORIUtrgsgCaULte7NWuFBKATlV6olddEZzrF8ytXXcQTEk
- YHhqerg/rL95wJedqTHtp9KJa1DkNxTvKuGGTe2PtYoCDibXb76UHMkbYFK8vD7S0j31
- OB4Wasz1FKVgDtOSslv3L/BJzO/GUjr9sPuTSWONIbHKF5/LD99cIUWcyICsvQ+1UwJ6
- Ew3Gy7F6WIZP3MuqKMav8wtiFuAOseSkS/OdN5eQZVNkPc9ad5tUX2EJUBTNfg97jyq2
- qvyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550276; x=1709155076;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eeX4i0DK4SphSxibAwB75cUwYg+pHr9ZvM93pY2qrKc=;
- b=B9fca6+gpiynvkG8y5nSHjtft2QrR0a8bAOrHyXlM42473jKP4ZYoSyaV8qL+sBBF9
- w21TtakWk83sUu/n7KMjPxpuodmCY7r7bt8JoBQMAvRTQn76nGYPnsieNvkQoMn92Fl4
- yFV0KYAi3HVoOfxDUAcHYJ6VeiZROvV5IskScL4Mcoaw74vU+R6sBJcEDZWeswEsE509
- 8D/wt8tU8uskOm1kUUPYFBQMIAXhgh7Vt33V95mvs0rEO0c/aezEpLQQssoooKtK/fKd
- 7r2IgYY5qqBUHcossNgJrK3Slld9+zkOzCnxTOrxY1n89dhuhUnwte0NMnNzz/+e+azo
- iz6g==
-X-Gm-Message-State: AOJu0Yy5PNNK6tVGQ33XCY9TeblnOBtjJl5f3hjB6fLGNHDzsaXlKC2z
- gzXRn6ggnol/Kdk74uRErPmG3c0NBsW6LkGHC5vMSqxmS9pBUM9wkgFrz7KVtX/3n4muiBHQ3L4
- fzKQ=
-X-Google-Smtp-Source: AGHT+IFOj7PyKzNFCqo+SYS30UxmV+sSq12WHe/P4LXDe7KdIc+6yJB5mBYlVdXE29jZtMYzAiF4lQ==
-X-Received: by 2002:a05:600c:4686:b0:412:568b:50b5 with SMTP id
- p6-20020a05600c468600b00412568b50b5mr614541wmo.14.1708550275864; 
- Wed, 21 Feb 2024 13:17:55 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- u7-20020a05600c00c700b0040fb783ad93sm18906438wmm.48.2024.02.21.13.17.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 13:17:54 -0800 (PST)
-Message-ID: <a38ae499-a5a3-4fb7-81c5-1380ecb965a1@linaro.org>
-Date: Wed, 21 Feb 2024 22:17:53 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctzL-00010D-Le; Wed, 21 Feb 2024 16:18:47 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctzJ-00018S-3W; Wed, 21 Feb 2024 16:18:47 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 71FFE4F802;
+ Thu, 22 Feb 2024 00:16:46 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 28B74869BA;
+ Thu, 22 Feb 2024 00:16:24 +0300 (MSK)
+Received: (nullmailer pid 2335322 invoked by uid 1000);
+ Wed, 21 Feb 2024 21:16:22 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 26/28] qemu-img: implement short --help,
+ remove global help() function
+Date: Thu, 22 Feb 2024 00:16:07 +0300
+Message-Id: <20240221211622.2335170-26-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
+References: <cover.1708544927.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] hw/i386: Move SGX under KVM and use QDev API
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240215142035.73331-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240215142035.73331-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,18 +61,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/2/24 15:20, Philippe Mathieu-Daudé wrote:
-> - Update MAINTAINERS
-> - Move SGX files with KVM ones
-> - Use QDev API
-> 
-> Supersedes: <20240213071613.72566-1-philmd@linaro.org>
-> 
-> Philippe Mathieu-Daudé (3):
->    MAINTAINERS: Cover hw/i386/kvm/ in 'X86 KVM CPUs' section
->    hw/i386: Move SGX files within the kvm/ directory
->    hw/i386/sgx: Use QDev API
+now once all individual subcommands has --help support, remove
+the large unreadable help() thing and replace it with small
+global --help, which refers to individual command --help for
+more info.
 
-Ping?
+While at it, also line-wrap list of formats after 75 chars.
+
+Since missing_argument() and unrecognized_option() are now unused,
+remove them.
+
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ qemu-img.c | 172 ++++++++++++-----------------------------------------
+ 1 file changed, 39 insertions(+), 133 deletions(-)
+
+diff --git a/qemu-img.c b/qemu-img.c
+index d72e1f565b..ea284dca2d 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -94,11 +94,6 @@ typedef enum OutputFormat {
+ /* Default to cache=writeback as data integrity is not important for qemu-img */
+ #define BDRV_DEFAULT_CACHE "writeback"
+ 
+-static void format_print(void *opaque, const char *name)
+-{
+-    printf(" %s", name);
+-}
+-
+ static G_NORETURN
+ void tryhelp(const char *argv0)
+ {
+@@ -118,18 +113,6 @@ void error_exit(const char *argv0, const char *fmt, ...)
+     tryhelp(argv0);
+ }
+ 
+-static G_NORETURN
+-void missing_argument(const char *option)
+-{
+-    error_exit("qemu-img", "missing argument for option '%s'", option);
+-}
+-
+-static G_NORETURN
+-void unrecognized_option(const char *option)
+-{
+-    error_exit("qemu-img", "unrecognized option '%s'", option);
+-}
+-
+ /*
+  * Print --help output for a command and exit.
+  * syntax and description are multi-line with trailing EOL
+@@ -166,114 +149,6 @@ static OutputFormat parse_output_format(const char *argv0, const char *arg)
+     }
+ }
+ 
+-/* Please keep in synch with docs/tools/qemu-img.rst */
+-static G_NORETURN
+-void help(void)
+-{
+-    const char *help_msg =
+-           QEMU_IMG_VERSION
+-           "usage: qemu-img [standard options] command [command options]\n"
+-           "QEMU disk image utility\n"
+-           "\n"
+-           "    '-h', '--help'       display this help and exit\n"
+-           "    '-V', '--version'    output version information and exit\n"
+-           "    '-T', '--trace'      [[enable=]<pattern>][,events=<file>][,file=<file>]\n"
+-           "                         specify tracing options\n"
+-           "\n"
+-           "Command syntax:\n"
+-#define DEF(option, callback, arg_string)        \
+-           "  " arg_string "\n"
+-#include "qemu-img-cmds.h"
+-#undef DEF
+-           "\n"
+-           "Command parameters:\n"
+-           "  'filename' is a disk image filename\n"
+-           "  'objectdef' is a QEMU user creatable object definition. See the qemu(1)\n"
+-           "    manual page for a description of the object properties. The most common\n"
+-           "    object type is a 'secret', which is used to supply passwords and/or\n"
+-           "    encryption keys.\n"
+-           "  'fmt' is the disk image format. It is guessed automatically in most cases\n"
+-           "  'cache' is the cache mode used to write the output disk image, the valid\n"
+-           "    options are: 'none', 'writeback' (default, except for convert), 'writethrough',\n"
+-           "    'directsync' and 'unsafe' (default for convert)\n"
+-           "  'src_cache' is the cache mode used to read input disk images, the valid\n"
+-           "    options are the same as for the 'cache' option\n"
+-           "  'size' is the disk image size in bytes. Optional suffixes\n"
+-           "    'k' or 'K' (kilobyte, 1024), 'M' (megabyte, 1024k), 'G' (gigabyte, 1024M),\n"
+-           "    'T' (terabyte, 1024G), 'P' (petabyte, 1024T) and 'E' (exabyte, 1024P)  are\n"
+-           "    supported. 'b' is ignored.\n"
+-           "  'output_filename' is the destination disk image filename\n"
+-           "  'output_fmt' is the destination format\n"
+-           "  'options' is a comma separated list of format specific options in a\n"
+-           "    name=value format. Use -o help for an overview of the options supported by\n"
+-           "    the used format\n"
+-           "  'snapshot_param' is param used for internal snapshot, format\n"
+-           "    is 'snapshot.id=[ID],snapshot.name=[NAME]', or\n"
+-           "    '[ID_OR_NAME]'\n"
+-           "  '-c' indicates that target image must be compressed (qcow format only)\n"
+-           "  '-u' allows unsafe backing chains. For rebasing, it is assumed that old and\n"
+-           "       new backing file match exactly. The image doesn't need a working\n"
+-           "       backing file before rebasing in this case (useful for renaming the\n"
+-           "       backing file). For image creation, allow creating without attempting\n"
+-           "       to open the backing file.\n"
+-           "  '-h' with or without a command shows this help and lists the supported formats\n"
+-           "  '-p' show progress of command (only certain commands)\n"
+-           "  '-q' use Quiet mode - do not print any output (except errors)\n"
+-           "  '-S' indicates the consecutive number of bytes (defaults to 4k) that must\n"
+-           "       contain only zeros for qemu-img to create a sparse image during\n"
+-           "       conversion. If the number of bytes is 0, the source will not be scanned for\n"
+-           "       unallocated or zero sectors, and the destination image will always be\n"
+-           "       fully allocated\n"
+-           "  '--output' takes the format in which the output must be done (human or json)\n"
+-           "  '-n' skips the target volume creation (useful if the volume is created\n"
+-           "       prior to running qemu-img)\n"
+-           "\n"
+-           "Parameters to bitmap subcommand:\n"
+-           "  'bitmap' is the name of the bitmap to manipulate, through one or more\n"
+-           "       actions from '--add', '--remove', '--clear', '--enable', '--disable',\n"
+-           "       or '--merge source'\n"
+-           "  '-g granularity' sets the granularity for '--add' actions\n"
+-           "  '-b source' and '-F src_fmt' tell '--merge' actions to find the source\n"
+-           "       bitmaps from an alternative file\n"
+-           "\n"
+-           "Parameters to check subcommand:\n"
+-           "  '-r' tries to repair any inconsistencies that are found during the check.\n"
+-           "       '-r leaks' repairs only cluster leaks, whereas '-r all' fixes all\n"
+-           "       kinds of errors, with a higher risk of choosing the wrong fix or\n"
+-           "       hiding corruption that has already occurred.\n"
+-           "\n"
+-           "Parameters to convert subcommand:\n"
+-           "  '--bitmaps' copies all top-level persistent bitmaps to destination\n"
+-           "  '-m' specifies how many coroutines work in parallel during the convert\n"
+-           "       process (defaults to 8)\n"
+-           "  '-W' allow to write to the target out of order rather than sequential\n"
+-           "\n"
+-           "Parameters to snapshot subcommand:\n"
+-           "  'snapshot' is the name of the snapshot to create, apply or delete\n"
+-           "  '-a' applies a snapshot (revert disk to saved state)\n"
+-           "  '-c' creates a snapshot\n"
+-           "  '-d' deletes a snapshot\n"
+-           "  '-l' lists all snapshots in the given image\n"
+-           "\n"
+-           "Parameters to compare subcommand:\n"
+-           "  '-f' first image format\n"
+-           "  '-F' second image format\n"
+-           "  '-s' run in Strict mode - fail on different image size or sector allocation\n"
+-           "\n"
+-           "Parameters to dd subcommand:\n"
+-           "  'bs=BYTES' read and write up to BYTES bytes at a time "
+-           "(default: 512)\n"
+-           "  'count=N' copy only N input blocks\n"
+-           "  'if=FILE' read from FILE\n"
+-           "  'of=FILE' write to FILE\n"
+-           "  'skip=N' skip N bs-sized blocks at the start of input\n";
+-
+-    printf("%s\nSupported formats:", help_msg);
+-    bdrv_iterate_format(format_print, NULL, false);
+-    printf("\n\n" QEMU_HELP_BOTTOM "\n");
+-    exit(EXIT_SUCCESS);
+-}
+-
+ /*
+  * Is @list safe for accumulate_options()?
+  * It is when multiple of them can be joined together separated by ','.
+@@ -5956,6 +5831,16 @@ static const img_cmd_t img_cmds[] = {
+     { NULL, NULL, },
+ };
+ 
++static void format_print(void *opaque, const char *name)
++{
++    int *np = opaque;
++    if (*np + strlen(name) > 75) {
++        printf("\n ");
++        *np = 1;
++    }
++    *np += printf(" %s", name);
++}
++
+ int main(int argc, char **argv)
+ {
+     const img_cmd_t *cmd;
+@@ -5987,16 +5872,35 @@ int main(int argc, char **argv)
+     qemu_add_opts(&qemu_source_opts);
+     qemu_add_opts(&qemu_trace_opts);
+ 
+-    while ((c = getopt_long(argc, argv, "+:hVT:", long_options, NULL)) != -1) {
++    while ((c = getopt_long(argc, argv, "+hVT:", long_options, NULL)) != -1) {
+         switch (c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            return 0;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            return 0;
+         case 'h':
+-            help();
++            printf(
++QEMU_IMG_VERSION
++"QEMU disk image utility.  Usage:\n"
++"\n"
++"  qemu-img [standard options] COMMAND [--help | command options]\n"
++"\n"
++"Standard options:\n"
++"  -h, --help\n"
++"     display this help and exit\n"
++"  -V, --version\n"
++"     display version info and exit\n"
++"  -T,--trace TRACE\n"
++"     specify tracing options:\n"
++"        [[enable=]<pattern>][,events=<file>][,file=<file>]\n"
++"\n"
++"Recognized commands (run qemu-img COMMAND --help for command-specific help):\n\n");
++            for (cmd = img_cmds; cmd->name != NULL; cmd++) {
++                printf("  %s\n", cmd->name);
++            }
++            printf("\nSupported image formats:\n");
++            c = 99; /* force a newline */
++            bdrv_iterate_format(format_print, &c, false);
++            if (c) {
++                printf("\n");
++            }
++            printf("\n" QEMU_HELP_BOTTOM "\n");
+             return 0;
+         case 'V':
+             printf(QEMU_IMG_VERSION);
+@@ -6004,6 +5908,8 @@ int main(int argc, char **argv)
+         case 'T':
+             trace_opt_parse(optarg);
+             break;
++        default:
++            tryhelp(argv[0]);
+         }
+     }
+ 
+-- 
+2.39.2
 
 
