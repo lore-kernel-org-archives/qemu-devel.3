@@ -4,74 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EDEC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E77C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoU6-0000yq-IB; Wed, 21 Feb 2024 10:26:11 -0500
+	id 1rcoJE-0000ji-A2; Wed, 21 Feb 2024 10:14:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoNJ-0003Wj-GH
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:19:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchu5-0000w1-2o; Wed, 21 Feb 2024 03:24:33 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rchwJ-0003Cq-DW
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:26:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708504009;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=noNMRoIaLd7hMdQmpScQDHZVhCVK1JsXEgZn4ucahco=;
- b=VEA4thXowZyUcwmFIswVVp14D+k4PM/fCJG+OZsvvB4E1IXKTPyNUY3OY7zqIuU08/3i+h
- uGTPI8a7UGOeHQUKAYVvySXQL9IsHJnlsZghdRUfCPdylNnN7bATUC4yOirrRYxdBS6YTx
- JltHNIC8A7B5JQQ+6aRgxFSRJN2Huz4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-63-QjE2vVA2O_atV9VVIVQPCQ-1; Wed, 21 Feb 2024 03:26:46 -0500
-X-MC-Unique: QjE2vVA2O_atV9VVIVQPCQ-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0A0BC185A786;
- Wed, 21 Feb 2024 08:26:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 885B4C185C0;
- Wed, 21 Feb 2024 08:26:45 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 583B521E66D5; Wed, 21 Feb 2024 09:26:43 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Kevin
- Wolf <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH] qapi: Craft the BlockdevCreateOptionsLUKS comment
-In-Reply-To: <CAK9dgmZkLZiT_W0UjB+=EN9_vAK5Qy5XKRMBhHBQ98sRBbiAQw@mail.gmail.com>
- (Yong Huang's message of "Wed, 21 Feb 2024 15:08:04 +0800")
-References: <91c52e03e46ff0a96559b4e7d66ded582b2ec4e1.1708486450.git.yong.huang@smartx.com>
- <874je22u83.fsf@pond.sub.org>
- <CAK9dgmZkLZiT_W0UjB+=EN9_vAK5Qy5XKRMBhHBQ98sRBbiAQw@mail.gmail.com>
-Date: Wed, 21 Feb 2024 09:26:43 +0100
-Message-ID: <875xyiz0ho.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchu3-0002fb-5Z; Wed, 21 Feb 2024 03:24:32 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9ED754F3E6;
+ Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 69C8C860C5;
+ Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
+Received: (nullmailer pid 2142109 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 40/60] linux-user/aarch64: Choose SYNC as the preferred
+ MTE mode
+Date: Wed, 21 Feb 2024 11:20:28 +0300
+Message-Id: <20240221082058.2141850-40-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,141 +63,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yong Huang <yong.huang@smartx.com> writes:
+From: Richard Henderson <richard.henderson@linaro.org>
 
-> On Wed, Feb 21, 2024 at 2:43=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> Hyman Huang <yong.huang@smartx.com> writes:
->>
->> > Add comment in detail for commit 433957bb7f (qapi:
->> > Make parameter 'file' optional for
->> > BlockdevCreateOptionsLUKS).
->> >
->> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
->> > ---
->> >  qapi/block-core.json | 20 +++++++++++++++++++-
->> >  1 file changed, 19 insertions(+), 1 deletion(-)
->> >
->> > diff --git a/qapi/block-core.json b/qapi/block-core.json
->> > index ab5a93a966..42b0840d43 100644
->> > --- a/qapi/block-core.json
->> > +++ b/qapi/block-core.json
->> > @@ -4973,7 +4973,25 @@
->> >  ##
->> >  # @BlockdevCreateOptionsLUKS:
->> >  #
->> > -# Driver specific image creation options for LUKS.
->> > +# Driver specific image creation options for LUKS. Note that
->> > +# @file is required if @preallocation is specified and equals
->> > +# PREALLOC_MODE_ON. The following three scenarios determine how
->> > +# creation logic behaves when @preallocation is either equal to
->> > +# PREALLOC_MODE_OFF or is not given:
->> > +#
->> > +#  1) When @file is given only, format the block device referenced
->> > +#     by @file as the LUKS specification and trunk it to the @size.
->>
->> Do you mean "truncate it to @size"?
->>
-> Yes, :( sorry for the spelling mistake.
+The API does not generate an error for setting ASYNC | SYNC; that merely
+constrains the selection vs the per-cpu default.  For qemu linux-user,
+choose SYNC as the default.
 
-Writing good documentation in a second language is *hard*.  All we can
-reasonably expect from contributors to try their best.  And then we
-improve the text together in review.  Just like we do for code :)
+Cc: qemu-stable@nongnu.org
+Reported-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20240207025210.8837-2-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 681dfc0d552963d4d598350d26097a692900b408)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
->> > +#     In this case, the @size should reflect amount of space made
->> > +#     available to the guest, so the trunk size must take account
->> > +#     of that which will be used by the crypto header.
->> > +#
->> > +#  2) When @header is given only, just format the block device
->> > +#     referenced by @header as the LUKS specification.
->> > +#
->> > +#  3) When both @file and @header are given, block device
->> > +#     referenced by @file should be trunked to @size, and block
->> > +#     device referenced by @header should be formatted as the LUKS
->> > +#     specification.
->> >  #
->> >  # @file: Node to create the image format on, mandatory except when
->> >  #        'preallocation' is not requested
->>
->> Let's see whether I understand.
->>
->> blockdev-create with "driver": "luks" can work in three different ways:
->>
->> 1. Create an image with a LUKS header
->>
->> 2. Create just a detached LUKS header
->>
->> 3. Create an image and a detached LUKS header
->>
->> Correct?
->>
->
-> Yes
->
->
->> @file and @header are BlockdevRef, which means they refer to existing
->> images with arbitrary driver.  Could be "file", "qcow2", or anything.
->>
->> Correct?
->>
-> Yes
->
->
->>
->> To get 1., specify @file, but not @header.
->>
->> To get 2., specify @header, but not @file.
->>
->> To get 3., specify both.
->>
->> Specifying neither is an error.
->>
->> Correct?
->>
->
-> Yes
->
->
->> In any case, @size is the logical size of the image (how much data it
->> can hold).
->>
->
-> Yes
->
->
->>
->> With 1., the actual image size is a bit larger due to the LUKS header.
->> The @file image is resized to that size: if it's shorter, it's grown, if
->> it's longer, it's truncated.
->>
->
-> Yes
->
->
->> With 2., @size is merely recorded in the detached LUKS header.
->>
->
-> In LUKS1 specification, payload data size is not contained in the header,
-> so in this case, @size is not recorded in the detached LUKS header.
-> The creation logic just does the LUKS header formatting only.
-
-Is @size unused then?
-
->> With 3., @size is recorded in the detached LUKS header, and the @file
->> image is resized as with 1.
->>
->
-> Same reason as above, @size is not recorded and @file image is
-> resized to @size exactly.
->
->
->>
->> Correct?
->>
->>
-> Thanks for the comment,
->
-> Yong
+diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
+index 5067e7d731..aa8e203c15 100644
+--- a/linux-user/aarch64/target_prctl.h
++++ b/linux-user/aarch64/target_prctl.h
+@@ -173,21 +173,26 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
+ 
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+-        switch (arg2 & PR_MTE_TCF_MASK) {
+-        case PR_MTE_TCF_NONE:
+-        case PR_MTE_TCF_SYNC:
+-        case PR_MTE_TCF_ASYNC:
+-            break;
+-        default:
+-            return -EINVAL;
+-        }
+-
+         /*
+          * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
+-         * Note that the syscall values are consistent with hw.
++         *
++         * The kernel has a per-cpu configuration for the sysadmin,
++         * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
++         * which qemu does not implement.
++         *
++         * Because there is no performance difference between the modes, and
++         * because SYNC is most useful for debugging MTE errors, choose SYNC
++         * as the preferred mode.  With this preference, and the way the API
++         * uses only two bits, there is no way for the program to select
++         * ASYMM mode.
+          */
+-        env->cp15.sctlr_el[1] =
+-            deposit64(env->cp15.sctlr_el[1], 38, 2, arg2 >> PR_MTE_TCF_SHIFT);
++        unsigned tcf = 0;
++        if (arg2 & PR_MTE_TCF_SYNC) {
++            tcf = 1;
++        } else if (arg2 & PR_MTE_TCF_ASYNC) {
++            tcf = 2;
++        }
++        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
+ 
+         /*
+          * Write PR_MTE_TAG to GCR_EL1[Exclude].
+-- 
+2.39.2
 
 
