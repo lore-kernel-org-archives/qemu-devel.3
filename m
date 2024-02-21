@@ -4,108 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3FDC48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 04:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D959DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 05:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rceU9-0001E6-GZ; Tue, 20 Feb 2024 23:45:33 -0500
+	id 1rcfBO-0000GC-PB; Wed, 21 Feb 2024 00:30:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rceU7-0001BI-N0
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 23:45:31 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rceU1-0007z6-V1
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 23:45:31 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-5d4d15ec7c5so5170386a12.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 20:45:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708490724; x=1709095524;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lfLJWsa65ASUYlZui0NxNUFsMoaCE+gG01MijQygC9g=;
- b=23e7xhP2Sjd4N+tdRorku4G7u+NxtxqrVPaOKg2CTnEViS82xII5GxgeSK5SEZIv3o
- mYhjlaH0u11mS5FYPx/P3n1iKGDdR5YcTXcryfvDa4UnfAgt265EbC2BYTJ0PM7Uslu2
- 70v996rzRi9aPwaOSXL7Kt5WPhhtxFILG93dmTnzdlrFqnHPRZ/5XWjduX85XRt/+Euh
- EBcBW3jRYZd5n2o4rytpkVzs/7oHqItkZ+6l5rwpcsPZdLSedicBQvIPrruF2IoSEcjC
- poGToP3t41+7ylbUsVm8KmtYY+Sg/5LkjzwgdIbpKLZLZEul3GnIf51Goh40Xp1tC3vK
- of/g==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rcfBN-0000Fn-Ae
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 00:30:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rcfBK-0006kW-F8
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 00:30:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708493407;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HyuseMr93S3mg/Puxtk8ri3RLefHMKBv0SC2N0mxXXc=;
+ b=U4/4o0cNUhbUlorMf99kU6iPaz5XaeZeHp5zuxODGvU5pvYwFZ2WuhBF21Oph3JXkzQpQR
+ RUn3GtGV0tCOgQNamqJ3kgxKX+4ioow0hOOnjV5YWDFmaefbk7KF0KfTfC/g3tqUj4V/gh
+ cI9tqxQzIVQlWPqZ6lGYbDX+P8zgjpo=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-l-le56xVMSKEE1OSdHR_cg-1; Wed, 21 Feb 2024 00:30:05 -0500
+X-MC-Unique: l-le56xVMSKEE1OSdHR_cg-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3c15c0203e0so3743298b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 21:30:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708490724; x=1709095524;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lfLJWsa65ASUYlZui0NxNUFsMoaCE+gG01MijQygC9g=;
- b=LG2U6DAs3TdMwNfrBkKOfIJrrfZ7HJwjdUvsIiYL/wSMbVYofsJGB8Mmhp1y/cIfI4
- waJ+Me4TtY+WNA9Ix+LBSHDZlrx/Mr2cIo1qvd0fF2tCrXQtnQk4796VTmMjoQ2QWLkJ
- vPEu58gT1aem9gI11FEGzfG/EMMaRAJSB0rvaQSS3VjLAcjc0N/3MzFajZKB2FkHmXow
- i5kHNTzJrXBX7P9gu6xJVVvG0MRjT3wsFkXMdrTs95nAaa56sKDBADxLBz1CHLRZdeud
- T7KDlcC0UJNkiPKL5p4mhjH9iW71GQQJ0jMo2Si9l/QUOH3z3IIyx15PcKKw+bPz6TaH
- 2RxQ==
-X-Gm-Message-State: AOJu0Yw18ccV77bCJ8/40Jenj6p/A546K4bYAXWfTFjt9tr8u9oJltXO
- RmwjlMf8r94r0h3b7+w+sdHN7FAcimNNmznE7daMliOASAAay5M/qMxLxrRhQz0=
-X-Google-Smtp-Source: AGHT+IFxkvhTpn7WYr15xsK9Opo2pt7EBMmd0rceTM0c9yO5qCdM3SZM2ZOJ7mKoEimRnvCYGUfNOw==
-X-Received: by 2002:a17:90a:bf82:b0:299:ecba:cc6a with SMTP id
- d2-20020a17090abf8200b00299ecbacc6amr2709783pjs.40.1708490724411; 
- Tue, 20 Feb 2024 20:45:24 -0800 (PST)
-Received: from [157.82.203.206] ([157.82.203.206])
+ d=1e100.net; s=20230601; t=1708493405; x=1709098205;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HyuseMr93S3mg/Puxtk8ri3RLefHMKBv0SC2N0mxXXc=;
+ b=XPC0OMe0T582P/qKMjyrf1NxW1020HabFG7yQV5SYb0U5mr5R+PbvgsD/wGIXAB1tJ
+ EAQb0Rw2UwZYwpUzRwhE3lBeoNEHunJr27egmMxV1AJcERLcwwm8AKV37EpieAYI9wPJ
+ 284yeFegWfPELr0oaJrHbgWwUc8d6LYPJ9SIIfUBrwXUQRY8eJRbSHRJ9rjKlEA2/4Ab
+ W5IO1fbozGsmCrfEjguEKMMwN+eTIMPss31QdRV6NSH8TTRib/8olq6zwHGZINPXSdT+
+ ETHRjKrXABMF11+yr7v4fC7DaF4nhOtG4vMYAEg3jE6KCY9mQjfigpgiOG2Owf8CNBQy
+ gEaQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW6jdEi9M9I40cnfFm9ZKQiiqKxmcPKBBKUWqsAQAt8LLVTGTcd2YmPmlQh+3PxRIOKz674KceshGbNX5EODiWHQQyCoW0=
+X-Gm-Message-State: AOJu0YwzNzXJzeO68zuhFlfdhkEtI2azg/lRdYLEdXeMp9k39g1XxHQA
+ 1a9rB7fhFtywh5hq7JYt3dqCVK0FvO2pCYmcHybZhe2wzXZt6UNATAwT3BIeRZ9s8B0/O/7HlQ+
+ EaTm+gd04nT2Bpo7QvSGBinjU3pDH2FSqWNamYThp5ObkcltFSpSN
+X-Received: by 2002:a05:6808:140e:b0:3c0:3a17:b9d4 with SMTP id
+ w14-20020a056808140e00b003c03a17b9d4mr19534195oiv.36.1708493404697; 
+ Tue, 20 Feb 2024 21:30:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEKVRk7/N4iLTgRUyZ2ZIbZovTttb5Ng0W9Hz8ZWcueY4VBBqnwT+/iTgvMPq+3ZPwywKq21g==
+X-Received: by 2002:a05:6808:140e:b0:3c0:3a17:b9d4 with SMTP id
+ w14-20020a056808140e00b003c03a17b9d4mr19534175oiv.36.1708493404399; 
+ Tue, 20 Feb 2024 21:30:04 -0800 (PST)
+Received: from smtpclient.apple ([115.96.143.141])
  by smtp.gmail.com with ESMTPSA id
- b23-20020a17090a489700b00298ca46547fsm8201030pjh.36.2024.02.20.20.45.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 20:45:24 -0800 (PST)
-Message-ID: <bf31a250-9539-448c-9c64-4168ab8741f1@daynix.com>
-Date: Wed, 21 Feb 2024 13:45:16 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/23] plugins: add an API to read registers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ a18-20020a056a000c9200b006e48e64ef54sm472736pfv.173.2024.02.20.21.30.00
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 20 Feb 2024 21:30:03 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Re: [PATCH v3] pc: q35: Bump max_cpus to 4096 vcpus
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <vp63d36mcuib6trlqyjqpy72ysxb7ftlodr3eldhqklfg7bqi6@zc74olpzwknw>
+Date: Wed, 21 Feb 2024 10:59:49 +0530
+Cc: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Song Gao <gaosong@loongson.cn>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
- <jsnow@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-s390x@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Yanan Wang <wangyanan55@huawei.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Brian Cain
- <bcain@quicinc.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Bin Meng <bin.meng@windriver.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240216163025.424857-1-alex.bennee@linaro.org>
- <20240216163025.424857-19-alex.bennee@linaro.org>
- <c38a22b5-01e8-40f1-bfc4-4bba9bf7b516@daynix.com>
- <87il2jcje8.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <87il2jcje8.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::529;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov <imammedo@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4608F5FA-584C-4FE9-A73A-EBEF1E7B7FEA@redhat.com>
+References: <20240220154204.29676-1-anisinha@redhat.com>
+ <ZdTKYV5AuhYxvi1Q@redhat.com>
+ <vp63d36mcuib6trlqyjqpy72ysxb7ftlodr3eldhqklfg7bqi6@zc74olpzwknw>
+To: Gerd Hoffmann <kraxel@redhat.com>
+X-Mailer: Apple Mail (2.3774.400.31)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,221 +113,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/20 23:14, Alex Bennée wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
-> 
->> On 2024/02/17 1:30, Alex Bennée wrote:
->>> We can only request a list of registers once the vCPU has been
->>> initialised so the user needs to use either call the get function on
->>> vCPU initialisation or during the translation phase.
->>> We don't expose the reg number to the plugin instead hiding it
->>> behind
->>> an opaque handle. This allows for a bit of future proofing should the
->>> internals need to be changed while also being hashed against the
->>> CPUClass so we can handle different register sets per-vCPU in
->>> hetrogenous situations.
->>> Having an internal state within the plugins also allows us to expand
->>> the interface in future (for example providing callbacks on register
->>> change if the translator can track changes).
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
->>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
->>> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> <snip>
->>> +/*
->>> + * Register handles
->>> + *
->>> + * The plugin infrastructure keeps hold of these internal data
->>> + * structures which are presented to plugins as opaque handles. They
->>> + * are global to the system and therefor additions to the hash table
->>> + * must be protected by the @reg_handle_lock.
->>> + *
->>> + * In order to future proof for up-coming heterogeneous work we want
->>> + * different entries for each CPU type while sharing them in the
->>> + * common case of multiple cores of the same type.
->>> + */
->>> +
->>> +static QemuMutex reg_handle_lock;
->>> +
->>> +struct qemu_plugin_register {
->>> +    const char *name;
->>> +    int gdb_reg_num;
->>> +};
->>> +
->>> +static GHashTable *reg_handles; /* hash table of PluginReg */
->>> +
->>> +/* Generate a stable key - would xxhash be overkill? */
->>> +static gpointer cpu_plus_reg_to_key(CPUState *cs, int gdb_regnum)
->>> +{
->>> +    uintptr_t key = (uintptr_t) cs->cc;
->>> +    key ^= gdb_regnum;
->>> +    return GUINT_TO_POINTER(key);
->>> +}
->>
->> I have pointed out this is theoretically prone to collisions and
->> unsafe.
-> 
-> How is it unsafe? The aim is to share handles for the same CPUClass
-> rather than having a unique handle per register/cpu combo.
 
-THe intention is legitimate, but the implementation is not safe. It 
-assumes (uintptr)cs->cc ^ gdb_regnum is unique, but there is no such 
-guarantee. The key of GHashTable must be unique; generating hashes of 
-keys should be done with hash_func given to g_hash_table_new().
 
-> 
-> Indeed if I add the following:
-> 
-> --8<---------------cut here---------------start------------->8---
->     plugins/api.c
-> @@ -482,6 +482,9 @@ static GArray *create_register_handles(CPUState *cs, GArray *gdbstub_regs)
->                   val->name = g_intern_string(grd->name);
->   
->                   g_hash_table_insert(reg_handles, key, val);
-> +            } else {
-> +                /* make sure its not a clash */
-> +                g_assert(val->gdb_reg_num == grd->gdb_reg);
->               }
->   
->               /* Create a record for the plugin */
-> modified   tests/plugin/insn.c
-> @@ -46,6 +46,25 @@ typedef struct {
->       char *disas;
->   } Instruction;
->   
-> +/*
-> + * Initialise a new vcpu with reading the register list
-> + */
-> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    g_autoptr(GArray) reg_list = qemu_plugin_get_registers();
-> +    g_autoptr(GByteArray) reg_value = g_byte_array_new();
-> +
-> +    if (reg_list) {
-> +        for (int i = 0; i < reg_list->len; i++) {
-> +            qemu_plugin_reg_descriptor *rd = &g_array_index(
-> +                reg_list, qemu_plugin_reg_descriptor, i);
-> +            int count = qemu_plugin_read_register(rd->handle, reg_value);
-> +            g_assert(count > 0);
-> +        }
-> +    }
-> +}
-> +
-> +
->   static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
->   {
->       unsigned int i = cpu_index % MAX_CPUS;
-> @@ -212,6 +231,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->           sizes = g_array_new(true, true, sizeof(unsigned long));
->       }
->   
-> +    /* Register init, translation block and exit callbacks */
-> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
->       qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
->       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->       return 0;
-> --8<---------------cut here---------------end--------------->8---
-> 
-> Nothing trips up during check-tcg (after I fixed "gdbstub: Infer number
-> of core registers from XML" to remove the microblaze check on
-> cc->gdb_num_core_regs).
-> 
->>
->>> +
->>> +/*
->>> + * Create register handles.
->>> + *
->>> + * We need to create a handle for each register so the plugin
->>> + * infrastructure can call gdbstub to read a register. We also
->>> + * construct a result array with those handles and some ancillary data
->>> + * the plugin might find useful.
->>> + */
->>> +
->>> +static GArray *create_register_handles(CPUState *cs, GArray *gdbstub_regs)
->>> +{
->>> +    GArray *find_data = g_array_new(true, true,
->>> +                                    sizeof(qemu_plugin_reg_descriptor));
->>> +
->>> +    WITH_QEMU_LOCK_GUARD(&reg_handle_lock) {
->>> +
->>> +        if (!reg_handles) {
->>> +            reg_handles = g_hash_table_new(g_direct_hash, g_direct_equal);
->>> +        }
->>> +
->>> +        for (int i = 0; i < gdbstub_regs->len; i++) {
->>> +            GDBRegDesc *grd = &g_array_index(gdbstub_regs, GDBRegDesc, i);
->>> +            gpointer key = cpu_plus_reg_to_key(cs, grd->gdb_reg);
->>> +            struct qemu_plugin_register *val = g_hash_table_lookup(reg_handles,
->>> +                                                                   key);
->>> +
->>> +            /* skip "un-named" regs */
->>> +            if (!grd->name) {
->>> +                continue;
->>> +            }
->>> +
->>> +            /* Doesn't exist, create one */
->>> +            if (!val) {
->>> +                val = g_new0(struct qemu_plugin_register, 1);
->>> +                val->gdb_reg_num = grd->gdb_reg;
->>> +                val->name = g_intern_string(grd->name);
->>> +
->>> +                g_hash_table_insert(reg_handles, key, val);
->>> +            }
->>> +
->>> +            /* Create a record for the plugin */
->>> +            qemu_plugin_reg_descriptor desc = {
->>> +                .handle = val,
->>> +                .name = val->name,
->>> +                .feature = g_intern_string(grd->feature_name)
->>> +            };
->>> +            g_array_append_val(find_data, desc);
->>> +        }
->>> +    }
->>> +
->>> +    return find_data;
->>> +}
->>> +
->>> +GArray *qemu_plugin_get_registers(void)
->>> +{
->>> +    g_assert(current_cpu);
->>> +
->>> +    g_autoptr(GArray) regs = gdb_get_register_list(current_cpu);
->>> +    return regs->len ? create_register_handles(current_cpu, regs) : NULL;
->>> +}
->>> +
->>> +int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
->>> +{
->>> +    g_assert(current_cpu);
->>> +
->>> +    return gdb_read_register(current_cpu, buf, reg->gdb_reg_num);
->>> +}
->>> +
->>> +static void __attribute__((__constructor__)) qemu_api_init(void)
->>> +{
->>> +    qemu_mutex_init(&reg_handle_lock);
->>> +
->>> +}
->>> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
->>> index adb67608598..27fe97239be 100644
->>> --- a/plugins/qemu-plugins.symbols
->>> +++ b/plugins/qemu-plugins.symbols
->>> @@ -3,6 +3,7 @@
->>>      qemu_plugin_end_code;
->>>      qemu_plugin_entry_code;
->>>      qemu_plugin_get_hwaddr;
->>> +  qemu_plugin_get_registers;
->>>      qemu_plugin_hwaddr_device_name;
->>>      qemu_plugin_hwaddr_is_io;
->>>      qemu_plugin_hwaddr_phys_addr;
->>> @@ -19,6 +20,7 @@
->>>      qemu_plugin_num_vcpus;
->>>      qemu_plugin_outs;
->>>      qemu_plugin_path_to_binary;
->>> +  qemu_plugin_read_register;
->>>      qemu_plugin_register_atexit_cb;
->>>      qemu_plugin_register_flush_cb;
->>>      qemu_plugin_register_vcpu_exit_cb;
-> 
+> On 20-Feb-2024, at 21:46, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>=20
+> On Tue, Feb 20, 2024 at 03:50:57PM +0000, Daniel P. Berrang=C3=A9 =
+wrote:
+>> On Tue, Feb 20, 2024 at 09:12:04PM +0530, Ani Sinha wrote:
+>>> Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS =
+to allow up to 4096 vCPUs")
+>>> Linux kernel can support upto a maximum number of 4096 vCPUS when =
+MAXSMP is
+>>> enabled in the kernel. At present, QEMU has been tested to correctly =
+boot a
+>>> linux guest with 4096 vcpus both with edk2 and seabios firmwares.
+>>> So bump up the value max_cpus to 4096 for q35 machines versions 9 =
+and newer.
+>>> Q35 machines versions 8.2 and older continue to support 1024 maximum =
+vcpus
+>>> as before for compatibility reasons.
+>>>=20
+>>> If KVM is not able to support the specified number of vcpus, QEMU =
+would
+>>> return the following error messages:
+>>>=20
+>>> $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
+>>> qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus =
+requested (1728) exceeds the recommended cpus supported by KVM (12)
+>>> qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus =
+requested (1728) exceeds the recommended cpus supported by KVM (12)
+>>> Number of SMP cpus requested (1728) exceeds the maximum cpus =
+supported by KVM (1024)
+>>>=20
+>>> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>>> Cc: Igor Mammedov <imammedo@redhat.com>
+>>> Cc: Michael S. Tsirkin <mst@redhat.com>
+>>> Cc: Julia Suvorova <jusual@redhat.com>
+>>> Cc: kraxel@redhat.com
+>>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>>> ---
+>>> hw/i386/pc_q35.c | 3 ++-
+>>> 1 file changed, 2 insertions(+), 1 deletion(-)
+>>>=20
+>>> Changelog:
+>>> v3: bump up to 4096 vcpus. It has now been tested to work with edk2.
+>>> See RH Jira: https://issues.redhat.com/browse/RHEL-22202
+>>=20
+>> That bug indicates a dependancy on a EDK2 patch
+>>=20
+>>  =
+https://github.com/kraxel/edk2/commit/7a03c17f0f4f4a9003d77db2660c8e087604=
+b2f0
+>>=20
+>> we'll need to rebase the EDK2 ROMs in QEMU to get that included.
+>=20
+> Which will btw take a while.  edk2 is in freeze for the 2024-02 =
+release
+> right now, I expect the changes land upstream shortly thereafter and
+> will be part of the 2024-05 release.  So end may / early june would be
+> the time when rebasing to release, or somewhen in march or april when =
+we
+> rebase to a git snapshot ...
+>=20
+>> Meanwhile, plesae at least call out this EDK2 commit as a
+>> pre-requisite in the commit message, so people know the
+>> EDK2 ROMs in QEMU won't work (yet).
+>=20
+> That surely makes sense.
+>=20
+> Oh, and it's more than just that one commit.  I don't think it makes
+> sense to compile a list of commits given this is a moving target
+> (upstream review is in progress right now).
+
+Looking at the edk2 GH, are these the PR that are waiting for upstream =
+review/merge that relate to vcpu scaling?
+
+https://github.com/tianocore/edk2/pull/5375
+https://github.com/tianocore/edk2/pull/5327
+
 
