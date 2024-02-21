@@ -4,52 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3690EC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9EEC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcobD-00035x-Rp; Wed, 21 Feb 2024 10:33:32 -0500
+	id 1rcoYF-0005T8-C1; Wed, 21 Feb 2024 10:30:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoXv-0004eG-UA; Wed, 21 Feb 2024 10:30:09 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcoM9-0001hh-4F; Wed, 21 Feb 2024 10:17:57 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchvT-00036c-4q; Wed, 21 Feb 2024 03:26:00 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AFBAA4F3F5;
- Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6D109860D4;
- Wed, 21 Feb 2024 11:21:02 +0300 (MSK)
-Received: (nullmailer pid 2142156 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Markus Frank <m.frank@proxmox.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 55/60] ui/clipboard: mark type as not available when
- there is no data
-Date: Wed, 21 Feb 2024 11:20:43 +0300
-Message-Id: <20240221082058.2141850-55-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rco1B-0007ME-4u; Wed, 21 Feb 2024 09:56:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708527377; x=1740063377;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=GkDRFpSgEw4Jc9eQg/w5fzMP57UNmwkGjsPiSjtncj0=;
+ b=ctcChPA3oBeHTYSiHnl5bvKZFvKnF0D5fgaHihfmnae8Fra7benpp9ND
+ fVSxhro6WvWFwacqeDLbGVZCtlehEJMQdcm6q6q6WdER0E84PoArzKHJE
+ V+o9xuZxtLDnNvfIP1F8mPRP4Q4p33Ohrx4r4zt+acxTrL2Wy61b8VVd6
+ qQCnVB4W+/1bVs4W0mlhIoO1sUULLA7sp+kkC/7b2jcIEftBaK4LgafoI
+ OED7J7D83SU/EceoNqR/wAmxU6PTWWgfQ9e6rqNfaTxRL8Rhd8dTbI2kT
+ NF9cNFyrpV1UjGqf3CFwVTFEec03P3CpBEKI5NnDM9C68Gxa5yv/pVNl9 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="3173102"
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="3173102"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2024 06:56:15 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="9782187"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 21 Feb 2024 06:56:11 -0800
+Date: Wed, 21 Feb 2024 23:09:49 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 5/6] hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD()
+ in cxl_usp_realize()
+Message-ID: <ZdYSPYlZEL6jUobe@intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+ <20240221094317.994454-6-zhao1.liu@linux.intel.com>
+ <87le7eujdx.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87le7eujdx.fsf@pond.sub.org>
+Received-SPF: none client-ip=192.198.163.16;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,84 +90,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+On Wed, Feb 21, 2024 at 12:49:46PM +0100, Markus Armbruster wrote:
+> Date: Wed, 21 Feb 2024 12:49:46 +0100
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 5/6] hw/pci-bridge/cxl_upstream: Fix missing
+>  ERRP_GUARD() in cxl_usp_realize()
+> 
+> Zhao Liu <zhao1.liu@linux.intel.com> writes:
+> 
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> >
+> > As the comment in qapi/error, dereferencing @errp requires
+> > ERRP_GUARD():
+> >
+> > * = Why, when and how to use ERRP_GUARD() =
+> > *
+> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> > * - It must not be dereferenced, because it may be null.
+> > * - It should not be passed to error_prepend() or
+> > *   error_append_hint(), because that doesn't work with &error_fatal.
+> > * ERRP_GUARD() lifts these restrictions.
+> > *
+> > * To use ERRP_GUARD(), add it right at the beginning of the function.
+> > * @errp can then be used without worrying about the argument being
+> > * NULL or &error_fatal.
+> > *
+> > * Using it when it's not needed is safe, but please avoid cluttering
+> > * the source with useless code.
+> >
+> > Currently, since cxl_usp_realize() - as a PCIDeviceClass.realize()
+> > method - doesn't get the NULL errp parameter, it doesn't trigger the
+> > dereference issue.
+> >
+> > To follow the requirement of errp, add missing ERRP_GUARD() in
+> > cxl_usp_realize()().
+> >
+> > Suggested-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> > Suggested by credit:
+> >  Markus: Referred his explanation about ERRP_GUARD().
+> > ---
+> >  hw/pci-bridge/cxl_upstream.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+> > index e87eb4017713..03d123cca0ef 100644
+> > --- a/hw/pci-bridge/cxl_upstream.c
+> > +++ b/hw/pci-bridge/cxl_upstream.c
+> > @@ -289,6 +289,7 @@ static void free_default_cdat_table(CDATSubHeader **cdat_table, int num,
+> >  
+> >  static void cxl_usp_realize(PCIDevice *d, Error **errp)
+> >  {
+> > +    ERRP_GUARD();
+> >      PCIEPort *p = PCIE_PORT(d);
+> >      CXLUpstreamPort *usp = CXL_USP(d);
+> >      CXLComponentState *cxl_cstate = &usp->cxl_cstate;
+> 
+> The dereference is
+> 
+>        cxl_doe_cdat_init(cxl_cstate, errp);
+>        if (*errp) {
+>            goto err_cap;
+>        }
+> 
+> As noted in review of PATCH 3, we check *errp, because
+> cxl_doe_cdat_init() returns void.  Could be improved to return bool,
+> along with its callees ct3_load_cdat() and ct3_build_cdat(), but that's
+> a slightly more ambitious cleanup, so
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
 
-With VNC, a client can send a non-extended VNC_MSG_CLIENT_CUT_TEXT
-message with len=0. In qemu_clipboard_set_data(), the clipboard info
-will be updated setting data to NULL (because g_memdup(data, size)
-returns NULL when size is 0). If the client does not set the
-VNC_ENCODING_CLIPBOARD_EXT feature when setting up the encodings, then
-the 'request' callback for the clipboard peer is not initialized.
-Later, because data is NULL, qemu_clipboard_request() can be reached
-via vdagent_chr_write() and vdagent_clipboard_recv_request() and
-there, the clipboard owner's 'request' callback will be attempted to
-be called, but that is a NULL pointer.
+Thanks! It's a good idea and I can continue to consider such the cleanup
+in the follow up.
 
-In particular, this can happen when using the KRDC (22.12.3) VNC
-client.
+Will also add the dereference description in commit message to make
+review easier.
 
-Another scenario leading to the same issue is with two clients (say
-noVNC and KRDC):
-
-The noVNC client sets the extension VNC_FEATURE_CLIPBOARD_EXT and
-initializes its cbpeer.
-
-The KRDC client does not, but triggers a vnc_client_cut_text() (note
-it's not the _ext variant)). There, a new clipboard info with it as
-the 'owner' is created and via qemu_clipboard_set_data() is called,
-which in turn calls qemu_clipboard_update() with that info.
-
-In qemu_clipboard_update(), the notifier for the noVNC client will be
-called, i.e. vnc_clipboard_notify() and also set vs->cbinfo for the
-noVNC client. The 'owner' in that clipboard info is the clipboard peer
-for the KRDC client, which did not initialize the 'request' function.
-That sounds correct to me, it is the owner of that clipboard info.
-
-Then when noVNC sends a VNC_MSG_CLIENT_CUT_TEXT message (it did set
-the VNC_FEATURE_CLIPBOARD_EXT feature correctly, so a check for it
-passes), that clipboard info is passed to qemu_clipboard_request() and
-the original segfault still happens.
-
-Fix the issue by handling updates with size 0 differently. In
-particular, mark in the clipboard info that the type is not available.
-
-While at it, switch to g_memdup2(), because g_memdup() is deprecated.
-
-Cc: qemu-stable@nongnu.org
-Fixes: CVE-2023-6683
-Reported-by: Markus Frank <m.frank@proxmox.com>
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Markus Frank <m.frank@proxmox.com>
-Message-ID: <20240124105749.204610-1-f.ebner@proxmox.com>
-(cherry picked from commit 405484b29f6548c7b86549b0f961b906337aa68a)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/ui/clipboard.c b/ui/clipboard.c
-index 3d14bffaf8..b3f6fa3c9e 100644
---- a/ui/clipboard.c
-+++ b/ui/clipboard.c
-@@ -163,9 +163,15 @@ void qemu_clipboard_set_data(QemuClipboardPeer *peer,
-     }
- 
-     g_free(info->types[type].data);
--    info->types[type].data = g_memdup(data, size);
--    info->types[type].size = size;
--    info->types[type].available = true;
-+    if (size) {
-+        info->types[type].data = g_memdup2(data, size);
-+        info->types[type].size = size;
-+        info->types[type].available = true;
-+    } else {
-+        info->types[type].data = NULL;
-+        info->types[type].size = 0;
-+        info->types[type].available = false;
-+    }
- 
-     if (update) {
-         qemu_clipboard_update(info);
--- 
-2.39.2
+Regards,
+Zhao
 
 
