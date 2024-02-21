@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01A4C48BC4
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 02:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D0DC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 02:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcc1u-0006px-9M; Tue, 20 Feb 2024 21:08:14 -0500
+	id 1rcc7W-0000SR-Q6; Tue, 20 Feb 2024 21:14:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcc1m-0006bt-7O
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:08:06 -0500
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcc1S-0006p1-Bs
- for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:07:59 -0500
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-6e4560664b5so121649b3a.1
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 18:07:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708481264; x=1709086064; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MJnm+gdmmenYlSaxNOt2bVc0T5hc5BobZ/eJ52YN9EI=;
- b=rFSymLC69iFw2TvGKFPmSjoBIKP3C/fj+VXkwAUuDBQ4SkRhsRHEzzvYJLLWEqil/n
- eXk5JDja6YMyB9trgKUn1KQzUDU2M0HaRvxO5iTFejH0s9poKgFC56gLsSETplN4u8UX
- ssyIcsKrW7dSNtx4WPIFfMZ3SgL6QOoUOlTt53mj3CQLkIzNrPkgebvINpBbrXv/ul6g
- sMjIeqjssx94Ie1Tg3mLwBevuddTdTIGCY5Jsb7G34wxeUqoDe6Smw1TqIQTm3f0fWuB
- 4IZcVaeXKusa1WL5zdNySERN8hfAon9a/KjiTJcNIfCjuAU/AlcKBLVa6jdGj0eSQarC
- k7Ng==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcc7V-0000PO-Ng
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:14:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcc7T-00080m-TM
+ for qemu-devel@nongnu.org; Tue, 20 Feb 2024 21:14:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708481638;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RO+xt5lFKH/d2VYIcFsobSEtSGxghlf/ShLhSWPZyIY=;
+ b=GBScBOFejnyKmHntJzPwkTyCqxGIINiG2JCTDGP2+/p/R8oM2xbgVt7rhxLWy6ZNQRgaQ/
+ z/nTvWBvOfQRoC2sOBgtx6YRqV2yO+YTzBm7JofmCCstDz66LIiW2yh6fE9Rw6G6zKADjf
+ DC0GM0sAtqkn9KJKn5zyMre+yA0mUjs=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-12-XfRljbI4Nz2PbjmH6vduFQ-1; Tue, 20 Feb 2024 21:13:57 -0500
+X-MC-Unique: XfRljbI4Nz2PbjmH6vduFQ-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5d57b2d2758so1818002a12.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 18:13:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708481264; x=1709086064;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MJnm+gdmmenYlSaxNOt2bVc0T5hc5BobZ/eJ52YN9EI=;
- b=JfefQLXTDgJM03i2mtvcLFuoL/boZr0vKlNpfHQDqaglsgJPOCM91Ur42oeLFopIiU
- zInkIrbaqM3DQfeTf3yjHmq0yeU1512PxvSvaG06XYPqBC02/oT3npKXLKjn209/S70u
- U5ejZVytFTru3hbChdzzoxUat+0dHWBt02bO0DV+Gt9MSFbxcg178NvLHpYLk9bZzQsk
- p3PpQ49ybtHU3/nl3j+E6GYgroI0DFzDaCPm+Pr6JeNNfajI/oNKBuJTo7JNlSCmpzrF
- +OpfnhGYPnqGdBcR/MGi+Du6cxhZnfErc8PDeBP1UfWhxDuEldSbTzcInpvZ8H4msQum
- pq3A==
-X-Gm-Message-State: AOJu0YwyHXvFBrZGitg2ULca90m8rMQNlk70/smWi8CJh0iutFNdh0p0
- EbWkFVWx8M5b7ntxk+Ig6Vara7Qty0GKXtIN+FqhlZac8Z3aFlQOR+YZ09h4h1I=
-X-Google-Smtp-Source: AGHT+IErxa5JRlO9hCxTcEd4AmiuRChm3IbEbnpf2hGmaML+1her1umGx10g83EQgmlmbqIWnI4AhQ==
-X-Received: by 2002:a05:6a21:1693:b0:19e:98b3:a1e with SMTP id
- np19-20020a056a21169300b0019e98b30a1emr19198957pzb.55.1708481264354; 
- Tue, 20 Feb 2024 18:07:44 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- g29-20020a63521d000000b005dc491ccdcesm6339745pgb.14.2024.02.20.18.07.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 18:07:43 -0800 (PST)
-Message-ID: <63284092-627d-4411-a21d-179b8dbf24e9@linaro.org>
-Date: Tue, 20 Feb 2024 16:07:40 -1000
+ d=1e100.net; s=20230601; t=1708481636; x=1709086436;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RO+xt5lFKH/d2VYIcFsobSEtSGxghlf/ShLhSWPZyIY=;
+ b=HoCgoz/SX+V/wiKxKGPA9r5M+Uei2/d57+BJw0VYrxsFJH9CcD+19sxkt6/YZOs7CC
+ JdUIsU29RJl5zvzgxNm7cwy2vSmXLqDvVCO44SZWEPAtK/T5w/GIdZQ0Bzl8Lhtkhftd
+ 7QXstX3+OMv5/OzJO0lHHpNENVI6zq9L8gMnp6FYqVmqdVRDmLegjZscYz/wO9q65Gh7
+ YsPuxUOXyP3TULhAU0IMQLjWAJjS1mAF5Q/VftEeOYZH1P39Dr9wLjCcravLsRi/wtd+
+ Ujjrrk1MW+XSDPY7mG+oxJtAse/HFDHBFsSG6NI0TJAwJ+kZlsuOScD0j/X1bK/OPDfb
+ goCg==
+X-Gm-Message-State: AOJu0Yy3TUvE6TwX9uoB0EPDDdIpx/DLl82FIXLGoryY+K/fCvPxDurC
+ bNiV3CpEQdCVJDQUSLxbOtkEp+AkIYWsUXBNLkDV98T6ZT9JRLFyzD/MU+dIaCdqeoRqyG54d3u
+ fa+ZCShONXYCFTSMWbgS8PqyJU5HZZetGT5IZeyFU/QI3SGl1vE47
+X-Received: by 2002:a05:6a20:6a24:b0:1a0:c2f4:89b4 with SMTP id
+ p36-20020a056a206a2400b001a0c2f489b4mr203491pzk.5.1708481635939; 
+ Tue, 20 Feb 2024 18:13:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGkDOisIP/rOi5C1hwqCjEREv8GSSeQ07BStqU0i1t05jEngV+enxHF8Rl8K+g7WiBB14r8zg==
+X-Received: by 2002:a05:6a20:6a24:b0:1a0:c2f4:89b4 with SMTP id
+ p36-20020a056a206a2400b001a0c2f489b4mr203480pzk.5.1708481635643; 
+ Tue, 20 Feb 2024 18:13:55 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ fn16-20020a056a002fd000b006e3dfb2ef4esm6191665pfb.95.2024.02.20.18.13.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 20 Feb 2024 18:13:55 -0800 (PST)
+Date: Wed, 21 Feb 2024 10:13:48 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH V3 00/13] allow cpr-reboot for vfio
+Message-ID: <ZdVcXE89BviCPYXI@x1n>
+References: <1707418446-134863-1-git-send-email-steven.sistare@oracle.com>
+ <ZdRZpiiD05JS_AkF@x1n>
+ <3784e88c-b48a-46d3-8742-c3b94ad422c5@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/36] linux-user: Adjust SVr4 NULL page mapping
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Helge Deller <deller@gmx.de>
-References: <20240215062018.795056-1-richard.henderson@linaro.org>
- <20240215062018.795056-3-richard.henderson@linaro.org>
- <87sf1s4p6a.fsf@draig.linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <87sf1s4p6a.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3784e88c-b48a-46d3-8742-c3b94ad422c5@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,49 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/16/24 01:35, Alex Bennée wrote:
-> Richard Henderson <richard.henderson@linaro.org> writes:
+On Tue, Feb 20, 2024 at 05:32:34PM -0500, Steven Sistare wrote:
+> On 2/20/2024 2:49 AM, Peter Xu wrote:
+> > On Thu, Feb 08, 2024 at 10:53:53AM -0800, Steve Sistare wrote:
+> >> Allow cpr-reboot for vfio if the guest is in the suspended runstate.  The
+> >> guest drivers' suspend methods flush outstanding requests and re-initialize
+> >> the devices, and thus there is no device state to save and restore.  The
+> >> user is responsible for suspending the guest before initiating cpr, such as
+> >> by issuing guest-suspend-ram to the qemu guest agent.
+> >>
+> >> Most of the patches in this series enhance migration notifiers so they can
+> >> return an error status and message.  The last few patches register a notifier
+> >> for vfio that returns an error if the guest is not suspended.
+> >>
+> >> Changes in V3:
+> >>   * update to tip, add RB's
+> >>   * replace MigrationStatus with new enum MigrationEventType
+> >>   * simplify migrate_fd_connect error recovery
+> >>   * support vfio iommufd containers
+> >>   * add patches:
+> >>       migration: stop vm for cpr
+> >>       migration: update cpr-reboot description
+> > 
+> > This doesn't apply to master anymore, please rebase when repost, thanks.
 > 
->> Use TARGET_PAGE_SIZE and MAP_FIXED_NOREPLACE.
->>
->> We really should be attending to this earlier during
->> probe_guest_base, as well as better detection and
->> emulation of various Linux personalities.
-> 
-> Do we know all our supported systems support this flag now?
+> Will do.  Before I do, any comments on "migration: update cpr-reboot description"?
+> After we converge on that short description, I will submit a longer treatment in
+> docs/devel/migration, which I see you have recently populated.
 
-We know that target_mmap() itself supports it, even if by emulation.
+Sounds good; yes I hope we have a file there, as it'll pop up later in
+https://www.qemu.org/docs/master/devel/migration/.
 
+You can add a short sentence to forbid postcopy if that's the plan.  Other
+than that it looks good.
 
-r~
+Thanks,
 
-> 
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Acked-by: Helge Deller <deller@gmx.de>
->> Message-Id: <20240102015808.132373-3-richard.henderson@linaro.org>
->> ---
->>   linux-user/elfload.c | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
->> index b8eef893d0..e918a13748 100644
->> --- a/linux-user/elfload.c
->> +++ b/linux-user/elfload.c
->> @@ -3912,8 +3912,9 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
->>                  and some applications "depend" upon this behavior.  Since
->>                  we do not have the power to recompile these, we emulate
->>                  the SVr4 behavior.  Sigh.  */
->> -            target_mmap(0, qemu_host_page_size, PROT_READ | PROT_EXEC,
->> -                        MAP_FIXED | MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
->> +            target_mmap(0, TARGET_PAGE_SIZE, PROT_READ | PROT_EXEC,
->> +                        MAP_FIXED_NOREPLACE | MAP_PRIVATE | MAP_ANONYMOUS,
->> +                        -1, 0);
->>           }
->>   #ifdef TARGET_MIPS
->>           info->interp_fp_abi = interp_info.fp_abi;
-> 
+-- 
+Peter Xu
 
 
