@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E0AC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F402C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuSN-0004o1-9s; Wed, 21 Feb 2024 16:48:48 -0500
+	id 1rcuTK-00020S-Oh; Wed, 21 Feb 2024 16:49:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuSK-0004c1-Nb; Wed, 21 Feb 2024 16:48:44 -0500
+ id 1rcuTD-0001NH-U7; Wed, 21 Feb 2024 16:49:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuSJ-0007X6-14; Wed, 21 Feb 2024 16:48:44 -0500
+ id 1rcuTC-0007cR-DX; Wed, 21 Feb 2024 16:49:39 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 31F7A4F86E;
+ by isrv.corpit.ru (Postfix) with ESMTP id B6F344F876;
  Thu, 22 Feb 2024 00:47:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D0E72869EF;
- Thu, 22 Feb 2024 00:47:24 +0300 (MSK)
-Received: (nullmailer pid 2339877 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 615C3869F7;
+ Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
+Received: (nullmailer pid 2339902 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 18/33] tests/acpi: Update DSDT.cxl to reflect change
- _STA return value.
-Date: Thu, 22 Feb 2024 00:47:01 +0300
-Message-Id: <20240221214723.2339742-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 26/33] i386/cpuid: Decrease cpuid_i when skipping
+ CPUID leaf 1F
+Date: Thu, 22 Feb 2024 00:47:09 +0300
+Message-Id: <20240221214723.2339742-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -62,30 +62,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-_STA will now return 0xB (in common with most other devices)
-rather than not setting the bits to indicate this fake device
-has not been enabled, and self tests haven't passed.
+Existing code misses a decrement of cpuid_i when skip leaf 0x1F.
+There's a blank CPUID entry(with leaf, subleaf as 0, and all fields
+stuffed 0s) left in the CPUID array.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240126120132.24248-13-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit b24a981b9f1c4767aaea815e504a2c7aeb405d72)
+It conflicts with correct CPUID leaf 0.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by:Yang Weijiang <weijiang.yang@intel.com>
+Message-ID: <20240125024016.2521244-2-xiaoyao.li@intel.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 10f92799af8ba3c3cef2352adcd4780f13fbab31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: rebuild tests/data/acpi/q35/DSDT.cxl for 7.2.x)
 
-diff --git a/tests/data/acpi/q35/DSDT.cxl b/tests/data/acpi/q35/DSDT.cxl
-index f9c6dd4ee0..267709e4e4 100644
-Binary files a/tests/data/acpi/q35/DSDT.cxl and b/tests/data/acpi/q35/DSDT.cxl differ
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 9ce0f596cc..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/q35/DSDT.cxl",
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 002b699030..5779b80ecb 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1859,6 +1859,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         }
+         case 0x1f:
+             if (env->nr_dies < 2) {
++                cpuid_i--;
+                 break;
+             }
+             /* fallthrough */
 -- 
 2.39.2
 
