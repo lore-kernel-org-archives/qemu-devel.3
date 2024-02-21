@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9208CC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A37EC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcqTj-0001B1-2A; Wed, 21 Feb 2024 12:33:55 -0500
+	id 1rcqTg-00010M-13; Wed, 21 Feb 2024 12:33:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <36DPWZQwKCt0M9AHGDRSDE9MFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--nabihestefan.bounces.google.com>)
- id 1rcqTU-0000t8-NC
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:33:45 -0500
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ <36jPWZQwKCt8OBCJIFTUFGBOHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--nabihestefan.bounces.google.com>)
+ id 1rcqTR-0000rE-Rg
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:33:38 -0500
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <36DPWZQwKCt0M9AHGDRSDE9MFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--nabihestefan.bounces.google.com>)
- id 1rcqTM-0002T7-9q
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:33:40 -0500
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-60804b369c7so72029487b3.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:33:29 -0800 (PST)
+ <36jPWZQwKCt8OBCJIFTUFGBOHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--nabihestefan.bounces.google.com>)
+ id 1rcqTM-0002TN-SL
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:33:37 -0500
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-dc64b659a9cso12258012276.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:33:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1708536808; x=1709141608; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=EcwbTVhF6/jNkSn+Rl6HkgY4LLv3UGKGBJOpP0BckOc=;
- b=2g6ftT0n9W10ghhB5oapRHhPqiTQ/Xcn2r2HW3GizciK44erXLrqcTaKVoiclJPozb
- Ky92/SKflwmh1wkK21G109aBlyrJne5zzLrqQxmKj4ztPUlloIz2IUg9xPTXcWoeT2b5
- hJHejD7DaqgdG60Y9OaRjZCw5Rm+90QPDJhdJgqCuJKyUjWRVjBsBfyOO434iXVAmyqQ
- Php7bt9+SW9WUUJPgPFqXSDhW0dzZxf/PqIwTH4UgstJjY2soJQZteSR6teERZpVRteD
- T3pBOnDZHInk5q2I8eRBWB73GKBN7ktZXf9MRcSKiEWx+kgHhfZ1WBeKFwVbaOdgi3kG
- F3RQ==
+ d=google.com; s=20230601; t=1708536810; x=1709141610; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=nKuGCA+rZrH/qIGJuQohJmMqyiRVPoofVS99+gBVcJQ=;
+ b=sPvojojgW7X3XYcZTD8yWIUet2A6vd0ce6d/QLmmtO3Psovi11zBbgaz9zuQnW0Gb/
+ s7tJdjE3a7ryXVORAGxByP228spyBDZEH0woMjB4kgzQhpNoRMmuSgK7IKaYaSxSokr/
+ nfeQinkNmtimVSFFa+2NE9/aaPAQ2dploOK0o/9I+g0/7YGPQ96EHojahNhj5c1fkquV
+ ARpx4wleJpr1s1Ni/efkWaSLPLh6Vq9YrXjYUE3eUmw6Xt53UUF1DBYVZDPbGaqAUd6Z
+ MZpAY0cpWgtj4LNnPmk0OkgNsvT+CnKfHvDpGFeH80VLcXQFdQXgHvrbzV+PijXhN5EM
+ qhmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708536808; x=1709141608;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EcwbTVhF6/jNkSn+Rl6HkgY4LLv3UGKGBJOpP0BckOc=;
- b=dQapnBoDcGpv4sp+5YR5oiUeqEluj5G4XI8lnEZhOnd5C8RYg6RI1OKjrsKP9pcBoa
- z714rZEOR6oRndssCd/h3HZuZmI5sqlew0Opo2kK6uUAYUn2SqJtpkEztaKWgxwGsabt
- ogx9OZ83lUKKIfkuGZfIzYof0cahux4vZHmABO0BSjoHRTBSk77Y3GfQ6JaFF8kpAfD7
- 69QUl7N+0xlWdybX7nCNMt9+kM6qOhw0w/HyuoybWwXwBZN+YZI/SpSYjDOARu43TkMO
- SOUzrP7m7TkU31qO2zQjjLvg0lwQWHiPzQ1+bFfqFfJtSjPTO2M5yVXKmj5yvcepy79h
- qcOg==
+ d=1e100.net; s=20230601; t=1708536810; x=1709141610;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=nKuGCA+rZrH/qIGJuQohJmMqyiRVPoofVS99+gBVcJQ=;
+ b=AoNXmV/Zbs41URErvEmlqRJd+Zd4LWsWAmYcfD4OnndiNLJFoTi+u6U2tMWyX3be8i
+ wXuIPLfj51LGHrM5Up5EESuoMrsu/lEB26daJ9EhNofLMb6xfN6FdYcU3NAPj4CkuHKy
+ 6pUYJgu3JRT/Qp/6k1V4jXiU6HgEbg7ieasvnhr3emaqgxPzRxrrFnLpOW1IIOdivXQc
+ /Hr/Ou+CC+UITvdwrrbpEEWoD3Tt0wT4bY5b2kGhtXQtp1lKZdbkQ58mcRIWtLlFnuBj
+ uEMvwc5WwT3LsEwGRN8oqPFLXnJzzr2+ZGBzFlFZQhoWxluPVk5aWzHlbmXMCzD2AU6+
+ r4xw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW49AJu5vn0hkJ4hi44KenyqeHERMZinLOu5s5qtvpnyVqYJBA2FRaK4+VOJ6ABU9gnr8MdZpqhH0Xpq3JRgo1tMdxCB7U=
-X-Gm-Message-State: AOJu0Yy1DPCRhHgkHndu6KCIrKOQrjaHyqhwMHIF09FtX7OFBKv+FOD9
- lWG6oiJt6DS/QN7NrBFP7To8doB9ZlXa0l9u+cP6w2sfhdt+f0xGRXTtr8pkOGLMHl4HYplgUBl
- NH7B77k9JprjoMd8Xt6A/WoF3QA==
-X-Google-Smtp-Source: AGHT+IG6WE3zV5svLQ76mxt52tZmeFvCHce6AV3kOrbEWjl9Jlp5P4EA3uPqqGtss7y3JBSiCxSj2FjjNcDRfwVl0aI=
+ AJvYcCXq5gnFGPBNf9kLPiZSM17i9j1Mj/WDyipsgZt8pmzI1tYBnJ1Id4FLOzOgcTYsytUxycTc5Amgph8HuUvNFeofUaFBQ/s=
+X-Gm-Message-State: AOJu0YypAcozbFh6LXNsoah3h3/8HoU0fvOlLxeQGN4zL3ZQZZRcgp1j
+ rbNV/2Cmdy2iEMIu82brq/4LPcXAYQWv4dyvG0Yiqit7V4MINM7W0/QVMAAGnaDyEiTMldeqBeN
+ oYXP+rniBnDl6z6T8qiRaGBnREw==
+X-Google-Smtp-Source: AGHT+IGTHqk+zzw6Aei7T0+8dlIobwB5c7dlCZCUi29oW+vxF9+KTvziSZt++jDWEbvn339bKgv32C/NIsWiwrdp5M4=
 X-Received: from nabihestefan.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:2737])
- (user=nabihestefan job=sendgmr) by 2002:a81:a196:0:b0:604:9b11:ff2 with SMTP
- id y144-20020a81a196000000b006049b110ff2mr4882082ywg.6.1708536808694; Wed, 21
- Feb 2024 09:33:28 -0800 (PST)
-Date: Wed, 21 Feb 2024 17:33:23 +0000
+ (user=nabihestefan job=sendgmr) by 2002:a25:aba4:0:b0:dc7:42:ecd with SMTP id
+ v33-20020a25aba4000000b00dc700420ecdmr4655431ybi.6.1708536810474; Wed, 21 Feb
+ 2024 09:33:30 -0800 (PST)
+Date: Wed, 21 Feb 2024 17:33:24 +0000
+In-Reply-To: <20240221173325.1494895-1-nabihestefan@google.com>
 Mime-Version: 1.0
+References: <20240221173325.1494895-1-nabihestefan@google.com>
 X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <20240221173325.1494895-1-nabihestefan@google.com>
-Subject: [PATCH 0/2] ARM GICv3 ITS DeviceID modification implementation
+Message-ID: <20240221173325.1494895-2-nabihestefan@google.com>
+Subject: [PATCH 1/2] hw/intc/arm_gicv3_its_common: Increase DeviceID to 32 bits
 From: Nabih Estefan <nabihestefan@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  its@irrelevant.dk, kbusch@kernel.org, roqueh@google.com, 
  nabihestefan@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=36DPWZQwKCt0M9AHGDRSDE9MFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--nabihestefan.bounces.google.com;
- helo=mail-yw1-x1149.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=36jPWZQwKCt8OBCJIFTUFGBOHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--nabihestefan.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -79,7 +83,7 @@ X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,23 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series modifies the ARM GICv3 ITS to use the already existing
-send_msi virtual function when writing the GITS_TRANSLATER in order to be able
-to modify the final DeviceID to an implementation specific version that requires
-extra information besides the BDF that comes in the requester_id. This is
-achieved by using inheritance and redefinition of the send_msi while the
-parent's send_msi could still be used to inject the modified DeviceID.
+From: Roque Arcudia Hernandez <roqueh@google.com>
 
-Roque Arcudia Hernandez (2):
-  hw/intc/arm_gicv3_its_common: Increase DeviceID to 32 bits
-  hw/intc/arm_gicv3_its: Use send_msi in the GITS_TRANSLATER write
+According to the =E2=80=9CGICv3 and GICv4 Software Overview=E2=80=9D the De=
+viceID is
+IMPLEMENTATION DEFINED. This patch increases the DeviceID in send_msi virtu=
+al
+function to 32 bits to allow the possibility of a redefinition of it with a
+bigger DeviceID.
 
- hw/intc/arm_gicv3_its.c                | 20 +++++++++-----------
- hw/intc/arm_gicv3_its_kvm.c            |  2 +-
- include/hw/intc/arm_gicv3_its_common.h | 15 ++++++++++++---
- 3 files changed, 22 insertions(+), 15 deletions(-)
+Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+---
+ hw/intc/arm_gicv3_its_kvm.c            | 2 +-
+ include/hw/intc/arm_gicv3_its_common.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
--- 
+diff --git a/hw/intc/arm_gicv3_its_kvm.c b/hw/intc/arm_gicv3_its_kvm.c
+index 3befc960db..4eaf1cfcad 100644
+--- a/hw/intc/arm_gicv3_its_kvm.c
++++ b/hw/intc/arm_gicv3_its_kvm.c
+@@ -42,7 +42,7 @@ struct KVMARMITSClass {
+ };
+=20
+=20
+-static int kvm_its_send_msi(GICv3ITSState *s, uint32_t value, uint16_t dev=
+id)
++static int kvm_its_send_msi(GICv3ITSState *s, uint32_t value, uint32_t dev=
+id)
+ {
+     struct kvm_msi msi;
+=20
+diff --git a/include/hw/intc/arm_gicv3_its_common.h b/include/hw/intc/arm_g=
+icv3_its_common.h
+index 7dc712b38d..e072c36cca 100644
+--- a/include/hw/intc/arm_gicv3_its_common.h
++++ b/include/hw/intc/arm_gicv3_its_common.h
+@@ -117,7 +117,7 @@ struct GICv3ITSCommonClass {
+     SysBusDeviceClass parent_class;
+     /*< public >*/
+=20
+-    int (*send_msi)(GICv3ITSState *s, uint32_t data, uint16_t devid);
++    int (*send_msi)(GICv3ITSState *s, uint32_t data, uint32_t devid);
+     void (*pre_save)(GICv3ITSState *s);
+     void (*post_load)(GICv3ITSState *s);
+ };
+--=20
 2.44.0.rc0.258.g7320e95886-goog
 
 
