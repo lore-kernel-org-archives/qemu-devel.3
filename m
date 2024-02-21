@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB191C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E492AC48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchrO-0001ZN-He; Wed, 21 Feb 2024 03:21:46 -0500
+	id 1rchqj-000116-8j; Wed, 21 Feb 2024 03:21:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrJ-0001To-As; Wed, 21 Feb 2024 03:21:41 -0500
+ id 1rchqh-00010W-JT; Wed, 21 Feb 2024 03:21:03 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrH-0002BN-K0; Wed, 21 Feb 2024 03:21:41 -0500
+ id 1rchqf-00027L-9E; Wed, 21 Feb 2024 03:21:03 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 864B74F3C8;
- Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E87C34F3BF;
+ Wed, 21 Feb 2024 11:21:19 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 51C58860A7;
- Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
-Received: (nullmailer pid 2142016 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id B48E28609E;
+ Wed, 21 Feb 2024 11:20:58 +0300 (MSK)
+Received: (nullmailer pid 2141989 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 10/60] target/arm: Reinstate "vfp" property on AArch32
- CPUs
-Date: Wed, 21 Feb 2024 11:19:58 +0300
-Message-Id: <20240221082058.2141850-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 01/60] migration: Plug memory leak on HMP migrate error
+ path
+Date: Wed, 21 Feb 2024 11:19:49 +0300
+Message-Id: <20240221082058.2141850-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
@@ -63,40 +62,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Markus Armbruster <armbru@redhat.com>
 
-In commit 4315f7c614743 we restructured the logic for creating the
-VFP related properties to avoid testing the aa32_simd_r32 feature on
-AArch64 CPUs.  However in the process we accidentally stopped
-exposing the "vfp" QOM property on AArch32 TCG CPUs.
+hmp_migrate() leaks @caps when qmp_migrate() fails.  Plug the leak
+with g_autoptr().
 
-This mostly hasn't had any ill effects because not many people want
-to disable VFP, but it wasn't intentional.  Reinstate the property.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 4315f7c614743 ("target/arm: Restructure has_vfp_d32 test")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2098
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240126193432.2210558-1-peter.maydell@linaro.org
-(cherry picked from commit 185e3fdf8d106cb2f7d234d5e6453939c66db2a9)
+Fixes: 967f2de5c9ec (migration: Implement MigrateChannelList to hmp migration flow.) v8.2.0-rc0
+Fixes: CID 1533125
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Link: https://lore.kernel.org/r/20240117140722.3979657-1-armbru@redhat.com
+[peterx: fix CID number as reported by Peter Maydell]
+Signed-off-by: Peter Xu <peterx@redhat.com>
+(cherry picked from commit 918f620d30a9b0095b7824b8d77a2d6059a439d9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index efb22a87f9..5d9bca5b8d 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1615,6 +1615,10 @@ void arm_cpu_post_init(Object *obj)
-         }
-     } else if (cpu_isar_feature(aa32_vfp, cpu)) {
-         cpu->has_vfp = true;
-+        if (tcg_enabled() || qtest_enabled()) {
-+            qdev_property_add_static(DEVICE(obj),
-+                                     &arm_cpu_has_vfp_property);
-+        }
-         if (cpu_isar_feature(aa32_simd_r32, cpu)) {
-             cpu->has_vfp_d32 = true;
-             /*
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 86ae832176..2faa5cad46 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -762,7 +762,7 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+     bool resume = qdict_get_try_bool(qdict, "resume", false);
+     const char *uri = qdict_get_str(qdict, "uri");
+     Error *err = NULL;
+-    MigrationChannelList *caps = NULL;
++    g_autoptr(MigrationChannelList) caps = NULL;
+     g_autoptr(MigrationChannel) channel = NULL;
+ 
+     if (inc) {
+@@ -787,8 +787,6 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+         return;
+     }
+ 
+-    qapi_free_MigrationChannelList(caps);
+-
+     if (!detach) {
+         HMPMigrationStatus *status;
+ 
 -- 
 2.39.2
 
