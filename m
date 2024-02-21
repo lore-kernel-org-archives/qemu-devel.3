@@ -4,74 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E098C48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3126C5478A
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoZ4-0006ut-4x; Wed, 21 Feb 2024 10:31:18 -0500
+	id 1rcoaC-0006ZD-MN; Wed, 21 Feb 2024 10:32:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcoNJ-0001hh-IJ; Wed, 21 Feb 2024 10:19:09 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoSD-0003Ss-KJ
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:24:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcivJ-0003QN-TL; Wed, 21 Feb 2024 04:29:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708507794; x=1740043794;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=XiQ/HbQz6vM8OKlU2Z+p1K0FZs1RQXcxipd8cRAsJiw=;
- b=YgxNC/bgqCBX4oZ+cT9jTFz4dtVtp0/vhqsmqBMDLna/qQCpA8VcEG2k
- yJI3zigGXtNB2uonQaPfuXjKbCrQZ3YrzzpwDulrO95PIzbOSZscTNXAa
- YY59/Vt1PFbZmanJNfvp4iFnRwDQQaJhQLN3QMVidbMxRuYYK7cEtsnVP
- 8G3SLydXKvd2zsXE4pZE/8V7hZ0DUNXu7OlRI9DTQOyZfyWDKcIX53lkP
- yuSlBZygFlX2L/8psI15KZeNH8w/EM8q4sjRPweo8fcChwStBzbx9KzG2
- s3I4ngXb7hzyHTnreNTaKAP90ssahIe0DSViz4oqdZhD7La/ORrVu4/rF w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="2795451"
-X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="2795451"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2024 01:29:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="9720034"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 21 Feb 2024 01:29:48 -0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 2/6] hw/display/macfb: Fix missing ERRP_GUARD() in
- macfb_nubus_realize()
-Date: Wed, 21 Feb 2024 17:43:13 +0800
-Message-Id: <20240221094317.994454-3-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
-References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rciAE-00057v-EU
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:41:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708504872;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=kQC3iDEwTU0zOMJx2FKCKhfHkf/F88iH7Ne+kunsMtE=;
+ b=gYRXgcX1838su7vEB4yg34v9CeAKHJrJwX0PYgU7ZBNTQSpyIDs0sY7qUm2JXpyI/awBxm
+ OkrhYxnj58kudyPfO0HUCKoHP9pXBHLY1I7loFkNR1lX10r2opMeLYD018NI1DXVz6/w+O
+ 4LCeGOXc13ZVQjuM3R4o8PsiW14PVP0=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-V6DZBQODM3KJGgo7izz8WQ-1; Wed,
+ 21 Feb 2024 03:41:10 -0500
+X-MC-Unique: V6DZBQODM3KJGgo7izz8WQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0853D1C0BB5B;
+ Wed, 21 Feb 2024 08:41:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id D9C012166B36;
+ Wed, 21 Feb 2024 08:41:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9C5C821E66D5; Wed, 21 Feb 2024 09:41:08 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  Peter Xu
+ <peterx@redhat.com>,  Claudio Fontana <cfontana@suse.de>,  Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH v4 11/34] migration/ram: Introduce 'fixed-ram' migration
+ capability
+In-Reply-To: <20240220224138.24759-12-farosas@suse.de> (Fabiano Rosas's
+ message of "Tue, 20 Feb 2024 19:41:15 -0300")
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-12-farosas@suse.de>
+Date: Wed, 21 Feb 2024 09:41:08 +0100
+Message-ID: <87o7caxl97.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.15;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,55 +85,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Fabiano Rosas <farosas@suse.de> writes:
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
+> Add a new migration capability 'fixed-ram'.
+>
+> The core of the feature is to ensure that each RAM page has a specific
+> offset in the resulting migration stream. The reasons why we'd want
+> such behavior are:
+>
+>  - The resulting file will have a bounded size, since pages which are
+>    dirtied multiple times will always go to a fixed location in the
+>    file, rather than constantly being added to a sequential
+>    stream. This eliminates cases where a VM with, say, 1G of RAM can
+>    result in a migration file that's 10s of GBs, provided that the
+>    workload constantly redirties memory.
+>
+>  - It paves the way to implement O_DIRECT-enabled save/restore of the
+>    migration stream as the pages are ensured to be written at aligned
+>    offsets.
+>
+>  - It allows the usage of multifd so we can write RAM pages to the
+>    migration file in parallel.
+>
+> For now, enabling the capability has no effect. The next couple of
+> patches implement the core functionality.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
-* - It should not be passed to error_prepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
+[...]
 
-Currently, since macfb_nubus_realize() - as a DeviceClass.realize()
-method - doesn't get the NULL errp parameter, it doesn't trigger the
-dereference issue.
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 5a565d9b8d..3fce5fe53e 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -531,6 +531,10 @@
+>  #     and can result in more stable read performance.  Requires KVM
+>  #     with accelerator property "dirty-ring-size" set.  (Since 8.1)
+>  #
+> +# @fixed-ram: Migrate using fixed offsets in the migration file for
+> +#     each RAM page.  Requires a migration URI that supports seeking,
+> +#     such as a file.  (since 9.0)
+> +#
+>  # Features:
+>  #
+>  # @deprecated: Member @block is deprecated.  Use blockdev-mirror with
+> @@ -555,7 +559,7 @@
+>             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>             'validate-uuid', 'background-snapshot',
+>             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> -           'dirty-limit'] }
+> +           'dirty-limit', 'fixed-ram'] }
+>  
+>  ##
+>  # @MigrationCapabilityStatus:
 
-To follow the requirement of errp, add missing ERRP_GUARD() in
-macfb_nubus_realize().
+Can we find a better name than @fixed-ram?  @fixed-ram-offsets?
+@use-seek?
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-Suggested by credit:
- Markus: Referred his explanation about ERRP_GUARD().
----
- hw/display/macfb.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-index 418e99c8e18e..1ace341a0ff4 100644
---- a/hw/display/macfb.c
-+++ b/hw/display/macfb.c
-@@ -714,6 +714,7 @@ static void macfb_nubus_set_irq(void *opaque, int n, int level)
- 
- static void macfb_nubus_realize(DeviceState *dev, Error **errp)
- {
-+    ERRP_GUARD();
-     NubusDevice *nd = NUBUS_DEVICE(dev);
-     MacfbNubusState *s = NUBUS_MACFB(dev);
-     MacfbNubusDeviceClass *ndc = NUBUS_MACFB_GET_CLASS(dev);
--- 
-2.34.1
+Apart from that, QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
