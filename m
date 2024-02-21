@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F23C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A50C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoJB-0000gZ-R8; Wed, 21 Feb 2024 10:14:54 -0500
+	id 1rchu3-0000lP-B1; Wed, 21 Feb 2024 03:24:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchsm-0005eU-BS; Wed, 21 Feb 2024 03:23:12 -0500
+ id 1rchu1-0000do-OR; Wed, 21 Feb 2024 03:24:29 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchsk-0002Rx-CI; Wed, 21 Feb 2024 03:23:12 -0500
+ id 1rchu0-0002dD-4E; Wed, 21 Feb 2024 03:24:29 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B79F54F3DA;
- Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7D58B4F3E4;
+ Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 85884860B9;
- Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
-Received: (nullmailer pid 2142072 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4986C860C3;
+ Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
+Received: (nullmailer pid 2142103 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 28/60] tcg/arm: Fix goto_tb for large translation blocks
-Date: Wed, 21 Feb 2024 11:20:16 +0300
-Message-Id: <20240221082058.2141850-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 38/60] hw/i386: Fix _STA return value for ACPI0017
+Date: Wed, 21 Feb 2024 11:20:26 +0300
+Message-Id: <20240221082058.2141850-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
@@ -61,35 +61,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Correct arithmetic for separating high and low
-on a large negative number.
+Found whilst testing a series for the linux kernel that actually
+bothers to check if enabled is set. 0xB is the option used
+for vast majority of DSDT entries in QEMU.
+It is a little odd for a device that doesn't really exist and
+is simply a hook to tell the OS there is a CEDT table but 0xB
+seems a reasonable choice and avoids need to special case
+this device in the OS.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 79ffece4447 ("tcg/arm: Implement direct branch for goto_tb")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1714
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit e41f1825b43796c3508ef309ed0b150ef89acc44)
+Means:
+* Device present.
+* Device enabled and decoding it's resources.
+* Not shown in UI
+* Functioning properly
+* No battery (on this device!)
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240126120132.24248-12-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit d9ae5802f656f6fb53b788747ba557a826b6e740)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/arm/tcg-target.c.inc b/tcg/arm/tcg-target.c.inc
-index a9aa8aa91c..c9a47b7ea1 100644
---- a/tcg/arm/tcg-target.c.inc
-+++ b/tcg/arm/tcg-target.c.inc
-@@ -1736,9 +1736,9 @@ static void tcg_out_goto_tb(TCGContext *s, int which)
-          * shifted immediate from pc.
-          */
-         int h = -i_disp;
--        int l = h & 0xfff;
-+        int l = -(h & 0xfff);
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 80db183b78..1e178341de 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1415,7 +1415,7 @@ static void build_acpi0017(Aml *table)
+     aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0017")));
  
--        h = encode_imm_nofail(h - l);
-+        h = encode_imm_nofail(h + l);
-         tcg_out_dat_imm(s, COND_AL, ARITH_SUB, TCG_REG_R0, TCG_REG_PC, h);
-         tcg_out_ld32_12(s, COND_AL, TCG_REG_PC, TCG_REG_R0, l);
-     }
+     method = aml_method("_STA", 0, AML_NOTSERIALIZED);
+-    aml_append(method, aml_return(aml_int(0x01)));
++    aml_append(method, aml_return(aml_int(0x0B)));
+     aml_append(dev, method);
+     build_cxl_dsm_method(dev);
+ 
 -- 
 2.39.2
 
