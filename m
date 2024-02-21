@@ -4,71 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E83BC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FDEC48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoT1-0005jk-13; Wed, 21 Feb 2024 10:25:03 -0500
+	id 1rcoXa-00042P-Pw; Wed, 21 Feb 2024 10:29:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoMs-0000nB-18
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcmN4-0005Ou-B1
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:10:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708521044;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AtCSsIwXL4IiaaxqSyjHIbu+Bf1iRXGlN67g2XJpYIc=;
- b=YGIYK0AJutBUP6uI26VRLSL9UgJBUUW/FDxgYE1GpyXbenv1vcOhLSLKVOBDXaMdd5Dp/v
- bFV86Waov3r+h76g4xjxjDb6rOgQ/iMe74uph5OX2R1QWGh1E8e+yFsco8NLDbwArOuFiZ
- 3oEPrwDydzJnUNwte15QLjjfeoRtp4w=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-TKZFUVCnM6ShfPOtNgDJIg-1; Wed, 21 Feb 2024 08:10:40 -0500
-X-MC-Unique: TKZFUVCnM6ShfPOtNgDJIg-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcoNL-0003Rf-D9
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:19:11 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcma2-0007N3-S0
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:24:13 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0FBAB85A58A;
- Wed, 21 Feb 2024 13:10:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id CDD92200B436;
- Wed, 21 Feb 2024 13:10:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B661121E66C8; Wed, 21 Feb 2024 14:10:33 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Peter Xu
- <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  =?utf-8?Q?Marc-An?=
- =?utf-8?Q?dr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH V4 5/5] migration: simplify exec migration functions
-In-Reply-To: <1705099758-211963-6-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Fri, 12 Jan 2024 14:49:18 -0800")
-References: <1705099758-211963-1-git-send-email-steven.sistare@oracle.com>
- <1705099758-211963-6-git-send-email-steven.sistare@oracle.com>
-Date: Wed, 21 Feb 2024 14:10:33 +0100
-Message-ID: <87r0h63quu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2AB4221EF9;
+ Wed, 21 Feb 2024 13:24:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708521849; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUthbAJxyMk41bKipdxC3j5UI5ZZ7T3/a9qsLwI/CEk=;
+ b=DTQn1wBW1fvNWR3UiKaONQLGKtuolP5HKhYPsejvggxKbw+rvnX6x/iae/dRwYrp+CZROV
+ TpiIRQumnOso5f2TFRiZf93ReQlkleQalxgBrylw4CoWlZ/xJNf4ixXjwRa5DYeyZOeTX/
+ H5lYPfScEnchE9AkRcI7P2dRroqbCKA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708521849;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUthbAJxyMk41bKipdxC3j5UI5ZZ7T3/a9qsLwI/CEk=;
+ b=d+4nAevdb5oCoNdn9stsNzmMFyyxKCYlQf++hymyRj/GoK3bOMg94GHn/71QJVQyysXDP2
+ PGvA0PQe4vqLGBCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708521849; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUthbAJxyMk41bKipdxC3j5UI5ZZ7T3/a9qsLwI/CEk=;
+ b=DTQn1wBW1fvNWR3UiKaONQLGKtuolP5HKhYPsejvggxKbw+rvnX6x/iae/dRwYrp+CZROV
+ TpiIRQumnOso5f2TFRiZf93ReQlkleQalxgBrylw4CoWlZ/xJNf4ixXjwRa5DYeyZOeTX/
+ H5lYPfScEnchE9AkRcI7P2dRroqbCKA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708521849;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dUthbAJxyMk41bKipdxC3j5UI5ZZ7T3/a9qsLwI/CEk=;
+ b=d+4nAevdb5oCoNdn9stsNzmMFyyxKCYlQf++hymyRj/GoK3bOMg94GHn/71QJVQyysXDP2
+ PGvA0PQe4vqLGBCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9E3C1139D0;
+ Wed, 21 Feb 2024 13:24:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AzYWGXj51WWrcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 21 Feb 2024 13:24:08 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, Peter Xu
+ <peterx@redhat.com>, Claudio Fontana <cfontana@suse.de>, Eric Blake
+ <eblake@redhat.com>
+Subject: Re: [PATCH v4 11/34] migration/ram: Introduce 'fixed-ram' migration
+ capability
+In-Reply-To: <87o7caxl97.fsf@pond.sub.org>
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-12-farosas@suse.de> <87o7caxl97.fsf@pond.sub.org>
+Date: Wed, 21 Feb 2024 10:24:05 -0300
+Message-ID: <87sf1mar2i.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DTQn1wBW;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=d+4nAevd
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 2AB4221EF9
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,120 +123,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala, Peter, or Fabiano, please review.
+Markus Armbruster <armbru@redhat.com> writes:
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+>> Add a new migration capability 'fixed-ram'.
+>>
+>> The core of the feature is to ensure that each RAM page has a specific
+>> offset in the resulting migration stream. The reasons why we'd want
+>> such behavior are:
+>>
+>>  - The resulting file will have a bounded size, since pages which are
+>>    dirtied multiple times will always go to a fixed location in the
+>>    file, rather than constantly being added to a sequential
+>>    stream. This eliminates cases where a VM with, say, 1G of RAM can
+>>    result in a migration file that's 10s of GBs, provided that the
+>>    workload constantly redirties memory.
+>>
+>>  - It paves the way to implement O_DIRECT-enabled save/restore of the
+>>    migration stream as the pages are ensured to be written at aligned
+>>    offsets.
+>>
+>>  - It allows the usage of multifd so we can write RAM pages to the
+>>    migration file in parallel.
+>>
+>> For now, enabling the capability has no effect. The next couple of
+>> patches implement the core functionality.
+>>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>
+> [...]
+>
+>> diff --git a/qapi/migration.json b/qapi/migration.json
+>> index 5a565d9b8d..3fce5fe53e 100644
+>> --- a/qapi/migration.json
+>> +++ b/qapi/migration.json
+>> @@ -531,6 +531,10 @@
+>>  #     and can result in more stable read performance.  Requires KVM
+>>  #     with accelerator property "dirty-ring-size" set.  (Since 8.1)
+>>  #
+>> +# @fixed-ram: Migrate using fixed offsets in the migration file for
+>> +#     each RAM page.  Requires a migration URI that supports seeking,
+>> +#     such as a file.  (since 9.0)
+>> +#
+>>  # Features:
+>>  #
+>>  # @deprecated: Member @block is deprecated.  Use blockdev-mirror with
+>> @@ -555,7 +559,7 @@
+>>             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>>             'validate-uuid', 'background-snapshot',
+>>             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+>> -           'dirty-limit'] }
+>> +           'dirty-limit', 'fixed-ram'] }
+>>  
+>>  ##
+>>  # @MigrationCapabilityStatus:
+>
+> Can we find a better name than @fixed-ram?  @fixed-ram-offsets?
+> @use-seek?
 
-> Simplify the exec migration code by using list utility functions.
->
-> As a side effect, this also fixes a minor memory leak.  On function return,
-> "g_auto(GStrv) argv" frees argv and each element, which is wrong, because
-> the function does not own the individual elements.  To compensate, the code
-> uses g_steal_pointer which NULLs argv and prevents the destructor from
-> running, but argv is leaked.
->
-> Fixes: cbab4face57b ("migration: convert exec backend ...")
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  migration/exec.c | 58 ++++++++------------------------------------------------
->  1 file changed, 8 insertions(+), 50 deletions(-)
->
-> diff --git a/migration/exec.c b/migration/exec.c
-> index 47d2f3b..1312ca7 100644
-> --- a/migration/exec.c
-> +++ b/migration/exec.c
-> @@ -19,12 +19,12 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
-> +#include "qemu/strList.h"
->  #include "channel.h"
->  #include "exec.h"
->  #include "migration.h"
->  #include "io/channel-command.h"
->  #include "trace.h"
-> -#include "qemu/cutils.h"
->  
->  #ifdef WIN32
->  const char *exec_get_cmd_path(void)
-> @@ -39,51 +39,16 @@ const char *exec_get_cmd_path(void)
->  }
->  #endif
->  
-> -/* provides the length of strList */
-> -static int
-> -str_list_length(strList *list)
-> -{
-> -    int len = 0;
-> -    strList *elem;
-> -
-> -    for (elem = list; elem != NULL; elem = elem->next) {
-> -        len++;
-> -    }
-> -
-> -    return len;
-> -}
-> -
-> -static void
-> -init_exec_array(strList *command, char **argv, Error **errp)
-> -{
-> -    int i = 0;
-> -    strList *lst;
-> -
-> -    for (lst = command; lst; lst = lst->next) {
-> -        argv[i++] = lst->value;
-> -    }
-> -
-> -    argv[i] = NULL;
-> -    return;
-> -}
-> -
->  void exec_start_outgoing_migration(MigrationState *s, strList *command,
->                                     Error **errp)
->  {
-> -    QIOChannel *ioc;
-> -
-> -    int length = str_list_length(command);
-> -    g_auto(GStrv) argv = (char **) g_new0(const char *, length + 1);
-> -
-> -    init_exec_array(command, argv, errp);
-> +    QIOChannel *ioc = NULL;
-> +    g_auto(GStrv) argv = strv_from_strList(command);
-> +    const char * const *args = (const char * const *) argv;
->      g_autofree char *new_command = g_strjoinv(" ", (char **)argv);
->  
->      trace_migration_exec_outgoing(new_command);
-> -    ioc = QIO_CHANNEL(
-> -        qio_channel_command_new_spawn(
-> -                            (const char * const *) g_steal_pointer(&argv),
-> -                            O_RDWR,
-> -                            errp));
-> +    ioc = QIO_CHANNEL(qio_channel_command_new_spawn(args, O_RDWR, errp));
->      if (!ioc) {
->          return;
->      }
-> @@ -105,19 +70,12 @@ static gboolean exec_accept_incoming_migration(QIOChannel *ioc,
->  void exec_start_incoming_migration(strList *command, Error **errp)
->  {
->      QIOChannel *ioc;
-> -
-> -    int length = str_list_length(command);
-> -    g_auto(GStrv) argv = (char **) g_new0(const char *, length + 1);
-> -
-> -    init_exec_array(command, argv, errp);
-> +    g_auto(GStrv) argv = strv_from_strList(command);
-> +    const char * const *args = (const char * const *) argv;
->      g_autofree char *new_command = g_strjoinv(" ", (char **)argv);
->  
->      trace_migration_exec_incoming(new_command);
-> -    ioc = QIO_CHANNEL(
-> -        qio_channel_command_new_spawn(
-> -                            (const char * const *) g_steal_pointer(&argv),
-> -                            O_RDWR,
-> -                            errp));
-> +    ioc = QIO_CHANNEL(qio_channel_command_new_spawn(args, O_RDWR, errp));
->      if (!ioc) {
->          return;
->      }
+I have no idea how we came to fixed-ram. The archives don't provide any
+clarification. I find it confusing at first glance as well.
 
+A little brainstorming on how fixed-ram is different from exiting
+migration:
+
+Fixed-ram:
+  uses a file, like the 'file:' migration;
+
+  needs a seeking medium, such as a file;
+
+  migrates ram by placing a page always in the same offset in the
+  file, contrary to normal migration which streams the page changes
+  continuously;
+
+  ensures a migration file of size bounded to VM RAM size, contrary to
+  normal 'file:' migration which creates a file with unbounded size;
+
+  enables multi-threaded RAM migration, even though we only use it when
+  multifd is enabled;
+
+  uses scatter-gatter APIs (pwritev, preadv);
+
+So a few options:
+
+(disconsidering use-seek, it might be even more generic/vague)
+
+- fixed-ram-offsets
+- non-streaming (or streaming: false)
+- ram-scatter-gather (ram-sg)
+- parallel-ram (even with the slight inaccuracy that we sometimes do it single-threaded)
+
+Remember we also use this name internally, so I think a broader
+"feature" name is better that a super specific one.
+
+Does anyone have a strong preference? Other suggestions?
+
+> Apart from that, QAPI schema
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+
+Thanks!
 
