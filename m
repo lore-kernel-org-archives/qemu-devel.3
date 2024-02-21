@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB957C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B64FC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:25:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyu-0006rj-9a; Wed, 21 Feb 2024 16:18:20 -0500
+	id 1rcu0T-0005wO-6p; Wed, 21 Feb 2024 16:19:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyq-0006Vq-M7
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:18:16 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzv-0004ZX-NK
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:19:26 -0500
 Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyk-00014z-Lz
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:18:16 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzh-0001Kl-2s
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:19:23 -0500
 Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33d4c0b198aso730701f8f.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:18:10 -0800 (PST)
+ ffacd0b85a97d-33d26da3e15so127025f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:19:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550288; x=1709155088; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708550346; x=1709155146; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XwtVJOAzHCvEh5zeHnf1CnqeZsBBSTY3uRRfR/7NLW8=;
- b=k7M65HuWfT9rTjKKBypVlcMJ9HLsgS5D4kI4RIA7ar37Rs83OXjglwFLBFGuckfrKT
- K0/GaQDUZYikOb1xMR4I9JRT6ZazJhmpQof7qF3xXHVkkq2f017wWkbqFsDqUtgwSxmB
- pq8LeEBq8igyzdleE9sWRFUN5/oD2dVtVrK4U6yGW8V/9snw8eWiRIPPm3LfxylJSyw1
- 9FYGnZXFtrrcQKMnMTTVtNBlUgXdyCLX1cE8KMKdO2e//d2Z1gPpzKcmDg8qfP8A6hk0
- Fk6ILIXzWPD++VqBRvqRYbpEVMgHKIfInFk7DpaYdsc5lUZiZ1X08/JIuGURkCGtUsfU
- vS3A==
+ bh=NpDez5BJ9vbQ7QvGPKHbANOGqK0wCG2QqegQsAENy/M=;
+ b=JhhImJ34pZsm+yXJkMhkg39DZC5rn7ZSVufvqv6DoCpYcp9it9GKYW2BTJFrYdNsOH
+ NUwwWGq32qv2M6b9duDLUkgyAtaTeZwl+yvqpwDVoVt/yNaeWGbYUI0Sqzz13ZdUOJyb
+ led7Y+1HusAtJypdCDRENxmTSGm17DnxOuT7lTGUfmRvdJUi//2nHQ3gcX1K1O1MgBqw
+ Vtp/k2uzM+I0w/AxEn9yurNwmURSbqXfivWB8QzePn6n0Z+nQ0mXMl11Ozj8/BW46wr/
+ OWuaLvaeXx6Or+aGF9OIIQcCq7viHcz6PWoyTNmh2/eJ6AOIoPDwW8gRAA+GYdhuz7jl
+ 3D6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550288; x=1709155088;
+ d=1e100.net; s=20230601; t=1708550346; x=1709155146;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XwtVJOAzHCvEh5zeHnf1CnqeZsBBSTY3uRRfR/7NLW8=;
- b=uqdU77mfkmMv13Pnc55YwQDxk9wxSEMZgmpjWfFsi/oJvEr7Z1lN6j98BnRdAJ5Ilx
- ATYghbpukvZySwj3HUPQVu9vxG93dAqnNqW2znecdGEMd96BjytSA/t1zX0eIFtZCY5V
- RbuPY61l12rtIQgbjK+5k1kEGupxEgfptlVya1Gm19k5+j2JdnEeqnHJaRCI/STikw/I
- 0OZZ7vC0a8/Jj41MmMbjbBnxVDAufdsWkr0BxXd0pRoSbFHX95dItQD9D0pHVOXuM1wR
- 2D7bHOIFL6JsOx6/v6pu3X2rS/2Ob1NdfKKTw9XG8U6E2Pek8qPLlwh90ri2/QGVGe5n
- vSHA==
-X-Gm-Message-State: AOJu0YyHMB+7K5UVScP3fjFVB/pmHOdZWqOU+nmwiapvqRjXNYVJboHJ
- CMmfrArhpO7fc+FGQS9coRV3XpXOeccqpa5P9e7H0ygK6LFOJs5DkLPdQov/pBSeE9OUSC1ygai
- JYzU=
-X-Google-Smtp-Source: AGHT+IGmfSHG+/r5mJO/cRoikvzS0NZ1FX2VEcGBcNX1XJT8URhspdH8/7Z9f89HkCzz0nlXmzwChA==
-X-Received: by 2002:a05:6000:184a:b0:33d:6b89:fbbb with SMTP id
- c10-20020a056000184a00b0033d6b89fbbbmr4816826wri.47.1708550288697; 
- Wed, 21 Feb 2024 13:18:08 -0800 (PST)
+ bh=NpDez5BJ9vbQ7QvGPKHbANOGqK0wCG2QqegQsAENy/M=;
+ b=jT/2aYTJdDVCCK2fJ2knc007ka53yrgSLrj+QWBlc+MW5UG0Zbl30IreGvapbKsKH4
+ kNvKRwOWi84QD2Mc4rWMtxvxgrllQqKlWiEShP11/bGFIt+pzeypvlaHCs1UmRB9tKUQ
+ hP/5WzvMhSZyYOSJjVhtg/wFGt5gkd1r77LeJkcOWW6CVu5fc8vapUYihNbTtkyjoyqA
+ 3N05B6apw0/qkhdWYuDUJQXcegmuWvE6fCVw8Sm/eqOtPRGuEfGTD+vrpGX4NL2XrRxr
+ KlQQzCJp3qMYrPZ1Cn7e7NA7ZDjPql0ijOGneEW0KinLE3JH2eyr0KIgllTQVr1j+zq5
+ KIkA==
+X-Gm-Message-State: AOJu0Yw8XS5tSY+eag9TeBu+1e3JC5r8j0eL9CMqoN65dQT7UKuUM78N
+ ktFNw/+xuekmi30HnmflUnFeNS0rDQTwwI0Ywzgc9QzEDYN1Wc8RNBq/QvhnQRUS0Ve66JPIsQe
+ e7rs=
+X-Google-Smtp-Source: AGHT+IEiZ0yx9stEBXUpom8+/tY1+MsXEq20M8a4XHguZUGteJL27fk7hNVVLQyX4kl9h7jI/8coZA==
+X-Received: by 2002:adf:f78c:0:b0:33d:3490:6e05 with SMTP id
+ q12-20020adff78c000000b0033d34906e05mr639495wrp.27.1708550346251; 
+ Wed, 21 Feb 2024 13:19:06 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- bx14-20020a5d5b0e000000b0033d6bd4eab9sm6920318wrb.1.2024.02.21.13.18.07
+ e4-20020adfe384000000b0033cfa00e497sm17842766wrm.64.2024.02.21.13.19.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 21 Feb 2024 13:18:08 -0800 (PST)
+ Wed, 21 Feb 2024 13:19:05 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 12/25] hw/i386/pc: Merge pc_guest_info_init() into
- pc_machine_initfn()
-Date: Wed, 21 Feb 2024 22:16:12 +0100
-Message-ID: <20240221211626.48190-13-philmd@linaro.org>
+ John Snow <jsnow@redhat.com>
+Subject: [PULL 22/25] hw/ide: Move IDE bus related definitions to a new header
+ ide-bus.h
+Date: Wed, 21 Feb 2024 22:16:22 +0100
+Message-ID: <20240221211626.48190-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
 References: <20240221211626.48190-1-philmd@linaro.org>
@@ -101,87 +98,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
 
-Resolves redundant code in the piix and q35 machines.
+Let's consolidate the public IDE bus related functions in a separate
+header.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240208220349.4948-5-shentey@gmail.com>
+Message-ID: <20240220085505.30255-6-thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h | 2 --
- hw/i386/pc.c         | 9 +++------
- hw/i386/pc_piix.c    | 2 --
- hw/i386/pc_q35.c     | 2 --
- 4 files changed, 3 insertions(+), 12 deletions(-)
+ include/hw/ide/ide-bus.h  | 42 +++++++++++++++++++++++++++++++++++++++
+ include/hw/ide/internal.h | 40 +------------------------------------
+ 2 files changed, 43 insertions(+), 39 deletions(-)
+ create mode 100644 include/hw/ide/ide-bus.h
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index cf2fa60868..39cdb9b933 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -154,8 +154,6 @@ extern int fd_bootchk;
- 
- void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
- 
--void pc_guest_info_init(PCMachineState *pcms);
--
- #define PCI_HOST_PROP_RAM_MEM          "ram-mem"
- #define PCI_HOST_PROP_PCI_MEM          "pci-mem"
- #define PCI_HOST_PROP_SYSTEM_MEM       "system-mem"
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index d7183780bd..694de8e130 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -698,12 +698,6 @@ void pc_machine_done(Notifier *notifier, void *data)
-     pc_cmos_init_late(pcms);
- }
- 
--void pc_guest_info_init(PCMachineState *pcms)
--{
--    pcms->machine_done.notify = pc_machine_done;
--    qemu_add_machine_init_done_notifier(&pcms->machine_done);
--}
--
- /* setup pci memory address space mapping into system address space */
- void pc_pci_as_mapping_init(MemoryRegion *system_memory,
-                             MemoryRegion *pci_address_space)
-@@ -1744,6 +1738,9 @@ static void pc_machine_initfn(Object *obj)
-     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
-                               OBJECT(pcms->pcspk), "audiodev");
-     cxl_machine_init(obj, &pcms->cxl_devices_state);
+diff --git a/include/hw/ide/ide-bus.h b/include/hw/ide/ide-bus.h
+new file mode 100644
+index 0000000000..4841a7dcd6
+--- /dev/null
++++ b/include/hw/ide/ide-bus.h
+@@ -0,0 +1,42 @@
++#ifndef HW_IDE_BUS_H
++#define HW_IDE_BUS_H
 +
-+    pcms->machine_done.notify = pc_machine_done;
-+    qemu_add_machine_init_done_notifier(&pcms->machine_done);
- }
++#include "exec/ioport.h"
++#include "hw/ide/ide-dev.h"
++#include "hw/ide/ide-dma.h"
++
++struct IDEBus {
++    BusState qbus;
++    IDEDevice *master;
++    IDEDevice *slave;
++    IDEState ifs[2];
++    QEMUBH *bh;
++
++    int bus_id;
++    int max_units;
++    IDEDMA *dma;
++    uint8_t unit;
++    uint8_t cmd;
++    qemu_irq irq; /* bus output */
++
++    int error_status;
++    uint8_t retry_unit;
++    int64_t retry_sector_num;
++    uint32_t retry_nsector;
++    PortioList portio_list;
++    PortioList portio2_list;
++    VMChangeStateEntry *vmstate;
++};
++
++#define TYPE_IDE_BUS "IDE"
++OBJECT_DECLARE_SIMPLE_TYPE(IDEBus, IDE_BUS)
++
++void ide_bus_init(IDEBus *idebus, size_t idebus_size, DeviceState *dev,
++                  int bus_id, int max_units);
++IDEDevice *ide_bus_create_drive(IDEBus *bus, int unit, DriveInfo *drive);
++
++int ide_get_geometry(BusState *bus, int unit,
++                     int16_t *cyls, int8_t *heads, int8_t *secs);
++int ide_get_bios_chs_trans(BusState *bus, int unit);
++
++#endif
+diff --git a/include/hw/ide/internal.h b/include/hw/ide/internal.h
+index 1aab89b27b..d3ec16a945 100644
+--- a/include/hw/ide/internal.h
++++ b/include/hw/ide/internal.h
+@@ -8,16 +8,10 @@
+  */
  
- static void pc_machine_reset(MachineState *machine, ShutdownCause reason)
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index bea096f569..eeca725504 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -225,8 +225,6 @@ static void pc_init1(MachineState *machine,
-                                                &error_abort);
-     }
+ #include "hw/ide.h"
+-#include "exec/ioport.h"
+-#include "hw/ide/ide-dma.h"
+-#include "hw/ide/ide-dev.h"
++#include "hw/ide/ide-bus.h"
  
--    pc_guest_info_init(pcms);
+ /* debug IDE devices */
+ #define USE_DMA_CDROM
+-#include "qom/object.h"
 -
-     if (pcmc->smbios_defaults) {
-         MachineClass *mc = MACHINE_GET_CLASS(machine);
-         /* These values are guest ABI, do not change */
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 0e9bd27a6e..8053d8cccb 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -188,8 +188,6 @@ static void pc_q35_init(MachineState *machine)
-         kvmclock_create(pcmc->kvmclock_create_always);
-     }
+-#define TYPE_IDE_BUS "IDE"
+-OBJECT_DECLARE_SIMPLE_TYPE(IDEBus, IDE_BUS)
  
--    pc_guest_info_init(pcms);
+ /* Device/Head ("select") Register */
+ #define ATA_DEV_SELECT          0x10
+@@ -338,29 +332,6 @@ typedef struct IDEBufferedRequest {
+     bool orphaned;
+ } IDEBufferedRequest;
+ 
+-struct IDEBus {
+-    BusState qbus;
+-    IDEDevice *master;
+-    IDEDevice *slave;
+-    IDEState ifs[2];
+-    QEMUBH *bh;
 -
-     if (pcmc->smbios_defaults) {
-         /* These values are guest ABI, do not change */
-         smbios_set_defaults("QEMU", mc->desc,
+-    int bus_id;
+-    int max_units;
+-    IDEDMA *dma;
+-    uint8_t unit;
+-    uint8_t cmd;
+-    qemu_irq irq; /* bus output */
+-
+-    int error_status;
+-    uint8_t retry_unit;
+-    int64_t retry_sector_num;
+-    uint32_t retry_nsector;
+-    PortioList portio_list;
+-    PortioList portio2_list;
+-    VMChangeStateEntry *vmstate;
+-};
+-
+ /* These are used for the error_status field of IDEBus */
+ #define IDE_RETRY_MASK 0xf8
+ #define IDE_RETRY_DMA  0x08
+@@ -477,15 +448,6 @@ void ide_cancel_dma_sync(IDEState *s);
+ void ide_atapi_cmd(IDEState *s);
+ void ide_atapi_cmd_reply_end(IDEState *s);
+ 
+-/* hw/ide/qdev.c */
+-void ide_bus_init(IDEBus *idebus, size_t idebus_size, DeviceState *dev,
+-                  int bus_id, int max_units);
+-IDEDevice *ide_bus_create_drive(IDEBus *bus, int unit, DriveInfo *drive);
+-
+-int ide_get_geometry(BusState *bus, int unit,
+-                     int16_t *cyls, int8_t *heads, int8_t *secs);
+-int ide_get_bios_chs_trans(BusState *bus, int unit);
+-
+ int ide_handle_rw_error(IDEState *s, int error, int op);
+ 
+ #endif /* HW_IDE_INTERNAL_H */
 -- 
 2.41.0
 
