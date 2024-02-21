@@ -4,73 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A469DC5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A36C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcocv-0007y1-H1; Wed, 21 Feb 2024 10:35:17 -0500
+	id 1rcoTt-0007WL-1J; Wed, 21 Feb 2024 10:25:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
- id 1rcoaG-00077j-5x
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:32:32 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcoMj-0004vg-Q8; Wed, 21 Feb 2024 10:18:38 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
- id 1rcmmG-00010M-Ji
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:36:51 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 93B9B60BC3;
- Wed, 21 Feb 2024 16:36:39 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:8113::1:1c] (unknown
- [2a02:6b8:b081:8113::1:1c])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id aaSav20iB4Y0-SNPsgyOg; Wed, 21 Feb 2024 16:36:38 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1708522598;
- bh=uKgDMQw1Rf7Un0gEEOS0l9WOjKuJSyFOjqqLOXiDoIY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=e2OJ0h4aMdaOw+1P58ly2Jed1iVC5LkLlt5qeYm3+fChsORpXb+CGw9k0akrFGy03
- oFzNoGtz399Ry2UacWxNUnVR4YhlqDhFI0UwN1sFa35St8M0vdhnBBTo+9MUjxVcsK
- uFqqz9FyN+U0Qg7Sn2hBFHw6SmSfcOYGxBCb0p9Q=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <f5435d60-8941-4ad7-b851-c7f320d6522f@yandex-team.ru>
-Date: Wed, 21 Feb 2024 18:36:36 +0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] qapi/migration.json: add reason to MIGRATION event
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcnyC-0006w4-Bw; Wed, 21 Feb 2024 09:53:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708527192; x=1740063192;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=UGj5JoIo7Cr9pGUnX7V/P0tJcuLD76ovvoOQLggI0D8=;
+ b=it9xlkMuuFBVDvlQyist1CgBj7T6GYrUbkdDil2rbFT/GVkHhGygTnwK
+ y6qumUGgvOWZSshevTsrdhEVqT6sHjR4/7GBxZdzU2WQqr8emiY5GYdNk
+ TUNaQDgXfzTdwzG809Ql+WEbdZNzXjkBaRgzqtgPr2KtFMB30W3FW15hh
+ kGstlUvQ3+83zYR/8Hj1G7u6xHs75wdmc3ilJmUoTkYWR5ZoseLcRoxuC
+ gDHXQ0ODM6MaTAaJNHrvlvl605AIXha6hoHGtYzMl5wJgyEMAJzjOXNF7
+ KdNtgrscw9SYKfWfUaOv28Kjb//tSsT3t8XQMNdmsB81KrpLBBX5YSDjq w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="5643881"
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="5643881"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2024 06:53:09 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; d="scan'208";a="28302334"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa002.fm.intel.com with ESMTP; 21 Feb 2024 06:53:04 -0800
+Date: Wed, 21 Feb 2024 23:06:44 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- eblake@redhat.com, yc-core@yandex-team.ru
-References: <20240215122759.1438581-1-rkhapov@yandex-team.ru>
- <20240215122759.1438581-2-rkhapov@yandex-team.ru>
- <87il2p0w78.fsf@pond.sub.org>
- <d1f73aaa-f5cb-4366-a567-fad7d965b76e@yandex-team.ru>
- <87le7hrmf0.fsf@pond.sub.org>
-From: Roman Khapov <rkhapov@yandex-team.ru>
-In-Reply-To: <87le7hrmf0.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=rkhapov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 4/6] hw/misc/xlnx-versal-trng: Fix missing ERRP_GUARD()
+ in trng_prop_fault_event_set()
+Message-ID: <ZdYRhCWhTGlkM7up@intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+ <20240221094317.994454-5-zhao1.liu@linux.intel.com>
+ <87ttm2ujhm.fsf@pond.sub.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ttm2ujhm.fsf@pond.sub.org>
+Received-SPF: none client-ip=192.198.163.13;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -82,33 +89,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The reason in MIGRATION event can be used, when there is some helpful 
-message, that can be added to improve debugging\understanding of the 
-reason of migration status changing.
+On Wed, Feb 21, 2024 at 12:47:33PM +0100, Markus Armbruster wrote:
+> Date: Wed, 21 Feb 2024 12:47:33 +0100
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 4/6] hw/misc/xlnx-versal-trng: Fix missing ERRP_GUARD()
+>  in trng_prop_fault_event_set()
+> 
+> Zhao Liu <zhao1.liu@linux.intel.com> writes:
+> 
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> >
+> > As the comment in qapi/error, dereferencing @errp requires
+> > ERRP_GUARD():
+> >
+> > * = Why, when and how to use ERRP_GUARD() =
+> > *
+> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> > * - It must not be dereferenced, because it may be null.
+> > * - It should not be passed to error_prepend() or
+> > *   error_append_hint(), because that doesn't work with &error_fatal.
+> > * ERRP_GUARD() lifts these restrictions.
+> > *
+> > * To use ERRP_GUARD(), add it right at the beginning of the function.
+> > * @errp can then be used without worrying about the argument being
+> > * NULL or &error_fatal.
+> > *
+> > * Using it when it's not needed is safe, but please avoid cluttering
+> > * the source with useless code.
+> >
+> > Currently, since trng_prop_fault_event_set() doesn't get the NULL errp
+> > parameter as a "set" method of object property, it doesn't trigger the
+> > dereference issue.
+> >
+> > To follow the requirement of errp, add missing ERRP_GUARD() in
+> > trng_prop_fault_event_set().
+> >
+> > Suggested-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> > Suggested by credit:
+> >  Markus: Referred his explanation about ERRP_GUARD().
+> > ---
+> >  hw/misc/xlnx-versal-trng.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+> > index b8111b8b6626..3579348a9d17 100644
+> > --- a/hw/misc/xlnx-versal-trng.c
+> > +++ b/hw/misc/xlnx-versal-trng.c
+> > @@ -33,6 +33,7 @@
+> >  #include "qemu/error-report.h"
+> >  #include "qemu/guest-random.h"
+> >  #include "qemu/timer.h"
+> > +#include "qapi/error.h"
+> >  #include "qapi/visitor.h"
+> >  #include "migration/vmstate.h"
+> >  #include "hw/qdev-properties.h"
+> > @@ -641,6 +642,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
+> >                                        const char *name, void *opaque,
+> >                                        Error **errp)
+> >  {
+> > +    ERRP_GUARD();
+> >      Property *prop = opaque;
+> >      uint32_t *events = object_field_prop_ptr(obj, prop);
+> 
+>        visit_type_uint32(v, name, events, errp);
+>        if (*errp) {
+>            return;
+>        }
+> 
+> Please do this instead:
+> 
+> diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+> index b8111b8b66..6495188dc7 100644
+> --- a/hw/misc/xlnx-versal-trng.c
+> +++ b/hw/misc/xlnx-versal-trng.c
+> @@ -644,8 +644,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
+>      Property *prop = opaque;
+>      uint32_t *events = object_field_prop_ptr(obj, prop);
+>  
+> -    visit_type_uint32(v, name, events, errp);
+> -    if (*errp) {
+> +    if (!visit_type_uint32(v, name, events, errp)) {
+>          return;
+>      }
+>  
 
-I propose the next usage - when qemu sends (MIGRATION status=failed) 
-event, the error message describing the problem can be sent in that 
-event too. This is more comfortable way to understand the problem 
-comparing to reading qemu logs, especially in some cases, where qemu are 
-launched and monitored through various automation processes (examples: 
-cloud environments, some 'integration' tests of the qemu, etc). 
-Probably, there are some other cases when the accompanying message can 
-be useful, not only in failed migrations, but now I don't know that cases.
+Thanks! I didn't think of that. Will do this.
 
-If we have common understanding with that, I will improve the doc 
-comment and the commit message of the first path too in the next version 
-of the series.
-
-On 2/19/24 11:35, Markus Armbruster wrote:
-> Roman Khapov <rkhapov@yandex-team.ru> writes:
->
->> To be clear: you meant that the description of the event must be extended, similar to its description on the commit message? Or you don't see its proper usage at all?
-> The commit message doesn't really tell me either why and how anybody
-> would use @reason.  Once we have a common understanding there, improving
-> the doc comment should be straightforward.
-
--- 
-Best regards,
-Roman Khapov
+Regards,
+Zhao
 
 
