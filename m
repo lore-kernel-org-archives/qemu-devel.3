@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9707EC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE6FC5478A
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoaF-0006yY-0q; Wed, 21 Feb 2024 10:32:31 -0500
+	id 1rcoai-0001XH-9L; Wed, 21 Feb 2024 10:33:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcoSL-0004Hd-T4; Wed, 21 Feb 2024 10:24:23 -0500
+ id 1rcoU4-0000na-As; Wed, 21 Feb 2024 10:26:08 -0500
 Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcivE-0003PR-GE; Wed, 21 Feb 2024 04:29:50 -0500
+ id 1rciva-0003SO-LJ; Wed, 21 Feb 2024 04:30:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708507789; x=1740043789;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=DMvGc8DfimJRTPgD6QMJJKd+KloeFda9pBPBryI/NJk=;
- b=QcCveHMg8XDjPDkTD2QaGnIImu9+N4JvU+ZT6VKezVT2KrzUiKAy52AC
- e8U3GcuenGkugwDG6k0zm5hNzWzv5PLWQYp5ZYBdYpTlQBQuF80gIzuu0
- B83OcT9j3ZK3cbVrZ4a2xPsJfqJ7t0AYnETR6I1lLfKKIOf3M/apZiuF6
- 6pqTQeemSU0T1ScuT5s48xB+nEe1ZfEH2aowNgRNTfwP8WlbboVCivaYb
- C9QSrFuYm6VJYkBDiLzyMcROXFKlYkvjsHGwLQUoW0bFzv0aA5pi6kJwq
- 9iBrk4WYS0Y4WEgEAJphc93HbUQAsI9YGrOzEj+aLOgtUY5QZ4ijtLkzi w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="2795430"
+ t=1708507811; x=1740043811;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=9Bc0Ckt/w+D5ioixCAtTbsd0rswmbrxmghE0DuhNEmw=;
+ b=kFbLR8zrVVXmHGHwV5+hTaFMQaaWx05EVkp8t1Csj8md1O8lOvY2/LVx
+ 5tWSS087VY3GZathzuDDWnGcSCnhaaXY3otU7VN10VZPR8gpN80XTf7Fs
+ SZziDZOZMK0L5TVqBqH29PApE4NK22FePCaLWaeprhRC4+dCvO/OtMIOR
+ IZFjZW97F9NvYIdJFVslyyuVgybAi5WVMn+l/CMj7TVbaOGDF/ljfoQGs
+ l5GxqPYZNJGpH1CVVIiBgnMfQeafVEDPskAnGVwHRW9HbckYsTba4jyhl
+ geXqTwOXfXg8M9XzP4Q83XHn9kPW8ODcsB3zMkKkN0MfkUQlAazq7Qs4m w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="2795468"
 X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="2795430"
+   d="scan'208";a="2795468"
 Received: from orviesa003.jf.intel.com ([10.64.159.143])
  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2024 01:29:43 -0800
+ 21 Feb 2024 01:30:01 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="9719977"
+   d="scan'208";a="9720087"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 21 Feb 2024 01:29:39 -0800
+ by orviesa003.jf.intel.com with ESMTP; 21 Feb 2024 01:29:57 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -55,11 +55,13 @@ To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 0/6] [PATCH 0/6] Fix missing ERRP_GUARD() when dereference
- @errp
-Date: Wed, 21 Feb 2024 17:43:11 +0800
-Message-Id: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+Subject: [PATCH 4/6] hw/misc/xlnx-versal-trng: Fix missing ERRP_GUARD() in
+ trng_prop_fault_event_set()
+Date: Wed, 21 Feb 2024 17:43:15 +0800
+Message-Id: <20240221094317.994454-5-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.15;
@@ -87,41 +89,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Hi all,
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
-Thanks to Markus's explanation about ERRP_GUARD() on my previsou
-patch [1],
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+* - It should not be passed to error_prepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
 
-I realize that perhaps more @errp dereference cases need to be
-double-checked to ensure that ERRP_GUARD() is being used correctly.
+Currently, since trng_prop_fault_event_set() doesn't get the NULL errp
+parameter as a "set" method of object property, it doesn't trigger the
+dereference issue.
 
-Therefore, there're the patches to add more missing ERRP_GUARD().
+To follow the requirement of errp, add missing ERRP_GUARD() in
+trng_prop_fault_event_set().
 
-[1]: https://lore.kernel.org/qemu-devel/875xz0ojg7.fsf@pond.sub.org/
-
-Thanks and Best Regards,
-Zhao
-
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Zhao Liu (6):
-  hw/cxl/cxl-host: Fix missing ERRP_GUARD() in
-    cxl_fixed_memory_window_config()
-  hw/display/macfb: Fix missing ERRP_GUARD() in macfb_nubus_realize()
-  hw/mem/cxl_type3: Fix missing ERRP_GUARD() in ct3_realize()
-  hw/misc/xlnx-versal-trng: Fix missing ERRP_GUARD() in
-    trng_prop_fault_event_set()
-  hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD() in
-    cxl_usp_realize()
-  hw/vfio/iommufd: Fix missing ERRP_GUARD() in iommufd_cdev_getfd()
+Suggested by credit:
+ Markus: Referred his explanation about ERRP_GUARD().
+---
+ hw/misc/xlnx-versal-trng.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- hw/cxl/cxl-host.c            | 1 +
- hw/display/macfb.c           | 1 +
- hw/mem/cxl_type3.c           | 1 +
- hw/misc/xlnx-versal-trng.c   | 2 ++
- hw/pci-bridge/cxl_upstream.c | 1 +
- hw/vfio/iommufd.c            | 1 +
- 6 files changed, 7 insertions(+)
-
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index b8111b8b6626..3579348a9d17 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -33,6 +33,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/timer.h"
++#include "qapi/error.h"
+ #include "qapi/visitor.h"
+ #include "migration/vmstate.h"
+ #include "hw/qdev-properties.h"
+@@ -641,6 +642,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
+                                       const char *name, void *opaque,
+                                       Error **errp)
+ {
++    ERRP_GUARD();
+     Property *prop = opaque;
+     uint32_t *events = object_field_prop_ptr(obj, prop);
+ 
 -- 
 2.34.1
 
