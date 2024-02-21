@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47033C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E9FC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:24:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchr2-00016Z-II; Wed, 21 Feb 2024 03:21:24 -0500
+	id 1rchtZ-0007R9-LG; Wed, 21 Feb 2024 03:24:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchqt-00014a-7W; Wed, 21 Feb 2024 03:21:15 -0500
+ id 1rchtU-0007Hy-S6; Wed, 21 Feb 2024 03:23:57 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchqp-0002AG-SC; Wed, 21 Feb 2024 03:21:14 -0500
+ id 1rchtS-0002YY-PN; Wed, 21 Feb 2024 03:23:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 530384F3C5;
- Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E4A24F3E0;
+ Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1D5B2860A4;
- Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
-Received: (nullmailer pid 2142007 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 08CCF860BF;
+ Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
+Received: (nullmailer pid 2142091 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 07/60] target/arm: fix exception syndrome for AArch32
- bkpt insn
-Date: Wed, 21 Feb 2024 11:19:55 +0300
-Message-Id: <20240221082058.2141850-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 34/60] virtio-gpu: Correct
+ virgl_renderer_resource_get_info() error check
+Date: Wed, 21 Feb 2024 11:20:22 +0300
+Message-Id: <20240221082058.2141850-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
@@ -65,83 +64,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Debug exceptions that target AArch32 Hyp mode are reported differently
-than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
-such exceptions need to be either converted to a prefetch abort
-(breakpoints, vector catch) or a data abort (watchpoints).
+virgl_renderer_resource_get_info() returns errno and not -1 on error.
+Correct the return-value check.
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-Id: <20240129073921.446869-1-dmitry.osipenko@collabora.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240127202758.3326381-1-jan.kloetzke@kernkonzept.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f670be1aad33e801779af580398895b9455747ee)
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 574b64aa6754ba491f51024c5a823a674d48a658)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 2746d3fdac..6515c5e89c 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -10823,6 +10823,24 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
+diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+index d1ccdf7d06..51da0e3667 100644
+--- a/contrib/vhost-user-gpu/virgl.c
++++ b/contrib/vhost-user-gpu/virgl.c
+@@ -327,7 +327,7 @@ virgl_get_resource_info_modifiers(uint32_t resource_id,
+ #ifdef VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION
+     struct virgl_renderer_resource_info_ext info_ext;
+     ret = virgl_renderer_resource_get_info_ext(resource_id, &info_ext);
+-    if (ret < 0) {
++    if (ret) {
+         return ret;
      }
  
-     if (env->exception.target_el == 2) {
-+        /* Debug exceptions are reported differently on AArch32 */
-+        switch (syn_get_ec(env->exception.syndrome)) {
-+        case EC_BREAKPOINT:
-+        case EC_BREAKPOINT_SAME_EL:
-+        case EC_AA32_BKPT:
-+        case EC_VECTORCATCH:
-+            env->exception.syndrome = syn_insn_abort(arm_current_el(env) == 2,
-+                                                     0, 0, 0x22);
-+            break;
-+        case EC_WATCHPOINT:
-+            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
-+                                                 EC_DATAABORT);
-+            break;
-+        case EC_WATCHPOINT_SAME_EL:
-+            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
-+                                                 EC_DATAABORT_SAME_EL);
-+            break;
-+        }
-         arm_cpu_do_interrupt_aarch32_hyp(cs);
-         return;
+@@ -335,7 +335,7 @@ virgl_get_resource_info_modifiers(uint32_t resource_id,
+     *modifiers = info_ext.modifiers;
+ #else
+     ret = virgl_renderer_resource_get_info(resource_id, info);
+-    if (ret < 0) {
++    if (ret) {
+         return ret;
      }
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 95454b5b3b..eccb759da6 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -25,6 +25,8 @@
- #ifndef TARGET_ARM_SYNDROME_H
- #define TARGET_ARM_SYNDROME_H
  
-+#include "qemu/bitops.h"
-+
- /* Valid Syndrome Register EC field values */
- enum arm_exception_class {
-     EC_UNCATEGORIZED          = 0x00,
-@@ -80,6 +82,7 @@ typedef enum {
-     SME_ET_InactiveZA,
- } SMEExceptionType;
- 
-+#define ARM_EL_EC_LENGTH 6
- #define ARM_EL_EC_SHIFT 26
- #define ARM_EL_IL_SHIFT 25
- #define ARM_EL_ISV_SHIFT 24
-@@ -91,6 +94,11 @@ static inline uint32_t syn_get_ec(uint32_t syn)
-     return syn >> ARM_EL_EC_SHIFT;
- }
- 
-+static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
-+{
-+    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
-+}
-+
- /*
-  * Utility functions for constructing various kinds of syndrome value.
-  * Note that in general we follow the AArch64 syndrome values; in a
+@@ -372,7 +372,7 @@ virgl_cmd_set_scanout(VuGpu *g,
+         uint64_t modifiers = 0;
+         ret = virgl_get_resource_info_modifiers(ss.resource_id, &info,
+                                                 &modifiers);
+-        if (ret == -1) {
++        if (ret) {
+             g_critical("%s: illegal resource specified %d\n",
+                        __func__, ss.resource_id);
+             cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 8bb7a2c21f..9f34d0e661 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -181,7 +181,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+         memset(&info, 0, sizeof(info));
+         ret = virgl_renderer_resource_get_info(ss.resource_id, &info);
+ #endif
+-        if (ret == -1) {
++        if (ret) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                           "%s: illegal resource specified %d\n",
+                           __func__, ss.resource_id);
 -- 
 2.39.2
 
