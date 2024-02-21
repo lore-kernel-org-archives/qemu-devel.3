@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0ECC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 146CDC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:22:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoPk-00067A-So; Wed, 21 Feb 2024 10:21:40 -0500
+	id 1rcoND-0005cp-Pz; Wed, 21 Feb 2024 10:19:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rcoKp-0001tO-IL
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:16:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcoJk-0000sX-05; Wed, 21 Feb 2024 10:15:28 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rcjOt-0008RF-MZ
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 05:00:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708509623;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=42SecKXcOz47okkrRHbgTxl0Hcl8mRZrzLBuSKsVq2E=;
- b=DaMe+XDk4LXicr8qQ8eDuOLhfrEd1R1Jvn/BHkyKGNJ7jYp78aU3KBp3TEO6By0+YKTF0C
- IVgt+rRuL+BSn/dee6Wlf/V8U7r+1re6OzwOdBtQWIQinQiheeNDacmGuaHAfAwVCSDDoY
- QXcMbBaAVSil2H3HzXgUL2R4tNUz1hg=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-tdsE-VNENNCQgSlziWQHeQ-1; Wed, 21 Feb 2024 05:00:21 -0500
-X-MC-Unique: tdsE-VNENNCQgSlziWQHeQ-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d23d2bd17fso23732181fa.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 02:00:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708509619; x=1709114419;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=42SecKXcOz47okkrRHbgTxl0Hcl8mRZrzLBuSKsVq2E=;
- b=YDcsHziXS/J44YaMkJDBz9IPxktZei9QMdcbd8cAYnLhlG4jmuFOBacAIdIMDJ2qv5
- 9O8KRieli3LpBSwyeGVQisv3uec69dP3NYSMkRMjekDEFEa/pKDCoP+4CZLomwTp+ug6
- EwYT5bDXs1CfsrRPGDiFU8Pkojr2MxOB76J27NTyWhCCRuRcLoV8DaqIueN/ce8jtkbw
- nbyZYqfc1xLyPjICrIZvUbu3GLXjcbHWpKRBMz14YaL2XwfKLp+mWstw8ZrztpI/zXe7
- XC/8UwI5uH19rzRPXM0dV0kBg1QLztarM7lyRQ5TPY2bnCqFpyaiL3tdZpHkSMvB8ouQ
- c3oQ==
-X-Gm-Message-State: AOJu0Yylq2VtDqDCtZlan/L8F8Nak0bvdANUl0Ji3R9mNDHhWr5UmnTC
- UlocBF/x55qfshia8ZXxkw3NIJzk7iYqQ/7HzBCLoxjzn4rDXf1SVTDhSmPtbYKUVUsiaXeEGAg
- vDd+A6ZZXLvLkToazhInrnq03WzhfcP6YZ3VK58fx3c+7NNr7n7bHamkVipIR+iCx5pn2lLoL9c
- l48uzEOXF3APIMXkYazyFZxayjELI=
-X-Received: by 2002:a2e:bc23:0:b0:2d2:230f:f14 with SMTP id
- b35-20020a2ebc23000000b002d2230f0f14mr11526516ljf.12.1708509619763; 
- Wed, 21 Feb 2024 02:00:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG+Vo7pjED4tYF605xYHdGPxTDds2n+IPxYdZ73a9eDL7MiBEyVEh47DNAu/gMowDvTz1HCT4GQZ3gK89vCBZs=
-X-Received: by 2002:a2e:bc23:0:b0:2d2:230f:f14 with SMTP id
- b35-20020a2ebc23000000b002d2230f0f14mr11526499ljf.12.1708509619493; Wed, 21
- Feb 2024 02:00:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rclZl-0004nS-Er; Wed, 21 Feb 2024 07:19:50 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D0DC54F4F8;
+ Wed, 21 Feb 2024 15:20:07 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 406118639A;
+ Wed, 21 Feb 2024 15:19:46 +0300 (MSK)
+Message-ID: <fc340966-40d5-4776-8ce1-b93a8f9a64ed@tls.msk.ru>
+Date: Wed, 21 Feb 2024 15:19:46 +0300
 MIME-Version: 1.0
-References: <20240221095130.52711-1-demeng@redhat.com>
-In-Reply-To: <20240221095130.52711-1-demeng@redhat.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 21 Feb 2024 12:00:08 +0200
-Message-ID: <CAPMcbCr9y89BiM+mTF3i2n6GfAA9Xnu3ovoS-KamLZFEiAhrSA@mail.gmail.com>
-Subject: Re: [PATCH] qga-win: Add support of Windows Server 2025 in get-osinfo
- command
-To: Dehan Meng <demeng@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="000000000000f730010611e164f7"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/23] qemu-img: resize: do not always eat last argument
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <cover.1707513011.git.mjt@tls.msk.ru>
+ <7e0e7cb2470d572e8c0a48ba85c993be3bdb1c07.1707513011.git.mjt@tls.msk.ru>
+ <ZdToIERLC8RaHhhg@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <ZdToIERLC8RaHhhg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,85 +86,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f730010611e164f7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+20.02.2024 20:57, Daniel P. Berrangé пишет:
+> On Sat, Feb 10, 2024 at 12:22:36AM +0300, Michael Tokarev wrote:
+>> 'qemu-img resize --help' does not work, since it wants more arguments.
+>> Only eat last option at the beginning if it starts like -N.., and allow
+>> getopt() to do its work, and eat it up at the end if not already eaten.
+>> This will not allow to mix options and size anyway, but it is better
+>> than now.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   qemu-img.c | 15 +++++++++------
+>>   1 file changed, 9 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/qemu-img.c b/qemu-img.c
+>> index 69d41e0a92..929a25a021 100644
+>> --- a/qemu-img.c
+>> +++ b/qemu-img.c
+>> @@ -4271,13 +4271,13 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+>>   
+>>       /* Remove size from argv manually so that negative numbers are not treated
+>>        * as options by getopt. */
+>> -    if (argc < 3) {
+>> -        error_exit(ccmd, "Not enough arguments");
+>> -        return 1;
+>> +    if (argc > 1 && argv[argc - 1][0] == '-'
+>> +        && argv[argc-1][1] >= '0' && argv[argc-1][1] <= '9') {
+>> +        size = argv[--argc];
+>> +    } else {
+>> +        size = NULL;
+>>       }
+> 
+> We already have a variable 'int relative' that is set to '-1'
+> or '+1' depending on whether we have a -ve or +ve size.
+> 
+> I think it is clearer to follow if we just set 'relative' much
+> earlier before parsing by moving this chunk of code to before
+> the getopt:
 
-On Wed, Feb 21, 2024 at 11:51=E2=80=AFAM Dehan Meng <demeng@redhat.com> wro=
-te:
+Well, we'll also have to repeat the same switch after getopt, since
+there, I only test for -[0-9], not +[0-9] or [0-9].   But yes, it
+can be done too.
 
-> Add support of Windows Server 2025 in get-osinfo command
->
-> Signed-off-by: Dehan Meng <demeng@redhat.com>
-> ---
->  qga/commands-win32.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index 697c65507c..f3c7e604c9 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -2154,6 +2154,7 @@ static ga_win_10_0_t const
-> WIN_10_0_SERVER_VERSION_MATRIX[4] =3D {
->
+But this is more interesting, - I think we should switch getopt to
+use 'return in order' option, and process options together with
+getopt, looking at the next option at each iteration, - if it looks
+like [+-]size if we already got the filename part.  Lemme try to
+do that..
 
-You don't update the array size, there are out of range elements
-
-
->      {14393, "Microsoft Windows Server 2016",    "2016"},
->      {17763, "Microsoft Windows Server 2019",    "2019"},
->      {20344, "Microsoft Windows Server 2022",    "2022"},
-> +    {26040, "MIcrosoft Windows Server 2025",    "2025"},
->      {0, 0}
->  };
->
-> --
-> 2.35.1
->
->
-
---000000000000f730010611e164f7
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 21, 2024 at 11:51=E2=80=
-=AFAM Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com">demeng@redhat.com=
-</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-Add support of Windows Server 2025 in get-osinfo command<br>
-<br>
-Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=
-=3D"_blank">demeng@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/commands-win32.c | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
-index 697c65507c..f3c7e604c9 100644<br>
---- a/qga/commands-win32.c<br>
-+++ b/qga/commands-win32.c<br>
-@@ -2154,6 +2154,7 @@ static ga_win_10_0_t const WIN_10_0_SERVER_VERSION_MA=
-TRIX[4] =3D {<br></blockquote><div><br></div><div>You don&#39;t update the =
-array size, there are out of range elements<br></div><div>=C2=A0</div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0{14393, &quot;Microsoft Windows Server 2016&quot;,=C2=
-=A0 =C2=A0 &quot;2016&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{17763, &quot;Microsoft Windows Server 2019&quot;,=C2=
-=A0 =C2=A0 &quot;2019&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{20344, &quot;Microsoft Windows Server 2022&quot;,=C2=
-=A0 =C2=A0 &quot;2022&quot;},<br>
-+=C2=A0 =C2=A0 {26040, &quot;MIcrosoft Windows Server 2025&quot;,=C2=A0 =C2=
-=A0 &quot;2025&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{0, 0}<br>
-=C2=A0};<br>
-<br>
--- <br>
-2.35.1<br>
-<br>
-</blockquote></div></div>
-
---000000000000f730010611e164f7--
-
+/mjt
 
