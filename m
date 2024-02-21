@@ -4,112 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD3EC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE479C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoX8-0002NV-S3; Wed, 21 Feb 2024 10:29:18 -0500
+	id 1rcoPp-0006Sd-Jj; Wed, 21 Feb 2024 10:21:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcoOh-00031g-3R
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:20:37 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcoKq-0000nB-S9
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:16:37 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcn45-0004ZM-AV
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:55:14 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E52C622215;
- Wed, 21 Feb 2024 13:55:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708523711; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J3R3voEcqQsH8I82vTjHH785Oy/T6sRnWXadVuBifyc=;
- b=ua4hQrirzkbKKri4TO1gYFim1I1ZYwPWmsU4ZV3J3f8cImqYyEpUaaiUwv0/pTyZjYqsqU
- c/gk+w25hgjHd4aTJCl1QEJ52xi5WrxAjwj75OQE+779pWUGpO6VbqURxZ0tDcMZQPbHjq
- bxNI3kJTwxrAZf/Bfio8pHUYPU3Tmc0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708523711;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J3R3voEcqQsH8I82vTjHH785Oy/T6sRnWXadVuBifyc=;
- b=8G+zoAv77J2+FAVRh7o6x05bq4ZN6qKiXhknIqm4aQOimc/GY/U0MIwdoNUURzgzU83Yu1
- LLI3bT5QXHog3dAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708523709; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J3R3voEcqQsH8I82vTjHH785Oy/T6sRnWXadVuBifyc=;
- b=kjcQtxgTYIh1ulPBLShyZnlZOnPv86qHs+mzroRPGZLp45CLBhZ8az/kQLrgRjpMArJtC7
- egM7QTwJ5n6FUTOs0icyRWjBH36q2hNgucK4wDLAj7scf2t2zanlcTAqBD7H7FybD9DC6n
- uUHWLW+eaIrF0kFu88eJgnq3/XogAmo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708523709;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J3R3voEcqQsH8I82vTjHH785Oy/T6sRnWXadVuBifyc=;
- b=/vMmA+ESVRZrvcJmwM02zrV5F/47rhqk6VVF6jG9Wef9I8UoZgnC7d+kSlJwFE8lbyWZPg
- ZX3pBzRW40kwdECA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6F6C913A69;
- Wed, 21 Feb 2024 13:55:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 8dGcDb0A1mXaeQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 21 Feb 2024 13:55:09 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Peter Xu <peterx@redhat.com>, =?utf-8?Q?Marc-Andr?=
- =?utf-8?Q?=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH V4 5/5] migration: simplify exec migration functions
-In-Reply-To: <1705099758-211963-6-git-send-email-steven.sistare@oracle.com>
-References: <1705099758-211963-1-git-send-email-steven.sistare@oracle.com>
- <1705099758-211963-6-git-send-email-steven.sistare@oracle.com>
-Date: Wed, 21 Feb 2024 10:55:06 -0300
-Message-ID: <87msrtc479.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcnap-0001nl-3J
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 09:29:05 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e45bd5014dso1496205b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 06:29:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708525739; x=1709130539;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LOWeQZKkpHY3S/TYS2ARTLU2Fl4Tz5Q8QZ4qlJVZvWo=;
+ b=pTVGWaMGCLDVEDpkEUDbHCtalKkHg9C8oySpDK9dAtCsdtSQkmkE3k/4MJBn2hF9Jb
+ EWZYfq+FViAp83eHNQNaCxX/cs6oaydtWIksW2/e6xVcdlyyKNgfEOMPNilNg7bXlkDX
+ 92+ggRG+uuGzNf5YrwNShV5epai9XKXvM8l9G+uEi5SE8iuONxEd83tJv37q7ONk+HSF
+ tkTNMsW6LD97ixbBZU0afLu17yVneVf1GfiEHVAnia6J0qnLASYwCTt7nn4RgAQXyr8+
+ BuqvkyLlqNVIvLeD4USdvD40MMpovWBWS6SBTzZSwY0/N0TGlBAQ+swTaEsgpcaxAwRg
+ eRJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708525739; x=1709130539;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LOWeQZKkpHY3S/TYS2ARTLU2Fl4Tz5Q8QZ4qlJVZvWo=;
+ b=JAE56ZYeC6GbfwXgLmthD55n6HdEdsOVxXQORo3f5EonfbZBjYLBwY2Z4QDPoQXi1z
+ RX3kJ7fcbnISqLcpHCoLAnA8gHJo+2zCwD5mHctyHg9BXzranQVLqecTA36Pg1h1eWIx
+ WUEGSQhG02B3fKyrZDcoZYvhsFYwTNDx+gyaNP/NASFU/x9lMkO/fqP0r4rPua4v/2S6
+ GudbBKre7/Acj+47DYn7y/FYCwvHWgkB+mAJoG0C74TokAzR03/j8hjlGcrUOQNUpIbx
+ wn4ZkohuMDxM6/55cWgBdbQBHjJphoytVO5GzUs9XWDLer/rVeGzYHqSJkxS2c5vBbjC
+ 7RXA==
+X-Gm-Message-State: AOJu0YyS9jqUngCugkwHgJcW3FjqP+sK/5xOZ6SbQqgMxVdb3P0gF9k+
+ gWgUhIXC862jcO/4MZi1Ske4BLCN5ZLFWKnatxA3W/NpB60rweFL/lu5xonBphjCwtqzcAu7UB/
+ nQGYgBQ==
+X-Google-Smtp-Source: AGHT+IGmCzHur7OKSBq/9+wyemPDkdujuNVLB99HBhiKAvwXpN8P0dC+goSoZIHjYmjJy7piQYeOTQ==
+X-Received: by 2002:a05:6a00:9a0:b0:6e4:7b27:2887 with SMTP id
+ u32-20020a056a0009a000b006e47b272887mr6726614pfg.7.1708525738613; 
+ Wed, 21 Feb 2024 06:28:58 -0800 (PST)
+Received: from anolis-dev.zelin.local ([221.122.98.162])
+ by smtp.gmail.com with ESMTPSA id
+ p129-20020a625b87000000b006e4762b5f3bsm4480030pfb.172.2024.02.21.06.28.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Feb 2024 06:28:58 -0800 (PST)
+From: Hyman Huang <yong.huang@smartx.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, yong.huang@smartx.com
+Subject: [PATCH v4 0/3] Adjust the output of x-query-virtio-status
+Date: Wed, 21 Feb 2024 22:28:50 +0800
+Message-Id: <cover.1708525606.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=kjcQtxgT;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="/vMmA+ES"
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.33 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[7]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-2.82)[99.24%];
- ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,oracle.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-X-Rspamd-Queue-Id: E52C622215
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::435;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,18 +92,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+v4:
+- Rebase on master
+- Fix the syntax mistake within the commit message of [PATCH v3 1/3]
+- Adjust the linking file in hw/virtio/meson.build suggested by Markus
 
-> Simplify the exec migration code by using list utility functions.
->
-> As a side effect, this also fixes a minor memory leak.  On function return,
-> "g_auto(GStrv) argv" frees argv and each element, which is wrong, because
-> the function does not own the individual elements.  To compensate, the code
-> uses g_steal_pointer which NULLs argv and prevents the destructor from
-> running, but argv is leaked.
->
-> Fixes: cbab4face57b ("migration: convert exec backend ...")
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Please review,
+Yong
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+v3:
+- Rebase on master
+- Use the refined commit message furnished by Markus for [PATCH v2 1/2]
+- Drop the [PATCH v2 2/2]
+- Add [PATCH v3 2/3] to declare the decoding functions to static
+- Add [PATCH v3 3/3] to Define VhostDeviceProtocols and
+  VirtioDeviceFeatures as plain C types
+
+v2:
+- Changing the hmp_virtio_dump_xxx function signatures to implement
+  the bitmap decoding, suggested by Philippe.
+
+This patchset is derived from the series:
+https://lore.kernel.org/qemu-devel/cover.1699793550.git.yong.huang@smartx.com/
+Please go to the link to see more background information.
+
+The following points are what we have done in the patchset:
+1. Take the policy of adding human-readable output just in HMP.
+2. For the HMP output, display the human-readable information and
+   drop the unknown bits in practice.
+3. For the QMP output, remove the descriptive strings and only
+   display bits encoded as numbers.
+
+Hyman Huang (3):
+  qmp: Switch x-query-virtio-status back to numeric encoding
+  virtio: Declare the decoding functions to static
+  qapi: Define VhostDeviceProtocols and VirtioDeviceFeatures as plain C
+    types
+
+ hw/virtio/meson.build       |   4 +-
+ hw/virtio/virtio-hmp-cmds.c | 702 +++++++++++++++++++++++++++++++++++-
+ hw/virtio/virtio-qmp.c      | 684 +----------------------------------
+ hw/virtio/virtio-qmp.h      |   3 -
+ qapi/virtio.json            | 231 +-----------
+ 5 files changed, 724 insertions(+), 900 deletions(-)
+
+-- 
+2.39.3
+
 
