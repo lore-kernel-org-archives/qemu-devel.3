@@ -4,110 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D5BC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 675AFC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoaw-0002Q7-0M; Wed, 21 Feb 2024 10:33:14 -0500
+	id 1rcoaR-0007oR-Qv; Wed, 21 Feb 2024 10:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rcoXP-0003jH-9f; Wed, 21 Feb 2024 10:29:38 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcoPi-0005tI-QN; Wed, 21 Feb 2024 10:21:38 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rck1r-0006Ej-Ih; Wed, 21 Feb 2024 05:40:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=6q4CEzvSxRYjSolwFvPNHljnOCfacR2GjxvgW/Q9bLE=; b=RgvHmcXx8xY1rrxQS7QvxQOufW
- gb0em3Tqr5trJLM6CMlQRSoL0ndmPIcnKdakQTfLinpNnQMD9bs50hWgFF7XJUv7vgeIgUTP4O6ql
- RqLv2qhkFmvv5TW9l3743XPaQ4S2TUTImr4uELc8bjNPsEcVrzS1VP0XBtjnanvSpjxSsAL5WK7GL
- Rpi8ULxVBg60gisyiuztI0OdqVBtDlTITp+ZkbrK34DvV2p7ENjhmI90PG+0V/D+HJIt7yVxwSota
- i05knSs61Z4Sf7CODTF3MZBzR3fB3wsuBlwBWnatS1Sd0+F3KVs5QR1oOkC3Kte0/qXi3aCOH/ZJ2
- PsCGAIq+xblMPKxymSpp9CZfiK9p4fzeB7byoQnEZPmE7arNyUfqaMNtua5nsWaGew0lgJNmhYnNb
- QYEdZLm/RQ/VI1vK5E01co0hQsIS2knc0P8tojB5I+LaPTJRJrdC2YCA4UGU9V1Kfd6sqK30bNmUs
- VmyY0vqhT3Y+aRsNt6I68KfMScRRCIjN6d7RSEuNNAlIU8vjNL3UY/hlqNrGp8lCBjKXZPAaZHxs8
- uAeyolKw0FLT1NyNmESMIWhDqpELlSagSaPgbnYOqx1ETzmC208BIZrjWREBYsxc6zkZdgEpxlR5G
- WXwrO/p9jJK47bt7n7ysKB6eLWqg3S5bge2oYzjPI=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rck10-0007uS-HG; Wed, 21 Feb 2024 10:39:54 +0000
-Message-ID: <537d53f6-8094-4d6e-b4a8-20ade481deee@ilande.co.uk>
-Date: Wed, 21 Feb 2024 10:40:29 +0000
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchtN-0002X2-1K; Wed, 21 Feb 2024 03:23:52 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A5874F3DE;
+ Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id CC288860BD;
+ Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
+Received: (nullmailer pid 2142084 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+ Fan Ni <fan.ni@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 32/60] hw/cxl/device: read from register values in
+ mdev_reg_read()
+Date: Wed, 21 Feb 2024 11:20:20 +0300
+Message-Id: <20240221082058.2141850-32-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-arm@nongnu.org, kvm@vger.kernel.org,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
- <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
- <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
- <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
- <CAFEAcA-Mvd4NVY2yDgNEdjZ_YPrN93PDZRyfCi7JyCjmPs4gAQ@mail.gmail.com>
- <0a31f410-415d-474b-bcea-9cb18f41aeb2@ilande.co.uk>
- <CAFEAcA9v4yh=K9+ND7R+KHC_0=fW39=fK7ScjE+HX-ip-KwQvw@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA9v4yh=K9+ND7R+KHC_0=fW39=fK7ScjE+HX-ip-KwQvw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,63 +63,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/02/2024 13:35, Peter Maydell wrote:
+From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
 
-> On Mon, 19 Feb 2024 at 13:33, Mark Cave-Ayland
-> <mark.cave-ayland@ilande.co.uk> wrote:
->>
->> On 19/02/2024 13:05, Peter Maydell wrote:
->>
->>> On Mon, 19 Feb 2024 at 12:49, Mark Cave-Ayland
->>> <mark.cave-ayland@ilande.co.uk> wrote:
->>>>
->>>> On 19/02/2024 12:00, BALATON Zoltan wrote:
->>>>> For new people trying to contribute to QEMU QDev is overwhelming so having some way
->>>>> to need less of it to do simple things would help them to get started.
->>>>
->>>> It depends what how you define "simple": for QEMU developers most people search for
->>>> similar examples in the codebase and copy/paste them. I'd much rather have a slightly
->>>> longer, but consistent API for setting properties rather than coming up with many
->>>> special case wrappers that need to be maintained just to keep the line count down for
->>>> "simplicity".
->>>>
->>>> I think that Phil's approach here is the best one for now, particularly given that it
->>>> allows us to take another step towards heterogeneous machines. As the work in this
->>>> area matures it might be that we can consider other approaches, but that's not a
->>>> decision that can be made right now and so shouldn't be a reason to block this change.
->>>
->>> Mmm. It's unfortunate that we're working with C, so we're a bit limited
->>> in what tools we have to try to make a better and lower-boilerplate
->>> interface for the "create, configure, realize and wire up devices" task.
->>> (I think you could do much better in a higher level language...)
->>> sysbus_create_simple() was handy at the time, but it doesn't work so
->>> well for more complicated SoC-based boards. It's noticeable that
->>> if you look at the code that uses it, it's almost entirely the older
->>> and less maintained board models, especially those which don't actually
->>> model an SoC and just have the board code create all the devices.
->>
->> Yeah I was thinking that you'd use the DSL (e.g. YAML templates or similar) to
->> provide some of the boilerplating around common actions, rather than the C API
->> itself. Even better, once everything has been moved to use a DSL then the C API
->> shouldn't really matter so much as it is no longer directly exposed to the user.
-> 
-> That does feel like it's rather a long way away, though, so there
-> might be scope for improving our C APIs in the meantime. (Also,
-> doing the boilerplating with fragments of YAML or whatever means
-> that checking of eg typos and other syntax errors shifts from
-> compile time to runtime, which is a shame.)
+In the current mdev_reg_read() implementation, it consistently returns
+that the Media Status is Ready (01b). This was fine until commit
+25a52959f99d ("hw/cxl: Add support for device sanitation") because the
+media was presumed to be ready.
 
-I think most people who frequently use QOM/qdev have ideas as to how to improve the C 
-API, but what seems clear to me is that the analysis of scenarios by Phil, Markus and 
-others as part of the heterogeneous machine work is useful and should be used to help 
-guide future work in this area.
+However, as per the CXL 3.0 spec "8.2.9.8.5.1 Sanitize (Opcode 4400h)",
+during sanitation, the Media State should be set to Disabled (11b). The
+mentioned commit correctly sets it to Disabled, but mdev_reg_read()
+still returns Media Status as Ready.
 
-If there are proposed changes in the C API, I'd be keen to see a short RFC detailing 
-the changes and their rationale to aid developers/reviewers before they are 
-introduced into the codebase.
+To address this, update mdev_reg_read() to read register values instead
+of returning dummy values.
 
+Note that __toggle_media() managed to not only write something
+that no one read, it did it to the wrong register storage and
+so changed the reported mailbox size which was definitely not
+the intent. That gets fixed as a side effect of allocating
+separate state storage for this register.
 
-ATB,
+Fixes: commit 25a52959f99d ("hw/cxl: Add support for device sanitation")
+Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Reviewed-by: Fan Ni <fan.ni@samsung.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240126120132.24248-7-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit f7509f462c788a347521f90f19d623908c4fbcc5)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Mark.
+diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
+index 61a3c4dc2e..40b619ffd9 100644
+--- a/hw/cxl/cxl-device-utils.c
++++ b/hw/cxl/cxl-device-utils.c
+@@ -229,12 +229,9 @@ static void mailbox_reg_write(void *opaque, hwaddr offset, uint64_t value,
+ 
+ static uint64_t mdev_reg_read(void *opaque, hwaddr offset, unsigned size)
+ {
+-    uint64_t retval = 0;
+-
+-    retval = FIELD_DP64(retval, CXL_MEM_DEV_STS, MEDIA_STATUS, 1);
+-    retval = FIELD_DP64(retval, CXL_MEM_DEV_STS, MBOX_READY, 1);
++    CXLDeviceState *cxl_dstate = opaque;
+ 
+-    return retval;
++    return cxl_dstate->memdev_status;
+ }
+ 
+ static void ro_reg_write(void *opaque, hwaddr offset, uint64_t value,
+@@ -371,7 +368,15 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+     cxl_dstate->mbox_msi_n = msi_n;
+ }
+ 
+-static void memdev_reg_init_common(CXLDeviceState *cxl_dstate) { }
++static void memdev_reg_init_common(CXLDeviceState *cxl_dstate)
++{
++    uint64_t memdev_status_reg;
++
++    memdev_status_reg = FIELD_DP64(0, CXL_MEM_DEV_STS, MEDIA_STATUS, 1);
++    memdev_status_reg = FIELD_DP64(memdev_status_reg, CXL_MEM_DEV_STS,
++                                   MBOX_READY, 1);
++    cxl_dstate->memdev_status = memdev_status_reg;
++}
+ 
+ void cxl_device_register_init_t3(CXLType3Dev *ct3d)
+ {
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index befb5f884b..31d2afcd3d 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -202,6 +202,9 @@ typedef struct cxl_device_state {
+         };
+     };
+ 
++    /* Stash the memory device status value */
++    uint64_t memdev_status;
++
+     struct {
+         bool set;
+         uint64_t last_set;
+@@ -353,8 +356,10 @@ static inline void __toggle_media(CXLDeviceState *cxl_dstate, int val)
+ {
+     uint64_t dev_status_reg;
+ 
+-    dev_status_reg = FIELD_DP64(0, CXL_MEM_DEV_STS, MEDIA_STATUS, val);
+-    cxl_dstate->mbox_reg_state64[R_CXL_MEM_DEV_STS] = dev_status_reg;
++    dev_status_reg = cxl_dstate->memdev_status;
++    dev_status_reg = FIELD_DP64(dev_status_reg, CXL_MEM_DEV_STS, MEDIA_STATUS,
++                                val);
++    cxl_dstate->memdev_status = dev_status_reg;
+ }
+ #define cxl_dev_disable_media(cxlds)                    \
+         do { __toggle_media((cxlds), 0x3); } while (0)
+-- 
+2.39.2
+
 
