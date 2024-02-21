@@ -4,72 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE826C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37EBC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoaH-0007Ii-WC; Wed, 21 Feb 2024 10:32:34 -0500
+	id 1rcoa6-0005fA-18; Wed, 21 Feb 2024 10:32:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoSD-0003RC-4n
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:24:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rcoQM-0007yB-AW
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:22:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcijE-0001Ro-BS
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 04:17:27 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rclyw-0000kN-8v
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 07:46:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708507043;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1708519548;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hKemNzyEDxMR9dRSjFinPfyeeGDMuqmVo7SqJ7xLIK0=;
- b=fmdgtgXgseihgFDYh51jOLAzl7S4b1pcNWF8J+4/5ltIBCmg+xstIPbhN09JPiYc6/cT5P
- UAfsrLCVjG97tuvBWEMrvUdT3wkB9ZNYFYX78IoZM0hjXJ92yQH4eIQzt9RKnWNNZInKTc
- F3Dc5KT4pCi/VBTbMN2PM8xnUv2Rly4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h0rMCtexgvyL/jrBXkcmUZwK4PEevrktJT3ywti7/q4=;
+ b=cta4tJ7C1Y1I0pk64xuBpGc5Y5eaTZHxa/nTo/YWdGjCSNkV74dBtdxPxRmThYYMrohv48
+ awu+K96H1xgiiOmJmrVa9OiizbiJHTvFDTHc+T8t5A46G9cbWd2RKNjTaE8jwLNr2Eeo2U
+ TQjplwLmpQ2nOjjaL+qWCOt3YJQzmzE=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-tStC8PaQO3uvM17QAyOpXw-1; Wed, 21 Feb 2024 04:17:18 -0500
-X-MC-Unique: tStC8PaQO3uvM17QAyOpXw-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9EB148630C6;
- Wed, 21 Feb 2024 09:17:18 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7C54D2022AAA;
- Wed, 21 Feb 2024 09:17:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 64CE121E6740; Wed, 21 Feb 2024 10:17:14 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  Peter Xu
- <peterx@redhat.com>,  Claudio Fontana <cfontana@suse.de>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v4 27/34] migration: Add direct-io parameter
-In-Reply-To: <20240220224138.24759-28-farosas@suse.de> (Fabiano Rosas's
- message of "Tue, 20 Feb 2024 19:41:31 -0300")
-References: <20240220224138.24759-1-farosas@suse.de>
- <20240220224138.24759-28-farosas@suse.de>
-Date: Wed, 21 Feb 2024 10:17:14 +0100
-Message-ID: <87h6i2xjl1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ us-mta-67-QI4msnRPPxqN9g_PQlEgrg-1; Wed, 21 Feb 2024 07:45:46 -0500
+X-MC-Unique: QI4msnRPPxqN9g_PQlEgrg-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-68f8b4cc3f1so19201176d6.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 04:45:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708519546; x=1709124346;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h0rMCtexgvyL/jrBXkcmUZwK4PEevrktJT3ywti7/q4=;
+ b=VNMkng1Emz4l4JxHp1bRy5BW2OOVHjV/wbV6GWWVt1tvDSFPrBKYQo7vdseDZ7v69Y
+ 3rYCk/fGZFKH7UkvvVenOrKNZpQhhJFAyJaBAEVoeZunNELtqkOd41jaeWp3sMpPSFMf
+ ZMRH5ZwB9y2yp4ngO8/KaCoqEYgiM/u9FfJfGvMDa7l23OvR0+TVeDkv/ODcOQDwOQOr
+ pN0rj9FZGXjQD28S69OCw6nVdlmr4vcBUbbP4iwTdr+OesSEs4gdOSOUHjAJk+IG1hUY
+ IGq7oP4+X6dklhNxWDVGhqAdvVO7E1tmIOL1012BTflsLSmhQgM3RxP6tYIToqHS8nGC
+ owsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUD0rbUE28UpAOTOJBVHzpqLIp2Q/jF4rkfxHIzywfrgl65+GBsS3PYfVEc6QzoXixQxgIWgFFfiEWLfSjvI+qoGXCRFrg=
+X-Gm-Message-State: AOJu0Yy6xnReLwMObf7rmdS9t0wPPovMzB7PGtsBDShLRYzJCVicTQbz
+ jhRcdhNFnjpxj3W3brw4URGDwnZH6T/JheegIN7o9P9ArAXt0fYfKQdpXEVOOCQFVoPcgNQ5cmC
+ QZ3Jrs/KWMXR4boM0ZLnBQwOmPsFksHm3VOmM6IpYW+r0Q7o1aVMt
+X-Received: by 2002:a0c:f084:0:b0:68f:a250:7a07 with SMTP id
+ g4-20020a0cf084000000b0068fa2507a07mr1767883qvk.19.1708519545944; 
+ Wed, 21 Feb 2024 04:45:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLrw+/3tMyJ+gBoAD3aLUKNifm7Y4Igdym/h7PHgz790+CvS8DGsc9LOPV25qD/+7wNDT9sw==
+X-Received: by 2002:a0c:f084:0:b0:68f:a250:7a07 with SMTP id
+ g4-20020a0cf084000000b0068fa2507a07mr1767863qvk.19.1708519545642; 
+ Wed, 21 Feb 2024 04:45:45 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ng9-20020a0562143bc900b0068f455083fbsm5130548qvb.63.2024.02.21.04.45.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 04:45:45 -0800 (PST)
+Message-ID: <fa751e58-0b98-4b86-900d-83b128d1c829@redhat.com>
+Date: Wed, 21 Feb 2024 13:45:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] virtio-iommu: Use qemu_real_host_page_mask as default
+ page_size_mask
+Content-Language: en-US
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, alex.williamson@redhat.com,
+ clg@redhat.com, peter.maydell@linaro.org, Peter Xu <peterx@redhat.com>
+References: <20240117132039.332273-1-eric.auger@redhat.com>
+ <20240213044312-mutt-send-email-mst@kernel.org>
+ <6d4b5766-f8e2-4889-827d-01d3509239f7@redhat.com>
+ <20240213060731-mutt-send-email-mst@kernel.org>
+ <417ea71e-fb45-4e1d-b8e5-9d54d93dba3b@redhat.com>
+ <20240213064017-mutt-send-email-mst@kernel.org>
+ <8c0f6a91-7ae2-46c6-a8ad-18ca096a6115@redhat.com>
+ <20240221113106.GA4121556@myrica>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240221113106.GA4121556@myrica>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,107 +114,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
 
-> Add the direct-io migration parameter that tells the migration code to
-> use O_DIRECT when opening the migration stream file whenever possible.
+
+On 2/21/24 12:31, Jean-Philippe Brucker wrote:
+> On Wed, Feb 21, 2024 at 11:41:57AM +0100, Eric Auger wrote:
+>> Hi,
+>>
+>> On 2/13/24 13:00, Michael S. Tsirkin wrote:
+>>> On Tue, Feb 13, 2024 at 12:24:22PM +0100, Eric Auger wrote:
+>>>> Hi Michael,
+>>>> On 2/13/24 12:09, Michael S. Tsirkin wrote:
+>>>>> On Tue, Feb 13, 2024 at 11:32:13AM +0100, Eric Auger wrote:
+>>>>>> Do you have an other concern?
+>>>>> I also worry a bit about migrating between hosts with different
+>>>>> page sizes. Not with kvm I am guessing but with tcg it does work I think?
+>>>> I have never tried but is it a valid use case? Adding Peter in CC.
+>>>>> Is this just for vfio and vdpa? Can we limit this to these setups
+>>>>> maybe?
+>>>> I am afraid we know the actual use case too later. If the VFIO device is
+>>>> hotplugged we have started working with 4kB granule.
+>>>>
+>>>> The other way is to introduce a min_granule option as done for aw-bits.
+>>>> But it is heavier.
+>>>>
+>>>> Thanks
+>>>>
+>>>> Eric
+>>> Let's say, if you are changing the default then we definitely want
+>>> a way to get the cmpatible behaviour for tcg.
+>>> So the compat machinery should be user-accessible too and documented.
+>> I guess I need to add a new option to guarantee the machine compat.
+>>
+>> I was thinking about an enum GranuleMode property taking the following
+>> values, 4KB, 64KB, host
+>> Jean, do you think there is a rationale offering something richer?
+> 16KB seems to be gaining popularity, we should include that (I think it's
+> the only granule supported by Apple IOMMU?). Hopefully that will be
+> enough.
+thank you for your prompt reply. I do agree.
+
+nevertheless I am going to prototype passing the whole page size mask I
+think. That could be useful to test some weird configs
+
+Thanks
+
+Eric
 >
-> This is currently only used with the fixed-ram migration that has a
-> clear window guaranteed to perform aligned writes.
+> Thanks,
+> Jean
 >
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-[...]
-
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 3fce5fe53e..41241a2178 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -878,6 +878,9 @@
->  # @mode: Migration mode. See description in @MigMode. Default is 'normal'.
->  #        (Since 8.2)
->  #
-> +# @direct-io: Open migration files with O_DIRECT when possible. This
-> +#     requires that the 'fixed-ram' capability is enabled. (since 9.0)
-
-'fixed-ram' is a cross-reference to MigrationCapability member
-fixed-ram.
-
-For local members, @name is better than 'name', because @name carries
-meaning, while 'name' could be anything.
-
-Currently, @name is merely shorthand for ``name``, which is an reST
-"inline literal", commonly used for short code snippets.  Rendered in
-fixed-width font, unlike 'name'.
-
-Making @name generating a link to the description would be a nice
-improvement.
-
-For non-local members, we can't make @name a link without also
-specifying the thing it's a member of.
-
-Let's stick to @name for member names, even non-local ones, so we get
-the same font for all of them.
-
-> +#
->  # Features:
->  #
->  # @deprecated: Member @block-incremental is deprecated.  Use
-> @@ -911,7 +914,8 @@
->             'block-bitmap-mapping',
->             { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstable'] },
->             'vcpu-dirty-limit',
-> -           'mode'] }
-> +           'mode',
-> +           'direct-io'] }
->  
->  ##
->  # @MigrateSetParameters:
-> @@ -1070,6 +1074,9 @@
->  # @mode: Migration mode. See description in @MigMode. Default is 'normal'.
->  #        (Since 8.2)
->  #
-> +# @direct-io: Open migration files with O_DIRECT when possible. This
-> +#     requires that the 'fixed-ram' capability is enabled. (since 9.0)
-> +#
->  # Features:
->  #
->  # @deprecated: Member @block-incremental is deprecated.  Use
-> @@ -1123,7 +1130,8 @@
->              '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
->                                              'features': [ 'unstable' ] },
->              '*vcpu-dirty-limit': 'uint64',
-> -            '*mode': 'MigMode'} }
-> +            '*mode': 'MigMode',
-> +            '*direct-io': 'bool' } }
->  
->  ##
->  # @migrate-set-parameters:
-> @@ -1298,6 +1306,9 @@
->  # @mode: Migration mode. See description in @MigMode. Default is 'normal'.
->  #        (Since 8.2)
->  #
-> +# @direct-io: Open migration files with O_DIRECT when possible. This
-> +#     requires that the 'fixed-ram' capability is enabled. (since 9.0)
-> +#
->  # Features:
->  #
->  # @deprecated: Member @block-incremental is deprecated.  Use
-> @@ -1348,7 +1359,8 @@
->              '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
->                                              'features': [ 'unstable' ] },
->              '*vcpu-dirty-limit': 'uint64',
-> -            '*mode': 'MigMode'} }
-> +            '*mode': 'MigMode',
-> +            '*direct-io': 'bool' } }
->  
->  ##
->  # @query-migrate-parameters:
-
-Other than that, QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+>> Obviously being able to set the exact page_size_mask + host mode would
+>> be better but this does not really fit into any std property type.
+>>
+>> Thanks
+>>
+>> Eric
 
 
