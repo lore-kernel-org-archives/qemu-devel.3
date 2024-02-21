@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52856C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB87C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:40:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoWr-0007y1-4p; Wed, 21 Feb 2024 10:29:01 -0500
+	id 1rcod5-0000Sr-Bb; Wed, 21 Feb 2024 10:35:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoOM-0001Rw-Qw; Wed, 21 Feb 2024 10:20:14 -0500
+ id 1rcobf-00048t-8m; Wed, 21 Feb 2024 10:33:59 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchvM-00035v-RH; Wed, 21 Feb 2024 03:25:54 -0500
+ id 1rchsh-0002J7-8h; Wed, 21 Feb 2024 03:23:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8293D4F3F3;
- Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9A8314F3D8;
+ Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4E03D860D2;
- Wed, 21 Feb 2024 11:21:02 +0300 (MSK)
-Received: (nullmailer pid 2142149 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 65612860B7;
+ Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
+Received: (nullmailer pid 2142066 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ziqiao Kong <ziqiaokong@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 53/60] target/i386: Generate an illegal opcode
- exception on cmp instructions with lock prefix
-Date: Wed, 21 Feb 2024 11:20:41 +0300
-Message-Id: <20240221082058.2141850-53-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sven Schnelle <svens@stackframe.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 26/60] hw/net/tulip: add chip status register values
+Date: Wed, 21 Feb 2024 11:20:14 +0300
+Message-Id: <20240221082058.2141850-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,42 +63,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ziqiao Kong <ziqiaokong@gmail.com>
+From: Sven Schnelle <svens@stackframe.org>
 
-target/i386: As specified by Intel Manual Vol2 3-180, cmp instructions
-are not allowed to have lock prefix and a `UD` should be raised. Without
-this patch, s1->T0 will be uninitialized and used in the case OP_CMPL.
+Netbsd isn't able to detect a link on the emulated tulip card. That's
+because netbsd reads the Chip Status Register of the Phy (address
+0x14). The default phy data in the qemu tulip driver is all zero,
+which means no link is established and autonegotation isn't complete.
 
-Signed-off-by: Ziqiao Kong <ziqiaokong@gmail.com>
-Message-ID: <20240215095015.570748-2-ziqiaokong@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 99d0dcd7f102c07a510200d768cae65e5db25d23)
+Therefore set the register to 0x3b40, which means:
+
+Link is up, Autonegotation complete, Full Duplex, 100MBit/s Link
+speed.
+
+Also clear the mask because this register is read only.
+
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 9b60a3ed5569a70bbdd29e3c9ec4c5d4685c6e2c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 8fd49ff474..83c2b40480 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1480,12 +1480,13 @@ static bool check_iopl(DisasContext *s)
- /* if d == OR_TMP0, it means memory operand (address in A0) */
- static void gen_op(DisasContext *s1, int op, MemOp ot, int d)
- {
-+    /* Invalid lock prefix when destination is not memory or OP_CMPL. */
-+    if ((d != OR_TMP0 || op == OP_CMPL) && s1->prefix & PREFIX_LOCK) {
-+        gen_illegal_opcode(s1);
-+        return;
-+    }
-+
-     if (d != OR_TMP0) {
--        if (s1->prefix & PREFIX_LOCK) {
--            /* Lock prefix when destination is not memory.  */
--            gen_illegal_opcode(s1);
--            return;
--        }
-         gen_op_mov_v_reg(s1, ot, s1->T0, d);
-     } else if (!(s1->prefix & PREFIX_LOCK)) {
-         gen_op_ld_v(s1, ot, s1->T0, s1->A0);
+diff --git a/hw/net/tulip.c b/hw/net/tulip.c
+index 962086aae4..f21b8ca62b 100644
+--- a/hw/net/tulip.c
++++ b/hw/net/tulip.c
+@@ -421,7 +421,7 @@ static uint16_t tulip_mdi_default[] = {
+     /* MDI Registers 8 - 15 */
+     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+     /* MDI Registers 16 - 31 */
+-    0x0003, 0x0000, 0x0001, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
++    0x0003, 0x0000, 0x0001, 0x0000, 0x3b40, 0x0000, 0x0000, 0x0000,
+     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+ };
+ 
+@@ -429,7 +429,7 @@ static uint16_t tulip_mdi_default[] = {
+ static const uint16_t tulip_mdi_mask[] = {
+     0x0000, 0xffff, 0xffff, 0xffff, 0xc01f, 0xffff, 0xffff, 0x0000,
+     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+-    0x0fff, 0x0000, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff, 0xffff,
++    0x0fff, 0x0000, 0xffff, 0xffff, 0x0000, 0xffff, 0xffff, 0xffff,
+     0xffff, 0xffff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+ };
+ 
 -- 
 2.39.2
 
