@@ -4,113 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1923C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D98C5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctnQ-0006fq-3l; Wed, 21 Feb 2024 16:06:28 -0500
+	id 1rctrW-0007pN-2l; Wed, 21 Feb 2024 16:10:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rctnO-0006fe-3G
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:06:26 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rctrU-0007oZ-Qo
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:10:40 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rctnL-00078j-TY
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:06:25 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1DE9F1FB7F;
- Wed, 21 Feb 2024 21:06:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708549582; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SerqdHuV8+6tkxP9iUEOH0nI559jeDUFXwZIqM5mvl8=;
- b=msmEHUjDRHmPFyEfKJVCho0TqMgAs3zVYYTNlidt76j5h/+do9Ipdov74qoSqEf/8AAlAG
- VW5GUK6YzFgEttY296m7XeveGGKvgv/Ib/AtiBVHuhmrSoRoAajRgIsOQoKZxTwnAjXe5P
- cPvQytYHAqBlS1wSCFHGQzAUoYORjJY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708549582;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SerqdHuV8+6tkxP9iUEOH0nI559jeDUFXwZIqM5mvl8=;
- b=jnbakoYMUZCZg2caNHZaosmS5DmNemmigRvq9xi8hxc28bWz1fPWLAWNjHjjmlQWqPAiBt
- 6m4FEtHZfGv6nFCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708549582; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SerqdHuV8+6tkxP9iUEOH0nI559jeDUFXwZIqM5mvl8=;
- b=msmEHUjDRHmPFyEfKJVCho0TqMgAs3zVYYTNlidt76j5h/+do9Ipdov74qoSqEf/8AAlAG
- VW5GUK6YzFgEttY296m7XeveGGKvgv/Ib/AtiBVHuhmrSoRoAajRgIsOQoKZxTwnAjXe5P
- cPvQytYHAqBlS1wSCFHGQzAUoYORjJY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708549582;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SerqdHuV8+6tkxP9iUEOH0nI559jeDUFXwZIqM5mvl8=;
- b=jnbakoYMUZCZg2caNHZaosmS5DmNemmigRvq9xi8hxc28bWz1fPWLAWNjHjjmlQWqPAiBt
- 6m4FEtHZfGv6nFCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8EB50139D0;
- Wed, 21 Feb 2024 21:06:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +8lwFc1l1mUbXgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 21 Feb 2024 21:06:21 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Hao Xiang <hao.xiang@bytedance.com>, pbonzini@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, peterx@redhat.com,
- eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, qemu-devel@nongnu.org, jdenemar@redhat.com
-Cc: Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH v2 4/7] migration/multifd: Enable zero page checking
- from multifd threads.
-In-Reply-To: <20240216224002.1476890-5-hao.xiang@bytedance.com>
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-5-hao.xiang@bytedance.com>
-Date: Wed, 21 Feb 2024 18:06:19 -0300
-Message-ID: <875xyhbk8k.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rctrS-0007yt-9F
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:10:40 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5ce9555d42eso825027a12.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:10:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1708549830; x=1709154630; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ldYeMJj37fFO9yLjgBm0hhe8urfpz8llyl2LTRVyHjQ=;
+ b=BeexsQS2KoHYn9vHRjR7zJgTmZwSoP+0jSjwEzU4a7X21ozmSdNeg/65+83CJfP0Dt
+ cxvgTE+MmN+1raP288rWHlLNPbMUNtwrcH5fGrFXjLlHI2SzKHpPfs/en128UMiZWlnZ
+ grgSFAWnvBAmpUjQBGQKXrpRhMogQf/zt8E+lGYYM45c6+G8A3zOG7mWoNkC5KOiN1BA
+ kPxPd/9oML9dBp2LxlvuUtbch1oruffLVovDa9AnPJYhqLea2AKLuK26GQYWS8sFJjMY
+ u4w3Ozvm6vIFRbCUpc7KKeiRjW9Bur54994caLBMG9keS30rWFB7dMHVqFJC5hd9VIYi
+ 1YJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708549830; x=1709154630;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ldYeMJj37fFO9yLjgBm0hhe8urfpz8llyl2LTRVyHjQ=;
+ b=YuH1h6V3sYBKH4FTG1VqS0g6QbA0OHVt3YXOCW59SPBt8uDV1h37GEsop+GqUyQknr
+ td5gsSvvWKblB2y+xiTr+iGdg2d0rE5nTtTepU386dnC0dss7CNiDGMX4BKd8tkC1esF
+ ev1uJowEctQpiReGkxUo+Af+BtCiZZOdg5wPpcipAAHg05auOaEn4tLKEyoM8XgApr8C
+ KAb3woKSHAPNoRW5cscIVM/mgInZTvgOqv+bRkcORyU7/SNNHHhFVkWxiPigcFtj85Hr
+ York27VEMRzr1uqkfO4K5RJA/AImLiFBar4e2A3d+eFEIMENymKoJjpVcWG4k+a7V8h/
+ xEKQ==
+X-Gm-Message-State: AOJu0YwCA1BLDkpDZB/Gp7sNlKm8dikiPx0vJT6wTDpI/+mfqRRvnpyN
+ rGBYjDoPkd6r+u1v9sHGK2W8ruAlFj5K73P0IDzZkXj9qVcHHO+TP3z5JjoxioE=
+X-Google-Smtp-Source: AGHT+IFVwgjfHxEJcJfP0oy8FxWmoHO1NHXpzvy0aRqyp+AJrAKIQlxIzEDG87aS6wzm0NMIKHxn9A==
+X-Received: by 2002:a17:90b:805:b0:299:765e:1756 with SMTP id
+ bk5-20020a17090b080500b00299765e1756mr9644296pjb.30.1708549830262; 
+ Wed, 21 Feb 2024 13:10:30 -0800 (PST)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ mo7-20020a1709030a8700b001db5ecd115bsm8493567plb.276.2024.02.21.13.10.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 13:10:29 -0800 (PST)
+Message-ID: <1545594f-721f-4208-baac-bc034b57b300@ventanamicro.com>
+Date: Wed, 21 Feb 2024 18:10:25 -0300
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=msmEHUjD;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jnbakoYM
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_TWELVE(0.00)[12];
- DBL_BLOCKED_OPENRESOLVER(0.00)[bytedance.com:email,suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-X-Rspamd-Queue-Id: 1DE9F1FB7F
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 0/8] Add Counter delegation ISA extension support
+To: Atish Patra <atishp@rivosinc.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ qemu-riscv@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
+ kaiwenxue1@gmail.com, Andrew Jones <ajones@ventanamicro.com>
+References: <20240217000134.3634191-1-atishp@rivosinc.com>
+ <35a4d40c-9d0d-4a0a-a2c9-5d5f7def9b9c@ventanamicro.com>
+ <CAHBxVyEnRcvB5iGDv8rE6oJ6L+yvM12ia+T0ZtsAx73TW5PfrQ@mail.gmail.com>
+ <de514d34-b0e3-4776-890d-3d5dc738785c@ventanamicro.com>
+ <699311c4-2adc-416c-a1ef-4aee9374913b@rivosinc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <699311c4-2adc-416c-a1ef-4aee9374913b@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,185 +103,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@bytedance.com> writes:
 
-> This change adds a dedicated handler for MigrationOps::ram_save_target_page in
 
-nit: Add a dedicated handler...
+On 2/21/24 17:17, Atish Patra wrote:
+> 
+> On 2/21/24 10:26, Daniel Henrique Barboza wrote:
+>>
+>>
+>> On 2/21/24 14:06, Atish Kumar Patra wrote:
+>>>
+>>>
+>>> On Wed, Feb 21, 2024 at 6:58 AM Daniel Henrique Barboza <dbarboza@ventanamicro.com <mailto:dbarboza@ventanamicro.com>> wrote:
+>>>
+>>>     Hi Atish,
+>>>
+>>>     This series and its dependency, which I assume it's
+>>>
+>>>     "[PATCH v4 0/5] Add ISA extension smcntrpmf support"
+>>>
+>>>     Doesn't apply in neither master nor riscv-to-apply.next because of this patch:
+>>>
+>>>     "target/riscv: Use RISCVException as return type for all csr ops"
+>>>
+>>>     That changed some functions from 'int' to "RISCVException" type. The conflicts
+>>>     from the v4 series are rather trivial but the conflicts for this RFC are annoying
+>>>     to deal with. It would be better if you could re-send both series rebased with
+>>>     the latest changes.
+>>>
+>>>
+>>> I was waiting for Alistair's ACK on the smcntrpmf series as he had some comments. It looks like he is okay
+>>> with the series now (no further questions).  Let me respin both the series.
+>>>
+>>>     One more thing:
+>>>
+>>>     On 2/16/24 21:01, Atish Patra wrote:
+>>>      > This series adds the counter delegation extension support. The counter
+>>>      > delegation ISA extension(Smcdeleg/Ssccfg) actually depends on multiple ISA
+>>>      > extensions.
+>>>      >
+>>>      > 1. S[m|s]csrind : The indirect CSR extension[1] which defines additional
+>>>      >     5 ([M|S|VS]IREG2-[M|S|VS]IREG6) register to address size limitation of
+>>>      >     RISC-V CSR address space.
+>>>      > 2. Smstateen: The stateen bit[60] controls the access to the registers
+>>>      >     indirectly via the above indirect registers.
+>>>      > 3. Smcdeleg/Ssccfg: The counter delegation extensions[2]
+>>>      >
+>>>      > The counter delegation extension allows Supervisor mode to program the
+>>>      > hpmevent and hpmcounters directly without needing the assistance from the
+>>>      > M-mode via SBI calls. This results in a faster perf profiling and very
+>>>      > few traps. This extension also introduces a scountinhibit CSR which allows
+>>>      > to stop/start any counter directly from the S-mode. As the counter
+>>>      > delegation extension potentially can have more than 100 CSRs, the specificaiton
+>>>      > leverages the indirect CSR extension to save the precious CSR address range.
+>>>      >
+>>>      > Due to the dependancy of these extensions, the following extensions must be
+>>>      > enabled to use the counter delegation feature in S-mode.
+>>>      >
+>>>      > "smstateen=true,sscofpmf=true,ssccfg=true,smcdeleg=true,smcsrind=true,sscsrind=true"
+>>>      >
+>>>      > This makes the qemu command line quite tedious. In stead of that, I think we
+>>>      > can enable these features by default if there is no objection.
+>>>
+>>>     It wasn't need so far but, if needed, we can add specialized setters for extensions
+>>>     that has multiple dependencies. Instead of the usual setter we would do something
+>>>     like:
+>>>
+>>>     cpu_set_ssccfg() {
+>>>
+>>>           if (enabled) {
+>>>               smstateen=true
+>>>               sscofpmf=true
+>>>               smcdeleg=true
+>>>               smcsrind=true
+>>>               sscsrind=true
+>>>           }
+>>>     }
+>>>
+>>>
+>>>     The advantage is that this setter would also work for CPUs that doesn't inherit defaults,
+>>>     like bare-cps and profile CPUs.
+>>>
+>>>
+>>> Your suggested approach looks good to me. But I was asking about concerns about enabling these extensions
+>>> by default rather than the actual mechanism to implement it. Few of the extensions listed here such as smstateen,smcsrind
+>>> sscsrind are independent ISA extensions which are used for other ISA extensions as well.
+>>>
+>>> It looks like you are okay with the use case also ?
+>>
+>> I don't mind setting new defaults in rv64.
+>>
+>>>
+>>>     That doesn't mean we can't add defaults for rv64, but for this particular case I wonder if
+>>>     the 'max' CPU wouldn't be better.
+>>>
+>>>
+>>> Not sure what you mean here. What does 'max' cpu have to do with pmu extensions ?
+>>
+>>
+>> Save a few exceptions, all the extensions declared in riscv_cpu_extensions[]
+>> will be enabled in the 'max' CPU, regardless of their default value for the
+>> rv64 CPU (see riscv_init_max_cpu_extensions() in tcg-cpu.c).
+>>
+> 
+> Ahh okay. That makes sense. I got confused with maxcpus option.
+> 
+> 
+>> If we count both the v4 and this RFC, the following extensions were added in
+>> riscv_cpu_extensions[]:
+>>
+>> +    MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
+>>
+>> +    MULTI_EXT_CFG_BOOL("smcsrind", ext_smcsrind, false),
+>> +    MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
+>>
+>> +    MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
+>> +    MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+>>
+>>
+>> All of them will be enabled by default in the 'max' CPU.
+>>
+>> This is what I was referring to. We can just use the 'max' CPU and don't worry about
+>> enabling defaults in rv64.
+>>
+> We should definitely enable them in 'max' cpu as these extensions are ratified.
+> The comment in the code says it should enable all ratified extensions. Is that a guiding policy ?
+> Qemu allows merging non frozen extensions.
 
-Usually "this patch/change" is used only when necessary to avoid
-ambiguity.
+I guess we need to update that comment ... we're been accepting "frozen" extensions as
+stable (i.e. no need for the leading "x-") recently. It doesn't have to be ratified.
 
-> multifd live migration. Now zero page checking can be done in the multifd threads
-> and this becomes the default configuration. We still provide backward compatibility
-> where zero page checking is done from the migration main thread.
->
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> ---
->  migration/multifd.c |  1 +
->  migration/options.c |  2 +-
->  migration/ram.c     | 53 ++++++++++++++++++++++++++++++++++-----------
->  3 files changed, 42 insertions(+), 14 deletions(-)
->
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index fbb40ea10b..ef5dad1019 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -13,6 +13,7 @@
->  #include "qemu/osdep.h"
->  #include "qemu/cutils.h"
+> 
+> But rv64 still is the default one everyone running. So I feel we should enable there as for user convenience.
 
-This include...
+I've been talking with Drew about making 'max' the default CPU for riscv64. Users
+that don't bother with any particular CPU can then use the most feature-rich CPU we
+can provide by default. rv64 will still be around for people that wants more control,
+although for real control of what the CPU is enabling or not I advise using rv64i or
+even a profile CPU.
 
->  #include "qemu/rcu.h"
-> +#include "qemu/cutils.h"
+But anyway, as I said in an earlier reply, I don't mind enabling more defaults in rv64,
+especially in a case where one extension have 3+ dependencies.
 
-is there already.
 
->  #include "exec/target_page.h"
->  #include "sysemu/sysemu.h"
->  #include "exec/ramblock.h"
-> diff --git a/migration/options.c b/migration/options.c
-> index 3c603391b0..3c79b6ccd4 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -181,7 +181,7 @@ Property migration_properties[] = {
->                        MIG_MODE_NORMAL),
->      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
->                         parameters.zero_page_detection,
-> -                       ZERO_PAGE_DETECTION_LEGACY),
-> +                       ZERO_PAGE_DETECTION_MULTIFD),
+Thanks,
 
-I think we'll need something to avoid a 9.0 -> 8.2 migration with this
-enabled. Otherwise it will go along happily until we get data corruption
-because the new QEMU didn't send any zero pages on the migration thread
-and the old QEMU did not look for them in the multifd packet.
+Daniel
 
-Perhaps bumping the MULTIFD_VERSION when ZERO_PAGE_DETECTION_MULTIFD is
-in use. We'd just need to fix the test in the new QEMU to check
-(msg.version > MULTIFD_VERSION) instead of (msg.version != MULTIFD_VERSION).
 
->  
->      /* Migration capabilities */
->      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 5ece9f042e..b088c5a98c 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -1123,10 +1123,6 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
->      QEMUFile *file = pss->pss_channel;
->      int len = 0;
->  
-> -    if (migrate_zero_page_detection() != ZERO_PAGE_DETECTION_LEGACY) {
-> -        return 0;
-> -    }
-
-How does 'none' work now?
-
-> -
->      if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
->          return 0;
->      }
-> @@ -1256,6 +1252,10 @@ static int ram_save_page(RAMState *rs, PageSearchStatus *pss)
->  
->  static int ram_save_multifd_page(RAMBlock *block, ram_addr_t offset)
->  {
-> +    assert(migrate_multifd());
-> +    assert(!migrate_compress());
-> +    assert(!migration_in_postcopy());
-
-Drop these, please. Keep only the asserts that are likely to trigger
-during development, such as the existing ones at multifd_send_pages.
-
-> +
->      if (!multifd_queue_page(block, offset)) {
->          return -1;
->      }
-> @@ -2046,7 +2046,6 @@ static bool save_compress_page(RAMState *rs, PageSearchStatus *pss,
->   */
->  static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
->  {
-> -    RAMBlock *block = pss->block;
->      ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
->      int res;
->  
-> @@ -2062,17 +2061,40 @@ static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *pss)
->          return 1;
->      }
->  
-> +    return ram_save_page(rs, pss);
-
-Look at where git put this! Are you using the default diff algorithm? If
-not try using --patience to see if it improves the diff.
-
-> +}
-> +
-> +/**
-> + * ram_save_target_page_multifd: save one target page
-> + *
-> + * Returns the number of pages written
-
-We could be more precise here:
-
- ram_save_target_page_multifd: send one target page to multifd workers
- 
- Returns 1 if the page was queued, -1 otherwise.
-
-> + *
-> + * @rs: current RAM state
-> + * @pss: data about the page we want to send
-> + */
-> +static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatus *pss)
-> +{
-> +    RAMBlock *block = pss->block;
-> +    ram_addr_t offset = ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
-> +
-> +    /* Multifd is not compatible with old compression. */
-> +    assert(!migrate_compress());
-
-This should already be enforced at options.c.
-
-> +
-> +    /* Multifd is not compabible with postcopy. */
-> +    assert(!migration_in_postcopy());
-
-Same here.
-
-> +
->      /*
-> -     * Do not use multifd in postcopy as one whole host page should be
-> -     * placed.  Meanwhile postcopy requires atomic update of pages, so even
-> -     * if host page size == guest page size the dest guest during run may
-> -     * still see partially copied pages which is data corruption.
-> +     * Backward compatibility support. While using multifd live
-> +     * migration, we still need to handle zero page checking on the
-> +     * migration main thread.
->       */
-> -    if (migrate_multifd() && !migration_in_postcopy()) {
-> -        return ram_save_multifd_page(block, offset);
-> +    if (migrate_zero_page_detection() == ZERO_PAGE_DETECTION_LEGACY) {
-> +        if (save_zero_page(rs, pss, offset)) {
-> +            return 1;
-> +        }
->      }
->  
-> -    return ram_save_page(rs, pss);
-> +    return ram_save_multifd_page(block, offset);
->  }
->  
->  /* Should be called before sending a host page */
-> @@ -2984,7 +3006,12 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
->      }
->  
->      migration_ops = g_malloc0(sizeof(MigrationOps));
-> -    migration_ops->ram_save_target_page = ram_save_target_page_legacy;
-> +
-> +    if (migrate_multifd()) {
-> +        migration_ops->ram_save_target_page = ram_save_target_page_multifd;
-> +    } else {
-> +        migration_ops->ram_save_target_page = ram_save_target_page_legacy;
-> +    }
->  
->      bql_unlock();
->      ret = multifd_send_sync_main();
+> 
+>>
+>> Thanks,
+>>
+>> Daniel
+>>
+>>>
+>>>
+>>>     Thanks,
+>>>
+>>>
+>>>     Daniel
+>>>
+>>>      >
+>>>      > The first 2 patches decouple the indirect CSR usage from AIA implementation
+>>>      > while patch3 adds stateen bits validation for AIA.
+>>>      > The PATCH4 implements indirect CSR extensions while remaining patches
+>>>      > implement the counter delegation extensions.
+>>>      >
+>>>      > The Qemu patches can be found here:
+>>>      > https://github.com/atishp04/qemu/tree/counter_delegation_rfc <https://github.com/atishp04/qemu/tree/counter_delegation_rfc>
+>>>      >
+>>>      > The opensbi patch can be found here:
+>>>      > https://github.com/atishp04/opensbi/tree/counter_delegation_v1 <https://github.com/atishp04/opensbi/tree/counter_delegation_v1>
+>>>      >
+>>>      > The Linux kernel patches can be found here:
+>>>      > https://github.com/atishp04/linux/tree/counter_delegation_rfc <https://github.com/atishp04/linux/tree/counter_delegation_rfc>
+>>>      >
+>>>      > [1] https://github.com/riscv/riscv-indirect-csr-access <https://github.com/riscv/riscv-indirect-csr-access>
+>>>      > [2] https://github.com/riscv/riscv-smcdeleg-ssccfg <https://github.com/riscv/riscv-smcdeleg-ssccfg>
+>>>      >
+>>>      > Atish Patra (1):
+>>>      > target/riscv: Enable S*stateen bits for AIA
+>>>      >
+>>>      > Kaiwen Xue (7):
+>>>      > target/riscv: Add properties for Indirect CSR Access extension
+>>>      > target/riscv: Decouple AIA processing from xiselect and xireg
+>>>      > target/riscv: Support generic CSR indirect access
+>>>      > target/riscv: Add smcdeleg/ssccfg properties
+>>>      > target/riscv: Add counter delegation definitions
+>>>      > target/riscv: Add select value range check for counter delegation
+>>>      > target/riscv: Add counter delegation/configuration support
+>>>      >
+>>>      > target/riscv/cpu.c      |   8 +
+>>>      > target/riscv/cpu.h      |   1 +
+>>>      > target/riscv/cpu_bits.h |  34 +-
+>>>      > target/riscv/cpu_cfg.h  |   4 +
+>>>      > target/riscv/csr.c      | 713 +++++++++++++++++++++++++++++++++++++---
+>>>      > target/riscv/machine.c  |   1 +
+>>>      > 6 files changed, 722 insertions(+), 39 deletions(-)
+>>>      >
+>>>      > --
+>>>      > 2.34.1
+>>>      >
+>>>
 
