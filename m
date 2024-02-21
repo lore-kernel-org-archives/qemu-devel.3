@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7467C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0710CC5478B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcqM0-0008C4-Kp; Wed, 21 Feb 2024 12:25:56 -0500
+	id 1rcqO3-0002Pa-ON; Wed, 21 Feb 2024 12:28:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcqLz-00089o-B8
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:25:55 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcqO2-0002Ob-Hz
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:28:02 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcqLx-0001Bj-J5
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:25:55 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d93edfa76dso44385535ad.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:25:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcqNz-0001OC-DC
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 12:28:01 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so953774666b.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 09:27:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708536351; x=1709141151; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708536477; x=1709141277; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/XwhC+KfPAJsGVSX29D1cLKRWy6NmiBSvHsmRxAD9qU=;
- b=AhtLQIA+GvxjdG/i365/VUHO1osrzNxkzIJoF1+B8/Hp2kzJA6bVTh+apu0NCO3VR1
- FtUUsZ7BcuEnH68Fd/YEzPvH9g7XNxSfWMGvV70GYE54H4OrEOWdlVxpW/9s8aSKG8EQ
- QufHr+hpCg3ZnFTLthIV3qKpfeMqdspW33kxSm1lky+Y9Ql5ZIl1onmPeChgrIy7+A/+
- WHyVGKQ9VoH2B5Erl+Or2MgOdJ5biIDnslBJjNSXTPMOPF73XUcOOIbUZoUVnp1azQiS
- pWzYgajo2jRAleL4/G+rD9ED08rKGInoTm1UDknuD1BF5KbqbHO/Om5re0yt1Y1OS1j6
- jfcQ==
+ bh=nanjrW8+lHyTaE/BIXI3+e3cjCA8p5Dw61k2o3R3a1A=;
+ b=J7o9Wva59OBghUmZfCeNRoB2nr69fGlo311Nlpm/cOxtyoJdb3XTdeIf4kuhA5g5zs
+ RyarlQbHIhunDfZdwDgJNZKBq/UTapXAMMIEZGBjI96liltAjXdZMSkkBAd4dY4kaKe9
+ CwjX7bll2lIgK+5FGbDnnpi8oRTnbPn78T7NXZcCd4gkKCJhE+/y1ncgPyFi4+e8Q744
+ LD0U05Fk9EO7NVJ2XPMC8xGRIHfJd3ZIZ7vhpLlCd01dpbwA2LzV6Q+E7oycSTEolU9I
+ hFGbjensccxmZSvDWTy5ZOw/yWmcnB4BEBdj6+SVYr7N9beUo0DJy9+gAQ/icSesEBXv
+ p+4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708536351; x=1709141151;
+ d=1e100.net; s=20230601; t=1708536477; x=1709141277;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/XwhC+KfPAJsGVSX29D1cLKRWy6NmiBSvHsmRxAD9qU=;
- b=oa8mUKVB7Kq4OzCxQFfMpSkx0eOZ6dF4Kd6zg62YLVNM/xwCdhlhh5zKkhBakkmuc/
- VSSAQnMR04MDj2xJlnv5TBKRliU9cGihz53EHUDqYctWqw7DDucHfXUsrs089tYLQmdM
- YTdKzo/WhEGfutjbWYzCvRcHxbJUtehcr/9lYLYF3fQLBGdnx10kPOPooshimANQFrUj
- dMoHuYrga/RcfZ6qrBdCvyPk88mlSAWWXwnnERP+GAv1ZznbXn5fV0x41XlW1v+wHx6X
- JeLWvLnnP+IFfPNc4o3BZE3b/apTDIklMnl1M1QgupPxpj2sflq04+sfSaVNOa1e8My0
- RykA==
+ bh=nanjrW8+lHyTaE/BIXI3+e3cjCA8p5Dw61k2o3R3a1A=;
+ b=ItmEfqeXIVmCitoHwdfi36tT78KOSr4v29bWLT9fPRF5jWW9Vzvre9yTM9En6wTGgt
+ YYsJHqz7dCpMwjgOUfpa/bzwuVE7yjYU4ksIQC5vaGQkoBPdKYr3ZWUdpR18p74HTpX2
+ a4jcDwL05qsc3E8D/lxFMZbsa4rXI+83t6WwFv0ntQDa0TCOdFaEqccv11eQhRQTMlaA
+ iiJmI8PitTd8h2sHK1J02+zBFTVJBXtVd4EuvJ6Ib9+VwggUufknPfiiyeOlM/0YZfdD
+ guL5EMyEG4p1aF9BHXBLCJErwZQp27dYBcmKoAPDzfobwZOlevDPSJ6RC9ijUYIQdN0m
+ Q4iA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtzWPw3JvEuIA2T1EmuIsNjMXtB1ZcTsOzN55LHAuSmpELLdK0E3m+iZVo9Kml4cD31IjY5Pgid+/Aic2kGYml1lzXHFY=
-X-Gm-Message-State: AOJu0Yw+CdzBiZ//M/12GgWRTgXwyCxXNgbkzp/zmNgRFW6VqjY3pqRF
- 0xbfij2aY4H2frNzpd8kKZGjidp9DaMN6wIUZkVP4jwTYlqPYn2A4HplrGj/9yY=
-X-Google-Smtp-Source: AGHT+IFpYltHIzGvdA943cqGDYZA9E7lmr9ynlKv3jtrv5tiFJLjupfiiIthKkdRAm7RvWCOvH3YWw==
-X-Received: by 2002:a17:903:2cd:b0:1dc:3e49:6795 with SMTP id
- s13-20020a17090302cd00b001dc3e496795mr1309079plk.47.1708536351071; 
- Wed, 21 Feb 2024 09:25:51 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
+ AJvYcCWQrzYAkPbIiytNXBdGwAORxCWPBDwURgfoVGNCIk5vhMdBaq2XZDpjrVVsh7M5GbV4ITkHHOAhIK+uwkh/32uoqjpqs4E=
+X-Gm-Message-State: AOJu0YyDcTO09dg2LS610d6wvzuVsqYdT+czx5x0KYkBelDKPd5wOBxB
+ pl7CNcO+jK4y/ut/SWFyiuBaLUVHJLyQ/v6MADoX2r6XEOfLkaYQSqm2VV98wUM=
+X-Google-Smtp-Source: AGHT+IEFy1XZz6MjT8rdd2q/uvb/+AodjOcQrlyNIvuC7uYbTj4hZiqyreXOJMdBGFQem5WlQefVgQ==
+X-Received: by 2002:a17:906:f919:b0:a3f:4a97:f552 with SMTP id
+ lc25-20020a170906f91900b00a3f4a97f552mr1323185ejb.70.1708536477518; 
+ Wed, 21 Feb 2024 09:27:57 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- j6-20020a17090276c600b001db693d89fdsm8310055plt.179.2024.02.21.09.25.48
+ rf20-20020a1709076a1400b00a3f2bf468b9sm971061ejc.173.2024.02.21.09.27.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 09:25:50 -0800 (PST)
-Message-ID: <801fb2e4-bb09-47e9-b7f6-899de574c4a3@ventanamicro.com>
-Date: Wed, 21 Feb 2024 14:25:46 -0300
+ Wed, 21 Feb 2024 09:27:56 -0800 (PST)
+Message-ID: <e38c7fa5-8dc8-4e7a-a4a9-06a88206b325@linaro.org>
+Date: Wed, 21 Feb 2024 18:27:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] target/riscv: Apply modularized matching conditions
- for breakpoint
+Subject: Re: [PATCH 3/3] meson: Enable -Wvla
 Content-Language: en-US
-To: Alvin Chang <alvinga@andestech.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-References: <20240219032559.79665-1-alvinga@andestech.com>
- <20240219032559.79665-3-alvinga@andestech.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240219032559.79665-3-alvinga@andestech.com>
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
+ <chigot@adacore.com>
+Cc: qemu-ppc@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240221162636.173136-1-thuth@redhat.com>
+ <20240221162636.173136-4-thuth@redhat.com>
+ <8dac5c1a-5780-45ca-90fe-147f1ab2fe28@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <8dac5c1a-5780-45ca-90fe-147f1ab2fe28@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,95 +102,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21/2/24 17:59, Thomas Huth wrote:
+> On 21/02/2024 17.26, Thomas Huth wrote:
+>> From: Peter Maydell <peter.maydell@linaro.org>
+>>
+>> QEMU has historically used variable length arrays only very rarely.
+>> Variable length arrays are a potential security issue where an
+>> on-stack dynamic allocation isn't correctly size-checked, especially
+>> when the size comes from the guest.  (An example problem of this kind
+>> from the past is CVE-2021-3527).  Forbidding them entirely is a
+>> defensive measure against further bugs of this kind.
+>>
+>> Enable -Wvla to prevent any new uses from sneaking into the codebase.
+>>
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> Message-ID: <20240125173211.1786196-3-peter.maydell@linaro.org>
+>> [thuth: rebased to current master branch]
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   meson.build | 1 +
+>>   1 file changed, 1 insertion(+)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On 2/19/24 00:25, Alvin Chang wrote:
-> We have implemented trigger_common_match(), which checks if the enabled
-> privilege levels of the trigger match CPU's current privilege level.
-> Remove the related code in riscv_cpu_debug_check_breakpoint() and invoke
-> trigger_common_match() to check the privilege levels of the type 2 and
-> type 6 triggers for the breakpoints.
+>> diff --git a/meson.build b/meson.build
+>> index c1dc83e4c0..0ef1654e86 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -592,6 +592,7 @@ warn_flags = [
+>>     '-Wstrict-prototypes',
+>>     '-Wtype-limits',
+>>     '-Wundef',
+>> +  '-Wvla',
+>>     '-Wwrite-strings',
+>>     # Then disable some undesirable warnings
 > 
-> Only the execution bit and the executed PC should be futher checked in
-
-typo: further
-
-> riscv_cpu_debug_check_breakpoint().
+> Sigh, there's a new warning in the latest master branch:
 > 
-> Signed-off-by: Alvin Chang <alvinga@andestech.com>
-> ---
->   target/riscv/debug.c | 26 ++++++--------------------
->   1 file changed, 6 insertions(+), 20 deletions(-)
+>   https://gitlab.com/thuth/qemu/-/jobs/6225992174
 > 
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 7932233073..b971ed5d7a 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -855,21 +855,17 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->           for (i = 0; i < RV_MAX_TRIGGERS; i++) {
->               trigger_type = get_trigger_type(env, i);
->   
-> +            if (!trigger_common_match(env, trigger_type, i)) {
-> +                continue;
-> +            }
-> +
+> Caused by commit d65aba828 ("hw/sparc/leon3: implement multiprocessor")...
+> Clément, Philippe, could this maybe be written in a different way that 
+> does not trigger a -Wvla warning?
 
-I believe this will change how the function behaves. Before this patch, we would
-'return false' if we have a TRIGGER_TYPE_AD_MATCH and env->virt_enabled is true.
+Clément, ResetData::entry isn't used, so we can simplify removing
+the whole ResetData structure, but I'm not sure this is intended:
 
-Now, for the same case, we'll keep looping until we found a match, or return 'false'
-if we run out of triggers.
+-- >8 --
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 4873b59b6c..1ff6b5d63d 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -68,14 +68,6 @@
+  #define LEON3_APB_PNP_OFFSET (0x800FF000)
+  #define LEON3_AHB_PNP_OFFSET (0xFFFFF000)
 
-This seems ok to do, but we should state in the commit msg that we're intentionally
-change how the function works. If that's not the idea and we want to preserve the existing
-behavior, we would need to do:
+-typedef struct ResetData {
+-    struct CPUResetData {
+-        int id;
+-        SPARCCPU *cpu;
+-    } info[MAX_CPUS];
+-    uint32_t entry;             /* save kernel entry in case of reset */
+-} ResetData;
+-
+  static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
+  {
+      stl_p(code++, 0x82100000); /* mov %g0, %g1                */
+@@ -148,17 +140,14 @@ static void write_bootloader(void *ptr, hwaddr 
+kernel_addr)
 
->   
-> +            if (!trigger_common_match(env, trigger_type, i)) {
-> +                return false;
-> +            }
+  static void leon3_cpu_reset(void *opaque)
+  {
+-    struct CPUResetData *info = (struct CPUResetData *) opaque;
+-    int id = info->id;
+-    ResetData *s = (ResetData *)DO_UPCAST(ResetData, info[id], info);
+-    CPUState *cpu = CPU(s->info[id].cpu);
++    CPUState *cpu = opaque;
+      CPUSPARCState *env = cpu_env(cpu);
 
-Instead of just continue looping. Thanks,
+      cpu_reset(cpu);
 
+      cpu->halted = cpu->cpu_index != 0;
+-    env->pc = s->entry;
+-    env->npc = s->entry + 4;
++    env->pc = LEON3_PROM_OFFSET;
++    env->npc = LEON3_PROM_OFFSET + 4;
+  }
 
-Daniel
+  static void leon3_cache_control_int(CPUSPARCState *env)
+@@ -259,7 +248,7 @@ static void leon3_generic_hw_init(MachineState *machine)
+      ram_addr_t ram_size = machine->ram_size;
+      const char *bios_name = machine->firmware ?: LEON3_PROM_FILENAME;
+      const char *kernel_filename = machine->kernel_filename;
+-    SPARCCPU *cpu;
++    SPARCCPU *cpu[MAX_CPUS];
+      CPUSPARCState   *env;
+      MemoryRegion *address_space_mem = get_system_memory();
+      MemoryRegion *prom = g_new(MemoryRegion, 1);
+@@ -267,28 +256,22 @@ static void leon3_generic_hw_init(MachineState 
+*machine)
+      char       *filename;
+      int         bios_size;
+      int         prom_size;
+-    ResetData  *reset_info;
+      DeviceState *dev, *irqmpdev;
+      int i;
+      AHBPnp *ahb_pnp;
+      APBPnp *apb_pnp;
 
->               switch (trigger_type) {
->               case TRIGGER_TYPE_AD_MATCH:
-> -                /* type 2 trigger cannot be fired in VU/VS mode */
-> -                if (env->virt_enabled) {
-> -                    return false;
-> -                }
-> -
->                   ctrl = env->tdata1[i];
->                   pc = env->tdata2[i];
->   
->                   if ((ctrl & TYPE2_EXEC) && (bp->pc == pc)) {
-> -                    /* check U/S/M bit against current privilege level */
-> -                    if ((ctrl >> 3) & BIT(env->priv)) {
-> -                        return true;
-> -                    }
-> +                    return true;
->                   }
->                   break;
->               case TRIGGER_TYPE_AD_MATCH6:
-> @@ -877,17 +873,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->                   pc = env->tdata2[i];
->   
->                   if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
-> -                    if (env->virt_enabled) {
-> -                        /* check VU/VS bit against current privilege level */
-> -                        if ((ctrl >> 23) & BIT(env->priv)) {
-> -                            return true;
-> -                        }
-> -                    } else {
-> -                        /* check U/S/M bit against current privilege level */
-> -                        if ((ctrl >> 3) & BIT(env->priv)) {
-> -                            return true;
-> -                        }
-> -                    }
-> +                    return true;
->                   }
->                   break;
->               default:
+-    reset_info = g_malloc0(sizeof(ResetData));
+-
+      for (i = 0; i < machine->smp.cpus; i++) {
+          /* Init CPU */
+-        cpu = SPARC_CPU(object_new(machine->cpu_type));
+-        qdev_init_gpio_in_named(DEVICE(cpu), leon3_start_cpu, 
+"start_cpu", 1);
+-        qdev_init_gpio_in_named(DEVICE(cpu), leon3_set_pil_in, "pil", 1);
+-        qdev_realize(DEVICE(cpu), NULL, &error_fatal);
+-        env = &cpu->env;
++        cpu[i] = SPARC_CPU(object_new(machine->cpu_type));
++        qdev_init_gpio_in_named(DEVICE(cpu[i]), leon3_start_cpu, 
+"start_cpu", 1);
++        qdev_init_gpio_in_named(DEVICE(cpu[i]), leon3_set_pil_in, 
+"pil", 1);
++        qdev_realize(DEVICE(cpu[i]), NULL, &error_fatal);
++        env = &cpu[i]->env;
+
+          cpu_sparc_set_id(env, i);
+
+-        /* Reset data */
+-        reset_info->info[i].id = i;
+-        reset_info->info[i].cpu = cpu;
+-        qemu_register_reset(leon3_cpu_reset, &reset_info->info[i]);
++        qemu_register_reset(leon3_cpu_reset, cpu[i]);
+      }
+
+      ahb_pnp = GRLIB_AHB_PNP(qdev_new(TYPE_GRLIB_AHB_PNP));
+@@ -312,13 +295,12 @@ static void leon3_generic_hw_init(MachineState 
+*machine)
+      sysbus_realize_and_unref(SYS_BUS_DEVICE(irqmpdev), &error_fatal);
+
+      for (i = 0; i < machine->smp.cpus; i++) {
+-        cpu = reset_info->info[i].cpu;
+-        env = &cpu->env;
++        env = &cpu[i]->env;
+          qdev_connect_gpio_out_named(irqmpdev, "grlib-start-cpu", i,
+-                                    qdev_get_gpio_in_named(DEVICE(cpu),
++                                    qdev_get_gpio_in_named(DEVICE(cpu[i]),
+ 
+"start_cpu", 0));
+          qdev_connect_gpio_out_named(irqmpdev, "grlib-irq", i,
+-                                    qdev_get_gpio_in_named(DEVICE(cpu),
++                                    qdev_get_gpio_in_named(DEVICE(cpu[i]),
+                                                             "pil", 0));
+          env->irq_manager = irqmpdev;
+          env->qemu_irq_ack = leon3_irq_manager;
+@@ -396,11 +378,6 @@ static void leon3_generic_hw_init(MachineState 
+*machine)
+               * bootloader.
+               */
+              write_bootloader(memory_region_get_ram_ptr(prom), entry);
+-            reset_info->entry = LEON3_PROM_OFFSET;
+-            for (i = 0; i < machine->smp.cpus; i++) {
+-                reset_info->info[i].cpu->env.pc = LEON3_PROM_OFFSET;
+-                reset_info->info[i].cpu->env.npc = LEON3_PROM_OFFSET + 4;
+-            }
+          }
+      }
+---
+
+Regards,
+
+Phil.
 
