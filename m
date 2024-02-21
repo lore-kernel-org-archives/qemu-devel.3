@@ -4,149 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C511C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9013C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:10:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcghH-0006u9-Ja; Wed, 21 Feb 2024 02:07:15 -0500
+	id 1rcgkO-00007k-4C; Wed, 21 Feb 2024 02:10:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rcghE-0006tN-Vp
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:07:13 -0500
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgkL-00007L-4N
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:10:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rcghB-0005Rx-HE
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:07:12 -0500
-Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 41KJBaIu026182; Tue, 20 Feb 2024 23:07:06 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- proofpoint20171006; bh=BrahB9vIs/xD0ekbiruVfXrR7wUMz8wZsw4xW5GNH
- wo=; b=IeF+t4u6MwHSfItYTCdjSJOKDDPnhHHuDat7IrdCpBZmU/eWcrENtCDqE
- bRcr8VoQiSJeS2RRSFVy4E7ztb29lZwAqUmzwcxJaw6goAYC7DArIlQjxe3KiPos
- 3tpEEchHOnFnQTH2cgxO9NFvp7dyYNopiUxGKkisZ1aUigR1ieViGMncObBzGSkN
- 0TcJU4CmHESEz2Gfbv61gvMUdNvtkDbTM41V8dwQs2wmrV5tCe4Q0ajfwoZ2ITIv
- vhT9Cz/rFG/7UjZe/4uAWK3mlI1wYX3+i18UM261i0MjsNtVcgFoQXhHqm5jVAO+
- KBxdeUx2lM8Ci16vO4w11fV6Yr5lw==
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10lp2101.outbound.protection.outlook.com [104.47.58.101])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3wd2181cp0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 20 Feb 2024 23:07:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LTsl596++z5U5rMgUc9IiRhCjeHFdefxZ3JvSYGRzv4tQY4j1g+q7Z76fg3AAs1jhySR6oTgQOm57zXaDvSlnHLAiL8GItPI4RJ6gIoAyOGH+5OTJWvjZ5tqVx/sdE9U3J9qkJXx2jeiGhJFq9iwHOnZd5b63nJFp1aYg5JgJzMUuzf82gMyVKY2xGTE+vBV6y0sJfjZx3SgbxirQpmiMk9ONeJyyi8HfLeiHpwF4PcR6b/5aZWcLiuX4ZAo2VCUU9YqZYJhvwo7Ibr5+26Cuw9myiEmA8rQScH6tP4qj8Bnd7oz4a+v1SWIzzlLH2QSOiQYqwq7TZljaw0aWRP1KA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BrahB9vIs/xD0ekbiruVfXrR7wUMz8wZsw4xW5GNHwo=;
- b=kB8MH/bLMZqXTRoRrwWIjIJnpR+ysJ22vX5tGUKSIVvZKkkY0mN1H0p7W7UbGW5aFF1GrKJA/BGGA861wb3R5Rwo/JbLTnmKNj+MjwDpE3Yh9U46xlaBCHPTU9AoRQYzmuDjHrgQCnJ94uqHcF2jKEPobK/qv8SevA10HaiBI4L4V/W6t0C66vHRC1yaCj8tAHpgstG6khBLFfFlmntUiWTSLM4wuz/++Jl4NmitdrTHZgOEiYCZsZfZo3AT94Z16aZLmhJH9ynBoT9G0+PgLakhxoNR7TXeuoMqfbZLaiAJTidG1wpcVEPKHc+dIh1mCtSEy5r4AYkxLxPM68SPpw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BrahB9vIs/xD0ekbiruVfXrR7wUMz8wZsw4xW5GNHwo=;
- b=O4/WXo6lLA77fmpoNIcRVHuC54Dbq9pwJgfCMegHzyJoDrHGr519EKNU0PVGPB7ji6YgrIDRv6XCzI9g51DZ1IUXu2G5DKOLbFwmM54ppEVyH8JAXGDpDbcrAtq6uSotem1xIZ3LY3cDmKUeatKxPsf8mN/yuxuzjShmC+ZfelC54UaMBlPcN6G2RvkqX9LZXFqMTKx6q/NQjjNMFi1lEjT3j4P0ZRHmSXr3KMijhJIsur6gqXRGhizfmP4dcTTy0IrFR2kyNF1GUqYWPl2HToOhb7/4GCteeL1Yi56kuR+TZc1U+CEqV056mh0M3jJ0r02dtRIj0xYdbgAv9D0PTg==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by SA1PR02MB8639.namprd02.prod.outlook.com (2603:10b6:806:1fe::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.39; Wed, 21 Feb
- 2024 07:07:04 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7292.036; Wed, 21 Feb 2024
- 07:07:04 +0000
-Message-ID: <b1ce8254-24e8-487e-8da0-d8916f53fcb4@nutanix.com>
-Date: Wed, 21 Feb 2024 12:36:57 +0530
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgk9-00062r-1W
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:10:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708499410;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=iqPLVOtSYfJum3uYFgOmy2G+Z0ylaCldui6mZhJ9mUo=;
+ b=CEmLShYx6z1p4MTjP6cpcXkIdIOiHTAmjQlql6BUNrqNMAcQELU6p0xZCTpZhFTiuoOn0T
+ 5Ugdrh+vfN7E7NLqvIJwCDnhG7X8qymyq21IoBntqbzKIZo28wsvPIN1lweUq9hImX4NmR
+ m2cuhEu//BUZIVbBNHieJ6BcLnn0UWc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-GJ_RzVtBN3-lGxDh_v9ezQ-1; Wed, 21 Feb 2024 02:10:08 -0500
+X-MC-Unique: GJ_RzVtBN3-lGxDh_v9ezQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a35ef7abe08so355151466b.2
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:10:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708499407; x=1709104207;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iqPLVOtSYfJum3uYFgOmy2G+Z0ylaCldui6mZhJ9mUo=;
+ b=HNLI0dszzq0lD651/murE9iz6zeUUTUkUH1dU6uhiplsXX5Xo98ne2qw/V4W9UdSS0
+ f4hV3LCo79uNX/rqbOjs84tW6M2fNmv8YzBuiLlHt+qL80hA3wdJTQxZzalPRXXY4ybn
+ fO3B2EeNbqrwRWEiDIGGeDO8AuhZV+8ax/jC60SLslMxhdMl5NErS+oRNvWHH2+iIVaT
+ sUndxQ4M5gKBRlhCcuvSoNaHJtX+08O80sJ+qkDQeyA4tusKUNiZ5rU2k8wH+U5KA2KV
+ rJaCSJCOlOH6qoR1uuDmBDPRnMo7ju2OdlM66QyE29C14ItOcBgCzaIL9uPrIMrABpkh
+ QWow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkel4Mwe/Eui46En9Ef+Wu10kGdwTKPMU4WZzAQ0ioD3RYCZ7PNYfLcJBgkvDNRnCq28g9ru2fnmJ1gGceZuQgdryZci8=
+X-Gm-Message-State: AOJu0YwKkz1wOBLZLe3mg+kro5SroOvoQHnNW5eaQQ9VZrCMRonhlT5Q
+ 34tYEbH9BRPpQl5seh/tfF5utKXyCL/2Te87XwIBPyxujUJkqYR00rAFnS6I0Cxp1Rin+lrkOka
+ AHlTSKZY7SVc2yF3zYUExvT+S0nS62ggWaVBDLimQXtF0bZmTQPTL
+X-Received: by 2002:a17:906:b354:b0:a3e:d450:d3e0 with SMTP id
+ cd20-20020a170906b35400b00a3ed450d3e0mr4092919ejb.43.1708499406851; 
+ Tue, 20 Feb 2024 23:10:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE25KHy+cN6vEuiQv3L6xRRLrOzjqxoxOykRBeu7xKLFg0eoKoZc3XZMYXNtZztyTc67rmOIA==
+X-Received: by 2002:a17:906:b354:b0:a3e:d450:d3e0 with SMTP id
+ cd20-20020a170906b35400b00a3ed450d3e0mr4092906ejb.43.1708499406575; 
+ Tue, 20 Feb 2024 23:10:06 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
+ [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
+ f6-20020a170906560600b00a3f106b6de9sm1043963ejq.216.2024.02.20.23.10.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 20 Feb 2024 23:10:06 -0800 (PST)
+Message-ID: <15a0b0cc-eb78-437f-b82f-72dab7a51fb9@redhat.com>
+Date: Wed, 21 Feb 2024 08:10:05 +0100
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qapi: Misc cleanups to migrate QAPIs
+Subject: Re: [PATCH 1/3] docs: Document that 32-bit Windows is unsupported
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Fabiano_Fid=C3=AAncio?= <fabiano@fidencio.org>,
- Fabiano Rosas <farosas@suse.de>
-References: <20240216195659.189091-1-het.gala@nutanix.com>
- <87edd61ezt.fsf@pond.sub.org>
-From: Het Gala <het.gala@nutanix.com>
-In-Reply-To: <87edd61ezt.fsf@pond.sub.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Yonggang Luo <luoyonggang@gmail.com>
+References: <20240220174412.155885-1-peter.maydell@linaro.org>
+ <20240220174412.155885-2-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240220174412.155885-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MA0PR01CA0070.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:ad::15) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|SA1PR02MB8639:EE_
-X-MS-Office365-Filtering-Correlation-Id: af43847d-8d2d-4bf4-4022-08dc32abb51c
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GiSexyOf0Ec7YIbsR6CbYtHv6EKvALfvaeQzgHQFoblesCvQsmQ17A704GRyg3JnwCaG9D4kIgB04F6S0TCdhO8tTDjb0V+VsDITMABgyncOSKOMH6ydrgmy5nwLAG0LcTuLgj4sgCW5sY9hAxGj9nnDmNynwoJdxfZFs1FTE27bubEinkcGxgz5cc1I1Nv2mf4g267Ocd3LvgXC5p+08DYwY5vopgTSG607vpLm0vKpzxZOPdyrhk8gqJs4TjR0W01UUY+ubAylbYNfRSfh8JDuI5PXCKsQcurmymo4mBGYYL2lMQJoL2+4tmXUt/NcefkFYZmdV2gCMowkJQGJzsG3rUag2qz/3XzkgY8j+uVk/jWeKy73Vpz4uKpL1Hy3Jx3X0AtDLYKxDadcUNbe6aMFJ7s4WCOe5qcFp1UJBnMA+AryOflD89Z+Gt1ZZLEv5Fl9HyALy0hl/Ql9cPKXPZoN2WZK5cYm6ERWy0YNEtuLaxI9ONxigQ+G4HrnDZ4Az9tKx83eAcao+5odPCObq7O2GkViVFTmEsLAPvZdCoo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bWN5VncrQ1RzQmlwMW9LQUZIemh1bDFmQUxmQ09ocjc4bXB3NTBaZkgyQ2tZ?=
- =?utf-8?B?cGwyckNNWk91NzZRTGs2VloxUDRRNXhjVGZtTWFlVVBUZGNpdC8xdUVlOVFF?=
- =?utf-8?B?U3JxeW8yMVNqTVlQQVhJSzdLaFVvSGg2dnFEbWsrRzNYd0UrWWlqdFFqdVpu?=
- =?utf-8?B?VnFsVDlPWUpyT1BXTHM3bm5FU0wzVmpCVkM2VVhXd2dFVHIrU3J0N0ZtY0Rw?=
- =?utf-8?B?VVY5QUtGaTVleWprb3VCajRhNjZicUpIQW0rYVpLZHFNa2MzdFkxV2ZVMDJj?=
- =?utf-8?B?Vmw5VW5JZ05yWTJiTU9HL3o4T3VkMHhkOTBDUW5nT1YyVXd2QUZSQjFSU3dM?=
- =?utf-8?B?OFF1dy9JNUkvVzlTMXNtVnFaN0R3cXlOWjAwT2tWUWs1U2E3czZJWk45YWpx?=
- =?utf-8?B?aHpNZGhlbVROZzNTNENjVGZvUUQ3OEVYWW11OE9nbFREeE9UWE85QVB2cElj?=
- =?utf-8?B?dXdHcXFRdTVZSjVlOUV4NDR3YTU3TVBwc1NOeFRlQXIwWFFObWpvUEd1bnRi?=
- =?utf-8?B?WWNqK1FQUGFRVEJZV0lTU1QvblZUcGJla3VXeUY4eUlWMFRaZW1NVlBCLzAv?=
- =?utf-8?B?ZWp4NkRrak1YS2sxWERGRGdHZEhIWFQxQ05CbW9tVncxbmJPT0laaUJ3TUNE?=
- =?utf-8?B?dTI2OTc4ZGRwWVBZUkdSOFVKbG9KMmJ6T08xS1F6NnhuQ1NsbVA1dzZnMW9V?=
- =?utf-8?B?YXp2WmlmSU4xNzRDM3J0MTVJWmJkeWtyZ3JSR0tZeVlNeitoaWFkVGlnUDBZ?=
- =?utf-8?B?RTI3RjJ3aFNIY2RFZHNMYUtjM2xNa2JFMGtoTlY2d0lOMWVuYnRJc0YzbTg0?=
- =?utf-8?B?ODhFT3JCejNoTDdCVVhqSlBKWk81Yy9yZlFxT2N3NHdZc0tEanY4ZnhYc1Vt?=
- =?utf-8?B?a0ZDY2pZZWpHOWpoblpBVTZvaXQxV2JnV0F2QmVKRFFqVVdOczByUEM0eXFs?=
- =?utf-8?B?TFcydFI4d0VYRU9Ca3daSU9leVdZb0pVUFN2TmlJNVdOc1VZWmxrNHhlMWl6?=
- =?utf-8?B?VnF4RTA2T2xNSG9Wd2FhM0x6NWRzK0F0b3NwWGU0czdwY2Z4VEV4dHUzQkhz?=
- =?utf-8?B?YjU4S0lQaXdUZDg5YU9kaGszS0t1UDMrVElITFdhVHdKSHVNU0thT2tocmZV?=
- =?utf-8?B?b0MvanRjTDExT2R2RVE2QUpOS1E3VUVCc0w5cU9KMTNVR3l3MEVqS2srWXBF?=
- =?utf-8?B?dksycWVVTXhYN0lwVlB2amVuNnFqdkExQzhNVlBYeXFmbXNuTzVTKzRSNE1R?=
- =?utf-8?B?bWpkckY3bldGZ0JsNVVZbllJbjdMMDFQNUtmT2VJRHZVLzJJOU56WmpMNmdM?=
- =?utf-8?B?Q1B6VlA3d1h0VHM3Mm1sQlE2WjczdjkwK0pyUEVIVEc1MTg5Um1XUE1TZzNF?=
- =?utf-8?B?ZTNlYkxTU0xVWTdlWGpUbE9qaDhvSm5CQ2hHMHJYMytIYmt6WW5lTXB2bEI5?=
- =?utf-8?B?d2xGbTI1TTh0Rnc5U0VkL0NuZ1N1empSNWJDcmdOTFU5VWMxQ3BWSW5CVEZF?=
- =?utf-8?B?OVFxSExlU0RDa2QwT08vRENzUFdnaTVmRExXMCtFR08vZ01KRzBvTGF6bUg5?=
- =?utf-8?B?QjlBSE5GNEtCODNwKzJ6Zlo2QXRkb0V0OUt4eWhpVzJuMzlRMjZlejJEY2xR?=
- =?utf-8?B?T1Yzc2ROb05zaWZPdkRxL1NXQlhaNHM2T3FNa1BWMU91a1ZTNlBQcU9sMGNm?=
- =?utf-8?B?SHhjTFNGeWsxazZUT1IwenNtTGFDdlZQU1JQQzcrYkRZQ08zNDJyT0JCbzBl?=
- =?utf-8?B?RnpNemNQdVluUDZGVW9oakdlVGRPbU50Snp3ZTlqdlB4bnFWOE5QYVJRSVBS?=
- =?utf-8?B?TDZNYVBHNHJsbGZWcEdRWnhmTEM2NG05SWhrMjhrdGhackRJSjhmR1lqY3Fs?=
- =?utf-8?B?T01OVWlmVVU4OEwxdHQ0d21KTjdCOE45VkgydmhOZFhVSHd6dEpZdlU1TW9U?=
- =?utf-8?B?QW42REt4SGl4cjI4RVlucUg2VXVWSFNTUFNDMk8zSXA5TWtUSW51Y2x3cDcr?=
- =?utf-8?B?S2QvZFZVVm5jKzFDUExTWXY0S2FPaEJaSHYrVWNYVDd5c0lvS2NPTmV4S0RS?=
- =?utf-8?B?QXNZNWFSaDdqYXlwUHJjNjkvMVp1ZGZlTi9Da2xldEFqRS82ZTljN0pYTk56?=
- =?utf-8?Q?y9fpzqRLEtFBcj7MNZVSCRKFE?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: af43847d-8d2d-4bf4-4022-08dc32abb51c
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Feb 2024 07:07:04.0194 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: O+x7kLvmrC97LRRNeKXFRGaT8/73s+tWo5fvGPokgpsVWvqIRN7Ag+FnYZRFwJfqLWV0iFpxi8SSNUoFaQetwQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR02MB8639
-X-Proofpoint-ORIG-GUID: RU_15B-ABjWxBJe51RqMv2n_11KQTRLY
-X-Proofpoint-GUID: RU_15B-ABjWxBJe51RqMv2n_11KQTRLY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -169,87 +146,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry Markus, firstly I thought its just regarding qapi documentation so 
-migration maintainers might not be needed ? but then I realize the 
-commit message fails to specify that
+On 20/02/2024 18.44, Peter Maydell wrote:
+> ---
+>   docs/about/build-platforms.rst  |  2 ++
+>   docs/about/removed-features.rst | 15 +++++++++++++++
+>   2 files changed, 17 insertions(+)
+> 
+> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+> index f2a7aec56ff..8fd7da140a3 100644
+> --- a/docs/about/build-platforms.rst
+> +++ b/docs/about/build-platforms.rst
+> @@ -139,6 +139,8 @@ unprivileged accounts can create symlinks if Developer Mode is enabled.
+>   When Developer Mode is not available/enabled, the SeCreateSymbolicLinkPrivilege
+>   privilege is required, or the process must be run as an administrator.
+>   
+> +Only 64-bit Windows is supported.
+...
 
-IIRC, you are one of the maintainers for qapi. So, just cc'd to you, but 
-you are right, should have done to migration maintainers also.
 
-Have we got the wrong Fabiano here ? Isn't Fabiano Rosas the migration 
-maintainer ?
-
-cc'ing to Fabiano Rosas too.
-
-On 21/02/24 12:27 pm, Markus Armbruster wrote:
-> You neglected to cc: migration maintainers; I'm doing that for you now.
->
-> Peter or Fabiano, please have a look.
->
-> Het Gala <het.gala@nutanix.com> writes:
->
->> Signed-off-by: Het Gala <het.gala@nutanix.com>
->> ---
->>   qapi/migration.json | 13 +++++++------
->>   1 file changed, 7 insertions(+), 6 deletions(-)
->>
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index 5a565d9b8d..5756e650b0 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -1728,6 +1728,7 @@
->>   #
->>   # -> { "execute": "migrate", "arguments": { "uri": "tcp:0:4446" } }
->>   # <- { "return": {} }
->> +#
->>   # -> { "execute": "migrate",
->>   #      "arguments": {
->>   #          "channels": [ { "channel-type": "main",
->> @@ -1796,19 +1797,19 @@
->>   #
->>   #     3. The uri format is the same as for -incoming
->>   #
->> -#     5. For now, number of migration streams is restricted to one,
->> +#     4. For now, number of migration streams is restricted to one,
->>   #        i.e number of items in 'channels' list is just 1.
->>   #
->> -#     4. The 'uri' and 'channels' arguments are mutually exclusive;
->> +#     5. The 'uri' and 'channels' arguments are mutually exclusive;
->>   #        exactly one of the two should be present.
->>   #
->>   # Example:
->>   #
->>   # -> { "execute": "migrate-incoming",
->> -#      "arguments": { "uri": "tcp::4446" } }
->> +#      "arguments": { "uri": "tcp:0:4446" } }
->>   # <- { "return": {} }
->>   #
->> -# -> { "execute": "migrate",
->> +# -> { "execute": "migrate-incoming",
->>   #      "arguments": {
->>   #          "channels": [ { "channel-type": "main",
->>   #                          "addr": { "transport": "socket",
->> @@ -1817,7 +1818,7 @@
->>   #                                    "port": "1050" } } ] } }
->>   # <- { "return": {} }
->>   #
->> -# -> { "execute": "migrate",
->> +# -> { "execute": "migrate-incoming",
->>   #      "arguments": {
->>   #          "channels": [ { "channel-type": "main",
->>   #                          "addr": { "transport": "exec",
->> @@ -1825,7 +1826,7 @@
->>   #                                              "/some/sock" ] } } ] } }
->>   # <- { "return": {} }
->>   #
->> -# -> { "execute": "migrate",
->> +# -> { "execute": "migrate-incoming",
->>   #      "arguments": {
->>   #          "channels": [ { "channel-type": "main",
->>   #                          "addr": { "transport": "rdma",
-
-Regards,
-
-Het Gala
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
