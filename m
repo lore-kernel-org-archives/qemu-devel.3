@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E103CC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A6FC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:51:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcrez-0007lg-6C; Wed, 21 Feb 2024 13:49:37 -0500
+	id 1rcrfq-0008VU-JT; Wed, 21 Feb 2024 13:50:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrex-0007lC-Gi
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:49:35 -0500
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcrfp-0008UV-MM
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:50:29 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrei-0007iP-KV
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:49:35 -0500
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-4cb26623dc1so1101277e0c.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:49:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcrfY-0007zA-UV
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:50:29 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e486abf3a5so1179272b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:50:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708541359; x=1709146159; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1708541411; x=1709146211; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9kOcMGExMW1vcux9Gf3eZVPIP6XqBWuIIEYyKwaDkOk=;
- b=IVKtkFxJIfPnB9GmaFQkP+LPGo2MiV8Gx47bWVkJc1702C5kA4YiEZ9dQM1OF4Astn
- 2hvlftnnXu6y0sR2C1pjBeaiydulK6lC9JE5nXc7AZvtE9GvUU6RgM5yz4l8UfRqku3e
- 4kYdBdNLJ+feMLue5BMJApUQqz/DMcxLJC2RGH0z+x5wDntIK3dJ4j6qXoeBSrAxFcZF
- rwDgzaeOtWZkG429RhZZRb5TA9DkQSmsykPdebzknVg8Guaou8GxhTYUEMWn4ituT9IN
- Rfn0RZtI/LCghlygp15Unwudr8HzaRE795Eu/AB6zq/Fi/RcWZkLlzCZ/oGjISTwImoT
- 92uA==
+ bh=9xIiLvRY3xbhfc35tIkJp/NU/J0+jshpKxjq/sU0Ku0=;
+ b=aEFOGx3QW1by9ld1l84XpFPa9YBfpCW2Y/02/ucrJnX5+TsY43mCvbobFt4icEdg6Y
+ mgIccFvTgp+EBAuV2z/vVjAkazl75sKgOh01gLTVuR/4fjar/82M7ty9zd/VsCUoCecb
+ 17AaS6EEy8TDjSEcck5NBYWsqhDF+mDt29WqfotIJOeKCpAgdcEDwuJW6ZSf5/j3huRf
+ hO8mYvXg8ONgsbR6j9US7gLeu2clTpn0CxNbWK++A1UHtMnc0hYOoZc/8emuSIO5NhqJ
+ nfLQedNjaCGVFqeSc104Thoe8gqWDfq45jR2MkS5SaMUqAnC3NXzWP0BnHDo8QPdUYJE
+ /q8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708541359; x=1709146159;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1708541411; x=1709146211;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9kOcMGExMW1vcux9Gf3eZVPIP6XqBWuIIEYyKwaDkOk=;
- b=bmFWzC+S+Ks/XjWWrLkZkFvgc9LAD+G7GpAOF9A5obSZ+daMj0iGW1jgfnO/KiPWx9
- cHlWlOAklW+llTK2SOvpJiNqFnRqz8fec8PFlMDOfoBLF6y2zPrn1nUHlCaloMWgVcfJ
- GiqYNzy042h2HdH03j6CcPFXu9cNOkhHns65qjw4Jmy8EACRrLsD+dXQjHQvR9dT8EfF
- LXt81V9pFqaBaVxZnFO5jDX8mZpAazsPSkWvMb/3oCgDfOoqJUOtuSwz+C277TVcT0NF
- zwhdhBddE3aQl1LliJUZ+G+6KMlWIF1FijB5YrYe/ZyhcOns1f1ntX9pVxDeb1Syyqqu
- FbjQ==
+ bh=9xIiLvRY3xbhfc35tIkJp/NU/J0+jshpKxjq/sU0Ku0=;
+ b=DAzldHQcIe3gY8H6arOC3ysOkHnIOMV5NpzSMo38CuTPa8wVXIkOPN25hF83Ze0+9o
+ EeMdNUzNoMotrQ9oRMy/sRlCByaAFidI0B/f/8yA39r23hBTH4QQqpGVbCf3ExpwXW+Z
+ 1RLIHSW5f0sLNvkk++wDX+Pr1NKQM8L7FIv2L4APSmfQZKk+HwigULxi1fWPR6JyaGNH
+ eRQh54dGYxYl8Jto5ceMeF0X3oDTbnN2TqOU+hu7EnleBUp7AzFknaI9Lb3sIaI+OXM5
+ Yw/V2T6/lw10Mbkcp1DGcrggOWLeMaCOIggqx6Y3gr8j+22BUh75MtNB/J2ahjWAxmDi
+ wmfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXcu6wnBcbu9eOuVXUa8BkqDHkPBsUVa6//vVLC8PjTTGZs/uUXgx9f++KZy1DOHlMVKfyNjVWkwtT1Gm+porMwfEZ7+6M=
-X-Gm-Message-State: AOJu0YwxYqdGnBMXiz12slDvInfSpzokPDqEoodMA/eQzOInpt+XQ+Gq
- q6mfVDqzXo6WflujmvvQcSWLdvcrcZKZ6G8H2babZXVZxOLsFKwGzAyx8LelsSI=
-X-Google-Smtp-Source: AGHT+IFtGsUG1KSyW0kDXOgQ9Ip0F3RPXNe2b/RiZbA3zU9uYvywmn4AfsLWfF6mAHUZoSaAyoFrFw==
-X-Received: by 2002:a1f:d847:0:b0:4c0:683a:d114 with SMTP id
- p68-20020a1fd847000000b004c0683ad114mr16283351vkg.15.1708541359369; 
- Wed, 21 Feb 2024 10:49:19 -0800 (PST)
-Received: from [192.168.221.175] ([93.23.14.172])
- by smtp.gmail.com with ESMTPSA id
- u10-20020a0cb68a000000b0068f785b1cfbsm3274445qvd.64.2024.02.21.10.49.17
+ AJvYcCV4bmYz1NzjkhHq/dRD8M7n50kIcjhq92x7mKd/Srf89LkUUApV3/yTx4aPwwamibGv9rxvR8X57KhOKirx8nFYRWND/Cw=
+X-Gm-Message-State: AOJu0YwF0wJxj7VN5vU8+l3wIHa4nYNfcin9Ljz4l7Pj6qyp74HQJjAZ
+ JrivUFVu4MzpeiT4T5onBr9cXC9A4qvlRWGKSqVunwLz3ypCu5+2KWUbjhaiTqs=
+X-Google-Smtp-Source: AGHT+IEMjJbY6FSCj+U/FAZzmCFE/bxTRWubIwR3SO02b2u6RaEuC7saLXQHphJjbsH8SN7IOiPxAw==
+X-Received: by 2002:a05:6a21:168d:b0:19e:9c82:b139 with SMTP id
+ np13-20020a056a21168d00b0019e9c82b139mr17733965pzb.45.1708541411185; 
+ Wed, 21 Feb 2024 10:50:11 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ ka36-20020a056a0093a400b006e48e0499dfsm1866046pfb.39.2024.02.21.10.50.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 10:49:18 -0800 (PST)
-Message-ID: <1ed3ee21-20ff-4503-98ea-de00c490b83a@linaro.org>
-Date: Wed, 21 Feb 2024 19:49:15 +0100
+ Wed, 21 Feb 2024 10:50:10 -0800 (PST)
+Message-ID: <5f25d9cf-3ca0-4adb-860e-71a8fac3b504@linaro.org>
+Date: Wed, 21 Feb 2024 08:50:07 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sparc/leon3: Fix wrong usage of DO_UPCAST macro
+Subject: Re: [RFC PATCH v2 03/22] target/arm: Add PSTATE.ALLINT
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Frederic Konrad <konrad.frederic@yahoo.fr>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240221180751.190489-1-thuth@redhat.com>
- <99813a8e-45ec-460e-a944-c696eb853b75@linaro.org>
-In-Reply-To: <99813a8e-45ec-460e-a944-c696eb853b75@linaro.org>
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
+ <20240221130823.677762-4-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240221130823.677762-4-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=philmd@linaro.org; helo=mail-vk1-xa2f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,35 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/2/24 19:47, Philippe Mathieu-Daudé wrote:
-> On 21/2/24 19:07, Thomas Huth wrote:
->> leon3.c currently fails to compile with some compilers when the -Wvla
->> option has been enabled:
->>
->>   ../hw/sparc/leon3.c: In function ‘leon3_cpu_reset’:
->>   ../hw/sparc/leon3.c:153:5: error: ISO C90 forbids variable length array
->>    ‘offset_must_be_zero’ [-Werror=vla]
->>     153 |     ResetData *s = (ResetData *)DO_UPCAST(ResetData, 
->> info[id], info);
->>         |     ^~~~~~~~~
->>   cc1: all warnings being treated as errors
->>
->> Looking at this code, the DO_UPCAST macro is indeed used in a wrong way
->> here: DO_UPCAST is supposed to check that the second parameter is the
->> first entry of the struct that the first parameter indicates, but since
->> we use and index into the info[] array, this of course cannot work.
->>
->> The intention here was likely rather to use the container_of() macro
->> instead, so switch the code accordingly.
-
-Fixes: d65aba8286 ("hw/sparc/leon3: implement multiprocessor")
-
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   hw/sparc/leon3.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
+On 2/21/24 03:08, Jinjie Ruan via wrote:
+> The ALLINT bit in PSTATE is used to mask all IRQ or FIQ interrupts.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Place this in its own field within ENV, as that will
+> make it easier to reset from within TCG generated code.
 > 
+> With the change to pstate_read/write, exception entry
+> and return are automatically handled.
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> ---
+>   target/arm/cpu.c | 3 +++
+>   target/arm/cpu.h | 9 +++++++--
+>   2 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 5fa86bc8d5..5e5978c302 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -1104,6 +1104,9 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>       if (cpu_isar_feature(aa64_bti, cpu)) {
+>           qemu_fprintf(f, "  BTYPE=%d", (psr & PSTATE_BTYPE) >> 10);
+>       }
+> +    if (cpu_isar_feature(aa64_nmi, cpu)) {
+> +        qemu_fprintf(f, "  ALLINT=%d", (psr & PSTATE_ALLINT) >> 13);
+> +    }
 
+This is one bit -- !!(psr & ALLINT) is better
+
+We don't individually print DAIF either; why is this bit more special?
+
+> @@ -224,6 +224,7 @@ typedef struct CPUArchState {
+>        *    semantics as for AArch32, as described in the comments on each field)
+>        *  nRW (also known as M[4]) is kept, inverted, in env->aarch64
+>        *  DAIF (exception masks) are kept in env->daif
+> +     *  ALLINT (all IRQ or FIQ interrupts masks) are kept in env->allint
+>        *  BTYPE is kept in env->btype
+>        *  SM and ZA are kept in env->svcr
+>        *  all other bits are stored in their correct places in env->pstate
+> @@ -261,6 +262,7 @@ typedef struct CPUArchState {
+>       uint32_t btype;  /* BTI branch type.  spsr[11:10].  */
+>       uint64_t daif; /* exception masks, in the bits they are in PSTATE */
+>       uint64_t svcr; /* PSTATE.{SM,ZA} in the bits they are in SVCR */
+> +    uint64_t allint; /* All IRQ or FIQ interrupt mask, in the bit in PSTATE */
+
+Why is this split out from env->pstate?
+
+The allint bit matches the documentation for SPSR_EL1, which is how env->pstate is 
+documented.  The other exclusions have some performance imperative which I don't see for 
+allint.
+
+
+r~
 
