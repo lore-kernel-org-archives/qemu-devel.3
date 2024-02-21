@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2BE4C5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701BEC5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcrKV-00018R-59; Wed, 21 Feb 2024 13:28:27 -0500
+	id 1rcrKh-0001Ez-1i; Wed, 21 Feb 2024 13:28:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcrKT-00017w-5t
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:28:25 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrKf-00019w-EW
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:28:37 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcrKR-0004Rv-GK
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:28:24 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1dc1ff3ba1aso16722225ad.3
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:28:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrKd-0004Ss-Ra
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:28:37 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5643ae47cd3so5685674a12.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:28:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708540102; x=1709144902; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1708540114; x=1709144914; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dCt/xZht6j+ruMBWjNo94PLoSvyswCPBO6OZhq2J/tc=;
- b=KSGSrn3pXuWxy2PC0OnEvHCBKLC6ZLXjd/evEtoRC6SpkH2z9wkZIhTqBUQ/aLO0bn
- tSGPmYZVXbsY8GDjy+ogM7ZWpNN3b6Y5ahp1sMaOpbsJ0u9/J4lmdHOpHea4Exy59S5M
- c2GkSHVmJCwDc4s5Ss8ScVssnQuvAMmeqhQfJGB6fMqClsh4bSSRW4sRMcmMkPHxtK0G
- Z9ipreYg1h3biCaxau4Ao33ktfvNS2BDFJwM1q1UybHt4zNSFg+afdM7T6GhCM53xHIY
- MDXi7feA58fnrUaL5Co7HSbA+nrOWhy4WSWA6zqReasD+db65ZNuEaNbcj8byKXQXpLd
- +Wiw==
+ bh=MJM+r+s0wTNV2HO0+cw7G08B7u+MlVStAvZBZDGHhnc=;
+ b=ZpMBZrpDpnHtWy1g6mfr95Uw86oKJMz2gsHRCnFPAaISbeAuUWfo1Gf1pSUkNW6vGR
+ 7c09E/gx8Xtr0fxVzzPPCCnC8NlSV+AzQdHMs6XOnJ4SGhDWC/FXf6diXzLMdEgihozA
+ d6lfPXIO824TNzz6+8mpZNesPrbBDzL9HWs22keb1px1oRRCcWyt39JqERYCFbOZyju5
+ yD4mS1WuWMvO/VQhRjePHpurW9sBd5Z8LysKDxFs5LonGrVDjen8keE5xx5Q+Ikygj8g
+ +3WmI/XXYidi7IreyPgdr8FMM5GJjxhF9ImS7KaDqJ4uxO0+EkWnMVj2hwnSuhFPwK3X
+ Alww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708540102; x=1709144902;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1708540114; x=1709144914;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dCt/xZht6j+ruMBWjNo94PLoSvyswCPBO6OZhq2J/tc=;
- b=rPDqwgMjsE/GMrEI1WW2qeQ31SBuNUWY5Ow/GZhW6ea4e7NnpWysLnP2Jm88VUDVS8
- KiQKmwtigpLVkubD8J9H9C5q60Q7glUh+PRqiS2eyRCOW3pK06wNuofbPAZX4tBqIbyG
- wMwd0BHOIifCPL+jE/LWA0wHyMtgntLcwKgJZP20Tsgd+/l8JoYndR/F1Q85KauKAFld
- pgF7Y32KQnsjcuCHGsPcKScFEIpBFdlSiA639Tjqkg4oP+1SCNCgc52cfUPZcJjyo36z
- ghnIeYmr8R+9KZuFA1Gi7AUqir0qL/nNXAx/Pt7kAX76MTy8nAjUzQ75AJaYoR1Kfcm4
- ax8Q==
+ bh=MJM+r+s0wTNV2HO0+cw7G08B7u+MlVStAvZBZDGHhnc=;
+ b=plo9rAF2wYTydba3B71vHlbQ4YaLmyEy1lSPeF7sGdelbokWvBQZeaQqZJlB9Zp+vx
+ ufvHCMRetDzYOE27HKfSdU7GP1ME2EakWlLeMPFC8nSz9mngOvpw4Ht2ogzyBp+Qh0NN
+ aMAfZ/iowaMDQ5rrGAmvZpjXTQX82ns3IfwJFog+22s25/HJo5VAcJ3DyzC466vtdmSf
+ 7Z1ZFn6Lf2ASGTwO7oGCiJqJo1JxhqZF5Hd2cLEdHLlu9CqfknEY+f+oFTUKdP8Y8ryR
+ UPGCTBQG8OQBX8go3wszhLKLk0psCX5WYJcV25+5keCbzJD8YHwtXVixH2aYdP5OwUH1
+ OvJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6W/YZ3WogaDDt1oVmkrfeborXP8n9/w9ARa8jD7KhI5X8xFLuDzNZI+2gpGK9qQcdIMj9GJCtslNyE1zszmNM+AQjjOo=
-X-Gm-Message-State: AOJu0YwxFUb21zOUMywEH51FYjRgLpG8O6V7Ahbv2veUV2/kix+kp+EV
- PcltqHfZXqnk5GswUKt+gAqat2DFtGpfBpAv4CN4tiO+xUgGmMb9/PU7qO2vyUk=
-X-Google-Smtp-Source: AGHT+IHxvRqtY4vjRpo3w0jYmUbW2KS1vgZrs/S0MZCdIMXH84FvY+bHKsPORHZ5vVGgLPc1XwStew==
-X-Received: by 2002:a17:902:ccc2:b0:1dc:418f:c8a2 with SMTP id
- z2-20020a170902ccc200b001dc418fc8a2mr1172919ple.21.1708540101935; 
- Wed, 21 Feb 2024 10:28:21 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- kj4-20020a17090306c400b001db9c3d6506sm8452403plb.209.2024.02.21.10.28.20
+ AJvYcCWGuZ3vFRlI5MfhzmevLjTMbHDDyP1wrDDl2glkhG4ZeMzPrEKpKgamLO2/IMHIeuQzwUN/TvHpq6lsTY/nIXV2whFaDoQ=
+X-Gm-Message-State: AOJu0YxCnL+68lH89aSBGSr/F0ntMAiYBpxHXvBFT2Zp4EFZg4IlqHpf
+ dEoNPF23kDqGFXz2se1/Mij6wn8A3aGP2QwAZ3ld6teASvRxY1BCL5bL+nfC39s=
+X-Google-Smtp-Source: AGHT+IE39WmWmoSCw39MHK3dn4uEcN/pSQWWQVxXdEjfdDuOnwRQtQRTsL8npiLE5IqzWwDoAENH1Q==
+X-Received: by 2002:a17:906:6b0f:b0:a3e:cefe:722f with SMTP id
+ q15-20020a1709066b0f00b00a3ecefe722fmr5906108ejr.54.1708540114365; 
+ Wed, 21 Feb 2024 10:28:34 -0800 (PST)
+Received: from [192.168.221.175] ([93.23.14.172])
+ by smtp.gmail.com with ESMTPSA id
+ i18-20020a1709063c5200b00a3d5d8ff745sm5228635ejg.144.2024.02.21.10.28.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 10:28:21 -0800 (PST)
-Message-ID: <b6a427fd-80d0-486c-a1ac-ccf394713969@linaro.org>
-Date: Wed, 21 Feb 2024 08:28:17 -1000
+ Wed, 21 Feb 2024 10:28:33 -0800 (PST)
+Message-ID: <d042e9e4-081a-4761-9332-f22ab2cf1376@linaro.org>
+Date: Wed, 21 Feb 2024 19:28:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 02/22] target/arm: Handle HCR_EL2 accesses for bits
- introduced with FEAT_NMI
+Subject: Re: [PATCH v4 2/3] hw/i2c/smbus_slave: Add object path on error prints
 Content-Language: en-US
-To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20240221130823.677762-1-ruanjinjie@huawei.com>
- <20240221130823.677762-3-ruanjinjie@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240221130823.677762-3-ruanjinjie@huawei.com>
+To: Joe Komlodi <komlodi@google.com>, qemu-devel@nongnu.org
+Cc: venture@google.com, minyard@acm.org, peter.maydell@linaro.org
+References: <20240220211123.2664977-1-komlodi@google.com>
+ <20240220211123.2664977-3-komlodi@google.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240220211123.2664977-3-komlodi@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,17 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/21/24 03:08, Jinjie Ruan via wrote:
-> FEAT_NMI defines another new bit in HCRX_EL2: TALLINT. When the
-> feature is enabled, allow this bit to be written in HCRX_EL2.
+On 20/2/24 22:11, Joe Komlodi wrote:
+> The current logging doesn't tell us which specific smbus device is an
+> error state.
 > 
-> Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
+> Signed-off-by: Joe Komlodi <komlodi@google.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/cpu-features.h | 5 +++++
->   target/arm/helper.c       | 5 +++++
->   2 files changed, 10 insertions(+)
+>   hw/i2c/smbus_slave.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
+> index 1300c9ec72..9f9afc25a4 100644
+> --- a/hw/i2c/smbus_slave.c
+> +++ b/hw/i2c/smbus_slave.c
+> @@ -25,11 +25,15 @@
+>   #define DPRINTF(fmt, ...) \
+>   do { printf("smbus(%02x): " fmt , dev->i2c.address, ## __VA_ARGS__); } while (0)
+>   #define BADF(fmt, ...) \
+> -do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__); exit(1);} while (0)
+> +do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
+> +    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
+> +            exit(1); } while (0)
+>   #else
+>   #define DPRINTF(fmt, ...) do {} while(0)
+>   #define BADF(fmt, ...) \
+> -do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__);} while (0)
+> +do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
+> +    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
+> +             } while (0)
+>   #endif
+>   
+>   enum {
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Better convert to trace events, so we can enable tracing at runtime.
 
-r~
+Anyhow,
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
