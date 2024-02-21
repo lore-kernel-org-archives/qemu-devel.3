@@ -4,50 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB52BC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7527BC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoZG-0008Uy-Nn; Wed, 21 Feb 2024 10:31:31 -0500
+	id 1rcoZX-0002JG-FB; Wed, 21 Feb 2024 10:31:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoNs-0000Mc-Dk; Wed, 21 Feb 2024 10:19:44 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rcoPd-0005Yw-Kx
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:21:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcht9-0002TL-Kl; Wed, 21 Feb 2024 03:23:44 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F0AA34F3DD;
- Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B7A16860BC;
- Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
-Received: (nullmailer pid 2142081 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rcjGN-0006rN-9Y
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 04:51:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708509098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MZFrzMSAp3WcUMLxcFM+e6FN2UmU3TwbhgcKXD9+458=;
+ b=DBegrXGFJ+X+5O8++N3lL/edhDWMO9Ilys8nGiceLQN4/xQz8DXo8GcLdp4tckmLat8lD/
+ yO/X9JEly4r5SxnajxIkIxjJKF4AgUgW0y4gWzBcpl9t6Z9Z0NGqVpLX9b86uhRFjJCMrt
+ dmw5Le4AHX0jwUhO2DjhaLwFG9WTtxw=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-vIAzX9LdNFirbJxqFTn3vQ-1; Wed,
+ 21 Feb 2024 04:51:35 -0500
+X-MC-Unique: vIAzX9LdNFirbJxqFTn3vQ-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 590AD3804075;
+ Wed, 21 Feb 2024 09:51:35 +0000 (UTC)
+Received: from dhcp-8-237.nay.redhat.com (dhcp-8-237.nay.redhat.com
+ [10.66.8.237])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8445E492BE9;
+ Wed, 21 Feb 2024 09:51:33 +0000 (UTC)
+From: Dehan Meng <demeng@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ira Weiny <ira.weiny@intel.com>,
- Huai-Cheng Kuo <hchkuo@avery-design.com.tw>, Dave Jiang <dave.jiang@intel.com>,
- Fan Ni <fan.ni@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 31/60] cxl/cdat: Fix header sum value in CDAT checksum
-Date: Wed, 21 Feb 2024 11:20:19 +0300
-Message-Id: <20240221082058.2141850-31-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+Cc: demeng@redhat.com,
+	kkostiuk@redhat.com,
+	michael.roth@amd.com
+Subject: [PATCH] qga-win: Add support of Windows Server 2025 in get-osinfo
+ command
+Date: Wed, 21 Feb 2024 17:51:30 +0800
+Message-Id: <20240221095130.52711-1-demeng@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,61 +79,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ira Weiny <ira.weiny@intel.com>
+Add support of Windows Server 2025 in get-osinfo command
 
-The addition of the DCD support for CXL type-3 devices extended the CDAT
-table large enough that the checksum being returned was incorrect.[1]
+Signed-off-by: Dehan Meng <demeng@redhat.com>
+---
+ qga/commands-win32.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-This was because the checksum value was using the header length field
-rather than each of the 4 bytes of the length field.  This was
-previously not seen because the length of the CDAT data was less than
-256 thus resulting in an equivalent checksum value.
-
-Properly calculate the checksum for the CDAT header.
-
-[1] https://lore.kernel.org/all/20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com/
-
-Fixes: aba578bdace5 ("hw/cxl/cdat: CXL CDAT Data Object Exchange implementation")
-Cc: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-Message-Id: <20240126120132.24248-5-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 64fdad5e67587e88c2f1d8f294e89403856a4a31)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
-index 24829cf242..2fea975671 100644
---- a/hw/cxl/cxl-cdat.c
-+++ b/hw/cxl/cxl-cdat.c
-@@ -49,6 +49,7 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     g_autofree CDATTableHeader *cdat_header = NULL;
-     g_autofree CDATEntry *cdat_st = NULL;
-     uint8_t sum = 0;
-+    uint8_t *hdr_buf;
-     int ent, i;
- 
-     /* Use default table if fopen == NULL */
-@@ -95,8 +96,12 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     /* For now, no runtime updates */
-     cdat_header->sequence = 0;
-     cdat_header->length += sizeof(CDATTableHeader);
--    sum += cdat_header->revision + cdat_header->sequence +
--        cdat_header->length;
-+
-+    hdr_buf = (uint8_t *)cdat_header;
-+    for (i = 0; i < sizeof(*cdat_header); i++) {
-+        sum += hdr_buf[i];
-+    }
-+
-     /* Sum of all bytes including checksum must be 0 */
-     cdat_header->checksum = ~sum + 1;
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 697c65507c..f3c7e604c9 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -2154,6 +2154,7 @@ static ga_win_10_0_t const WIN_10_0_SERVER_VERSION_MATRIX[4] = {
+     {14393, "Microsoft Windows Server 2016",    "2016"},
+     {17763, "Microsoft Windows Server 2019",    "2019"},
+     {20344, "Microsoft Windows Server 2022",    "2022"},
++    {26040, "MIcrosoft Windows Server 2025",    "2025"},
+     {0, 0}
+ };
  
 -- 
-2.39.2
+2.35.1
 
 
