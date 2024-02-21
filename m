@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69FFDC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 272F5C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoWm-0007Fb-Dn; Wed, 21 Feb 2024 10:28:56 -0500
+	id 1rcoVw-00053b-Lr; Wed, 21 Feb 2024 10:28:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcoNr-00006H-38; Wed, 21 Feb 2024 10:19:43 -0500
+ id 1rcoNL-0003Wj-5E; Wed, 21 Feb 2024 10:19:11 -0500
 Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcmLy-0004rU-EH; Wed, 21 Feb 2024 08:09:39 -0500
+ id 1rcmM2-0004uC-DP; Wed, 21 Feb 2024 08:09:44 -0500
 Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TfxQ54ypPz2BdDj;
- Wed, 21 Feb 2024 21:07:25 +0800 (CST)
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TfxQB5bv9z2BdDw;
+ Wed, 21 Feb 2024 21:07:30 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id A092E140154;
- Wed, 21 Feb 2024 21:09:34 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id B66BA140154;
+ Wed, 21 Feb 2024 21:09:39 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
- 2024 21:09:34 +0800
+ 2024 21:09:39 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v2 15/22] hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
-Date: Wed, 21 Feb 2024 13:08:16 +0000
-Message-ID: <20240221130823.677762-16-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v2 21/22] hw/intc/arm_gicv3: Implement NMI interrupt
+ prioirty
+Date: Wed, 21 Feb 2024 13:08:22 +0000
+Message-ID: <20240221130823.677762-22-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240221130823.677762-1-ruanjinjie@huawei.com>
 References: <20240221130823.677762-1-ruanjinjie@huawei.com>
@@ -69,74 +70,142 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add GICR_INMIR0 register and support access GICR_INMIR0.
+If GICD_CTLR_DS bit is zero and the NMI is non-secure, the NMI prioirty
+is higher than 0x80, otherwise it is higher than 0x0. And save NMI
+super prioirty information in hppi.superprio to deliver NMI exception.
+Since both GICR and GICD can deliver NMI, it is both necessary to check
+whether the pending irq is NMI in gicv3_redist_update_noirqset and
+gicv3_update_noirqset. And In irqbetter(), only a non-NMI with the same
+priority and a smaller interrupt number can be preempted but not NMI.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/intc/arm_gicv3_redist.c | 23 +++++++++++++++++++++++
- hw/intc/gicv3_internal.h   |  1 +
- 2 files changed, 24 insertions(+)
+ hw/intc/arm_gicv3.c | 61 +++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 54 insertions(+), 7 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
-index 8153525849..87e7823f34 100644
---- a/hw/intc/arm_gicv3_redist.c
-+++ b/hw/intc/arm_gicv3_redist.c
-@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
-     return extract32(cs->gicr_nsacr, irq * 2, 2);
- }
+diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
+index 0b8f79a122..e3281cffdc 100644
+--- a/hw/intc/arm_gicv3.c
++++ b/hw/intc/arm_gicv3.c
+@@ -21,7 +21,7 @@
+ #include "hw/intc/arm_gicv3.h"
+ #include "gicv3_internal.h"
  
-+static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-+                                  uint32_t *reg, uint32_t val)
-+{
-+    /* Helper routine to implement writing to a "set" register */
-+    val &= mask_group(cs, attrs);
-+    *reg = val;
-+    gicv3_redist_update(cs);
-+}
-+
- static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
-                                       uint32_t *reg, uint32_t val)
+-static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
++static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio, bool is_nmi)
  {
-@@ -406,6 +415,13 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
-         *data = value;
-         return MEMTX_OK;
+     /* Return true if this IRQ at this priority should take
+      * precedence over the current recorded highest priority
+@@ -33,11 +33,21 @@ static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
+     if (prio < cs->hppi.prio) {
+         return true;
      }
-+    case GICR_INMIR0:
-+        if (!cs->gic->nmi_support) {
-+            *data = 0;
-+            return MEMTX_OK;
-+        }
-+        *data = gicr_read_bitmap_reg(cs, attrs, cs->gicr_isuperprio);
-+        return MEMTX_OK;
-     case GICR_ICFGR0:
-     case GICR_ICFGR1:
-     {
-@@ -555,6 +571,13 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
-         gicv3_redist_update(cs);
-         return MEMTX_OK;
-     }
-+    case GICR_INMIR0:
-+        if (!cs->gic->nmi_support) {
-+            return MEMTX_OK;
-+        }
-+        gicr_write_bitmap_reg(cs, attrs, &cs->gicr_isuperprio, value);
-+        return MEMTX_OK;
 +
-     case GICR_ICFGR0:
-         /* Register is all RAZ/WI or RAO/WI bits */
-         return MEMTX_OK;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index 29d5cdc1b6..f35b7d2f03 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -109,6 +109,7 @@
- #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
- #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
- #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
-+#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
++    /*
++     * Current highest prioirity pending interrupt is not a NMI
++     * and the new IRQ is a NMI with same priority.
++     */
++    if (prio == cs->hppi.prio && !cs->hppi.superprio && is_nmi) {
++        return true;
++    }
++
+     /* If multiple pending interrupts have the same priority then it is an
+      * IMPDEF choice which of them to signal to the CPU. We choose to
+      * signal the one with the lowest interrupt number.
+      */
+-    if (prio == cs->hppi.prio && irq <= cs->hppi.irq) {
++    if (prio == cs->hppi.prio && !cs->hppi.superprio &&
++        !is_nmi && irq <= cs->hppi.irq) {
+         return true;
+     }
+     return false;
+@@ -141,6 +151,8 @@ static void gicv3_redist_update_noirqset(GICv3CPUState *cs)
+     uint8_t prio;
+     int i;
+     uint32_t pend;
++    bool is_nmi = 0;
++    uint32_t superprio = 0;
  
- /* VLPI redistributor registers, offsets from VLPI_base */
- #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
+     /* Find out which redistributor interrupts are eligible to be
+      * signaled to the CPU interface.
+@@ -152,10 +164,26 @@ static void gicv3_redist_update_noirqset(GICv3CPUState *cs)
+             if (!(pend & (1 << i))) {
+                 continue;
+             }
+-            prio = cs->gicr_ipriorityr[i];
+-            if (irqbetter(cs, i, prio)) {
++            superprio = extract32(cs->gicr_isuperprio, i, 1);
++
++            /* NMI */
++            if (superprio) {
++                is_nmi = 1;
++
++                /* DS = 0 & Non-secure NMI */
++                if ((!(cs->gic->gicd_ctlr & GICD_CTLR_DS)) &&
++                    extract32(cs->gicr_igroupr0, i, 1))
++                    prio = 0x80;
++                else
++                    prio = 0x0;
++            } else {
++               is_nmi = 0;
++               prio = cs->gicr_ipriorityr[i];
++            }
++            if (irqbetter(cs, i, prio, is_nmi)) {
+                 cs->hppi.irq = i;
+                 cs->hppi.prio = prio;
++                cs->hppi.superprio = is_nmi;
+                 seenbetter = true;
+             }
+         }
+@@ -168,7 +196,7 @@ static void gicv3_redist_update_noirqset(GICv3CPUState *cs)
+     if ((cs->gicr_ctlr & GICR_CTLR_ENABLE_LPIS) && cs->gic->lpi_enable &&
+         (cs->gic->gicd_ctlr & GICD_CTLR_EN_GRP1NS) &&
+         (cs->hpplpi.prio != 0xff)) {
+-        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio)) {
++        if (irqbetter(cs, cs->hpplpi.irq, cs->hpplpi.prio, false)) {
+             cs->hppi.irq = cs->hpplpi.irq;
+             cs->hppi.prio = cs->hpplpi.prio;
+             cs->hppi.grp = cs->hpplpi.grp;
+@@ -212,7 +240,9 @@ static void gicv3_update_noirqset(GICv3State *s, int start, int len)
+ {
+     int i;
+     uint8_t prio;
++    bool is_nmi = 0;
+     uint32_t pend = 0;
++    uint32_t superprio = 0;
+ 
+     assert(start >= GIC_INTERNAL);
+     assert(len > 0);
+@@ -240,10 +270,27 @@ static void gicv3_update_noirqset(GICv3State *s, int start, int len)
+              */
+             continue;
+         }
+-        prio = s->gicd_ipriority[i];
+-        if (irqbetter(cs, i, prio)) {
++
++        superprio = *gic_bmp_ptr32(s->superprio, i);
++        /* NMI */
++        if (superprio & (1 << (i & 0x1f))) {
++            is_nmi = 1;
++
++            /* DS = 0 & Non-secure NMI */
++            if ((!(s->gicd_ctlr & GICD_CTLR_DS)) &&
++                gicv3_gicd_group_test(s, i))
++                    prio = 0x80;
++            else
++                    prio = 0x0;
++        } else {
++            is_nmi = 0;
++            prio = s->gicd_ipriority[i];
++        }
++
++        if (irqbetter(cs, i, prio, is_nmi)) {
+             cs->hppi.irq = i;
+             cs->hppi.prio = prio;
++            cs->hppi.superprio = is_nmi;
+             cs->seenbetter = true;
+         }
+     }
 -- 
 2.34.1
 
