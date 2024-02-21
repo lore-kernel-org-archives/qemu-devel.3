@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F7CC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12D8C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcrT4-0005MN-MB; Wed, 21 Feb 2024 13:37:18 -0500
+	id 1rcrYo-0002Dr-DM; Wed, 21 Feb 2024 13:43:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrT3-0005LO-4r
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:37:17 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrYm-0002CW-WD
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:43:13 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrT1-00062c-EW
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:37:16 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a3e72ec566aso126154666b.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:37:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcrYl-0006em-Er
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:43:12 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a3e550ef31cso95973566b.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:43:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708540633; x=1709145433; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708540989; x=1709145789; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yrKXObd+UTfgg0nkPQ5SnoLv8F/U/VagFm3n3E/xOQw=;
- b=gdqdQ/x/Zw8UcUK42GuiSEb+akZVrilXUvhOoaxFA5IEe1SPdgn6pB3WeMniPlHSng
- 5qMWhQSC75d7yKO0y5sC1+bPOiQhJrS+JncaHvlX6/8TuKsxRJbWaIblF8X3ya5CYbcn
- QqAy9gYT0dJySHwImH+PFi1XF9pD/i+wIfC28u0rLwsru7KcQrR+CYdWCOY4VqX9J3ZS
- iwyC1tYJantFpBfOIJDIdDNjLlLccKYFaaWEXGTWcZ2iV/OOq3BD4iiHz0uYVZC8rArr
- RzS2S/PqfbcMWidLEicffFK6JBJViE14ZCrdrXu2OgSpMX5xOmSU9dtfDhgC5VTgi/oJ
- d/7g==
+ bh=mREZuS4vl04GEMCbVbG0gfOlQu3ED2DjSLl2cG2tELo=;
+ b=KqyMhNlRybeJM/my5jVqUx8hdFxb1vl3AYfS+2J8825Z90ix1wVCZUzeQ3bSYR4B62
+ EO5JMV5nOeryZSVrP7ZAgPQeh33LT4ytBFY3wQQVm3hkLIdjH4GFVqKci5U3dBhl2Bm9
+ OvBfMn5gKE6MKmsPXCOjUwoMh3GQZs0HBq/AvcJlqPYJVlt7I3wbh7hOPL9127emOnyX
+ sARIDg9RcnhdfoMd2WpxIAp6F3wchhX8xdYkPqk/DGzE1BP5eWCcHW4kput/k5UlZYTN
+ 156UKrAtjniKuOkcY4TPfRqMOi7hU262D6I4nIeTCTC+yVLSUniQM2DlmqVkbTdH0PgR
+ k7KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708540633; x=1709145433;
+ d=1e100.net; s=20230601; t=1708540989; x=1709145789;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yrKXObd+UTfgg0nkPQ5SnoLv8F/U/VagFm3n3E/xOQw=;
- b=GbpIX11tOwY40Cztezn69RTIARUx1AtNOgmN+lzYMTe25w7i1oG6req9cW/BvQ2J2H
- 2adr8IdGnSG4Gda8kDaYY9D5SWqPWWKLM+S6MdYKffVTAUeq+bRGcoYc/7uyogOl+N08
- vuwaMhd8peGpGwuxEgpHr/LOwXtiNOUv8sAQzgsGT78ibEO6Q3nK2RUsZWOTaHxMA+m0
- wKlUdD8YBUnL/ll2K9Or/Glhe8r1BHlOJ/aMjWSzh5ygkMBn51/2WFus+sstFhaNBb1M
- NSkZlIeU6E99rEOEILbnaez1ok6LXUXcoDiGIcSe0vaCjbt6sBEmHmo7aCg9b//90y8j
- k6Lw==
+ bh=mREZuS4vl04GEMCbVbG0gfOlQu3ED2DjSLl2cG2tELo=;
+ b=lPlVkdzVKJf/uvV4h/nNfYkM8MtayQQ0Y4v8EhxaypcZtxk58vYCdzZ35SjOhOM5ZC
+ 3T62wKb/vxIKJ71IjXkFpLvqHOa7FLUoajpCUDR1iMkjcPa+KpNizEBq7Akm2v56xjjz
+ rl7QvxyMrYW98AUcRQjDrB6NMjR+ckT65WfQSFAwRu34ho8d/CHV3hpJwbtyCXLAdN0w
+ lEZ0QtLd9n9QVoC0fGg4va2q2z6GzVu3eqNEZjJECnvguZHITlV5/vk0BY+Xh63IHtaC
+ YcWMw1JCyYL34jKDPugUso3z/biZsHt4oIz9ln9e6/vbG/rzoQRn79kCE8z543eR93hc
+ 5Z6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdTub0OhvwnvGXp/Iu1qoUZ3aSxFJi/L/C0T/QSo5LZ1fEvW4RjMHZ3GhDX8oe6uCyKtKJdIHLjOVIHaVDHY972Xx+qWU=
-X-Gm-Message-State: AOJu0YxTAH6mWxHNgGiMZcr++COg/vLVZ6GdQXHbZPC7GEA1Kf61t4Dr
- ZQxa6QnPm1B8ZC/F7E37JLv+BTrw3hS3LWIVURKAC0uf6BpPNA5iXFNqlUkpcur16nkGK2HsJSd
- snwg=
-X-Google-Smtp-Source: AGHT+IEKn3abDQvvAQ37razbCcJYNnFZoQdaZXMaTJlBV3inF6AR8qJs5XsiBLgEmE8H83ExLtbhWQ==
-X-Received: by 2002:a17:906:b0c:b0:a3e:5b7f:6d31 with SMTP id
- u12-20020a1709060b0c00b00a3e5b7f6d31mr6365745ejg.5.1708540633145; 
- Wed, 21 Feb 2024 10:37:13 -0800 (PST)
+ AJvYcCUPxwqZ3tcPOhg1gVZC5SLQEBFYHDJMfLWiD5jaCQnR9LVy8mfxKmyLsTnCmY7/cD6q2phDfcE8Eik9hu/h6jzUFj2XUWQ=
+X-Gm-Message-State: AOJu0Yy7CcBN1JZMSl/rpVKB9fqIt91xFZo4R1zH3bczLxJY1s8dbGve
+ WtXPvxZ2txUzJJTIxB2MW2S/1Y1pQypXqQsET3DaSKf9PpeMauKiAibYAwjf7gEgEGwFgvP39KC
+ is2M=
+X-Google-Smtp-Source: AGHT+IHdgB2L7Xo6+PMSW64+tGlkVQh9R1ZJU8a7Zp61Oofr8cHDQ8+5WwAXqLrVdZMM2AKwAKSPjg==
+X-Received: by 2002:a17:906:f4e:b0:a3d:9a28:52e6 with SMTP id
+ h14-20020a1709060f4e00b00a3d9a2852e6mr12036319ejj.50.1708540989569; 
+ Wed, 21 Feb 2024 10:43:09 -0800 (PST)
 Received: from [192.168.221.175] ([93.23.14.172])
  by smtp.gmail.com with ESMTPSA id
- vu2-20020a170907a64200b00a3d2e690abfsm5132944ejc.122.2024.02.21.10.37.12
+ vo7-20020a170907a80700b00a3d00616e1fsm1424939ejc.193.2024.02.21.10.43.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 10:37:12 -0800 (PST)
-Message-ID: <8a67e4b9-df36-449a-ac74-e8da3a8b3af1@linaro.org>
-Date: Wed, 21 Feb 2024 19:37:10 +0100
+ Wed, 21 Feb 2024 10:43:09 -0800 (PST)
+Message-ID: <d1b005a8-ee10-414e-b76b-9c56ef657a9b@linaro.org>
+Date: Wed, 21 Feb 2024 19:43:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] hw/ide: Move IDE DMA related definitions to a
- separate header ide-dma.h
+Subject: Re: [PATCH v2 4/7] hw/ide: Move IDE device related definitions to
+ ide-dev.h
 Content-Language: en-US
 To: Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-devel@nongnu.org
 Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-block@nongnu.org
 References: <20240220085505.30255-1-thuth@redhat.com>
- <20240220085505.30255-4-thuth@redhat.com>
+ <20240220085505.30255-5-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240220085505.30255-4-thuth@redhat.com>
+In-Reply-To: <20240220085505.30255-5-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,62 +100,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 20/2/24 09:55, Thomas Huth wrote:
-> These definitions are required outside of the hw/ide/ code, too,
-> so lets's move them from internal.h to a new header called ide-dma.h.
+> Unentangle internal.h by moving public IDE device related
+
+Disentangle ... from? Untangle? TIL Unentangle.
+
+Anyway I'm not a native English speaker, so:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> definitions to ide-dev.h.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   include/hw/ide/ide-dma.h  | 37 +++++++++++++++++++++++++++++++++++++
->   include/hw/ide/internal.h | 29 +----------------------------
->   2 files changed, 38 insertions(+), 28 deletions(-)
->   create mode 100644 include/hw/ide/ide-dma.h
-> 
-> diff --git a/include/hw/ide/ide-dma.h b/include/hw/ide/ide-dma.h
-> new file mode 100644
-> index 0000000000..3ac4c3c9fa
-> --- /dev/null
-> +++ b/include/hw/ide/ide-dma.h
-> @@ -0,0 +1,37 @@
-> +#ifndef HW_IDE_DMA_H
-> +#define HW_IDE_DMA_H
-> +
-> +#include "block/aio.h"
-> +#include "qemu/iov.h"
-> +
-> +typedef struct IDEState IDEState;
-> +typedef struct IDEDMAOps IDEDMAOps;
-> +typedef struct IDEDMA IDEDMA;
-> +
-> +typedef void DMAStartFunc(const IDEDMA *, IDEState *, BlockCompletionFunc *);
-> +typedef void DMAVoidFunc(const IDEDMA *);
-> +typedef int DMAIntFunc(const IDEDMA *, bool);
-> +typedef int32_t DMAInt32Func(const IDEDMA *, int32_t len);
-> +typedef void DMAu32Func(const IDEDMA *, uint32_t);
-> +typedef void DMAStopFunc(const IDEDMA *, bool);
-> +
-> +struct IDEDMAOps {
-> +    DMAStartFunc *start_dma;
-> +    DMAVoidFunc *pio_transfer;
-> +    DMAInt32Func *prepare_buf;
-> +    DMAu32Func *commit_buf;
-> +    DMAIntFunc *rw_buf;
-> +    DMAVoidFunc *restart;
-> +    DMAVoidFunc *restart_dma;
-> +    DMAStopFunc *set_inactive;
-> +    DMAVoidFunc *cmd_done;
-> +    DMAVoidFunc *reset;
-> +};
-> +
-> +struct IDEDMA {
-> +    const struct IDEDMAOps *ops;
-
-While here, let's use the typedef, otherwise:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +    QEMUIOVector qiov;
-> +    BlockAIOCB *aiocb;
-> +};
+>   include/hw/ide/ide-dev.h  | 143 +++++++++++++++++++++++++++++++++++++-
+>   include/hw/ide/internal.h | 143 +-------------------------------------
+>   hw/ide/ide-dev.c          |   1 +
+>   3 files changed, 144 insertions(+), 143 deletions(-)
 
 
 
