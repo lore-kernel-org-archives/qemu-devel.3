@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92775C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:20:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78796C5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctz1-0007Xx-Io; Wed, 21 Feb 2024 16:18:27 -0500
+	id 1rctxt-0002qy-S9; Wed, 21 Feb 2024 16:17:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyx-0007B0-4Y; Wed, 21 Feb 2024 16:18:24 -0500
+ id 1rctxQ-0002CO-CO; Wed, 21 Feb 2024 16:16:48 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyv-00017X-9C; Wed, 21 Feb 2024 16:18:22 -0500
+ id 1rctxN-0000mx-Ko; Wed, 21 Feb 2024 16:16:47 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4B71B4F800;
- Thu, 22 Feb 2024 00:16:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5E7484F7EF;
+ Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 03738869B8;
- Thu, 22 Feb 2024 00:16:24 +0300 (MSK)
-Received: (nullmailer pid 2335316 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 16916869A8;
+ Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
+Received: (nullmailer pid 2335268 invoked by uid 1000);
  Wed, 21 Feb 2024 21:16:22 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 24/28] qemu-img: dd: refresh options/--help
-Date: Thu, 22 Feb 2024 00:16:05 +0300
-Message-Id: <20240221211622.2335170-24-mjt@tls.msk.ru>
+Subject: [PATCH 08/28] qemu-img: check: refresh options/--help
+Date: Thu, 22 Feb 2024 00:15:49 +0300
+Message-Id: <20240221211622.2335170-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
 References: <cover.1708544927.git.mjt@tls.msk.ru>
@@ -64,73 +64,71 @@ Add missing long options and --help output.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ qemu-img.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index e4027ece20..af7841573c 100644
+index 01894c097b..69fa9701e9 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -5502,31 +5502,48 @@ static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
-     const struct option long_options[] = {
-         { "help", no_argument, 0, 'h'},
-         { "object", required_argument, 0, OPTION_OBJECT},
-+        { "format", required_argument, 0, 'f'},
-+        { "output-format", required_argument, 0, 'O'},
-         { "image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-         { "force-share", no_argument, 0, 'U'},
-         { 0, 0, 0, 0 }
-     };
- 
--    while ((c = getopt_long(argc, argv, ":hf:O:U", long_options, NULL))) {
-+    while ((c = getopt_long(argc, argv, "hf:O:U", long_options, NULL))) {
-         if (c == EOF) {
+@@ -804,7 +804,9 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
+         int option_index = 0;
+         static const struct option long_options[] = {
+             {"help", no_argument, 0, 'h'},
++            {"quiet", no_argument, 0, 'q'},
+             {"format", required_argument, 0, 'f'},
++            {"cache", required_argument, 0, 'T'},
+             {"repair", required_argument, 0, 'r'},
+             {"output", required_argument, 0, OPTION_OUTPUT},
+             {"object", required_argument, 0, OPTION_OBJECT},
+@@ -812,20 +814,38 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
+             {"force-share", no_argument, 0, 'U'},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":hf:r:T:qU",
++        c = getopt_long(argc, argv, "hf:r:T:qU",
+                         long_options, &option_index);
+         if (c == -1) {
              break;
          }
-         switch (c) {
-+        case 'h':
-+            cmd_help(ccmd,
-+"[-f FMT|--image-opts] [-O OUTPUT_FMT] [-U]\n"
-+"        [bs=BLOCK_SIZE] [count=BLOCKS] if=INPUT of=OUTPUT\n"
-+,
-+"  -f, --format FMT\n"
-+"     specify format for INPUT explicitly\n"
-+"  --image-opts\n"
-+"     indicates that INPUT is a complete image specification\n"
-+"     instead of a file name (incompatible with --format)\n"
-+"  -O, --output-format OUTPUT_FMT\n"
-+"     format of the OUTPUT (default raw)\n"
-+"  -U, --force-share\n"
-+"     open images in shared mode for concurrent access\n"
-+"  bs=BLOCK_SIZE[kKMGTP]\n"
-+"     size of I/O block (default 512)\n"
-+"  count=COUNT\n"
-+"     number of blocks to convert (default whole INPUT)\n"
-+"  if=INPUT\n"
-+"     input file name (or image specification with --image-opts)\n"
-+"  of=OUTPUT\n"
-+"     output file name to create\n"
-+);
-+            break;
-         case 'O':
-             out_fmt = optarg;
-             break;
-         case 'f':
-             fmt = optarg;
-             break;
+         switch(c) {
 -        case ':':
 -            missing_argument(argv[optind - 1]);
 -            break;
 -        case '?':
 -            unrecognized_option(argv[optind - 1]);
 -            break;
--        case 'h':
+         case 'h':
 -            help();
--            break;
-         case 'U':
-             force_share = true;
++            cmd_help(ccmd,
++"[-f FMT | --image-opts] [-T CACHE_MODE] [-r] [-u]\n"
++"        [--output human|json] [--object OBJDEF] FILENAME\n"
++,
++"  -q, --quiet\n"
++"     quiet operations\n"
++"  -f, --format FMT\n"
++"     specifies format of the image explicitly\n"
++"  --image-opts\n"
++"     indicates that FILENAME is a complete image specification\n"
++"     instead of a file name (incompatible with --format)\n"
++"  -T, --cache CACHE_MODE\n"
++"     image cache mode (" BDRV_DEFAULT_CACHE ")\n"
++"  -U, --force-share\n"
++"     open image in shared mode for concurrent access\n"
++"  --output human|json\n"
++"     output format\n"
++"  -r, --repair leaks|all\n"
++"     repair particular aspect of the image\n"
++"     (image will be open in read-write mode, incompatible with --force-share)\n"
++"  --object OBJDEF\n"
++"     QEMU user-creatable object (eg encryption key)\n"
++"  FILENAME\n"
++"     the image file (or image specification) to operate on\n"
++);
              break;
-@@ -5536,6 +5553,8 @@ static int img_dd(const img_cmd_t *ccmd, int argc, char **argv)
+         case 'f':
+             fmt = optarg;
+@@ -860,6 +880,8 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
          case OPTION_IMAGE_OPTS:
              image_opts = true;
              break;
@@ -138,7 +136,7 @@ index e4027ece20..af7841573c 100644
 +            tryhelp(argv[0]);
          }
      }
- 
+     if (optind != argc - 1) {
 -- 
 2.39.2
 
