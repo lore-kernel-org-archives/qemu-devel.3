@@ -4,49 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF484C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 657A3C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:52:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoUO-00029d-SB; Wed, 21 Feb 2024 10:26:29 -0500
+	id 1rcoZO-00010F-32; Wed, 21 Feb 2024 10:31:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoMW-0000wD-JY; Wed, 21 Feb 2024 10:18:24 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoP1-0004hS-4l
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:20:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchtL-0002X3-Jn; Wed, 21 Feb 2024 03:23:51 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2DE314F3DF;
- Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id EA3C1860BE;
- Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
-Received: (nullmailer pid 2142087 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Fan Ni <fan.ni@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 33/60] hw/cxl: Pass CXLComponentState to cache_mem_ops
-Date: Wed, 21 Feb 2024 11:20:21 +0300
-Message-Id: <20240221082058.2141850-33-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rclzc-0000st-NL
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 07:46:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708519589;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5+iFDGsoywuH5+H7Hd1QIQz6/y36MS3F778kGZSKiq0=;
+ b=Fa+EW8fGx9J5GRpTEBSl+550YmcAFZqjmNeneDPLPi25mEeO33gACNz1ZXrJZeutRolHKq
+ 5e6irX73ODsnWeDakoBK6kGils4vCo6wFzAGEJ5jGFszlRaViMqfAt0sn+zsQB/6YtYMix
+ pe543f3hrzD8TmBwdiS6OGbB5FicNHk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-611-guzpp1vhOniCWJKEZF_cKg-1; Wed, 21 Feb 2024 07:46:23 -0500
+X-MC-Unique: guzpp1vhOniCWJKEZF_cKg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F3E28845E61;
+ Wed, 21 Feb 2024 12:46:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7533210800;
+ Wed, 21 Feb 2024 12:46:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 67A6421E6740; Wed, 21 Feb 2024 13:46:21 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
+ Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
+ kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
+ <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>,  Zhao
+ Liu <zhao1.liu@intel.com>
+Subject: Re: [RFC 4/8] hw/core: Add cache topology options in -smp
+In-Reply-To: <20240220092504.726064-5-zhao1.liu@linux.intel.com> (Zhao Liu's
+ message of "Tue, 20 Feb 2024 17:25:00 +0800")
+References: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
+ <20240220092504.726064-5-zhao1.liu@linux.intel.com>
+Date: Wed, 21 Feb 2024 13:46:21 +0100
+Message-ID: <871q9656jm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,38 +98,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+Zhao Liu <zhao1.liu@linux.intel.com> writes:
 
-cache_mem_ops.{read,write}() interprets opaque as
-CXLComponentState(cxl_cstate) instead of ComponentRegisters(cregs).
+> From: Zhao Liu <zhao1.liu@intel.com>
+>
+> Add "l1d-cache", "l1i-cache". "l2-cache", and "l3-cache" options in
+> -smp to define the cache topology for SMP system.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-Fortunately, cregs is the first member of cxl_cstate, so their values are
-the same.
+[...]
 
-Fixes: 9e58f52d3f8 ("hw/cxl/component: Introduce CXL components (8.1.x, 8.2.5)")
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240126120132.24248-8-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 729d45a6af06753d3e330f589c248fe9687c5cd5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index d0e7f1f615f3..0a923ac38803 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1650,6 +1650,14 @@
+>  #
+>  # @threads: number of threads per core
+>  #
+> +# @l1d-cache: topology hierarchy of L1 data cache (since 9.0)
+> +#
+> +# @l1i-cache: topology hierarchy of L1 instruction cache (since 9.0)
+> +#
+> +# @l2-cache: topology hierarchy of L2 unified cache (since 9.0)
+> +#
+> +# @l3-cache: topology hierarchy of L3 unified cache (since 9.0)
+> +#
 
-diff --git a/hw/cxl/cxl-component-utils.c b/hw/cxl/cxl-component-utils.c
-index 29d477492b..9dfde6c0b3 100644
---- a/hw/cxl/cxl-component-utils.c
-+++ b/hw/cxl/cxl-component-utils.c
-@@ -199,7 +199,7 @@ void cxl_component_register_block_init(Object *obj,
-     /* io registers controls link which we don't care about in QEMU */
-     memory_region_init_io(&cregs->io, obj, NULL, cregs, ".io",
-                           CXL2_COMPONENT_IO_REGION_SIZE);
--    memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cregs,
-+    memory_region_init_io(&cregs->cache_mem, obj, &cache_mem_ops, cxl_cstate,
-                           ".cache_mem", CXL2_COMPONENT_CM_REGION_SIZE);
- 
-     memory_region_add_subregion(&cregs->component_registers, 0, &cregs->io);
--- 
-2.39.2
+Too terse, just like my review ;-P
+
+>  # Since: 6.1
+>  ##
+>  { 'struct': 'SMPConfiguration', 'data': {
+> @@ -1662,7 +1670,11 @@
+>       '*modules': 'int',
+>       '*cores': 'int',
+>       '*threads': 'int',
+> -     '*maxcpus': 'int' } }
+> +     '*maxcpus': 'int',
+> +     '*l1d-cache': 'str',
+> +     '*l1i-cache': 'str',
+> +     '*l2-cache': 'str',
+> +     '*l3-cache': 'str' } }
+>  
+>  ##
+>  # @x-query-irq:
+
+[...]
 
 
