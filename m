@@ -4,44 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269A3C54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFC9C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuRG-0000sy-GG; Wed, 21 Feb 2024 16:47:38 -0500
+	id 1rcuSq-0007gk-GC; Wed, 21 Feb 2024 16:49:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRF-0000ox-0R; Wed, 21 Feb 2024 16:47:37 -0500
+ id 1rcuSo-0007X3-W5; Wed, 21 Feb 2024 16:49:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRD-0007LQ-71; Wed, 21 Feb 2024 16:47:36 -0500
+ id 1rcuSn-0007bZ-1G; Wed, 21 Feb 2024 16:49:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 44E694F861;
- Thu, 22 Feb 2024 00:47:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8656E4F873;
+ Thu, 22 Feb 2024 00:47:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E0545869E2;
- Thu, 22 Feb 2024 00:47:23 +0300 (MSK)
-Received: (nullmailer pid 2339838 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 2F6C0869F4;
+ Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
+Received: (nullmailer pid 2339893 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bohdan Kostiv <bohdan.kostiv@tii.ae>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 05/33] system/vl.c: Fix handling of '-serial none
- -serial something'
-Date: Thu, 22 Feb 2024 00:46:48 +0300
-Message-Id: <20240221214723.2339742-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 23/33] iotests: Make 144 deterministic again
+Date: Thu, 22 Feb 2024 00:47:06 +0300
+Message-Id: <20240221214723.2339742-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -66,82 +62,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Currently if the user passes multiple -serial options on the command
-line, we mostly treat those as applying to the different serial
-devices in order, so that for example
- -serial stdio -serial file:filename
-will connect the first serial port to stdio and the second to the
-named file.
+Since commit effd60c8 changed how QMP commands are processed, the order
+of the block-commit return value and job events in iotests 144 wasn't
+fixed and more and caused the test to fail intermittently.
 
-The exception to this is the '-serial none' serial device type.  This
-means "don't allocate this serial device", but a bug means that
-following -serial options are not correctly handled, so that
- -serial none -serial stdio
-has the unexpected effect that stdio is connected to the first serial
-port, not the second.
+Change the test to cache events first and then print them in a
+predefined order.
 
-This is a very long-standing bug that dates back at least as far as
-commit 998bbd74b9d81 from 2009.
+Waiting three times for JOB_STATUS_CHANGE is a bit uglier than just
+waiting for the JOB_STATUS_CHANGE that has "status": "ready", but the
+tooling we have doesn't seem to allow the latter easily.
 
-Make the 'none' serial type move forward in the indexing of serial
-devices like all the other serial types, so that any subsequent
--serial options are correctly handled.
-
-Note that if your commandline mistakenly had a '-serial none' that
-was being overridden by a following '-serial something' option, you
-should delete the unnecessary '-serial none'.  This will give you the
-same behaviour as before, on QEMU versions both with and without this
-bug fix.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Bohdan Kostiv <bohdan.kostiv@tii.ae>
+Fixes: effd60c878176bcaf97fa7ce2b12d04bb8ead6f7
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2126
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-id: 20240209173103.239994-1-kwolf@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240122163607.459769-2-peter.maydell@linaro.org
-Fixes: 998bbd74b9d81 ("default devices: core code & serial lines")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit d2019a9d0c34a4fdcb5b5df550d73040dc0637d9)
+(cherry picked from commit cc29c12ec629ba68a4a6cb7d165c94cc8502815a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/softmmu/vl.c b/softmmu/vl.c
-index ce88869618..ab4394c53d 100644
---- a/softmmu/vl.c
-+++ b/softmmu/vl.c
-@@ -1363,18 +1363,22 @@ static void qemu_create_default_devices(void)
- static int serial_parse(const char *devname)
- {
-     int index = num_serial_hds;
--    char label[32];
+diff --git a/tests/qemu-iotests/144 b/tests/qemu-iotests/144
+index bdcc498fa2..d284a0e442 100755
+--- a/tests/qemu-iotests/144
++++ b/tests/qemu-iotests/144
+@@ -83,12 +83,22 @@ echo
+ echo === Performing block-commit on active layer ===
+ echo
  
--    if (strcmp(devname, "none") == 0)
--        return 0;
--    snprintf(label, sizeof(label), "serial%d", index);
-     serial_hds = g_renew(Chardev *, serial_hds, index + 1);
- 
--    serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
--    if (!serial_hds[index]) {
--        error_report("could not connect serial device"
--                     " to character backend '%s'", devname);
--        return -1;
-+    if (strcmp(devname, "none") == 0) {
-+        /* Don't allocate a serial device for this index */
-+        serial_hds[index] = NULL;
-+    } else {
-+        char label[32];
-+        snprintf(label, sizeof(label), "serial%d", index);
++capture_events="BLOCK_JOB_READY JOB_STATUS_CHANGE"
 +
-+        serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
-+        if (!serial_hds[index]) {
-+            error_report("could not connect serial device"
-+                         " to character backend '%s'", devname);
-+            return -1;
-+        }
-     }
-     num_serial_hds++;
-     return 0;
+ # Block commit on active layer, push the new overlay into base
+ _send_qemu_cmd $h "{ 'execute': 'block-commit',
+                                 'arguments': {
+                                                  'device': 'virtio0'
+                                               }
+-                    }" "READY"
++                    }" "return"
++
++_wait_event $h "JOB_STATUS_CHANGE"
++_wait_event $h "JOB_STATUS_CHANGE"
++_wait_event $h "JOB_STATUS_CHANGE"
++
++_wait_event $h "BLOCK_JOB_READY"
++
++capture_events=
+ 
+ _send_qemu_cmd $h "{ 'execute': 'block-job-complete',
+                                 'arguments': {
+diff --git a/tests/qemu-iotests/144.out b/tests/qemu-iotests/144.out
+index b3b4812015..2245ddfa10 100644
+--- a/tests/qemu-iotests/144.out
++++ b/tests/qemu-iotests/144.out
+@@ -25,9 +25,9 @@ Formatting 'TEST_DIR/tmp.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off co
+                                                  'device': 'virtio0'
+                                               }
+                     }
++{"return": {}}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "virtio0"}}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "virtio0"}}
+-{"return": {}}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "virtio0"}}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "virtio0", "len": 0, "offset": 0, "speed": 0, "type": "commit"}}
+ { 'execute': 'block-job-complete',
 -- 
 2.39.2
 
