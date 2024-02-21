@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42558C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162E4C5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctxY-0002P4-S2; Wed, 21 Feb 2024 16:16:57 -0500
+	id 1rctyt-0006jT-Ck; Wed, 21 Feb 2024 16:18:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxE-00020x-Ac; Wed, 21 Feb 2024 16:16:37 -0500
+ id 1rctyq-0006Vk-I1; Wed, 21 Feb 2024 16:18:16 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxB-0000jK-22; Wed, 21 Feb 2024 16:16:35 -0500
+ id 1rctyl-000105-SR; Wed, 21 Feb 2024 16:18:16 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EC8214F7E8;
- Thu, 22 Feb 2024 00:16:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 23A7F4F7FD;
+ Thu, 22 Feb 2024 00:16:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9E4B7869A1;
- Thu, 22 Feb 2024 00:16:22 +0300 (MSK)
-Received: (nullmailer pid 2335247 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id CF9C2869B5;
+ Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
+Received: (nullmailer pid 2335307 invoked by uid 1000);
  Wed, 21 Feb 2024 21:16:22 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 01/28] qemu-img: stop printing error twice in a few places
-Date: Thu, 22 Feb 2024 00:15:42 +0300
-Message-Id: <20240221211622.2335170-1-mjt@tls.msk.ru>
+Subject: [PATCH 21/28] qemu-img: amend: refresh options/--help
+Date: Thu, 22 Feb 2024 00:16:02 +0300
+Message-Id: <20240221211622.2335170-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
 References: <cover.1708544927.git.mjt@tls.msk.ru>
@@ -60,55 +60,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have:
-
-  ./qemu-img resize none +10
-  qemu-img: Could not open 'none': Could not open 'none': No such file or directory
-
-stop printing the message twice, - local_err already has
-all the info, no need to prepend additional text there.
-
-There are a few other places like this, but I'm unsure
-about these.
+Add missing long options and --help output.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ qemu-img.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 7668f86769..5a756be600 100644
+index 45fbef5d37..0d17738fb6 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -404,7 +404,7 @@ static BlockBackend *img_open_file(const char *filename,
-     }
-     blk = blk_new_open(filename, NULL, options, flags, &local_err);
-     if (!blk) {
--        error_reportf_err(local_err, "Could not open '%s': ", filename);
-+        error_report_err(local_err);
-         return NULL;
-     }
-     blk_set_enable_write_cache(blk, !writethrough);
-@@ -597,7 +597,7 @@ static int img_create(int argc, char **argv)
-     bdrv_img_create(filename, fmt, base_filename, base_fmt,
-                     options, img_size, flags, quiet, &local_err);
-     if (local_err) {
--        error_reportf_err(local_err, "%s: ", filename);
-+        error_report_err(local_err);
-         goto fail;
+@@ -4557,26 +4557,42 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
+     for (;;) {
+         static const struct option long_options[] = {
+             {"help", no_argument, 0, 'h'},
++            {"quiet", no_argument, 0, 'q'},
++            {"progress", no_argument, 0, 'p'},
+             {"object", required_argument, 0, OPTION_OBJECT},
++            {"format", required_argument, 0, 'f'},
++            {"cache", required_argument, 0, 't'},
++            {"options", required_argument, 0, 'o'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+             {"force", no_argument, 0, OPTION_FORCE},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":ho:f:t:pq",
++        c = getopt_long(argc, argv, "ho:f:t:pq",
+                         long_options, NULL);
+         if (c == -1) {
+             break;
+         }
+ 
+         switch (c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
+         case 'h':
+-            help();
++            cmd_help(ccmd,
++"[-f FMT | --image-opts] [t CACHE] [--force] [-p] [-q]\n"
++"        [--object OBJDEF -o OPTIONS FILENAME\n"
++,
++"  -q, --quiet\n"
++"     quiet operation\n"
++"  -p, --progres\n"
++"     show progress\n"
++"  -f, --format FMT\n"
++"     specify FILENAME format explicitly\n"
++"  --image-opts\n"
++"     indicates that FILENAME is a complete image specification\n"
++"   instead of a file name (incompatible with --format)\n"
++"  -t, --cache CACHE\n"
++"     cache mode for FILENAME (" BDRV_DEFAULT_CACHE ")\n"
++"  --force\n"
++"     allow certain unsafe operations\n"
++);
+             break;
+         case 'o':
+             if (accumulate_options(&options, optarg) < 0) {
+@@ -4605,6 +4621,8 @@ static int img_amend(const img_cmd_t *ccmd, int argc, char **argv)
+         case OPTION_FORCE:
+             force = true;
+             break;
++        default:
++            tryhelp(argv[0]);
+         }
      }
  
-@@ -5253,9 +5253,7 @@ static int img_dd(int argc, char **argv)
- 
-     ret = bdrv_create(drv, out.filename, opts, &local_err);
-     if (ret < 0) {
--        error_reportf_err(local_err,
--                          "%s: error while creating output image: ",
--                          out.filename);
-+        error_report_err(local_err);
-         ret = -1;
-         goto out;
-     }
 -- 
 2.39.2
 
