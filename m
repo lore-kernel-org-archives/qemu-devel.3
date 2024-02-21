@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C16C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944C5C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:07:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcgcI-0005Ip-Ln; Wed, 21 Feb 2024 02:02:06 -0500
+	id 1rcghB-0006sw-Lj; Wed, 21 Feb 2024 02:07:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgcH-0005Id-1R
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:02:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcghA-0006sl-Hz
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:07:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgcF-0004Gz-Dd
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:02:04 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgh2-0005RL-D6
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:07:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708498922;
+ s=mimecast20190719; t=1708499217;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=k73+xYBsNLVXFW5hnB4dCpoJ4R6MBhNhw8H5+I28xk4=;
- b=R/QQJzlXg8A1020UEt9LQfiHRl14RezlHuj0hju7+YLU0+QUo4xo45jzDDE5m0UQur2H7C
- 9XY2XqtioSY8cPy3ErUBCzrbdeFnVF8I/qcSX4s6dV51KwhdJpvapYyE54iMCI+izAx3Hh
- KRLc6+h/R5L6KTA8D9kQWG4FNpzORig=
+ bh=yIhX8BnZOwWsfK7+P9wFDxso7BwP3JZVl3hqeZRoB0w=;
+ b=fdrpCSBUGsPMuwmzzgj5WqBq92ZuIs91RZjAUk6M54uhTYCRENXfQM/aw+RsTdF+ljChIH
+ GaPWISETpcCKMg1QO74o0ETNVHB3WYizQDonB76hQrI3nzvK5OSshb6lmhL4ACoIQACuJZ
+ PN/WJdR3IisK7GZGMMq4w9laUsvJggQ=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-lfTheB5zPROk0MM7ds_N7Q-1; Wed, 21 Feb 2024 02:01:58 -0500
-X-MC-Unique: lfTheB5zPROk0MM7ds_N7Q-1
+ us-mta-637-107TDIZJNUeRjHr-vFEgiA-1; Wed, 21 Feb 2024 02:06:55 -0500
+X-MC-Unique: 107TDIZJNUeRjHr-vFEgiA-1
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a3f3c382ba9so16463166b.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:01:57 -0800 (PST)
+ a640c23a62f3a-a30f9374db7so743760866b.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:06:55 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708498917; x=1709103717;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k73+xYBsNLVXFW5hnB4dCpoJ4R6MBhNhw8H5+I28xk4=;
- b=bLiTVCOK1QGzetBOKkuchDO+1mF6gQD40TMBv8u3/lEjWQBTtW+gHO37lw3sVRA0Q8
- ktqmWdxUUB1TdRhxrWwBrQ7JHJnP0nuUCHsMDgX0zbEhXX5xYw31gBApU9HGRNdxWJit
- ElDGaEwWyGZh3rgUx+or078VJz2RNisqaqlNWSbgFFzGc9C9dhQKphwwgi2h+BAjaKf7
- an0rJHoSTIzRce0Yok1iYAexTUu/ux5z5bsh2A91Os2QT761sfT5OKM4++WQ730pINf3
- 5youhfqE/ilvrpcqYl8etWai70cRItJ5SnkydtTjIuOJK289X7ZrZBVpGThYK6aNJgEE
- FsTg==
+ d=1e100.net; s=20230601; t=1708499214; x=1709104014;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=yIhX8BnZOwWsfK7+P9wFDxso7BwP3JZVl3hqeZRoB0w=;
+ b=o/7JLrg7HDtLyr7DAxaOx+eR2Uo9DoIlo8In9Vedf5G4Hi5ZX1doXG6/5RiZ2dR7BQ
+ l6QjU+4NaamkoC6bqlpm2NbfZfMtRc+edVAVciGUph4Jq8io0pF5ZS5Hs7Ziz4oYzOUW
+ zcJL4EJLgGPJZgDdKHTsoEoBpoW1HQ7/ANjqXUfwgGWMEySCplcUIuU7sg2NOyNFH0FE
+ wDIyTtVzcAnw8FvbtVLBFt7qYkKe3OcjkDG0tGasxsdRNBzF9BDWJ7KcgPzZcogayG8j
+ 1oIpP0jWgVdqfov+YiqJGzSDHRyuSdEeT9s5N7i4RyKIZ9KbZxNT+aHrQXZSf6l8ofMS
+ 89EA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnkvlZmMN+mWQyuv1MUGCiZ4eOLzzG6LAbVjHizf1EvJEoOvhBaQjsBPKtyuWNTngRBzepELJhPC8wt0hd92m2prV58lM=
-X-Gm-Message-State: AOJu0YyNfk0OnBKTNdj1srvGhK8D8JVSqg0hEMMPXTKUMIWMUh8gerI5
- JvPJsmdKnzaqvKN6azE7q5ZtItbIsjuIzO76g9xLi2TgHQTsLEk9AnCfwk6ZgC95M4/bKw+Xm/t
- cOPg/ufjqkl2SxKuEOdDeAHaAOJVdP/MBmnQA0VZT8MrQJtUaI/vQ
-X-Received: by 2002:a17:906:5906:b0:a3e:d810:bd20 with SMTP id
- h6-20020a170906590600b00a3ed810bd20mr4273441ejq.21.1708498916843; 
- Tue, 20 Feb 2024 23:01:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHFtqoTIYTmjeQo50/280q7SiETC9Bu6Ijzet/wKmg6UJM32FXxXFWxQOA6nVTYzrfdSRKtIA==
-X-Received: by 2002:a17:906:5906:b0:a3e:d810:bd20 with SMTP id
- h6-20020a170906590600b00a3ed810bd20mr4273418ejq.21.1708498916523; 
- Tue, 20 Feb 2024 23:01:56 -0800 (PST)
+ AJvYcCXJRupUxx3/0Ifc1i3b5yQAMl1go6ZZ0xBjnPIXhLISX3CA3ipQxpHPXoTUw9ojgvmTlzdiJTsBHkv4BBPyoqVWfouFYzI=
+X-Gm-Message-State: AOJu0YxS8jjx2Vayr34Z9Y6Y0DHb2Gx7S5h1dXDudFdbHzDA/+0/HGSJ
+ pPKAHLbIf75KuT62Vf0p6mEsxXtylsjo5GRa+xx3sIwBtAwxcc5YCoEzaVMCUuS12jVxlTB4nu3
+ pwyox++aU0HTA2X4dhUrC26RbGlLiuF2QsivkHMKyUfuB/aitHbc/
+X-Received: by 2002:a17:907:20e2:b0:a3e:9df3:b2e7 with SMTP id
+ rh2-20020a17090720e200b00a3e9df3b2e7mr6651916ejb.35.1708499214715; 
+ Tue, 20 Feb 2024 23:06:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH+SoktgSaL6N1M/Tn4o4f31z+Xrmcpv2tsMGkFYOYhmK2ui1tFhGIXg3VnXM0vMy0IgGF4Rg==
+X-Received: by 2002:a17:907:20e2:b0:a3e:9df3:b2e7 with SMTP id
+ rh2-20020a17090720e200b00a3e9df3b2e7mr6651906ejb.35.1708499214386; 
+ Tue, 20 Feb 2024 23:06:54 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
  [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- ps12-20020a170906bf4c00b00a3e2ba369d8sm4116017ejb.47.2024.02.20.23.01.55
+ zh11-20020a170906880b00b00a3ec216ec6csm2207743ejb.45.2024.02.20.23.06.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 23:01:56 -0800 (PST)
-Message-ID: <ddef1636-a20b-4987-9f45-b36eb1b7aade@redhat.com>
-Date: Wed, 21 Feb 2024 08:01:54 +0100
+ Tue, 20 Feb 2024 23:06:53 -0800 (PST)
+Message-ID: <8da15519-ff9e-4b3b-9e52-44403be554d8@redhat.com>
+Date: Wed, 21 Feb 2024 08:06:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH qemu-web] _download/windows.md: Drop 32-bit Windows support
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240220180618.158100-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH 2/3] .gitlab-ci.d: Drop cross-win32-system job
 Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Yonggang Luo <luoyonggang@gmail.com>
+References: <20240220174412.155885-1-peter.maydell@linaro.org>
+ <20240220174412.155885-3-peter.maydell@linaro.org>
+ <3a4a6505-662a-448e-9196-f3be819b51a0@linaro.org>
+ <ZdT1pyGMcsNGja3M@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,19 +122,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240220180618.158100-1-peter.maydell@linaro.org>
+In-Reply-To: <ZdT1pyGMcsNGja3M@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,20 +149,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/02/2024 19.06, Peter Maydell wrote:
-> 32-bit Windows is no longer a supported platform for QEMU, and both
-> MSYS2 and Stefan Weil have stopped building 32-bit packages of it.
-> Remove the no-longer-working i686 pacman rune, and state explicitly
-> that 32 bit Windows isn't supported.
+On 20/02/2024 19.55, Daniel P. Berrangé wrote:
+> On Tue, Feb 20, 2024 at 07:46:37PM +0100, Philippe Mathieu-Daudé wrote:
+>> On 20/2/24 18:44, Peter Maydell wrote:
+>>> We don't support 32-bit Windows any more, so we don't need to defend it
+>>> with this CI job.
+>>>
+>>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>>> ---
+>>>    .gitlab-ci.d/container-cross.yml              |   5 -
+>>>    .gitlab-ci.d/crossbuilds.yml                  |  14 ---
+>>>    .../dockerfiles/fedora-win32-cross.docker     | 111 ------------------
+>>>    tests/lcitool/refresh                         |   5 -
+>>>    4 files changed, 135 deletions(-)
+>>>    delete mode 100644 tests/docker/dockerfiles/fedora-win32-cross.docker
+>>
+>>
+>>> diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+>>> index d19d98cde05..987ba9694ba 100644
+>>> --- a/.gitlab-ci.d/crossbuilds.yml
+>>> +++ b/.gitlab-ci.d/crossbuilds.yml
+>>> @@ -159,20 +159,6 @@ cross-mips64el-kvm-only:
+>>>        IMAGE: debian-mips64el-cross
+>>>        EXTRA_CONFIGURE_OPTS: --disable-tcg --target-list=mips64el-softmmu
+>>> -cross-win32-system:
+>>> -  extends: .cross_system_build_job
+>>> -  needs:
+>>> -    job: win32-fedora-cross-container
+>>> -  variables:
+>>> -    IMAGE: fedora-win32-cross
+>>> -    EXTRA_CONFIGURE_OPTS: --enable-fdt=internal
+>>> -    CROSS_SKIP_TARGETS: alpha-softmmu avr-softmmu hppa-softmmu m68k-softmmu
+>>> -                        microblazeel-softmmu mips64el-softmmu nios2-softmmu
+>>
+>> Thomas, is it possible to add mips64el-softmmu to the cross-win64-system
+>> job or is it already at the timeout limit?
 > 
-> Fix a grammar nit in the page while we're here.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   _download/windows.md | 10 +++-------
->   1 file changed, 3 insertions(+), 7 deletions(-)
+> If its too close to the limit, we could add  across-win64-system-part2
+> job now we freed time from the deleting the win32 job.
 
-Thanks, applied!
+Looking at a recent run:
+
+  https://gitlab.com/qemu-project/qemu/-/jobs/6189303285
+
+It seems like we're in the 50 minutes range here, and timeout is set to 
+1h20m, so I think there should still be enough headroom for adding 
+mips64el-softmmu to that job.
 
   Thomas
 
