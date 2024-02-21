@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F89BC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C79CC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoP0-0004aW-Fv; Wed, 21 Feb 2024 10:20:54 -0500
+	id 1rcoNM-0006Gg-1U; Wed, 21 Feb 2024 10:19:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcoK6-0000sX-8z; Wed, 21 Feb 2024 10:16:01 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rcoJv-00010D-2b; Wed, 21 Feb 2024 10:15:44 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcmLz-0004s9-25; Wed, 21 Feb 2024 08:09:41 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TfxQ73mG2z1h0HS;
- Wed, 21 Feb 2024 21:07:27 +0800 (CST)
+ id 1rcmLz-0004pX-Lo; Wed, 21 Feb 2024 08:09:42 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TfxQr4FQPz1xnx5;
+ Wed, 21 Feb 2024 21:08:04 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 472A11400CF;
- Wed, 21 Feb 2024 21:09:36 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4E4A11402CC;
+ Wed, 21 Feb 2024 21:09:27 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
- 2024 21:09:35 +0800
+ 2024 21:09:26 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v2 17/22] hw/intc: Enable FEAT_GICv3_NMI Feature
-Date: Wed, 21 Feb 2024 13:08:18 +0000
-Message-ID: <20240221130823.677762-18-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v2 06/22] target/arm: Add support for Non-maskable
+ Interrupt
+Date: Wed, 21 Feb 2024 13:08:07 +0000
+Message-ID: <20240221130823.677762-7-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240221130823.677762-1-ruanjinjie@huawei.com>
 References: <20240221130823.677762-1-ruanjinjie@huawei.com>
@@ -44,8 +45,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -69,73 +70,163 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added properties to enable FEAT_GICv3_NMI feature, setup distributor
-and redistributor registers to indicate NMI support.
+This only implements the external delivery method via the GICv3.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/intc/arm_gicv3_common.c         | 1 +
- hw/intc/arm_gicv3_dist.c           | 2 ++
- hw/intc/gicv3_internal.h           | 1 +
- include/hw/intc/arm_gicv3_common.h | 1 +
- 4 files changed, 5 insertions(+)
+ target/arm/cpu-qom.h |  3 ++-
+ target/arm/cpu.c     | 39 ++++++++++++++++++++++++++++++++++-----
+ target/arm/cpu.h     |  2 ++
+ target/arm/helper.c  |  1 +
+ 4 files changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 6249c3edc9..9abbe9b71d 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -566,6 +566,7 @@ static Property arm_gicv3_common_properties[] = {
-     DEFINE_PROP_UINT32("num-irq", GICv3State, num_irq, 32),
-     DEFINE_PROP_UINT32("revision", GICv3State, revision, 3),
-     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
-+    DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 0),
-     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
+diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
+index 8e032691db..66d555a605 100644
+--- a/target/arm/cpu-qom.h
++++ b/target/arm/cpu-qom.h
+@@ -36,11 +36,12 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
+ #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
+ #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
+ 
+-/* Meanings of the ARMCPU object's four inbound GPIO lines */
++/* Meanings of the ARMCPU object's five inbound GPIO lines */
+ #define ARM_CPU_IRQ 0
+ #define ARM_CPU_FIQ 1
+ #define ARM_CPU_VIRQ 2
+ #define ARM_CPU_VFIQ 3
++#define ARM_CPU_NMI 4
+ 
+ /* For M profile, some registers are banked secure vs non-secure;
+  * these are represented as a 2-element array where the first element
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 5e5978c302..055670343e 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -128,7 +128,7 @@ static bool arm_cpu_has_work(CPUState *cs)
+ 
+     return (cpu->power_state != PSCI_OFF)
+         && cs->interrupt_request &
+-        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
++        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI
+          | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
+          | CPU_INTERRUPT_EXITTB);
+ }
+@@ -668,6 +668,7 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+     CPUARMState *env = cpu_env(cs);
+     bool pstate_unmasked;
+     bool unmasked = false;
++    bool nmi_unmasked = false;
+ 
      /*
-      * Compatibility property: force 8 bits of physical priority, even
-diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
-index 2f7280c524..65e7ca29cf 100644
---- a/hw/intc/arm_gicv3_dist.c
-+++ b/hw/intc/arm_gicv3_dist.c
-@@ -412,6 +412,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
-          *                      by GICD_TYPER.IDbits)
-          * MBIS == 0 (message-based SPIs not supported)
-          * SecurityExtn == 1 if security extns supported
-+         * NMI = 1 if Non-maskable interrupt property is supported
-          * CPUNumber == 0 since for us ARE is always 1
-          * ITLinesNumber == (((max SPI IntID + 1) / 32) - 1)
+      * Don't take exceptions if they target a lower EL.
+@@ -678,13 +679,29 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+         return false;
+     }
+ 
++    nmi_unmasked = (!(env->allint & PSTATE_ALLINT)) &
++                   (!((env->cp15.sctlr_el[target_el] & SCTLR_SPINTMASK) &&
++                   (env->pstate & PSTATE_SP) && cur_el == target_el));
++
+     switch (excp_idx) {
++    case EXCP_NMI:
++        pstate_unmasked = nmi_unmasked;
++        break;
++
+     case EXCP_FIQ:
+-        pstate_unmasked = !(env->daif & PSTATE_F);
++        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++            pstate_unmasked = (!(env->daif & PSTATE_F)) & nmi_unmasked;
++        } else {
++            pstate_unmasked = !(env->daif & PSTATE_F);
++        }
+         break;
+ 
+     case EXCP_IRQ:
+-        pstate_unmasked = !(env->daif & PSTATE_I);
++        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++            pstate_unmasked = (!(env->daif & PSTATE_I)) & nmi_unmasked;
++        } else {
++            pstate_unmasked = !(env->daif & PSTATE_I);
++        }
+         break;
+ 
+     case EXCP_VFIQ:
+@@ -804,6 +821,16 @@ static bool arm_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ 
+     /* The prioritization of interrupts is IMPLEMENTATION DEFINED. */
+ 
++    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
++        if (interrupt_request & CPU_INTERRUPT_NMI) {
++            excp_idx = EXCP_NMI;
++            target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
++            if (arm_excp_unmasked(cs, excp_idx, target_el,
++                                  cur_el, secure, hcr_el2)) {
++                goto found;
++            }
++        }
++    }
+     if (interrupt_request & CPU_INTERRUPT_FIQ) {
+         excp_idx = EXCP_FIQ;
+         target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
+@@ -929,7 +956,8 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
+         [ARM_CPU_IRQ] = CPU_INTERRUPT_HARD,
+         [ARM_CPU_FIQ] = CPU_INTERRUPT_FIQ,
+         [ARM_CPU_VIRQ] = CPU_INTERRUPT_VIRQ,
+-        [ARM_CPU_VFIQ] = CPU_INTERRUPT_VFIQ
++        [ARM_CPU_VFIQ] = CPU_INTERRUPT_VFIQ,
++        [ARM_CPU_NMI] = CPU_INTERRUPT_NMI
+     };
+ 
+     if (!arm_feature(env, ARM_FEATURE_EL2) &&
+@@ -957,6 +985,7 @@ static void arm_cpu_set_irq(void *opaque, int irq, int level)
+         break;
+     case ARM_CPU_IRQ:
+     case ARM_CPU_FIQ:
++    case ARM_CPU_NMI:
+         if (level) {
+             cpu_interrupt(cs, mask[irq]);
+         } else {
+@@ -1358,7 +1387,7 @@ static void arm_cpu_initfn(Object *obj)
           */
-@@ -425,6 +426,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
-         bool dvis = s->revision >= 4;
+         qdev_init_gpio_in(DEVICE(cpu), arm_cpu_kvm_set_irq, 4);
+     } else {
+-        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 4);
++        qdev_init_gpio_in(DEVICE(cpu), arm_cpu_set_irq, 5);
+     }
  
-         *data = (1 << 25) | (1 << 24) | (dvis << 18) | (sec_extn << 10) |
-+            (s->nmi_support << GICD_TYPER_NMI_SHIFT) |
-             (s->lpi_enable << GICD_TYPER_LPIS_SHIFT) |
-             (0xf << 19) | itlinesnumber;
-         return true;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index a1fc34597e..8d793243f4 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -70,6 +70,7 @@
- #define GICD_CTLR_E1NWF             (1U << 7)
- #define GICD_CTLR_RWP               (1U << 31)
+     qdev_init_gpio_out(DEVICE(cpu), cpu->gt_timer_outputs,
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index f9646dbbfb..5257343bcb 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -60,6 +60,7 @@
+ #define EXCP_DIVBYZERO      23   /* v7M DIVBYZERO UsageFault */
+ #define EXCP_VSERR          24
+ #define EXCP_GPC            25   /* v9 Granule Protection Check Fault */
++#define EXCP_NMI            26
+ /* NB: add new EXCP_ defines to the array in arm_log_exception() too */
  
-+#define GICD_TYPER_NMI_SHIFT           9
- #define GICD_TYPER_LPIS_SHIFT          17
+ #define ARMV7M_EXCP_RESET   1
+@@ -79,6 +80,7 @@
+ #define CPU_INTERRUPT_VIRQ  CPU_INTERRUPT_TGT_EXT_2
+ #define CPU_INTERRUPT_VFIQ  CPU_INTERRUPT_TGT_EXT_3
+ #define CPU_INTERRUPT_VSERR CPU_INTERRUPT_TGT_INT_0
++#define CPU_INTERRUPT_NMI   CPU_INTERRUPT_TGT_EXT_4
  
- /* 16 bits EventId */
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 1eb8c39239..c9d31c7c7d 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -248,6 +248,7 @@ struct GICv3State {
-     uint32_t num_irq;
-     uint32_t revision;
-     bool lpi_enable;
-+    bool nmi_support;
-     bool security_extn;
-     bool force_8bit_prio;
-     bool irq_reset_nonsecure;
+ /* The usual mapping for an AArch64 system register to its AArch32
+  * counterpart is for the 32 bit world to have access to the lower
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 211156d640..bd7858e02e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10626,6 +10626,7 @@ void arm_log_exception(CPUState *cs)
+             [EXCP_DIVBYZERO] = "v7M DIVBYZERO UsageFault",
+             [EXCP_VSERR] = "Virtual SERR",
+             [EXCP_GPC] = "Granule Protection Check",
++            [EXCP_NMI] = "NMI"
+         };
+ 
+         if (idx >= 0 && idx < ARRAY_SIZE(excnames)) {
 -- 
 2.34.1
 
