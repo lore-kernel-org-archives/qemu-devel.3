@@ -4,86 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6732FC5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2434C5478D
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyd-0004vB-5S; Wed, 21 Feb 2024 16:18:03 -0500
+	id 1rctzg-0002vn-H0; Wed, 21 Feb 2024 16:19:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyZ-0004g0-MB
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:59 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyS-00010W-F6
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:59 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-41270d0b919so15994525e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:17:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550270; x=1709155070; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3gLsl7BBn0DZO5gyuGErugwjfhowG19+Smg3Lb3vokg=;
- b=TClTjH7ZuuBhe/WiafLP2jCKPn0aWHcprJZwk2PIGA/ChzLNVNAERvtGZ/5tVbOFnu
- nDTBywWk1Bk7kM12w7dG2rLxe3G33/UfFN98/onneTG1Frqd292x6mBCQmHY7PS651e7
- F6g8iSeC7hOyqcmdld3UMXb0WayASWB69VtOEAZo3eEmBGNIWUjWriaD4V64IGJyJeb3
- 47Yt1D7RWr1N+6mLRjxANj0qJQDb7hj115FeeDacb2dLTOdwVQB38j1kLazwd+QzbTCz
- hUQ61wxJZiisRHoV2tE/NR2O8awvzEW4A23dQ2uuoLgOQbj0LAWDscKRvCeHBulAqgFw
- 9CgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550270; x=1709155070;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3gLsl7BBn0DZO5gyuGErugwjfhowG19+Smg3Lb3vokg=;
- b=OzYm3hRxA7agyxS1XRgxOsxJ/AQRu5nH/8k+HXpY/7SQ0h+8L2ivx6HsNMm1OFBQEl
- pn0Esy02PFOD3Wovp2AQll/UoPLoqibCTjNON2bWf3YjnevGsaBSeNwxdKj4+5C1k4RT
- cQ3BS9j+YDJ1nxeFqHs6WowUC2f/mXfYba4ONHV6L/LOSE8NkON+PEQhpZLqKot5UTsg
- FVRge9sVp6Tkey+T2wnpEJropq0snTaFIgPiGT3KLPjCMs327Y97KOXvh3fwrzPvJ6Lp
- jnu7uSRsEK+AvQvO9Dah6j5vBgtBGNR2n5EPWuNdBEywHl9MJ0dgQPdIjoXCrJ50329H
- 8iXg==
-X-Gm-Message-State: AOJu0Yz1IkKCU3FP8EYvNuFFMzGqF2UJXjj6LSgmvL2lgI6t4Hpr3Qa8
- f4iVBlLr3TPgB2yY+xZJqUUjIrvS2J1uMVTcoBPRZwlSm9Gpu9USmCP2fWjfi9IIn3WADvuZU7x
- Q/gI=
-X-Google-Smtp-Source: AGHT+IGX4rvXEuavkGqkWXNFkw5ZZCD8SgJj7cvop787hNC+npyHML2KT0YeuupGteRL1xYNijqafw==
-X-Received: by 2002:a05:6000:1561:b0:33d:804f:5ea3 with SMTP id
- 1-20020a056000156100b0033d804f5ea3mr1934709wrz.69.1708550270472; 
- Wed, 21 Feb 2024 13:17:50 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- n1-20020a5d51c1000000b0033b1c321070sm17958745wrv.31.2024.02.21.13.17.48
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 21 Feb 2024 13:17:50 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 09/25] hw/i386/pc: Store pointers to IDE buses in PCMachineState
-Date: Wed, 21 Feb 2024 22:16:09 +0100
-Message-ID: <20240221211626.48190-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
-References: <20240221211626.48190-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctzQ-0001Vy-4F; Wed, 21 Feb 2024 16:18:55 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctzN-0001FE-44; Wed, 21 Feb 2024 16:18:51 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8D1CA4F804;
+ Thu, 22 Feb 2024 00:16:46 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 43C22869BC;
+ Thu, 22 Feb 2024 00:16:24 +0300 (MSK)
+Received: (nullmailer pid 2335328 invoked by uid 1000);
+ Wed, 21 Feb 2024 21:16:22 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 28/28] qemu-img: extend cvtnum() and use it in more places
+Date: Thu, 22 Feb 2024 00:16:09 +0300
+Message-Id: <20240221211622.2335170-28-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
+References: <cover.1708544927.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,171 +60,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+cvtnum() expects input string to specify some sort of size
+(optionally with KMG... suffix).  However, there are a lot
+of other number conversions in there (using qemu_strtol &Co),
+also, not all conversions which use cvtnum, actually expects
+size, - like dd count=nn.
 
-Add the two IDE bus BusState pointers to the set we keep in PCMachineState.
-This allows us to avoid passing them to pc_cmos_init(), and also will
-allow a refactoring of how we call pc_cmos_init_late().
+Add bool issize argument to cvtnum() to specify if it should
+treat the argument as a size or something else, - this changes
+conversion routine in use and error text.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMD: Do not zero-init pcms->idebus[] again]
-Message-ID: <20240220160622.114437-2-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Use the new cvtnum() in more places (like where strtol were used),
+since it never return negative number in successful conversion.
+When it makes sense, also specify upper or lower bounds at the
+same time.  This simplifies option processing in multiple places,
+removing the need of local temporary variables and longer error
+reporting code.
+
+While at it, fix errors, like depth in measure must be >= 1,
+while the previous code allowed it to be 0.
+
+In a few places, change unsigned variables (like of type size_t)
+to be signed instead, - to avoid the need of temporary conversion
+variable.  All these variables are okay to be signed, we never
+assign <0 value to them except of the cases of conversion error,
+where we return immediately.
+
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- include/hw/i386/pc.h |  4 +++-
- hw/i386/pc.c         |  5 ++---
- hw/i386/pc_piix.c    | 12 ++++--------
- hw/i386/pc_q35.c     |  9 +++------
- 4 files changed, 12 insertions(+), 18 deletions(-)
+ qemu-img.c | 118 ++++++++++++++++++++---------------------------------
+ 1 file changed, 44 insertions(+), 74 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 02a0deedd3..cf2fa60868 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -17,6 +17,8 @@
- 
- #define HPET_INTCAP "hpet-intcap"
- 
-+#define MAX_IDE_BUS 2
-+
- /**
-  * PCMachineState:
-  * @acpi_dev: link to ACPI PM device that performs ACPI hotplug handling
-@@ -37,6 +39,7 @@ typedef struct PCMachineState {
-     PFlashCFI01 *flash[2];
-     ISADevice *pcspk;
-     DeviceState *iommu;
-+    BusState *idebus[MAX_IDE_BUS];
- 
-     /* Configuration options: */
-     uint64_t max_ram_below_4g;
-@@ -182,7 +185,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
-                           bool create_fdctrl,
-                           uint32_t hpet_irqs);
- void pc_cmos_init(PCMachineState *pcms,
--                  BusState *ide0, BusState *ide1,
-                   ISADevice *s);
- void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus);
- 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 9cbc59665f..3e9ca6295f 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -574,7 +574,6 @@ static void pc_cmos_init_late(void *opaque)
+diff --git a/qemu-img.c b/qemu-img.c
+index 299e34e470..a066c4cfc4 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -397,18 +397,23 @@ static int add_old_style_options(const char *fmt, QemuOpts *opts,
+     return 0;
  }
  
- void pc_cmos_init(PCMachineState *pcms,
--                  BusState *idebus0, BusState *idebus1,
-                   ISADevice *rtc)
+-static int64_t cvtnum_full(const char *name, const char *value, int64_t min,
+-                           int64_t max)
++static int64_t cvtnum_full(const char *name, const char *value,
++                           bool issize, int64_t min, int64_t max)
  {
-     int val;
-@@ -634,8 +633,8 @@ void pc_cmos_init(PCMachineState *pcms,
+     int err;
+     uint64_t res;
  
-     /* hard drives and FDC */
-     arg.rtc_state = s;
--    arg.idebus[0] = idebus0;
--    arg.idebus[1] = idebus1;
-+    arg.idebus[0] = pcms->idebus[0];
-+    arg.idebus[1] = pcms->idebus[1];
-     qemu_register_reset(pc_cmos_init_late, &arg);
+-    err = qemu_strtosz(value, NULL, &res);
++    err = issize ? qemu_strtosz(value, NULL, &res) :
++                   qemu_strtou64(value, NULL, 0, &res);
+     if (err < 0 && err != -ERANGE) {
+-        error_report("Invalid %s specified. You may use "
+-                     "k, M, G, T, P or E suffixes for", name);
+-        error_report("kilobytes, megabytes, gigabytes, terabytes, "
+-                     "petabytes and exabytes.");
++        if (issize) {
++            error_report("Invalid %s specified. You may use "
++                         "k, M, G, T, P or E suffixes for", name);
++            error_report("kilobytes, megabytes, gigabytes, terabytes, "
++                         "petabytes and exabytes.");
++        } else {
++            error_report("Invalid %s specified.", name);
++        }
+         return err;
+     }
+     if (err == -ERANGE || res > max || res < min) {
+@@ -419,9 +424,9 @@ static int64_t cvtnum_full(const char *name, const char *value, int64_t min,
+     return res;
  }
  
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 9064511507..bea096f569 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -68,7 +68,6 @@
- #include "kvm/kvm-cpu.h"
- #include "target/i386/cpu.h"
+-static int64_t cvtnum(const char *name, const char *value)
++static int64_t cvtnum(const char *name, const char *value, bool issize)
+ {
+-    return cvtnum_full(name, value, 0, INT64_MAX);
++    return cvtnum_full(name, value, issize, 0, INT64_MAX);
+ }
  
--#define MAX_IDE_BUS 2
- #define XEN_IOAPIC_NUM_PIRQS 128ULL
+ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
+@@ -525,7 +530,7 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
  
- #ifdef CONFIG_IDE_ISA
-@@ -114,7 +113,6 @@ static void pc_init1(MachineState *machine,
-     Object *piix4_pm = NULL;
-     qemu_irq smi_irq;
-     GSIState *gsi_state;
--    BusState *idebus[MAX_IDE_BUS];
-     ISADevice *rtc_state;
-     MemoryRegion *ram_memory;
-     MemoryRegion *pci_memory = NULL;
-@@ -299,8 +297,8 @@ static void pc_init1(MachineState *machine,
-         piix4_pm = object_resolve_path_component(OBJECT(pci_dev), "pm");
-         dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
-         pci_ide_create_devs(PCI_DEVICE(dev));
--        idebus[0] = qdev_get_child_bus(dev, "ide.0");
--        idebus[1] = qdev_get_child_bus(dev, "ide.1");
-+        pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
-+        pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
-     } else {
-         isa_bus = isa_bus_new(NULL, system_memory, system_io,
-                               &error_abort);
-@@ -312,8 +310,6 @@ static void pc_init1(MachineState *machine,
- 
-         i8257_dma_init(OBJECT(machine), isa_bus, 0);
-         pcms->hpet_enabled = false;
--        idebus[0] = NULL;
--        idebus[1] = NULL;
-     }
- 
-     if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
-@@ -358,12 +354,12 @@ static void pc_init1(MachineState *machine,
-              * second one.
-              */
-             busname[4] = '0' + i;
--            idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
-+            pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+     /* Get image size, if specified */
+     if (optind < argc) {
+-        img_size = cvtnum("image size", argv[optind++]);
++        img_size = cvtnum("image size", argv[optind++], true);
+         if (img_size < 0) {
+             goto fail;
          }
-     }
- #endif
+@@ -987,7 +992,7 @@ static int img_commit(const img_cmd_t *ccmd, int argc, char **argv)
+             quiet = true;
+             break;
+         case 'r':
+-            rate_limit = cvtnum("rate limit", optarg);
++            rate_limit = cvtnum("rate limit", optarg, true);
+             if (rate_limit < 0) {
+                 return 1;
+             }
+@@ -2412,7 +2417,7 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+         {
+             int64_t sval;
  
--    pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
-+    pc_cmos_init(pcms, rtc_state);
+-            sval = cvtnum("buffer size for sparse output", optarg);
++            sval = cvtnum("buffer size for sparse output", optarg, true);
+             if (sval < 0) {
+                 goto fail_getopt;
+             } else if (!QEMU_IS_ALIGNED(sval, BDRV_SECTOR_SIZE) ||
+@@ -2444,10 +2449,9 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+             skip_create = true;
+             break;
+         case 'm':
+-            if (qemu_strtol(optarg, NULL, 0, &s.num_coroutines) ||
+-                s.num_coroutines < 1 || s.num_coroutines > MAX_COROUTINES) {
+-                error_report("Invalid number of coroutines. Allowed number of"
+-                             " coroutines is between 1 and %d", MAX_COROUTINES);
++            s.num_coroutines = cvtnum_full("number of coroutines", optarg,
++                                           false, 1, MAX_COROUTINES);
++            if (s.num_coroutines < 0) {
+                 goto fail_getopt;
+             }
+             break;
+@@ -2458,7 +2462,7 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+             force_share = true;
+             break;
+         case 'r':
+-            rate_limit = cvtnum("rate limit", optarg);
++            rate_limit = cvtnum("rate limit", optarg, true);
+             if (rate_limit < 0) {
+                 goto fail_getopt;
+             }
+@@ -3377,13 +3381,13 @@ static int img_map(const img_cmd_t *ccmd, int argc, char **argv)
+             output_format = parse_output_format(argv[0], optarg);
+             break;
+         case 's':
+-            start_offset = cvtnum("start offset", optarg);
++            start_offset = cvtnum("start offset", optarg, true);
+             if (start_offset < 0) {
+                 return 1;
+             }
+             break;
+         case 'l':
+-            max_length = cvtnum("max length", optarg);
++            max_length = cvtnum("max length", optarg, true);
+             if (max_length < 0) {
+                 return 1;
+             }
+@@ -4704,9 +4708,9 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+     int count = 75000;
+     int depth = 64;
+     int64_t offset = 0;
+-    size_t bufsize = 4096;
++    ssize_t bufsize = 4096;
+     int pattern = 0;
+-    size_t step = 0;
++    ssize_t step = 0;
+     int flush_interval = 0;
+     bool drain_on_flush = true;
+     int64_t image_size;
+@@ -4788,27 +4792,17 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+ );
+             break;
+         case 'c':
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
+-                error_report("Invalid request count specified");
++            count = cvtnum_full("request count", optarg, false, 1, INT_MAX);
++            if (count < 0) {
+                 return 1;
+             }
+-            count = res;
+             break;
+-        }
+         case 'd':
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
+-                error_report("Invalid queue depth specified");
++            depth = cvtnum_full("queue depth", optarg, false, 1, INT_MAX);
++            if (depth < 0) {
+                 return 1;
+             }
+-            depth = res;
+             break;
+-        }
+         case 'f':
+             fmt = optarg;
+             break;
+@@ -4824,41 +4818,26 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             }
+             break;
+         case 'o':
+-        {
+-            offset = cvtnum("offset", optarg);
++            offset = cvtnum("offset", optarg, true);
+             if (offset < 0) {
+                 return 1;
+             }
+             break;
+-        }
+-            break;
+         case 'q':
+             quiet = true;
+             break;
+         case 's':
+-        {
+-            int64_t sval;
+-
+-            sval = cvtnum_full("buffer size", optarg, 0, INT_MAX);
+-            if (sval < 0) {
++            bufsize = cvtnum_full("buffer size", optarg, true, 1, INT_MAX);
++            if (bufsize < 0) {
+                 return 1;
+             }
+-
+-            bufsize = sval;
+             break;
+-        }
+         case 'S':
+-        {
+-            int64_t sval;
+-
+-            sval = cvtnum_full("step_size", optarg, 0, INT_MAX);
+-            if (sval < 0) {
++            step = cvtnum_full("step size", optarg, true, 0, INT_MAX);
++            if (step < 0) {
+                 return 1;
+             }
+-
+-            step = sval;
+             break;
+-        }
+         case 't':
+             ret = bdrv_parse_cache_mode(optarg, &flags, &writethrough);
+             if (ret < 0) {
+@@ -4875,27 +4854,18 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             force_share = true;
+             break;
+         case OPTION_PATTERN:
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > 0xff) {
+-                error_report("Invalid pattern byte specified");
++            pattern = cvtnum_full("pattern byte", optarg, false, 0, 0xff);
++            if (pattern < 0) {
+                 return 1;
+             }
+-            pattern = res;
+             break;
+-        }
+         case OPTION_FLUSH_INTERVAL:
+-        {
+-            unsigned long res;
+-
+-            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
+-                error_report("Invalid flush interval specified");
++            flush_interval = cvtnum_full("flush interval", optarg,
++                                         false, 0, INT_MAX);
++            if (flush_interval < 0) {
+                 return 1;
+             }
+-            flush_interval = res;
+             break;
+-        }
+         case OPTION_NO_DRAIN:
+             drain_on_flush = false;
+             break;
+@@ -5090,7 +5060,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+             src_fmt = optarg;
+             break;
+         case 'g':
+-            granularity = cvtnum("granularity", optarg);
++            granularity = cvtnum("granularity", optarg, false);
+             if (granularity < 0) {
+                 return 1;
+             }
+@@ -5278,7 +5248,7 @@ static int img_dd_bs(const char *arg,
+ {
+     int64_t res;
  
-     if (piix4_pm) {
-         smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 0);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index d346fa3b1d..0e9bd27a6e 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -126,7 +126,6 @@ static void pc_q35_init(MachineState *machine)
-     PCIBus *host_bus;
-     PCIDevice *lpc;
-     DeviceState *lpc_dev;
--    BusState *idebus[MAX_SATA_PORTS];
-     ISADevice *rtc_state;
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *system_io = get_system_io();
-@@ -300,13 +299,11 @@ static void pc_q35_init(MachineState *machine)
-                                                          ICH9_SATA1_FUNC),
-                                                "ich9-ahci");
-         ich9 = ICH9_AHCI(pdev);
--        idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
--        idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
-+        pcms->idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
-+        pcms->idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
-         g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
-         ide_drive_get(hd, ich9->ahci.ports);
-         ahci_ide_create_devs(&ich9->ahci, hd);
--    } else {
--        idebus[0] = idebus[1] = NULL;
-     }
+-    res = cvtnum_full("bs", arg, 1, INT_MAX);
++    res = cvtnum_full("bs", arg, true, 1, INT_MAX);
  
-     if (machine_usb(machine)) {
-@@ -327,7 +324,7 @@ static void pc_q35_init(MachineState *machine)
-         smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
-     }
+     if (res < 0) {
+         return 1;
+@@ -5292,7 +5262,7 @@ static int img_dd_count(const char *arg,
+                         struct DdIo *in, struct DdIo *out,
+                         struct DdInfo *dd)
+ {
+-    dd->count = cvtnum("count", arg);
++    dd->count = cvtnum("count", arg, false);
  
--    pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
-+    pc_cmos_init(pcms, rtc_state);
+     if (dd->count < 0) {
+         return 1;
+@@ -5323,7 +5293,7 @@ static int img_dd_skip(const char *arg,
+                        struct DdIo *in, struct DdIo *out,
+                        struct DdInfo *dd)
+ {
+-    in->offset = cvtnum("skip", arg);
++    in->offset = cvtnum("skip", arg, false);
  
-     /* the rest devices to which pci devfn is automatically assigned */
-     pc_vga_init(isa_bus, host_bus);
+     if (in->offset < 0) {
+         return 1;
+@@ -5718,7 +5688,7 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+             output_format = parse_output_format(argv[0], optarg);
+             break;
+         case 's':
+-            img_size = cvtnum("image size", optarg);
++            img_size = cvtnum("image size", optarg, true);
+             if (img_size < 0) {
+                 goto out;
+             }
 -- 
-2.41.0
+2.39.2
 
 
