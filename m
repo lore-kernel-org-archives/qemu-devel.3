@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31A50C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:15:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9D9C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchu3-0000lP-B1; Wed, 21 Feb 2024 03:24:31 -0500
+	id 1rcoJF-0000kJ-H6; Wed, 21 Feb 2024 10:14:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchu1-0000do-OR; Wed, 21 Feb 2024 03:24:29 -0500
+ id 1rchsl-0005dy-8j; Wed, 21 Feb 2024 03:23:11 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchu0-0002dD-4E; Wed, 21 Feb 2024 03:24:29 -0500
+ id 1rchsj-0002RS-Hl; Wed, 21 Feb 2024 03:23:11 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7D58B4F3E4;
- Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A9ECF4F3D9;
+ Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4986C860C3;
- Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
-Received: (nullmailer pid 2142103 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 763AE860B8;
+ Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
+Received: (nullmailer pid 2142069 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 38/60] hw/i386: Fix _STA return value for ACPI0017
-Date: Wed, 21 Feb 2024 11:20:26 +0300
-Message-Id: <20240221082058.2141850-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 27/60] tcg: Increase width of temp_subindex
+Date: Wed, 21 Feb 2024 11:20:15 +0300
+Message-Id: <20240221082058.2141850-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,43 +63,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Found whilst testing a series for the linux kernel that actually
-bothers to check if enabled is set. 0xB is the option used
-for vast majority of DSDT entries in QEMU.
-It is a little odd for a device that doesn't really exist and
-is simply a hook to tell the OS there is a CEDT table but 0xB
-seems a reasonable choice and avoids need to special case
-this device in the OS.
+We need values 0-3 for TCG_TYPE_I128 on 32-bit hosts.
 
-Means:
-* Device present.
-* Device enabled and decoding it's resources.
-* Not shown in UI
-* Functioning properly
-* No battery (on this device!)
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240126120132.24248-12-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit d9ae5802f656f6fb53b788747ba557a826b6e740)
+Cc: qemu-stable@nongnu.org
+Fixes: 43eef72f4109 ("tcg: Add temp allocation for TCGv_i128")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2159
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Tested-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit c0e688153f299d5d493989c80bcc84c9cf36d6a6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 80db183b78..1e178341de 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1415,7 +1415,7 @@ static void build_acpi0017(Aml *table)
-     aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0017")));
+diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+index daf2a5bf9e..451f3fec41 100644
+--- a/include/tcg/tcg.h
++++ b/include/tcg/tcg.h
+@@ -412,7 +412,7 @@ typedef struct TCGTemp {
+     unsigned int mem_coherent:1;
+     unsigned int mem_allocated:1;
+     unsigned int temp_allocated:1;
+-    unsigned int temp_subindex:1;
++    unsigned int temp_subindex:2;
  
-     method = aml_method("_STA", 0, AML_NOTSERIALIZED);
--    aml_append(method, aml_return(aml_int(0x01)));
-+    aml_append(method, aml_return(aml_int(0x0B)));
-     aml_append(dev, method);
-     build_cxl_dsm_method(dev);
- 
+     int64_t val;
+     struct TCGTemp *mem_base;
 -- 
 2.39.2
 
