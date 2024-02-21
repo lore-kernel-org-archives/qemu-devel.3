@@ -4,49 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70992C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEE5C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoOQ-0001we-P5; Wed, 21 Feb 2024 10:20:18 -0500
+	id 1rcoNR-00078h-GL; Wed, 21 Feb 2024 10:19:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoKw-0000wk-BN; Wed, 21 Feb 2024 10:16:43 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rcoKs-0001XF-MP
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:16:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchuv-00031M-Pt; Wed, 21 Feb 2024 03:25:27 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 322174F3EE;
- Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id F1495860CD;
- Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
-Received: (nullmailer pid 2142134 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 48/60] .gitlab-ci/windows.yml: Don't install libusb or
- spice packages on 32-bit
-Date: Wed, 21 Feb 2024 11:20:36 +0300
-Message-Id: <20240221082058.2141850-48-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rchvp-00039p-Gb
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:26:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708503980;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hd/ttXoszpMYTfUKQHfQwOsC/MFhsOZNvz3dXuB4uSk=;
+ b=LpnbuMwRZrESyEem61SPKZpQlA0I2BiWsFb7DQk/6h7XvcaqAXVyLmgUz/1XR8/GU7q6DT
+ fqj5h8ahyTwFQVMBEU+a6BP7V6Qicus7HaiIBP6vP5zCqWo3p1Dl5qHGj34XAZSPIT5iXr
+ S6yBQiVbSPpC+gfS8sbd1QesKFI3Ncs=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-452-28j0DJaQPSiRwC0YRVyZtA-1; Wed, 21 Feb 2024 03:26:17 -0500
+X-MC-Unique: 28j0DJaQPSiRwC0YRVyZtA-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-29a16254a66so131158a91.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 00:26:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708503976; x=1709108776;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hd/ttXoszpMYTfUKQHfQwOsC/MFhsOZNvz3dXuB4uSk=;
+ b=dA50yHewsfqfG19cTN8QI//R7qkrLfcVnN9MFzA0aYygY9D9F4Wwx4WHbBSyAwLhzO
+ EIVaMrjbsRruA/jrOEQrcSyYB75hlZDPoUKxkppRlgUKNOVwv+hzMpcum/rrHeUEuX3G
+ Kg2ckohO7hi9qR8aZkb8bQxz91GGiWwPf8SbXkRA0//zL6j89DqzfSaK3nOLIZh0M5Fx
+ YKeiKmWVtzQ4nGgDrLT2qLgFJUCCPBNh50VvdIIGjMphrGoDW5T69E+A9/a/mWWqRGf8
+ R9+ROUQqrQsUEhid+Qqsm0M4P20Zuak4ntvl4aw/KwoeNAeVzVWPaXUTukUflT5Feyzb
+ CP4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaLfOpuZtb06U+W14ukI/sYM99n47as13/F541F496bpigUWeU9k0F226if2Zf/3UFi1iZW/Cjb72JBl7PoDO0mX6rfcc=
+X-Gm-Message-State: AOJu0YzF8KdhLxw9PHZnvvFG3yS1Ks/+MNHRXhW86CIBRtmPdsOdhglu
+ McaylaEtahhGiMznX85Q0t1iCuZH6PtiWyF9+k76Gts1sYiVfmCPJ/oU6GQB4hhEOsUvlqZrN8D
+ HOHdEWVUYCtXFVPXNP8tqYxatlLpTB2TxYmIxTWJ+ydGKyLz25Dph
+X-Received: by 2002:a05:6a21:1a4:b0:1a0:810e:5f40 with SMTP id
+ le36-20020a056a2101a400b001a0810e5f40mr18747231pzb.4.1708503976367; 
+ Wed, 21 Feb 2024 00:26:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGPlw51rZw4vIUQMgxAUEb1DsNWycXAndXUAhYQclvrw8/gMYgh0yl3zUReZwS/tc6RmtkBlg==
+X-Received: by 2002:a05:6a21:1a4:b0:1a0:810e:5f40 with SMTP id
+ le36-20020a056a2101a400b001a0810e5f40mr18747220pzb.4.1708503975997; 
+ Wed, 21 Feb 2024 00:26:15 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ f9-20020a170902e98900b001db45855528sm7384596plb.198.2024.02.21.00.26.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 21 Feb 2024 00:26:15 -0800 (PST)
+Date: Wed, 21 Feb 2024 16:26:01 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Het Gala <het.gala@nutanix.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] qapi: Misc cleanups to migrate QAPIs
+Message-ID: <ZdWzmbOuCVk8GZMn@x1n>
+References: <20240216195659.189091-1-het.gala@nutanix.com>
+ <87edd61ezt.fsf@pond.sub.org>
+ <b1ce8254-24e8-487e-8da0-d8916f53fcb4@nutanix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b1ce8254-24e8-487e-8da0-d8916f53fcb4@nutanix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -64,76 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Thanks, Markus.
 
-When msys2 updated their libusb packages to libusb 1.0.27, they
-dropped support for building them for mingw32, leaving only mingw64
-packages.  This broke our CI job, as the 'pacman' package install now
-fails with:
+On Wed, Feb 21, 2024 at 12:36:57PM +0530, Het Gala wrote:
+> > > diff --git a/qapi/migration.json b/qapi/migration.json
+> > > index 5a565d9b8d..5756e650b0 100644
+> > > --- a/qapi/migration.json
+> > > +++ b/qapi/migration.json
+> > > @@ -1728,6 +1728,7 @@
+> > >   #
+> > >   # -> { "execute": "migrate", "arguments": { "uri": "tcp:0:4446" } }
+> > >   # <- { "return": {} }
+> > > +#
+> > >   # -> { "execute": "migrate",
+> > >   #      "arguments": {
+> > >   #          "channels": [ { "channel-type": "main",
+> > > @@ -1796,19 +1797,19 @@
+> > >   #
+> > >   #     3. The uri format is the same as for -incoming
+> > >   #
+> > > -#     5. For now, number of migration streams is restricted to one,
+> > > +#     4. For now, number of migration streams is restricted to one,
+> > >   #        i.e number of items in 'channels' list is just 1.
+> > >   #
+> > > -#     4. The 'uri' and 'channels' arguments are mutually exclusive;
+> > > +#     5. The 'uri' and 'channels' arguments are mutually exclusive;
+> > >   #        exactly one of the two should be present.
+> > >   #
+> > >   # Example:
+> > >   #
+> > >   # -> { "execute": "migrate-incoming",
+> > > -#      "arguments": { "uri": "tcp::4446" } }
+> > > +#      "arguments": { "uri": "tcp:0:4446" } }
+> > >   # <- { "return": {} }
+> > >   #
+> > > -# -> { "execute": "migrate",
+> > > +# -> { "execute": "migrate-incoming",
+> > >   #      "arguments": {
+> > >   #          "channels": [ { "channel-type": "main",
+> > >   #                          "addr": { "transport": "socket",
+> > > @@ -1817,7 +1818,7 @@
+> > >   #                                    "port": "1050" } } ] } }
+> > >   # <- { "return": {} }
+> > >   #
+> > > -# -> { "execute": "migrate",
+> > > +# -> { "execute": "migrate-incoming",
+> > >   #      "arguments": {
+> > >   #          "channels": [ { "channel-type": "main",
+> > >   #                          "addr": { "transport": "exec",
+> > > @@ -1825,7 +1826,7 @@
+> > >   #                                              "/some/sock" ] } } ] } }
+> > >   # <- { "return": {} }
+> > >   #
+> > > -# -> { "execute": "migrate",
+> > > +# -> { "execute": "migrate-incoming",
+> > >   #      "arguments": {
+> > >   #          "channels": [ { "channel-type": "main",
+> > >   #                          "addr": { "transport": "rdma",
 
-error: target not found: mingw-w64-i686-libusb
-error: target not found: mingw-w64-i686-usbredir
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-(both these binary packages are from the libusb source package).
+Markus, do you want us to pick it up, or let it go via qapi?
 
-Similarly, spice is now 64-bit only:
-error: target not found: mingw-w64-i686-spice
+Thanks,
 
-Fix this by dropping these packages from the list we install for our
-msys2-32bit build.  We do this with a simple mechanism for the
-msys2-64bit and msys2-32bit jobs to specify a list of extra packages
-to install on top of the common ones we install for both jobs.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2160
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Message-id: 20240215155009.2422335-1-peter.maydell@linaro.org
-(cherry picked from commit 8e31b744fdf2c5d933681e4128acee72a83af4b8)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index f7645f72b7..5c1e385dc8 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -88,7 +88,6 @@
-       $MINGW_TARGET-libpng
-       $MINGW_TARGET-libssh
-       $MINGW_TARGET-libtasn1
--      $MINGW_TARGET-libusb
-       $MINGW_TARGET-lzo2
-       $MINGW_TARGET-nettle
-       $MINGW_TARGET-ninja
-@@ -98,9 +97,8 @@
-       $MINGW_TARGET-SDL2
-       $MINGW_TARGET-SDL2_image
-       $MINGW_TARGET-snappy
--      $MINGW_TARGET-spice
--      $MINGW_TARGET-usbredir
--      $MINGW_TARGET-zstd "
-+      $MINGW_TARGET-zstd
-+      $EXTRA_PACKAGES "
-   - Write-Output "Running build at $(Get-Date -Format u)"
-   - $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
-   - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
-@@ -123,6 +121,8 @@ msys2-64bit:
-   variables:
-     MINGW_TARGET: mingw-w64-x86_64
-     MSYSTEM: MINGW64
-+    # msys2 only ship these packages for 64-bit, not 32-bit
-+    EXTRA_PACKAGES: $MINGW_TARGET-libusb $MINGW_TARGET-usbredir $MINGW_TARGET-spice
-     # do not remove "--without-default-devices"!
-     # commit 9f8e6cad65a6 ("gitlab-ci: Speed up the msys2-64bit job by using --without-default-devices"
-     # changed to compile QEMU with the --without-default-devices switch
-@@ -137,5 +137,6 @@ msys2-32bit:
-   variables:
-     MINGW_TARGET: mingw-w64-i686
-     MSYSTEM: MINGW32
-+    EXTRA_PACKAGES:
-     CONFIGURE_ARGS:  --target-list=ppc64-softmmu -Ddebug=false -Doptimization=0
-     TEST_ARGS: --no-suite qtest
 -- 
-2.39.2
+Peter Xu
 
 
