@@ -4,47 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB41C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6732FC5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctxu-0002st-HZ; Wed, 21 Feb 2024 16:17:18 -0500
+	id 1rctyd-0004vB-5S; Wed, 21 Feb 2024 16:18:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxm-0002gl-1R; Wed, 21 Feb 2024 16:17:12 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxk-0000ts-9Y; Wed, 21 Feb 2024 16:17:09 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A38434F7F5;
- Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8F010869A0;
- Thu, 22 Feb 2024 00:16:22 +0300 (MSK)
-Received: (nullmailer pid 2335242 invoked by uid 1000);
- Wed, 21 Feb 2024 21:16:22 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v2 00/28] qemu-img: refersh options and --help handling,
- cleanups
-Date: Thu, 22 Feb 2024 00:15:41 +0300
-Message-Id: <cover.1708544927.git.mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyZ-0004g0-MB
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:59 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyS-00010W-F6
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:59 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-41270d0b919so15994525e9.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:17:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708550270; x=1709155070; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3gLsl7BBn0DZO5gyuGErugwjfhowG19+Smg3Lb3vokg=;
+ b=TClTjH7ZuuBhe/WiafLP2jCKPn0aWHcprJZwk2PIGA/ChzLNVNAERvtGZ/5tVbOFnu
+ nDTBywWk1Bk7kM12w7dG2rLxe3G33/UfFN98/onneTG1Frqd292x6mBCQmHY7PS651e7
+ F6g8iSeC7hOyqcmdld3UMXb0WayASWB69VtOEAZo3eEmBGNIWUjWriaD4V64IGJyJeb3
+ 47Yt1D7RWr1N+6mLRjxANj0qJQDb7hj115FeeDacb2dLTOdwVQB38j1kLazwd+QzbTCz
+ hUQ61wxJZiisRHoV2tE/NR2O8awvzEW4A23dQ2uuoLgOQbj0LAWDscKRvCeHBulAqgFw
+ 9CgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708550270; x=1709155070;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3gLsl7BBn0DZO5gyuGErugwjfhowG19+Smg3Lb3vokg=;
+ b=OzYm3hRxA7agyxS1XRgxOsxJ/AQRu5nH/8k+HXpY/7SQ0h+8L2ivx6HsNMm1OFBQEl
+ pn0Esy02PFOD3Wovp2AQll/UoPLoqibCTjNON2bWf3YjnevGsaBSeNwxdKj4+5C1k4RT
+ cQ3BS9j+YDJ1nxeFqHs6WowUC2f/mXfYba4ONHV6L/LOSE8NkON+PEQhpZLqKot5UTsg
+ FVRge9sVp6Tkey+T2wnpEJropq0snTaFIgPiGT3KLPjCMs327Y97KOXvh3fwrzPvJ6Lp
+ jnu7uSRsEK+AvQvO9Dah6j5vBgtBGNR2n5EPWuNdBEywHl9MJ0dgQPdIjoXCrJ50329H
+ 8iXg==
+X-Gm-Message-State: AOJu0Yz1IkKCU3FP8EYvNuFFMzGqF2UJXjj6LSgmvL2lgI6t4Hpr3Qa8
+ f4iVBlLr3TPgB2yY+xZJqUUjIrvS2J1uMVTcoBPRZwlSm9Gpu9USmCP2fWjfi9IIn3WADvuZU7x
+ Q/gI=
+X-Google-Smtp-Source: AGHT+IGX4rvXEuavkGqkWXNFkw5ZZCD8SgJj7cvop787hNC+npyHML2KT0YeuupGteRL1xYNijqafw==
+X-Received: by 2002:a05:6000:1561:b0:33d:804f:5ea3 with SMTP id
+ 1-20020a056000156100b0033d804f5ea3mr1934709wrz.69.1708550270472; 
+ Wed, 21 Feb 2024 13:17:50 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.211.34])
+ by smtp.gmail.com with ESMTPSA id
+ n1-20020a5d51c1000000b0033b1c321070sm17958745wrv.31.2024.02.21.13.17.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 21 Feb 2024 13:17:50 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 09/25] hw/i386/pc: Store pointers to IDE buses in PCMachineState
+Date: Wed, 21 Feb 2024 22:16:09 +0100
+Message-ID: <20240221211626.48190-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
+References: <20240221211626.48190-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,98 +99,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Quite big patchset trying to implement normal, readable qemu-img --help
-(and qemu-img COMMAND --help) output with readable descriptions, and
-adding many long options in the process.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-In the end I stopped using qemu-img-opts.hx in qemu-img.c, perhaps
-this can be avoided, with only list of commands and their desrciptions
-kept there, but I don't see big advantage here.  The same list should
-be included in docs/tools/qemu-img.rst, - this is not done now.
+Add the two IDE bus BusState pointers to the set we keep in PCMachineState.
+This allows us to avoid passing them to pc_cmos_init(), and also will
+allow a refactoring of how we call pc_cmos_init_late().
 
-Also each command syntax isn't reflected in the doc for now, because
-I want to give good names for options first, - and there, we've quite
-some inconsistences and questions.  For example, measure --output=OFMT
--O OFMT, - this is priceless :)  I've no idea why we have this ugly
---output=json thing, why not have --json? ;)  I gave the desired
-format long name --target-format to avoid clash with --output.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[PMD: Do not zero-init pcms->idebus[] again]
+Message-ID: <20240220160622.114437-2-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/i386/pc.h |  4 +++-
+ hw/i386/pc.c         |  5 ++---
+ hw/i386/pc_piix.c    | 12 ++++--------
+ hw/i386/pc_q35.c     |  9 +++------
+ 4 files changed, 12 insertions(+), 18 deletions(-)
 
-For rebase, src vs tgt probably should be renamed in local variables
-too, and I'm not even sure I've got the caches right. For caches,
-the thing is inconsistent across commands.
-
-For compare, I used --a-format/--b-format (for -f/-F), - this can
-be made --souce-format and --target-format, to compare source (file1)
-with target (file2).
-
-For bitmap, things are scary, I'm not sure what -b SRC_FILENAME
-really means, - for now I gave it --source option, but this does
-not make it more clear, suggestions welcome.
-
-There are many other inconsistencies, I can't fix them all in one
-go.. :)
-
-Changes since v1:
-
- - reformatted help text to be less condensed
- - added cleanups (first 3 patches and last patch)
- - change argv[0] handling and getopt error reporting to
-   fix inherent bug (see patch 4 "global option processing"
-   for details)
- - removed missing_argument() & unrecognized_option()
-   and handling of '?' and ':' getopt return values
- - more robust handling of resize filename -size vs options
-   ("resize: do not always eat last argument")
- - larger cleanup in snapshot mode handling
-   ("snapshot: make -l (list) the default...")
- - cvtnum and number conversion and bugfixes
-   ("extend cvtnum() and use it in more places")
- - removed unused option_index variable in two places
- - added a few fixmes
- - various other minor changes
-
-I kept Dan's R-b for a few patches he reviewed
-despite the changed, - hopefully it's okay, since
-the new changes are not related to the initial ones.
-Keeping him in Cc for that.
-
-Michael Tokarev (28):
-  qemu-img: stop printing error twice in a few places
-  qemu-img: measure: convert img_size to signed, simplify handling
-  qemu-img: create: convert img_size to signed, simplify handling
-  qemu-img: global option processing and error printing
-  qemu-img: pass current cmd info into command handlers
-  qemu-img: create: refresh options/--help
-  qemu-img: factor out parse_output_format() and use it in the code
-  qemu-img: check: refresh options/--help
-  qemu-img: simplify --repair error message
-  qemu-img: commit: refresh options/--help
-  qemu-img: compare: refresh options/--help
-  qemu-img: convert: refresh options/--help
-  qemu-img: info: refresh options/--help
-  qemu-img: map: refresh options/--help
-  qemu-img: snapshot: allow specifying -f fmt
-  qemu-img: snapshot: make -l (list) the default
-  qemu-img: snapshot: refresh options/--help
-  qemu-img: rebase: refresh options/--help
-  qemu-img: resize: do not always eat last argument
-  qemu-img: resize: refresh options/--help
-  qemu-img: amend: refresh options/--help
-  qemu-img: bench: refresh options/--help
-  qemu-img: bitmap: refresh options/--help
-  qemu-img: dd: refresh options/--help
-  qemu-img: measure: refresh options/--help
-  qemu-img: implement short --help, remove global help() function
-  qemu-img: inline list of supported commands, remove qemu-img-cmds.h
-    include
-  qemu-img: extend cvtnum() and use it in more places
-
- docs/tools/qemu-img.rst |    4 +-
- qemu-img-cmds.hx        |    4 +-
- qemu-img.c              | 1143 +++++++++++++++++++++++----------------
- 3 files changed, 670 insertions(+), 481 deletions(-)
-
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 02a0deedd3..cf2fa60868 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -17,6 +17,8 @@
+ 
+ #define HPET_INTCAP "hpet-intcap"
+ 
++#define MAX_IDE_BUS 2
++
+ /**
+  * PCMachineState:
+  * @acpi_dev: link to ACPI PM device that performs ACPI hotplug handling
+@@ -37,6 +39,7 @@ typedef struct PCMachineState {
+     PFlashCFI01 *flash[2];
+     ISADevice *pcspk;
+     DeviceState *iommu;
++    BusState *idebus[MAX_IDE_BUS];
+ 
+     /* Configuration options: */
+     uint64_t max_ram_below_4g;
+@@ -182,7 +185,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+                           bool create_fdctrl,
+                           uint32_t hpet_irqs);
+ void pc_cmos_init(PCMachineState *pcms,
+-                  BusState *ide0, BusState *ide1,
+                   ISADevice *s);
+ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus);
+ 
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 9cbc59665f..3e9ca6295f 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -574,7 +574,6 @@ static void pc_cmos_init_late(void *opaque)
+ }
+ 
+ void pc_cmos_init(PCMachineState *pcms,
+-                  BusState *idebus0, BusState *idebus1,
+                   ISADevice *rtc)
+ {
+     int val;
+@@ -634,8 +633,8 @@ void pc_cmos_init(PCMachineState *pcms,
+ 
+     /* hard drives and FDC */
+     arg.rtc_state = s;
+-    arg.idebus[0] = idebus0;
+-    arg.idebus[1] = idebus1;
++    arg.idebus[0] = pcms->idebus[0];
++    arg.idebus[1] = pcms->idebus[1];
+     qemu_register_reset(pc_cmos_init_late, &arg);
+ }
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 9064511507..bea096f569 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -68,7 +68,6 @@
+ #include "kvm/kvm-cpu.h"
+ #include "target/i386/cpu.h"
+ 
+-#define MAX_IDE_BUS 2
+ #define XEN_IOAPIC_NUM_PIRQS 128ULL
+ 
+ #ifdef CONFIG_IDE_ISA
+@@ -114,7 +113,6 @@ static void pc_init1(MachineState *machine,
+     Object *piix4_pm = NULL;
+     qemu_irq smi_irq;
+     GSIState *gsi_state;
+-    BusState *idebus[MAX_IDE_BUS];
+     ISADevice *rtc_state;
+     MemoryRegion *ram_memory;
+     MemoryRegion *pci_memory = NULL;
+@@ -299,8 +297,8 @@ static void pc_init1(MachineState *machine,
+         piix4_pm = object_resolve_path_component(OBJECT(pci_dev), "pm");
+         dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
+         pci_ide_create_devs(PCI_DEVICE(dev));
+-        idebus[0] = qdev_get_child_bus(dev, "ide.0");
+-        idebus[1] = qdev_get_child_bus(dev, "ide.1");
++        pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
++        pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
+     } else {
+         isa_bus = isa_bus_new(NULL, system_memory, system_io,
+                               &error_abort);
+@@ -312,8 +310,6 @@ static void pc_init1(MachineState *machine,
+ 
+         i8257_dma_init(OBJECT(machine), isa_bus, 0);
+         pcms->hpet_enabled = false;
+-        idebus[0] = NULL;
+-        idebus[1] = NULL;
+     }
+ 
+     if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
+@@ -358,12 +354,12 @@ static void pc_init1(MachineState *machine,
+              * second one.
+              */
+             busname[4] = '0' + i;
+-            idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
++            pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+         }
+     }
+ #endif
+ 
+-    pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
++    pc_cmos_init(pcms, rtc_state);
+ 
+     if (piix4_pm) {
+         smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 0);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index d346fa3b1d..0e9bd27a6e 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -126,7 +126,6 @@ static void pc_q35_init(MachineState *machine)
+     PCIBus *host_bus;
+     PCIDevice *lpc;
+     DeviceState *lpc_dev;
+-    BusState *idebus[MAX_SATA_PORTS];
+     ISADevice *rtc_state;
+     MemoryRegion *system_memory = get_system_memory();
+     MemoryRegion *system_io = get_system_io();
+@@ -300,13 +299,11 @@ static void pc_q35_init(MachineState *machine)
+                                                          ICH9_SATA1_FUNC),
+                                                "ich9-ahci");
+         ich9 = ICH9_AHCI(pdev);
+-        idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
+-        idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
++        pcms->idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
++        pcms->idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
+         g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
+         ide_drive_get(hd, ich9->ahci.ports);
+         ahci_ide_create_devs(&ich9->ahci, hd);
+-    } else {
+-        idebus[0] = idebus[1] = NULL;
+     }
+ 
+     if (machine_usb(machine)) {
+@@ -327,7 +324,7 @@ static void pc_q35_init(MachineState *machine)
+         smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
+     }
+ 
+-    pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
++    pc_cmos_init(pcms, rtc_state);
+ 
+     /* the rest devices to which pci devfn is automatically assigned */
+     pc_vga_init(isa_bus, host_bus);
 -- 
-2.39.2
+2.41.0
 
 
