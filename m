@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9647BC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 16:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61320C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 17:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcppf-00007w-C2; Wed, 21 Feb 2024 11:52:31 -0500
+	id 1rcpwr-00064B-CV; Wed, 21 Feb 2024 11:59:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcppe-00007N-9z
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:52:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcpwn-000625-6x
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:59:55 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcppc-00014U-Bq
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:52:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcpwg-0002f0-0O
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:59:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708534346;
+ s=mimecast20190719; t=1708534784;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JH3FLT+/2hOPlVFvEzl4/OFsysIOgthWJancqoKHUIc=;
- b=eZanP+Cm5cMdKn+opLD0KIC4kviGkWWaC+W9vG9xeJmubDKJEtkRLUYh1fMfGUKc1M/6Iz
- 25f0SW1Ph1oFIFuByrlqxGw5nDfV1byPJ5ytN5PALMIcp/zvMNLWtYgAJYqROC9EesUeG1
- G/CX1SXgjGWUk7bEIxOnt5gbSOebZ14=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=peoRle8vtX9T1ynXLCHG2qOo2v5R4ITKD0n7IXxnFO4=;
+ b=W2fqxxPMnsnPqGLSr9JQhgm8cUcV2GJ++hUig+dVGvwAO13ZsEgJf1RoGaeCMAlqGpyZ7j
+ sJBTpere6BCHxY3yxC1ULVnslQYdg1k/pmI1T9ZOeSdQ/VoIAz3dc5jQgljCLlHFRZ1s+o
+ qUCfTFdaflSOJowFedhFycIJvYGtthA=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-enulH_gsNSGIoQEw767pow-1; Wed, 21 Feb 2024 11:52:24 -0500
-X-MC-Unique: enulH_gsNSGIoQEw767pow-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-40d62d3ae0cso4247765e9.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 08:52:24 -0800 (PST)
+ us-mta-561-RF0WLMeOPSeEGkdg7niKUQ-1; Wed, 21 Feb 2024 11:59:42 -0500
+X-MC-Unique: RF0WLMeOPSeEGkdg7niKUQ-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2d23683df7fso32911001fa.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 08:59:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708534343; x=1709139143;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JH3FLT+/2hOPlVFvEzl4/OFsysIOgthWJancqoKHUIc=;
- b=cus2Kou7RYQaEIvKuCh4DIHxXmLIQsGd4+M32b8nu9J5Ya1/ufHSDAhqGEdyjex8hy
- +HC4UtutuaU0wwJx2M4SuMCjXChOs10Egqzqy5Hvx+BJxsXoqTsVKMnOIobMy1Pd7uvb
- 2Skoa4HIMbB042EW3q/+QYtUa4BywozqfuUjj+VsT1DGg6fwOrtN//3FEKQ6byt2W2L6
- WVROoJ2I8V6aCbPHpmfJ43IoE2i42ziix+Xw5jxVZn2VtqIHimUxXQt+u2UavNHLFP8D
- nQPs1Yt+0bLfUT4SyDnE4lBUl/c9eG9c8qrTWC22vRG4FUqvhanEADqF/mlrfctuvlzk
- 9AAw==
-X-Gm-Message-State: AOJu0YwtyC+kzvPjLeSL7+h4eI7Xw7BEdQOIK+qMNSKfYeqYc26JE+Gu
- y/bPhV7VCZph9YT7z9mCQKBdmXk9/s2Zs3uaf/x0HHfGa73Nif07A04br2Yj1X71bBNgssPsXgt
- rbc2075ll5NmgRzl1/G/XFtjkEaMeP0z7i2i4FJf07+14TPHASLWW
-X-Received: by 2002:a05:600c:34d2:b0:412:7866:2338 with SMTP id
- d18-20020a05600c34d200b0041278662338mr1056874wmq.5.1708534343663; 
- Wed, 21 Feb 2024 08:52:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH3JFkdjtMfZ1dqSRPgdCGp1xyyZ5zTTX+FBIlyCtqq9TBMsZ6/Pa0uiDSeF4dB/PnS6eNtFQ==
-X-Received: by 2002:a05:600c:34d2:b0:412:7866:2338 with SMTP id
- d18-20020a05600c34d200b0041278662338mr1056860wmq.5.1708534343339; 
- Wed, 21 Feb 2024 08:52:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708534780; x=1709139580;
+ h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+ :from:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=peoRle8vtX9T1ynXLCHG2qOo2v5R4ITKD0n7IXxnFO4=;
+ b=pnWxw47mpsvJdtjwncw5HymmUtuOwa5cIFDeqWS7zQywMymmIw4J/fVUv6OJ9xu4lJ
+ Zc77uYrad3fgUk6oM32mU2ibkD5dRNfjZp6mL5lMsQIUBv5Nr76ZjMdY4yl85SzanCfn
+ vj3h8b5IT+qEu5DNYQsAHb/MiFW2oxrCVKqljax6SKsylCLDhdLVMAzQgZlfEPjm4uMS
+ T+dRvolgl0pTX0kbQnCkCNnyPM1TZl6QPzSaTQZRH3OykwvRK5+bEcu9/7xpaBhsjers
+ DE3yXOmVBBj2OrHx0j4wHWZp6rGrXNc3ZcwIFKLxiHPsGbn2JwrsZP6p5JsilPtv/fTl
+ s7Xw==
+X-Gm-Message-State: AOJu0Yy0ni5H2llQpL7YIcdRBL60BtqDq4o+Qwirtju5ee4LUd9B1Xua
+ iu7Pud0yj5b7fCV4sTz3sha31jXu3Nhoi77CFA9eb6d6XKh+ydiWUZfJUoJEVcpDvxmepNfZ/TZ
+ +PWGFBUH6RQ6x7N/KBDg9vygbEMvp/fKh5Dlk9VmFO8UBfRcgXcl9YNC+mReZgv6vdLljRzQSxa
+ dXhFfPafc4zAKak0WsueRr6xAiiO55sxeP
+X-Received: by 2002:a2e:8018:0:b0:2d2:37d6:350c with SMTP id
+ j24-20020a2e8018000000b002d237d6350cmr8609093ljg.12.1708534780815; 
+ Wed, 21 Feb 2024 08:59:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IENtXn3i/lrWDmQrIAieLfSJoLT6o2w5Pms3hM6ecDLow1qX1klM1kZLGX1OHtIMqPtkO7aPQ==
+X-Received: by 2002:a2e:8018:0:b0:2d2:37d6:350c with SMTP id
+ j24-20020a2e8018000000b002d237d6350cmr8609071ljg.12.1708534780422; 
+ Wed, 21 Feb 2024 08:59:40 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
  [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- f13-20020a7bcd0d000000b00410b0ce91b1sm3057576wmj.25.2024.02.21.08.52.22
+ az35-20020a05600c602300b004127921cdd7sm1421918wmb.0.2024.02.21.08.59.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 08:52:22 -0800 (PST)
-Message-ID: <32e50eb5-d776-434c-ae0b-e2c62e3c357a@redhat.com>
-Date: Wed, 21 Feb 2024 17:52:21 +0100
+ Wed, 21 Feb 2024 08:59:39 -0800 (PST)
+Message-ID: <8dac5c1a-5780-45ca-90fe-147f1ab2fe28@redhat.com>
+Date: Wed, 21 Feb 2024 17:59:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/ppc/kvm: Replace variable length array in
- kvmppc_save_htab()
+Subject: Re: [PATCH 3/3] meson: Enable -Wvla
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-ppc@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 References: <20240221162636.173136-1-thuth@redhat.com>
- <20240221162636.173136-2-thuth@redhat.com>
- <CAFEAcA-xOme3gDx_iwO7S2vSmS8ktG0Lw1UVA5s4LViQZiKRAw@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20240221162636.173136-4-thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -122,9 +123,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAFEAcA-xOme3gDx_iwO7S2vSmS8ktG0Lw1UVA5s4LViQZiKRAw@mail.gmail.com>
+In-Reply-To: <20240221162636.173136-4-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -133,8 +134,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,44 +150,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/02/2024 17.29, Peter Maydell wrote:
-> On Wed, 21 Feb 2024 at 16:26, Thomas Huth <thuth@redhat.com> wrote:
->>
->> To be able to compile QEMU with -Wvla (to prevent potential security
->> issues), we need to get rid of the variable length array in the
->> kvmppc_save_htab() function. Replace it with a heap allocation instead.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   target/ppc/kvm.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
->> index 26fa9d0575..e7e39c3091 100644
->> --- a/target/ppc/kvm.c
->> +++ b/target/ppc/kvm.c
->> @@ -2688,7 +2688,7 @@ int kvmppc_get_htab_fd(bool write, uint64_t index, Error **errp)
->>   int kvmppc_save_htab(QEMUFile *f, int fd, size_t bufsize, int64_t max_ns)
->>   {
->>       int64_t starttime = qemu_clock_get_ns(QEMU_CLOCK_REALTIME);
->> -    uint8_t buf[bufsize];
->> +    g_autofree uint8_t *buf = g_malloc(bufsize);
->>       ssize_t rc;
->>
+On 21/02/2024 17.26, Thomas Huth wrote:
+> From: Peter Maydell <peter.maydell@linaro.org>
 > 
-> This works, so
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> QEMU has historically used variable length arrays only very rarely.
+> Variable length arrays are a potential security issue where an
+> on-stack dynamic allocation isn't correctly size-checked, especially
+> when the size comes from the guest.  (An example problem of this kind
+> from the past is CVE-2021-3527).  Forbidding them entirely is a
+> defensive measure against further bugs of this kind.
 > 
-> but you could also drop the bufsize argument, because there are only
-> two callers and they both pass MAX_KVM_BUF_SIZE, and then declare the
-> array as fixed size with "uint8_t buf[MAX_KVM_BUF_SIZE]".
+> Enable -Wvla to prevent any new uses from sneaking into the codebase.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Message-ID: <20240125173211.1786196-3-peter.maydell@linaro.org>
+> [thuth: rebased to current master branch]
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   meson.build | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index c1dc83e4c0..0ef1654e86 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -592,6 +592,7 @@ warn_flags = [
+>     '-Wstrict-prototypes',
+>     '-Wtype-limits',
+>     '-Wundef',
+> +  '-Wvla',
+>     '-Wwrite-strings',
+>   
+>     # Then disable some undesirable warnings
 
-Yes, that's an alternative ... my thinking was that MAX_KVM_BUF_SIZE = 2048 
-is already a rather big buffer which should maybe rather be allocated on the 
-heap than the stack? But I don't mind too much, so if ppc folks prefer the 
-stack allocation, I can change the patch, too.
+Sigh, there's a new warning in the latest master branch:
+
+  https://gitlab.com/thuth/qemu/-/jobs/6225992174
+
+Caused by commit d65aba828 ("hw/sparc/leon3: implement multiprocessor")...
+Clément, Philippe, could this maybe be written in a different way that does 
+not trigger a -Wvla warning?
 
   Thomas
-
 
 
