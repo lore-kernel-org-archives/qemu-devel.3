@@ -4,76 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A36C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51416C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoTt-0007WL-1J; Wed, 21 Feb 2024 10:25:57 -0500
+	id 1rcoVu-0004cz-A5; Wed, 21 Feb 2024 10:28:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcoMj-0004vg-Q8; Wed, 21 Feb 2024 10:18:38 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoNP-0006oZ-FT
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:19:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcnyC-0006w4-Bw; Wed, 21 Feb 2024 09:53:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708527192; x=1740063192;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=UGj5JoIo7Cr9pGUnX7V/P0tJcuLD76ovvoOQLggI0D8=;
- b=it9xlkMuuFBVDvlQyist1CgBj7T6GYrUbkdDil2rbFT/GVkHhGygTnwK
- y6qumUGgvOWZSshevTsrdhEVqT6sHjR4/7GBxZdzU2WQqr8emiY5GYdNk
- TUNaQDgXfzTdwzG809Ql+WEbdZNzXjkBaRgzqtgPr2KtFMB30W3FW15hh
- kGstlUvQ3+83zYR/8Hj1G7u6xHs75wdmc3ilJmUoTkYWR5ZoseLcRoxuC
- gDHXQ0ODM6MaTAaJNHrvlvl605AIXha6hoHGtYzMl5wJgyEMAJzjOXNF7
- KdNtgrscw9SYKfWfUaOv28Kjb//tSsT3t8XQMNdmsB81KrpLBBX5YSDjq w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="5643881"
-X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="5643881"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2024 06:53:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; d="scan'208";a="28302334"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 21 Feb 2024 06:53:04 -0800
-Date: Wed, 21 Feb 2024 23:06:44 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 4/6] hw/misc/xlnx-versal-trng: Fix missing ERRP_GUARD()
- in trng_prop_fault_event_set()
-Message-ID: <ZdYRhCWhTGlkM7up@intel.com>
-References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
- <20240221094317.994454-5-zhao1.liu@linux.intel.com>
- <87ttm2ujhm.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcmfP-00080g-8F
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:29:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708522182;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cCF9B/dPNar/dBTlgTXTODVGMSwxWMVrxZJM9zNu/VM=;
+ b=d34ybzQtDTvANxrIVevndKhrSU+VnAj0kPWEpDPx9BDeWFEyRJQWwrKOgd9VvTjlywZg+6
+ 2bkf1BJf6ws7mvQMU+wQnCwiSn1ox2AP/bVCJumB+1o4vgjFXDY5QPBZcZ8zAo18xrqvNK
+ wjL7GovCmKY/wcdleT3v4YGjz6kQWbc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-V37vrGBAMaulVVrmvzJakg-1; Wed, 21 Feb 2024 08:29:38 -0500
+X-MC-Unique: V37vrGBAMaulVVrmvzJakg-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A51FA859704;
+ Wed, 21 Feb 2024 13:29:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 629FE492BD7;
+ Wed, 21 Feb 2024 13:29:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4355C21E6740; Wed, 21 Feb 2024 14:29:35 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Peter Xu
+ <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  =?utf-8?Q?Marc-An?=
+ =?utf-8?Q?dr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH V4 1/5] util: strList_from_string
+In-Reply-To: <1705099758-211963-2-git-send-email-steven.sistare@oracle.com>
+ (Steve Sistare's message of "Fri, 12 Jan 2024 14:49:14 -0800")
+References: <1705099758-211963-1-git-send-email-steven.sistare@oracle.com>
+ <1705099758-211963-2-git-send-email-steven.sistare@oracle.com>
+Date: Wed, 21 Feb 2024 14:29:35 +0100
+Message-ID: <875xyi3pz4.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87ttm2ujhm.fsf@pond.sub.org>
-Received-SPF: none client-ip=192.198.163.13;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,95 +84,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 21, 2024 at 12:47:33PM +0100, Markus Armbruster wrote:
-> Date: Wed, 21 Feb 2024 12:47:33 +0100
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [PATCH 4/6] hw/misc/xlnx-versal-trng: Fix missing ERRP_GUARD()
->  in trng_prop_fault_event_set()
-> 
-> Zhao Liu <zhao1.liu@linux.intel.com> writes:
-> 
-> > From: Zhao Liu <zhao1.liu@intel.com>
-> >
-> > As the comment in qapi/error, dereferencing @errp requires
-> > ERRP_GUARD():
-> >
-> > * = Why, when and how to use ERRP_GUARD() =
-> > *
-> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-> > * - It must not be dereferenced, because it may be null.
-> > * - It should not be passed to error_prepend() or
-> > *   error_append_hint(), because that doesn't work with &error_fatal.
-> > * ERRP_GUARD() lifts these restrictions.
-> > *
-> > * To use ERRP_GUARD(), add it right at the beginning of the function.
-> > * @errp can then be used without worrying about the argument being
-> > * NULL or &error_fatal.
-> > *
-> > * Using it when it's not needed is safe, but please avoid cluttering
-> > * the source with useless code.
-> >
-> > Currently, since trng_prop_fault_event_set() doesn't get the NULL errp
-> > parameter as a "set" method of object property, it doesn't trigger the
-> > dereference issue.
-> >
-> > To follow the requirement of errp, add missing ERRP_GUARD() in
-> > trng_prop_fault_event_set().
-> >
-> > Suggested-by: Markus Armbruster <armbru@redhat.com>
-> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > ---
-> > Suggested by credit:
-> >  Markus: Referred his explanation about ERRP_GUARD().
-> > ---
-> >  hw/misc/xlnx-versal-trng.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
-> > index b8111b8b6626..3579348a9d17 100644
-> > --- a/hw/misc/xlnx-versal-trng.c
-> > +++ b/hw/misc/xlnx-versal-trng.c
-> > @@ -33,6 +33,7 @@
-> >  #include "qemu/error-report.h"
-> >  #include "qemu/guest-random.h"
-> >  #include "qemu/timer.h"
-> > +#include "qapi/error.h"
-> >  #include "qapi/visitor.h"
-> >  #include "migration/vmstate.h"
-> >  #include "hw/qdev-properties.h"
-> > @@ -641,6 +642,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
-> >                                        const char *name, void *opaque,
-> >                                        Error **errp)
-> >  {
-> > +    ERRP_GUARD();
-> >      Property *prop = opaque;
-> >      uint32_t *events = object_field_prop_ptr(obj, prop);
-> 
->        visit_type_uint32(v, name, events, errp);
->        if (*errp) {
->            return;
->        }
-> 
-> Please do this instead:
-> 
-> diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
-> index b8111b8b66..6495188dc7 100644
-> --- a/hw/misc/xlnx-versal-trng.c
-> +++ b/hw/misc/xlnx-versal-trng.c
-> @@ -644,8 +644,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
->      Property *prop = opaque;
->      uint32_t *events = object_field_prop_ptr(obj, prop);
->  
-> -    visit_type_uint32(v, name, events, errp);
-> -    if (*errp) {
-> +    if (!visit_type_uint32(v, name, events, errp)) {
->          return;
->      }
->  
+I apologize for the lateness of my review.
 
-Thanks! I didn't think of that. Will do this.
+Steve Sistare <steven.sistare@oracle.com> writes:
 
-Regards,
-Zhao
+> Generalize hmp_split_at_comma() to take any delimiter string, rename
+> as strList_from_string(), and move it to util/strList.c.
+>
+> No functional change.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+
+I can't see an actual use of generalized delimiters outside tests in
+this series.  Do you have uses?
+
+> ---
+>  include/monitor/hmp.h  |  1 -
+>  include/qemu/strList.h | 24 ++++++++++++++++++++++++
+>  monitor/hmp-cmds.c     | 19 -------------------
+>  net/net-hmp-cmds.c     |  3 ++-
+>  stats/stats-hmp-cmds.c |  3 ++-
+>  util/meson.build       |  1 +
+>  util/strList.c         | 24 ++++++++++++++++++++++++
+>  7 files changed, 53 insertions(+), 22 deletions(-)
+>  create mode 100644 include/qemu/strList.h
+>  create mode 100644 util/strList.c
+>
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index 13f9a2d..2df661e 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -19,7 +19,6 @@
+>  
+>  bool hmp_handle_error(Monitor *mon, Error *err);
+>  void hmp_help_cmd(Monitor *mon, const char *name);
+> -strList *hmp_split_at_comma(const char *str);
+>  
+>  void hmp_info_name(Monitor *mon, const QDict *qdict);
+>  void hmp_info_version(Monitor *mon, const QDict *qdict);
+> diff --git a/include/qemu/strList.h b/include/qemu/strList.h
+> new file mode 100644
+> index 0000000..010237f
+> --- /dev/null
+> +++ b/include/qemu/strList.h
+> @@ -0,0 +1,24 @@
+> +/*
+> + * Copyright (c) 2022 - 2024 Oracle and/or its affiliates.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef QEMU_STR_LIST_H
+> +#define QEMU_STR_LIST_H
+> +
+> +#include "qapi/qapi-builtin-types.h"
+> +
+> +/*
+> + * Break @in into a strList using the delimiter string @delim.
+> + * The delimiter is not included in the result.
+> + * Return NULL if @in is NULL or an empty string.
+> + * A leading, trailing, or consecutive delimiter produces an
+> + * empty string at that position in the output.
+> + * All strings are g_strdup'd, and the result can be freed
+> + * using qapi_free_strList.
+> + */
+> +strList *strList_from_string(const char *in, const char *delim);
+
+The function name no longer tells us explicitly what the function does:
+splitting the string.
+
+`> +
+> +#endif
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index 871898a..66b68a0 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -38,25 +38,6 @@ bool hmp_handle_error(Monitor *mon, Error *err)
+>      return false;
+>  }
+>  
+> -/*
+> - * Split @str at comma.
+> - * A null @str defaults to "".
+> - */
+> -strList *hmp_split_at_comma(const char *str)
+> -{
+> -    char **split = g_strsplit(str ?: "", ",", -1);
+> -    strList *res = NULL;
+> -    strList **tail = &res;
+> -    int i;
+> -
+> -    for (i = 0; split[i]; i++) {
+> -        QAPI_LIST_APPEND(tail, split[i]);
+> -    }
+> -
+> -    g_free(split);
+> -    return res;
+> -}
+> -
+>  void hmp_info_name(Monitor *mon, const QDict *qdict)
+>  {
+>      NameInfo *info;
+> diff --git a/net/net-hmp-cmds.c b/net/net-hmp-cmds.c
+> index 41d326b..e893801 100644
+> --- a/net/net-hmp-cmds.c
+> +++ b/net/net-hmp-cmds.c
+> @@ -26,6 +26,7 @@
+>  #include "qemu/config-file.h"
+>  #include "qemu/help_option.h"
+>  #include "qemu/option.h"
+> +#include "qemu/strList.h"
+>  
+>  void hmp_info_network(Monitor *mon, const QDict *qdict)
+>  {
+> @@ -72,7 +73,7 @@ void hmp_announce_self(Monitor *mon, const QDict *qdict)
+>                                              migrate_announce_params());
+>  
+>      qapi_free_strList(params->interfaces);
+> -    params->interfaces = hmp_split_at_comma(interfaces_str);
+> +    params->interfaces = strList_from_string(interfaces_str, ",");
+>      params->has_interfaces = params->interfaces != NULL;
+>      params->id = g_strdup(id);
+>      qmp_announce_self(params, NULL);
+> diff --git a/stats/stats-hmp-cmds.c b/stats/stats-hmp-cmds.c
+> index 1f91bf8..428c0e6 100644
+> --- a/stats/stats-hmp-cmds.c
+> +++ b/stats/stats-hmp-cmds.c
+> @@ -10,6 +10,7 @@
+>  #include "monitor/hmp.h"
+>  #include "monitor/monitor.h"
+>  #include "qemu/cutils.h"
+> +#include "qemu/strList.h"
+>  #include "hw/core/cpu.h"
+>  #include "qapi/qmp/qdict.h"
+>  #include "qapi/error.h"
+> @@ -176,7 +177,7 @@ static StatsFilter *stats_filter(StatsTarget target, const char *names,
+>              request->provider = provider_idx;
+>              if (names && !g_str_equal(names, "*")) {
+>                  request->has_names = true;
+> -                request->names = hmp_split_at_comma(names);
+> +                request->names = strList_from_string(names, ",");
+>              }
+>              QAPI_LIST_PREPEND(request_list, request);
+>          }
+> diff --git a/util/meson.build b/util/meson.build
+> index af3bf56..e1d1e1f 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -1,4 +1,5 @@
+>  util_ss.add(files('osdep.c', 'cutils.c', 'unicode.c', 'qemu-timer-common.c'))
+> +util_ss.add(files('strList.c'))
+>  util_ss.add(files('thread-context.c'), numa)
+>  if not config_host_data.get('CONFIG_ATOMIC64')
+>    util_ss.add(files('atomic64.c'))
+> diff --git a/util/strList.c b/util/strList.c
+> new file mode 100644
+> index 0000000..7991de3
+> --- /dev/null
+> +++ b/util/strList.c
+> @@ -0,0 +1,24 @@
+> +/*
+> + * Copyright (c) 2023 Red Hat, Inc.
+> + * Copyright (c) 2022 - 2024 Oracle and/or its affiliates.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/strList.h"
+> +
+> +strList *strList_from_string(const char *str, const char *delim)
+> +{
+> +    g_autofree char **split = g_strsplit(str ?: "", delim, -1);
+> +    strList *res = NULL;
+> +    strList **tail = &res;
+> +    int i;
+> +
+> +    for (i = 0; split[i]; i++) {
+> +        QAPI_LIST_APPEND(tail, split[i]);
+> +    }
+> +
+> +    return res;
+> +}
 
 
