@@ -4,79 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE479C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CF8C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:49:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoPp-0006Sd-Jj; Wed, 21 Feb 2024 10:21:45 -0500
+	id 1rcoSp-0004u9-4L; Wed, 21 Feb 2024 10:24:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1rcoKq-0000nB-S9
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:16:37 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1rcnap-0001nl-3J
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 09:29:05 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e45bd5014dso1496205b3a.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 06:29:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708525739; x=1709130539;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LOWeQZKkpHY3S/TYS2ARTLU2Fl4Tz5Q8QZ4qlJVZvWo=;
- b=pTVGWaMGCLDVEDpkEUDbHCtalKkHg9C8oySpDK9dAtCsdtSQkmkE3k/4MJBn2hF9Jb
- EWZYfq+FViAp83eHNQNaCxX/cs6oaydtWIksW2/e6xVcdlyyKNgfEOMPNilNg7bXlkDX
- 92+ggRG+uuGzNf5YrwNShV5epai9XKXvM8l9G+uEi5SE8iuONxEd83tJv37q7ONk+HSF
- tkTNMsW6LD97ixbBZU0afLu17yVneVf1GfiEHVAnia6J0qnLASYwCTt7nn4RgAQXyr8+
- BuqvkyLlqNVIvLeD4USdvD40MMpovWBWS6SBTzZSwY0/N0TGlBAQ+swTaEsgpcaxAwRg
- eRJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708525739; x=1709130539;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LOWeQZKkpHY3S/TYS2ARTLU2Fl4Tz5Q8QZ4qlJVZvWo=;
- b=JAE56ZYeC6GbfwXgLmthD55n6HdEdsOVxXQORo3f5EonfbZBjYLBwY2Z4QDPoQXi1z
- RX3kJ7fcbnISqLcpHCoLAnA8gHJo+2zCwD5mHctyHg9BXzranQVLqecTA36Pg1h1eWIx
- WUEGSQhG02B3fKyrZDcoZYvhsFYwTNDx+gyaNP/NASFU/x9lMkO/fqP0r4rPua4v/2S6
- GudbBKre7/Acj+47DYn7y/FYCwvHWgkB+mAJoG0C74TokAzR03/j8hjlGcrUOQNUpIbx
- wn4ZkohuMDxM6/55cWgBdbQBHjJphoytVO5GzUs9XWDLer/rVeGzYHqSJkxS2c5vBbjC
- 7RXA==
-X-Gm-Message-State: AOJu0YyS9jqUngCugkwHgJcW3FjqP+sK/5xOZ6SbQqgMxVdb3P0gF9k+
- gWgUhIXC862jcO/4MZi1Ske4BLCN5ZLFWKnatxA3W/NpB60rweFL/lu5xonBphjCwtqzcAu7UB/
- nQGYgBQ==
-X-Google-Smtp-Source: AGHT+IGmCzHur7OKSBq/9+wyemPDkdujuNVLB99HBhiKAvwXpN8P0dC+goSoZIHjYmjJy7piQYeOTQ==
-X-Received: by 2002:a05:6a00:9a0:b0:6e4:7b27:2887 with SMTP id
- u32-20020a056a0009a000b006e47b272887mr6726614pfg.7.1708525738613; 
- Wed, 21 Feb 2024 06:28:58 -0800 (PST)
-Received: from anolis-dev.zelin.local ([221.122.98.162])
- by smtp.gmail.com with ESMTPSA id
- p129-20020a625b87000000b006e4762b5f3bsm4480030pfb.172.2024.02.21.06.28.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 21 Feb 2024 06:28:58 -0800 (PST)
-From: Hyman Huang <yong.huang@smartx.com>
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rcoMq-0001hh-Jj
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rciZC-00004w-SY
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 04:07:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708506422;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Z4rURaphcKk7/a+8zTv9dZaq+CdNL6F+N6TeXLxwyK0=;
+ b=Hq8bJH22Jm21XVY7wzFEU/QwiloH4wr7vXcFjqxiU9yJvMGOxGhtezz6d1+vydUSe1rNIx
+ hekC4PrUhKcSzPx+bvUVHn8CnA4twnbRKY9+Xz0axyuF0nMhOLEhC7bjfMvtuzgKhUk93C
+ eEAErVzMyItyTDut2rPpIM6ENcorF2k=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-392-MdZOVJ57Nh2iL0COUsSQyg-1; Wed, 21 Feb 2024 04:05:07 -0500
+X-MC-Unique: MdZOVJ57Nh2iL0COUsSQyg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8DE848630D5;
+ Wed, 21 Feb 2024 09:05:07 +0000 (UTC)
+Received: from dhcp-8-237.nay.redhat.com (dhcp-8-237.nay.redhat.com
+ [10.66.8.237])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 77CA510802;
+ Wed, 21 Feb 2024 09:05:05 +0000 (UTC)
+From: Dehan Meng <demeng@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, yong.huang@smartx.com
-Subject: [PATCH v4 0/3] Adjust the output of x-query-virtio-status
-Date: Wed, 21 Feb 2024 22:28:50 +0800
-Message-Id: <cover.1708525606.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.39.3
+Cc: demeng@redhat.com,
+	kkostiuk@redhat.com,
+	michael.roth@amd.com
+Subject: [PATCH v2 1/1] qga/linux: Add new api 'guest-network-get-route'
+Date: Wed, 21 Feb 2024 17:04:59 +0800
+Message-Id: <20240221090459.48938-2-demeng@redhat.com>
+In-Reply-To: <20240221090459.48938-1-demeng@redhat.com>
+References: <20240221090459.48938-1-demeng@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::435;
- envelope-from=yong.huang@smartx.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,51 +81,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v4:
-- Rebase on master
-- Fix the syntax mistake within the commit message of [PATCH v3 1/3]
-- Adjust the linking file in hw/virtio/meson.build suggested by Markus
+The Route information of the Linux VM needs to be used
+by administrators and users when debugging network problems
+and troubleshooting.
 
-Please review,
-Yong
+Signed-off-by: Dehan Meng <demeng@redhat.com>
+---
+ qga/commands-posix.c | 78 ++++++++++++++++++++++++++++++++++++++++++
+ qga/commands-win32.c |  6 ++++
+ qga/qapi-schema.json | 80 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 164 insertions(+)
 
-v3:
-- Rebase on master
-- Use the refined commit message furnished by Markus for [PATCH v2 1/2]
-- Drop the [PATCH v2 2/2]
-- Add [PATCH v3 2/3] to declare the decoding functions to static
-- Add [PATCH v3 3/3] to Define VhostDeviceProtocols and
-  VirtioDeviceFeatures as plain C types
-
-v2:
-- Changing the hmp_virtio_dump_xxx function signatures to implement
-  the bitmap decoding, suggested by Philippe.
-
-This patchset is derived from the series:
-https://lore.kernel.org/qemu-devel/cover.1699793550.git.yong.huang@smartx.com/
-Please go to the link to see more background information.
-
-The following points are what we have done in the patchset:
-1. Take the policy of adding human-readable output just in HMP.
-2. For the HMP output, display the human-readable information and
-   drop the unknown bits in practice.
-3. For the QMP output, remove the descriptive strings and only
-   display bits encoded as numbers.
-
-Hyman Huang (3):
-  qmp: Switch x-query-virtio-status back to numeric encoding
-  virtio: Declare the decoding functions to static
-  qapi: Define VhostDeviceProtocols and VirtioDeviceFeatures as plain C
-    types
-
- hw/virtio/meson.build       |   4 +-
- hw/virtio/virtio-hmp-cmds.c | 702 +++++++++++++++++++++++++++++++++++-
- hw/virtio/virtio-qmp.c      | 684 +----------------------------------
- hw/virtio/virtio-qmp.h      |   3 -
- qapi/virtio.json            | 231 +-----------
- 5 files changed, 724 insertions(+), 900 deletions(-)
-
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 6169bbf7a0..894cc43fce 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -2747,6 +2747,78 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+     return head;
+ }
+ 
++char *hexToIPAddress(unsigned int hexValue);
++
++char *hexToIPAddress(unsigned int hexValue)
++{
++    unsigned int byte1 = (hexValue >> 24) & 0xFF;
++    unsigned int byte2 = (hexValue >> 16) & 0xFF;
++    unsigned int byte3 = (hexValue >> 8) & 0xFF;
++    unsigned int byte4 = hexValue & 0xFF;
++
++    return g_strdup_printf("%u.%u.%u.%u", byte4, byte3, byte2, byte1);
++}
++
++GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
++{
++    GuestNetworkRouteList *head = NULL, **tail = &head;
++    const char *routeFile = "/proc/net/route";
++    FILE *fp;
++    size_t n;
++    char *line = NULL;
++    int firstLine = 1;
++
++    fp = fopen(routeFile, "r");
++    if (fp == NULL) {
++        error_setg_errno(errp, errno, "open(\"%s\")", routeFile);
++        free(line);
++        return NULL;
++    }
++
++    while (getline(&line, &n, fp) != -1) {
++        if (firstLine) {
++            firstLine = 0;
++            continue;
++        }
++        GuestNetworkRoute *route = NULL;
++        GuestNetworkRouteStat *networkroute;
++        int i;
++        char Iface[16];
++        unsigned int Destination, Gateway, Mask, Flags;
++        int RefCnt, Use, Metric, MTU, Window, IRTT;
++
++        /* Parse the line and extract the values */
++        i = (sscanf(line, "%s %X %X %x %d %d %d %X %d %d %d",
++                    Iface, &Destination, &Gateway, &Flags, &RefCnt,
++                    &Use, &Metric, &Mask, &MTU, &Window, &IRTT) == 11);
++        if (i == EOF) {
++            continue;
++        }
++
++        route = g_new0(GuestNetworkRoute, 1);
++        route->type = GUEST_NETWORK_ROUTE_TYPE_LINUX;
++
++        networkroute = &route->u.q_linux;
++        networkroute->iface = g_strdup(Iface);
++        networkroute->destination = hexToIPAddress(Destination);
++        networkroute->gateway = hexToIPAddress(Gateway);
++        networkroute->mask = hexToIPAddress(Mask);
++        networkroute->metric = Metric;
++        networkroute->flags = Flags;
++        networkroute->refcnt = RefCnt;
++        networkroute->use = Use;
++        networkroute->mtu = MTU;
++        networkroute->window = Window;
++        networkroute->irtt = IRTT;
++
++        QAPI_LIST_APPEND(tail, route);
++    }
++
++    free(line);
++    fclose(fp);
++    return head;
++}
++
+ #else /* defined(__linux__) */
+ 
+ void qmp_guest_suspend_disk(Error **errp)
+@@ -3118,6 +3190,12 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+     return NULL;
+ }
+ 
++GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
++{
++    error_setg(errp, QERR_UNSUPPORTED);
++    return NULL;
++}
++
+ #endif /* CONFIG_FSFREEZE */
+ 
+ #if !defined(CONFIG_FSTRIM)
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 697c65507c..e62c04800a 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -2522,3 +2522,9 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+     error_setg(errp, QERR_UNSUPPORTED);
+     return NULL;
+ }
++
++GuestNetworkRouteList *qmp_guest_network_get_route(Error **errp)
++{
++    error_setg(errp, QERR_UNSUPPORTED);
++    return NULL;
++}
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 876e2a8ea8..eed9539bb7 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -1789,3 +1789,83 @@
+ { 'command': 'guest-get-cpustats',
+   'returns': ['GuestCpuStats']
+ }
++
++##
++# @GuestNetworkRouteType:
++#
++# An enumeration of OS type
++#
++# Since: 8.2
++##
++{ 'enum': 'GuestNetworkRouteType',
++  'data': [ 'linux' ] }
++
++##
++# @GuestNetworkRouteStat:
++#
++# Route information, currently, only linux supported.
++#
++# @iface: The destination network or host's egress network interface in the routing table
++#
++# @destination: The IP address of the target network or host, The final destination of the packet
++#
++# @gateway: The IP address of the next hop router
++#
++# @mask: Subnet Mask
++#
++# @metric: Route metric
++#
++# @flags: Route flags (not for windows)
++#
++# @irtt: Initial round-trip delay (not for windows)
++#
++# @refcnt: The route's reference count (not for windows)
++#
++# @use: Route usage count (not for windows)
++#
++# @window: TCP window size, used for flow control (not for windows)
++#
++# @mtu: Data link layer maximum packet size (not for windows)
++#
++# Since: 8.2
++
++##
++{ 'struct': 'GuestNetworkRouteStat',
++  'data': {'iface': 'str',
++           'destination': 'str',
++           'gateway': 'str',
++           'metric': 'int',
++           'mask': 'str',
++           '*irtt': 'int',
++           '*flags': 'uint64',
++           '*refcnt': 'int',
++           '*use': 'int',
++           '*window': 'int',
++           '*mtu': 'int'
++           }}
++
++##
++# @GuestNetworkRoute:
++#
++# Get route information of system.
++#
++# - @linux: Linux style network route
++#
++# Since: 8.2
++##
++{ 'union': 'GuestNetworkRoute',
++  'base': { 'type': 'GuestNetworkRouteType' },
++  'discriminator': 'type',
++  'data': { 'linux': 'GuestNetworkRouteStat' } }
++
++##
++# @guest-network-get-route:
++#
++# Retrieve information about route of network.
++# Returns: List of route info of guest.
++#
++# Since: 8.2
++##
++{ 'command': 'guest-network-get-route',
++  'returns': ['GuestNetworkRoute']
++}
 -- 
-2.39.3
+2.35.1
 
 
