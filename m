@@ -4,50 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4AA2C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82ED0C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchrW-0001kp-25; Wed, 21 Feb 2024 03:21:55 -0500
+	id 1rchrB-0001Hw-1R; Wed, 21 Feb 2024 03:21:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrO-0001Zx-0y; Wed, 21 Feb 2024 03:21:46 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrL-0002CO-Nb; Wed, 21 Feb 2024 03:21:45 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B7F8A4F3CB;
- Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 83886860AA;
- Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
-Received: (nullmailer pid 2142025 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rchr8-0001HQ-Qn
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:21:30 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rchr5-0002Bb-Tg
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:21:30 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Bxnut+stVlbLwPAA--.40451S3;
+ Wed, 21 Feb 2024 16:21:18 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxVMx4stVle6k9AA--.32470S3; 
+ Wed, 21 Feb 2024 16:21:14 +0800 (CST)
+Subject: Re: [RESEND PATCH v4 00/17] Add boot LoongArch elf kernel with FDT
+From: gaosong <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 13/60] linux-user/aarch64: Add padding before
- __kernel_rt_sigreturn
-Date: Wed, 21 Feb 2024 11:20:01 +0300
-Message-Id: <20240221082058.2141850-13-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ philmd@linaro.org, maobibo@loongson.cn, zhaotianrui@loongson.cn,
+ lixianglai@loongson.cn
+References: <20240118113123.1672939-1-gaosong@loongson.cn>
+Message-ID: <cb78bbba-d506-0b05-978c-576843ae25df@loongson.cn>
+Date: Wed, 21 Feb 2024 16:21:12 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20240118113123.1672939-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8BxVMx4stVle6k9AA--.32470S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxury7AFW3WrW3Wr17Gw1UXFc_yoW5GrWfpF
+ W7Zr13Grs5JrZ7Ar9av34Sqr90yrn7Gr12v3W3Kry8CrZFvF17Z3WxAr9rZFy7t3y8Wryq
+ vr1Fkw1jgF4UJwcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
+ 05UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-3.297, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,45 +84,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Ping !
 
-Without this padding, an unwind through the signal handler
-will pick up the unwind info for the preceding syscall.
-
-This fixes gcc's 30_threads/thread/native_handle/cancel.cc.
-
-Cc: qemu-stable@nongnu.org
-Fixes: ee95fae075c6 ("linux-user/aarch64: Add vdso")
-Resolves: https://linaro.atlassian.net/browse/GNU-974
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Benn√©e <alex.bennee@linaro.org>
-Message-Id: <20240202034427.504686-1-richard.henderson@linaro.org>
-(cherry picked from commit 6400be014f80e4c2c246eb8be709ea3a96428233)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/linux-user/aarch64/vdso-be.so b/linux-user/aarch64/vdso-be.so
-index 6084f3d1a7..808206ade8 100755
-Binary files a/linux-user/aarch64/vdso-be.so and b/linux-user/aarch64/vdso-be.so differ
-diff --git a/linux-user/aarch64/vdso-le.so b/linux-user/aarch64/vdso-le.so
-index 947d534ec1..941aaf2993 100755
-Binary files a/linux-user/aarch64/vdso-le.so and b/linux-user/aarch64/vdso-le.so differ
-diff --git a/linux-user/aarch64/vdso.S b/linux-user/aarch64/vdso.S
-index 34d3a9ebd2..a0ac1487b0 100644
---- a/linux-user/aarch64/vdso.S
-+++ b/linux-user/aarch64/vdso.S
-@@ -63,7 +63,11 @@ vdso_syscall __kernel_clock_getres, __NR_clock_getres
-  * For now, elide the unwind info for __kernel_rt_sigreturn and rely on
-  * the libgcc fallback routine as we have always done.  This requires
-  * that the code sequence used be exact.
-+ *
-+ * Add a nop as a spacer to ensure that unwind does not pick up the
-+ * unwind info from the preceding syscall.
-  */
-+	nop
- __kernel_rt_sigreturn:
- 	/* No BTI C insn here -- we arrive via RET. */
- 	mov	x8, #__NR_rt_sigreturn
--- 
-2.39.2
+‘⁄ 2024/1/18 œ¬ŒÁ7:31, Song Gao –¥µ¿:
+> Hi, All
+>
+> We already support boot efi kernel with bios, but not support boot elf kernel.
+> This series adds boot elf kernel with FDT.
+>
+> 'LoongArch supports ACPI and FDT. The information that needs to be passed
+>   to the kernel includes the memmap, the initrd, the command line, optionally
+>   the ACPI/FDT tables, and so on'  see [1].
+>
+> Patch 2-8 : Create efi system table, and three efi configuration table
+>              boot_memmap, initd, FDT.
+> Patch 9-17 : Fixes FDT problems.
+>
+> Test:
+>    - Start kernel
+>      See [2] start_kernel.sh
+>    - Start qcow2
+>      See [2] start_qcow2.sh
+>
+> V4:
+>    - patch 3 change slave_boot_code[] to const, and 'static void *p ' to
+>      'void *p';
+>    - patch 4 fixes build error;
+>    - patch 10-13, add project and commit link.
+>
+> V3:
+>    - Load initrd at  kernel_high + 4 * kernel_size;
+>    - Load 'boot_rom' at [0 - 1M], the 'boot_rom' includes
+>      slave_boot_code, cmdline_buf and systab_tables;
+>    - R-b and rebase.
+>
+> V2:
+>    - FDT pcie node adds cells 'msi-map';
+>
+>
+> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/arch/loongarch/booting.rst?h=v6.7-rc4
+>
+> [2]: https://github.com/gaosong-loongson/loongarch-binary/releases
+>
+> Please review!
+>
+> Thanks.
+> Song Gao
+>
+> Song Gao (17):
+>    hw/loongarch: Move boot fucntions to boot.c
+>    hw/loongarch: Add load initrd
+>    hw/loongarch: Add slave cpu boot_code
+>    hw/loongarch: Add init_cmdline
+>    hw/loongarch: Init efi_system_table
+>    hw/loongarch: Init efi_boot_memmap table
+>    hw/loongarch: Init efi_initrd table
+>    hw/loongarch: Init efi_fdt table
+>    hw/loongarch: Fix fdt memory node wrong 'reg'
+>    hw/loongarch: fdt adds cpu interrupt controller node
+>    hw/loongarch: fdt adds Extend I/O Interrupt Controller
+>    hw/loongarch: fdt adds pch_pic Controller
+>    hw/loongarch: fdt adds pch_msi Controller
+>    hw/loongarch: fdt adds pcie irq_map node
+>    hw/loongarch: fdt remove unused irqchip node
+>    hw/loongarch: Add cells missing from uart node
+>    hw/loongarch: Add cells missing from rtc node
+>
+>   include/hw/intc/loongarch_extioi.h |   1 +
+>   include/hw/loongarch/boot.h        | 109 +++++++++
+>   include/hw/loongarch/virt.h        |  14 ++
+>   include/hw/pci-host/ls7a.h         |   2 +
+>   target/loongarch/cpu.h             |   2 +
+>   hw/loongarch/boot.c                | 330 ++++++++++++++++++++++++++
+>   hw/loongarch/virt.c                | 364 ++++++++++++++++-------------
+>   hw/loongarch/meson.build           |   1 +
+>   8 files changed, 661 insertions(+), 162 deletions(-)
+>   create mode 100644 include/hw/loongarch/boot.h
+>   create mode 100644 hw/loongarch/boot.c
+>
 
 
