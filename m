@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 942E8C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:44:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3690EC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoZe-00032d-TP; Wed, 21 Feb 2024 10:31:55 -0500
+	id 1rcobD-00035x-Rp; Wed, 21 Feb 2024 10:33:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoOQ-0001zu-PL; Wed, 21 Feb 2024 10:20:18 -0500
+ id 1rcoXv-0004eG-UA; Wed, 21 Feb 2024 10:30:09 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchvQ-00036H-O2; Wed, 21 Feb 2024 03:25:57 -0500
+ id 1rchvT-00036c-4q; Wed, 21 Feb 2024 03:26:00 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 917344F3F4;
+ by isrv.corpit.ru (Postfix) with ESMTP id AFBAA4F3F5;
  Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5DA06860D3;
+ by tsrv.corpit.ru (Postfix) with SMTP id 6D109860D4;
  Wed, 21 Feb 2024 11:21:02 +0300 (MSK)
-Received: (nullmailer pid 2142152 invoked by uid 1000);
+Received: (nullmailer pid 2142156 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Markus Frank <m.frank@proxmox.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 54/60] ui: reject extended clipboard message if not
- activated
-Date: Wed, 21 Feb 2024 11:20:42 +0300
-Message-Id: <20240221082058.2141850-54-mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 55/60] ui/clipboard: mark type as not available when
+ there is no data
+Date: Wed, 21 Feb 2024 11:20:43 +0300
+Message-Id: <20240221082058.2141850-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
@@ -65,35 +65,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-The extended clipboard message protocol requires that the client
-activate the extension by requesting a psuedo encoding. If this
-is not done, then any extended clipboard messages from the client
-should be considered invalid and the client dropped.
+With VNC, a client can send a non-extended VNC_MSG_CLIENT_CUT_TEXT
+message with len=0. In qemu_clipboard_set_data(), the clipboard info
+will be updated setting data to NULL (because g_memdup(data, size)
+returns NULL when size is 0). If the client does not set the
+VNC_ENCODING_CLIPBOARD_EXT feature when setting up the encodings, then
+the 'request' callback for the clipboard peer is not initialized.
+Later, because data is NULL, qemu_clipboard_request() can be reached
+via vdagent_chr_write() and vdagent_clipboard_recv_request() and
+there, the clipboard owner's 'request' callback will be attempted to
+be called, but that is a NULL pointer.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+In particular, this can happen when using the KRDC (22.12.3) VNC
+client.
+
+Another scenario leading to the same issue is with two clients (say
+noVNC and KRDC):
+
+The noVNC client sets the extension VNC_FEATURE_CLIPBOARD_EXT and
+initializes its cbpeer.
+
+The KRDC client does not, but triggers a vnc_client_cut_text() (note
+it's not the _ext variant)). There, a new clipboard info with it as
+the 'owner' is created and via qemu_clipboard_set_data() is called,
+which in turn calls qemu_clipboard_update() with that info.
+
+In qemu_clipboard_update(), the notifier for the noVNC client will be
+called, i.e. vnc_clipboard_notify() and also set vs->cbinfo for the
+noVNC client. The 'owner' in that clipboard info is the clipboard peer
+for the KRDC client, which did not initialize the 'request' function.
+That sounds correct to me, it is the owner of that clipboard info.
+
+Then when noVNC sends a VNC_MSG_CLIENT_CUT_TEXT message (it did set
+the VNC_FEATURE_CLIPBOARD_EXT feature correctly, so a check for it
+passes), that clipboard info is passed to qemu_clipboard_request() and
+the original segfault still happens.
+
+Fix the issue by handling updates with size 0 differently. In
+particular, mark in the clipboard info that the type is not available.
+
+While at it, switch to g_memdup2(), because g_memdup() is deprecated.
+
+Cc: qemu-stable@nongnu.org
+Fixes: CVE-2023-6683
+Reported-by: Markus Frank <m.frank@proxmox.com>
+Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240115095119.654271-1-berrange@redhat.com>
-(cherry picked from commit 4cba8388968b70fe20e290221dc421c717051fdd)
+Tested-by: Markus Frank <m.frank@proxmox.com>
+Message-ID: <20240124105749.204610-1-f.ebner@proxmox.com>
+(cherry picked from commit 405484b29f6548c7b86549b0f961b906337aa68a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 4f23a0fa79..3b2c71e653 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2445,6 +2445,11 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-         }
+diff --git a/ui/clipboard.c b/ui/clipboard.c
+index 3d14bffaf8..b3f6fa3c9e 100644
+--- a/ui/clipboard.c
++++ b/ui/clipboard.c
+@@ -163,9 +163,15 @@ void qemu_clipboard_set_data(QemuClipboardPeer *peer,
+     }
  
-         if (read_s32(data, 4) < 0) {
-+            if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_EXT)) {
-+                error_report("vnc: extended clipboard message while disabled");
-+                vnc_client_error(vs);
-+                break;
-+            }
-             if (dlen < 4) {
-                 error_report("vnc: malformed payload (header less than 4 bytes)"
-                              " in extended clipboard pseudo-encoding.");
+     g_free(info->types[type].data);
+-    info->types[type].data = g_memdup(data, size);
+-    info->types[type].size = size;
+-    info->types[type].available = true;
++    if (size) {
++        info->types[type].data = g_memdup2(data, size);
++        info->types[type].size = size;
++        info->types[type].available = true;
++    } else {
++        info->types[type].data = NULL;
++        info->types[type].size = 0;
++        info->types[type].available = false;
++    }
+ 
+     if (update) {
+         qemu_clipboard_update(info);
 -- 
 2.39.2
 
