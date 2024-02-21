@@ -4,74 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A908FC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA7A6C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoco-0007B1-71; Wed, 21 Feb 2024 10:35:10 -0500
+	id 1rcoah-0001Sg-IQ; Wed, 21 Feb 2024 10:32:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcoa2-0005LV-SN; Wed, 21 Feb 2024 10:32:19 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rcoQb-0000ae-ER; Wed, 21 Feb 2024 10:22:33 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rcivf-0003QN-Kc; Wed, 21 Feb 2024 04:30:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708507816; x=1740043816;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ZoOw7oZSsgWoryzBsNZfJlqiBLjXl5nzRum0ygARlNs=;
- b=fucxyC/kNOGG6zBZBp6QY7JL4y4k6Nc2z3CbbORIU6cMAiXjUsHnVk/c
- zusNW4sNfRmI7Mvi2QC14UziiPoxjAJL7o7krHuALJZ2wXBcSWJhzkJ3z
- OH5/3oWGQzGa8iE76rWradcmutHC0S6VkF4sO1qxbA9KHEqs2051u28/Z
- OBvfPDPpFbSZQrAA26QDckXXdFyDV/FqnpISc89zUU7aUukyjiS2nR/IC
- BVNnc3Is3tDXbT1fdQgUnAOTo+tFoguZ7yW/IAKczFOuxi+6kr8srJ4m0
- kOm80KH9sgQ7P3vQ6s2k4+vaeNLsbiCs9I0dVRC2utwUYvu5mJerGcOv3 Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="2795509"
-X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="2795509"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2024 01:30:10 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
-   d="scan'208";a="9720217"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 21 Feb 2024 01:30:06 -0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 6/6] hw/vfio/iommufd: Fix missing ERRP_GUARD() in
- iommufd_cdev_getfd()
-Date: Wed, 21 Feb 2024 17:43:17 +0800
-Message-Id: <20240221094317.994454-7-zhao1.liu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rcmLw-0004od-JB; Wed, 21 Feb 2024 08:09:38 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TfxQm2hfpz1xnkp;
+ Wed, 21 Feb 2024 21:08:00 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 18F4E140154;
+ Wed, 21 Feb 2024 21:09:23 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
+ 2024 21:09:22 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [RFC PATCH v2 01/22] target/arm: Add FEAT_NMI to max
+Date: Wed, 21 Feb 2024 13:08:02 +0000
+Message-ID: <20240221130823.677762-2-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
-References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240221130823.677762-1-ruanjinjie@huawei.com>
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.15;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,58 +64,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Enable FEAT_NMI on the 'max' CPU.
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
-
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
-* - It should not be passed to error_prepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
-
-Currently, since vfio_attach_device() - the caller of
-iommufd_cdev_getfd() - is always called in DeviceClass.realize() context
-and won't get the NULL errp parameter, iommufd_cdev_getfd()
-doesn't trigger the dereference issue.
-
-To follow the requirement of errp, add missing ERRP_GUARD() in
-iommufd_cdev_getfd().
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
-Suggested by credit:
- Markus: Referred his explanation about ERRP_GUARD().
----
- hw/vfio/iommufd.c | 1 +
- 1 file changed, 1 insertion(+)
+ docs/system/arm/emulation.rst | 1 +
+ target/arm/tcg/cpu64.c        | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 9bfddc136089..7baf49e6ee9e 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -116,6 +116,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
+diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+index f67aea2d83..91baf7ad69 100644
+--- a/docs/system/arm/emulation.rst
++++ b/docs/system/arm/emulation.rst
+@@ -63,6 +63,7 @@ the following architecture extensions:
+ - FEAT_MTE (Memory Tagging Extension)
+ - FEAT_MTE2 (Memory Tagging Extension)
+ - FEAT_MTE3 (MTE Asymmetric Fault Handling)
++- FEAT_NMI (Non-maskable Interrupt)
+ - FEAT_NV (Nested Virtualization)
+ - FEAT_NV2 (Enhanced nested virtualization support)
+ - FEAT_PACIMP (Pointer authentication - IMPLEMENTATION DEFINED algorithm)
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 5fba2c0f04..60f0dcd799 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1175,6 +1175,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64PFR1, RAS_FRAC, 0);  /* FEAT_RASv1p1 + FEAT_DoubleFault */
+     t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
+     t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_2 */
++    t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
+     cpu->isar.id_aa64pfr1 = t;
  
- static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
- {
-+    ERRP_GUARD();
-     long int ret = -ENOTTY;
-     char *path, *vfio_dev_path = NULL, *vfio_path = NULL;
-     DIR *dir = NULL;
+     t = cpu->isar.id_aa64mmfr0;
 -- 
 2.34.1
 
