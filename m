@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72B7C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F90BC5478C
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyV-000421-DU; Wed, 21 Feb 2024 16:17:55 -0500
+	id 1rctyZ-0004ZL-4G; Wed, 21 Feb 2024 16:17:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyF-0003OL-5z; Wed, 21 Feb 2024 16:17:40 -0500
+ id 1rctyM-0003Vu-K0; Wed, 21 Feb 2024 16:17:50 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyB-0000uo-KJ; Wed, 21 Feb 2024 16:17:38 -0500
+ id 1rctyH-0000xy-O0; Wed, 21 Feb 2024 16:17:46 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BCEC14F7F7;
+ by isrv.corpit.ru (Postfix) with ESMTP id E5E294F7FA;
  Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 73579869AF;
+ by tsrv.corpit.ru (Postfix) with SMTP id 9C7B1869B2;
  Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
-Received: (nullmailer pid 2335289 invoked by uid 1000);
+Received: (nullmailer pid 2335298 invoked by uid 1000);
  Wed, 21 Feb 2024 21:16:22 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 15/28] qemu-img: snapshot: allow specifying -f fmt
-Date: Thu, 22 Feb 2024 00:15:56 +0300
-Message-Id: <20240221211622.2335170-15-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 18/28] qemu-img: rebase: refresh options/--help
+Date: Thu, 22 Feb 2024 00:15:59 +0300
+Message-Id: <20240221211622.2335170-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
 References: <cover.1708544927.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,87 +60,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For consistency with other commands, and since it already
-accepts --image-opts, allow specifying -f fmt too.
+Add missing long options and --help output.
+
+Options added:
+ --format, --cache - for the image in question
+ --backing, --backing-format, --backing-cache, --backing-unsafe -
+   for the new backing file
+(was eg CACHE vs SRC_CACHE, which is unclear).
+
+Probably should rename local variables.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/tools/qemu-img.rst | 2 +-
- qemu-img-cmds.hx        | 4 ++--
- qemu-img.c              | 9 ++++++---
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ qemu-img.c | 55 +++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 46 insertions(+), 9 deletions(-)
 
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 3653adb963..9b628c4da5 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -663,7 +663,7 @@ Command description:
-   bitmap support, or 0 if bitmaps are supported but there is nothing
-   to copy.
- 
--.. option:: snapshot [--object OBJECTDEF] [--image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
-+.. option:: snapshot [--object OBJECTDEF] [-f FMT | --image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
- 
-   List, apply, create or delete snapshots in image *FILENAME*.
- 
-diff --git a/qemu-img-cmds.hx b/qemu-img-cmds.hx
-index c9dd70a892..2c5a8a28f9 100644
---- a/qemu-img-cmds.hx
-+++ b/qemu-img-cmds.hx
-@@ -84,9 +84,9 @@ SRST
- ERST
- 
- DEF("snapshot", img_snapshot,
--    "snapshot [--object objectdef] [--image-opts] [-U] [-q] [-l | -a snapshot | -c snapshot | -d snapshot] filename")
-+    "snapshot [--object objectdef] [-f fmt | --image-opts] [-U] [-q] [-l | -a snapshot | -c snapshot | -d snapshot] filename")
- SRST
--.. option:: snapshot [--object OBJECTDEF] [--image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
-+.. option:: snapshot [--object OBJECTDEF] [-f FMT | --image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
- ERST
- 
- DEF("rebase", img_rebase,
 diff --git a/qemu-img.c b/qemu-img.c
-index 3f719bbecf..85c37d491d 100644
+index ce939708d4..2a4bff2872 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -3594,7 +3594,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockBackend *blk;
-     BlockDriverState *bs;
-     QEMUSnapshotInfo sn;
--    char *filename, *snapshot_name = NULL;
-+    char *filename, *fmt = NULL, *snapshot_name = NULL;
-     int c, ret = 0, bdrv_oflags;
-     int action = 0;
-     bool quiet = false;
-@@ -3613,7 +3613,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+@@ -3792,26 +3792,61 @@ static int img_rebase(const img_cmd_t *ccmd, int argc, char **argv)
+     for(;;) {
+         static const struct option long_options[] = {
+             {"help", no_argument, 0, 'h'},
++            {"quiet", no_argument, 0, 'q'},
++            {"progress", no_argument, 0, 'p'},
+             {"object", required_argument, 0, OPTION_OBJECT},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
              {"force-share", no_argument, 0, 'U'},
++            {"format", required_argument, 0, 'f'},
++            {"cache", required_argument, 0, 't'},
+             {"compress", no_argument, 0, 'c'},
++            {"backing", required_argument, 0, 'b'},
++            {"backing-format", required_argument, 0, 'F'},
++            {"backing-cache", required_argument, 0, 'T'},
++            {"backing-unsafe", no_argument, 0, 'u'},
              {0, 0, 0, 0}
          };
--        c = getopt_long(argc, argv, ":la:c:d:hqU",
-+        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
+-        c = getopt_long(argc, argv, ":hf:F:b:upt:T:qUc",
++        c = getopt_long(argc, argv, "hf:F:b:upt:T:qUc",
                          long_options, NULL);
          if (c == -1) {
              break;
-@@ -3628,6 +3628,9 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+         }
+-        switch(c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
++        switch (c) {
          case 'h':
-             help();
+-            help();
++            cmd_help(ccmd,
++"[-f FMT | --image-opts] [-t CACHE] [-q] [-U] [-p]\n"
++"        [-b BACKING_FILENAME [-F BACKING_FMT] [-T BACKING_CACHE]] [-u]\n"
++"        [--object OBJDEF] [-c] FILENAME\n"
++"Rebases FILENAME on top of BACKING_FILENAME or no backing file\n"
++,
++"  -q, --quiet\n"
++"     quiet operation\n"
++"  -p, --progress\n"
++"     show progress indicator\n"
++"  -f, --format FMT\n"
++"     specify FILENAME format explicitly\n"
++"  --image-opts\n"
++"     indicates that FILENAME is a complete image specification\n"
++"     instead of a file name (incompatible with --format)\n"
++"  -t, --cache CACHE\n"
++"     cache mode for FILENAME (" BDRV_DEFAULT_CACHE ")\n"
++"  -b, --backing BACKING_FILENAME|\"\"\n"
++"     rebase onto this file (or no backing file)\n"
++"  -F, --backing-format BACKING_FMT\n"
++"     specify format for BACKING_FILENAME\n"
++"  -T, --backing-cache CACHE\n"
++"     BACKING_FILENAME cache mode (" BDRV_DEFAULT_CACHE ")\n"
++"  -u, --backing-unsafe\n"
++"     do not fail if BACKING_FILENAME can not be read\n"
++"  -c, --compress\n"
++"     compress image (when image supports this)\n"
++"  -U, --force-share\n"
++"     open image in shared mode for concurrent access\n"
++"  --object OBJDEF\n"
++"     QEMU user-creatable object (eg encryption key)\n"
++"  FILENAME\n"
++"     image file name (or specification with --image-opts)\n"
++);
              return 0;
-+        case 'f':
-+            fmt = optarg;
-+            break;
-         case 'l':
-             if (action) {
-                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
-@@ -3681,7 +3684,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     filename = argv[optind++];
+         case 'f':
+             fmt = optarg;
+@@ -3849,6 +3884,8 @@ static int img_rebase(const img_cmd_t *ccmd, int argc, char **argv)
+         case 'c':
+             compress = true;
+             break;
++        default:
++            tryhelp(argv[0]);
+         }
+     }
  
-     /* Open the image */
--    blk = img_open(image_opts, filename, NULL, bdrv_oflags, false, quiet,
-+    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
-                    force_share);
-     if (!blk) {
-         return 1;
 -- 
 2.39.2
 
