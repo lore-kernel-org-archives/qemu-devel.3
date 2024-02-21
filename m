@@ -4,36 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39930C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F40C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchqk-000125-GZ; Wed, 21 Feb 2024 03:21:06 -0500
+	id 1rchr5-0001Ek-Hh; Wed, 21 Feb 2024 03:21:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchqh-00010g-Sy; Wed, 21 Feb 2024 03:21:03 -0500
+ id 1rchqw-00015U-6P; Wed, 21 Feb 2024 03:21:18 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchqf-00027K-25; Wed, 21 Feb 2024 03:21:03 -0500
+ id 1rchqu-0002Au-I2; Wed, 21 Feb 2024 03:21:17 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E04B14F3BE;
- Wed, 21 Feb 2024 11:21:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 657C04F3C6;
+ Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A668B8609D;
- Wed, 21 Feb 2024 11:20:58 +0300 (MSK)
-Received: (nullmailer pid 2141984 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 2ED37860A5;
+ Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
+Received: (nullmailer pid 2142010 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 v0 00/60] Patch Round-up for stable 8.2.2,
- freeze on 2024-03-02
-Date: Wed, 21 Feb 2024 11:19:48 +0300
-Message-Id: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bohdan Kostiv <bohdan.kostiv@tii.ae>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 08/60] system/vl.c: Fix handling of '-serial none
+ -serial something'
+Date: Wed, 21 Feb 2024 11:19:56 +0300
+Message-Id: <20240221082058.2141850-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -60,147 +66,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v8.2.2:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2
+Currently if the user passes multiple -serial options on the command
+line, we mostly treat those as applying to the different serial
+devices in order, so that for example
+ -serial stdio -serial file:filename
+will connect the first serial port to stdio and the second to the
+named file.
 
-Patch freeze is 2024-03-02, and the release is planned for 2024-03-04:
+The exception to this is the '-serial none' serial device type.  This
+means "don't allocate this serial device", but a bug means that
+following -serial options are not correctly handled, so that
+ -serial none -serial stdio
+has the unexpected effect that stdio is connected to the first serial
+port, not the second.
 
-  https://wiki.qemu.org/Planning/8.2
+This is a very long-standing bug that dates back at least as far as
+commit 998bbd74b9d81 from 2009.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Make the 'none' serial type move forward in the indexing of serial
+devices like all the other serial types, so that any subsequent
+-serial options are correctly handled.
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+Note that if your commandline mistakenly had a '-serial none' that
+was being overridden by a following '-serial something' option, you
+should delete the unnecessary '-serial none'.  This will give you the
+same behaviour as before, on QEMU versions both with and without this
+bug fix.
 
-Thanks!
+Cc: qemu-stable@nongnu.org
+Reported-by: Bohdan Kostiv <bohdan.kostiv@tii.ae>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240122163607.459769-2-peter.maydell@linaro.org
+Fixes: 998bbd74b9d81 ("default devices: core code & serial lines")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit d2019a9d0c34a4fdcb5b5df550d73040dc0637d9)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-/mjt
+diff --git a/system/vl.c b/system/vl.c
+index 6b87bfa32c..938b7b5acc 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1440,18 +1440,22 @@ static void qemu_create_default_devices(void)
+ static int serial_parse(const char *devname)
+ {
+     int index = num_serial_hds;
+-    char label[32];
+ 
+-    if (strcmp(devname, "none") == 0)
+-        return 0;
+-    snprintf(label, sizeof(label), "serial%d", index);
+     serial_hds = g_renew(Chardev *, serial_hds, index + 1);
+ 
+-    serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
+-    if (!serial_hds[index]) {
+-        error_report("could not connect serial device"
+-                     " to character backend '%s'", devname);
+-        return -1;
++    if (strcmp(devname, "none") == 0) {
++        /* Don't allocate a serial device for this index */
++        serial_hds[index] = NULL;
++    } else {
++        char label[32];
++        snprintf(label, sizeof(label), "serial%d", index);
++
++        serial_hds[index] = qemu_chr_new_mux_mon(label, devname, NULL);
++        if (!serial_hds[index]) {
++            error_report("could not connect serial device"
++                         " to character backend '%s'", devname);
++            return -1;
++        }
+     }
+     num_serial_hds++;
+     return 0;
+-- 
+2.39.2
 
---------------------------------------
-01 918f620d30a9 Markus Armbruster:
-   migration: Plug memory leak on HMP migrate error path
-02 27eb8499edb2 Fabiano Rosas:
-   migration: Fix use-after-free of migration state object
-03 d2b668fca565 Cédric Le Goater:
-   vfio/pci: Clear MSI-X IRQ index always
-04 57fd4b4e1075 Het Gala:
-   Make 'uri' optional for migrate QAPI
-05 db101376af52 Yihuan Pan:
-   qemu-docs: Update options for graphical frontends
-06 615eaeab3d31 Richard W.M. Jones:
-   block/blkio: Make s->mem_region_alignment be 64 bits
-07 f670be1aad33 Jan Klötzke:
-   target/arm: fix exception syndrome for AArch32 bkpt insn
-08 d2019a9d0c34 Peter Maydell:
-   system/vl.c: Fix handling of '-serial none -serial something'
-09 747bfaf3a9d2 Peter Maydell:
-   qemu-options.hx: Improve -serial option documentation
-10 185e3fdf8d10 Peter Maydell:
-   target/arm: Reinstate "vfp" property on AArch32 CPUs
-11 8a7315202033 Guenter Roeck:
-   pci-host: designware: Limit value range of iATU viewport register
-12 45bf0e7aa648 Richard Henderson:
-   tcg/loongarch64: Set vector registers call clobbered
-13 6400be014f80 Richard Henderson:
-   linux-user/aarch64: Add padding before __kernel_rt_sigreturn
-14 8b09b7fe4708 Sven Schnelle:
-   hw/scsi/lsi53c895a: add missing decrement of reentrancy counter
-15 c645bac4e06b Daniel P. Berrangé:
-   iotests: fix leak of tmpdir in dry-run mode
-16 7d2faf0ce2cc Daniel P. Berrangé:
-   iotests: give tempdir an identifying name
-17 c42c3833e0cf Hanna Czenczek:
-   virtio-scsi: Attach event vq notifier with no_poll
-18 5bdbaebcce18 Hanna Czenczek:
-   virtio: Re-enable notifications after drain
-19 bfa36802d170 Stefan Hajnoczi:
-   virtio-blk: avoid using ioeventfd state in irqfd conditional
-20 3205bebd4fc6 Avihai Horon:
-   migration: Fix logic of channels and transport compatibility check
-21 1a49762c07d0 Daniel Henrique Barboza:
-   hw/riscv/virt-acpi-build.c: fix leak in build_rhct()
-22 7485508341f4 Fabiano Rosas:
-   tests/docker: Add sqlite3 module to openSUSE Leap container
-23 15cc10336249 Paolo Bonzini:
-   configure: run plugin TCG tests again
-24 cd8a35b913c2 Akihiko Odaki:
-   hw/smbios: Fix OEM strings table option validation
-25 196578c9d051 Akihiko Odaki:
-   hw/smbios: Fix port connector option validation
-26 9b60a3ed5569 Sven Schnelle:
-   hw/net/tulip: add chip status register values
-27 c0e688153f29 Richard Henderson:
-   tcg: Increase width of temp_subindex
-28 e41f1825b437 Richard Henderson:
-   tcg/arm: Fix goto_tb for large translation blocks
-29 aa05bd9ef407 Andrey Ignatov:
-   vhost-user.rst: Fix vring address description
-30 c62926f730d0 Ira Weiny:
-   cxl/cdat: Handle cdat table build errors
-31 64fdad5e6758 Ira Weiny:
-   cxl/cdat: Fix header sum value in CDAT checksum
-32 f7509f462c78 Hyeonggon Yoo:
-   hw/cxl/device: read from register values in mdev_reg_read()
-33 729d45a6af06 Li Zhijian:
-   hw/cxl: Pass CXLComponentState to cache_mem_ops
-34 574b64aa6754 Dmitry Osipenko:
-   virtio-gpu: Correct virgl_renderer_resource_get_info() error check
-35 9a457383ce9d Zhenzhong Duan:
-   virtio_iommu: Clear IOMMUPciBus pointer cache when system reset
-36 8a6b3f4dc95a Zhenzhong Duan:
-   smmu: Clear SMMUPciBus pointer cache when system reset
-37 14ec4ff3e429 Jonathan Cameron:
-   tests/acpi: Allow update of DSDT.cxl
-38 d9ae5802f656 Jonathan Cameron:
-   hw/i386: Fix _STA return value for ACPI0017
-39 b24a981b9f1c Jonathan Cameron:
-   tests/acpi: Update DSDT.cxl to reflect change _STA return value.
-40 681dfc0d5529 Richard Henderson:
-   linux-user/aarch64: Choose SYNC as the preferred MTE mode
-41 64c6e7444dff Richard Henderson:
-   target/arm: Fix nregs computation in do_{ld,st}_zpa
-42 b12a7671b609 Richard Henderson:
-   target/arm: Adjust and validate mtedesc sizem1
-43 96fcc9982b4a Richard Henderson:
-   target/arm: Split out make_svemte_desc
-44 623507ccfcfe Richard Henderson:
-   target/arm: Handle mte in do_ldrq, do_ldro
-45 855f94eca80c Richard Henderson:
-   target/arm: Fix SVE/SME gross MTE suppression checks
-46 ac1d88e9e7ca Peter Maydell:
-   target/arm: Don't get MDCR_EL2 in pmu_counter_enabled() before checking 
-   ARM_FEATURE_PMU
-47 cc29c12ec629 Kevin Wolf:
-   iotests: Make 144 deterministic again
-48 8e31b744fdf2 Peter Maydell:
-   .gitlab-ci/windows.yml: Don't install libusb or spice packages on 32-bit
-49 81f5cad3858f Xiaoyao Li:
-   i386/cpu: Clear FEAT_XSAVE_XSS_LO/HI leafs when CPUID_EXT_XSAVE is not 
-   available
-50 a11a365159b9 Xiaoyao Li:
-   i386/cpu: Mask with XCR0/XSS mask for FEAT_XSAVE_XCR0_HI and 
-   FEAT_XSAVE_XSS_HI leafs
-51 10f92799af8b Xiaoyao Li:
-   i386/cpuid: Decrease cpuid_i when skipping CPUID leaf 1F
-52 0729857c7075 Xiaoyao Li:
-   i386/cpuid: Move leaf 7 to correct group
-53 99d0dcd7f102 Ziqiao Kong:
-   target/i386: Generate an illegal opcode exception on cmp instructions 
-   with lock prefix
-54 4cba8388968b Daniel P. Berrangé:
-   ui: reject extended clipboard message if not activated
-55 405484b29f65 Fiona Ebner:
-   ui/clipboard: mark type as not available when there is no data
-56 9c416582611b Fiona Ebner:
-   ui/clipboard: add asserts for update and request
-57 95b08fee8f68 Tianlan Zhou:
-   ui/console: Fix console resize with placeholder surface
-58 d67611907590 Akihiko Odaki:
-   audio: Depend on dbus_display1_dep
-59 7aee57df930d Akihiko Odaki:
-   meson: Explicitly specify dbus-display1.h dependency
-60 186acfbaf7f3 Akihiko Odaki:
-   tests/qtest: Depend on dbus_display1_dep
 
