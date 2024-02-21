@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630F9C54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26613C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuRL-000103-QO; Wed, 21 Feb 2024 16:47:44 -0500
+	id 1rcuRM-00011r-6M; Wed, 21 Feb 2024 16:47:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRJ-0000wR-9B; Wed, 21 Feb 2024 16:47:41 -0500
+ id 1rcuRI-0000vT-3W; Wed, 21 Feb 2024 16:47:40 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRH-0007M4-LB; Wed, 21 Feb 2024 16:47:41 -0500
+ id 1rcuRG-0007Lq-DB; Wed, 21 Feb 2024 16:47:39 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7CE254F864;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C68A4F863;
  Thu, 22 Feb 2024 00:47:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2660F869E5;
+ by tsrv.corpit.ru (Postfix) with SMTP id 13D7C869E4;
  Thu, 22 Feb 2024 00:47:24 +0300 (MSK)
-Received: (nullmailer pid 2339847 invoked by uid 1000);
+Received: (nullmailer pid 2339844 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Ani Sinha <anisinha@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [Stable-7.2.10 08/33] hw/smbios: Fix OEM strings table option
- validation
-Date: Thu, 22 Feb 2024 00:46:51 +0300
-Message-Id: <20240221214723.2339742-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Guenter Roeck <linux@roeck-us.net>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 07/33] pci-host: designware: Limit value range of iATU
+ viewport register
+Date: Thu, 22 Feb 2024 00:46:50 +0300
+Message-Id: <20240221214723.2339742-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -63,45 +64,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-qemu_smbios_type11_opts did not have the list terminator and that
-resulted in out-of-bound memory access. It also needs to have an element
-for the type option.
+The latest version of qemu (v8.2.0-869-g7a1dc45af5) crashes when booting
+the mcimx7d-sabre emulation with Linux v5.11 and later.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 2d6dcbf93fb0 ("smbios: support setting OEM strings table")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+qemu-system-arm: ../system/memory.c:2750: memory_region_set_alias_offset: Assertion `mr->alias' failed.
+
+Problem is that the Designware PCIe emulation accepts the full value range
+for the iATU Viewport Register. However, both hardware and emulation only
+support four inbound and four outbound viewports.
+
+The Linux kernel determines the number of supported viewports by writing
+0xff into the viewport register and reading the value back. The expected
+value when reading the register is the highest supported viewport index.
+Match that code by masking the supported viewport value range when the
+register is written. With this change, the Linux kernel reports
+
+imx6q-pcie 33800000.pcie: iATU: unroll F, 4 ob, 4 ib, align 0K, limit 4G
+
+as expected and supported.
+
+Fixes: d64e5eabc4c7 ("pci: Add support for Designware IP block")
+Cc: Andrey Smirnov <andrew.smirnov@gmail.com>
+Cc: Nikita Ostrenkov <n.ostrenkov@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Message-id: 20240129060055.2616989-1-linux@roeck-us.net
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 8a73152020337a7fbf34daf0a006d4d89ec1494e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit cd8a35b913c24248267c682cb9a348461c106139)
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index cd43185417..7a58d50d80 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -368,6 +368,11 @@ static const QemuOptDesc qemu_smbios_type8_opts[] = {
- };
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index bde3a343a2..c235b9daa3 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -340,6 +340,8 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+         break;
  
- static const QemuOptDesc qemu_smbios_type11_opts[] = {
-+    {
-+        .name = "type",
-+        .type = QEMU_OPT_NUMBER,
-+        .help = "SMBIOS element type",
-+    },
-     {
-         .name = "value",
-         .type = QEMU_OPT_STRING,
-@@ -378,6 +383,7 @@ static const QemuOptDesc qemu_smbios_type11_opts[] = {
-         .type = QEMU_OPT_STRING,
-         .help = "OEM string data from file",
-     },
-+    { /* end of list */ }
- };
+     case DESIGNWARE_PCIE_ATU_VIEWPORT:
++        val &= DESIGNWARE_PCIE_ATU_REGION_INBOUND |
++                (DESIGNWARE_PCIE_NUM_VIEWPORTS - 1);
+         root->atu_viewport = val;
+         break;
  
- static const QemuOptDesc qemu_smbios_type17_opts[] = {
 -- 
 2.39.2
 
