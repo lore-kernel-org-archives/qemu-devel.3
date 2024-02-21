@@ -4,53 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D007C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C3DAC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoY5-0004xp-RI; Wed, 21 Feb 2024 10:30:18 -0500
+	id 1rcoZz-0004ww-8a; Wed, 21 Feb 2024 10:32:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcoNK-0004vg-K0; Wed, 21 Feb 2024 10:19:10 -0500
-Received: from szxga08-in.huawei.com ([45.249.212.255])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcoPo-0006YT-ER; Wed, 21 Feb 2024 10:21:44 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcmM2-0004tm-KM; Wed, 21 Feb 2024 08:09:45 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4TfxQl2TDLz1Q8lf;
- Wed, 21 Feb 2024 21:07:59 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id D69E51404DB;
- Wed, 21 Feb 2024 21:09:38 +0800 (CST)
-Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
- (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
- 2024 21:09:38 +0800
-To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v2 20/22] hw/intc/arm_gicv3: Add NMI handling CPU
- interface registers
-Date: Wed, 21 Feb 2024 13:08:21 +0000
-Message-ID: <20240221130823.677762-21-ruanjinjie@huawei.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240221130823.677762-1-ruanjinjie@huawei.com>
-References: <20240221130823.677762-1-ruanjinjie@huawei.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchuw-00033j-42; Wed, 21 Feb 2024 03:25:27 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 427844F3EF;
+ Wed, 21 Feb 2024 11:21:23 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 0D02C860CE;
+ Wed, 21 Feb 2024 11:21:02 +0300 (MSK)
+Received: (nullmailer pid 2142137 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Yang Weijiang <weijiang.yang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 49/60] i386/cpu: Clear FEAT_XSAVE_XSS_LO/HI leafs when
+ CPUID_EXT_XSAVE is not available
+Date: Wed, 21 Feb 2024 11:20:37 +0300
+Message-Id: <20240221082058.2141850-49-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.67.174.55]
-X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.255;
- envelope-from=ruanjinjie@huawei.com; helo=szxga08-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -65,123 +60,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the NMIAR CPU interface registers which deal with acknowledging NMI.
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-When introduce NMI interrupt, there are some updates to the semantics for the
-register ICC_IAR1_EL1 and ICC_HPPIR1_EL1. For ICC_IAR1_EL1 register, it
-should return 1022 if the intid has super priority. And for ICC_NMIAR1_EL1
-register, it should return 1023 if the intid do not have super priority.
-Howerever, these are not necessary for ICC_HPPIR1_EL1 register.
+Leaf FEAT_XSAVE_XSS_LO and FEAT_XSAVE_XSS_HI also need to be cleared
+when CPUID_EXT_XSAVE is not set.
 
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
----
- hw/intc/arm_gicv3_cpuif.c | 46 ++++++++++++++++++++++++++++++++++++---
- hw/intc/gicv3_internal.h  |  1 +
- 2 files changed, 44 insertions(+), 3 deletions(-)
+Fixes: 301e90675c3f ("target/i386: Enable support for XSAVES based features")
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Yang Weijiang <weijiang.yang@intel.com>
+Message-ID: <20240115091325.1904229-2-xiaoyao.li@intel.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 81f5cad3858f27623b1b14467926032d229b76cc)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index e1a60d8c15..f5bf8df32b 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1097,7 +1097,8 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
-     return cs->hppi.irq;
- }
- 
--static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
-+static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env,
-+                                 bool is_nmi, bool is_hppi)
- {
-     /* Return the highest priority pending interrupt register value
-      * for group 1.
-@@ -1108,6 +1109,16 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
-         return INTID_SPURIOUS;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index cd16cb893d..8b9ef218d3 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6927,6 +6927,8 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
+     if (!(env->features[FEAT_1_ECX] & CPUID_EXT_XSAVE)) {
+         env->features[FEAT_XSAVE_XCR0_LO] = 0;
+         env->features[FEAT_XSAVE_XCR0_HI] = 0;
++        env->features[FEAT_XSAVE_XSS_LO] = 0;
++        env->features[FEAT_XSAVE_XSS_HI] = 0;
+         return;
      }
  
-+    if (!is_hppi) {
-+        if (is_nmi && (!cs->hppi.superprio)) {
-+            return INTID_SPURIOUS;
-+        }
-+
-+        if ((!is_nmi) && cs->hppi.superprio) {
-+            return INTID_NMI;
-+        }
-+    }
-+
-     /* Check whether we can return the interrupt or if we should return
-      * a special identifier, as per the CheckGroup1ForSpecialIdentifiers
-      * pseudocode. (We can simplify a little because for us ICC_SRE_EL1.RM
-@@ -1168,7 +1179,30 @@ static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     if (!icc_hppi_can_preempt(cs)) {
-         intid = INTID_SPURIOUS;
-     } else {
--        intid = icc_hppir1_value(cs, env);
-+        intid = icc_hppir1_value(cs, env, false, false);
-+    }
-+
-+    if (!gicv3_intid_is_special(intid)) {
-+        icc_activate_irq(cs, intid);
-+    }
-+
-+    trace_gicv3_icc_iar1_read(gicv3_redist_affid(cs), intid);
-+    return intid;
-+}
-+
-+static uint64_t icc_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    GICv3CPUState *cs = icc_cs_from_env(env);
-+    uint64_t intid;
-+
-+    if (icv_access(env, HCR_IMO)) {
-+        return icv_iar_read(env, ri);
-+    }
-+
-+    if (!icc_hppi_can_preempt(cs)) {
-+        intid = INTID_SPURIOUS;
-+    } else {
-+        intid = icc_hppir1_value(cs, env, true, false);
-     }
- 
-     if (!gicv3_intid_is_special(intid)) {
-@@ -1555,7 +1589,7 @@ static uint64_t icc_hppir1_read(CPUARMState *env, const ARMCPRegInfo *ri)
-         return icv_hppir_read(env, ri);
-     }
- 
--    value = icc_hppir1_value(cs, env);
-+    value = icc_hppir1_value(cs, env, false, true);
-     trace_gicv3_icc_hppir1_read(gicv3_redist_affid(cs), value);
-     return value;
- }
-@@ -2344,6 +2378,12 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
-       .access = PL1_R, .accessfn = gicv3_irq_access,
-       .readfn = icc_iar1_read,
-     },
-+    { .name = "ICC_NMIAR1_EL1", .state = ARM_CP_STATE_BOTH,
-+      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 9, .opc2 = 5,
-+      .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+      .access = PL1_R, .accessfn = gicv3_irq_access,
-+      .readfn = icc_nmiar1_read,
-+    },
-     { .name = "ICC_EOIR1_EL1", .state = ARM_CP_STATE_BOTH,
-       .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 12, .opc2 = 1,
-       .type = ARM_CP_IO | ARM_CP_NO_RAW,
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index 8d793243f4..93e56b3726 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -511,6 +511,7 @@ FIELD(VTE, RDBASE, 42, RDBASE_PROCNUM_LENGTH)
- /* Special interrupt IDs */
- #define INTID_SECURE 1020
- #define INTID_NONSECURE 1021
-+#define INTID_NMI 1022
- #define INTID_SPURIOUS 1023
- 
- /* Functions internal to the emulated GICv3 */
 -- 
-2.34.1
+2.39.2
 
 
