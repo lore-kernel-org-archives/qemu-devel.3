@@ -4,73 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C77C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB164C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoWs-0008C0-GM; Wed, 21 Feb 2024 10:29:02 -0500
+	id 1rcoTv-0007zK-Gj; Wed, 21 Feb 2024 10:25:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoOO-0001fU-L8
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:20:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcoMx-0003Rf-NB; Wed, 21 Feb 2024 10:18:50 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rclLM-0002U1-Ar
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 07:05:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708517095;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Tx1O13Gnsie+xPpCJxw92CzPBEojqIPPjBASOTq07Hw=;
- b=dv6xYrvo/Obvv4GkhR9jBj02HvJ4Cv6TXLSKwn/vKRq3O/MEygb5kp2hzxAaxogMM4awbT
- HUf0Dv3gx3OfwiwmqdFKJ3n7pf3xSgsaqsRn9MFQeJZYOdE0pmgoSF9AiZnIrhDILxbygU
- KdhqYkE2L7erRkO1zifQMYVDQ6z8oPs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-411-04X_3TotNzuNcEnteRLy_Q-1; Wed, 21 Feb 2024 07:04:49 -0500
-X-MC-Unique: 04X_3TotNzuNcEnteRLy_Q-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A8EF683B827;
- Wed, 21 Feb 2024 12:04:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 85415492BD7;
- Wed, 21 Feb 2024 12:04:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9013B21E66D5; Wed, 21 Feb 2024 13:04:47 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Hao Xiang <hao.xiang@bytedance.com>
-Cc: pbonzini@redhat.com,  berrange@redhat.com,  eduardo@habkost.net,
- peterx@redhat.com,  farosas@suse.de,  eblake@redhat.com,
- thuth@redhat.com,  lvivier@redhat.com,  qemu-devel@nongnu.org,
- jdenemar@redhat.com
-Subject: Re: [PATCH v2 3/7] migration/multifd: Zero page transmission on the
- multifd thread.
-In-Reply-To: <20240216224002.1476890-4-hao.xiang@bytedance.com> (Hao Xiang's
- message of "Fri, 16 Feb 2024 22:39:58 +0000")
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-4-hao.xiang@bytedance.com>
-Date: Wed, 21 Feb 2024 13:04:47 +0100
-Message-ID: <87ttm2t44g.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchsI-0002IU-Rk; Wed, 21 Feb 2024 03:22:45 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 793DF4F3D6;
+ Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 43D82860B5;
+ Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
+Received: (nullmailer pid 2142059 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Ani Sinha <anisinha@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [Stable-8.2.2 24/60] hw/smbios: Fix OEM strings table option
+ validation
+Date: Wed, 21 Feb 2024 11:20:12 +0300
+Message-Id: <20240221082058.2141850-24-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,40 +63,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@bytedance.com> writes:
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-> 1. Implements the zero page detection and handling on the multifd
-> threads for non-compression, zlib and zstd compression backends.
-> 2. Added a new value 'multifd' in ZeroPageDetection enumeration.
-> 3. Add proper asserts to ensure pages->normal are used for normal pages
-> in all scenarios.
->
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+qemu_smbios_type11_opts did not have the list terminator and that
+resulted in out-of-bound memory access. It also needs to have an element
+for the type option.
 
-[...]
+Cc: qemu-stable@nongnu.org
+Fixes: 2d6dcbf93fb0 ("smbios: support setting OEM strings table")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(cherry picked from commit cd8a35b913c24248267c682cb9a348461c106139)
 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 99843a8e95..e2450b92d4 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -660,9 +660,11 @@
->  #
->  # @none: Do not perform zero page checking.
->  #
-> +# @multifd: Perform zero page checking on the multifd sender thread. (since 9.0)
-
-As pointed out in my review of PATCH 3, the entire type is since 9.0.
-
-> +#
->  ##
->  { 'enum': 'ZeroPageDetection',
-> -  'data': [ 'legacy', 'none' ] }
-> +  'data': [ 'legacy', 'none', 'multifd' ] }
->  
->  ##
->  # @BitmapMigrationBitmapAliasTransform:
-
-I don't like having 'none' (don't detect) between the two ways to
-detect.  Put it either first or last.
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 2a90601ac5..522ed1ed9f 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -369,6 +369,11 @@ static const QemuOptDesc qemu_smbios_type8_opts[] = {
+ };
+ 
+ static const QemuOptDesc qemu_smbios_type11_opts[] = {
++    {
++        .name = "type",
++        .type = QEMU_OPT_NUMBER,
++        .help = "SMBIOS element type",
++    },
+     {
+         .name = "value",
+         .type = QEMU_OPT_STRING,
+@@ -379,6 +384,7 @@ static const QemuOptDesc qemu_smbios_type11_opts[] = {
+         .type = QEMU_OPT_STRING,
+         .help = "OEM string data from file",
+     },
++    { /* end of list */ }
+ };
+ 
+ static const QemuOptDesc qemu_smbios_type17_opts[] = {
+-- 
+2.39.2
 
 
