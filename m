@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B60CC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671F4C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoPj-00062J-VQ; Wed, 21 Feb 2024 10:21:40 -0500
+	id 1rcoRb-0002GK-Dc; Wed, 21 Feb 2024 10:23:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcoM5-0001tO-5f
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:17:56 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcnEW-000610-RN
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 09:06:06 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33d26da3e15so2884894f8f.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 06:05:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708524357; x=1709129157; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jToOqvLtcQbxy76UxGoAKsmsuFkgoQ92P/MuKUVl25M=;
- b=ueSzMcVAT/FxB4u99AdVIFC+kc1lXOtEGucCYJiYXkgz1DyD/HASPi7kNXU3XmwcON
- W45whsxBNJ4DbwOe3bm6df0WGggQG6S09g4hrjfqEdJ2fiEygFysnOkJ75cR4ZXraepE
- kQYno/nhiOzSEVNYpHiXsLKKd614NzRysFqqrQs50b4dzLwZ1L+8iAzmklUjrM5AoFad
- 04j2GejVBYqllVhfpHzpVWzSnpvDmw7hVBVjRJJrS9XkgIZvSmiS5WRruwj9Ua13QquL
- Euf4X5+sN/hoLEb0lt8a5FCUWZn1yj4QkqrXSVMXA1vxHMix0U/qLghmPaFn0KxkAxN6
- d4fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708524357; x=1709129157;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jToOqvLtcQbxy76UxGoAKsmsuFkgoQ92P/MuKUVl25M=;
- b=cpF3cgwb+ZqBGG8CXL7Q3uDWqBo/MftAVUfEja3KRXSHoc/OdYh6x0h/ioD5ufnDVJ
- nFPupjeEV1IP9FMjK+jR9bIyKPouFNGr8FA0SVRtimZm1aaqRkft7Z4/eJzwt4jD2VeR
- 8OuSxQiZO9RvZeAZ0DfjcLmvzGeuhX0oryGv7TKkwRXRL3XTg2cfu6+k4kgtcRovPHN8
- 9l3PHjj8iSG7myyp0K2rJetKjnDl9FshiKpmbycHX18uLtPwosCI1ZUoxHrT4cDr2Wh9
- vUn0Fd70aZV8NSXRaGkfKPx3oW2ahGK2em093KVrBtMigX5QoBN9jiEhOBI6zotfQSBa
- ZvHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVteZWwzEgUyZ2cExqM5XZ2KRVNkUPE68i6UkGmQS5Byb1tfk5YhlF6xUIHxKcjKnCHrD5wiMhb1j8WbpMryupb90YFTCQ=
-X-Gm-Message-State: AOJu0YxyODDjfaB0abmuB3fPz9ULaDA9raC9ISkxac8StCha2VP44P/x
- NQnFRPaSEHFrmx7Cc5b2itrLcONlsI7NF5c2mIYrPJxfQerj3JvJR72KMOAGxcY=
-X-Google-Smtp-Source: AGHT+IFIi9jZw1PN13M2gmLjp+mpIEcwqXL/v17iqUxcJ5Id9WH64Mbpa/5e/uG27pb251Icki6FRw==
-X-Received: by 2002:adf:f144:0:b0:33d:3cea:8484 with SMTP id
- y4-20020adff144000000b0033d3cea8484mr9666150wro.1.1708524357572; 
- Wed, 21 Feb 2024 06:05:57 -0800 (PST)
-Received: from [192.168.245.175] ([81.185.169.168])
- by smtp.gmail.com with ESMTPSA id
- v4-20020a5d6784000000b0033d39626c27sm12603630wru.76.2024.02.21.06.05.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 06:05:56 -0800 (PST)
-Message-ID: <5a8a7625-16ea-4ed4-8c50-72474423e228@linaro.org>
-Date: Wed, 21 Feb 2024 15:05:53 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rcoL4-0001hh-KD; Wed, 21 Feb 2024 10:16:52 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rco2Z-0007Tg-3P; Wed, 21 Feb 2024 09:57:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708527463; x=1740063463;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=N/Rh861QxK57N9KeQmommhQkchtjVhc8QkT0maRgZQo=;
+ b=K9kdT/ZlExtJEnpjVVA61JAaJbV7ZjBqIkaAz2X63vrWuqzWEMQ0GBr8
+ aTCaZm28kBFB34ehyf3I3SeMFhoX3uUsMmLYWG2Wu6Rb5IfSHIYHBw8Sv
+ +Kp9vZ4RAh7IF237XrlkiUmSz/J+yKdS2TFixyBLneuNXd7REOp+ihWkW
+ /0+vnUIr5cOqjaI9wPGaMOE7HgjD3ueKziR9daN0e95W60Dd8E4WRSgqG
+ Y0PIJM9hycS8pdZziNjeh19qu7LUVo/mYZURHCAGVooJqgc3BygXXn+6E
+ 9GcQTpJnNrGarBrsvokSUys6kbUqy4JgqzrTYwOV2iNHT5GSkKcMyDqJx Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10990"; a="3173218"
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="3173218"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2024 06:57:40 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,175,1705392000"; 
+   d="scan'208";a="9752563"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa004.fm.intel.com with ESMTP; 21 Feb 2024 06:57:33 -0800
+Date: Wed, 21 Feb 2024 23:11:12 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 3/6] hw/mem/cxl_type3: Fix missing ERRP_GUARD() in
+ ct3_realize()
+Message-ID: <ZdYSkNRkZBsfHJea@intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+ <20240221094317.994454-4-zhao1.liu@linux.intel.com>
+ <87zfvuuk18.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] hw/i386/pc_piix: Share pc_cmos_init() invocation
- between pc and isapc machines
-Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Sergio Lopez <slp@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240208220349.4948-1-shentey@gmail.com>
- <20240208220349.4948-3-shentey@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240208220349.4948-3-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87zfvuuk18.fsf@pond.sub.org>
+Received-SPF: none client-ip=192.198.163.16;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +90,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 23:03, Bernhard Beschow wrote:
-> Both invocations are the same and either one is always executed. Avoid this
-> redundancy.
+On Wed, Feb 21, 2024 at 12:35:47PM +0100, Markus Armbruster wrote:
+> Date: Wed, 21 Feb 2024 12:35:47 +0100
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 3/6] hw/mem/cxl_type3: Fix missing ERRP_GUARD() in
+>  ct3_realize()
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->   hw/i386/pc_piix.c | 8 +++-----
->   1 file changed, 3 insertions(+), 5 deletions(-)
+> Zhao Liu <zhao1.liu@linux.intel.com> writes:
+> 
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> >
+> > As the comment in qapi/error, dereferencing @errp requires
+> > ERRP_GUARD():
+> >
+> > * = Why, when and how to use ERRP_GUARD() =
+> > *
+> > * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> > * - It must not be dereferenced, because it may be null.
+> > * - It should not be passed to error_prepend() or
+> > *   error_append_hint(), because that doesn't work with &error_fatal.
+> > * ERRP_GUARD() lifts these restrictions.
+> > *
+> > * To use ERRP_GUARD(), add it right at the beginning of the function.
+> > * @errp can then be used without worrying about the argument being
+> > * NULL or &error_fatal.
+> > *
+> > * Using it when it's not needed is safe, but please avoid cluttering
+> > * the source with useless code.
+> >
+> > Currently, since ct3_realize() - as a PCIDeviceClass.realize() method -
+> > doesn't get the NULL errp parameter, it doesn't trigger the dereference
+> > issue.
+> >
+> > To follow the requirement of errp, add missing ERRP_GUARD() in
+> > ct3_realize().
+> >
+> > Suggested-by: Markus Armbruster <armbru@redhat.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> > Suggested by credit:
+> >  Markus: Referred his explanation about ERRP_GUARD().
+> > ---
+> >  hw/mem/cxl_type3.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > index e8801805b90f..a3b0761f843b 100644
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -645,6 +645,7 @@ static DOEProtocol doe_cdat_prot[] = {
+> >  
+> >  static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+> >  {
+> > +    ERRP_GUARD();
+> >      CXLType3Dev *ct3d = CXL_TYPE3(pci_dev);
+> >      CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
+> >      ComponentRegisters *regs = &cxl_cstate->crb;
+> 
+> The dereference is
+> 
+>        cxl_doe_cdat_init(cxl_cstate, errp);
+>        if (*errp) {
+>            goto err_free_special_ops;
+>        }
+> 
+> We check *errp, because cxl_doe_cdat_init() returns void.  Could be
+> improved to return bool, along with its callees ct3_load_cdat() and
+> ct3_build_cdat(), but that's a slightly more ambitious cleanup, so
+> 
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks! I can continue to consider such the cleanup in the follow up.
+
+Will also add the dereference description in commit message to make
+review easier.
+
+Regards,
+Zhao
+
 
 
