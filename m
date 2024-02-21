@@ -4,110 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A83C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDFEC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoUT-0002mo-W2; Wed, 21 Feb 2024 10:26:34 -0500
+	id 1rcoY4-0004iq-1D; Wed, 21 Feb 2024 10:30:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rcoMW-0003Rf-NT
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:24 -0500
-Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rcjZL-0001lx-9r
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 05:11:18 -0500
-Received: by mail-io1-xd36.google.com with SMTP id
- ca18e2360f4ac-7c4949a366fso253321339f.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 02:11:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708510274; x=1709115074;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XPD8jhIbDSZIaggwaCTJVQeh546LjhKhNB7LZ3iOLyU=;
- b=ZEvWmFlffp1ZU+kNYIADFJnRD1GI4LTJw1IsWC1mvtHYTr3Xg0Cx7EJOEGix2DsIae
- ZDz+OWhzF3AcNhdeZUJCeRcC6WSTgA0khhlhxJZjt+8YLI9bLZGm7NHZDHzSBi8rDG0S
- 34OXHnFsOeqmQkT8GUrzKZWdbMtB+B++X93Y477520ivfCXHxQX3GT0pl0Vu6Txshzdl
- +0vhzZED/eaVpZrMcID1BFGgwU9nKhQVuFGHc3c4hAoo5kD6ttVy28gMo/VN2rsNsxdf
- KurISf8WToib+6/crW46tj/JJYE4HnE4VMIKK9DBJXQ5bvpFMU9dkPaYGPG5EW7LIWbz
- YC4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708510274; x=1709115074;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XPD8jhIbDSZIaggwaCTJVQeh546LjhKhNB7LZ3iOLyU=;
- b=NT1rSnbq1iPTnBlHSSjJ+n+ULoCXrF02qb6rpjK7L1p0eENmEV4tz37EUQwjPtVaVz
- Xwfm5Lvh1qv7nGE5TMKKZOg0vcbIHPVODfnV+Hu4Ou4KrcG/kbp6uPNPPZszbj7tQGhR
- 4ojooA0IJJmcRxYGuQizuZ9G7EvI24SeQWjvO+UiokV5QKifBv+LK9STo8qtxfoeEPR8
- NY5AFfKnVpy/si0clkaapobRAlpIFzLJLeCY/eRT3Sqt4mBnQG2pk+OMuwBbKBxx0As6
- 95TPPIssXgXxP49E/IHlJuOGIUVP2/3M3fVsY2krxQEUI4MLT/EhazV0SQ9yJYyScW3O
- /neA==
-X-Gm-Message-State: AOJu0YyVjY+wzU/VRo4K5EfY4oSs8U6rEgQC86cxNpebeYpCRIBzOjH7
- c9AI7LNZv4swudOmpr/Nr/zUblLUpGFmvhF0O/j8nX8hINc6RALirvPSE1aGUnA=
-X-Google-Smtp-Source: AGHT+IE7unUuLCbAK2t/Rvu+pMjVTIQBGYWgnPs3uyfsRXfNtlQE9xB+W0G6Wq5Jmoc53U6R0JsUzA==
-X-Received: by 2002:a05:6e02:214e:b0:364:2239:a89b with SMTP id
- d14-20020a056e02214e00b003642239a89bmr19188267ilv.11.1708510273879; 
- Wed, 21 Feb 2024 02:11:13 -0800 (PST)
-Received: from [157.82.203.206] ([157.82.203.206])
- by smtp.gmail.com with ESMTPSA id
- d188-20020a6336c5000000b005dc89957e06sm8034185pga.71.2024.02.21.02.11.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 02:11:13 -0800 (PST)
-Message-ID: <bf5e9471-c09f-47f2-a5a3-83713255c47a@daynix.com>
-Date: Wed, 21 Feb 2024 19:11:05 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoPE-0005Dm-KF
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:21:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcl6s-0000I7-8B
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 06:49:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708516196;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HOuCJgn0aHyrvzHDwAt1bFkH1ADdZr58ytTLv9fml6I=;
+ b=Ew5rpSYkl9LSHX8jCeKLvpUWpHYnvkrOkFUKTTPZSA/QI26WaJcHJjYi++p7A7kfnRYnKh
+ LNhPF3kSKVSPC+Dxc5SIQmviH/00PVSB0ERU4CmpjFZ6DieCUWEigfToR7+mCTNfLQx49C
+ 58r+4ZlSh77BjDQiXxMoNXIEcg2UNmY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-_xvVJxn8OMG_MLfekMR0Tw-1; Wed,
+ 21 Feb 2024 06:49:52 -0500
+X-MC-Unique: _xvVJxn8OMG_MLfekMR0Tw-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9B14B28C976B;
+ Wed, 21 Feb 2024 11:49:51 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 74E80C0335F;
+ Wed, 21 Feb 2024 11:49:51 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2E15821E66D5; Wed, 21 Feb 2024 12:49:46 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,  Fan Ni
+ <fan.ni@samsung.com>,  Laurent Vivier <laurent@vivier.eu>,  Alistair
+ Francis <alistair@alistair23.me>,  "Edgar E . Iglesias"
+ <edgar.iglesias@gmail.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Alex Williamson
+ <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Markus
+ Armbruster
+ <armbru@redhat.com>,  qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
+ qemu-trivial@nongnu.org,  Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 5/6] hw/pci-bridge/cxl_upstream: Fix missing
+ ERRP_GUARD() in cxl_usp_realize()
+In-Reply-To: <20240221094317.994454-6-zhao1.liu@linux.intel.com> (Zhao Liu's
+ message of "Wed, 21 Feb 2024 17:43:16 +0800")
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
+ <20240221094317.994454-6-zhao1.liu@linux.intel.com>
+Date: Wed, 21 Feb 2024 12:49:46 +0100
+Message-ID: <87le7eujdx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/23] plugins: add an API to read registers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv@nongnu.org,
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Song Gao <gaosong@loongson.cn>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
- <jsnow@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-s390x@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Yanan Wang <wangyanan55@huawei.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Brian Cain
- <bcain@quicinc.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Bin Meng <bin.meng@windriver.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240216163025.424857-1-alex.bennee@linaro.org>
- <20240216163025.424857-19-alex.bennee@linaro.org>
- <c38a22b5-01e8-40f1-bfc4-4bba9bf7b516@daynix.com>
- <87il2jcje8.fsf@draig.linaro.org>
- <bf31a250-9539-448c-9c64-4168ab8741f1@daynix.com>
- <87bk8ab0f4.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <87bk8ab0f4.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d36;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-io1-xd36.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,84 +95,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/21 19:02, Alex Bennée wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
-> 
->> On 2024/02/20 23:14, Alex Bennée wrote:
->>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>
->>>> On 2024/02/17 1:30, Alex Bennée wrote:
->>>>> We can only request a list of registers once the vCPU has been
->>>>> initialised so the user needs to use either call the get function on
->>>>> vCPU initialisation or during the translation phase.
->>>>> We don't expose the reg number to the plugin instead hiding it
->>>>> behind
->>>>> an opaque handle. This allows for a bit of future proofing should the
->>>>> internals need to be changed while also being hashed against the
->>>>> CPUClass so we can handle different register sets per-vCPU in
->>>>> hetrogenous situations.
->>>>> Having an internal state within the plugins also allows us to expand
->>>>> the interface in future (for example providing callbacks on register
->>>>> change if the translator can track changes).
->>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
->>>>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
->>>>> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
->>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> <snip>
->>>>> +/*
->>>>> + * Register handles
->>>>> + *
->>>>> + * The plugin infrastructure keeps hold of these internal data
->>>>> + * structures which are presented to plugins as opaque handles. They
->>>>> + * are global to the system and therefor additions to the hash table
->>>>> + * must be protected by the @reg_handle_lock.
->>>>> + *
->>>>> + * In order to future proof for up-coming heterogeneous work we want
->>>>> + * different entries for each CPU type while sharing them in the
->>>>> + * common case of multiple cores of the same type.
->>>>> + */
->>>>> +
->>>>> +static QemuMutex reg_handle_lock;
->>>>> +
->>>>> +struct qemu_plugin_register {
->>>>> +    const char *name;
->>>>> +    int gdb_reg_num;
->>>>> +};
->>>>> +
->>>>> +static GHashTable *reg_handles; /* hash table of PluginReg */
->>>>> +
->>>>> +/* Generate a stable key - would xxhash be overkill? */
->>>>> +static gpointer cpu_plus_reg_to_key(CPUState *cs, int gdb_regnum)
->>>>> +{
->>>>> +    uintptr_t key = (uintptr_t) cs->cc;
->>>>> +    key ^= gdb_regnum;
->>>>> +    return GUINT_TO_POINTER(key);
->>>>> +}
->>>>
->>>> I have pointed out this is theoretically prone to collisions and
->>>> unsafe.
->>> How is it unsafe? The aim is to share handles for the same CPUClass
->>> rather than having a unique handle per register/cpu combo.
->>
->> THe intention is legitimate, but the implementation is not safe. It
->> assumes (uintptr)cs->cc ^ gdb_regnum is unique, but there is no such
->> guarantee. The key of GHashTable must be unique; generating hashes of
->> keys should be done with hash_func given to g_hash_table_new().
-> 
-> This isn't a hash its a non-unique key. It is however unique for
-> the same register on the same class of CPU so for each vCPU in a system
-> can share the same opaque handles.
-> 
-> The hashing is done internally by glib. We would assert if there was a
-> duplicate key referring to a different register.
-> 
-> I'm unsure what you want here? Do you have a suggestion for the key
-> generation algorithm? As the comment notes I did consider a more complex
-> mixing algorithm using xxhash but that wouldn't guarantee no clash
-> either.
+Zhao Liu <zhao1.liu@linux.intel.com> writes:
 
-I suggest using a struct that holds both of cs->cc and gdb_regnum, and 
-pass g_direct_equal() and g_direct_hash() to g_hash_table_new().
+> From: Zhao Liu <zhao1.liu@intel.com>
+>
+> As the comment in qapi/error, dereferencing @errp requires
+> ERRP_GUARD():
+>
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> * - It must not be dereferenced, because it may be null.
+> * - It should not be passed to error_prepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> *
+> * Using it when it's not needed is safe, but please avoid cluttering
+> * the source with useless code.
+>
+> Currently, since cxl_usp_realize() - as a PCIDeviceClass.realize()
+> method - doesn't get the NULL errp parameter, it doesn't trigger the
+> dereference issue.
+>
+> To follow the requirement of errp, add missing ERRP_GUARD() in
+> cxl_usp_realize()().
+>
+> Suggested-by: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Suggested by credit:
+>  Markus: Referred his explanation about ERRP_GUARD().
+> ---
+>  hw/pci-bridge/cxl_upstream.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+> index e87eb4017713..03d123cca0ef 100644
+> --- a/hw/pci-bridge/cxl_upstream.c
+> +++ b/hw/pci-bridge/cxl_upstream.c
+> @@ -289,6 +289,7 @@ static void free_default_cdat_table(CDATSubHeader **cdat_table, int num,
+>  
+>  static void cxl_usp_realize(PCIDevice *d, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      PCIEPort *p = PCIE_PORT(d);
+>      CXLUpstreamPort *usp = CXL_USP(d);
+>      CXLComponentState *cxl_cstate = &usp->cxl_cstate;
+
+The dereference is
+
+       cxl_doe_cdat_init(cxl_cstate, errp);
+       if (*errp) {
+           goto err_cap;
+       }
+
+As noted in review of PATCH 3, we check *errp, because
+cxl_doe_cdat_init() returns void.  Could be improved to return bool,
+along with its callees ct3_load_cdat() and ct3_build_cdat(), but that's
+a slightly more ambitious cleanup, so
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
 
