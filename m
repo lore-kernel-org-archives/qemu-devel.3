@@ -4,54 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9D9C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E26DC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoJF-0000kJ-H6; Wed, 21 Feb 2024 10:14:57 -0500
+	id 1rcoKy-0002dl-5O; Wed, 21 Feb 2024 10:16:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchsl-0005dy-8j; Wed, 21 Feb 2024 03:23:11 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
+ id 1rcoJo-00010D-VY
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:15:33 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchsj-0002RS-Hl; Wed, 21 Feb 2024 03:23:11 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A9ECF4F3D9;
- Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 763AE860B8;
- Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
-Received: (nullmailer pid 2142069 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 27/60] tcg: Increase width of temp_subindex
-Date: Wed, 21 Feb 2024 11:20:15 +0300
-Message-Id: <20240221082058.2141850-27-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
+ id 1rcmwz-0002yY-Nc
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:47:56 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AC08A60E52;
+ Wed, 21 Feb 2024 16:47:49 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:a510::1:2d] (unknown
+ [2a02:6b8:b081:a510::1:2d])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id mlSZ730iCiE0-5a3riyI5; Wed, 21 Feb 2024 16:47:48 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1708523268;
+ bh=sDtRNk/m1TxEix06v3seKOOwGK8eu44uU2PT0LBSoXs=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=k9EOYR4uT7EBBKePpI6pdFndpSEKQopCnXWSGKqXw6ei2jVVhIfFbTSc5SafOLSYg
+ x8QE3cGOKQToCkDlM54LmYi2pDEjLfw7xIiuESAawHIpyqImWxKQWFIFH7RiqgVOQP
+ 30y8fhMUxzRQGRhfH9kFcqfpe1KABv1xsKAeyMeU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <a804edf0-67d4-4752-b79f-c3e1ef3d72ff@yandex-team.ru>
+Date: Wed, 21 Feb 2024 18:47:47 +0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] qapi/migration.json: add reason to MIGRATION event
+Content-Language: en-US
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, eblake@redhat.com,
+ armbru@redhat.com, yc-core@yandex-team.ru
+References: <20240215122759.1438581-1-rkhapov@yandex-team.ru>
+ <20240215122759.1438581-2-rkhapov@yandex-team.ru> <ZdQ7C5dHIQsTVQE8@x1n>
+From: Roman Khapov <rkhapov@yandex-team.ru>
+In-Reply-To: <ZdQ7C5dHIQsTVQE8@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=rkhapov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -63,34 +79,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+If I understood you right, you suggest to improve migrate_generate_event 
+to accept MigrationState* instead of int* state (which is pointing to 
+field MigrationState.state in all usages), and get error reason from 
+MigrationState.error, if the new state is MIGRATION_STATE_FAILED, is it?
 
-We need values 0-3 for TCG_TYPE_I128 on 32-bit hosts.
+That sounds reasonable, thanks!
 
-Cc: qemu-stable@nongnu.org
-Fixes: 43eef72f4109 ("tcg: Add temp allocation for TCGv_i128")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2159
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Tested-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit c0e688153f299d5d493989c80bcc84c9cf36d6a6)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+But I'm not sure if I got the idea of changing migrate_set_error 
+correctly, can you explain in more details, please?
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index daf2a5bf9e..451f3fec41 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -412,7 +412,7 @@ typedef struct TCGTemp {
-     unsigned int mem_coherent:1;
-     unsigned int mem_allocated:1;
-     unsigned int temp_allocated:1;
--    unsigned int temp_subindex:1;
-+    unsigned int temp_subindex:2;
- 
-     int64_t val;
-     struct TCGTemp *mem_base;
+On 2/20/24 10:39, Peter Xu wrote:
+> On Thu, Feb 15, 2024 at 05:27:58PM +0500, Roman Khapov wrote:
+>>       migrate_set_state(&mis->state, MIGRATION_STATUS_COLO,
+>> -                      MIGRATION_STATUS_COMPLETED);
+>> +                      MIGRATION_STATUS_COMPLETED, NULL);
+> Instead of enforcing migrate_set_error() to always pass an error, maybe we
+> can allow migrate_generate_event() to fetch s->error in FAILED state, if
+> that hint ever existed?
+>
 -- 
-2.39.2
+Best regards,
+Roman Khapov
 
 
