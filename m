@@ -4,83 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926ABC5478A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2720C5478B
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyW-00049c-H5; Wed, 21 Feb 2024 16:17:56 -0500
+	id 1rctxy-0002ts-0M; Wed, 21 Feb 2024 16:17:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyL-0003Ut-Ji
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:46 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctyG-0000y4-Of
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:45 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-33aeb088324so3908689f8f.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:17:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550259; x=1709155059; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BjLOWnOowHsDr6B+HTK3K7dnAqdoyTXUuN5gUgDOyxc=;
- b=i6GbSvhLMscjmR20xCNa2UCblE+gWX7go3qvdspTDC8hYccvzP7MmajJxlxHDc6s3k
- e53wPWUdk3tDP+2J+ooalVBfYqj30RPEtWUl3AQq7eByiCVheJZHIpG/gxB0nKmobrkq
- SR1BMmrbWqTgWztpYOdQvSkULA8pv0GHvaVRC2UDnyD8KUEX/9RmV9yrG1idCa5mp3kx
- qyenmg6uj6pdQoua/PQ08s1LS1yQmO2Qhd3pMHBFr0zxTpqcO93djw/Dzq/fPtTNZlL9
- 1e+4XWPsTGZuM3O47sEliT83Gb6KMT6sUUF2UtHP9osm0tNp6Iyp6+gLD9OKmvGjcyiR
- /AdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550259; x=1709155059;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BjLOWnOowHsDr6B+HTK3K7dnAqdoyTXUuN5gUgDOyxc=;
- b=bTOMKGQpiWmb9V2zTzDviZTU54F92BSrgSaz6oDZeukUd/SQoa75GzA5SlhaEuytJ8
- Nr5aCj1wzOzQXm/JtJws8zpu5ICRskRpqsXAfXAkMRDbXvgxhJBCLEkn0ovbBjiI1LjB
- fxdPU9EuwcVAjM+XZul2riY5qnNsOWaG/Sii03oclMaptFYfyuTnm9iE2v13xQftwiZ1
- NFKVPWbMAD3TvQjlcdBn+KFY4NoBImd5XdpnMbC9VL0v14iiUWof+GH4kkl1p6VbHF3q
- Xs2irPBsD+cFDx+qHM3ZfLRDU3328fACOojx99yTCogBRnTFA5LJxCu7rmkNIGJq+qvc
- BQjQ==
-X-Gm-Message-State: AOJu0Yz+vIseQdUAjYSqhQqfHEvVkx/Bge2Sg7MRDr1Fd4DGNH+0XV6t
- zzHq2Uz9/4T4Hf/b/U8ABHXicVlVM2XQ5YuWuCinT4DZvapE7vT0D9/p9BSDCboaFTHP0OkZBXB
- ury0=
-X-Google-Smtp-Source: AGHT+IENLPABupxNks9MlSVajhcdQIKNGGK2eWFNHJ+le8zEE2ru50YvEYuzvpt2J2lO5SJ6peg4kw==
-X-Received: by 2002:a5d:6dae:0:b0:33d:3cf6:a2ca with SMTP id
- u14-20020a5d6dae000000b0033d3cf6a2camr8716854wrs.30.1708550258936; 
- Wed, 21 Feb 2024 13:17:38 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- 14-20020a056000154e00b0033d10bd6612sm18477037wry.81.2024.02.21.13.17.37
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 21 Feb 2024 13:17:38 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Joe Komlodi <komlodi@google.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Corey Minyard <cminyard@mvista.com>
-Subject: [PULL 07/25] hw/i2c/smbus_slave: Add object path on error prints
-Date: Wed, 21 Feb 2024 22:16:07 +0100
-Message-ID: <20240221211626.48190-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
-References: <20240221211626.48190-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctxZ-0002Ue-0d; Wed, 21 Feb 2024 16:16:57 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctxX-0000pQ-2j; Wed, 21 Feb 2024 16:16:56 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 946BA4F7F3;
+ Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 4B47F869AC;
+ Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
+Received: (nullmailer pid 2335280 invoked by uid 1000);
+ Wed, 21 Feb 2024 21:16:22 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH 12/28] qemu-img: convert: refresh options/--help
+Date: Thu, 22 Feb 2024 00:15:53 +0300
+Message-Id: <20240221211622.2335170-12-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
+References: <cover.1708544927.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,43 +60,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joe Komlodi <komlodi@google.com>
+Add missing long options and --help output.
 
-The current logging doesn't tell us which specific smbus device is an
-error state.
+convert uses -B for --backing, - why not -b?
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240202204847.2062798-3-komlodi@google.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/i2c/smbus_slave.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ qemu-img.c | 90 ++++++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 81 insertions(+), 9 deletions(-)
 
-diff --git a/hw/i2c/smbus_slave.c b/hw/i2c/smbus_slave.c
-index 1300c9ec72..9f9afc25a4 100644
---- a/hw/i2c/smbus_slave.c
-+++ b/hw/i2c/smbus_slave.c
-@@ -25,11 +25,15 @@
- #define DPRINTF(fmt, ...) \
- do { printf("smbus(%02x): " fmt , dev->i2c.address, ## __VA_ARGS__); } while (0)
- #define BADF(fmt, ...) \
--do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__); exit(1);} while (0)
-+do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
-+    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
-+            exit(1); } while (0)
- #else
- #define DPRINTF(fmt, ...) do {} while(0)
- #define BADF(fmt, ...) \
--do { fprintf(stderr, "smbus: error: " fmt , ## __VA_ARGS__);} while (0)
-+do { g_autofree char *qom_path = object_get_canonical_path(OBJECT(dev));  \
-+    fprintf(stderr, "%s: smbus: error: " fmt , qom_path, ## __VA_ARGS__); \
-+             } while (0)
- #endif
+diff --git a/qemu-img.c b/qemu-img.c
+index fd61b25ea7..911cdc159c 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -2403,30 +2403,100 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+     for(;;) {
+         static const struct option long_options[] = {
+             {"help", no_argument, 0, 'h'},
++            {"quiet", no_argument, 0, 'q'},
+             {"object", required_argument, 0, OPTION_OBJECT},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
++            {"source-image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
++            {"source-format", required_argument, 0, 'f'},
++            {"source-cache", required_argument, 0, 'T'},
++            {"snapshot", required_argument, 0, 'l'},
++            {"sparse-size", required_argument, 0, 'S'},
++            {"output-format", required_argument, 0, 'O'},
++            {"options", required_argument, 0, 'o'},
++            {"output-cache", required_argument, 0, 't'},
++            {"backing", required_argument, 0, 'B'},
++            {"backing-format", required_argument, 0, 'F'},
+             {"force-share", no_argument, 0, 'U'},
+             {"target-image-opts", no_argument, 0, OPTION_TARGET_IMAGE_OPTS},
+             {"salvage", no_argument, 0, OPTION_SALVAGE},
+             {"target-is-zero", no_argument, 0, OPTION_TARGET_IS_ZERO},
+             {"bitmaps", no_argument, 0, OPTION_BITMAPS},
+             {"skip-broken-bitmaps", no_argument, 0, OPTION_SKIP_BROKEN},
++            {"rate", required_argument, 0, 'r'},
++            {"parallel", required_argument, 0, 'm'},
++            {"oob-writes", no_argument, 0, 'W'},
++            {"copy-range-offloading", no_argument, 0, 'C'},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":hf:O:B:CcF:o:l:S:pt:T:qnm:WUr:",
++        c = getopt_long(argc, argv, "hf:O:B:CcF:o:l:S:pt:T:qnm:WUr:",
+                         long_options, NULL);
+         if (c == -1) {
+             break;
+         }
+-        switch(c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
++        switch (c) {
+         case 'h':
+-            help();
++            cmd_help(ccmd,
++"[-f SRC_FMT|--image-opts] [-T SRC_CACHE] [--bitmaps [--skip-broken-bitmaps]]\n"
++"        [-o TGT_OPTS|--target-image-opts] [-t TGT_CACHE] [-n]\n"
++"        [-B BACKING_FILENAME [-F BACKING_FMT]]\n"
++"        SRC_FILENAME [SRC_FILENAME2 [...]] TGT_FILENAME\n"
++,
++"  -q, --quiet\n"
++"     quiet operations\n"
++"  -p, --progress\n"
++"     show operation progress\n"
++"  -f, --source-format SRC_FMT\n"
++"     specify SRC_FILENAME source image format explicitly\n"
++"  --source-image-opts\n"
++"     indicates that SRC_FILENAME is a complete image specification\n"
++"     instead of a file name (incompatible with --source-format)\n"
++"  -l, --source-snapshot SNAPSHOT_PARAMS\n"
++"     specify source snapshot parameters\n"
++"  -T, --source-cache SRC_CACHE\n"
++"     source image(s) cache mode (" BDRV_DEFAULT_CACHE ")\n"
++"  -O, --target-format TGT_FMT\n"
++"     specify TGT_FILENAME image format (default is raw)\n"
++"  --target-image-opts\n"
++"     indicates that TGT_FILENAME is a complete image specification\n"
++"     instead of a file name (incompatible with --output-format)\n"
++"  -o, --target-options TGT_OPTS\n"
++"     TARGET_FMT-specific options\n"
++"  -c, --compress\n"
++"     create compressed output image (qcow and qcow2 format only)\n"
++"  -t, --target-cache TGT_CACHE\n"
++"     cache mode when opening output image (unsafe)\n"
++"  -B, --backing BACKING_FILENAME\n"
++"     create output to be a CoW on top of BACKING_FILENAME\n"
++"  -F, --backing-format BACKING_FMT\n"
++"     specify BACKING_FILENAME image format explicitly\n"
++"  -n, --no-create\n"
++"     omit target volume creation (eg on rbd)\n"
++"  --target-is-zero\n"
++"  -S, --sparse-size SPARSE_SIZE\n"
++"     XXX todo\n"
++"  --bitmaps\n"
++"     also copy any persistent bitmaps present in source\n"
++"  --skip-broken-bitmaps\n"
++"     skip (do not error out) any broken bitmaps\n"
++"  -U, --force-share\n"
++"     open images in shared mode for concurrent access\n"
++"  -r, --rate RATE\n"
++"     I/O rate limit\n"
++"  -m, --parallel NUM_COROUTINES\n"
++"     specify parallelism (default 8)\n"
++"  -C, --copy-range-offloading\n"
++"     use copy_range offloading\n"
++"  --salvage\n"
++"     XXX todo\n"
++"  -W, --oob-writes\n"
++"     enable out-of-order writes to improve performance\n"
++"  --object OBJDEF\n"
++"     QEMU user-creatable object (eg encryption key)\n"
++"  SRC_FILENAME\n"
++"     source image file name (or specification with --image-opts)\n"
++"  TGT_FILENAME\n"
++"     target (output) image file name\n"
++);
+             break;
+         case 'f':
+             fmt = optarg;
+@@ -2545,6 +2615,8 @@ static int img_convert(const img_cmd_t *ccmd, int argc, char **argv)
+         case OPTION_SKIP_BROKEN:
+             skip_broken = true;
+             break;
++        default:
++            tryhelp(argv[0]);
+         }
+     }
  
- enum {
 -- 
-2.41.0
+2.39.2
 
 
