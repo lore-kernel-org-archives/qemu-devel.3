@@ -4,88 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5DC4C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB739C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcojo-0008Um-Dg; Wed, 21 Feb 2024 10:42:24 -0500
+	id 1rcoa5-0005cW-Qy; Wed, 21 Feb 2024 10:32:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcojm-0008PL-L2
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:42:22 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcojk-0000dB-S3
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:42:22 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-33d2b354c72so3106064f8f.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 07:42:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708530139; x=1709134939; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Pfvtcpdy2nrjGtQx3Hv+IDxJA8BcKmv7oaMjW4p3RA8=;
- b=gh5b8LjPFzvv3pBpo/kKbnFYwyaGQPDnACuQAdJ41yLYLgtyzpKNazi9ZY7KgcQc9s
- T9D+DJI1wOZ5aGvZ7YChJb5fMXydS1UtgT/ecXn5maX2rKPElwb2eE2K42oVeJz/2KxL
- IIvFXc+SdAMXjOR4ILs0CEpqOxlN+pJCjmx+IxToNU4KxzIJchQZXWdyH0aBVDPvi9gs
- iR1IzzYptUasOd8DU/9PmEuCqzonsaM6AjDZQ4VzuH0FjcXwl1rch9Pmvz+mHD+aCm5q
- OAoQK2ZZzCsp8OYoXLoYe51lMuU/JnksihtROCX53R40kuvR7tsuAfk+gsgth+AyKB7G
- knJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708530139; x=1709134939;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pfvtcpdy2nrjGtQx3Hv+IDxJA8BcKmv7oaMjW4p3RA8=;
- b=iCzRFq+J1a2tnHAYvxIlnRozTb1BTJ4pZh+qodZkwJNjVCi7oycHisyrXM7vkLkGQs
- SM7ZOpaUzLpQaads5OGRZj7xg4Dis6FBoX0cZlnXSUHde1KA8+sYL5JIxoPboOnomgQP
- rIvgPFrAp2O/xzH0ZuG3+PzIK2XPwtqPu6rbklzm64MRSIuUnxzkQ8Ue+3MegQFD3hYv
- yMOX8llMHj1yFSxFWveC5homkBfSIXWUnbPiqdJ0WxmiZ5SP3bb+elVLZCgKmhtqmDS/
- 1/nDTcochompwDG9w/W4QzeiPebko3+D9ZOe7vi+y97yDJvJfIJyBYemjuN17rOhCpXM
- iUCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWB1djg7w+WhmeNx5bOPUFd/zz3ajB4Y5MYTVvJdIWd64esdIggB/EtJ5DupS2jhWFhNmhmFfnpY6fUrgi4eCOGlxZK+eA=
-X-Gm-Message-State: AOJu0YxkF3T6QjUxQWYZGBKXTO21/cly3IrO518TzabldmutaL+uIez4
- eYjYGPGpMoJJgk3ED8FHfPE8OTR9PhOg1XRCC/yunCvECt9WnHDw/MAQloBmfGw=
-X-Google-Smtp-Source: AGHT+IHT69Cl6S+GXsmPQymnu/r2azmGfsHMrf7am8uFXH5t61Lxz47KKb/JWSbi1g7tCFVuhx80/w==
-X-Received: by 2002:a5d:4d8a:0:b0:33d:51ec:6d07 with SMTP id
- b10-20020a5d4d8a000000b0033d51ec6d07mr5670502wru.62.1708530138902; 
- Wed, 21 Feb 2024 07:42:18 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- q2-20020a056000136200b0033d12895cfdsm17435937wrz.61.2024.02.21.07.42.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 07:42:18 -0800 (PST)
-Message-ID: <16ef6303-7527-4ab8-8a8c-62e6892963c1@linaro.org>
-Date: Wed, 21 Feb 2024 16:42:16 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rcoOq-0003nk-RI; Wed, 21 Feb 2024 10:20:44 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rchu3-0002fk-Qr; Wed, 21 Feb 2024 03:24:33 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id AFBF74F3E7;
+ Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 7A626860C6;
+ Wed, 21 Feb 2024 11:21:01 +0300 (MSK)
+Received: (nullmailer pid 2142112 invoked by uid 1000);
+ Wed, 21 Feb 2024 08:20:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 41/60] target/arm: Fix nregs computation in do_{ld,
+ st}_zpa
+Date: Wed, 21 Feb 2024 11:20:29 +0300
+Message-Id: <20240221082058.2141850-41-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] hw/core/machine: Use qemu_register_resettable for
- sysbus reset
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-10-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240220160622.114437-10-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,65 +63,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 17:06, Peter Maydell wrote:
-> Move the reset of the sysbus (and thus all devices and buses anywhere
-> on the qbus tree) from qemu_register_reset() to qemu_register_resettable().
-> 
-> This is a behaviour change: because qemu_register_resettable() is
-> aware of three-phase reset, this now means that:
->   * 'enter' phase reset methods of devices and buses are called
->     before any legacy reset callbacks registered with qemu_register_reset()
->   * 'exit' phase reset methods of devices and buses are called
->     after any legacy qemu_register_reset() callbacks
-> 
-> Put another way, a qemu_register_reset() callback is now correctly
-> ordered in the 'hold' phase along with any other 'hold' phase methods.
-> 
-> The motivation for doing this is that we will now be able to resolve
-> some reset-ordering issues using the three-phase mechanism, because
-> the 'exit' phase is always after the 'hold' phase, even when the
-> 'hold' phase function was registered with qemu_register_reset().
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I believe that given we don't make much use of enter/exit phases
-> currently that this is unlikely to cause unexpected regressions due
-> to an accidental reset-order dependency that is no longer satisfied,
-> but it's always possible...
-> ---
->   hw/core/machine.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index fb5afdcae4c..9ac5d5389a6 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -1577,14 +1577,13 @@ void qdev_machine_creation_done(void)
->       /* TODO: once all bus devices are qdevified, this should be done
->        * when bus is created by qdev.c */
->       /*
-> -     * TODO: If we had a main 'reset container' that the whole system
-> -     * lived in, we could reset that using the multi-phase reset
-> -     * APIs. For the moment, we just reset the sysbus, which will cause
-> +     * This is where we arrange for the sysbus to be reset when the
-> +     * whole simulation is reset. In turn, resetting the sysbus will cause
->        * all devices hanging off it (and all their child buses, recursively)
->        * to be reset. Note that this will *not* reset any Device objects
->        * which are not attached to some part of the qbus tree!
->        */
-> -    qemu_register_reset(resettable_cold_reset_fn, sysbus_get_default());
-> +    qemu_register_resettable(OBJECT(sysbus_get_default()));
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Correct, so:
+The field is encoded as [0-3], which is convenient for
+indexing our array of function pointers, but the true
+value is [1-4].  Adjust before calling do_mem_zpa.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add an assert, and move the comment re passing ZT to
+the helper back next to the relevant code.
 
-But I'd rather move that call to main_system_bus_create() in
-hw/core/sysbus.c, as it doesn't seem to be related to the
-machine creation phases anymore. Maybe clearer to do in a
-separate patch although.
+Cc: qemu-stable@nongnu.org
+Fixes: 206adacfb8d ("target/arm: Add mte helpers for sve scalar + int loads")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20240207025210.8837-3-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 64c6e7444dff64b42d11b836b9aec9acfbe8ecc2)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
->       notifier_list_notify(&machine_init_done_notifiers, NULL);
->   
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 296e7d1ce2..7108938251 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -4445,11 +4445,7 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
+     TCGv_ptr t_pg;
+     int desc = 0;
+ 
+-    /*
+-     * For e.g. LD4, there are not enough arguments to pass all 4
+-     * registers as pointers, so encode the regno into the data field.
+-     * For consistency, do this even for LD1.
+-     */
++    assert(mte_n >= 1 && mte_n <= 4);
+     if (s->mte_active[0]) {
+         int msz = dtype_msz(dtype);
+ 
+@@ -4463,6 +4459,11 @@ static void do_mem_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
+         addr = clean_data_tbi(s, addr);
+     }
+ 
++    /*
++     * For e.g. LD4, there are not enough arguments to pass all 4
++     * registers as pointers, so encode the regno into the data field.
++     * For consistency, do this even for LD1.
++     */
+     desc = simd_desc(vsz, vsz, zt | desc);
+     t_pg = tcg_temp_new_ptr();
+ 
+@@ -4600,7 +4601,7 @@ static void do_ld_zpa(DisasContext *s, int zt, int pg,
+      * accessible via the instruction encoding.
+      */
+     assert(fn != NULL);
+-    do_mem_zpa(s, zt, pg, addr, dtype, nreg, false, fn);
++    do_mem_zpa(s, zt, pg, addr, dtype, nreg + 1, false, fn);
+ }
+ 
+ static bool trans_LD_zprr(DisasContext *s, arg_rprr_load *a)
+@@ -5168,14 +5169,13 @@ static void do_st_zpa(DisasContext *s, int zt, int pg, TCGv_i64 addr,
+     if (nreg == 0) {
+         /* ST1 */
+         fn = fn_single[s->mte_active[0]][be][msz][esz];
+-        nreg = 1;
+     } else {
+         /* ST2, ST3, ST4 -- msz == esz, enforced by encoding */
+         assert(msz == esz);
+         fn = fn_multiple[s->mte_active[0]][be][nreg - 1][msz];
+     }
+     assert(fn != NULL);
+-    do_mem_zpa(s, zt, pg, addr, msz_dtype(s, msz), nreg, true, fn);
++    do_mem_zpa(s, zt, pg, addr, msz_dtype(s, msz), nreg + 1, true, fn);
+ }
+ 
+ static bool trans_ST_zprr(DisasContext *s, arg_rprr_store *a)
+-- 
+2.39.2
 
 
