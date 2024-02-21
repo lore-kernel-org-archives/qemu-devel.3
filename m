@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9814C5478B
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAF2C5478B
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctzw-0004D4-LU; Wed, 21 Feb 2024 16:19:26 -0500
+	id 1rctxz-0002ux-Ih; Wed, 21 Feb 2024 16:17:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzf-0002lS-6K
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:19:07 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctxh-0002eN-R1
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:06 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctza-0001Jj-TX
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:19:06 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412698ac6f9so1289045e9.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:19:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctxY-0000pn-6x
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:17:05 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-33d7b04f7e9so788454f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550341; x=1709155141; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708550214; x=1709155014; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xFzn/uz4uT8liK1wRCr+n2ERXfHQX8sWgAYNC3jQl+0=;
- b=n2dttVdBCvZ3XNufC5L9oz2YztjKdNL8T24gkYt5DLdIBJqg1UTz9fuNtn4hLFfk9n
- +PvxjYaCDXoPAZdo9FaYdC8EJkoPROnWXhWqL4+eXYPFN7RdbMghWtoFwUwhJl/Yv9G2
- Da/EG1l8RiNLd8flO2JsQTg8bry2tNi3b+Ng6RNzHiedbThRnSDcUXzeNUhNIW4gSUqB
- YhlgpTwKPt2rLqyfDobEETEAsW4uJcHnoV6xkNOktyedThsqIlUQokOk1bWQ5eCUroJt
- RwBow/tZiLpWx4Tog8GmRqP0UA7lltQGCIZCq9r6ZCQUbqnuaRb9tsb2ed2xBLfUVbNt
- g2+Q==
+ bh=GU7gAHkVNY1ZnCm5tOTnwrsOZMxJGgzLpPFYNVYgH0g=;
+ b=s2bYLsq/SnTwAs0PbA68nT8WROylbqGw12WHNeXeDvXHA5Ipw1TC4u39WSBKOre/Rf
+ eL7t+tno5MU1NBQ6K1NrGh10L8Cs2/AsuVRcJ25iyuSN9+tE8rTcs+0vNBXJeQyH4ecU
+ /kjCakh/NDBAFgKXodOwwwRg7eBCjdI1U38dARbstT0KySPDwU7SssOFJC59CDytSsfN
+ zAkKKtHufOD/sPxKffC8Iz4uYsqOMHbeuCPj0bikcvdfP6dHus5K7G9iJBowgZ/QCCXw
+ meAMy0HULcxg9VQcLG6jvyOCSz9qg4IE5iQVa+bEh3rh/Zs6LNn2f5n7v9Tj+9LgYpic
+ Mo8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550341; x=1709155141;
+ d=1e100.net; s=20230601; t=1708550214; x=1709155014;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xFzn/uz4uT8liK1wRCr+n2ERXfHQX8sWgAYNC3jQl+0=;
- b=ojIlMfdyHPXQVcGQqlgHWgtaiUGTnqbKJIYvmhvfgt9e5PtfJdZDpeEsM8UyWSpCk9
- 3NhV0cHoeys5JSU7eGOnLCCAUiajCZ7i/9V5XOerxxaY2S9pb/ltlABsZ6HUoMMt593G
- rq1GmjwrBGLq8yjlkMWYHuk6MBxpovlZjuyT6391HzUVQkKnMF1ccd4gPcUsRhVSVKTO
- s0DbJ/EK837w3N10Nib18fHNgkRyZ48j6ep9DCHhzX/Bk490pez2JKsWg9NHHaCthabk
- 12cGqG6Lpsaj//6zFHmdbjbjBSwfYBdYJ+3Gxn94C/jotUhKXM6jaYrbxUTKK68+B2rA
- TONw==
-X-Gm-Message-State: AOJu0YwK/Bv0qnL0eCqYGoOAlTNvYsvgazVUMbJW/v7OAYU5uwn6RJtq
- vk9K4lwG/imc92nrtYvZn1zIIMh+fwWyuE6q5hheB6mGYlsSXwVam4PAXrtIoGcC7LzL/0CKSst
- uuP0=
-X-Google-Smtp-Source: AGHT+IHf9EQhiCU8LHUlBdO0p3JrfPu98BpjiTZ0nGDY8kx3KV7sY1HdG089qjEqbX6G39NNiKGoHw==
-X-Received: by 2002:a5d:4d8e:0:b0:33d:2012:6d64 with SMTP id
- b14-20020a5d4d8e000000b0033d20126d64mr609702wru.4.1708550340703; 
- Wed, 21 Feb 2024 13:19:00 -0800 (PST)
+ bh=GU7gAHkVNY1ZnCm5tOTnwrsOZMxJGgzLpPFYNVYgH0g=;
+ b=S33sEnL1ZJPiv0VlrvyEwiGU2qWKcwNviPVrrEGvg7y914Chv+PsjiVzpOVgqZHa9X
+ gNtU2TUIhk7lBy0YrQB8U3fMSsXwqMsgWNSWdJnfzvI/hyI5JXFEdG57T8mwWZVsPi/J
+ BZ3cxs+d5ntUuKPmifkVt+RhKPTXpjoW30hNH/pr6parFAWKlNQG2zxfb8ImeaqGs5cQ
+ ocbXoEUuJXsxGigGXUsAhLIv2m7kOcfxiz56Pa8m+lz6w1cRT9ahKRbbtyCpc789erIT
+ z/mdKD/2FFmRt3xSogPQemxGhj3RN31slZCBZ+gSXzzFKTcrMbSemIU3GLj8ldywVIHq
+ sugA==
+X-Gm-Message-State: AOJu0YxNlZfMlraRUgOG+Z+vjSwraaZCt2qOMliUVXKNveByK2rjaXf4
+ PS3zu8Q4CwnI9TOtDAyarqXW4xiaDowTRj8bFzeWhmiLehYCI/i7rBgminOrew6MbmgkSsuD69+
+ j6bo=
+X-Google-Smtp-Source: AGHT+IGfgsZXmjxVbcD0rnQvNVUiD/uZOY4xP1iLwFSz+ySQHXhyphKMCM7a8iCvIyHaLgIaWZqarw==
+X-Received: by 2002:a5d:47ac:0:b0:33d:38cf:aa76 with SMTP id
+ 12-20020a5d47ac000000b0033d38cfaa76mr10702068wrb.46.1708550213945; 
+ Wed, 21 Feb 2024 13:16:53 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- r2-20020a05600c35c200b004123b049f86sm19731963wmq.37.2024.02.21.13.18.59
+ df5-20020a5d5b85000000b0033d87557283sm997351wrb.0.2024.02.21.13.16.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 21 Feb 2024 13:19:00 -0800 (PST)
+ Wed, 21 Feb 2024 13:16:53 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>
-Subject: [PULL 21/25] hw/ide: Move IDE device related definitions to ide-dev.h
-Date: Wed, 21 Feb 2024 22:16:21 +0100
-Message-ID: <20240221211626.48190-22-philmd@linaro.org>
+ BALATON Zoltan <balaton@eik.bme.hu>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 04/25] hw/ppc/ppc4xx_pci: Extract PCI host definitions to
+ hw/pci-host/ppc4xx.h
+Date: Wed, 21 Feb 2024 22:16:04 +0100
+Message-ID: <20240221211626.48190-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
 References: <20240221211626.48190-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,375 +96,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
-
-Untangle internal.h by moving public IDE device related
-definitions to ide-dev.h.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240220085505.30255-5-thuth@redhat.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240215105017.57748-3-philmd@linaro.org>
 ---
- include/hw/ide/ide-dev.h  | 143 +++++++++++++++++++++++++++++++++++++-
- include/hw/ide/internal.h | 143 +-------------------------------------
- hw/ide/ide-dev.c          |   1 +
- 3 files changed, 144 insertions(+), 143 deletions(-)
+ MAINTAINERS                  |  1 +
+ include/hw/pci-host/ppc4xx.h | 17 +++++++++++++++++
+ include/hw/ppc/ppc4xx.h      |  5 -----
+ hw/ppc/ppc440_bamboo.c       |  1 +
+ hw/ppc/ppc440_pcix.c         |  2 +-
+ hw/ppc/ppc440_uc.c           |  1 +
+ hw/ppc/ppc4xx_pci.c          |  2 +-
+ hw/ppc/sam460ex.c            |  1 +
+ 8 files changed, 23 insertions(+), 7 deletions(-)
+ create mode 100644 include/hw/pci-host/ppc4xx.h
 
-diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
-index 7e9663cda9..1f62e58ebc 100644
---- a/include/hw/ide/ide-dev.h
-+++ b/include/hw/ide/ide-dev.h
-@@ -20,9 +20,150 @@
- #ifndef IDE_DEV_H
- #define IDE_DEV_H
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7d61fb9319..9b6ce9a934 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2070,6 +2070,7 @@ F: hw/ppc/ppc4xx*.c
+ F: hw/ppc/ppc440_uc.c
+ F: hw/ppc/ppc440.h
+ F: hw/i2c/ppc4xx_i2c.c
++F: include/hw/pci-host/ppc4xx.h
+ F: include/hw/ppc/ppc4xx.h
+ F: include/hw/i2c/ppc4xx_i2c.h
+ F: hw/intc/ppc-uic.c
+diff --git a/include/hw/pci-host/ppc4xx.h b/include/hw/pci-host/ppc4xx.h
+new file mode 100644
+index 0000000000..32396417fc
+--- /dev/null
++++ b/include/hw/pci-host/ppc4xx.h
+@@ -0,0 +1,17 @@
++/*
++ * QEMU PowerPC 4xx PCI-host definitions
++ *
++ * Copyright (c) 2018-2023 BALATON Zoltan
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_PCIHOST_PPC4XX_H
++#define HW_PCIHOST_PPC4XX_H
++
++#define TYPE_PPC4xx_HOST_BRIDGE "ppc4xx-host-bridge"
++#define TYPE_PPC4xx_PCI_HOST "ppc4xx-pci-host"
++#define TYPE_PPC440_PCIX_HOST "ppc440-pcix-host"
++#define TYPE_PPC460EX_PCIE_HOST "ppc460ex-pcie-host"
++
++#endif
+diff --git a/include/hw/ppc/ppc4xx.h b/include/hw/ppc/ppc4xx.h
+index ea7740239b..1bd9b8821b 100644
+--- a/include/hw/ppc/ppc4xx.h
++++ b/include/hw/ppc/ppc4xx.h
+@@ -29,11 +29,6 @@
+ #include "exec/memory.h"
+ #include "hw/sysbus.h"
  
-+#include "sysemu/dma.h"
- #include "hw/qdev-properties.h"
- #include "hw/block/block.h"
--#include "hw/ide/internal.h"
-+
-+typedef struct IDEDevice IDEDevice;
-+typedef struct IDEState IDEState;
-+typedef struct IDEBus IDEBus;
-+
-+typedef void EndTransferFunc(IDEState *);
-+
-+#define MAX_IDE_DEVS 2
-+
-+#define TYPE_IDE_DEVICE "ide-device"
-+OBJECT_DECLARE_TYPE(IDEDevice, IDEDeviceClass, IDE_DEVICE)
-+
-+typedef enum { IDE_HD, IDE_CD, IDE_CFATA } IDEDriveKind;
-+
-+struct unreported_events {
-+    bool eject_request;
-+    bool new_media;
-+};
-+
-+enum ide_dma_cmd {
-+    IDE_DMA_READ = 0,
-+    IDE_DMA_WRITE,
-+    IDE_DMA_TRIM,
-+    IDE_DMA_ATAPI,
-+    IDE_DMA__COUNT
-+};
-+
-+/* NOTE: IDEState represents in fact one drive */
-+struct IDEState {
-+    IDEBus *bus;
-+    uint8_t unit;
-+    /* ide config */
-+    IDEDriveKind drive_kind;
-+    int drive_heads, drive_sectors;
-+    int cylinders, heads, sectors, chs_trans;
-+    int64_t nb_sectors;
-+    int mult_sectors;
-+    int identify_set;
-+    uint8_t identify_data[512];
-+    int drive_serial;
-+    char drive_serial_str[21];
-+    char drive_model_str[41];
-+    uint64_t wwn;
-+    /* ide regs */
-+    uint8_t feature;
-+    uint8_t error;
-+    uint32_t nsector;
-+    uint8_t sector;
-+    uint8_t lcyl;
-+    uint8_t hcyl;
-+    /* other part of tf for lba48 support */
-+    uint8_t hob_feature;
-+    uint8_t hob_nsector;
-+    uint8_t hob_sector;
-+    uint8_t hob_lcyl;
-+    uint8_t hob_hcyl;
-+
-+    uint8_t select;
-+    uint8_t status;
-+
-+    bool io8;
-+    bool reset_reverts;
-+
-+    /* set for lba48 access */
-+    uint8_t lba48;
-+    BlockBackend *blk;
-+    char version[9];
-+    /* ATAPI specific */
-+    struct unreported_events events;
-+    uint8_t sense_key;
-+    uint8_t asc;
-+    bool tray_open;
-+    bool tray_locked;
-+    uint8_t cdrom_changed;
-+    int packet_transfer_size;
-+    int elementary_transfer_size;
-+    int32_t io_buffer_index;
-+    int lba;
-+    int cd_sector_size;
-+    int atapi_dma; /* true if dma is requested for the packet cmd */
-+    BlockAcctCookie acct;
-+    BlockAIOCB *pio_aiocb;
-+    QEMUIOVector qiov;
-+    QLIST_HEAD(, IDEBufferedRequest) buffered_requests;
-+    /* ATA DMA state */
-+    uint64_t io_buffer_offset;
-+    int32_t io_buffer_size;
-+    QEMUSGList sg;
-+    /* PIO transfer handling */
-+    int req_nb_sectors; /* number of sectors per interrupt */
-+    EndTransferFunc *end_transfer_func;
-+    uint8_t *data_ptr;
-+    uint8_t *data_end;
-+    uint8_t *io_buffer;
-+    /* PIO save/restore */
-+    int32_t io_buffer_total_len;
-+    int32_t cur_io_buffer_offset;
-+    int32_t cur_io_buffer_len;
-+    uint8_t end_transfer_fn_idx;
-+    QEMUTimer *sector_write_timer; /* only used for win2k install hack */
-+    uint32_t irq_count; /* counts IRQs when using win2k install hack */
-+    /* CF-ATA extended error */
-+    uint8_t ext_error;
-+    /* CF-ATA metadata storage */
-+    uint32_t mdata_size;
-+    uint8_t *mdata_storage;
-+    int media_changed;
-+    enum ide_dma_cmd dma_cmd;
-+    /* SMART */
-+    uint8_t smart_enabled;
-+    uint8_t smart_autosave;
-+    int smart_errors;
-+    uint8_t smart_selftest_count;
-+    uint8_t *smart_selftest_data;
-+    /* AHCI */
-+    int ncq_queues;
-+};
-+
-+struct IDEDeviceClass {
-+    DeviceClass parent_class;
-+    void (*realize)(IDEDevice *dev, Error **errp);
-+};
-+
-+struct IDEDevice {
-+    DeviceState qdev;
-+    uint32_t unit;
-+    BlockConf conf;
-+    int chs_trans;
-+    char *version;
-+    char *serial;
-+    char *model;
-+    uint64_t wwn;
-+    /*
-+     * 0x0000        - rotation rate not reported
-+     * 0x0001        - non-rotating medium (SSD)
-+     * 0x0002-0x0400 - reserved
-+     * 0x0401-0xffe  - rotations per minute
-+     * 0xffff        - reserved
-+     */
-+    uint16_t rotation_rate;
-+};
- 
- typedef struct IDEDrive {
-     IDEDevice dev;
-diff --git a/include/hw/ide/internal.h b/include/hw/ide/internal.h
-index a3a6702eec..1aab89b27b 100644
---- a/include/hw/ide/internal.h
-+++ b/include/hw/ide/internal.h
-@@ -8,23 +8,17 @@
+-#define TYPE_PPC4xx_HOST_BRIDGE "ppc4xx-host-bridge"
+-#define TYPE_PPC4xx_PCI_HOST "ppc4xx-pci-host"
+-#define TYPE_PPC440_PCIX_HOST "ppc440-pcix-host"
+-#define TYPE_PPC460EX_PCIE_HOST "ppc460ex-pcie-host"
+-
+ /*
+  * Generic DCR device
   */
- 
- #include "hw/ide.h"
--#include "sysemu/dma.h"
--#include "hw/block/block.h"
- #include "exec/ioport.h"
- #include "hw/ide/ide-dma.h"
-+#include "hw/ide/ide-dev.h"
- 
- /* debug IDE devices */
- #define USE_DMA_CDROM
- #include "qom/object.h"
- 
--typedef struct IDEDevice IDEDevice;
--typedef struct IDEState IDEState;
--
- #define TYPE_IDE_BUS "IDE"
- OBJECT_DECLARE_SIMPLE_TYPE(IDEBus, IDE_BUS)
- 
--#define MAX_IDE_DEVS 2
--
- /* Device/Head ("select") Register */
- #define ATA_DEV_SELECT          0x10
- /* ATA1,3: Defined as '1'.
-@@ -327,23 +321,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(IDEBus, IDE_BUS)
- #define SMART_DISABLE         0xd9
- #define SMART_STATUS          0xda
- 
--typedef enum { IDE_HD, IDE_CD, IDE_CFATA } IDEDriveKind;
--
--typedef void EndTransferFunc(IDEState *);
--
--struct unreported_events {
--    bool eject_request;
--    bool new_media;
--};
--
--enum ide_dma_cmd {
--    IDE_DMA_READ = 0,
--    IDE_DMA_WRITE,
--    IDE_DMA_TRIM,
--    IDE_DMA_ATAPI,
--    IDE_DMA__COUNT
--};
--
- extern const char *IDE_DMA_CMD_lookup[IDE_DMA__COUNT];
- 
- extern const MemoryRegionPortio ide_portio_list[];
-@@ -361,97 +338,6 @@ typedef struct IDEBufferedRequest {
-     bool orphaned;
- } IDEBufferedRequest;
- 
--/* NOTE: IDEState represents in fact one drive */
--struct IDEState {
--    IDEBus *bus;
--    uint8_t unit;
--    /* ide config */
--    IDEDriveKind drive_kind;
--    int drive_heads, drive_sectors;
--    int cylinders, heads, sectors, chs_trans;
--    int64_t nb_sectors;
--    int mult_sectors;
--    int identify_set;
--    uint8_t identify_data[512];
--    int drive_serial;
--    char drive_serial_str[21];
--    char drive_model_str[41];
--    uint64_t wwn;
--    /* ide regs */
--    uint8_t feature;
--    uint8_t error;
--    uint32_t nsector;
--    uint8_t sector;
--    uint8_t lcyl;
--    uint8_t hcyl;
--    /* other part of tf for lba48 support */
--    uint8_t hob_feature;
--    uint8_t hob_nsector;
--    uint8_t hob_sector;
--    uint8_t hob_lcyl;
--    uint8_t hob_hcyl;
--
--    uint8_t select;
--    uint8_t status;
--
--    bool io8;
--    bool reset_reverts;
--
--    /* set for lba48 access */
--    uint8_t lba48;
--    BlockBackend *blk;
--    char version[9];
--    /* ATAPI specific */
--    struct unreported_events events;
--    uint8_t sense_key;
--    uint8_t asc;
--    bool tray_open;
--    bool tray_locked;
--    uint8_t cdrom_changed;
--    int packet_transfer_size;
--    int elementary_transfer_size;
--    int32_t io_buffer_index;
--    int lba;
--    int cd_sector_size;
--    int atapi_dma; /* true if dma is requested for the packet cmd */
--    BlockAcctCookie acct;
--    BlockAIOCB *pio_aiocb;
--    QEMUIOVector qiov;
--    QLIST_HEAD(, IDEBufferedRequest) buffered_requests;
--    /* ATA DMA state */
--    uint64_t io_buffer_offset;
--    int32_t io_buffer_size;
--    QEMUSGList sg;
--    /* PIO transfer handling */
--    int req_nb_sectors; /* number of sectors per interrupt */
--    EndTransferFunc *end_transfer_func;
--    uint8_t *data_ptr;
--    uint8_t *data_end;
--    uint8_t *io_buffer;
--    /* PIO save/restore */
--    int32_t io_buffer_total_len;
--    int32_t cur_io_buffer_offset;
--    int32_t cur_io_buffer_len;
--    uint8_t end_transfer_fn_idx;
--    QEMUTimer *sector_write_timer; /* only used for win2k install hack */
--    uint32_t irq_count; /* counts IRQs when using win2k install hack */
--    /* CF-ATA extended error */
--    uint8_t ext_error;
--    /* CF-ATA metadata storage */
--    uint32_t mdata_size;
--    uint8_t *mdata_storage;
--    int media_changed;
--    enum ide_dma_cmd dma_cmd;
--    /* SMART */
--    uint8_t smart_enabled;
--    uint8_t smart_autosave;
--    int smart_errors;
--    uint8_t smart_selftest_count;
--    uint8_t *smart_selftest_data;
--    /* AHCI */
--    int ncq_queues;
--};
--
- struct IDEBus {
-     BusState qbus;
-     IDEDevice *master;
-@@ -475,33 +361,6 @@ struct IDEBus {
-     VMChangeStateEntry *vmstate;
- };
- 
--#define TYPE_IDE_DEVICE "ide-device"
--OBJECT_DECLARE_TYPE(IDEDevice, IDEDeviceClass, IDE_DEVICE)
--
--struct IDEDeviceClass {
--    DeviceClass parent_class;
--    void (*realize)(IDEDevice *dev, Error **errp);
--};
--
--struct IDEDevice {
--    DeviceState qdev;
--    uint32_t unit;
--    BlockConf conf;
--    int chs_trans;
--    char *version;
--    char *serial;
--    char *model;
--    uint64_t wwn;
--    /*
--     * 0x0000        - rotation rate not reported
--     * 0x0001        - non-rotating medium (SSD)
--     * 0x0002-0x0400 - reserved
--     * 0x0401-0xffe  - rotations per minute
--     * 0xffff        - reserved
--     */
--    uint16_t rotation_rate;
--};
--
- /* These are used for the error_status field of IDEBus */
- #define IDE_RETRY_MASK 0xf8
- #define IDE_RETRY_DMA  0x08
-diff --git a/hw/ide/ide-dev.c b/hw/ide/ide-dev.c
-index 15d088fd06..c8e2033469 100644
---- a/hw/ide/ide-dev.c
-+++ b/hw/ide/ide-dev.c
-@@ -23,6 +23,7 @@
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "hw/ide/ide-dev.h"
-+#include "hw/ide/internal.h"
- #include "sysemu/block-backend.h"
- #include "sysemu/blockdev.h"
+diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
+index c75c3083e6..e18f57efce 100644
+--- a/hw/ppc/ppc440_bamboo.c
++++ b/hw/ppc/ppc440_bamboo.c
+@@ -24,6 +24,7 @@
+ #include "elf.h"
+ #include "hw/char/serial.h"
+ #include "hw/ppc/ppc.h"
++#include "hw/pci-host/ppc4xx.h"
  #include "sysemu/sysemu.h"
+ #include "sysemu/reset.h"
+ #include "hw/sysbus.h"
+diff --git a/hw/ppc/ppc440_pcix.c b/hw/ppc/ppc440_pcix.c
+index d84418cb7b..1926ae2a27 100644
+--- a/hw/ppc/ppc440_pcix.c
++++ b/hw/ppc/ppc440_pcix.c
+@@ -25,7 +25,7 @@
+ #include "qemu/module.h"
+ #include "qemu/units.h"
+ #include "hw/irq.h"
+-#include "hw/ppc/ppc4xx.h"
++#include "hw/pci-host/ppc4xx.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/pci/pci_host.h"
+ #include "trace.h"
+diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
+index 7d6ca70387..1312aa2080 100644
+--- a/hw/ppc/ppc440_uc.c
++++ b/hw/ppc/ppc440_uc.c
+@@ -14,6 +14,7 @@
+ #include "qemu/log.h"
+ #include "hw/irq.h"
+ #include "hw/ppc/ppc4xx.h"
++#include "hw/pci-host/ppc4xx.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/pci/pci.h"
+ #include "sysemu/reset.h"
+diff --git a/hw/ppc/ppc4xx_pci.c b/hw/ppc/ppc4xx_pci.c
+index e4101398c9..b6c6c8993c 100644
+--- a/hw/ppc/ppc4xx_pci.c
++++ b/hw/ppc/ppc4xx_pci.c
+@@ -24,7 +24,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "hw/irq.h"
+-#include "hw/ppc/ppc4xx.h"
++#include "hw/pci-host/ppc4xx.h"
+ #include "migration/vmstate.h"
+ #include "qemu/module.h"
+ #include "sysemu/reset.h"
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 1e615b8d35..a28498f39c 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -25,6 +25,7 @@
+ #include "elf.h"
+ #include "exec/memory.h"
+ #include "ppc440.h"
++#include "hw/pci-host/ppc4xx.h"
+ #include "hw/block/flash.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/reset.h"
 -- 
 2.41.0
 
