@@ -4,46 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E44EC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A642C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyU-0003yb-Su; Wed, 21 Feb 2024 16:17:55 -0500
+	id 1rcu57-0006Xs-SK; Wed, 21 Feb 2024 16:24:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyP-0003WH-Qf; Wed, 21 Feb 2024 16:17:50 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctyN-0000w9-5l; Wed, 21 Feb 2024 16:17:49 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D7DAC4F7F9;
- Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8FB5A869B1;
- Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
-Received: (nullmailer pid 2335295 invoked by uid 1000);
- Wed, 21 Feb 2024 21:16:22 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 17/28] qemu-img: snapshot: refresh options/--help
-Date: Thu, 22 Feb 2024 00:15:58 +0300
-Message-Id: <20240221211622.2335170-17-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcu4z-0006L3-HV
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:24:37 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rcu4x-0002iC-AF
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:24:37 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A1C9522007;
+ Wed, 21 Feb 2024 21:24:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708550672; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lrorlbSpBm+dq3CWaxvi57HwC9Ggxdw+2DsdUV6rSFA=;
+ b=szDkeZqGNxgt9VcYfyS5oq64X83A+sE4BqhLzplT/tVKY9/GpPApqHejun4g4/qihEQhuy
+ 1hY1DeV/ZjtwZMEQQ3Q+0VGr6/YGHyLxEKY2+QGuLteDAZa6k8NMhlyL9YIisdsugrKK3/
+ Bxsfbcb7jgI8VYAsDxFWAcVud3VoMEk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708550672;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lrorlbSpBm+dq3CWaxvi57HwC9Ggxdw+2DsdUV6rSFA=;
+ b=WgX365LXlV9qe8poamrOjcBTXF8izNWhzkSTAz2xTzG6I91N9xYRvFVDWLKRPL6Y4b/BoE
+ BSWiZAkFqo+DI2CA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708550672; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lrorlbSpBm+dq3CWaxvi57HwC9Ggxdw+2DsdUV6rSFA=;
+ b=szDkeZqGNxgt9VcYfyS5oq64X83A+sE4BqhLzplT/tVKY9/GpPApqHejun4g4/qihEQhuy
+ 1hY1DeV/ZjtwZMEQQ3Q+0VGr6/YGHyLxEKY2+QGuLteDAZa6k8NMhlyL9YIisdsugrKK3/
+ Bxsfbcb7jgI8VYAsDxFWAcVud3VoMEk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708550672;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lrorlbSpBm+dq3CWaxvi57HwC9Ggxdw+2DsdUV6rSFA=;
+ b=WgX365LXlV9qe8poamrOjcBTXF8izNWhzkSTAz2xTzG6I91N9xYRvFVDWLKRPL6Y4b/BoE
+ BSWiZAkFqo+DI2CA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2962D139D0;
+ Wed, 21 Feb 2024 21:24:31 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id a+DqOA9q1mUEYgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 21 Feb 2024 21:24:31 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>, Peter Xu
+ <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>, Laurent Vivier
+ <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 5/5] tests: Add migration test for loongarch64
+In-Reply-To: <20240220124126.1164081-6-maobibo@loongson.cn>
+References: <20240220124126.1164081-1-maobibo@loongson.cn>
+ <20240220124126.1164081-6-maobibo@loongson.cn>
+Date: Wed, 21 Feb 2024 18:24:29 -0300
+Message-ID: <87zfvta4tu.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=szDkeZqG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WgX365LX
+X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: A1C9522007
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -60,88 +122,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add missing long options and --help output.
+Bibo Mao <maobibo@loongson.cn> writes:
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- qemu-img.c | 45 ++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 36 insertions(+), 9 deletions(-)
+> This patch adds migration test support for loongarch64. The test code
+> comes from aarch64 mostly, only that it it booted as bios in qemu since
+> kernel requires elf format and bios uses binary format.
+>
+> In addition to providing the binary, this patch also includes the source
+> code and the build script in tests/migration/loongarch64. So users can
+> change the source and/or re-compile the binary as they wish.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 
-diff --git a/qemu-img.c b/qemu-img.c
-index ee35768af8..ce939708d4 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -3608,26 +3608,51 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     for(;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
-+            {"quiet", no_argument, 0, 'q'},
-             {"object", required_argument, 0, OPTION_OBJECT},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-             {"force-share", no_argument, 0, 'U'},
-+            {"list", no_argument, 0, SNAPSHOT_LIST},
-+            {"apply", no_argument, 0, SNAPSHOT_APPLY},
-+            {"create", no_argument, 0, SNAPSHOT_CREATE},
-+            {"delete", no_argument, 0, SNAPSHOT_DELETE},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
-+        c = getopt_long(argc, argv, "la:c:d:f:hqU",
-                         long_options, NULL);
-         if (c == -1) {
-             break;
-         }
-         switch(c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
--            break;
-         case 'h':
--            help();
--            return 0;
-+            cmd_help(ccmd,
-+"[-f FMT | --image-opts] [-l | -a|-c|-d SNAPSHOT]\n"
-+"        [-U] [--object OBJDEF] FILENAME\n"
-+,
-+"  -q, --quiet\n"
-+"      quiet operations\n"
-+"  -f, --format FMT\n"
-+"      specify FILENAME format explicitly\n"
-+"  --image-opts\n"
-+"      indicates that FILENAME is a complete image specification\n"
-+"   instead of a file name (incompatible with --format)\n"
-+"  -U, --force-share\n"
-+"      open image in shared mode for concurrent access\n"
-+"  --object OBJDEF\n"
-+"      QEMU user-creatable object (eg encryption key)\n"
-+"  Operation, one of:\n"
-+"    -l, --list\n"
-+"       list snapshots in FILENAME (the default)\n"
-+"    -c, --create SNAPSHOT\n"
-+"       create named snapshot\n"
-+"    -a, --apply SNAPSHOT\n"
-+"       apply named snapshot to the base\n"
-+"    -d, --delete SNAPSHOT\n"
-+"       delete named snapshot\n"
-+"  FILENAME - image file name (or specification with --image-opts)\n"
-+);
-+            break;
-         case 'f':
-             fmt = optarg;
-             break;
-@@ -3654,6 +3679,8 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_IMAGE_OPTS:
-             image_opts = true;
-             break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
- 
--- 
-2.39.2
+Just a nit below.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+
+> ---
+>  tests/migration/Makefile                 |  2 +-
+>  tests/migration/loongarch64/Makefile     | 18 ++++++++++
+>  tests/migration/loongarch64/a-b-kernel.S | 46 ++++++++++++++++++++++++
+>  tests/migration/loongarch64/a-b-kernel.h | 13 +++++++
+>  tests/migration/migration-test.h         |  3 ++
+>  tests/qtest/meson.build                  |  4 +++
+>  tests/qtest/migration-test.c             | 10 ++++++
+>  7 files changed, 95 insertions(+), 1 deletion(-)
+>  create mode 100644 tests/migration/loongarch64/Makefile
+>  create mode 100644 tests/migration/loongarch64/a-b-kernel.S
+>  create mode 100644 tests/migration/loongarch64/a-b-kernel.h
+>
+> diff --git a/tests/migration/Makefile b/tests/migration/Makefile
+> index 13e99b1692..cfebfe23f8 100644
+> --- a/tests/migration/Makefile
+> +++ b/tests/migration/Makefile
+> @@ -5,7 +5,7 @@
+>  # See the COPYING file in the top-level directory.
+>  #
+>  
+> -TARGET_LIST = i386 aarch64 s390x
+> +TARGET_LIST = i386 aarch64 s390x loongarch64
+>  
+>  SRC_PATH = ../..
+>  
+> diff --git a/tests/migration/loongarch64/Makefile b/tests/migration/loongarch64/Makefile
+> new file mode 100644
+> index 0000000000..5d8719205f
+> --- /dev/null
+> +++ b/tests/migration/loongarch64/Makefile
+> @@ -0,0 +1,18 @@
+> +# To specify cross compiler prefix, use CROSS_PREFIX=
+> +#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
+> +
+> +.PHONY: all clean
+> +all: a-b-kernel.h
+> +
+> +a-b-kernel.h: loongarch64.kernel
+> +	echo "$$__note" > $@
+> +	xxd -i $< | sed -e 's/.*int.*//' >> $@
+> +
+> +loongarch64.kernel: loongarch64.elf
+> +	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
+> +
+> +loongarch64.elf: a-b-kernel.S
+> +	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
+> +
+> +clean:
+> +	$(RM) *.kernel *.elf
+> diff --git a/tests/migration/loongarch64/a-b-kernel.S b/tests/migration/loongarch64/a-b-kernel.S
+> new file mode 100644
+> index 0000000000..078f91b306
+> --- /dev/null
+> +++ b/tests/migration/loongarch64/a-b-kernel.S
+> @@ -0,0 +1,46 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/*
+> + * Copyright (c) 2024 Loongson Technology Corporation Limited
+> + */
+> +#include "../migration-test.h"
+> +
+> +#define LOONGARCH_CSR_CRMD          0
+> +#define LOONGARCH_VIRT_UART         0x1FE001E0
+> +.section .text
+> +
+> +        .globl  _start
+> +_start:
+> +        /* output char 'A' to UART16550 */
+> +        li.d    $t0, LOONGARCH_VIRT_UART
+> +        li.w    $t1, 'A'
+> +        st.b    $t1, $t0, 0
+> +
+> +        /* traverse test memory region */
+> +	li.d    $t0, LOONGARCH_TEST_MEM_START
+
+Stray tab here.
+
+> +        li.d    $t1, LOONGARCH_TEST_MEM_END
+> +        li.d    $t2, TEST_MEM_PAGE_SIZE
+> +
+> +clean:
+> +        st.b    $zero, $t0, 0
+> +        add.d   $t0,   $t0, $t2
+> +        bne     $t0,   $t1, clean
+> +
+> +mainloop:
+> +        li.d    $t0, LOONGARCH_TEST_MEM_START
+> +        li.d    $t1, LOONGARCH_TEST_MEM_END
+> +        li.d    $t2, TEST_MEM_PAGE_SIZE
+> +
+> +        li.d    $t4, LOONGARCH_VIRT_UART
+> +        li.w    $t5, 'B'
+> +
+> +innerloop:
+> +        ld.bu   $t3, $t0, 0
+> +        addi.w  $t3, $t3, 1
+> +        ext.w.b $t3, $t3
+> +        st.b    $t3, $t0, 0
+> +        add.d   $t0, $t0, $t2
+> +        bne     $t0, $t1, innerloop
+> +
+> +        st.b    $t5, $t4, 0
+> +        b       mainloop
+> +        nop
+> diff --git a/tests/migration/loongarch64/a-b-kernel.h b/tests/migration/loongarch64/a-b-kernel.h
+> new file mode 100644
+> index 0000000000..6019450229
+> --- /dev/null
+> +++ b/tests/migration/loongarch64/a-b-kernel.h
+> @@ -0,0 +1,13 @@
+> +
+> +unsigned char loongarch64_kernel[] = {
+> +  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
+> +  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x01, 0x14, 0x0d, 0x80, 0x0c, 0x14,
+> +  0x2e, 0x00, 0x00, 0x14, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
+> +  0x8d, 0xf9, 0xff, 0x5f, 0x0c, 0x00, 0x01, 0x14, 0x0d, 0x80, 0x0c, 0x14,
+> +  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
+> +  0x11, 0x08, 0x81, 0x03, 0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02,
+> +  0xef, 0x5d, 0x00, 0x00, 0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
+> +  0x8d, 0xed, 0xff, 0x5f, 0x11, 0x02, 0x00, 0x29, 0xff, 0xcf, 0xff, 0x53,
+> +  0x00, 0x00, 0x40, 0x03
+> +};
+> +
+> diff --git a/tests/migration/migration-test.h b/tests/migration/migration-test.h
+> index 68512c0b1b..b6e9914f9c 100644
+> --- a/tests/migration/migration-test.h
+> +++ b/tests/migration/migration-test.h
+> @@ -32,4 +32,7 @@
+>   */
+>  #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
+>  
+> +/* LoongArch64 */
+> +#define LOONGARCH_TEST_MEM_START (8 * 1024 * 1024)
+> +#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
+>  #endif /* MIGRATION_TEST_H */
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 2b89e8634b..b634587b0a 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -249,6 +249,10 @@ qtests_s390x = \
+>  qtests_riscv32 = \
+>    (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+>  
+> +qtests_loongarch64 = \
+> +  qtests_filter + \
+> +  ['migration-test']
+> +
+>  qos_test_ss = ss.source_set()
+>  qos_test_ss.add(
+>    'ac97-test.c',
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index 8a5bb1752e..8a25edfa77 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -132,6 +132,7 @@ static char *bootpath;
+>  #include "tests/migration/i386/a-b-bootblock.h"
+>  #include "tests/migration/aarch64/a-b-kernel.h"
+>  #include "tests/migration/s390x/a-b-bios.h"
+> +#include "tests/migration/loongarch64/a-b-kernel.h"
+>  
+>  static void bootfile_create(char *dir, bool suspend_me)
+>  {
+> @@ -158,6 +159,9 @@ static void bootfile_create(char *dir, bool suspend_me)
+>          content = aarch64_kernel;
+>          len = sizeof(aarch64_kernel);
+>          g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
+> +    } else if (strcmp(arch, "loongarch64") == 0) {
+> +        content = loongarch64_kernel;
+> +        len = sizeof(loongarch64_kernel);
+>      } else {
+>          g_assert_not_reached();
+>      }
+> @@ -823,6 +827,12 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>          arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
+>          start_address = ARM_TEST_MEM_START;
+>          end_address = ARM_TEST_MEM_END;
+> +    } else if (strcmp(arch, "loongarch64") == 0) {
+> +        memory_size = "256M";
+> +        machine_alias = "virt";
+> +        arch_opts = g_strdup_printf("-cpu max -bios %s", bootpath);
+> +        start_address = LOONGARCH_TEST_MEM_START;
+> +        end_address = LOONGARCH_TEST_MEM_END;
+>      } else {
+>          g_assert_not_reached();
+>      }
 
