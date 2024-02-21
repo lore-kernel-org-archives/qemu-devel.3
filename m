@@ -4,48 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC55FC54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5A2C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctyL-0003OJ-3b; Wed, 21 Feb 2024 16:17:45 -0500
+	id 1rctzK-0000iA-7M; Wed, 21 Feb 2024 16:18:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcty1-0002vf-Cg; Wed, 21 Feb 2024 16:17:25 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxz-0000vS-I0; Wed, 21 Feb 2024 16:17:25 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB3F54F7F8;
- Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 819CA869B0;
- Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
-Received: (nullmailer pid 2335292 invoked by uid 1000);
- Wed, 21 Feb 2024 21:16:22 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 16/28] qemu-img: snapshot: make -l (list) the default,
- simplify option handling
-Date: Thu, 22 Feb 2024 00:15:57 +0300
-Message-Id: <20240221211622.2335170-16-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzG-0000MZ-Oy
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:18:42 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzF-0001C9-2H
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:18:42 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41275855dc4so8168445e9.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:18:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708550318; x=1709155118; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BV4BUYH/p7RXmaoiTzArsDf4sWF/v6E5dOHqrTpk5Lc=;
+ b=DzMyjL/50C8/xkdUgx6OqzMnHuTdlHHoL/oIIgattKBfNrAQ7ClF6Vz7PnUo9ytoEe
+ eRQF5QjIzYzP5oZL0rR9k87zBBe0YxNs11sDY+6VjApXXHPK6ZEiVpKtKFt4CETVq+k9
+ xgPV7MmMxv4M/DNs5btHLEL3+oxLGIG9scM1G4ZDjjLEn4ON5/OhgbNihnQRSSzfq3Tz
+ xkjyEvSf/h/me/tbERSi5Akc2xTyCpfS9+/2vkOf1wjjUeOvMwk3sCWmKL0FB1iylfCU
+ aW+cmVmZ+F+WfZI2JdWXRRrIdeiawuBJYfKN+jkfCr3++RmvsUhQzxix1hEbvUR1Ijki
+ VXfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708550318; x=1709155118;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BV4BUYH/p7RXmaoiTzArsDf4sWF/v6E5dOHqrTpk5Lc=;
+ b=GrIIwkRYjs+q1wOP7eWYFJFgJAwkUXheNoKdKcYnPh5TWF3vM+4kZtLXyQTwZpbDBW
+ oGGdrVUHnBNZXiUrx317D7UpDJ12QyDiqTujyMHBk01WEoxxM4k6yqr/1/6NrihapkmM
+ bf/iHWnnsuLpi3LlItwtUV6D94uc5TqaEQD56DlUykq/bjF4A7qOoE4o8ba4U2LQtyZX
+ kmfFRMZGoioo8jzDFfS9hAkPjwa7fFx7NJWYeqQ/9eZvSMg/JIoQOvzT3sr74ZM1WSIB
+ n//0RwkGx7+Tu10uB5f2n9NnqowVb1vYBQNIGv6qR0vSpxBoxKnVPmkztG/zW5EgwqzH
+ ++qg==
+X-Gm-Message-State: AOJu0Yy1XyjYdC+kHlatOljyAQ9ARjWYGwYL5NbvaJJIRNje2UQBKBh8
+ hQEJFrR+zokKERVnRw3DirBNtIFo2XeFVL8JbQbNQq3kihsJsLqLj64u24hTvgkPcXjot+ggv1W
+ +9js=
+X-Google-Smtp-Source: AGHT+IFJrwEWy2FuQNI4zcUFbb+uAdmWFWnE0G8R1cTMgvtrg127DHSf4dMuVAvCebl/w9i3y3QDRQ==
+X-Received: by 2002:a05:600c:4fd5:b0:411:b834:9c79 with SMTP id
+ o21-20020a05600c4fd500b00411b8349c79mr14858240wmq.13.1708550317938; 
+ Wed, 21 Feb 2024 13:18:37 -0800 (PST)
+Received: from m1x-phil.lan ([176.187.211.34])
+ by smtp.gmail.com with ESMTPSA id
+ m5-20020a05600c4f4500b004127dd1f713sm436127wmq.27.2024.02.21.13.18.36
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 21 Feb 2024 13:18:37 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 17/25] hw/isa/meson.build: Sort alphabetically
+Date: Wed, 21 Feb 2024 22:16:17 +0100
+Message-ID: <20240221211626.48190-18-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
+References: <20240221211626.48190-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,131 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no -l/-a/-c/-d specified, assume -l (list).
+From: Bernhard Beschow <shentey@gmail.com>
 
-Use the same values for SNAPSHOT_LIST/etc constants as the
-option chars (lacd), this makes it possible to simplify
-option handling a lot, combining cases for 4 options into
-one.
+Fixes: fbd758008f0f "hw/isa: extract FDC37M81X to a separate file"
 
-Also remove bdrv_oflags handling (only list can use RO mode).
-
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240218131701.91132-2-shentey@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/tools/qemu-img.rst |  2 +-
- qemu-img.c              | 52 ++++++++++++++---------------------------
- 2 files changed, 19 insertions(+), 35 deletions(-)
+ hw/isa/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 9b628c4da5..df184d15b9 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -256,7 +256,7 @@ Parameters to snapshot subcommand:
+diff --git a/hw/isa/meson.build b/hw/isa/meson.build
+index f650b39507..3219282217 100644
+--- a/hw/isa/meson.build
++++ b/hw/isa/meson.build
+@@ -1,10 +1,10 @@
+ system_ss.add(when: 'CONFIG_APM', if_true: files('apm.c'))
++system_ss.add(when: 'CONFIG_FDC37M81X', if_true: files('fdc37m81x-superio.c'))
+ system_ss.add(when: 'CONFIG_I82378', if_true: files('i82378.c'))
+ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('isa-bus.c'))
+ system_ss.add(when: 'CONFIG_ISA_SUPERIO', if_true: files('isa-superio.c'))
+ system_ss.add(when: 'CONFIG_PC87312', if_true: files('pc87312.c'))
+ system_ss.add(when: 'CONFIG_PIIX', if_true: files('piix.c'))
+-system_ss.add(when: 'CONFIG_FDC37M81X', if_true: files('fdc37m81x-superio.c'))
+ system_ss.add(when: 'CONFIG_SMC37C669', if_true: files('smc37c669-superio.c'))
+ system_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686.c'))
  
- .. option:: -l
- 
--  Lists all snapshots in the given image
-+  Lists all snapshots in the given image (default action)
- 
- Command description:
- 
-diff --git a/qemu-img.c b/qemu-img.c
-index 85c37d491d..ee35768af8 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -3584,10 +3584,11 @@ out:
-     return ret < 0;
- }
- 
--#define SNAPSHOT_LIST   1
--#define SNAPSHOT_CREATE 2
--#define SNAPSHOT_APPLY  3
--#define SNAPSHOT_DELETE 4
-+/* the same as options */
-+#define SNAPSHOT_LIST   'l'
-+#define SNAPSHOT_CREATE 'c'
-+#define SNAPSHOT_APPLY  'a'
-+#define SNAPSHOT_DELETE 'd'
- 
- static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
- {
-@@ -3595,7 +3596,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockDriverState *bs;
-     QEMUSnapshotInfo sn;
-     char *filename, *fmt = NULL, *snapshot_name = NULL;
--    int c, ret = 0, bdrv_oflags;
-+    int c, ret = 0;
-     int action = 0;
-     bool quiet = false;
-     Error *err = NULL;
-@@ -3603,7 +3604,6 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     bool force_share = false;
-     int64_t rt;
- 
--    bdrv_oflags = BDRV_O_RDWR;
-     /* Parse commandline parameters */
-     for(;;) {
-         static const struct option long_options[] = {
-@@ -3631,36 +3631,15 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-         case 'f':
-             fmt = optarg;
-             break;
--        case 'l':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_LIST;
--            bdrv_oflags &= ~BDRV_O_RDWR; /* no need for RW */
--            break;
--        case 'a':
-+        case SNAPSHOT_LIST:
-+        case SNAPSHOT_APPLY:
-+        case SNAPSHOT_CREATE:
-+        case SNAPSHOT_DELETE:
-             if (action) {
-                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
-                 return 0;
-             }
--            action = SNAPSHOT_APPLY;
--            snapshot_name = optarg;
--            break;
--        case 'c':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_CREATE;
--            snapshot_name = optarg;
--            break;
--        case 'd':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_DELETE;
-+            action = c;
-             snapshot_name = optarg;
-             break;
-         case 'q':
-@@ -3683,9 +3662,14 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     }
-     filename = argv[optind++];
- 
-+    if (!action) {
-+        action = SNAPSHOT_LIST;
-+    }
-+
-     /* Open the image */
--    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
--                   force_share);
-+    blk = img_open(image_opts, filename, fmt,
-+                   action == SNAPSHOT_LIST ? 0 : BDRV_O_RDWR,
-+                   false, quiet, force_share);
-     if (!blk) {
-         return 1;
-     }
 -- 
-2.39.2
+2.41.0
 
 
