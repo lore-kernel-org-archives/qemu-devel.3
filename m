@@ -4,50 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 675AFC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D3E9C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoaR-0007oR-Qv; Wed, 21 Feb 2024 10:32:44 -0500
+	id 1rcoTr-0007M0-JM; Wed, 21 Feb 2024 10:25:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoPi-0005tI-QN; Wed, 21 Feb 2024 10:21:38 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rcoMr-0003Wj-3w; Wed, 21 Feb 2024 10:18:41 -0500
+Received: from szxga06-in.huawei.com ([45.249.212.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchtN-0002X2-1K; Wed, 21 Feb 2024 03:23:52 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1A5874F3DE;
- Wed, 21 Feb 2024 11:21:22 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CC288860BD;
- Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
-Received: (nullmailer pid 2142084 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hyeonggon Yoo <42.hyeyoo@gmail.com>,
- Fan Ni <fan.ni@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 32/60] hw/cxl/device: read from register values in
- mdev_reg_read()
-Date: Wed, 21 Feb 2024 11:20:20 +0300
-Message-Id: <20240221082058.2141850-32-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rcmM4-0004v1-66; Wed, 21 Feb 2024 08:09:45 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4TfxS249H1z1vtyr;
+ Wed, 21 Feb 2024 21:09:06 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id C1CB41400CF;
+ Wed, 21 Feb 2024 21:09:40 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
+ 2024 21:09:40 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [RFC PATCH v2 22/22] hw/intc/arm_gicv3: Report the NMI interrupt in
+ gicv3_cpuif_update()
+Date: Wed, 21 Feb 2024 13:08:23 +0000
+Message-ID: <20240221130823.677762-23-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240221130823.677762-1-ruanjinjie@huawei.com>
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,104 +65,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+In CPU Interface, if the IRQ or FIQ has the superpriority property, report
+NMI to the corresponding PE and record the NMI interrupt type.
 
-In the current mdev_reg_read() implementation, it consistently returns
-that the Media Status is Ready (01b). This was fine until commit
-25a52959f99d ("hw/cxl: Add support for device sanitation") because the
-media was presumed to be ready.
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+---
+ hw/intc/arm_gicv3_cpuif.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-However, as per the CXL 3.0 spec "8.2.9.8.5.1 Sanitize (Opcode 4400h)",
-during sanitation, the Media State should be set to Disabled (11b). The
-mentioned commit correctly sets it to Disabled, but mdev_reg_read()
-still returns Media Status as Ready.
-
-To address this, update mdev_reg_read() to read register values instead
-of returning dummy values.
-
-Note that __toggle_media() managed to not only write something
-that no one read, it did it to the wrong register storage and
-so changed the reported mailbox size which was definitely not
-the intent. That gets fixed as a side effect of allocating
-separate state storage for this register.
-
-Fixes: commit 25a52959f99d ("hw/cxl: Add support for device sanitation")
-Signed-off-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240126120132.24248-7-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit f7509f462c788a347521f90f19d623908c4fbcc5)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
-index 61a3c4dc2e..40b619ffd9 100644
---- a/hw/cxl/cxl-device-utils.c
-+++ b/hw/cxl/cxl-device-utils.c
-@@ -229,12 +229,9 @@ static void mailbox_reg_write(void *opaque, hwaddr offset, uint64_t value,
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index f5bf8df32b..87bde1f897 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -931,6 +931,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     /* Tell the CPU about its highest priority pending interrupt */
+     int irqlevel = 0;
+     int fiqlevel = 0;
++    int nmilevel = 0;
+     ARMCPU *cpu = ARM_CPU(cs->cpu);
+     CPUARMState *env = &cpu->env;
  
- static uint64_t mdev_reg_read(void *opaque, hwaddr offset, unsigned size)
- {
--    uint64_t retval = 0;
--
--    retval = FIELD_DP64(retval, CXL_MEM_DEV_STS, MEDIA_STATUS, 1);
--    retval = FIELD_DP64(retval, CXL_MEM_DEV_STS, MBOX_READY, 1);
-+    CXLDeviceState *cxl_dstate = opaque;
+@@ -967,7 +968,10 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+             g_assert_not_reached();
+         }
  
--    return retval;
-+    return cxl_dstate->memdev_status;
+-        if (isfiq) {
++        if (cs->hppi.superprio) {
++            nmilevel = 1;
++            env->nmi_is_irq = !isfiq;
++        } else if (isfiq) {
+             fiqlevel = 1;
+         } else {
+             irqlevel = 1;
+@@ -978,6 +982,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ 
+     qemu_set_irq(cs->parent_fiq, fiqlevel);
+     qemu_set_irq(cs->parent_irq, irqlevel);
++    qemu_set_irq(cs->parent_nmi, nmilevel);
  }
  
- static void ro_reg_write(void *opaque, hwaddr offset, uint64_t value,
-@@ -371,7 +368,15 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
-     cxl_dstate->mbox_msi_n = msi_n;
- }
- 
--static void memdev_reg_init_common(CXLDeviceState *cxl_dstate) { }
-+static void memdev_reg_init_common(CXLDeviceState *cxl_dstate)
-+{
-+    uint64_t memdev_status_reg;
-+
-+    memdev_status_reg = FIELD_DP64(0, CXL_MEM_DEV_STS, MEDIA_STATUS, 1);
-+    memdev_status_reg = FIELD_DP64(memdev_status_reg, CXL_MEM_DEV_STS,
-+                                   MBOX_READY, 1);
-+    cxl_dstate->memdev_status = memdev_status_reg;
-+}
- 
- void cxl_device_register_init_t3(CXLType3Dev *ct3d)
- {
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index befb5f884b..31d2afcd3d 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -202,6 +202,9 @@ typedef struct cxl_device_state {
-         };
-     };
- 
-+    /* Stash the memory device status value */
-+    uint64_t memdev_status;
-+
-     struct {
-         bool set;
-         uint64_t last_set;
-@@ -353,8 +356,10 @@ static inline void __toggle_media(CXLDeviceState *cxl_dstate, int val)
- {
-     uint64_t dev_status_reg;
- 
--    dev_status_reg = FIELD_DP64(0, CXL_MEM_DEV_STS, MEDIA_STATUS, val);
--    cxl_dstate->mbox_reg_state64[R_CXL_MEM_DEV_STS] = dev_status_reg;
-+    dev_status_reg = cxl_dstate->memdev_status;
-+    dev_status_reg = FIELD_DP64(dev_status_reg, CXL_MEM_DEV_STS, MEDIA_STATUS,
-+                                val);
-+    cxl_dstate->memdev_status = dev_status_reg;
- }
- #define cxl_dev_disable_media(cxlds)                    \
-         do { __toggle_media((cxlds), 0x3); } while (0)
+ static uint64_t icc_pmr_read(CPUARMState *env, const ARMCPRegInfo *ri)
 -- 
-2.39.2
+2.34.1
 
 
