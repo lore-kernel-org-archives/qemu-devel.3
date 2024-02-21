@@ -4,84 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E520C5478C
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB41C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcu0Q-0005Sm-33; Wed, 21 Feb 2024 16:19:54 -0500
+	id 1rctxu-0002st-HZ; Wed, 21 Feb 2024 16:17:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzp-0004M7-VP
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:19:20 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctzm-0001MF-Ud
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:19:17 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4127a0d8ae1so3995335e9.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:19:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708550352; x=1709155152; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w/0nxiYdmkxhHFcoyS3JZWxjubFyxLiPoIZ7GwIxEsQ=;
- b=Gsel+bvNel7e5S+Im07IoAfEHdZcNSfwCNeXu2AQlCGD1vnkntdGhimisb02DgI/zO
- BIKD//3A3mZusoKRyNhAFs3eu5k4vxOzpAYz1ELUr6xAWlQSSN47H/K/UZCugHJ1ZWrL
- UodzjUQvprVTE4N9iSusTiGdY2SweNZFVBph/DB8Vq1Ld/ufDlA7gsKFF4M+eGQCEgig
- nkfczsDwYVM2z4DP0hnVBI8TWnokIM/+BXhQmAauDec/9kaBujGljtiw285VAsEwhhbV
- rzmQZoHj1jwGpvopXa3mVp6Udq6nflwr/WNtZzqah1oPCEbmGQxiIJafoRilHybkjNh/
- +Ruw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550352; x=1709155152;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=w/0nxiYdmkxhHFcoyS3JZWxjubFyxLiPoIZ7GwIxEsQ=;
- b=BzL/nJWz5ZJxmV/f8bk8XzV/qICwTgEWjzzD8D0D8qFnSipWQUE6qzOgeItc+vb7ez
- khEKdrG0qjBx86K1LkMgUGwGTBfx53GsEFFZ+PZkwUxPNxYXUnzEPne4j3fNSuPDmgT1
- w0WWuv5wNG8O5S45vKtrHH46k38mFy7HDFlg+EN9oy9hLRkYWbZynsmLeIn4iQaL4S7U
- AzaXQf6nlRlIFquxvQ/OC3/D4Hl24H4lE5xkbN6NVLxEaMV7U03t60XLf4dUQteWgmFA
- uKLtGTtcH8QrC8DlIiQrRg0EoY2ZUb01wBiGv4Ad6/4K7228Zs36RkiZlcvknxy6hB7c
- IYxQ==
-X-Gm-Message-State: AOJu0YwiZBrpTa65cyAmJefxtGY/99mxkZWlfh0dT82PKdT88dTgPK/U
- YOvDiBX4+uSpEo12zSywa8LZL0iEdVe6Mx0fcSS74ZbE58VMWH4iku3PPhMQc2QsljHt4CG2ym/
- DOFM=
-X-Google-Smtp-Source: AGHT+IHyN+IOXDgmMOArYsOeWjs3fsVaeo64Fgkqjs5KXLiQD8O+hDzV+x+4jDWPWqUL/uj4kRVAgQ==
-X-Received: by 2002:a05:6000:1542:b0:33d:28a9:2fd8 with SMTP id
- 2-20020a056000154200b0033d28a92fd8mr13726735wry.39.1708550351870; 
- Wed, 21 Feb 2024 13:19:11 -0800 (PST)
-Received: from m1x-phil.lan ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- bk26-20020a0560001d9a00b0033d568f8310sm10168971wrb.89.2024.02.21.13.19.10
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 21 Feb 2024 13:19:11 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- John Snow <jsnow@redhat.com>
-Subject: [PULL 23/25] hw/ide: Remove the include/hw/ide.h legacy file
-Date: Wed, 21 Feb 2024 22:16:23 +0100
-Message-ID: <20240221211626.48190-24-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
-References: <20240221211626.48190-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctxm-0002gl-1R; Wed, 21 Feb 2024 16:17:12 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctxk-0000ts-9Y; Wed, 21 Feb 2024 16:17:09 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A38434F7F5;
+ Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 8F010869A0;
+ Thu, 22 Feb 2024 00:16:22 +0300 (MSK)
+Received: (nullmailer pid 2335242 invoked by uid 1000);
+ Wed, 21 Feb 2024 21:16:22 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH v2 00/28] qemu-img: refersh options and --help handling,
+ cleanups
+Date: Thu, 22 Feb 2024 00:15:41 +0300
+Message-Id: <cover.1708544927.git.mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,79 +60,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Quite big patchset trying to implement normal, readable qemu-img --help
+(and qemu-img COMMAND --help) output with readable descriptions, and
+adding many long options in the process.
 
-There was only one prototype left in this legacy file. Move it to
-ide-dev.h to finally get rid of it.
+In the end I stopped using qemu-img-opts.hx in qemu-img.c, perhaps
+this can be avoided, with only list of commands and their desrciptions
+kept there, but I don't see big advantage here.  The same list should
+be included in docs/tools/qemu-img.rst, - this is not done now.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Message-ID: <20240220085505.30255-7-thuth@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- MAINTAINERS               | 1 -
- include/hw/ide.h          | 9 ---------
- include/hw/ide/ide-dev.h  | 2 ++
- include/hw/ide/internal.h | 3 +--
- 4 files changed, 3 insertions(+), 12 deletions(-)
- delete mode 100644 include/hw/ide.h
+Also each command syntax isn't reflected in the doc for now, because
+I want to give good names for options first, - and there, we've quite
+some inconsistences and questions.  For example, measure --output=OFMT
+-O OFMT, - this is priceless :)  I've no idea why we have this ugly
+--output=json thing, why not have --json? ;)  I gave the desired
+format long name --target-format to avoid clash with --output.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5535df4487..9dd98a923f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1937,7 +1937,6 @@ IDE
- M: John Snow <jsnow@redhat.com>
- L: qemu-block@nongnu.org
- S: Odd Fixes
--F: include/hw/ide.h
- F: include/hw/ide/
- F: hw/ide/
- F: hw/block/block.c
-diff --git a/include/hw/ide.h b/include/hw/ide.h
-deleted file mode 100644
-index db963bdb77..0000000000
---- a/include/hw/ide.h
-+++ /dev/null
-@@ -1,9 +0,0 @@
--#ifndef HW_IDE_H
--#define HW_IDE_H
--
--#include "exec/memory.h"
--
--/* ide/core.c */
--void ide_drive_get(DriveInfo **hd, int max_bus);
--
--#endif /* HW_IDE_H */
-diff --git a/include/hw/ide/ide-dev.h b/include/hw/ide/ide-dev.h
-index 1f62e58ebc..708cc0fda3 100644
---- a/include/hw/ide/ide-dev.h
-+++ b/include/hw/ide/ide-dev.h
-@@ -179,4 +179,6 @@ typedef struct IDEDrive {
- 
- void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp);
- 
-+void ide_drive_get(DriveInfo **hd, int max_bus);
-+
- #endif
-diff --git a/include/hw/ide/internal.h b/include/hw/ide/internal.h
-index d3ec16a945..20dde37f45 100644
---- a/include/hw/ide/internal.h
-+++ b/include/hw/ide/internal.h
-@@ -4,10 +4,9 @@
- /*
-  * QEMU IDE Emulation -- internal header file
-  * only files in hw/ide/ are supposed to include this file.
-- * non-internal declarations are in hw/ide.h
-+ * non-internal declarations are in hw/include/ide-*.h
-  */
- 
--#include "hw/ide.h"
- #include "hw/ide/ide-bus.h"
- 
- /* debug IDE devices */
+For rebase, src vs tgt probably should be renamed in local variables
+too, and I'm not even sure I've got the caches right. For caches,
+the thing is inconsistent across commands.
+
+For compare, I used --a-format/--b-format (for -f/-F), - this can
+be made --souce-format and --target-format, to compare source (file1)
+with target (file2).
+
+For bitmap, things are scary, I'm not sure what -b SRC_FILENAME
+really means, - for now I gave it --source option, but this does
+not make it more clear, suggestions welcome.
+
+There are many other inconsistencies, I can't fix them all in one
+go.. :)
+
+Changes since v1:
+
+ - reformatted help text to be less condensed
+ - added cleanups (first 3 patches and last patch)
+ - change argv[0] handling and getopt error reporting to
+   fix inherent bug (see patch 4 "global option processing"
+   for details)
+ - removed missing_argument() & unrecognized_option()
+   and handling of '?' and ':' getopt return values
+ - more robust handling of resize filename -size vs options
+   ("resize: do not always eat last argument")
+ - larger cleanup in snapshot mode handling
+   ("snapshot: make -l (list) the default...")
+ - cvtnum and number conversion and bugfixes
+   ("extend cvtnum() and use it in more places")
+ - removed unused option_index variable in two places
+ - added a few fixmes
+ - various other minor changes
+
+I kept Dan's R-b for a few patches he reviewed
+despite the changed, - hopefully it's okay, since
+the new changes are not related to the initial ones.
+Keeping him in Cc for that.
+
+Michael Tokarev (28):
+  qemu-img: stop printing error twice in a few places
+  qemu-img: measure: convert img_size to signed, simplify handling
+  qemu-img: create: convert img_size to signed, simplify handling
+  qemu-img: global option processing and error printing
+  qemu-img: pass current cmd info into command handlers
+  qemu-img: create: refresh options/--help
+  qemu-img: factor out parse_output_format() and use it in the code
+  qemu-img: check: refresh options/--help
+  qemu-img: simplify --repair error message
+  qemu-img: commit: refresh options/--help
+  qemu-img: compare: refresh options/--help
+  qemu-img: convert: refresh options/--help
+  qemu-img: info: refresh options/--help
+  qemu-img: map: refresh options/--help
+  qemu-img: snapshot: allow specifying -f fmt
+  qemu-img: snapshot: make -l (list) the default
+  qemu-img: snapshot: refresh options/--help
+  qemu-img: rebase: refresh options/--help
+  qemu-img: resize: do not always eat last argument
+  qemu-img: resize: refresh options/--help
+  qemu-img: amend: refresh options/--help
+  qemu-img: bench: refresh options/--help
+  qemu-img: bitmap: refresh options/--help
+  qemu-img: dd: refresh options/--help
+  qemu-img: measure: refresh options/--help
+  qemu-img: implement short --help, remove global help() function
+  qemu-img: inline list of supported commands, remove qemu-img-cmds.h
+    include
+  qemu-img: extend cvtnum() and use it in more places
+
+ docs/tools/qemu-img.rst |    4 +-
+ qemu-img-cmds.hx        |    4 +-
+ qemu-img.c              | 1143 +++++++++++++++++++++++----------------
+ 3 files changed, 670 insertions(+), 481 deletions(-)
+
 -- 
-2.41.0
+2.39.2
 
 
