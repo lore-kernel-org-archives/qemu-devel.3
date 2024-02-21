@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E03C5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 19:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2661EC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 19:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcsfS-0007Im-A4; Wed, 21 Feb 2024 14:54:10 -0500
+	id 1rcsfS-0007K3-Vi; Wed, 21 Feb 2024 14:54:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bobby825@126.com>)
- id 1rcsfQ-0007Hn-J6; Wed, 21 Feb 2024 14:54:08 -0500
-Received: from m16.mail.126.com ([220.197.31.6])
+ id 1rcsfQ-0007Ho-Jt; Wed, 21 Feb 2024 14:54:08 -0500
+Received: from m16.mail.126.com ([220.197.31.8])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <bobby825@126.com>)
- id 1rcsfM-0002ec-8t; Wed, 21 Feb 2024 14:54:08 -0500
+ id 1rcsfM-0002fy-Ew; Wed, 21 Feb 2024 14:54:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=xUgF3
- eEwoaVx31GbAphfCzyKv6zNp1x84DqIbkUNDDs=; b=W+1Us/H2oKyBKcEfn5JNt
- dtCg20r1DqR2LWY7LT7IilZFPL+TSnkxak8hcTzKUdCevHaxcn40Pl4Zwewkbndq
- /i7G4vXbdwM5xV41CD0BURlvuHLHp/NJSOAGEOU+v7lySlhGa4OTaRVXDcC3rxa9
- 21V8zuqV2fzPD8U1A37T/0=
+ s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=setws
+ QxNT/qBw7KDZBMc2zcKiezGHUHwoE6quIssdmI=; b=D5WnTWYkrHBrU8WxM/cjG
+ AVCPQSooQCa0B7EFWKVTeBVw3p0m/4uqtwEnEUU9yqz0HRzzxUanA4aU0b+WmwNz
+ iARwIQDt/wVeS/t+KgBoxFgC+6xLTSlA5bDIaE/acGg8M8YL6lMhZ0pApvRnD59S
+ 3BuIeIF9oTkwIRYxFboTPo=
 Received: from localhost.localdomain (unknown [101.88.177.236])
- by gzga-smtp-mta-g1-2 (Coremail) with SMTP id _____wAnLoHJVNZlICNbAw--.46376S2;
- Thu, 22 Feb 2024 03:53:46 +0800 (CST)
+ by gzga-smtp-mta-g1-2 (Coremail) with SMTP id _____wAnLoHJVNZlICNbAw--.46376S4;
+ Thu, 22 Feb 2024 03:53:53 +0800 (CST)
 From: Tianlan Zhou <bobby825@126.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
  Tianlan Zhou <bobby825@126.com>
-Subject: [PATCH v2 0/2] Update description for input grab key
-Date: Thu, 22 Feb 2024 03:52:08 +0800
-Message-Id: <20240221195208.462-1-bobby825@126.com>
+Subject: [PATCH v2 2/2] system/vl: Update description for input grab key
+Date: Thu, 22 Feb 2024 03:52:10 +0800
+Message-Id: <20240221195208.462-3-bobby825@126.com>
 X-Mailer: git-send-email 2.38.1.windows.1
+In-Reply-To: <20240221195208.462-1-bobby825@126.com>
+References: <20240221195208.462-1-bobby825@126.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wAnLoHJVNZlICNbAw--.46376S2
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
- VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxU1ManUUUUU
+X-CM-TRANSID: _____wAnLoHJVNZlICNbAw--.46376S4
+X-Coremail-Antispam: 1Uf129KBjvdXoW7XryxGr1ruw1xZr4ruF4fAFb_yoWxurg_u3
+ W8JrZ7u390yFn7Can3ZF4xKw40g3s3GrykZryfZr17G34UXa15GFZ7KrZ3JF1rurWkWrZx
+ Zw4vqr90yw4Y9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU8WUDJUUUUU==
 X-Originating-IP: [101.88.177.236]
-X-CM-SenderInfo: xereu5qysvqiyswou0bp/1tbiGA6LUmVLZ6CNzgAAsl
-Received-SPF: pass client-ip=220.197.31.6; envelope-from=bobby825@126.com;
+X-CM-SenderInfo: xereu5qysvqiyswou0bp/1tbiWQ6LUmVLY3udCAABss
+Received-SPF: pass client-ip=220.197.31.8; envelope-from=bobby825@126.com;
  helo=m16.mail.126.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
@@ -70,20 +74,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Input grab key should be Ctrl-Alt-g, not just Ctrl-Alt.
 
-v2:
-- Update help message in system/vl.c
+Signed-off-by: Tianlan Zhou <bobby825@126.com>
+---
+ system/vl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v1:
-- Initial patch
-
-Tianlan Zhou (2):
-  docs/system: Update description for input grab key
-  system/vl: Update description for input grab key
-
- docs/system/keys.rst.inc | 2 +-
- system/vl.c              | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
+diff --git a/system/vl.c b/system/vl.c
+index a82555ae15..b8469d9965 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -891,7 +891,7 @@ static void help(int exitcode)
+     printf("\nDuring emulation, the following keys are useful:\n"
+            "ctrl-alt-f      toggle full screen\n"
+            "ctrl-alt-n      switch to virtual console 'n'\n"
+-           "ctrl-alt        toggle mouse and keyboard grab\n"
++           "ctrl-alt-g      toggle mouse and keyboard grab\n"
+            "\n"
+            "When using -nographic, press 'ctrl-a h' to get some help.\n"
+            "\n"
 -- 
 2.38.1.windows.1
 
