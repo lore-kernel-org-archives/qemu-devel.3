@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C19CC5478A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9815EC5478B
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoaa-0000US-Kx; Wed, 21 Feb 2024 10:32:52 -0500
+	id 1rcoTx-0008EW-Ck; Wed, 21 Feb 2024 10:26:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rcoTC-0006J0-6D; Wed, 21 Feb 2024 10:25:14 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rclBo-0000vP-U5; Wed, 21 Feb 2024 06:55:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=1YhoWONXIpaW9qGOk56UkNXIr6FA0V3YLLDDXHffgU4=; b=OPJDJLgTMiqd4d236CMFfYV4gQ
- DqytrWx+T3aLLi9zsVWplxKprUyKN1KUxISsl654A6lVR6zdGn2fpNzLIWbMGlmUDvwf9zc5BWAgd
- IByju33mpDWF6RNDIul+kek06EGdxlHH5KAwbLOjZbuDCDwy9TG0Wjbhi6V9dJ6p0VdBTpjI9+IW3
- mKTjhTU3n6yWYYHEr+oCnSHA8ldnNtkBx4ZP5qXJiQIW+iEsqsMbKp69qE9n6TUpQ6hHQDqOzO5fM
- 87VCPk+xPg6sUq2PnAMpo7JYkmeEyddNTIG7qvK2aFiHoLUY7f0qb2Fjg0FkUk1fk9a8eIkcPUGhv
- WTUxvfbc1imqcpIaEGxpSuRn2LjZGzTBalVrTDvPQ57+60BqkvRW6VgwBbGAZRDm5D2mTep9BPgzw
- G1zU3+iznvC/FiXr4DKWFW5hKB43UH6bd5+Pc9941z/3mJDLAEBdaGz3ZdyN1H7hD/SqfPLqN2Pvm
- S6B3vDADVt77SuB5wZdor7bpqpfVPdyp0xCQf3yN6wsz0R0aL2B6eYzSnXxwN79hQ9YXlwqzfX1yL
- snaTW7SQhYIkJhhW64Lhd155/fLQPHdGadlKaZK1rNG70T0YvIosVI5iI2v9fJOmgQVFvfnOEVJeX
- f83yc7qQZH7HK9YAp9NxfqZWKavGIRB66J6tsAeHU=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rclB0-0008MU-MH; Wed, 21 Feb 2024 11:54:18 +0000
-Message-ID: <a468ae40-8d53-4048-9692-a9eb15f1fbd9@ilande.co.uk>
-Date: Wed, 21 Feb 2024 11:54:56 +0000
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcoMz-0000nB-7V
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:51 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rciNI-0006hP-54
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:54:45 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-412748b183aso3617075e9.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 00:54:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708505682; x=1709110482; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IL4qO7MOcVi4MGpjEojSBfFz5U68QnGi75B1lq5XjZU=;
+ b=GISvUosUT1g3fGRsnuTbEt2RDCzBZD7+FVcyakzL4TpSGPLTirYpiqb8SCTolAa5VE
+ DcukzmnVI0wptl5XgmYTsJFMMIxL+kgjRhcqIN2pyL7HawMK7rozU1+hcUL3WTZgI51t
+ ch5kD3okN4n0+iYLBjgOp2LyxyL2PqtfjrH9NV/efW7SpB08UZlO6faFqgYdXt8Vyin0
+ UbVAjKTeh9MdDKS11lrzpj1WNlXbGJoeAypS/iazA/oIwI4N/3nerAoQGNE9682YJDoC
+ jFyQxguy+qrAz/pY9W/QKGepsBNPZbQ4jX3RdP4ay03lSO1ULgWiM1olpNgNpvHUWeh9
+ wb+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708505682; x=1709110482;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IL4qO7MOcVi4MGpjEojSBfFz5U68QnGi75B1lq5XjZU=;
+ b=TR9ea4OGkjVJwxy+njnuRbSomCe5XCIPhB8J/i/BTOlbiroTMCPTA8yGYVF1XkN1OX
+ Qq0m8g8IHy3/QjSDoTuiqKWeFEK10PNIzsab5BZ8toWZSwTrkyd6syWETus02K3oqVfB
+ 98kqvPWUnh1FFD3BSB37RMxw/SX15lW100IqFeLkwBOHx6PBN1aDbY7pXLaUUJFdtEu9
+ hfVW+kkP/tbxAlYt4ExJITGKR1ZYBxcMrgGxDgtwwxofmulQHZ18uLEn1/Bl9arMd1To
+ ss9X6tgrdHtj2SYtWbgbVizpT5DHkGoaQZeJ7h8an+SUpNWXmoabCYiSH8jceVmOUHzp
+ BJTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVH3vUnXXCFJtwLqK+VW3OpokK4/ejVrLnHPixbiMGPYnFL2H3TDkKg48XxVOqgL4NNFaHCNko31tp9w3jum3EXO/TTo1E=
+X-Gm-Message-State: AOJu0Yw8GboZhpzBgCIzKCPCU8t3ibJ/6KadH5wNFHDm4obVlNuOSvVQ
+ 8Nx2VDyMGLYzpuBnQtU7HTZN5tFnQVIg3XaZXEQ26UsIHS6RCSg7H1WpwCEoTsI=
+X-Google-Smtp-Source: AGHT+IFI9UYRfzbsWl+N286cqalQ65LKK+hxQxVmy+3XCz0FPOCs+XzO3eke16fuHHS9J1x7fwXNWw==
+X-Received: by 2002:a05:600c:511f:b0:410:d6c7:e003 with SMTP id
+ o31-20020a05600c511f00b00410d6c7e003mr12449107wms.32.1708505682381; 
+ Wed, 21 Feb 2024 00:54:42 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.211.159])
+ by smtp.gmail.com with ESMTPSA id
+ w2-20020adfec42000000b0033d13530134sm16037706wrn.106.2024.02.21.00.54.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 00:54:41 -0800 (PST)
+Message-ID: <9a386049-17e9-4181-b0a8-050c69d0be20@linaro.org>
+Date: Wed, 21 Feb 2024 09:54:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
+ 'ich_dmi_pci.h'
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org
-References: <20240220085505.30255-1-thuth@redhat.com>
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240220085505.30255-1-thuth@redhat.com>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+References: <20240219163855.87326-1-philmd@linaro.org>
+ <20240219163855.87326-7-philmd@linaro.org>
+ <C977DC8F-8731-4ED4-8FFC-85241ABED160@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <C977DC8F-8731-4ED4-8FFC-85241ABED160@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 0/7] hw/ide: Clean up hw/ide/qdev.c and
- include/hw/ide/internal.h
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,78 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/02/2024 08:54, Thomas Huth wrote:
-
-> While trying to make it possible to compile-out the CompactFlash IDE device
-> in downstream distributions (first patch), we noticed that there are more
-> things in the IDE code that could use a proper clean up:
+On 20/2/24 20:25, Bernhard Beschow wrote:
 > 
-> First, hw/ide/qdev.c is quite a mix between IDE BUS specific functions
-> and (disk) device specific functions. Thus the second patch splits qdev.c
-> into two new separate files to make it more obvious which part belongs
-> to which kind of devices.
 > 
-> The remaining patches unentangle include/hw/ide/internal.h, which is meant
-> as a header that should only be used internally to the IDE subsystem, but
-> which is currently exposed to the world since include/hw/ide/pci.h includes
-> this header, too. Thus we move the definitions that are also required for
-> non-IDE code to other new header files, so we can finally change pci.h to
-> stop including internal.h. After these changes, internal.h is only included
-> by files in hw/ide/ as it should be.
+> Am 19. Februar 2024 16:38:46 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
+>> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
+>> "hw/pci-bridge/ich_dmi_pci.h" header.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> MAINTAINERS                         |  1 +
+>> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
+>> include/hw/southbridge/ich9.h       |  2 --
+>> hw/pci-bridge/i82801b11.c           | 11 ++++-------
+>> 4 files changed, 25 insertions(+), 9 deletions(-)
+>> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 1b210c5cc1..50507c3dd6 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
+>> F: hw/i2c/smbus_ich9.c
+>> F: hw/isa/lpc_ich9.c
+>> F: include/hw/acpi/ich9*.h
+>> +F: include/hw/pci-bridge/ich_dmi_pci.h
+>> F: include/hw/southbridge/ich9.h
+>>
+>> PIIX4 South Bridge (i82371AB)
+>> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h b/include/hw/pci-bridge/ich_dmi_pci.h
+>> new file mode 100644
+>> index 0000000000..7623b32b8e
+>> --- /dev/null
+>> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
 > 
-> v2:
-> - Change the order of the DMA patch and move typedef struct IDEDMAOps
->    and typedef struct IDEDMA IDEDMA into ide-dma.h, too
-> - Make sure that the headers are self-contained (i.e. #include the
->    right other headers)
-> - Remove some more remnants of include/hw/ide.h
-> 
-> Thomas Huth (7):
->    hw/ide: Add the possibility to disable the CompactFlash device in the
->      build
->    hw/ide: Split qdev.c into ide-bus.c and ide-dev.c
->    hw/ide: Move IDE DMA related definitions to a separate header
->      ide-dma.h
->    hw/ide: Move IDE device related definitions to ide-dev.h
->    hw/ide: Move IDE bus related definitions to a new header ide-bus.h
->    hw/ide: Remove the include/hw/ide.h legacy file
->    hw/ide: Stop exposing internal.h to non-IDE files
-> 
->   MAINTAINERS                  |   1 -
->   include/hw/ide.h             |   9 --
->   include/hw/ide/ide-bus.h     |  42 +++++++
->   include/hw/ide/ide-dev.h     | 184 ++++++++++++++++++++++++++++++
->   include/hw/ide/ide-dma.h     |  37 ++++++
->   include/hw/ide/internal.h    | 211 +----------------------------------
->   include/hw/ide/pci.h         |   2 +-
->   hw/i386/pc.c                 |   2 +-
->   hw/ide/cf.c                  |  58 ++++++++++
->   hw/ide/cmd646.c              |   1 +
->   hw/ide/ide-bus.c             | 111 ++++++++++++++++++
->   hw/ide/{qdev.c => ide-dev.c} | 137 +----------------------
->   hw/ide/pci.c                 |   1 +
->   hw/ide/piix.c                |   1 +
->   hw/ide/sii3112.c             |   1 +
->   hw/ide/via.c                 |   1 +
->   hw/arm/Kconfig               |   2 +
->   hw/ide/Kconfig               |  32 ++++--
->   hw/ide/meson.build           |   4 +-
->   19 files changed, 470 insertions(+), 367 deletions(-)
->   delete mode 100644 include/hw/ide.h
->   create mode 100644 include/hw/ide/ide-bus.h
->   create mode 100644 include/hw/ide/ide-dev.h
->   create mode 100644 include/hw/ide/ide-dma.h
->   create mode 100644 hw/ide/cf.c
->   create mode 100644 hw/ide/ide-bus.c
->   rename hw/ide/{qdev.c => ide-dev.c} (67%)
+> Shouldn't we name the new header like its source file, i.e. i82801b11.h?
 
-I've had a quick skim of this series, and it looks like a good tidy-up to me so:
+I'll rename sources to use the "ichX_FOO.c" pattern.
 
-Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-
-ATB,
-
-Mark.
-
+>> @@ -0,0 +1,20 @@
+>> +/*
+>> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
+>> +#define HW_PCI_BRIDGE_ICH_D2P_H
+...
 
