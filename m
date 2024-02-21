@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFC9C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E8B0C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuSq-0007gk-GC; Wed, 21 Feb 2024 16:49:16 -0500
+	id 1rcuSG-00046x-MO; Wed, 21 Feb 2024 16:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuSo-0007X3-W5; Wed, 21 Feb 2024 16:49:15 -0500
+ id 1rcuSD-0003gG-Ae; Wed, 21 Feb 2024 16:48:37 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuSn-0007bZ-1G; Wed, 21 Feb 2024 16:49:14 -0500
+ id 1rcuSB-0007WB-CO; Wed, 21 Feb 2024 16:48:36 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8656E4F873;
+ by isrv.corpit.ru (Postfix) with ESMTP id 13DAB4F86C;
  Thu, 22 Feb 2024 00:47:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2F6C0869F4;
- Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
-Received: (nullmailer pid 2339893 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id B1FD8869ED;
+ Thu, 22 Feb 2024 00:47:24 +0300 (MSK)
+Received: (nullmailer pid 2339871 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 23/33] iotests: Make 144 deterministic again
-Date: Thu, 22 Feb 2024 00:47:06 +0300
-Message-Id: <20240221214723.2339742-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 16/33] tests/acpi: Allow update of DSDT.cxl
+Date: Thu, 22 Feb 2024 00:46:59 +0300
+Message-Id: <20240221214723.2339742-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -62,71 +61,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Since commit effd60c8 changed how QMP commands are processed, the order
-of the block-commit return value and job events in iotests 144 wasn't
-fixed and more and caused the test to fail intermittently.
+The _STA value returned currently indicates the ACPI0017 device
+is not enabled.  Whilst this isn't a real device, setting _STA
+like this may prevent an OS from enumerating it correctly and
+hence from parsing the CEDT table.
 
-Change the test to cache events first and then print them in a
-predefined order.
-
-Waiting three times for JOB_STATUS_CHANGE is a bit uglier than just
-waiting for the JOB_STATUS_CHANGE that has "status": "ready", but the
-tooling we have doesn't seem to allow the latter easily.
-
-Fixes: effd60c878176bcaf97fa7ce2b12d04bb8ead6f7
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2126
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20240209173103.239994-1-kwolf@redhat.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit cc29c12ec629ba68a4a6cb7d165c94cc8502815a)
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240126120132.24248-11-Jonathan.Cameron@huawei.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+(cherry picked from commit 14ec4ff3e4293635240ba5a7afe7a0f3ba447d31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/144 b/tests/qemu-iotests/144
-index bdcc498fa2..d284a0e442 100755
---- a/tests/qemu-iotests/144
-+++ b/tests/qemu-iotests/144
-@@ -83,12 +83,22 @@ echo
- echo === Performing block-commit on active layer ===
- echo
- 
-+capture_events="BLOCK_JOB_READY JOB_STATUS_CHANGE"
-+
- # Block commit on active layer, push the new overlay into base
- _send_qemu_cmd $h "{ 'execute': 'block-commit',
-                                 'arguments': {
-                                                  'device': 'virtio0'
-                                               }
--                    }" "READY"
-+                    }" "return"
-+
-+_wait_event $h "JOB_STATUS_CHANGE"
-+_wait_event $h "JOB_STATUS_CHANGE"
-+_wait_event $h "JOB_STATUS_CHANGE"
-+
-+_wait_event $h "BLOCK_JOB_READY"
-+
-+capture_events=
- 
- _send_qemu_cmd $h "{ 'execute': 'block-job-complete',
-                                 'arguments': {
-diff --git a/tests/qemu-iotests/144.out b/tests/qemu-iotests/144.out
-index b3b4812015..2245ddfa10 100644
---- a/tests/qemu-iotests/144.out
-+++ b/tests/qemu-iotests/144.out
-@@ -25,9 +25,9 @@ Formatting 'TEST_DIR/tmp.qcow2', fmt=qcow2 cluster_size=65536 extended_l2=off co
-                                                  'device': 'virtio0'
-                                               }
-                     }
-+{"return": {}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "virtio0"}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "virtio0"}}
--{"return": {}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "virtio0"}}
- {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_JOB_READY", "data": {"device": "virtio0", "len": 0, "offset": 0, "speed": 0, "type": "commit"}}
- { 'execute': 'block-job-complete',
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..9ce0f596cc 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/q35/DSDT.cxl",
 -- 
 2.39.2
 
