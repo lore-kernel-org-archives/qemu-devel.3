@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A995C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47033C48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 08:23:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rchrq-0002KR-KR; Wed, 21 Feb 2024 03:22:14 -0500
+	id 1rchr2-00016Z-II; Wed, 21 Feb 2024 03:21:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrp-0002Iz-6j; Wed, 21 Feb 2024 03:22:13 -0500
+ id 1rchqt-00014a-7W; Wed, 21 Feb 2024 03:21:15 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchrn-0002DR-Ii; Wed, 21 Feb 2024 03:22:12 -0500
+ id 1rchqp-0002AG-SC; Wed, 21 Feb 2024 03:21:14 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 05F454F3CF;
- Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 530384F3C5;
+ Wed, 21 Feb 2024 11:21:20 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C36A4860AE;
+ by tsrv.corpit.ru (Postfix) with SMTP id 1D5B2860A4;
  Wed, 21 Feb 2024 11:20:59 +0300 (MSK)
-Received: (nullmailer pid 2142038 invoked by uid 1000);
+Received: (nullmailer pid 2142007 invoked by uid 1000);
  Wed, 21 Feb 2024 08:20:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 17/60] virtio-scsi: Attach event vq notifier with
- no_poll
-Date: Wed, 21 Feb 2024 11:20:05 +0300
-Message-Id: <20240221082058.2141850-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Jan=20Kl=C3=B6tzke?= <jan.kloetzke@kernkonzept.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.2 07/60] target/arm: fix exception syndrome for AArch32
+ bkpt insn
+Date: Wed, 21 Feb 2024 11:19:55 +0300
+Message-Id: <20240221082058.2141850-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,69 +65,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Jan Klötzke <jan.kloetzke@kernkonzept.com>
 
-As of commit 38738f7dbbda90fbc161757b7f4be35b52205552 ("virtio-scsi:
-don't waste CPU polling the event virtqueue"), we only attach an io_read
-notifier for the virtio-scsi event virtqueue instead, and no polling
-notifiers.  During operation, the event virtqueue is typically
-non-empty, but none of the buffers are intended to be used immediately.
-Instead, they only get used when certain events occur.  Therefore, it
-makes no sense to continuously poll it when non-empty, because it is
-supposed to be and stay non-empty.
+Debug exceptions that target AArch32 Hyp mode are reported differently
+than on AAarch64. Internally, Qemu uses the AArch64 syndromes. Therefore
+such exceptions need to be either converted to a prefetch abort
+(breakpoints, vector catch) or a data abort (watchpoints).
 
-We do this by using virtio_queue_aio_attach_host_notifier_no_poll()
-instead of virtio_queue_aio_attach_host_notifier() for the event
-virtqueue.
-
-Commit 766aa2de0f29b657148e04599320d771c36fd126 ("virtio-scsi: implement
-BlockDevOps->drained_begin()") however has virtio_scsi_drained_end() use
-virtio_queue_aio_attach_host_notifier() for all virtqueues, including
-the event virtqueue.  This can lead to it being polled again, undoing
-the benefit of commit 38738f7dbbda90fbc161757b7f4be35b52205552.
-
-Fix it by using virtio_queue_aio_attach_host_notifier_no_poll() for the
-event virtqueue.
-
-Reported-by: Fiona Ebner <f.ebner@proxmox.com>
-Fixes: 766aa2de0f29b657148e04599320d771c36fd126
-       ("virtio-scsi: implement BlockDevOps->drained_begin()")
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20240202153158.788922-2-hreitz@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit c42c3833e0cfdf2b80fb3ca410acfd392b6874ab)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jan Klötzke <jan.kloetzke@kernkonzept.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240127202758.3326381-1-jan.kloetzke@kernkonzept.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit f670be1aad33e801779af580398895b9455747ee)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 9c751bf296..4b0d476c8d 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -1149,6 +1149,7 @@ static void virtio_scsi_drained_begin(SCSIBus *bus)
- static void virtio_scsi_drained_end(SCSIBus *bus)
- {
-     VirtIOSCSI *s = container_of(bus, VirtIOSCSI, bus);
-+    VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     uint32_t total_queues = VIRTIO_SCSI_VQ_NUM_FIXED +
-                             s->parent_obj.conf.num_queues;
-@@ -1166,7 +1167,11 @@ static void virtio_scsi_drained_end(SCSIBus *bus)
- 
-     for (uint32_t i = 0; i < total_queues; i++) {
-         VirtQueue *vq = virtio_get_queue(vdev, i);
--        virtio_queue_aio_attach_host_notifier(vq, s->ctx);
-+        if (vq == vs->event_vq) {
-+            virtio_queue_aio_attach_host_notifier_no_poll(vq, s->ctx);
-+        } else {
-+            virtio_queue_aio_attach_host_notifier(vq, s->ctx);
-+        }
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 2746d3fdac..6515c5e89c 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10823,6 +10823,24 @@ static void arm_cpu_do_interrupt_aarch32(CPUState *cs)
      }
+ 
+     if (env->exception.target_el == 2) {
++        /* Debug exceptions are reported differently on AArch32 */
++        switch (syn_get_ec(env->exception.syndrome)) {
++        case EC_BREAKPOINT:
++        case EC_BREAKPOINT_SAME_EL:
++        case EC_AA32_BKPT:
++        case EC_VECTORCATCH:
++            env->exception.syndrome = syn_insn_abort(arm_current_el(env) == 2,
++                                                     0, 0, 0x22);
++            break;
++        case EC_WATCHPOINT:
++            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
++                                                 EC_DATAABORT);
++            break;
++        case EC_WATCHPOINT_SAME_EL:
++            env->exception.syndrome = syn_set_ec(env->exception.syndrome,
++                                                 EC_DATAABORT_SAME_EL);
++            break;
++        }
+         arm_cpu_do_interrupt_aarch32_hyp(cs);
+         return;
+     }
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 95454b5b3b..eccb759da6 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -25,6 +25,8 @@
+ #ifndef TARGET_ARM_SYNDROME_H
+ #define TARGET_ARM_SYNDROME_H
+ 
++#include "qemu/bitops.h"
++
+ /* Valid Syndrome Register EC field values */
+ enum arm_exception_class {
+     EC_UNCATEGORIZED          = 0x00,
+@@ -80,6 +82,7 @@ typedef enum {
+     SME_ET_InactiveZA,
+ } SMEExceptionType;
+ 
++#define ARM_EL_EC_LENGTH 6
+ #define ARM_EL_EC_SHIFT 26
+ #define ARM_EL_IL_SHIFT 25
+ #define ARM_EL_ISV_SHIFT 24
+@@ -91,6 +94,11 @@ static inline uint32_t syn_get_ec(uint32_t syn)
+     return syn >> ARM_EL_EC_SHIFT;
  }
  
++static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
++{
++    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
++}
++
+ /*
+  * Utility functions for constructing various kinds of syndrome value.
+  * Note that in general we follow the AArch64 syndrome values; in a
 -- 
 2.39.2
 
