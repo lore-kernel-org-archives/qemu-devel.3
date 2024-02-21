@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17805C48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D5CC48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcos7-0004Bk-2z; Wed, 21 Feb 2024 10:50:59 -0500
+	id 1rcoaI-0007HW-2I; Wed, 21 Feb 2024 10:32:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcorp-0003lY-SO
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:50:44 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcoPH-0005EJ-S9
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:21:18 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcorn-0003Ae-Kz
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:50:41 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a30f7c9574eso863720466b.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 07:50:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcoPD-0004Ic-25
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:21:11 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4127a0d8ae1so1160815e9.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 07:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708530636; x=1709135436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708528864; x=1709133664; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zsHcxReiCT3qx9ZuZIFORC2MKetXidUOVHo1k8P0RjA=;
- b=jnSwiJA0+7ltFhSklbc1ZL4TpZcOWcoq98qfZp3nTNUn3m6H6Vt/xb3/dunYRsB6aM
- fUlMuvYgs8rWXIglzmSDLKedGb+o5MejPYvi4it0r8g5U+czdOv1sR3KXM5HhTNo/5K0
- jlm+5TFLdel70BoXxkmxwnKxFw8Sk37xexSZ+ky9wuUMlvFzU5BrEFXJbWobnen7+jtH
- mBZQ14RjsxzghUeMl0dN08pDoZiM1bQPh4w1PIRoV0PHU3Pw2VwNz9mTQ/LLtZ3QMsqA
- RhwJLMaA27WjX+fHKdzafZ6Q7y+KNaTqqou0EnmsHEKUgi8D0nChq57rEPIBL5n6Zpir
- LzhA==
+ bh=N7rGT8yZCvAdoVTuAMhRwm2ubb3JgqYFNPXxnz7r5cI=;
+ b=nB6Xr7lnYNBGoBEU3w1VflH1R1ReinON5oE2J/f2IseDjk/bbgiJ/ETU1c1QHxdM3v
+ +cD+NRVOQf+Bnp6RyyKFnyQneMnnAPJZvBVpev+bhrd1QU6TOCgtCMSqhKeH+d9io5d4
+ az2KqLGvpka/fdpGB+XEno6X+nxynrvinEZYaUxto5db8gDINepWaihxjJzkXgFomUx6
+ MfVi32znXQn29dvGrIofFVkihlcrOnjG06zHbWKP7VC3zx8vi2vF/l9tfzMHfB7u2Cy6
+ Pqfa1VzRQDoos7afQ5qUGPIZwjh1LL9SNc5WGNX7pqYPwM5ZgBLbzewuhfCvFc4E313O
+ COhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708530636; x=1709135436;
+ d=1e100.net; s=20230601; t=1708528864; x=1709133664;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zsHcxReiCT3qx9ZuZIFORC2MKetXidUOVHo1k8P0RjA=;
- b=WLi4AsKQnM7qXItpFYWsrujr1pjjBIItD5RRRbmLv3m7TZ2YniuiKTdRkG2HmVv84n
- f8dESXnUOjvcP2VPK9tGByKMncwBfIPmj/dQVnz2gX6pxLroBw3MRHgqhezueeiP6nk0
- uPw1BX8KpDFPnlOtyBAN9EMDjsIx/ftIqezpCv3xc8rSpErdcczUpBQ1yM8dCVTFzWQN
- Ip2qVnNmyNLYsX543uQ0RV9TFdgDe5ftmTW7h3awgvd7BplUF3ndpHS2l3oqy2fi/c5s
- S2QngESBNtv9gUgCXTKgfPiN1lKmZjkuTzahctza6atP9QOMIqzV3OHTkIC/Ue15gxTe
- 89LA==
+ bh=N7rGT8yZCvAdoVTuAMhRwm2ubb3JgqYFNPXxnz7r5cI=;
+ b=pN0JVRBl6nJ4B3YOjGe8EqsmSPUG0CDfXpBqf8ILgwZ9AKEHALlYObMEQV8kTVus+Y
+ Y+tyLrwLobu2IEPFSY1lMM3c1B9ksHvx6SeFKpmjD0uWLC4ErO/fubBDxzh0mRe0HsHI
+ hXnmsAZ47eTXlwLY2YpThgAR1xTCMpvIT2E1tjUjEr7IMaRXnMRjxR2CReFxbbN569Ds
+ 5iBe1Vzjxjy9KEA5Yv1pbrE/Eh9fHqeat1Qyt6CdGLqowz4RIF/1AZomLTRCX6g2IaZ5
+ kU6EgDuzJmKLLbMZqQVcVm0oYOzAQyhFh+Q2Z9wAiPwrZ1WsCRutZ6BpT4iJwiLoegcZ
+ M6xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNdmi/vamQ7DFVAMGLnvBjih4cH3Yg4Qx9gMTapcXaERx6S0NdNW73+7qsrCdz7cwo6XiMJKPvsjAg+joanJG/0x08XR0=
-X-Gm-Message-State: AOJu0YyDHAfHNOZNcNszmXpjXal736pBSo13m31wApjdfzeSi4z1vAcA
- 9AfVYXmV6V/43+1XkasVkvf+XwSZjr7gizprORpiCXGOpLWah5p6iDsWZcLy/TU=
-X-Google-Smtp-Source: AGHT+IEuqLmeS136VDT5+Bz8pMcXzUika1dgpKBXOeeqb3snt2m/366BnlbECX1d+IUrBS5qzQYEWA==
-X-Received: by 2002:a17:906:f2d9:b0:a3e:a0cd:5c4b with SMTP id
- gz25-20020a170906f2d900b00a3ea0cd5c4bmr5803399ejb.55.1708530635942; 
- Wed, 21 Feb 2024 07:50:35 -0800 (PST)
+ AJvYcCU00XapxoF6AhNBXIbp3ahGrNxXaaiTQRVG6dSDR7PYvT1byT51Cjc2XsT7DbqNIkA3L1jdZUzlnwl2LcSYlhbCNdxy8V8=
+X-Gm-Message-State: AOJu0YykCHsth/3hLugT5kWyXcbqcrEnD+uFhKpv0iIgUZPnv+KuqLws
+ VT1nL4/ZgvBGtpNgmtmAtSWROOd+2xSeM/uYP7zO0uW+VjZina8ZmXNFhi7igFM=
+X-Google-Smtp-Source: AGHT+IGJm+aHfTqk17QohLqvqvgJ1905KXyxZup2B2MbulSNHTddU548WfYPTXE841pUYNVS4/Oj7w==
+X-Received: by 2002:a05:600c:2184:b0:411:c9c0:eddf with SMTP id
+ e4-20020a05600c218400b00411c9c0eddfmr13923149wme.36.1708528864617; 
+ Wed, 21 Feb 2024 07:21:04 -0800 (PST)
 Received: from [192.168.69.100] ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- ae2-20020a17090725c200b00a3e643e61e1sm3793695ejc.214.2024.02.21.07.50.34
+ s7-20020a05600c45c700b0041279707ffbsm793673wmo.15.2024.02.21.07.21.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 07:50:35 -0800 (PST)
-Message-ID: <002d9fca-56dd-4265-a79e-2850fbb1a822@linaro.org>
-Date: Wed, 21 Feb 2024 16:50:33 +0100
+ Wed, 21 Feb 2024 07:21:04 -0800 (PST)
+Message-ID: <a5bd04e4-6f41-4e2b-a99f-d5150682e53a@linaro.org>
+Date: Wed, 21 Feb 2024 16:21:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] hw/i386/pc_{piix, q35}: Eliminate local
- pci_bus/pci_host variables
+Subject: Re: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
+ pc_machine_done()
 Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Sergio Lopez <slp@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20240208220349.4948-1-shentey@gmail.com>
- <20240208220349.4948-10-shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-3-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240208220349.4948-10-shentey@gmail.com>
+In-Reply-To: <20240220160622.114437-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,29 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 23:03, Bernhard Beschow wrote:
-> There is no advantage in having these local variables which 1/ needlessly have
-> different identifiers in both machines and 2/ which are redundant to pcms->bus
-> which is almost as short.
+On 20/2/24 17:06, Peter Maydell wrote:
+> In the i386 PC machine, we want to run the pc_cmos_init_late()
+> function only once the IDE and floppy drive devices have been set up.
+> We currently do this using qemu_register_reset(), and then have the
+> function call qemu_unregister_reset() on itself, so it runs exactly
+> once.
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> This was an expedient way to do it back in 2010 when we first added
+> this (in commit c0897e0cb94e8), but now we have a more obvious point
+> to do "machine initialization that has to happen after generic device
+> init": the machine-init-done hook.
+> 
+> Do the pc_cmos_init_late() work from our existing PC machine init
+> done hook function, so we can drop the use of qemu_register_reset()
+> and qemu_unregister_reset().
+> 
+> Because the pointers to the devices we need (the IDE buses and the
+> RTC) are now all in the machine state, we don't need the
+> pc_cmos_init_late_arg struct and can just pass the PCMachineState
+> pointer.
+
+Even if we remove the IDEBus/RTC pointers from PCMachineState,
+we can still QOM-resolve them from it in pc_cmos_init_late().
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/i386/pc_piix.c | 14 ++++++--------
->   hw/i386/pc_q35.c  | 16 +++++++---------
->   2 files changed, 13 insertions(+), 17 deletions(-)
+>   hw/i386/pc.c | 39 ++++++++++++++++-----------------------
+>   1 file changed, 16 insertions(+), 23 deletions(-)
 
-IMO it is a design mistake to have these fields in PCMachineState:
-
-  27 typedef struct PCMachineState {
-
-  36     /* Pointers to devices and objects: */
-  37     PCIBus *bus;
-  38     I2CBus *smbus;
-  39     PFlashCFI01 *flash[2];
-  40     ISADevice *pcspk;
-  41     DeviceState *iommu;
-  42     BusState *idebus[MAX_IDE_BUS];
-
-Anyhow, back to your patch, please rename 'bus' -> 'pcibus'. Maybe
-in a preliminary patch?
 
