@@ -4,48 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B5CDC5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE515C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoJF-0000ko-SK; Wed, 21 Feb 2024 10:14:58 -0500
+	id 1rcoKk-0002Cb-4y; Wed, 21 Feb 2024 10:16:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rchtJ-00074k-C1; Wed, 21 Feb 2024 03:23:47 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcoJi-0000wC-OV
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:15:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcht7-0002Sv-Mj; Wed, 21 Feb 2024 03:23:44 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DBC604F3DC;
- Wed, 21 Feb 2024 11:21:21 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A2508860BB;
- Wed, 21 Feb 2024 11:21:00 +0300 (MSK)
-Received: (nullmailer pid 2142078 invoked by uid 1000);
- Wed, 21 Feb 2024 08:20:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ira Weiny <ira.weiny@intel.com>,
- Huai-Cheng Kuo <hchkuo@avery-design.com.tw>, Dave Jiang <dave.jiang@intel.com>,
- Fan Ni <fan.ni@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.2 30/60] cxl/cdat: Handle cdat table build errors
-Date: Wed, 21 Feb 2024 11:20:18 +0300
-Message-Id: <20240221082058.2141850-30-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
-References: <qemu-stable-8.2.2-20240221110049@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rci88-0004nj-Tl
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:39:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708504743;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JzkBGVVeocauj1tHOu+yVsER9m+6l0bnVxg2pXsZP4U=;
+ b=TKuZGpbD4UUILZ08JlFN27HLYIsxQQqaey89qVxamKoOFhjps6cDKZgTE6MxC2zL2/aq3f
+ iENcd20fPg0LyNmIe9yZ//i370lbLNfNZ2qlBkPEYngsOeWIugFQyqZfoGyJoTRLwaLkst
+ vpkL+Rqxd8me/eevU9BGd0libHhbLMM=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-FLYYuSQpOAGrMhnX_jGNBg-1; Wed,
+ 21 Feb 2024 03:38:58 -0500
+X-MC-Unique: FLYYuSQpOAGrMhnX_jGNBg-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5A0683C23FC6
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 08:38:58 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.110])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 682752166B32;
+ Wed, 21 Feb 2024 08:38:57 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [qemu-web PATCH] Replace deprecated "bundle install --path vendor"
+Date: Wed, 21 Feb 2024 09:38:56 +0100
+Message-ID: <20240221083856.117001-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -63,40 +77,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ira Weiny <ira.weiny@intel.com>
+When running "bundle install --path vendor", the command complains
+that the --path parameter is deprecated nowadays and that
+"bundle config set --local path 'vendor'" should be used instead.
+So let's update our README accordingly.
 
-The callback for building CDAT tables may return negative error codes.
-This was previously unhandled and will result in potentially huge
-allocations later on in ct3_build_cdat()
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ README | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Detect the negative error code and defer cdat building.
-
-Fixes: f5ee7413d592 ("hw/mem/cxl-type3: Add CXL CDAT Data Object Exchange")
-Cc: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240126120132.24248-2-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit c62926f730d08450502d36548e28dd727c998ace)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
-index 639a2db3e1..24829cf242 100644
---- a/hw/cxl/cxl-cdat.c
-+++ b/hw/cxl/cxl-cdat.c
-@@ -63,7 +63,7 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     cdat->built_buf_len = cdat->build_cdat_table(&cdat->built_buf,
-                                                  cdat->private);
+diff --git a/README b/README
+index 31be741..ee3119e 100644
+--- a/README
++++ b/README
+@@ -32,7 +32,8 @@ required Jekyll software should be installed locally:
  
--    if (!cdat->built_buf_len) {
-+    if (cdat->built_buf_len <= 0) {
-         /* Build later as not all data available yet */
-         cdat->to_update = true;
-         return;
+ * Install Jekyll and its dependencies
+ 
+-   # bundle install --path vendor
++   # bundle config set --local path 'vendor'
++   # bundle install
+ 
+   NB this last command must be run from the qemu-web.git checkout
+   root directory.
 -- 
-2.39.2
+2.43.2
 
 
