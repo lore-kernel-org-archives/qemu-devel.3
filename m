@@ -4,104 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C508C48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A23FC5478A
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoWf-0006hk-H0; Wed, 21 Feb 2024 10:28:52 -0500
+	id 1rcoU2-0000Lx-4h; Wed, 21 Feb 2024 10:26:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rcoN7-0000wD-B1; Wed, 21 Feb 2024 10:19:02 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rcoML-0000wk-Fu
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:18:12 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rcj8A-0005gM-L1; Wed, 21 Feb 2024 04:43:13 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41L8VBo2011104; Wed, 21 Feb 2024 09:42:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=2mcUGsz+G/CH4UyajAvWqzY66myYuYr8IqB6Vvmo+tU=;
- b=cccbxpE/p50MM/EYEwEnrRNQQE4TyELPF1N4yYjQtamHcIn4WYC+7DYVFb/gbrnMI52G
- M9lR5ILRtW/ghiMuFACRejlJSkOWKkwO5Kxu0rxYkp5aplRrj9J9CoPZ2Gb5na0VRerV
- u8kk6g7zNm7CO07pu/x7S8Ok9ABknX2C1R0BgTnpgYzmLWVvJ502FqsHWYPKFJYo/HrB
- JSWbFr9NmVErmMzWMAEvz35Q4UrjWa7GDxgeeotMhegwJYPWsF8jUHpAkA1qvdEwVFAk
- WyPAXTaqBcOOaEEOqhY88398jvWr+TJ4SUgOMAh2xw1PREBtGCRUoWfrhIDXOJWJyfdS 6Q== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wdcqp31ur-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Feb 2024 09:42:50 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41L9Vghn015773;
- Wed, 21 Feb 2024 09:42:50 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wdcqp31ud-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Feb 2024 09:42:50 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41L7DuOV031153; Wed, 21 Feb 2024 09:42:49 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wb9bkws6t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 21 Feb 2024 09:42:49 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41L9gkpV18219564
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 21 Feb 2024 09:42:48 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7792A58055;
- Wed, 21 Feb 2024 09:42:46 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4B44558076;
- Wed, 21 Feb 2024 09:42:44 +0000 (GMT)
-Received: from [9.171.84.200] (unknown [9.171.84.200])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 21 Feb 2024 09:42:43 +0000 (GMT)
-Message-ID: <1309d0d0-f887-4634-9ba5-f3b9bb1eee1b@linux.ibm.com>
-Date: Wed, 21 Feb 2024 15:12:42 +0530
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rcl0k-0007Zm-95
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 06:43:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=7k30ACzpKa2rKS5+dmRM7qfouc1yR7zIpJ7tiHdP5g0=; b=s/Zmez0C4bsE6VmyIW5XM8+wJq
+ ljXvrWHQLq7BtoXnyOQaBBTnt5qk4ropLBvxZkNmZqsC4StSek8tzWvWPMi/pTBZ3oBTEg2BshLFv
+ lu6lpNExc65GoQ6m2mz6KLo1361piHNbkx7G56QzVLXlk/vEwEtec4OKg+e6b7UqlwinIgpESAxI3
+ jWEei6QMTZMNayCT9Fwb/LrEmaCZWqj55Epe1wsTMquGLPLhYi8A+T6GUvZRgZwmd1MX0ax8WR0sN
+ ekUDcwh7SRm42+ZHNq9NY+Xlevgc9LNqq8B7vNzlVfLRXz30I/gh2qvuUkkR6J7hkfvIqYtKQEQlt
+ ++y+etf0NdkDKy/98jNyxkS25OI3ECS2Hv1IAxQ3uKjGKklvZScTFGyXtyDGXQgDhLZTnziQRX3U1
+ SzcoahnAhaKrcmy03LFMl/o0QPvIcBNnuXlJYreRt/ixywUCEgpwaTQWcsmSo88NPo5MhPqTYYqwo
+ MtHnO/07fiTXrzykXgCFTFc68KqTRX0qGFITNkNwHDJXrajw2MW9meqgpvRENfCmUGN6S2gqPb/PT
+ PKfyFQ9UZJ9yxtLhLiimO2YgQYusqa7dDzmYM/3N9hVERCd6iZ0ycM4hJnVD+J/MKC4/Hll21Rn61
+ rUG7eqb2kj3rL3l+NmKlf+pAr5OxC68BANk4BqQJk=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rckzw-0008HQ-HS; Wed, 21 Feb 2024 11:42:52 +0000
+Message-ID: <26f9ca25-b828-4ca5-983a-5e8667239d01@ilande.co.uk>
+Date: Wed, 21 Feb 2024 11:43:30 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/9] target/ppc: Simplify syscall exception handlers
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-References: <cover.1705614747.git.balaton@eik.bme.hu>
- <62f95b82597580aadc559114992675bee721e887.1705614747.git.balaton@eik.bme.hu>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <62f95b82597580aadc559114992675bee721e887.1705614747.git.balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+References: <20240218131701.91132-1-shentey@gmail.com>
+ <20240218131701.91132-3-shentey@gmail.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240218131701.91132-3-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: lYG7DE7XiPMFS8ilEiYZLrSawSjL3JM_
-X-Proofpoint-GUID: FX-ty8OAZ9bc1U2sttzmU1Hs0Ag2TZ_I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-20_06,2024-02-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxscore=0
- phishscore=0 impostorscore=0 malwarescore=0 mlxlogscore=772
- priorityscore=1501 bulkscore=0 lowpriorityscore=0 spamscore=0
- suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2402210075
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 2/5] hw/i386/port92: Allow for TYPE_PORT92 to be embedded
+ in devices
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,88 +112,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/02/2024 13:16, Bernhard Beschow wrote:
 
-
-On 1/19/24 03:31, BALATON Zoltan wrote:
-> After previous changes the hypercall handling in 7xx and 74xx
-> exception handlers can be folded into one if statement to simpilfy
-> this code. Also add "unlikely" to mark the less freqiently used branch
-> for the compiler.
+> Port 92 is an integral part of south bridges. Allow for embedding it there.
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-
-Nice cleanup.
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
+> South bridges aren't architecture-specific, so move port92.c to hw/isa which is
+> accessible to other architectures than x86.
+> 
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   target/ppc/excp_helper.c | 24 ++++++++----------------
->   1 file changed, 8 insertions(+), 16 deletions(-)
+>   include/hw/i386/pc.h      |  5 -----
+>   include/hw/isa/port92.h   | 30 ++++++++++++++++++++++++++++++
+>   hw/i386/pc.c              |  1 +
+>   hw/{i386 => isa}/port92.c | 14 +-------------
+>   hw/i386/Kconfig           |  1 +
+>   hw/i386/meson.build       |  3 +--
+>   hw/i386/trace-events      |  4 ----
+>   hw/isa/Kconfig            |  3 +++
+>   hw/isa/meson.build        |  1 +
+>   hw/isa/trace-events       |  4 ++++
+>   10 files changed, 42 insertions(+), 24 deletions(-)
+>   create mode 100644 include/hw/isa/port92.h
+>   rename hw/{i386 => isa}/port92.c (91%)
 > 
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 411d67376c..035a9fd968 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -762,26 +762,22 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
->       case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
->       {
->           int lev = env->error_code;
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index ec0e5efcb2..b2987209b1 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -188,11 +188,6 @@ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus);
+>   
+>   void pc_i8259_create(ISABus *isa_bus, qemu_irq *i8259_irqs);
+>   
+> -/* port92.c */
+> -#define PORT92_A20_LINE "a20"
 > -
-> -        if (lev == 1 && cpu->vhyp) {
-> -            dump_hcall(env);
-> -        } else {
-> -            dump_syscall(env);
-> -        }
->           /*
->            * The Virtual Open Firmware (VOF) relies on the 'sc 1'
->            * instruction to communicate with QEMU. The pegasos2 machine
->            * uses VOF and the 7xx CPUs, so although the 7xx don't have
->            * HV mode, we need to keep hypercall support.
->            */
-> -        if (lev == 1 && cpu->vhyp) {
-> +        if (unlikely(lev == 1 && cpu->vhyp)) {
->               PPCVirtualHypervisorClass *vhc =
->                   PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> +            dump_hcall(env);
->               vhc->hypercall(cpu->vhyp, cpu);
->               powerpc_reset_excp_state(cpu);
->               return;
-> +        } else {
-> +            dump_syscall(env);
->           }
+> -#define TYPE_PORT92 "port92"
 > -
->           break;
->       }
->       case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-> @@ -907,26 +903,22 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
->       case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
->       {
->           int lev = env->error_code;
+>   /* pc_sysfw.c */
+>   void pc_system_flash_create(PCMachineState *pcms);
+>   void pc_system_flash_cleanup_unused(PCMachineState *pcms);
+> diff --git a/include/hw/isa/port92.h b/include/hw/isa/port92.h
+> new file mode 100644
+> index 0000000000..214783d071
+> --- /dev/null
+> +++ b/include/hw/isa/port92.h
+> @@ -0,0 +1,30 @@
+> +/*
+> + * QEMU I/O port 0x92 (System Control Port A, to handle Fast Gate A20)
+> + *
+> + * Copyright (c) 2003-2004 Fabrice Bellard
+> + *
+> + * SPDX-License-Identifier: MIT
+> + */
+> +
+> +#ifndef HW_PORT92_H
+> +#define HW_PORT92_H
+> +
+> +#include "exec/memory.h"
+> +#include "hw/irq.h"
+> +#include "hw/isa/isa.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_PORT92 "port92"
+> +OBJECT_DECLARE_SIMPLE_TYPE(Port92State, PORT92)
+> +
+> +struct Port92State {
+> +    ISADevice parent_obj;
+> +
+> +    MemoryRegion io;
+> +    uint8_t outport;
+> +    qemu_irq a20_out;
+> +};
+> +
+> +#define PORT92_A20_LINE "a20"
+> +
+> +#endif /* HW_PORT92_H */
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 196827531a..0b11d4576e 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -32,6 +32,7 @@
+>   #include "hw/i386/vmport.h"
+>   #include "sysemu/cpus.h"
+>   #include "hw/ide/internal.h"
+> +#include "hw/isa/port92.h"
+>   #include "hw/timer/hpet.h"
+>   #include "hw/loader.h"
+>   #include "hw/rtc/mc146818rtc.h"
+> diff --git a/hw/i386/port92.c b/hw/isa/port92.c
+> similarity index 91%
+> rename from hw/i386/port92.c
+> rename to hw/isa/port92.c
+> index 1070bfbf36..06df06b088 100644
+> --- a/hw/i386/port92.c
+> +++ b/hw/isa/port92.c
+> @@ -9,20 +9,8 @@
+>   #include "qemu/osdep.h"
+>   #include "sysemu/runstate.h"
+>   #include "migration/vmstate.h"
+> -#include "hw/irq.h"
+> -#include "hw/i386/pc.h"
+> +#include "hw/isa/port92.h"
+>   #include "trace.h"
+> -#include "qom/object.h"
 > -
-> -        if (lev == 1 && cpu->vhyp) {
-> -            dump_hcall(env);
-> -        } else {
-> -            dump_syscall(env);
-> -        }
->           /*
->            * The Virtual Open Firmware (VOF) relies on the 'sc 1'
->            * instruction to communicate with QEMU. The pegasos2 machine
->            * uses VOF and the 74xx CPUs, so although the 74xx don't have
->            * HV mode, we need to keep hypercall support.
->            */
-> -        if (lev == 1 && cpu->vhyp) {
-> +        if (unlikely(lev == 1 && cpu->vhyp)) {
->               PPCVirtualHypervisorClass *vhc =
->                   PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> +            dump_hcall(env);
->               vhc->hypercall(cpu->vhyp, cpu);
->               powerpc_reset_excp_state(cpu);
->               return;
-> +        } else {
-> +            dump_syscall(env);
->           }
+> -OBJECT_DECLARE_SIMPLE_TYPE(Port92State, PORT92)
 > -
->           break;
->       }
->       case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+> -struct Port92State {
+> -    ISADevice parent_obj;
+> -
+> -    MemoryRegion io;
+> -    uint8_t outport;
+> -    qemu_irq a20_out;
+> -};
+>   
+>   static void port92_write(void *opaque, hwaddr addr, uint64_t val,
+>                            unsigned size)
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index a1846be6f7..ccf6de4a00 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -37,6 +37,7 @@ config PC
+>       select I8254
+>       select PCKBD
+>       select PCSPK
+> +    select PORT92
+>       select I8257
+>       select MC146818RTC
+>       # For ACPI builder:
+> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+> index b9c1ca39cb..94d558edd6 100644
+> --- a/hw/i386/meson.build
+> +++ b/hw/i386/meson.build
+> @@ -24,8 +24,7 @@ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+>   i386_ss.add(when: 'CONFIG_PC', if_true: files(
+>     'pc.c',
+>     'pc_sysfw.c',
+> -  'acpi-build.c',
+> -  'port92.c'))
+> +  'acpi-build.c'))
+>   i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
+>                                           if_false: files('pc_sysfw_ovmf-stubs.c'))
+>   
+> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+> index 53c02d7ac8..b730589394 100644
+> --- a/hw/i386/trace-events
+> +++ b/hw/i386/trace-events
+> @@ -118,10 +118,6 @@ vmport_command(unsigned char command) "command: 0x%02x"
+>   x86_gsi_interrupt(int irqn, int level) "GSI interrupt #%d level:%d"
+>   x86_pic_interrupt(int irqn, int level) "PIC interrupt #%d level:%d"
+>   
+> -# port92.c
+> -port92_read(uint8_t val) "port92: read 0x%02x"
+> -port92_write(uint8_t val) "port92: write 0x%02x"
+> -
+>   # vmmouse.c
+>   vmmouse_get_status(void) ""
+>   vmmouse_mouse_event(int x, int y, int dz, int buttons_state) "event: x=%d y=%d dz=%d state=%d"
+> diff --git a/hw/isa/Kconfig b/hw/isa/Kconfig
+> index 73c6470805..efdf43e92c 100644
+> --- a/hw/isa/Kconfig
+> +++ b/hw/isa/Kconfig
+> @@ -49,6 +49,9 @@ config PIIX
+>       select MC146818RTC
+>       select USB_UHCI
+>   
+> +config PORT92
+> +    bool
+> +
+>   config VT82C686
+>       bool
+>       select ISA_BUS
+> diff --git a/hw/isa/meson.build b/hw/isa/meson.build
+> index 3219282217..fb7cd44984 100644
+> --- a/hw/isa/meson.build
+> +++ b/hw/isa/meson.build
+> @@ -5,6 +5,7 @@ system_ss.add(when: 'CONFIG_ISA_BUS', if_true: files('isa-bus.c'))
+>   system_ss.add(when: 'CONFIG_ISA_SUPERIO', if_true: files('isa-superio.c'))
+>   system_ss.add(when: 'CONFIG_PC87312', if_true: files('pc87312.c'))
+>   system_ss.add(when: 'CONFIG_PIIX', if_true: files('piix.c'))
+> +system_ss.add(when: 'CONFIG_PORT92', if_true: files('port92.c'))
+>   system_ss.add(when: 'CONFIG_SMC37C669', if_true: files('smc37c669-superio.c'))
+>   system_ss.add(when: 'CONFIG_VT82C686', if_true: files('vt82c686.c'))
+>   
+> diff --git a/hw/isa/trace-events b/hw/isa/trace-events
+> index 1816e8307a..bb5d9f1078 100644
+> --- a/hw/isa/trace-events
+> +++ b/hw/isa/trace-events
+> @@ -10,6 +10,10 @@ superio_create_ide(int id, uint16_t base, unsigned int irq) "id=%d, base 0x%03x,
+>   pc87312_io_read(uint32_t addr, uint32_t val) "read addr=0x%x val=0x%x"
+>   pc87312_io_write(uint32_t addr, uint32_t val) "write addr=0x%x val=0x%x"
+>   
+> +# port92.c
+> +port92_read(uint8_t val) "port92: read 0x%02x"
+> +port92_write(uint8_t val) "port92: write 0x%02x"
+> +
+>   # apm.c
+>   apm_io_read(uint8_t addr, uint8_t val) "read addr=0x%x val=0x%02x"
+>   apm_io_write(uint8_t addr, uint8_t val) "write addr=0x%x val=0x%02x"
+
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+
+
+ATB,
+
+Mark.
+
 
