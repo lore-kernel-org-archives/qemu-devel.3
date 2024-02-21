@@ -4,66 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A3EC48BC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD3CC48BF6
 	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:20:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoNv-0000jY-UP; Wed, 21 Feb 2024 10:19:48 -0500
+	id 1rcoNo-0008IT-51; Wed, 21 Feb 2024 10:19:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcoKp-0001hh-Gc
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:16:36 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rcoKe-0000nB-RC
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:16:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rcmet-0007zX-4t
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:29:15 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rcklm-00058u-AY
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 06:28:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708522148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1708514886;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CW3dvocXjydBQWBtZlsGFlO9RdT8KstgMzvafnJJ+r4=;
- b=HMv6YVVtd1oTKiuM6J5GrQcUqZp0/nvM8lR7t/r7ug0xq87b6SWmPCDUTNiKInXrul8Ifk
- ZqAi4l7GtsOBrB6rTWi1p69bCOY7n3J17bx/wQkcMxJIBaqUP1EcxUnC8qH9WY6B9beF6p
- wGUgmYfrnu9SgoVcY3ifrDc+DaKU9j4=
+ bh=ieCsZuSkBI0B+XEaiJ6sclcbNAWk7AmKo+YpAjPn4LY=;
+ b=ZqibYyg6Y1SAIW5ZCe9G77Uvcp+b+ewUfWxuuDguB6mvcEtpRIAa6M6PdCd66U/Q+ljGfQ
+ cjBrHq+jjrlPkwQw04W8N9z55HN+jSeBJKqlh1Bl07ldsNAa4BhkCMCeg862xm2JGyivjR
+ cSEUx16b+AcSfA0a5B+FsFL8RM4JVNE=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-267-G5O782JfMByJP71v3iS84g-1; Wed,
- 21 Feb 2024 08:29:06 -0500
-X-MC-Unique: G5O782JfMByJP71v3iS84g-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-tUB8WiofMWu-3jX_tMuIgQ-1; Wed,
+ 21 Feb 2024 06:28:03 -0500
+X-MC-Unique: tUB8WiofMWu-3jX_tMuIgQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0588A2820B78;
- Wed, 21 Feb 2024 13:29:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.55])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D44F610800;
- Wed, 21 Feb 2024 13:29:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D58D621E66D5; Wed, 21 Feb 2024 14:29:04 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  Markus Armbruster <armbru@redhat.com>,  Michael
- Roth <michael.roth@amd.com>,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH V4 2/5] qapi: QAPI_LIST_LENGTH
-In-Reply-To: <1705099758-211963-3-git-send-email-steven.sistare@oracle.com>
- (Steve Sistare's message of "Fri, 12 Jan 2024 14:49:15 -0800")
-References: <1705099758-211963-1-git-send-email-steven.sistare@oracle.com>
- <1705099758-211963-3-git-send-email-steven.sistare@oracle.com>
-Date: Wed, 21 Feb 2024 14:29:04 +0100
-Message-ID: <877ciy3pzz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 978E5282D3C6;
+ Wed, 21 Feb 2024 11:28:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E58882166B32;
+ Wed, 21 Feb 2024 11:28:01 +0000 (UTC)
+Date: Wed, 21 Feb 2024 11:28:00 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Vogt <michael.vogt@gmail.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] linux-user: Add FIFREEZE and FITHAW ioctls
+Message-ID: <ZdXeQIK9Cm9AwWJu@redhat.com>
+References: <20240220105726.8852-1-michael.vogt@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240220105726.8852-1-michael.vogt@gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,63 +81,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+Adding the linux-user maintainer to the CC list
 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On Tue, Feb 20, 2024 at 11:57:21AM +0100, Michael Vogt wrote:
+> Add missing FIFREEZE and FITHAW ioctls.
+> 
+> Signed-off-by: Michael Vogt <michael.vogt@gmail.com>
 > ---
->  include/qapi/util.h | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
->
-> diff --git a/include/qapi/util.h b/include/qapi/util.h
-> index 81a2b13..e1b8b1d 100644
-> --- a/include/qapi/util.h
-> +++ b/include/qapi/util.h
-> @@ -56,4 +56,17 @@ int parse_qapi_name(const char *name, bool complete);
->      (tail) =3D &(*(tail))->next; \
->  } while (0)
->=20=20
-> +/*
-> + * For any GenericList @list, return its length.
-> + */
-> +#define QAPI_LIST_LENGTH(list) \
-> +    ({ \
-> +        int len =3D 0; \
+>  linux-user/ioctls.h       | 6 ++++++
+>  linux-user/syscall_defs.h | 3 +++
+>  2 files changed, 9 insertions(+)
 
-size_t
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> +        typeof(list) elem; \
-
-Name this @tail, please.
-
-> +        for (elem =3D list; elem !=3D NULL; elem =3D elem->next) { \
-> +            len++; \
-> +        } \
-> +        len; \
-> +    })
-> +
+> 
+> diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+> index 071f7ca253..1aec9d5836 100644
+> --- a/linux-user/ioctls.h
+> +++ b/linux-user/ioctls.h
+> @@ -134,6 +134,12 @@
+>       IOCTL(FICLONE, IOC_W, TYPE_INT)
+>       IOCTL(FICLONERANGE, IOC_W, MK_PTR(MK_STRUCT(STRUCT_file_clone_range)))
 >  #endif
+> +#ifdef FIFREEZE
+> +     IOCTL(FIFREEZE, IOC_W | IOC_R, TYPE_INT)
+> +#endif
+> +#ifdef FITHAW
+> +     IOCTL(FITHAW, IOC_W | IOC_R, TYPE_INT)
+> +#endif
+>  
+>       IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
+>  #ifdef CONFIG_FIEMAP
+> diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+> index 77ba343c85..744fda599e 100644
+> --- a/linux-user/syscall_defs.h
+> +++ b/linux-user/syscall_defs.h
+> @@ -943,6 +943,9 @@ struct target_rtc_pll_info {
+>  #define TARGET_FICLONE    TARGET_IOW(0x94, 9, abi_int)
+>  #define TARGET_FICLONERANGE TARGET_IOW(0x94, 13, struct file_clone_range)
+>  
+> +#define TARGET_FIFREEZE    TARGET_IOWR('X', 119, abi_int)
+> +#define TARGET_FITHAW    TARGET_IOWR('X', 120, abi_int)
+> +
+>  /*
+>   * Note that the ioctl numbers for FS_IOC_<GET|SET><FLAGS|VERSION>
+>   * claim type "long" but the actual type used by the kernel is "int".
 
-This is a macro instead of a function so users don't have to cast their
-FooList * to GenericList *.
+> -- 
+> 2.43.0
+> 
+> 
 
-The only user outside tests is strv_from_strList().  I'd be tempted to
-open-code it there and call it a day.  Or do you have more users in
-mind?
-
-If we keep the macro, please align the backslashes like this:
-
-   #define QAPI_LIST_LENGTH(list)                                  \
-       ({                                                          \
-           int len =3D 0;                                            \
-           typeof(list) elem;                                      \
-           for (elem =3D list; elem !=3D NULL; elem =3D elem->next) {    \
-               len++;                                              \
-           }                                                       \
-           len;                                                    \
-       })
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
