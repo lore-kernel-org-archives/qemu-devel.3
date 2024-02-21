@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212CCC54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7B5C54788
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuOF-0007WC-Kz; Wed, 21 Feb 2024 16:44:31 -0500
+	id 1rcuQv-0000Jf-Rm; Wed, 21 Feb 2024 16:47:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcuOD-0007Vp-UK
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:44:29 -0500
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1rcuQu-0000Fg-Ex
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:47:16 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rcuOB-0006bW-DJ
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:44:29 -0500
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-5dbcfa0eb5dso6700843a12.3
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:44:26 -0800 (PST)
+ id 1rcuQs-0007JR-UA
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:47:16 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d7431e702dso70817595ad.1
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:47:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708551865; x=1709156665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708552033; x=1709156833; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3ymlyp9LqkKgQT6kNoix2ZwRRamVl7+be284Cy/Jwu4=;
- b=LVENi6p9xg2VD2qd+7RZ/t5AsIA2lGmhDszbhvNDFjd4OJ305oLGonZdnkpglnqz67
- e2YlaItQMYW+ZYl/jLpwp1LZ4iMvY4mHgE4yek/fkj/I/rcWCgdN3+1hkuVXIbcOnTqf
- Q/K69NgXRcak/JtClMIE8SQjjxRm18zfSwbSFFspA9b7OBcZzI+8Q347sy2PmXlvByHQ
- qI3K/LyGv4pIRPOmh763KotumxMsciW1XylwfnI6h57Z69xKUonsi1CCUnywL2fiqAOp
- XSD1EDX5MtCiV3dlCoCG4vTsJj1m95HjxJtomA5WU5K+KVv3HAN4eTVaPRQaub/V0yh2
- aBHQ==
+ bh=xaHEju4N6XZEKAd1TC8U2j6QNIS2DMzjyHv3tA7Eee4=;
+ b=b0iX2NC8Dzm1XqaXvtQIimFUUalBjO80mmQyO86p/oGE5vwGQDME5Mtuq+/XnBfRGJ
+ V8HnTrbVmwIp4Gi4NmwsWrSobwPeMyDdz0hXUpa5+Cqnkx5P22JoBDBFyCoVZUYf0img
+ 0VtsjjNEE9RvxyBwdILT5pmThppGxEHEkyq0AM+TRwAoqH6KQLXsCjAWZ3fdzGMgy8yr
+ FLpRQNevOF0rFgKgMByeAhVSO6ddulktBEaVLogwqBmbp+HfzD3GXF6nTedQzuCAlRG/
+ W2gtdl5yh0fQXL8xRUkA0qLLLn/ZHdYonnQdz2QP24DEnWIwcSCvShHIZWg/DlV8eyaM
+ 3r8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708551865; x=1709156665;
+ d=1e100.net; s=20230601; t=1708552033; x=1709156833;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3ymlyp9LqkKgQT6kNoix2ZwRRamVl7+be284Cy/Jwu4=;
- b=D6DB0IfM5hODdXOBlzECk8236vpIn4Omblm6dYZcIOTQ0BiZrSvtgZPKC9JTwgg2lI
- B2haSewFBDKDCgcSRQsj2Cu0DnzQt8FqIKt87CixNiUIEPkzrTnzGvYxiuFHNOlcmyzV
- xVuKS0Owjis/7NNVNgd4pPo3DoQj9elis1DN/zS33YFwBBIWu6JPJI3Aw9Wgsb02Rcuq
- K0raEa/tKCPJzTEwauZNWoaMfE2dFCk1M7H98pD4GkWKGXPZoW9Pv1gqAg1IBOmd5muR
- rgJMnu+Z3vqwQOI++VbcSIXob4sU4WDdxohJPZz2qoTrcAGkpsqdbygQbsgW8e4OJLY1
- uZjg==
+ bh=xaHEju4N6XZEKAd1TC8U2j6QNIS2DMzjyHv3tA7Eee4=;
+ b=uU7bwWL/9GDnjXJFSc5OKwg6whXusM1kG74V+Ihl7OJdgEIo/m0N8ZoW3fIL4pjVji
+ O9l/WXArpSgp3mZirOdHNEl3j0+N1zDS/1XFvQgmJCs1JapCFlTHg5CEaUTp1ftbpnX7
+ Jugf0+uEwJXEtYwWOKIJpyBICiL7zO10MTIAqKT3BsYBiNY/Ny1H9fu053uScpUhWqt4
+ FTLCxnVBmPzThMgblWsZqZzy96FxdYTq83Aa9uIXYpYfdcOQypqN1ZM+sCxovpGSKJpb
+ dYHT5wnc07rxBzC7j+CRauCIWQGcaz0l79rxhTgaGpQlH7w26M1Wc0S1nsCkNE6N7gfq
+ e7oA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1mb8HHsNanXbeUg+MhK+S490JoCfHZwrH/zopNxyyB0Kf4V5+3AGudn+WJ98y2dE4M6LrLi+FQgg9mQSI4e0eAmqNA0k=
-X-Gm-Message-State: AOJu0Yw6zOLAdiUZzLH64IG7XxRaMICDyOemWBggGxX/L/PZJOuThMUT
- uf2kCrBbjRIa6mNDIwlDmLJf/LhEFWhFElf6qTn0UD0KYlvFa7dqgMfphH/9yrs=
-X-Google-Smtp-Source: AGHT+IF/+DWZKWpC726neRMh9kSXStYcqeMfeScMl5QKcxnGNZwKFLITWpRCYE6p0mgQ6fJ9tT6/vg==
-X-Received: by 2002:a05:6a21:9216:b0:1a0:776c:f45e with SMTP id
- tl22-20020a056a21921600b001a0776cf45emr22745764pzb.4.1708551865555; 
- Wed, 21 Feb 2024 13:44:25 -0800 (PST)
+ AJvYcCUgXFZeqMweyJkLIjFri1TaLRmfvCpBtT+ZR5i3iqdpb6nUj2nQ4tbrpA5ImMMA8jmYkKgBdaOZgHzjUAp7sQSZXynkSZI=
+X-Gm-Message-State: AOJu0YxJXaBLNKDQE5su+Lqq81GhOuGoetrzlDGGOGWYUK6laidyON8a
+ FAyff4woh/QAVKFWVmQF7EspSmVz8r6UEgZmpxIGk7Ll+2WBlzlurFTeEmCNI6nmZLUKzJ3WMd5
+ I
+X-Google-Smtp-Source: AGHT+IHmvtPB+gIXRiTXx2JyW4lMwDQHl/2wdwF+VhHWzP18HzZ3bLATj/DCedmBQqGBe4tjGF8t2w==
+X-Received: by 2002:a17:903:2346:b0:1db:ab71:a4ae with SMTP id
+ c6-20020a170903234600b001dbab71a4aemr14723192plh.42.1708552033309; 
+ Wed, 21 Feb 2024 13:47:13 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- z16-20020aa791d0000000b006e0d165f8a4sm9446676pfa.20.2024.02.21.13.44.24
+ ke8-20020a170903340800b001d901c2087esm8577345plb.302.2024.02.21.13.47.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 13:44:25 -0800 (PST)
-Message-ID: <425d1313-a1fb-4098-8413-026c47a6ff44@linaro.org>
-Date: Wed, 21 Feb 2024 11:44:22 -1000
+ Wed, 21 Feb 2024 13:47:12 -0800 (PST)
+Message-ID: <f5f07aa2-6fe3-4030-b045-5110cfa0db74@linaro.org>
+Date: Wed, 21 Feb 2024 11:47:09 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 16/22] hw/intc/arm_gicv3: Implement GICD_INMIR
+Subject: Re: [RFC PATCH v2 18/22] hw/arm/virt: Add FEAT_GICv3_NMI feature
+ support in virt GIC
 Content-Language: en-US
 To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
  eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20240221130823.677762-1-ruanjinjie@huawei.com>
- <20240221130823.677762-17-ruanjinjie@huawei.com>
+ <20240221130823.677762-19-ruanjinjie@huawei.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240221130823.677762-17-ruanjinjie@huawei.com>
+In-Reply-To: <20240221130823.677762-19-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,15 +102,27 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/21/24 03:08, Jinjie Ruan via wrote:
-> Add GICD_INMIR0, GICD_INMIRnE register and support access GICD_INMIR0.
+> Included support FEAT_GICv3_NMI feature as part of virt platform
+> GIC initialization.
 > 
-> Signed-off-by: Jinjie Ruan<ruanjinjie@huawei.com>
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 > ---
->   hw/intc/arm_gicv3_dist.c | 38 ++++++++++++++++++++++++++++++++++++++
->   hw/intc/gicv3_internal.h |  2 ++
->   2 files changed, 40 insertions(+)
+>   hw/arm/virt.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index c442652d0f..0359dbd8bd 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -772,6 +772,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>           qdev_prop_set_array(vms->gic, "redist-region-count",
+>                               redist_region_count);
+>   
+> +        qdev_prop_set_bit(vms->gic, "has-nmi", true);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This should be set based on whether the cpu class created has FEAT_NMI.
+
 
 r~
+
 
