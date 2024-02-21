@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1AC4C54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5FEC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:49:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuRa-0001WJ-Ls; Wed, 21 Feb 2024 16:47:58 -0500
+	id 1rcuSp-0007aU-PC; Wed, 21 Feb 2024 16:49:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRY-0001Ug-OU; Wed, 21 Feb 2024 16:47:56 -0500
+ id 1rcuSn-0007QF-U3; Wed, 21 Feb 2024 16:49:13 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRV-0007Q2-Th; Wed, 21 Feb 2024 16:47:56 -0500
+ id 1rcuSl-0007YC-SV; Wed, 21 Feb 2024 16:49:13 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C47454F868;
- Thu, 22 Feb 2024 00:47:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 64B414F871;
+ Thu, 22 Feb 2024 00:47:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6A61E869E9;
- Thu, 22 Feb 2024 00:47:24 +0300 (MSK)
-Received: (nullmailer pid 2339859 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 0DD58869F2;
+ Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
+Received: (nullmailer pid 2339887 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ira Weiny <ira.weiny@intel.com>,
- Huai-Cheng Kuo <hchkuo@avery-design.com.tw>, Dave Jiang <dave.jiang@intel.com>,
- Fan Ni <fan.ni@samsung.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 12/33] cxl/cdat: Fix header sum value in CDAT checksum
-Date: Thu, 22 Feb 2024 00:46:55 +0300
-Message-Id: <20240221214723.2339742-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 21/33] target/arm: Fix SVE/SME gross MTE suppression
+ checks
+Date: Thu, 22 Feb 2024 00:47:04 +0300
+Message-Id: <20240221214723.2339742-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -63,59 +63,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The addition of the DCD support for CXL type-3 devices extended the CDAT
-table large enough that the checksum being returned was incorrect.[1]
+The TBI and TCMA bits are located within mtedesc, not desc.
 
-This was because the checksum value was using the header length field
-rather than each of the 4 bytes of the length field.  This was
-previously not seen because the length of the CDAT data was less than
-256 thus resulting in an equivalent checksum value.
-
-Properly calculate the checksum for the CDAT header.
-
-[1] https://lore.kernel.org/all/20231116-fix-cdat-devm-free-v1-1-b148b40707d7@intel.com/
-
-Fixes: aba578bdace5 ("hw/cxl/cdat: CXL CDAT Data Object Exchange implementation")
-Cc: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-Message-Id: <20240126120132.24248-5-Jonathan.Cameron@huawei.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit 64fdad5e67587e88c2f1d8f294e89403856a4a31)
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-id: 20240207025210.8837-7-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 855f94eca80c85a99f459e36684ea2f98f6a3243)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/cxl/cxl-cdat.c b/hw/cxl/cxl-cdat.c
-index 931693f02d..0cde11854e 100644
---- a/hw/cxl/cxl-cdat.c
-+++ b/hw/cxl/cxl-cdat.c
-@@ -49,6 +49,7 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     g_autofree CDATTableHeader *cdat_header = NULL;
-     g_autofree CDATEntry *cdat_st = NULL;
-     uint8_t sum = 0;
-+    uint8_t *hdr_buf;
-     int ent, i;
+diff --git a/target/arm/sme_helper.c b/target/arm/sme_helper.c
+index 8856773635..d592c78ec9 100644
+--- a/target/arm/sme_helper.c
++++ b/target/arm/sme_helper.c
+@@ -606,8 +606,8 @@ void sme_ld1_mte(CPUARMState *env, void *za, uint64_t *vg,
+     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
  
-     /* Use default table if fopen == NULL */
-@@ -94,8 +95,12 @@ static void ct3_build_cdat(CDATObject *cdat, Error **errp)
-     /* For now, no runtime updates */
-     cdat_header->sequence = 0;
-     cdat_header->length += sizeof(CDATTableHeader);
--    sum += cdat_header->revision + cdat_header->sequence +
--        cdat_header->length;
-+
-+    hdr_buf = (uint8_t *)cdat_header;
-+    for (i = 0; i < sizeof(*cdat_header); i++) {
-+        sum += hdr_buf[i];
-+    }
-+
-     /* Sum of all bytes including checksum must be 0 */
-     cdat_header->checksum = ~sum + 1;
+     /* Perform gross MTE suppression early. */
+-    if (!tbi_check(desc, bit55) ||
+-        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
++    if (!tbi_check(mtedesc, bit55) ||
++        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
+         mtedesc = 0;
+     }
+ 
+@@ -783,8 +783,8 @@ void sme_st1_mte(CPUARMState *env, void *za, uint64_t *vg, target_ulong addr,
+     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+ 
+     /* Perform gross MTE suppression early. */
+-    if (!tbi_check(desc, bit55) ||
+-        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
++    if (!tbi_check(mtedesc, bit55) ||
++        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
+         mtedesc = 0;
+     }
+ 
+diff --git a/target/arm/sve_helper.c b/target/arm/sve_helper.c
+index 27838fb6e2..45a93755fe 100644
+--- a/target/arm/sve_helper.c
++++ b/target/arm/sve_helper.c
+@@ -5803,8 +5803,8 @@ void sve_ldN_r_mte(CPUARMState *env, uint64_t *vg, target_ulong addr,
+     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+ 
+     /* Perform gross MTE suppression early. */
+-    if (!tbi_check(desc, bit55) ||
+-        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
++    if (!tbi_check(mtedesc, bit55) ||
++        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
+         mtedesc = 0;
+     }
+ 
+@@ -6159,8 +6159,8 @@ void sve_ldnfff1_r_mte(CPUARMState *env, void *vg, target_ulong addr,
+     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+ 
+     /* Perform gross MTE suppression early. */
+-    if (!tbi_check(desc, bit55) ||
+-        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
++    if (!tbi_check(mtedesc, bit55) ||
++        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
+         mtedesc = 0;
+     }
+ 
+@@ -6413,8 +6413,8 @@ void sve_stN_r_mte(CPUARMState *env, uint64_t *vg, target_ulong addr,
+     desc = extract32(desc, 0, SIMD_DATA_SHIFT + SVE_MTEDESC_SHIFT);
+ 
+     /* Perform gross MTE suppression early. */
+-    if (!tbi_check(desc, bit55) ||
+-        tcma_check(desc, bit55, allocation_tag_from_addr(addr))) {
++    if (!tbi_check(mtedesc, bit55) ||
++        tcma_check(mtedesc, bit55, allocation_tag_from_addr(addr))) {
+         mtedesc = 0;
+     }
  
 -- 
 2.39.2
