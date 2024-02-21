@@ -4,132 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9013C48BF6
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B85EC48BF6
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 07:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcgkO-00007k-4C; Wed, 21 Feb 2024 02:10:28 -0500
+	id 1rcgkR-00008e-Vp; Wed, 21 Feb 2024 02:10:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgkL-00007L-4N
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:10:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcgk9-00062r-1W
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:10:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708499410;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iqPLVOtSYfJum3uYFgOmy2G+Z0ylaCldui6mZhJ9mUo=;
- b=CEmLShYx6z1p4MTjP6cpcXkIdIOiHTAmjQlql6BUNrqNMAcQELU6p0xZCTpZhFTiuoOn0T
- 5Ugdrh+vfN7E7NLqvIJwCDnhG7X8qymyq21IoBntqbzKIZo28wsvPIN1lweUq9hImX4NmR
- m2cuhEu//BUZIVbBNHieJ6BcLnn0UWc=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-GJ_RzVtBN3-lGxDh_v9ezQ-1; Wed, 21 Feb 2024 02:10:08 -0500
-X-MC-Unique: GJ_RzVtBN3-lGxDh_v9ezQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a35ef7abe08so355151466b.2
- for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:10:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcgkP-000086-C9
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:10:29 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1rcgkM-0005iq-D9
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 02:10:29 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1dc139ed11fso11921545ad.0
+ for <qemu-devel@nongnu.org>; Tue, 20 Feb 2024 23:08:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708499302; x=1709104102;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=xbDHAMXCSWwQLMvR0+NEyRiJYdqRFrvsARXGJfdO2XA=;
+ b=anbetUTfWqdk+o02wAIx1UDiurO2ZXUHBKLj8XBX2zaxVLWHkdQ2fdNNQnX7SPHDWg
+ kxlZ0/pZFOAY6TcZFLn1/jmC8cYCZzBOZJ6XHk83P/JmHS7RBWaoVpWgrBFP6yIgtnBP
+ /dtJdfAqj5LzZiuRpT2klLR+1/qaXSOFL4Z7606agteDOj8wryG+EP2zaMAIFALFsSt5
+ GbFlSHSFQnP7OB7RhOK2TDsvAnGmbMj7+6MaovlKe4e1C2wglu0j270M8CBbO0cXyRjp
+ F52Thlh3lezZY1bm66uOS5MtEi9n/QB7BxlPuvZHmgl0ux7lIuhrEsnTQbF+RvU1Q2Qc
+ j0wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708499407; x=1709104207;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iqPLVOtSYfJum3uYFgOmy2G+Z0ylaCldui6mZhJ9mUo=;
- b=HNLI0dszzq0lD651/murE9iz6zeUUTUkUH1dU6uhiplsXX5Xo98ne2qw/V4W9UdSS0
- f4hV3LCo79uNX/rqbOjs84tW6M2fNmv8YzBuiLlHt+qL80hA3wdJTQxZzalPRXXY4ybn
- fO3B2EeNbqrwRWEiDIGGeDO8AuhZV+8ax/jC60SLslMxhdMl5NErS+oRNvWHH2+iIVaT
- sUndxQ4M5gKBRlhCcuvSoNaHJtX+08O80sJ+qkDQeyA4tusKUNiZ5rU2k8wH+U5KA2KV
- rJaCSJCOlOH6qoR1uuDmBDPRnMo7ju2OdlM66QyE29C14ItOcBgCzaIL9uPrIMrABpkh
- QWow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkel4Mwe/Eui46En9Ef+Wu10kGdwTKPMU4WZzAQ0ioD3RYCZ7PNYfLcJBgkvDNRnCq28g9ru2fnmJ1gGceZuQgdryZci8=
-X-Gm-Message-State: AOJu0YwKkz1wOBLZLe3mg+kro5SroOvoQHnNW5eaQQ9VZrCMRonhlT5Q
- 34tYEbH9BRPpQl5seh/tfF5utKXyCL/2Te87XwIBPyxujUJkqYR00rAFnS6I0Cxp1Rin+lrkOka
- AHlTSKZY7SVc2yF3zYUExvT+S0nS62ggWaVBDLimQXtF0bZmTQPTL
-X-Received: by 2002:a17:906:b354:b0:a3e:d450:d3e0 with SMTP id
- cd20-20020a170906b35400b00a3ed450d3e0mr4092919ejb.43.1708499406851; 
- Tue, 20 Feb 2024 23:10:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE25KHy+cN6vEuiQv3L6xRRLrOzjqxoxOykRBeu7xKLFg0eoKoZc3XZMYXNtZztyTc67rmOIA==
-X-Received: by 2002:a17:906:b354:b0:a3e:d450:d3e0 with SMTP id
- cd20-20020a170906b35400b00a3ed450d3e0mr4092906ejb.43.1708499406575; 
- Tue, 20 Feb 2024 23:10:06 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
- [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- f6-20020a170906560600b00a3f106b6de9sm1043963ejq.216.2024.02.20.23.10.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 20 Feb 2024 23:10:06 -0800 (PST)
-Message-ID: <15a0b0cc-eb78-437f-b82f-72dab7a51fb9@redhat.com>
-Date: Wed, 21 Feb 2024 08:10:05 +0100
+ d=1e100.net; s=20230601; t=1708499302; x=1709104102;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xbDHAMXCSWwQLMvR0+NEyRiJYdqRFrvsARXGJfdO2XA=;
+ b=PwT3I/FAUX7ef50qS4S8pfg7sk0surFtm1ytQSKOwrJStZJ3IZJZTRsCCqGXWV3qla
+ +VINj0c7nq4zHPiozQMezUFBGSeKpl+n0tLVGozpYdr046tP1JTBNtrfL1avA2tLlkEj
+ D7drl2RorguFWV2O1OSHyFClbH1UvA19/NfulAtQ7dOWMMnKSvzRO0rlG2belJmQfMGi
+ AF6Uu6VuguE0Ymiv4scWvtCkGAXBEUvc7zUMHD8qoW5koBl9qjnT9Pg/KGQKX9Kc0X/w
+ 1ojggSdY5SXxhGHMtux9QQ/RQLnkjxXuivHlEQ9cFq7fBfHk5ZrJGwjoFtgaP3xAOK9S
+ Ynxw==
+X-Gm-Message-State: AOJu0YwRXxrBExdUKVJv/N5aJ6Xo1XxMTX0fd3njJfkGq042g2NTd0Tk
+ Kml+McOdTzQpir5+ThwwCRZuiOTXkzpzyTrMztpCY8n0XyAXDCGcc6+B+ZGIfoYyB+U+0MERVlM
+ svjtBDpnlixbBnKs0+fJcMvhcJsNphRTZ8ymY4+S59mOEJEAqBN/+rii9
+X-Google-Smtp-Source: AGHT+IERjPXurMS4MYpJlZolgFDcH2kl6hPsKzTk/tMWDdEkUdW2qd7VDxZdm+jtETCyCw4Hh/9YIUFahYrcIk/4T48=
+X-Received: by 2002:a17:90b:1881:b0:299:1cce:f3c3 with SMTP id
+ mn1-20020a17090b188100b002991ccef3c3mr21944881pjb.7.1708499300315; Tue, 20
+ Feb 2024 23:08:20 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] docs: Document that 32-bit Windows is unsupported
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Yonggang Luo <luoyonggang@gmail.com>
-References: <20240220174412.155885-1-peter.maydell@linaro.org>
- <20240220174412.155885-2-peter.maydell@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240220174412.155885-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <91c52e03e46ff0a96559b4e7d66ded582b2ec4e1.1708486450.git.yong.huang@smartx.com>
+ <874je22u83.fsf@pond.sub.org>
+In-Reply-To: <874je22u83.fsf@pond.sub.org>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Wed, 21 Feb 2024 15:08:04 +0800
+Message-ID: <CAK9dgmZkLZiT_W0UjB+=EN9_vAK5Qy5XKRMBhHBQ98sRBbiAQw@mail.gmail.com>
+Subject: Re: [PATCH] qapi: Craft the BlockdevCreateOptionsLUKS comment
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000e505fb0611defd5b"
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=yong.huang@smartx.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,24 +90,315 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/02/2024 18.44, Peter Maydell wrote:
-> ---
->   docs/about/build-platforms.rst  |  2 ++
->   docs/about/removed-features.rst | 15 +++++++++++++++
->   2 files changed, 17 insertions(+)
-> 
-> diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-> index f2a7aec56ff..8fd7da140a3 100644
-> --- a/docs/about/build-platforms.rst
-> +++ b/docs/about/build-platforms.rst
-> @@ -139,6 +139,8 @@ unprivileged accounts can create symlinks if Developer Mode is enabled.
->   When Developer Mode is not available/enabled, the SeCreateSymbolicLinkPrivilege
->   privilege is required, or the process must be run as an administrator.
->   
-> +Only 64-bit Windows is supported.
-...
+--000000000000e505fb0611defd5b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Feb 21, 2024 at 2:43=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+
+> Hyman Huang <yong.huang@smartx.com> writes:
+>
+> > Add comment in detail for commit 433957bb7f (qapi:
+> > Make parameter 'file' optional for
+> > BlockdevCreateOptionsLUKS).
+> >
+> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> > ---
+> >  qapi/block-core.json | 20 +++++++++++++++++++-
+> >  1 file changed, 19 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index ab5a93a966..42b0840d43 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
+> > @@ -4973,7 +4973,25 @@
+> >  ##
+> >  # @BlockdevCreateOptionsLUKS:
+> >  #
+> > -# Driver specific image creation options for LUKS.
+> > +# Driver specific image creation options for LUKS. Note that
+> > +# @file is required if @preallocation is specified and equals
+> > +# PREALLOC_MODE_ON. The following three scenarios determine how
+> > +# creation logic behaves when @preallocation is either equal to
+> > +# PREALLOC_MODE_OFF or is not given:
+> > +#
+> > +#  1) When @file is given only, format the block device referenced
+> > +#     by @file as the LUKS specification and trunk it to the @size.
+>
+> Do you mean "truncate it to @size"?
+>
+Yes, :( sorry for the spelling mistake.
 
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+>
+> > +#     In this case, the @size should reflect amount of space made
+> > +#     available to the guest, so the trunk size must take account
+> > +#     of that which will be used by the crypto header.
+> > +#
+> > +#  2) When @header is given only, just format the block device
+> > +#     referenced by @header as the LUKS specification.
+> > +#
+> > +#  3) When both @file and @header are given, block device
+> > +#     referenced by @file should be trunked to @size, and block
+> > +#     device referenced by @header should be formatted as the LUKS
+> > +#     specification.
+> >  #
+> >  # @file: Node to create the image format on, mandatory except when
+> >  #        'preallocation' is not requested
+>
+> Let's see whether I understand.
+>
+> blockdev-create with "driver": "luks" can work in three different ways:
+>
+> 1. Create an image with a LUKS header
+>
+> 2. Create just a detached LUKS header
+>
+> 3. Create an image and a detached LUKS header
+>
+> Correct?
+>
 
+Yes
+
+
+> @file and @header are BlockdevRef, which means they refer to existing
+> images with arbitrary driver.  Could be "file", "qcow2", or anything.
+>
+> Correct?
+>
+Yes
+
+
+>
+> To get 1., specify @file, but not @header.
+>
+> To get 2., specify @header, but not @file.
+>
+> To get 3., specify both.
+>
+> Specifying neither is an error.
+>
+> Correct?
+>
+
+Yes
+
+
+> In any case, @size is the logical size of the image (how much data it
+> can hold).
+>
+
+Yes
+
+
+>
+> With 1., the actual image size is a bit larger due to the LUKS header.
+> The @file image is resized to that size: if it's shorter, it's grown, if
+> it's longer, it's truncated.
+>
+
+Yes
+
+
+> With 2., @size is merely recorded in the detached LUKS header.
+>
+
+In LUKS1 specification, payload data size is not contained in the header,
+so in this case, @size is not recorded in the detached LUKS header.
+The creation logic just does the LUKS header formatting only.
+
+
+>
+> With 3., @size is recorded in the detached LUKS header, and the @file
+> image is resized as with 1.
+>
+
+Same reason as above, @size is not recorded and @file image is
+resized to @size exactly.
+
+
+>
+> Correct?
+>
+>
+Thanks for the comment,
+
+Yong
+
+--=20
+Best regards
+
+--000000000000e505fb0611defd5b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 21, 20=
+24 at 2:43=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat=
+.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-=
+style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">Hyman Huan=
+g &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">yong.huang=
+@smartx.com</a>&gt; writes:<br>
+<br>
+&gt; Add comment in detail for commit 433957bb7f (qapi:<br>
+&gt; Make parameter &#39;file&#39; optional for<br>
+&gt; BlockdevCreateOptionsLUKS).<br>
+&gt;<br>
+&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
+" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 qapi/block-core.json | 20 +++++++++++++++++++-<br>
+&gt;=C2=A0 1 file changed, 19 insertions(+), 1 deletion(-)<br>
+&gt;<br>
+&gt; diff --git a/qapi/block-core.json b/qapi/block-core.json<br>
+&gt; index ab5a93a966..42b0840d43 100644<br>
+&gt; --- a/qapi/block-core.json<br>
+&gt; +++ b/qapi/block-core.json<br>
+&gt; @@ -4973,7 +4973,25 @@<br>
+&gt;=C2=A0 ##<br>
+&gt;=C2=A0 # @BlockdevCreateOptionsLUKS:<br>
+&gt;=C2=A0 #<br>
+&gt; -# Driver specific image creation options for LUKS.<br>
+&gt; +# Driver specific image creation options for LUKS. Note that<br>
+&gt; +# @file is required if @preallocation is specified and equals<br>
+&gt; +# PREALLOC_MODE_ON. The following three scenarios determine how<br>
+&gt; +# creation logic behaves when @preallocation is either equal to<br>
+&gt; +# PREALLOC_MODE_OFF or is not given:<br>
+&gt; +#<br>
+&gt; +#=C2=A0 1) When @file is given only, format the block device referenc=
+ed<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0by @file as the LUKS specification and trunk it =
+to the @size.<br>
+<br>
+Do you mean &quot;truncate it to @size&quot;?<br></blockquote><div><div cla=
+ss=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-se=
+rif"></div><div class=3D"gmail_default" style=3D"font-family:&quot;comic sa=
+ns ms&quot;,sans-serif">Yes, :( sorry for the spelling mistake.</div></div>=
+<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:r=
+gb(204,204,204);padding-left:1ex">
+<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0In this case, the @size should reflect amount of=
+ space made<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0available to the guest, so the trunk size must t=
+ake account<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0of that which will be used by the crypto header.=
+<br>
+&gt; +#<br>
+&gt; +#=C2=A0 2) When @header is given only, just format the block device<b=
+r>
+&gt; +#=C2=A0 =C2=A0 =C2=A0referenced by @header as the LUKS specification.=
+<br>
+&gt; +#<br>
+&gt; +#=C2=A0 3) When both @file and @header are given, block device<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0referenced by @file should be trunked to @size, =
+and block<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0device referenced by @header should be formatted=
+ as the LUKS<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0specification.<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # @file: Node to create the image format on, mandatory except wh=
+en<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;preallocation&#39; is not requ=
+ested<br>
+<br>
+Let&#39;s see whether I understand.<br>
+<br>
+blockdev-create with &quot;driver&quot;: &quot;luks&quot; can work in three=
+ different ways:<br>
+<br>
+1. Create an image with a LUKS header<br>
+<br>
+2. Create just a detached LUKS header<br>
+<br>
+3. Create an image and a detached LUKS header<br>
+<br>
+Correct?<br></blockquote><div><br></div><div class=3D"gmail_default" style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Yes</div><div class=
+=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-seri=
+f"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(2=
+04,204,204);padding-left:1ex">
+<br>
+@file and @header are BlockdevRef, which means they refer to existing<br>
+images with arbitrary driver.=C2=A0 Could be &quot;file&quot;, &quot;qcow2&=
+quot;, or anything.<br>
+<br>
+Correct?<br></blockquote><div><div class=3D"gmail_default" style=3D"font-fa=
+mily:&quot;comic sans ms&quot;,sans-serif"></div><div class=3D"gmail_defaul=
+t" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Yes</div></di=
+v><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color=
+:rgb(204,204,204);padding-left:1ex">
+<br>
+To get 1., specify @file, but not @header.<br>
+<br>
+To get 2., specify @header, but not @file.<br>
+<br>
+To get 3., specify both.<br>
+<br>
+Specifying neither is an error.<br>
+<br>
+Correct?<br></blockquote><div><br></div><div class=3D"gmail_default" style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Yes</div><div class=
+=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-seri=
+f"><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(2=
+04,204,204);padding-left:1ex">
+<br>
+In any case, @size is the logical size of the image (how much data it<br>
+can hold).<br></blockquote><div><br></div><div><div class=3D"gmail_default"=
+ style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">Yes</div></div>=
+<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:r=
+gb(204,204,204);padding-left:1ex">
+<br>
+With 1., the actual image size is a bit larger due to the LUKS header.<br>
+The @file image is resized to that size: if it&#39;s shorter, it&#39;s grow=
+n, if<br>
+it&#39;s longer, it&#39;s truncated.<br></blockquote><div><br></div><div cl=
+ass=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-s=
+erif">Yes</div><div class=3D"gmail_default" style=3D"font-family:&quot;comi=
+c sans ms&quot;,sans-serif"><br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:soli=
+d;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+With 2., @size is merely recorded in the detached LUKS header.<br></blockqu=
+ote><div><br></div><div class=3D"gmail_default"><div class=3D"gmail_default=
+" style=3D"font-family:&quot;comic sans ms&quot;,sans-serif">In LUKS1 speci=
+fication, payload data size is not contained in the header,</div><div class=
+=3D"gmail_default" style=3D"font-family:Arial,Helvetica,sans-serif"><font f=
+ace=3D"comic sans ms, sans-serif">so in this case, @size is not recorded in=
+ the detached LUKS header.<span class=3D"gmail-Apple-converted-space">=C2=
+=A0</span></font></div><div class=3D"gmail_default"><font face=3D"comic san=
+s ms, sans-serif">The creation logic just does the LUKS header formatting o=
+nly.</font></div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
+lid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+With 3., @size is recorded in the detached LUKS header, and the @file<br>
+image is resized as with 1.<br></blockquote><div><br></div><div><div class=
+=3D"gmail_default" style=3D"font-family:&quot;comic sans ms&quot;,sans-seri=
+f">Same reason as above, @size is not recorded and=C2=A0@file image is</div=
+><div class=3D"gmail_default"><font face=3D"comic sans ms, sans-serif">resi=
+zed to @size exactly.=C2=A0</font></div></div><div>=C2=A0</div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1=
+px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:=
+1ex">
+<br>
+Correct?<br>
+<br>
+</blockquote></div><div><br></div><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif">Thanks for the comment,</div=
+><br clear=3D"all"><div><div class=3D"gmail_default" style=3D"font-family:&=
+quot;comic sans ms&quot;,sans-serif">Yong</div><br></div><span class=3D"gma=
+il_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signatur=
+e"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</=
+font></div></div></div>
+
+--000000000000e505fb0611defd5b--
 
