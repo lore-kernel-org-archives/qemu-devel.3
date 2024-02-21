@@ -4,88 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B1B0C5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41BCC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 18:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcqya-0001ft-O5; Wed, 21 Feb 2024 13:05:48 -0500
+	id 1rcr0m-000552-Mi; Wed, 21 Feb 2024 13:08:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcqyY-0001dF-VX
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:05:46 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcqyX-0000FT-8k
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:05:46 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e45d0c9676so36426b3a.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 10:05:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708538743; x=1709143543; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nKKLptDSdqzkckguYJTH6juMz0piBQqZbgHWd2D7gsc=;
- b=RzU5/pVzMsjqeUpxBRgmUfb2puIyUSB7o6MqtedeCxcA+mpJtaUxH0lfBKzrltGVKU
- UGq43NdMOWNhxllI2FEWPE4U+JIG5FHh70Tqf/I2sCqFyRNX5t/ZtFaDTfHVkg+u1PoH
- x8fydQ4hVB8KMuikE4jN6C0jfNsFw6WZdXRpTz5oqHl+KjN1Dzc3C7f3yO9Ibc/r1E1d
- FJTWiVCBcKQRQuv+Ube12uxqiGCv7CmR6YmSSt+y9V/C5Ko55/hxgc3k7pKIOqeyUcBV
- LKPhLdqjJQZfPVSDnGJCCAeqpvlk/uIefzllLZlYRMStmuzSrEjF8bntEochMQoR7IXn
- zj4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708538743; x=1709143543;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nKKLptDSdqzkckguYJTH6juMz0piBQqZbgHWd2D7gsc=;
- b=NUrje3s7SnnUQyxQsEd11AmIZF197w+SUrDPrzSmGV0d9uwtClDshqWiElCAWBD12m
- rWKQw1IMWbzxYSMeO6YnLrLH73a1jRsQbi57GhfTTwkHOImdx8L20UjkdaQlGBTJ7Hlf
- KfzQSFJGwuhuKL1RAq3/M8ypI12hFFCmhP0X6vEzr2KDbG8tBx8R+mggYmnabQDZ0o6W
- pFsjDj5R4urBCnrRYAErEqgY+PPGtyRiyCxNMuAa5yQmnZkg6vYsfd3HpH5a7qCBzz02
- 1s7VdwwvTmEUp/ejxBptlU1UWQ7O/mOmUYWh3Lc2CzHt1Ob/8mSXUhTgntY/3c8PD4qK
- Dw1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVALCDHZs/CjqRf+y8rZhWMmQiJ6kEUGnt3Iy1Z4RWPr7Plt0gq2dk498yl0K5x8h4BQ+ogEVFv1X1P/UzgrGNyd3CMJH0=
-X-Gm-Message-State: AOJu0YzwzLcnlC3IUZ1Jj8zpcRAIHsrjrFczgA2+GzQctUn/26WpkloO
- lL/u/TkGDO+b4rc9KWtmiMrpI6+sE1kC3GiVYxwSYuJYukotNP8SGpFpe0CCZcg=
-X-Google-Smtp-Source: AGHT+IFV8Zft/HEd0ZZ0Sqs3GE02GOjtOYWps9GcAdWCAGezCPoGChys0Cq19iS0rzx9cDKs4tYtUA==
-X-Received: by 2002:a05:6a00:4585:b0:6e4:bc7f:ba39 with SMTP id
- it5-20020a056a00458500b006e4bc7fba39mr277365pfb.17.1708538743337; 
- Wed, 21 Feb 2024 10:05:43 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- s6-20020a62e706000000b006e3f09fd6a5sm7571751pfh.163.2024.02.21.10.05.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 10:05:42 -0800 (PST)
-Message-ID: <094d7589-09f6-4515-ae8d-72acbd3ade58@ventanamicro.com>
-Date: Wed, 21 Feb 2024 15:05:39 -0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcr0l-0004wF-Au
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:08:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rcr0i-0000hW-Jm
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 13:08:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708538878;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5N9kQmsXi811xBmhKN5vWVkLXcdGsB/xJVwLIj9WQEE=;
+ b=htBoiaX7P+50qbS9vv2Go80CduXPKer8Y+bRRgKWyXPxgIHO5gcyTZMcge9bYMunCF1ty+
+ EsiitXjZdteLcAk5bpZs/tagcfAsqjZbI8gVTOqdV+tInu5MH4r6c3LGJBTmc7XTMjDcqK
+ QeBMrsoybApqPRlsKZtznUmTVWqJcyg=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-393-XSKf2OcqMxCBTUQbG2h32g-1; Wed, 21 Feb 2024 13:07:54 -0500
+X-MC-Unique: XSKf2OcqMxCBTUQbG2h32g-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7DAA0887E41;
+ Wed, 21 Feb 2024 18:07:54 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.110])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 5D23D2166B32;
+ Wed, 21 Feb 2024 18:07:52 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>, qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] hw/sparc/leon3: Fix wrong usage of DO_UPCAST macro
+Date: Wed, 21 Feb 2024 19:07:51 +0100
+Message-ID: <20240221180751.190489-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/riscv: Apply modularized matching conditions
- for icount trigger
-Content-Language: en-US
-To: Alvin Chang <alvinga@andestech.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-References: <20240219032559.79665-1-alvinga@andestech.com>
- <20240219032559.79665-5-alvinga@andestech.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240219032559.79665-5-alvinga@andestech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,46 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+leon3.c currently fails to compile with some compilers when the -Wvla
+option has been enabled:
 
+ ../hw/sparc/leon3.c: In function ‘leon3_cpu_reset’:
+ ../hw/sparc/leon3.c:153:5: error: ISO C90 forbids variable length array
+  ‘offset_must_be_zero’ [-Werror=vla]
+   153 |     ResetData *s = (ResetData *)DO_UPCAST(ResetData, info[id], info);
+       |     ^~~~~~~~~
+ cc1: all warnings being treated as errors
 
-On 2/19/24 00:25, Alvin Chang wrote:
-> We have implemented trigger_common_match(), which checks if the enabled
-> privilege levels of the trigger match CPU's current privilege level. We
-> can invoke trigger_common_match() to check the privilege levels of the
-> type 3 triggers.
-> 
-> Signed-off-by: Alvin Chang <alvinga@andestech.com>
-> ---
->   target/riscv/debug.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 67ba19c966..de996a393c 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -624,7 +624,7 @@ void helper_itrigger_match(CPURISCVState *env)
->           if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
->               continue;
->           }
-> -        if (check_itrigger_priv(env, i)) {
-> +        if (!trigger_common_match(env, TRIGGER_TYPE_INST_CNT, i)) {
->               continue;
->           }
+Looking at this code, the DO_UPCAST macro is indeed used in a wrong way
+here: DO_UPCAST is supposed to check that the second parameter is the
+first entry of the struct that the first parameter indicates, but since
+we use and index into the info[] array, this of course cannot work.
 
+The intention here was likely rather to use the container_of() macro
+instead, so switch the code accordingly.
 
-Looks good. Shouldn't we also change riscv_itrigger_enabled() to also use
-trigger_common_match()? riscv_itrigger_enabled() is remarkably similar to
-helper_itrigger_match() so I believe we can also use the new function
-there.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/sparc/leon3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 4873b59b6c..6aaa04cb19 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -150,7 +150,7 @@ static void leon3_cpu_reset(void *opaque)
+ {
+     struct CPUResetData *info = (struct CPUResetData *) opaque;
+     int id = info->id;
+-    ResetData *s = (ResetData *)DO_UPCAST(ResetData, info[id], info);
++    ResetData *s = container_of(info, ResetData, info[id]);
+     CPUState *cpu = CPU(s->info[id].cpu);
+     CPUSPARCState *env = cpu_env(cpu);
+ 
+-- 
+2.43.2
 
-Thanks,
-
-Daniel
-
-
-
-
-
->           count = itrigger_get_count(env, i);
 
