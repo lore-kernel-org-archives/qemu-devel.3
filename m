@@ -4,87 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845B2C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 20:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCF7C5478A
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 20:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctZh-0002CP-73; Wed, 21 Feb 2024 15:52:17 -0500
+	id 1rctgN-0000iz-0C; Wed, 21 Feb 2024 15:59:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctZg-0002C8-Jc
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 15:52:16 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rctgL-0000ij-Kx
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 15:59:09 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rctZe-0004ki-DL
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 15:52:16 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-41279203064so5511235e9.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 12:52:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708548733; x=1709153533; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tAb+IZJURPm8lO9YaFguG0cjar2ldCOv1GxmfhUyOvI=;
- b=IwPL6G1kTDoJt8mvpbgOhi7/Q/KPHLF5l4NlJyOog5AcDFag/IDVkgPzKTEa3ulvyM
- EHTyWGXsN2NK9ZeB4G/S5uEluG5fc7u3Wmn2kzGeh4KGbYz54fUzcj5y48iCG7KUBlZK
- Ovl6lNEmA6kgd2UDXGDH0HsQmF3d5WHjYSAvTabiM8CT6RdtpvfZW2wyPa6Bq5VrXRkZ
- hEtaGPgWisHhgeUJEZo/UEHNkB1+zqHjTtoG7BhfdWXYfvaB7AhWHxqoQ8h4ikQstQyb
- K9MBudH53gFy6Z99wH9epgul2qLm+aQHXnGQF9P2rxrFOB+uiSWMbs0H1j67BhAvw70c
- C2nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708548733; x=1709153533;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tAb+IZJURPm8lO9YaFguG0cjar2ldCOv1GxmfhUyOvI=;
- b=k7Aev8Xvd+rvY4gxKemOyzMCH66QBQfZca74tX1lXma8zbY3vFCN6KHDqso+mIWwzQ
- gGZsaEO4Ex904D2MFpqB7zM1or+YqahjDo/TRsHfsXdkvgKAKCLZNWEqaaH8C9/vrlrg
- 207CyM7yxiUeGou6Sebq/UYY0hc0Chc8bCY+zsrPiJIqx80yCuC3vjssAx7Il4Ks/TMa
- SDozK4xW0dnNA25PJPRMb0Ugge7Sq/cwWBdIt+R0A2Df4iYJFZXBblRo3eISGj+JPyoI
- FqG2AiMJK98x7f+Ijs0TEhyI+r6hC83q4+/nuf/ggtd0cg2sAyHo4yjYgBK3A/WftzwS
- dXAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5ih1sXxkccv/JfcTnYwTcOKLVAgHX8GiksKLw3iHUl9cVvf3rDQqvjZMYrZNIKfR4MRpofHWyyJHubj6acufuukluOrQ=
-X-Gm-Message-State: AOJu0Ywa5lVuHyyymY2Tl+JkP0BzgdDgE6dz9AFCwVGyAHR25Czj+FXB
- 3rSOUIKfkn0u6wTN/SNzRLcx138X3XqUd29b+8zwXWY4/ApkDTV0cgxuyKnKSRU=
-X-Google-Smtp-Source: AGHT+IHFcvvT0A7gVFwFmRnXIYybQPbzwaULRNy2hDjISmCIBeIZV7B7xTM6EbL2v57J3R47ypp5sQ==
-X-Received: by 2002:a05:600c:5390:b0:411:c789:5730 with SMTP id
- hg16-20020a05600c539000b00411c7895730mr14142961wmb.35.1708548732611; 
- Wed, 21 Feb 2024 12:52:12 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- m23-20020a7bca57000000b0041262355aeasm3628034wml.16.2024.02.21.12.52.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 12:52:11 -0800 (PST)
-Message-ID: <858c4ece-bfea-4211-aca9-4b541ad35fb8@linaro.org>
-Date: Wed, 21 Feb 2024 21:52:10 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rctgJ-0005lN-AW
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 15:59:09 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 646322228D;
+ Wed, 21 Feb 2024 20:59:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708549144; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=psMlRJvTcZCItPYhGeR/AouJC4RavelIS4cBjT6oinU=;
+ b=GTHah/CB3zTLIgxDwaVnjEM4CaKpGy4Jl9Od3xp+WUeignIaOoQSjLxFGzeO5bdLp8KaeN
+ lrHxTtWGmJLfqzetUOVIA/vtGXM2YiZgIAMWSnl5BXnDvo7kRClCpKq5QF7oYFW7KhH5fS
+ HmQ/fzm5YlxbmSMCAk3BrpfTBxIp6d8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708549144;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=psMlRJvTcZCItPYhGeR/AouJC4RavelIS4cBjT6oinU=;
+ b=Xe9F0n+S4R96Cs2TrjD3deg8ez8MViUqS+h0f4djm+QnrS8BAv1cxYtVMYLk60CXwlgzgf
+ 3UeZsyZxAwnX/iAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708549144; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=psMlRJvTcZCItPYhGeR/AouJC4RavelIS4cBjT6oinU=;
+ b=GTHah/CB3zTLIgxDwaVnjEM4CaKpGy4Jl9Od3xp+WUeignIaOoQSjLxFGzeO5bdLp8KaeN
+ lrHxTtWGmJLfqzetUOVIA/vtGXM2YiZgIAMWSnl5BXnDvo7kRClCpKq5QF7oYFW7KhH5fS
+ HmQ/fzm5YlxbmSMCAk3BrpfTBxIp6d8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708549144;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=psMlRJvTcZCItPYhGeR/AouJC4RavelIS4cBjT6oinU=;
+ b=Xe9F0n+S4R96Cs2TrjD3deg8ez8MViUqS+h0f4djm+QnrS8BAv1cxYtVMYLk60CXwlgzgf
+ 3UeZsyZxAwnX/iAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E28DE139D0;
+ Wed, 21 Feb 2024 20:59:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1MAJKhdk1mV9XAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 21 Feb 2024 20:59:03 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Hao Xiang <hao.xiang@bytedance.com>, pbonzini@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net, peterx@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, qemu-devel@nongnu.org, jdenemar@redhat.com
+Cc: Hao Xiang <hao.xiang@bytedance.com>
+Subject: Re: [PATCH v2 5/7] migration/multifd: Add new migration test cases
+ for legacy zero page checking.
+In-Reply-To: <20240216224002.1476890-6-hao.xiang@bytedance.com>
+References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
+ <20240216224002.1476890-6-hao.xiang@bytedance.com>
+Date: Wed, 21 Feb 2024 17:59:01 -0300
+Message-ID: <878r3dbkkq.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] hw/ide: Move IDE device related definitions to
- ide-dev.h
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-block@nongnu.org
-References: <20240220085505.30255-1-thuth@redhat.com>
- <20240220085505.30255-5-thuth@redhat.com>
- <d1b005a8-ee10-414e-b76b-9c56ef657a9b@linaro.org>
- <767097cd-06f5-4eec-a778-94b60f947e2b@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <767097cd-06f5-4eec-a778-94b60f947e2b@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="GTHah/CB";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Xe9F0n+S
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.47 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ RCPT_COUNT_TWELVE(0.00)[12];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.16)[-0.777];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Rspamd-Queue-Id: 646322228D
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,25 +127,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/2/24 20:13, Thomas Huth wrote:
-> On 21/02/2024 19.43, Philippe Mathieu-Daudé wrote:
->> On 20/2/24 09:55, Thomas Huth wrote:
->>> Unentangle internal.h by moving public IDE device related
->>
->> Disentangle ... from? Untangle? TIL Unentangle.
-> 
-> You're right, "disentangle" seems to be the more appropriate word.
-> I'll fix it up.
+Hao Xiang <hao.xiang@bytedance.com> writes:
 
-No need, series queued and fixed!
+> Now that zero page checking is done on the multifd sender threads by
+> default, we still provide an option for backward compatibility. This
+> change adds a qtest migration test case to set the zero-page-detection
+> option to "legacy" and run multifd migration with zero page checking on the
+> migration main thread.
+>
+> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> ---
+>  tests/qtest/migration-test.c | 52 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>
+> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+> index 8a5bb1752e..c27083110a 100644
+> --- a/tests/qtest/migration-test.c
+> +++ b/tests/qtest/migration-test.c
+> @@ -2621,6 +2621,24 @@ test_migrate_precopy_tcp_multifd_start(QTestState *from,
+>      return test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
+>  }
+>  
+> +static void *
+> +test_migrate_precopy_tcp_multifd_start_zero_page_legacy(QTestState *from,
+> +                                                        QTestState *to)
+> +{
+> +    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
+> +    migrate_set_parameter_str(from, "zero-page-detection", "legacy");
+> +    return NULL;
+> +}
+> +
+> +static void *
+> +test_migration_precopy_tcp_multifd_start_no_zero_page(QTestState *from,
+> +                                                      QTestState *to)
+> +{
+> +    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
+> +    migrate_set_parameter_str(from, "zero-page-detection", "none");
+> +    return NULL;
+> +}
+> +
+>  static void *
+>  test_migrate_precopy_tcp_multifd_zlib_start(QTestState *from,
+>                                              QTestState *to)
+> @@ -2652,6 +2670,36 @@ static void test_multifd_tcp_none(void)
+>      test_precopy_common(&args);
+>  }
+>  
+> +static void test_multifd_tcp_zero_page_legacy(void)
+> +{
+> +    MigrateCommon args = {
+> +        .listen_uri = "defer",
+> +        .start_hook = test_migrate_precopy_tcp_multifd_start_zero_page_legacy,
+> +        /*
+> +         * Multifd is more complicated than most of the features, it
+> +         * directly takes guest page buffers when sending, make sure
+> +         * everything will work alright even if guest page is changing.
+> +         */
+> +        .live = true,
+> +    };
+> +    test_precopy_common(&args);
+> +}
+> +
+> +static void test_multifd_tcp_no_zero_page(void)
+> +{
+> +    MigrateCommon args = {
+> +        .listen_uri = "defer",
+> +        .start_hook = test_migration_precopy_tcp_multifd_start_no_zero_page,
+> +        /*
+> +         * Multifd is more complicated than most of the features, it
+> +         * directly takes guest page buffers when sending, make sure
+> +         * everything will work alright even if guest page is changing.
+> +         */
+> +        .live = true,
+> +    };
+> +    test_precopy_common(&args);
+> +}
+> +
+>  static void test_multifd_tcp_zlib(void)
+>  {
+>      MigrateCommon args = {
+> @@ -3550,6 +3598,10 @@ int main(int argc, char **argv)
+>      }
+>      migration_test_add("/migration/multifd/tcp/plain/none",
+>                         test_multifd_tcp_none);
+> +    migration_test_add("/migration/multifd/tcp/plain/zero_page_legacy",
+> +                       test_multifd_tcp_zero_page_legacy);
+> +    migration_test_add("/migration/multifd/tcp/plain/no_zero_page",
+> +                       test_multifd_tcp_no_zero_page);
 
->> Anyway I'm not a native English speaker, so:
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Thanks!
-> 
->   Thomas
-> 
-> 
+Here it's better to separate the main feature from the states. That way
+we can run only the zero-page tests with:
 
+ migration-test -r /x86_64/migration/multifd/tcp/plain/zero-page
+
+Like so: (also dashes instead of underscores)
+/zero-page/legacy
+/zero-page/none
+
+>      migration_test_add("/migration/multifd/tcp/plain/cancel",
+>                         test_multifd_tcp_cancel);
+>      migration_test_add("/migration/multifd/tcp/plain/zlib",
 
