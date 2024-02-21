@@ -4,70 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E26DC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20075C48BC3
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoKy-0002dl-5O; Wed, 21 Feb 2024 10:16:44 -0500
+	id 1rcoJz-0001VA-1z; Wed, 21 Feb 2024 10:15:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
- id 1rcoJo-00010D-VY
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:15:33 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rcoJe-0000nB-4L; Wed, 21 Feb 2024 10:15:24 -0500
+Received: from szxga01-in.huawei.com ([45.249.212.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkhapov@yandex-team.ru>)
- id 1rcmwz-0002yY-Nc
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 08:47:56 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id AC08A60E52;
- Wed, 21 Feb 2024 16:47:49 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:a510::1:2d] (unknown
- [2a02:6b8:b081:a510::1:2d])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id mlSZ730iCiE0-5a3riyI5; Wed, 21 Feb 2024 16:47:48 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1708523268;
- bh=sDtRNk/m1TxEix06v3seKOOwGK8eu44uU2PT0LBSoXs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=k9EOYR4uT7EBBKePpI6pdFndpSEKQopCnXWSGKqXw6ei2jVVhIfFbTSc5SafOLSYg
- x8QE3cGOKQToCkDlM54LmYi2pDEjLfw7xIiuESAawHIpyqImWxKQWFIFH7RiqgVOQP
- 30y8fhMUxzRQGRhfH9kFcqfpe1KABv1xsKAeyMeU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <a804edf0-67d4-4752-b79f-c3e1ef3d72ff@yandex-team.ru>
-Date: Wed, 21 Feb 2024 18:47:47 +0500
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rcmLx-0004oS-KG; Wed, 21 Feb 2024 08:09:40 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+ by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4TfxQP54w4zsX3R;
+ Wed, 21 Feb 2024 21:07:41 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 64E6A1404DB;
+ Wed, 21 Feb 2024 21:09:21 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
+ 2024 21:09:20 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [RFC PATCH v2 00/22] target/arm: Implement FEAT_NMI and FEAT_GICv3_NMI
+Date: Wed, 21 Feb 2024 13:08:01 +0000
+Message-ID: <20240221130823.677762-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] qapi/migration.json: add reason to MIGRATION event
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, eblake@redhat.com,
- armbru@redhat.com, yc-core@yandex-team.ru
-References: <20240215122759.1438581-1-rkhapov@yandex-team.ru>
- <20240215122759.1438581-2-rkhapov@yandex-team.ru> <ZdQ7C5dHIQsTVQE8@x1n>
-From: Roman Khapov <rkhapov@yandex-team.ru>
-In-Reply-To: <ZdQ7C5dHIQsTVQE8@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=rkhapov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.187;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -76,30 +62,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If I understood you right, you suggest to improve migrate_generate_event 
-to accept MigrationState* instead of int* state (which is pointing to 
-field MigrationState.state in all usages), and get error reason from 
-MigrationState.error, if the new state is MIGRATION_STATE_FAILED, is it?
+This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
+introduce support for a new category of interrupts in the architecture
+which we can use to provide NMI like functionality.
 
-That sounds reasonable, thanks!
+There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
+PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
+interrupts including those with superpriority to be masked on entry to ELn
+until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
+can be managed by software using the new register control ALLINT.ALLINT.
+Independent controls are provided for this feature at each EL, usage at EL1
+should not disrupt EL2 or EL3.
 
-But I'm not sure if I got the idea of changing migrate_set_error 
-correctly, can you explain in more details, please?
+I have tested it with the following linux patches which try to support
+FEAT_NMI in linux kernel:
 
-On 2/20/24 10:39, Peter Xu wrote:
-> On Thu, Feb 15, 2024 at 05:27:58PM +0500, Roman Khapov wrote:
->>       migrate_set_state(&mis->state, MIGRATION_STATUS_COLO,
->> -                      MIGRATION_STATUS_COMPLETED);
->> +                      MIGRATION_STATUS_COMPLETED, NULL);
-> Instead of enforcing migrate_set_error() to always pass an error, maybe we
-> can allow migrate_generate_event() to fetch s->error in FAILED state, if
-> that hint ever existed?
->
+	https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
+
+In the test, SGI, PPI and SPI interrupts can all be set to have super priority
+to be converted to a hardware NMI interrupt. The SGI is tested with kernel
+IPI as NMI framework, and the PPI interrupt is tested with "perf top" command
+with hardware NMI enabled, and the PPI interrupt is tested with a custom
+test module, in which NMI interrupts can be received and transmitted normally.
+
+Changes in v2:
+- Break up the patches so that each one does only one thing.
+- Remove the command line option and just implement it in "max" cpu.
+
+Jinjie Ruan (22):
+  target/arm: Add FEAT_NMI to max
+  target/arm: Handle HCR_EL2 accesses for bits introduced with FEAT_NMI
+  target/arm: Add PSTATE.ALLINT
+  target/arm: Implement ALLINT MSR (immediate)
+  target/arm: Support MSR access to ALLINT
+  target/arm: Add support for Non-maskable Interrupt
+  target/arm: Add support for NMI event state
+  target/arm: Handle IS/FS in ISR_EL1 for NMI
+  target/arm: Add support for FEAT_NMI, Non-maskable Interrupt
+  target/arm: Handle PSTATE.ALLINT on taking an exception
+  target/arm: Set pstate.ALLINT in arm_cpu_reset_hold
+  hw/arm/virt: Wire NMI irq line from GIC to CPU
+  hw/intc/arm_gicv3: Add external IRQ lines for NMI
+  target/arm: Handle NMI in arm_cpu_do_interrupt_aarch64()
+  hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
+  hw/intc/arm_gicv3: Implement GICD_INMIR
+  hw/intc: Enable FEAT_GICv3_NMI Feature
+  hw/arm/virt: Add FEAT_GICv3_NMI feature support in virt GIC
+  hw/intc/arm_gicv3: Add irq superpriority information
+  hw/intc/arm_gicv3: Add NMI handling CPU interface registers
+  hw/intc/arm_gicv3: Implement NMI interrupt prioirty
+  hw/intc/arm_gicv3: Report the NMI interrupt in gicv3_cpuif_update()
+
+ docs/system/arm/emulation.rst      |  1 +
+ hw/arm/virt.c                      |  7 ++-
+ hw/intc/arm_gicv3.c                | 61 ++++++++++++++++++++++---
+ hw/intc/arm_gicv3_common.c         |  4 ++
+ hw/intc/arm_gicv3_cpuif.c          | 53 ++++++++++++++++++++--
+ hw/intc/arm_gicv3_dist.c           | 40 +++++++++++++++++
+ hw/intc/arm_gicv3_redist.c         | 23 ++++++++++
+ hw/intc/gicv3_internal.h           |  5 +++
+ include/hw/intc/arm_gic_common.h   |  1 +
+ include/hw/intc/arm_gicv3_common.h |  6 +++
+ target/arm/cpu-features.h          |  5 +++
+ target/arm/cpu-qom.h               |  3 +-
+ target/arm/cpu.c                   | 46 ++++++++++++++++---
+ target/arm/cpu.h                   | 15 ++++++-
+ target/arm/helper.c                | 72 ++++++++++++++++++++++++++++++
+ target/arm/internals.h             |  3 ++
+ target/arm/tcg/a64.decode          |  1 +
+ target/arm/tcg/cpu64.c             |  1 +
+ target/arm/tcg/helper-a64.c        | 24 ++++++++++
+ target/arm/tcg/helper-a64.h        |  1 +
+ target/arm/tcg/translate-a64.c     | 10 +++++
+ 21 files changed, 362 insertions(+), 20 deletions(-)
+
 -- 
-Best regards,
-Roman Khapov
+2.34.1
 
 
