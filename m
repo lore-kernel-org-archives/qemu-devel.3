@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF48EC54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 850D3C54788
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuTo-0004UO-Pu; Wed, 21 Feb 2024 16:50:17 -0500
+	id 1rcuRI-0000w3-Qh; Wed, 21 Feb 2024 16:47:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuTf-0004EA-0L; Wed, 21 Feb 2024 16:50:07 -0500
+ id 1rcuRG-0000sn-8Q; Wed, 21 Feb 2024 16:47:38 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuTc-0007iH-NW; Wed, 21 Feb 2024 16:50:06 -0500
+ id 1rcuRE-0007Ld-EP; Wed, 21 Feb 2024 16:47:37 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 112D64F87A;
- Thu, 22 Feb 2024 00:47:48 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 593514F862;
+ Thu, 22 Feb 2024 00:47:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A2BF9869FB;
- Thu, 22 Feb 2024 00:47:25 +0300 (MSK)
-Received: (nullmailer pid 2339914 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id F39B2869E3;
+ Thu, 22 Feb 2024 00:47:23 +0300 (MSK)
+Received: (nullmailer pid 2339841 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Markus Frank <m.frank@proxmox.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 30/33] ui/clipboard: mark type as not available when
- there is no data
-Date: Thu, 22 Feb 2024 00:47:13 +0300
-Message-Id: <20240221214723.2339742-30-mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 06/33] qemu-options.hx: Improve -serial option
+ documentation
+Date: Thu, 22 Feb 2024 00:46:49 +0300
+Message-Id: <20240221214723.2339742-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -65,83 +65,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-With VNC, a client can send a non-extended VNC_MSG_CLIENT_CUT_TEXT
-message with len=0. In qemu_clipboard_set_data(), the clipboard info
-will be updated setting data to NULL (because g_memdup(data, size)
-returns NULL when size is 0). If the client does not set the
-VNC_ENCODING_CLIPBOARD_EXT feature when setting up the encodings, then
-the 'request' callback for the clipboard peer is not initialized.
-Later, because data is NULL, qemu_clipboard_request() can be reached
-via vdagent_chr_write() and vdagent_clipboard_recv_request() and
-there, the clipboard owner's 'request' callback will be attempted to
-be called, but that is a NULL pointer.
+The -serial option documentation is a bit brief about '-serial none'
+and '-serial null'. In particular it's not very clear about the
+difference between them, and it doesn't mention that it's up to
+the machine model whether '-serial none' means "don't create the
+serial port" or "don't wire the serial port up to anything".
 
-In particular, this can happen when using the KRDC (22.12.3) VNC
-client.
+Expand on these points.
 
-Another scenario leading to the same issue is with two clients (say
-noVNC and KRDC):
-
-The noVNC client sets the extension VNC_FEATURE_CLIPBOARD_EXT and
-initializes its cbpeer.
-
-The KRDC client does not, but triggers a vnc_client_cut_text() (note
-it's not the _ext variant)). There, a new clipboard info with it as
-the 'owner' is created and via qemu_clipboard_set_data() is called,
-which in turn calls qemu_clipboard_update() with that info.
-
-In qemu_clipboard_update(), the notifier for the noVNC client will be
-called, i.e. vnc_clipboard_notify() and also set vs->cbinfo for the
-noVNC client. The 'owner' in that clipboard info is the clipboard peer
-for the KRDC client, which did not initialize the 'request' function.
-That sounds correct to me, it is the owner of that clipboard info.
-
-Then when noVNC sends a VNC_MSG_CLIENT_CUT_TEXT message (it did set
-the VNC_FEATURE_CLIPBOARD_EXT feature correctly, so a check for it
-passes), that clipboard info is passed to qemu_clipboard_request() and
-the original segfault still happens.
-
-Fix the issue by handling updates with size 0 differently. In
-particular, mark in the clipboard info that the type is not available.
-
-While at it, switch to g_memdup2(), because g_memdup() is deprecated.
-
-Cc: qemu-stable@nongnu.org
-Fixes: CVE-2023-6683
-Reported-by: Markus Frank <m.frank@proxmox.com>
-Suggested-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Markus Frank <m.frank@proxmox.com>
-Message-ID: <20240124105749.204610-1-f.ebner@proxmox.com>
-(cherry picked from commit 405484b29f6548c7b86549b0f961b906337aa68a)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240122163607.459769-3-peter.maydell@linaro.org
+(cherry picked from commit 747bfaf3a9d2f3cd51674763dc1f7575100cd200)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/clipboard.c b/ui/clipboard.c
-index 3d14bffaf8..b3f6fa3c9e 100644
---- a/ui/clipboard.c
-+++ b/ui/clipboard.c
-@@ -163,9 +163,15 @@ void qemu_clipboard_set_data(QemuClipboardPeer *peer,
-     }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 379692da86..7f798ce47e 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3968,7 +3968,8 @@ SRST
+     This option can be used several times to simulate up to 4 serial
+     ports.
  
-     g_free(info->types[type].data);
--    info->types[type].data = g_memdup(data, size);
--    info->types[type].size = size;
--    info->types[type].available = true;
-+    if (size) {
-+        info->types[type].data = g_memdup2(data, size);
-+        info->types[type].size = size;
-+        info->types[type].available = true;
-+    } else {
-+        info->types[type].data = NULL;
-+        info->types[type].size = 0;
-+        info->types[type].available = false;
-+    }
+-    Use ``-serial none`` to disable all serial ports.
++    You can use ``-serial none`` to suppress the creation of default
++    serial devices.
  
-     if (update) {
-         qemu_clipboard_update(info);
+     Available character devices are:
+ 
+@@ -3990,10 +3991,17 @@ SRST
+         [Linux only] Pseudo TTY (a new PTY is automatically allocated)
+ 
+     ``none``
+-        No device is allocated.
++        No device is allocated. Note that for machine types which
++        emulate systems where a serial device is always present in
++        real hardware, this may be equivalent to the ``null`` option,
++        in that the serial device is still present but all output
++        is discarded. For boards where the number of serial ports is
++        truly variable, this suppresses the creation of the device.
+ 
+     ``null``
+-        void device
++        A guest will see the UART or serial device as present in the
++        machine, but all output is discarded, and there is no input.
++        Conceptually equivalent to redirecting the output to ``/dev/null``.
+ 
+     ``chardev:id``
+         Use a named character device defined with the ``-chardev``
 -- 
 2.39.2
 
