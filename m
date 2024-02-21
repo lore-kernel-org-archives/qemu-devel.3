@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814CDC48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 16:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE22EC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 16:11:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcpAq-0003uJ-P9; Wed, 21 Feb 2024 11:10:20 -0500
+	id 1rcpBT-0004d1-7T; Wed, 21 Feb 2024 11:10:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcpAo-0003sa-4w
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:10:18 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcpBR-0004ck-DG
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:10:57 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rcpAS-0001c2-JL
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:10:07 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33d8739ddd4so115189f8f.2
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 08:09:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rcpBP-000234-PZ
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 11:10:57 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-5129e5b8cecso6112798e87.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 08:10:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708531793; x=1709136593; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jHBXNYCfALl1QAOWdHewi35JME+D6K+Zk7VT8y53AAA=;
- b=OzA+lr95BhcoMESINoFE3WqvXABMZPeAZ+/7RACcb5s6igpyzawn/ypkUUgzVOzdKe
- WwqCwXbZBjonz9VdN0tu73NUWNJQJsQIrEp/ROx/o3Y+mJFF5uNcXmOuKEks1zjPCYSW
- r8JbwrJXJ8Ux4PZ3HUyZ66H+i35eVz+Mb7fbbSaPyr+bAaUcJpTDBk3V44EcehG/WNaD
- bHFvS0X4icmnZlQRsivwlSQGHbUNU6ASiRAoKxh3+mHLT6K2Gem8bfu34kR6xfbYtkGK
- TM0Sbd01gnKdA/DKuP0nxJfPHCPKeUXWBFrG+Qu7SxHhCc0ZFL1DltZnkkD64xnCsA2d
- ghQQ==
+ d=linaro.org; s=google; t=1708531854; x=1709136654; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=amOl3kWIB9RHQXqv9gZxnCrTPOPpDUYd6cxqYb6aajc=;
+ b=Betj7eByYoUVUEG04T1/YVto3L2P3EcRIG9kCKrPEDK5/h241BjhfPQnvttcbEltIJ
+ RK2qSkAb3Z1UMPzyzlH0CVR8UcYx9GDfATyEdqECAHd5qmj626mksABqOWENRGcEZKu6
+ 5kWxL3wgIOOikP9rFgnpknbIskhQsoNsnlIbZ2FcMSiV6tBQDpCC30ImGynT3eNKeR1M
+ cTvTxvdsjZpAT6SZPTTMnsY8O6hsRozOy+xAF9YMRTKQQuYxGh7P+yVLS+1CiZwuz2f8
+ 9zL9ZM1sJtGLBb6vicwdQ5nH5SMTjWlQELpTT1CNlj0fHrfLp65MOA5b5LC4L0iWMyVl
+ AfIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708531793; x=1709136593;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jHBXNYCfALl1QAOWdHewi35JME+D6K+Zk7VT8y53AAA=;
- b=qI791IXga14DS8UpFwD8rAjQE6d8i8i4t+NaB9O0YAsR1Y4mlEIfDnzsvPYdBxoBJF
- P9ijprzR2PVahsiD4lG0oejwDYaHjhZvA8oXg2PCiw2Boy1oH9+9/Bi3eYeROSfDX2Jh
- a3SufA6A0zeByVUwpy6JZytoymJbbrPkr3tDaye5GbbNT3mFkHcyLdz+SfSN4kvlEi32
- IyQZDe8v/siphvIvvnYBJlEjx2YzOJi2Ol5QSPRWLDAcBfoFc7D/dEa80/Cmrt+ADxSL
- iIzgLly0L2OfAVJK2rp2NnymWeir02k/QovwI57yXovp1EzOS14fN+WMIVnQ4IDHvDCz
- KCVg==
-X-Gm-Message-State: AOJu0YzKIkfqP+VUyfHRm8CqLwNUauqWf7882ZhDUDvhsap9VjaImeKL
- 1Elqfghx25HoL0k4MLXMcnsT38FiyAV4hmcm3mNPoOuBny2WYPueCvgtBBdz7NvKdc07aQu3FFQ
- Bsi70Ze2w+Q8DV6IGggjFDMRWVfAYEqwAJyifhw==
-X-Google-Smtp-Source: AGHT+IGgmmVb1pDTdYAyR4/DPwrT/wt6bm70aKFrsMkd/bXFBF22nCd7av2S6hDW61IiNcxhIaWO9xeW3q4lfYlkvfg=
-X-Received: by 2002:adf:f54e:0:b0:33d:d37:485a with SMTP id
- j14-20020adff54e000000b0033d0d37485amr11214319wrp.58.1708531793210; Wed, 21
- Feb 2024 08:09:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708531854; x=1709136654;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=amOl3kWIB9RHQXqv9gZxnCrTPOPpDUYd6cxqYb6aajc=;
+ b=wsv7l9CmLX9wf5I1goaC8UWbMt32oLkDIfWge6CStAQ1/L2zI4n618OI2zC2Hfy7WH
+ gRG4ewt4tNm2jjoLI/qXdkvfziirgeyPoXYwo6ENbOVfBy6rm+ZUQErq25iqQseWdwpN
+ 4ov60NiyTuspYwnWKeSTZo5q8oMNnzK3nX+sW5NU62cgNIT5qwJIHrj6qG15/FTXsI+b
+ s+ORbaoAHNBvoizDxAjesQkWyjxCD4bJFwzdR7WCVzCazh1Tvf0YaJyvJDW+rXMzlzEq
+ F/UV9HAz3CWkFIBwbET+uUUs+xMAFIswbKnshyxoLrJU0V0FoZC6brfNJprzRqWuJ8LM
+ mrqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaZF9ZbmtvtCX/EHVFdt3wyseqxpLDgiAIJPOUAJ7VT+QBvAYEryv0/NM71CA6b1y9OX0hpbVxIhX4xHVjrc5Sfpjhxr0=
+X-Gm-Message-State: AOJu0YyB4ywNHrzuCuoOo2mQuAyZMAB3i64RI04XXHv8a/tteSRPn41l
+ 84W922i4xhbgpFrmoH4qAYuzjv0xAiZ/bmBkJHMNuR+E/0FCwt16vucJJeypd5U=
+X-Google-Smtp-Source: AGHT+IFcISEpk2U5CKMv4FcxsHKW+OV1D9zE3iRcvlyQnBuLY0uhQmCECk1ZzSJ1TdR4j7lUb48eeA==
+X-Received: by 2002:a05:6512:10c6:b0:512:cd03:b0a5 with SMTP id
+ k6-20020a05651210c600b00512cd03b0a5mr3222401lfg.10.1708531853876; 
+ Wed, 21 Feb 2024 08:10:53 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.211.34])
+ by smtp.gmail.com with ESMTPSA id
+ vb7-20020a170907d04700b00a3d6737afe2sm5075282ejc.138.2024.02.21.08.10.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 08:10:51 -0800 (PST)
+Message-ID: <71bd7161-766e-4ff1-88d3-5cc86458c7ec@linaro.org>
+Date: Wed, 21 Feb 2024 17:10:49 +0100
 MIME-Version: 1.0
-References: <20240220160622.114437-1-peter.maydell@linaro.org>
- <20240220160622.114437-7-peter.maydell@linaro.org>
- <55058f62-b59b-43ee-812c-628b8df9745e@linaro.org>
-In-Reply-To: <55058f62-b59b-43ee-812c-628b8df9745e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 21 Feb 2024 16:09:41 +0000
-Message-ID: <CAFEAcA8PuK-EVWCYh16+4FDcPFPhU4qHHp5HzsnPvFhtut+gXA@mail.gmail.com>
-Subject: Re: [PATCH 06/10] hw/core: Add ResetContainer which holds objects
- implementing Resettable
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/9] hw/i386/pc_sysfw: Inline pc_system_flash_create() and
+ remove it
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Sergio Lopez <slp@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240208220349.4948-1-shentey@gmail.com>
+ <20240208220349.4948-8-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240208220349.4948-8-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,61 +101,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Feb 2024 at 15:34, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 20/2/24 17:06, Peter Maydell wrote:
-> > Implement a ResetContainer.  This is a subclass of Object, and it
-> > implements the Resettable interface.  The container holds a list of
-> > arbitrary other objects which implement Resettable, and when the
-> > container is reset, all the objects it contains are also reset.
-> >
-> > This will allow us to have a 3-phase-reset equivalent of the old
-> > qemu_register_reset() API: we will have a single "simulation reset"
-> > top level ResetContainer, and objects in it are the equivalent of the
-> > old QEMUResetHandler functions.
-> >
-> > The qemu_register_reset() API manages its list of callbacks using a
-> > QTAILQ, but here we use a GPtrArray for our list of Resettable
-> > children: we expect the "remove" operation (which will need to do an
-> > iteration through the list) to be fairly uncommon, and we get simpler
-> > code with fewer memory allocations.
-> >
-> > Since there is currently no listed owner in MAINTAINERS for the
-> > existing reset-related source files, create a new section for
-> > them, and add these new files there also.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   MAINTAINERS                      | 10 +++++
-> >   include/hw/core/resetcontainer.h | 48 ++++++++++++++++++++
-> >   hw/core/resetcontainer.c         | 76 +++++++++++++++++++++++++++++++=
-+
-> >   hw/core/meson.build              |  1 +
-> >   4 files changed, 135 insertions(+)
-> >   create mode 100644 include/hw/core/resetcontainer.h
-> >   create mode 100644 hw/core/resetcontainer.c
->
->
-> > +static void resettable_container_child_foreach(Object *obj,
-> > +                                               ResettableChildCallback=
- cb,
-> > +                                               void *opaque, ResetType=
- type)
-> > +{
-> > +    ResettableContainer *rc =3D RESETTABLE_CONTAINER(obj);
-> > +    unsigned int len =3D rc->children->len;
-> > +
-> > +    for (unsigned int i =3D 0; i < len; i++) {
->
-> Worth a pair of trace events around the callback call.
+On 8/2/24 23:03, Bernhard Beschow wrote:
+> pc_system_flash_create() checked for pcmc->pci_enabled which is redundant since
+> its caller already checked it. The method can be turned into just two lines, so
+> inline and remove it.
+> 
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/i386/pc_sysfw.c | 15 ++-------------
+>   1 file changed, 2 insertions(+), 13 deletions(-)
 
-Do you think so? What would be the interest in them?
-(The way the resettable handling works this foreach loop
-gets called several times for any particular reset event,
-as well as getting called if anybody calls qemu_unregister_reset():
-so "something is iterating the resettable container children"
-can be for multiple reasons.)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- PMM
 
