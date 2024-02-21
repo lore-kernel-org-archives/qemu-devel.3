@@ -4,46 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DC6C5478A
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E9CC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rctxc-0002aN-6i; Wed, 21 Feb 2024 16:17:00 -0500
+	id 1rcu3t-0003NJ-Rv; Wed, 21 Feb 2024 16:23:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxM-00026T-84; Wed, 21 Feb 2024 16:16:46 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rctxK-0000mF-9P; Wed, 21 Feb 2024 16:16:43 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4187D4F7ED;
- Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E1D5C869A6;
- Thu, 22 Feb 2024 00:16:22 +0300 (MSK)
-Received: (nullmailer pid 2335262 invoked by uid 1000);
- Wed, 21 Feb 2024 21:16:22 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 06/28] qemu-img: create: refresh options/--help
-Date: Thu, 22 Feb 2024 00:15:47 +0300
-Message-Id: <20240221211622.2335170-6-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcu3r-0002zU-LE
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:23:27 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rcu3p-0002ZP-Ks
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:23:27 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d94b222a3aso10440245ad.2
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:23:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708550604; x=1709155404; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hA9wk4DDRs8mMwqVKgtTFnwG6tFmZJmKv/wHSsyAkpA=;
+ b=R9GgTTKnxC1KVq+Uy3kZMCHdJS7RTRlkmfKvXeFHrFAVkWDUht0XbQLy3DOUyVbDKe
+ +za6LOSewGMy9NQ47trEHNiUdTo04KC/8OYLaG35KSlNt8w3blP7MLC0+ZN1h9EwKQpi
+ qLYhC2NknctCRU5rms1bIPPaItLhS/Hql1sUcQKzBDKjHUsqF5k8BQmnDmq5ZsI8GT3C
+ YcW+WV4WjQ019s3Sfxp9rxYYDCkBBF9B0JFDj1YSiX9W11Ll7JVrqcwwySYRkNQ3+AON
+ D0yO96kJEQVNT83MLX2zEeppqs2/IJtyQsMnZ8RxBh/0Z/de8AI/WSQxtrPPfHaCg4zw
+ 9fZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708550604; x=1709155404;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hA9wk4DDRs8mMwqVKgtTFnwG6tFmZJmKv/wHSsyAkpA=;
+ b=Iyj1GuXj+p+mpKIK/uusZEK/4bWAd7UoPwUbUupK6lmxsnDhmU9aaxiXAYmtrjK1FY
+ tiudG+vxvS0cBe3lBVVIiolE9FJwee2bgYr/00ZoT34eDjpRlTSL87MKn6p2hm7OrQ19
+ ZaKWkyw6BDtIo/tx6udrdWZmSiOJcs1+VcLEP71udezq4eNaQImf6t/WeNVx+P21TqTs
+ MiCZoGIpsiOp5QEggkmOoGigeurUfxg9tXQudLkZe1T3Uoytfqep82aKEtVa6JAceFy0
+ SedKAjmrCfFxDJ9cj6VtBcSxdfjfP7Fo3sD/6AqPJgsefUO4/CNWaxeqIOvI/UIPJ2VK
+ 6Xyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgxYWDiZppUED4nZLhs9KAQiNXQma/gCXE90yjsCRO7m8NnPsqoeE5QS93nnCM43RkvlfmMfIhl4Kqy9kpzX23S1Y6xwA=
+X-Gm-Message-State: AOJu0YxYqXIl0lwBfflXYfI03SOZhwT1SoY09TFlF6Q5bxAZhid7RWQF
+ mG/qgspeDl8IkH+nznwLJDfADHz76JCwuAJxhYF+2zj38u1absBjmL2fVtAuvIk=
+X-Google-Smtp-Source: AGHT+IHVvUJcz+gSz2Y/ZgzBdUOfzg+OldRKQqcCA1uMeP9iL2KXYjFFb3omJhPLajczJ6wVHQX3dg==
+X-Received: by 2002:a17:90a:6581:b0:299:2d54:52af with SMTP id
+ k1-20020a17090a658100b002992d5452afmr16100531pjj.18.1708550603963; 
+ Wed, 21 Feb 2024 13:23:23 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ pt5-20020a17090b3d0500b002994f848bc9sm2342212pjb.43.2024.02.21.13.23.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 13:23:23 -0800 (PST)
+Message-ID: <2e1ad5a4-b706-44a9-b686-6ddeb41722e2@linaro.org>
+Date: Wed, 21 Feb 2024 11:23:21 -1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 06/22] target/arm: Add support for Non-maskable
+ Interrupt
+Content-Language: en-US
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
+ <20240221130823.677762-7-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240221130823.677762-7-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -60,122 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create helper function cmd_help() to display command-specific
-help text, and use it to print --help for 'create' subcommand.
+On 2/21/24 03:08, Jinjie Ruan via wrote:
+> This only implements the external delivery method via the GICv3.
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> ---
+>   target/arm/cpu-qom.h |  3 ++-
+>   target/arm/cpu.c     | 39 ++++++++++++++++++++++++++++++++++-----
+>   target/arm/cpu.h     |  2 ++
+>   target/arm/helper.c  |  1 +
+>   4 files changed, 39 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
+> index 8e032691db..66d555a605 100644
+> --- a/target/arm/cpu-qom.h
+> +++ b/target/arm/cpu-qom.h
+> @@ -36,11 +36,12 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
+>   #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
+>   #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
+>   
+> -/* Meanings of the ARMCPU object's four inbound GPIO lines */
+> +/* Meanings of the ARMCPU object's five inbound GPIO lines */
+>   #define ARM_CPU_IRQ 0
+>   #define ARM_CPU_FIQ 1
+>   #define ARM_CPU_VIRQ 2
+>   #define ARM_CPU_VFIQ 3
+> +#define ARM_CPU_NMI 4
 
-Add missing long options (eg --format) in img_create().
+You need a 6th GPIO for vNMI.
 
-Remove usage of missing_argument()/unrecognized_option() in
-img_create().
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- qemu-img.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 60 insertions(+), 8 deletions(-)
-
-diff --git a/qemu-img.c b/qemu-img.c
-index 38ac0f1845..7e4c993b9c 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -132,6 +132,31 @@ void unrecognized_option(const char *option)
-     error_exit("qemu-img", "unrecognized option '%s'", option);
- }
- 
-+/*
-+ * Print --help output for a command and exit.
-+ * syntax and description are multi-line with trailing EOL
-+ * (to allow easy extending of the text)
-+ * syntax has each subsequent line indented by 8 chars.
-+ * desrciption is indented by 2 chars for argument on each own line,
-+ * and with 5 chars for argument description (like -h arg below).
-+ */
-+static G_NORETURN
-+void cmd_help(const img_cmd_t *ccmd,
-+              const char *syntax, const char *arguments)
-+{
-+    printf(
-+"Usage:\n"
-+"  %s %s %s"
-+"\n"
-+"Arguments:\n"
-+"  -h, --help\n"
-+"     print this help and exit\n"
-+"%s\n",
-+           "qemu-img", ccmd->name,
-+           syntax, arguments);
-+    exit(EXIT_SUCCESS);
-+}
-+
- /* Please keep in synch with docs/tools/qemu-img.rst */
- static G_NORETURN
- void help(void)
-@@ -530,23 +555,48 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
-     for(;;) {
-         static const struct option long_options[] = {
-             {"help", no_argument, 0, 'h'},
-+            {"quiet", no_argument, 0, 'q'},
-             {"object", required_argument, 0, OPTION_OBJECT},
-+            {"format", required_argument, 0, 'f'},
-+            {"backing", required_argument, 0, 'b'},
-+            {"backing-format", required_argument, 0, 'F'},
-+            {"backing-unsafe", no_argument, 0, 'u'},
-+            {"options", required_argument, 0, 'o'},
-             {0, 0, 0, 0}
-         };
--        c = getopt_long(argc, argv, ":F:b:f:ho:qu",
-+        c = getopt_long(argc, argv, "F:b:f:ho:qu",
-                         long_options, NULL);
-         if (c == -1) {
-             break;
-         }
-         switch(c) {
--        case ':':
--            missing_argument(argv[optind - 1]);
--            break;
--        case '?':
--            unrecognized_option(argv[optind - 1]);
--            break;
-         case 'h':
--            help();
-+            cmd_help(ccmd,
-+"[-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]\n"
-+"        [--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]\n"
-+,
-+"  -q, --quiet\n"
-+"     quiet operations\n"
-+"  -f, --format FMT\n"
-+"     specifies format of the new image, default is raw\n"
-+"  -o, --options FMT_OPTS\n"
-+"     format-specific options ('-o list' for list)\n"
-+"  -b, --backing BACKING_FILENAME\n"
-+"     stack new image on top of BACKING_FILENAME\n"
-+"     (for formats which support stacking)\n"
-+"  -F, --backing-format BACKING_FMT\n"
-+"     specify format of BACKING_FILENAME\n"
-+"  -u, --backing-unsafe\n"
-+"     do not fail if BACKING_FMT can not be read\n"
-+"  --object OBJDEF\n"
-+"     QEMU user-creatable object (eg encryption key)\n"
-+"  FILENAME\n"
-+"     image file to create.  It will be overridden if exists\n"
-+"  SIZE\n"
-+"     image size with optional suffix (multiplies in 1024)\n"
-+"     SIZE is required unless BACKING_IMG is specified,\n"
-+"     in which case it will be the same as size of BACKING_IMG\n"
-+);
-             break;
-         case 'F':
-             base_fmt = optarg;
-@@ -571,6 +621,8 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
-         case OPTION_OBJECT:
-             user_creatable_process_cmdline(optarg);
-             break;
-+        default:
-+            tryhelp(argv[0]);
-         }
-     }
- 
--- 
-2.39.2
-
+r~
 
