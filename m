@@ -4,85 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9998C48BEB
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72B7C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcu5j-0007kK-Pm; Wed, 21 Feb 2024 16:25:23 -0500
+	id 1rctyV-000421-DU; Wed, 21 Feb 2024 16:17:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcu5U-0007S4-9w
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:25:09 -0500
-Received: from mail-il1-x12e.google.com ([2607:f8b0:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rcu5R-00030T-6a
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 16:25:07 -0500
-Received: by mail-il1-x12e.google.com with SMTP id
- e9e14a558f8ab-364efe11f6aso34880665ab.1
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 13:25:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708550703; x=1709155503; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ly+eHYKQZikrFS/T0BXws43a/vi7lieY+J3mVy2jsZA=;
- b=cKpfn2OF7PG9IWt7MZR/tCp+InOVmwZkddvfBAhX/Iw7w6eNUiigKKsrLeRKkpXKj+
- q/8DlEXG/g/seGicKLJ2UzHfuY1GGOCkQU3s2zj9QZciwhNtDqW0x37qNdBeKG9KJl0n
- z42v3gyxGZQkQ+z2LTBmyo+FlWBhZ4dy3SPNHbSgd9tvmzrmCwH8Mgx22FvlX6opfojM
- K2ecqnNtx13QNmPjGHlsbTvMqNT9pCsD+9+H4e5lPVj9NtNQImAOJK10giYmvRhpEmmE
- DsF36KJnGZ4CeLpDZXaUTJkFsniVe5hU8pdgP4Y6Wllzh+y6x757mYigrbRtRAXtEZ5H
- geJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708550703; x=1709155503;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ly+eHYKQZikrFS/T0BXws43a/vi7lieY+J3mVy2jsZA=;
- b=G9lYkf1miGFEVm1ZzdxSvvKy/EPdIWXWHnXjNNJdIMn7wiH4BPz+dKokrDtwcpQbIe
- EC85fCn+fB/ag5IjuglnrWnPYgGqJdIKmQDJuTeDYwqjZW7Q8B+hFWTwNB0vhL2z4d8b
- r/QkKbopTJrGJ8aCkEQmLzwTo4oRChKxfHwppidoIkgH13A3VuyjIYPYtk6ddsWC2Kjm
- l0o40wHm5YeceCgXWAEWbIHFq7cuauR95AEA3aK6g8rhpwanYyXI3pk4AucmtJcSgdSJ
- cL8L93iW8hKz99yDwqlONVlg2VCKmGrRDNvcwBavfRlIl/Abq+jalE9A2fb74NCJwMO6
- JPag==
-X-Gm-Message-State: AOJu0YyL9ZbinymQtIn6uBn7iDHB/P5bscowCYcAN1UXJw5SkIcdDMSO
- Cd79w9dZd4ozci8hIhlvJMljTe2R6NScbPReXk0cjntOkjxOMmF3YRwmwy/FEIXNLheYZTeGhaf
- 4
-X-Google-Smtp-Source: AGHT+IGK6pT3x21ohZeqqOWJP2Rl/lBGvx8tHnhd/lf68oxWonH5oSiywYNblf/BsErpk5NMJhmLfA==
-X-Received: by 2002:a92:db4b:0:b0:365:2575:6d3 with SMTP id
- w11-20020a92db4b000000b00365257506d3mr12339494ilq.30.1708550703268; 
- Wed, 21 Feb 2024 13:25:03 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- h17-20020a63e151000000b005dc884e9f5bsm9138691pgk.38.2024.02.21.13.25.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 13:25:02 -0800 (PST)
-Message-ID: <401679a5-ff0e-4911-acef-5774681f2e1d@ventanamicro.com>
-Date: Wed, 21 Feb 2024 18:24:58 -0300
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctyF-0003OL-5z; Wed, 21 Feb 2024 16:17:40 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rctyB-0000uo-KJ; Wed, 21 Feb 2024 16:17:38 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BCEC14F7F7;
+ Thu, 22 Feb 2024 00:16:45 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 73579869AF;
+ Thu, 22 Feb 2024 00:16:23 +0300 (MSK)
+Received: (nullmailer pid 2335289 invoked by uid 1000);
+ Wed, 21 Feb 2024 21:16:22 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 15/28] qemu-img: snapshot: allow specifying -f fmt
+Date: Thu, 22 Feb 2024 00:15:56 +0300
+Message-Id: <20240221211622.2335170-15-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <cover.1708544927.git.mjt@tls.msk.ru>
+References: <cover.1708544927.git.mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/7] riscv: set vstart_eq_zero on mark_vs_dirty
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, max.chou@sifive.com
-References: <20240221022252.252872-1-dbarboza@ventanamicro.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240221022252.252872-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-il1-x12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,57 +62,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard,
+For consistency with other commands, and since it already
+accepts --image-opts, allow specifying -f fmt too.
 
-On 2/20/24 23:22, Daniel Henrique Barboza wrote:
-> Hi,
-> 
-> In this new version we removed the remaining brconds() from
-> trans_rvbf16.c.inc like Richard suggested in patch 3. Richard, I kept
-> your ack in that patch.
-> 
-> This change caused the 'cpu_vstart' global to be unused. A new patch (4)
-> was added to remove it.
-> 
-> Series based on alistair/riscv-to-apply.next.
-> 
-> Patches missing acks: patch 4.
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ docs/tools/qemu-img.rst | 2 +-
+ qemu-img-cmds.hx        | 4 ++--
+ qemu-img.c              | 9 ++++++---
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
+diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
+index 3653adb963..9b628c4da5 100644
+--- a/docs/tools/qemu-img.rst
++++ b/docs/tools/qemu-img.rst
+@@ -663,7 +663,7 @@ Command description:
+   bitmap support, or 0 if bitmaps are supported but there is nothing
+   to copy.
+ 
+-.. option:: snapshot [--object OBJECTDEF] [--image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
++.. option:: snapshot [--object OBJECTDEF] [-f FMT | --image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
+ 
+   List, apply, create or delete snapshots in image *FILENAME*.
+ 
+diff --git a/qemu-img-cmds.hx b/qemu-img-cmds.hx
+index c9dd70a892..2c5a8a28f9 100644
+--- a/qemu-img-cmds.hx
++++ b/qemu-img-cmds.hx
+@@ -84,9 +84,9 @@ SRST
+ ERST
+ 
+ DEF("snapshot", img_snapshot,
+-    "snapshot [--object objectdef] [--image-opts] [-U] [-q] [-l | -a snapshot | -c snapshot | -d snapshot] filename")
++    "snapshot [--object objectdef] [-f fmt | --image-opts] [-U] [-q] [-l | -a snapshot | -c snapshot | -d snapshot] filename")
+ SRST
+-.. option:: snapshot [--object OBJECTDEF] [--image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
++.. option:: snapshot [--object OBJECTDEF] [-f FMT | --image-opts] [-U] [-q] [-l | -a SNAPSHOT | -c SNAPSHOT | -d SNAPSHOT] FILENAME
+ ERST
+ 
+ DEF("rebase", img_rebase,
+diff --git a/qemu-img.c b/qemu-img.c
+index 3f719bbecf..85c37d491d 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -3594,7 +3594,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+     BlockBackend *blk;
+     BlockDriverState *bs;
+     QEMUSnapshotInfo sn;
+-    char *filename, *snapshot_name = NULL;
++    char *filename, *fmt = NULL, *snapshot_name = NULL;
+     int c, ret = 0, bdrv_oflags;
+     int action = 0;
+     bool quiet = false;
+@@ -3613,7 +3613,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+             {"force-share", no_argument, 0, 'U'},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":la:c:d:hqU",
++        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
+                         long_options, NULL);
+         if (c == -1) {
+             break;
+@@ -3628,6 +3628,9 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+         case 'h':
+             help();
+             return 0;
++        case 'f':
++            fmt = optarg;
++            break;
+         case 'l':
+             if (action) {
+                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
+@@ -3681,7 +3684,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
+     filename = argv[optind++];
+ 
+     /* Open the image */
+-    blk = img_open(image_opts, filename, NULL, bdrv_oflags, false, quiet,
++    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
+                    force_share);
+     if (!blk) {
+         return 1;
+-- 
+2.39.2
 
-I missed your acks from v4 in patches 1 and 2 . I'll add them back in the next
-version.
-
-
-Thanks,
-
-
-Daniel
-
-> 
-> Changes from v4:
-> - patch 3:
->    - remove vstart >= vl and vl = 0 brconds from trans_fvbf16.c.inc
-> - patch 4 (new):
->    - remove cpu_vstart
-> - v4 link: https://lore.kernel.org/qemu-riscv/20240220222510.209448-1-dbarboza@ventanamicro.com/
-> 
-> 
-> Daniel Henrique Barboza (6):
->    trans_rvv.c.inc: mark_vs_dirty() before loads and stores
->    trans_rvv.c.inc: remove 'is_store' bool from load/store fns
->    target/riscv: remove 'over' brconds from vector trans
->    target/riscv/translate.c: remove 'cpu_vstart' global
->    target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
->    trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
-> 
-> Ivan Klokov (1):
->    target/riscv: Clear vstart_qe_zero flag
-> 
->   target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
->   target/riscv/insn_trans/trans_rvv.c.inc    | 292 ++++++---------------
->   target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +--
->   target/riscv/translate.c                   |  10 +-
->   target/riscv/vector_helper.c               |   1 +
->   5 files changed, 100 insertions(+), 251 deletions(-)
-> 
 
