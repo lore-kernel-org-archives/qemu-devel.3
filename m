@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 850D3C54788
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A30C48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 21:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcuRI-0000w3-Qh; Wed, 21 Feb 2024 16:47:40 -0500
+	id 1rcuRD-0000kQ-9D; Wed, 21 Feb 2024 16:47:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRG-0000sn-8Q; Wed, 21 Feb 2024 16:47:38 -0500
+ id 1rcuRB-0000jf-PT; Wed, 21 Feb 2024 16:47:33 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcuRE-0007Ld-EP; Wed, 21 Feb 2024 16:47:37 -0500
+ id 1rcuR9-0007Kq-3P; Wed, 21 Feb 2024 16:47:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 593514F862;
+ by isrv.corpit.ru (Postfix) with ESMTP id 20F764F85F;
  Thu, 22 Feb 2024 00:47:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id F39B2869E3;
+ by tsrv.corpit.ru (Postfix) with SMTP id BF8E0869E0;
  Thu, 22 Feb 2024 00:47:23 +0300 (MSK)
-Received: (nullmailer pid 2339841 invoked by uid 1000);
+Received: (nullmailer pid 2339832 invoked by uid 1000);
  Wed, 21 Feb 2024 21:47:23 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.10 06/33] qemu-options.hx: Improve -serial option
- documentation
-Date: Thu, 22 Feb 2024 00:46:49 +0300
-Message-Id: <20240221214723.2339742-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Richard W.M. Jones" <rjones@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.10 03/33] block/blkio: Make s->mem_region_alignment be 64
+ bits
+Date: Thu, 22 Feb 2024 00:46:46 +0300
+Message-Id: <20240221214723.2339742-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
 References: <qemu-stable-7.2.10-20240221121815@cover.tls.msk.ru>
@@ -65,57 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: "Richard W.M. Jones" <rjones@redhat.com>
 
-The -serial option documentation is a bit brief about '-serial none'
-and '-serial null'. In particular it's not very clear about the
-difference between them, and it doesn't mention that it's up to
-the machine model whether '-serial none' means "don't create the
-serial port" or "don't wire the serial port up to anything".
+With GCC 14 the code failed to compile on i686 (and was wrong for any
+version of GCC):
 
-Expand on these points.
+../block/blkio.c: In function ‘blkio_file_open’:
+../block/blkio.c:857:28: error: passing argument 3 of ‘blkio_get_uint64’ from incompatible pointer type [-Wincompatible-pointer-types]
+  857 |                            &s->mem_region_alignment);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~
+      |                            |
+      |                            size_t * {aka unsigned int *}
+In file included from ../block/blkio.c:12:
+/usr/include/blkio.h:49:67: note: expected ‘uint64_t *’ {aka ‘long long unsigned int *’} but argument is of type ‘size_t *’ {aka ‘unsigned int *’}
+   49 | int blkio_get_uint64(struct blkio *b, const char *name, uint64_t *value);
+      |                                                         ~~~~~~~~~~^~~~~
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240122163607.459769-3-peter.maydell@linaro.org
-(cherry picked from commit 747bfaf3a9d2f3cd51674763dc1f7575100cd200)
+Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+Message-id: 20240130122006.2977938-1-rjones@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 615eaeab3d318ba239d54141a4251746782f65c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 379692da86..7f798ce47e 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3968,7 +3968,8 @@ SRST
-     This option can be used several times to simulate up to 4 serial
-     ports.
+diff --git a/block/blkio.c b/block/blkio.c
+index 5eae3adfaf..cb66160268 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -74,7 +74,7 @@ typedef struct {
+     CoQueue bounce_available;
  
--    Use ``-serial none`` to disable all serial ports.
-+    You can use ``-serial none`` to suppress the creation of default
-+    serial devices.
+     /* The value of the "mem-region-alignment" property */
+-    size_t mem_region_alignment;
++    uint64_t mem_region_alignment;
  
-     Available character devices are:
- 
-@@ -3990,10 +3991,17 @@ SRST
-         [Linux only] Pseudo TTY (a new PTY is automatically allocated)
- 
-     ``none``
--        No device is allocated.
-+        No device is allocated. Note that for machine types which
-+        emulate systems where a serial device is always present in
-+        real hardware, this may be equivalent to the ``null`` option,
-+        in that the serial device is still present but all output
-+        is discarded. For boards where the number of serial ports is
-+        truly variable, this suppresses the creation of the device.
- 
-     ``null``
--        void device
-+        A guest will see the UART or serial device as present in the
-+        machine, but all output is discarded, and there is no input.
-+        Conceptually equivalent to redirecting the output to ``/dev/null``.
- 
-     ``chardev:id``
-         Use a named character device defined with the ``-chardev``
+     /* Can we skip adding/deleting blkio_mem_regions? */
+     bool needs_mem_regions;
 -- 
 2.39.2
 
