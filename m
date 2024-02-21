@@ -4,73 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B774AC48BC3
-	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9546CC48BEB
+	for <qemu-devel@archiver.kernel.org>; Wed, 21 Feb 2024 15:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcoZk-0003i3-3h; Wed, 21 Feb 2024 10:32:00 -0500
+	id 1rcod1-0008Ra-NS; Wed, 21 Feb 2024 10:35:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rcoPr-0006rl-0d; Wed, 21 Feb 2024 10:21:47 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rclSX-0003sk-Ua; Wed, 21 Feb 2024 07:12:28 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9835F4F4F6;
- Wed, 21 Feb 2024 15:12:40 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 01A2D86390;
- Wed, 21 Feb 2024 15:12:18 +0300 (MSK)
-Message-ID: <ad43c5e3-6995-4311-8d80-76258009d96c@tls.msk.ru>
-Date: Wed, 21 Feb 2024 15:12:18 +0300
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rcoaS-0007sF-Ew
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 10:32:44 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rchvG-00035J-IV
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 03:25:49 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Ax++iGs9VlxLwPAA--.21223S3;
+ Wed, 21 Feb 2024 16:25:42 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxrhODs9Vl1qo9AA--.38362S3; 
+ Wed, 21 Feb 2024 16:25:42 +0800 (CST)
+Subject: Re: [PATCH V2 1/1] loongarch: Change the UEFI loading mode to
+ loongarch
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Andrea Bolognani <abologna@redhat.com>, maobibo@loongson.cn,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ zhaotianrui@loongson.cn
+References: <cover.1708336919.git.lixianglai@loongson.cn>
+ <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <471e15f0-8463-6f29-f09a-4d5cf528e12d@loongson.cn>
+Date: Wed, 21 Feb 2024 16:25:39 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/23] qemu-img: make -l (list) the default for "snapshot"
- subcommand
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <cover.1707513011.git.mjt@tls.msk.ru>
- <71d69214d43897e5649fed00804a5969b0fd718b.1707513011.git.mjt@tls.msk.ru>
- <ZdTlVnQ2YvTLctDp@redhat.com>
- <0d55ced8-4295-4388-9fcd-4cab8f70f849@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <0d55ced8-4295-4388-9fcd-4cab8f70f849@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8CxrhODs9Vl1qo9AA--.38362S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxKrykWFW3Zw17CF15Jw4rtFc_yoWDXr4fpF
+ W8CFsY9r18XFnrWr1xJwsxGa40yrn7Ka45Wrya9r10kasxWr18WrWfK3y0yFy8Z34kXF4j
+ gFn5XFZ2kanrXrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9
+ N3UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,21 +86,282 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-20.02.2024 21:51, Michael Tokarev wrote:
-> 20.02.2024 20:45, Daniel P. Berrangé wrote:
->> On Sat, Feb 10, 2024 at 12:22:33AM +0300, Michael Tokarev wrote:
->>> also remove bdrv_oflags handling (only list can use RO mode)
->>> ---
->>>   qemu-img.c | 13 ++++++++-----
->>>   1 file changed, 8 insertions(+), 5 deletions(-)
->>
->> I'd suggest docs/tools/qemu-img.rst should also be updated to say
-> 
-> qemu-img.rst needs to be updated, significantly more than this.
+在 2024/2/19 下午6:34, Xianglai Li 写道:
+> The UEFI loading mode in loongarch is very different
+> from that in other architectures:loongarch's UEFI code
+> is in rom, while other architectures' UEFI code is in flash.
+>
+> loongarch UEFI can be loaded as follows:
+> -machine virt,pflash=pflash0-format
+> -bios ./QEMU_EFI.fd
+>
+> Other architectures load UEFI using the following methods:
+> -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
+>
+> loongarch's UEFI loading method makes qemu and libvirt incompatible
+> when using NVRAM, and the cost of loongarch's current loading method
+> far outweighs the benefits, so we decided to use the same UEFI loading
+> scheme as other architectures.
+>
+> Cc: Andrea Bolognani <abologna@redhat.com>
+> Cc: maobibo@loongson.cn
+> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: zhaotianrui@loongson.cn
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Andrea Bolognani <abologna@redhat.com>
+> ---
+>   hw/loongarch/acpi-build.c   |  29 +++++++++--
+>   hw/loongarch/virt.c         | 101 ++++++++++++++++++++++++++----------
+>   include/hw/loongarch/virt.h |  10 ++--
+>   3 files changed, 107 insertions(+), 33 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Actually, - yes, you're right in this case.  Added.  A good suggestion.
+Thanks.
+Song Gao
+> diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
+> index a1c4198741..6c75f216ea 100644
+> --- a/hw/loongarch/acpi-build.c
+> +++ b/hw/loongarch/acpi-build.c
+> @@ -314,16 +314,39 @@ static void build_pci_device_aml(Aml *scope, LoongArchMachineState *lams)
+>   static void build_flash_aml(Aml *scope, LoongArchMachineState *lams)
+>   {
+>       Aml *dev, *crs;
+> +    MemoryRegion *flash_mem;
+>   
+> -    hwaddr flash_base = VIRT_FLASH_BASE;
+> -    hwaddr flash_size = VIRT_FLASH_SIZE;
+> +    hwaddr flash0_base;
+> +    hwaddr flash0_size;
+> +
+> +    hwaddr flash1_base;
+> +    hwaddr flash1_size;
+> +
+> +    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
+> +    flash0_base = flash_mem->addr;
+> +    flash0_size = flash_mem->size;
+> +
+> +    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
+> +    flash1_base = flash_mem->addr;
+> +    flash1_size = flash_mem->size;
+>   
+>       dev = aml_device("FLS0");
+>       aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
+>       aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+>   
+>       crs = aml_resource_template();
+> -    aml_append(crs, aml_memory32_fixed(flash_base, flash_size, AML_READ_WRITE));
+> +    aml_append(crs, aml_memory32_fixed(flash0_base, flash0_size,
+> +                                       AML_READ_WRITE));
+> +    aml_append(dev, aml_name_decl("_CRS", crs));
+> +    aml_append(scope, dev);
+> +
+> +    dev = aml_device("FLS1");
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("LNRO0015")));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(1)));
+> +
+> +    crs = aml_resource_template();
+> +    aml_append(crs, aml_memory32_fixed(flash1_base, flash1_size,
+> +                                       AML_READ_WRITE));
+>       aml_append(dev, aml_name_decl("_CRS", crs));
+>       aml_append(scope, dev);
+>   }
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 0ad7d8c887..a7b9199e70 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -54,7 +54,9 @@ struct loaderparams {
+>       const char *initrd_filename;
+>   };
+>   
+> -static void virt_flash_create(LoongArchMachineState *lams)
+> +static PFlashCFI01 *virt_flash_create1(LoongArchMachineState *lams,
+> +                                       const char *name,
+> +                                       const char *alias_prop_name)
+>   {
+>       DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
+>   
+> @@ -66,45 +68,78 @@ static void virt_flash_create(LoongArchMachineState *lams)
+>       qdev_prop_set_uint16(dev, "id1", 0x18);
+>       qdev_prop_set_uint16(dev, "id2", 0x00);
+>       qdev_prop_set_uint16(dev, "id3", 0x00);
+> -    qdev_prop_set_string(dev, "name", "virt.flash");
+> -    object_property_add_child(OBJECT(lams), "virt.flash", OBJECT(dev));
+> -    object_property_add_alias(OBJECT(lams), "pflash",
+> +    qdev_prop_set_string(dev, "name", name);
+> +    object_property_add_child(OBJECT(lams), name, OBJECT(dev));
+> +    object_property_add_alias(OBJECT(lams), alias_prop_name,
+>                                 OBJECT(dev), "drive");
+> +    return PFLASH_CFI01(dev);
+> +}
+>   
+> -    lams->flash = PFLASH_CFI01(dev);
+> +static void virt_flash_create(LoongArchMachineState *lams)
+> +{
+> +    lams->flash[0] = virt_flash_create1(lams, "virt.flash0", "pflash0");
+> +    lams->flash[1] = virt_flash_create1(lams, "virt.flash1", "pflash1");
+>   }
+>   
+> -static void virt_flash_map(LoongArchMachineState *lams,
+> -                           MemoryRegion *sysmem)
+> +static void virt_flash_map1(PFlashCFI01 *flash,
+> +                            hwaddr base, hwaddr size,
+> +                            MemoryRegion *sysmem)
+>   {
+> -    PFlashCFI01 *flash = lams->flash;
+>       DeviceState *dev = DEVICE(flash);
+> -    hwaddr base = VIRT_FLASH_BASE;
+> -    hwaddr size = VIRT_FLASH_SIZE;
+> +    BlockBackend *blk;
+> +    hwaddr real_size = size;
+> +
+> +    blk = pflash_cfi01_get_blk(flash);
+> +    if (blk) {
+> +        real_size = blk_getlength(blk);
+> +        assert(real_size && real_size <= size);
+> +    }
+>   
+> -    assert(QEMU_IS_ALIGNED(size, VIRT_FLASH_SECTOR_SIZE));
+> -    assert(size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
+> +    assert(QEMU_IS_ALIGNED(real_size, VIRT_FLASH_SECTOR_SIZE));
+> +    assert(real_size / VIRT_FLASH_SECTOR_SIZE <= UINT32_MAX);
+>   
+> -    qdev_prop_set_uint32(dev, "num-blocks", size / VIRT_FLASH_SECTOR_SIZE);
+> +    qdev_prop_set_uint32(dev, "num-blocks", real_size / VIRT_FLASH_SECTOR_SIZE);
+>       sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>       memory_region_add_subregion(sysmem, base,
+>                                   sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+> +}
+>   
+> +static void virt_flash_map(LoongArchMachineState *lams,
+> +                           MemoryRegion *sysmem)
+> +{
+> +    PFlashCFI01 *flash0 = lams->flash[0];
+> +    PFlashCFI01 *flash1 = lams->flash[1];
+> +
+> +    virt_flash_map1(flash0, VIRT_FLASH0_BASE, VIRT_FLASH0_SIZE, sysmem);
+> +    virt_flash_map1(flash1, VIRT_FLASH1_BASE, VIRT_FLASH1_SIZE, sysmem);
+>   }
+>   
+>   static void fdt_add_flash_node(LoongArchMachineState *lams)
+>   {
+>       MachineState *ms = MACHINE(lams);
+>       char *nodename;
+> +    MemoryRegion *flash_mem;
+> +
+> +    hwaddr flash0_base;
+> +    hwaddr flash0_size;
+>   
+> -    hwaddr flash_base = VIRT_FLASH_BASE;
+> -    hwaddr flash_size = VIRT_FLASH_SIZE;
+> +    hwaddr flash1_base;
+> +    hwaddr flash1_size;
+>   
+> -    nodename = g_strdup_printf("/flash@%" PRIx64, flash_base);
+> +    flash_mem = pflash_cfi01_get_memory(lams->flash[0]);
+> +    flash0_base = flash_mem->addr;
+> +    flash0_size = flash_mem->size;
+> +
+> +    flash_mem = pflash_cfi01_get_memory(lams->flash[1]);
+> +    flash1_base = flash_mem->addr;
+> +    flash1_size = flash_mem->size;
+> +
+> +    nodename = g_strdup_printf("/flash@%" PRIx64, flash0_base);
+>       qemu_fdt_add_subnode(ms->fdt, nodename);
+>       qemu_fdt_setprop_string(ms->fdt, nodename, "compatible", "cfi-flash");
+>       qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg",
+> -                                 2, flash_base, 2, flash_size);
+> +                                 2, flash0_base, 2, flash0_size,
+> +                                 2, flash1_base, 2, flash1_size);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "bank-width", 4);
+>       g_free(nodename);
+>   }
+> @@ -637,12 +672,32 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
+>   {
+>       char *filename = MACHINE(lams)->firmware;
+>       char *bios_name = NULL;
+> -    int bios_size;
+> +    int bios_size, i;
+> +    BlockBackend *pflash_blk0;
+> +    MemoryRegion *mr;
+>   
+>       lams->bios_loaded = false;
+>   
+> +    /* Map legacy -drive if=pflash to machine properties */
+> +    for (i = 0; i < ARRAY_SIZE(lams->flash); i++) {
+> +        pflash_cfi01_legacy_drive(lams->flash[i],
+> +                                  drive_get(IF_PFLASH, 0, i));
+> +    }
+> +
+>       virt_flash_map(lams, get_system_memory());
+>   
+> +    pflash_blk0 = pflash_cfi01_get_blk(lams->flash[0]);
+> +
+> +    if (pflash_blk0) {
+> +        if (filename) {
+> +            error_report("cannot use both '-bios' and '-drive if=pflash'"
+> +                         "options at once");
+> +            exit(1);
+> +        }
+> +        lams->bios_loaded = true;
+> +        return;
+> +    }
+> +
+>       if (filename) {
+>           bios_name = qemu_find_file(QEMU_FILE_TYPE_BIOS, filename);
+>           if (!bios_name) {
+> @@ -650,21 +705,15 @@ static void loongarch_firmware_init(LoongArchMachineState *lams)
+>               exit(1);
+>           }
+>   
+> -        bios_size = load_image_targphys(bios_name, VIRT_BIOS_BASE, VIRT_BIOS_SIZE);
+> +        mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(lams->flash[0]), 0);
+> +        bios_size = load_image_mr(bios_name, mr);
+>           if (bios_size < 0) {
+>               error_report("Could not load ROM image '%s'", bios_name);
+>               exit(1);
+>           }
+> -
+>           g_free(bios_name);
+> -
+> -        memory_region_init_ram(&lams->bios, NULL, "loongarch.bios",
+> -                               VIRT_BIOS_SIZE, &error_fatal);
+> -        memory_region_set_readonly(&lams->bios, true);
+> -        memory_region_add_subregion(get_system_memory(), VIRT_BIOS_BASE, &lams->bios);
+>           lams->bios_loaded = true;
+>       }
+> -
+>   }
+>   
+>   static void reset_load_elf(void *opaque)
+> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+> index 6ef9a92394..252f7df7f4 100644
+> --- a/include/hw/loongarch/virt.h
+> +++ b/include/hw/loongarch/virt.h
+> @@ -18,10 +18,12 @@
+>   
+>   #define VIRT_FWCFG_BASE         0x1e020000UL
+>   #define VIRT_BIOS_BASE          0x1c000000UL
+> -#define VIRT_BIOS_SIZE          (4 * MiB)
+> +#define VIRT_BIOS_SIZE          (16 * MiB)
+>   #define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
+> -#define VIRT_FLASH_BASE         0x1d000000UL
+> -#define VIRT_FLASH_SIZE         (16 * MiB)
+> +#define VIRT_FLASH0_BASE        VIRT_BIOS_BASE
+> +#define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
+> +#define VIRT_FLASH1_BASE        0x1d000000UL
+> +#define VIRT_FLASH1_SIZE        (16 * MiB)
+>   
+>   #define VIRT_LOWMEM_BASE        0
+>   #define VIRT_LOWMEM_SIZE        0x10000000
+> @@ -49,7 +51,7 @@ struct LoongArchMachineState {
+>       int          fdt_size;
+>       DeviceState *platform_bus_dev;
+>       PCIBus       *pci_bus;
+> -    PFlashCFI01  *flash;
+> +    PFlashCFI01  *flash[2];
+>       MemoryRegion system_iocsr;
+>       MemoryRegion iocsr_mem;
+>       AddressSpace as_iocsr;
 
-Thanks,
-
-/mjt
 
