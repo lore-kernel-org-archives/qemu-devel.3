@@ -4,79 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D230C54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 14:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B9DC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 14:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdA41-0005eW-GD; Thu, 22 Feb 2024 09:28:41 -0500
+	id 1rdAIA-0003VW-Av; Thu, 22 Feb 2024 09:43:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdA40-0005eO-V3
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 09:28:40 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdA3w-0006L0-0B
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 09:28:40 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-55f50cf2021so2787384a12.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 06:28:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708612114; x=1709216914; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=eC+CYy2oEug9+rMCzsvGNr80fqPIx2W2fhrxncPzcUU=;
- b=RHK4S1jK+r8xTS1Z7X41NcalgIXrcmxVUjSutwuHuyIOADW7bchP06B/mIJ0AZP2Jf
- qC5Ml5hla11Zx46j3LPPV0lbnj9fbtMy0MO1Asxu9YMWY9vLn60nD+ohyZWRbPYdyM4h
- mjOv8/jkPrrnQqOKPkBU4KCTGssQVnU2oeCLb6vsY+sQ5keh2qhB2LrygvQzjsHmmw++
- NepfYVJPqSmEelsJdIZLJ3H9hBSDNq3p2WbvgtvOM449VlnDOD4BwIvtGY3gnLb0HN0o
- fApqRywN6Sne5/PuuIom1LcY5By+MPfd0DDxOAVW7/TLfR1QvRtR8l14+kJHQ7g6amUc
- sRcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708612114; x=1709216914;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eC+CYy2oEug9+rMCzsvGNr80fqPIx2W2fhrxncPzcUU=;
- b=RqdGqNuE7Gzsv972RchmQZryrE6ZlVp8D9hV8Zel72fNjojgdktkHT2aEd5hbRqXm3
- G2Pkq/qz50PXO9ipdfAyyalCskfAmUhd2xiSwerBCJqdZNeoEPr6d/BW87NGgGnBPLUp
- 9UZdpnUNYw1VJ89W86UpfKCTJibdMjN3VHC8seN3qyteS+Q/PWF0qzIAuNe5xIEu298o
- ooWZbELApy21mYHmZcK2kcmbKo8xKHvkI3r2q0IpwCU5nEGZ2QlSSM+iI3xwIWDgCo+8
- enXjvQUhUibIEKc/l9usmr9harrHDLEehSgfByl3aTplpBAeQhb/2izyfx2SBdKKQLYV
- 2QmQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPeaOlaczHt2CHLiCGl4B3pVH75+eCW4DO7AHGgiB5DlCm67yrPNvu0001O9m2LE0EUDQ5941RLFdpXmoqgfSnrFsRHbI=
-X-Gm-Message-State: AOJu0Yxgx+Aa883EJsB0zU1eHz2VeElMLSpqTlthQTk/kWrEIW3KYW9d
- /v5l89O5kENAEAlK6+j4F7hz8/KaSY6sOT83W34//oQP8OvM9NNn28Oukry9R3ajV1pS/2HUcMe
- p5fIALpD/C/dv3/g6rcOVvlm0pEGoI4E2/W17K1qwr+iw0WZP
-X-Google-Smtp-Source: AGHT+IHGGZd198Umwm6cmbEPRtl4kxak3bT5a7pDH9biI6YaDN0S4+0apb2JWG0jrJmJoKkPaMS7NeVGTGmdlOSqYX4=
-X-Received: by 2002:a50:bb2e:0:b0:565:11c5:c7db with SMTP id
- y43-20020a50bb2e000000b0056511c5c7dbmr2909011ede.5.1708612113988; Thu, 22 Feb
- 2024 06:28:33 -0800 (PST)
-MIME-Version: 1.0
-References: <20240221063431.76992-1-shahuang@redhat.com>
-In-Reply-To: <20240221063431.76992-1-shahuang@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Feb 2024 14:28:22 +0000
-Message-ID: <CAFEAcA-dAghULy_LibG8XLq4yUT3wZLUKvjrRzWZ+4ZSKfYEmQ@mail.gmail.com>
-Subject: Re: [PATCH v7] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
-To: Shaoqin Huang <shahuang@redhat.com>
-Cc: qemu-arm@nongnu.org, Eric Auger <eauger@redhat.com>, 
- Sebastian Ott <sebott@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ (Exim 4.90_1) (envelope-from <wj28.lee@samsung.com>)
+ id 1rd3m6-0004kr-6v
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 02:45:47 -0500
+Received: from mailout3.samsung.com ([203.254.224.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <wj28.lee@samsung.com>)
+ id 1rd3lx-00042g-Sz
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 02:45:45 -0500
+Received: from epcas2p4.samsung.com (unknown [182.195.41.56])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20240222074526epoutp03451c027007487a068337d8127d2fa7c3~2H6q15emV3035230352epoutp03t
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 07:45:26 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20240222074526epoutp03451c027007487a068337d8127d2fa7c3~2H6q15emV3035230352epoutp03t
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1708587926;
+ bh=WO5vv8iXnfXWEVyIv/JdS6NWHIGqgzMh1bKqgfERsw8=;
+ h=Subject:Reply-To:From:To:CC:In-Reply-To:Date:References:From;
+ b=L9U4vdB3EeJVKM3qPgptB8iboTxca9r4tOhiJU9//cfw17NnRtuhoKD9gqTL+gcZ1
+ RE5VeTydQEkBnvrf9+fNK3gg25CDcdTXpcQtQ3v/YXE5VvuVqbYK1ZFadaB4NTZFHf
+ m/8KOO11M5sck3I+JguSAYTKv0bki6L4VqTVoK18=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+ epcas2p1.samsung.com (KnoxPortal) with ESMTP id
+ 20240222074526epcas2p174c274773d75015c457c7f1738a67aa1~2H6qQ-6QR2971329713epcas2p1F;
+ Thu, 22 Feb 2024 07:45:26 +0000 (GMT)
+Received: from epsmges2p1.samsung.com (unknown [182.195.36.98]) by
+ epsnrtp3.localdomain (Postfix) with ESMTP id 4TgQD53sl2z4x9QM; Thu, 22 Feb
+ 2024 07:45:25 +0000 (GMT)
+X-AuditID: b6c32a45-3ebfd70000002716-62-65d6fb95a1f2
+Received: from epcas2p2.samsung.com ( [182.195.41.54]) by
+ epsmges2p1.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 01.77.10006.59BF6D56; Thu, 22 Feb 2024 16:45:25 +0900 (KST)
+Mime-Version: 1.0
+Subject: RE: [PATCH v4 02/10] hw/cxl/cxl-mailbox-utils: Add dynamic capacity
+ region representative and mailbox command support
+From: Wonjae Lee <wj28.lee@samsung.com>
+To: "nifan.cxl@gmail.com" <nifan.cxl@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "gregory.price@memverge.com" <gregory.price@memverge.com>,
+ "ira.weiny@intel.com" <ira.weiny@intel.com>, "dan.j.williams@intel.com"
+ <dan.j.williams@intel.com>, Adam Manzanares <a.manzanares@samsung.com>,
+ "dave@stgolabs.net" <dave@stgolabs.net>, "nmtadam.samsung@gmail.com"
+ <nmtadam.samsung@gmail.com>, Jim Harris <jim.harris@samsung.com>, Fan Ni
+ <fan.ni@samsung.com>, KyungSan Kim <ks0204.kim@samsung.com>, Hojin Nam
+ <hj96.nam@samsung.com>
+X-Priority: 3
+X-Content-Kind-Code: NORMAL
+In-Reply-To: <20240221182020.1086096-3-nifan.cxl@gmail.com>
+X-CPGS-Detection: blocking_info_exchange
+X-Drm-Type: N,general
+X-Msg-Generator: Mail
+X-Msg-Type: PERSONAL
+X-Reply-Demand: N
+Message-ID: <20240222074525epcms2p1099bf72b0683889b36a5c5c06bdc2dff@epcms2p1>
+Date: Thu, 22 Feb 2024 16:45:25 +0900
+X-CMS-MailID: 20240222074525epcms2p1099bf72b0683889b36a5c5c06bdc2dff
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: AUTO_CONFIDENTIAL
+CMS-TYPE: 102P
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCJsWRmVeSWpSXmKPExsWy7bCmme7U39dSDV7OkrWYfljRYvrUC4wW
+ q2+uYbRoWn2X1aKh6RGLxYc3/1gs9j99zmKx9ICGxaqF19gsju7hsDg/6xSLxd9texktli55
+ xGxxvHcHiwOfx85Zd9k9Wo68ZfVYvOclk8fGj//ZPZ5c28zk0bdlFaPH1Nn1Hp83yQVwRGXb
+ ZKQmpqQWKaTmJeenZOal2yp5B8c7x5uaGRjqGlpamCsp5CXmptoqufgE6Lpl5gAdraRQlphT
+ ChQKSCwuVtK3synKLy1JVcjILy6xVUotSMkpMC/QK07MLS7NS9fLSy2xMjQwMDIFKkzIzjh9
+ 5gFLQRt3Rff8b8wNjD2cXYycHBICJhIn+54zdzFycQgJ7GCUaGmexNbFyMHBKyAo8XeHMEiN
+ sEADo8ShnzkgtpCAnMTd26eYIOKaEm+mrWIBsdkE1CV+dJ4Ei4sIJElMmLIIbCazwAEWiY7H
+ PxghlvFKzGh/ygJhS0tsX74VLM4pYC1xdOoCqLiGxI9lvcwQtqjEzdVv2WHs98fmQ80RkWi9
+ dxaqRlDiwc/dUHEpia8n/rKD3C8hUC7xZr05yA0SIPc/WfkXao65xIQ9E8FsXgFficsXf4Ad
+ zSKgKnHmzQk2iBoXiWmTT4HdwywgL7H97RxmkJnMQA+v36UPMV5Z4sgtqAo+iY7DMNN5JXbM
+ e8IEYStJTGk7AnWZhERD41ao6R4Sp7c8ZJ3AqDgLEdCzkOyahbBrASPzKkax1ILi3PTUYqMC
+ Q3jcJufnbmIEJ18t1x2Mk99+0DvEyMTBeIhRgoNZSYSXpfxKqhBvSmJlVWpRfnxRaU5q8SFG
+ U6AvJzJLiSbnA9N/Xkm8oYmlgYmZmaG5kamBuZI4773WuSlCAumJJanZqakFqUUwfUwcnFIN
+ TLPcRdXnL9Nyrfe/nX705ouzLW7HA+YtePNBOO6g54e5NzUcOlemn+4K/e1u9LP+3L1ZHoW6
+ W47sXdH/bb9HTEWcjdBkqSOz+BvU5c8EaYiUTdp0bL/8Qavvb9NFBRrXn16ZneNT5Hw3edOf
+ nRrXJz974ZPO81869A77npv+82Xsrzz4fP6ChEr+768lK9xLUw+x+Ozr6frJ37JULeJp0R7u
+ veZT654f/322k4dhM8vldRMeRwVtnPO05WmTylFLj9akDQf9Iqe7G2RsOP6jjaEh93NGRWfS
+ rCufGPjX/7dUufuB9aFarXTGyvCJe0wWqD9ZfGpemG7aU6kZHc+PN0v/Dc396u7/Lm32j9xn
+ uauVWIozEg21mIuKEwEBQIGhRwQAAA==
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240221182126epcas2p1b684f9239e4262f17ff484939658a382
+References: <20240221182020.1086096-3-nifan.cxl@gmail.com>
+ <20240221182020.1086096-1-nifan.cxl@gmail.com>
+ <CGME20240221182126epcas2p1b684f9239e4262f17ff484939658a382@epcms2p1>
+Received-SPF: pass client-ip=203.254.224.33; envelope-from=wj28.lee@samsung.com;
+ helo=mailout3.samsung.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 22 Feb 2024 09:43:13 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,302 +122,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: wj28.lee@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Feb 2024 at 06:34, Shaoqin Huang <shahuang@redhat.com> wrote:
+On Wed, Feb 21, 2024 at 10:15:55AM -0800, nifan.cxl@gmail.com wrote:
+> From: Fan Ni <fan.ni@samsung.com>
 >
-> The KVM_ARM_VCPU_PMU_V3_FILTER provides the ability to let the VMM decide
-> which PMU events are provided to the guest. Add a new option
-> `kvm-pmu-filter` as -cpu sub-option to set the PMU Event Filtering.
-> Without the filter, all PMU events are exposed from host to guest by
-> default. The usage of the new sub-option can be found from the updated
-> document (docs/system/arm/cpu-features.rst).
+> Per cxl spec r3.1, add dynamic capacity region representative based on
+> Table 8-165 and extend the cxl type3 device definition to include dc region
+> information. Also, based on info in 8.2.9.9.9.1, add 'Get Dynamic Capacity
+> Configuration' mailbox support.
 >
-> Here is an example which shows how to use the PMU Event Filtering, when
-> we launch a guest by use kvm, add such command line:
+> Note: decode_len of a dc region is aligned to 256*MiB, divided by
+> 256 * MiB before returned to the host for "Get Dynamic Capacity Configuration"
+> mailbox command.
 >
->   # qemu-system-aarch64 \
->         -accel kvm \
->         -cpu host,kvm-pmu-filter="D:0x11-0x11"
->
-> Since the first action is deny, we have a global allow policy. This
-> filters out the cycle counter (event 0x11 being CPU_CYCLES).
->
-> And then in guest, use the perf to count the cycle:
->
->   # perf stat sleep 1
->
->    Performance counter stats for 'sleep 1':
->
->               1.22 msec task-clock                       #    0.001 CPUs utilized
->                  1      context-switches                 #  820.695 /sec
->                  0      cpu-migrations                   #    0.000 /sec
->                 55      page-faults                      #   45.138 K/sec
->    <not supported>      cycles
->            1128954      instructions
->             227031      branches                         #  186.323 M/sec
->               8686      branch-misses                    #    3.83% of all branches
->
->        1.002492480 seconds time elapsed
->
->        0.001752000 seconds user
->        0.000000000 seconds sys
->
-> As we can see, the cycle counter has been disabled in the guest, but
-> other pmu events do still work.
->
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
-> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
 > ---
-> v6->v7:
->   - Check return value of sscanf.
->   - Improve the check condition.
+>  hw/cxl/cxl-mailbox-utils.c  | 110 ++++++++++++++++++++++++++++++++++++
+>  include/hw/cxl/cxl_device.h |  16 ++++++
+>  2 files changed, 126 insertions(+)
 >
-> v5->v6:
->   - Commit message improvement.
->   - Remove some unused code.
->   - Collect Reviewed-by, thanks Sebastian.
->   - Use g_auto(Gstrv) to replace the gchar **.          [Eric]
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index ba1d9901df..88e3b733e3 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -22,6 +22,7 @@
 >
-> v4->v5:
->   - Change the kvm-pmu-filter as a -cpu sub-option.     [Eric]
->   - Comment tweak.                                      [Gavin]
->   - Rebase to the latest branch.
->
-> v3->v4:
->   - Fix the wrong check for pmu_filter_init.            [Sebastian]
->   - Fix multiple alignment issue.                       [Gavin]
->   - Report error by warn_report() instead of error_report(), and don't use
->   abort() since the PMU Event Filter is an add-on and best-effort feature.
->                                                         [Gavin]
->   - Add several missing {  } for single line of code.   [Gavin]
->   - Use the g_strsplit() to replace strtok().           [Gavin]
->
-> v2->v3:
->   - Improve commits message, use kernel doc wording, add more explaination on
->     filter example, fix some typo error.                [Eric]
->   - Add g_free() in kvm_arch_set_pmu_filter() to prevent memory leak. [Eric]
->   - Add more precise error message report.              [Eric]
->   - In options doc, add pmu-filter rely on KVM_ARM_VCPU_PMU_V3_FILTER support in
->     KVM.                                                [Eric]
->
-> v1->v2:
->   - Add more description for allow and deny meaning in
->     commit message.                                     [Sebastian]
->   - Small improvement.                                  [Sebastian]
->
->  docs/system/arm/cpu-features.rst | 23 +++++++++
->  target/arm/cpu.h                 |  3 ++
->  target/arm/kvm.c                 | 80 ++++++++++++++++++++++++++++++++
->  3 files changed, 106 insertions(+)
 
-The new syntax for the filter property seems quite complicated.
-I think it would be worth testing it with a new test in
-tests/qtest/arm-cpu-features.c.
+[snip]
 
+> +#ifdef CXL_SPEC_AFTER_R30
+> +    /*FIXME: need to set valid values in the future*/
+> +    stq_le_p(&extra_out->num_extents_supported, 0);
+> +    stq_le_p(&extra_out->num_extents_available, 0);
+> +    stq_le_p(&extra_out->num_tags_supported, 0);
+> +    stq_le_p(&extra_out->num_tags_available, 0);
 
-> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-> index a5fb929243..7c8f6a60ef 100644
-> --- a/docs/system/arm/cpu-features.rst
-> +++ b/docs/system/arm/cpu-features.rst
-> @@ -204,6 +204,29 @@ the list of KVM VCPU features and their descriptions.
->    the guest scheduler behavior and/or be exposed to the guest
->    userspace.
->
-> +``kvm-pmu-filter``
-> +  By default kvm-pmu-filter is disabled. This means that by default all pmu
+Hello,
 
-"PMU"
+It's a trivial comment and doesn't have any impact yet, but shouldn't it
+be stl_le_p()?
 
-> +  events will be exposed to guest.
-> +
-> +  KVM implements PMU Event Filtering to prevent a guest from being able to
-> +  sample certain events. It depends on the KVM_ARM_VCPU_PMU_V3_FILTER
-> +  attribute supported in KVM. It has the following format:
-> +
-> +  kvm-pmu-filter="{A,D}:start-end[;{A,D}:start-end...]"
-> +
-> +  The A means "allow" and D means "deny", start is the first event of the
-> +  range and the end is the last one. The first registered range defines
-> +  the global policy(global ALLOW if the first @action is DENY, global DENY
-
-Missing space before '('.
-
-Why the '@' before 'action'?
-
-> +  if the first @action is ALLOW). The start and end only support hexadecimal
-> +  format. For example:
-> +
-> +  kvm-pmu-filter="A:0x11-0x11;A:0x23-0x3a;D:0x30-0x30"
-> +
-> +  Since the first action is allow, we have a global deny policy. It
-> +  will allow event 0x11 (The cycle counter), events 0x23 to 0x3a are
-
-lowercase "the".
-
-> +  also allowed except the event 0x30 which is denied, and all the other
-> +  events are denied.
-> +
-
-Did you check that the documentation builds and that this new
-documentation renders into HTML the way you want it?
-
->  TCG VCPU Features
->  =================
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 63f31e0d98..f7f2431755 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -948,6 +948,9 @@ struct ArchCPU {
->
->      /* KVM steal time */
->      OnOffAuto kvm_steal_time;
-> +
-> +    /* KVM PMU Filter */
-> +    char *kvm_pmu_filter;
->  #endif /* CONFIG_KVM */
->
->      /* Uniprocessor system with MP extensions */
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 81813030a5..5c62580d34 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -496,6 +496,22 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
->      ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->  }
->
-> +static char *kvm_pmu_filter_get(Object *obj, Error **errp)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +
-> +    return g_strdup(cpu->kvm_pmu_filter);
-> +}
-> +
-> +static void kvm_pmu_filter_set(Object *obj, const char *pmu_filter,
-> +                               Error **errp)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +
-> +    g_free(cpu->kvm_pmu_filter);
-> +    cpu->kvm_pmu_filter = g_strdup(pmu_filter);
-> +}
-> +
->  /* KVM VCPU properties should be prefixed with "kvm-". */
->  void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->  {
-> @@ -517,6 +533,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->                               kvm_steal_time_set);
->      object_property_set_description(obj, "kvm-steal-time",
->                                      "Set off to disable KVM steal time.");
-> +
-> +    object_property_add_str(obj, "kvm-pmu-filter", kvm_pmu_filter_get,
-> +                            kvm_pmu_filter_set);
-> +    object_property_set_description(obj, "kvm-pmu-filter",
-> +                                    "PMU Event Filtering description for "
-> +                                    "guest PMU. (default: NULL, disabled)");
->  }
->
->  bool kvm_arm_pmu_supported(void)
-> @@ -1706,6 +1728,62 @@ static bool kvm_arm_set_device_attr(ARMCPU *cpu, struct kvm_device_attr *attr,
->      return true;
->  }
->
-> +static void kvm_arm_pmu_filter_init(ARMCPU *cpu)
-> +{
-> +    static bool pmu_filter_init;
-> +    struct kvm_pmu_event_filter filter;
-> +    struct kvm_device_attr attr = {
-> +        .group      = KVM_ARM_VCPU_PMU_V3_CTRL,
-> +        .attr       = KVM_ARM_VCPU_PMU_V3_FILTER,
-> +        .addr       = (uint64_t)&filter,
-> +    };
-> +    int i;
-> +    g_auto(GStrv) event_filters;
-> +
-> +    if (!cpu->kvm_pmu_filter) {
-> +        return;
-> +    }
-> +    if (kvm_vcpu_ioctl(CPU(cpu), KVM_HAS_DEVICE_ATTR, &attr)) {
-> +        warn_report("The KVM doesn't support the PMU Event Filter!");
-
-Drop "The ".
-
-Should this really only be a warning, rather than an error?
-
-> +        return;
-> +    }
-> +
-> +    /*
-> +     * The filter only needs to be initialized through one vcpu ioctl and it
-> +     * will affect all other vcpu in the vm.
-
-Weird. Why isn't it a VM ioctl if it affects the whole VM ?
-
-> +     */
-> +    if (pmu_filter_init) {
-> +        return;
-> +    } else {
-> +        pmu_filter_init = true;
-> +    }
-
-Shouldn't we do this before we do the kvm_vcpu_ioctl check
-for whether the kernel supports the filter? Otherwise presumably
-we'll print the warning once per vCPU, rather than only once.
-
-> +
-> +    event_filters = g_strsplit(cpu->kvm_pmu_filter, ";", -1);
-> +    for (i = 0; event_filters[i]; i++) {
-> +        unsigned short start = 0, end = 0;
-> +        char act;
-> +
-> +        if (sscanf(event_filters[i], "%c:%hx-%hx", &act, &start, &end) != 3) {
-> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
-> +            continue;
-> +        }
-> +
-> +        if ((act != 'A' && act != 'D') || start > end) {
-> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
-> +            continue;
-> +        }
-
-It would be better to do the syntax checking up-front when
-the user tries to set the property. Then you can make the
-property-setting return an error for invalid strings.
-
-> +
-> +        filter.base_event = start;
-> +        filter.nevents = end - start + 1;
-> +        filter.action = (act == 'A') ? KVM_PMU_EVENT_ALLOW :
-> +                                       KVM_PMU_EVENT_DENY;
-> +
-> +        if (!kvm_arm_set_device_attr(cpu, &attr, "PMU_V3_FILTER")) {
-
-Shouldn't we arrange for an error message if this fails?
-
-> +            break;
-> +        }
-> +    }
-> +}
-> +
->  void kvm_arm_pmu_init(ARMCPU *cpu)
->  {
->      struct kvm_device_attr attr = {
-> @@ -1716,6 +1794,8 @@ void kvm_arm_pmu_init(ARMCPU *cpu)
->      if (!cpu->has_pmu) {
->          return;
->      }
-> +
-> +    kvm_arm_pmu_filter_init(cpu);
->      if (!kvm_arm_set_device_attr(cpu, &attr, "PMU")) {
->          error_report("failed to init PMU");
->          abort();
->
-> base-commit: 760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83d0
-> --
-> 2.40.1
-
-thanks
--- PMM
+Thanks,
+Wonjae
 
