@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEDFC54791
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99DFDC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:29:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdCsY-0004ko-ES; Thu, 22 Feb 2024 12:29:02 -0500
+	id 1rdCsw-0005bO-3K; Thu, 22 Feb 2024 12:29:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rdCsT-0004j3-EU
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:28:57 -0500
+ id 1rdCsu-0005U2-2F
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:24 -0500
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rdCsR-0003D9-QF
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:28:57 -0500
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ id 1rdCsr-0003KF-To
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:23 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41MGtc6q005183; Thu, 22 Feb 2024 17:28:54 GMT
+ 41MH9aGn031377; Thu, 22 Feb 2024 17:29:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=hFgl8tvTrOvJ0dXJAR8o7o4bvOTku39BFJ3n9ZyNU1Y=;
- b=bo/u/J81vGErnfvhPnPEWrQ+0GgYocoX+d2VwLKdwx6u8+N6ipr/SIohPiNNylD46UOB
- oAGPPbiVPyxUklMUtJTQ1o5YoZNyibvqsk/IJ2/IpKdjhUvflBd5BZd9F5AV+5JGv4fG
- uX9GK67H3bDuJNcnlHFmGfS2NKZRCaaFRrVU0PUyS67uNK/2FSFiYgl5XTiAfNekFnV/
- eGXsjCGvhTW/VPneesv9a7GXTFdjouY1VTSzKVAcWN91ouSBBjR11vec/h9E5l+OwB0z
- UfJLE8o8iJYcy8BhL6V8iSaXh7gOkR5x/rs7Vt49Gam2bESzN9RN85AamJqg6xTZH+7J QQ== 
+ bh=wVz1B2cs/KV7XZxdXZrfE7CvTr69TpbqwHL6XmEN+qU=;
+ b=ku8yryDrKE3red+r8gwv4RZML4qGZA/vLKAXOaQ799xwFJE9VQyOH52k37Evk+/jquTW
+ 3pXeasRt0yyZo+cUrc0h1hSNWNhXmj34+PYbLmqxmPx4Z3TQ1pqavf9KUejrE/sguAUz
+ DUfqzFQibDSLsPUvrxKfKGZgG1afbpWIEv8T1lpMfCpmFmhKH4Z/au2Tw4rv7W7db6bc
+ GvyKYbtmUthCkkEwXUU9mdGZTNWTyKDew5JjLZKW7uauZEJoF6gX2qVUgqnanKrrkOft
+ RQ99jaZLHIHNZzOpCMQKo2SQBFEnvdShuay0QkmKFG4sMVvR/jUW6FlSrKcBFLcYl6uY Uw== 
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wd5fw52v1-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wakd2dfyv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 17:28:54 +0000
+ Thu, 22 Feb 2024 17:29:20 +0000
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41MG9UJn024561; Thu, 22 Feb 2024 17:28:52 GMT
+ with ESMTP id 41MHSVQp024791; Thu, 22 Feb 2024 17:29:03 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wak8ayrq8-1
+ 3wak8ays03-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 17:28:52 +0000
+ Thu, 22 Feb 2024 17:29:03 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSgA3032453;
- Thu, 22 Feb 2024 17:28:52 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSgAH032453;
+ Thu, 22 Feb 2024 17:29:02 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3wak8ayre4-8; Thu, 22 Feb 2024 17:28:52 +0000
+ ESMTP id 3wak8ayre4-15; Thu, 22 Feb 2024 17:29:02 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -62,9 +62,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 07/14] migration: per-mode notifiers
-Date: Thu, 22 Feb 2024 09:28:33 -0800
-Message-Id: <1708622920-68779-8-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 14/14] migration: options incompatible with cpr
+Date: Thu, 22 Feb 2024 09:28:40 -0800
+Message-Id: <1708622920-68779-15-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
 References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
@@ -76,8 +76,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402220138
-X-Proofpoint-GUID: Gsmrrpfx117hphCD1zdhg_TqezvPCIVI
-X-Proofpoint-ORIG-GUID: Gsmrrpfx117hphCD1zdhg_TqezvPCIVI
+X-Proofpoint-GUID: GD-xtRYXNFAjQWLWt2k1e94V9rvhjn2J
+X-Proofpoint-ORIG-GUID: GD-xtRYXNFAjQWLWt2k1e94V9rvhjn2J
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -102,87 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep a separate list of migration notifiers for each migration mode.
+Fail the migration request if options are set that are incompatible
+with cpr.
 
-Suggested-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
 ---
- include/migration/misc.h |  6 ++++++
- migration/migration.c    | 22 +++++++++++++++++-----
- 2 files changed, 23 insertions(+), 5 deletions(-)
+ migration/migration.c | 17 +++++++++++++++++
+ qapi/migration.json   |  2 ++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index e36a1f3..4dc06a9 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -86,6 +86,12 @@ typedef int (*MigrationNotifyFunc)(NotifierWithReturn *notify,
- void migration_add_notifier(NotifierWithReturn *notify,
-                             MigrationNotifyFunc func);
- 
-+/*
-+ * Same as migration_add_notifier, but applies to be specified @mode.
-+ */
-+void migration_add_notifier_mode(NotifierWithReturn *notify,
-+                                 MigrationNotifyFunc func, MigMode mode);
-+
- void migration_remove_notifier(NotifierWithReturn *notify);
- void migration_call_notifiers(MigrationState *s, MigrationEventType type);
- bool migration_in_setup(MigrationState *);
 diff --git a/migration/migration.c b/migration/migration.c
-index 33149c4..925103b 100644
+index 90a9094..7652fd4 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -69,8 +69,13 @@
- #include "qemu/sockets.h"
- #include "sysemu/kvm.h"
- 
--static NotifierWithReturnList migration_state_notifiers =
--    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(migration_state_notifiers);
-+#define NOTIFIER_ELEM_INIT(array, elem)    \
-+    [elem] = NOTIFIER_WITH_RETURN_LIST_INITIALIZER((array)[elem])
-+
-+static NotifierWithReturnList migration_state_notifiers[] = {
-+    NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
-+    NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
-+};
- 
- /* Messages sent on the return path from destination to source */
- enum mig_rp_message_type {
-@@ -1463,11 +1468,17 @@ static void migrate_fd_cancel(MigrationState *s)
+@@ -1953,6 +1953,23 @@ static bool migrate_prepare(MigrationState *s, bool blk, bool blk_inc,
+         return false;
      }
- }
  
-+void migration_add_notifier_mode(NotifierWithReturn *notify,
-+                                 MigrationNotifyFunc func, MigMode mode)
-+{
-+    notify->notify = (NotifierWithReturnFunc)func;
-+    notifier_with_return_list_add(&migration_state_notifiers[mode], notify);
-+}
++    if (migrate_mode_is_cpr(s)) {
++        const char *conflict = NULL;
 +
- void migration_add_notifier(NotifierWithReturn *notify,
-                             MigrationNotifyFunc func)
- {
--    notify->notify = (NotifierWithReturnFunc)func;
--    notifier_with_return_list_add(&migration_state_notifiers, notify);
-+    migration_add_notifier_mode(notify, func, MIG_MODE_NORMAL);
- }
- 
- void migration_remove_notifier(NotifierWithReturn *notify)
-@@ -1480,10 +1491,11 @@ void migration_remove_notifier(NotifierWithReturn *notify)
- 
- void migration_call_notifiers(MigrationState *s, MigrationEventType type)
- {
-+    MigMode mode = s->parameters.mode;
-     MigrationEvent e;
- 
-     e.type = type;
--    notifier_with_return_list_notify(&migration_state_notifiers, &e, 0);
-+    notifier_with_return_list_notify(&migration_state_notifiers[mode], &e, 0);
- }
- 
- bool migration_in_setup(MigrationState *s)
++        if (migrate_postcopy()) {
++            conflict = "postcopy";
++        } else if (migrate_background_snapshot()) {
++            conflict = "background snapshot";
++        } else if (migrate_colo()) {
++            conflict = "COLO";
++        }
++
++        if (conflict) {
++            error_setg(errp, "Cannot use %s with CPR", conflict);
++            return false;
++        }
++    }
++
+     if (blk || blk_inc) {
+         if (migrate_colo()) {
+             error_setg(errp, "No disk migration is required in COLO mode");
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 0990297..c6bfe2e 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -657,6 +657,8 @@
+ #     shared backend must be be non-volatile across reboot, such as by backing
+ #     it with a dax device.
+ #
++#     cpr-reboot may not be used with postcopy, colo, or background-snapshot.
++#
+ #     (since 8.2)
+ ##
+ { 'enum': 'MigMode',
 -- 
 1.8.3.1
 
