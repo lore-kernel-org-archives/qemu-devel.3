@@ -4,59 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEC0C54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 15:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1BEC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 15:44:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdBAm-0004Tw-2T; Thu, 22 Feb 2024 10:39:44 -0500
+	id 1rdAMK-0008Ab-N8; Thu, 22 Feb 2024 09:47:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rdBAk-0004TD-99
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:39:42 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rdBAf-0002TB-4P
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:39:41 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D87D460DBF;
- Thu, 22 Feb 2024 18:39:31 +0300 (MSK)
-Received: from davydov-max-nux.yandex.net (unknown
- [2a02:6b8:8f:4:b109:a1eb:adad:8bd8])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id CdVQ8Q0i7a60-pcANuaDa; Thu, 22 Feb 2024 18:39:31 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1708616371;
- bh=6XfTr0rpufuBnnuoGoJuO2nrfQIfRMUlKRl2ieJi++g=;
- h=Cc:Message-Id:References:Date:In-Reply-To:Subject:To:From;
- b=U2HDj3s/LZOFaQdr3Mp/uNalJnm1qjgoO8ec5ahKU20E5kvnkHuTyLPi12gFmniRG
- B7VlJ9MQ+sWwVmZT1mVOhelnbkTU5ao5L8vjO+bm9ift0vSabOZanC82d7RLQcbCrQ
- c4jYZnO2kHb5l9lrJGFQ35ztMIH6tzdRL3nGmtSg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Maksim Davydov <davydov-max@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: davydov-max@yandex-team.ru, vsementsov@yandex-team.ru, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
- jsnow@redhat.com, eblake@redhat.com, armbru@redhat.com,
- pbonzini@redhat.com, berrange@redhat.com, alxndr@bu.edu, den@virtuozzo.com
-Subject: [PATCH v9 2/4] qmp: add dump machine type compatibility properties
-Date: Thu, 22 Feb 2024 18:39:10 +0300
-Message-Id: <20240222153912.646053-3-davydov-max@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240222153912.646053-1-davydov-max@yandex-team.ru>
-References: <20240222153912.646053-1-davydov-max@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdAM9-00087f-TM
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 09:47:31 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdAM8-0001nq-4G
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 09:47:25 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-33d32f74833so1310642f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 06:47:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708613242; x=1709218042; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ig1zQ5yAhvNeIG9dSEvmApyUP139yhXRSsTZspye650=;
+ b=D1PDvOb84K3aSx9v/A6FYEl69vmlqofiDN6Bm0d3nX4C/FCZGBlO+fdRVUSyl3QMOk
+ cwFsAf2c6SBsH0pVdVYtwJ85NQzUXngrD2mvCIZxaXkTqLL6IuJ/kwtNXgb48YXoTd1b
+ 4uQRbtrVNAyqxCCKpq2y6WR0b9eGMLz8h09LC5ODBFQ2GtX8BGb/cjZ8rec9XbRcTy+l
+ s+APEUhqANYhRyOPn69HYsig8bjYjjiYt3otYGj86HC7GQAHpT07eoaW/VRQZT7uk0oE
+ AmVikWcQJ7VsBNYmN7N+3rxIOeDN9L7eeNX/SuiqDCk9DweaqFm0xSeIDH1z6Ul3rbhO
+ IqnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708613242; x=1709218042;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ig1zQ5yAhvNeIG9dSEvmApyUP139yhXRSsTZspye650=;
+ b=uDxzP68X61UuDo2X3RJr+bSWGdSbdYltoY0LPxr6AX7TRVYcWPysYe8Ifym8/bpwCw
+ qPf9fuDpyCgT7ZtiVzOtIYeOYmo/w7gyuBhH/lIeaFeCBh8RiebRE01RNogAlcFbdj5e
+ N11xlX6rCWYdJG3ydt/WiDbqIroSf4APYTT6uDGFOyoKGAn36pX0o8CQqAM7/rNaFIRS
+ zTSHabBSxA2t4I4m5Y+Bw5mwmmqmCaoE57Aej8RwQVRdZVlIIfiPzsdyXHkmMJ3FYZwx
+ CVk49X+Lzpq4Wvx8ykcgOLzB2Q7pt774JPW78tumvPvSedewDMbqcUz/AKIe2MwO4tuB
+ y9lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV11gipGEINTrEIM3qtoc9cixXLrZOyN1Jg3QWMj9lw1Fl8Qt9ubl3aG505yeqMns3SfMazR38TQGbWtnU/yqFNyem9Aqs=
+X-Gm-Message-State: AOJu0Yy8+F8TScNeyss+fbXhfEsWk3+S7yaoBPXW2R1Mxk6SdmiMxAkm
+ e3MoFyi3w22Euki9NbaNP11e661LlQoPFng2A6q5GppQbuPAvfbkzYGep4SRwBE=
+X-Google-Smtp-Source: AGHT+IHzO4C/HHgUmxAV4JJFLSC92PSbv6ZbYvSpW0d4vhsFfUbovstJ0ayKa/dCf+4Ie2xlWvvXMA==
+X-Received: by 2002:adf:f60d:0:b0:33d:27cf:6208 with SMTP id
+ t13-20020adff60d000000b0033d27cf6208mr10477182wrp.7.1708613242063; 
+ Thu, 22 Feb 2024 06:47:22 -0800 (PST)
+Received: from [192.168.69.100] (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
+ [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
+ df2-20020a5d5b82000000b0033d6c928a95sm8796319wrb.63.2024.02.22.06.47.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Feb 2024 06:47:21 -0800 (PST)
+Message-ID: <aedde374-0a7a-4a38-9149-7002c627b743@linaro.org>
+Date: Thu, 22 Feb 2024 15:47:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/3] hw/i2c: smbus: Reset fixes
+Content-Language: en-US
+To: minyard@acm.org, Joe Komlodi <komlodi@google.com>
+Cc: venture@google.com, peter.maydell@linaro.org, qemu-devel@nongnu.org
+References: <20240220211123.2664977-1-komlodi@google.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240220211123.2664977-1-komlodi@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -79,180 +95,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To control that creating new machine type doesn't affect the previous
-types (their compat_props) and to check complex compat_props inheritance
-we need qmp command to print machine type compatibility properties.
-This patch adds the ability to get list of all the compat_props of the
-corresponding supported machines for their comparison via new optional
-argument of "query-machines" command. Since information on compatibility
-properties can increase the command output by a factor of 40, add an
-argument to enable it, default off.
+Hi Joe,
 
-Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- hw/core/machine-qmp-cmds.c  | 23 ++++++++++++-
- qapi/machine.json           | 67 +++++++++++++++++++++++++++++++++++--
- tests/qtest/fuzz/qos_fuzz.c |  2 +-
- 3 files changed, 88 insertions(+), 4 deletions(-)
+On 20/2/24 22:11, Joe Komlodi wrote:
+> Changelog:
 
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 3860a50c3b..4e908e12d3 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -66,7 +66,8 @@ CpuInfoFastList *qmp_query_cpus_fast(Error **errp)
-     return head;
- }
- 
--MachineInfoList *qmp_query_machines(Error **errp)
-+MachineInfoList *qmp_query_machines(bool has_compat_props, bool compat_props,
-+                                    Error **errp)
- {
-     GSList *el, *machines = object_class_get_list(TYPE_MACHINE, false);
-     MachineInfoList *mach_list = NULL;
-@@ -98,6 +99,26 @@ MachineInfoList *qmp_query_machines(Error **errp)
-             info->default_ram_id = g_strdup(mc->default_ram_id);
-         }
- 
-+        if (compat_props && mc->compat_props) {
-+            int i;
-+            info->compat_props = NULL;
-+            CompatPropertyList **tail = &(info->compat_props);
-+            info->has_compat_props = true;
-+
-+            for (i = 0; i < mc->compat_props->len; i++) {
-+                GlobalProperty *mt_prop = g_ptr_array_index(mc->compat_props,
-+                                                            i);
-+                CompatProperty *prop;
-+
-+                prop = g_malloc0(sizeof(*prop));
-+                prop->qom_type = g_strdup(mt_prop->driver);
-+                prop->property = g_strdup(mt_prop->property);
-+                prop->value = g_strdup(mt_prop->value);
-+
-+                QAPI_LIST_APPEND(tail, prop);
-+            }
-+        }
-+
-         QAPI_LIST_PREPEND(mach_list, info);
-     }
- 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index d816c5c02e..bb7f0616fd 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -135,6 +135,26 @@
- ##
- { 'command': 'query-cpus-fast', 'returns': [ 'CpuInfoFast' ] }
- 
-+##
-+# @CompatProperty:
-+#
-+# Property default values specific to a machine type, for use by
-+# scripts/compare-machine-types.
-+#
-+# @qom-type: name of the QOM type to which the default applies
-+#
-+# @property: name of its property to which the default applies
-+#
-+# @value: the default value (machine-specific default can overwrite
-+#     the "default" default, to avoid this use -machine none)
-+#
-+# Since: 9.0
-+##
-+{ 'struct': 'CompatProperty',
-+  'data': { 'qom-type': 'str',
-+            'property': 'str',
-+            'value': 'str' } }
-+
- ##
- # @MachineInfo:
- #
-@@ -166,6 +186,14 @@
- #
- # @acpi: machine type supports ACPI (since 8.0)
- #
-+# @compat-props: The machine type's compatibility properties.  Only
-+#     present when query-machines argument @compat-props is true.
-+#     (since 9.0)
-+#
-+# Features:
-+#
-+# @unstable: Member @compat-props is experimental.
-+#
- # Since: 1.2
- ##
- { 'struct': 'MachineInfo',
-@@ -173,18 +201,53 @@
-             '*is-default': 'bool', 'cpu-max': 'int',
-             'hotpluggable-cpus': 'bool',  'numa-mem-supported': 'bool',
-             'deprecated': 'bool', '*default-cpu-type': 'str',
--            '*default-ram-id': 'str', 'acpi': 'bool' } }
-+            '*default-ram-id': 'str', 'acpi': 'bool',
-+            '*compat-props': { 'type': ['CompatProperty'],
-+                               'features': ['unstable'] } } }
- 
- ##
- # @query-machines:
- #
- # Return a list of supported machines
- #
-+# @compat-props: if true, also return compatibility properties.
-+#     (default: false) (since 9.0)
-+#
-+# Features:
-+#
-+# @unstable: Argument @compat-props is experimental.
-+#
- # Returns: a list of MachineInfo
- #
- # Since: 1.2
-+#
-+# Example:
-+#
-+# -> { "execute": "query-machines", "arguments": { "compat-props": true } }
-+# <- { "return": [
-+#          {
-+#              "hotpluggable-cpus": true,
-+#              "name": "pc-q35-6.2",
-+#              "compat-props": [
-+#                  {
-+#                      "qom-type": "virtio-mem",
-+#                      "property": "unplugged-inaccessible",
-+#                      "value": "off"
-+#                   }
-+#               ],
-+#               "numa-mem-supported": false,
-+#               "default-cpu-type": "qemu64-x86_64-cpu",
-+#               "cpu-max": 288,
-+#               "deprecated": false,
-+#               "default-ram-id": "pc.ram"
-+#           },
-+#           ...
-+#    }
- ##
--{ 'command': 'query-machines', 'returns': ['MachineInfo'] }
-+{ 'command': 'query-machines',
-+  'data': { '*compat-props': { 'type': 'bool',
-+                               'features': [ 'unstable' ] } },
-+  'returns': ['MachineInfo'] }
- 
- ##
- # @CurrentMachineParams:
-diff --git a/tests/qtest/fuzz/qos_fuzz.c b/tests/qtest/fuzz/qos_fuzz.c
-index e403d373a0..b71e945c5f 100644
---- a/tests/qtest/fuzz/qos_fuzz.c
-+++ b/tests/qtest/fuzz/qos_fuzz.c
-@@ -46,7 +46,7 @@ static void qos_set_machines_devices_available(void)
-     MachineInfoList *mach_info;
-     ObjectTypeInfoList *type_info;
- 
--    mach_info = qmp_query_machines(&error_abort);
-+    mach_info = qmp_query_machines(false, false, &error_abort);
-     machines_apply_to_node(mach_info);
-     qapi_free_MachineInfoList(mach_info);
- 
--- 
-2.34.1
+> This series adds some resets for SMBus and for the I2C core. Along with
+> it, we make SMBus slave error printing a little more helpful.
+> 
+> These reset issues were very infrequent, they would maybe occur in 1 out
+> of hundreds of resets in our testing, but the way they happen is pretty
+> straightforward.
+> 
+> Basically as long as a reset happens in the middle of a transaction, the
+> state of the old transaction would still partially be there after the
+> reset. Once a new transaction comes in, the partial stale state can
+> cause the new transaction to incorrectly fail.
 
+Sorry for jumping late, at v4. I'm a bit confused by this series.
+
+- AFAICT there is no in-band or RESET line with I2C, but
+   the AN10216 document mentions:
+
+   I2C Bus recovery
+
+   • Typical case is when masters fails when doing a read
+     operation in a slave
+   • SDA line is then non usable anymore because of the
+     “Slave-Transmitter” mode.
+   • Methods to recover the SDA line are:
+     – Reset the slave device (assuming the device has a
+       Reset pin)
+     – Use a bus recovery sequence to leave the “Slave-
+       Transmitter” mode
+   • Bus recovery sequence is done as following:
+     1 - Send 9 clock pulses on SCL line
+     2 - Ask the master to keep SDA High until the “Slave-
+         Transmitter” releases the SDA line to perform the
+         ACK operation
+     3 - Keeping SDA High during the ACK means that the
+         “Master-Receiver” does not acknowledge the previous
+         byte receive
+     4 - The “Slave-Transmitter” then goes in an idle state
+     5 - The master then sends a STOP command initializing
+         completely the bus
+
+- For SMBus Specification Version 2.0:
+
+   3.1.4.2 Power-on reset
+
+   SMBus devices detect a power-on event in one of three ways:
+   • By detecting that power is being applied to the device,
+   • By an external reset signal that is being asserted or
+   • For self-powered or always powered devices, by detecting
+     that the SMBus is active (clock and data lines have gone
+     high after being low for more than 2 1/2 seconds).
+
+Questions:
+
+- Is the first patch "hw/i2c: core: Add reset" really for
+   I2C? Otherwise we could expand smbus form i2cbus, and have
+   this reset only for smbus.
+
+- Should we model the "I2C bus recovery sequence" before
+   triggering reset?
+
+- Shouldn't we model the smbus 2.5s timeout before triggering
+   the reset?
+
+Thanks,
+
+Phil.
 
