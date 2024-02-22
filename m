@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99555C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77978C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:30:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7E3-0008AH-4J; Thu, 22 Feb 2024 06:26:51 -0500
+	id 1rd7E3-0008A3-4K; Thu, 22 Feb 2024 06:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Dg-00085u-94; Thu, 22 Feb 2024 06:26:28 -0500
+ id 1rd7Dm-00086E-Pu; Thu, 22 Feb 2024 06:26:36 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Dd-0004um-HJ; Thu, 22 Feb 2024 06:26:27 -0500
+ id 1rd7Dk-0004x1-8N; Thu, 22 Feb 2024 06:26:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BAC284FB48;
+ by isrv.corpit.ru (Postfix) with ESMTP id D74564FB4A;
  Thu, 22 Feb 2024 14:26:25 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4123B87174;
+ by tsrv.corpit.ru (Postfix) with SMTP id 5DEE387176;
  Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
-Received: (nullmailer pid 2526158 invoked by uid 1000);
+Received: (nullmailer pid 2526164 invoked by uid 1000);
  Thu, 22 Feb 2024 11:26:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 06/34] hw/timer: Move HPET_INTCAP definition to "hpet.h"
-Date: Thu, 22 Feb 2024 14:25:33 +0300
-Message-Id: <20240222112601.2526057-7-mjt@tls.msk.ru>
+Subject: [PULL 08/34] hw/i386/acpi: Declare pc_madt_cpu_entry() in
+ 'acpi-common.h'
+Date: Thu, 22 Feb 2024 14:25:35 +0300
+Message-Id: <20240222112601.2526057-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
@@ -64,57 +65,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-HPET_INTCAP is specific to TYPE_HPET, so define it there.
-hpet.c doesn't need to include "hw/i386/pc.h" anymore.
+Since pc_madt_cpu_entry() is only used by:
+ - hw/i386/acpi-build.c   // single call
+ - hw/i386/acpi-common.c  // definition
+there is no need to expose it outside of hw/i386/.
+Declare it in "acpi-common.h".
+acpi-build.c doesn't need "hw/i386/pc.h" anymore.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Reviewed-by: Luc Michel <luc.michel@amd.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/timer/hpet.c         | 1 -
- include/hw/i386/pc.h    | 2 --
- include/hw/timer/hpet.h | 2 ++
- 3 files changed, 2 insertions(+), 3 deletions(-)
+ hw/i386/acpi-common.c | 1 -
+ hw/i386/acpi-common.h | 3 +++
+ include/hw/i386/pc.h  | 4 ----
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 1672faa4f2..01efe4885d 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -25,7 +25,6 @@
-  */
- 
- #include "qemu/osdep.h"
+diff --git a/hw/i386/acpi-common.c b/hw/i386/acpi-common.c
+index 43dc23f7e0..f1a11f833a 100644
+--- a/hw/i386/acpi-common.c
++++ b/hw/i386/acpi-common.c
+@@ -27,7 +27,6 @@
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
+ #include "hw/acpi/utils.h"
 -#include "hw/i386/pc.h"
- #include "hw/irq.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
+ #include "target/i386/cpu.h"
+ 
+ #include "acpi-build.h"
+diff --git a/hw/i386/acpi-common.h b/hw/i386/acpi-common.h
+index b3c56ee014..e305aaac15 100644
+--- a/hw/i386/acpi-common.h
++++ b/hw/i386/acpi-common.h
+@@ -1,12 +1,15 @@
+ #ifndef HW_I386_ACPI_COMMON_H
+ #define HW_I386_ACPI_COMMON_H
+ 
++#include "hw/boards.h"
+ #include "hw/acpi/bios-linker-loader.h"
+ #include "hw/i386/x86.h"
+ 
+ /* Default IOAPIC ID */
+ #define ACPI_BUILD_IOAPIC_ID 0x0
+ 
++void pc_madt_cpu_entry(int uid, const CPUArchIdList *apic_ids,
++                       GArray *entry, bool force_enabled);
+ void acpi_build_madt(GArray *table_data, BIOSLinker *linker,
+                      X86MachineState *x86ms,
+                      const char *oem_id, const char *oem_table_id);
 diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 02a0deedd3..c0e6c43fbd 100644
+index c0e6c43fbd..d7c7f930ed 100644
 --- a/include/hw/i386/pc.h
 +++ b/include/hw/i386/pc.h
-@@ -15,8 +15,6 @@
- #include "hw/firmware/smbios.h"
- #include "hw/cxl/cxl.h"
+@@ -199,10 +199,6 @@ bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
+                                int *data_len);
+ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
  
--#define HPET_INTCAP "hpet-intcap"
+-/* hw/i386/acpi-common.c */
+-void pc_madt_cpu_entry(int uid, const CPUArchIdList *apic_ids,
+-                       GArray *entry, bool force_enabled);
 -
- /**
-  * PCMachineState:
-  * @acpi_dev: link to ACPI PM device that performs ACPI hotplug handling
-diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
-index f04c4d3238..d17a8d4319 100644
---- a/include/hw/timer/hpet.h
-+++ b/include/hw/timer/hpet.h
-@@ -78,6 +78,8 @@ extern struct hpet_fw_config hpet_cfg;
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
  
- #define TYPE_HPET "hpet"
- 
-+#define HPET_INTCAP "hpet-intcap"
-+
- static inline bool hpet_find(void)
- {
-     return object_resolve_path_type("", TYPE_HPET, NULL);
 -- 
 2.39.2
 
