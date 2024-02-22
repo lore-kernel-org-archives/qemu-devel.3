@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA693C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 08:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F096C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd4ur-0005AH-NK; Thu, 22 Feb 2024 03:58:53 -0500
+	id 1rd4yv-0006NM-20; Thu, 22 Feb 2024 04:03:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rd4up-00059Y-LD; Thu, 22 Feb 2024 03:58:51 -0500
-Received: from mgamail.intel.com ([192.198.163.18])
+ id 1rd4yt-0006Mw-OK; Thu, 22 Feb 2024 04:03:03 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rd4um-0006fr-Nj; Thu, 22 Feb 2024 03:58:51 -0500
+ id 1rd4ys-0007R8-6F; Thu, 22 Feb 2024 04:03:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708592329; x=1740128329;
+ t=1708592582; x=1740128582;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=tK9iJX/PGYxRl6fiAZa/42LQrJHsPlP9pIA09b3Rftw=;
- b=Y0wAjawUA+QHx1QjsjkegLtW6ZLCErZU0alCpEia8M79bmQUOnbqa1lN
- Mo3ZWxOvFv86JXAPPgBXpORc8iHgo6faxVD+s3IVNQsvtG6+7F+iOB/SU
- 5H/LZ0BczXAs4pB+y484+K0nB9IKOb+gihVEkIKGSMac/GYK4B+J05Wdb
- Q7Vx12KPK2ujj/kKV0QClqiqO1yYyXy9CeQi9FcufpHrQkULJiNVPd7Ou
- 1aeh6PcqbqO5CXSuf6sboQTYCAu2DPyPynjoeaRFZHtfSPNMvo6d3XFiS
- NGP1ttqPbMwmJhD8XolwvXipK2W7JwSYSUCnJ9c7V83TqdMCxndWMwkQz A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10991"; a="2688574"
+ bh=pVCsK+Qv4FAZytRcJKKh5xEgXldDFEQHKJuro//Rm0c=;
+ b=EsXl89AEbW/bX7NmHEtOv36M80Hv9WIWVIDti1q6l8HcKpTO1Nnj8M5n
+ GdV5MI1yJyBfNKgmX3N4EPP84hE1gK1RhBWR1IPWqMAen151xx9HVw9U4
+ qKqx+dXxjk/9RzKl+cmjoJ5gFCbUfN1qaLpw1N2qTO6M64A7WfaFjqXzJ
+ l3rxdBNiZ3jarMnH1zpSRg58/LZbMB+CEI6Gxoui/rpC9fcspJG7hIz05
+ 9Edzlew0CMDM/UmJyzU8XpAY6/qEOhOkxL1NJX9fnSFfH9bZnEDcudhJ1
+ u91p51TS/RSL3Thj/kLAsqySJs/6qXTh3jweAZ5Xl5mGTLyY+bBFltyXc Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10991"; a="2956273"
 X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; 
-   d="scan'208";a="2688574"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Feb 2024 00:58:42 -0800
+   d="scan'208";a="2956273"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Feb 2024 01:02:58 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; 
-   d="scan'208";a="5367625"
+X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; d="scan'208";a="36260438"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 22 Feb 2024 00:58:39 -0800
-Date: Thu, 22 Feb 2024 17:12:20 +0800
+ by orviesa002.jf.intel.com with ESMTP; 22 Feb 2024 01:02:55 -0800
+Date: Thu, 22 Feb 2024 17:16:35 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
@@ -52,16 +51,17 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH 01/21] hw/i386/pc: Do not use C99 mixed-declarations style
-Message-ID: <ZdcP9A7n5w7RJqii@intel.com>
+Subject: Re: [PATCH 02/21] hw/i386/pc_sysfw: Use qdev_is_realized() instead
+ of QOM API
+Message-ID: <ZdcQ8wk6rPmivHWO@intel.com>
 References: <20240216110313.17039-1-philmd@linaro.org>
- <20240216110313.17039-2-philmd@linaro.org>
+ <20240216110313.17039-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240216110313.17039-2-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240216110313.17039-3-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,49 +85,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
-
-On Fri, Feb 16, 2024 at 12:02:52PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Fri, 16 Feb 2024 12:02:52 +0100
+On Fri, Feb 16, 2024 at 12:02:53PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Fri, 16 Feb 2024 12:02:53 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 01/21] hw/i386/pc: Do not use C99 mixed-declarations style
+> Subject: [PATCH 02/21] hw/i386/pc_sysfw: Use qdev_is_realized() instead of
+>  QOM API
 > X-Mailer: git-send-email 2.41.0
 > 
-> QEMU's coding style generally forbids C99 mixed declarations.
+> Prefer QDev API for QDev objects, avoid the underlying QOM layer.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/i386/pc.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  hw/i386/pc_sysfw.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 > 
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 196827531a..3c00a87317 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1227,6 +1227,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
->       */
->      if (pcms->hpet_enabled) {
->          qemu_irq rtc_irq;
-> +        uint8_t compat;
+> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> index c8d9e71b88..3efabbbab2 100644
+> --- a/hw/i386/pc_sysfw.c
+> +++ b/hw/i386/pc_sysfw.c
+> @@ -107,17 +107,15 @@ void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+>  {
+>      char *prop_name;
+>      int i;
+> -    Object *dev_obj;
 >  
->          hpet = qdev_try_new(TYPE_HPET);
->          if (!hpet) {
-> @@ -1238,8 +1239,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
->           * use IRQ16~23, IRQ8 and IRQ2.  If the user has already set
->           * the property, use whatever mask they specified.
->           */
-> -        uint8_t compat = object_property_get_uint(OBJECT(hpet),
-> -                HPET_INTCAP, NULL);
-> +        compat = object_property_get_uint(OBJECT(hpet), HPET_INTCAP, NULL);
->          if (!compat) {
->              qdev_prop_set_uint32(hpet, HPET_INTCAP, hpet_irqs);
+>      assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
+>  
+>      for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+> -        dev_obj = OBJECT(pcms->flash[i]);
+> -        if (!object_property_get_bool(dev_obj, "realized", &error_abort)) {
+> +        if (!qdev_is_realized(DEVICE(pcms->flash[i]))) {
+>              prop_name = g_strdup_printf("pflash%d", i);
+>              object_property_del(OBJECT(pcms), prop_name);
+>              g_free(prop_name);
+> -            object_unparent(dev_obj);
+> +            object_unparent(OBJECT(pcms->flash[i]));
+>              pcms->flash[i] = NULL;
 >          }
-
-"compat" is only used here to check. So, what about getting rid of this
-variable?
-
-if (!object_property_get_uint(OBJECT(hpet), HPET_INTCAP, NULL)) {
-    qdev_prop_set_uint32(hpet, HPET_INTCAP, hpet_irqs);
-}
-
+>      }
+> -- 
+> 2.41.0
+> 
+> 
 
