@@ -4,70 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459E8C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E136C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7RZ-000581-9S; Thu, 22 Feb 2024 06:40:49 -0500
+	id 1rd7Uv-0005yW-8B; Thu, 22 Feb 2024 06:44:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rd7RX-00057m-Qa
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:40:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rd7RV-0007Ob-Qn
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:40:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708602044;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=p7g2eXheqTj3RZmVQplKMlOMB7UA11moCYxCP+wOg1o=;
- b=Hl70PmgGkrBC+J1yjDKmg9O+S17qFJqmvv2MVHeuZbVxjjbx7oWSfxNaYiGBt8rMHg5jFK
- +vITaI/DCRL473i3/UNuZgW5IjD6BIdQEP4LddXKe4aD1To3c8InyJJecoqOkFWrpnn+NM
- FSa8oYyHRhsHRZ8NtXqSBj4EX8vDjLg=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-WK5WMDraOpSmzNgJFqf0sA-1; Thu,
- 22 Feb 2024 06:40:41 -0500
-X-MC-Unique: WK5WMDraOpSmzNgJFqf0sA-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B054038117EB;
- Thu, 22 Feb 2024 11:40:40 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.48])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 50FDE492BC6;
- Thu, 22 Feb 2024 11:40:39 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] gitlab: force allow use of pip in Cirrus jobs
-Date: Thu, 22 Feb 2024 11:40:38 +0000
-Message-ID: <20240222114038.2348718-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rd7Ut-0005y7-E8
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:44:15 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rd7Uq-0007mR-Jm
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:44:15 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5654621d62dso431237a12.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 03:44:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708602251; x=1709207051; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C4JoJUOpaLjEuldvsh0KvTsEDQYZ2Zk/vfAS3pyEwGQ=;
+ b=PTUMEYi2k4aKxQWMYr3lXcW0zN/OiIw8OX8u1H/Z0ZgY/y6qFnkOYhQL20nmfc5NYs
+ q2MCoD2YDCrbGP7znpa1H1AY9enMZpv58VuI4PbRfU/JuGxGVts2hqHqDLydR+WoRD+m
+ PVlQiYMXanQyr7pV7MROjfaEKOtYkbefCF66jI4bGBo+qqueveiiFtQhzH1V2Mm0MEa5
+ WPP+K4SvlSWs60KSStu2eSyPywswVhvZKZzfOo9N5izaPZCWz4mIbqeLlEefsv2cNoCs
+ 2eUvFVxoJuEfP+WfWcQ216lY1BnxwyZ5AE9H47/kCJZeZjvJ7WYDk635MkkeLzqUXIKH
+ JKgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708602251; x=1709207051;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C4JoJUOpaLjEuldvsh0KvTsEDQYZ2Zk/vfAS3pyEwGQ=;
+ b=oi/jvBMm9KHC0h/GXt+TLe5QPCiGeQALvON5VtJBeHr0zguqMB19b890PLnUC6vp2K
+ nBOHspWn5+BvxYQeJWtniKwd+h9AXi0fAI0TkD9svGCsUnzapKj/pcth3ygdOD8NW/ex
+ Wy7bZPw9iz9o6T1slh17nbyS8UI9XO8KQL3k0JgHEMpAeluB7A2I5vSIZk5DVOLaXqyK
+ HgzmuCozbxlLoO35uNmRi7J0Znk0hBar7pvXnSWaCiQM9jXHHHpuWrHLKhQJAQA1FY3k
+ UYfBvAOSIjGJm0DWTl5vjKtvc7kXAN1rJoWWTVU9Mx8ANCLDjujnmvE9w1wntJ9lmwxn
+ HRug==
+X-Gm-Message-State: AOJu0Yx7FPphyxhTmNanEecV5I1fJekXhNhuYVFI6Qq9kwCfW2+TypsE
+ hQ8HXBTC0b4idVieNTocDeyDv1tqyroIXQBLzZLwKzoE2eICNviUUB+wroDY6RW5NDCArMLwq64
+ qRlY3jVJ0SYcIOSGqMEv0srydjRq9DAmBNJfgmA==
+X-Google-Smtp-Source: AGHT+IHUP3jpQYvkDhXG6njBhm//e1cMcpVm3Mm5t1Li3MM9XQSCBWPrmKK/qsNeiZJpTgZ5g2KSObLdPqmCrTEun5k=
+X-Received: by 2002:a05:6402:1d1a:b0:565:210a:34b9 with SMTP id
+ dg26-20020a0564021d1a00b00565210a34b9mr1976979edb.38.1708602250842; Thu, 22
+ Feb 2024 03:44:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240220174412.155885-1-peter.maydell@linaro.org>
+ <20240220174412.155885-3-peter.maydell@linaro.org>
+ <3a4a6505-662a-448e-9196-f3be819b51a0@linaro.org>
+In-Reply-To: <3a4a6505-662a-448e-9196-f3be819b51a0@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Feb 2024 11:44:00 +0000
+Message-ID: <CAFEAcA_1zEQ-bT8bE=74FC24fz7HYN6j8ZLZVaDn7C47vraNAQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] .gitlab-ci.d: Drop cross-win32-system job
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Yonggang Luo <luoyonggang@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,45 +93,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Python is transitioning to a world where you're not allowed to use 'pip
-install' outside of a virutal env by default. The rationale is to stop
-use of pip clashing with distro provided python packages, which creates
-a major headache on distro upgrades.
+On Tue, 20 Feb 2024 at 18:46, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 20/2/24 18:44, Peter Maydell wrote:
+> > We don't support 32-bit Windows any more, so we don't need to defend it
+> > with this CI job.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   .gitlab-ci.d/container-cross.yml              |   5 -
+> >   .gitlab-ci.d/crossbuilds.yml                  |  14 ---
+> >   .../dockerfiles/fedora-win32-cross.docker     | 111 -----------------=
+-
+> >   tests/lcitool/refresh                         |   5 -
+> >   4 files changed, 135 deletions(-)
+> >   delete mode 100644 tests/docker/dockerfiles/fedora-win32-cross.docker
+>
+>
+> > diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.ym=
+l
+> > index d19d98cde05..987ba9694ba 100644
+> > --- a/.gitlab-ci.d/crossbuilds.yml
+> > +++ b/.gitlab-ci.d/crossbuilds.yml
+> > @@ -159,20 +159,6 @@ cross-mips64el-kvm-only:
+> >       IMAGE: debian-mips64el-cross
+> >       EXTRA_CONFIGURE_OPTS: --disable-tcg --target-list=3Dmips64el-soft=
+mmu
+> >
+> > -cross-win32-system:
+> > -  extends: .cross_system_build_job
+> > -  needs:
+> > -    job: win32-fedora-cross-container
+> > -  variables:
+> > -    IMAGE: fedora-win32-cross
+> > -    EXTRA_CONFIGURE_OPTS: --enable-fdt=3Dinternal
+> > -    CROSS_SKIP_TARGETS: alpha-softmmu avr-softmmu hppa-softmmu m68k-so=
+ftmmu
+> > -                        microblazeel-softmmu mips64el-softmmu nios2-so=
+ftmmu
+>
+> Thomas, is it possible to add mips64el-softmmu to the cross-win64-system
+> job or is it already at the timeout limit?
 
-All our CI environments, however, are 100% disposable so the upgrade
-headaches don't exist. Thus we can undo the python defaults to allow
-pip to work.
+This is a skip, i.e. exclude, list, not an include list. So dropping
+this job is not removing mips64el-softmmu from coverage.
+The Windows build coverage we lose will be the targets we
+are skipping in the cross-win64-system job and weren't
+skipping here:
+ or1k-softmmu rx-softmmu sh4eb-softmmu sparc64-softmmu
+ tricore-softmmu xtensaeb-softmmu
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- .gitlab-ci.d/cirrus/build.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+which then fall into the same bucket as
+   alpha-softmmu avr-softmmu hppa-softmmu m68k-softmmu
+   microblazeel-softmmu nios2-softmmu
 
-FYI lcitool recently added logic that purges the EXTERNALLY-MANAGED
-marker in all the dockerfiles. QEMU will pick that up on the next
-refresh, so Linux containers won't have trouble in future.
+which are already not built in either cross-win*-system job.
 
-The macos/FreeBSD build env isn't fully managed by lcitool though,
-so we need this manual addition to purge the marker that prevents
-use of 'pip'.
+Is there a reason why we aren't covering those in Windows
+builds?
 
-This fixes the CI regression that just started hitting on Cirrus
-CI macOS images, likely from homebrew python updates.
-
-diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
-index 29d55c4aa3..43dd52dd19 100644
---- a/.gitlab-ci.d/cirrus/build.yml
-+++ b/.gitlab-ci.d/cirrus/build.yml
-@@ -21,7 +21,7 @@ build_task:
-   install_script:
-     - @UPDATE_COMMAND@
-     - @INSTALL_COMMAND@ @PKGS@
--    - if test -n "@PYPI_PKGS@" ; then @PIP3@ install @PYPI_PKGS@ ; fi
-+    - if test -n "@PYPI_PKGS@" ; then PYLIB=$(@PYTHON@ -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; @PIP3@ install @PYPI_PKGS@ ; fi
-   clone_script:
-     - git clone --depth 100 "$CI_REPOSITORY_URL" .
-     - git fetch origin "$CI_COMMIT_REF_NAME"
--- 
-2.43.0
-
+thanks
+-- PMM
 
