@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07FEC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E764EC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7E8-0008D4-Ie; Thu, 22 Feb 2024 06:26:56 -0500
+	id 1rd7Ez-0000FG-BH; Thu, 22 Feb 2024 06:27:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Dl-00086A-CI; Thu, 22 Feb 2024 06:26:34 -0500
+ id 1rd7Et-00005Q-TK; Thu, 22 Feb 2024 06:27:44 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Dg-0004vg-9Q; Thu, 22 Feb 2024 06:26:33 -0500
+ id 1rd7Er-00058n-O5; Thu, 22 Feb 2024 06:27:43 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C90074FB49;
- Thu, 22 Feb 2024 14:26:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C67324FB58;
+ Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 4F8DF87175;
- Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
-Received: (nullmailer pid 2526161 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4D35887184;
+ Thu, 22 Feb 2024 14:26:03 +0300 (MSK)
+Received: (nullmailer pid 2526207 invoked by uid 1000);
  Thu, 22 Feb 2024 11:26:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 07/34] hw/isa/lpc_ich9: Remove unused 'hw/i386/pc.h'
-Date: Thu, 22 Feb 2024 14:25:34 +0300
-Message-Id: <20240222112601.2526057-8-mjt@tls.msk.ru>
+Subject: [PULL 22/34] hw/net/npcm_gmac.h: correct typos
+Date: Thu, 22 Feb 2024 14:25:49 +0300
+Message-Id: <20240222112601.2526057-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,31 +61,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Commit c461f3e382 ("hw/acpi/acpi_dev_interface: Remove now unused
-madt_cpu virtual method") removed the need for "hw/i386/pc.h".
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Luc Michel <luc.michel@amd.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/isa/lpc_ich9.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/hw/net/npcm_gmac.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 70c6e8a093..bd727b2320 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -41,7 +41,6 @@
- #include "hw/isa/apm.h"
- #include "hw/pci/pci.h"
- #include "hw/southbridge/ich9.h"
--#include "hw/i386/pc.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/ich9.h"
- #include "hw/pci/pci_bus.h"
+diff --git a/include/hw/net/npcm_gmac.h b/include/hw/net/npcm_gmac.h
+index f2d9f08ec1..6340ffe92c 100644
+--- a/include/hw/net/npcm_gmac.h
++++ b/include/hw/net/npcm_gmac.h
+@@ -81,7 +81,7 @@ struct NPCMGMACRxDesc {
+ 
+ /* Disable Interrupt on Completion */
+ #define RX_DESC_RDES1_DIS_INTR_COMP_MASK BIT(31)
+-/* Recieve end of ring */
++/* Receive end of ring */
+ #define RX_DESC_RDES1_RC_END_RING_MASK BIT(25)
+ /* Second Address Chained */
+ #define RX_DESC_RDES1_SEC_ADDR_CHND_MASK BIT(24)
+@@ -213,7 +213,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(NPCMGMACState, NPCM_GMAC)
+ #define NPCM_DMA_STATUS_FBI BIT(13)
+ /* Early transmit Interrupt */
+ #define NPCM_DMA_STATUS_ETI BIT(10)
+-/* Receive Watchdog Timout */
++/* Receive Watchdog Timeout */
+ #define NPCM_DMA_STATUS_RWT BIT(9)
+ /* Receive Process Stopped */
+ #define NPCM_DMA_STATUS_RPS BIT(8)
 -- 
 2.39.2
 
