@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCD21C54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 12:57:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5308FC54788
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 12:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd8cc-0006Zq-6l; Thu, 22 Feb 2024 07:56:18 -0500
+	id 1rd8cE-00066f-6q; Thu, 22 Feb 2024 07:55:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd8cY-0006Wr-Bl
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:56:14 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd8c9-00063N-4D
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:55:49 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd8cW-0005AK-Im
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:56:13 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-41282f05409so4658555e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 04:56:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd8c6-0004pU-3z
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:55:48 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33d118a181fso4157753f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 04:55:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708606567; x=1709211367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708606544; x=1709211344; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I7XkfKPxz7eBX4abxuH9t9ZpbmlF01x5HTkfTXvGamo=;
- b=vXtxlrb8bhPU0SKRELbiri0A2XAfrAIi2rThuuhUBl0Urvq1I+Jv0rbULbW88fYNnk
- xfokphEGRlHVU2igZmjmSW8IDtqb16c5BBNicgoT8GnkrkQR10Ms+RlQg0plhxeW6s9c
- YIO0M2mpYarmGCOSht19B5aTi0Xds6hwrmOgR9Erm6DIOKd01vd3tqpiprQ7BYaZKHl+
- v5taCDjlvzhZxoPGWz7WqHCLo7KeWmASQvsuTyGpmpYn61GNiZpZeYW3+K+cr6kHmJ5p
- 7L48sEXO6V3ufMxfERrb3EHkJRXh+tAGe8w2Wc5wHL0BbI5XhjmRiQWJE0Qd7xln2NJR
- jPVA==
+ bh=uRGIpW70+JCu0X7x3ntc2AVzHCNC5IMABlVBK4pcGGo=;
+ b=NqnX49VQEUL4rdFt3fe5ZFoouFmxkrr3E4MO2d3GD8XJUMjQkWPr4IVATuHIvsaVSH
+ Pmm/1bUCy20vKN8qA+8NBf+2djsAEzPDUespYJTFTR2akoFOcHnkZQH3WuOjT87wqxW7
+ BROQ4G8eHn+y8qhh1HvVDjYMhfU1QpdCuS9tXjphGslp343lC8SdPCyprTu+VtGwz0JG
+ Pr8RrZD4E2B5IDVG6IFu2qLClfcdIVWmqls4mbxn7JF51iYL2Y80771Hlt8ocLBedy58
+ aDRmlZAnk4sDwN0Djvm2x0CH/eABrQSb1OMNxZKqGDmHpIVXUf5eabORB3artj2Ljwyl
+ 4cRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708606567; x=1709211367;
+ d=1e100.net; s=20230601; t=1708606544; x=1709211344;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I7XkfKPxz7eBX4abxuH9t9ZpbmlF01x5HTkfTXvGamo=;
- b=TUaoUzVW1Daai0h5WlMYE5TbAqkr4HF0suP3jVlYrebTD7oDe+v6katD0uiVsk13N1
- vJMJLv8OagYE1K3oZhIyl1ASyZaCKGS953MfInNwKrgt/2yBli47Z5hMz+x8fUCTL+mB
- +Vkh2kQv6XDV3oiC/rON7J/0C1WGwc1ajpgUndxzKzaPhh9vCD9H7dUUcTsW+Ryf7XC2
- XZF+Of2BLQKHq5dCEsPzx3bMPWvoxEaCCQ85awFdfR3BPFA2LR4ndsR3HizrefPN+Skj
- VyfDoY20+EgvWrs5Ox+8sY+TAqDGoQSFfk11/FBofToXeT5i5FTtbygLWbcXMX5zAF2J
- c3NQ==
-X-Gm-Message-State: AOJu0YxZ8OEMVI5kjmx8lbnLEu14WkpOG6LRki7aRxOtRiwYmLu+ng9B
- 9Kq7VEMZgMwNLcEDlL9Lm0ah2LCBgQUEJCSwu8hWg1VEGB6kI56Bo8pcT4RcK/cwhwXSaafIvRe
- 5iCc=
-X-Google-Smtp-Source: AGHT+IEijIWXV7Q+slmM+fPSZSIDrDDYtHHmgpC8hhG0K4kqtO/pk5tyqILU0HPEn9GEUs8S/xrG+w==
-X-Received: by 2002:a05:600c:3581:b0:412:6a78:d4db with SMTP id
- p1-20020a05600c358100b004126a78d4dbmr7395532wmq.14.1708606567589; 
- Thu, 22 Feb 2024 04:56:07 -0800 (PST)
+ bh=uRGIpW70+JCu0X7x3ntc2AVzHCNC5IMABlVBK4pcGGo=;
+ b=seqrvQcdo5tOZmGxkmUwBGMhrMpsVzYvcfkBkunqVrT5O+cevnbR+AcWc/oINVm1+g
+ JUk2q0N9JPbQHX2Wn1G+8bb0My/8daTdwD7Izr3lYlt5xH2hB0UtGTWjCEFhKYPKc9un
+ rD9bQUtUZ0+V8MCyvSuoK+/OUSd+RdqBb/n9Z7Vsw9eTAdWu9sU+jMPd3WOqhkxSOi04
+ XBiT6ygRXpjmwZYAiviZiPYdIfOTJgBhJjZuF7X49r2rOcPs9oGrhgnoEqJrYZXpHXc/
+ s5pk5EcRCh2CyEYbz2G1u9ptOYaUJunBjn7Q3cH0tRU6JOCfrPN5qaMcUJ2EOs34qktI
+ dHAQ==
+X-Gm-Message-State: AOJu0YzSwoGqtzh1EEjVmttSgcozJa726McA2qxsLJEtFIGDK2lwBaQH
+ +cFBpYKSi3Q2z69c2kAKmgw0sK8AzQJC7qO3j/EbkJqnO/UCFAKnK9pFZfRNo19ofJruT0EeVq3
+ fhXc=
+X-Google-Smtp-Source: AGHT+IFByVao65aOERJNukoTTia4BHk2GOS6oGktluL9zXORr8DJ5RV6/KgmT7ei71yEmm3V1/OdFQ==
+X-Received: by 2002:a05:6000:1f0e:b0:33d:6fd8:90d3 with SMTP id
+ bv14-20020a0560001f0e00b0033d6fd890d3mr6031207wrb.4.1708606543937; 
+ Thu, 22 Feb 2024 04:55:43 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- s7-20020a7bc387000000b004107dfa6aebsm5938919wmj.28.2024.02.22.04.56.06
+ x11-20020a5d444b000000b0033b7ce8b496sm20291719wrr.108.2024.02.22.04.55.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Feb 2024 04:56:07 -0800 (PST)
+ Thu, 22 Feb 2024 04:55:43 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PULL 32/32] hw/sparc/leon3: Fix wrong usage of DO_UPCAST macro
-Date: Thu, 22 Feb 2024 13:55:16 +0100
-Message-ID: <20240222125517.67131-9-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 19/32] hw/i386/pc_sysfw: Use qdev_is_realized() instead of QOM
+ API
+Date: Thu, 22 Feb 2024 13:55:12 +0100
+Message-ID: <20240222125517.67131-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240222125517.67131-1-philmd@linaro.org>
 References: <20240222125517.67131-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Prefer QDev API for QDev objects, avoid the underlying QOM layer.
 
-leon3.c currently fails to compile with some compilers when the -Wvla
-option has been enabled:
-
- ../hw/sparc/leon3.c: In function ‘leon3_cpu_reset’:
- ../hw/sparc/leon3.c:153:5: error: ISO C90 forbids variable length array
-  ‘offset_must_be_zero’ [-Werror=vla]
-   153 |     ResetData *s = (ResetData *)DO_UPCAST(ResetData, info[id], info);
-       |     ^~~~~~~~~
- cc1: all warnings being treated as errors
-
-Looking at this code, the DO_UPCAST macro is indeed used in a wrong way
-here: DO_UPCAST is supposed to check that the second parameter is the
-first entry of the struct that the first parameter indicates, but since
-we use and index into the info[] array, this of course cannot work.
-
-The intention here was likely rather to use the container_of() macro
-instead, so switch the code accordingly.
-
-Fixes: d65aba8286 ("hw/sparc/leon3: implement multiprocessor")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240221180751.190489-1-thuth@redhat.com>
-Tested-by: Clément Chigot <chigot@adacore.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20240216110313.17039-3-philmd@linaro.org>
 ---
- hw/sparc/leon3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/pc_sysfw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index 4873b59b6c..6aaa04cb19 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -150,7 +150,7 @@ static void leon3_cpu_reset(void *opaque)
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 2dcaa116ad..b02e285579 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -95,17 +95,15 @@ static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
  {
-     struct CPUResetData *info = (struct CPUResetData *) opaque;
-     int id = info->id;
--    ResetData *s = (ResetData *)DO_UPCAST(ResetData, info[id], info);
-+    ResetData *s = container_of(info, ResetData, info[id]);
-     CPUState *cpu = CPU(s->info[id].cpu);
-     CPUSPARCState *env = cpu_env(cpu);
+     char *prop_name;
+     int i;
+-    Object *dev_obj;
  
+     assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
+ 
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+-        dev_obj = OBJECT(pcms->flash[i]);
+-        if (!object_property_get_bool(dev_obj, "realized", &error_abort)) {
++        if (!qdev_is_realized(DEVICE(pcms->flash[i]))) {
+             prop_name = g_strdup_printf("pflash%d", i);
+             object_property_del(OBJECT(pcms), prop_name);
+             g_free(prop_name);
+-            object_unparent(dev_obj);
++            object_unparent(OBJECT(pcms->flash[i]));
+             pcms->flash[i] = NULL;
+         }
+     }
 -- 
 2.41.0
 
