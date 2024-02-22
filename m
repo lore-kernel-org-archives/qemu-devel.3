@@ -4,57 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DAFCC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 01:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43783C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 01:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcyGV-0004oj-MA; Wed, 21 Feb 2024 20:52:47 -0500
+	id 1rcyLJ-0007gy-Af; Wed, 21 Feb 2024 20:57:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcyGT-0004fq-W1; Wed, 21 Feb 2024 20:52:46 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcyGR-0007pY-JD; Wed, 21 Feb 2024 20:52:45 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TgGHQ1g5fz1FKns;
- Thu, 22 Feb 2024 09:47:46 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 9C2D9140383;
- Thu, 22 Feb 2024 09:52:38 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 22 Feb 2024 09:52:37 +0800
-Message-ID: <531a573e-fab3-930c-6cf6-cc69846817a8@huawei.com>
-Date: Thu, 22 Feb 2024 09:52:37 +0800
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1rcyLC-0007gM-U8
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 20:57:38 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1rcyL8-0000u3-3b
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 20:57:38 -0500
+Received: from loongson.cn (unknown [10.20.42.173])
+ by gateway (Coremail) with SMTP id _____8CxSPAAqtZlwAUQAA--.42353S3;
+ Thu, 22 Feb 2024 09:57:20 +0800 (CST)
+Received: from [10.20.42.173] (unknown [10.20.42.173])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Dxfs38qdZlqWY+AA--.29081S3; 
+ Thu, 22 Feb 2024 09:57:18 +0800 (CST)
+Subject: Re: [PATCH 5/5] tests: Add migration test for loongarch64
+To: Fabiano Rosas <farosas@suse.de>, Song Gao <gaosong@loongson.cn>,
+ Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240220124126.1164081-1-maobibo@loongson.cn>
+ <20240220124126.1164081-6-maobibo@loongson.cn> <87zfvta4tu.fsf@suse.de>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <9beb9255-b727-d6d7-a14d-55089a8759bb@loongson.cn>
+Date: Thu, 22 Feb 2024 09:57:22 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [RFC PATCH v2 01/22] target/arm: Add FEAT_NMI to max
+In-Reply-To: <87zfvta4tu.fsf@suse.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240221130823.677762-1-ruanjinjie@huawei.com>
- <20240221130823.677762-2-ruanjinjie@huawei.com>
- <c6271668-1bee-4ff4-9a9c-5fe6acee4937@linaro.org>
-In-Reply-To: <c6271668-1bee-4ff4-9a9c-5fe6acee4937@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: AQAAf8Dxfs38qdZlqWY+AA--.29081S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxuFW8try3Xr1rGw45AFykCrX_yoW3JF4kpw
+ 18Ca1Fkan7Gr17t3WfWryY9F1rXw1xKr1a9FZ7tr40yrZYyFy8Ar1Ygry7WFn3Xw4jgF4I
+ vwnYyr12k3WqyrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -69,60 +82,217 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/2/22 5:22, Richard Henderson wrote:
-> On 2/21/24 03:08, Jinjie Ruan via wrote:
->> Enable FEAT_NMI on the 'max' CPU.
+On 2024/2/22 上午5:24, Fabiano Rosas wrote:
+> Bibo Mao <maobibo@loongson.cn> writes:
+> 
+>> This patch adds migration test support for loongarch64. The test code
+>> comes from aarch64 mostly, only that it it booted as bios in qemu since
+>> kernel requires elf format and bios uses binary format.
 >>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> In addition to providing the binary, this patch also includes the source
+>> code and the build script in tests/migration/loongarch64. So users can
+>> change the source and/or re-compile the binary as they wish.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> 
+> Just a nit below.
+> 
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> 
 >> ---
->>   docs/system/arm/emulation.rst | 1 +
->>   target/arm/tcg/cpu64.c        | 1 +
->>   2 files changed, 2 insertions(+)
-> 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> However, this patch must be sorted last, after all support for FEAT_NMI
-> is present.
-
-Good suggestion! Placed it last is more reasonable.
-
-> 
-> 
-> r~
-> 
+>>   tests/migration/Makefile                 |  2 +-
+>>   tests/migration/loongarch64/Makefile     | 18 ++++++++++
+>>   tests/migration/loongarch64/a-b-kernel.S | 46 ++++++++++++++++++++++++
+>>   tests/migration/loongarch64/a-b-kernel.h | 13 +++++++
+>>   tests/migration/migration-test.h         |  3 ++
+>>   tests/qtest/meson.build                  |  4 +++
+>>   tests/qtest/migration-test.c             | 10 ++++++
+>>   7 files changed, 95 insertions(+), 1 deletion(-)
+>>   create mode 100644 tests/migration/loongarch64/Makefile
+>>   create mode 100644 tests/migration/loongarch64/a-b-kernel.S
+>>   create mode 100644 tests/migration/loongarch64/a-b-kernel.h
 >>
->> diff --git a/docs/system/arm/emulation.rst
->> b/docs/system/arm/emulation.rst
->> index f67aea2d83..91baf7ad69 100644
->> --- a/docs/system/arm/emulation.rst
->> +++ b/docs/system/arm/emulation.rst
->> @@ -63,6 +63,7 @@ the following architecture extensions:
->>   - FEAT_MTE (Memory Tagging Extension)
->>   - FEAT_MTE2 (Memory Tagging Extension)
->>   - FEAT_MTE3 (MTE Asymmetric Fault Handling)
->> +- FEAT_NMI (Non-maskable Interrupt)
->>   - FEAT_NV (Nested Virtualization)
->>   - FEAT_NV2 (Enhanced nested virtualization support)
->>   - FEAT_PACIMP (Pointer authentication - IMPLEMENTATION DEFINED
->> algorithm)
->> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
->> index 5fba2c0f04..60f0dcd799 100644
->> --- a/target/arm/tcg/cpu64.c
->> +++ b/target/arm/tcg/cpu64.c
->> @@ -1175,6 +1175,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->>       t = FIELD_DP64(t, ID_AA64PFR1, RAS_FRAC, 0);  /* FEAT_RASv1p1 +
->> FEAT_DoubleFault */
->>       t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
->>       t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_2 */
->> +    t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
->>       cpu->isar.id_aa64pfr1 = t;
->>         t = cpu->isar.id_aa64mmfr0;
+>> diff --git a/tests/migration/Makefile b/tests/migration/Makefile
+>> index 13e99b1692..cfebfe23f8 100644
+>> --- a/tests/migration/Makefile
+>> +++ b/tests/migration/Makefile
+>> @@ -5,7 +5,7 @@
+>>   # See the COPYING file in the top-level directory.
+>>   #
+>>   
+>> -TARGET_LIST = i386 aarch64 s390x
+>> +TARGET_LIST = i386 aarch64 s390x loongarch64
+>>   
+>>   SRC_PATH = ../..
+>>   
+>> diff --git a/tests/migration/loongarch64/Makefile b/tests/migration/loongarch64/Makefile
+>> new file mode 100644
+>> index 0000000000..5d8719205f
+>> --- /dev/null
+>> +++ b/tests/migration/loongarch64/Makefile
+>> @@ -0,0 +1,18 @@
+>> +# To specify cross compiler prefix, use CROSS_PREFIX=
+>> +#   $ make CROSS_PREFIX=loongarch64-linux-gnu-
+>> +
+>> +.PHONY: all clean
+>> +all: a-b-kernel.h
+>> +
+>> +a-b-kernel.h: loongarch64.kernel
+>> +	echo "$$__note" > $@
+>> +	xxd -i $< | sed -e 's/.*int.*//' >> $@
+>> +
+>> +loongarch64.kernel: loongarch64.elf
+>> +	$(CROSS_PREFIX)objcopy -j .text -O binary $< $@
+>> +
+>> +loongarch64.elf: a-b-kernel.S
+>> +	$(CROSS_PREFIX)gcc -o $@ -nostdlib -Wl,--build-id=none $<
+>> +
+>> +clean:
+>> +	$(RM) *.kernel *.elf
+>> diff --git a/tests/migration/loongarch64/a-b-kernel.S b/tests/migration/loongarch64/a-b-kernel.S
+>> new file mode 100644
+>> index 0000000000..078f91b306
+>> --- /dev/null
+>> +++ b/tests/migration/loongarch64/a-b-kernel.S
+>> @@ -0,0 +1,46 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +/*
+>> + * Copyright (c) 2024 Loongson Technology Corporation Limited
+>> + */
+>> +#include "../migration-test.h"
+>> +
+>> +#define LOONGARCH_CSR_CRMD          0
+>> +#define LOONGARCH_VIRT_UART         0x1FE001E0
+>> +.section .text
+>> +
+>> +        .globl  _start
+>> +_start:
+>> +        /* output char 'A' to UART16550 */
+>> +        li.d    $t0, LOONGARCH_VIRT_UART
+>> +        li.w    $t1, 'A'
+>> +        st.b    $t1, $t0, 0
+>> +
+>> +        /* traverse test memory region */
+>> +	li.d    $t0, LOONGARCH_TEST_MEM_START
 > 
+> Stray tab here.
+Good catch, there is tab here. Will fix it in next version.
+
+Regards
+Bibo Mao
+> 
+>> +        li.d    $t1, LOONGARCH_TEST_MEM_END
+>> +        li.d    $t2, TEST_MEM_PAGE_SIZE
+>> +
+>> +clean:
+>> +        st.b    $zero, $t0, 0
+>> +        add.d   $t0,   $t0, $t2
+>> +        bne     $t0,   $t1, clean
+>> +
+>> +mainloop:
+>> +        li.d    $t0, LOONGARCH_TEST_MEM_START
+>> +        li.d    $t1, LOONGARCH_TEST_MEM_END
+>> +        li.d    $t2, TEST_MEM_PAGE_SIZE
+>> +
+>> +        li.d    $t4, LOONGARCH_VIRT_UART
+>> +        li.w    $t5, 'B'
+>> +
+>> +innerloop:
+>> +        ld.bu   $t3, $t0, 0
+>> +        addi.w  $t3, $t3, 1
+>> +        ext.w.b $t3, $t3
+>> +        st.b    $t3, $t0, 0
+>> +        add.d   $t0, $t0, $t2
+>> +        bne     $t0, $t1, innerloop
+>> +
+>> +        st.b    $t5, $t4, 0
+>> +        b       mainloop
+>> +        nop
+>> diff --git a/tests/migration/loongarch64/a-b-kernel.h b/tests/migration/loongarch64/a-b-kernel.h
+>> new file mode 100644
+>> index 0000000000..6019450229
+>> --- /dev/null
+>> +++ b/tests/migration/loongarch64/a-b-kernel.h
+>> @@ -0,0 +1,13 @@
+>> +
+>> +unsigned char loongarch64_kernel[] = {
+>> +  0x0c, 0xc0, 0x3f, 0x14, 0x8c, 0x81, 0x87, 0x03, 0x0d, 0x04, 0x81, 0x03,
+>> +  0x8d, 0x01, 0x00, 0x29, 0x0c, 0x00, 0x01, 0x14, 0x0d, 0x80, 0x0c, 0x14,
+>> +  0x2e, 0x00, 0x00, 0x14, 0x80, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
+>> +  0x8d, 0xf9, 0xff, 0x5f, 0x0c, 0x00, 0x01, 0x14, 0x0d, 0x80, 0x0c, 0x14,
+>> +  0x2e, 0x00, 0x00, 0x14, 0x10, 0xc0, 0x3f, 0x14, 0x10, 0x82, 0x87, 0x03,
+>> +  0x11, 0x08, 0x81, 0x03, 0x8f, 0x01, 0x00, 0x2a, 0xef, 0x05, 0x80, 0x02,
+>> +  0xef, 0x5d, 0x00, 0x00, 0x8f, 0x01, 0x00, 0x29, 0x8c, 0xb9, 0x10, 0x00,
+>> +  0x8d, 0xed, 0xff, 0x5f, 0x11, 0x02, 0x00, 0x29, 0xff, 0xcf, 0xff, 0x53,
+>> +  0x00, 0x00, 0x40, 0x03
+>> +};
+>> +
+>> diff --git a/tests/migration/migration-test.h b/tests/migration/migration-test.h
+>> index 68512c0b1b..b6e9914f9c 100644
+>> --- a/tests/migration/migration-test.h
+>> +++ b/tests/migration/migration-test.h
+>> @@ -32,4 +32,7 @@
+>>    */
+>>   #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
+>>   
+>> +/* LoongArch64 */
+>> +#define LOONGARCH_TEST_MEM_START (8 * 1024 * 1024)
+>> +#define LOONGARCH_TEST_MEM_END   (100 * 1024 * 1024)
+>>   #endif /* MIGRATION_TEST_H */
+>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>> index 2b89e8634b..b634587b0a 100644
+>> --- a/tests/qtest/meson.build
+>> +++ b/tests/qtest/meson.build
+>> @@ -249,6 +249,10 @@ qtests_s390x = \
+>>   qtests_riscv32 = \
+>>     (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+>>   
+>> +qtests_loongarch64 = \
+>> +  qtests_filter + \
+>> +  ['migration-test']
+>> +
+>>   qos_test_ss = ss.source_set()
+>>   qos_test_ss.add(
+>>     'ac97-test.c',
+>> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+>> index 8a5bb1752e..8a25edfa77 100644
+>> --- a/tests/qtest/migration-test.c
+>> +++ b/tests/qtest/migration-test.c
+>> @@ -132,6 +132,7 @@ static char *bootpath;
+>>   #include "tests/migration/i386/a-b-bootblock.h"
+>>   #include "tests/migration/aarch64/a-b-kernel.h"
+>>   #include "tests/migration/s390x/a-b-bios.h"
+>> +#include "tests/migration/loongarch64/a-b-kernel.h"
+>>   
+>>   static void bootfile_create(char *dir, bool suspend_me)
+>>   {
+>> @@ -158,6 +159,9 @@ static void bootfile_create(char *dir, bool suspend_me)
+>>           content = aarch64_kernel;
+>>           len = sizeof(aarch64_kernel);
+>>           g_assert(sizeof(aarch64_kernel) <= ARM_TEST_MAX_KERNEL_SIZE);
+>> +    } else if (strcmp(arch, "loongarch64") == 0) {
+>> +        content = loongarch64_kernel;
+>> +        len = sizeof(loongarch64_kernel);
+>>       } else {
+>>           g_assert_not_reached();
+>>       }
+>> @@ -823,6 +827,12 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>>           arch_opts = g_strdup_printf("-cpu max -kernel %s", bootpath);
+>>           start_address = ARM_TEST_MEM_START;
+>>           end_address = ARM_TEST_MEM_END;
+>> +    } else if (strcmp(arch, "loongarch64") == 0) {
+>> +        memory_size = "256M";
+>> +        machine_alias = "virt";
+>> +        arch_opts = g_strdup_printf("-cpu max -bios %s", bootpath);
+>> +        start_address = LOONGARCH_TEST_MEM_START;
+>> +        end_address = LOONGARCH_TEST_MEM_END;
+>>       } else {
+>>           g_assert_not_reached();
+>>       }
+
 
