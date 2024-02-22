@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC58C5478C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 21:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD6CC54E49
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 21:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdGVN-0007Ve-Dk; Thu, 22 Feb 2024 16:21:21 -0500
+	id 1rdGvY-0000sG-6k; Thu, 22 Feb 2024 16:48:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdGVM-0007VW-8n
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 16:21:20 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdGVK-0000cR-Kb
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 16:21:20 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e09143c7bdso71111b3a.3
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 13:21:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708636877; x=1709241677; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UCCh/F1oQ842Tcqwks1U7mp9nWMsI9vl+KYbrNtyEo0=;
- b=s4k3tRj15ikfaPLryD3UkOKSeFNug1Er5hYo1TTv1/FbMNRKS+5o6qBe+NQKi38RzI
- XcLuU6QzvZHNrpTWaNWYvJV4WP3YegG2w7nW1CcjgP9ZEtPehCq8sIFUDEuU6CTKAlGs
- h55txebQzK6kJuZCE/uM1wht4mkskcQlhO9GlfgBJihcrWPwxjvb1Wkl5g2EL9z6auKA
- BJSMK+ODdrnIx8DVmPAaaBvXRsyact1ZD4AsHjxsWLsx1IZjOKaVpf5neCXWQ2sNyrsl
- H51ygtRwpLSFNkQ4Zy7ZFRsfuTTwU/KayVMbKvReMhzLwpuH8EU4nakWfZW9hMPsMQ7G
- d8KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708636877; x=1709241677;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UCCh/F1oQ842Tcqwks1U7mp9nWMsI9vl+KYbrNtyEo0=;
- b=RavCDi+1VcsxSaQltoJywfLO2AUZdmAB+hGt/B9dzhxU3Epp970KVXnAHmHdx/PcHT
- MmTeOGhJx2CENwiv4pWrxu/XR/SzOEtp0HzinpX+iYVCxyiUzQAFjEu4vqypNrUAMA4D
- 28k14iUQ6KpRNckgp3QlHwBOZLfVxjB3X8K8VnPbG4EkCkD5HlLJ5s7XXB4Q5vvfn0sW
- G9vOsvLlkxAwtsS3m9luqB9896OI6EtZYztcan2paLRfQkz/wqiEK1AdPMxFGPQUOpPS
- A84OT7AnzCN9kzX1z9leKwXrz4B10M5jqw1wzIiR5GjkW/jlAVfFTqMDqEyu3nfBwiNh
- 8NlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUA/FvjZYfmtKeqXeexbJM05Vsi3LO9X+1fZP9c1BPzx5y6lJ0Ww6rZy4hmhrQ/wvkKGuL5/t+kzNvyD7SAcxQSPjOXVvI=
-X-Gm-Message-State: AOJu0YymIAmhevzDVSA47QUDFBV75D5YlTplv90MiaUp2MKTLrM7hJw1
- mXWgywwjbi6WUxLprhB1FUXTHDJBQb8eIDlStTx5JRoitBScNAAclh1deyY1eEE=
-X-Google-Smtp-Source: AGHT+IGLGtlbicdXcwsgdLRpXtbOJ76WaGeiX1GM253/BpXCfZ9BUDz8+Z+ZarV1GpK9ZgWnuZfLAw==
-X-Received: by 2002:a05:6a00:2d96:b0:6e4:8ea7:231d with SMTP id
- fb22-20020a056a002d9600b006e48ea7231dmr126338pfb.5.1708636877128; 
- Thu, 22 Feb 2024 13:21:17 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- kt21-20020a056a004bb500b006e465e1573esm8206831pfb.74.2024.02.22.13.21.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 13:21:16 -0800 (PST)
-Message-ID: <cfa50d25-3a82-48f5-b715-1daf16932fc2@linaro.org>
-Date: Thu, 22 Feb 2024 11:21:12 -1000
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rdGvS-0000pO-QJ
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 16:48:18 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rdGvC-0005Pi-3m
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 16:48:18 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41MIQUN6013885; Thu, 22 Feb 2024 21:47:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type : content-transfer-encoding; s=corp-2023-11-20;
+ bh=o3oit5ldE+NEebjJz1DchaFQnOU35e+LSkFNo6mVBPU=;
+ b=X0SVoJnYYWxVBMuTp4PXohluaVe36tflPFOVkVHILggXYK/ckFRQypx/ujKS+g3sFJlQ
+ L7VrXB10hGEYz0sy9dYwbi0Q+oeKhYlN0ISosAfPj+91CqB0LEDgCigfV2AuOY6Fu9DK
+ vf9juhcQoClrRXjyzjT6ImBPTqRhv14oTMEBJGahgLGk072ZEXP0/qXqgb92BhHObaP/
+ IG/W/krzjeDoS7qzUklarwsi4ARaXLFlPLPGq8JiKrUF1L4OPr94h6GBMkDahbm4SWBV
+ HHsHS6PbaVfATXdUTwSEPbs9ZDzTXWb9lU/q94CJoBzDQbMW7dh6beejec55LcJC7npU CA== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wd5fw5p90-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Feb 2024 21:47:57 +0000
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41ML0sjr022159; Thu, 22 Feb 2024 21:47:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wak8bft5u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Feb 2024 21:47:55 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MLlqUB037274;
+ Thu, 22 Feb 2024 21:47:54 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 3wak8bft40-3; Thu, 22 Feb 2024 21:47:54 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 2/5] qapi: QAPI_LIST_LENGTH
+Date: Thu, 22 Feb 2024 13:47:47 -0800
+Message-Id: <1708638470-114846-3-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1708638470-114846-1-git-send-email-steven.sistare@oracle.com>
+References: <1708638470-114846-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2] arm/ptw: Handle atomic updates of page tables
- entries in MMIO during PTW.
-Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gregory.price@memverge.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: linux-cxl@vger.kernel.org, linuxarm@huawei.com
-References: <20240219161229.11776-1-Jonathan.Cameron@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240219161229.11776-1-Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ suspectscore=0
+ mlxscore=0 spamscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402220169
+X-Proofpoint-GUID: 4rlASmzXpofMvPcSiSOOKtS46YwxjMij
+X-Proofpoint-ORIG-GUID: 4rlASmzXpofMvPcSiSOOKtS46YwxjMij
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,85 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/24 06:12, Jonathan Cameron wrote:
-> I'm far from confident this handling here is correct. Hence
-> RFC.  In particular not sure on what locks I should hold for this
-> to be even moderately safe.
-> 
-> The function already appears to be inconsistent in what it returns
-> as the CONFIG_ATOMIC64 block returns the endian converted 'eventual'
-> value of the cmpxchg whereas the TCG_OVERSIZED_GUEST case returns
-> the previous value.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
-> v2: Thanks Peter for reviewing.
->   - Handle the address space as in arm_ldq_ptw() - I should have looked
->     at the code immediately above :(
->     The result ends up a little more convoluted than I'd like. Could factor
->     this block of code out perhaps. I'm also not sure on the fault type
->     that is appropriate here.
->   - Switch to 'need_lock' as per Philippe's feedback on the x86 fixes.
->     likely() doesn't seem appropriate here though.
->   
-> target/arm/ptw.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++--
->   1 file changed, 62 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 5eb3577bcd..ba1a27ca2b 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -711,8 +711,68 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
->       void *host = ptw->out_host;
->   
->       if (unlikely(!host)) {
-> -        fi->type = ARMFault_UnsuppAtomicUpdate;
-> -        return 0;
-> +        /* Page table in MMIO Memory Region */
-> +        CPUState *cs = env_cpu(env);
-> +        MemTxAttrs attrs = {
-> +            .space = ptw->out_space,
-> +            .secure = arm_space_is_secure(ptw->out_space),
-> +        };
-> +        AddressSpace *as = arm_addressspace(cs, attrs);
-> +        MemTxResult result = MEMTX_OK;
-> +        bool need_lock = !bql_locked();
-> +
-> +        if (need_lock) {
-> +            bql_lock();
-> +        }
-> +        if (ptw->out_be) {
-> +            cur_val = address_space_ldq_be(as, ptw->out_phys, attrs, &result);
-> +            if (unlikely(result != MEMTX_OK)) {
-> +                fi->type = ARMFault_SyncExternalOnWalk;
-> +                fi->ea = arm_extabort_type(result);
-> +                if (need_lock) {
-> +                    bql_unlock();
-> +                }
-> +                return old_val;
-> +            }
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/qapi/util.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Use BQL_LOCK_GUARD() and avoid all of the repeated unlocks at each return point.
+diff --git a/include/qapi/util.h b/include/qapi/util.h
+index 81a2b13..20dfea8 100644
+--- a/include/qapi/util.h
++++ b/include/qapi/util.h
+@@ -56,4 +56,17 @@ int parse_qapi_name(const char *name, bool complete);
+     (tail) = &(*(tail))->next; \
+ } while (0)
+ 
++/*
++ * For any GenericList @list, return its length.
++ */
++#define QAPI_LIST_LENGTH(list)                                      \
++    ({                                                              \
++        size_t _len = 0;                                            \
++        typeof(list) _tail;                                         \
++        for (_tail = list; _tail != NULL; _tail = _tail->next) {    \
++            _len++;                                                 \
++        }                                                           \
++        _len;                                                       \
++    })
++
+ #endif
+-- 
+1.8.3.1
 
-You can merge all of the error paths, e.g.
-
-     cur_val = (ptw->out_be
-                ? address_space_ldq_be(as, ptw->out_phys, attrs, &result)
-                : address_space_ldq_le(as, ptw->out_phys, attrs, &result));
-     if (result == MEMTX_OK && cur_val == old_val) {
-         if (ptw->out_be) {
-             address_space_stq_be(as, ptw->out_phys, new_val, attrs, &result);
-         } else {
-             address_space_stq_le(as, ptw->out_phys, new_val, attrs, &result);
-         }
-     }
-     if (unlikely(result != MEMTX_OK)) {
-         fi->type = ...
-         return old_val;
-     }
-     return cur_val;
-
-
-
-r~
 
