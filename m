@@ -4,87 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89595C48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1676C48BF8
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 06:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd28s-0006Td-J7; Thu, 22 Feb 2024 01:01:10 -0500
+	id 1rd27z-0006Aq-Fm; Thu, 22 Feb 2024 01:00:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_tsoni@quicinc.com>)
- id 1rd28q-0006TQ-BP
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 01:01:08 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rd27y-0006Ab-2x; Thu, 22 Feb 2024 01:00:14 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_tsoni@quicinc.com>)
- id 1rd28m-0008DY-EE
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 01:01:06 -0500
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 41M5UGNW004932
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 06:00:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- message-id:date:mime-version:subject:to:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=
- qcppdkim1; bh=dmJhoCAhkgfwrO/jnzX0XGpLOD1V9DByG6XAosiivzg=; b=ix
- A7iOACLTEob1BRCwzQWM/4aF311qdDXOBdF8xhS5vBweA3e05CkV4Vn4DPusSIY2
- 1Ij9Fl2W+VrIZNhy379YVJv6UdcfnXWrgaNYN2iQfByUGE5zrzhclQ6K/zhXGZs2
- x7T/VNnYzZEi1Up8mDFo4CBJCTGFuYE9rdzM6tO2hXIQS0WdnBdIVV7IGrXbKWoS
- mS6AaODcQUIj5BOVrkHtJ3VUtM23EJ629ebZ+eG72SvD/B8sVauQFBlVvmjIJgD7
- WZciUb4QFG5Li1clJ8MJroj+GEJX/2pytgPLs2zn+xt/h6Gv2Q9vDC35KB0/FZ5N
- pz8vw+mj5twfNCTxqt/g==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com
- [199.106.103.254])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wdgge28de-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 06:00:59 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com
- [10.52.223.231])
- by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41M60wg2001659
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 06:00:58 GMT
-Received: from [10.110.27.83] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 21 Feb
- 2024 22:00:58 -0800
-Message-ID: <f89cd017-5d8c-f2fa-1702-1705bad1ba10@quicinc.com>
-Date: Wed, 21 Feb 2024 22:00:57 -0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rd27w-0007np-3J; Thu, 22 Feb 2024 01:00:13 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4068B4FA0E;
+ Thu, 22 Feb 2024 09:00:29 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2D53F86C7D;
+ Thu, 22 Feb 2024 09:00:06 +0300 (MSK)
+Message-ID: <f04b5aad-b563-4e83-b90c-3159ae3b6aea@tls.msk.ru>
+Date: Thu, 22 Feb 2024 09:00:06 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: Support Android hypervisors
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/2] Update description for input grab key
 Content-Language: en-US
-To: <qemu-devel@nongnu.org>
-References: <CAK4oD7DS0WiZcze37b8ERh50_ht=HNS3Bk8aeRmCjx_ndMG1gw@mail.gmail.com>
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <CAK4oD7DS0WiZcze37b8ERh50_ht=HNS3Bk8aeRmCjx_ndMG1gw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Tianlan Zhou <bobby825@126.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org
+References: <20240221195208.462-1-bobby825@126.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240221195208.462-1-bobby825@126.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-GUID: pThnioIewtGNjzP5yK1tBtEQLlNcglBF
-X-Proofpoint-ORIG-GUID: pThnioIewtGNjzP5yK1tBtEQLlNcglBF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-22_03,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015
- spamscore=0 malwarescore=0 suspectscore=0 impostorscore=0 mlxscore=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 mlxlogscore=661
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402220045
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_tsoni@quicinc.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -53
-X-Spam_score: -5.4
-X-Spam_bar: -----
-X-Spam_report: (-5.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-3.297,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,18 +85,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/21/2024 9:37 PM, RR NN wrote:
-> Android Virtualization Framework (AVF) supports "KVM(pKVM)" also Qualcomm's
-> "Gunyah" and MediaTek's "GenieZone" as the hypervisor. Please Add these
-> hypervisors to QEMU.
+21.02.2024 22:52, Tianlan Zhou :
+> Input grab key should be Ctrl-Alt-g, not just Ctrl-Alt.
+> 
+> v2:
+> - Update help message in system/vl.c
+> 
+> v1:
+> - Initial patch
+> 
+> Tianlan Zhou (2):
+>    docs/system: Update description for input grab key
+>    system/vl: Update description for input grab key
+> 
+>   docs/system/keys.rst.inc | 2 +-
+>   system/vl.c              | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 
-I don't understand this comment. Do you want QEMU to work as VMM as well
-for these Hypervisors? AVF works w/ CrosVM as VMM. 
+Applied to trivial-patches, thanks!
 
-Recently Vatsa had submitted RFC for supporting QEMU w/ Gunyah. You can check
-that as an example. 
-
--- 
----Trilok Soni
+/mjt
 
 
