@@ -4,35 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 933BFC48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12DBC48BF8
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7LD-0005F3-Mq; Thu, 22 Feb 2024 06:34:15 -0500
+	id 1rd7L2-0004rE-UM; Thu, 22 Feb 2024 06:34:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd7L4-0004vp-Ec; Thu, 22 Feb 2024 06:34:06 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1rd7Kz-0004kL-HB; Thu, 22 Feb 2024 06:34:01 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd7L1-0006ME-J1; Thu, 22 Feb 2024 06:34:06 -0500
+ id 1rd7Kw-0006Kz-74; Thu, 22 Feb 2024 06:34:01 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EE8154E6027;
- Thu, 22 Feb 2024 12:33:59 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C717D4E6012;
+ Thu, 22 Feb 2024 12:33:55 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id aJHESgxVWY3B; Thu, 22 Feb 2024 12:33:58 +0100 (CET)
+ with ESMTP id g6lVE9XXjaG0; Thu, 22 Feb 2024 12:33:53 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0D5EB4E6004; Thu, 22 Feb 2024 12:33:58 +0100 (CET)
-Message-Id: <1ee8a821afa24d8d0a0227c1da7901616edb2afa.1708601065.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1708601065.git.balaton@eik.bme.hu>
-References: <cover.1708601065.git.balaton@eik.bme.hu>
+ id DAF864E6003; Thu, 22 Feb 2024 12:33:53 +0100 (CET)
+Message-Id: <cover.1708601065.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 4/9] target/ppc: Move patching nip from exception handler
- to helper_scv
+Subject: [PATCH v6 0/9] Misc clean ups to target/ppc exception handling
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -40,9 +37,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Date: Thu, 22 Feb 2024 12:33:58 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Thu, 22 Feb 2024 12:33:53 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,57 +60,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+These are some small clean ups for target/ppc/excp_helper.c trying to
+make this code a bit simpler. No functional change is intended. This
+series was submitted before but only partially merged due to freeze
+and conflicting series os thia was postponed then to avoid conflicts.
 
-Unlike sc, for scv a facility unavailable interrupt must be generated
-if FSCR[SCV]=0 so we can't raise the exception with nip set to next
-instruction but we can move advancing nip if the FSCR check passes to
-helper_scv so the exception handler does not need to change it.
+v6:
+- rebase on master
+- added R-b tags and changes from Harsh
 
-[balaton: added commit message]
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- target/ppc/excp_helper.c | 2 +-
- target/ppc/translate.c   | 6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+v5:
+- rebase on master
+- keep logging nip pointing to the sc instruction
+- add another patch
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 1c07a11405..411d67376c 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1405,7 +1405,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL_VECTORED: /* scv exception                     */
-         lev = env->error_code;
-         dump_syscall(env);
--        env->nip += 4;
-         new_msr |= env->msr & ((target_ulong)1 << MSR_EE);
-         new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
- 
-@@ -2528,6 +2527,7 @@ void helper_ppc_maybe_interrupt(CPUPPCState *env)
- void helper_scv(CPUPPCState *env, uint32_t lev)
- {
-     if (env->spr[SPR_FSCR] & (1ull << FSCR_SCV)) {
-+        env->nip += 4;
-         raise_exception_err(env, POWERPC_EXCP_SYSCALL_VECTORED, lev);
-     } else {
-         raise_exception_err(env, POWERPC_EXCP_FU, FSCR_IC_SCV);
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 6a43eda3b9..c4063f8e2c 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -4554,7 +4554,11 @@ static void gen_scv(DisasContext *ctx)
- {
-     uint32_t lev = (ctx->opcode >> 5) & 0x7F;
- 
--    /* Set the PC back to the faulting instruction. */
-+    /*
-+     * Set the PC back to the scv instruction (unlike sc), because a facility
-+     * unavailable interrupt must be generated if FSCR[SCV]=0. The helper
-+     * advances nip if the FSCR check passes.
-+     */
-     gen_update_nip(ctx, ctx->cia);
-     gen_helper_scv(tcg_env, tcg_constant_i32(lev));
- 
+v4: Rebased on master dropping what was merged
+
+BALATON Zoltan (9):
+  target/ppc: Use env_cpu for cpu_abort in excp_helper
+  target/ppc: Readability improvements in exception handlers
+  target/ppc: Fix gen_sc to use correct nip
+  target/ppc: Move patching nip from exception handler to helper_scv
+  target/ppc: Simplify syscall exception handlers
+  target/ppc: Clean up ifdefs in excp_helper.c, part 1
+  target/ppc: Clean up ifdefs in excp_helper.c, part 2
+  target/ppc: Clean up ifdefs in excp_helper.c, part 3
+  target/ppc: Remove interrupt handler wrapper functions
+
+ target/ppc/cpu.h         |   1 +
+ target/ppc/excp_helper.c | 487 +++++++++++++--------------------------
+ target/ppc/translate.c   |  16 +-
+ 3 files changed, 167 insertions(+), 337 deletions(-)
+
 -- 
 2.30.9
 
