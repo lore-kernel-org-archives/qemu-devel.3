@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D56AC54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 13:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BCD6C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 14:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd9b8-0000wx-OS; Thu, 22 Feb 2024 08:58:50 -0500
+	id 1rd9cY-0002zd-So; Thu, 22 Feb 2024 09:00:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rd9b7-0000sT-23
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 08:58:49 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1rd9cV-0002xl-Ay
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 09:00:16 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rd9b5-0000Oo-Jp
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 08:58:48 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so10599287a12.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 05:58:47 -0800 (PST)
+ id 1rd9cS-0000nf-SB
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 09:00:15 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-55a8fd60af0so11448345a12.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 06:00:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708610326; x=1709215126; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=f4A5QTEiDWI+EfdbbvxQ+LWL8OIiOi+Y61Valh+/N3Q=;
- b=UGaSoyKhP4K89t3GwugN4+FezHSrvof1uLCwjf/dfPsjgQDLJt+HqxMpVmc3yi7ruV
- dIRTIVBS8iLGotSZRaErEgGXKFfPIRE55Bx0RXAm0TO7Qz80yq3dXluXUh9gipzCWGCz
- OUh2COq3H5kpnkT29wxumEByRLIoBHU2PyOQDVFiV1vsQdOnGxzA78IHQT2Mo1cqU1PE
- q0bEQrbTzt1/NkUPT+sEtTgleGmJKSlQy71/idqW9DK+gHnh8ipWswa5v1hWKRhvhrsL
- 1yiud0jt2x5ytxyWG065AWBsiTLdJ3ryqUpiZ6nFOpqYIIob1D+igbiYzpBJudypx7c3
- xxvQ==
+ d=linaro.org; s=google; t=1708610411; x=1709215211; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2hFGk6XPuUEhnSARm3LRyJ0MRKVV4i2hJYqf5akPQ78=;
+ b=Je6RakzOkuEGo/qrfO8iz5lqrDPZ5oo2bRecHlt6ySpoMXb1ILBXkPwb+bFBSBQduf
+ e+dh7OE+mKYOjEaUyOkqBe3PJ4ErWica23VzDa5VOD3+Bin3TIhkkRK5EzBcb7LVO6Cr
+ ATUZPlhV1y+fXjQYW/OWurSXH3QEsXyBVoAXfV5JVrsRgQ+fZXgUr96gAaYiimR9SrB5
+ uZA8v7FjAuwYU6wRHRYGhNcCqoD6eCZYYJEXK/q/MWtcHcSjJ/+UibB2ngB9y6EyZKpS
+ fZ623VfM1EnPzyEXKOdfvM2n2bPdDVYde/B7F7J4QJicQowlaWAuN9YnyO/PdGH4TlAW
+ hqNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708610326; x=1709215126;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=f4A5QTEiDWI+EfdbbvxQ+LWL8OIiOi+Y61Valh+/N3Q=;
- b=TfaZqjfB0asi/2zBSiXiz3uTfzoX+qo4uY/nBZjyrYUzNCz1kdAQjzScyuFZEKsTra
- aPcY7/Dv7i48I1xmsZFlESjH3apMbYwujQrmOAf/BE7qiYnoBY1Fvc2Mw7fOvnOf3olu
- WaUj/6frEMcyHCMqgk6kkMygOvJmmt/vfWM4B+XSIXz9TZC62Dcu+HhVyX88dZ0vKRYz
- n5bV2D6idarb7FtLFfDNSTs4XV2w86Zs0DZFw4Zbp2zw+7cOJmXiHVOrh14DsOf5FIv6
- nsc5fXzo2q5L4Bw3NHujNt8VmUThb3dGVfhXbrIl386+nEdGthqCqHbE1ZmOyCAVVuNO
- Hvyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQo8pYAHvqKvRDDt5z54tGKV4eRNNqNZqYhVFWtDwbUy700LA8n6sLRXsVmdPSm0ZHoBe2qGS+JLydhKLidQ0vUF2VZ4c=
-X-Gm-Message-State: AOJu0YyCg0v/MzJQbo0WKKBGU3V4uw4VUYIFMmxzOrHCPtEO5UIcFLsO
- dUraJpXFGpyH/eCvtoUtH2Z6quYPTisyE/x8v25ZQuZADkY6kEdf0jN+EBL52WZQJVpUdqDHtR3
- 4DsbXQwyoXVAQ/f7HPkLXiMXsNsgjeD5AS2ntAA==
-X-Google-Smtp-Source: AGHT+IGBvOXoSvzJqJtB1loWnl6+UTKKdjwEHe40d+rfbb7FuvNrbV6WI7EhKPyMXXpOvmPL+NA9gnjPzqbCaCZ7eaU=
-X-Received: by 2002:aa7:cfda:0:b0:564:f9f3:801c with SMTP id
- r26-20020aa7cfda000000b00564f9f3801cmr2928331edy.33.1708610326159; Thu, 22
- Feb 2024 05:58:46 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708610411; x=1709215211;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2hFGk6XPuUEhnSARm3LRyJ0MRKVV4i2hJYqf5akPQ78=;
+ b=hDJL1xoTXodjixcYdDN/xb9Hf/DZq05zMuDdM0a54o/7QVDnS3YEi0vDVspa/P42r/
+ 3k8P1/1/mWOTtuOvRp5z5rCmXVtYnh/yzjM95vZMR4mEOnbJcqfLLpePQX7th4ixPhQ7
+ oZ3AzQDD3J1M1AVzz5YUZxs1s3Er5aGpg/EK/5edTmwRxrAc/728jR0wt5TmWi3Tmd/C
+ vFL2NHaOA7SDaIx2pVj7Dts+1iDYCZG5fL0Klc+qnaMMV7Ja+15roMivX7dvUZapNzBp
+ iMYZNlm8c3g8Ls0zV4A2xOJh2BBWAULFAi2+vJwlUK/wG7J+IEoUBKxZgZpgfLaNSx/0
+ QCSw==
+X-Gm-Message-State: AOJu0YwC8PPOQlJn7eFuxlq0LsBO9XwBp1Zczt5DUcLd04QsJ/9BHMGN
+ 9M7lPd1UYTBFDBwjpRR6UY4E3zMwS946FzefaOzZawdNALmjODRJ6RbBgGfYiQk1TcBIUSNEUVO
+ 4++QeA1PRtsSBdHOMBebof9TPGDXnKSFfzV8b+g==
+X-Google-Smtp-Source: AGHT+IEz5xwWf6y0i3/CGA0YIC2H2Y0FPuN+8vTzrFsNDF3Q9ZENm3eGQKygjLElxj/J+Omyjb1IIH0to5gI35lJ8W4=
+X-Received: by 2002:a05:6402:176b:b0:565:396b:2c1 with SMTP id
+ da11-20020a056402176b00b00565396b02c1mr1229669edb.8.1708610411221; Thu, 22
+ Feb 2024 06:00:11 -0800 (PST)
 MIME-Version: 1.0
-References: <20240215160202.2803452-1-ardb+git@google.com>
-In-Reply-To: <20240215160202.2803452-1-ardb+git@google.com>
+References: <20240215160713.80409-1-philmd@linaro.org>
+In-Reply-To: <20240215160713.80409-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Feb 2024 13:58:35 +0000
-Message-ID: <CAFEAcA8z-xqsBt4rFOkY0Rqj+7wJs+KLsCC9VFogxFthi=iKyQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Advertise Cortex-A53 erratum #843419 fix via
- REVIDR
-To: Ard Biesheuvel <ardb+git@google.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, philmd@linaro.org, 
- richard.henderson@linaro.org, Ard Biesheuvel <ardb@kernel.org>
+Date: Thu, 22 Feb 2024 14:00:00 +0000
+Message-ID: <CAFEAcA9C4WB6NZhs-i4pw-rruE4nDP-eJ2i1Q4CQ1inHicoe7Q@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Cover hw/ide/ahci-allwinner.c with AllWinner
+ A10 machine
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Beniamino Galvani <b.galvani@gmail.com>,
+ qemu-arm@nongnu.org, John Snow <jsnow@redhat.com>, qemu-block@nongnu.org, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,19 +92,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Feb 2024 at 16:02, Ard Biesheuvel <ardb+git@google.com> wrote:
+On Thu, 15 Feb 2024 at 16:09, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> From: Ard Biesheuvel <ardb@kernel.org>
+> This code -- which was moved many times around -- was added in
+> commit 377e214539 ("ahci: Add allwinner AHCI") and belong to the
+> AllWinner machines. See also commit dca625768a ("arm: allwinner-a10:
+> Add SATA").
 >
-> The Cortex-A53 r0p4 revision that QEMU emulates is affected by a CatA
-> erratum #843419 (i.e., the most severe), which requires workarounds in
-> the toolchain as well as the OS.
->
-> Since the emulation is obviously not affected in the same way, we can
-> indicate this via REVIDR bit #8, which on r0p4 has the meaning that no
-> workarounds for erratum #843419 are needed.
->
-> Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
 
 
 
