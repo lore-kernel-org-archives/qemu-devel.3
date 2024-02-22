@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 397C2C54791
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 16:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24726C54791
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdCNf-0004U1-DW; Thu, 22 Feb 2024 11:57:07 -0500
+	id 1rdCaR-0002Go-19; Thu, 22 Feb 2024 12:10:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdCNd-0004PI-0a
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 11:57:05 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1rdCaO-0002G3-RU
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:10:16 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdCNb-0005R6-IW
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 11:57:04 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-563c595f968so2905487a12.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 08:57:03 -0800 (PST)
+ id 1rdCaM-0008Kf-Ls
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:10:16 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-565468bec51so1211187a12.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 09:10:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708621022; x=1709225822; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SEVNk6M0QlKdkG6bKeJ4g5smHGSMYbyjbGMbu2zztno=;
- b=umcK7io8mN3d0F3Nnnlrygo1NP0oJvhfTlC7aeAn1aAqsD63Sj8Kh2VcvRrUlHuaVi
- nSm6nMNcdCjN3urt9IUFMdhIztfOctxkbjjN6lVCK86IgIN3DjvXwvQxK0i4Zsl1JBL+
- 41k42VDfViC8Ky0e6kmPvFomg43EA/FkYHNPJo4ePUQMPOokgg/St5Y0eUfd1MTnmUKN
- l0YIK9NEPj9iGDHrkMMma77Q0sXlF75yT3N/OpXr8YvA/fjZQgkGFa5j6hw+4WVqD/9C
- 83hu/C6iYW6PR4VcOMyNl62qyzXC12+TIesfj8qyu6tAFOwizQ/U7BxzNQnN4gMRfrf4
- 65iA==
+ d=linaro.org; s=google; t=1708621813; x=1709226613; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+clhGK5CmMbUnm7X1zLQ+lroWGpJSidp8qaoKLdvM0E=;
+ b=LEMu0Y7J9t1WXeUqdsE4bx6cHuHpgtWvUEEQdaa3zCu8EBj8RTT2T/bE1bWRoDQUsv
+ m+8MTRnf0fSvz8FlSyngd+G/HLRQKh5oHR9VAOmFJHqSp1nGxZhhOAtcikP/VckhB0SQ
+ ZFNNW8y0zyQrL+Y94kD9imOlh16txWy/6zTAgU5hAAzSJFGYgkkMer+SfI/9RKoylUOt
+ cjnEag/dtAqI3WDYl+fZPOK+wKIYUoV8e4RY+EfWSjshkkDwne6umjMKPWJ1h24NfOpV
+ Dx7bYz8qd3l/2PQGFNZQSMOg9zLR5RFchaBBOHS4mjoH83tMdyaau+Cvsbrmbuj7DasL
+ N+dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708621022; x=1709225822;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SEVNk6M0QlKdkG6bKeJ4g5smHGSMYbyjbGMbu2zztno=;
- b=ei7/489nnMbVhrhnGRlZr30ASmUxsLYncjEbDe8OKoZifKcs/xJGIoF+PwBD0Cy6Id
- /hzyHJU6MHMosjkl4smkxNClProBbg3Nkxn5qoHjoTKenGKlYMGm/12La5W4oclKNPIP
- 6b6EaLTr+9W9FyUPTuUUBLgrMIRxiES+wNxnU7iYUVCVpYj30gSBtDwm8TibPyNwnIIh
- 8tjp01nyelOb0tIKwABCMBVpb3qcyeqGQlkZRwTqgh7NUusAM6KseuHTN+DB2QJ+81Cr
- 5t2IKHx6bHfms14Buh2yTTw6kaY/euw2CgNdl7pBfc/GNAJg85q5oAVVdueVMe61jt9n
- vPmQ==
+ d=1e100.net; s=20230601; t=1708621813; x=1709226613;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+clhGK5CmMbUnm7X1zLQ+lroWGpJSidp8qaoKLdvM0E=;
+ b=n5UD6sRUD17w22x9clRRpZyqcpZg6wjCQy2tnLUYW77hdbTUscVdq8sN58pju5oUl9
+ MTX8c3lQSrHsmv/JCKaF4bMl/7oWA2VtpIj/7+Rc8GhUqhdZlHXaNarYCA9Lr9KUTX17
+ TIKodQAKXMgWZ7unstwhgirEiVzNORimxqqkzx8E3Y0tz+sqLSp0IL3QbB/c5r/PTX+0
+ CrmbNd+XicXT7pN3f4lM2eA/6Fj7B1wll39yeTKU+DYGAROPmNMZ+MjuNyK6UxgBmPrr
+ Yb/wVEhOfrS7GpQbGFOwJqaAgQplPIlvWGqQVf8ZC7UG7kQtKStceg4KW1SDxjc26rIx
+ 1TSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5IaMRw3NLzs4CE8saE0MPQrvc+Ph62WuaApk/rRa/QYa+knBZNtIHR7zm556YVRin5rgUNsB6/HqfxYA5j4RDUD829sE=
-X-Gm-Message-State: AOJu0YyorrX3MICg1sjiAe35eB9ucCb88DFSIw5UDfzHlByj6BrkJImA
- Xf/XZWR6UBrPy0cb8R70keJ5Ar7q+PuCrGLqiR9tgEOZDgnD2p+JSlrRL0AIxv1S2cgan40QoWt
- me446PWV/Fmu7ibh8fqUG/YSho4HN7pGVovBkqA==
-X-Google-Smtp-Source: AGHT+IHmsVm2rtLQ+DqejHxIBzGFcUElDLCPoX4wLyGpARpUpvCSWgr+cLq+Zsuv+xKi9zBv6WJOo0tGX9OcsQWi7ks=
-X-Received: by 2002:a50:fc02:0:b0:564:5973:56f2 with SMTP id
- i2-20020a50fc02000000b00564597356f2mr8714584edr.7.1708621022002; Thu, 22 Feb
- 2024 08:57:02 -0800 (PST)
+ AJvYcCXxiTVsOTdXR0TKMOafyFisoMT4O5RfHZ5kUTEIQWYhUJ/CT80os35tsPyM/j9yRdY3i+nWxDRsJhfvPfPWfv+4dZh4Da0=
+X-Gm-Message-State: AOJu0YyxH6NCfkpRnq13tsnWRASOGd9z0X2kg8pXBEGsoK+h76AcB/8x
+ PFfOLMRrijKgmkTGo9H+cu1Un28PPZDk8ocpoBa3XG8e71UhVsKxaqUWz3vPU4MC+YhNk9yp9SI
+ QHBvSjPPAd4w492u04HixkTJZzzlrvF3Iy8nkPg==
+X-Google-Smtp-Source: AGHT+IEly/qy7fFCWe/A4i4RjIJfJHMb84VXxNj7chgks0xxYaMDU+46E2PahxeEW3Fe/UXXeF8B6li8k25TlkOHvjU=
+X-Received: by 2002:a05:6402:43c3:b0:564:9628:2e2f with SMTP id
+ p3-20020a05640243c300b0056496282e2fmr2865537edc.17.1708621812704; Thu, 22 Feb
+ 2024 09:10:12 -0800 (PST)
 MIME-Version: 1.0
-References: <20240217-cocoa-v11-0-0a17a7e534d4@daynix.com>
- <20240217-cocoa-v11-3-0a17a7e534d4@daynix.com>
-In-Reply-To: <20240217-cocoa-v11-3-0a17a7e534d4@daynix.com>
+References: <DDADA9A9-DED4-4510-A532-7600C0233467@daveparsons.net>
+ <fdda385d-2e18-4554-88d0-e43cb5b90e39@tls.msk.ru>
+In-Reply-To: <fdda385d-2e18-4554-88d0-e43cb5b90e39@tls.msk.ru>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Feb 2024 16:56:51 +0000
-Message-ID: <CAFEAcA-P_kX_wM9VxTCLgOPp-Sw4VmvUJzC3ZyYrEgppUAqXow@mail.gmail.com>
-Subject: Re: [PATCH v11 3/6] ui/cocoa: Let the platform toggle fullscreen
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Marek Glogowski <smarkusg@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Rene Engel <ReneEngel80@emailn.de>, qemu-devel@nongnu.org
+Date: Thu, 22 Feb 2024 17:10:01 +0000
+Message-ID: <CAFEAcA9psJuvPz+mWYzWz0NLTcQTCNhknFrGZ2bx7Frtb3=B4A@mail.gmail.com>
+Subject: Re: [PATCH] ui/cocoa: Fix incorrect window clipping on macOS Sonoma
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: David Parsons <dave@daveparsons.net>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,19 +96,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 17 Feb 2024 at 11:19, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Thu, 22 Feb 2024 at 06:08, Michael Tokarev <mjt@tls.msk.ru> wrote:
 >
-> It allows making the window full screen by clicking full screen button
-> provided by the platform (the left-top green button) and save some code.
+> [Adding a few more Ccs]
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  ui/cocoa.m | 423 ++++++++++++++++++++++++++++++-------------------------------
->  1 file changed, 207 insertions(+), 216 deletions(-)
+> 17.02.2024 18:58, David Parsons :
+> > macOS Sonoma changes the NSView.clipsToBounds to false by default where=
+ it was true in
+> > earlier version of macOS. This causes the window contents to be obscure=
+d by the window
+> > frame. This fixes the issue by conditionally setting the clipping on So=
+noma to true.
+> >
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
+> > Signed-off-by: David Parsons <dave@daveparsons.net>
+> >
+> > diff --git a/ui/cocoa.m b/ui/cocoa.m
+> > index eb99064bee..c9e3b96004 100644
+> > --- a/ui/cocoa.m
+> > +++ b/ui/cocoa.m
+> > @@ -365,6 +365,9 @@ - (id)initWithFrame:(NSRect)frameRect
+> >           screen.width =3D frameRect.size.width;
+> >           screen.height =3D frameRect.size.height;
+> >           kbd =3D qkbd_state_init(dcl.con);
+> > +        if (@available(macOS 14, *)) {
+> > +            [self setClipsToBounds:YES];
+> > +        }
+> >
+> >       }
+> >       return self;
+> >
+>
+> Hi David!
+>
+> While the code change is tiny, I for one know nothing about MacOS and
+> its cocoa thing, so to me (with my trivial-patches hat on) this is a
+> no-go.  I'd love to have a review from someone more knowlegeable in
+> this area.
 
-This is a big patch and I'm having difficulty figuring out what
-it's doing. Is it possible to split it up a bit?
+Mmm. Akihiko is the expert here, but I do notice that we don't
+seem to be handling the "macos-version-specific" stuff in a
+way we've done it before (we don't use @available elsewhere).
 
-thanks
+I did wonder if we could call the setClipsToBounds method unconditionally;
+The release notes say
+https://developer.apple.com/documentation/macos-release-notes/appkit-releas=
+e-notes-for-macos-14#NSView
+"This property is available back to macOS 10.9. This availability is
+intended to allow code targeting older OSes to set this property to
+true without guarding the setter in an availability check."
+
+but I think that might only mean "you can do this building on a new
+SDK that's targeting an old version", not "you can do this
+when building on an older SDK" (at least judging from the
+comments in the gitlab issue).
+
+The other option would be to fix whatever it is that we're
+presumably not getting right that means this default change
+caused the bug. My guess is that we are in the case
+"Confusing a view=E2=80=99s bounds and its dirty rect. The dirty rect
+ passed to .drawRect() should be used to determine what to draw,
+ not where to draw it. Use NSView.bounds when determining the
+ layout of what your view draws."
+But unless the fix for that is really obvious and easy I guess
+that flipping the default back to its old value is the better
+approach.
+
 -- PMM
 
