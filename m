@@ -4,82 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335B9C48BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 02:56:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C9FC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 03:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rczG3-0007Hk-ML; Wed, 21 Feb 2024 21:56:23 -0500
+	id 1rd01q-0003Q1-V1; Wed, 21 Feb 2024 22:45:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rczG0-0007HF-M0
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 21:56:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rd01m-0003PR-UK
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 22:45:43 -0500
+Received: from mail-mw2nam10on2076.outbound.protection.outlook.com
+ ([40.107.94.76] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rczFz-0004eA-9a
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 21:56:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708570578;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zFPmGy81lNg+XAh+N8ZatgzyKG/G0Rd9VX7vVLL28ig=;
- b=AiByuJSf2mAjoQ3XwdtxGSU6wQTu7TFUtKdu37VXq4E+8U2U9sgQzrjG1OTiX/YoVyTRJo
- acF9IAcycvn7UWnY1Ry5n+ltXhijRpmT9l2LHSPqow4+2hs0vc51f9MPCbyLr6wpnL2NLl
- Ws37R+RvwYlt0iStpZXISe18FAq2NFE=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-NuHpUAHxP6KjdqFD90Kmfg-1; Wed, 21 Feb 2024 21:56:14 -0500
-X-MC-Unique: NuHpUAHxP6KjdqFD90Kmfg-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-603c0e020a6so62561927b3.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 18:56:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708570574; x=1709175374;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zFPmGy81lNg+XAh+N8ZatgzyKG/G0Rd9VX7vVLL28ig=;
- b=ADKVRtj6JHK8zsw0jzeuF8eKQrZGcrT2a76Ens5Mu41IiZZEKivw/Bwxvi/froJdCI
- Xps8nQnqOn10MjviZvHcdWfhAtsPhuQlwqP+JfcK9BJrF3EEahiZmqwv3V/0wi6jBMKw
- e3vttAT370gB5yWmDg1evdRmqOnv7agBpjSeNmJbJ5EeECPN48NcKX0eugpIp9y/l/Hl
- KyC0GhQqMn5rYTF3Om1il5isX3AI5v/cgy8Y4oJbZ4iCajOKpQ8jCVJe9K9zOd8cMGRc
- HfyH6O2/TW4gURFbVoapc7Qd92wC0MrF5dkFIKWpJxGCbzbBVJwK+aaKOF7Lp5sVSw/5
- jsTg==
-X-Gm-Message-State: AOJu0Yx0jBZYIH3hPoJRWPbUS+BVSp6ofOpewAkIiJg4Izd9m5p55pJi
- 8Bg7uWk1Qoot2D9Z4dmYFLw/6sX2XhZZZPjKnSkyF5+qbUPuWEURAiiYuB0dollL6FOd1U5Od5r
- tbUkDUIVl4HtoYCg+Tq1MQ6x5lC5RGAwQx36PWN3huuh3EN/SwWsE+ey4Az+iekhVhHnGJ3xpgV
- uYtmacfCTjYXxtPmERSg5jM3QuoTC9TbcXQX8=
-X-Received: by 2002:a0d:ea91:0:b0:608:7dd:3649 with SMTP id
- t139-20020a0dea91000000b0060807dd3649mr11962234ywe.14.1708570574195; 
- Wed, 21 Feb 2024 18:56:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFnStJqE91XUdrseDpBriqKfqH4RgNpuNhOvnB4kmxxqEjKS5Q9anY4wMxL4GhpN6HgkFiy47PC1Hlcno+TYLk=
-X-Received: by 2002:a0d:ea91:0:b0:608:7dd:3649 with SMTP id
- t139-20020a0dea91000000b0060807dd3649mr11962225ywe.14.1708570573939; Wed, 21
- Feb 2024 18:56:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rd01k-0002z4-Cf
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 22:45:42 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IwqSP+Gsf99HfDfucLIoydKFYllHJ0UJaZnPaBCm84H3VSxB56u8wrp//yhc0dZ6KNBZS/wjJi85S3/syFYCZ7WggOY3uAg2yzbiqKTcuuCC8D2nyC1VTtnrHODyGF3BYtpDXRGTp+TAfSjYWm13d3Pz0qR/Ig3Zi1d5zTFfHrvskUz5gwtgk5yBh2qQa7ytcwFQriD8fh9ZIJ4rtZGJpIqjmRt7QHAiKuibtdQFtbbfFRugRVXJJ0aanot1xb8fUHzW2vsWIbPbiGBzb7oAbFj0+qgDIjVs0nq8J+8+y65+C87Ols3JVndSw5gfiX00Nkkk9XTkQitWSom2RfAW9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qWrbS8eJnNTz3LPIZ4ldZ403pYsWg3XyASNre1CQILc=;
+ b=BjmewEMKx56IWksh5sbWkBN5RrU4RL99b4+2VHSiVkTQ/nyOcWQk/aHaFs4tjBPwdpNgBd6Gh/wPpSFIqvcObr6asYBZ+3uYKQ4GD5J51xADw9ktFMrYPtwpgqfoc2fqKjy1g+km3AYRMSr9QRIb05GsXdO/aKUWKnnNJquXJG9V0k9UecMyKMGrxqFmfn2HN46jDgce7As+2wIG7M1sE9O1lB9+0AP+FetvyR+63qQS4czIZBS0mXiGnZ+RpvT8/NNvDSltZxku0wdhVvD7hD+9OVYeB5450JpEJi0ILAoDZ4lr9ziWcZZFUta+MCwK7NqaODyrNM8XVarX8QZACA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qWrbS8eJnNTz3LPIZ4ldZ403pYsWg3XyASNre1CQILc=;
+ b=2W349JsAe2TcU8cgkqt43QQMGfIXEos0gafQPM1nV41EVnYfP/BQPXuIDi3vtzG7AZ4dgoxkOQLyatOdFyxWpPeOxfDDeki7oCyuD6iUY8KGtX26e1o4nAeHjApKi2TBuegfMshiA/wMp4g6s5AJ+oC3n62FbhmMmtwVC68/oaQ=
+Received: from BL0PR02CA0109.namprd02.prod.outlook.com (2603:10b6:208:35::14)
+ by CH3PR12MB8970.namprd12.prod.outlook.com (2603:10b6:610:176::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.22; Thu, 22 Feb
+ 2024 03:40:34 +0000
+Received: from BL02EPF0001A0FB.namprd03.prod.outlook.com
+ (2603:10b6:208:35:cafe::bc) by BL0PR02CA0109.outlook.office365.com
+ (2603:10b6:208:35::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.43 via Frontend
+ Transport; Thu, 22 Feb 2024 03:40:33 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL02EPF0001A0FB.mail.protection.outlook.com (10.167.242.102) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7292.25 via Frontend Transport; Thu, 22 Feb 2024 03:40:33 +0000
+Received: from cjq-desktop.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
+ 2024 21:40:32 -0600
+From: Jiqian Chen <Jiqian.Chen@amd.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>
+CC: Jiqian Chen <Jiqian.Chen@amd.com>
+Subject: [QEMU PATCH v6 1/1] virtio-pci: implement No_Soft_Reset bit
+Date: Thu, 22 Feb 2024 11:40:10 +0800
+Message-ID: <20240222034010.887390-2-Jiqian.Chen@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240222034010.887390-1-Jiqian.Chen@amd.com>
+References: <20240222034010.887390-1-Jiqian.Chen@amd.com>
 MIME-Version: 1.0
-References: <20240221095130.52711-1-demeng@redhat.com>
- <CAPMcbCr9y89BiM+mTF3i2n6GfAA9Xnu3ovoS-KamLZFEiAhrSA@mail.gmail.com>
-In-Reply-To: <CAPMcbCr9y89BiM+mTF3i2n6GfAA9Xnu3ovoS-KamLZFEiAhrSA@mail.gmail.com>
-From: Dehan Meng <demeng@redhat.com>
-Date: Thu, 22 Feb 2024 10:56:03 +0800
-Message-ID: <CA+kPPJweQkm50+6q4uYx33kU8kc-u13TbkhqEO+CL3VHht18CQ@mail.gmail.com>
-Subject: Re: [PATCH] qga-win: Add support of Windows Server 2025 in get-osinfo
- command
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="0000000000002237320611ef9639"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FB:EE_|CH3PR12MB8970:EE_
+X-MS-Office365-Filtering-Correlation-Id: be96fb8d-92bd-4782-e5aa-08dc3358067a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: OlXMYMdoyal2pqeN5kBDGHTjJl8E5Ulo56ULJouhbzfN2E4MSf1CCVJgqAKjIgk05CZB2XefHULxdJdKSQjco19zX+cCOD4yoctvsNYYgvdf4RWh4jTrOnBFryxAkWDwuy/4Gpg2E5sQv3iXrerAZtLfufCJRZMZ5LpNZZPS0jHzmFt/cSY0vHhsDW9yzseeuXC+5wMEFCD/hJeHnMf7syo5OCf5DEz/vR2Gprx5cg9KqXWTtbEMiZ/BXjBeGu2rme6zLi4XbPO2pl5Hk9aDOt0lCu6Tkj60AEkOyGK9L+FYcrLAPFDvY8Nb0SMjYF4lAVvfIDUnNm7kLCPXPtGpDgBfLoUV+a3cTIp+7coK9Hq8a2Bd95E+/hOjB6UHD5dn+PV55cJwEJI+uDb0AShutXFifpCs4Sy9eNAtmMunTNEAvMjTHmPqIRkvfgl7lD7rNAgWIQM5tQELVaCHqklx7mbsgcVfXMw4vVKzhkKdhjtOMqg7TL/nCWO70f+8tMscOuiMOl7sDL8IEn/qSrHTb+P6xTUu1vjQ5ijOlnjTqfMoUfYzJSMu6xo9bXPG+mPS6agNJxGGEYmJadSSvHelfyOdq7CvE7W7Rs8kcg/OyDa1MznhZjDxr5xSevXJsHpFoyDQJFjdHUU5ufcFodi0GXLFp+AzOAjmNzpn6avW8pc=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(36860700004)(46966006)(40470700004); DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Feb 2024 03:40:33.8155 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: be96fb8d-92bd-4782-e5aa-08dc3358067a
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FB.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8970
+Received-SPF: softfail client-ip=40.107.94.76;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,100 +121,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002237320611ef9639
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In current code, when guest does S3, virtio devices are reset due to
+the bit No_Soft_Reset is not set. After resetting, the display resources
+of virtio-gpu are destroyed, then the display can't come back and only
+show blank after resuming.
 
-Done. thanks.
+Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
+this bit, if this bit is set, the devices resetting will not be done, and
+then the display can work after resuming.
 
-On Wed, Feb 21, 2024 at 6:00=E2=80=AFPM Konstantin Kostiuk <kkostiuk@redhat=
-.com>
-wrote:
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+---
+ hw/virtio/virtio-pci.c         | 37 +++++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-pci.h |  5 +++++
+ 2 files changed, 41 insertions(+), 1 deletion(-)
 
->
->
-> On Wed, Feb 21, 2024 at 11:51=E2=80=AFAM Dehan Meng <demeng@redhat.com> w=
-rote:
->
->> Add support of Windows Server 2025 in get-osinfo command
->>
->> Signed-off-by: Dehan Meng <demeng@redhat.com>
->> ---
->>  qga/commands-win32.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
->> index 697c65507c..f3c7e604c9 100644
->> --- a/qga/commands-win32.c
->> +++ b/qga/commands-win32.c
->> @@ -2154,6 +2154,7 @@ static ga_win_10_0_t const
->> WIN_10_0_SERVER_VERSION_MATRIX[4] =3D {
->>
->
-> You don't update the array size, there are out of range elements
->
->
->>      {14393, "Microsoft Windows Server 2016",    "2016"},
->>      {17763, "Microsoft Windows Server 2019",    "2019"},
->>      {20344, "Microsoft Windows Server 2022",    "2022"},
->> +    {26040, "MIcrosoft Windows Server 2025",    "2025"},
->>      {0, 0}
->>  };
->>
->> --
->> 2.35.1
->>
->>
-
---0000000000002237320611ef9639
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Done. thanks.=C2=A0<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 21, 2024 at 6:00=E2=80=
-=AFPM Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkostiu=
-k@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"g=
-mail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Feb 21, 2024 at 1=
-1:51=E2=80=AFAM Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=
-=3D"_blank">demeng@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">Add support of Windows Server 2025 in get-osin=
-fo command<br>
-<br>
-Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=
-=3D"_blank">demeng@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/commands-win32.c | 1 +<br>
-=C2=A01 file changed, 1 insertion(+)<br>
-<br>
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
-index 697c65507c..f3c7e604c9 100644<br>
---- a/qga/commands-win32.c<br>
-+++ b/qga/commands-win32.c<br>
-@@ -2154,6 +2154,7 @@ static ga_win_10_0_t const WIN_10_0_SERVER_VERSION_MA=
-TRIX[4] =3D {<br></blockquote><div><br></div><div>You don&#39;t update the =
-array size, there are out of range elements<br></div><div>=C2=A0</div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0{14393, &quot;Microsoft Windows Server 2016&quot;,=C2=
-=A0 =C2=A0 &quot;2016&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{17763, &quot;Microsoft Windows Server 2019&quot;,=C2=
-=A0 =C2=A0 &quot;2019&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{20344, &quot;Microsoft Windows Server 2022&quot;,=C2=
-=A0 =C2=A0 &quot;2022&quot;},<br>
-+=C2=A0 =C2=A0 {26040, &quot;MIcrosoft Windows Server 2025&quot;,=C2=A0 =C2=
-=A0 &quot;2025&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{0, 0}<br>
-=C2=A0};<br>
-<br>
--- <br>
-2.35.1<br>
-<br>
-</blockquote></div></div>
-</blockquote></div>
-
---0000000000002237320611ef9639--
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 1a7039fb0c68..da5312010345 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2197,6 +2197,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+             pcie_cap_lnkctl_init(pci_dev);
+         }
+ 
++        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
++            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
++                         PCI_PM_CTRL_NO_SOFT_RESET);
++        }
++
+         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+             /* Init Power Management Control Register */
+             pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
+@@ -2259,18 +2264,46 @@ static void virtio_pci_reset(DeviceState *qdev)
+     }
+ }
+ 
++static bool device_no_need_reset(PCIDevice *dev)
++{
++    if (pci_is_express(dev)) {
++        uint16_t pmcsr;
++
++        pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
++        /*
++         * When No_Soft_Reset bit is set and device
++         * is in D3hot state, can't reset device
++         */
++        if ((pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
++            (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3)
++            return true;
++    }
++
++    return false;
++}
++
+ static void virtio_pci_bus_reset_hold(Object *obj)
+ {
+     PCIDevice *dev = PCI_DEVICE(obj);
+     DeviceState *qdev = DEVICE(obj);
+ 
++    if (device_no_need_reset(dev))
++        return;
++
+     virtio_pci_reset(qdev);
+ 
+     if (pci_is_express(dev)) {
++        uint16_t pmcsr;
++        uint16_t val = 0;
++
+         pcie_cap_deverr_reset(dev);
+         pcie_cap_lnkctl_reset(dev);
+ 
+-        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
++        /* don't reset the RO bits */
++        pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
++        val = val | (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) |
++                (pmcsr & PCI_PM_CTRL_DATA_SCALE_MASK);
++        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, val);
+     }
+ }
+ 
+@@ -2297,6 +2330,8 @@ static Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
++    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
++                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 59d88018c16a..9e67ba38c748 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -43,6 +43,7 @@ enum {
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
++    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
+ };
+ 
+ /* Need to activate work-arounds for buggy guests at vmstate load. */
+@@ -79,6 +80,10 @@ enum {
+ /* Init Power Management */
+ #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
+ 
++/* Init The No_Soft_Reset bit of Power Management */
++#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
++  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
++
+ /* Init Function Level Reset capability */
+ #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
+ 
+-- 
+2.34.1
 
 
