@@ -4,32 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12DBC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1014DC54788
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7L2-0004rE-UM; Thu, 22 Feb 2024 06:34:05 -0500
+	id 1rd7LA-00059Q-Ev; Thu, 22 Feb 2024 06:34:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd7Kz-0004kL-HB; Thu, 22 Feb 2024 06:34:01 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1rd7L3-0004tO-1t; Thu, 22 Feb 2024 06:34:05 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd7Kw-0006Kz-74; Thu, 22 Feb 2024 06:34:01 -0500
+ id 1rd7L1-0006Mh-1l; Thu, 22 Feb 2024 06:34:04 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C717D4E6012;
- Thu, 22 Feb 2024 12:33:55 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 00B464E602D;
+ Thu, 22 Feb 2024 12:34:01 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id g6lVE9XXjaG0; Thu, 22 Feb 2024 12:33:53 +0100 (CET)
+ with ESMTP id z5PbRchGWTDI; Thu, 22 Feb 2024 12:33:59 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DAF864E6003; Thu, 22 Feb 2024 12:33:53 +0100 (CET)
-Message-Id: <cover.1708601065.git.balaton@eik.bme.hu>
+ id 1956C4E6026; Thu, 22 Feb 2024 12:33:59 +0100 (CET)
+Message-Id: <5441ced92de39f712378e8aac4346aef809301c7.1708601065.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1708601065.git.balaton@eik.bme.hu>
+References: <cover.1708601065.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 0/9] Misc clean ups to target/ppc exception handling
+Subject: [PATCH v6 5/9] target/ppc: Simplify syscall exception handlers
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -37,9 +39,9 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Date: Thu, 22 Feb 2024 12:33:53 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Thu, 22 Feb 2024 12:33:59 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -60,38 +62,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are some small clean ups for target/ppc/excp_helper.c trying to
-make this code a bit simpler. No functional change is intended. This
-series was submitted before but only partially merged due to freeze
-and conflicting series os thia was postponed then to avoid conflicts.
+After previous changes the hypercall handling in 7xx and 74xx
+exception handlers can be folded into one if statement to simpilfy
+this code. Also add "unlikely" to mark the less freqiently used branch
+for the compiler.
 
-v6:
-- rebase on master
-- added R-b tags and changes from Harsh
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ target/ppc/excp_helper.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-v5:
-- rebase on master
-- keep logging nip pointing to the sc instruction
-- add another patch
-
-v4: Rebased on master dropping what was merged
-
-BALATON Zoltan (9):
-  target/ppc: Use env_cpu for cpu_abort in excp_helper
-  target/ppc: Readability improvements in exception handlers
-  target/ppc: Fix gen_sc to use correct nip
-  target/ppc: Move patching nip from exception handler to helper_scv
-  target/ppc: Simplify syscall exception handlers
-  target/ppc: Clean up ifdefs in excp_helper.c, part 1
-  target/ppc: Clean up ifdefs in excp_helper.c, part 2
-  target/ppc: Clean up ifdefs in excp_helper.c, part 3
-  target/ppc: Remove interrupt handler wrapper functions
-
- target/ppc/cpu.h         |   1 +
- target/ppc/excp_helper.c | 487 +++++++++++++--------------------------
- target/ppc/translate.c   |  16 +-
- 3 files changed, 167 insertions(+), 337 deletions(-)
-
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 411d67376c..035a9fd968 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -762,26 +762,22 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+     {
+         int lev = env->error_code;
+-
+-        if (lev == 1 && cpu->vhyp) {
+-            dump_hcall(env);
+-        } else {
+-            dump_syscall(env);
+-        }
+         /*
+          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+          * instruction to communicate with QEMU. The pegasos2 machine
+          * uses VOF and the 7xx CPUs, so although the 7xx don't have
+          * HV mode, we need to keep hypercall support.
+          */
+-        if (lev == 1 && cpu->vhyp) {
++        if (unlikely(lev == 1 && cpu->vhyp)) {
+             PPCVirtualHypervisorClass *vhc =
+                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
++            dump_hcall(env);
+             vhc->hypercall(cpu->vhyp, cpu);
+             powerpc_reset_excp_state(cpu);
+             return;
++        } else {
++            dump_syscall(env);
+         }
+-
+         break;
+     }
+     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+@@ -907,26 +903,22 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
+     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
+     {
+         int lev = env->error_code;
+-
+-        if (lev == 1 && cpu->vhyp) {
+-            dump_hcall(env);
+-        } else {
+-            dump_syscall(env);
+-        }
+         /*
+          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
+          * instruction to communicate with QEMU. The pegasos2 machine
+          * uses VOF and the 74xx CPUs, so although the 74xx don't have
+          * HV mode, we need to keep hypercall support.
+          */
+-        if (lev == 1 && cpu->vhyp) {
++        if (unlikely(lev == 1 && cpu->vhyp)) {
+             PPCVirtualHypervisorClass *vhc =
+                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
++            dump_hcall(env);
+             vhc->hypercall(cpu->vhyp, cpu);
+             powerpc_reset_excp_state(cpu);
+             return;
++        } else {
++            dump_syscall(env);
+         }
+-
+         break;
+     }
+     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
 -- 
 2.30.9
 
