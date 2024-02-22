@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98821C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07FEC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:30:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7Fx-0004qO-Pt; Thu, 22 Feb 2024 06:28:49 -0500
+	id 1rd7E8-0008D4-Ie; Thu, 22 Feb 2024 06:26:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Ft-0004TE-SN; Thu, 22 Feb 2024 06:28:45 -0500
+ id 1rd7Dl-00086A-CI; Thu, 22 Feb 2024 06:26:34 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Fo-0005F8-Im; Thu, 22 Feb 2024 06:28:45 -0500
+ id 1rd7Dg-0004vg-9Q; Thu, 22 Feb 2024 06:26:33 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 55CD14FB61;
- Thu, 22 Feb 2024 14:26:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C90074FB49;
+ Thu, 22 Feb 2024 14:26:25 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id D07298718D;
- Thu, 22 Feb 2024 14:26:03 +0300 (MSK)
-Received: (nullmailer pid 2526235 invoked by uid 1000);
- Thu, 22 Feb 2024 11:26:02 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 4F8DF87175;
+ Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
+Received: (nullmailer pid 2526161 invoked by uid 1000);
+ Thu, 22 Feb 2024 11:26:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 31/34] target/sparc: correct typos
-Date: Thu, 22 Feb 2024 14:25:58 +0300
-Message-Id: <20240222112601.2526057-32-mjt@tls.msk.ru>
+Subject: [PULL 07/34] hw/isa/lpc_ich9: Remove unused 'hw/i386/pc.h'
+Date: Thu, 22 Feb 2024 14:25:34 +0300
+Message-Id: <20240222112601.2526057-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
@@ -62,42 +62,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Correct typos automatically found with the `typos` tool
-<https://crates.io/crates/typos>
+Commit c461f3e382 ("hw/acpi/acpi_dev_interface: Remove now unused
+madt_cpu virtual method") removed the need for "hw/i386/pc.h".
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- target/sparc/asi.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/isa/lpc_ich9.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/sparc/asi.h b/target/sparc/asi.h
-index 3270ed0c7f..a66829674b 100644
---- a/target/sparc/asi.h
-+++ b/target/sparc/asi.h
-@@ -145,14 +145,14 @@
-  * and later ASIs.
-  */
- #define ASI_REAL                0x14 /* Real address, cacheable          */
--#define ASI_PHYS_USE_EC		0x14 /* PADDR, E-cachable		*/
--#define ASI_REAL_IO             0x15 /* Real address, non-cachable      */
-+#define ASI_PHYS_USE_EC		0x14 /* PADDR, E-cacheable		*/
-+#define ASI_REAL_IO             0x15 /* Real address, non-cacheable      */
- #define ASI_PHYS_BYPASS_EC_E	0x15 /* PADDR, E-bit			*/
- #define ASI_BLK_AIUP_4V		0x16 /* (4V) Prim, user, block ld/st	*/
- #define ASI_BLK_AIUS_4V		0x17 /* (4V) Sec, user, block ld/st	*/
- #define ASI_REAL_L              0x1c /* Real address, cacheable, LE      */
--#define ASI_PHYS_USE_EC_L	0x1c /* PADDR, E-cachable, little endian*/
--#define ASI_REAL_IO_L           0x1d /* Real address, non-cachable, LE  */
-+#define ASI_PHYS_USE_EC_L	0x1c /* PADDR, E-cacheable, little endian*/
-+#define ASI_REAL_IO_L           0x1d /* Real address, non-cacheable, LE  */
- #define ASI_PHYS_BYPASS_EC_E_L	0x1d /* PADDR, E-bit, little endian	*/
- #define ASI_BLK_AIUP_L_4V	0x1e /* (4V) Prim, user, block, l-endian*/
- #define ASI_BLK_AIUS_L_4V	0x1f /* (4V) Sec, user, block, l-endian	*/
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index 70c6e8a093..bd727b2320 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -41,7 +41,6 @@
+ #include "hw/isa/apm.h"
+ #include "hw/pci/pci.h"
+ #include "hw/southbridge/ich9.h"
+-#include "hw/i386/pc.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/ich9.h"
+ #include "hw/pci/pci_bus.h"
 -- 
 2.39.2
 
