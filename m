@@ -4,77 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB9DC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A56CC5478C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:49:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdFum-0006vU-0v; Thu, 22 Feb 2024 15:43:32 -0500
+	id 1rdFum-0006vZ-4r; Thu, 22 Feb 2024 15:43:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFul-0006td-8R
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:31 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rdFuk-0006rR-G4
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:30 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFuj-0002Zb-0j
+ id 1rdFui-0002ZU-0Y
  for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:30 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1d731314e67so460395ad.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:28 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1d7431e702dso2267835ad.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708634607; x=1709239407; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6bGhiDlU0H1FunNKKdUnN7eps2A5T8/N/TZO0RrbQvI=;
- b=KXUG7fKqV+wD9Bd0gYjuGGkHLnN1Vb8hqhqy8PAQmrb0+SFXsWXecWt7RlHeSipmzq
- x+s+3etnKwc0po28IcZRiDZTsfTDvP4t1LRQfdRHUCzM7h1ePCSF/nXpuJGhW+BLoPfj
- fFe/9Zp6BrpTXRSdCdDecaJFZ0Y8CsPFioYXyRDmL/Y/km39C/isDpuPVa+bGxZcF/MY
- ZVjKojlOD5AXjbD5muSnvxjhdncUlyZl3++E3sQe9FHal39NxY4mZmqeVMIl5Vzk0VCg
- +oEOgxHIOPhZMfUnvfEJxkaV8uTG5LxKchxgCVJdnZdYaQ6WSIO5TLK36fEE/oFB3HvP
- DQRQ==
+ d=linaro.org; s=google; t=1708634606; x=1709239406; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=e3ksIOvNEk9D5oFNIRRHPUvB1mnd7rvsTcn4yoh133o=;
+ b=iH8SoWTlbwnKDRbfJhUK+p+8N+KA2OT+HtMwT1wJHi4treVzqKfa6aeKNU/zzuI1l4
+ wXjCRkvkIycaRPqbuXdmlBFKxiRaJBnTiyPMIWAXQA6vkAYM2gQZaobnYo7DT3+gNdOU
+ v1FK6wdfOyq9jaRWDA+WkruTXHh8R0vgAO0wDGZyVCSEjmgqN8FxFZ7J/0T4OXrcfe0L
+ 64TjR4WCpTJZzxTQ1Z1E1HfJe2S2+LQVusu2HF0ptOle3vnw02ppsWbgSE2fH7DRhtwX
+ t+TJZVGUvzgaOnhI6w3C7mACkWrg7yXLbPUV9RQ7lmBLeEizVH5t1ru7ATkrQlnE66f0
+ TEHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708634607; x=1709239407;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6bGhiDlU0H1FunNKKdUnN7eps2A5T8/N/TZO0RrbQvI=;
- b=JJ2MBV1nRrk79Te2YwIXvEiq8+wZdrdzmgkcOtQvuTUJkFZXNe+3ximSiopSVKED07
- 4/zJV0B68gTqboi8MWSPNvKVJwu4zr3xwZKx27iG3NOuatSdaFFCUbpApGEOC6RDVNQp
- WQCqexEwGU8jguX1tf86inEbArBTeeLZWxVwmAM8G8qdXdK1q5pZXYzSeHSAG9WYNjRK
- sy/nmTROzHcSBL0kV2IqCETshFWr23tBKX5fxwbJDH4RD18J4/xQOo/3Zb8IIgI5FFsc
- rPGNbcO1mXlciCRyvzTr13PW5A3ORYX15eyHPKZmfOZvf6yxBZxG1vCDQJVLvlQlG/aW
- Akpw==
-X-Gm-Message-State: AOJu0Yx76OogZTL1qkYO5szJbla2DdFQJPv/JczO05TLs/U9WOFoV/eG
- cuFNZscODTxjTP0NN5+4mYDPrL0ys04guJwgx1Tt1hfCn0lsRnuOArCV6xXYl8tYEKcc6sW9w+5
- B
-X-Google-Smtp-Source: AGHT+IGV+DNcAIjYL2CRgDuAA3BrvJQe/tICE//QVX2rWx+a5IY5VlKzgBOyq+5AYqKF3vlIskqamA==
-X-Received: by 2002:a17:902:da8f:b0:1db:e7a4:9d4d with SMTP id
- j15-20020a170902da8f00b001dbe7a49d4dmr17151169plx.46.1708634607498; 
- Thu, 22 Feb 2024 12:43:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708634606; x=1709239406;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=e3ksIOvNEk9D5oFNIRRHPUvB1mnd7rvsTcn4yoh133o=;
+ b=ZeCvmk0386d+6n0/Pdlg5REwZKg9pyQoUsdEfKWtKWxF5E1HvPz3BIMpyPNutHJ9ns
+ RQNl4QDqtbqwlT/S+u8GzvmDR+EXWKoCKMaLFaObfQypv4tOOHHvtMM1aMtoZFB1KUqn
+ agmYEofxUas4lwmzwIz2SMdLn56/53eF55MwVGYGM7FEYWuR5f5/UP0T8SaRKGIMJCCt
+ LvNDABBG91irwPGO8uj6Dz2ZHbIWgkp1NlZoAcjqAlw/RHdaeELsLeTNCJ25ZgCyqDe8
+ 5BIBL7lTcgLCFPFKLVgUWsF91GC/pzrMV8jTS/CoTJH/nxitotRO6SvDGYDE/MtWyUA1
+ oc7g==
+X-Gm-Message-State: AOJu0YzU2XGCHF6fffHNebE6HvL9MHHI09wSCvWYdQxA7L2LF02omv82
+ wzv7uhwBICqO122t66yn/n/PwPIc4KYZxRRywpmxWe8gvkbQLrq431w48VFhw6eSfxpo3diIDs4
+ g
+X-Google-Smtp-Source: AGHT+IENi5DQ6nWy+aGg36iiwlMJosYrWwWL/P0Aph5aAX2EyFAzD8PvA4GR3hjH+N4DxTsrf3YrgA==
+X-Received: by 2002:a17:902:ea0d:b0:1db:e7a4:90a8 with SMTP id
+ s13-20020a170902ea0d00b001dbe7a490a8mr15953550plg.10.1708634606150; 
+ Thu, 22 Feb 2024 12:43:26 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.26
+ l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.25
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 12:43:27 -0800 (PST)
+ Thu, 22 Feb 2024 12:43:25 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/39] tcg/aarch64: Apple does not align __int128_t in even
- registers
-Date: Thu, 22 Feb 2024 10:42:45 -1000
-Message-Id: <20240222204323.268539-2-richard.henderson@linaro.org>
+Subject: [PULL 00/39] tcg and linux-user patch queue
+Date: Thu, 22 Feb 2024 10:42:44 -1000
+Message-Id: <20240222204323.268539-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240222204323.268539-1-richard.henderson@linaro.org>
-References: <20240222204323.268539-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,41 +91,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From https://developer.apple.com/documentation/xcode/writing-arm64-code-for-apple-platforms
+The following changes since commit 6630bc04bccadcf868165ad6bca5a964bb69b067:
 
-  When passing an argument with 16-byte alignment in integer registers,
-  Apple platforms allow the argument to start in an odd-numbered xN
-  register. The standard ABI requires it to begin in an even-numbered
-  xN register.
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2024-02-22 12:42:52 +0000)
 
-Cc: qemu-stable@nongnu.org
-Fixes: 5427a9a7604 ("tcg: Add TCG_TARGET_CALL_{RET,ARG}_I128")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2169
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <9fc0c2c7-dd57-459e-aecb-528edb74b4a7@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tcg/aarch64/tcg-target.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+are available in the Git repository at:
 
-diff --git a/tcg/aarch64/tcg-target.h b/tcg/aarch64/tcg-target.h
-index ef5ebe91bd..85d5746e47 100644
---- a/tcg/aarch64/tcg-target.h
-+++ b/tcg/aarch64/tcg-target.h
-@@ -55,7 +55,11 @@ typedef enum {
- #define TCG_TARGET_CALL_STACK_OFFSET    0
- #define TCG_TARGET_CALL_ARG_I32         TCG_CALL_ARG_NORMAL
- #define TCG_TARGET_CALL_ARG_I64         TCG_CALL_ARG_NORMAL
--#define TCG_TARGET_CALL_ARG_I128        TCG_CALL_ARG_EVEN
-+#ifdef CONFIG_DARWIN
-+# define TCG_TARGET_CALL_ARG_I128       TCG_CALL_ARG_NORMAL
-+#else
-+# define TCG_TARGET_CALL_ARG_I128       TCG_CALL_ARG_EVEN
-+#endif
- #define TCG_TARGET_CALL_RET_I128        TCG_CALL_RET_NORMAL
- 
- #define have_lse    (cpuinfo & CPUINFO_LSE)
--- 
-2.34.1
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240222
 
+for you to fetch changes up to a06efc2615a1283e139e35ae8a8875925766268f:
+
+  linux-user: Remove pgb_dynamic alignment assertion (2024-02-22 09:04:05 -1000)
+
+----------------------------------------------------------------
+tcg/aarch64: Apple does not align __int128_t in even registers
+accel/tcg: Fixes for page tables in mmio memory
+linux-user: Remove qemu_host_page_{size,mask}, HOST_PAGE_ALIGN
+migration: Remove qemu_host_page_size
+hw/tpm: Remove qemu_host_page_size
+softmmu: Remove qemu_host_page_{size,mask}, HOST_PAGE_ALIGN
+linux-user: Split and reorganize target_mmap.
+*-user: Deprecate and disable -p pagesize
+linux-user: Allow TARGET_PAGE_BITS_VARY
+target/alpha: Enable TARGET_PAGE_BITS_VARY for user-only
+target/arm: Enable TARGET_PAGE_BITS_VARY for AArch64 user-only
+target/ppc: Enable TARGET_PAGE_BITS_VARY for user-only
+linux-user: Remove pgb_dynamic alignment assertion
+
+----------------------------------------------------------------
+Jonathan Cameron (1):
+      tcg: Avoid double lock if page tables happen to be in mmio memory.
+
+Peter Maydell (1):
+      accel/tcg: Set can_do_io at at start of lookup_tb_ptr helper
+
+Richard Henderson (37):
+      tcg/aarch64: Apple does not align __int128_t in even registers
+      accel/tcg: Remove qemu_host_page_size from page_protect/page_unprotect
+      linux-user: Adjust SVr4 NULL page mapping
+      linux-user: Remove qemu_host_page_{size, mask} in probe_guest_base
+      linux-user: Remove qemu_host_page_size from create_elf_tables
+      linux-user/hppa: Simplify init_guest_commpage
+      linux-user/nios2: Remove qemu_host_page_size from init_guest_commpage
+      linux-user/arm: Remove qemu_host_page_size from init_guest_commpage
+      linux-user: Remove qemu_host_page_{size, mask} from mmap.c
+      linux-user: Remove REAL_HOST_PAGE_ALIGN from mmap.c
+      linux-user: Remove HOST_PAGE_ALIGN from mmap.c
+      migration: Remove qemu_host_page_size
+      hw/tpm: Remove HOST_PAGE_ALIGN from tpm_ppi_init
+      softmmu/physmem: Remove qemu_host_page_size
+      softmmu/physmem: Remove HOST_PAGE_ALIGN
+      linux-user: Remove qemu_host_page_size from main
+      linux-user: Split out target_mmap__locked
+      linux-user: Move some mmap checks outside the lock
+      linux-user: Fix sub-host-page mmap
+      linux-user: Split out mmap_end
+      linux-user: Do early mmap placement only for reserved_va
+      linux-user: Split out do_munmap
+      linux-user: Use do_munmap for target_mmap failure
+      linux-user: Split out mmap_h_eq_g
+      linux-user: Split out mmap_h_lt_g
+      linux-user: Split out mmap_h_gt_g
+      tests/tcg: Remove run-test-mmap-*
+      tests/tcg: Extend file in linux-madvise.c
+      *-user: Deprecate and disable -p pagesize
+      cpu: Remove page_size_init
+      accel/tcg: Disconnect TargetPageDataNode from page size
+      linux-user: Allow TARGET_PAGE_BITS_VARY
+      target/arm: Enable TARGET_PAGE_BITS_VARY for AArch64 user-only
+      linux-user: Bound mmap_min_addr by host page size
+      target/ppc: Enable TARGET_PAGE_BITS_VARY for user-only
+      target/alpha: Enable TARGET_PAGE_BITS_VARY for user-only
+      linux-user: Remove pgb_dynamic alignment assertion
+
+ docs/about/deprecated.rst                 |  10 +
+ docs/user/main.rst                        |   3 -
+ bsd-user/qemu.h                           |   7 +
+ include/exec/cpu-common.h                 |   7 -
+ include/hw/core/cpu.h                     |   2 -
+ target/alpha/cpu-param.h                  |  16 +-
+ target/arm/cpu-param.h                    |   6 +-
+ target/ppc/cpu-param.h                    |   9 +-
+ tcg/aarch64/tcg-target.h                  |   6 +-
+ accel/tcg/cpu-exec.c                      |   8 +
+ accel/tcg/cputlb.c                        |  34 +-
+ accel/tcg/translate-all.c                 |   1 -
+ accel/tcg/user-exec.c                     |  31 +-
+ bsd-user/main.c                           |  22 +-
+ cpu-target.c                              |  13 -
+ hw/tpm/tpm_ppi.c                          |   6 +-
+ linux-user/elfload.c                      |  68 +--
+ linux-user/main.c                         |  34 +-
+ linux-user/mmap.c                         | 767 ++++++++++++++++++------------
+ migration/ram.c                           |  22 +-
+ system/physmem.c                          |  17 +-
+ system/vl.c                               |   1 -
+ target/arm/cpu.c                          |  51 +-
+ tests/tcg/multiarch/linux/linux-madvise.c |   2 +
+ tests/tcg/alpha/Makefile.target           |   3 -
+ tests/tcg/arm/Makefile.target             |   3 -
+ tests/tcg/hppa/Makefile.target            |   3 -
+ tests/tcg/i386/Makefile.target            |   3 -
+ tests/tcg/m68k/Makefile.target            |   3 -
+ tests/tcg/multiarch/Makefile.target       |   9 -
+ tests/tcg/ppc/Makefile.target             |  12 -
+ tests/tcg/sh4/Makefile.target             |   3 -
+ tests/tcg/sparc64/Makefile.target         |   6 -
+ 33 files changed, 700 insertions(+), 488 deletions(-)
+ delete mode 100644 tests/tcg/ppc/Makefile.target
+ delete mode 100644 tests/tcg/sparc64/Makefile.target
 
