@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F34C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 19:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87AEDC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 19:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdEPZ-0003br-RZ; Thu, 22 Feb 2024 14:07:14 -0500
+	id 1rdEhL-0001iH-60; Thu, 22 Feb 2024 14:25:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdEPY-0003bS-86
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 14:07:12 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1rdEhJ-0001hm-Op
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 14:25:33 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdEPV-00021n-Mc
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 14:07:11 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1d953fa3286so58306065ad.2
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 11:07:09 -0800 (PST)
+ id 1rdEhI-0005Fb-2d
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 14:25:33 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-29951f5c2e7so129309a91.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 11:25:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708628828; x=1709233628; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1708629930; x=1709234730; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Xpp4DmdZelqa3/qJH9FOo7tBbfaeZKlhtvUdGDFXTJU=;
- b=AfA9gTU5ILQRb2B3kTe31HSuLRY7yRkSYNVOMqfG4VxwrkG6r3fjsR4lfb1cyruRHw
- NjEeyN7KTswzXqxPpWbiCVItz1W87HOi1PpFOx/P76iXleXaD9dRBeOwsCOMB3mrBYsv
- kdJs6/jUdKD4YBoJ97XlHaGwPjGhZBvDUlDAVLaWclHUZiofiU2X/Id5abHleTJXe+oR
- M/qoYmMZ4f84MFva+n+yxaqv9wdW8It2NMcnELw8/9u4fqTeWuUGJxRHaoW0JB1lYjxF
- bBdmtJn+jlm87wsJj8XZEEnKtNhyvpDeKGHqiI1+CYM4XLdotx5344iTWQufqhj7ic/+
- b2dQ==
+ bh=oF4lpGq2MDfl+zCgIfXJbR8cwX/+n0Z38trpUl0o/OU=;
+ b=HADGdSepPPBWimeGbO23qMwTKauAjtMKwO/SgSiZ9zhILG8jK9WH0MAz6zSmgZB4mg
+ UWzjJkMIYJtmieSddcQcJPW86KYNoo/uTA/HxmFakIfpaN0qxZmyerOOsOThrV6neAiM
+ E0UyjiVI5K0smgZ579/e1FKopxtLU85DhX6M5cvfMb5FPUEHoa+ZMKRKyBFaJxxYChzk
+ JSUc0jJE4mDBp/KdNd1N8sHvfPaMLNQOGj/O3t3DOa0XwI/9sRYjM6JdLQiViDuR4uof
+ z2hWK0YKf9vXroJ0Cc0IbYErYc7TcuJn4QMNKnLEokj6ThR8XlBd++cAMhc7dJdwHDJL
+ DtZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708628828; x=1709233628;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1708629930; x=1709234730;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Xpp4DmdZelqa3/qJH9FOo7tBbfaeZKlhtvUdGDFXTJU=;
- b=FY+avE9kYiGmiu4lRlcKdsBc+0tdnYyowRXTksE9Ww20uM9cTG2JHJWI5fOWcw3ASL
- 35bMqYUf+7+gMN1pREgNQjwPUFgnbB6mniUUhKng/ovyFMtxDtmkdCy4U7cJzLbWEfKh
- RI+8s1BunTtFQHHnqApwjE5KBYGkkZh5dr/ebeRm4hUownor5ioZiUD2lS2RPH/IZwBf
- wGvQWE1AigxuFotHNlQNALHwtvubAOWR180NbQWrd0FQQJAVPu9Ia2nn0WL66ts5+8kg
- RX9tr6FOBuOrc4cJOJokAZVI9bHri+tS96hs913Lx4dI+Lt4MT6wV1QXVQibEbjJ7CRa
- bnmg==
+ bh=oF4lpGq2MDfl+zCgIfXJbR8cwX/+n0Z38trpUl0o/OU=;
+ b=YXwnd592EwLp04BVN6GkuFG55eH8Qr7a5/TZncoaAhycG79J8z5G3aZkNkCQ6NqJTD
+ t7XMFCrvSqt9PnRF3nKLyr52XMgaLf4pErJn96gvxk/aADtUbZt3LJcSr79MloqiAEzt
+ spcxnA5OUb4S/09tl/TB+OWZhS6hpoc/IINu9HH3VhOcHMQHxLYhLx5oXaJXy1PLz9sY
+ KpduErvr7Qpd6/uofiCOVXRZx/FC1mEFbGTbofDk8fjO3VBM+QeEUsgcTS26lze7XEo4
+ eeM3qLsgyJ3rc9d8AofCAy1HX5aVZRda7CMm7LWzNmk5Mx9DEc1XhKURw8xkGxPsxQeo
+ dWfg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrZaQsQqRB8/p+RqEeDKyEO4IbklAPEkyiBWylktPgY9+f+E2A/LfJ0+cu40nzsgyrVQmbhhc0VKgRLv5WQ8JWnCbHhe8=
-X-Gm-Message-State: AOJu0YxW9IXPW6UnsNv8APD/3+NgzDl2g9aF7HKS/RkTAKMYp8i7fIiS
- t1af4NzpTKSamiSyxjELmEsNiwUwcEzGzyjeykMIqN+/D/YQszI5uxfu2tJDJV0=
-X-Google-Smtp-Source: AGHT+IHYPc+1zNyyTsVAXwA+p/shYQGyroZNvCYgD8exWDzjPlr9OZ+6sz29FkFBS4Cg7TRMOFO+ng==
-X-Received: by 2002:a17:902:ea0e:b0:1db:eec6:5b9e with SMTP id
- s14-20020a170902ea0e00b001dbeec65b9emr15783481plg.65.1708628827907; 
- Thu, 22 Feb 2024 11:07:07 -0800 (PST)
+ AJvYcCWP5m4og+YULAj7Z6Me5eXgKN/Jb1HXaz5/gP4IBMBxQVQlysS4FLnYmQDoKl0NFeVyzAsrM5uTYL9eI6NuaSu/fHdB188=
+X-Gm-Message-State: AOJu0YyVHa5NJcgyjAZUtyI5DBtsMAZv2lkXZ8yhnQph81icTP68s8wM
+ /gcFX6duxN6YAbfxkBLadSxFWM7jZCdA3ntiF7VTZ2i4ag4rECk+wjlt4i/4gm4=
+X-Google-Smtp-Source: AGHT+IHW/sgW5u4Pb//3d4Omv/+H2sQQ5W/fAZzRBljk89zLVCTOcHOqK0FI8kwoELEpAHfezUI9GQ==
+X-Received: by 2002:a17:90a:bd86:b0:299:560e:79a0 with SMTP id
+ z6-20020a17090abd8600b00299560e79a0mr12810306pjr.31.1708629930214; 
+ Thu, 22 Feb 2024 11:25:30 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- h22-20020a170902ac9600b001db5eb52911sm10315032plr.89.2024.02.22.11.07.05
+ ev5-20020a17090aeac500b0029a56afe382sm1603836pjb.39.2024.02.22.11.25.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 11:07:07 -0800 (PST)
-Message-ID: <1cf87044-8830-49da-92c8-406316260e51@linaro.org>
-Date: Thu, 22 Feb 2024 09:07:03 -1000
+ Thu, 22 Feb 2024 11:25:29 -0800 (PST)
+Message-ID: <5f72beff-64a8-44fe-b87d-6e532e2b210d@linaro.org>
+Date: Thu, 22 Feb 2024 09:25:26 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3 qemu] tcg/i386: Page tables in MMIO memory fixes
- (CXL)
+Subject: Re: [RFC PATCH v2 03/22] target/arm: Add PSTATE.ALLINT
 Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gregory.price@memverge.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Sajjan Rao <sajjanr@gmail.com>,
- Dimitrios Palyvos <dimitrios.palyvos@zptcorp.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: linuxarm@huawei.com, linux-cxl@vger.kernel.org
-References: <20240219173153.12114-1-Jonathan.Cameron@huawei.com>
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
+ <20240221130823.677762-4-ruanjinjie@huawei.com>
+ <5f25d9cf-3ca0-4adb-860e-71a8fac3b504@linaro.org>
+ <7e42f863-0079-18bd-94b5-83f3f40191a5@huawei.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240219173153.12114-1-Jonathan.Cameron@huawei.com>
+In-Reply-To: <7e42f863-0079-18bd-94b5-83f3f40191a5@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,66 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/19/24 07:31, Jonathan Cameron wrote:
-> v2: Changes documented in patch 3.
->     - I have not addressed Richard's comment on recursive locks as that
->       seems to be a more general issue not specific to this patch set.
+On 2/21/24 15:48, Jinjie Ruan wrote:
+>> Why is this split out from env->pstate?
+>>
+>> The allint bit matches the documentation for SPSR_EL1, which is how
+>> env->pstate is documented.  The other exclusions have some performance
+>> imperative which I don't see for allint.
 > 
-> CXL memory is interleaved at granularities as fine as 64 bytes.
-> To emulate this each read and write access undergoes address translation
-> similar to that used in physical hardware. This is done using
-> cfmws_ops for a memory region per CXL Fixed Memory Window (the PA address
-> range in the host that is interleaved across host bridges and beyond.
-> The OS programs interleaved decoders in the CXL Root Bridges, switch
-> upstream ports and the corresponding decoders CXL type 3 devices who
-> have to know the Host PA to Device PA mappings).
-> 
-> Unfortunately this CXL memory may be used as normal memory and anything
-> that can end up in RAM can be placed within it. As Linux has become
-> more capable of handling this memory we've started to get quite a few
-> bug reports for the QEMU support. However terrible the performance is
-> people seem to like running actual software stacks on it :(
-> 
-> This doesn't work for KVM - so for now CXL emulation remains TCG only.
-> (unless you are very careful on how it is used!)  I plan to add some
-> safety guards at a later date to make it slightly harder for people
-> to shoot themselves in the foot + a more limited set of CXL functionality
-> that is safe (no interleaving!)
-> 
-> Previously we had some issues with TCG reading instructions from CXL
-> memory but that is now all working. This time the issues are around
-> the Page Tables being in the CXL memory + DMA buffers being placed in it.
-> 
-> The test setup I've been using is simple 2 way interleave via 2 root
-> ports below a single CXL root complex.  After configuration in Linux
-> these are mapped to their own Numa Node and
-> numactl --membind=1 ls
-> followed by powering down the machine is sufficient to hit all the bugs
-> addressed in this series.
-> 
-> Thanks to Gregory, Peter and Alex for their help figuring this lot
-> out. Note that I've included one patch from Peter without a SoB
-> because so far it has only be posted in the discussion thread.
-> 
-> Whilst thread started back at:
-> https://lore.kernel.org/all/CAAg4PaqsGZvkDk_=PH+Oz-yeEUVcVsrumncAgegRKuxe_YoFhA@mail.gmail.com/
-> The QEMU part is from.
-> https://lore.kernel.org/all/20240201130438.00001384@Huawei.com/
-> 
-> 
-> Gregory Price (1):
->    target/i386: Enable page walking from MMIO memory
-> 
-> Jonathan Cameron (1):
->    tcg: Avoid double lock if page tables happen to be in mmio memory.
-> 
-> Peter Maydell (1):
->    accel/tcg: Set can_do_io at at start of lookup_tb_ptr helper
+> It seems to me that allint is a bit like daif, so it is reasonable to
+> maintain it separately in ENV as what daif do it.
 
-Thanks.  Queued patches 1 and 3 to tcg-next, and adjusted patch 3 to use BQL_LOCK_GUARD as 
-suggested by Alex.
+daif is shared between aa64 pstate and aa32 cpsr; keeping those bits separate means we 
+don't have to check the execution state in order to find them.
+
+allint has no aa32 counterpart, so it can live in pstate always.
 
 
 r~
-
 
