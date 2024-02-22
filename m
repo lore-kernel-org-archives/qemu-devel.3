@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35DD5C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:23:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3EF3C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd6EB-0007K4-8w; Thu, 22 Feb 2024 05:22:55 -0500
+	id 1rd6Rk-0004cm-BK; Thu, 22 Feb 2024 05:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd6EA-0007In-HL
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:22:54 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd6E3-0003Sb-UC
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:22:54 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4125e435b38so42361945e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 02:22:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708597366; x=1709202166; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GIJgw6JawTFcB6/RW+pFCZ02B/g75qD9enf63xzlI68=;
- b=Qf5k6CW5MclCmRTMJHEN/GydOD7/TBi/OZu8HhjkKsns3/quqjHaO4h6Cj4Ia8cAbD
- +2L39gdahYWoiiY1hZBDFx2EKyXJdrw4CPltdgFnKoIYtaxfvu/z14E2SmQsKhVWvvdF
- +YyUS7ehYuN5DxDjzXCDT8DN+fWhBMzEeBLNM/4irw7Cuza02DGqfDZfCMvG9NX7ljHh
- HD1XGeGJMAbKu9cyILK80Q9oSNM/Er8+gtT04P0tw+RKrX8gTcAkx2rF0PeCZzJg4gRm
- ds5z+x2NhwnyKatALI3oFQ3y0saSvy+T/0TK8YSrkOF1ha+RtfHCsUtnqcrPWZ4wdoul
- pUvw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd6Rh-0004bi-5Q
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:36:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd6Rf-0005Xh-I9
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:36:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708598209;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3l+1uwvfY5MewMAvwwE/pzbqQSLCl1gixYPq5UjDny8=;
+ b=IfIVtnoZJK/WTGKSASjTH2Ru5B0WIC1belQ9lESwIqBuN5Rj1jz9UPKxmJJLBKbWAYud6u
+ pt4wCEZhMzisQgtSoiijKGepkTS6ldAXMhQ/7H5k7YgYL6UbrnMBqmWJbTwNsPL4qMdk0E
+ qFTapzhoCWOYY3fQypdEPmjJEmAQV78=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-342-C5ds3agROliNcJf71SEMNg-1; Thu, 22 Feb 2024 05:36:46 -0500
+X-MC-Unique: C5ds3agROliNcJf71SEMNg-1
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-6e4cc2c9dd7so102617b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 02:36:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708597366; x=1709202166;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GIJgw6JawTFcB6/RW+pFCZ02B/g75qD9enf63xzlI68=;
- b=AsFHsXEotWWrdvYtRlV79FvzyrN1V7AsD7t/CqrQnm5iaGorh2Mm1j8iAFrY2ExhHV
- fFdIMl62+xfyDqEE4tHqs9NVOsysJ5PGXr4A5dgZDHmBgHtcVkbOOAhms5kRweyrcq7/
- 8cvNBeqTH+jFePQB3k7nyjZG1Gk/55w/eTnhgEUdtMCv0iVHN2umx9a11BxfMzd048Y2
- CUXa1/wJoA2A914eMhV2+4zB6JIa+OxNECuPHtF3opByXQ/nT85GplEIBerB+TNOqgHy
- J9Me2kg50J3KfArPPuQcxb4VpuWSMnJNANHUcIlqKfTnl8eWpPQHaPlJvWIzQ7qgLZ9O
- kCbg==
-X-Gm-Message-State: AOJu0YxotWQKFTQPWgVL1s210ORPZ4Ve4YuhQBRVyHNssML3q+x13MS/
- 9DgcG3Ms6oTVIpAGVx4GNVDbxenD/SpyC66RAbiQl91G5zNvKwK+1CnAIVyyGlhPS1Xge3Kfk1l
- BhBk=
-X-Google-Smtp-Source: AGHT+IHntMYfNBDqvx6T+pZ2pIWQZ0fYCKAevc+281+3WLk7M0A3P/WEN4oHjCT3lFoMfUhRGSKnLg==
-X-Received: by 2002:adf:edcd:0:b0:33d:2746:2f50 with SMTP id
- v13-20020adfedcd000000b0033d27462f50mr9757619wro.33.1708597366120; 
- Thu, 22 Feb 2024 02:22:46 -0800 (PST)
-Received: from [192.168.247.175] (41.red-95-127-32.staticip.rima-tde.net.
- [95.127.32.41]) by smtp.gmail.com with ESMTPSA id
- f2-20020adfe902000000b0033cf24700e5sm19730037wrm.39.2024.02.22.02.22.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 02:22:45 -0800 (PST)
-Message-ID: <74b605bb-c52f-43e5-af82-d6a38c5bd2cd@linaro.org>
-Date: Thu, 22 Feb 2024 11:22:43 +0100
+ d=1e100.net; s=20230601; t=1708598205; x=1709203005;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3l+1uwvfY5MewMAvwwE/pzbqQSLCl1gixYPq5UjDny8=;
+ b=VtVfBOibTfXwAQuZWYjkwS2vao0chahFEvIhm0nBtoEp46veBWW9gHjEdFLp1zpusk
+ aTyg0i+VEcjJOMLNmpK8fY+Si2AWq6zLx/1yn3tgQ1MS6i9fMxyFmw30KbeHOMlOeaLo
+ zJcGoye9q7NJRWvHUNOHWWhSf3sltSQksFErBuVasvk4nLHWGwXT8iyVjCukCrOZhSuD
+ 7rCZugtp4luL+dKtI6sXUSAvblWM+fcQrUVSt/A8JxxgGU93pXZhxgsby/0ERGCyqpMj
+ 70mEcNgghbj1zsWXNUQxzJxhXKX0lN6b1HApMFH8anQkvewdEdcrnEZqh1o0Fuh+dS49
+ 4yXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+DUd5ElYy90z/YHDVM+HVMEGkNUew6M8D/6b+t7SVyRZVwNxB7e4A5p/K+OQctZKBY0V6EaO/1mfxnpItD9m4leNwfUE=
+X-Gm-Message-State: AOJu0YyVo4SKagiixPqMFfClj2vBImPdfOHhaYJhQJeZKDvZi/RU7T3r
+ bq98dja8cKTLXUYsyX9Gd0WEIsn755AI6xgRUYhlXS6ddKbFfpmnpESaTL01RHvUiap/r1RWSLI
+ DgM/kfUuYozHETY3ZpRIFXAV9cIpw4+xk/QOd3fjueIfB+A4S5+68
+X-Received: by 2002:a05:6a20:7484:b0:1a0:db7c:df1 with SMTP id
+ p4-20020a056a20748400b001a0db7c0df1mr93032pzd.5.1708598205522; 
+ Thu, 22 Feb 2024 02:36:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFvI8gGf3GgBADLLnR1PaChJtErsqEyeb2Kk3pEuDS5azCUKfIEAtu/NuFcIv1QD0uNT7VTBw==
+X-Received: by 2002:a05:6a20:7484:b0:1a0:db7c:df1 with SMTP id
+ p4-20020a056a20748400b001a0db7c0df1mr93021pzd.5.1708598205262; 
+ Thu, 22 Feb 2024 02:36:45 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ c24-20020a170902d91800b001db68d6c4d7sm9531285plz.287.2024.02.22.02.36.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Feb 2024 02:36:44 -0800 (PST)
+Date: Thu, 22 Feb 2024 18:36:34 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Hao Xiang <hao.xiang@bytedance.com>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
+ farosas@suse.de, eblake@redhat.com, armbru@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org,
+ jdenemar@redhat.com
+Subject: Re: [PATCH v2 1/7] migration/multifd: Add new migration option
+ zero-page-detection.
+Message-ID: <Zdcjso7kUcZ5pL2o@x1n>
+References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
+ <20240216224002.1476890-2-hao.xiang@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/25] Misc HW patches for 2024-02-21
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240221211626.48190-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240221211626.48190-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240216224002.1476890-2-hao.xiang@bytedance.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,53 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Fri, Feb 16, 2024 at 10:39:56PM +0000, Hao Xiang wrote:
+> @@ -1123,6 +1123,10 @@ static int save_zero_page(RAMState *rs, PageSearchStatus *pss,
+>      QEMUFile *file = pss->pss_channel;
+>      int len = 0;
+>  
+> +    if (migrate_zero_page_detection() != ZERO_PAGE_DETECTION_LEGACY) {
+> +        return 0;
+> +    }
 
-On 21/2/24 22:16, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83d0:
-> 
->    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-02-20 10:11:08 +0000)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git tags/hw-misc-20240221
-> 
-> for you to fetch changes up to df07f6bb563f25f39f4f5887adab557e42bdee59:
-> 
->    hw/sparc/leon3: Fix wrong usage of DO_UPCAST macro (2024-02-21 22:13:03 +0100)
-> 
-> Following checkpatch.pl error ignored:
-> 
->    ERROR: Macros with complex values should be enclosed in parenthesis
->    #62: FILE: include/hw/ide/ide-dev.h:31:
->    +#define DEFINE_IDE_DEV_PROPERTIES()                     \
->    +    DEFINE_BLOCK_PROPERTIES(IDEDrive, dev.conf),        \
->    +    DEFINE_BLOCK_ERROR_PROPERTIES(IDEDrive, dev.conf),  \
->    +    DEFINE_PROP_STRING("ver",  IDEDrive, dev.version),  \
->    +    DEFINE_PROP_UINT64("wwn",  IDEDrive, dev.wwn, 0),   \
->    +    DEFINE_PROP_STRING("serial",  IDEDrive, dev.serial),\
->    +    DEFINE_PROP_STRING("model", IDEDrive, dev.model)
-> 
-> ----------------------------------------------------------------
-> Misc HW patch queue
-> 
-> - Remove sysbus_add_io (Phil)
-> - Build PPC 4xx PCI host bridges once (Phil)
-> - Display QOM path while debugging SMBus targets (Joe)
-> - Simplify x86 PC code (Bernhard)
-> - Remove qemu_[un]register_reset() calls in x86 PC CMOS (Peter)
-> - Fix wiring of ICH9 LPC interrupts (Bernhard)
-> - Split core IDE as device / bus / dma (Thomas)
-> - Fix invalid use of DO_UPCAST() in Leon3 (Thomas)
-> 
-> ----------------------------------------------------------------
+Nitpick: use "== NONE" here seems clearer.
 
-I did the mistake to rebase on master after testing,
-and not test again, and missed a new header must be
-added in "hw/i386/kvmvapic.c". I apologize for that
-and will respin a v2 once fully tested again.
+> +
+>      if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
+>          return 0;
+>      }
 
-Regards,
+-- 
+Peter Xu
 
-Phil.
 
