@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B73C54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E78C54E41
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7E8-0008D3-5W; Thu, 22 Feb 2024 06:26:56 -0500
+	id 1rd7FH-0001Eo-Eg; Thu, 22 Feb 2024 06:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Dv-00087n-US; Thu, 22 Feb 2024 06:26:44 -0500
+ id 1rd7FG-0001EU-Mc; Thu, 22 Feb 2024 06:28:06 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7Dr-00052N-Ua; Thu, 22 Feb 2024 06:26:43 -0500
+ id 1rd7FC-00058x-JX; Thu, 22 Feb 2024 06:28:05 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1D20E4FB4E;
+ by isrv.corpit.ru (Postfix) with ESMTP id D4AF14FB59;
  Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 97E888717A;
- Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
-Received: (nullmailer pid 2526176 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 5B84B87185;
+ Thu, 22 Feb 2024 14:26:03 +0300 (MSK)
+Received: (nullmailer pid 2526210 invoked by uid 1000);
  Thu, 22 Feb 2024 11:26:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 12/34] system/physmem: remove redundant arg reassignment
-Date: Thu, 22 Feb 2024 14:25:39 +0300
-Message-Id: <20240222112601.2526057-13-mjt@tls.msk.ru>
+Subject: [PULL 23/34] hw/riscv/virt.h: correct typos
+Date: Thu, 22 Feb 2024 14:25:50 +0300
+Message-Id: <20240222112601.2526057-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
@@ -63,45 +63,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Arguments `ram_block` are reassigned to local declarations `block`
-without further use. Remove re-assignment to reduce noise.
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- system/physmem.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/hw/riscv/virt.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 5e054650b8..e3ebc19eef 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2154,10 +2154,8 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
-  *
-  * Called within RCU critical section.
-  */
--void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
-+void *qemu_map_ram_ptr(RAMBlock *block, ram_addr_t addr)
- {
--    RAMBlock *block = ram_block;
--
-     if (block == NULL) {
-         block = qemu_get_ram_block(addr);
-         addr -= block->offset;
-@@ -2182,10 +2180,9 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
-  *
-  * Called within RCU critical section.
-  */
--static void *qemu_ram_ptr_length(RAMBlock *ram_block, ram_addr_t addr,
-+static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-                                  hwaddr *size, bool lock)
- {
--    RAMBlock *block = ram_block;
-     if (*size == 0) {
-         return NULL;
-     }
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index f89790fd58..3db839160f 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -144,13 +144,13 @@ uint32_t imsic_num_bits(uint32_t count);
+ #define VIRT_IMSIC_GROUP_MAX_SIZE      (1U << IMSIC_MMIO_GROUP_MIN_SHIFT)
+ #if VIRT_IMSIC_GROUP_MAX_SIZE < \
+     IMSIC_GROUP_SIZE(VIRT_CPUS_MAX_BITS, VIRT_IRQCHIP_MAX_GUESTS_BITS)
+-#error "Can't accomodate single IMSIC group in address space"
++#error "Can't accommodate single IMSIC group in address space"
+ #endif
+ 
+ #define VIRT_IMSIC_MAX_SIZE            (VIRT_SOCKETS_MAX * \
+                                         VIRT_IMSIC_GROUP_MAX_SIZE)
+ #if 0x4000000 < VIRT_IMSIC_MAX_SIZE
+-#error "Can't accomodate all IMSIC groups in address space"
++#error "Can't accommodate all IMSIC groups in address space"
+ #endif
+ 
+ #endif
 -- 
 2.39.2
 
