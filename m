@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5F5C54791
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7955BC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdFvC-0007Lg-1F; Thu, 22 Feb 2024 15:43:58 -0500
+	id 1rdFva-0008Am-E6; Thu, 22 Feb 2024 15:44:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFv7-0007FJ-FA
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:53 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1rdFvY-00087p-Pu
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:44:20 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFv4-0002fz-7Y
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:52 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1dc09556599so1893345ad.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:49 -0800 (PST)
+ id 1rdFvW-0002nX-9v
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:44:20 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1dc139ed11fso10254735ad.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:44:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708634629; x=1709239429; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708634657; x=1709239457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9UuugcteI3wsnFXZ+gvu7oCS1Hb/WPFzjY9R5VsQ974=;
- b=aiM9tOI62KtGtR2JFQ3MF1GeIN7slAOqzVwX6Rob7pkxFNjB3uWjMfynuv+eUFYMGW
- KjXRqGB2eMBUBESL2/KKREiaOGDZ9AUR3qOFIHP4p9ZfvxpUvP8/xEdbGRFB65rHUhOJ
- fUG19UVzt491J1rPEuEoqLllh93B4GjsAM2RAEmzOZ23nTp0Y1gR2h+QZ5rkCY3nqoPU
- FVM3GKrYwFCwVU0kLIDyxZAqxkqggJBVS537DVk9+7knu44M/Da36eNJumuIgsBY6Lyq
- UHQ7C/+QDlVCkpzJrR6rriPpG6OAoSozrJLq2Iuu/Ze2rQFLq8BvtWFFNkI95qdOySdR
- 92xg==
+ bh=nFLr/Nh9lR5RHGOKXL0ktJAFT8XYevI/jB1Fp1QCuj0=;
+ b=cewAROzRJluIMgKQAMvQECa8EoX7t/lej6g/hIyeFwo5xXYmld45rmlh9RBd/AkK+5
+ /RM+sfWwS7nF5jPCyCjLoFJugOwMCmJAfkBrvY9m0IsL8ep84ffShbGzhuuRd5GMDKs9
+ BFH+lkT1rbSJgqxg8nuOYsERpXpE6SYeC4oEs7D0tCCDXhS8mzFVrINhQQ8MMFXvYRBO
+ SvqZqoeX0dpu89SWqF8JkoaNyV3/LYCNG436INlQvFqiZZTqigj7UNREzgE7jUWM+5gW
+ gfD0xNipQKIp9A+UiMTxQirzAIVjkO9JC0Z4HWgXIuO3b44yHEeVe2mPc9yDwJA52qy0
+ xkKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708634629; x=1709239429;
+ d=1e100.net; s=20230601; t=1708634657; x=1709239457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9UuugcteI3wsnFXZ+gvu7oCS1Hb/WPFzjY9R5VsQ974=;
- b=CcEe27B4MwqLSl9Dgiqn+qWK+uMAErPwNyGTWdgjsrLHaKZdKpL4bwPKvIvR97yN08
- eOcr6tuE7wEfjxHI2yLhPT7wJX502fMhNwya7bORlV5XWlaCHJZX+Jqj9LuflI/Bx6WJ
- aK9trafHSRBw3sM8kg8xBu9DeYFyDzZUVrxW09GJHOFgNdzemTpSiCvYXJEeTrnjEF0n
- YZ2pGgcZIAtEtVyXonpBakMHdCUlyl5wjcIvPvfKb9BtLGuurSPRgCUM5zTPNzyFSi+z
- 0y54QlkmUk3vJZpt6Q2u+hbiaSudR7ZB109pLauK/56LDfEYfon5xXtcsd5P8u08EUaf
- LylA==
-X-Gm-Message-State: AOJu0YyfPopOlZ++YsPN+esXzF03xeFz4YCMTMzQ/k7uMHHpcOqqaLW8
- yzHggiVf7RA85PQQr2r52TnZnOWjWcaz7cMWr56rOD5jcxCV2OO6Gg1BP8Lm3DWLRcO4Hn/7Ctt
- X
-X-Google-Smtp-Source: AGHT+IHTYa+a/K6CNDzmXH0Z1jnDBthB9dDd+QQD3FLFcEDaoJ6pEUulcrvICEysCwwB6cW3LcU/6g==
-X-Received: by 2002:a17:902:ecc7:b0:1dc:15db:bcca with SMTP id
- a7-20020a170902ecc700b001dc15dbbccamr10964375plh.55.1708634629026; 
- Thu, 22 Feb 2024 12:43:49 -0800 (PST)
+ bh=nFLr/Nh9lR5RHGOKXL0ktJAFT8XYevI/jB1Fp1QCuj0=;
+ b=A6LeiEgzGA89m+1QVgHHQokuKkcUUn91pLWas0Y73FoYw5rY9WeN7WJR6SDLYP9fjK
+ ZT1ZxeaZdl9aB5w5YFflzqhBnhmPYzl51n6scllmFigi7alkApZjGMJ1Oa4ACbyYbMf9
+ Q9AEXEV24G4fIb/rnhJPocDvmHd7gIEljpm8eWwr38LHtw0MoPiQdy6lKRoD3KqPGEhM
+ BNo/Ns08CbcI9F+7ki6s5Ztr27FUmmTwDnE7ClAc76MpASoo5M488V5rTgowO9hhG01j
+ dZ00x0RGLNhrGopaDj0wlJOWY1+mJsYKCGc5HjETXMdIb9ixnxXnlLwvZL2ksAYcInXP
+ nkIw==
+X-Gm-Message-State: AOJu0Yx8q1U2zMZ7BPKWQCNek/ggdDxpoKNumTvWxsKeycS6QgpOgcZL
+ V/uhSmOLz1FFtLDvzMFXwzFp3gbG6wff2pFtTx5P6Yw90lVOpzy5ynkYy8KjDjdPJJ+iFrV8yEI
+ M
+X-Google-Smtp-Source: AGHT+IGKmEqptejhuqQ8Xh4Axro+8zv2UVti17Bt2ZCSZ72RESjA2z2OXX5LRtpSVZ8PZ7zTWsTFGg==
+X-Received: by 2002:a17:902:da92:b0:1db:f15c:85c0 with SMTP id
+ j18-20020a170902da9200b001dbf15c85c0mr173183plx.33.1708634656959; 
+ Thu, 22 Feb 2024 12:44:16 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.47
+ l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.44.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 12:43:48 -0800 (PST)
+ Thu, 22 Feb 2024 12:44:16 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PULL 15/39] hw/tpm: Remove HOST_PAGE_ALIGN from tpm_ppi_init
-Date: Thu, 22 Feb 2024 10:42:59 -1000
-Message-Id: <20240222204323.268539-16-richard.henderson@linaro.org>
+Subject: [PULL 33/39] accel/tcg: Disconnect TargetPageDataNode from page size
+Date: Thu, 22 Feb 2024 10:43:17 -1000
+Message-Id: <20240222204323.268539-34-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240222204323.268539-1-richard.henderson@linaro.org>
 References: <20240222204323.268539-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,34 +96,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes a hidden use of qemu_host_page_size, hoisting
-two uses of qemu_real_host_page_size to a local variable.
+Dynamically size the node for the runtime target page size.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Acked-by: Helge Deller <deller@gmx.de>
+Message-Id: <20240102015808.132373-29-richard.henderson@linaro.org>
 ---
- hw/tpm/tpm_ppi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ accel/tcg/user-exec.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/hw/tpm/tpm_ppi.c b/hw/tpm/tpm_ppi.c
-index 7f74e26ec6..f27ed6c35e 100644
---- a/hw/tpm/tpm_ppi.c
-+++ b/hw/tpm/tpm_ppi.c
-@@ -47,8 +47,10 @@ void tpm_ppi_reset(TPMPPI *tpmppi)
- void tpm_ppi_init(TPMPPI *tpmppi, MemoryRegion *m,
-                   hwaddr addr, Object *obj)
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 69b7429e31..3cac3a78c4 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -864,7 +864,7 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+ typedef struct TargetPageDataNode {
+     struct rcu_head rcu;
+     IntervalTreeNode itree;
+-    char data[TPD_PAGES][TARGET_PAGE_DATA_SIZE] __attribute__((aligned));
++    char data[] __attribute__((aligned));
+ } TargetPageDataNode;
+ 
+ static IntervalTreeRoot targetdata_root;
+@@ -902,7 +902,8 @@ void page_reset_target_data(target_ulong start, target_ulong last)
+         n_last = MIN(last, n->last);
+         p_len = (n_last + 1 - n_start) >> TARGET_PAGE_BITS;
+ 
+-        memset(t->data[p_ofs], 0, p_len * TARGET_PAGE_DATA_SIZE);
++        memset(t->data + p_ofs * TARGET_PAGE_DATA_SIZE, 0,
++               p_len * TARGET_PAGE_DATA_SIZE);
+     }
+ }
+ 
+@@ -910,7 +911,7 @@ void *page_get_target_data(target_ulong address)
  {
--    tpmppi->buf = qemu_memalign(qemu_real_host_page_size(),
--                                HOST_PAGE_ALIGN(TPM_PPI_ADDR_SIZE));
-+    size_t host_page_size = qemu_real_host_page_size();
-+
-+    tpmppi->buf = qemu_memalign(host_page_size,
-+                                ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
-     memory_region_init_ram_device_ptr(&tpmppi->ram, obj, "tpm-ppi",
-                                       TPM_PPI_ADDR_SIZE, tpmppi->buf);
-     vmstate_register_ram(&tpmppi->ram, DEVICE(obj));
+     IntervalTreeNode *n;
+     TargetPageDataNode *t;
+-    target_ulong page, region;
++    target_ulong page, region, p_ofs;
+ 
+     page = address & TARGET_PAGE_MASK;
+     region = address & TBD_MASK;
+@@ -926,7 +927,8 @@ void *page_get_target_data(target_ulong address)
+         mmap_lock();
+         n = interval_tree_iter_first(&targetdata_root, page, page);
+         if (!n) {
+-            t = g_new0(TargetPageDataNode, 1);
++            t = g_malloc0(sizeof(TargetPageDataNode)
++                          + TPD_PAGES * TARGET_PAGE_DATA_SIZE);
+             n = &t->itree;
+             n->start = region;
+             n->last = region | ~TBD_MASK;
+@@ -936,7 +938,8 @@ void *page_get_target_data(target_ulong address)
+     }
+ 
+     t = container_of(n, TargetPageDataNode, itree);
+-    return t->data[(page - region) >> TARGET_PAGE_BITS];
++    p_ofs = (page - region) >> TARGET_PAGE_BITS;
++    return t->data + p_ofs * TARGET_PAGE_DATA_SIZE;
+ }
+ #else
+ void page_reset_target_data(target_ulong start, target_ulong last) { }
 -- 
 2.34.1
 
