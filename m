@@ -4,59 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D718C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A55C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5lc-0007W7-9b; Thu, 22 Feb 2024 04:53:24 -0500
+	id 1rd5pa-0002kd-UR; Thu, 22 Feb 2024 04:57:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd5lV-0007Tp-SJ
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:53:18 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd5pX-0002kV-Jj
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:57:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd5lU-0006mb-Cx
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:53:17 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd5pV-0007bM-GD
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:57:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708595594;
+ s=mimecast20190719; t=1708595844;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XVZgEJyPi0lNLpFEaYQlAovpe/n6EgDfNQp8be0H6wA=;
- b=BDelc/JppML02POmhaYsi6Kz9uwAiiYjan+tk6crPjgLdJvL45VCKDsgU8i+zs6ejHC10h
- gsI3mV/+AJy638AS28b+qgg5c6Bf+qwdXbQuDbiLFnswg1JVlyHAFt0TYYmJ8DAeCosZzX
- jRnYEcgWPzd2LaIcGrfwa1WZd26bwio=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-5RCpDHlRO9SX1L6hWA2nBQ-1; Thu,
- 22 Feb 2024 04:53:10 -0500
-X-MC-Unique: 5RCpDHlRO9SX1L6hWA2nBQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6569A3816447;
- Thu, 22 Feb 2024 09:53:10 +0000 (UTC)
-Received: from x1n.redhat.com (unknown [10.72.116.9])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 50BB910802;
- Thu, 22 Feb 2024 09:53:07 +0000 (UTC)
-From: peterx@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
- Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 1/5] migration/multifd: Cleanup TLS iochannel referencing
-Date: Thu, 22 Feb 2024 17:52:57 +0800
-Message-ID: <20240222095301.171137-2-peterx@redhat.com>
-In-Reply-To: <20240222095301.171137-1-peterx@redhat.com>
-References: <20240222095301.171137-1-peterx@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XbDLkBp3kI0s3DRlfLoo7jIUqdqFSYBYM2NRpXfk3o8=;
+ b=WY7q3wHrRCyc+3KzAr3o2ODlowp0xtGZXBK8yfp+NDObUWlgNpmjABLX8QRrDozrwtQJ8M
+ NgzFxLoY1PJc+hLZIvH/9mDE4Pex8gdpGgjVHTAUi66cKlTfB83W4hSA0/pPdlNTdpKmca
+ vrvZ6FgDF/Ss8KbQu2CGAA/038hcMS4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-GhINzLssMB-MURD4cShxGw-1; Thu, 22 Feb 2024 04:57:22 -0500
+X-MC-Unique: GhINzLssMB-MURD4cShxGw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a3e94bbb22dso91123266b.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 01:57:22 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708595841; x=1709200641;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XbDLkBp3kI0s3DRlfLoo7jIUqdqFSYBYM2NRpXfk3o8=;
+ b=R5pwsJIysRhJqHb0L1LTXd4UQWOnC2L2QcfoNd4q0Tz/KzDrqnad5AFcEU03NU8L51
+ eoWyT3L3UaWjXOL2opAtl9nZOMqYGNz/qHACd0IfE/cyN5U+kOy1jb3sVO5DShc4hE9b
+ ah9ObWhP/zCRUE2endDMybeiDbgMW9geOuJU4FuemZb5iqGoYxeBO1Vd61wZYwN5uLU0
+ s03jgqErem/lxaxbLyK3aotMq7G/zn0uH/dq5Wpf4IhsBT0E+Y6rai9XSy7wjmmLipoC
+ o9VEieG0DDP50vyjmQHMfAEOCA4ly3//15HoaFHUGbh0sHpKss+dUwTedvSYQEMZ5gmB
+ ppzw==
+X-Gm-Message-State: AOJu0Yz3mPNu+8R294OunSK6XRBhhgquB6VzngrC4DADnfIvso4PublF
+ zlKlhpvLXhz/gPeYVDbr6BiZ1X0JvYl+pYC6ox7CDFVYAdQNv20CLMQhwl7K7WiHrz+YNZcvM+R
+ WpGJyMQ+h0wyszdW9dzOvL2WXggkQqlJoRhc76BbujRvKN2FYw/al
+X-Received: by 2002:a17:906:fb11:b0:a3e:7390:4130 with SMTP id
+ lz17-20020a170906fb1100b00a3e73904130mr7968354ejb.14.1708595841729; 
+ Thu, 22 Feb 2024 01:57:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0eWmMykMIJ6//Q0nPbHJg189Jo9oL1f633TG9s+TX30Q4vXFsJ3/u3I8H2zWceNiJVkSH8Q==
+X-Received: by 2002:a17:906:fb11:b0:a3e:7390:4130 with SMTP id
+ lz17-20020a170906fb1100b00a3e73904130mr7968347ejb.14.1708595841360; 
+ Thu, 22 Feb 2024 01:57:21 -0800 (PST)
+Received: from [192.168.52.107] ([37.84.174.18])
+ by smtp.gmail.com with ESMTPSA id
+ th8-20020a1709078e0800b00a3daadea882sm5740027ejc.56.2024.02.22.01.57.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Feb 2024 01:57:21 -0800 (PST)
+Message-ID: <30980866-7fe8-4900-a75b-01fe735e14e1@redhat.com>
+Date: Thu, 22 Feb 2024 10:57:19 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/m68k: Fix exception frame format for 68010
+Content-Language: en-US
+To: Daniel Palmer <daniel@0x0f.com>, laurent@vivier.eu
+Cc: qemu-devel@nongnu.org
+References: <20240115101643.2165387-1-daniel@0x0f.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240115101643.2165387-1-daniel@0x0f.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -80,113 +142,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+On 15/01/2024 11.16, Daniel Palmer wrote:
+>  From the 68010 a word with the frame format and exception vector
+> are placed on the stack before the PC and SR.
+> 
+> M68K_FEATURE_QUAD_MULDIV is currently checked to workout if to do
+> this or not for the configured CPU but that flag isn't set for
+> 68010 so currently the exception stack when 68010 is configured
+> is incorrect.
+> 
+> It seems like checking M68K_FEATURE_MOVEFROMSR_PRIV would do but
+> adding a new flag that shows exactly what is going on here is
+> maybe clearer.
+> 
+> Add a new flag for the behaviour, M68K_FEATURE_EXCEPTION_FORMAT_VEC,
+> and set it for 68010 and above, and then use it to control if the
+> format and vector word are pushed/pop during exception entry/exit.
+> 
+> Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+> ---
+>   target/m68k/cpu.c       | 4 +++-
+>   target/m68k/cpu.h       | 2 ++
+>   target/m68k/op_helper.c | 4 ++--
+>   3 files changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+> index 1421e77c2c07..20718944b4c8 100644
+> --- a/target/m68k/cpu.c
+> +++ b/target/m68k/cpu.c
+> @@ -137,7 +137,8 @@ static void m68000_cpu_initfn(Object *obj)
+>   }
+>   
+>   /*
+> - * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD
+> + * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD,
+> + *      format+vector in exception frame.
+>    */
+>   static void m68010_cpu_initfn(Object *obj)
+>   {
+> @@ -150,6 +151,7 @@ static void m68010_cpu_initfn(Object *obj)
+>       m68k_set_feature(env, M68K_FEATURE_BKPT);
+>       m68k_set_feature(env, M68K_FEATURE_MOVEC);
+>       m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
+> +    m68k_set_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC);
+>   }
+>   
+>   /*
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index d13427b0fe61..0fc591e618f6 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -549,6 +549,8 @@ enum m68k_features {
+>       M68K_FEATURE_TRAPCC,
+>       /* MOVE from SR privileged (from 68010) */
+>       M68K_FEATURE_MOVEFROMSR_PRIV,
+> +    /* Exception frame with format+vector (from 68010) */
+> +    M68K_FEATURE_EXCEPTION_FORMAT_VEC,
+>   };
+>   
+>   static inline bool m68k_feature(CPUM68KState *env, int feature)
+> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+> index 1ce850bbc594..b09771672dec 100644
+> --- a/target/m68k/op_helper.c
+> +++ b/target/m68k/op_helper.c
+> @@ -52,7 +52,7 @@ throwaway:
+>       sp += 2;
+>       env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+>       sp += 4;
+> -    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
+> +    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+>           /*  all except 68000 */
+>           fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+>           sp += 2;
+> @@ -256,7 +256,7 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
+>                                     uint16_t format, uint16_t sr,
+>                                     uint32_t addr, uint32_t retaddr)
+>   {
+> -    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
+> +    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+>           /*  all except 68000 */
+>           CPUState *cs = env_cpu(env);
+>           switch (format) {
 
-Commit a1af605bd5 ("migration/multifd: fix hangup with TLS-Multifd due to
-blocking handshake") introduced a thread for TLS channels, which will
-resolve the issue on blocking the main thread.  However in the same commit
-p->c is slightly abused just to be able to pass over the pointer "p" into
-the thread.
+LGTM,
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-That's the major reason we'll need to conditionally free the io channel in
-the fault paths.
+Laurent, if you're currently too busy with other stuff, I could also add 
+this to my next pull request?
 
-To clean it up, using a separate structure to pass over both "p" and "tioc"
-in the tls handshake thread.  Then we can make it a rule that p->c will
-never be set until the channel is completely setup.  With that, we can drop
-the tricky conditional unref of the io channel in the error path.
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/multifd.c | 37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
-
-diff --git a/migration/multifd.c b/migration/multifd.c
-index adfe8c9a0a..6b89a6c885 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -873,16 +873,22 @@ out:
- 
- static void multifd_new_send_channel_async(QIOTask *task, gpointer opaque);
- 
-+typedef struct {
-+    MultiFDSendParams *p;
-+    QIOChannelTLS *tioc;
-+} MultiFDTLSThreadArgs;
-+
- static void *multifd_tls_handshake_thread(void *opaque)
- {
--    MultiFDSendParams *p = opaque;
--    QIOChannelTLS *tioc = QIO_CHANNEL_TLS(p->c);
-+    MultiFDTLSThreadArgs *args = opaque;
- 
--    qio_channel_tls_handshake(tioc,
-+    qio_channel_tls_handshake(args->tioc,
-                               multifd_new_send_channel_async,
--                              p,
-+                              args->p,
-                               NULL,
-                               NULL);
-+    g_free(args);
-+
-     return NULL;
- }
- 
-@@ -892,6 +898,7 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
- {
-     MigrationState *s = migrate_get_current();
-     const char *hostname = s->hostname;
-+    MultiFDTLSThreadArgs *args;
-     QIOChannelTLS *tioc;
- 
-     tioc = migration_tls_client_create(ioc, hostname, errp);
-@@ -906,11 +913,14 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
-     object_unref(OBJECT(ioc));
-     trace_multifd_tls_outgoing_handshake_start(ioc, tioc, hostname);
-     qio_channel_set_name(QIO_CHANNEL(tioc), "multifd-tls-outgoing");
--    p->c = QIO_CHANNEL(tioc);
-+
-+    args = g_new0(MultiFDTLSThreadArgs, 1);
-+    args->tioc = tioc;
-+    args->p = p;
- 
-     p->tls_thread_created = true;
-     qemu_thread_create(&p->tls_thread, "multifd-tls-handshake-worker",
--                       multifd_tls_handshake_thread, p,
-+                       multifd_tls_handshake_thread, args,
-                        QEMU_THREAD_JOINABLE);
-     return true;
- }
-@@ -923,6 +933,7 @@ static bool multifd_channel_connect(MultiFDSendParams *p,
- 
-     migration_ioc_register_yank(ioc);
-     p->registered_yank = true;
-+    /* Setup p->c only if the channel is completely setup */
-     p->c = ioc;
- 
-     p->thread_created = true;
-@@ -976,14 +987,12 @@ out:
- 
-     trace_multifd_new_send_channel_async_error(p->id, local_err);
-     multifd_send_set_error(local_err);
--    if (!p->c) {
--        /*
--         * If no channel has been created, drop the initial
--         * reference. Otherwise cleanup happens at
--         * multifd_send_channel_destroy()
--         */
--        object_unref(OBJECT(ioc));
--    }
-+    /*
-+     * For error cases (TLS or non-TLS), IO channel is always freed here
-+     * rather than when cleanup multifd: since p->c is not set, multifd
-+     * cleanup code doesn't even know its existence.
-+     */
-+    object_unref(OBJECT(ioc));
-     error_free(local_err);
- }
- 
--- 
-2.43.0
+  Thomas
 
 
