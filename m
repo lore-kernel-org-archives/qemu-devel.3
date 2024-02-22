@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BEEC48BEB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4182C48BF8
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5yT-0004a5-82; Thu, 22 Feb 2024 05:06:42 -0500
+	id 1rd5y7-0004T3-6A; Thu, 22 Feb 2024 05:06:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rd5yR-0004XK-7r; Thu, 22 Feb 2024 05:06:39 -0500
+ id 1rd5y5-0004SZ-Ao; Thu, 22 Feb 2024 05:06:17 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rd5yO-0000hM-QT; Thu, 22 Feb 2024 05:06:38 -0500
+ id 1rd5y2-0000da-VW; Thu, 22 Feb 2024 05:06:17 -0500
 Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41M9mO1I018808; Thu, 22 Feb 2024 10:06:31 GMT
+ 41M9m2df018071; Thu, 22 Feb 2024 10:06:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
  bh=7yCuldceSyJz3Ap78sQDAsienMAXu3g0BfrHBqSf+qs=;
- b=FKmVhDTSSmKOyAvAUCSMECYKal3g413qCjLgBs7fWHHQ58xSPQQ7r+xU4ry2hqXOZID/
- 7REq3d3D5q7A/YMKsvLWpRJHSfYAxG74i1oZyvwNUdGQLY3EaqT5jFZIqSA/fT0/Yh5y
- e8uyaMNvQenQUr12tlw1mvcj2cof62lTIx5mP6PsXWS06ZeHPN89EdWTyO6dL9HxZDwd
- mml9pOgpyOvw8V5IeZXJIF/JfZImGkjwXsZn5BdY3w+cuGdml/Uf8TZ1O0NUDefCYkaE
- oVjOKDBOXWh5sjv4IKI0Z5xQx3X/HWgPrs7MO8ZQFfpmGYHWz5d4QsXgXGTUHl9XyOGV xA== 
+ b=SLInFg9gt4X1Frq7kkpIJEfZbDczP7xvLl9xVhXyHuQvAOKu2KA3HcXel8kb4IkRe1tN
+ TJwEbBlzhD4jVJ3n5e4btEi3Wqd8utJDEBdYfMwIT/ZQK4EuY0zlnSJXEcQrJj9vWAtj
+ 8fEYsszezkfa2ZyMRdDvuK8ihkY+nkm6D5Kzifp36zVQVkzhF26SFOOjqMenSehuf2Q6
+ N6VYL4qIYLD8xNoC4W/Wm4kHLymoBgkaSAa2e+opzpnlTqRFi+c4zgV/HnuDt8+eSDnV
+ +ncXSki60voLR7zbA+YzAQtoi5JBMwMZrvj6h2/uQgT9r4TCZ6rfS0NtMForDr1ux4jo UQ== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3y10g4s-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3y10fkh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Feb 2024 10:06:30 +0000
+ Thu, 22 Feb 2024 10:06:03 +0000
 Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41M9o5EL025411;
- Thu, 22 Feb 2024 10:06:29 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3y10g4d-1
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41M9mdbI019300;
+ Thu, 22 Feb 2024 10:06:03 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3y10fk8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Feb 2024 10:06:29 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41M8Daqt014406; Thu, 22 Feb 2024 10:06:29 GMT
+ Thu, 22 Feb 2024 10:06:03 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41M97Otl009540; Thu, 22 Feb 2024 10:06:02 GMT
 Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wb9u2vuh9-1
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb84pnbs5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Feb 2024 10:06:29 +0000
+ Thu, 22 Feb 2024 10:06:02 +0000
 Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
  [10.241.53.100])
  by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41MA6QkT14877364
+ 41MA606q13304444
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 10:06:28 GMT
+ Thu, 22 Feb 2024 10:06:02 GMT
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF4A858066;
- Thu, 22 Feb 2024 10:06:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 08E495806F;
+ Thu, 22 Feb 2024 10:06:00 +0000 (GMT)
 Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CA0DF5805D;
- Thu, 22 Feb 2024 10:06:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0D63A5805D;
+ Thu, 22 Feb 2024 10:05:58 +0000 (GMT)
 Received: from [9.179.15.237] (unknown [9.179.15.237])
  by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 22 Feb 2024 10:06:24 +0000 (GMT)
-Message-ID: <7ed65560-9521-4b56-84fe-df7a7d0084fd@linux.ibm.com>
-Date: Thu, 22 Feb 2024 15:36:24 +0530
+ Thu, 22 Feb 2024 10:05:57 +0000 (GMT)
+Message-ID: <b8ea8222-ee3b-4bf9-85b0-636d6a4d6f3a@linux.ibm.com>
+Date: Thu, 22 Feb 2024 15:35:56 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Subject: Re: [PATCH v5 9/9] target/ppc: Remove interrupt handler wrapper
  functions
+Content-Language: en-US
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
 References: <cover.1705614747.git.balaton@eik.bme.hu>
  <281ce504db0192be0673f3525ea59d425bb1e5e0.1705614747.git.balaton@eik.bme.hu>
-Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 In-Reply-To: <281ce504db0192be0673f3525ea59d425bb1e5e0.1705614747.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 7B5OULyKW9w2AQsPTOU_nXZ8lz5abTRb
-X-Proofpoint-GUID: KpvHlaNf869RXJ5PY8TkukV6zmBXSueY
+X-Proofpoint-ORIG-GUID: XssZUiIHfmnZ2AWfq6QdfN7HhH7X9mtr
+X-Proofpoint-GUID: Sc2u4RgddR_pHhQt1KBQe6iJ8MPL3E-N
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-22_06,2024-02-22_01,2023-05-22_02
