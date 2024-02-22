@@ -4,58 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DE2C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 03:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4E7C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 04:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd06t-0007SS-9A; Wed, 21 Feb 2024 22:50:59 -0500
+	id 1rd0I7-0002nd-1Q; Wed, 21 Feb 2024 23:02:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rd06r-0007Re-5j; Wed, 21 Feb 2024 22:50:57 -0500
-Received: from szxga03-in.huawei.com ([45.249.212.189])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd0I5-0002nS-Fd
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 23:02:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rd06o-0004MD-8m; Wed, 21 Feb 2024 22:50:56 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4TgJzl4qspzNlmc;
- Thu, 22 Feb 2024 11:49:23 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 794AD14011D;
- Thu, 22 Feb 2024 11:50:47 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 22 Feb 2024 11:50:46 +0800
-Message-ID: <09fde4c7-2000-5e78-f33d-c80fbcd49405@huawei.com>
-Date: Thu, 22 Feb 2024 11:50:46 +0800
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd0I3-0007H6-UD
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 23:02:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708574550;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1faIOiExS26ujZjxJUrYaGy4bPENpXxP0Tdvc+SQStg=;
+ b=bjswkBAKImzYaixUkOwiFO8coUkbvgde+lesLcYL/5kvCaxlfLIao1IszLviuidXhg5Aiz
+ 7CeZ8eknXkTK0NQGNIbsIt8aqd2lk77lCNTKiytlYG5OJWwhYHnYX1pXiCRVH3rK0mDgnc
+ H+13/bCUc7pniqXLd841Xn8bYP+fEo4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-211-qmChELuvP0e-uhpXLqnTQw-1; Wed, 21 Feb 2024 23:02:29 -0500
+X-MC-Unique: qmChELuvP0e-uhpXLqnTQw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33d4c09ec04so1935289f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 20:02:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708574548; x=1709179348;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1faIOiExS26ujZjxJUrYaGy4bPENpXxP0Tdvc+SQStg=;
+ b=UQ2XxOO7sIdKoombwIfeXJ+sD+v4am4JFZbH78PBCg+0ky/aCKnCl8Z9Ct98cSPyke
+ Y/YPVV8sZkUPoXqoA1+4N33W5stYOH1DbfAunMgD643z9b/jmgOXcLqvNsLZTiBO7XeA
+ 9Tu15teg6LFk8a0yRNJmNX7ZZWarNdzmha4bR3P9diebyMVBII2CUmVbiKL3rZdxkBBe
+ hBGSzZZxZ1BKrqYiuna4gGr4ufG+XO08exNdwchzW4ev4jCM4UhzcZyIWBuhFv0aiDJ1
+ 7l8HwHiMnUeUQXk/UljLFibmhL51Y9F4gaI/SpTgaUCbzhSL3ckvuHvlG3/jS5KDnCku
+ hP8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBXwWhp/aY0z2q8doABn4j7P3WZZJo0creSzo9ZO0FFepFHAAqZo9zk6iNrQHNMGnxWl/Vjg7CEjpl9e4F/GYjOChiShA=
+X-Gm-Message-State: AOJu0YzTF3InF7ov20AI8B0+5luomd9CBDX/ef22MKFo9gr1kiXMg+AS
+ A40+imEGbrlT2kmzSZTMyMqir0zPXQlyETBvQR8EIbmhA6ThgOxVREGUNjHNnIrUNq2iAZd4udn
+ +upOENzyExt5r2tTx7tJcWLqC7dCVq+1KYIjd4xjdlKNlIxNbsyaZ
+X-Received: by 2002:a5d:4389:0:b0:33d:3b83:6ca3 with SMTP id
+ i9-20020a5d4389000000b0033d3b836ca3mr8141275wrq.64.1708574548119; 
+ Wed, 21 Feb 2024 20:02:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdQ5wlHWZLB6IG9y57GTvPguBCS18JhKTcvLsYYqQHeP2hFbFQOMYCA/lbP9srbqf0esj57g==
+X-Received: by 2002:a5d:4389:0:b0:33d:3b83:6ca3 with SMTP id
+ i9-20020a5d4389000000b0033d3b836ca3mr8141261wrq.64.1708574547804; 
+ Wed, 21 Feb 2024 20:02:27 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
+ [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
+ j11-20020adff54b000000b0033b43a5f53csm18834788wrp.103.2024.02.21.20.02.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 21 Feb 2024 20:02:27 -0800 (PST)
+Message-ID: <a9bbbae4-2e73-4027-8c46-0d0573597129@redhat.com>
+Date: Thu, 22 Feb 2024 05:02:25 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [RFC PATCH v2 05/22] target/arm: Support MSR access to ALLINT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] system/vl: Update description for input grab key
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240221130823.677762-1-ruanjinjie@huawei.com>
- <20240221130823.677762-6-ruanjinjie@huawei.com>
- <699fbf87-8f24-4d3d-b230-f956ce371f20@linaro.org>
-In-Reply-To: <699fbf87-8f24-4d3d-b230-f956ce371f20@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.189;
- envelope-from=ruanjinjie@huawei.com; helo=szxga03-in.huawei.com
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+To: Tianlan Zhou <bobby825@126.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org
+References: <20240221195208.462-1-bobby825@126.com>
+ <20240221195208.462-3-bobby825@126.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240221195208.462-3-bobby825@126.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,85 +143,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21/02/2024 20.52, Tianlan Zhou wrote:
+> Input grab key should be Ctrl-Alt-g, not just Ctrl-Alt.
+> 
+> Signed-off-by: Tianlan Zhou <bobby825@126.com>
+> ---
+>   system/vl.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/system/vl.c b/system/vl.c
+> index a82555ae15..b8469d9965 100644
+> --- a/system/vl.c
+> +++ b/system/vl.c
+> @@ -891,7 +891,7 @@ static void help(int exitcode)
+>       printf("\nDuring emulation, the following keys are useful:\n"
+>              "ctrl-alt-f      toggle full screen\n"
+>              "ctrl-alt-n      switch to virtual console 'n'\n"
+> -           "ctrl-alt        toggle mouse and keyboard grab\n"
+> +           "ctrl-alt-g      toggle mouse and keyboard grab\n"
+>              "\n"
+>              "When using -nographic, press 'ctrl-a h' to get some help.\n"
+>              "\n"
 
+Fixes: f8d2c9369b ("sdl: use ctrl-alt-g as grab hotkey")
 
-On 2024/2/22 3:28, Richard Henderson wrote:
-> On 2/21/24 03:08, Jinjie Ruan via wrote:
->> Support ALLINT msr access as follow:
->>     mrs <xt>, ALLINT    // read allint
->>     msr ALLINT, <xt>    // write allint with imm
->>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
->> ---
->>   target/arm/helper.c | 32 ++++++++++++++++++++++++++++++++
->>   1 file changed, 32 insertions(+)
->>
->> diff --git a/target/arm/helper.c b/target/arm/helper.c
->> index a3062cb2ad..211156d640 100644
->> --- a/target/arm/helper.c
->> +++ b/target/arm/helper.c
->> @@ -4618,6 +4618,31 @@ static void aa64_daif_write(CPUARMState *env,
->> const ARMCPRegInfo *ri,
->>       env->daif = value & PSTATE_DAIF;
->>   }
->>   +static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo
->> *ri,
->> +                              uint64_t value)
->> +{
->> +    env->allint = value & PSTATE_ALLINT;
->> +}
->> +
->> +static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo
->> *ri)
->> +{
->> +    return env->allint & PSTATE_ALLINT;
->> +}
->> +
->> +static CPAccessResult aa64_allint_access(CPUARMState *env,
->> +                                         const ARMCPRegInfo *ri, bool
->> isread)
->> +{
->> +    if (arm_current_el(env) == 0) {
->> +        return CP_ACCESS_TRAP_UNCATEGORIZED;
->> +    }
-> 
-> This is handled by .access PL1_RW.
-> 
->> +
->> +    if (arm_current_el(env) == 1 && arm_is_el2_enabled(env) &&
->> +        cpu_isar_feature(aa64_hcx, env_archcpu(env)) &&
->> +        (env->cp15.hcrx_el2 & HCRX_TALLINT))
->> +        return CP_ACCESS_TRAP_EL2;
-> 
-> You should be using arm_hcrx_el2_eff(env).
-> Missing braces.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-I'll fix it, thank you!
-
-> 
->> @@ -5437,6 +5462,13 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
->>         .access = PL0_RW, .accessfn = aa64_daif_access,
->>         .fieldoffset = offsetof(CPUARMState, daif),
->>         .writefn = aa64_daif_write, .resetfn = arm_cp_reset_ignore },
->> +    { .name = "ALLINT", .state = ARM_CP_STATE_AA64,
->> +      .opc0 = 3, .opc1 = 0, .opc2 = 0, .crn = 4, .crm = 3,
->> +      .type = ARM_CP_NO_RAW,
->> +      .access = PL1_RW, .accessfn = aa64_allint_access,
->> +      .fieldoffset = offsetof(CPUARMState, allint),
->> +      .writefn = aa64_allint_write, .readfn = aa64_allint_read,
->> +      .resetfn = arm_cp_reset_ignore },
-> 
-> You cannot add ALLINT here in v8_cp_reginfo[].
-> Compare fgt_reginfo[], and how it is registered.
-
-I'll fix it, thank you!
-
-> 
-> 
-> r~
 
