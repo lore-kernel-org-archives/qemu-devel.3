@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9865AC5478C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:45:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7126BC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdFuv-000700-LB; Thu, 22 Feb 2024 15:43:41 -0500
+	id 1rdFv0-00074R-Al; Thu, 22 Feb 2024 15:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFut-0006z5-8Z
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:39 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1rdFuy-00072X-Vn
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:45 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFur-0002c9-NW
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:39 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1d73066880eso2070575ad.3
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:36 -0800 (PST)
+ id 1rdFux-0002cz-9C
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:44 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1dc139ed11fso10251345ad.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708634615; x=1709239415; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708634621; x=1709239421; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4czMnwy4ONozXZRRucTuxGhHSF3+8ljKdOePhx3D1do=;
- b=anpyhmLpTbAXrCgl01JfOe98PpXZ6jVSSm19PoQ+fTrjYHyqLNTFNuWjBcZt2GpZTz
- lueict9CA5G0Go9AkP+u2i4GSpwSfW4uWCn9vzkX2TO+Az8wg4YWbNneg9q04a8HfBVi
- q0qOxfU7Szs+UUWgySNCE5aFye/1ADTSFhOBNU69AvLAojCpORpIrSVZ8H92373l1U8K
- vO6csWLOXXEes+uIJPUZI+G35elCYi/1sVTOVLaxfY86Yj9NcSEuZ9/ZUwe/4W030X0S
- b10u71flj/uKef38ZHFptHdvoVYne3oPAMttM100AReLo2tV+x9FCN7yEILwLWaOjQn6
- jL/g==
+ bh=aaAlM/N1pdfPJQ0AFuX+476ixWIzFXGcl3gsIXYKRec=;
+ b=Njeeik9zO19UpleMaIDKuJa5PCejUa3nrDoAGi3qUoDdjdRGOZ4BYwNWjvmuJdEOFf
+ nwncKrZt5TXsiQQgu4HClU33N4pj1RcroDvLthoW18tq1BF+ukZCc+GneIPJOghFKiv+
+ 9SPYd2RoagkVV+6EqXnKelIYuRNhcEKYcVdxuXSSzsIIWVvDoM2O1Z21k/HSPe/YWSrm
+ QUMPSO1MZEKGkSNCm0LdtRfEAD4Kb1wL7GbrF5+lTJL3PkxS5lH+4+NKbGoFRVD638nK
+ dIh/ut7B4L+C157X1JRujb63xOihyTy7NYSjPVVROjBdQRFU/nKZNU53OzNkpkRRlZlZ
+ BQcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708634615; x=1709239415;
+ d=1e100.net; s=20230601; t=1708634621; x=1709239421;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4czMnwy4ONozXZRRucTuxGhHSF3+8ljKdOePhx3D1do=;
- b=jHza5xslqljIYQtJzEs1x8Jha+4/yt1RkIvOrWEF2cScrvdlPWYL3VdjD6N+1QHomn
- 5SXpPzNw/RwdrFJx+B8D73i/HFEb1BFyJm3XTbXiQZdVF1krDC6IJZxCNvOMfxAWrHdS
- 9hVgZwmCMl6KskP+xZyDhxVEVmJr+trT5Vu9DSqDXbW6aZndqkmY+E5LaemJGv4K1JnO
- +eDYoa9Tb8Di8/PhvtpCCW7UrS6UhM25+jr1u+DrnnWboG7VVGaIOKCYk8tzSYYy2meF
- BuDbCnDzCGQ43OlgQOdJ9sVDGON7CxP6aLX2bdZI111QdT9Cbws/0QxGazbBEGjBIMJL
- QHog==
-X-Gm-Message-State: AOJu0YzWi00xYrvwYt086PBCq4wuP86IW5+pD1PXHwqstKPJ0GberX0A
- Dfz80Lb6SZpWFQoAmgWhbIKpWKismj2Rlp9SQyLGEdm6xvx9AJ4EX0UygBd6mwMGljq6t0Xo7RA
- +
-X-Google-Smtp-Source: AGHT+IH6fkUsuO7V5W/elbU7FrcWJw9+jn/TcS2Q+OEznwW02JUaE73O465WG9Zn5HBaRLp6rXW1bQ==
-X-Received: by 2002:a17:902:f68c:b0:1db:e9ea:31 with SMTP id
- l12-20020a170902f68c00b001dbe9ea0031mr15479254plg.62.1708634615327; 
- Thu, 22 Feb 2024 12:43:35 -0800 (PST)
+ bh=aaAlM/N1pdfPJQ0AFuX+476ixWIzFXGcl3gsIXYKRec=;
+ b=NmpXdLwm0MTDpOvI7qKdprSCZLhNYNTc+qPX4ANpOS+4O/aeT3hBPd54X/cr0Tv2P5
+ 37Uu9c/a6pGk0+N6BVKUR098Lu9I65lLbG5IlgdD+JztKqRK+ugcLEL5WYpAY+lo9CNJ
+ +NYNEJkofwZ6RCXKVYdgrWTqQQQEL6o3UPX/9ff88atN/XidnwsLnyFu5TyGSRkjMCEJ
+ A7IPVKjOTB2j47BqCIoqY3VWtaZZSZCT+GFxRPqhxscpWNhjxsUeJYrCzO9fWQOzrcPs
+ K8x6ZX6+x0BlfOqZgBWQEnKWtTPCt/M2biFz0C3P2AeBW98jvJ2dlEHPu1Pya7zo+w/6
+ SUuA==
+X-Gm-Message-State: AOJu0Yyt5wIZKMRB7k26h+nKUZ5j3xZek68lA308HSORTLYZtLXg9mfM
+ piRCLfIhMsgUOTdpzSOtrUGWfllNqOrnqjti+7uBbXHTRDPJmAfKSG4NWEcxANq3vq1xa7Gdayz
+ y
+X-Google-Smtp-Source: AGHT+IEwJziSyEuRCWD5PkVaxtUS+nDgchiFl2JkjU3dNR7mB2TJyn6RO23QS3xB/01LGUzrjNPZvg==
+X-Received: by 2002:a17:902:ec83:b0:1db:2caa:6c5e with SMTP id
+ x3-20020a170902ec8300b001db2caa6c5emr5538661plg.3.1708634621183; 
+ Thu, 22 Feb 2024 12:43:41 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.34
+ l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 12:43:34 -0800 (PST)
+ Thu, 22 Feb 2024 12:43:40 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Helge Deller <deller@gmx.de>
-Subject: [PULL 06/39] linux-user: Remove qemu_host_page_{size,
- mask} in probe_guest_base
-Date: Thu, 22 Feb 2024 10:42:50 -1000
-Message-Id: <20240222204323.268539-7-richard.henderson@linaro.org>
+Subject: [PULL 10/39] linux-user/arm: Remove qemu_host_page_size from
+ init_guest_commpage
+Date: Thu, 22 Feb 2024 10:42:54 -1000
+Message-Id: <20240222204323.268539-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240222204323.268539-1-richard.henderson@linaro.org>
 References: <20240222204323.268539-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,41 +96,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The host SHMLBA is by definition a multiple of the host page size.
-Thus the remaining component of qemu_host_page_size is the
-target page size.
+Use qemu_real_host_page_size.
+If the commpage is not within reserved_va, use MAP_FIXED_NOREPLACE.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-4-richard.henderson@linaro.org>
+Message-Id: <20240102015808.132373-8-richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ linux-user/elfload.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index e918a13748..e84a201448 100644
+index a9f1077861..f3f1ab4f69 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -2893,7 +2893,7 @@ static bool pgb_addr_set(PGBAddrs *ga, abi_ulong guest_loaddr,
- 
-     /* Add any HI_COMMPAGE not covered by reserved_va. */
-     if (reserved_va < HI_COMMPAGE) {
--        ga->bounds[n][0] = HI_COMMPAGE & qemu_host_page_mask;
-+        ga->bounds[n][0] = HI_COMMPAGE & qemu_real_host_page_mask();
-         ga->bounds[n][1] = HI_COMMPAGE + TARGET_PAGE_SIZE - 1;
-         n++;
-     }
-@@ -3075,7 +3075,7 @@ void probe_guest_base(const char *image_name, abi_ulong guest_loaddr,
-                       abi_ulong guest_hiaddr)
+@@ -460,6 +460,7 @@ enum {
+ static bool init_guest_commpage(void)
  {
-     /* In order to use host shmat, we must be able to honor SHMLBA.  */
--    uintptr_t align = MAX(SHMLBA, qemu_host_page_size);
-+    uintptr_t align = MAX(SHMLBA, TARGET_PAGE_SIZE);
+     ARMCPU *cpu = ARM_CPU(thread_cpu);
++    int host_page_size = qemu_real_host_page_size();
+     abi_ptr commpage;
+     void *want;
+     void *addr;
+@@ -472,10 +473,12 @@ static bool init_guest_commpage(void)
+         return true;
+     }
  
-     /* Sanity check the guest binary. */
-     if (reserved_va) {
+-    commpage = HI_COMMPAGE & -qemu_host_page_size;
++    commpage = HI_COMMPAGE & -host_page_size;
+     want = g2h_untagged(commpage);
+-    addr = mmap(want, qemu_host_page_size, PROT_READ | PROT_WRITE,
+-                MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
++    addr = mmap(want, host_page_size, PROT_READ | PROT_WRITE,
++                MAP_ANONYMOUS | MAP_PRIVATE |
++                (commpage < reserved_va ? MAP_FIXED : MAP_FIXED_NOREPLACE),
++                -1, 0);
+ 
+     if (addr == MAP_FAILED) {
+         perror("Allocating guest commpage");
+@@ -488,12 +491,12 @@ static bool init_guest_commpage(void)
+     /* Set kernel helper versions; rest of page is 0.  */
+     __put_user(5, (uint32_t *)g2h_untagged(0xffff0ffcu));
+ 
+-    if (mprotect(addr, qemu_host_page_size, PROT_READ)) {
++    if (mprotect(addr, host_page_size, PROT_READ)) {
+         perror("Protecting guest commpage");
+         exit(EXIT_FAILURE);
+     }
+ 
+-    page_set_flags(commpage, commpage | ~qemu_host_page_mask,
++    page_set_flags(commpage, commpage | (host_page_size - 1),
+                    PAGE_READ | PAGE_EXEC | PAGE_VALID);
+     return true;
+ }
 -- 
 2.34.1
 
