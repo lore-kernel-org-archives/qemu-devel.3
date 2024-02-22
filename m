@@ -4,88 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E1EC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D161C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5IC-00060y-3F; Thu, 22 Feb 2024 04:23:00 -0500
+	id 1rd5Lv-0006vY-MA; Thu, 22 Feb 2024 04:26:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd5I9-00060k-8p
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:22:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rd5Ln-0006uX-E3; Thu, 22 Feb 2024 04:26:45 -0500
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd5I4-00028B-BI
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:22:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708593770;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hVsZscbCBZmdHksZO1pddkEO3JQCt8go1PJ2oOhmt6U=;
- b=QzBBu1eOQmcPJQAVm7JdOo/edrmI/nmFWlNsgPaofLVWgLgUeG7b+gOSt90oX+wECZ8DkL
- TVCJ8jwQEMF5Vngmb71rj7Da4biQ4r2nfNB6Rhxt+U4pNut5IzVPsAt8sLarYXulRfYVsE
- E+wQr53Xmp0LYyu+ckLUhhJoZzqx6XQ=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-Z2duMHxVMo-I6ypHqTRY8w-1; Thu, 22 Feb 2024 04:22:48 -0500
-X-MC-Unique: Z2duMHxVMo-I6ypHqTRY8w-1
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-1da0dd1dec4so27155955ad.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 01:22:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708593768; x=1709198568;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hVsZscbCBZmdHksZO1pddkEO3JQCt8go1PJ2oOhmt6U=;
- b=FHkBj1/WH/QG8bZuqIh6EiZSD09OhgQ6ydQnJw2vDQiTS+SPgydqtWuv1urUwMNHzt
- 2X3pOOOkfrukqDqd13Y5JZv+Zf2LFyJF6V80GxIuxgXt+gg+z+NUEEr7l+c0H8cBFMT/
- JpAiky9xJZ3aFNyKQLUL9Y8qbybfJbn6LsGPIJXcvPsHaFqk3O/9ixNHXXk+3QsAJ6lN
- kPDGkPk8QFyqs+eU2u8Nx3yD20qB+mDCbgUPyqzPGf2Da8OQbq7Y9pbWbIqFAQi3a81w
- VOTyBDg/xm7LnaZc/gGS+E7havrbVanSFNy2bHnilaniLEUo36FmjtWS2IpdDUIfOduT
- D4Lg==
-X-Gm-Message-State: AOJu0YwgYlDIIjRdY+1GsRfP1/BSq2UMM/cDw9yNIlEavQd1Tsez0GaP
- yquTEB5CDG9grGUmBvw17WurRZQrk3O840YVXGKhD9v/42SX5ONAeiQqsnOEgJ44Vg42YGAZ4al
- /WilzpS02SQ4dc4Z1thYLJ+1EJEqeGl3i68Q7xstJB/qm0Wv/5vjv
-X-Received: by 2002:a17:902:b113:b0:1dc:e32:d0b7 with SMTP id
- q19-20020a170902b11300b001dc0e32d0b7mr8773552plr.0.1708593767915; 
- Thu, 22 Feb 2024 01:22:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXJlrGLAyNg7CTFYJLJkvNaNX8u+e6nfySE//IY8Thjd0gLIEVkHGwkRzWk29ZPlDMhspaSg==
-X-Received: by 2002:a17:902:b113:b0:1dc:e32:d0b7 with SMTP id
- q19-20020a170902b11300b001dc0e32d0b7mr8773534plr.0.1708593767440; 
- Thu, 22 Feb 2024 01:22:47 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- o7-20020a170902778700b001dc391cc28fsm2209959pll.121.2024.02.22.01.22.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 01:22:47 -0800 (PST)
-Date: Thu, 22 Feb 2024 17:22:40 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Roman Khapov <rkhapov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, eblake@redhat.com,
- armbru@redhat.com, yc-core@yandex-team.ru
-Subject: Re: [PATCH v2 1/2] qapi/migration.json: add reason to MIGRATION event
-Message-ID: <ZdcSYEtQe8M69Uza@x1n>
-References: <20240215122759.1438581-1-rkhapov@yandex-team.ru>
- <20240215122759.1438581-2-rkhapov@yandex-team.ru>
- <ZdQ7C5dHIQsTVQE8@x1n>
- <a804edf0-67d4-4752-b79f-c3e1ef3d72ff@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rd5Lj-0002d7-HX; Thu, 22 Feb 2024 04:26:42 -0500
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TgSQJ6NqKz2BdJZ;
+ Thu, 22 Feb 2024 17:24:24 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 90F54140411;
+ Thu, 22 Feb 2024 17:26:34 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 22 Feb 2024 17:26:33 +0800
+Message-ID: <864e2313-ca3e-b704-ade0-f4ae7583c275@huawei.com>
+Date: Thu, 22 Feb 2024 17:26:33 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a804edf0-67d4-4752-b79f-c3e1ef3d72ff@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [RFC PATCH v2 06/22] target/arm: Add support for Non-maskable
+ Interrupt
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
+ <20240221130823.677762-7-ruanjinjie@huawei.com>
+ <2e1ad5a4-b706-44a9-b686-6ddeb41722e2@linaro.org>
+In-Reply-To: <2e1ad5a4-b706-44a9-b686-6ddeb41722e2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -74
+X-Spam_score: -7.5
+X-Spam_bar: -------
+X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,46 +70,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 21, 2024 at 06:47:47PM +0500, Roman Khapov wrote:
-> If I understood you right, you suggest to improve migrate_generate_event to
-> accept MigrationState* instead of int* state (which is pointing to field
-> MigrationState.state in all usages), and get error reason from
-> MigrationState.error, if the new state is MIGRATION_STATE_FAILED, is it?
 
-migrate_generate_event() is a migration internal function, it can directly
-reference s->error with error_mutex held.
 
+On 2024/2/22 5:23, Richard Henderson wrote:
+> On 2/21/24 03:08, Jinjie Ruan via wrote:
+>> This only implements the external delivery method via the GICv3.
+>>
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> ---
+>>   target/arm/cpu-qom.h |  3 ++-
+>>   target/arm/cpu.c     | 39 ++++++++++++++++++++++++++++++++++-----
+>>   target/arm/cpu.h     |  2 ++
+>>   target/arm/helper.c  |  1 +
+>>   4 files changed, 39 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
+>> index 8e032691db..66d555a605 100644
+>> --- a/target/arm/cpu-qom.h
+>> +++ b/target/arm/cpu-qom.h
+>> @@ -36,11 +36,12 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
+>>   #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
+>>   #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
+>>   -/* Meanings of the ARMCPU object's four inbound GPIO lines */
+>> +/* Meanings of the ARMCPU object's five inbound GPIO lines */
+>>   #define ARM_CPU_IRQ 0
+>>   #define ARM_CPU_FIQ 1
+>>   #define ARM_CPU_VIRQ 2
+>>   #define ARM_CPU_VFIQ 3
+>> +#define ARM_CPU_NMI 4
 > 
-> That sounds reasonable, thanks!
+> You need a 6th GPIO for vNMI.
+Thank you! I'll fix it.
 > 
-> But I'm not sure if I got the idea of changing migrate_set_error correctly,
-> can you explain in more details, please?
-
-I fat-fingered.. sorry.  I wanted to say migrate_set_state() below, and I
-think migrate_set_state() can be kept untouched.
-
-But please consider the other reviewer's comment first: if query-migrate
-(or HMP "info migrate") works for you, then this interface is not needed.
-
 > 
-> On 2/20/24 10:39, Peter Xu wrote:
-> > On Thu, Feb 15, 2024 at 05:27:58PM +0500, Roman Khapov wrote:
-> > >       migrate_set_state(&mis->state, MIGRATION_STATUS_COLO,
-> > > -                      MIGRATION_STATUS_COMPLETED);
-> > > +                      MIGRATION_STATUS_COMPLETED, NULL);
-> > Instead of enforcing migrate_set_error() to always pass an error, maybe we
-> > can allow migrate_generate_event() to fetch s->error in FAILED state, if
-> > that hint ever existed?
-> > 
-> -- 
-> Best regards,
-> Roman Khapov
-> 
-
--- 
-Peter Xu
-
+> r~
 
