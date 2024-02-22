@@ -4,104 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6FF3C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C169C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5Tv-0006Ja-6i; Thu, 22 Feb 2024 04:35:07 -0500
+	id 1rd5Ue-0006et-AM; Thu, 22 Feb 2024 04:35:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rd5Ts-0006Ii-37; Thu, 22 Feb 2024 04:35:04 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rd5Ud-0006dt-4j; Thu, 22 Feb 2024 04:35:51 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rd5Tq-00041E-Hp; Thu, 22 Feb 2024 04:35:03 -0500
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41M9D00U009573; Thu, 22 Feb 2024 09:34:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=3VCUI0JQqZoHmiUFs8/nzOtlc81PfO3pveBkPgkn7VY=;
- b=de7PMCXKoj8JpWwZyIeUhrRqAx1F6rGFhzg8XDgsJGjIvaXFSx0dPFqSwTpS2VckKStQ
- HLpqmhuIWJPw3oQKgkUrkfzTP7VpXH8w/YwO11zN85IlJjPRgNW5idCDc38LderebWdd
- X5VXk5xJntXqdFTvqBKvgb9yCbSbyys2uSGdzseUIb/Y2bf5/2rDOnbiedUfLkBwXqZ7
- Fo9wbxAe/ZRfOMFL96CNrHM9rSCBrWrt8ubhK+6G8Zzve0QZqw9UEeiZJdRs+zxFM8o7
- djxY4Bg7t/hpeKLEsNqvt7dBr+mWRWMxDS5qHyeWy6weeqbNQ03jT4oJHX/JMabBdvBQ aA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3ek8gqa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Feb 2024 09:34:52 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41M9UsZu019375;
- Thu, 22 Feb 2024 09:34:52 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3ek8gq5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Feb 2024 09:34:52 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41M7jE7w013452; Thu, 22 Feb 2024 09:34:51 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wb7h0neuv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 22 Feb 2024 09:34:51 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41M9Yn5127787896
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 09:34:51 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 426DE5803F;
- Thu, 22 Feb 2024 09:34:49 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1DA8458054;
- Thu, 22 Feb 2024 09:34:47 +0000 (GMT)
-Received: from [9.179.15.207] (unknown [9.179.15.207])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 22 Feb 2024 09:34:46 +0000 (GMT)
-Message-ID: <a60f2ec8-52ff-4c00-948c-438ed6bc66a0@linux.ibm.com>
-Date: Thu, 22 Feb 2024 15:04:44 +0530
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rd5UW-0004GX-A1; Thu, 22 Feb 2024 04:35:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708594544; x=1740130544;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=0I3Grk97EFZAZEOpOvJ/R2MlrW4jSdK7oEzs5F+q1o0=;
+ b=L0tg3FcWyvTcMurpK6RetT5NxOg7xpAoo7Ej3avmOkpMXVAYHz+lzKlL
+ 5/AwZAc6orDFYee0Zf1CTdj2cCNpkmTYVpf6TDoT6VF4HvC6FnV+TPfQy
+ cfMONr01Phi6QLI5bDvlzUFw05c0n146h94MKaNnwfZoiuyykHRqJs9TW
+ bR1xsM3HBTEPTKA1LdErFAzt1dtNvw7GBAux8Pti7gsSZryEPdXNmr8Pu
+ A3W1Um791kh6lhAH8UfX8yvtWERvCmgikXrxJY0kP9NWillOiUVTuk2HV
+ 8L40eKTk3YNgR1MhmZcFjXOfpYXBtsb8Fj+14f+C3tKwcezgpfweaAxJK A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10991"; a="6622893"
+X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; 
+   d="scan'208";a="6622893"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Feb 2024 01:35:36 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,177,1705392000"; 
+   d="scan'208";a="5747800"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa007.jf.intel.com with ESMTP; 22 Feb 2024 01:35:34 -0800
+Date: Thu, 22 Feb 2024 17:49:14 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH 11/21] hw/usb: Add QOM parentship relation with hub devices
+Message-ID: <ZdcYmhG3zcad3RLC@intel.com>
+References: <20240216110313.17039-1-philmd@linaro.org>
+ <20240216110313.17039-12-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/9] target/ppc: Clean up ifdefs in excp_helper.c, part
- 2
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-References: <cover.1705614747.git.balaton@eik.bme.hu>
- <7f3984701b06b581f72b39dd8bd804bb128982b1.1705614747.git.balaton@eik.bme.hu>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <7f3984701b06b581f72b39dd8bd804bb128982b1.1705614747.git.balaton@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: W8fCHbdbXilvU-Po5nl9G5RYU3rrb3sE
-X-Proofpoint-ORIG-GUID: wkAia_eA9UP8ksD59zHebcVxdKwP-IsV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-22_06,2024-02-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 mlxlogscore=895 impostorscore=0 suspectscore=0 mlxscore=0
- bulkscore=0 priorityscore=1501 adultscore=0 malwarescore=0 clxscore=1015
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402220075
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240216110313.17039-12-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,40 +81,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Philippe,
 
-
-On 1/19/24 03:31, BALATON Zoltan wrote:
-> Remove check for !defined(CONFIG_USER_ONLY) as this is already within
-> an #ifndef CONFIG_USER_ONLY block.
+On Fri, Feb 16, 2024 at 12:03:02PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Fri, 16 Feb 2024 12:03:02 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH 11/21] hw/usb: Add QOM parentship relation with hub devices
+> X-Mailer: git-send-email 2.41.0
 > 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
+> QDev objects created with qdev_*new() need to manually add
+> their parent relationship with object_property_add_child().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/ppc/excp_helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>  hw/usb/bus.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index d8eab4ff6c..2d4a72883f 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -2607,7 +2607,7 @@ void helper_hrfid(CPUPPCState *env)
->   }
->   #endif /* TARGET_PPC64 */
->   
-> -#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
-> +#ifdef TARGET_PPC64
->   void helper_rfebb(CPUPPCState *env, target_ulong s)
->   {
->       target_ulong msr = env->msr;
-> @@ -2682,7 +2682,7 @@ void raise_ebb_perfm_exception(CPUPPCState *env)
->   
->       do_ebb(env, POWERPC_EXCP_PERFM_EBB);
->   }
-> -#endif /* defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY) */
-> +#endif /* TARGET_PPC64 */
->   
->   /*****************************************************************************/
->   /* Embedded PowerPC specific helpers */
+> diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+> index a599e2552b..baad04f466 100644
+> --- a/hw/usb/bus.c
+> +++ b/hw/usb/bus.c
+> @@ -439,6 +439,7 @@ void usb_claim_port(USBDevice *dev, Error **errp)
+>              /* Create a new hub and chain it on */
+>              hub = USB_DEVICE(qdev_try_new("usb-hub"));
+
+One additional question comes to mind, should we use the qdev_new()
+here?
+
+The difference between qdev_try_new() and qdev_new() is the latter
+uses assert() to ensure the passed type exists.
+
+So if we know that type parameter is correct, we should just use
+qdev_new().
+
+Only when the caller is not sure whether the type is valid,
+qdev_try_new() should be preferred.
+
+Am I understand correctly? ;-)
+
+>              if (hub) {
+> +                object_property_add_child(OBJECT(dev), "hub", OBJECT(hub));
+
+From the comment above the code:
+
+/* Create a new hub and chain it on */
+
+this only creates a new usb-hub, should the new usb-hub become the child
+object of the original usb-hub?
+
+>                  usb_realize_and_unref(hub, bus, NULL);
+>              }
+>          }
+> -- 
+> 2.41.0
+> 
+> 
 
