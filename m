@@ -4,76 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 543B3C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 12:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A185C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 12:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd8PK-0005o4-VI; Thu, 22 Feb 2024 07:42:34 -0500
+	id 1rd8So-0007vp-80; Thu, 22 Feb 2024 07:46:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rd8PJ-0005nu-VC
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:42:34 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rd8PI-0002wr-33
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:42:33 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-563c595f968so2482469a12.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 04:42:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708605750; x=1709210550; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hlwaMRPuFF+oM4wPgCtefWbSlwv7w5mW4wwJDImByFc=;
- b=Ut2tF1poJqttGYG3MEmMV14M01frQRkhQTY+EHrh7KgNLwBDJZTT1dDyeDX8coVZ/T
- yfCsjjw4Z+oDfAL8M+zUljrd8yesz4IT4oZIGMaxcRu9wFqVmJQ1PumBKx9FWj9qkSiz
- tQkfSHEmxAmrkrmEh6pnpNUGwmlql8nNW4sOPvjbsif4tNSytQObd62Eq0hIfZA7dLs5
- 6c58ZnHLjcM4OZk8LKfWAXDk0AR29onrLirPjXa6oBWLmFTYBhTu+f3TXRXSEDMRBLGM
- i+vyU9MSR0B8tK6BjDrw5JaVK+3cgcCZqm8Ao3Sb7C55QfOz4k2HtceBLEAaKIGTSe4k
- IO8Q==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd8Sk-0007vZ-H4
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:46:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd8Sg-0003ZS-WD
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:46:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708605961;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=lJ3Uu3rijV0kvUk7vwzc9iApVw6hY2fEiV6yPi3WV4c=;
+ b=eoS2L0n3wRl5hWZX6W00MiJa+ZN1cwGPBv+qRlE68FKQ40TyAw2kPGY4TRyL+tTadFshkj
+ 0U9cHhzKFlhL9SQBTs3MhIyy2H7iJbaseOCBVzAMMFyzMhbfgTlE7p7yEU6rDgs3qfG/tF
+ Opv0/y21u5NBHKvwAiyaNl1xJMDnGPA=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-381-94KuVU5CMQyp3NncO2eiQg-1; Thu, 22 Feb 2024 07:46:00 -0500
+X-MC-Unique: 94KuVU5CMQyp3NncO2eiQg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a3fa99aa548so773566b.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 04:46:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708605750; x=1709210550;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hlwaMRPuFF+oM4wPgCtefWbSlwv7w5mW4wwJDImByFc=;
- b=UuoZT7B1+BA6GIkjLWQo2kCE3BMwFi4p8sx3Yao0BLBFC9H5HVOXNo142E88pVMsoC
- gGf5uTVBXeoKfeK9tRUlYeqJRm6yysml4G9L9MEk/3ZJ3q/a7lxt98GfgfFcgPLRSjsL
- 8BI9iLA2+UzjvtttwgOUWn8PAWYvQ9aFYiIG6HGR6Q/JlNyRQJyJJNhEG0ppIJtwt8gj
- WLqSogzTgP+NM3XuqnySVg2nA/IgE4Box7Cw5RxF2ruWXlZWsF1gPb2w+tguoxRq08Cu
- WtucW1/B7cl492BJQ09q5y8SV88iJ/BlBJmO2lC0LNY2Pa9McafwZprpR/49IC15+3Jt
- j1pA==
-X-Gm-Message-State: AOJu0YyywZkMHy58W1+opKDc5DaheQwAQ1Yv+d+hDnlb3OP4CWjhAhot
- fCpb3W87SwiUIeEDWDM1si5wcYWyikUA0m+z5zt4sGQcdXD+bk+aQXH7g554HbHWC1fxiK9jNp0
- s547TIdvcXLjXa13ambdcfdsLnCxhh6EdFmyALtOKRvzKVxDf
-X-Google-Smtp-Source: AGHT+IGrpTG0Wnssde1lv9LErlcFctcjC57weezlh6GZn8Mbom3m2gSuV+mMVCmiRrK7Fm1t6tbOZodKhTJG2j33wuQ=
-X-Received: by 2002:aa7:df87:0:b0:565:2183:d28e with SMTP id
- b7-20020aa7df87000000b005652183d28emr1814383edy.42.1708605750454; Thu, 22 Feb
- 2024 04:42:30 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708605959; x=1709210759;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lJ3Uu3rijV0kvUk7vwzc9iApVw6hY2fEiV6yPi3WV4c=;
+ b=Wc0O03ZgzjQSsKi2+cx/ShydokxLoxCss4Z33z8mApfLtfq1z8y08l59QXJMfSzRpk
+ UfZ+67fM/ZWCoRIUG5mM++ctAd50uH4ecYQUiaCwUvqXYFAB50Qa0ycjLtNPEjcZBj4P
+ 3920gd3GnzY+CLBZ8Ijq/IkHE4IoJW+x9TP8sQVM7wv2xbKR1oQW2kJuXnENPGWyKgdN
+ 9cet3AE3tdGwx05amMXJZLv2CAaWug+WVHUJt84u40B8roUvH0HvYLq4U7HkBTsuadpB
+ j+MxluxcwfekXB4IYw3OfC0B8FLRG7YyZaqlWvSHBaep5kH5dvrpEMhOku7CQxjmfR5z
+ 1ryQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWK0n6o6Eaf6aaVbdUqJfhAxF2AoSdL88jvlm8+8KS1NEVJsVpqVroOu8jgxYzF5pe3zj9naSvhJkvYI16mzZU+Z6S7TIE=
+X-Gm-Message-State: AOJu0YxiXFXIWQIfX7BGR3Rv1U7JbOpKDUwQvLVUxz5H+8PD1H7ieQL4
+ J7fEvvPSZzxkNKMizsDeSSoN8EAP6tAHzFQZDOnHWSR5u8ZISOY1GTzIruUjGLNJ3aKnMZPqYPm
+ pcuhIMTkJ16TxxDWo7mzhio2SDaeC5xa67WvFNRsmij+y8oOlHZuJ
+X-Received: by 2002:a17:906:2bc6:b0:a3f:4f15:49d9 with SMTP id
+ n6-20020a1709062bc600b00a3f4f1549d9mr2898664ejg.18.1708605959193; 
+ Thu, 22 Feb 2024 04:45:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHNIykHIptdn0CTBmaV9aSDMeTxxP/+AZRH+xsUX43HHONnQyA+ul5nUO0njnw2TwveJ9HAgw==
+X-Received: by 2002:a17:906:2bc6:b0:a3f:4f15:49d9 with SMTP id
+ n6-20020a1709062bc600b00a3f4f1549d9mr2898643ejg.18.1708605958859; 
+ Thu, 22 Feb 2024 04:45:58 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
+ [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
+ pv14-20020a170907208e00b00a3f45b80559sm1444845ejb.139.2024.02.22.04.45.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Feb 2024 04:45:58 -0800 (PST)
+Message-ID: <ce362ea6-b583-4c37-bc13-5a9fc664ce6f@redhat.com>
+Date: Thu, 22 Feb 2024 13:45:57 +0100
 MIME-Version: 1.0
-References: <20240221091154.3024118-1-gaosong@loongson.cn>
-In-Reply-To: <20240221091154.3024118-1-gaosong@loongson.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Feb 2024 12:42:19 +0000
-Message-ID: <CAFEAcA8zR0dKQYbVNTbF8cwwvKUt+eJc7v3mSm58cMissO6GZg@mail.gmail.com>
-Subject: Re: [PULL 0/1] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitlab: force allow use of pip in Cirrus jobs
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+References: <20240222114038.2348718-1-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240222114038.2348718-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,76 +148,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Feb 2024 at 09:11, Song Gao <gaosong@loongson.cn> wrote:
->
-> The following changes since commit 760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83=
-d0:
->
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into stagin=
-g (2024-02-20 10:11:08 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240221
->
-> for you to fetch changes up to be57fd1e526e70fd55f1e87b0b70fab3c6baf089:
->
->   loongarch: Change the UEFI loading mode to loongarch (2024-02-21 17:06:=
-23 +0800)
->
-> ----------------------------------------------------------------
-> pull-loongarch-20240221
->
-> ----------------------------------------------------------------
-> Xianglai Li (1):
->       loongarch: Change the UEFI loading mode to loongarch
+On 22/02/2024 12.40, Daniel P. Berrangé wrote:
+> Python is transitioning to a world where you're not allowed to use 'pip
+> install' outside of a virutal env by default. The rationale is to stop
+> use of pip clashing with distro provided python packages, which creates
+> a major headache on distro upgrades.
+> 
+> All our CI environments, however, are 100% disposable so the upgrade
+> headaches don't exist. Thus we can undo the python defaults to allow
+> pip to work.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/cirrus/build.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> FYI lcitool recently added logic that purges the EXTERNALLY-MANAGED
+> marker in all the dockerfiles. QEMU will pick that up on the next
+> refresh, so Linux containers won't have trouble in future.
+> 
+> The macos/FreeBSD build env isn't fully managed by lcitool though,
+> so we need this manual addition to purge the marker that prevents
+> use of 'pip'.
+> 
+> This fixes the CI regression that just started hitting on Cirrus
+> CI macOS images, likely from homebrew python updates.
+> 
+> diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
+> index 29d55c4aa3..43dd52dd19 100644
+> --- a/.gitlab-ci.d/cirrus/build.yml
+> +++ b/.gitlab-ci.d/cirrus/build.yml
+> @@ -21,7 +21,7 @@ build_task:
+>     install_script:
+>       - @UPDATE_COMMAND@
+>       - @INSTALL_COMMAND@ @PKGS@
+> -    - if test -n "@PYPI_PKGS@" ; then @PIP3@ install @PYPI_PKGS@ ; fi
+> +    - if test -n "@PYPI_PKGS@" ; then PYLIB=$(@PYTHON@ -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; @PIP3@ install @PYPI_PKGS@ ; fi
+>     clone_script:
+>       - git clone --depth 100 "$CI_REPOSITORY_URL" .
+>       - git fetch origin "$CI_COMMIT_REF_NAME"
 
-Hi; this fails to build for mipsel:
-https://gitlab.com/qemu-project/qemu/-/jobs/6232698129
+Thanks, that works for me:
 
-../hw/loongarch/acpi-build.c: In function =E2=80=98build_flash_aml=E2=80=99=
-:
-../hw/loongarch/acpi-build.c:327:19: error: incompatible types when
-assigning to type =E2=80=98hwaddr=E2=80=99 {aka =E2=80=98long long unsigned=
- int=E2=80=99} from type
-=E2=80=98Int128=E2=80=99
-327 | flash0_size =3D flash_mem->size;
-| ^~~~~~~~~
-../hw/loongarch/acpi-build.c:331:19: error: incompatible types when
-assigning to type =E2=80=98hwaddr=E2=80=99 {aka =E2=80=98long long unsigned=
- int=E2=80=99} from type
-=E2=80=98Int128=E2=80=99
-331 | flash1_size =3D flash_mem->size;
-| ^~~~~~~~~
+  https://gitlab.com/thuth/qemu/-/jobs/6233183719
 
+Tested-by: Thomas Huth <thuth@redhat.com>
 
-../hw/loongarch/virt.c: In function =E2=80=98fdt_add_flash_node=E2=80=99:
-../hw/loongarch/virt.c:131:19: error: incompatible types when
-assigning to type =E2=80=98hwaddr=E2=80=99 {aka =E2=80=98long long unsigned=
- int=E2=80=99} from type
-=E2=80=98Int128=E2=80=99
-131 | flash0_size =3D flash_mem->size;
-| ^~~~~~~~~
-../hw/loongarch/virt.c:135:19: error: incompatible types when
-assigning to type =E2=80=98hwaddr=E2=80=99 {aka =E2=80=98long long unsigned=
- int=E2=80=99} from type
-=E2=80=98Int128=E2=80=99
-135 | flash1_size =3D flash_mem->size;
-| ^~~~~~~~~
-
-
-The value you get back from pflash_cfi01_get_memory() is a
-MemoryRegion -- this should be an opaque struct to you, not
-something you can reach in and get the 'size' field from.
-(The 'size' field is an Int128, which is not necessarily an
-integer type known to the compiler -- on some platforms it is
-a struct -- which is why this doesn't compile here.)
-
-Your board code created these memory regions so typically it
-should already know how big they are.  If you really
-do need to get the size of a MemoryRegion, the function
-to use is memory_region_size().
-
-thanks
--- PMM
 
