@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D161C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5646CC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5Lv-0006vY-MA; Thu, 22 Feb 2024 04:26:51 -0500
+	id 1rd5Mb-0007TG-PJ; Thu, 22 Feb 2024 04:27:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rd5Ln-0006uX-E3; Thu, 22 Feb 2024 04:26:45 -0500
-Received: from szxga04-in.huawei.com ([45.249.212.190])
+ id 1rd5MZ-0007Sh-Os; Thu, 22 Feb 2024 04:27:31 -0500
+Received: from szxga02-in.huawei.com ([45.249.212.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rd5Lj-0002d7-HX; Thu, 22 Feb 2024 04:26:42 -0500
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4TgSQJ6NqKz2BdJZ;
- Thu, 22 Feb 2024 17:24:24 +0800 (CST)
+ id 1rd5MX-0002ii-DQ; Thu, 22 Feb 2024 04:27:31 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.194])
+ by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4TgSRT4zTYzXhDg;
+ Thu, 22 Feb 2024 17:25:25 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 90F54140411;
- Thu, 22 Feb 2024 17:26:34 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 8894B140257;
+ Thu, 22 Feb 2024 17:27:21 +0800 (CST)
 Received: from [10.67.109.254] (10.67.109.254) by
  kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 22 Feb 2024 17:26:33 +0800
-Message-ID: <864e2313-ca3e-b704-ade0-f4ae7583c275@huawei.com>
-Date: Thu, 22 Feb 2024 17:26:33 +0800
+ 15.1.2507.35; Thu, 22 Feb 2024 17:27:20 +0800
+Message-ID: <61cb54a9-0940-e92f-e409-0aa8a20587e0@huawei.com>
+Date: Thu, 22 Feb 2024 17:27:20 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.2.0
@@ -42,22 +42,21 @@ To: Richard Henderson <richard.henderson@linaro.org>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 References: <20240221130823.677762-1-ruanjinjie@huawei.com>
  <20240221130823.677762-7-ruanjinjie@huawei.com>
- <2e1ad5a4-b706-44a9-b686-6ddeb41722e2@linaro.org>
-In-Reply-To: <2e1ad5a4-b706-44a9-b686-6ddeb41722e2@linaro.org>
+ <94867836-95f4-4da2-96e9-583e508a762d@linaro.org>
+In-Reply-To: <94867836-95f4-4da2-96e9-583e508a762d@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.190;
- envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.188;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
 X-Spam_score_int: -74
 X-Spam_score: -7.5
 X-Spam_bar: -------
 X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,7 +76,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/2/22 5:23, Richard Henderson wrote:
+On 2024/2/22 4:06, Richard Henderson wrote:
 > On 2/21/24 03:08, Jinjie Ruan via wrote:
 >> This only implements the external delivery method via the GICv3.
 >>
@@ -103,9 +102,72 @@ On 2024/2/22 5:23, Richard Henderson wrote:
 >>   #define ARM_CPU_VIRQ 2
 >>   #define ARM_CPU_VFIQ 3
 >> +#define ARM_CPU_NMI 4
+>>     /* For M profile, some registers are banked secure vs non-secure;
+>>    * these are represented as a 2-element array where the first element
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 5e5978c302..055670343e 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -128,7 +128,7 @@ static bool arm_cpu_has_work(CPUState *cs)
+>>         return (cpu->power_state != PSCI_OFF)
+>>           && cs->interrupt_request &
+>> -        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
+>> +        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI
+>>            | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ |
+>> CPU_INTERRUPT_VSERR
+>>            | CPU_INTERRUPT_EXITTB);
+>>   }
 > 
-> You need a 6th GPIO for vNMI.
-Thank you! I'll fix it.
+> I think you should not include CPU_INTERRUPT_NMI when it cannot be
+> delivered, e.g. FEAT_NMI not enabled.
+
+I'll fix it.
+
+> 
+> 
+>> @@ -668,6 +668,7 @@ static inline bool arm_excp_unmasked(CPUState *cs,
+>> unsigned int excp_idx,
+>>       CPUARMState *env = cpu_env(cs);
+>>       bool pstate_unmasked;
+>>       bool unmasked = false;
+>> +    bool nmi_unmasked = false;
+>>         /*
+>>        * Don't take exceptions if they target a lower EL.
+>> @@ -678,13 +679,29 @@ static inline bool arm_excp_unmasked(CPUState
+>> *cs, unsigned int excp_idx,
+>>           return false;
+>>       }
+>>   +    nmi_unmasked = (!(env->allint & PSTATE_ALLINT)) &
+>> +                   (!((env->cp15.sctlr_el[target_el] &
+>> SCTLR_SPINTMASK) &&
+>> +                   (env->pstate & PSTATE_SP) && cur_el == target_el));
+> 
+> I don't see SCTLR_ELx.NMI being tested anywhere, which is required to
+> enable everything else.
+
+I'll Add it
+
+> 
+>>       case EXCP_FIQ:
+>> -        pstate_unmasked = !(env->daif & PSTATE_F);
+>> +        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
+>> +            pstate_unmasked = (!(env->daif & PSTATE_F)) & nmi_unmasked;
+>> +        } else {
+>> +            pstate_unmasked = !(env->daif & PSTATE_F);
+>> +        }
+>>           break;
+>>         case EXCP_IRQ:
+>> -        pstate_unmasked = !(env->daif & PSTATE_I);
+>> +        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
+>> +            pstate_unmasked = (!(env->daif & PSTATE_I)) & nmi_unmasked;
+>> +        } else {
+>> +            pstate_unmasked = !(env->daif & PSTATE_I);
+>> +        }
+>>           break;
+> 
+> I don't see what this is doing.  While Superpriority is IMPLEMENTATION
+> DEFINED, how are you defining it for QEMU?  Is there a definition from
+> real hw which makes sense under emulation?
 > 
 > 
 > r~
