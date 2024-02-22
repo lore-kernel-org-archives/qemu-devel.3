@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A154C5478C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD99C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdFvh-0000Bu-9L; Thu, 22 Feb 2024 15:44:29 -0500
+	id 1rdFvi-0000Q4-Dy; Thu, 22 Feb 2024 15:44:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFvf-0008U3-Kn
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:44:27 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rdFvg-00008Z-Rc
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:44:28 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFvc-0002pq-1M
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:44:27 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1dc5d0162bcso613605ad.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:44:23 -0800 (PST)
+ id 1rdFvf-0002qm-3u
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:44:28 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-53fa455cd94so77017a12.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:44:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708634663; x=1709239463; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708634665; x=1709239465; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KYeT1V/wjgovpdrb0SONHx5NJHYkyLqzQDA/KKTsreA=;
- b=QI42+2rj+7GidUYbORxEOjUYcCvca6yba9mtOkpm4TIhiDR/A+IPE/EAmnKUMw47Y2
- IFF0bOYlGd0xVssNDAo+7hcGY87ceNdm3lvaPWIEDyVP+mQhw/JLSto0F6s9m/QVeTmF
- d2+c90ZuGfcSwGv5htTHoeQxEmJfQHGcOn9l3nH2fQdUP6/jBR21PM671bpf1VsAzs+M
- HEMXWhKVuFh6Ntns0RxFzfEFCXHb48bkCnM5/mdp05sWRvi0n+ldL8RgSOaSkQFgYNLO
- jfn4pzGUUJ2v/o3J0R8jZAedHH2yWuy4Hx61ZgElht6dJg80Zhme+2pwgfrK+mesHq7W
- Y5Nw==
+ bh=nZgxz9sv+Wfw3NEh+PaVP4+cTZIcAB3l+Ojbwy+/FqY=;
+ b=aapvMTa08l9dR6SGmYHP3k3nF1Jf7GTaTyZQI4KhzOYnjMQv1983H2ENRgrDL5wYDD
+ lgSGkxCgLyW3qooo//o4xCb7Zkpm9fm0fdk5ITUx9OS9EPst87rsXXZ3ZRAGiRYuIp7h
+ e+Jdjp7gv+51tnOZcbr96eAzV2EXRik61XXyyMYhqLZqidiDbznfWeSOvw+BCKcPUkzW
+ pbuZIUlmdtF+SxI/HA1vwwUFVEgidvyIEinzwiAtmgQoiTdanBaxFyAM3G5Pn9NCPu/b
+ ZTPCRrgm55BQW/jYJAC3JcrDeoBqF2TKNkV/e8ZGAZRFBJCAiVoGdI88XHFGGrGF4gfI
+ 7FAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708634663; x=1709239463;
+ d=1e100.net; s=20230601; t=1708634665; x=1709239465;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KYeT1V/wjgovpdrb0SONHx5NJHYkyLqzQDA/KKTsreA=;
- b=X3bC1pbOScLhCTbKo7mMZfC426DgI93tjlj7gLnlSr5wQVgIX8UDy1h3cOaOIYhjIq
- LXFWosbSdAYPu1Rds/xIIe20WJsjj+gy0fGBgXqqg73x6QjRjFRYVByszSVLpf0TTwlj
- S7JvAKMf6k98KCVr49yG5Jd78UFrc3r0usoG/qIj5eaapWbPmkc50q9YiKVCT2TDse5f
- yAv47R4HDbYWuuwhFMWM3jstlPniq1rWvKvMT1sQ1du883OW7jYTCDscY840hWkbWMYb
- XbibqYAK/gsT3GZeJ2FerQ9/G07ipeLwSAAACqVeeQvdtnpwsNxIcEx77iCAqjjetxiB
- QPVA==
-X-Gm-Message-State: AOJu0YyZgVw8mBZApzHBCsReAag0nzGBLJ+LDO4Ko4C/CLghAK4zdiRw
- 32UtbvO2EY+xK1Is8u4Iv3aet8fzRQNZm7hA8Ypr83p76Fzg01yZ4igeEtolg8DuYyLwnezK4Bm
- r
-X-Google-Smtp-Source: AGHT+IG4megIkJ/DOoXf3Swsa/+1KpgVYZ2p24cETZIU/FgFKa+qM2MtubqK6bETL4ILS90GdrccSQ==
-X-Received: by 2002:a17:902:6f10:b0:1db:9fa4:c770 with SMTP id
- w16-20020a1709026f1000b001db9fa4c770mr14920062plk.34.1708634662870; 
- Thu, 22 Feb 2024 12:44:22 -0800 (PST)
+ bh=nZgxz9sv+Wfw3NEh+PaVP4+cTZIcAB3l+Ojbwy+/FqY=;
+ b=sjlbrruH3o+1wRpcU41imEqBF5aJjfepTMjKyz0EZoFC1cb3aBiIlXRZb5AUSg8rWb
+ BTfJxWe8XczitLkUg5JGoL+6w863QcEAf6xsi0NtBR/rlNu2hc8sWrMuKiM4O+QqP6gT
+ rpSZCHI/cWID1SqJ1gzk8NfYH2FjgQGRLlnx/YL8jpV3FbAmHMuKFK9fmqgTHEBhVMFI
+ jNm0icW89ngo7NlqQZ0P9Hu6wcZadcTeU096SAWD/q5rK4TqoEq+573S+YBbJUF1Nq7J
+ L1rI0XJXS/2ohpbq1rG+5TvozhPYr0JRed8OnHubHXMv3Ip+4TBrAS5nzl7eaiKKTVN+
+ 7OxA==
+X-Gm-Message-State: AOJu0YwpTmW/K8fOSeAhEP78puNF9/d5JhTmNzFrf9zXdJi9bTGFaKj1
+ L6WA4nFaoP7nSTsEPBaXEwBKG6q26lR3Hup8i/sSR8DttjVcjggLO+EYzm2I49ylqmuHAbP+cQp
+ Q
+X-Google-Smtp-Source: AGHT+IGtk8U1oBd9J2hNINjlM3l+J+lqFhSsY3Q2lflLXPqzceAc/B1PsZTo/7Lifj7hZJAlFhQftw==
+X-Received: by 2002:a17:902:a3c3:b0:1dc:1ff5:3dfe with SMTP id
+ q3-20020a170902a3c300b001dc1ff53dfemr7073216plb.27.1708634664745; 
+ Thu, 22 Feb 2024 12:44:24 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.44.21
+ l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.44.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 12:44:22 -0800 (PST)
+ Thu, 22 Feb 2024 12:44:24 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PULL 37/39] target/ppc: Enable TARGET_PAGE_BITS_VARY for user-only
-Date: Thu, 22 Feb 2024 10:43:21 -1000
-Message-Id: <20240222204323.268539-38-richard.henderson@linaro.org>
+Subject: [PULL 38/39] target/alpha: Enable TARGET_PAGE_BITS_VARY for user-only
+Date: Thu, 22 Feb 2024 10:43:22 -1000
+Message-Id: <20240222204323.268539-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240222204323.268539-1-richard.henderson@linaro.org>
 References: <20240222204323.268539-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,34 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since ppc binaries are generally built for multiple
+Since alpha binaries are generally built for multiple
 page sizes, it is trivial to allow the page size to vary.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-33-richard.henderson@linaro.org>
+Message-Id: <20240102015808.132373-34-richard.henderson@linaro.org>
 ---
- target/ppc/cpu-param.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ target/alpha/cpu-param.h | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
-index 0a0416e0a8..b7ad52de03 100644
---- a/target/ppc/cpu-param.h
-+++ b/target/ppc/cpu-param.h
-@@ -31,6 +31,13 @@
- # define TARGET_PHYS_ADDR_SPACE_BITS 36
- # define TARGET_VIRT_ADDR_SPACE_BITS 32
- #endif
--#define TARGET_PAGE_BITS 12
+diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
+index 68c46f7998..c969cb016b 100644
+--- a/target/alpha/cpu-param.h
++++ b/target/alpha/cpu-param.h
+@@ -9,10 +9,22 @@
+ #define ALPHA_CPU_PARAM_H
+ 
+ #define TARGET_LONG_BITS 64
+-#define TARGET_PAGE_BITS 13
+ 
+ /* ??? EV4 has 34 phys addr bits, EV5 has 40, EV6 has 44.  */
+ #define TARGET_PHYS_ADDR_SPACE_BITS  44
+-#define TARGET_VIRT_ADDR_SPACE_BITS  (30 + TARGET_PAGE_BITS)
 +
 +#ifdef CONFIG_USER_ONLY
-+/* Allow user-only to vary page size from 4k */
++/*
++ * Allow user-only to vary page size.  Real hardware allows only 8k and 64k,
++ * but since any variance means guests cannot assume a fixed value, allow
++ * a 4k minimum to match x86 host, which can minimize emulation issues.
++ */
 +# define TARGET_PAGE_BITS_VARY
 +# define TARGET_PAGE_BITS_MIN 12
++# define TARGET_VIRT_ADDR_SPACE_BITS  63
 +#else
-+# define TARGET_PAGE_BITS 12
++# define TARGET_PAGE_BITS 13
++# define TARGET_VIRT_ADDR_SPACE_BITS  (30 + TARGET_PAGE_BITS)
 +#endif
  
  #endif
