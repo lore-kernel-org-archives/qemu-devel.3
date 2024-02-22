@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D42C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 12:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FBEC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 12:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd8Kp-0003t9-M8; Thu, 22 Feb 2024 07:37:55 -0500
+	id 1rd8MG-0004tN-2Z; Thu, 22 Feb 2024 07:39:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rd8Ko-0003sr-8g
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:37:54 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd8M3-0004pi-FM
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:39:12 -0500
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rd8Kg-0002D8-TU
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:37:54 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1d953fa3286so54149285ad.2
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 04:37:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd8M1-0002RD-8B
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 07:39:10 -0500
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-512a65cd2c7so6390812e87.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 04:39:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708605465; x=1709210265; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1708605547; x=1709210347; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xrvwjP0Hb+b3w8KG0wWYxs30wNfruxhjAgPCKAwfW6E=;
- b=O7g18gEwL6b/mD6zMaGZoXldLWiNmvipi9EKwKdT6hjrenRUyaathrWT9s6Vmx6Iig
- RZ6Yrfm4V+S/YIGlW3REEyxeR+SyV1ckQDoQwXIBm5eBNqhQJicIpk0F09zwSvi9RZz8
- lhZtKJ+3wl1xedrZUK4ZyYGZ2meHwjMfhAIJE8kEhqu7NUYvvx4Cldf4+AGKcG3SRGBQ
- Y+Ba86wtYmACNxLM7ayjbL9I+po6XbEPb6MUKsPqBy/K3zyXwvUMyGQPrRE/Yk217+0j
- rqpQCVwjLxREadxdw2NRL3gywr6UbNR/+wJVnS80A7rz6VVWAv6n4aA1N3wybahMRIF1
- iBlg==
+ bh=yRJfDPXqdyiEqooCZK6y2objTKV3aGRbT3NUK6art34=;
+ b=U9v1wl0TO4o/p/Kh15fnK1BVL5zX6/bK8huZ9s0ab1ZAs6/Ex3AQmaXDl703FntWEm
+ zJFsPRxadDdh6T5XRMz/ftki3MJUYVT75utr04BBCJSjBls0IafTgWgbJ4Vf5lB6CHiq
+ TgdnWtJgBQC4st+xwGO7ppT23ZzhT5q6FsTBlTi/rVjditQ9JBmTKxN8vRNNJ+Ybmhfo
+ MTNGQUqzYelhedc/pacl+LnGHrnLNzqFZNOYD+aITlhl0rwg63WSPGQEBDwwURgbNpvP
+ oNea1xmo/auT3SSys6VWUS08uTfbf4q+krek6du/YOtWHqRVnF5XFBN1gfcCChiWzm4f
+ UL5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708605465; x=1709210265;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1708605547; x=1709210347;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xrvwjP0Hb+b3w8KG0wWYxs30wNfruxhjAgPCKAwfW6E=;
- b=f/CQsbmi6PLBa3lSfA71V4jKVId4YVstYbXzW6dfDnQnBsuJv/RpnWYGf/bKyTHi8W
- KilkFmMuQICHqYSNdTOedrC5rUhXsPIpG+fHE9C9QFgNOzIi63jAaHTLYbU8T+/SgU4g
- V6lU+6NIypms+7VLoMMzNbf9ONqcmfWwQfWv1hsdHi79M5wYk0Dh30N/nw+LImPzEPif
- QVy4WDTWP7PkOS8PZaPdShsxfQWmc55jLe8ERZFxtiBarhJZbay3ttEIBskHyKfrspd3
- HiS31SRgHdrpQgAIE08hFqpHtCmEKkG/l8eLF8Ot2I8LWSXH0XKPxeDfyTJ1+wyZu+Rp
- Mn3w==
+ bh=yRJfDPXqdyiEqooCZK6y2objTKV3aGRbT3NUK6art34=;
+ b=lT7oZRkhP4iavf1tQE2e5ExbbeIFYZOqwCFyRwXPN3QQjKnmwzhCXJYxSKM5fRV91h
+ UsDfiNYzL0c4IdcQTClLhG6bjKabFekAOujiiAxg4Xsf5Qgf4PG2WPz9JGNBpiQfFE2/
+ LY7q8uWoTriuPsgBake7fhk9JM7nXY6LqJdxnHVh1E5a2Bm02WMPBXFR1QgVeg3PiIqm
+ ll5o8E1PNChnHURPnegiIy9qcJWj9MXZ2zTkXr8BR+rp95h+zIjqJVtr3TemmZZdNNsM
+ X2eZ5zMBdnC53dOz6hEpbIwfJR8OBaH42bNxPkzFJZJVr+XsaB3Ts0HgTHvWll7eMqun
+ Qc7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEn0CXBiaE4Jyu1oNMldRM1KO6Ev+CwENt8wWjZnm3RNcm+i0duOTtoJQNmwqBe7l7s/baVIFoJUziSCOvLbd1GgnsYTM=
-X-Gm-Message-State: AOJu0Yw+/CAPiIk0XjCr7JLZSZ3gK7184OWgrpH40nFXqa0qSJZohiLG
- V44oRHYTeuWOeEbUadUGLX8geSUfebJQjotE550kd5cPJZHaDP7cyq2KxNjvElM=
-X-Google-Smtp-Source: AGHT+IG2x8eVxDs3qzDoDDyqa0omePT+X5AfKsvlLi3BkihsMpijGHTBF//qkDYYqfuB7ukNJIwAtg==
-X-Received: by 2002:a17:902:bc86:b0:1d9:7ab0:5e20 with SMTP id
- bb6-20020a170902bc8600b001d97ab05e20mr22278224plb.69.1708605464695; 
- Thu, 22 Feb 2024 04:37:44 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
+ AJvYcCX4ap58RBwcQpG2gFGoDQrrrc+VDwhx9bQ41K+xFq/E9tTgFiq1WZfl5qbxIUlcc/jcqa+dTTgswZmcuY6aYpBg6rEXYRU=
+X-Gm-Message-State: AOJu0YwVHq4pTKhLW9mKtn/KV6mZ4nTo/hzPaIGpY0OvuigWtq9taS9P
+ MHtV17azpeS7smuZkaYiOv4jRTDqqoNVKtOe9ii4u1IG53zbWcf7IIwivd6llmw=
+X-Google-Smtp-Source: AGHT+IFDjbzBj1tyShgtwQIAN+l5GE+0jiif1LRCPzIVn/vkkgfjGmsAyWcsxQw87A1lRqtgYKw6yQ==
+X-Received: by 2002:a05:6512:ba1:b0:512:bda4:bf47 with SMTP id
+ b33-20020a0565120ba100b00512bda4bf47mr8104889lfv.4.1708605547106; 
+ Thu, 22 Feb 2024 04:39:07 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.211.34])
  by smtp.gmail.com with ESMTPSA id
- e2-20020a170902d38200b001da0a698095sm9865684pld.282.2024.02.22.04.37.42
+ fj21-20020a1709069c9500b00a3e5adf11c7sm4812091ejc.157.2024.02.22.04.39.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 04:37:44 -0800 (PST)
-Message-ID: <eb13a04e-420a-4db7-a324-25520bcc32ea@ventanamicro.com>
-Date: Thu, 22 Feb 2024 09:37:39 -0300
+ Thu, 22 Feb 2024 04:39:06 -0800 (PST)
+Message-ID: <885a8c0a-0dce-4580-8b4b-b72800e5387f@linaro.org>
+Date: Thu, 22 Feb 2024 13:39:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] target/riscv: Apply modularized matching conditions
- for breakpoint
-To: =?UTF-8?B?QWx2aW4gQ2hlLUNoaWEgQ2hhbmco5by15ZOy5ZiJKQ==?=
- <alvinga@andestech.com>, "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
- "bin.meng@windriver.com" <bin.meng@windriver.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
-References: <20240219032559.79665-1-alvinga@andestech.com>
- <20240219032559.79665-3-alvinga@andestech.com>
- <801fb2e4-bb09-47e9-b7f6-899de574c4a3@ventanamicro.com>
- <SEYPR03MB6700A34DA4F22756C3C72CF0A8562@SEYPR03MB6700.apcprd03.prod.outlook.com>
+Subject: Re: [PATCH] gitlab: force allow use of pip in Cirrus jobs
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <SEYPR03MB6700A34DA4F22756C3C72CF0A8562@SEYPR03MB6700.apcprd03.prod.outlook.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+References: <20240222114038.2348718-1-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240222114038.2348718-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,144 +98,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2/21/24 22:46, Alvin Che-Chia Chang(張哲嘉) wrote:
-> Hi Daniel,
+On 22/2/24 12:40, Daniel P. Berrangé wrote:
+> Python is transitioning to a world where you're not allowed to use 'pip
+> install' outside of a virutal env by default. The rationale is to stop
+> use of pip clashing with distro provided python packages, which creates
+> a major headache on distro upgrades.
 > 
->> -----Original Message-----
->> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> Sent: Thursday, February 22, 2024 1:26 AM
->> To: Alvin Che-Chia Chang(張哲嘉) <alvinga@andestech.com>;
->> qemu-riscv@nongnu.org; qemu-devel@nongnu.org
->> Cc: alistair.francis@wdc.com; bin.meng@windriver.com;
->> liwei1518@gmail.com; zhiwei_liu@linux.alibaba.com
->> Subject: Re: [PATCH 2/4] target/riscv: Apply modularized matching conditions
->> for breakpoint
->>
->>
->>
->> On 2/19/24 00:25, Alvin Chang wrote:
->>> We have implemented trigger_common_match(), which checks if the
->>> enabled privilege levels of the trigger match CPU's current privilege level.
->>> Remove the related code in riscv_cpu_debug_check_breakpoint() and
->>> invoke
->>> trigger_common_match() to check the privilege levels of the type 2 and
->>> type 6 triggers for the breakpoints.
->>>
->>> Only the execution bit and the executed PC should be futher checked in
->>
->> typo: further
+> All our CI environments, however, are 100% disposable so the upgrade
+> headaches don't exist. Thus we can undo the python defaults to allow
+> pip to work.
 > 
-> Thanks! Will fix it.
-> 
->>
->>> riscv_cpu_debug_check_breakpoint().
->>>
->>> Signed-off-by: Alvin Chang <alvinga@andestech.com>
->>> ---
->>>    target/riscv/debug.c | 26 ++++++--------------------
->>>    1 file changed, 6 insertions(+), 20 deletions(-)
->>>
->>> diff --git a/target/riscv/debug.c b/target/riscv/debug.c index
->>> 7932233073..b971ed5d7a 100644
->>> --- a/target/riscv/debug.c
->>> +++ b/target/riscv/debug.c
->>> @@ -855,21 +855,17 @@ bool riscv_cpu_debug_check_breakpoint(CPUState
->> *cs)
->>>            for (i = 0; i < RV_MAX_TRIGGERS; i++) {
->>>                trigger_type = get_trigger_type(env, i);
->>>
->>> +            if (!trigger_common_match(env, trigger_type, i)) {
->>> +                continue;
->>> +            }
->>> +
->>
->> I believe this will change how the function behaves. Before this patch, we
->> would 'return false' if we have a TRIGGER_TYPE_AD_MATCH and
->> env->virt_enabled is true.
->>
->> Now, for the same case, we'll keep looping until we found a match, or return
->> 'false'
->> if we run out of triggers.
-> 
-> Oh! I didn't notice that the behavior is changed.. thank you.
-> 
-> Image that CPU supports both type 2 and type 6 triggers, and the debugger sets two identical breakpoints.(this should be a mistake, but we should not restrict the debugger)
-> One of them is type 2 breakpoint at trigger index 0, and the other is type 6 breakpoint at trigger index 1.
-> Now if the system runs in VS/VU modes, it could match type 6 breakpoint, so the looping is necessary.
-> If the system runs in M/HS/U modes, it could match type 2 breakpoint.
-> Is my understanding correct?
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   .gitlab-ci.d/cirrus/build.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-It looks correct to me. We just need to mention in the commit msg that the behavior
-change is intentional, not an accident.
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-Thanks,
-
-Daniel
-
-
-> 
-> 
-> Sincerely,
-> Alvin
-> 
->>
->> This seems ok to do, but we should state in the commit msg that we're
->> intentionally change how the function works. If that's not the idea and we want
->> to preserve the existing behavior, we would need to do:
->>
->>>
->>> +            if (!trigger_common_match(env, trigger_type, i)) {
->>> +                return false;
->>> +            }
->>
->> Instead of just continue looping. Thanks,
->>
->>
->> Daniel
->>
->>>                switch (trigger_type) {
->>>                case TRIGGER_TYPE_AD_MATCH:
->>> -                /* type 2 trigger cannot be fired in VU/VS mode */
->>> -                if (env->virt_enabled) {
->>> -                    return false;
->>> -                }
->>> -
->>>                    ctrl = env->tdata1[i];
->>>                    pc = env->tdata2[i];
->>>
->>>                    if ((ctrl & TYPE2_EXEC) && (bp->pc == pc)) {
->>> -                    /* check U/S/M bit against current privilege level
->> */
->>> -                    if ((ctrl >> 3) & BIT(env->priv)) {
->>> -                        return true;
->>> -                    }
->>> +                    return true;
->>>                    }
->>>                    break;
->>>                case TRIGGER_TYPE_AD_MATCH6:
->>> @@ -877,17 +873,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState
->> *cs)
->>>                    pc = env->tdata2[i];
->>>
->>>                    if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
->>> -                    if (env->virt_enabled) {
->>> -                        /* check VU/VS bit against current privilege
->> level */
->>> -                        if ((ctrl >> 23) & BIT(env->priv)) {
->>> -                            return true;
->>> -                        }
->>> -                    } else {
->>> -                        /* check U/S/M bit against current privilege
->> level */
->>> -                        if ((ctrl >> 3) & BIT(env->priv)) {
->>> -                            return true;
->>> -                        }
->>> -                    }
->>> +                    return true;
->>>                    }
->>>                    break;
->>>                default:
 
