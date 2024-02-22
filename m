@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91CEFC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FEDFC54791
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdCsr-0005No-5f; Thu, 22 Feb 2024 12:29:21 -0500
+	id 1rdCsY-0004ko-ES; Thu, 22 Feb 2024 12:29:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rdCsp-0005Mb-6q
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:19 -0500
+ id 1rdCsT-0004j3-EU
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:28:57 -0500
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rdCsn-0003J0-AP
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:18 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ id 1rdCsR-0003D9-QF
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:28:57 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41MH9aGe031377; Thu, 22 Feb 2024 17:29:16 GMT
+ 41MGtc6q005183; Thu, 22 Feb 2024 17:28:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=yYkqhag+ZGTXKPDA5eix+T8bZQxSgGbYTN0RzZrNURA=;
- b=IPB7mvfqLH0XDWvIzdq3AgNifFgTQWrZWjhqx/uNQjZiPewp54yFXLAhhHMfAdrO5IqF
- UCfPTAWycFMyDAWBS3cnXVPJed/VZlcv2K9J9Tcx3icJixi2SQTeLfHIIGtY4z31gFyO
- 4qE+PnBq8ANrvIA7P3ZCGbrKb5xKXcQYLe/6bHO0QKQcILWfDKVzzgwtLvV0kkxM7Mt0
- eXwfFYVAut9qPzGQv8Wzg+K7xv5qzElTx75s0jyZ5lD0o47aKxMDmD9bhmGa2O3jq8vQ
- zCwmsamlEVguLxIQuycU76b2/92OKZVk4cXXhX7VRMPdBYSyE+HhFACfoRkEPMomh+ES gA== 
+ bh=hFgl8tvTrOvJ0dXJAR8o7o4bvOTku39BFJ3n9ZyNU1Y=;
+ b=bo/u/J81vGErnfvhPnPEWrQ+0GgYocoX+d2VwLKdwx6u8+N6ipr/SIohPiNNylD46UOB
+ oAGPPbiVPyxUklMUtJTQ1o5YoZNyibvqsk/IJ2/IpKdjhUvflBd5BZd9F5AV+5JGv4fG
+ uX9GK67H3bDuJNcnlHFmGfS2NKZRCaaFRrVU0PUyS67uNK/2FSFiYgl5XTiAfNekFnV/
+ eGXsjCGvhTW/VPneesv9a7GXTFdjouY1VTSzKVAcWN91ouSBBjR11vec/h9E5l+OwB0z
+ UfJLE8o8iJYcy8BhL6V8iSaXh7gOkR5x/rs7Vt49Gam2bESzN9RN85AamJqg6xTZH+7J QQ== 
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wakd2dfy7-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wd5fw52v1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 17:29:15 +0000
+ Thu, 22 Feb 2024 17:28:54 +0000
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41MG4la1024355; Thu, 22 Feb 2024 17:28:57 GMT
+ with ESMTP id 41MG9UJn024561; Thu, 22 Feb 2024 17:28:52 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wak8ayrum-1
+ 3wak8ayrq8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 17:28:57 +0000
+ Thu, 22 Feb 2024 17:28:52 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSgA9032453;
- Thu, 22 Feb 2024 17:28:56 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSgA3032453;
+ Thu, 22 Feb 2024 17:28:52 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3wak8ayre4-11; Thu, 22 Feb 2024 17:28:56 +0000
+ ESMTP id 3wak8ayre4-8; Thu, 22 Feb 2024 17:28:52 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -62,9 +62,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 10/14] migration: stop vm for cpr
-Date: Thu, 22 Feb 2024 09:28:36 -0800
-Message-Id: <1708622920-68779-11-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 07/14] migration: per-mode notifiers
+Date: Thu, 22 Feb 2024 09:28:33 -0800
+Message-Id: <1708622920-68779-8-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
 References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
@@ -76,8 +76,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402220138
-X-Proofpoint-GUID: SFswUIRABeJ6Duo_pXWc6LKlQ64c5frt
-X-Proofpoint-ORIG-GUID: SFswUIRABeJ6Duo_pXWc6LKlQ64c5frt
+X-Proofpoint-GUID: Gsmrrpfx117hphCD1zdhg_TqezvPCIVI
+X-Proofpoint-ORIG-GUID: Gsmrrpfx117hphCD1zdhg_TqezvPCIVI
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -102,153 +102,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When migration for cpr is initiated, stop the vm and set state
-RUN_STATE_FINISH_MIGRATE before ram is saved.  This eliminates the
-possibility of ram and device state being out of sync, and guarantees
-that a guest in the suspended state remains suspended, because qmp_cont
-rejects a cont command in the RUN_STATE_FINISH_MIGRATE state.
+Keep a separate list of migration notifiers for each migration mode.
 
+Suggested-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 ---
- include/migration/misc.h |  1 +
- migration/migration.c    | 51 +++++++++++++++++++++++++++++-------------------
- migration/migration.h    |  2 --
- 3 files changed, 32 insertions(+), 22 deletions(-)
+ include/migration/misc.h |  6 ++++++
+ migration/migration.c    | 22 +++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
 diff --git a/include/migration/misc.h b/include/migration/misc.h
-index e4933b8..5d1aa59 100644
+index e36a1f3..4dc06a9 100644
 --- a/include/migration/misc.h
 +++ b/include/migration/misc.h
-@@ -60,6 +60,7 @@ void migration_object_init(void);
- void migration_shutdown(void);
- bool migration_is_idle(void);
- bool migration_is_active(MigrationState *);
-+bool migrate_mode_is_cpr(MigrationState *);
+@@ -86,6 +86,12 @@ typedef int (*MigrationNotifyFunc)(NotifierWithReturn *notify,
+ void migration_add_notifier(NotifierWithReturn *notify,
+                             MigrationNotifyFunc func);
  
- typedef enum MigrationEventType {
-     MIG_EVENT_PRECOPY_SETUP,
++/*
++ * Same as migration_add_notifier, but applies to be specified @mode.
++ */
++void migration_add_notifier_mode(NotifierWithReturn *notify,
++                                 MigrationNotifyFunc func, MigMode mode);
++
+ void migration_remove_notifier(NotifierWithReturn *notify);
+ void migration_call_notifiers(MigrationState *s, MigrationEventType type);
+ bool migration_in_setup(MigrationState *);
 diff --git a/migration/migration.c b/migration/migration.c
-index 37c836b..90a9094 100644
+index 33149c4..925103b 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -167,11 +167,19 @@ static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
-     return (a > b) - (a < b);
+@@ -69,8 +69,13 @@
+ #include "qemu/sockets.h"
+ #include "sysemu/kvm.h"
+ 
+-static NotifierWithReturnList migration_state_notifiers =
+-    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(migration_state_notifiers);
++#define NOTIFIER_ELEM_INIT(array, elem)    \
++    [elem] = NOTIFIER_WITH_RETURN_LIST_INITIALIZER((array)[elem])
++
++static NotifierWithReturnList migration_state_notifiers[] = {
++    NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_NORMAL),
++    NOTIFIER_ELEM_INIT(migration_state_notifiers, MIG_MODE_CPR_REBOOT),
++};
+ 
+ /* Messages sent on the return path from destination to source */
+ enum mig_rp_message_type {
+@@ -1463,11 +1468,17 @@ static void migrate_fd_cancel(MigrationState *s)
+     }
  }
  
--int migration_stop_vm(RunState state)
-+static int migration_stop_vm(MigrationState *s, RunState state)
- {
--    int ret = vm_stop_force_state(state);
-+    int ret;
-+
-+    migration_downtime_start(s);
-+
-+    s->vm_old_state = runstate_get();
-+    global_state_store();
-+
-+    ret = vm_stop_force_state(state);
- 
-     trace_vmstate_downtime_checkpoint("src-vm-stopped");
-+    trace_migration_completion_vm_stop(ret);
- 
-     return ret;
- }
-@@ -1602,6 +1610,11 @@ bool migration_is_active(MigrationState *s)
-             s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE);
- }
- 
-+bool migrate_mode_is_cpr(MigrationState *s)
++void migration_add_notifier_mode(NotifierWithReturn *notify,
++                                 MigrationNotifyFunc func, MigMode mode)
 +{
-+    return s->parameters.mode == MIG_MODE_CPR_REBOOT;
++    notify->notify = (NotifierWithReturnFunc)func;
++    notifier_with_return_list_add(&migration_state_notifiers[mode], notify);
 +}
 +
- int migrate_init(MigrationState *s, Error **errp)
+ void migration_add_notifier(NotifierWithReturn *notify,
+                             MigrationNotifyFunc func)
  {
-     int ret;
-@@ -2454,10 +2467,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     bql_lock();
-     trace_postcopy_start_set_run();
+-    notify->notify = (NotifierWithReturnFunc)func;
+-    notifier_with_return_list_add(&migration_state_notifiers, notify);
++    migration_add_notifier_mode(notify, func, MIG_MODE_NORMAL);
+ }
  
--    migration_downtime_start(ms);
--
--    global_state_store();
--    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
-+    ret = migration_stop_vm(ms, RUN_STATE_FINISH_MIGRATE);
-     if (ret < 0) {
-         goto fail;
-     }
-@@ -2652,15 +2662,12 @@ static int migration_completion_precopy(MigrationState *s,
-     int ret;
+ void migration_remove_notifier(NotifierWithReturn *notify)
+@@ -1480,10 +1491,11 @@ void migration_remove_notifier(NotifierWithReturn *notify)
  
-     bql_lock();
--    migration_downtime_start(s);
+ void migration_call_notifiers(MigrationState *s, MigrationEventType type)
+ {
++    MigMode mode = s->parameters.mode;
+     MigrationEvent e;
  
--    s->vm_old_state = runstate_get();
--    global_state_store();
--
--    ret = migration_stop_vm(RUN_STATE_FINISH_MIGRATE);
--    trace_migration_completion_vm_stop(ret);
--    if (ret < 0) {
--        goto out_unlock;
-+    if (!migrate_mode_is_cpr(s)) {
-+        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-+        if (ret < 0) {
-+            goto out_unlock;
-+        }
-     }
+     e.type = type;
+-    notifier_with_return_list_notify(&migration_state_notifiers, &e, 0);
++    notifier_with_return_list_notify(&migration_state_notifiers[mode], &e, 0);
+ }
  
-     ret = migration_maybe_pause(s, current_active_state,
-@@ -3500,15 +3507,10 @@ static void *bg_migration_thread(void *opaque)
-     s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
- 
-     trace_migration_thread_setup_complete();
--    migration_downtime_start(s);
- 
-     bql_lock();
- 
--    s->vm_old_state = runstate_get();
--
--    global_state_store();
--    /* Forcibly stop VM before saving state of vCPUs and devices */
--    if (migration_stop_vm(RUN_STATE_PAUSED)) {
-+    if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
-         goto fail;
-     }
-     /*
-@@ -3584,6 +3586,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-     Error *local_err = NULL;
-     uint64_t rate_limit;
-     bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
-+    int ret;
- 
-     /*
-      * If there's a previous error, free it and prepare for another one.
-@@ -3655,6 +3658,14 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-         return;
-     }
- 
-+    if (migrate_mode_is_cpr(s)) {
-+        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-+        if (ret < 0) {
-+            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-+            goto fail;
-+        }
-+    }
-+
-     if (migrate_background_snapshot()) {
-         qemu_thread_create(&s->thread, "bg_snapshot",
-                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
-diff --git a/migration/migration.h b/migration/migration.h
-index aef8afb..65c0b61 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -541,6 +541,4 @@ int migration_rp_wait(MigrationState *s);
-  */
- void migration_rp_kick(MigrationState *s);
- 
--int migration_stop_vm(RunState state);
--
- #endif
+ bool migration_in_setup(MigrationState *s)
 -- 
 1.8.3.1
 
