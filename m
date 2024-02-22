@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24375C54791
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E65BC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdCsa-0004m5-Hq; Thu, 22 Feb 2024 12:29:04 -0500
+	id 1rdCsX-0004kf-WF; Thu, 22 Feb 2024 12:29:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rdCsY-0004kg-1D
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:02 -0500
+ id 1rdCsW-0004kI-Kk
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:00 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rdCsW-0003Er-CY
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:01 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ id 1rdCsU-0003ER-Tl
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:29:00 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41MH95Di003429; Thu, 22 Feb 2024 17:28:59 GMT
+ 41MH93vN003389; Thu, 22 Feb 2024 17:28:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=rH7BH7+m4emVEj2RIKS77Ga1/IdPcieuJjzqzULPCFo=;
- b=MoSqnUGszoQtfcbuRK7+2TMcMokncKF17e+fyHdp45Ypk6YdlbHqAXj3vf7JcCiK3b47
- q+MHgOMni9uiC7/Zyz4XpCjoFKlY3WSKf2McCGmKP08iy2PINhw2c8pgq9Rs1WUKPDMn
- EhpZHnRhUVsBPqgkU2TfG92a8tYNsO1ubzgk/GjOubZtLYwCssQ0ZPiT2Z2rh4bEHc/N
- E7hdLZXMI7Ju8QxHRE7KqXZjLJkRgtYyM6bDCcgYa9lT+gbiGjiHoKdTkGNpLHsPbkgH
- Bhekj+tzN4BliZB/suHyA0NMpeOfqBrxgpcW20l+hL1KbwrixSC30BnSqsZk22iQeERm 2w== 
+ bh=Tblg+6OG6Lt4MehE1ykRrcRbYGVc+HXXJGb9aqjcWwo=;
+ b=ImhQSAntfymYxztspEX3IPpMmei5TFLyky/RIxBK1h5E9gaEaKeXxE+Xb0uM5g90EpF5
+ iRCMxpYoTwJ2kSbrsMGBboOJX9eMY3/T3OcZU8R+7dmnBukNqAWME/tKDTzqKTxcAsqs
+ axkOAMzGHATQCKNwMFK6QcF08bYTjMt84IMV2C0UwSyzOVhInBRiNGwR10KvLqi6/wOp
+ alXQjtIGzU5ONkg1AVFzdPXfHl7SUdPP1vkBPgrHnafPmqUp4emkykUQY+SFK9Q8GjMY
+ dJvPoL32JdSiDX0/qOBtVSL5D6kVPB2sAy2Iw1zTKkEm7p11yzkCdJ/+ZOdec+M6Eu2+ ww== 
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wamud5dq0-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wd4knw1cr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 17:28:59 +0000
+ Thu, 22 Feb 2024 17:28:57 +0000
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41MG9UJu024561; Thu, 22 Feb 2024 17:28:58 GMT
+ with ESMTP id 41MG4lZx024355; Thu, 22 Feb 2024 17:28:55 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wak8ayrvk-1
+ 3wak8ayrtb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 22 Feb 2024 17:28:58 +0000
+ Thu, 22 Feb 2024 17:28:55 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSgAB032453;
- Thu, 22 Feb 2024 17:28:58 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSgA7032453;
+ Thu, 22 Feb 2024 17:28:55 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3wak8ayre4-12; Thu, 22 Feb 2024 17:28:57 +0000
+ ESMTP id 3wak8ayre4-10; Thu, 22 Feb 2024 17:28:54 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -62,9 +62,9 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Marc-Andre Lureau <marcandre.lureau@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 11/14] vfio: register container for cpr
-Date: Thu, 22 Feb 2024 09:28:37 -0800
-Message-Id: <1708622920-68779-12-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 09/14] migration: notifier error checking
+Date: Thu, 22 Feb 2024 09:28:35 -0800
+Message-Id: <1708622920-68779-10-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
 References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
@@ -76,8 +76,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2402220138
-X-Proofpoint-GUID: ZUGGXzxHkRH1V_cVgBLTEFlgWJNvn-zq
-X-Proofpoint-ORIG-GUID: ZUGGXzxHkRH1V_cVgBLTEFlgWJNvn-zq
+X-Proofpoint-ORIG-GUID: xq6s9JdbXDsISQP5FYapEljN5vDHLmjl
+X-Proofpoint-GUID: xq6s9JdbXDsISQP5FYapEljN5vDHLmjl
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -103,133 +103,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define entry points to perform per-container cpr-specific initialization
-and teardown.
+Check the status returned by migration notifiers for event type
+MIG_EVENT_PRECOPY_SETUP, and report errors.  None of the notifiers
+return an error status at this time.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- hw/vfio/container.c           | 11 ++++++++++-
- hw/vfio/cpr.c                 | 19 +++++++++++++++++++
- hw/vfio/iommufd.c             |  6 ++++++
- hw/vfio/meson.build           |  1 +
- include/hw/vfio/vfio-common.h |  3 +++
- 5 files changed, 39 insertions(+), 1 deletion(-)
- create mode 100644 hw/vfio/cpr.c
+ include/migration/misc.h |  8 +++++++-
+ migration/migration.c    | 25 ++++++++++++++++---------
+ 2 files changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index bd25b9f..096d77e 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -621,10 +621,15 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-         goto free_container_exit;
-     }
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 4dc06a9..e4933b8 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -72,6 +72,11 @@ typedef struct MigrationEvent {
+     MigrationEventType type;
+ } MigrationEvent;
  
-+    ret = vfio_cpr_register_container(bcontainer, errp);
-+    if (ret) {
-+        goto free_container_exit;
-+    }
-+
-     ret = vfio_ram_block_discard_disable(container, true);
-     if (ret) {
-         error_setg_errno(errp, -ret, "Cannot set discarding of RAM broken");
--        goto free_container_exit;
-+        goto unregister_container_exit;
-     }
- 
-     assert(bcontainer->ops->setup);
-@@ -667,6 +672,9 @@ listener_release_exit:
- enable_discards_exit:
-     vfio_ram_block_discard_disable(container, false);
- 
-+unregister_container_exit:
-+    vfio_cpr_unregister_container(bcontainer);
-+
- free_container_exit:
-     g_free(container);
- 
-@@ -710,6 +718,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
-         vfio_container_destroy(bcontainer);
- 
-         trace_vfio_disconnect_container(container->fd);
-+        vfio_cpr_unregister_container(bcontainer);
-         close(container->fd);
-         g_free(container);
- 
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-new file mode 100644
-index 0000000..3bede54
---- /dev/null
-+++ b/hw/vfio/cpr.c
-@@ -0,0 +1,19 @@
 +/*
-+ * Copyright (c) 2021-2024 Oracle and/or its affiliates.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * A MigrationNotifyFunc may return an error code and an Error object,
++ * but only when @e->type is MIG_EVENT_PRECOPY_SETUP.  The code is an int
++ * to allow for different failure modes and recovery actions.
 + */
-+
-+#include "qemu/osdep.h"
-+#include "hw/vfio/vfio-common.h"
-+#include "qapi/error.h"
-+
-+int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
-+{
-+    return 0;
-+}
-+
-+void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
-+{
-+}
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 9bfddc1..e1be224 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -411,6 +411,11 @@ found_container:
-         goto err_listener_register;
+ typedef int (*MigrationNotifyFunc)(NotifierWithReturn *notify,
+                                    MigrationEvent *e, Error **errp);
+ 
+@@ -93,7 +98,8 @@ void migration_add_notifier_mode(NotifierWithReturn *notify,
+                                  MigrationNotifyFunc func, MigMode mode);
+ 
+ void migration_remove_notifier(NotifierWithReturn *notify);
+-void migration_call_notifiers(MigrationState *s, MigrationEventType type);
++int migration_call_notifiers(MigrationState *s, MigrationEventType type,
++                             Error **errp);
+ bool migration_in_setup(MigrationState *);
+ bool migration_has_finished(MigrationState *);
+ bool migration_has_failed(MigrationState *);
+diff --git a/migration/migration.c b/migration/migration.c
+index 6a115d2..37c836b 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1376,7 +1376,7 @@ static void migrate_fd_cleanup(MigrationState *s)
+     }
+     type = migration_has_failed(s) ? MIG_EVENT_PRECOPY_FAILED :
+                                      MIG_EVENT_PRECOPY_DONE;
+-    migration_call_notifiers(s, type);
++    migration_call_notifiers(s, type, NULL);
+     block_cleanup_parameters();
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+ }
+@@ -1489,13 +1489,18 @@ void migration_remove_notifier(NotifierWithReturn *notify)
+     }
+ }
+ 
+-void migration_call_notifiers(MigrationState *s, MigrationEventType type)
++int migration_call_notifiers(MigrationState *s, MigrationEventType type,
++                             Error **errp)
+ {
+     MigMode mode = s->parameters.mode;
+     MigrationEvent e;
++    int ret;
+ 
+     e.type = type;
+-    notifier_with_return_list_notify(&migration_state_notifiers[mode], &e, 0);
++    ret = notifier_with_return_list_notify(&migration_state_notifiers[mode],
++                                           &e, errp);
++    assert(!ret || type == MIG_EVENT_PRECOPY_SETUP);
++    return ret;
+ }
+ 
+ bool migration_in_setup(MigrationState *s)
+@@ -2549,7 +2554,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+      * at the transition to postcopy and after the device state; in particular
+      * spice needs to trigger a transition now
+      */
+-    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE);
++    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_DONE, NULL);
+ 
+     migration_downtime_end(ms);
+ 
+@@ -2569,11 +2574,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
+ 
+     ret = qemu_file_get_error(ms->to_dst_file);
+     if (ret) {
+-        error_setg(errp, "postcopy_start: Migration stream errored");
+-        migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                              MIGRATION_STATUS_FAILED);
++        error_setg_errno(errp, -ret, "postcopy_start: Migration stream error");
++        bql_lock();
++        goto fail;
+     }
+-
+     trace_postcopy_preempt_enabled(migrate_postcopy_preempt());
+ 
+     return ret;
+@@ -2594,6 +2598,7 @@ fail:
+             error_report_err(local_err);
+         }
+     }
++    migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
+     bql_unlock();
+     return -1;
+ }
+@@ -3613,7 +3618,9 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+         rate_limit = migrate_max_bandwidth();
+ 
+         /* Notify before starting migration thread */
+-        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP);
++        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
++            goto fail;
++        }
      }
  
-+    ret = vfio_cpr_register_container(bcontainer, errp);
-+    if (ret) {
-+        goto err_listener_register;
-+    }
-+
-     /*
-      * TODO: examine RAM_BLOCK_DISCARD stuff, should we do group level
-      * for discarding incompatibility check as well?
-@@ -461,6 +466,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
-         iommufd_cdev_ram_block_discard_disable(false);
-     }
- 
-+    vfio_cpr_unregister_container(bcontainer);
-     iommufd_cdev_detach_container(vbasedev, container);
-     iommufd_cdev_container_destroy(container);
-     vfio_put_address_space(space);
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index bb98493..bba776f 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -5,6 +5,7 @@ vfio_ss.add(files(
-   'container-base.c',
-   'container.c',
-   'migration.c',
-+  'cpr.c',
- ))
- vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
- vfio_ss.add(when: 'CONFIG_IOMMUFD', if_true: files(
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 4a6c262..b9da6c0 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -205,6 +205,9 @@ void vfio_detach_device(VFIODevice *vbasedev);
- int vfio_kvm_device_add_fd(int fd, Error **errp);
- int vfio_kvm_device_del_fd(int fd, Error **errp);
- 
-+int vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp);
-+void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer);
-+
- extern const MemoryRegionOps vfio_region_ops;
- typedef QLIST_HEAD(VFIOGroupList, VFIOGroup) VFIOGroupList;
- typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
+     migration_rate_set(rate_limit);
 -- 
 1.8.3.1
 
