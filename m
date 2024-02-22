@@ -4,54 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FF6C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B73C54788
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd73h-0000Hr-2T; Thu, 22 Feb 2024 06:16:09 -0500
+	id 1rd7E8-0008D3-5W; Thu, 22 Feb 2024 06:26:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd73e-0008SF-Kx; Thu, 22 Feb 2024 06:16:06 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rd7Dv-00087n-US; Thu, 22 Feb 2024 06:26:44 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd73a-0002nP-6T; Thu, 22 Feb 2024 06:16:06 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8F39B4E6004;
- Thu, 22 Feb 2024 12:15:58 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 7ArcJ8sw_vNq; Thu, 22 Feb 2024 12:15:56 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 939C24E6003; Thu, 22 Feb 2024 12:15:56 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 90E6F7456B4;
- Thu, 22 Feb 2024 12:15:56 +0100 (CET)
-Date: Thu, 22 Feb 2024 12:15:56 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Subject: Re: [PATCH v5 9/9] target/ppc: Remove interrupt handler wrapper
- functions
-In-Reply-To: <7ed65560-9521-4b56-84fe-df7a7d0084fd@linux.ibm.com>
-Message-ID: <12aca702-90e6-8a5b-2153-6df85d887106@eik.bme.hu>
-References: <cover.1705614747.git.balaton@eik.bme.hu>
- <281ce504db0192be0673f3525ea59d425bb1e5e0.1705614747.git.balaton@eik.bme.hu>
- <7ed65560-9521-4b56-84fe-df7a7d0084fd@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rd7Dr-00052N-Ua; Thu, 22 Feb 2024 06:26:43 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D20E4FB4E;
+ Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 97E888717A;
+ Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
+Received: (nullmailer pid 2526176 invoked by uid 1000);
+ Thu, 22 Feb 2024 11:26:01 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 12/34] system/physmem: remove redundant arg reassignment
+Date: Thu, 22 Feb 2024 14:25:39 +0300
+Message-Id: <20240222112601.2526057-13-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
+References: <20240222112601.2526057-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,141 +61,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 Feb 2024, Harsh Prateek Bora wrote:
-> On 1/19/24 03:31, BALATON Zoltan wrote:
->> These wrappers call out to handle POWER7 and newer in separate
->> functions but reduce to the generic case when TARGET_PPC64 is not
->> defined. It is easy enough to include the switch in the beginning of
->> the generic functions to branch out to the specific functions and get
->> rid of these wrappers. This avoids one indirection and entitely
->
-> s/entitely/entirely
->
->> compiles out the switch without TARGET_PPC64.
->> 
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   target/ppc/excp_helper.c | 70 ++++++++++++++++++----------------------
->>   1 file changed, 31 insertions(+), 39 deletions(-)
->> 
->> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
->> index 5124c3e6b5..de51627c4c 100644
->> --- a/target/ppc/excp_helper.c
->> +++ b/target/ppc/excp_helper.c
->> @@ -1921,8 +1921,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState 
->> *env)
->>   }
->>   #endif /* TARGET_PPC64 */
->>   -static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
->> +static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->>   {
->> +#ifdef TARGET_PPC64
->> +    switch (env->excp_model) {
->> +    case POWERPC_EXCP_POWER7:
->> +        return p7_next_unmasked_interrupt(env);
->> +    case POWERPC_EXCP_POWER8:
->> +        return p8_next_unmasked_interrupt(env);
->> +    case POWERPC_EXCP_POWER9:
->> +    case POWERPC_EXCP_POWER10:
->> +        return p9_next_unmasked_interrupt(env);
->> +    default:
->> +        break;
->> +    }
->> +#endif
->>       bool async_deliver;
->>         /* External reset */
->> @@ -2033,23 +2046,6 @@ static int 
->> ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
->>       return 0;
->>   }
->>   -static int ppc_next_unmasked_interrupt(CPUPPCState *env)
->> -{
->> -    switch (env->excp_model) {
->> -#ifdef TARGET_PPC64
->> -    case POWERPC_EXCP_POWER7:
->> -        return p7_next_unmasked_interrupt(env);
->> -    case POWERPC_EXCP_POWER8:
->> -        return p8_next_unmasked_interrupt(env);
->> -    case POWERPC_EXCP_POWER9:
->> -    case POWERPC_EXCP_POWER10:
->> -        return p9_next_unmasked_interrupt(env);
->> -#endif
->> -    default:
->> -        return ppc_next_unmasked_interrupt_generic(env);
->> -    }
->> -}
->> -
->>   /*
->>    * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to 
->> be
->>    * delivered and clears CPU_INTERRUPT_HARD otherwise.
->> @@ -2279,8 +2275,24 @@ static void p9_deliver_interrupt(CPUPPCState *env, 
->> int interrupt)
->>   }
->>   #endif /* TARGET_PPC64 */
->>   -static void ppc_deliver_interrupt_generic(CPUPPCState *env, int 
->> interrupt)
->> +static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
->>   {
->> +#ifdef TARGET_PPC64
->> +    switch (env->excp_model) {
->> +    case POWERPC_EXCP_POWER7:
->> +        p7_deliver_interrupt(env, interrupt);
->> +        return;
->> +    case POWERPC_EXCP_POWER8:
->> +        p8_deliver_interrupt(env, interrupt);
->> +        return;
->> +    case POWERPC_EXCP_POWER9:
->> +    case POWERPC_EXCP_POWER10:
->> +        p9_deliver_interrupt(env, interrupt);
->> +        return;
->
-> These return statements could be clubbed with the function call itself.
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-These return void so I thought it's cleaner this way but it appears to 
-work the way you suggest too so I'll change it then.
+Arguments `ram_block` are reassigned to local declarations `block`
+without further use. Remove re-assignment to reduce noise.
 
-> With the suggested fixes,
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ system/physmem.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Thanks for reviewing these. I'll send an updated version today.
+diff --git a/system/physmem.c b/system/physmem.c
+index 5e054650b8..e3ebc19eef 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2154,10 +2154,8 @@ void qemu_ram_remap(ram_addr_t addr, ram_addr_t length)
+  *
+  * Called within RCU critical section.
+  */
+-void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
++void *qemu_map_ram_ptr(RAMBlock *block, ram_addr_t addr)
+ {
+-    RAMBlock *block = ram_block;
+-
+     if (block == NULL) {
+         block = qemu_get_ram_block(addr);
+         addr -= block->offset;
+@@ -2182,10 +2180,9 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
+  *
+  * Called within RCU critical section.
+  */
+-static void *qemu_ram_ptr_length(RAMBlock *ram_block, ram_addr_t addr,
++static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
+                                  hwaddr *size, bool lock)
+ {
+-    RAMBlock *block = ram_block;
+     if (*size == 0) {
+         return NULL;
+     }
+-- 
+2.39.2
 
-Regards,
-BALATON Zoltan
-
->> +    default:
->> +        break;
->> +    }
->> +#endif
->>       PowerPCCPU *cpu = env_archcpu(env);
->>         switch (interrupt) {
->> @@ -2383,26 +2395,6 @@ static void 
->> ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
->>       }
->>   }
->>   -static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
->> -{
->> -    switch (env->excp_model) {
->> -#ifdef TARGET_PPC64
->> -    case POWERPC_EXCP_POWER7:
->> -        p7_deliver_interrupt(env, interrupt);
->> -        break;
->> -    case POWERPC_EXCP_POWER8:
->> -        p8_deliver_interrupt(env, interrupt);
->> -        break;
->> -    case POWERPC_EXCP_POWER9:
->> -    case POWERPC_EXCP_POWER10:
->> -        p9_deliver_interrupt(env, interrupt);
->> -        break;
->> -#endif
->> -    default:
->> -        ppc_deliver_interrupt_generic(env, interrupt);
->> -    }
->> -}
->> -
->>   void ppc_cpu_do_system_reset(CPUState *cs)
->>   {
->>       PowerPCCPU *cpu = POWERPC_CPU(cs);
->
->
 
