@@ -4,129 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A55C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BEEC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5pa-0002kd-UR; Thu, 22 Feb 2024 04:57:31 -0500
+	id 1rd5yT-0004a5-82; Thu, 22 Feb 2024 05:06:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd5pX-0002kV-Jj
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:57:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rd5yR-0004XK-7r; Thu, 22 Feb 2024 05:06:39 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd5pV-0007bM-GD
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:57:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708595844;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XbDLkBp3kI0s3DRlfLoo7jIUqdqFSYBYM2NRpXfk3o8=;
- b=WY7q3wHrRCyc+3KzAr3o2ODlowp0xtGZXBK8yfp+NDObUWlgNpmjABLX8QRrDozrwtQJ8M
- NgzFxLoY1PJc+hLZIvH/9mDE4Pex8gdpGgjVHTAUi66cKlTfB83W4hSA0/pPdlNTdpKmca
- vrvZ6FgDF/Ss8KbQu2CGAA/038hcMS4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-GhINzLssMB-MURD4cShxGw-1; Thu, 22 Feb 2024 04:57:22 -0500
-X-MC-Unique: GhINzLssMB-MURD4cShxGw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a3e94bbb22dso91123266b.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 01:57:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708595841; x=1709200641;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XbDLkBp3kI0s3DRlfLoo7jIUqdqFSYBYM2NRpXfk3o8=;
- b=R5pwsJIysRhJqHb0L1LTXd4UQWOnC2L2QcfoNd4q0Tz/KzDrqnad5AFcEU03NU8L51
- eoWyT3L3UaWjXOL2opAtl9nZOMqYGNz/qHACd0IfE/cyN5U+kOy1jb3sVO5DShc4hE9b
- ah9ObWhP/zCRUE2endDMybeiDbgMW9geOuJU4FuemZb5iqGoYxeBO1Vd61wZYwN5uLU0
- s03jgqErem/lxaxbLyK3aotMq7G/zn0uH/dq5Wpf4IhsBT0E+Y6rai9XSy7wjmmLipoC
- o9VEieG0DDP50vyjmQHMfAEOCA4ly3//15HoaFHUGbh0sHpKss+dUwTedvSYQEMZ5gmB
- ppzw==
-X-Gm-Message-State: AOJu0Yz3mPNu+8R294OunSK6XRBhhgquB6VzngrC4DADnfIvso4PublF
- zlKlhpvLXhz/gPeYVDbr6BiZ1X0JvYl+pYC6ox7CDFVYAdQNv20CLMQhwl7K7WiHrz+YNZcvM+R
- WpGJyMQ+h0wyszdW9dzOvL2WXggkQqlJoRhc76BbujRvKN2FYw/al
-X-Received: by 2002:a17:906:fb11:b0:a3e:7390:4130 with SMTP id
- lz17-20020a170906fb1100b00a3e73904130mr7968354ejb.14.1708595841729; 
- Thu, 22 Feb 2024 01:57:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH0eWmMykMIJ6//Q0nPbHJg189Jo9oL1f633TG9s+TX30Q4vXFsJ3/u3I8H2zWceNiJVkSH8Q==
-X-Received: by 2002:a17:906:fb11:b0:a3e:7390:4130 with SMTP id
- lz17-20020a170906fb1100b00a3e73904130mr7968347ejb.14.1708595841360; 
- Thu, 22 Feb 2024 01:57:21 -0800 (PST)
-Received: from [192.168.52.107] ([37.84.174.18])
- by smtp.gmail.com with ESMTPSA id
- th8-20020a1709078e0800b00a3daadea882sm5740027ejc.56.2024.02.22.01.57.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 01:57:21 -0800 (PST)
-Message-ID: <30980866-7fe8-4900-a75b-01fe735e14e1@redhat.com>
-Date: Thu, 22 Feb 2024 10:57:19 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rd5yO-0000hM-QT; Thu, 22 Feb 2024 05:06:38 -0500
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41M9mO1I018808; Thu, 22 Feb 2024 10:06:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : from : subject : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=7yCuldceSyJz3Ap78sQDAsienMAXu3g0BfrHBqSf+qs=;
+ b=FKmVhDTSSmKOyAvAUCSMECYKal3g413qCjLgBs7fWHHQ58xSPQQ7r+xU4ry2hqXOZID/
+ 7REq3d3D5q7A/YMKsvLWpRJHSfYAxG74i1oZyvwNUdGQLY3EaqT5jFZIqSA/fT0/Yh5y
+ e8uyaMNvQenQUr12tlw1mvcj2cof62lTIx5mP6PsXWS06ZeHPN89EdWTyO6dL9HxZDwd
+ mml9pOgpyOvw8V5IeZXJIF/JfZImGkjwXsZn5BdY3w+cuGdml/Uf8TZ1O0NUDefCYkaE
+ oVjOKDBOXWh5sjv4IKI0Z5xQx3X/HWgPrs7MO8ZQFfpmGYHWz5d4QsXgXGTUHl9XyOGV xA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3y10g4s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Feb 2024 10:06:30 +0000
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41M9o5EL025411;
+ Thu, 22 Feb 2024 10:06:29 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3we3y10g4d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Feb 2024 10:06:29 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41M8Daqt014406; Thu, 22 Feb 2024 10:06:29 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wb9u2vuh9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Feb 2024 10:06:29 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41MA6QkT14877364
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Feb 2024 10:06:28 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF4A858066;
+ Thu, 22 Feb 2024 10:06:26 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CA0DF5805D;
+ Thu, 22 Feb 2024 10:06:24 +0000 (GMT)
+Received: from [9.179.15.237] (unknown [9.179.15.237])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 22 Feb 2024 10:06:24 +0000 (GMT)
+Message-ID: <7ed65560-9521-4b56-84fe-df7a7d0084fd@linux.ibm.com>
+Date: Thu, 22 Feb 2024 15:36:24 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/m68k: Fix exception frame format for 68010
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v5 9/9] target/ppc: Remove interrupt handler wrapper
+ functions
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
+References: <cover.1705614747.git.balaton@eik.bme.hu>
+ <281ce504db0192be0673f3525ea59d425bb1e5e0.1705614747.git.balaton@eik.bme.hu>
 Content-Language: en-US
-To: Daniel Palmer <daniel@0x0f.com>, laurent@vivier.eu
-Cc: qemu-devel@nongnu.org
-References: <20240115101643.2165387-1-daniel@0x0f.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240115101643.2165387-1-daniel@0x0f.com>
+In-Reply-To: <281ce504db0192be0673f3525ea59d425bb1e5e0.1705614747.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 7B5OULyKW9w2AQsPTOU_nXZ8lz5abTRb
+X-Proofpoint-GUID: KpvHlaNf869RXJ5PY8TkukV6zmBXSueY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_06,2024-02-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ mlxlogscore=999 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402220078
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,94 +118,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/01/2024 11.16, Daniel Palmer wrote:
->  From the 68010 a word with the frame format and exception vector
-> are placed on the stack before the PC and SR.
+
+
+On 1/19/24 03:31, BALATON Zoltan wrote:
+> These wrappers call out to handle POWER7 and newer in separate
+> functions but reduce to the generic case when TARGET_PPC64 is not
+> defined. It is easy enough to include the switch in the beginning of
+> the generic functions to branch out to the specific functions and get
+> rid of these wrappers. This avoids one indirection and entitely
+
+s/entitely/entirely
+
+> compiles out the switch without TARGET_PPC64.
 > 
-> M68K_FEATURE_QUAD_MULDIV is currently checked to workout if to do
-> this or not for the configured CPU but that flag isn't set for
-> 68010 so currently the exception stack when 68010 is configured
-> is incorrect.
-> 
-> It seems like checking M68K_FEATURE_MOVEFROMSR_PRIV would do but
-> adding a new flag that shows exactly what is going on here is
-> maybe clearer.
-> 
-> Add a new flag for the behaviour, M68K_FEATURE_EXCEPTION_FORMAT_VEC,
-> and set it for 68010 and above, and then use it to control if the
-> format and vector word are pushed/pop during exception entry/exit.
-> 
-> Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   target/m68k/cpu.c       | 4 +++-
->   target/m68k/cpu.h       | 2 ++
->   target/m68k/op_helper.c | 4 ++--
->   3 files changed, 7 insertions(+), 3 deletions(-)
+>   target/ppc/excp_helper.c | 70 ++++++++++++++++++----------------------
+>   1 file changed, 31 insertions(+), 39 deletions(-)
 > 
-> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-> index 1421e77c2c07..20718944b4c8 100644
-> --- a/target/m68k/cpu.c
-> +++ b/target/m68k/cpu.c
-> @@ -137,7 +137,8 @@ static void m68000_cpu_initfn(Object *obj)
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 5124c3e6b5..de51627c4c 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -1921,8 +1921,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env)
+>   }
+>   #endif /* TARGET_PPC64 */
+>   
+> -static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
+> +static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+>   {
+> +#ifdef TARGET_PPC64
+> +    switch (env->excp_model) {
+> +    case POWERPC_EXCP_POWER7:
+> +        return p7_next_unmasked_interrupt(env);
+> +    case POWERPC_EXCP_POWER8:
+> +        return p8_next_unmasked_interrupt(env);
+> +    case POWERPC_EXCP_POWER9:
+> +    case POWERPC_EXCP_POWER10:
+> +        return p9_next_unmasked_interrupt(env);
+> +    default:
+> +        break;
+> +    }
+> +#endif
+>       bool async_deliver;
+>   
+>       /* External reset */
+> @@ -2033,23 +2046,6 @@ static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
+>       return 0;
 >   }
 >   
+> -static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+> -{
+> -    switch (env->excp_model) {
+> -#ifdef TARGET_PPC64
+> -    case POWERPC_EXCP_POWER7:
+> -        return p7_next_unmasked_interrupt(env);
+> -    case POWERPC_EXCP_POWER8:
+> -        return p8_next_unmasked_interrupt(env);
+> -    case POWERPC_EXCP_POWER9:
+> -    case POWERPC_EXCP_POWER10:
+> -        return p9_next_unmasked_interrupt(env);
+> -#endif
+> -    default:
+> -        return ppc_next_unmasked_interrupt_generic(env);
+> -    }
+> -}
+> -
 >   /*
-> - * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD
-> + * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD,
-> + *      format+vector in exception frame.
->    */
->   static void m68010_cpu_initfn(Object *obj)
+>    * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to be
+>    * delivered and clears CPU_INTERRUPT_HARD otherwise.
+> @@ -2279,8 +2275,24 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
+>   }
+>   #endif /* TARGET_PPC64 */
+>   
+> -static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
+> +static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
 >   {
-> @@ -150,6 +151,7 @@ static void m68010_cpu_initfn(Object *obj)
->       m68k_set_feature(env, M68K_FEATURE_BKPT);
->       m68k_set_feature(env, M68K_FEATURE_MOVEC);
->       m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
-> +    m68k_set_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC);
+> +#ifdef TARGET_PPC64
+> +    switch (env->excp_model) {
+> +    case POWERPC_EXCP_POWER7:
+> +        p7_deliver_interrupt(env, interrupt);
+> +        return;
+> +    case POWERPC_EXCP_POWER8:
+> +        p8_deliver_interrupt(env, interrupt);
+> +        return;
+> +    case POWERPC_EXCP_POWER9:
+> +    case POWERPC_EXCP_POWER10:
+> +        p9_deliver_interrupt(env, interrupt);
+> +        return;
+
+These return statements could be clubbed with the function call itself.
+
+With the suggested fixes,
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+> +    default:
+> +        break;
+> +    }
+> +#endif
+>       PowerPCCPU *cpu = env_archcpu(env);
+>   
+>       switch (interrupt) {
+> @@ -2383,26 +2395,6 @@ static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
+>       }
 >   }
 >   
->   /*
-> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-> index d13427b0fe61..0fc591e618f6 100644
-> --- a/target/m68k/cpu.h
-> +++ b/target/m68k/cpu.h
-> @@ -549,6 +549,8 @@ enum m68k_features {
->       M68K_FEATURE_TRAPCC,
->       /* MOVE from SR privileged (from 68010) */
->       M68K_FEATURE_MOVEFROMSR_PRIV,
-> +    /* Exception frame with format+vector (from 68010) */
-> +    M68K_FEATURE_EXCEPTION_FORMAT_VEC,
->   };
->   
->   static inline bool m68k_feature(CPUM68KState *env, int feature)
-> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-> index 1ce850bbc594..b09771672dec 100644
-> --- a/target/m68k/op_helper.c
-> +++ b/target/m68k/op_helper.c
-> @@ -52,7 +52,7 @@ throwaway:
->       sp += 2;
->       env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
->       sp += 4;
-> -    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
-> +    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
->           /*  all except 68000 */
->           fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
->           sp += 2;
-> @@ -256,7 +256,7 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
->                                     uint16_t format, uint16_t sr,
->                                     uint32_t addr, uint32_t retaddr)
+> -static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+> -{
+> -    switch (env->excp_model) {
+> -#ifdef TARGET_PPC64
+> -    case POWERPC_EXCP_POWER7:
+> -        p7_deliver_interrupt(env, interrupt);
+> -        break;
+> -    case POWERPC_EXCP_POWER8:
+> -        p8_deliver_interrupt(env, interrupt);
+> -        break;
+> -    case POWERPC_EXCP_POWER9:
+> -    case POWERPC_EXCP_POWER10:
+> -        p9_deliver_interrupt(env, interrupt);
+> -        break;
+> -#endif
+> -    default:
+> -        ppc_deliver_interrupt_generic(env, interrupt);
+> -    }
+> -}
+> -
+>   void ppc_cpu_do_system_reset(CPUState *cs)
 >   {
-> -    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
-> +    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
->           /*  all except 68000 */
->           CPUState *cs = env_cpu(env);
->           switch (format) {
-
-LGTM,
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-Laurent, if you're currently too busy with other stuff, I could also add 
-this to my next pull request?
-
-  Thomas
-
+>       PowerPCCPU *cpu = POWERPC_CPU(cs);
 
