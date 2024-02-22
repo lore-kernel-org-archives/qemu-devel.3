@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EAAC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB7DC5478C
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 20:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdFvB-0007LA-QK; Thu, 22 Feb 2024 15:43:57 -0500
+	id 1rdFv1-00075S-T4; Thu, 22 Feb 2024 15:43:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFv8-0007GP-Mz
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:54 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rdFux-00070f-P8
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:44 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdFv6-0002gA-LC
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:54 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1dc1ff697f9so1995085ad.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:51 -0800 (PST)
+ id 1rdFuv-0002cm-4b
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 15:43:42 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1dc13fb0133so400895ad.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 12:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708634631; x=1709239431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708634620; x=1709239420; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Utr6CY7GZcNfj8e7YUB3Ing2Y6m3UnMyzHBBd5nSQRo=;
- b=LhrWrRa5yphmSfgH8AFGg3m3J/K0a+zZpzn9L6X5jDFpxXTlHq+B629Nah2BMMFUty
- jhC/LsBfE+jWnCKYfozqx4Nq6BuSNeSwihGKnxFgX0JDvhSFPzZXODeg/cBVfQe84pr3
- au/uSZy5Bzgdm6TKUH8KF6JclS+H5iH29Fgvf+Fk3dFfY7V+8H+fk3hbLpJaskwK1Ckc
- dRySbb038mqI9zPQCz27xhlDgODh5q3OiZjQ8z+2Eq46ECAKCJliTViawLsmnQxu8f/1
- CV3QOMiO3V6MGXnhiVd8uEalmFhbTzzT+zhCTmohW4W/IUoN9vx6bK4qkTS/h6OyEFZr
- 3UYQ==
+ bh=on46I2b8riCprdxQ1GrqNDsO17YyckywkPgL9RszReM=;
+ b=VsdgqmSn3KN7WNHhYg2ADbbWpZJ5QJzlpqs7sfR5UM3qZs/EyhvCXQXmt0BSu0oDoZ
+ +0+t2nQyP3XSBX+Xh652ycNLFFoUuK/DTOjRMZyoCgAEI7i2yzQ6ZaO8E4odky4kU08a
+ IZr43tmNNwSrYBIWQKtyLigYMoHSICKvzkQyG12AoF3wTTTCO7dorh4tjQml2RxiT2By
+ HpV5Ws3334Ig+53Q6LH1U+BKWdaH0u53WQoUjk589Yn4rVwFxlCuYplQ1CwjP0ZPjQwR
+ /zqLCNCH/wP2JaAJMrT2o02jZMmYuAUSG0TtkJCHDCcpXQzExj2hqDcVUz/ZQOpxBZIN
+ M4UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708634631; x=1709239431;
+ d=1e100.net; s=20230601; t=1708634620; x=1709239420;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Utr6CY7GZcNfj8e7YUB3Ing2Y6m3UnMyzHBBd5nSQRo=;
- b=qD7hPwdGgFiPYlnQ7bMQ1F5Ir9LK9crJPVukYPhtVM6COosGDxQXbgdzWGbvsleCx/
- EuEjRH5oPvmBoGkTE+UEUQ/mj3SkkZrDvi37K+dB3kXncU592YEohYXBVMCLBbEKfVzf
- iz1FSwev7QAG4h/XwAqRH+Zhit0m2A/nbVEW/o64JUw3VL3EjU/19lcYMQWes1n4uxHf
- tz6jcpo+28y7ORJDrUDswqAZH49NFN22O8skknjUYObe2fahVuxx5FiZizHBkns6sOd5
- NxtcSTC0KQ6JFtHVr2QtssP0U41gyce9srHcZlgfbLSY3b5+ZLIYqpboFMg2a1juqFlI
- HQxA==
-X-Gm-Message-State: AOJu0Yw0OsflRsjP9ZEdMaSkPw7Bix/B0SRxpxw/YN+qk/5XAs7vzVrM
- 5GJop3lTg0rk3RzA3HulgQK0WXo0B/cx05no0XTKoXpgQNQDCEFKHhIC3xyDTeSh/EFKqEtNf7r
- s
-X-Google-Smtp-Source: AGHT+IGjZgQixJ+pWhtnY9g01dKeCbpIoA1KNjOhjs64feytNdPX1hjHmmQ4xu4xWt0nDAfm0dhpZQ==
-X-Received: by 2002:a17:903:2350:b0:1db:fc02:f96e with SMTP id
- c16-20020a170903235000b001dbfc02f96emr12801397plh.24.1708634630848; 
- Thu, 22 Feb 2024 12:43:50 -0800 (PST)
+ bh=on46I2b8riCprdxQ1GrqNDsO17YyckywkPgL9RszReM=;
+ b=w4HNIt8j12czhnS7NIZ8447ZmaEijK73armHAK59iW4DrGgG8bJzJC22Kq/ZdDPt5Z
+ 9o+j+EXO7V3BGzyrvQfszTjNGUBjrzmBOr2OGcAOPHQ44KuymvhHNWD8EWOPEvng3pfz
+ MvKet0Rsy41gwIUGm9kTDOdmIxFrEby2lerZypl5GMDAVR6CTt41TYLnq5g/LghMH/G9
+ tlfO101DA4h1kWBqEVxrNQUs4EKaIO2bIuVB3LveHancwTs/NJ3ycYud1aF2zkatc3Aa
+ L5/1O9VyA84+Dj4Wt+OTADVKn8toTGL+lyhyhj1Glm0gTl9xjr9r5YyLoqQyi46qsKNp
+ E3gw==
+X-Gm-Message-State: AOJu0YxbhpO7/mjGwOJHsq8Wew1GA6/l05KxrkLPHsBZ4skfcXNFHvHc
+ FD3OJzD54EjbezjH4gnjeY/oY9U+Mh2vxSFPl+JFmQrvj+wVUKvdvYfmIYbQV1s02i7KVkgJzVs
+ J
+X-Google-Smtp-Source: AGHT+IGFSz5KPcJYr2c4+rE8XHTN5WltgBYqhZTzmSsYXJRi2R6o+nCFd5HmCdadzd0RMNyVtlNFsw==
+X-Received: by 2002:a17:902:e551:b0:1db:be69:d037 with SMTP id
+ n17-20020a170902e55100b001dbbe69d037mr22021957plf.46.1708634619854; 
+ Thu, 22 Feb 2024 12:43:39 -0800 (PST)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.49
+ l12-20020a170902d34c00b001d8f81ecebesm10275500plk.192.2024.02.22.12.43.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 12:43:50 -0800 (PST)
+ Thu, 22 Feb 2024 12:43:39 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Helge Deller <deller@gmx.de>
-Subject: [PULL 16/39] softmmu/physmem: Remove qemu_host_page_size
-Date: Thu, 22 Feb 2024 10:43:00 -1000
-Message-Id: <20240222204323.268539-17-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Deller <deller@gmx.de>
+Subject: [PULL 09/39] linux-user/nios2: Remove qemu_host_page_size from
+ init_guest_commpage
+Date: Thu, 22 Feb 2024 10:42:53 -1000
+Message-Id: <20240222204323.268539-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240222204323.268539-1-richard.henderson@linaro.org>
 References: <20240222204323.268539-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,30 +96,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use qemu_real_host_page_size() instead.
+Use qemu_real_host_page_size.
+If !reserved_va, use MAP_FIXED_NOREPLACE.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240102015808.132373-14-richard.henderson@linaro.org>
+Message-Id: <20240102015808.132373-7-richard.henderson@linaro.org>
 ---
- system/physmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/elfload.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index e3ebc19eef..3b08e064ff 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3511,7 +3511,7 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length)
-          *    fallocate works on hugepages and shmem
-          *    shared anonymous memory requires madvise REMOVE
-          */
--        need_madvise = (rb->page_size == qemu_host_page_size);
-+        need_madvise = (rb->page_size == qemu_real_host_page_size());
-         need_fallocate = rb->fd != -1;
-         if (need_fallocate) {
-             /* For a file, this causes the area of the file to be zero'd
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 1893b3c192..a9f1077861 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -1532,10 +1532,14 @@ static bool init_guest_commpage(void)
+                  0x3a, 0x68, 0x3b, 0x00,  /* trap 0 */
+     };
+ 
+-    void *want = g2h_untagged(LO_COMMPAGE & -qemu_host_page_size);
+-    void *addr = mmap(want, qemu_host_page_size, PROT_READ | PROT_WRITE,
+-                      MAP_ANONYMOUS | MAP_PRIVATE | MAP_FIXED, -1, 0);
++    int host_page_size = qemu_real_host_page_size();
++    void *want, *addr;
+ 
++    want = g2h_untagged(LO_COMMPAGE & -host_page_size);
++    addr = mmap(want, host_page_size, PROT_READ | PROT_WRITE,
++                MAP_ANONYMOUS | MAP_PRIVATE |
++                (reserved_va ? MAP_FIXED : MAP_FIXED_NOREPLACE),
++                -1, 0);
+     if (addr == MAP_FAILED) {
+         perror("Allocating guest commpage");
+         exit(EXIT_FAILURE);
+@@ -1544,9 +1548,9 @@ static bool init_guest_commpage(void)
+         return false;
+     }
+ 
+-    memcpy(addr, kuser_page, sizeof(kuser_page));
++    memcpy(g2h_untagged(LO_COMMPAGE), kuser_page, sizeof(kuser_page));
+ 
+-    if (mprotect(addr, qemu_host_page_size, PROT_READ)) {
++    if (mprotect(addr, host_page_size, PROT_READ)) {
+         perror("Protecting guest commpage");
+         exit(EXIT_FAILURE);
+     }
 -- 
 2.34.1
 
