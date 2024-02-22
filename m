@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B4E7C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 04:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A30C54788
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 04:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd0I7-0002nd-1Q; Wed, 21 Feb 2024 23:02:35 -0500
+	id 1rd0Ig-0003JN-Iv; Wed, 21 Feb 2024 23:03:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd0I5-0002nS-Fd
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 23:02:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd0Ic-0003Ce-UV
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 23:03:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd0I3-0007H6-UD
- for qemu-devel@nongnu.org; Wed, 21 Feb 2024 23:02:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rd0Ib-0007Pi-6J
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 23:03:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708574550;
+ s=mimecast20190719; t=1708574584;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1faIOiExS26ujZjxJUrYaGy4bPENpXxP0Tdvc+SQStg=;
- b=bjswkBAKImzYaixUkOwiFO8coUkbvgde+lesLcYL/5kvCaxlfLIao1IszLviuidXhg5Aiz
- 7CeZ8eknXkTK0NQGNIbsIt8aqd2lk77lCNTKiytlYG5OJWwhYHnYX1pXiCRVH3rK0mDgnc
- H+13/bCUc7pniqXLd841Xn8bYP+fEo4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IJ9d5/KH8exfeUgSs1FxBgwqHlkbBlgAKWiKe8KTwb4=;
+ b=eHx0uuCKBgkbGVsOgojUR6XIpx/SxiXD5C+N9syBg2RJcU1n/NACn1g1XFIgrFsDzSFUjR
+ lrGoa1iI8VX9Lm9nXG2qMm/d1nf5oePIouQjfQHhZvvOCMMrEY7c0Uwea9wMeWHWJDbcd3
+ 9tD1/ed8RLISBVukVe3vktXSWhSoKwc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-211-qmChELuvP0e-uhpXLqnTQw-1; Wed, 21 Feb 2024 23:02:29 -0500
-X-MC-Unique: qmChELuvP0e-uhpXLqnTQw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33d4c09ec04so1935289f8f.0
- for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 20:02:29 -0800 (PST)
+ us-mta-508-RJIQdqitMAG0zmOlwRweCA-1; Wed, 21 Feb 2024 23:03:02 -0500
+X-MC-Unique: RJIQdqitMAG0zmOlwRweCA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4127b4d7607so2300135e9.3
+ for <qemu-devel@nongnu.org>; Wed, 21 Feb 2024 20:03:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708574548; x=1709179348;
+ d=1e100.net; s=20230601; t=1708574581; x=1709179381;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1faIOiExS26ujZjxJUrYaGy4bPENpXxP0Tdvc+SQStg=;
- b=UQ2XxOO7sIdKoombwIfeXJ+sD+v4am4JFZbH78PBCg+0ky/aCKnCl8Z9Ct98cSPyke
- Y/YPVV8sZkUPoXqoA1+4N33W5stYOH1DbfAunMgD643z9b/jmgOXcLqvNsLZTiBO7XeA
- 9Tu15teg6LFk8a0yRNJmNX7ZZWarNdzmha4bR3P9diebyMVBII2CUmVbiKL3rZdxkBBe
- hBGSzZZxZ1BKrqYiuna4gGr4ufG+XO08exNdwchzW4ev4jCM4UhzcZyIWBuhFv0aiDJ1
- 7l8HwHiMnUeUQXk/UljLFibmhL51Y9F4gaI/SpTgaUCbzhSL3ckvuHvlG3/jS5KDnCku
- hP8A==
+ bh=IJ9d5/KH8exfeUgSs1FxBgwqHlkbBlgAKWiKe8KTwb4=;
+ b=m4yee41hLc2ouDLCRQ5buWVV7jPRNNEWlopliXbApD3tgyb7hOkRarP3EjzxYa6xRx
+ RmOEy1VCcQwMqgVqI5K1lnjQr6hs37DddnuATx+cgmFOS971+5urEhLGpBIb4UN/S+Tc
+ mEPKqKlfk18GH3oBIjZduvf1X6DG1uoOMZjadV43eENv8VE+eIwdHylVomrI5ZOCVyMv
+ eap23lowA250LFLeLMBYhQdeko0FyRUS39x6WQEVuSpSI07hR/3r/E6zOyEnqjRzzP9U
+ WGVWI+UdH2mi/KckVcuB3IsGytu//g/Sidbc/yGk+jFAqIZYTHTc8QRGuLdqb8iY3f++
+ gxiw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBXwWhp/aY0z2q8doABn4j7P3WZZJo0creSzo9ZO0FFepFHAAqZo9zk6iNrQHNMGnxWl/Vjg7CEjpl9e4F/GYjOChiShA=
-X-Gm-Message-State: AOJu0YzTF3InF7ov20AI8B0+5luomd9CBDX/ef22MKFo9gr1kiXMg+AS
- A40+imEGbrlT2kmzSZTMyMqir0zPXQlyETBvQR8EIbmhA6ThgOxVREGUNjHNnIrUNq2iAZd4udn
- +upOENzyExt5r2tTx7tJcWLqC7dCVq+1KYIjd4xjdlKNlIxNbsyaZ
-X-Received: by 2002:a5d:4389:0:b0:33d:3b83:6ca3 with SMTP id
- i9-20020a5d4389000000b0033d3b836ca3mr8141275wrq.64.1708574548119; 
- Wed, 21 Feb 2024 20:02:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdQ5wlHWZLB6IG9y57GTvPguBCS18JhKTcvLsYYqQHeP2hFbFQOMYCA/lbP9srbqf0esj57g==
-X-Received: by 2002:a5d:4389:0:b0:33d:3b83:6ca3 with SMTP id
- i9-20020a5d4389000000b0033d3b836ca3mr8141261wrq.64.1708574547804; 
- Wed, 21 Feb 2024 20:02:27 -0800 (PST)
+ AJvYcCWSj6Y/iArM6oKYkusAslN1nCPoH/z2UxFa3AXY/Pg61sC6abSYPGS+yHYo4p+mm7u1IF8bg5BUBzTKnx9oBszL2OB1E/k=
+X-Gm-Message-State: AOJu0YyIS3/8K9v9Ye3VZIObyOpCDSQvPRZmsfGLBpM2zY39d92J2iOC
+ p8CcG+B9DI8STPV6DAUGpw+eJAZ0p9kJ3IayVhNVvvIu4ke2fZ5x/qzZHb0YWBXtfSNIjt/+ILy
+ ifjFW27EvjDpcezkdTGjQCiNULzr5ruwaTwbarHvHAzWmQF/5Wcq8
+X-Received: by 2002:a05:600c:4fc9:b0:412:5652:2875 with SMTP id
+ o9-20020a05600c4fc900b0041256522875mr13357208wmq.17.1708574581449; 
+ Wed, 21 Feb 2024 20:03:01 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFfs5wiJFOwQ2tZR/lLXg9Gxga/sObz6uIOb+hsZJ7JNTFfz9CKUVKgtyf2S3BTiNbrsB9NJA==
+X-Received: by 2002:a05:600c:4fc9:b0:412:5652:2875 with SMTP id
+ o9-20020a05600c4fc900b0041256522875mr13357194wmq.17.1708574581132; 
+ Wed, 21 Feb 2024 20:03:01 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-178-100.web.vodafone.de.
  [109.43.178.100]) by smtp.gmail.com with ESMTPSA id
- j11-20020adff54b000000b0033b43a5f53csm18834788wrp.103.2024.02.21.20.02.26
+ j11-20020adff54b000000b0033b43a5f53csm18834788wrp.103.2024.02.21.20.03.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 21 Feb 2024 20:02:27 -0800 (PST)
-Message-ID: <a9bbbae4-2e73-4027-8c46-0d0573597129@redhat.com>
-Date: Thu, 22 Feb 2024 05:02:25 +0100
+ Wed, 21 Feb 2024 20:03:00 -0800 (PST)
+Message-ID: <d8299843-b4c3-464c-a137-2af26ad88020@redhat.com>
+Date: Thu, 22 Feb 2024 05:03:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] system/vl: Update description for input grab key
+Subject: Re: [PATCH v2 1/2] docs/system: Update description for input grab key
 Content-Language: en-US
 To: Tianlan Zhou <bobby825@126.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>
 References: <20240221195208.462-1-bobby825@126.com>
- <20240221195208.462-3-bobby825@126.com>
+ <20240221195208.462-2-bobby825@126.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,18 +120,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240221195208.462-3-bobby825@126.com>
+In-Reply-To: <20240221195208.462-2-bobby825@126.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,22 +153,22 @@ On 21/02/2024 20.52, Tianlan Zhou wrote:
 > 
 > Signed-off-by: Tianlan Zhou <bobby825@126.com>
 > ---
->   system/vl.c | 2 +-
+>   docs/system/keys.rst.inc | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/system/vl.c b/system/vl.c
-> index a82555ae15..b8469d9965 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -891,7 +891,7 @@ static void help(int exitcode)
->       printf("\nDuring emulation, the following keys are useful:\n"
->              "ctrl-alt-f      toggle full screen\n"
->              "ctrl-alt-n      switch to virtual console 'n'\n"
-> -           "ctrl-alt        toggle mouse and keyboard grab\n"
-> +           "ctrl-alt-g      toggle mouse and keyboard grab\n"
->              "\n"
->              "When using -nographic, press 'ctrl-a h' to get some help.\n"
->              "\n"
+> diff --git a/docs/system/keys.rst.inc b/docs/system/keys.rst.inc
+> index 2e2c97aa23..59966a3fe7 100644
+> --- a/docs/system/keys.rst.inc
+> +++ b/docs/system/keys.rst.inc
+> @@ -29,7 +29,7 @@ Ctrl-Alt-n
+>      *3*
+>         Serial port
+>   
+> -Ctrl-Alt
+> +Ctrl-Alt-g
+>      Toggle mouse and keyboard grab.
+>   
+>   In the virtual consoles, you can use Ctrl-Up, Ctrl-Down, Ctrl-PageUp and
 
 Fixes: f8d2c9369b ("sdl: use ctrl-alt-g as grab hotkey")
 
