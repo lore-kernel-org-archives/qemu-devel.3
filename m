@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 972E2C54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6E5C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7EO-0008Kj-Gt; Thu, 22 Feb 2024 06:27:12 -0500
+	id 1rd7EA-0008F3-0X; Thu, 22 Feb 2024 06:26:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7EL-0008JQ-8S; Thu, 22 Feb 2024 06:27:09 -0500
+ id 1rd7Du-00087h-LK; Thu, 22 Feb 2024 06:26:43 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7EJ-000542-Ce; Thu, 22 Feb 2024 06:27:08 -0500
+ id 1rd7Dq-000527-CY; Thu, 22 Feb 2024 06:26:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FCD44FB51;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0EB5A4FB4D;
  Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DA9738717D;
+ by tsrv.corpit.ru (Postfix) with SMTP id 89ACC87179;
  Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
-Received: (nullmailer pid 2526185 invoked by uid 1000);
+Received: (nullmailer pid 2526173 invoked by uid 1000);
  Thu, 22 Feb 2024 11:26:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 15/34] accel/tcg: correct typos
-Date: Thu, 22 Feb 2024 14:25:42 +0300
-Message-Id: <20240222112601.2526057-16-mjt@tls.msk.ru>
+Subject: [PULL 11/34] hw/acpi/cpu_hotplug: Include 'x86.h' instead of 'pc.h'
+Date: Thu, 22 Feb 2024 14:25:38 +0300
+Message-Id: <20240222112601.2526057-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
@@ -62,33 +62,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Correct typos automatically found with the `typos` tool
-<https://crates.io/crates/typos>
+X86 CPU hotplug isn't specific to PC machines.
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- accel/tcg/ldst_atomicity.c.inc | 2 +-
+ hw/acpi/cpu_hotplug.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/tcg/ldst_atomicity.c.inc b/accel/tcg/ldst_atomicity.c.inc
-index 33a04dec52..97dae70d53 100644
---- a/accel/tcg/ldst_atomicity.c.inc
-+++ b/accel/tcg/ldst_atomicity.c.inc
-@@ -76,7 +76,7 @@ static int required_atomicity(CPUState *cpu, uintptr_t p, MemOp memop)
-         /*
-          * Examine the alignment of p to determine if there are subobjects
-          * that must be aligned.  Note that we only really need ctz4() --
--         * any more sigificant bits are discarded by the immediately
-+         * any more significant bits are discarded by the immediately
-          * following comparison.
-          */
-         tmp = ctz32(p);
+diff --git a/hw/acpi/cpu_hotplug.c b/hw/acpi/cpu_hotplug.c
+index f7fe905e0a..83b8bc5deb 100644
+--- a/hw/acpi/cpu_hotplug.c
++++ b/hw/acpi/cpu_hotplug.c
+@@ -13,7 +13,7 @@
+ #include "hw/acpi/cpu_hotplug.h"
+ #include "qapi/error.h"
+ #include "hw/core/cpu.h"
+-#include "hw/i386/pc.h"
++#include "hw/i386/x86.h"
+ #include "hw/pci/pci_device.h"
+ #include "qemu/error-report.h"
+ 
 -- 
 2.39.2
 
