@@ -4,97 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 176B8C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FF6C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:17:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd6jt-0008MW-6x; Thu, 22 Feb 2024 05:55:41 -0500
+	id 1rd73h-0000Hr-2T; Thu, 22 Feb 2024 06:16:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rd6jr-0008MJ-2u
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:55:39 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rd6jo-00082o-Ov
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:55:38 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41279203064so9626895e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 02:55:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708599335; x=1709204135; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kebqUSP2m77cw/AFNttxNd7Rli6XADFYi2bPtg2xNEw=;
- b=v7144p5vWh1NFtgp1EWMQGh+SIEtgicpH2nicUudGP/BYSv2/7930lhqFK2y7oLwM7
- 6TYuZXUSfAMQVX9VDS2hOiJ+rf/H7s1/EF5zBlle5P3hLawhIDWX9cLz/J8Ly4ZsnoBF
- CRMtgTnvQT5FXTv/yPzkqwmEKu5xz+C0ozgoXabjFcheaggOAK2EtdSNz5au4GoegH3V
- +paC8SIHwOxfufFHHHbyocpaYJlGom8lkvk0ig1oXty8WbK5yEyzbVrJDf2YIXsNAJ1N
- f0GPa7p9n8DiNEKEk30SZBsjkJzLXfHP/4HfrsNk3P7rns2hG26QGfpE3YS7QoNDk4Gv
- 1UYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708599335; x=1709204135;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kebqUSP2m77cw/AFNttxNd7Rli6XADFYi2bPtg2xNEw=;
- b=ddkU+EgDZh27IsdfRN9pMVmtu+NkDUjuwE1tPgtP0NhXQhoTPv42Gsx+cCKlDJW+F2
- EugOBJ1F6mVgTO36TWulk+EbLXowQDbBwwOSdUD11kdOGUJ8SeWH5QB04jNpB2tPUlRT
- N0XIAW0prHKw2IXifmChAEz8r1fgs2kXYODn04g7dR2p773TtSQVzkvF0iSrq25Sfeb/
- OGhoRtUtZW6+OY4hTsqaK5OBr2JOW0YOIR5f0D5Xk4Wpe+CuOjy/+6kSDMp6ZUOe+puc
- sxeUVitzRb355MVHyYfzG89JgycrnlcfbF1wBvgGYG/tzVEJ9IPEcJmGnQ6B18WLV65w
- dmDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/b3GXsSrPPcWW59WqX1dtcoRzzKvJwqmeyBSRlDgy69gm77OVOLY2M3W/3rDPPkzZtGoqEYGME+s/nWqgFp71uCCOTEo=
-X-Gm-Message-State: AOJu0YwKm6oO/vx+26zC3v16Q1qRFrmfyq0O1DWy5309Bq4GqE8ceOtA
- gh2vZNoVzqOkcY5eJii/1YhI+olWjPeOTArNO9D3kJNxJUYmDtLPSHv5vbLj5VU=
-X-Google-Smtp-Source: AGHT+IF1YjGPaghPOAIY9UXWaMb83HL/sIwoNYVChOQ5O+PU/VnfOD0UpkPhAKmLDhRCmHBmdlB8pQ==
-X-Received: by 2002:a05:600c:3b18:b0:412:7723:c754 with SMTP id
- m24-20020a05600c3b1800b004127723c754mr2950941wms.10.1708599334748; 
- Thu, 22 Feb 2024 02:55:34 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- w16-20020a05600c475000b004128c73beffsm981767wmo.34.2024.02.22.02.55.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 02:55:34 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 037B45F89B;
- Thu, 22 Feb 2024 10:55:34 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Faiq Ali Sayed <faiqueali.109@gmail.com>,  qemu-devel@nongnu.org,
- Alistair Francis <alistair@alistair23.me>, Edgar E. Iglesias
- <edgar.iglesias@gmail.com>, Stefano Stabellini <stefano.stabellini@amd.com>
-Subject: Re: QNX VM hang on Qemu
-In-Reply-To: <CAFEAcA9_MDHQyQ6q76OpUXgEO9f_osS23oMhyTC4vNSBqtD1-A@mail.gmail.com>
- (Peter Maydell's message of "Thu, 22 Feb 2024 09:45:44 +0000")
-References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
- <87a5nvci5n.fsf@draig.linaro.org>
- <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
- <87y1bfawik.fsf@draig.linaro.org>
- <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
- <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
- <CAOpGCn+vQ7wupMqeH8ZLarT0c4gD85R6cgRqBMhVeAXtZ1F_Mg@mail.gmail.com>
- <CAFEAcA9Yp=ObPhgagAbf2Ev=6=D+9sCfHC_HCxPUr2JgvWa4oQ@mail.gmail.com>
- <CAOpGCn+BHsVPG1_2-avx6Ex10dc-nKYuVv=3VTct=MYRb4TmYw@mail.gmail.com>
- <CAFEAcA9_MDHQyQ6q76OpUXgEO9f_osS23oMhyTC4vNSBqtD1-A@mail.gmail.com>
-User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Thu, 22 Feb 2024 10:55:33 +0000
-Message-ID: <871q94ahui.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rd73e-0008SF-Kx; Thu, 22 Feb 2024 06:16:06 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rd73a-0002nP-6T; Thu, 22 Feb 2024 06:16:06 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8F39B4E6004;
+ Thu, 22 Feb 2024 12:15:58 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 7ArcJ8sw_vNq; Thu, 22 Feb 2024 12:15:56 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 939C24E6003; Thu, 22 Feb 2024 12:15:56 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 90E6F7456B4;
+ Thu, 22 Feb 2024 12:15:56 +0100 (CET)
+Date: Thu, 22 Feb 2024 12:15:56 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
+Subject: Re: [PATCH v5 9/9] target/ppc: Remove interrupt handler wrapper
+ functions
+In-Reply-To: <7ed65560-9521-4b56-84fe-df7a7d0084fd@linux.ibm.com>
+Message-ID: <12aca702-90e6-8a5b-2153-6df85d887106@eik.bme.hu>
+References: <cover.1705614747.git.balaton@eik.bme.hu>
+ <281ce504db0192be0673f3525ea59d425bb1e5e0.1705614747.git.balaton@eik.bme.hu>
+ <7ed65560-9521-4b56-84fe-df7a7d0084fd@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,104 +67,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-(adding the other ZyncMP maintainers to the CC)
-
-> On Wed, 21 Feb 2024 at 18:20, Faiq Ali Sayed <faiqueali.109@gmail.com> wr=
-ote:
->>
->>
->>>
->>> This is also useful information. I would suggest you look
->>> at what the difference is between the image that boots and
->>> the one that doesn't: is it the same format (and what format
->>> is that)? is the way it is loaded on the real hardware the
->>> same, or different?
->>
->>
->> I am not able to distinguish between the images as they are in binary fo=
-rm,
->> I noticed that the smaller size image can boot in Qemu.
->> I normally put the image into an SD card of the real hardware to boot.
->> so it is quite difficult for me now to distinguish.
->>
->>
->>> From the debug info from gdb you provided, the file clearly
->>> is not a raw binary file -- the initial bytes seem to be
->>> largely ASCII text. So it might be that this image is in
->>> a file format that whatever the real-hardware loader
->>> recognizes, but QEMU doesn't, whereas the images you have
->>> that work are really raw binaries. In that case you'd want
->>> to convert the image somehow to a format QEMU can understand
->>> (eg ELF, or raw-binary).
->>
->>
->> ahh, that also makes sense, ok now let me try to convert the images, and=
- let's see.
->> Does Qemu provide such a tool or do you know any?
+On Thu, 22 Feb 2024, Harsh Prateek Bora wrote:
+> On 1/19/24 03:31, BALATON Zoltan wrote:
+>> These wrappers call out to handle POWER7 and newer in separate
+>> functions but reduce to the generic case when TARGET_PPC64 is not
+>> defined. It is easy enough to include the switch in the beginning of
+>> the generic functions to branch out to the specific functions and get
+>> rid of these wrappers. This avoids one indirection and entitely
 >
-> We don't know what format these images are in, so hard
-> to say, but I would expect not (mostly QEMU's image
-> conversion handling is for filesystems, not guest
-> binaries). You'll probably do best to look on the QNX
-> and/or Xilinx side -- Xilinx should document what
-> file formats it is that their boot process accepts.
-> Your third-party vendor presumably also knows what
-> format it is that they're generating the image in.
-
-I did have a brief look through the Xilinx wiki pages to see if I could
-cobble together a test case for their PetaLinux images. A bunch of pages
-led to login walls which I assume are customer only. I did find:
-
-  https://github.com/Xilinx/soc-prebuilt-firmware/tree/xlnx_rel_v2023.1/zcu=
-102-zynqmp
-
-which has a number of the components for the firmware but there was no
-clear way to combine them into a single image. I did try just feeding
-the ELF's to the command line but there was a clash between zynqmp_fsbl
-and the bl31 (which I think is the normal ATF image).
-
-  ./qemu-system-aarch64 -M xlnx-zcu102 -audio none -smp 4 -serial mon:stdio=
- -display none -s -S -device loader,file=3D/home/alex/lsrc/tests/testcases/=
-zcu102-zyncmp-prebuilds/zynqmp_fsbl.elf -device loader,file=3D/home/alex/ls=
-rc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.elf,cpu-num=3D0 -device loa=
-der,file=3D/home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/system.d=
-tb,addr=3D0x00100000 -device loader,file=3D/home/alex/lsrc/tests/testcases/=
-zcu102-zyncmp-prebuilds/u-boot.elf  -dtb /home/alex/lsrc/tests/testcases/zc=
-u102-zyncmp-prebuilds/system.dtb
-  qemu-system-aarch64: Some ROM regions are overlapping
-  These ROM regions might have been loaded by direct user request or by def=
-ault.
-  They could be BIOS/firmware images, a guest kernel, initrd or some other =
-file loaded into guest memory.
-  Check whether you intended to load all this guest code, and whether it ha=
-s been built to load to the correct addresses.
-
-  The following two regions overlap (in the cpu-memory-0 address space):
-    /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zynqmp_fsbl.elf=
- ELF program header segment 0 (addresses 0x00000000fffc0000 - 0x00000000fff=
-e6058)
-    /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.elf ELF pr=
-ogram header segment 0 (addresses 0x00000000fffe0000 - 0x00000000ffffe000)
-
-  The following two regions overlap (in the cpu-memory-0 address space):
-    /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.elf ELF pr=
-ogram header segment 0 (addresses 0x00000000fffe0000 - 0x00000000ffffe000)
-    /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zynqmp_fsbl.elf=
- ELF program header segment 1 (addresses 0x00000000fffe9e00 - 0x00000000fff=
-e9e88)
-
-Most of the use cases on the Xilinx pages are hidden behind their launch
-scripts for their downstream fork. It would be nice if we could get at
-least one image published somewhere that we could add an avocado test
-for and hopefully an entry in the Arm system emulator pages (we have
-fairly complete docs for xlnx-versal-virt).
-
+> s/entitely/entirely
 >
-> -- PMM
+>> compiles out the switch without TARGET_PPC64.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   target/ppc/excp_helper.c | 70 ++++++++++++++++++----------------------
+>>   1 file changed, 31 insertions(+), 39 deletions(-)
+>> 
+>> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+>> index 5124c3e6b5..de51627c4c 100644
+>> --- a/target/ppc/excp_helper.c
+>> +++ b/target/ppc/excp_helper.c
+>> @@ -1921,8 +1921,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState 
+>> *env)
+>>   }
+>>   #endif /* TARGET_PPC64 */
+>>   -static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
+>> +static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+>>   {
+>> +#ifdef TARGET_PPC64
+>> +    switch (env->excp_model) {
+>> +    case POWERPC_EXCP_POWER7:
+>> +        return p7_next_unmasked_interrupt(env);
+>> +    case POWERPC_EXCP_POWER8:
+>> +        return p8_next_unmasked_interrupt(env);
+>> +    case POWERPC_EXCP_POWER9:
+>> +    case POWERPC_EXCP_POWER10:
+>> +        return p9_next_unmasked_interrupt(env);
+>> +    default:
+>> +        break;
+>> +    }
+>> +#endif
+>>       bool async_deliver;
+>>         /* External reset */
+>> @@ -2033,23 +2046,6 @@ static int 
+>> ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
+>>       return 0;
+>>   }
+>>   -static int ppc_next_unmasked_interrupt(CPUPPCState *env)
+>> -{
+>> -    switch (env->excp_model) {
+>> -#ifdef TARGET_PPC64
+>> -    case POWERPC_EXCP_POWER7:
+>> -        return p7_next_unmasked_interrupt(env);
+>> -    case POWERPC_EXCP_POWER8:
+>> -        return p8_next_unmasked_interrupt(env);
+>> -    case POWERPC_EXCP_POWER9:
+>> -    case POWERPC_EXCP_POWER10:
+>> -        return p9_next_unmasked_interrupt(env);
+>> -#endif
+>> -    default:
+>> -        return ppc_next_unmasked_interrupt_generic(env);
+>> -    }
+>> -}
+>> -
+>>   /*
+>>    * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to 
+>> be
+>>    * delivered and clears CPU_INTERRUPT_HARD otherwise.
+>> @@ -2279,8 +2275,24 @@ static void p9_deliver_interrupt(CPUPPCState *env, 
+>> int interrupt)
+>>   }
+>>   #endif /* TARGET_PPC64 */
+>>   -static void ppc_deliver_interrupt_generic(CPUPPCState *env, int 
+>> interrupt)
+>> +static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+>>   {
+>> +#ifdef TARGET_PPC64
+>> +    switch (env->excp_model) {
+>> +    case POWERPC_EXCP_POWER7:
+>> +        p7_deliver_interrupt(env, interrupt);
+>> +        return;
+>> +    case POWERPC_EXCP_POWER8:
+>> +        p8_deliver_interrupt(env, interrupt);
+>> +        return;
+>> +    case POWERPC_EXCP_POWER9:
+>> +    case POWERPC_EXCP_POWER10:
+>> +        p9_deliver_interrupt(env, interrupt);
+>> +        return;
+>
+> These return statements could be clubbed with the function call itself.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+These return void so I thought it's cleaner this way but it appears to 
+work the way you suggest too so I'll change it then.
+
+> With the suggested fixes,
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+Thanks for reviewing these. I'll send an updated version today.
+
+Regards,
+BALATON Zoltan
+
+>> +    default:
+>> +        break;
+>> +    }
+>> +#endif
+>>       PowerPCCPU *cpu = env_archcpu(env);
+>>         switch (interrupt) {
+>> @@ -2383,26 +2395,6 @@ static void 
+>> ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
+>>       }
+>>   }
+>>   -static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+>> -{
+>> -    switch (env->excp_model) {
+>> -#ifdef TARGET_PPC64
+>> -    case POWERPC_EXCP_POWER7:
+>> -        p7_deliver_interrupt(env, interrupt);
+>> -        break;
+>> -    case POWERPC_EXCP_POWER8:
+>> -        p8_deliver_interrupt(env, interrupt);
+>> -        break;
+>> -    case POWERPC_EXCP_POWER9:
+>> -    case POWERPC_EXCP_POWER10:
+>> -        p9_deliver_interrupt(env, interrupt);
+>> -        break;
+>> -#endif
+>> -    default:
+>> -        ppc_deliver_interrupt_generic(env, interrupt);
+>> -    }
+>> -}
+>> -
+>>   void ppc_cpu_do_system_reset(CPUState *cs)
+>>   {
+>>       PowerPCCPU *cpu = POWERPC_CPU(cs);
+>
+>
 
