@@ -4,89 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82E1C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6581CC54798
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7Ei-0008S8-2K; Thu, 22 Feb 2024 06:27:32 -0500
+	id 1rd7EK-0008Io-5w; Thu, 22 Feb 2024 06:27:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd7ER-0008Mo-DI
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:27:15 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd7EP-00055K-Lo
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:27:15 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33d8739ddd4so749421f8f.2
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 03:27:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708601232; x=1709206032; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ewuz/uX+FAlMODLnCCI2wbCxRcoCSmYQznNuQLSANFg=;
- b=k7Sob5/abgM7c+/CTGg7xfeGOW8yh8Z7lmiylCU4kg2g+PHPTjJzwF2vMD5GqnylPL
- GmJEpPVzohxd4LDnqJt6PQkb17NYkiZYtlCxWlT8mAZ9i8ehYOppsPRL9foqJxK16tSo
- gT2WauR3oYmw3q11Jlxfm2asd/BSmjKVDTwIes0LjLNroUqtSwTswdkFIF4vF8KBa3Yr
- R7AE3OK19+1O63qggc8uLMEMC5Gsl4ijyty677+hofPozLgdxoZYIe/XjH375j5doAHl
- 4exbJKOIHhEiIL8XNSDAdjFD3gQS8nUbmJvIY1taneZ1/jUHvrGMlGFqVa9sCEUNDyTK
- w1Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708601232; x=1709206032;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ewuz/uX+FAlMODLnCCI2wbCxRcoCSmYQznNuQLSANFg=;
- b=pX2P97pipaFiyEb8A2bOQll4KyQULoa4p4i7YqdmEsRtyqhw02+jyYEAFVC8PY8mfd
- EBabltRsjR/2HUQypAFM8jz3sva3osnlG+NJDe1XDfcUvY2z8GolbZu+439IH1J1jnZG
- mGoBv/yvg2v45n86/Lx/KKyx6fX0yIMR2OA5aajAjTgdg/I11hD1x5J9FxKMoHLPglQe
- aN0KlIpXqTEQ47/8jlPuzaQgx0vPWxqADHKvGGEbpSEShe3RE19BF6EeayfJwG4teBSX
- SRtL0UXwnirjz0rXmFiESrGj2zPW5krdQvp7WIV1KvvdFfNFBE/xIR+xnp409q2O2UcH
- Cl+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6mNLd9B53dqcw0ce8zjejIgWQ1pKQoUb5MDJL1FgJPUTyDspwBJGFR6Hk3EJAY6jLCCdxFIL6PdBkw624tI8LE/zz7LY=
-X-Gm-Message-State: AOJu0YzUcMtl1TNNwKtlETAcC0Ng1zU3izBs6F6z4BpBUJUJcaN2Myx4
- A58ez4S/mtmmlxKDbgkPzhHxiG+Lso/vtIblEXx9tLhA0nveHcRvoI7utvml5FU=
-X-Google-Smtp-Source: AGHT+IHYImjIerhPqKzadJuCMolekvIq2CyPVVAB2um/wkcWkD1FGoRTISs+T8n1b2f/WReLN8ASZw==
-X-Received: by 2002:a5d:430d:0:b0:33b:302:c08 with SMTP id
- h13-20020a5d430d000000b0033b03020c08mr15756333wrq.43.1708601231756; 
- Thu, 22 Feb 2024 03:27:11 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.211.34])
- by smtp.gmail.com with ESMTPSA id
- g2-20020a056000118200b0033d8a17a710sm2347370wrx.88.2024.02.22.03.27.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 03:27:11 -0800 (PST)
-Message-ID: <6e6ab585-5479-45c5-9042-b958e0dbdfeb@linaro.org>
-Date: Thu, 22 Feb 2024 12:27:09 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rd7EH-0008Hk-Ub; Thu, 22 Feb 2024 06:27:06 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rd7EG-00052d-3Z; Thu, 22 Feb 2024 06:27:05 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 371BD4FB4F;
+ Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id A62388717B;
+ Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
+Received: (nullmailer pid 2526179 invoked by uid 1000);
+ Thu, 22 Feb 2024 11:26:01 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 13/34] docs: correct typos
+Date: Thu, 22 Feb 2024 14:25:40 +0300
+Message-Id: <20240222112601.2526057-14-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
+References: <20240222112601.2526057-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/sparc/leon3: Fix wrong usage of DO_UPCAST macro
-Content-Language: en-US
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
-Cc: Thomas Huth <thuth@redhat.com>, Frederic Konrad
- <konrad.frederic@yahoo.fr>, qemu-devel@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240221180751.190489-1-thuth@redhat.com>
- <99813a8e-45ec-460e-a944-c696eb853b75@linaro.org>
- <1ed3ee21-20ff-4503-98ea-de00c490b83a@linaro.org>
- <0a37899f-ca73-4749-8f6f-2b61b92cb560@linaro.org>
- <CAJ307Ei8-VE1Jsy_uZzLa_2=t76qB_eykZx-=0hNoaogGsUQaA@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ307Ei8-VE1Jsy_uZzLa_2=t76qB_eykZx-=0hNoaogGsUQaA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,56 +62,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/2/24 09:26, Clément Chigot wrote:
-> Hi Philippe, Thomas
-> 
-> Thanks for handling that !
-> And I do confirm that it does not trigger any obvious regression on our side.
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Since I screwed my hw-misc pull request, I'll add your Tested-by to the
-commit before respin.
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
-> 
-> Thanks,
-> Clément
-> 
-> On Thu, Feb 22, 2024 at 8:46 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> On 21/2/24 19:49, Philippe Mathieu-Daudé wrote:
->>> On 21/2/24 19:47, Philippe Mathieu-Daudé wrote:
->>>> On 21/2/24 19:07, Thomas Huth wrote:
->>>>> leon3.c currently fails to compile with some compilers when the -Wvla
->>>>> option has been enabled:
->>>>>
->>>>>    ../hw/sparc/leon3.c: In function ‘leon3_cpu_reset’:
->>>>>    ../hw/sparc/leon3.c:153:5: error: ISO C90 forbids variable length
->>>>> array
->>>>>     ‘offset_must_be_zero’ [-Werror=vla]
->>>>>      153 |     ResetData *s = (ResetData *)DO_UPCAST(ResetData,
->>>>> info[id], info);
->>>>>          |     ^~~~~~~~~
->>>>>    cc1: all warnings being treated as errors
->>>>>
->>>>> Looking at this code, the DO_UPCAST macro is indeed used in a wrong way
->>>>> here: DO_UPCAST is supposed to check that the second parameter is the
->>>>> first entry of the struct that the first parameter indicates, but since
->>>>> we use and index into the info[] array, this of course cannot work.
->>>>>
->>>>> The intention here was likely rather to use the container_of() macro
->>>>> instead, so switch the code accordingly.
->>>
->>> Fixes: d65aba8286 ("hw/sparc/leon3: implement multiprocessor")
->>>
->>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>>> ---
->>>>>    hw/sparc/leon3.c | 2 +-
->>>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>
->>
->> Patch queued!
->>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+(mjt: trivial fixup)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ docs/devel/ci-jobs.rst.inc      | 2 +-
+ docs/devel/docs.rst             | 2 +-
+ docs/devel/testing.rst          | 2 +-
+ docs/interop/prl-xml.txt        | 2 +-
+ docs/interop/vhost-user.rst     | 2 +-
+ docs/system/devices/canokey.rst | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/docs/devel/ci-jobs.rst.inc b/docs/devel/ci-jobs.rst.inc
+index 4c39cdb2d9..ec33e6ee2b 100644
+--- a/docs/devel/ci-jobs.rst.inc
++++ b/docs/devel/ci-jobs.rst.inc
+@@ -147,7 +147,7 @@ Set this variable to 1 to create the pipelines, but leave all
+ the jobs to be manually started from the UI
+ 
+ Set this variable to 2 to create the pipelines and run all
+-the jobs immediately, as was historicaly behaviour
++the jobs immediately, as was the historical behaviour
+ 
+ QEMU_CI_AVOCADO_TESTING
+ ~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/docs/devel/docs.rst b/docs/devel/docs.rst
+index 50ff0d67f8..a7768b5311 100644
+--- a/docs/devel/docs.rst
++++ b/docs/devel/docs.rst
+@@ -21,7 +21,7 @@ are processed in two ways:
+ 
+ The syntax of these ``.hx`` files is simple. It is broadly an
+ alternation of C code put into the C output and rST format text
+-put into the documention. A few special directives are recognised;
++put into the documentation. A few special directives are recognised;
+ these are all-caps and must be at the beginning of the line.
+ 
+ ``HXCOMM`` is the comment marker. The line, including any arbitrary
+diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
+index bd132306c1..aa96eacec5 100644
+--- a/docs/devel/testing.rst
++++ b/docs/devel/testing.rst
+@@ -728,7 +728,7 @@ For example to setup the HPPA ports builds of Debian::
+     EXECUTABLE=(pwd)/qemu-hppa V=1
+ 
+ The ``DEB_`` variables are substitutions used by
+-``debian-boostrap.pre`` which is called to do the initial debootstrap
++``debian-bootstrap.pre`` which is called to do the initial debootstrap
+ of the rootfs before it is copied into the container. The second stage
+ is run as part of the build. The final image will be tagged as
+ ``qemu/debian-sid-hppa``.
+diff --git a/docs/interop/prl-xml.txt b/docs/interop/prl-xml.txt
+index 7031f8752c..cf9b3fba26 100644
+--- a/docs/interop/prl-xml.txt
++++ b/docs/interop/prl-xml.txt
+@@ -122,7 +122,7 @@ Each Image element has following child elements:
+     * Type - image type of the element. It can be:
+              "Plain" for raw files.
+              "Compressed" for expanding disks.
+-    * File - path to image file. Path can be relative to DiskDecriptor.xml or
++    * File - path to image file. Path can be relative to DiskDescriptor.xml or
+              absolute.
+ 
+ == Snapshots element ==
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index ad6e142f23..d1ed39dfa0 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -989,7 +989,7 @@ When reconnecting:
+ 
+    #. If ``d.flags`` is not equal to the calculated flags value (means
+       back-end has submitted the buffer to guest driver before crash, so
+-      it has to commit the in-progres update), set ``old_free_head``,
++      it has to commit the in-progress update), set ``old_free_head``,
+       ``old_used_idx``, ``old_used_wrap_counter`` to ``free_head``,
+       ``used_idx``, ``used_wrap_counter``
+ 
+diff --git a/docs/system/devices/canokey.rst b/docs/system/devices/canokey.rst
+index cfa6186e48..7f3664963f 100644
+--- a/docs/system/devices/canokey.rst
++++ b/docs/system/devices/canokey.rst
+@@ -14,7 +14,7 @@ CanoKey [1]_ is an open-source secure key with supports of
+ All these platform-independent features are in canokey-core [3]_.
+ 
+ For different platforms, CanoKey has different implementations,
+-including both hardware implementions and virtual cards:
++including both hardware implementations and virtual cards:
+ 
+ * CanoKey STM32 [4]_
+ * CanoKey Pigeon [5]_
+-- 
+2.39.2
 
 
