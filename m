@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7495EC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E1EC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd59E-0002Xl-HK; Thu, 22 Feb 2024 04:13:44 -0500
+	id 1rd5IC-00060y-3F; Thu, 22 Feb 2024 04:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rd59C-0002S6-QH; Thu, 22 Feb 2024 04:13:42 -0500
-Received: from fhigh1-smtp.messagingengine.com ([103.168.172.152])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd5I9-00060k-8p
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:22:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rd59A-0000gH-I6; Thu, 22 Feb 2024 04:13:42 -0500
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 760B811400D6;
- Thu, 22 Feb 2024 04:13:37 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute1.internal (MEProxy); Thu, 22 Feb 2024 04:13:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1708593217; x=
- 1708679617; bh=XwRqkdl0vuH6Ba/gl15XuZXHtlJr5Sza38PG/38JFBg=; b=Y
- UnMOmEzC1OXYp+XMKqJkcpVJWNt2ZH7DpZ105PiSxqc+NxIRJ3uZ1pPEDYPBVgKt
- kM9TfKAI/qwH7pzoEcC451cMi5o1u5zsDXCESsmILJVh2ZM3AJKhjD7aiJWWQufx
- BOB7hqH2au3mg3XHvg/rKGoI3NEnG+dOhwXBZqLtHHI9J25rKvrLBK6+WyYU++c5
- Uji+PC1I2YxiEYfFwP+hAsh24zvkidd3LrK5x6F/FzrOACNxuKPgdyBfrw/vO6fq
- AJwbZvNu395BLsHx7lemSByjkak/67ewEqHlF8RdOluXtxp6yeOZscC60rFMauvF
- WRM0ewUO3m7fhoRZqSiUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1708593217; x=1708679617; bh=XwRqkdl0vuH6Ba/gl15XuZXHtlJr
- 5Sza38PG/38JFBg=; b=psPVACYVkoKvE7NgePX0xHMSj8ziIgtkFxU6KHYgpv0P
- 0MDiDsg4JYi08BiTZp9T4SVO0eTnMpem1MP/7Uu0PQ0oRwS4Ru/ekl/ZZpm4XSSc
- RSrzYQ1ggq1079rClbcPrQtApx7HUS6TJyQGoLFLBRwej/6O1y5g+A05pyazt3bT
- wWHb7P4mRT9x9azVUpAqfzJ5ZYJoWSSXvAej0myo4y5h3Jmw0WJ0LqSU3zNXcv2S
- tuWdk0WhzXEn4KFiGIWWUiKeO/k7vuWhgXiXahaaH/rvNfXNBhdD8D7SXKwzdDp7
- 9RZ7+uzrVrUg7udXv4WXoZLOZ0KPQVjR90xTpdu6Zg==
-X-ME-Sender: <xms:QRDXZcFqeCV_-XGXe6bSnURLIs7PVO6MV4AjMNS8nFjS_etlvV4OfQ>
- <xme:QRDXZVX2EDQcrV1yEKc_cxUuNqDRX1frxZNNTuNOdVtJ45vDrx8dKNtWXkPzF6OAJ
- OZBzEOIOy6s5sa__1w>
-X-ME-Received: <xmr:QRDXZWKYRSyGEmPpfW8r9UfXheWRGYE3JhKDn-6ynPlMN8NHj5vk0zzq04BQog>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeegucetufdoteggodetrfdotffvucfrrh
- hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
- lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
- epfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgv
- nhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnh
- epjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecu
- vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesih
- hrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:QRDXZeFZxRuHhDnu4zDSW_EvpmtQDMJdkjhnNMMVQRRMsYyTtfYxJA>
- <xmx:QRDXZSUvd1eHRXyesrReDKr66urrdQeXMP7EPQZQ0ZPn3EHIVWCmag>
- <xmx:QRDXZRPtHF_0qUda171wqwmWbz2TIN9pwuBM2gpwO8mQjDZPkbsWsA>
- <xmx:QRDXZdG_KMunmlC-aMXOJvLEFkfBH7NYx3RLLJ2ySllv_AD43j_m9A>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Feb 2024 04:13:36 -0500 (EST)
-Date: Thu, 22 Feb 2024 10:13:30 +0100
-From: Klaus Jensen <its@irrelevant.dk>
-To: Nabih Estefan <nabihestefan@google.com>
-Cc: peter.maydell@linaro.org, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- kbusch@kernel.org, roqueh@google.com
-Subject: Re: [PATCH] hw/nvme/ns: Add NVMe NGUID property
-Message-ID: <ZdcQOnW1G6nCYqH-@cormorant.local>
-References: <20240221173853.1573034-1-nabihestefan@google.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rd5I4-00028B-BI
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 04:22:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708593770;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=hVsZscbCBZmdHksZO1pddkEO3JQCt8go1PJ2oOhmt6U=;
+ b=QzBBu1eOQmcPJQAVm7JdOo/edrmI/nmFWlNsgPaofLVWgLgUeG7b+gOSt90oX+wECZ8DkL
+ TVCJ8jwQEMF5Vngmb71rj7Da4biQ4r2nfNB6Rhxt+U4pNut5IzVPsAt8sLarYXulRfYVsE
+ E+wQr53Xmp0LYyu+ckLUhhJoZzqx6XQ=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-319-Z2duMHxVMo-I6ypHqTRY8w-1; Thu, 22 Feb 2024 04:22:48 -0500
+X-MC-Unique: Z2duMHxVMo-I6ypHqTRY8w-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-1da0dd1dec4so27155955ad.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 01:22:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708593768; x=1709198568;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hVsZscbCBZmdHksZO1pddkEO3JQCt8go1PJ2oOhmt6U=;
+ b=FHkBj1/WH/QG8bZuqIh6EiZSD09OhgQ6ydQnJw2vDQiTS+SPgydqtWuv1urUwMNHzt
+ 2X3pOOOkfrukqDqd13Y5JZv+Zf2LFyJF6V80GxIuxgXt+gg+z+NUEEr7l+c0H8cBFMT/
+ JpAiky9xJZ3aFNyKQLUL9Y8qbybfJbn6LsGPIJXcvPsHaFqk3O/9ixNHXXk+3QsAJ6lN
+ kPDGkPk8QFyqs+eU2u8Nx3yD20qB+mDCbgUPyqzPGf2Da8OQbq7Y9pbWbIqFAQi3a81w
+ VOTyBDg/xm7LnaZc/gGS+E7havrbVanSFNy2bHnilaniLEUo36FmjtWS2IpdDUIfOduT
+ D4Lg==
+X-Gm-Message-State: AOJu0YwgYlDIIjRdY+1GsRfP1/BSq2UMM/cDw9yNIlEavQd1Tsez0GaP
+ yquTEB5CDG9grGUmBvw17WurRZQrk3O840YVXGKhD9v/42SX5ONAeiQqsnOEgJ44Vg42YGAZ4al
+ /WilzpS02SQ4dc4Z1thYLJ+1EJEqeGl3i68Q7xstJB/qm0Wv/5vjv
+X-Received: by 2002:a17:902:b113:b0:1dc:e32:d0b7 with SMTP id
+ q19-20020a170902b11300b001dc0e32d0b7mr8773552plr.0.1708593767915; 
+ Thu, 22 Feb 2024 01:22:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXJlrGLAyNg7CTFYJLJkvNaNX8u+e6nfySE//IY8Thjd0gLIEVkHGwkRzWk29ZPlDMhspaSg==
+X-Received: by 2002:a17:902:b113:b0:1dc:e32:d0b7 with SMTP id
+ q19-20020a170902b11300b001dc0e32d0b7mr8773534plr.0.1708593767440; 
+ Thu, 22 Feb 2024 01:22:47 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ o7-20020a170902778700b001dc391cc28fsm2209959pll.121.2024.02.22.01.22.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Feb 2024 01:22:47 -0800 (PST)
+Date: Thu, 22 Feb 2024 17:22:40 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Roman Khapov <rkhapov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, eblake@redhat.com,
+ armbru@redhat.com, yc-core@yandex-team.ru
+Subject: Re: [PATCH v2 1/2] qapi/migration.json: add reason to MIGRATION event
+Message-ID: <ZdcSYEtQe8M69Uza@x1n>
+References: <20240215122759.1438581-1-rkhapov@yandex-team.ru>
+ <20240215122759.1438581-2-rkhapov@yandex-team.ru>
+ <ZdQ7C5dHIQsTVQE8@x1n>
+ <a804edf0-67d4-4752-b79f-c3e1ef3d72ff@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="9QHRZVwhrjmLGtfr"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240221173853.1573034-1-nabihestefan@google.com>
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
- helo=fhigh1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <a804edf0-67d4-4752-b79f-c3e1ef3d72ff@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,111 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Feb 21, 2024 at 06:47:47PM +0500, Roman Khapov wrote:
+> If I understood you right, you suggest to improve migrate_generate_event to
+> accept MigrationState* instead of int* state (which is pointing to field
+> MigrationState.state in all usages), and get error reason from
+> MigrationState.error, if the new state is MIGRATION_STATE_FAILED, is it?
 
---9QHRZVwhrjmLGtfr
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+migrate_generate_event() is a migration internal function, it can directly
+reference s->error with error_mutex held.
 
-On Feb 21 17:38, Nabih Estefan wrote:
-> From: Roque Arcudia Hernandez <roqueh@google.com>
->=20
-> This patch adds a way to specify an NGUID for a given NVMe Namespace usin=
-g a
-> string of hexadecimal digits with an optional '-' separator to group byte=
-s. For
-> instance:
->=20
-> -device nvme-ns,nguid=3D"e9accd3b83904e13167cf0593437f57d"
->=20
-> If provided, the NGUID will be part of the Namespace Identification Descr=
-iptor
-> list and the Identify Namespace data.
->=20
-> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> 
+> That sounds reasonable, thanks!
+> 
+> But I'm not sure if I got the idea of changing migrate_set_error correctly,
+> can you explain in more details, please?
 
-Hi Thanks! Looks good,
+I fat-fingered.. sorry.  I wanted to say migrate_set_state() below, and I
+think migrate_set_state() can be kept untouched.
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+But please consider the other reviewer's comment first: if query-migrate
+(or HMP "info migrate") works for you, then this interface is not needed.
 
-Only a minor nit below.
+> 
+> On 2/20/24 10:39, Peter Xu wrote:
+> > On Thu, Feb 15, 2024 at 05:27:58PM +0500, Roman Khapov wrote:
+> > >       migrate_set_state(&mis->state, MIGRATION_STATUS_COLO,
+> > > -                      MIGRATION_STATUS_COMPLETED);
+> > > +                      MIGRATION_STATUS_COMPLETED, NULL);
+> > Instead of enforcing migrate_set_error() to always pass an error, maybe we
+> > can allow migrate_generate_event() to fetch s->error in FAILED state, if
+> > that hint ever existed?
+> > 
+> -- 
+> Best regards,
+> Roman Khapov
+> 
 
-> diff --git a/hw/nvme/nguid.c b/hw/nvme/nguid.c
-> new file mode 100644
-> index 0000000000..3e3e0567c5
-> --- /dev/null
-> +++ b/hw/nvme/nguid.c
-> @@ -0,0 +1,192 @@
-> +/*
-> + *  QEMU NVMe NGUID functions
-> + *
-> + * Copyright 2024 Google LLC
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms of the GNU General Public License as published by the
-> + * Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful, but W=
-ITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-> + * for more details.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/visitor.h"
-> +#include "qemu/ctype.h"
-> +#include "nvme.h"
-> +
-> +#define NGUID_SEPARATOR '-'
-> +
-> +#define NGUID_VALUE_AUTO "auto"
-> +
-> +#define NGUID_FMT              \
-> +    "%02hhx%02hhx%02hhx%02hhx" \
-> +    "%02hhx%02hhx%02hhx%02hhx" \
-> +    "%02hhx%02hhx%02hhx%02hhx" \
-> +    "%02hhx%02hhx%02hhx%02hhx"
-> +
-> +#define NGUID_STR_LEN (2 * NGUID_LEN + 1)
-> +
-> +bool nvme_nguid_is_null(const NvmeNGUID *nguid)
-> +{
-> +    int i;
-> +    for (i =3D 0; i < NGUID_LEN; i++) {
-> +        if (nguid->data[i] !=3D 0) {
-> +            return false;
-> +        }
-> +    }
-> +    return true;
-> +}
+-- 
+Peter Xu
 
-Maybe just
-
-	bool nvme_nguid_is_null(const NvmeNGUID *nguid)
-	{
-	    static NvmeNGUID null_nguid;
-	    return memcmp(nguid, &null_nguid, sizeof(NvmeNGUID)) =3D=3D 0;
-	}
-
-
---9QHRZVwhrjmLGtfr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXXEDoACgkQTeGvMW1P
-Del7LAf/VaQwP7xFj6IOMaSBMiYakWgEmwPaf/lYJgpkhHZE3wgRDwAzepCorbho
-snr5jP/sdUC4cvErzzry3OEzWDe2khgqtC5B3N/fosv8f0t9DOoDa2OREm1pXCAy
-QTBr5l68UkNfImr+r/zL7rkq3NvWfTn96dvtt5stZ1+30hQazHn8DpxmFfvmG2WU
-68A2MDcvNsdSjcPK3PX4xs8acPh1ZAB9cx3Ub9Db8c0QDJuFEXp/Jc+28tNezSfG
-Xv/5Ba43zDnu1IjXf1tNvd0IHDQgkqL8SzbNOGROPRwQa/8bnjMNAowTdbq2NxaC
-73Vi7Jd2sLxxuop6HO5kYfyVec9MFw==
-=uY8A
------END PGP SIGNATURE-----
-
---9QHRZVwhrjmLGtfr--
 
