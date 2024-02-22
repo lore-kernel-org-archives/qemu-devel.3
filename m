@@ -4,73 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 740B0C5478C
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 18:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADC42C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 18:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdDgn-0002Vf-OT; Thu, 22 Feb 2024 13:20:57 -0500
+	id 1rdDyZ-00050J-Eu; Thu, 22 Feb 2024 13:39:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sergey.kambalin@auriga.com>)
- id 1rdDgj-0002Uv-E4; Thu, 22 Feb 2024 13:20:53 -0500
-Received: from hq-ms.auriga.com ([82.97.202.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sergey.kambalin@auriga.com>)
- id 1rdDgh-00045P-2X; Thu, 22 Feb 2024 13:20:53 -0500
-Received: from HQ-MS1.office.auriga.msk (82.97.202.32) by
- hq-ms1.office.auriga.msk (82.97.202.32) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Thu, 22 Feb 2024 21:15:39 +0300
-Received: from HQ-MS1.office.auriga.msk ([fe80::e2f8:5f63:adc1:868f]) by
- hq-ms1.office.auriga.msk ([fe80::e2f8:5f63:adc1:868f%7]) with mapi id
- 15.02.1258.028; Thu, 22 Feb 2024 21:15:39 +0300
-From: "Kambalin, Sergey" <sergey.kambalin@auriga.com>
-To: Peter Maydell <peter.maydell@linaro.org>, Sergey Kambalin
- <serg.oker@gmail.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 00/41] Raspberry Pi 4B machine
-Thread-Topic: [PATCH v5 00/41] Raspberry Pi 4B machine
-Thread-Index: AQHaYtGCfqkL7B0Tb0KILu02iBHW8bEWbf6AgABB86g=
-Date: Thu, 22 Feb 2024 18:15:39 +0000
-Message-ID: <caf1110f9e9445cab3aa00ebab24d263@auriga.com>
-References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>,
- <CAFEAcA-Wir3M7dVV5247uMPxCtrYs8j4Z3S7nucCx3Ha8pA1dg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-Wir3M7dVV5247uMPxCtrYs8j4Z3S7nucCx3Ha8pA1dg@mail.gmail.com>
-Accept-Language: ru-RU, en-US
-Content-Language: ru-RU
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [192.55.54.50]
-x-tm-as-product-ver: SMEX-14.0.0.1158-9.0.1002-28208.000
-x-tm-as-result: No-10--23.857400-8.000000
-x-tmase-matchedrid: h5TVo972vkSJVA+ukO+5MWg4D2QV/2zL6r3HCixfuKcc4ri4RJV/1W/R
- DAZTdSI3QnEYvg6//klFmXhQ6rgRVOyDy8V8lTWUzH6d90mb4+Ih6cl1707zKlZxVB3B2qbP6Xk
- ezPna397QLE3MitZAfl9/IWsrV5Ek1LFdtmiebE5itzfafzhYerzutTz14s8p0fmBwOcEOYMwrh
- SFC/dJGEZSxU13SYvpALYX+A8A0O0PTrDKsCYT0OKLvlSV0+r2rLALtod6A6ZmNqUsn94Y20FEM
- +pwiCobBt8n8fEuJJVX0KLFo/pn8fp4lWjAX1OzlOneJcroAxT3Oai+medFbKlOQjQcrzOl1jOm
- H0YwN7E45PBNB8uybZsbsj1AjTF7LdR5g5YGhzKj5gmRCefvLmHWZvjZxlUH33Nl3elSfsrGdRf
- PKx6LHMD46MsbWPCAmEKHz5YiYlQf0H3tYJmWPRMXUu1hb2VrrB85uDT3cKRvKpAGRBjcb9nfJr
- USEbFDd4EWkOs0kBZq+rSiPqZuvsQTSPZE5H8gOIQ9GP2P2u8cDDLReGt4PZTYluj+pBVBngIgp
- j8eDcAPEIloOPJwnn0GyL/mi/M8OMB0shqXhHpB7zALuogCGAYqv4YJG1FYtRdrdgLuMyW7mZq8
- BJXPF1kSgZIgXtrH
-x-tm-as-user-approved-sender: No
-x-tm-as-user-blocked-sender: No
-x-tmase-result: 10--23.857400-8.000000
-x-tmase-version: SMEX-14.0.0.1158-9.0.1002-28208.000
-x-tm-snts-smtp: 87E843C24A95885FD72591806D2F0CB8A0A582E6A0C336A4E8704232656EEB592000:8
-Content-Type: multipart/alternative;
- boundary="_000_caf1110f9e9445cab3aa00ebab24d263aurigacom_"
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rdDyW-0004zr-D9
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 13:39:16 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rdDyM-0008N5-K5
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 13:39:16 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1d71cb97937so765885ad.3
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 10:39:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708627143; x=1709231943; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5w8L/FhZ1WzIaiqItJofMyraJS2uSRvjwOlAvu5YBeI=;
+ b=mRYX2S1hWNfDSp2Rx5RsplaMYtV1RZKKxKIHe3iVXi3dGtg4EF9sI+aLfhUYIWAQkK
+ /+NLK9tFfOZw/D1+nTTP62OLTc71wgV1EC1FgrMJhEpMPYkxx6DOB2eC+kXka9eo9/tM
+ 9VJtteiR17hRrf0bcRWozoQqcXPxrP977y7SmjpRnJHRRtZhLzx1s/s2v5hjl+sVIGMl
+ xGW7h+vDYt5GQHDhqCKM89NHLPTfNET+E2ARRd7NjeEeSmzxz9Kf/sOJKDVxiCeC+1jv
+ vasy/oY8lkyFOdYo+4wTJ4HW107LcZZsWlt/ReyYG0HRqVJ4RXXAZQ90gAmcoU96AGEp
+ ir4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708627143; x=1709231943;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5w8L/FhZ1WzIaiqItJofMyraJS2uSRvjwOlAvu5YBeI=;
+ b=B8ZfXxwQAlBblwnCbcMLjax1G3p9RslamUCGZxS0eMUEoQvnnrpNkdHMNO8f/2+tKc
+ lUngsYKLESZUBJ48Nzku2Q+snfxFSKy1dRh5nSjvkyj5PcyD8UZcJp1MhBQCL5L6XmRp
+ HpA4maYYG5dkZ4+gFDz+VVPQwR9z2HCzUJifFBJZ6Pjucz90qr5pVpsyHwNkTpdYSmZi
+ NYGSJ2SIaLnJqzwxefbbPzE+vWu40cnhgjd+d3u298INvrgRgxGqWw4Bx73mOSDFOVIr
+ aB1R3YkaIfgEOtYIZguN2jWEhCejGNWH/8ZlgagOBTgUzdtNaoc+XF8zahNLAZS2D1Yh
+ Wl9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV6WzXscvyRH680jMNVESUo12xZZhCn8qpxgqwiNYMSNY2KYMdTTzi9bdj+lSi37Q2Ch6yCcOm9KH7kzMVhYzAMOtKIGd0=
+X-Gm-Message-State: AOJu0Yx7GerFlmNDIv96LcJnnpNp3U6Joi/HzJyRCBDQpEMB3nOzxzkI
+ tooV31CUXD4dAuD6qMXbnlxwjBES81kypeSbBzsfcFtVN5EesETwvRvnVjJOjPI=
+X-Google-Smtp-Source: AGHT+IGkL6yO8fFzYOleF/EzSwgVBVkxnsfnw7W3YgLEcEP5/oB8r3q4GNtGk9AYXAP+jkEt2NnDHA==
+X-Received: by 2002:a17:902:e843:b0:1db:ba1c:1b99 with SMTP id
+ t3-20020a170902e84300b001dbba1c1b99mr18152775plg.37.1708627143636; 
+ Thu, 22 Feb 2024 10:39:03 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ d17-20020a170903209100b001d9ef7f4bfdsm10281083plc.164.2024.02.22.10.39.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Feb 2024 10:39:03 -0800 (PST)
+Message-ID: <1b690345-55eb-4655-b0d8-b9cac39dd851@linaro.org>
+Date: Thu, 22 Feb 2024 08:38:58 -1000
 MIME-Version: 1.0
-Received-SPF: pass client-ip=82.97.202.32;
- envelope-from=sergey.kambalin@auriga.com; helo=hq-ms.auriga.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- MIME_CHARSET_FARAWAY=2.45, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 07/22] target/arm: Add support for NMI event state
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240221130823.677762-1-ruanjinjie@huawei.com>
+ <20240221130823.677762-8-ruanjinjie@huawei.com>
+ <c02228ea-4f24-46f9-b6b3-34cba3059d69@linaro.org>
+ <a4c733be-450b-4d28-b869-fd80630f3ecb@linaro.org>
+ <fc4c1ca9-09bf-89c7-a2bc-521f7972766c@huawei.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <fc4c1ca9-09bf-89c7-a2bc-521f7972766c@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,185 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_caf1110f9e9445cab3aa00ebab24d263aurigacom_
-Content-Type: text/plain; charset="koi8-r"
-Content-Transfer-Encoding: quoted-printable
+On 2/22/24 01:52, Jinjie Ruan wrote:
+> 
+> 
+> On 2024/2/22 5:25, Richard Henderson wrote:
+>> On 2/21/24 10:10, Richard Henderson wrote:
+>>> On 2/21/24 03:08, Jinjie Ruan via wrote:
+>>>> The NMI exception state include whether the interrupt with super
+>>>> priority
+>>>> is IRQ or FIQ, so add a nmi_is_irq flag in CPUARMState to distinguish
+>>>> it.
+>>>>
+>>>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>>>> ---
+>>>>    target/arm/cpu.h    | 2 ++
+>>>>    target/arm/helper.c | 9 +++++++++
+>>>>    2 files changed, 11 insertions(+)
+>>>>
+>>>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>>>> index 5257343bcb..051e589e19 100644
+>>>> --- a/target/arm/cpu.h
+>>>> +++ b/target/arm/cpu.h
+>>>> @@ -603,6 +603,8 @@ typedef struct CPUArchState {
+>>>>        /* State of our input IRQ/FIQ/VIRQ/VFIQ lines */
+>>>>        uint32_t irq_line_state;
+>>>> +    bool nmi_is_irq;
+>>>
+>>> Why would you need to add this to CPUARMState?
+>>> This has the appearance of requiring only a local variable.
+>>> But it is hard to tell since you do not set it within this patch at all.
+>>
+>> According to Arm GIC section 4.6.3 Interrupt superpriority, NMI is
+>> always IRQ, never FIQ, so this is never required.
+> 
+> There is a bit of ambiguity here. The processor manual says that both
+> irq and fiq can have superpriority attributes, but the gic manual only
+> says that the IRQ has superpriority attributes.
 
-Hi Peter!
-
-Sorry, it wasn't intentional.
-
-
-How can I keep the tags from v4?
+Yes, it is possible to inject a superpriority FIQ via HCRX_EL2.  But you don't need an 
+extra variable to handle this.
 
 
-Thanks,
-Sergey Kambalin
-Software Developer,
-Auriga Inc.
+r~
 
-
-________________________________
-=EF=D4: Peter Maydell <peter.maydell@linaro.org>
-=EF=D4=D0=D2=C1=D7=CC=C5=CE=CF: 22 =C6=C5=D7=D2=C1=CC=D1 2024 =C7. 11:17:07
-=EB=CF=CD=D5: Sergey Kambalin
-=EB=CF=D0=C9=D1: qemu-arm@nongnu.org; qemu-devel@nongnu.org; Kambalin, Serg=
-ey
-=F4=C5=CD=C1: Re: [PATCH v5 00/41] Raspberry Pi 4B machine
-
-On Mon, 19 Feb 2024 at 01:19, Sergey Kambalin <serg.oker@gmail.com> wrote:
->
-> Introducing Raspberry Pi 4B model.
-> It contains new BCM2838 SoC, PCIE subsystem,
-> RNG200, Thermal sensor and Genet network controller.
->
-> It can work with recent linux kernels 6.x.x.
-> Two avocado tests was added to check that.
->
-> Unit tests has been made as read/write operations
-> via mailbox properties.
->
-> Genet integration test is under development.
->
-> Every single commit
-> 1) builds without errors
-> 2) passes regression tests
-> 3) passes style check*
-> *the only exception is bcm2838-mbox-property-test.c file
-> containing heavy macros usage which cause a lot of
-> false-positives of checkpatch.pl.
->
-> I did my best to keep the commits less than 200 changes,
-> but had to make some of them a bit more in order to
-> keep their integrity.
->
-> This is v5 patchset with the most of v1..v4 comments fixed.
-
-I reviewed quite a lot of v4, but I don't see any of
-my Reviewed-by tags in this version. Did you really change
-every patch so much you had to drop the tags?
-
-thanks
--- PMM
-
---_000_caf1110f9e9445cab3aa00ebab24d263aurigacom_
-Content-Type: text/html; charset="koi8-r"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dkoi8-r">
-<meta name=3D"Generator" content=3D"Microsoft Exchange Server">
-<!-- converted from text --><style><!-- .EmailQuote { margin-left: 1pt; pad=
-ding-left: 4pt; border-left: #800000 2px solid; } --></style>
-</head>
-<body>
-<meta content=3D"text/html; charset=3DUTF-8">
-<style type=3D"text/css" style=3D"">
-<!--
-p
-	{margin-top:0;
-	margin-bottom:0}
--->
-</style>
-<div dir=3D"ltr">
-<div id=3D"x_divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size:12pt; col=
-or:#000000; font-family:Calibri,Helvetica,sans-serif">
-<p>Hi Peter!&nbsp;<br>
-<br>
-<span>Sorry, it wasn't intentional</span>.<br>
-<br>
-</p>
-<p>How can I keep the tags from v4?</p>
-<p><br>
-</p>
-<div id=3D"x_Signature">
-<div id=3D"x_divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size:12pt; col=
-or:rgb(0,0,0); font-family:Calibri,Helvetica,sans-serif,EmojiFont,&quot;App=
-le Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,NotoColorEmoji,&quot;Segoe =
-UI Symbol&quot;,&quot;Android Emoji&quot;,EmojiSymbols">
-<p><span lang=3D"en-US"><font size=3D"3" face=3D"Calibri,Helvetica,sans-ser=
-if" color=3D"black" style=3D"font-family:Calibri,Helvetica,sans-serif,serif=
-,&quot;EmojiFont&quot;"><span dir=3D"ltr" id=3D"x_divtagdefaultwrapper" sty=
-le=3D"font-size:12pt"><font size=3D"3" face=3D"Calibri,Helvetica,sans-serif=
-,EmojiFont,Apple Color Emoji,Segoe UI Emoji,NotoColorEmoji,Segoe UI Symbol,=
-Android Emoji,EmojiSymbols" color=3D"black"><span id=3D"x_divtagdefaultwrap=
-per" style=3D"font-size:12pt"></span></font></span></font></span></p>
-<font size=3D"3" face=3D"Calibri,Helvetica,sans-serif" color=3D"black" styl=
-e=3D"font-family:Calibri,Helvetica,sans-serif,serif,&quot;EmojiFont&quot;">=
-<font size=3D"3" face=3D"Calibri,Helvetica,sans-serif,EmojiFont,Apple Color=
- Emoji,Segoe UI Emoji,NotoColorEmoji,Segoe UI Symbol,Android Emoji,EmojiSym=
-bols" color=3D"black">
-<div style=3D"margin-top:0; margin-bottom:0"><i><span style=3D"font-size:10=
-pt">Thanks,</span></i></div>
-<i><span style=3D"font-size:10pt"></span></i>
-<div style=3D"margin-top:0; margin-bottom:0"><i><span style=3D"font-size:10=
-pt">Sergey Kambalin</span></i><i><br>
-</i></div>
-<i><span style=3D"font-size:10pt"></span></i>
-<div style=3D"margin-top:0; margin-bottom:0"><i><span style=3D"font-size:10=
-pt">Software Developer,</span></i></div>
-<div style=3D"margin-top:0; margin-bottom:0"><i><span style=3D"font-size:10=
-pt"><span>Auriga Inc.</span><br>
-</span></i></div>
-</font></font><br>
-<p></p>
-</div>
-</div>
-</div>
-<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%">
-<div id=3D"x_divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" =
-color=3D"#000000" style=3D"font-size:11pt"><b>=EF=D4:</b> Peter Maydell &lt=
-;peter.maydell@linaro.org&gt;<br>
-<b>=EF=D4=D0=D2=C1=D7=CC=C5=CE=CF:</b> 22 =C6=C5=D7=D2=C1=CC=D1 2024 =C7. 1=
-1:17:07<br>
-<b>=EB=CF=CD=D5:</b> Sergey Kambalin<br>
-<b>=EB=CF=D0=C9=D1:</b> qemu-arm@nongnu.org; qemu-devel@nongnu.org; Kambali=
-n, Sergey<br>
-<b>=F4=C5=CD=C1:</b> Re: [PATCH v5 00/41] Raspberry Pi 4B machine</font>
-<div>&nbsp;</div>
-</div>
-</div>
-<font size=3D"2"><span style=3D"font-size:10pt;">
-<div class=3D"PlainText">On Mon, 19 Feb 2024 at 01:19, Sergey Kambalin &lt;=
-serg.oker@gmail.com&gt; wrote:<br>
-&gt;<br>
-&gt; Introducing Raspberry Pi 4B model.<br>
-&gt; It contains new BCM2838 SoC, PCIE subsystem,<br>
-&gt; RNG200, Thermal sensor and Genet network controller.<br>
-&gt;<br>
-&gt; It can work with recent linux kernels 6.x.x.<br>
-&gt; Two avocado tests was added to check that.<br>
-&gt;<br>
-&gt; Unit tests has been made as read/write operations<br>
-&gt; via mailbox properties.<br>
-&gt;<br>
-&gt; Genet integration test is under development.<br>
-&gt;<br>
-&gt; Every single commit<br>
-&gt; 1) builds without errors<br>
-&gt; 2) passes regression tests<br>
-&gt; 3) passes style check*<br>
-&gt; *the only exception is bcm2838-mbox-property-test.c file<br>
-&gt; containing heavy macros usage which cause a lot of<br>
-&gt; false-positives of checkpatch.pl.<br>
-&gt;<br>
-&gt; I did my best to keep the commits less than 200 changes,<br>
-&gt; but had to make some of them a bit more in order to<br>
-&gt; keep their integrity.<br>
-&gt;<br>
-&gt; This is v5 patchset with the most of v1..v4 comments fixed.<br>
-<br>
-I reviewed quite a lot of v4, but I don't see any of<br>
-my Reviewed-by tags in this version. Did you really change<br>
-every patch so much you had to drop the tags?<br>
-<br>
-thanks<br>
--- PMM<br>
-</div>
-</span></font>
-</body>
-</html>
-
---_000_caf1110f9e9445cab3aa00ebab24d263aurigacom_--
 
