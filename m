@@ -4,114 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53FEFC54791
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92AC3C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 17:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdCqx-00032C-QB; Thu, 22 Feb 2024 12:27:23 -0500
+	id 1rdCsS-0004hJ-04; Thu, 22 Feb 2024 12:28:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdCqw-00031n-Ve
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:27:22 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdCqu-0002xh-Pz
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:27:22 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4127700a384so14550855e9.3
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 09:27:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708622839; x=1709227639; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fS/GfW4Lu66+ZTVYMJoOI4ljQ/MJsBhpNlzpZdXFC8Q=;
- b=RxOOWfI5YvaEez9gJl84Izk7oahMRzjWN+ZlCm+EWrQXCUsyno8ts2pga8vqvWjXbj
- N7FavmKC/cWmI1MjF7TNxAgvukoyurh/mhnQ96W2L7Gq2m2Yphh2YbTAtI2VsEEiYosi
- 4BBiaSuF6EzV4Dxnv6d+mF3TI8jVgM+JVqr4eKNAeoYHWUx6HriNlToHabqk41J6o+sQ
- QyTaR5K3hmfh5Ftf8cEkI/mk5bROACjt1V38YKb+Czsdbq0FIO9TCp9cWJJVeOu1i8lU
- wd/ZrdGnxaI1Afsyi/UqyPibLeCsK5MePMYQUjSity+1X/NHzqrbhTHpQuGA+iyQCD7E
- z36w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708622839; x=1709227639;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=fS/GfW4Lu66+ZTVYMJoOI4ljQ/MJsBhpNlzpZdXFC8Q=;
- b=I1y4ZVy5WYXQPfXz3x4qn+u6MT0euOvs+qC9jXOlNbXYsze4yPBwE8dt/rvxIEwRNM
- S6k6uN3rsuJpGKI0aXvCY6RkTZkCfYpsUMfMb2RZz+KsVHElxC/yjSQA7yTygSSB+H8Y
- kHpHtwwggUwyuAPyHLfFgQTXSJ98XdR53SB2JBd1Hv7a/iRRgR+bamGi8N3NLMQ4O4/J
- TqGaTa+KOu60tpKVIStes3V48xIcE53l0dsB7Ab4zupFW2gk9IFzSMTGtul9B0PMQ6Yu
- vI+3oFZLFeDZ+bH0O6xX5+ag7j/R6sa14bymCYcptkOc7JgM0UQS7WU/MyoqKaXQ+J6f
- 8u4Q==
-X-Gm-Message-State: AOJu0Yz2T9HPrbwsxERsjSg0LQPFm23n6shSGSJBsaMPr7r21eiIG5Lw
- ee2rSymytHytqy/2kihCOc6YqzLvXvyFxAjymlQLydW2qrCpOXHzeRzxH32uZb0=
-X-Google-Smtp-Source: AGHT+IHE8KO3qEOqemvWvAr6hLj1RxJdFOamqC/V+l5rPDdz/6UzdEAnpcIhWcn8Xf+MD3NbLi7Ppw==
-X-Received: by 2002:a05:600c:19c8:b0:412:529c:356f with SMTP id
- u8-20020a05600c19c800b00412529c356fmr13662162wmq.28.1708622838625; 
- Thu, 22 Feb 2024 09:27:18 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- r17-20020a05600c459100b004124907f43fsm21956884wmo.12.2024.02.22.09.27.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 09:27:18 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D005A5F89B;
- Thu, 22 Feb 2024 17:27:17 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org,  Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>,  Weiwei Li <liwei1518@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Michael Rolnik
- <mrolnik@gmail.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  qemu-ppc@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  qemu-riscv@nongnu.org,  Cleber Rosa
- <crosa@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Song Gao
- <gaosong@loongson.cn>,  qemu-arm@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  John Snow <jsnow@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@kaod.org>,  Nicholas Piggin <npiggin@gmail.com>,
- qemu-s390x@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Yanan Wang <wangyanan55@huawei.com>,  Palmer
- Dabbelt <palmer@dabbelt.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Brian Cain <bcain@quicinc.com>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,
- Bin Meng <bin.meng@windriver.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Alistair Francis
- <alistair.francis@wdc.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH 18/23] plugins: add an API to read registers
-In-Reply-To: <f4b0b535-9e2b-47c7-a84b-afd851deb88a@daynix.com> (Akihiko
- Odaki's message of "Thu, 22 Feb 2024 22:22:35 +0900")
-References: <20240216163025.424857-1-alex.bennee@linaro.org>
- <20240216163025.424857-19-alex.bennee@linaro.org>
- <c38a22b5-01e8-40f1-bfc4-4bba9bf7b516@daynix.com>
- <87il2jcje8.fsf@draig.linaro.org>
- <bf31a250-9539-448c-9c64-4168ab8741f1@daynix.com>
- <87bk8ab0f4.fsf@draig.linaro.org>
- <bf5e9471-c09f-47f2-a5a3-83713255c47a@daynix.com>
- <87zfvtaoqq.fsf@draig.linaro.org>
- <7e4b4ba6-3683-464f-ac37-3b7f19455643@daynix.com>
- <87cysoajhl.fsf@draig.linaro.org>
- <f4b0b535-9e2b-47c7-a84b-afd851deb88a@daynix.com>
-User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Thu, 22 Feb 2024 17:27:17 +0000
-Message-ID: <87plwo8l56.fsf@draig.linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rdCsQ-0004b6-0T
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:28:54 -0500
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rdCsN-0003Bq-OQ
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 12:28:53 -0500
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41MH95SJ014861; Thu, 22 Feb 2024 17:28:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
+ bh=hkziptoNJoRVRAXP7AqFNK/vltVyfbPSHrKKbVtAiv0=;
+ b=B2u4wyV/zKGzYs6+MmgpAbE328qnCu/tteHKKDNEAmlpeUyiNTZG+lMwo76kGY8fCERK
+ UVNbQeQNdlO+ZbmvTAM0gQjnUguQolijQFAmX9vpSUVYHOjPEQnHDeoAjDT7SqGNrOb4
+ RcFkzDOHq7OewICPs57rZLMR1v9SX1x7WFeScPzjG59oEnERMlzPCrn87R+u/3sbUkrG
+ CNahNaCAz3KM0loWVUVvbGmvix9/R/O/5KCoLvSwr/opJ2zhk8SWG/dNFIqZtvAH/lvS
+ YBTuQsRHzB7jpy5QTn3JubkfIa2lxXYmPnHGorV6/oMJ5UQNdtnUtAgHGTpA2tUwWg0s 0Q== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wamdu58c8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Feb 2024 17:28:50 +0000
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41MG6w14024563; Thu, 22 Feb 2024 17:28:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wak8ayrjq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Feb 2024 17:28:47 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41MHSg9r032453;
+ Thu, 22 Feb 2024 17:28:46 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 3wak8ayre4-4; Thu, 22 Feb 2024 17:28:46 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V4 03/14] migration: convert to NotifierWithReturn
+Date: Thu, 22 Feb 2024 09:28:29 -0800
+Message-Id: <1708622920-68779-4-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
+References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_13,2024-02-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ phishscore=0
+ suspectscore=0 mlxscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402220138
+X-Proofpoint-GUID: pTnxuNWLSab6R6hxGL7kTjYYRKJ8D0r7
+X-Proofpoint-ORIG-GUID: pTnxuNWLSab6R6hxGL7kTjYYRKJ8D0r7
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,172 +103,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+Change all migration notifiers to type NotifierWithReturn, so notifiers
+can return an error status in a future patch.  For now, pass NULL for the
+notifier error parameter, and do not check the return value.
 
-> On 2024/02/22 19:20, Alex Benn=C3=A9e wrote:
->> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>=20
->>> On 2024/02/21 23:14, Alex Benn=C3=A9e wrote:
->>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>
->>>>> On 2024/02/21 19:02, Alex Benn=C3=A9e wrote:
->>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>>>
->>>>>>> On 2024/02/20 23:14, Alex Benn=C3=A9e wrote:
->>>>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>>>>>
->>>>>>>>> On 2024/02/17 1:30, Alex Benn=C3=A9e wrote:
->>>>>>>>>> We can only request a list of registers once the vCPU has been
->>>>>>>>>> initialised so the user needs to use either call the get functio=
-n on
->>>>>>>>>> vCPU initialisation or during the translation phase.
->>>>>>>>>> We don't expose the reg number to the plugin instead hiding it
->>>>>>>>>> behind
->>>>>>>>>> an opaque handle. This allows for a bit of future proofing shoul=
-d the
->>>>>>>>>> internals need to be changed while also being hashed against the
->>>>>>>>>> CPUClass so we can handle different register sets per-vCPU in
->>>>>>>>>> hetrogenous situations.
->>>>>>>>>> Having an internal state within the plugins also allows us to ex=
-pand
->>>>>>>>>> the interface in future (for example providing callbacks on regi=
-ster
->>>>>>>>>> change if the translator can track changes).
->>>>>>>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
->>>>>>>>>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>>>>>> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
->>>>>>>>>> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
->>>>>>>>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>>>>>>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>>>> <snip>
->>>>>>>>>> +/*
->>>>>>>>>> + * Register handles
->>>>>>>>>> + *
->>>>>>>>>> + * The plugin infrastructure keeps hold of these internal data
->>>>>>>>>> + * structures which are presented to plugins as opaque handles.=
- They
->>>>>>>>>> + * are global to the system and therefor additions to the hash =
-table
->>>>>>>>>> + * must be protected by the @reg_handle_lock.
->>>>>>>>>> + *
->>>>>>>>>> + * In order to future proof for up-coming heterogeneous work we=
- want
->>>>>>>>>> + * different entries for each CPU type while sharing them in the
->>>>>>>>>> + * common case of multiple cores of the same type.
->>>>>>>>>> + */
->>>>>>>>>> +
->>>>>>>>>> +static QemuMutex reg_handle_lock;
->>>>>>>>>> +
->>>>>>>>>> +struct qemu_plugin_register {
->>>>>>>>>> +    const char *name;
->>>>>>>>>> +    int gdb_reg_num;
->>>>>>>>>> +};
->>>>>>>>>> +
->>>>>>>>>> +static GHashTable *reg_handles; /* hash table of PluginReg */
->>>>>>>>>> +
->>>>>>>>>> +/* Generate a stable key - would xxhash be overkill? */
->>>>>>>>>> +static gpointer cpu_plus_reg_to_key(CPUState *cs, int gdb_regnu=
-m)
->>>>>>>>>> +{
->>>>>>>>>> +    uintptr_t key =3D (uintptr_t) cs->cc;
->>>>>>>>>> +    key ^=3D gdb_regnum;
->>>>>>>>>> +    return GUINT_TO_POINTER(key);
->>>>>>>>>> +}
->>>>>>>>>
->>>>>>>>> I have pointed out this is theoretically prone to collisions and
->>>>>>>>> unsafe.
->>>>>>>> How is it unsafe? The aim is to share handles for the same CPUClass
->>>>>>>> rather than having a unique handle per register/cpu combo.
->>>>>>>
->>>>>>> THe intention is legitimate, but the implementation is not safe. It
->>>>>>> assumes (uintptr)cs->cc ^ gdb_regnum is unique, but there is no such
->>>>>>> guarantee. The key of GHashTable must be unique; generating hashes =
-of
->>>>>>> keys should be done with hash_func given to g_hash_table_new().
->>>>>> This isn't a hash its a non-unique key. It is however unique for
->>>>>> the same register on the same class of CPU so for each vCPU in a sys=
-tem
->>>>>> can share the same opaque handles.
->>>>>> The hashing is done internally by glib. We would assert if there was
->>>>>> a
->>>>>> duplicate key referring to a different register.
->>>>>> I'm unsure what you want here? Do you have a suggestion for the key
->>>>>> generation algorithm? As the comment notes I did consider a more com=
-plex
->>>>>> mixing algorithm using xxhash but that wouldn't guarantee no clash
->>>>>> either.
->>>>>
->>>>> I suggest using a struct that holds both of cs->cc and gdb_regnum, and
->>>>> pass g_direct_equal() and g_direct_hash() to g_hash_table_new().
->>>> We already do:
->>>>           if (!reg_handles) {
->>>>               reg_handles =3D g_hash_table_new(g_direct_hash, g_direct=
-_equal);
->>>>           }
->>>> But we can't use g_direct_equal with something that exceeds the
->>>> width of
->>>> gpointer as it is a straight equality test of the key. What you are
->>>> suggesting requires allocating memory for each key and de-referencing
->>>> with a custom GEqualFunc.
->>>
->>> My bad. I wrongly remembered g_direct_equal() and g_direct_hash(). It
->>> indeed seems to need a more complicated solution.
->>>
->>> It is possible to write a GEqualFunc and a GHashFunc that consumes a
->>> struct but it is a chore. How about having a two-level GHashTable?
->>> reg_handles will be a GHashTable keyed with cs->cc, and another
->>> GHashTable will be keyed with gdb_regnum.
->> That still seems overkill for a clash that can't happen. What do you
->> think about the following:
->>    /*
->>     * Generate a stable key shared across CPUs of the same class
->>     *
->>     * In order to future proof for up-coming heterogeneous work we want
->>     * different entries for each CPU type while sharing them in the
->>     * common case of multiple cores of the same type. This makes the
->>     * assumption you won't see two CPUClass pointers that are similar
->>     * enough that the low bits mixed with different registers numbers
->>     * will give you the same key.
->>     *
->>     * The build time assert will fire if CPUClass goes on a sudden diet
->>     * and we assert further down if we detect two keys representing
->>     * different regnums. In practice allocations of CPUClass are much
->>     * farther apart making clashes practically impossible.
->>     */
->>    static gpointer cpu_plus_reg_to_key(CPUState *cs, int gdb_regnum)
->>    {
->>        uintptr_t key =3D (uintptr_t) cs->cc;
->>        /* this protects some of the assumptions above */
->>        qemu_build_assert(sizeof(*cs->cc) >=3D 256);
->>        key ^=3D gdb_regnum;
->>        return GUINT_TO_POINTER(key);
->>    }
->
->
-> I think the assertion and comments are overkill. Doesn't having a
-> nested GHashTable save some words you have to wrote for the
-> assumption?
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+---
+ hw/net/virtio-net.c            |  4 +++-
+ hw/vfio/migration.c            |  4 +++-
+ include/hw/vfio/vfio-common.h  |  2 +-
+ include/hw/virtio/virtio-net.h |  2 +-
+ include/migration/misc.h       |  6 +++---
+ include/qemu/notify.h          |  1 +
+ migration/migration.c          | 16 ++++++++--------
+ net/vhost-vdpa.c               |  6 ++++--
+ roms/seabios-hppa              |  2 +-
+ ui/spice-core.c                |  8 +++++---
+ 10 files changed, 30 insertions(+), 21 deletions(-)
 
-A nested hash table for a single entry is overkill.
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 5a79bc3..75f4e86 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3534,11 +3534,13 @@ static void virtio_net_handle_migration_primary(VirtIONet *n, MigrationState *s)
+     }
+ }
+ 
+-static void virtio_net_migration_state_notifier(Notifier *notifier, void *data)
++static int virtio_net_migration_state_notifier(NotifierWithReturn *notifier,
++                                               void *data, Error **errp)
+ {
+     MigrationState *s = data;
+     VirtIONet *n = container_of(notifier, VirtIONet, migration_state);
+     virtio_net_handle_migration_primary(n, s);
++    return 0;
+ }
+ 
+ static bool failover_hide_primary_device(DeviceListener *listener,
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 70e6b1a..6b6acc4 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -754,7 +754,8 @@ static void vfio_vmstate_change(void *opaque, bool running, RunState state)
+                               mig_state_to_str(new_state));
+ }
+ 
+-static void vfio_migration_state_notifier(Notifier *notifier, void *data)
++static int vfio_migration_state_notifier(NotifierWithReturn *notifier,
++                                         void *data, Error **errp)
+ {
+     MigrationState *s = data;
+     VFIOMigration *migration = container_of(notifier, VFIOMigration,
+@@ -770,6 +771,7 @@ static void vfio_migration_state_notifier(Notifier *notifier, void *data)
+     case MIGRATION_STATUS_FAILED:
+         vfio_migration_set_state_or_reset(vbasedev, VFIO_DEVICE_STATE_RUNNING);
+     }
++    return 0;
+ }
+ 
+ static void vfio_migration_free(VFIODevice *vbasedev)
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 9b7ef7d..4a6c262 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -62,7 +62,7 @@ typedef struct VFIORegion {
+ typedef struct VFIOMigration {
+     struct VFIODevice *vbasedev;
+     VMChangeStateEntry *vm_state;
+-    Notifier migration_state;
++    NotifierWithReturn migration_state;
+     uint32_t device_state;
+     int data_fd;
+     void *data_buffer;
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 55977f0..eaee8f4 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -221,7 +221,7 @@ struct VirtIONet {
+     DeviceListener primary_listener;
+     QDict *primary_opts;
+     bool primary_opts_from_json;
+-    Notifier migration_state;
++    NotifierWithReturn migration_state;
+     VirtioNetRssData rss_data;
+     struct NetRxPkt *rx_pkt;
+     struct EBPFRSSContext ebpf_rss;
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 5e65c18..b62e351 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -60,9 +60,9 @@ void migration_object_init(void);
+ void migration_shutdown(void);
+ bool migration_is_idle(void);
+ bool migration_is_active(MigrationState *);
+-void migration_add_notifier(Notifier *notify,
+-                            void (*func)(Notifier *notifier, void *data));
+-void migration_remove_notifier(Notifier *notify);
++void migration_add_notifier(NotifierWithReturn *notify,
++                            NotifierWithReturnFunc func);
++void migration_remove_notifier(NotifierWithReturn *notify);
+ void migration_call_notifiers(MigrationState *s);
+ bool migration_in_setup(MigrationState *);
+ bool migration_has_finished(MigrationState *);
+diff --git a/include/qemu/notify.h b/include/qemu/notify.h
+index 9a85631..abf18db 100644
+--- a/include/qemu/notify.h
++++ b/include/qemu/notify.h
+@@ -45,6 +45,7 @@ bool notifier_list_empty(NotifierList *list);
+ /* Same as Notifier but allows .notify() to return errors */
+ typedef struct NotifierWithReturn NotifierWithReturn;
+ 
++/* Return int to allow for different failure modes and recovery actions */
+ typedef int (*NotifierWithReturnFunc)(NotifierWithReturn *notifier, void *data,
+                                       Error **errp);
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index ab21de2..6d4072e 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -69,8 +69,8 @@
+ #include "qemu/sockets.h"
+ #include "sysemu/kvm.h"
+ 
+-static NotifierList migration_state_notifiers =
+-    NOTIFIER_LIST_INITIALIZER(migration_state_notifiers);
++static NotifierWithReturnList migration_state_notifiers =
++    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(migration_state_notifiers);
+ 
+ /* Messages sent on the return path from destination to source */
+ enum mig_rp_message_type {
+@@ -1459,24 +1459,24 @@ static void migrate_fd_cancel(MigrationState *s)
+     }
+ }
+ 
+-void migration_add_notifier(Notifier *notify,
+-                            void (*func)(Notifier *notifier, void *data))
++void migration_add_notifier(NotifierWithReturn *notify,
++                            NotifierWithReturnFunc func)
+ {
+     notify->notify = func;
+-    notifier_list_add(&migration_state_notifiers, notify);
++    notifier_with_return_list_add(&migration_state_notifiers, notify);
+ }
+ 
+-void migration_remove_notifier(Notifier *notify)
++void migration_remove_notifier(NotifierWithReturn *notify)
+ {
+     if (notify->notify) {
+-        notifier_remove(notify);
++        notifier_with_return_remove(notify);
+         notify->notify = NULL;
+     }
+ }
+ 
+ void migration_call_notifiers(MigrationState *s)
+ {
+-    notifier_list_notify(&migration_state_notifiers, s);
++    notifier_with_return_list_notify(&migration_state_notifiers, s, 0);
+ }
+ 
+ bool migration_in_setup(MigrationState *s)
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 3726ee5..1c00519 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -34,7 +34,7 @@
+ typedef struct VhostVDPAState {
+     NetClientState nc;
+     struct vhost_vdpa vhost_vdpa;
+-    Notifier migration_state;
++    NotifierWithReturn migration_state;
+     VHostNetState *vhost_net;
+ 
+     /* Control commands shadow buffers */
+@@ -322,7 +322,8 @@ static void vhost_vdpa_net_log_global_enable(VhostVDPAState *s, bool enable)
+     }
+ }
+ 
+-static void vdpa_net_migration_state_notifier(Notifier *notifier, void *data)
++static int vdpa_net_migration_state_notifier(NotifierWithReturn *notifier,
++                                             void *data, Error **errp)
+ {
+     MigrationState *migration = data;
+     VhostVDPAState *s = container_of(notifier, VhostVDPAState,
+@@ -333,6 +334,7 @@ static void vdpa_net_migration_state_notifier(Notifier *notifier, void *data)
+     } else if (migration_has_failed(migration)) {
+         vhost_vdpa_net_log_global_enable(s, false);
+     }
++    return 0;
+ }
+ 
+ static void vhost_vdpa_net_data_start_first(VhostVDPAState *s)
+diff --git a/roms/seabios-hppa b/roms/seabios-hppa
+index 03774ed..e4eac85 160000
+--- a/roms/seabios-hppa
++++ b/roms/seabios-hppa
+@@ -1 +1 @@
+-Subproject commit 03774edaad3bfae090ac96ca5450353c641637d1
++Subproject commit e4eac85880e8677f96d8b9e94de9f2eec9c0751f
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 37b277f..b3cd229 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -42,7 +42,7 @@
+ /* core bits */
+ 
+ static SpiceServer *spice_server;
+-static Notifier migration_state;
++static NotifierWithReturn migration_state;
+ static const char *auth = "spice";
+ static char *auth_passwd;
+ static time_t auth_expires = TIME_MAX;
+@@ -568,12 +568,13 @@ static SpiceInfo *qmp_query_spice_real(Error **errp)
+     return info;
+ }
+ 
+-static void migration_state_notifier(Notifier *notifier, void *data)
++static int migration_state_notifier(NotifierWithReturn *notifier,
++                                    void *data, Error **errp)
+ {
+     MigrationState *s = data;
+ 
+     if (!spice_have_target_host) {
+-        return;
++        return 0;
+     }
+ 
+     if (migration_in_setup(s)) {
+@@ -586,6 +587,7 @@ static void migration_state_notifier(Notifier *notifier, void *data)
+         spice_server_migrate_end(spice_server, false);
+         spice_have_target_host = false;
+     }
++    return 0;
+ }
+ 
+ int qemu_spice_migrate_info(const char *hostname, int port, int tls_port,
+-- 
+1.8.3.1
 
-> I'm also not quite convinced that the comments and assertions are
-> enough to say this hack is safe; what if some sort of pointer
-> authentication is added and shuffles bits? Will this hack be
-> compatible with static and dynamic checkers we may have in the future?
-
-We are not using the value as a pointer so that should be irrelevant
-although generally those bits tend to be at the top of pointers so they
-can be masked off.
-
-I'm not sure what we are trying to achieve here. I've got something that
-works, doesn't fail any tests and has some guards in for potential
-future problems. At the same time I'm not prepared to over-engineer the
-solution for a theoretical future problem we haven't got yet.
-
-What about if I just key based of gdb_regnum and we accept that that
-might break the one heterogeneous system we model today?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
