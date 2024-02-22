@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A8EC54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 15:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E5FC54788
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 15:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdAwk-0002eY-PW; Thu, 22 Feb 2024 10:25:14 -0500
+	id 1rdB0C-0005AH-9u; Thu, 22 Feb 2024 10:28:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rdAwh-0002eC-3H
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:25:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rdAwf-0007xc-7I
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:25:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708615507;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nvLcEKFoeqR+bYgHg9r5skCMskVASqgKSTlChKlJ+2Y=;
- b=hQNnF05kmaW3ocuqGW6moOKNrJ2BL/eE502dBwCaDwjmXMKAy9rDIsoAA/5ZNjjQQ9ZGSb
- sJohWiC2YATRqq7Su8H8vUewr6otCLtIQ/L3dLkjW0VqbnH+CSHeI1Fdx9RRIp42XGWI3z
- P/OKxGbPdCD2EgUv6DM05uwvfHTn0uw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-dEu3VZ2iPV-PWU6sVFEONA-1; Thu, 22 Feb 2024 10:25:06 -0500
-X-MC-Unique: dEu3VZ2iPV-PWU6sVFEONA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412829eab17so4253505e9.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 07:25:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708615505; x=1709220305;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdB0A-00059s-I3
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:28:46 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdB08-0000Nw-Tb
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:28:46 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4127946aa11so11263515e9.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 07:28:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708615723; x=1709220523; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nvLcEKFoeqR+bYgHg9r5skCMskVASqgKSTlChKlJ+2Y=;
- b=Qf2jsh7p9DLljXj/Zs4kFullQK8U4IxHLWOS/KUFAdOus+sb7Stapx0Y8MGGuE/YU6
- PcMF5p6jN43aTnZIlh4V4aose2CKLCy/Mj/c2YDGzfDHmRSv7zRv5b+VGhK/9RMejYWX
- cYwZ3lSdiMS/Ha4STVLoWWVGn9487FuDMdShsqm3Dq5k0vD5ljPd7XkXLQpBnTKUb7Zi
- wqbrZ4Y7i0HJSVv+wOPJpOvnjnIPB46m5uK4tTZbUTSQbOAS2hIL3Pbv9Uxxu5hIjgnw
- voHCD10PVRbqeGCe97a/oB/mjqHYj2jeBRKrn6p8DfFc7Vw7pjigRWHIuO37T7dCkrXV
- RoKA==
-X-Gm-Message-State: AOJu0YyxtyH5c4z3N5v4vJyMbNP13jJXFfReglByiGutwqLULmvVNOsU
- vcrWcKHhKxMkaM8LcxpJ2LjtxWzk7sOiSAIfFrlNBENHt4aRDemhUu3hpD6JAtqOMgjrspsgLjO
- teu4YDeMKdCAqGYeYsTHDzIchg5uaxn//I6fPChsTVjnLM3j9unym
-X-Received: by 2002:a05:600c:3106:b0:412:7b4d:4518 with SMTP id
- g6-20020a05600c310600b004127b4d4518mr1879433wmo.23.1708615504914; 
- Thu, 22 Feb 2024 07:25:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgZLhpn/L0v+gaHoAu5heI2TyMH/25AXnvkzSUB2qX2a4/29+nWmLAwElCO/UqF2K5hLGUgA==
-X-Received: by 2002:a05:600c:3106:b0:412:7b4d:4518 with SMTP id
- g6-20020a05600c310600b004127b4d4518mr1879415wmo.23.1708615504605; 
- Thu, 22 Feb 2024 07:25:04 -0800 (PST)
-Received: from redhat.com ([2a06:c701:73fa:1600:1669:f0ad:816d:4f7])
- by smtp.gmail.com with ESMTPSA id
- p9-20020a7bcc89000000b00412393ddac2sm6355972wma.6.2024.02.22.07.25.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 07:25:04 -0800 (PST)
-Date: Thu, 22 Feb 2024 10:25:01 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Sergio Lopez <slp@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH 0/9] Simplify initialization of PC machines
-Message-ID: <20240222102414-mutt-send-email-mst@kernel.org>
-References: <20240208220349.4948-1-shentey@gmail.com>
+ bh=qJ101CcDEsIgwbCRRwIlIJGFhtgnXY0NDhltmJmVB0g=;
+ b=wnXfQxuXCFERBN1w3t23hKd85+GDWIfphAe4Qs9RBTdQMt3V0LgRorITZ8GDWlZPJw
+ PRD+2xD9dXOzYtym3l+vBQ2Mjwqx3bcG7o9oYqOdkTenFb0kKxghQtreqjjAtXfrrBCS
+ 3x4a0VZ9rWmJCds/JJ/cmg304eMnG9whv0pOUsEbGWJSeZNb3LVFHYsYddX3eQpy8Hj+
+ WdNNYMeyWlsFyEt2V/Uq+YoEHHOKTvlX7dHfZi62paUAlmMwCjfxfYaaVEMOcEF/VSui
+ lgJbbF1GbljWFezhhfQgypk6M/Mxixiy0qFqmIXVWzhOjSOTY59sQIW1Glf9yW2Pi5Sj
+ Uv3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708615723; x=1709220523;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qJ101CcDEsIgwbCRRwIlIJGFhtgnXY0NDhltmJmVB0g=;
+ b=jcyRMOlGoWisUTetYc08XBw/+7UPP5VNv6PKJxbUd33GUjvlSjdQR1pis0P6tNyM2m
+ 3396j7fVS0BM/jznMMnYnTCqMcrpUuiOEPiJk6Liv8pt4L1iXy7J2ZWVAWoV2U6RLEgy
+ HvfVaZgr+sDnjsnPxYvRJ9D6bHo9i/3a5q0t0zxpDnYcUKDBCEll1eAwdwiX7Q52d5hU
+ Mum2F396F+YIss8ZXWZtiw3PJSqpsF4iMe4zAsb738ze09Si3VTEf5Ee9Jq6CVMX5Bzp
+ LxuOl3CP5TVgLFne3SX0FnNGTykAbwQCsATgBnMl8b6CpURqh5GDg8CpLy78jf56MQNV
+ n2gQ==
+X-Gm-Message-State: AOJu0YziEpFw7/pN36ZHV97eNeGhWEZ9Keg4E9RUrpebfbsljEhw50R4
+ AfMCskQ1alwD1a8ALKlhafg3Vy83blnqfvhsH2l1B2G7Uwl7MjnxIlOW/8MHuEAf8jN2l6WvCVt
+ SSV0=
+X-Google-Smtp-Source: AGHT+IFoEO9QA1VxgNNjA3JJzbPRAuR1HlpdndQrBl6cPXw7w5pte/Z4CjGAqFMSHUR7pUfv62lcoQ==
+X-Received: by 2002:a05:600c:502c:b0:412:8faa:65db with SMTP id
+ n44-20020a05600c502c00b004128faa65dbmr168971wmr.38.1708615723211; 
+ Thu, 22 Feb 2024 07:28:43 -0800 (PST)
+Received: from m1x-phil.lan (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
+ [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
+ 26-20020a05600c025a00b0041273fc463csm6349173wmj.17.2024.02.22.07.28.42
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 22 Feb 2024 07:28:42 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Dehan Meng <demeng@redhat.com>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 1/3] qga/commands-win32: Declare const qualifier before type
+Date: Thu, 22 Feb 2024 16:28:33 +0100
+Message-ID: <20240222152835.72095-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240222152835.72095-1-philmd@linaro.org>
+References: <20240222152835.72095-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240208220349.4948-1-shentey@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,52 +96,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 11:03:40PM +0100, Bernhard Beschow wrote:
-> The series aims to simplify the initialization process of all PC-based machines.
-> 
-> It consists of streamlining redundant code, as well as consolidating the setup
-> of system flash and generation of smbios data which are currently fairly
-> distributed.
-> 
-> These changes are expected to make the code easier to understand and maintain.
-> 
-> Best regards,
-> Bernhard
+Most of the code base use the 'const' qualifier *before*
+the type being qualified. Use the same style to unify.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ qga/commands-win32.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-This looks good to me overall.
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-I see Philippe started queueing these, fine by me.
-
-> Bernhard Beschow (9):
->   hw/i386/x86: Let ioapic_init_gsi() take parent as pointer
->   hw/i386/pc_piix: Share pc_cmos_init() invocation between pc and isapc
->     machines
->   hw/i386/x86: Turn apic_xrupt_override into class attribute
->   hw/i386/pc: Merge pc_guest_info_init() into pc_machine_initfn()
->   hw/i386/pc: Defer smbios_set_defaults() to machine_done
->   hw/i386/pc: Confine system flash handling to pc_sysfw
->   hw/i386/pc_sysfw: Inline pc_system_flash_create() and remove it
->   hw/i386/pc: Populate RTC attribute directly
->   hw/i386/pc_{piix,q35}: Eliminate local pci_bus/pci_host variables
-> 
->  hw/i386/fw_cfg.h      |  3 ++-
->  include/hw/i386/pc.h  |  5 ----
->  include/hw/i386/x86.h |  5 ++--
->  hw/i386/acpi-common.c |  3 ++-
->  hw/i386/fw_cfg.c      | 12 +++++++++-
->  hw/i386/microvm.c     |  2 +-
->  hw/i386/pc.c          | 25 +++++---------------
->  hw/i386/pc_piix.c     | 55 ++++++++++++++-----------------------------
->  hw/i386/pc_q35.c      | 38 ++++++++++--------------------
->  hw/i386/pc_sysfw.c    | 17 ++++---------
->  hw/i386/x86.c         |  7 +++---
->  11 files changed, 62 insertions(+), 110 deletions(-)
-> 
-> -- 
-> 2.43.0
-> 
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index a1015757d8..79b5a580c9 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -2120,11 +2120,11 @@ GuestUserList *qmp_guest_get_users(Error **errp)
+ typedef struct _ga_matrix_lookup_t {
+     int major;
+     int minor;
+-    char const *version;
+-    char const *version_id;
++    const char *version;
++    const char *version_id;
+ } ga_matrix_lookup_t;
+ 
+-static ga_matrix_lookup_t const WIN_VERSION_MATRIX[2][7] = {
++static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] = {
+     {
+         /* Desktop editions */
+         { 5, 0, "Microsoft Windows 2000",   "2000"},
+@@ -2148,18 +2148,18 @@ static ga_matrix_lookup_t const WIN_VERSION_MATRIX[2][7] = {
+ 
+ typedef struct _ga_win_10_0_t {
+     int first_build;
+-    char const *version;
+-    char const *version_id;
++    const char *version;
++    const char *version_id;
+ } ga_win_10_0_t;
+ 
+-static ga_win_10_0_t const WIN_10_0_SERVER_VERSION_MATRIX[4] = {
++static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] = {
+     {14393, "Microsoft Windows Server 2016",    "2016"},
+     {17763, "Microsoft Windows Server 2019",    "2019"},
+     {20344, "Microsoft Windows Server 2022",    "2022"},
+     {0, 0}
+ };
+ 
+-static ga_win_10_0_t const WIN_10_0_CLIENT_VERSION_MATRIX[3] = {
++static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] = {
+     {10240, "Microsoft Windows 10",    "10"},
+     {22000, "Microsoft Windows 11",    "11"},
+     {0, 0}
+@@ -2185,16 +2185,16 @@ static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **errp)
+     return;
+ }
+ 
+-static char *ga_get_win_name(OSVERSIONINFOEXW const *os_version, bool id)
++static char *ga_get_win_name(const OSVERSIONINFOEXW *os_version, bool id)
+ {
+     DWORD major = os_version->dwMajorVersion;
+     DWORD minor = os_version->dwMinorVersion;
+     DWORD build = os_version->dwBuildNumber;
+     int tbl_idx = (os_version->wProductType != VER_NT_WORKSTATION);
+-    ga_matrix_lookup_t const *table = WIN_VERSION_MATRIX[tbl_idx];
+-    ga_win_10_0_t const *win_10_0_table = tbl_idx ?
++    const ga_matrix_lookup_t *table = WIN_VERSION_MATRIX[tbl_idx];
++    const ga_win_10_0_t *win_10_0_table = tbl_idx ?
+         WIN_10_0_SERVER_VERSION_MATRIX : WIN_10_0_CLIENT_VERSION_MATRIX;
+-    ga_win_10_0_t const *win_10_0_version = NULL;
++    const ga_win_10_0_t *win_10_0_version = NULL;
+     while (table->version != NULL) {
+         if (major == 10 && minor == 0) {
+             while (win_10_0_table->version != NULL) {
+-- 
+2.41.0
 
 
