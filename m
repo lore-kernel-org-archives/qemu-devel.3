@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D62ACC54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6159C54E4A
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 22:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdHUS-0002b4-GU; Thu, 22 Feb 2024 17:24:28 -0500
+	id 1rdHUN-0002ZF-Qs; Thu, 22 Feb 2024 17:24:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1rdHUR-0002aS-Im
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 17:24:27 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1rdHUM-0002Ye-7a
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 17:24:22 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1rdHUP-0003AW-Hy
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 17:24:27 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dbae7b8ff2so2218115ad.3
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 14:24:25 -0800 (PST)
+ id 1rdHUK-00039q-99
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 17:24:21 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e46dcd8feaso82084b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 14:24:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708640664; x=1709245464; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=98kHt0liMmpLoahi1BP6lbVmFWWdBBy/kfZQvJ/NECc=;
- b=my8dX9q9FTguT3d6StMjB/KLnwV1Zfu6pQlTyg2ygl4WISFFD5N1nxeULewkqpNU/R
- Z1ms9cLBiM3FoHPjD3tUfZEqhkt0jux/6669W6E0sfVYMDakE64eiQYhDmBFyAcb3J/W
- d+NZPRtsHpdZr7rl2/4j9EY+TaV7IOHbsPlRSylJ3H5fPdYF7AOcfSL37TZuilx1uSnq
- pe7cX1rJR0KD5Eh2fvIZ6W2upjNy6+e55lbEBAYzEMgSB2eFXfmEuTFPqwjKAYteSOBK
- 6X06E+qQ8EfyY6NF0GfZPxKiFpZ9Mo3wJC/ClFcH1QfqmOukEu31Zgi2x+DzIqqxs90c
- UYZQ==
+ d=linaro.org; s=google; t=1708640657; x=1709245457; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=odmBrfxrVJqhwVA+IUSN99OoFSVOcM+f5audJj2ZfrI=;
+ b=VEQ+znI2BWIiKGlbPj4tzznIs7UcihYSmQ57YTFNIEKTpejtNZBmd9Yr9bAXZd8Av3
+ OXvFO9L88Smub88NUR2AaGMKi12DllJ/n7m32NGLfd3HCuv/lMRPYmCVueHTlywnbR/u
+ Zz2ZAas0TPwHEaIBn44EJ0JsZ9N7EXUhhXy+U4j6ZE3mwvbzAHJ8WuFcZwH6GKdzOPBF
+ Ol2CApcyzPMsq5QCOGcDsdxxsrak8sIqfs4pOAGh5QQD00wSSUoQ3ppTx/E/EB8LGAvp
+ B2AUmyuvbt9DdfWaSyv0DeEZGJmqDEfhaRx7qPB4GTbKy1L8em5NocAd16BCm6Zm5ZkS
+ iO0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708640664; x=1709245464;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=98kHt0liMmpLoahi1BP6lbVmFWWdBBy/kfZQvJ/NECc=;
- b=MC67IRymZCpn+HnnD4ADOwHaqbCIr5wlISW7wHDXCq3ssdZL3uerbX94RqmxY1fh7X
- WhLz9kRadUY+z9zBipRKf8B08aJdO0172Y+/9IVL6PtXlXxcnmiIBmI1RbR6H1ixwrEw
- 23wRkw/XDoQ5Zzv2Ab5QpdCE2MAmLraWrVcjWIIz8y1qIZvsbwngfVz0fUm+pwXlHfRZ
- LkxKtjBLnQFl8umS5zseP8gBPeqtaoRT5TcICudG0W+EKnrpUWc3/xkeL1LLiMULTFo3
- 3lXhey0Jhclo/b44viDzVQsu3vnJ73BON9d93WC9FmrMOLJMG1PXrmjywhshiT41ozrn
- Gfpw==
-X-Gm-Message-State: AOJu0YwugSZ9Pzckus4YB0PoMAlBOLQhWCt4JHyINilAEElXAMy2XNC+
- liIzANSO8z9WVEEFRBPaQM611zgZvJcuvCwPtp9ejm/mpsZKP/bUcQO1P7ioTpUQpRXvv/8I+5r
- ntMU=
-X-Google-Smtp-Source: AGHT+IFRjKhixdX6oHkfeLbSg6fz23FY6ir93kR1ZVN52kmG+ItsK/kVvWhCO0cpODVOgDkw49CZrQ==
-X-Received: by 2002:a17:902:e810:b0:1dc:f0e:4e with SMTP id
- u16-20020a170902e81000b001dc0f0e004emr246883plg.12.1708640663674; 
- Thu, 22 Feb 2024 14:24:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708640657; x=1709245457;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=odmBrfxrVJqhwVA+IUSN99OoFSVOcM+f5audJj2ZfrI=;
+ b=XRRNJqEKRzgSvX2G97exvQRB7FnKZDO2JPuhl8NVqvU0vMgy3F5/IlkTDIUafxG9em
+ 4lhNWj02gSHlTxPsvb1cJz+GrfX4Qd/Z7HBuMOT5dj9qdC44IcwwNTpSJWEMMGMD/tWg
+ LVA0Y1IsCyZjTo4PQ1yr/wpICFoVQAZQKhvhnk5pDkyLEDnPGQrKSlqmTx6Oq/7tf8BC
+ OKloDxbk8mVDUwCGMpJFVMTt35ffTeYRPWZB5MNrHdlLlflPNXEaxAfU3lWyzgFz4R9e
+ dcmH37lVWR8bxa9PMg6fArwhzunyzysl4P/w6pHiCv8/Lr52btSVdghoH70uNYZNKnjM
+ CQSA==
+X-Gm-Message-State: AOJu0YyaCtP/gghCXRKODJua8fJi3aBPxRMS8BUh8m3vVQQNbc7Z/5C9
+ wLRb43+r1rui0cn6w+p/W0gCaZ7ZQ1GjGONsWFrc4w8brXkyww9ZUPS5ul0X1SF9k0xvq1zD8zZ
+ qrS0=
+X-Google-Smtp-Source: AGHT+IHFqLrcw/KANkMAQvECqMQhVS7dpdsPVJlM2RLEIlbDAoquX2rq27vi8H8SzxBqVZJ7wpykAg==
+X-Received: by 2002:a17:902:6548:b0:1d5:f36c:8737 with SMTP id
+ d8-20020a170902654800b001d5f36c8737mr168930pln.68.1708640657196; 
+ Thu, 22 Feb 2024 14:24:17 -0800 (PST)
 Received: from amd.. ([2804:7f0:b400:285a:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- ji7-20020a170903324700b001d7057c2fbasm10457210plb.100.2024.02.22.14.24.20
+ ji7-20020a170903324700b001d7057c2fbasm10457210plb.100.2024.02.22.14.24.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 14:24:23 -0800 (PST)
+ Thu, 22 Feb 2024 14:24:16 -0800 (PST)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org,
 	philmd@linaro.org
@@ -66,18 +65,15 @@ Cc: thuth@redhat.com, lvivier@redhat.com, qemu-arm@nongnu.org,
  alex.bennee@linaro.org, pbonzini@redhat.com, anton.kochkov@proton.me,
  richard.henderson@linaro.org, peter.maydell@linaro.org,
  gustavo.romero@linaro.org
-Subject: [PATCH 2/6] hw/misc/ivshmem-flat: Allow device to wire itself on
- sysbus
-Date: Thu, 22 Feb 2024 22:22:14 +0000
-Message-Id: <20240222222218.2261956-3-gustavo.romero@linaro.org>
+Subject: [PATCH 0/6] Add ivshmem-flat device
+Date: Thu, 22 Feb 2024 22:22:12 +0000
+Message-Id: <20240222222218.2261956-1-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240222222218.2261956-1-gustavo.romero@linaro.org>
-References: <20240222222218.2261956-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,276 +96,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit enables the ivshmem-flat device to wire itself on sysbus. It
-maps the device's Memory-Mapped Registers (MMRs) and shared memory
-(shmem) into the VM's memory layout and also allows connection to an
-input IRQ so that the device can trigger an interrupt for notification.
+Since v1:
+- Correct code style
+- Correct trace event format strings
+- Include minimum headers in ivshmem-flat.h
+- Allow ivshmem_flat_recv_msg() take NULL
+- Factored ivshmem_flat_connect_server() out
+- Split sysbus-auto-wire controversial code in different patch
+- Document QDev interface
 
-Three device options are introduced to control how this is done:
-x-bus-address-iomem, x-bus-address-shmem, and x-irq-qompath.
+Since v2:
+- Addressed all comments from Thomas Huth about qtest:
+  1) Use of g_usleep + number of attemps for timeout
+  2) Use of g_get_tmp_dir instead of hard-coded /tmp
+  3) Test if machine lm3s6965evb is available, if not skip test
+- Use of qemu_irq_pulse instead of 2x qemu_set_irq
+- Fixed all tests for new device options and IRQ name change
+- Updated doc and commit messages regarding new/deleted device options
+- Turned device options 'x-bus-address-iomem' and 'x-bus-address-shmem' mandatory
 
-The following is an example on how to create the ivshmem-flat device on
-a Stellaris machine:
+--
 
-$ qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb -nographic
-                  -net none -chardev stdio,id=con,mux=on
-                  -serial chardev:con -mon chardev=con,mode=readline
-                  -chardev socket,path=/tmp/ivshmem_socket,id=ivshmem_flat
-                  -device ivshmem-flat,chardev=ivshmem_flat,x-irq-qompath='/machine/soc/v7m/nvic/unnamed-gpio-in[0]',x-bus-address-iomem=0x400FF000,x-bus-address-shmem=0x40100000
-                  -kernel zephyr_kernel.elf
+This patchset introduces a new device, ivshmem-flat, which is similar to the
+current ivshmem device but does not require a PCI bus. It implements the ivshmem
+status and control registers as MMRs and the shared memory as a directly
+accessible memory region in the VM memory layout. It's meant to be used on
+machines like those with Cortex-M MCUs, which usually lack a PCI bus, e.g.,
+lm3s6965evb and mps2-an385. Additionally, it has the benefit of requiring a tiny
+'device driver,' which is helpful on some RTOSes, like Zephyr, that run on
+memory-constrained resource targets.
 
-The IRQ QOM path option for the target machine can be determined by
-creating the VM without the ivshmem-flat device, going to the QEMU
-console and listing the QOM nodes with 'info qom-tree'. In the Stellaris
-example above the input IRQ is in the machine's NVIC Interrupt
-Controller.
+The patchset includes a QTest for the ivshmem-flat device, however, it's also
+possible to experiment with it in two ways:
 
-If 'x-irq-qompath' is not provided the device won't be able to be
-interrupted by other VMs (peers) and only the shared memory (shmem)
-feature will be supported.
+(a) using two Cortex-M VMs running Zephyr; or
+(b) using one aarch64 VM running Linux with the ivshmem PCI device and another
+    arm (Cortex-M) VM running Zephyr with the new ivshmem-flat device.
 
-The MMRs for status and control (notification) are mapped to the MMIO
-region at 'x-bus-address-iomem', whilst the shared memory region start
-is mapped at address specified by 'x-bus-address-shmem'.
+Please note that for running the ivshmem-flat QTests the following patch, which
+is not committed to the tree yet, must be applied:
 
-Message-ID: <20231127052024.435743-2-gustavo.romero@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- docs/system/devices/ivshmem-flat.rst | 57 +++++++++++++++++++++
- hw/core/sysbus-fdt.c                 |  2 +
- hw/misc/ivshmem-flat.c               | 74 ++++++++++++++++++++++++++--
- include/hw/misc/ivshmem-flat.h       |  9 ++++
- 4 files changed, 139 insertions(+), 3 deletions(-)
+https://lists.nongnu.org/archive/html/qemu-devel/2023-11/msg03176.html
 
-diff --git a/docs/system/devices/ivshmem-flat.rst b/docs/system/devices/ivshmem-flat.rst
-index 1f97052804..ddc3477f52 100644
---- a/docs/system/devices/ivshmem-flat.rst
-+++ b/docs/system/devices/ivshmem-flat.rst
-@@ -31,3 +31,60 @@ the IRQ mechanism is disabled). The shared memory region is always present.
- The MMRs (INTRMASK, INTRSTATUS, IVPOSITION, and DOORBELL registers) offsets at
- the MMR region, and their functions, follow the ivshmem spec, so they work
- exactly as in the ivshmem PCI device (see ./specs/ivshmem-spec.txt).
-+
-+
-+Device Options
-+--------------
-+
-+The required options to create an ivshmem-flat device are: (a) the UNIX
-+socket where the ivshmem server is listening, usually ``/tmp/ivshmem_socket``;
-+(b) the address where to map the MMRs (``x-bus-address-iomem=``) in the VM
-+memory layout; and (c) the address where to map the shared memory in the VM
-+memory layout (``x-bus-address-shmem=``). Both (a) and (b) depend on the VM
-+being used, as the MMRs and shmem must be mapped to a region not previously
-+occupied in the VM.
-+
-+Example:
-+
-+.. parsed-literal::
-+
-+    |qemu-system-arm| -chardev socket,path=/tmp/ivshmem_socket,id=ivshmem_flat -device ivshmem-flat,chardev=ivshmem_flat,x-irq-qompath='/machine/soc/v7m/nvic/unnamed-gpio-in[0]',x-bus-address-iomem=0x400FF000,x-bus-address-shmem=0x40100000
-+
-+The other option, ``x-irq-qompath=``, is not required if the user doesn't want
-+the device supporting notifications.
-+
-+``x-irq-qompath``. Used to inform the device which IRQ input line it can attach
-+to enable the notification mechanism (IRQ). The ivshmem-flat device currently
-+only supports notification via vector 0. Notifications via other vectors are
-+ignored. (optional)
-+
-+Two examples for different machines follow.
-+
-+Stellaris machine (``- machine lm3s6965evb``):
-+
-+::
-+
-+    x-irq-qompath=/machine/soc/v7m/nvic/unnamed-gpio-in[0]
-+
-+Arm mps2-an385 machine (``-machine mps2-an385``):
-+
-+::
-+
-+    x-irq-qompath=/machine/armv7m/nvic/unnamed-gpio-in[0]
-+
-+The available IRQ input lines on a given VM that the ivshmem-flat device can be
-+attached to can be found from the QEMU monitor (Ctrl-a + c) with:
-+
-+(qemu) info qom-tree
-+
-+``x-bus-address-iomem``. Allows changing the address where the MMRs are mapped
-+into the VM memory layout. (required)
-+
-+ ``x-bus-address-shmem``. Allows changing the address where the shared memory
-+region is mapped into the VM memory layout. (required)
-+
-+``shmem-size``. Allows changing the size (in bytes) of shared memory region.
-+Default is 4 MiB, which is the same default used by the ivshmem server, so
-+usually it's not necessary to change it. The size must match the size of the
-+shared memory reserverd and informed by the ivshmem server, otherwise device
-+creation fails. (optional)
-diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-index eebcd28f9a..40d7356cae 100644
---- a/hw/core/sysbus-fdt.c
-+++ b/hw/core/sysbus-fdt.c
-@@ -31,6 +31,7 @@
- #include "qemu/error-report.h"
- #include "sysemu/device_tree.h"
- #include "sysemu/tpm.h"
-+#include "hw/misc/ivshmem-flat.h"
- #include "hw/platform-bus.h"
- #include "hw/vfio/vfio-platform.h"
- #include "hw/vfio/vfio-calxeda-xgmac.h"
-@@ -495,6 +496,7 @@ static const BindingEntry bindings[] = {
-     TYPE_BINDING(TYPE_TPM_TIS_SYSBUS, add_tpm_tis_fdt_node),
- #endif
-     TYPE_BINDING(TYPE_RAMFB_DEVICE, no_fdt_node),
-+    TYPE_BINDING(TYPE_IVSHMEM_FLAT, no_fdt_node),
-     TYPE_BINDING("", NULL), /* last element */
- };
- 
-diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
-index 833ee2fefb..972281ca57 100644
---- a/hw/misc/ivshmem-flat.c
-+++ b/hw/misc/ivshmem-flat.c
-@@ -420,16 +420,86 @@ static bool ivshmem_flat_connect_server(DeviceState *dev, Error **errp)
-     return true;
- }
- 
-+static bool ivshmem_flat_sysbus_wire(DeviceState *dev, Error **errp)
-+{
-+    IvshmemFTState *s = IVSHMEM_FLAT(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    if (s->x_sysbus_mmio_addr != UINT64_MAX) {
-+        trace_ivshmem_flat_mmio_map(s->x_sysbus_mmio_addr);
-+        sysbus_mmio_map(sbd, 0, s->x_sysbus_mmio_addr);
-+    } else {
-+        error_setg(errp, "No address for iomem (MMRs) specified. Can't create"
-+                         " ivshmem-flat device. Use 'x-bus-address-iomem'"
-+                         " option.");
-+        return false;
-+    }
-+
-+    if (s->x_sysbus_shmem_addr != UINT64_MAX) {
-+        trace_ivshmem_flat_shmem_map(s->x_sysbus_shmem_addr);
-+        sysbus_mmio_map(sbd, 1, s->x_sysbus_shmem_addr);
-+    } else {
-+        error_setg(errp, "No address for shmem specified. Can't create"
-+                         " ivshmem-flat device. Use 'x-bus-address-shmem'"
-+                         " option.");
-+        return false;
-+    }
-+
-+    /* Check for input IRQ line, if it's provided, connect it. */
-+    if (s->x_sysbus_irq_qompath) {
-+        Object *oirq;
-+        bool ambiguous = false;
-+        qemu_irq irq;
-+
-+        oirq = object_resolve_path_type(s->x_sysbus_irq_qompath, TYPE_IRQ,
-+                                        &ambiguous);
-+        if (ambiguous) {
-+            error_setg(errp, "Specified IRQ is ambiguous. Can't create"
-+                             " ivshmem-flat device.");
-+            return false;
-+        }
-+
-+        if (!oirq) {
-+            error_setg(errp, "Can't resolve IRQ QOM path.");
-+            return false;
-+        }
-+        irq = (qemu_irq)oirq;
-+        trace_ivshmem_flat_irq_resolved(s->x_sysbus_irq_qompath);
-+
-+        /*
-+         * Connect device out irq line to interrupt controller input irq line.
-+         */
-+        sysbus_connect_irq(sbd, 0, irq);
-+    } else {
-+       /*
-+        * If input IRQ is not provided, warn user the device won't be able
-+        * to trigger any interrupts.
-+        */
-+        warn_report("Input IRQ not specified, device won't be able"
-+                    " to handle IRQs!");
-+    }
-+
-+    return true;
-+}
-+
- static void ivshmem_flat_realize(DeviceState *dev, Error **errp)
- {
-     if (!ivshmem_flat_connect_server(dev, errp)) {
-         return;
-     }
-+    if (!ivshmem_flat_sysbus_wire(dev, errp)) {
-+        return;
-+    }
- }
- 
- static Property ivshmem_flat_props[] = {
-     DEFINE_PROP_CHR("chardev", IvshmemFTState, server_chr),
-     DEFINE_PROP_UINT32("shmem-size", IvshmemFTState, shmem_size, 4 * MiB),
-+    DEFINE_PROP_STRING("x-irq-qompath", IvshmemFTState, x_sysbus_irq_qompath),
-+    DEFINE_PROP_UINT64("x-bus-address-iomem", IvshmemFTState,
-+                       x_sysbus_mmio_addr, UINT64_MAX),
-+    DEFINE_PROP_UINT64("x-bus-address-shmem", IvshmemFTState,
-+                       x_sysbus_shmem_addr, UINT64_MAX),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-@@ -438,13 +508,11 @@ static void ivshmem_flat_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->hotpluggable = true;
-+    dc->user_creatable = true;
-     dc->realize = ivshmem_flat_realize;
- 
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-     device_class_set_props(dc, ivshmem_flat_props);
--
--    /* Reason: Must be wired up in code (sysbus MRs and IRQ) */
--    dc->user_creatable = false;
- }
- 
- static const TypeInfo ivshmem_flat_info = {
-diff --git a/include/hw/misc/ivshmem-flat.h b/include/hw/misc/ivshmem-flat.h
-index 97ca0ddce6..d5b6d99ae4 100644
---- a/include/hw/misc/ivshmem-flat.h
-+++ b/include/hw/misc/ivshmem-flat.h
-@@ -25,6 +25,12 @@
-  *    socket
-  *  + QOM property "shmem-size" sets the size of the RAM region shared between
-  *    the device and the ivshmem server
-+ *  + QOM property "x-bus-address-iomem" is the base address of the I/O region
-+ *    on the main system bus
-+ *  + QOM property "x-bus-address-shmem" is the base address of the shared RAM
-+ *    region on the main system bus
-+ *  + QOM property "x-irq-qompath" is the QOM path of the interrupt being
-+ *    notified
-  *  + sysbus MMIO region 0: device I/O mapped registers
-  *  + sysbus MMIO region 1: shared memory with ivshmem server
-  *  + sysbus IRQ 0: single output interrupt
-@@ -68,9 +74,11 @@ struct IvshmemFTState {
- 
-     /* IRQ */
-     qemu_irq irq;
-+    char *x_sysbus_irq_qompath;
- 
-     /* I/O registers */
-     MemoryRegion iomem;
-+    uint64_t x_sysbus_mmio_addr;
-     uint32_t intmask;
-     uint32_t intstatus;
-     uint32_t ivposition;
-@@ -80,6 +88,7 @@ struct IvshmemFTState {
-     MemoryRegion shmem;
-     int shmem_fd;
-     uint32_t shmem_size;
-+    uint64_t x_sysbus_shmem_addr;
- };
- 
- #endif /* IVSHMEM_FLAT_H */
+--
+
+To experiment with (a), clone this Zephyr repo [0], set the Zephyr build
+environment [1], and follow the instructions in the 'ivshmem' sample main.c [2].
+
+[0] https://github.com/gromero/zephyr/tree/ivshmem
+[1] https://docs.zephyrproject.org/latest/develop/getting_started/index.html
+[2] https://github.com/gromero/zephyr/commit/73fbd481e352b25ae5483ba5048a2182b90b7f00#diff-16fa1f481a49b995d0d1a62da37b9f33033f5ee477035e73465e7208521ddbe0R9-R70
+[3] https://lore.kernel.org/qemu-devel/20231127052024.435743-1-gustavo.romero@linaro.org/
+
+To experiment with (b):
+
+$ git clone -b uio_ivshmem --single-branch https://github.com/gromero/linux.git
+$ cd linux
+$ wget https://people.linaro.org/~gustavo.romero/ivshmem/arm64_uio_ivshmem.config -O .config
+
+If in an x86_64 machine, cross compile the kernel, for instance:
+
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j 36
+
+Install image in some directory, let's say, in ~/linux:
+
+$ mkdir ~/linux
+$ export INSTALL_PATH=~/linux
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j 36 install
+
+or, if you prefer, download the compiled image from:
+
+$ wget https://people.linaro.org/~gustavo.romero/ivshmem/vmlinuz-6.6.0-rc1-g28f3f88ee261
+
+... and then the rootfs:
+
+$ wget https://people.linaro.org/~gustavo.romero/ivshmem/rootfs.qcow2
+
+Now, build QEMU with this patchset applied:
+
+$ mkdir build && cd build
+$ ../configure --target-list=arm-softmmu,aarch64-softmmu
+$ make -j 36
+
+Start the ivshmem server:
+
+$ contrib/ivshmem-server/ivshmem-server -F
+
+Start the aarch64 VM + Linux + ivshmem PCI device:
+
+$ ./qemu-system-aarch64 -kernel ~/linux/vmlinuz-6.6.0-rc1-g28f3f88ee261 -append "root=/dev/vda initrd=/bin/bash console=ttyAMA0,115200" -drive file=~/linux/rootfs.qcow2,media=disk,if=virtio -machine virt-6.2 -nographic -accel tcg -cpu cortex-a57 -m 8192 -netdev bridge,id=hostnet0,br=virbr0,helper=/usr/lib/qemu/qemu-bridge-helper -device pcie-root-port,port=8,chassis=1,id=pci.1,bus=pcie.0,multifunction=on,addr=0x1 -device virtio-net-pci,netdev=hostnet0,id=net0,mac=52:54:00:d9:d1:12,bus=pci.1,addr=0x0 -device ivshmem-doorbell,vectors=2,chardev=ivshmem -chardev socket,path=/tmp/ivshmem_socket,id=ivshmem
+
+Log into the VM with user/pass: root/abc123
+
+should show:
+
+[    2.656367] uio_ivshmem 0000:00:02.0: ivshmem-mmr at 0x0000000010203000, size 0x0000000000001000
+[    2.656931] uio_ivshmem 0000:00:02.0: ivshmem-shmem at 0x0000008000000000, size 0x0000000000400000
+[    2.662554] uio_ivshmem 0000:00:02.0: module successfully loaded
+
+In another console, clone and build Zephyr image from 'uio_ivhsmem' branch:
+
+$ git clone -b uio_ivshmem --single-branch https://github.com/gromero/zephyr
+$ west -v --verbose build -p always -b qemu_cortex_m3 ./samples/uio_ivshmem/
+
+... and then start the arm VM + Zephyr image + ivshmem-flat device:
+
+$ ./qemu-system-arm -machine lm3s6965evb -nographic -net none -chardev socket,path=/tmp/ivshmem_socket,id=ivshmem_flat -device ivshmem-flat,chardev=ivshmem_flat,x-irq-qompath='/machine/unattached/device[1]/nvic/unnamed-gpio-in[0]',x-bus-qompath='/sysbus' -kernel ~/zephyrproject/zephyr/build/qemu_cortex_m3/uio_ivshmem/zephyr/zephyr.elf
+
+You should see something like:
+
+*** Booting Zephyr OS build zephyr-v3.3.0-8350-gfb003e583600 ***
+*** Board: qemu_cortex_m3
+*** Installing direct IRQ handler for external IRQ0 (Exception #16)...
+*** Enabling IRQ0 in the NVIC logic...
+*** Received IVSHMEM PEER ID: 7
+*** Waiting notification from peers to start...
+
+Now, from the Linux terminal, notify the arm VM (use the "IVSHMEM PEER ID"
+reported by Zephyr as the third arg, in this example: 7):
+
+MMRs mapped at 0xffff8fb28000 in VMA.
+shmem mapped at 0xffff8f728000 in VMA.
+mmr0: 0 0
+mmr1: 0 0
+mmr2: 6 6
+mmr3: 0 0
+Data ok. 4194304 byte(s) checked.
+
+The arm VM should report something like:
+
+*** Got interrupt at vector 0!
+*** Writting constant 0xb5b5b5b5 to shmem... done!
+*** Notifying back peer ID 6 at vector 0...
+
+Cheers,
+Gustavo
+
+Gustavo Romero (6):
+  hw/misc/ivshmem: Add ivshmem-flat device
+  hw/misc/ivshmem-flat: Allow device to wire itself on sysbus
+  hw/arm: Allow some machines to use the ivshmem-flat device
+  hw/misc/ivshmem: Rename ivshmem to ivshmem-pci
+  tests/qtest: Reorganize common code in ivshmem-test
+  tests/qtest: Add ivshmem-flat test
+
+ docs/system/devices/ivshmem-flat.rst |  90 +++++
+ hw/arm/mps2.c                        |   3 +
+ hw/arm/stellaris.c                   |   3 +
+ hw/arm/virt.c                        |   2 +
+ hw/core/sysbus-fdt.c                 |   2 +
+ hw/misc/Kconfig                      |   5 +
+ hw/misc/ivshmem-flat.c               | 531 +++++++++++++++++++++++++++
+ hw/misc/{ivshmem.c => ivshmem-pci.c} |   0
+ hw/misc/meson.build                  |   4 +-
+ hw/misc/trace-events                 |  17 +
+ include/hw/misc/ivshmem-flat.h       |  94 +++++
+ tests/qtest/ivshmem-flat-test.c      | 338 +++++++++++++++++
+ tests/qtest/ivshmem-test.c           | 113 +-----
+ tests/qtest/ivshmem-utils.c          | 156 ++++++++
+ tests/qtest/ivshmem-utils.h          |  56 +++
+ tests/qtest/meson.build              |   8 +-
+ 16 files changed, 1312 insertions(+), 110 deletions(-)
+ create mode 100644 docs/system/devices/ivshmem-flat.rst
+ create mode 100644 hw/misc/ivshmem-flat.c
+ rename hw/misc/{ivshmem.c => ivshmem-pci.c} (100%)
+ create mode 100644 include/hw/misc/ivshmem-flat.h
+ create mode 100644 tests/qtest/ivshmem-flat-test.c
+ create mode 100644 tests/qtest/ivshmem-utils.c
+ create mode 100644 tests/qtest/ivshmem-utils.h
+
 -- 
 2.34.1
 
