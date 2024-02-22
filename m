@@ -4,78 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC3E1C54788
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 13:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5615C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 13:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd9H4-000734-Lg; Thu, 22 Feb 2024 08:38:06 -0500
+	id 1rd9Rx-0007mS-Fq; Thu, 22 Feb 2024 08:49:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rd9H2-00072k-4Z
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 08:38:04 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rd9Rw-0007mI-6D
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 08:49:20 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rd9Gy-00052p-VP
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 08:38:02 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-512dc7b7fc2so863453e87.0
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 05:37:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708609078; x=1709213878; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WCalUmY3jmC+0gOHXsLUQ3zzprQtwvb6ncOkdtexh+s=;
- b=MZ9p4D0SSLeuksv+VMqsdAsqqh7lY5dzVUCvC4AyO0SsvUbFcLl40+dTegv3k0zP9j
- aR/A4Cm5sO3MmuH7uuapYbcmcu8PfCe52ecz2bzUPCRkw847HalyhYTLq5NVn+sFblIm
- wC3QmDmul//HU4iI6iCbYpGTe896VA7QsIZaGjCYZi6QFyvEu9sLdxTK00JFUVofZ3+7
- uVXzwuvt6KXgczNpAB8aL50/qxnzKYt0w+7uPkQaeKZ2tywZcV5BICswqNFFGopTOFUG
- O85BPiBqWcllS5OK35Huu6/Dpjc9ebbDfOrfPxwCX9aNPigunV6qV7e52k9d7vhG2Y7J
- uZaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708609078; x=1709213878;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WCalUmY3jmC+0gOHXsLUQ3zzprQtwvb6ncOkdtexh+s=;
- b=QlQzQ5BblMZpmtVTzUCOz/qpY5/tXoIXYhWB5QCdv73yA4CWpGVUWDE/7uiPnGsiYM
- Z7+wU5GNVCU59jpPJpD31WVv3m5qsOplflbD+lVIiBt3fur2KHo2vXio81+HyDA894GJ
- a51QU8xuvO7tU9fg4WEQxvgwTzDHdSNyTrEL2vGHTrkv9dRcs4nYqAcFtRMcAyd5Rp8C
- O9pZNKwzJreXighlnt7Mg68ZqFGlwDX2CxRFqLgHFQpM6j1r7yhvufdhzD5DvNpOs67R
- 277bZsjck4jFswRWlpCvFq/xdmLgtvTg8RJsIyENKLkVOc6vkLoEeT6ykbVKgJhXE1TD
- 6lIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLxpKzY2iWjun9/P5lmiGpVmq+EWHGXCvSVewuoL76MXhWY9ppq4v4z9LcP8L+UolGo3toKSr6JLdcAxn9970LGTNWecA=
-X-Gm-Message-State: AOJu0YwPB23SMu7ietXsZUwsRvJ44/z+rbLQj+J12Nh+lKP5GcuWnuN8
- MXePEFT12BOAK0tvXl0mo1kn7gQDFNsoLmZX9xWyVlPaSkG270RKgLslP2liL8mLBPzBbNrmaq+
- +A5PkHuWP+CqRPMAyiw8xKq0N9E+PddACLg5jwQ==
-X-Google-Smtp-Source: AGHT+IFCoXX9EIm9Ax7Kw4ccQM0I26MJ+gUYxD//RahucPQn1LS/92stbuPqWFpaX5TqmbXsHzdWHQb/kzpz9Ebktf0=
-X-Received: by 2002:ac2:546c:0:b0:511:88cc:4f00 with SMTP id
- e12-20020ac2546c000000b0051188cc4f00mr12486219lfn.56.1708609078081; Thu, 22
- Feb 2024 05:37:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rd9Rt-0007AT-VT
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 08:49:19 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0208E1F461;
+ Thu, 22 Feb 2024 13:49:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708609756; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O82u/VazbJQl9yXLYrvnIJDFO81W7VtRDaLReMLTYZk=;
+ b=IvJyVjAU2MEG/aEHoqTwI4gkidYCeO9X0kg0XE0lqhR6o5Fmb3xQwssU741TQ/myHBnTvz
+ MYhMie05tI1+wO3zVcgqEJXfNljIcvXUl0GnHsnCLRdt77JXS0VOEbU+7Z7cj3RGCImJ18
+ NDJkZhoiKCewxfKmxpwpvnefxPx4hi4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708609756;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O82u/VazbJQl9yXLYrvnIJDFO81W7VtRDaLReMLTYZk=;
+ b=G+39jE2A26T7yGCIOBSzprvFFLw3CB2XZudcPPiGcsdY9hjtWOB06SfnnuPDFEs29MKJzB
+ bRTFVYuqHq6feHCQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708609756; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O82u/VazbJQl9yXLYrvnIJDFO81W7VtRDaLReMLTYZk=;
+ b=IvJyVjAU2MEG/aEHoqTwI4gkidYCeO9X0kg0XE0lqhR6o5Fmb3xQwssU741TQ/myHBnTvz
+ MYhMie05tI1+wO3zVcgqEJXfNljIcvXUl0GnHsnCLRdt77JXS0VOEbU+7Z7cj3RGCImJ18
+ NDJkZhoiKCewxfKmxpwpvnefxPx4hi4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708609756;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O82u/VazbJQl9yXLYrvnIJDFO81W7VtRDaLReMLTYZk=;
+ b=G+39jE2A26T7yGCIOBSzprvFFLw3CB2XZudcPPiGcsdY9hjtWOB06SfnnuPDFEs29MKJzB
+ bRTFVYuqHq6feHCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 81C3513A8C;
+ Thu, 22 Feb 2024 13:49:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zBf6EdtQ12UWPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 22 Feb 2024 13:49:15 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] migration: Fix qmp_query_migrate mbps value
+In-Reply-To: <ZddMRroqCeuRWGFA@x1n>
+References: <20240219194457.26923-1-farosas@suse.de> <ZdVlUsTDJA4hdNhg@x1n>
+ <87y1beascb.fsf@suse.de> <ZdcWmVffLWhNB-Q8@x1n> <ZddMRroqCeuRWGFA@x1n>
+Date: Thu, 22 Feb 2024 10:49:12 -0300
+Message-ID: <87ttm0a9t3.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240115101643.2165387-1-daniel@0x0f.com>
- <30980866-7fe8-4900-a75b-01fe735e14e1@redhat.com>
- <5388387b-f7aa-4fa2-a65b-d3a3b52e23d9@ilande.co.uk>
-In-Reply-To: <5388387b-f7aa-4fa2-a65b-d3a3b52e23d9@ilande.co.uk>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 22 Feb 2024 13:37:46 +0000
-Message-ID: <CAFEAcA_RorzeXwHkBiq1Vjsxsh-u3ymGnJ-xY-4aBj7ivS-rtw@mail.gmail.com>
-Subject: Re: [PATCH] target/m68k: Fix exception frame format for 68010
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Thomas Huth <thuth@redhat.com>, Daniel Palmer <daniel@0x0f.com>,
- laurent@vivier.eu, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,13 +113,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 Feb 2024 at 13:34, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
+Peter Xu <peterx@redhat.com> writes:
 
-> This is also:
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2164
+> On Thu, Feb 22, 2024 at 05:40:41PM +0800, Peter Xu wrote:
+>> On Wed, Feb 21, 2024 at 09:56:36AM -0300, Fabiano Rosas wrote:
+>> > Peter Xu <peterx@redhat.com> writes:
+>> > 
+>> > > On Mon, Feb 19, 2024 at 04:44:57PM -0300, Fabiano Rosas wrote:
+>> > >> The QMP command query_migrate might see incorrect throughput numbers
+>> > >> if it runs after we've set the migration completion status but before
+>> > >> migration_calculate_complete() has updated s->total_time and s->mbps.
+>> > >> 
+>> > >> The migration status would show COMPLETED, but the throughput value
+>> > >> would be the one from the last iteration and not the one from the
+>> > >> whole migration. This will usually be a larger value due to the time
+>> > >> period being smaller (one iteration).
+>> > >> 
+>> > >> Move migration_calculate_complete() earlier so that the status
+>> > >> MIGRATION_STATUS_COMPLETED is only emitted after the final counters
+>> > >> update.
+>> > >> 
+>> > >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> > >> ---
+>> > >> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1182405776
+>> > >> ---
+>> > >>  migration/migration.c | 10 ++++++----
+>> > >>  1 file changed, 6 insertions(+), 4 deletions(-)
+>> > >> 
+>> > >> diff --git a/migration/migration.c b/migration/migration.c
+>> > >> index ab21de2cad..7486d59da0 100644
+>> > >> --- a/migration/migration.c
+>> > >> +++ b/migration/migration.c
+>> > >> @@ -102,6 +102,7 @@ static int migration_maybe_pause(MigrationState *s,
+>> > >>                                   int new_state);
+>> > >>  static void migrate_fd_cancel(MigrationState *s);
+>> > >>  static bool close_return_path_on_source(MigrationState *s);
+>> > >> +static void migration_calculate_complete(MigrationState *s);
+>> > >>  
+>> > >>  static void migration_downtime_start(MigrationState *s)
+>> > >>  {
+>> > >> @@ -2746,6 +2747,7 @@ static void migration_completion(MigrationState *s)
+>> > >>          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
+>> > >>                            MIGRATION_STATUS_COLO);
+>> > >>      } else {
+>> > >> +        migration_calculate_complete(s);
+>> > >>          migrate_set_state(&s->state, current_active_state,
+>> > >>                            MIGRATION_STATUS_COMPLETED);
+>> > >>      }
+>> > >> @@ -2784,6 +2786,7 @@ static void bg_migration_completion(MigrationState *s)
+>> > >>          goto fail;
+>> > >>      }
+>> > >>  
+>> > >> +    migration_calculate_complete(s);
+>> > >>      migrate_set_state(&s->state, current_active_state,
+>> > >>                        MIGRATION_STATUS_COMPLETED);
+>> > >>      return;
+>> > >> @@ -2993,12 +2996,15 @@ static void migration_calculate_complete(MigrationState *s)
+>> > >>      int64_t end_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+>> > >>      int64_t transfer_time;
+>> > >>  
+>> > >> +    /* QMP could read from these concurrently */
+>> > >> +    bql_lock();
+>> > >>      migration_downtime_end(s);
+>> > >>      s->total_time = end_time - s->start_time;
+>> > >>      transfer_time = s->total_time - s->setup_time;
+>> > >>      if (transfer_time) {
+>> > >>          s->mbps = ((double) bytes * 8.0) / transfer_time / 1000;
+>> > >>      }
+>> > >> +    bql_unlock();
+>> > >
+>> > > The lock is not needed?
+>> > >
+>> > > AFAIU that was needed because of things like runstate_set() rather than
+>> > > setting of these fields.
+>> > >
+>> > 
+>> > Don't we need to keep the total_time and mbps update atomic? Otherwise
+>> > query-migrate might see (say) total_time=0 and mbps=<correct value> or
+>> > total_time=<correct value> and mbps=<previous value>.
+>> 
+>> I thought it wasn't a major concern, but what you said makes sense; taking
+>> it one more time doesn't really hurt after all to provide such benefit.
+>> 
+>> > 
+>> > Also, what orders s->mbps update before the s->state update? I'd say we
+>> > should probably hold the lock around the whole total_time,mbps,state
+>> > update.
+>> 
+>> IMHO that's fine; mutex unlock implies a RELEASE.  See atomic.rst:
+>> 
+>> - ``pthread_mutex_lock`` has acquire semantics, ``pthread_mutex_unlock`` has
+>>   release semantics and synchronizes with a ``pthread_mutex_lock`` for the
+>>   same mutex.
+>
+> Hmm perhaps I wrote too soon.. it should only guarantee the ordering of the
+> update on the lock variable itself v.s. any previous R&Ws, nothing else.
+> Only if the other side uses bql_lock() will it guarantee proper ordering.
+>
+> Put them in bql should work, but I hesitate such use to start using bql
+> to protect state updates.
 
-"Resolves:" for gitlab bug URLs; "Fixes:" is for git commits.
+Well, on the other hand that's a major use-case of the BQL: protecting
+state that's used by QMP.
 
--- PMM
+>
+> How about we drop the lock, but use an explicit smp_mb_release()?  We may
+> also want to use smb_load_acquire() in fill_source_migration_info() to use
+> on reading &s->state (all will need some comment).  To me, making sure the
+> total mbps is valid seems more important; while the other races are less
+> harmful, and may not be a major concern?
+
+That more closely reflects the problem we're trying to solve, which is
+just an ordering one. However, the QMP code already holds the BQL, we
+could just take benefit of that instead of adding more complex
+synchronization primitives.
+
+May I suggest we keep it simple and move that last migrate_set_state
+into the BQL as well?
+
+>
+> PS: logically I think smp_mb_release() is not needed either, because state
+> is updated using qatomic_cmpxchg(), which implies a full __ATOMIC_SEQ_CST.
+>
+>> 
+>> > 
+>> > I'm not entirely sure, what do you think?
+>> > 
+>> > > See migration_update_counters() where it also updates mbps without holding
+>> > > a lock.
+>> > 
+>> > Here it might be less important since it's the middle of the migration,
+>> > there will proabably be more than one query-migrate which would see the
+>> > correct values.
+>> 
+>> Yep.  I queued this.
+>> 
+>> Thanks,
+>> 
+>> -- 
+>> Peter Xu
 
