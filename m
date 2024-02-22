@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6581CC54798
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7043AC54788
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7EK-0008Io-5w; Thu, 22 Feb 2024 06:27:08 -0500
+	id 1rd7Fu-0004VG-EA; Thu, 22 Feb 2024 06:28:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7EH-0008Hk-Ub; Thu, 22 Feb 2024 06:27:06 -0500
+ id 1rd7Fn-000402-2e; Thu, 22 Feb 2024 06:28:39 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7EG-00052d-3Z; Thu, 22 Feb 2024 06:27:05 -0500
+ id 1rd7Fk-0005C3-LR; Thu, 22 Feb 2024 06:28:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 371BD4FB4F;
- Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 38DD34FB5F;
+ Thu, 22 Feb 2024 14:26:27 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A62388717B;
- Thu, 22 Feb 2024 14:26:02 +0300 (MSK)
-Received: (nullmailer pid 2526179 invoked by uid 1000);
- Thu, 22 Feb 2024 11:26:01 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id B3D828718B;
+ Thu, 22 Feb 2024 14:26:03 +0300 (MSK)
+Received: (nullmailer pid 2526229 invoked by uid 1000);
+ Thu, 22 Feb 2024 11:26:02 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 13/34] docs: correct typos
-Date: Thu, 22 Feb 2024 14:25:40 +0300
-Message-Id: <20240222112601.2526057-14-mjt@tls.msk.ru>
+Subject: [PULL 29/34] m68k: correct typos
+Date: Thu, 22 Feb 2024 14:25:56 +0300
+Message-Id: <20240222112601.2526057-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,98 +67,32 @@ Correct typos automatically found with the `typos` tool
 <https://crates.io/crates/typos>
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-(mjt: trivial fixup)
+(mjt: trivial fixup "covers" suggested by Thomas)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- docs/devel/ci-jobs.rst.inc      | 2 +-
- docs/devel/docs.rst             | 2 +-
- docs/devel/testing.rst          | 2 +-
- docs/interop/prl-xml.txt        | 2 +-
- docs/interop/vhost-user.rst     | 2 +-
- docs/system/devices/canokey.rst | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ target/m68k/cpu.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/docs/devel/ci-jobs.rst.inc b/docs/devel/ci-jobs.rst.inc
-index 4c39cdb2d9..ec33e6ee2b 100644
---- a/docs/devel/ci-jobs.rst.inc
-+++ b/docs/devel/ci-jobs.rst.inc
-@@ -147,7 +147,7 @@ Set this variable to 1 to create the pipelines, but leave all
- the jobs to be manually started from the UI
- 
- Set this variable to 2 to create the pipelines and run all
--the jobs immediately, as was historicaly behaviour
-+the jobs immediately, as was the historical behaviour
- 
- QEMU_CI_AVOCADO_TESTING
- ~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/docs/devel/docs.rst b/docs/devel/docs.rst
-index 50ff0d67f8..a7768b5311 100644
---- a/docs/devel/docs.rst
-+++ b/docs/devel/docs.rst
-@@ -21,7 +21,7 @@ are processed in two ways:
- 
- The syntax of these ``.hx`` files is simple. It is broadly an
- alternation of C code put into the C output and rST format text
--put into the documention. A few special directives are recognised;
-+put into the documentation. A few special directives are recognised;
- these are all-caps and must be at the beginning of the line.
- 
- ``HXCOMM`` is the comment marker. The line, including any arbitrary
-diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
-index bd132306c1..aa96eacec5 100644
---- a/docs/devel/testing.rst
-+++ b/docs/devel/testing.rst
-@@ -728,7 +728,7 @@ For example to setup the HPPA ports builds of Debian::
-     EXECUTABLE=(pwd)/qemu-hppa V=1
- 
- The ``DEB_`` variables are substitutions used by
--``debian-boostrap.pre`` which is called to do the initial debootstrap
-+``debian-bootstrap.pre`` which is called to do the initial debootstrap
- of the rootfs before it is copied into the container. The second stage
- is run as part of the build. The final image will be tagged as
- ``qemu/debian-sid-hppa``.
-diff --git a/docs/interop/prl-xml.txt b/docs/interop/prl-xml.txt
-index 7031f8752c..cf9b3fba26 100644
---- a/docs/interop/prl-xml.txt
-+++ b/docs/interop/prl-xml.txt
-@@ -122,7 +122,7 @@ Each Image element has following child elements:
-     * Type - image type of the element. It can be:
-              "Plain" for raw files.
-              "Compressed" for expanding disks.
--    * File - path to image file. Path can be relative to DiskDecriptor.xml or
-+    * File - path to image file. Path can be relative to DiskDescriptor.xml or
-              absolute.
- 
- == Snapshots element ==
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index ad6e142f23..d1ed39dfa0 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -989,7 +989,7 @@ When reconnecting:
- 
-    #. If ``d.flags`` is not equal to the calculated flags value (means
-       back-end has submitted the buffer to guest driver before crash, so
--      it has to commit the in-progres update), set ``old_free_head``,
-+      it has to commit the in-progress update), set ``old_free_head``,
-       ``old_used_idx``, ``old_used_wrap_counter`` to ``free_head``,
-       ``used_idx``, ``used_wrap_counter``
- 
-diff --git a/docs/system/devices/canokey.rst b/docs/system/devices/canokey.rst
-index cfa6186e48..7f3664963f 100644
---- a/docs/system/devices/canokey.rst
-+++ b/docs/system/devices/canokey.rst
-@@ -14,7 +14,7 @@ CanoKey [1]_ is an open-source secure key with supports of
- All these platform-independent features are in canokey-core [3]_.
- 
- For different platforms, CanoKey has different implementations,
--including both hardware implementions and virtual cards:
-+including both hardware implementations and virtual cards:
- 
- * CanoKey STM32 [4]_
- * CanoKey Pigeon [5]_
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index aca4aa610b..646cacbdf1 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -478,10 +478,11 @@ void do_m68k_semihosting(CPUM68KState *env, int nr);
+  * The 68000 family is defined in six main CPU classes, the 680[012346]0.
+  * Generally each successive CPU adds enhanced data/stack/instructions.
+  * However, some features are only common to one, or a few classes.
+- * The features covers those subsets of instructons.
++ * The features cover those subsets of instructions.
+  *
+- * CPU32/32+ are basically 680010 compatible with some 68020 class instructons,
+- * and some additional CPU32 instructions. Mostly Supervisor state differences.
++ * CPU32/32+ are basically 680010 compatible with some 68020 class
++ * instructions, and some additional CPU32 instructions. Mostly Supervisor
++ * state differences.
+  *
+  * The ColdFire core ISA is a RISC-style reduction of the 68000 series cpu.
+  * There are 4 ColdFire core ISA revisions: A, A+, B and C.
 -- 
 2.39.2
 
