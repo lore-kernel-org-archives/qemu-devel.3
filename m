@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A921C54788
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05706C54798
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 15:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdBAl-0004Tt-O9; Thu, 22 Feb 2024 10:39:43 -0500
+	id 1rdBAk-0004Sy-EL; Thu, 22 Feb 2024 10:39:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rdBAj-0004Sl-Qn
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:39:41 -0500
+ id 1rdBAi-0004SP-Ii
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:39:40 -0500
 Received: from forwardcorp1c.mail.yandex.net
  ([2a02:6b8:c03:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rdBAf-0002T7-4M
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:39:41 -0500
+ id 1rdBAf-0002TD-3p
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:39:40 -0500
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:9328:0:640:5832:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id EF57A60D43;
- Thu, 22 Feb 2024 18:39:30 +0300 (MSK)
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 97CBF60D6E;
+ Thu, 22 Feb 2024 18:39:32 +0300 (MSK)
 Received: from davydov-max-nux.yandex.net (unknown
  [2a02:6b8:8f:4:b109:a1eb:adad:8bd8])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id CdVQ8Q0i7a60-0QNjMFmn; Thu, 22 Feb 2024 18:39:30 +0300
+ ESMTPSA id CdVQ8Q0i7a60-0tHeTV8c; Thu, 22 Feb 2024 18:39:31 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1708616370;
- bh=KAQ7bIK/33QGf3xImcTyGRwGSGrbYVHgYfFl9Kfrcqg=;
+ s=default; t=1708616371;
+ bh=hu8jYt4ZexfRPQMt+iDW2pNu8liod6iwXg6FOJKzodI=;
  h=Cc:Message-Id:References:Date:In-Reply-To:Subject:To:From;
- b=c2EiVvZWkdBaQ7drtHeGGdPF40w2La7w99yuJjYU9CVAzUbs7YUzaBpzGIexivmkz
- M+v91D3pMG/5Ss7U/UB/hNWnQ8O3yy+juncCFbPEfXRRTdf/RLnEuwlWQCmk9e+zlm
- ZK22ebxIyItGALb/HKh1eGEz6/mo2SJ9J+CBFvCA=
+ b=VA+/SDAyeN0NatntjIH2KyIIy1QF4MV/bmxs6dCnD4DVz2vPTP1pY/yyrrIJiJzRW
+ f6V6jzB0JG1icY4yNxv/DIjHJz+om87p34n2T12j9GWafqFffx9096XvqKZa8AQOEc
+ XO+vrQWeQXGM2VaZid24s6TvwWkh9/B3zq0y/e3I=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Maksim Davydov <davydov-max@yandex-team.ru>
@@ -46,9 +46,10 @@ Cc: davydov-max@yandex-team.ru, vsementsov@yandex-team.ru, eduardo@habkost.net,
  marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
  jsnow@redhat.com, eblake@redhat.com, armbru@redhat.com,
  pbonzini@redhat.com, berrange@redhat.com, alxndr@bu.edu, den@virtuozzo.com
-Subject: [PATCH v9 1/4] qom: add default value
-Date: Thu, 22 Feb 2024 18:39:09 +0300
-Message-Id: <20240222153912.646053-2-davydov-max@yandex-team.ru>
+Subject: [PATCH v9 3/4] python/qemu/machine: add method to retrieve
+ QEMUMachine::binary field
+Date: Thu, 22 Feb 2024 18:39:11 +0300
+Message-Id: <20240222153912.646053-4-davydov-max@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240222153912.646053-1-davydov-max@yandex-team.ru>
 References: <20240222153912.646053-1-davydov-max@yandex-team.ru>
@@ -78,31 +79,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qmp_qom_list_properties can print default values if they are available
-as qmp_device_list_properties does, because both of them use the
-ObjectPropertyInfo structure with default_value field. This can be useful
-when working with "not device" types (e.g. memory-backend).
+Add a supportive property to access the path to the QEMU binary
 
 Signed-off-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- qom/qom-qmp-cmds.c | 1 +
- 1 file changed, 1 insertion(+)
+ python/qemu/machine/machine.py | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-index 7c087299de..e91a235347 100644
---- a/qom/qom-qmp-cmds.c
-+++ b/qom/qom-qmp-cmds.c
-@@ -212,6 +212,7 @@ ObjectPropertyInfoList *qmp_qom_list_properties(const char *typename,
-         info->name = g_strdup(prop->name);
-         info->type = g_strdup(prop->type);
-         info->description = g_strdup(prop->description);
-+        info->default_value = qobject_ref(prop->defval);
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 31cb9d617d..f648f6af45 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -328,6 +328,11 @@ def args(self) -> List[str]:
+         """Returns the list of arguments given to the QEMU binary."""
+         return self._args
  
-         QAPI_LIST_PREPEND(prop_list, info);
-     }
++    @property
++    def binary(self) -> str:
++        """Returns path to the QEMU binary"""
++        return self._binary
++
+     def _pre_launch(self) -> None:
+         if self._qmp_set:
+             if self._monitor_address is None:
 -- 
 2.34.1
 
