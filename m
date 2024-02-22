@@ -4,59 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5646CC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F92DC48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 09:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd5Mb-0007TG-PJ; Thu, 22 Feb 2024 04:27:33 -0500
+	id 1rd5OL-0000R0-Hn; Thu, 22 Feb 2024 04:29:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rd5MZ-0007Sh-Os; Thu, 22 Feb 2024 04:27:31 -0500
-Received: from szxga02-in.huawei.com ([45.249.212.188])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rd5OI-0000Ls-WD; Thu, 22 Feb 2024 04:29:19 -0500
+Received: from fhigh1-smtp.messagingengine.com ([103.168.172.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rd5MX-0002ii-DQ; Thu, 22 Feb 2024 04:27:31 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.194])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4TgSRT4zTYzXhDg;
- Thu, 22 Feb 2024 17:25:25 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 8894B140257;
- Thu, 22 Feb 2024 17:27:21 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 22 Feb 2024 17:27:20 +0800
-Message-ID: <61cb54a9-0940-e92f-e409-0aa8a20587e0@huawei.com>
-Date: Thu, 22 Feb 2024 17:27:20 +0800
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rd5OG-0002vN-Lm; Thu, 22 Feb 2024 04:29:18 -0500
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id 4C28511400D3;
+ Thu, 22 Feb 2024 04:29:14 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Thu, 22 Feb 2024 04:29:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm3; t=1708594154; x=
+ 1708680554; bh=unEqUS2ah1tg5MfeHlyQZzvJDUO9xa3f3mPjgTDV990=; b=d
+ N0MqbHzXjwwcWazHUtlDNDcCgOw3Vv6k4lQVKO2uw3xR2xYLuh3MipMFV4gtW+d2
+ 1MqWO4NNOtlCC9fVLz/CF5dYu6woqeYXU1GKgljIou/QEuEK3WXbvpzKqVaKlDXw
+ GIkD1czSR7StKCd/lJBrtP0t0R5aQras5ciyK1RYv2hjVzzYgOM/B93qUlfpLQJC
+ idi71uGtTfY6P4fFkjULj01DgLC24ctiLwEsqh+msVbTRhwjdWdEVV8UbOXhKwdy
+ yJAfCf0Fp5UAhcYPonwPrlvv/UiXRxLFBJBabYAR8GRLHCS7c0C2TJrFrEmqQWqC
+ 2s/0Dl26AtxH9q/WAqKoQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1708594154; x=1708680554; bh=unEqUS2ah1tg5
+ MfeHlyQZzvJDUO9xa3f3mPjgTDV990=; b=XyG9AKCbWJqh38ynmFCZKGc8AWfUQ
+ BkeSg/Ijm9ZrmIMzm2/ZduYpR+zvGvTLBwAthqkL1MlLz9R7U9f5JHWrKYJ/IlPH
+ OgdcEfrBDrIveT971Z73qVnqcimMYHffZhrPj2OqQRqrtOOPSg39IqwvTlePs1r4
+ pdRSHsJxuHabDSJNU9BOw8ko6+dQZx3wczNPWFLssaT0Bw70/GcBUp+o8O3sq+Cv
+ MAEfo1x9pQgZviqYZqDPXChRkFWvlxvkuTUqeIg9SFbOCw7LEi7RpH93+FYXZMol
+ jgDRyJ2gOp88kGJ+u13Q3AYTEOC3mJyaEZjzC0Cmg78F9j7zeCYvLorqg==
+X-ME-Sender: <xms:6hPXZUeDrgT36q4Td0at_8vTjoExPjFhKHH2PhN7eHKiXup1GqZy5Q>
+ <xme:6hPXZWPLqadM8QHuMj6uyMhJ8ESYN9R19DhrRiQ6d5Pq9q35PTPryKkd8YbkHMHKK
+ OBws5xk5M7h5GRoreA>
+X-ME-Received: <xmr:6hPXZVjjqkDFnDcZD9-HfOxAhpYdPizxAzsDOc-5FpkmcgG-0gv9p0fbghHMepuz8mmK1qFhvnd3wBSP0Ag7rll0q5UAQ8hRcVGKLz0YtoRknoknjCh4z2q6NqVRedf6b8p1FCQJSI_-V5u4bg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeeggddtgecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefhfffugggtgffkvfevofesthejredtredtjeenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnheptdehveejiefhgfegiefhfeehueeigfeugfelhfdtffevheffkefhkeegteetffet
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtsh
+ esihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:6hPXZZ9IBzuekc7EhxkYGaVbOJdUPQz3ppasq5xmYvOLUO5hmsxX9A>
+ <xmx:6hPXZQuKML6cMfYxUAkRJT2xHYmDQaqeEbRN5W0f9OJv5pE3TdqloA>
+ <xmx:6hPXZQFFu-N5tHjdDHHTqufBCumgZUOUN_gM4JUMk7dPV3uagrNJNg>
+ <xmx:6hPXZUhI71Tl-N1ciaO3P-sR4Im6njVhJG_uJbZBnGfvlpl369q22w>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Feb 2024 04:29:13 -0500 (EST)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Thu, 22 Feb 2024 10:29:06 +0100
+Subject: [PATCH] hw/nvme: fix invalid endian conversion
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [RFC PATCH v2 06/22] target/arm: Add support for Non-maskable
- Interrupt
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240221130823.677762-1-ruanjinjie@huawei.com>
- <20240221130823.677762-7-ruanjinjie@huawei.com>
- <94867836-95f4-4da2-96e9-583e508a762d@linaro.org>
-In-Reply-To: <94867836-95f4-4da2-96e9-583e508a762d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240222-fix-sriov-numcntl-v1-1-d60bea5e72d0@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAOET12UC/x2MWwqAIBAAryL73UIuVtBVoo8eWy2UhlYE4t2TP
+ gdmJkJgLxygVRE8PxLE2Qy6UDBtg10ZZc4MVJIpiQgXeTF4cQ/a+5jstWPFI5t6MKSbGnJ3es7
+ S/+z6lD5IOIi7YwAAAA==
+To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, 
+ Klaus Jensen <k.jensen@samsung.com>, Kevin Wolf <kwolf@redhat.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1096; i=k.jensen@samsung.com; 
+ h=from:subject:message-id;
+ bh=PKexRZKVAtWrh0NHmG0QcIlyS8OHM26yr8H24FSQGLs=; 
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGXXE+j+gubLVuf1ZigEypdh7Huj+/bNpFwPK
+ Qlt34E/7RnIcokBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJl1xPoAAoJEE3hrzFt
+ Tw3pywIH/RsdlecmYxovU3zNM5/VTmMQ//Ijlu8Wgkk6X+MKEGRJi0RxhGSGkZSZW3I2CRRXibS
+ QaGjKsLkGAW2D/uFB4lSEgYDr8U87MZChf8t5g6UzOkuhBu68XAk4gD97EiRjkt2tzxiir663ye
+ 0l7YOrAwKz2NY1zPfKdZZkXAHWt9ymK6ACEI60wTlKm20azVouZ1TaDDV6Bpcm0nzfCzlZDuadD
+ 4kPrilZc18FlvnnPTgkUwbXDEGi0DVIp+l5WSJsQ8adt1vXYRohQx7k+939FJWcsnwCjPRjstXA
+ 3tbsxcrXX83OBLYiqmLBEzZH8naTpcl5K9VfQn6D4IlLiZTnlljkhqiq
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
+ helo=fhigh1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,106 +112,43 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Klaus Jensen <k.jensen@samsung.com>
 
+numcntl is one byte and so is max_vfs. Using cpu_to_le16 on big endian
+hosts results in numcntl being set to 0.
 
-On 2024/2/22 4:06, Richard Henderson wrote:
-> On 2/21/24 03:08, Jinjie Ruan via wrote:
->> This only implements the external delivery method via the GICv3.
->>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
->> ---
->>   target/arm/cpu-qom.h |  3 ++-
->>   target/arm/cpu.c     | 39 ++++++++++++++++++++++++++++++++++-----
->>   target/arm/cpu.h     |  2 ++
->>   target/arm/helper.c  |  1 +
->>   4 files changed, 39 insertions(+), 6 deletions(-)
->>
->> diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
->> index 8e032691db..66d555a605 100644
->> --- a/target/arm/cpu-qom.h
->> +++ b/target/arm/cpu-qom.h
->> @@ -36,11 +36,12 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
->>   #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
->>   #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
->>   -/* Meanings of the ARMCPU object's four inbound GPIO lines */
->> +/* Meanings of the ARMCPU object's five inbound GPIO lines */
->>   #define ARM_CPU_IRQ 0
->>   #define ARM_CPU_FIQ 1
->>   #define ARM_CPU_VIRQ 2
->>   #define ARM_CPU_VFIQ 3
->> +#define ARM_CPU_NMI 4
->>     /* For M profile, some registers are banked secure vs non-secure;
->>    * these are represented as a 2-element array where the first element
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 5e5978c302..055670343e 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -128,7 +128,7 @@ static bool arm_cpu_has_work(CPUState *cs)
->>         return (cpu->power_state != PSCI_OFF)
->>           && cs->interrupt_request &
->> -        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
->> +        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI
->>            | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ |
->> CPU_INTERRUPT_VSERR
->>            | CPU_INTERRUPT_EXITTB);
->>   }
-> 
-> I think you should not include CPU_INTERRUPT_NMI when it cannot be
-> delivered, e.g. FEAT_NMI not enabled.
+Fix by dropping the endian conversion.
 
-I'll fix it.
+Fixes: 746d42b13368 ("hw/nvme: Initialize capability structures for primary/secondary controllers")
+Reported-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> 
->> @@ -668,6 +668,7 @@ static inline bool arm_excp_unmasked(CPUState *cs,
->> unsigned int excp_idx,
->>       CPUARMState *env = cpu_env(cs);
->>       bool pstate_unmasked;
->>       bool unmasked = false;
->> +    bool nmi_unmasked = false;
->>         /*
->>        * Don't take exceptions if they target a lower EL.
->> @@ -678,13 +679,29 @@ static inline bool arm_excp_unmasked(CPUState
->> *cs, unsigned int excp_idx,
->>           return false;
->>       }
->>   +    nmi_unmasked = (!(env->allint & PSTATE_ALLINT)) &
->> +                   (!((env->cp15.sctlr_el[target_el] &
->> SCTLR_SPINTMASK) &&
->> +                   (env->pstate & PSTATE_SP) && cur_el == target_el));
-> 
-> I don't see SCTLR_ELx.NMI being tested anywhere, which is required to
-> enable everything else.
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index f026245d1e9e..76fe0397045b 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7924,7 +7924,7 @@ static void nvme_init_state(NvmeCtrl *n)
+     n->aer_reqs = g_new0(NvmeRequest *, n->params.aerl + 1);
+     QTAILQ_INIT(&n->aer_queue);
+ 
+-    list->numcntl = cpu_to_le16(max_vfs);
++    list->numcntl = max_vfs;
+     for (i = 0; i < max_vfs; i++) {
+         sctrl = &list->sec[i];
+         sctrl->pcid = cpu_to_le16(n->cntlid);
 
-I'll Add it
+---
+base-commit: 760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83d0
+change-id: 20240222-fix-sriov-numcntl-5ebe46a42176
 
-> 
->>       case EXCP_FIQ:
->> -        pstate_unmasked = !(env->daif & PSTATE_F);
->> +        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
->> +            pstate_unmasked = (!(env->daif & PSTATE_F)) & nmi_unmasked;
->> +        } else {
->> +            pstate_unmasked = !(env->daif & PSTATE_F);
->> +        }
->>           break;
->>         case EXCP_IRQ:
->> -        pstate_unmasked = !(env->daif & PSTATE_I);
->> +        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
->> +            pstate_unmasked = (!(env->daif & PSTATE_I)) & nmi_unmasked;
->> +        } else {
->> +            pstate_unmasked = !(env->daif & PSTATE_I);
->> +        }
->>           break;
-> 
-> I don't see what this is doing.  While Superpriority is IMPLEMENTATION
-> DEFINED, how are you defining it for QEMU?  Is there a definition from
-> real hw which makes sense under emulation?
-> 
-> 
-> r~
+Best regards,
+-- 
+Klaus Jensen <k.jensen@samsung.com>
+
 
