@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1676C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 06:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC8DC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 06:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd27z-0006Aq-Fm; Thu, 22 Feb 2024 01:00:15 -0500
+	id 1rd2Bw-0000YL-Ar; Thu, 22 Feb 2024 01:04:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd27y-0006Ab-2x; Thu, 22 Feb 2024 01:00:14 -0500
+ id 1rd2Bt-0000Rr-Qy; Thu, 22 Feb 2024 01:04:17 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd27w-0007np-3J; Thu, 22 Feb 2024 01:00:13 -0500
+ id 1rd2Bs-0000Hl-8m; Thu, 22 Feb 2024 01:04:17 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4068B4FA0E;
- Thu, 22 Feb 2024 09:00:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 341554FA15;
+ Thu, 22 Feb 2024 09:04:37 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2D53F86C7D;
- Thu, 22 Feb 2024 09:00:06 +0300 (MSK)
-Message-ID: <f04b5aad-b563-4e83-b90c-3159ae3b6aea@tls.msk.ru>
-Date: Thu, 22 Feb 2024 09:00:06 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1F42786C80;
+ Thu, 22 Feb 2024 09:04:14 +0300 (MSK)
+Message-ID: <34f501b4-94d3-4cb1-96b8-1d2a77013817@tls.msk.ru>
+Date: Thu, 22 Feb 2024 09:04:14 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Update description for input grab key
+Subject: Re: [PATCH 0/6] [PATCH 0/6] Fix missing ERRP_GUARD() when dereference
+ @errp
 Content-Language: en-US
-To: Tianlan Zhou <bobby825@126.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org
-References: <20240221195208.462-1-bobby825@126.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -59,7 +60,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240221195208.462-1-bobby825@126.com>
+In-Reply-To: <20240221094317.994454-1-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -85,25 +86,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-21.02.2024 22:52, Tianlan Zhou :
-> Input grab key should be Ctrl-Alt-g, not just Ctrl-Alt.
+21.02.2024 12:43, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> v2:
-> - Update help message in system/vl.c
+> Hi all,
 > 
-> v1:
-> - Initial patch
+> Thanks to Markus's explanation about ERRP_GUARD() on my previsou
+> patch [1],
 > 
-> Tianlan Zhou (2):
->    docs/system: Update description for input grab key
->    system/vl: Update description for input grab key
+> I realize that perhaps more @errp dereference cases need to be
+> double-checked to ensure that ERRP_GUARD() is being used correctly.
 > 
->   docs/system/keys.rst.inc | 2 +-
->   system/vl.c              | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+> Therefore, there're the patches to add more missing ERRP_GUARD().
+> 
+> [1]: https://lore.kernel.org/qemu-devel/875xz0ojg7.fsf@pond.sub.org/
 
-Applied to trivial-patches, thanks!
+Hi!
+
+Since you're going to respin (it looks like), please include the initial
+patch (hw/intc one) into the series as well, so it's all in one go.
+
+I'm not sure this should come via trivial-patches tree though.  Looks
+trivial enough :)
 
 /mjt
-
 
