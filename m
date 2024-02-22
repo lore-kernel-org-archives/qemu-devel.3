@@ -4,60 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2100C48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 02:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF46C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 02:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rcz4h-0005VE-Pu; Wed, 21 Feb 2024 21:44:39 -0500
+	id 1rczDq-0004u7-8x; Wed, 21 Feb 2024 21:54:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcz4f-0005Ub-KP; Wed, 21 Feb 2024 21:44:37 -0500
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rczDo-0004tq-SO
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 21:54:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rcz4b-0001RQ-Ki; Wed, 21 Feb 2024 21:44:37 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TgHRD5l07z1FL0d;
- Thu, 22 Feb 2024 10:39:36 +0800 (CST)
-Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 3DBF71402CD;
- Thu, 22 Feb 2024 10:44:29 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 22 Feb 2024 10:44:28 +0800
-Message-ID: <2f85fc25-e3ce-4e27-d6cf-2a02dcf7971c@huawei.com>
-Date: Thu, 22 Feb 2024 10:44:28 +0800
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1rczDm-0003uO-Nx
+ for qemu-devel@nongnu.org; Wed, 21 Feb 2024 21:54:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708570441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rJp20RBQGQ6FqkMDbkxfU3Fvt35vHW6R7eodzLmBRQ0=;
+ b=JJ98RRQ3DxvwS5xEegMluCMy9sy60gRfl98chUbkt6cfB0RR0dyh8ZwpKSgzulrsycGjze
+ epf45Q5DqtglfdNwjVBXy9Hq5N6lKmp/EM08BPlzvmJlS0ZGLPFx0VZaPdEozDd3karbhl
+ VYwUvOrJY35Na9k6rlk1BMy4c5eaLcE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-283-pCaiTQduNHaUnJ5tnlIs2w-1; Wed, 21 Feb 2024 21:53:57 -0500
+X-MC-Unique: pCaiTQduNHaUnJ5tnlIs2w-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4F1FD85A588;
+ Thu, 22 Feb 2024 02:53:57 +0000 (UTC)
+Received: from dhcp-8-237.nay.redhat.com (dhcp-8-237.nay.redhat.com
+ [10.66.8.237])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7B54FC1596E;
+ Thu, 22 Feb 2024 02:53:55 +0000 (UTC)
+From: Dehan Meng <demeng@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: demeng@redhat.com,
+	kkostiuk@redhat.com,
+	michael.roth@amd.com
+Subject: [PATCH v2 0/1] update the array size
+Date: Thu, 22 Feb 2024 10:53:51 +0800
+Message-Id: <20240222025352.58859-1-demeng@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [RFC PATCH v2 06/22] target/arm: Add support for Non-maskable
- Interrupt
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- <peter.maydell@linaro.org>, <eduardo@habkost.net>,
- <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
-References: <20240221130823.677762-1-ruanjinjie@huawei.com>
- <20240221130823.677762-7-ruanjinjie@huawei.com>
- <94867836-95f4-4da2-96e9-583e508a762d@linaro.org>
-In-Reply-To: <94867836-95f4-4da2-96e9-583e508a762d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.67.109.254]
-X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
- kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.297,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.05,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,111 +75,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
-From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+v1 -> v2
+update the array size "WIN_10_0_SERVER_VERSION_MATRIX" in case 
+array out of range elements.
 
+Dehan Meng (1):
+  qga-win: Add support of Windows Server 2025 in get-osinfo command
 
-On 2024/2/22 4:06, Richard Henderson wrote:
-> On 2/21/24 03:08, Jinjie Ruan via wrote:
->> This only implements the external delivery method via the GICv3.
->>
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
->> ---
->>   target/arm/cpu-qom.h |  3 ++-
->>   target/arm/cpu.c     | 39 ++++++++++++++++++++++++++++++++++-----
->>   target/arm/cpu.h     |  2 ++
->>   target/arm/helper.c  |  1 +
->>   4 files changed, 39 insertions(+), 6 deletions(-)
->>
->> diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
->> index 8e032691db..66d555a605 100644
->> --- a/target/arm/cpu-qom.h
->> +++ b/target/arm/cpu-qom.h
->> @@ -36,11 +36,12 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
->>   #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
->>   #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
->>   -/* Meanings of the ARMCPU object's four inbound GPIO lines */
->> +/* Meanings of the ARMCPU object's five inbound GPIO lines */
->>   #define ARM_CPU_IRQ 0
->>   #define ARM_CPU_FIQ 1
->>   #define ARM_CPU_VIRQ 2
->>   #define ARM_CPU_VFIQ 3
->> +#define ARM_CPU_NMI 4
->>     /* For M profile, some registers are banked secure vs non-secure;
->>    * these are represented as a 2-element array where the first element
->> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
->> index 5e5978c302..055670343e 100644
->> --- a/target/arm/cpu.c
->> +++ b/target/arm/cpu.c
->> @@ -128,7 +128,7 @@ static bool arm_cpu_has_work(CPUState *cs)
->>         return (cpu->power_state != PSCI_OFF)
->>           && cs->interrupt_request &
->> -        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
->> +        (CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD | CPU_INTERRUPT_NMI
->>            | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ |
->> CPU_INTERRUPT_VSERR
->>            | CPU_INTERRUPT_EXITTB);
->>   }
-> 
-> I think you should not include CPU_INTERRUPT_NMI when it cannot be
-> delivered, e.g. FEAT_NMI not enabled.
+ qga/commands-win32.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-OK! I'll fix it.
-> 
-> 
->> @@ -668,6 +668,7 @@ static inline bool arm_excp_unmasked(CPUState *cs,
->> unsigned int excp_idx,
->>       CPUARMState *env = cpu_env(cs);
->>       bool pstate_unmasked;
->>       bool unmasked = false;
->> +    bool nmi_unmasked = false;
->>         /*
->>        * Don't take exceptions if they target a lower EL.
->> @@ -678,13 +679,29 @@ static inline bool arm_excp_unmasked(CPUState
->> *cs, unsigned int excp_idx,
->>           return false;
->>       }
->>   +    nmi_unmasked = (!(env->allint & PSTATE_ALLINT)) &
->> +                   (!((env->cp15.sctlr_el[target_el] &
->> SCTLR_SPINTMASK) &&
->> +                   (env->pstate & PSTATE_SP) && cur_el == target_el));
-> 
-> I don't see SCTLR_ELx.NMI being tested anywhere, which is required to
-> enable everything else.
+-- 
+2.35.1
 
-OK! I'll fix it.
-
-> 
->>       case EXCP_FIQ:
->> -        pstate_unmasked = !(env->daif & PSTATE_F);
->> +        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
->> +            pstate_unmasked = (!(env->daif & PSTATE_F)) & nmi_unmasked;
->> +        } else {
->> +            pstate_unmasked = !(env->daif & PSTATE_F);
->> +        }
->>           break;
->>         case EXCP_IRQ:
->> -        pstate_unmasked = !(env->daif & PSTATE_I);
->> +        if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
->> +            pstate_unmasked = (!(env->daif & PSTATE_I)) & nmi_unmasked;
->> +        } else {
->> +            pstate_unmasked = !(env->daif & PSTATE_I);
->> +        }
->>           break;
-> 
-> I don't see what this is doing.  While Superpriority is IMPLEMENTATION
-> DEFINED, how are you defining it for QEMU?  Is there a definition from
-> real hw which makes sense under emulation?
-
-These code add allint mask for IRQ or FIQ,since ALLINT also mask them.
-
-The superpriority is DEFINED in  gicv3 code and it is a NMI exception
-for PE.
-
-> 
-> 
-> r~
 
