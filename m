@@ -4,49 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B121BC48BEB
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EBBC48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7LH-0005Jt-01; Thu, 22 Feb 2024 06:34:19 -0500
+	id 1rd7PS-0004Ld-4s; Thu, 22 Feb 2024 06:38:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd7L6-00051P-Me; Thu, 22 Feb 2024 06:34:08 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rd7L4-0006ON-Ns; Thu, 22 Feb 2024 06:34:08 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 278334E6049;
- Thu, 22 Feb 2024 12:34:05 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id BWTa0H36FGNM; Thu, 22 Feb 2024 12:34:03 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3E2434E6039; Thu, 22 Feb 2024 12:34:03 +0100 (CET)
-Message-Id: <7939a0638ac30b06d4c336bb04d72fdf48fb4c13.1708601065.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1708601065.git.balaton@eik.bme.hu>
-References: <cover.1708601065.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 9/9] target/ppc: Remove interrupt handler wrapper functions
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rd7PP-0004L5-UA
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:38:35 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rd7PN-0006yd-UU
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 06:38:35 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-563bb51c36eso8677572a12.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 03:38:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708601912; x=1709206712; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FXv2bkch8+nR9c89c16LLN3ML9A1adGz0xTEYO7PrpQ=;
+ b=pBEeAirpPKz2LSPW2xC4YVPOC/yVKIp+H9PXvrGYo9FrPDl1GteUcoKYws2tFztGQc
+ AdMq94EXApD5BRsE3g1aRFYslIiH89KBg5aO4pork8FiFP+3YKEHN/K24cZiScHilwBj
+ DFDl15yZ2KsXP2rmQVTMzB4AsQs3ubTbeAnbc+6EqZUC+5QnQyreebLh0S9FMEbTLfJD
+ 17Lqe7RXlo2A58jYX2RYwb4cgadRmkbZWQA5jp3XVfEvNK62NdPFYZYX2uRRjIJPCG95
+ N6iE8lBPFJQTJddKY/I2S8ZKCzzx7Lovfx2FoECNB74/4Eq8j24izuH2h7X0ylRimvgs
+ cNdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708601912; x=1709206712;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FXv2bkch8+nR9c89c16LLN3ML9A1adGz0xTEYO7PrpQ=;
+ b=j2LWkQzgMaut4ipzUVa3P1SWBKUHtvGURKHIpEiksP4LwqzzkWSEWwZH1FvdxvOBIQ
+ uc+WxO/C/IQ2EXBXs7ivRUjHcY7bIWUebwmMLlxczOFZozfGG1dPDACg5UZOSFpX/09p
+ HMMPF2gAkqUjYAd8S8V4mvzJYhZV6c3pJPYSsD/ZYJSJqENbMF0IOojJYNJ3VveJr3m0
+ 7h9fcF1q875fgWfUyqEnWn5pgcCfE3CDnfl7mJ4tt/gX+j4/frCiT3N7MXgJ7S2Bz0nZ
+ 3XG6ZpxKRDv/ZWy8uGkdWjDbkZVX6IbqjwEuufj6n+9Wx4JI1cFIt2y4OqZ5HHvdQrKI
+ lQfg==
+X-Gm-Message-State: AOJu0Yw6ICbmwvih8n0XjUICyKXSa5RPbTZoytfp/hzXgl+QbueVg6il
+ ycjfngS1lx6B5woSSCIKRQgxX3RUE2kFFl4lZETbo+UYxle+yDU2q85wA0LHmrEC003vLtrVZVF
+ iAiKIY8/tC7vQlgGef+n6I/8eYqSX7NuEzj7dRQ==
+X-Google-Smtp-Source: AGHT+IFp6xTu/klY5UQo/9LK+kGQW6fDBnxXpbeeNl/5q7c2GKmfr9HKjCdK6qwRjH/tUPFaHGPlo1PgxMEpuicpcq8=
+X-Received: by 2002:a05:6402:5246:b0:565:2183:d296 with SMTP id
+ t6-20020a056402524600b005652183d296mr2236133edd.27.1708601912023; Thu, 22 Feb
+ 2024 03:38:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Date: Thu, 22 Feb 2024 12:34:03 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240220174412.155885-1-peter.maydell@linaro.org>
+ <20240220174412.155885-4-peter.maydell@linaro.org>
+ <e434d7fc-d215-4537-b594-784155ebadfb@linaro.org>
+In-Reply-To: <e434d7fc-d215-4537-b594-784155ebadfb@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 22 Feb 2024 11:38:21 +0000
+Message-ID: <CAFEAcA-rqXQ_mEmLk4HJf8jnYPqTFBG2rkvb360BOE+vOywVDg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] .gitlab-ci.d/windows.yml: Remove shared-msys2
+ abstraction
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Yonggang Luo <luoyonggang@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,121 +94,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These wrappers call out to handle POWER7 and newer in separate
-functions but reduce to the generic case when TARGET_PPC64 is not
-defined. It is easy enough to include the switch in the beginning of
-the generic functions to branch out to the specific functions and get
-rid of these wrappers. This avoids one indirection and entirely
-compiles out the switch without TARGET_PPC64.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- target/ppc/excp_helper.c | 67 +++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 39 deletions(-)
-
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 5124c3e6b5..a23dd43437 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1921,8 +1921,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env)
- }
- #endif /* TARGET_PPC64 */
- 
--static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
-+static int ppc_next_unmasked_interrupt(CPUPPCState *env)
- {
-+#ifdef TARGET_PPC64
-+    switch (env->excp_model) {
-+    case POWERPC_EXCP_POWER7:
-+        return p7_next_unmasked_interrupt(env);
-+    case POWERPC_EXCP_POWER8:
-+        return p8_next_unmasked_interrupt(env);
-+    case POWERPC_EXCP_POWER9:
-+    case POWERPC_EXCP_POWER10:
-+        return p9_next_unmasked_interrupt(env);
-+    default:
-+        break;
-+    }
-+#endif
-     bool async_deliver;
- 
-     /* External reset */
-@@ -2033,23 +2046,6 @@ static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
-     return 0;
- }
- 
--static int ppc_next_unmasked_interrupt(CPUPPCState *env)
--{
--    switch (env->excp_model) {
--#ifdef TARGET_PPC64
--    case POWERPC_EXCP_POWER7:
--        return p7_next_unmasked_interrupt(env);
--    case POWERPC_EXCP_POWER8:
--        return p8_next_unmasked_interrupt(env);
--    case POWERPC_EXCP_POWER9:
--    case POWERPC_EXCP_POWER10:
--        return p9_next_unmasked_interrupt(env);
--#endif
--    default:
--        return ppc_next_unmasked_interrupt_generic(env);
--    }
--}
+On Tue, 20 Feb 2024 at 18:50, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 20/2/24 18:44, Peter Maydell wrote:
+> > Now we don't build msys2-32bit we don't need the abstraction out of the
+> > common msys2 handling from the 32-vs-64-bit specifics. Collapse it
+> > down into the msys2-64bit job definition.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   .gitlab-ci.d/windows.yml | 84 +++++++++++++++++++--------------------=
 -
- /*
-  * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to be
-  * delivered and clears CPU_INTERRUPT_HARD otherwise.
-@@ -2279,8 +2275,21 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
- }
- #endif /* TARGET_PPC64 */
- 
--static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-+static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
- {
-+#ifdef TARGET_PPC64
-+    switch (env->excp_model) {
-+    case POWERPC_EXCP_POWER7:
-+        return p7_deliver_interrupt(env, interrupt);
-+    case POWERPC_EXCP_POWER8:
-+        return p8_deliver_interrupt(env, interrupt);
-+    case POWERPC_EXCP_POWER9:
-+    case POWERPC_EXCP_POWER10:
-+        return p9_deliver_interrupt(env, interrupt);
-+    default:
-+        break;
-+    }
-+#endif
-     PowerPCCPU *cpu = env_archcpu(env);
- 
-     switch (interrupt) {
-@@ -2383,26 +2392,6 @@ static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-     }
- }
- 
--static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
--{
--    switch (env->excp_model) {
--#ifdef TARGET_PPC64
--    case POWERPC_EXCP_POWER7:
--        p7_deliver_interrupt(env, interrupt);
--        break;
--    case POWERPC_EXCP_POWER8:
--        p8_deliver_interrupt(env, interrupt);
--        break;
--    case POWERPC_EXCP_POWER9:
--    case POWERPC_EXCP_POWER10:
--        p9_deliver_interrupt(env, interrupt);
--        break;
--#endif
--    default:
--        ppc_deliver_interrupt_generic(env, interrupt);
--    }
--}
--
- void ppc_cpu_do_system_reset(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
--- 
-2.30.9
+> >   1 file changed, 40 insertions(+), 44 deletions(-)
+> >
+> > diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+> > index 8fc08218d28..e784d5a68cd 100644
+> > --- a/.gitlab-ci.d/windows.yml
+> > +++ b/.gitlab-ci.d/windows.yml
+> > @@ -1,4 +1,4 @@
+> > -.shared_msys2_builder:
+> > +msys2-64bit:
+> >     extends: .base_job_template
+> >     tags:
+> >     - shared-windows
+> > @@ -14,9 +14,19 @@
+> >     stage: build
+> >     timeout: 100m
+> >     variables:
+> > +    MINGW_TARGET: mingw-w64-x86_64
+>
+> You expanded $MINGW_TARGET so we can remove it.
+>
+> > +    MSYSTEM: MINGW64
+> >       # This feature doesn't (currently) work with PowerShell, it stops
+> >       # the echo'ing of commands being run and doesn't show any timing
+> >       FF_SCRIPT_SECTIONS: 0
+> > +    # do not remove "--without-default-devices"!
+> > +    # commit 9f8e6cad65a6 ("gitlab-ci: Speed up the msys2-64bit job by=
+ using --without-default-devices"
+> > +    # changed to compile QEMU with the --without-default-devices switc=
+h
+> > +    # for the msys2 64-bit job, due to the build could not complete wi=
+thin
+>
+> s/the msys2 64-bit/this/, although it seems this sentence got truncated.
 
+Looks like commit 11961d08fcbddf accidentally dropped a line
+when refactoring the file; it should end:
+  # the project timeout.
+
+-- PMM
 
