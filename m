@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D250DC48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE35C48BEB
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 11:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd7E5-0008Bt-6U; Thu, 22 Feb 2024 06:26:53 -0500
+	id 1rd7FN-0001gd-1h; Thu, 22 Feb 2024 06:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7DR-00083N-76; Thu, 22 Feb 2024 06:26:13 -0500
+ id 1rd7FK-0001Ud-LH; Thu, 22 Feb 2024 06:28:10 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rd7DK-0004p1-Tv; Thu, 22 Feb 2024 06:26:12 -0500
+ id 1rd7FF-00059Q-DX; Thu, 22 Feb 2024 06:28:10 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 701CB4FB43;
- Thu, 22 Feb 2024 14:26:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E2A044FB5A;
+ Thu, 22 Feb 2024 14:26:26 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id EB40A8716F;
- Thu, 22 Feb 2024 14:26:01 +0300 (MSK)
-Received: (nullmailer pid 2526143 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 6976E87186;
+ Thu, 22 Feb 2024 14:26:03 +0300 (MSK)
+Received: (nullmailer pid 2526213 invoked by uid 1000);
  Thu, 22 Feb 2024 11:26:01 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 01/34] hw/usb: Style cleanup
-Date: Thu, 22 Feb 2024 14:25:28 +0300
-Message-Id: <20240222112601.2526057-2-mjt@tls.msk.ru>
+Subject: [PULL 24/34] pc-bios/README: correct typos
+Date: Thu, 22 Feb 2024 14:25:51 +0300
+Message-Id: <20240222112601.2526057-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240222112601.2526057-1-mjt@tls.msk.ru>
 References: <20240222112601.2526057-1-mjt@tls.msk.ru>
@@ -45,8 +45,8 @@ X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,60 +62,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-We are going to modify these lines, fix their style
-in order to avoid checkpatch.pl warning.
+Correct typos automatically found with the `typos` tool
+<https://crates.io/crates/typos>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/usb/hcd-ehci.c | 3 ++-
- hw/usb/hcd-uhci.c | 6 ++++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ pc-bios/README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-index 870c72cb59..98a2860069 100644
---- a/hw/usb/hcd-ehci.c
-+++ b/hw/usb/hcd-ehci.c
-@@ -1086,8 +1086,9 @@ static void ehci_opreg_write(void *ptr, hwaddr addr,
-     case CONFIGFLAG:
-         val &= 0x1;
-         if (val) {
--            for(i = 0; i < NB_PORTS; i++)
-+            for (i = 0; i < NB_PORTS; i++) {
-                 handle_port_owner_write(s, i, 0);
-+            }
-         }
-         break;
+diff --git a/pc-bios/README b/pc-bios/README
+index 4189bb28cc..b8a0210d24 100644
+--- a/pc-bios/README
++++ b/pc-bios/README
+@@ -67,7 +67,7 @@
+   and enable the use of well-known bootloaders such as U-Boot.
+   OpenSBI is distributed under the terms of the BSD 2-clause license
+   ("Simplified BSD License" or "FreeBSD License", SPDX: BSD-2-Clause). OpenSBI
+-  source code also contains code reused from other projects desribed here:
++  source code also contains code reused from other projects described here:
+   https://github.com/riscv/opensbi/blob/master/ThirdPartyNotices.md.
  
-diff --git a/hw/usb/hcd-uhci.c b/hw/usb/hcd-uhci.c
-index 7d3c026dae..b95b47f6a4 100644
---- a/hw/usb/hcd-uhci.c
-+++ b/hw/usb/hcd-uhci.c
-@@ -457,8 +457,9 @@ static void uhci_port_write(void *opaque, hwaddr addr,
-             int n;
- 
-             n = (addr >> 1) & 7;
--            if (n >= NB_PORTS)
-+            if (n >= NB_PORTS) {
-                 return;
-+            }
-             port = &s->ports[n];
-             dev = port->port.dev;
-             if (dev && dev->attached) {
-@@ -513,8 +514,9 @@ static uint64_t uhci_port_read(void *opaque, hwaddr addr, unsigned size)
-             UHCIPort *port;
-             int n;
-             n = (addr >> 1) & 7;
--            if (n >= NB_PORTS)
-+            if (n >= NB_PORTS) {
-                 goto read_default;
-+            }
-             port = &s->ports[n];
-             val = port->ctrl;
-         }
+ - npcm7xx_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for Nuvoton
 -- 
 2.39.2
 
