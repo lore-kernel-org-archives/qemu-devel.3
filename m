@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E5FC54788
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C16EC54798
 	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 15:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdB0C-0005AH-9u; Thu, 22 Feb 2024 10:28:48 -0500
+	id 1rdB07-00059d-Vt; Thu, 22 Feb 2024 10:28:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdB0A-00059s-I3
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:28:46 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdB05-00059E-Rn
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:28:41 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdB08-0000Nw-Tb
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:28:46 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4127946aa11so11263515e9.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 07:28:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdB04-0000Nb-57
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 10:28:41 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-41279488d3cso11598245e9.2
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 07:28:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708615723; x=1709220523; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qJ101CcDEsIgwbCRRwIlIJGFhtgnXY0NDhltmJmVB0g=;
- b=wnXfQxuXCFERBN1w3t23hKd85+GDWIfphAe4Qs9RBTdQMt3V0LgRorITZ8GDWlZPJw
- PRD+2xD9dXOzYtym3l+vBQ2Mjwqx3bcG7o9oYqOdkTenFb0kKxghQtreqjjAtXfrrBCS
- 3x4a0VZ9rWmJCds/JJ/cmg304eMnG9whv0pOUsEbGWJSeZNb3LVFHYsYddX3eQpy8Hj+
- WdNNYMeyWlsFyEt2V/Uq+YoEHHOKTvlX7dHfZi62paUAlmMwCjfxfYaaVEMOcEF/VSui
- lgJbbF1GbljWFezhhfQgypk6M/Mxixiy0qFqmIXVWzhOjSOTY59sQIW1Glf9yW2Pi5Sj
- Uv3w==
+ d=linaro.org; s=google; t=1708615718; x=1709220518; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4MwHCNZiA3Visjen24c/hVnCKAjTkYsBMXtfe/ZJmuA=;
+ b=gZlMiBRJf/a7UGGXS6naz2QSklBfEYoulXP5cHWNmftWfnumqXLzYXS+gMp0bhfmzJ
+ M/p2BwNsj+cVFRBvCxliBsfrKSjqdJ3au0LlWn1W+s+1rKqA3hGDu4EyRqdTT3aERdqH
+ +Mxm5Zb42aW7dpkiVm4pJVTvLiJn6GdMwGJ/gk5TqLDBs7C9FbgxQbpsJ+5QDV90xV37
+ wZn5QEek0RXUOP5XeJcZ9uhfWj9BsXvTENP8A/P/q/OpVziCFag0RuQbOyAY9gQMb+bG
+ tXwrM3rrV6Rwe/pyY/DMuOLEiMWPQ8dVTfFw4u8fPcrazhhulbbhJm1tlDroag0ySXB2
+ wRlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708615723; x=1709220523;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qJ101CcDEsIgwbCRRwIlIJGFhtgnXY0NDhltmJmVB0g=;
- b=jcyRMOlGoWisUTetYc08XBw/+7UPP5VNv6PKJxbUd33GUjvlSjdQR1pis0P6tNyM2m
- 3396j7fVS0BM/jznMMnYnTCqMcrpUuiOEPiJk6Liv8pt4L1iXy7J2ZWVAWoV2U6RLEgy
- HvfVaZgr+sDnjsnPxYvRJ9D6bHo9i/3a5q0t0zxpDnYcUKDBCEll1eAwdwiX7Q52d5hU
- Mum2F396F+YIss8ZXWZtiw3PJSqpsF4iMe4zAsb738ze09Si3VTEf5Ee9Jq6CVMX5Bzp
- LxuOl3CP5TVgLFne3SX0FnNGTykAbwQCsATgBnMl8b6CpURqh5GDg8CpLy78jf56MQNV
- n2gQ==
-X-Gm-Message-State: AOJu0YziEpFw7/pN36ZHV97eNeGhWEZ9Keg4E9RUrpebfbsljEhw50R4
- AfMCskQ1alwD1a8ALKlhafg3Vy83blnqfvhsH2l1B2G7Uwl7MjnxIlOW/8MHuEAf8jN2l6WvCVt
- SSV0=
-X-Google-Smtp-Source: AGHT+IFoEO9QA1VxgNNjA3JJzbPRAuR1HlpdndQrBl6cPXw7w5pte/Z4CjGAqFMSHUR7pUfv62lcoQ==
-X-Received: by 2002:a05:600c:502c:b0:412:8faa:65db with SMTP id
- n44-20020a05600c502c00b004128faa65dbmr168971wmr.38.1708615723211; 
- Thu, 22 Feb 2024 07:28:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708615718; x=1709220518;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4MwHCNZiA3Visjen24c/hVnCKAjTkYsBMXtfe/ZJmuA=;
+ b=Qe/1Yn/gHCcfTumAdyDWZGvewJEpwBuic2czyGiwIt1nnnOmJxeo1pWapCQ8pR3VLi
+ /7LTPadmluLtEt+yY2RN7rnapWn+7LqCjvCO6IPMvPcaCtZim7PtgYTRGMsUIvLvW/S2
+ ElU5Is1IlvispS0txGJzC9V+ih4G7ceuycH3kOizDTFYBMMoPtJ4DfFg+BEzdRo2tIBN
+ 8VFOz62rD6gyW6gKG0+pASOPmZKCn6GvNRG5X3W8ybVmlTGAwBRiqCDHquajbWAzkOy4
+ GyEV6OagTVjMvko0HTg/tc8igp3xoUqDkVGVk61K/FSFlEIJANnaPLbh5yFaVsaC9rA2
+ PtQA==
+X-Gm-Message-State: AOJu0YxQjsrUKo7YN0BfVtRCPtPDcSwFzoYezMYoEnG1AGvuotz0mcYt
+ qDwtSDg1PbRBV6K1gr9b8EaCDz3gQsTg09Nf7XAYKY/vpVk86YpOK3NOYTcms2BcO8WmKeb/Hqe
+ wfgg=
+X-Google-Smtp-Source: AGHT+IF2NK0K6ceeP/8gS4/jlGm01Ohwg7qYN1Dey+YfeBz7cLHsn+NyVUtFmfQqF9nohdSQkeUnBw==
+X-Received: by 2002:a05:600c:45cf:b0:412:8560:1bb8 with SMTP id
+ s15-20020a05600c45cf00b0041285601bb8mr1386292wmo.27.1708615717903; 
+ Thu, 22 Feb 2024 07:28:37 -0800 (PST)
 Received: from m1x-phil.lan (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
  [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
- 26-20020a05600c025a00b0041273fc463csm6349173wmj.17.2024.02.22.07.28.42
+ j25-20020a05600c1c1900b0040fd3121c4asm2938941wms.46.2024.02.22.07.28.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 22 Feb 2024 07:28:42 -0800 (PST)
+ Thu, 22 Feb 2024 07:28:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Dehan Meng <demeng@redhat.com>
 Cc: Konstantin Kostiuk <kkostiuk@redhat.com>,
  Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 1/3] qga/commands-win32: Declare const qualifier before type
-Date: Thu, 22 Feb 2024 16:28:33 +0100
-Message-ID: <20240222152835.72095-2-philmd@linaro.org>
+Subject: [PATCH v3 0/3] qga/commands-win32: Style cleanups before adding
+ Windows Server 2025
+Date: Thu, 22 Feb 2024 16:28:32 +0100
+Message-ID: <20240222152835.72095-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240222152835.72095-1-philmd@linaro.org>
-References: <20240222152835.72095-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,77 +94,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most of the code base use the 'const' qualifier *before*
-the type being qualified. Use the same style to unify.
+Respin of Dehan's v2 since I had the changes stashed.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- qga/commands-win32.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+Supersedes: <20240222025437.58996-1-demeng@redhat.com>
 
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index a1015757d8..79b5a580c9 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -2120,11 +2120,11 @@ GuestUserList *qmp_guest_get_users(Error **errp)
- typedef struct _ga_matrix_lookup_t {
-     int major;
-     int minor;
--    char const *version;
--    char const *version_id;
-+    const char *version;
-+    const char *version_id;
- } ga_matrix_lookup_t;
- 
--static ga_matrix_lookup_t const WIN_VERSION_MATRIX[2][7] = {
-+static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] = {
-     {
-         /* Desktop editions */
-         { 5, 0, "Microsoft Windows 2000",   "2000"},
-@@ -2148,18 +2148,18 @@ static ga_matrix_lookup_t const WIN_VERSION_MATRIX[2][7] = {
- 
- typedef struct _ga_win_10_0_t {
-     int first_build;
--    char const *version;
--    char const *version_id;
-+    const char *version;
-+    const char *version_id;
- } ga_win_10_0_t;
- 
--static ga_win_10_0_t const WIN_10_0_SERVER_VERSION_MATRIX[4] = {
-+static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] = {
-     {14393, "Microsoft Windows Server 2016",    "2016"},
-     {17763, "Microsoft Windows Server 2019",    "2019"},
-     {20344, "Microsoft Windows Server 2022",    "2022"},
-     {0, 0}
- };
- 
--static ga_win_10_0_t const WIN_10_0_CLIENT_VERSION_MATRIX[3] = {
-+static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] = {
-     {10240, "Microsoft Windows 10",    "10"},
-     {22000, "Microsoft Windows 11",    "11"},
-     {0, 0}
-@@ -2185,16 +2185,16 @@ static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **errp)
-     return;
- }
- 
--static char *ga_get_win_name(OSVERSIONINFOEXW const *os_version, bool id)
-+static char *ga_get_win_name(const OSVERSIONINFOEXW *os_version, bool id)
- {
-     DWORD major = os_version->dwMajorVersion;
-     DWORD minor = os_version->dwMinorVersion;
-     DWORD build = os_version->dwBuildNumber;
-     int tbl_idx = (os_version->wProductType != VER_NT_WORKSTATION);
--    ga_matrix_lookup_t const *table = WIN_VERSION_MATRIX[tbl_idx];
--    ga_win_10_0_t const *win_10_0_table = tbl_idx ?
-+    const ga_matrix_lookup_t *table = WIN_VERSION_MATRIX[tbl_idx];
-+    const ga_win_10_0_t *win_10_0_table = tbl_idx ?
-         WIN_10_0_SERVER_VERSION_MATRIX : WIN_10_0_CLIENT_VERSION_MATRIX;
--    ga_win_10_0_t const *win_10_0_version = NULL;
-+    const ga_win_10_0_t *win_10_0_version = NULL;
-     while (table->version != NULL) {
-         if (major == 10 && minor == 0) {
-             while (win_10_0_table->version != NULL) {
+Dehan Meng (1):
+  qga-win: Add support of Windows Server 2025 in get-osinfo command
+
+Philippe Mathieu-Daudé (2):
+  qga/commands-win32: Declare const qualifier before type
+  qga/commands-win32: Do not set matrix_lookup_t/win_10_0_t arrays size
+
+ qga/commands-win32.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
 -- 
 2.41.0
 
