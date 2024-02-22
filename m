@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96D11C48BF8
-	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:10:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 301E2C48BF8
+	for <qemu-devel@archiver.kernel.org>; Thu, 22 Feb 2024 10:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rd61z-0006u1-5n; Thu, 22 Feb 2024 05:10:19 -0500
+	id 1rd64q-00007M-2F; Thu, 22 Feb 2024 05:13:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd61t-0006sW-WD
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:10:15 -0500
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rd61p-0001I9-6Y
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 05:10:13 -0500
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-512b4388dafso5166862e87.2
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 02:10:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708596607; x=1709201407; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MpRQRvPMdTz33T7Nn52zSwd0okxqNSiTPY20Y4YiyDw=;
- b=Cc2cq064id9+h/nB1gAeieR/2SUI+/Lj3v1jg9DtFiCIte5iNFgkNhnTSnPWP4b5vo
- 5f/Y2B435FTLUCj2qYmjgcrmWMo2OTwxvJlK2NbN4ocRwaBUjZ4wm3hRDEJB7FTaff6z
- AzLu9eZAxF/6M1Aa8l9GZZ0lY1Z1p+3Awqk2Mz8e6B2j+DXNyBZr913ioVgMSXNtTxIL
- VfOQWzP5Y3NbX3YzmYBLdr9hcbz8twV0kL3K0w9Vfilf8RpnWNod7LeoDUIlDfVs7lG8
- zRnZURHMboC5tNfdyRwmVuZuK5Fa1k/TNeIdH/U82YY/TGxvStWHSK7hVE7LPFWJDreB
- KdeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708596607; x=1709201407;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MpRQRvPMdTz33T7Nn52zSwd0okxqNSiTPY20Y4YiyDw=;
- b=pCgeLPEMddnepG8koDvzMTN+ArwBr9fEEOpKyaiL/ydwM4ZxIObv4QbrWdhfieunJn
- ZJQRD4AB/6P3Cd2+6lU8EsB1unq3mXHO/y24vMyRRTNAaFiHgFi9RhY+N4QwEaUlMBaG
- p0zmJH5PtkSFvU42NwVlVkm2mN5up7qskeLnseG6zDTyd4EoyLPR3Z0yFkrqjLxc56HW
- uykLkuGrMLLl7HWDzEG4JH6qKAr6qVs9Qbij7ApLUlQOg4QJ9tQ2x6ajKrMYyQkpzc6W
- wrAOEbOEXUwo8P7m9XuV82Dvh8mCtr6bnLswMlIv1AGvsvosevApqNU+Irk3Zr9p6Dk7
- wWHg==
-X-Gm-Message-State: AOJu0YxYkGqhNV00xZTww+dZpoNSl3DKc6xHOEZSCMk2iW/Z3XnG5Ic0
- Vp/Uy0JFM7yeB4n6BJ53Hk+9fyVnZhPT7i2IV6/9kM7v62EBiIZNh/evZvP8rbQ=
-X-Google-Smtp-Source: AGHT+IGUHB79ncU7QcKsdC0a0ggzrkUAHIDmgTPg/Gaqejy79ETPKbtfkv8wJWCo8cqJANORovkOzg==
-X-Received: by 2002:a05:6512:398f:b0:512:dde1:2226 with SMTP id
- j15-20020a056512398f00b00512dde12226mr911157lfu.47.1708596607205; 
- Thu, 22 Feb 2024 02:10:07 -0800 (PST)
-Received: from [192.168.247.175] (41.red-95-127-32.staticip.rima-tde.net.
- [95.127.32.41]) by smtp.gmail.com with ESMTPSA id
- f21-20020ac25335000000b00512d86c2c78sm375667lfh.88.2024.02.22.02.10.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 02:10:06 -0800 (PST)
-Message-ID: <caa10a96-729a-4ee8-93f4-9bfd2b032e2b@linaro.org>
-Date: Thu, 22 Feb 2024 11:10:03 +0100
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rd64k-00006U-7M; Thu, 22 Feb 2024 05:13:10 -0500
+Received: from out3-smtp.messagingengine.com ([66.111.4.27])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rd64h-0001Yk-Va; Thu, 22 Feb 2024 05:13:09 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id 27F365C00C9;
+ Thu, 22 Feb 2024 05:13:06 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Thu, 22 Feb 2024 05:13:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1708596786; x=
+ 1708683186; bh=7/6hbQYSLlrGJ5jAW+4VhpXCqUEZi6bfd+Kl1LOMg2k=; b=f
+ XeFWvtyI4DFhKboxDNgrY98ovQmFNMAmnfXcccoZFgv+1JbG1jOIrIsf5FHqAvu9
+ TssPVuLBlwlZuv9g2GE9wtrVn5J90YIvXZDPLoq/btdSymZ3ivh5saXnDnMFe7T2
+ 7ldVIIPJZmpU07Uxb/wnzFqwKWWvmR4qksX1r5EnH4QIXfWcnfDKSXisbg4KSCZs
+ 597v37bPM7Hxk4K+lTyCp6hUE3UUErPxK6y3B2Wp8dfqpLwpLz8wSbLl0H9XLkX9
+ y30olm8qakDpMstwNT2mpZw4z2lOlXMsFAChrtP0MQ/V/58fvKj593Y3Ut7jzr/m
+ FaqrgAcMi9iFGvmebqrww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1708596786; x=1708683186; bh=7/6hbQYSLlrGJ5jAW+4VhpXCqUEZ
+ i6bfd+Kl1LOMg2k=; b=TIUIBrMCS2twHDe/tLxtuy6QooC6scd1FoSLlv9cdCZX
+ b4JO3i2oQqrMvJje3g9Yv4iAj/bJwKH5jI2TT7meW9MlPNKNOK5eau04a+zUgWrD
+ v+oJENCXsjO38FQzILHiBB2DQM1/Nk5PDh0UOUYO1RcRRceW0g46g2+7GZbhYBPD
+ hlL8VvSEt1MdtT9Sy3KW5CX6Z+S02HaWIUAzftTjISkiCWOX0ILrFGc/zOE5HJKv
+ 3C2jSWJoaOcM/yU6lIawQPH0eDrgp7kDbH7xsX3xVathkeAw8uGA7Qxi/OmOFhkV
+ eFklr8kTlTUZDFdyDdK1OwTx17XomlT55NCKy7WnDQ==
+X-ME-Sender: <xms:MR7XZU5n1HOOXDUxNieYOqRSVvyLNAPXXzPCU--8x4AGLpbKjb0BEw>
+ <xme:MR7XZV4sHk5utuC-rIxcHIIAxFJPsidjp_TNcLaA37RFhNjcCz4FTvJoX6J49ibfU
+ P4e_NNYwEJ_JEJj0MU>
+X-ME-Received: <xmr:MR7XZTewvcD4ZwP1ro26v4D_PDmQqrouulFxXRUixUORP5jVOi4eqmTk-jUd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeeggdduvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpeffhffvvefukfhfgggtuggjsehgtdorredttdejnecuhfhrohhmpefmlhgruhhs
+ ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
+ gvrhhnpeeivefffffhledukeehhfetueelkeffudeuieektdegtefhgeefleeiudelveel
+ keenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
+ hssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:MR7XZZLdrOa3oopAqRoLaoharDYXzTmK_qFXOz6V3Z04vHX1kPzcng>
+ <xmx:MR7XZYJHh6G1MYrn6I2rYxbaWgLrVkktQJ5cO4ess4A5GnYeQ5Ne8w>
+ <xmx:MR7XZazalnlljsXPcDOgp20b57RKObhM9BLeaQkDnv6-HA5-k-CYxw>
+ <xmx:Mh7XZQ88gsw19aP0IOeOlJZcw3Sy6SuYmrwkyxdPTZcDemO02eounQ>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Feb 2024 05:13:05 -0500 (EST)
+Date: Thu, 22 Feb 2024 11:13:00 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Keith Busch <kbusch@kernel.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH] hw/nvme: fix invalid endian conversion
+Message-ID: <ZdceLDayLzLsGWJq@cormorant.local>
+References: <20240222-fix-sriov-numcntl-v1-1-d60bea5e72d0@samsung.com>
+ <42681015-53e0-40df-8de3-3f93e83ba002@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/21] hw/i386/pc: Do not use C99 mixed-declarations style
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240216110313.17039-1-philmd@linaro.org>
- <20240216110313.17039-2-philmd@linaro.org> <ZdcP9A7n5w7RJqii@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZdcP9A7n5w7RJqii@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="XIwDPZuthy6JqNu0"
+Content-Disposition: inline
+In-Reply-To: <42681015-53e0-40df-8de3-3f93e83ba002@linaro.org>
+Received-SPF: pass client-ip=66.111.4.27; envelope-from=its@irrelevant.dk;
+ helo=out3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,52 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/2/24 10:12, Zhao Liu wrote:
-> Hi Philippe,
-> 
-> On Fri, Feb 16, 2024 at 12:02:52PM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Fri, 16 Feb 2024 12:02:52 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: [PATCH 01/21] hw/i386/pc: Do not use C99 mixed-declarations style
->> X-Mailer: git-send-email 2.41.0
->>
->> QEMU's coding style generally forbids C99 mixed declarations.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/i386/pc.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->> index 196827531a..3c00a87317 100644
->> --- a/hw/i386/pc.c
->> +++ b/hw/i386/pc.c
->> @@ -1227,6 +1227,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
->>        */
->>       if (pcms->hpet_enabled) {
->>           qemu_irq rtc_irq;
->> +        uint8_t compat;
->>   
->>           hpet = qdev_try_new(TYPE_HPET);
->>           if (!hpet) {
->> @@ -1238,8 +1239,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
->>            * use IRQ16~23, IRQ8 and IRQ2.  If the user has already set
->>            * the property, use whatever mask they specified.
->>            */
->> -        uint8_t compat = object_property_get_uint(OBJECT(hpet),
->> -                HPET_INTCAP, NULL);
->> +        compat = object_property_get_uint(OBJECT(hpet), HPET_INTCAP, NULL);
->>           if (!compat) {
->>               qdev_prop_set_uint32(hpet, HPET_INTCAP, hpet_irqs);
->>           }
-> 
-> "compat" is only used here to check. So, what about getting rid of this
-> variable?
-> 
-> if (!object_property_get_uint(OBJECT(hpet), HPET_INTCAP, NULL)) {
->      qdev_prop_set_uint32(hpet, HPET_INTCAP, hpet_irqs);
-> }
 
-Ah yeah, I didn't noticed, thanks!
+--XIwDPZuthy6JqNu0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Feb 22 11:08, Philippe Mathieu-Daud=C3=A9 wrote:
+> Hi Klaus,
+>=20
+> On 22/2/24 10:29, Klaus Jensen wrote:
+> > From: Klaus Jensen <k.jensen@samsung.com>
+> >=20
+> > numcntl is one byte and so is max_vfs. Using cpu_to_le16 on big endian
+> > hosts results in numcntl being set to 0.
+> >=20
+> > Fix by dropping the endian conversion.
+> >=20
+> > Fixes: 746d42b13368 ("hw/nvme: Initialize capability structures for pri=
+mary/secondary controllers")
+>=20
+> Isn't it commit 99f48ae7ae ("Add support for Secondary Controller
+> List") instead?
+>=20
+
+Thanks Philippe,
+
+Yes, that is the commit that had the bug originally. I'll fix it up.
+
+--XIwDPZuthy6JqNu0
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXXHisACgkQTeGvMW1P
+DelCAQf/bSgoW+cNxrqA2HqbiVotijwoIFolT3wXrAuh0U4oO+0N5+FiYSNzqMJl
+Lo4IOG018WjsUN+8ZldrwTJMloft8NgFnXWebPr3lEqS/8pMnRMcy/muWFsKPm7m
+lo7xyOh4tZN3xKUc9lnhcQGEJ+VGK0gNC7dDKbFd5DjTrb/U4ESCTigVZduRyzlh
+VY4Yp5344gKPaP2toXcW3PAEpTYSk3WZGqiMrbiHyfwdfd5LwO3Uj5/3BWTPNa94
+85EyDT9YRTMv2+NIHTB/qq0X36HnQAt4b2KHj804Rifwwg2fWJNy5A+op9PhFbbl
+trg1GaW8YDPMKqjM6wJwcbNM74e0nQ==
+=G089
+-----END PGP SIGNATURE-----
+
+--XIwDPZuthy6JqNu0--
 
