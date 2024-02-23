@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156F1C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7726DC54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdbG5-0007GL-9K; Fri, 23 Feb 2024 14:30:57 -0500
+	id 1rdbGq-0007Rf-Fr; Fri, 23 Feb 2024 14:31:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdawK-0005oD-94
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:34 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdawH-0005nR-6B
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:35 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdaw2-0005BN-Ob
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:31 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdawC-0005Fp-Of
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708715413;
+ s=mimecast20190719; t=1708715423;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IezDwMYo04OSAJvi1EoNt37k9i5h7cpqiwzb+gmay2k=;
- b=C2+JXB1AAeDK/zK1VHa0XjWV+Abd4GQmCo2DlxizL3vrIMOCxT8tPTTK45vf66hIcxK+9n
- UJGROcsmIgZXH7caSg76qHpmt+NKdurVkR4sHai5pLGVj8BZr1hYg8KY9w4mX8u2dAzwan
- jLBtNOeizfrc5JcE+fJnm3C277Pglo0=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-pirtAEIUN0-Ir5b2GzzLtQ-1; Fri,
- 23 Feb 2024 14:10:09 -0500
-X-MC-Unique: pirtAEIUN0-Ir5b2GzzLtQ-1
+ bh=AuBn9YK65/VJijo7z361xypecvvLSdypK1RNAkg3cAg=;
+ b=g7Ytn+tjRDJ9eCnC7bjQhAB3QiBTVJVb/xgfvaXcoJlZNMhiBiKq7GczSJQW8DM/+Xsl65
+ 8tkgd/HRT+FMUI7hgleDKSz6Cqpy21NxAXdyoY1NU/I8UF18E88sc13i/RRCc7EAiODCD9
+ db3Ru63XRsvDMlUo5HO+fR+Noo/qoUk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-164-HeE8df90NE-BtQ5AmfahDw-1; Fri, 23 Feb 2024 14:10:19 -0500
+X-MC-Unique: HeE8df90NE-BtQ5AmfahDw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 44E9B38562CE;
- Fri, 23 Feb 2024 19:10:09 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 782E888CDCF;
+ Fri, 23 Feb 2024 19:10:19 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.20])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6D57210800;
- Fri, 23 Feb 2024 19:10:08 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 74B1E8CED;
+ Fri, 23 Feb 2024 19:10:18 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 03/11] tests/qtest: Fix boot-serial-test when using
- --without-default-devices
-Date: Fri, 23 Feb 2024 20:09:55 +0100
-Message-ID: <20240223191003.6268-4-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 10/11] .gitlab-ci.d/windows.yml: Remove shared-msys2 abstraction
+Date: Fri, 23 Feb 2024 20:10:02 +0100
+Message-ID: <20240223191003.6268-11-thuth@redhat.com>
 In-Reply-To: <20240223191003.6268-1-thuth@redhat.com>
 References: <20240223191003.6268-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -62,9 +64,9 @@ X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,33 +82,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If "configure" has been run with "--without-default-devices", there is
-no e1000 device in the binaries, so the boot-serial-test currently fails
-in that case since it tries to use the e1000 with the sam460ex machine.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Since we're testing the serial output here, and not the NIC, let's
-simply switch to the "pci-bridge" device here instead, which should
-always be there for PCI-based machines like the sam460ex.
+Now we don't build msys2-32bit we don't need the abstraction out of the
+common msys2 handling from the 32-vs-64-bit specifics. Collapse it
+down into the msys2-64bit job definition.
 
-Message-ID: <20240219111030.384158-1-thuth@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: "Daniel P. Berrangé" <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240222130920.362517-4-peter.maydell@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/boot-serial-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .gitlab-ci.d/windows.yml | 85 +++++++++++++++++++---------------------
+ 1 file changed, 41 insertions(+), 44 deletions(-)
 
-diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-test.c
-index 6dd06aeaf4..e3b7d65fe5 100644
---- a/tests/qtest/boot-serial-test.c
-+++ b/tests/qtest/boot-serial-test.c
-@@ -156,7 +156,7 @@ static const testdef_t tests[] = {
-       "Open Firmware" },
-     { "ppc64", "powernv8", "", "OPAL" },
-     { "ppc64", "powernv9", "", "OPAL" },
--    { "ppc64", "sam460ex", "-device e1000", "8086  100e" },
-+    { "ppc64", "sam460ex", "-device pci-bridge,chassis_nr=2", "1b36  0001" },
-     { "i386", "isapc", "-cpu qemu32 -M graphics=off", "SeaBIOS" },
-     { "i386", "pc", "-M graphics=off", "SeaBIOS" },
-     { "i386", "q35", "-M graphics=off", "SeaBIOS" },
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index 8fc08218d2..f116b8012d 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -1,4 +1,4 @@
+-.shared_msys2_builder:
++msys2-64bit:
+   extends: .base_job_template
+   tags:
+   - shared-windows
+@@ -14,9 +14,20 @@
+   stage: build
+   timeout: 100m
+   variables:
++    # Select the "64 bit, gcc and MSVCRT" MSYS2 environment
++    MSYSTEM: MINGW64
+     # This feature doesn't (currently) work with PowerShell, it stops
+     # the echo'ing of commands being run and doesn't show any timing
+     FF_SCRIPT_SECTIONS: 0
++    # do not remove "--without-default-devices"!
++    # commit 9f8e6cad65a6 ("gitlab-ci: Speed up the msys2-64bit job by using --without-default-devices"
++    # changed to compile QEMU with the --without-default-devices switch
++    # for this job, because otherwise the build could not complete within
++    # the project timeout.
++    CONFIGURE_ARGS:  --target-list=x86_64-softmmu --without-default-devices -Ddebug=false -Doptimization=0
++    # qTests don't run successfully with "--without-default-devices",
++    # so let's exclude the qtests from CI for now.
++    TEST_ARGS: --no-suite qtest
+   artifacts:
+     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+     expire_in: 7 days
+@@ -72,33 +83,35 @@
+   - .\msys64\usr\bin\bash -lc "pacman -Sy --noconfirm --needed
+       bison diffutils flex
+       git grep make sed
+-      $MINGW_TARGET-binutils
+-      $MINGW_TARGET-capstone
+-      $MINGW_TARGET-ccache
+-      $MINGW_TARGET-curl
+-      $MINGW_TARGET-cyrus-sasl
+-      $MINGW_TARGET-dtc
+-      $MINGW_TARGET-gcc
+-      $MINGW_TARGET-glib2
+-      $MINGW_TARGET-gnutls
+-      $MINGW_TARGET-gtk3
+-      $MINGW_TARGET-libgcrypt
+-      $MINGW_TARGET-libjpeg-turbo
+-      $MINGW_TARGET-libnfs
+-      $MINGW_TARGET-libpng
+-      $MINGW_TARGET-libssh
+-      $MINGW_TARGET-libtasn1
+-      $MINGW_TARGET-lzo2
+-      $MINGW_TARGET-nettle
+-      $MINGW_TARGET-ninja
+-      $MINGW_TARGET-pixman
+-      $MINGW_TARGET-pkgconf
+-      $MINGW_TARGET-python
+-      $MINGW_TARGET-SDL2
+-      $MINGW_TARGET-SDL2_image
+-      $MINGW_TARGET-snappy
+-      $MINGW_TARGET-zstd
+-      $EXTRA_PACKAGES "
++      mingw-w64-x86_64-binutils
++      mingw-w64-x86_64-capstone
++      mingw-w64-x86_64-ccache
++      mingw-w64-x86_64-curl
++      mingw-w64-x86_64-cyrus-sasl
++      mingw-w64-x86_64-dtc
++      mingw-w64-x86_64-gcc
++      mingw-w64-x86_64-glib2
++      mingw-w64-x86_64-gnutls
++      mingw-w64-x86_64-gtk3
++      mingw-w64-x86_64-libgcrypt
++      mingw-w64-x86_64-libjpeg-turbo
++      mingw-w64-x86_64-libnfs
++      mingw-w64-x86_64-libpng
++      mingw-w64-x86_64-libssh
++      mingw-w64-x86_64-libtasn1
++      mingw-w64-x86_64-libusb
++      mingw-w64-x86_64-lzo2
++      mingw-w64-x86_64-nettle
++      mingw-w64-x86_64-ninja
++      mingw-w64-x86_64-pixman
++      mingw-w64-x86_64-pkgconf
++      mingw-w64-x86_64-python
++      mingw-w64-x86_64-SDL2
++      mingw-w64-x86_64-SDL2_image
++      mingw-w64-x86_64-snappy
++      mingw-w64-x86_64-spice
++      mingw-w64-x86_64-usbredir
++      mingw-w64-x86_64-zstd"
+   - Write-Output "Running build at $(Get-Date -Format u)"
+   - $env:CHERE_INVOKING = 'yes'  # Preserve the current working directory
+   - $env:MSYS = 'winsymlinks:native' # Enable native Windows symlink
+@@ -115,19 +128,3 @@
+   - ..\msys64\usr\bin\bash -lc "make check MTESTARGS='$TEST_ARGS' || { cat meson-logs/testlog.txt; exit 1; } ;"
+   - ..\msys64\usr\bin\bash -lc "ccache --show-stats"
+   - Write-Output "Finished build at $(Get-Date -Format u)"
+-
+-msys2-64bit:
+-  extends: .shared_msys2_builder
+-  variables:
+-    MINGW_TARGET: mingw-w64-x86_64
+-    MSYSTEM: MINGW64
+-    # msys2 only ship these packages for 64-bit, not 32-bit
+-    EXTRA_PACKAGES: $MINGW_TARGET-libusb $MINGW_TARGET-usbredir $MINGW_TARGET-spice
+-    # do not remove "--without-default-devices"!
+-    # commit 9f8e6cad65a6 ("gitlab-ci: Speed up the msys2-64bit job by using --without-default-devices"
+-    # changed to compile QEMU with the --without-default-devices switch
+-    # for the msys2 64-bit job, due to the build could not complete within
+-    CONFIGURE_ARGS:  --target-list=x86_64-softmmu --without-default-devices -Ddebug=false -Doptimization=0
+-    # qTests don't run successfully with "--without-default-devices",
+-    # so let's exclude the qtests from CI for now.
+-    TEST_ARGS: --no-suite qtest
 -- 
 2.43.2
 
