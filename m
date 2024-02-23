@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70FC6C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 03:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12196C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 03:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdLos-0001v7-ET; Thu, 22 Feb 2024 22:01:50 -0500
+	id 1rdLqJ-0002br-IL; Thu, 22 Feb 2024 22:03:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rdLoq-0001uj-Ca
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:01:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rdLop-0000Tf-0z
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:01:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708657306;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=INtrFyP7qpgbCVyzPLuBu8mQ792fSvsfq+2a6pqjDBk=;
- b=gNQEd6/6PoyF3a+FEq4lfoJJFvYtWI13OVq3EydpDdvQE6TYljU3yE/4I4GsaZcwsibLKW
- 60W2FK+DaBX90CHKgjPtckYBgvrDm5TdaH4eVm9Kvo+Xe2j3trBv77nElqu366+dLMXEEl
- 8u9h7stg2hWBFWsvAaW71hHdYoOWKqc=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-522-6lXtNim8PDadyEvmnc4BEw-1; Thu, 22 Feb 2024 22:01:44 -0500
-X-MC-Unique: 6lXtNim8PDadyEvmnc4BEw-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-5cf8663f2d6so89240a12.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 19:01:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708657303; x=1709262103;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rdLqH-0002bH-Bn
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:03:17 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rdLqF-0000cR-Uq
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:03:17 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e08dd0fa0bso411318b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 19:03:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708657394; x=1709262194; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=INtrFyP7qpgbCVyzPLuBu8mQ792fSvsfq+2a6pqjDBk=;
- b=VNZdCMq/j66N28KZk6Z+EL0F0hBWUycuf9wgza6M9MIYuAJNn6hzkq+SkY9Ia9YkZ9
- 7pnSRPs5gqIeb7gR3w+bvGT4zxbCG/5PRRzRBnxvrqnClAh1OKohyD5n8k1RgJQBmUc1
- Byrp+7WVwCJwDStiyoL84kHf/rfA7wMzG9b9+k+cVkPNGmWZBvRculhRPRzOQ3UGzgQo
- RDhJQLeXpMBTCvA0TFe9ITUWWeY6DvbGeTe6vL0pECdW3fhlrFGj80TVwkiu/pVdwMcw
- dcVIpFGuUIjY0lcScRdksOmAoy+n0muEIf1h07TXlZGv+1fWYnecAb5EJ+F9x4CckVud
- A8MQ==
-X-Gm-Message-State: AOJu0YzULCPOM4ctvfwLRVBeEp2kDtOutadisvnlCXeIR5lUxVq2iU03
- Wc8+Yin2EEUdMzXskrbsHt4BkTV9gONsT1GQXJcnMYAhwmr0dD5Np1a62OeWbnvvWHVsVSCh0KX
- JEeQuth94DRebQ9HcOZochldP7bTel2PEbfBgvISSZ2J2Fc4rUD9r
-X-Received: by 2002:a17:902:d344:b0:1db:ce31:96b1 with SMTP id
- l4-20020a170902d34400b001dbce3196b1mr691608plk.6.1708657303564; 
- Thu, 22 Feb 2024 19:01:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEMY9lUBuy7gAczhTokRVP8xBlZFCz1w2dpW2uj01r53VyPzzmvk9SBt/PEnYjxg1FSe/O6/w==
-X-Received: by 2002:a17:902:d344:b0:1db:ce31:96b1 with SMTP id
- l4-20020a170902d34400b001dbce3196b1mr691596plk.6.1708657303269; 
- Thu, 22 Feb 2024 19:01:43 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- t17-20020a170902d29100b001db5ecb2899sm10706965plc.162.2024.02.22.19.01.40
+ bh=SHlUnJMkSLjXViHQWxp6vaRXYVXn1e/U/gKCQwR45lE=;
+ b=OHAp4duwjt6L6OBs2GKA5uIiRgF3QH5pO1HCXniUppqUjyzkAvLaVZxKglY2JTdiqc
+ O+5UimwD4LCxVBE6hZuP09UitQ8NhNi7NVexlmW8o2kyQPKbqmK8RkBeIQxzhpRBhq0p
+ gNoPGXjebjC0w6Zf6sokT8DgbdpFwylN8vTATgC6v3vBJPXo0uqp2Ic3QEracHY/cSSQ
+ NYE1POZjdp3Idkf2EKw84lb0hOhCpAweQN8UugIXnQgZcT3Mp/IhkebaYVmcmP5SaMST
+ 0SXceMqZinkxXetx2E9Jd0RF6Jq5AvzWPptCaxoCiBSxJ5o8VLKFdqfLSt9FoqjjZr2J
+ EKMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708657394; x=1709262194;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SHlUnJMkSLjXViHQWxp6vaRXYVXn1e/U/gKCQwR45lE=;
+ b=YaZ0USds2u9PV4aAWj+8zblI5CKNBKmbTaNCesD3sjHjZ6wcIuH5UtB87BwYNsNQU/
+ SO2D9y5qYoQtHgdpdPRc+arjdSZqUXeleQvp7KhW027h3CgwQfhodS6ZfTpC9895P0DP
+ KcgR2rTJNOCvUSdPJuj8bnENTH9LyJ9Pthhj3hey4gGqP+Ay2yWWKvcE0YbW/TxLQntb
+ w6qWhluXvMdnAz06xLPYtIe9DpxIg+pTjqJxHfALdEBaCS8kDjtN2SCAe3GRNBkv3OvL
+ Ygz1fXFZhsu1zQdRl+ahocllo3sYRWLcTD1ttlc6y9slabOIpSM+UpgTe/EcwcSN0VzT
+ hdwg==
+X-Gm-Message-State: AOJu0Yy+VN1+kCgWoTAZ/2JKu/q3HSLL6diQd0CA4peF1SV71yqoUNFd
+ 2H7qLHSThOF+3KmYqMHZdU94yTJpjOp/+kNQWHgcjYBV7G69AjCinH+wPu2pJB0eHZDal7rYhZe
+ k
+X-Google-Smtp-Source: AGHT+IHJunKb2gmTOvW6YzKI59Q7aAHbhAa5pIsAtKFpxevTNWpDutr3UFzNB9HWXLPWfGjegAqZUg==
+X-Received: by 2002:a05:6a00:9a3:b0:6e4:74d9:6f0f with SMTP id
+ u35-20020a056a0009a300b006e474d96f0fmr1449327pfg.0.1708657394267; 
+ Thu, 22 Feb 2024 19:03:14 -0800 (PST)
+Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
+ by smtp.gmail.com with ESMTPSA id
+ n38-20020a056a000d6600b006e31f615af6sm11594159pfv.17.2024.02.22.19.03.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 19:01:42 -0800 (PST)
-Date: Fri, 23 Feb 2024 11:01:28 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v4 01/34] docs/devel/migration.rst: Document the file
- transport
-Message-ID: <ZdgKiMcQS7yiVxnw@x1n>
-References: <20240220224138.24759-1-farosas@suse.de>
- <20240220224138.24759-2-farosas@suse.de>
+ Thu, 22 Feb 2024 19:03:13 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, iii@linux.ibm.com, richard.purdie@linuxfoundation.org,
+ mjt@tls.msk.ru, Song Gao <gaosong@loongson.cn>
+Subject: [PATCH 1/3] linux-user/loongarch64: Remove TARGET_FORCE_SHMLBA
+Date: Thu, 22 Feb 2024 17:03:07 -1000
+Message-Id: <20240223030309.458451-2-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240223030309.458451-1-richard.henderson@linaro.org>
+References: <20240223030309.458451-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240220224138.24759-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,15 +95,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 07:41:05PM -0300, Fabiano Rosas wrote:
-> When adding the support for file migration with the file: transport,
-> we missed adding documentation for it.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+The upstream linux kernel does not define __ARCH_FORCE_SHMLBA.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Cc: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
+---
+
+Did this definition come from the port before it was merged upstream?
+Or was it incorrectly copied from MIPS?
+---
+ linux-user/loongarch64/target_syscall.h | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/linux-user/loongarch64/target_syscall.h b/linux-user/loongarch64/target_syscall.h
+index 8b5de52124..39f229bb9c 100644
+--- a/linux-user/loongarch64/target_syscall.h
++++ b/linux-user/loongarch64/target_syscall.h
+@@ -38,11 +38,4 @@ struct target_pt_regs {
+ #define TARGET_MCL_FUTURE  2
+ #define TARGET_MCL_ONFAULT 4
+ 
+-#define TARGET_FORCE_SHMLBA
+-
+-static inline abi_ulong target_shmlba(CPULoongArchState *env)
+-{
+-    return 64 * KiB;
+-}
+-
+ #endif
 -- 
-Peter Xu
+2.34.1
 
 
