@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC965C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 04:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80241C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 04:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdN2o-0002VP-4G; Thu, 22 Feb 2024 23:20:18 -0500
+	id 1rdN4o-0003bY-2a; Thu, 22 Feb 2024 23:22:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rdN2m-0002Ue-DZ
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:20:16 -0500
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1rdN4m-0003bM-Gn
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:22:20 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rdN2k-0006hk-5w
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:20:16 -0500
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a3ed9cae56fso317800566b.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 20:20:13 -0800 (PST)
+ id 1rdN4k-0006ya-MG
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:22:20 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a3566c0309fso48850366b.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 20:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1708662011; x=1709266811; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1708662137; x=1709266937; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=blLoU+6k7MIlhBo6C/f6eewEZV3lVGSTs1jtLWtANGg=;
- b=GkX1XQ2TnbtOVn71/iT/PmMWA9QBMei8MKUcMQOk/fONdXOzr2zKbKszPZkv1WHbey
- ZS26+VRMKpy7o7J+dbc8O1rcDBrFoYqgvWYQp+o7aUPT/Fm7wpTcslHrb/1/17jWViRi
- mz4OVb6uUdILiANVTyDlx+TIExGmB7cQydNuEDWF5oN5yDL8jfVAU4HzPu6pO+/qBVSv
- 4D9H1MQxES6xffRqUDyo6sVQO31B/bxeX9D1EAMhgU2OexgwU8gSd1/WWgq8NbRF2mm6
- oMbgj9oX6puAJCZEtsQGw1L0bIMvRSZNJoK0O7ui/cJXsB08z17FMUZHQFGlt4GY/msf
- jN4w==
+ bh=4dujOaVMuVnBjIdun19nhNdkOrYNurs3v7HFGER9xfs=;
+ b=RXQcXv7Ybklxpy4gkymz0nKwFXt7SDqlEWiu9sk92gpmCxcn2mIukbU5jC4XdL4rQg
+ HEtGUWTGpKlsLxhwqEA33TfmHzsXVSpQ4bJdy/S3KhauHrVLf0d5x0YQvuNNDxyUFIzq
+ 8EIUhG1N6Wnm4FH4kBI1ouAd17sNpV7tqCrAbMfyctlrWN6QG5sKfKINjYI5YpJ/ywIG
+ UZw1exymHnAoS/cdAGV9ta1ymlXtunN+m1ffP2plRpaZg81rwPOG0+PFu/dOtuUMEVhb
+ oETqqQyunsTXRyiQ9zS62UtTzAImmI64ZP4OgmxvZzmrvWDt0m6twa/+niXfV3LjbYTn
+ UB/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708662011; x=1709266811;
+ d=1e100.net; s=20230601; t=1708662137; x=1709266937;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=blLoU+6k7MIlhBo6C/f6eewEZV3lVGSTs1jtLWtANGg=;
- b=WKdvht2BZX9kWHJrRuatCXvmJNUywERVGyvc9PQ1sJu8oEKz3ccaEwczJNKx85C36c
- 7ePaT07FQvyAXF5WHIkmREgEu5TKZNPFO7ZMbamDEBW9+k6hpQ5ZgPb37cn0XA8o0PyE
- 2h9+mnSR+zJQUef3EiNS2HtL+pAv5aXPGJCFbSY7/tFHo3Tgsz/6fpH6SmNWeyjmvUKj
- aA+RyP1FbGOhObqFwOZT300JicfaK8OH9Nt/0/g8LKVK7gDqAnAAhzYLoedO+A7BdBEX
- Q0rKF75dCuzQuopCPA4359SnDqE4Sw1foqLcc3Sd9pJU5IwB17t9JiDTusl/OaKQxgAI
- xGBw==
+ bh=4dujOaVMuVnBjIdun19nhNdkOrYNurs3v7HFGER9xfs=;
+ b=ld769d4+nqbC9V+V5AIGZVlgs8OI8aSH3LgQbsW6vUVlIZJUA0PJN+0usOJj72siVR
+ Wf7aB1NrWBvyDIN5sgZzZWKJy790T79iiEEjW0mj5MUT3EIpQcOtP0nPE9QJQ6/YFx12
+ kYQVrzpk15jzwiaHF74I+yom1LTqR1xJjWR/V0SNAQRDagniMKNrhKsZ3F/D+NCbPzOf
+ FfYFa2KTQ6G/LaJn2SMklC+eA5j1UiIAJQkbWjykSjUXMfOVNDoM5NEtP6ESly0aCaRx
+ B7pTAKXQ8CuEjMdIJlEhBBhM/K5O3qJxL27aisLb+S+d0qGPaYxF2Sz1t7Yi3DEl+YMf
+ IdXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXohmJt+z1/EFMkuPg9xRtCsbqZFMPSyo6ik2NpsfJwHl/WlrLY4u8hV7RZ6W/awcWnX6aa4aBtrpVSIXyAFlZ8L6PDkng=
-X-Gm-Message-State: AOJu0Ywb1G91R74RcGxlu9ouBzoo0XrI0QSUuc3C9rU7bzdvMWdXjBpj
- WwLpx+cMpUonS+j7BRFXX/IpuVJoI/oTdkJKY0WObhqiVPjiQ9lGGe17HvQcfaS0QBBiBWkvHww
- AVkEIas+7tOOO7X4iRjl3EFXZppzs7DKBKqv7PA==
-X-Google-Smtp-Source: AGHT+IGVj+rfylx8fgCJy4/1gXFia1/mi0o7J9AF+K8X21aJKcCKtyN4JEce4mJ6ZndGvRVhJFbaVdqipWhB+PonaoU=
-X-Received: by 2002:a17:907:b9c5:b0:a3f:cd6b:80fd with SMTP id
- xa5-20020a170907b9c500b00a3fcd6b80fdmr290746ejc.7.1708662011195; Thu, 22 Feb
- 2024 20:20:11 -0800 (PST)
+ AJvYcCXwcERqgedhvBJNLqbOyMxwt6wVe33cVFIz6W8WlfNMcmcWiul9vWzPUduEHSyQtXwEAKvU/dItjt1l1KfJPEpzInQODDk=
+X-Gm-Message-State: AOJu0YyRsULV4nl9B6sXUr1f1LV+YX7CSXuRetbmZwPYwgkFHvc1La1M
+ bvFdNSitdYuH5uzqJcMsIJkHUNpPJZf8CCnJrONHOo0dh6bVc1iaQMlKhQn97XsGPVK35tvi+TO
+ FawlzHq6qiqYutaSR/IrIY437puwhfCw3RK1eVQ==
+X-Google-Smtp-Source: AGHT+IEqv6Q/qQYmH+Z4qMdQ2MeNEcWBluORlO3OwXIYhM3sg8QmWeL/bwLVc3yiGlkVMGORDh79JB1mJEE+ni3QU9c=
+X-Received: by 2002:a17:906:34cb:b0:a3e:a736:fe60 with SMTP id
+ h11-20020a17090634cb00b00a3ea736fe60mr387669ejb.77.1708662137078; Thu, 22 Feb
+ 2024 20:22:17 -0800 (PST)
 MIME-Version: 1.0
 References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-6-hao.xiang@bytedance.com> <878r3dbkkq.fsf@suse.de>
-In-Reply-To: <878r3dbkkq.fsf@suse.de>
+ <20240216224002.1476890-2-hao.xiang@bytedance.com>
+ <87y1bet47a.fsf@pond.sub.org>
+In-Reply-To: <87y1bet47a.fsf@pond.sub.org>
 From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Thu, 22 Feb 2024 20:20:00 -0800
-Message-ID: <CAAYibXg1Q0DvsoOA65dp8uguL8xf7kxr5R7xUEMG8_wc_asERg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2 5/7] migration/multifd: Add new
- migration test cases for legacy zero page checking.
-To: Fabiano Rosas <farosas@suse.de>
+Date: Thu, 22 Feb 2024 20:22:06 -0800
+Message-ID: <CAAYibXgYRzr_gzO00R6dfgikDK4njjyjtxDRK2yEWwwAjb0jzQ@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v2 1/7] migration/multifd: Add new
+ migration option zero-page-detection.
+To: Markus Armbruster <armbru@redhat.com>
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- peterx@redhat.com, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, 
+ peterx@redhat.com, farosas@suse.de, eblake@redhat.com, thuth@redhat.com, 
  lvivier@redhat.com, qemu-devel@nongnu.org, jdenemar@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,122 +96,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 21, 2024 at 12:59=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wr=
-ote:
+On Wed, Feb 21, 2024 at 4:03=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
 > Hao Xiang <hao.xiang@bytedance.com> writes:
 >
-> > Now that zero page checking is done on the multifd sender threads by
-> > default, we still provide an option for backward compatibility. This
-> > change adds a qtest migration test case to set the zero-page-detection
-> > option to "legacy" and run multifd migration with zero page checking on=
- the
-> > migration main thread.
+> > This new parameter controls where the zero page checking is running.
+> > 1. If this parameter is set to 'legacy', zero page checking is
+> > done in the migration main thread.
+> > 2. If this parameter is set to 'none', zero page checking is disabled.
 > >
 > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > ---
-> >  tests/qtest/migration-test.c | 52 ++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 52 insertions(+)
+>
+> [...]
+>
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index 5a565d9b8d..99843a8e95 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -653,6 +653,17 @@
+> >  { 'enum': 'MigMode',
+> >    'data': [ 'normal', 'cpr-reboot' ] }
 > >
-> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.=
-c
-> > index 8a5bb1752e..c27083110a 100644
-> > --- a/tests/qtest/migration-test.c
-> > +++ b/tests/qtest/migration-test.c
-> > @@ -2621,6 +2621,24 @@ test_migrate_precopy_tcp_multifd_start(QTestStat=
-e *from,
-> >      return test_migrate_precopy_tcp_multifd_start_common(from, to, "no=
-ne");
-> >  }
-> >
-> > +static void *
-> > +test_migrate_precopy_tcp_multifd_start_zero_page_legacy(QTestState *fr=
-om,
-> > +                                                        QTestState *to=
-)
-> > +{
-> > +    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
-> > +    migrate_set_parameter_str(from, "zero-page-detection", "legacy");
-> > +    return NULL;
-> > +}
-> > +
-> > +static void *
-> > +test_migration_precopy_tcp_multifd_start_no_zero_page(QTestState *from=
-,
-> > +                                                      QTestState *to)
-> > +{
-> > +    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
-> > +    migrate_set_parameter_str(from, "zero-page-detection", "none");
-> > +    return NULL;
-> > +}
-> > +
-> >  static void *
-> >  test_migrate_precopy_tcp_multifd_zlib_start(QTestState *from,
-> >                                              QTestState *to)
-> > @@ -2652,6 +2670,36 @@ static void test_multifd_tcp_none(void)
-> >      test_precopy_common(&args);
-> >  }
-> >
-> > +static void test_multifd_tcp_zero_page_legacy(void)
-> > +{
-> > +    MigrateCommon args =3D {
-> > +        .listen_uri =3D "defer",
-> > +        .start_hook =3D test_migrate_precopy_tcp_multifd_start_zero_pa=
-ge_legacy,
-> > +        /*
-> > +         * Multifd is more complicated than most of the features, it
-> > +         * directly takes guest page buffers when sending, make sure
-> > +         * everything will work alright even if guest page is changing=
-.
-> > +         */
-> > +        .live =3D true,
-> > +    };
-> > +    test_precopy_common(&args);
-> > +}
-> > +
-> > +static void test_multifd_tcp_no_zero_page(void)
-> > +{
-> > +    MigrateCommon args =3D {
-> > +        .listen_uri =3D "defer",
-> > +        .start_hook =3D test_migration_precopy_tcp_multifd_start_no_ze=
-ro_page,
-> > +        /*
-> > +         * Multifd is more complicated than most of the features, it
-> > +         * directly takes guest page buffers when sending, make sure
-> > +         * everything will work alright even if guest page is changing=
-.
-> > +         */
-> > +        .live =3D true,
-> > +    };
-> > +    test_precopy_common(&args);
-> > +}
-> > +
-> >  static void test_multifd_tcp_zlib(void)
-> >  {
-> >      MigrateCommon args =3D {
-> > @@ -3550,6 +3598,10 @@ int main(int argc, char **argv)
-> >      }
-> >      migration_test_add("/migration/multifd/tcp/plain/none",
-> >                         test_multifd_tcp_none);
-> > +    migration_test_add("/migration/multifd/tcp/plain/zero_page_legacy"=
-,
-> > +                       test_multifd_tcp_zero_page_legacy);
-> > +    migration_test_add("/migration/multifd/tcp/plain/no_zero_page",
-> > +                       test_multifd_tcp_no_zero_page);
+> > +##
+> > +# @ZeroPageDetection:
+> > +#
+> > +# @legacy: Perform zero page checking from main migration thread. (sin=
+ce 9.0)
+> > +#
+> > +# @none: Do not perform zero page checking.
+> > +#
+> > +##
 >
-> Here it's better to separate the main feature from the states. That way
-> we can run only the zero-page tests with:
+> The entire type is since 9.0.  Thus:
 >
->  migration-test -r /x86_64/migration/multifd/tcp/plain/zero-page
+>    ##
+>    # @ZeroPageDetection:
+>    #
+>    # @legacy: Perform zero page checking from main migration thread.
+>    #
+>    # @none: Do not perform zero page checking.
+>    #
+>    # Since: 9.0
+>    ##
 >
-> Like so: (also dashes instead of underscores)
-> /zero-page/legacy
-> /zero-page/none
+> > +{ 'enum': 'ZeroPageDetection',
+> > +  'data': [ 'legacy', 'none' ] }
+> > +
+> >  ##
+> >  # @BitmapMigrationBitmapAliasTransform:
+> >  #
+> > @@ -874,6 +885,9 @@
+> >  # @mode: Migration mode. See description in @MigMode. Default is 'norm=
+al'.
+> >  #        (Since 8.2)
+> >  #
+> > +# @zero-page-detection: See description in @ZeroPageDetection.
+> > +#     Default is 'legacy'. (Since 9.0)
 >
+> The description feels a bit lazy :)
+>
+> Suggest
+>
+>    # @zero-page-detection: Whether and how to detect zero pages.  Default
+>    #     is 'legacy'.  (since 9.0)
+>
+> Same for the other two copies.
 
-Sounds good.
+I will fix these in the next version.
 
-> >      migration_test_add("/migration/multifd/tcp/plain/cancel",
-> >                         test_multifd_tcp_cancel);
-> >      migration_test_add("/migration/multifd/tcp/plain/zlib",
+>
+> > +#
+> >  # Features:
+> >  #
+> >  # @deprecated: Member @block-incremental is deprecated.  Use
+> > @@ -907,7 +921,8 @@
+> >             'block-bitmap-mapping',
+> >             { 'name': 'x-vcpu-dirty-limit-period', 'features': ['unstab=
+le'] },
+> >             'vcpu-dirty-limit',
+> > -           'mode'] }
+> > +           'mode',
+> > +           'zero-page-detection'] }
+> >
+> >  ##
+> >  # @MigrateSetParameters:
+> > @@ -1066,6 +1081,10 @@
+> >  # @mode: Migration mode. See description in @MigMode. Default is 'norm=
+al'.
+> >  #        (Since 8.2)
+> >  #
+> > +# @zero-page-detection: See description in @ZeroPageDetection.
+> > +#     Default is 'legacy'. (Since 9.0)
+> > +#
+> > +#
+> >  # Features:
+> >  #
+> >  # @deprecated: Member @block-incremental is deprecated.  Use
+> > @@ -1119,7 +1138,8 @@
+> >              '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
+> >                                              'features': [ 'unstable' ]=
+ },
+> >              '*vcpu-dirty-limit': 'uint64',
+> > -            '*mode': 'MigMode'} }
+> > +            '*mode': 'MigMode',
+> > +            '*zero-page-detection': 'ZeroPageDetection'} }
+> >
+> >  ##
+> >  # @migrate-set-parameters:
+> > @@ -1294,6 +1314,9 @@
+> >  # @mode: Migration mode. See description in @MigMode. Default is 'norm=
+al'.
+> >  #        (Since 8.2)
+> >  #
+> > +# @zero-page-detection: See description in @ZeroPageDetection.
+> > +#     Default is 'legacy'. (Since 9.0)
+> > +#
+> >  # Features:
+> >  #
+> >  # @deprecated: Member @block-incremental is deprecated.  Use
+> > @@ -1344,7 +1367,8 @@
+> >              '*x-vcpu-dirty-limit-period': { 'type': 'uint64',
+> >                                              'features': [ 'unstable' ]=
+ },
+> >              '*vcpu-dirty-limit': 'uint64',
+> > -            '*mode': 'MigMode'} }
+> > +            '*mode': 'MigMode',
+> > +            '*zero-page-detection': 'ZeroPageDetection'} }
+> >
+> >  ##
+> >  # @query-migrate-parameters:
+>
 
