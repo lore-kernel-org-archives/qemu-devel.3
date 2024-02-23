@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32E6BC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1EFC48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdOgF-00022i-W7; Fri, 23 Feb 2024 01:05:08 -0500
+	id 1rdOkF-0003fn-7Y; Fri, 23 Feb 2024 01:09:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdOgE-00022R-NY
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:05:06 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdOgD-0005eE-3B
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:05:06 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3bbb4806f67so312700b6e.3
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:05:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708668303; x=1709273103; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AVpn56uAKqSy4bM5wbUPBSPDaybDTFerj5cuagAcW9k=;
- b=U1Mu77iBS98kEWM8LzP9TsQiS0jSrV1tBPZYP351D3PvQh0uHx1G3fFpsPeFF0Jhao
- sUElYBjwIL5GJpGX+TXo+TFhTLDvYI3T4CSD7WUTfZ4vkSsapb/VPWacuM1MsETvBlit
- Yxmf8f1JdzykjpaWrvQxaQq1uVwBDWcg4tcPje/GOrcogKuigoEnjPA/lbWLnbIALi1+
- aeADM+VuvZ1lZVOwUbkc+tuGwui/j2Kdd+8sL7WHTEMw4dGDXSgxTgJzAZoYqAApH5G4
- ac7qdkAn+kiism7XdUS1aAhQ+j8jJOtrdiv/dN/QAOU0XWpp+s9c928a57xAu9lDLsCJ
- 6sqg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rdOkA-0003fR-EZ
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:09:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rdOk8-0006Ke-Cn
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:09:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708668547;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rCMVUZ+45b/Z7/Qm3YQyYtcJYyWifBqUef0wO34Ua9w=;
+ b=Jd66jqNwN6UwHdCZCu5fK1Sq4MGL2H5pI0U2eLmV/3JiUzNbF3XEVov8fsoDCUnuQHTQLn
+ 1mxHpHZ0WZsyUJbjPJszPtwuAzIuM8M6Ico3/fHC3D70yAVn2VyjuSARVbP8H9O1zaYwjy
+ d5ZgTgH2TkZ0Z4/BGZ2RUJHWa5ruQp0=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-QILXHr_ePn28tLcBLtvekA-1; Fri, 23 Feb 2024 01:09:05 -0500
+X-MC-Unique: QILXHr_ePn28tLcBLtvekA-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2d230281e64so4123411fa.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:09:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708668303; x=1709273103;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AVpn56uAKqSy4bM5wbUPBSPDaybDTFerj5cuagAcW9k=;
- b=fGIuIIuSFjZMyFAssybxMwqkxKXodepakrwbq1qJ0n5STjXtVKJtbG/XZEIunsHBOc
- YZLMB0kFrd75SSJQwv+/RmBZ4DVjAkj0QeR/xv4W7+YP1OsF5Ovm4Zim4y6O71XJXJSh
- vc69lbhgW3u/vaA94SxQSrKB5j+9WHE/zEPgOjfwg2DHZ+5s435KNw6OKie3Tu6YuhpV
- 52il34cchKzcrIUghB480B0ePyopXeybK2Q6KHE7BAJPh/sb5T5FYkM4K0iFQhgtVHLb
- HRFoddKG7RE/eUK4vhVrXn3eMdkpqHoRXgFpImvV3NDW3HUvvgl+9h2+2gGeDTUv/G51
- 4f3A==
-X-Gm-Message-State: AOJu0Yx3wcHTIuxQC+G8oBZ47uip/kwrr0EWlW5CUk925x3AS2CwOjRI
- 34RkfXPanz989bnp4FfdwBnINjXYg19gEDlbGu8TDkEx+2+RiBk9Q0Vn7UEuhOJG6BZMixdEtkg
- m
-X-Google-Smtp-Source: AGHT+IH7rQjk3Tv3Tr/yqnuOgui/FZZlhbBYcSgp9ve4SLocO1ni6ePDBxwW/LPiyQzTfztC8Xo8ow==
-X-Received: by 2002:a05:6808:1686:b0:3c1:4678:5aff with SMTP id
- bb6-20020a056808168600b003c146785affmr1260398oib.31.1708668302675; 
- Thu, 22 Feb 2024 22:05:02 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- b2-20020aa78ec2000000b006e4d2cbcac8sm1904546pfr.94.2024.02.22.22.05.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 22:05:02 -0800 (PST)
-Message-ID: <4bcc5abb-9b42-4687-9a8d-d9c15598b11f@linaro.org>
-Date: Thu, 22 Feb 2024 20:04:58 -1000
+ d=1e100.net; s=20230601; t=1708668544; x=1709273344;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rCMVUZ+45b/Z7/Qm3YQyYtcJYyWifBqUef0wO34Ua9w=;
+ b=pUR3kzS5RZKbWFTp9j4TxMnz46LHEAGuujL3+3RD/1iJ5PCcNOAtwJ7M4FiVdk6WuV
+ Z5HsTei1oxXa0ZmUFnyCw8/o5INVh9b2bliWZ4G8Q2OT6GtvxSZy2Vqj0ee8BW44pVKA
+ 5g7G1GY5VZ04wAajqz/KQ54EkrjXwOA3rnB3Li/ln9kn1wFy/TstkPjtl2MxZOxgjKOf
+ R+yroegMVZqBRQLkJFmuTSmekponh5vkEqptIiu5ZFGVNr1ccj3P3ISv8rOdme0SlzTL
+ zFSiQm3f9TTO5izr99VydDhk3gmmCxQpppnfZs/sfXtDz705E/pXubNeYyARRA1Ony02
+ ozlQ==
+X-Gm-Message-State: AOJu0YwSSJfl7G/aayIXBe75L/U3bWYAnvcGLiftYihgD/Ih6950XnQ0
+ LHobikouGjp5yjzUhYwN1jUoqzc00uc5o0CEA0FpAd2pijfpXX6k7DwDdYEbhR1q9KhaRG2y9hB
+ /t5gY5qf6ZjgO49tT0CScXks5uzsLqiGA1Z2oKk5Moff+BtOEs/5c
+X-Received: by 2002:a2e:7219:0:b0:2d2:36e6:b76 with SMTP id
+ n25-20020a2e7219000000b002d236e60b76mr638550ljc.49.1708668544049; 
+ Thu, 22 Feb 2024 22:09:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHXpCaU13jG9NxQVM7FU01MyOixul3P+Pjd3+9LdY9DAVQ6dO7xAg223Pt8BKHXLdXLRcJkKg==
+X-Received: by 2002:a2e:7219:0:b0:2d2:36e6:b76 with SMTP id
+ n25-20020a2e7219000000b002d236e60b76mr638533ljc.49.1708668543639; 
+ Thu, 22 Feb 2024 22:09:03 -0800 (PST)
+Received: from redhat.com ([147.235.213.72]) by smtp.gmail.com with ESMTPSA id
+ b11-20020a5d634b000000b0033cf80ad6f5sm1451928wrw.60.2024.02.22.22.09.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 22 Feb 2024 22:09:03 -0800 (PST)
+Date: Fri, 23 Feb 2024 01:09:00 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Srujana Challa <schalla@marvell.com>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, vattunuru@marvell.com,
+ jerinj@marvell.com
+Subject: Re: [PATCH v3] virtio-pci: correctly set virtio pci queue mem
+ multiplier
+Message-ID: <20240223010723-mutt-send-email-mst@kernel.org>
+References: <20240223052617.1867132-1-schalla@marvell.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] linux-user: Add strace for shmat
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, iii@linux.ibm.com, richard.purdie@linuxfoundation.org, 
- mjt@tls.msk.ru
-References: <20240223030309.458451-1-richard.henderson@linaro.org>
- <20240223030309.458451-3-richard.henderson@linaro.org>
-In-Reply-To: <20240223030309.458451-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240223052617.1867132-1-schalla@marvell.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,35 +99,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/22/24 17:03, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   linux-user/strace.c    | 23 +++++++++++++++++++++++
->   linux-user/strace.list |  2 +-
->   2 files changed, 24 insertions(+), 1 deletion(-)
+On Fri, Feb 23, 2024 at 10:56:17AM +0530, Srujana Challa wrote:
+> Currently, virtio_pci_queue_mem_mult function always returns 4K
+> when VIRTIO_PCI_FLAG_PAGE_PER_VQ is set. But this won't
+> work for vhost vdpa when host has page size other than 4K.
+> This patch introduces a new property(host-page-per-vq) for vdpa
+> use case to fix the same.
 > 
-> diff --git a/linux-user/strace.c b/linux-user/strace.c
-> index cf26e55264..47d6ec3263 100644
-> --- a/linux-user/strace.c
-> +++ b/linux-user/strace.c
-> @@ -670,6 +670,25 @@ print_semctl(CPUArchState *cpu_env, const struct syscallname *name,
->   }
->   #endif
->   
-> +static void
-> +print_shmat(CPUArchState *cpu_env, const struct syscallname *name,
-> +            abi_long arg0, abi_long arg1, abi_long arg2,
-> +            abi_long arg3, abi_long arg4, abi_long arg5)
-> +{
-> +    static const struct flags shmat_flags[] = {
-> +        FLAG_GENERIC(SHM_RND),
-> +        FLAG_GENERIC(SHM_REMAP),
-> +        FLAG_GENERIC(SHM_RDONLY),
-> +        FLAG_GENERIC(SHM_EXEC),
-> +    };
+> Signed-off-by: Srujana Challa <schalla@marvell.com>
 
-Missing FLAG_END, of course.
+Looks good. I'd like to fail realize if both 
+   (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)
+and
+   (proxy->flags & VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ)
+so users do not start depending on this combination.
 
 
-r~
+
+> ---
+> v2->v3:
+> - Modified property name, page-per-vdpa-vq to host-page-per-vq.
+> 
+> v1->v2:
+> - Introduced a new property to get virtqueue mem multiplier for
+>   vdpa use case.
+> 
+>  hw/virtio/virtio-pci.c         | 10 ++++++++--
+>  include/hw/virtio/virtio-pci.h |  5 +++++
+>  2 files changed, 13 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 1a7039fb0c..f29e60830b 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -320,8 +320,12 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
+>  
+>  static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
+>  {
+> -    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
+> -        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
+> +    if (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)
+> +        return QEMU_VIRTIO_PCI_QUEUE_MEM_MULT;
+> +    else if (proxy->flags & VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ)
+> +        return qemu_real_host_page_size();
+> +    else
+> +        return 4;
+>  }
+>  
+>  static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
+> @@ -2301,6 +2305,8 @@ static Property virtio_pci_properties[] = {
+>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_AER_BIT, false),
+> +    DEFINE_PROP_BIT("host-page-per-vq", VirtIOPCIProxy, flags,
+> +                    VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT, false),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+>  
+> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+> index 59d88018c1..81b6de4291 100644
+> --- a/include/hw/virtio/virtio-pci.h
+> +++ b/include/hw/virtio/virtio-pci.h
+> @@ -43,6 +43,7 @@ enum {
+>      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+>      VIRTIO_PCI_FLAG_AER_BIT,
+>      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
+> +    VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT,
+>  };
+>  
+>  /* Need to activate work-arounds for buggy guests at vmstate load. */
+> @@ -89,6 +90,10 @@ enum {
+>  #define VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED \
+>    (1 << VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT)
+>  
+> +/* page per vdpa vq flag to be used for vhost vdpa backends */
+> +#define VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ \
+> +    (1 << VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT)
+> +
+>  typedef struct {
+>      MSIMessage msg;
+>      int virq;
+> -- 
+> 2.25.1
+
 
