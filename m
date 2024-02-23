@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC24C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 13:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4421C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 13:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdVOi-0007T9-IY; Fri, 23 Feb 2024 08:15:28 -0500
+	id 1rdVk5-0000UU-9G; Fri, 23 Feb 2024 08:37:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rdVJP-0002Wk-Pq
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 08:10:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rdVJO-0000By-8p
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 08:09:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708693797;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=D9HILDzSeft/x8LKIsAPFE7LYaAwnW+F+2deJrffy3I=;
- b=IYtQobaogxPFn/bj/GWKCJEUhPz4lU7bx7xwY42JBzJZ+GYRkbZysc5LkP8tieMZtAyu+J
- 6//ghvpc7u8ZGVqgzn1Egu799WIhfiRTgJ4I1BIV8HkYjXV3yvCIRrhvt+vN6/diIcvY25
- /NIw0M4EXDynsY4sSwR15Gp8dUj6bho=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-a9DmyXPQOw2Ld5BGJhI-Tg-1; Fri, 23 Feb 2024 08:09:56 -0500
-X-MC-Unique: a9DmyXPQOw2Ld5BGJhI-Tg-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-50e91f9d422so1101538e87.2
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 05:09:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <wj28.lee@gmail.com>)
+ id 1rdRZS-0002QH-NZ
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:10:18 -0500
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wj28.lee@gmail.com>)
+ id 1rdRZK-0004hF-Uy
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:10:17 -0500
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-295c8b795e2so511786a91.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 01:10:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708679409; x=1709284209; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=i7088AgHa1OAqA61tMttin5VX75haYu/ICj6HSRJocc=;
+ b=EYkLXkSR+xG2KxbjP7gMzW46d2k31aqWzRN5JhZCXLcS97ShVIdITrGTWFSAtTZXCd
+ 39pyt62WpsGCSp62kgKe+B4SefYGzbusdJGoxG3hSr6sWyOh7JcmFCKoecDz0WLvrTII
+ tqDffJ9+8UFCFlxF0mAp1uzPb/gsJveJcXO9LNr5yRS1PIrKK7rNp+WcfQyRwcApQlAt
+ CCmDs9cR2Ps//NfzTA3J0nLP0neddj8fNN+A4unntTbv8EQY6Xa8RwymxcBdxaPLzCKR
+ X4kSvRMsA9fkPQisKxnw35qeZTHjl5gz6/gaS1ktZYC0jt5LOecihXW7olWxRnU33KZT
+ QTfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708693794; x=1709298594;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=D9HILDzSeft/x8LKIsAPFE7LYaAwnW+F+2deJrffy3I=;
- b=V7tnEQPU+ALuAGk/HmexT8dhnAJmQd+SnYuQwgQwrSNItZbFHcxG2PjsXXcfrhPLdM
- 2PftSnvC374ZI3KVY4HIugA+ey0Kaka65570uIglIm1kH/A9QBTyG9zrKU+xiCvil1Nz
- 230k0GJ/27nzTYd4oQkHa3FFjE+MszMXNXRL17GQKBLDnug4tDpRz2/4TgbxW8zXUCiq
- xCD9Lgj99nEqLj2pdhnjaQEiXbjpBt2TSBO1XPTr/DYFYa1882x4fCo1DsysmqJU7HDn
- s4zyHiXptlPkHuRBOuWh3vXXne72Z6V4BcdtyUilveZrzhyweErw5YQzA89Llu6Kt4TO
- YHug==
-X-Gm-Message-State: AOJu0Yy6608ryO4XJeL1SlsRCJHNX0vxhC+A1CHtB6F+HrCFCWIBZ8yl
- GrDXFG8VNOEGY8DAu6NRG5ZHVoGU89cMkczbBby4RSymNQvEkxqAEAGOy1mHDMwtk+T9iTNiRBa
- o/2vt13XoT/INVzCX++Pejuhh73nWCIYSPwfB4M17aRLwzjrcp1wO5h61MvN6POt8jn7OoKvE3D
- JGDHAhXoabvqWzavXjPGNoDd/Gog4a3MlbXFj8
-X-Received: by 2002:a05:6512:280e:b0:512:a9b7:c637 with SMTP id
- cf14-20020a056512280e00b00512a9b7c637mr1844962lfb.29.1708693794120; 
- Fri, 23 Feb 2024 05:09:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHiQYSWmODja1eQtpxRBKZ2tluaszOw2+BqWFo5r2ga3PS73eEAwnQqiY+K9X+lu8puL5n6fA==
-X-Received: by 2002:a05:6512:280e:b0:512:a9b7:c637 with SMTP id
- cf14-20020a056512280e00b00512a9b7c637mr1844941lfb.29.1708693793730; 
- Fri, 23 Feb 2024 05:09:53 -0800 (PST)
-Received: from [192.168.10.118] ([2001:b07:6468:f312:9af8:e5f5:7516:fa89])
+ d=1e100.net; s=20230601; t=1708679409; x=1709284209;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=i7088AgHa1OAqA61tMttin5VX75haYu/ICj6HSRJocc=;
+ b=qmMX67C2eQwhIE6Ci92dJl84v9DzDg45IeXCfUaerDbNFgYySTrcwm7mNvIBa9dmmX
+ ScZUOo7z5YLdcV4TGQ9wly8i4aDIPJ4KPN6hpquo5HytkDalio7/w2YjI59wOP+1v03y
+ O1BsWVB3Kgn+VvPclhgDjpzupe/tUM5RhhIkYycaVkj+JL8SkhVhUF867Vx2uC1XVAFW
+ KqLW1+uePnNaViJRC5vioCNL1M1YZusLVEmLuRuMBdyvB8teecpWkQrGlgILR4Snh/zE
+ 56rV4CUfn6lZPx08NWLJfpGZ2jA9kqHPWb2JBYVF0BjuyCfLjlu2LTIuz+fKhw2Hzzl6
+ 5Z6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX2mn3NIeXBdGTDDMMt9JHiOg/GiqPeQlNDKw8CYVdcR98JWk4n1G/DbGmhdpa/uDYTJHsgg3+YH8C9jbIuygqv6kDvrlk=
+X-Gm-Message-State: AOJu0YyIzLU+zZ8fVzBwj8NHKYcvsxyFSMNfbTtp/osShLJOjKP4y37I
+ TMSDRi6SxYGdlg+QQL/QQd+pbVvRBgbRJinTKpbL4UopAggyaRXv
+X-Google-Smtp-Source: AGHT+IHCs7N7AR1WscQ+RxKqewpNJ204dTv8cjZrnZyzFnjfD1/ZJjzCG7gLLLLxhsrAcX/bbYe2/g==
+X-Received: by 2002:a17:90a:6888:b0:29a:7380:53a with SMTP id
+ a8-20020a17090a688800b0029a7380053amr1246186pjd.34.1708679408952; 
+ Fri, 23 Feb 2024 01:10:08 -0800 (PST)
+Received: from [172.30.1.72] ([211.197.219.189])
  by smtp.gmail.com with ESMTPSA id
- g9-20020a19ee09000000b00512ec1559cdsm86394lfb.213.2024.02.23.05.09.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 05:09:52 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	mcb30@ipxe.org
-Subject: [PATCH v2 1/7] target/i386: mask high bits of CR3 in 32-bit mode
-Date: Fri, 23 Feb 2024 14:09:42 +0100
-Message-ID: <20240223130948.237186-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240223130948.237186-1-pbonzini@redhat.com>
-References: <20240223130948.237186-1-pbonzini@redhat.com>
+ se13-20020a17090b518d00b00299b31de43esm921900pjb.45.2024.02.23.01.10.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Feb 2024 01:10:08 -0800 (PST)
+Message-ID: <698e6bc2-d38f-46e2-837c-3c6777d49139@gmail.com>
+Date: Fri, 23 Feb 2024 18:10:08 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 08/10] hw/cxl/cxl-mailbox-utils: Add mailbox commands
+ to support add/release dynamic capacity response
+Content-Language: en-US
+To: nifan.cxl@gmail.com, qemu-devel@nongnu.org
+Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
+ gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ jim.harris@samsung.com, Fan Ni <fan.ni@samsung.com>
+References: <20240221182020.1086096-1-nifan.cxl@gmail.com>
+ <20240221182020.1086096-9-nifan.cxl@gmail.com>
+From: Wonjae Lee <wj28.lee@gmail.com>
+In-Reply-To: <20240221182020.1086096-9-nifan.cxl@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=wj28.lee@gmail.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 23 Feb 2024 08:35:47 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,41 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CR3 bits 63:32 are ignored in 32-bit mode (either legacy 2-level
-paging or PAE paging).  Do this in mmu_translate() to remove
-the last case where get_physical_address() meaningfully drops
-the high bits of the address.
+On 2024-02-22 오전 3:16, nifan.cxl@gmail.com wrote:
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> Per CXL spec 3.1, two mailbox commands are implemented:
+> Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
+> Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> ---
+>   hw/cxl/cxl-mailbox-utils.c  | 288 ++++++++++++++++++++++++++++++++++++
+>   include/hw/cxl/cxl_device.h |   2 +
+>   2 files changed, 290 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index dae7fe00ed..65ed28f700 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/sysemu/excp_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+[snip]
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 5b86f439add..11126c860d4 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -238,7 +238,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-             /*
-              * Page table level 3
-              */
--            pte_addr = ((in->cr3 & ~0x1f) + ((addr >> 27) & 0x18)) & a20_mask;
-+            pte_addr = ((in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18)) & a20_mask;
-             if (!ptw_translate(&pte_trans, pte_addr)) {
-                 return false;
-             }
-@@ -306,7 +306,7 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-         /*
-          * Page table level 2
-          */
--        pte_addr = ((in->cr3 & ~0xfff) + ((addr >> 20) & 0xffc)) & a20_mask;
-+        pte_addr = ((in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc)) & a20_mask;
-         if (!ptw_translate(&pte_trans, pte_addr)) {
-             return false;
-         }
--- 
-2.43.0
+> +/*
+> + * CXL r3.1 Table 8-168: Add Dynamic Capacity Response Input Payload
+> + * CXL r3.1 Table 8-170: Release Dynamic Capacity Input Payload
+> + */
+> +typedef struct CXLUpdateDCExtentListInPl {
+> +    uint32_t num_entries_updated;
+> +    uint8_t flags;
+> +    uint8_t rsvd[3];
+> +    /* CXL r3.1 Table 8-169: Updated Extent List */
+
+I'm not sure why this was changed, but in r3.1 the table is simply 
+renamed to "Updated Extent"
+
+...
+
+> +/*
+> + * CXL r3.1 section 8.2.9.9.9.3: Add Dynamic Capacity Response (opcode 4802h)
+
+It's too trivial, but it's written as "Opcode" in other comments.
+: Opcode 4802h
+
+...
+
+> +/*
+> + * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (opcode 4803h)
+
+And here, too
+: Opcode 4803h
+
+...
+
+> @@ -1462,6 +1744,12 @@ static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
+>       [DCD_CONFIG][GET_DYN_CAP_EXT_LIST] = {
+>           "DCD_GET_DYNAMIC_CAPACITY_EXTENT_LIST", cmd_dcd_get_dyn_cap_ext_list,
+>           8, 0 },
+> +    [DCD_CONFIG][ADD_DYN_CAP_RSP] = {
+> +        "ADD_DCD_DYNAMIC_CAPACITY_RESPONSE", cmd_dcd_add_dyn_cap_rsp,
+> +        ~0, IMMEDIATE_DATA_CHANGE },
+> +    [DCD_CONFIG][RELEASE_DYN_CAP] = {
+> +        "RELEASE_DCD_DYNAMIC_CAPACITY", cmd_dcd_release_dyn_cap,
+> +        ~0, IMMEDIATE_DATA_CHANGE },
+
+For consistency, how about setting the names of commands as follows?
+: DCD_ADD_DYNAMIC_CAPACITY_RESPONSE
+: DCD_RELEASE_DYNAMIC_CAPACITY
+
+Thanks,
+Wonjae
 
 
