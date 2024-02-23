@@ -4,78 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618B9C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44885C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdbSK-0007ib-7o; Fri, 23 Feb 2024 14:43:36 -0500
+	id 1rdbSl-0008D5-Oi; Fri, 23 Feb 2024 14:44:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb5N-0002GF-O5
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:19:54 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb3f-0000I3-Ks
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:18:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb5K-0007nq-5n
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:19:51 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb3c-0007RF-E0
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:18:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708715988;
+ s=mimecast20190719; t=1708715881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZpqHWqbAN/MBEhiC/FJWHqxhIj4aptI5ngFUgePBW6Y=;
- b=h7HtwJJmGQLCzhfuBnkvlEt0+UF9KUkWYKhD9IHHmrbj+xd4cmEp/UVomFd0E3joHBlL97
- VkpkB7/78v+Hv46AMMHiHK5EdLjc19EdQJvwkscmIbaeJmDvJo5opBpTxZQBqnmhgivE3D
- yKI3zl3MIms/fHCUVBn6aC/G0OYYwL4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=itQAUMMOZcJtxJNZcr/T1fsAp5e++SkYNEcWquRoLuQ=;
+ b=B+5BZ1RemIO5r1BWb4xvyqyagLXAhnUHP/vNc0AI7O2gJvXrOZRSHUlgr+Zv3MueCDORil
+ 9FcmfCzYe/i5pRK7bSUqN7aNbumyniuUcTm5mKqhNtMznaY1o9kPf2C4H3uF6P92kssvXi
+ RBlQbueTuVkB8jiT9fAOMDJurXAHgJQ=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-Ukj6UyqzMhOdzo5jAwZ2-Q-1; Fri, 23 Feb 2024 14:19:47 -0500
-X-MC-Unique: Ukj6UyqzMhOdzo5jAwZ2-Q-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33dadb50731so380917f8f.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 11:19:46 -0800 (PST)
+ us-mta-284-AcWA52q2PGa7QkRkjlnhVA-1; Fri, 23 Feb 2024 14:18:00 -0500
+X-MC-Unique: AcWA52q2PGa7QkRkjlnhVA-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2d22e2f9a0cso5561321fa.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 11:17:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708715986; x=1709320786;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZpqHWqbAN/MBEhiC/FJWHqxhIj4aptI5ngFUgePBW6Y=;
- b=M1dN+lRsWvav1fhup+rxmKrcvBbP8b1/gYmF4RGAGExS7HuEmv4+ZCLUQSIM0tCMPK
- teEh6VQEm5cWRz7mweS1GaEjbS7c2tbBlRIY85oDIbXyi7IV97hZFZgGdPgTUMCNYSKn
- 5ESKZqxQ78e+MjZ3zN1VUncewsdZsD2u8I0FDdXHFdj8GA/6MmvtGXSGIn+7xXWrjb09
- BYuO87NVxbKpZR4Ubu2pnHrYR30KwBfSYAOBna/W+/wveqmQw6y0wUxFNgBEW2B1bRg9
- ZQLwZfAn1Rv0sYwgvhCQANZW3np+OVCRkwRQoCISTy0jrTgDlbQIjikPHGrFuzkGmZHA
- Nn4w==
+ d=1e100.net; s=20230601; t=1708715878; x=1709320678;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=itQAUMMOZcJtxJNZcr/T1fsAp5e++SkYNEcWquRoLuQ=;
+ b=QOvc5x9NIjwzvfAU6cmHrnf1hjoOnCwHxismjzst1S5KSdKm+m65sGue5SfUbCKaob
+ yGtrsX60blrHDin83HmfluHDRLpeUiTYjybsa8DmXyM7Ra8zQ0/iOCjV7jOFTlj1c1Yx
+ iP4keLIS0eWpmX4cKMYiNl+26Ipoux2Q1gOJXcMmOg7oQNPukQdmLSmsherTV5G83OuQ
+ Y6/2UGeOQK6NXkCBxZdrFXutXuJTO25E5mAyaxKG0HEK30CNwQzc8pg9cOhBU5nP6Lxp
+ 5s+n7iQ5flvRi3WupwQA2j7KazhoN3dLPbNHEW/QYX1Q7nRf+90WDNo6D/gAA/4RtqbH
+ cRHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDVrrJ2k7+eghLz2uI9+lmQrrf2uyq7zTBlW5AY3O4m4eMndQyLHfmzWpC2q6iI+OiZ9G7UzoMA9vYliWiuXCkZUbCby0=
-X-Gm-Message-State: AOJu0YyCrAOG5q3pLfzM0oP+oSDqESQwXUggSUQUoI+2HJaiPNc2SW/2
- ChJoFz/n77YmW10Rl2bli6zbchpDfdkRjrC80/vxhpvVQQ7T5XRG/GziMUR7T1R6i87TjIbk40+
- i/0gmcOrt5bIFo1Td9r0eDW9VOIfhXaSEEmrEd6mZ5LSS2uMCNlji
-X-Received: by 2002:adf:f88f:0:b0:33d:2226:a26b with SMTP id
- u15-20020adff88f000000b0033d2226a26bmr502484wrp.24.1708715986082; 
- Fri, 23 Feb 2024 11:19:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF8BiqXEeDAx149bgRRErhjY5XVfClhAxL/0iGzOU+nMKqaraGJdWQRUXUBRx/Im6k5yigq4A==
-X-Received: by 2002:adf:f88f:0:b0:33d:2226:a26b with SMTP id
- u15-20020adff88f000000b0033d2226a26bmr502473wrp.24.1708715985766; 
- Fri, 23 Feb 2024 11:19:45 -0800 (PST)
+ AJvYcCWt2pSKJHfnz7plqukxxTm/6gr6bF7edPZ0OAo9Csci1WMO5NSiJvMWvPwQOyY6hOEwi3EWQZQ8mvbrzCCNZ6rDZsPKPCs=
+X-Gm-Message-State: AOJu0Yy2iviLh8r1qhsyQdVbJE0zLwAV8pq98XputT3quiQEAGgBdw/m
+ QmKF+/6ADxr45w+0ADMks/oUHMUPzTMItnLciW2PWBaX0IvwvtFzygCyr3DMKxtVgzXyR9or2sm
+ 99JVc5S4tawZ4cHuHVPqHSK0yf+J8SR+L88/zzKKjlwn48VuxwDlZ
+X-Received: by 2002:a2e:9003:0:b0:2d2:5275:b40d with SMTP id
+ h3-20020a2e9003000000b002d25275b40dmr49934ljg.31.1708715878771; 
+ Fri, 23 Feb 2024 11:17:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHffphPENJf/K5BqfHly9exWjb4OhKKNQl2w4Cq7SamUCMY3t6n8I3x+WLXZq7jx4VEkXvrBA==
+X-Received: by 2002:a2e:9003:0:b0:2d2:5275:b40d with SMTP id
+ h3-20020a2e9003000000b002d25275b40dmr49918ljg.31.1708715878409; 
+ Fri, 23 Feb 2024 11:17:58 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
  [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
- ay28-20020a5d6f1c000000b0033d60cba289sm3950786wrb.68.2024.02.23.11.19.44
+ jl20-20020a05600c6a9400b004126101915esm3320007wmb.4.2024.02.23.11.17.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 11:19:45 -0800 (PST)
-Message-ID: <3936c63a-b67a-484d-b7c0-5297b4c3aed4@redhat.com>
-Date: Fri, 23 Feb 2024 20:19:44 +0100
+ Fri, 23 Feb 2024 11:17:57 -0800 (PST)
+Message-ID: <aed34f97-f2d9-4e4a-bfbe-9e90e1f96037@redhat.com>
+Date: Fri, 23 Feb 2024 20:17:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ide: Remove last two uses of ide/internal.h outside of
- hw/ide
+Subject: Re: [PATCH v2 02/27] tests/tcg: bump TCG test timeout to 120s
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Bin Meng <bin.meng@windriver.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cleber Rosa <crosa@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
+ Weiwei Li <liwei1518@gmail.com>, Alistair Francis
+ <alistair.francis@wdc.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Brian Cain <bcain@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Michael Rolnik <mrolnik@gmail.com>
+References: <20240223162202.1936541-1-alex.bennee@linaro.org>
+ <20240223162202.1936541-3-alex.bennee@linaro.org>
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, philmd@linaro.org
-References: <20240223142633.933694E6004@zero.eik.bme.hu>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -119,9 +142,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240223142633.933694E6004@zero.eik.bme.hu>
+In-Reply-To: <20240223162202.1936541-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -131,7 +154,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,52 +170,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/02/2024 15.26, BALATON Zoltan wrote:
-> Remove last two includes of hw/ide/intarnal.h outside of hw/ide and
-> replace them with newly added public header to allow moving internal.h
-> into hw/ide to really stop exposing it.
+On 23/02/2024 17.21, Alex Bennée wrote:
+> This is less than ideal but easier than making sure we get all the
+> iterations of the memory test. Update the comment accordingly.
 > 
-> Fixes: a11f439a0e (hw/ide: Stop exposing internal.h to non-IDE files)
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   hw/arm/sbsa-ref.c                 | 2 +-
->   {include/hw => hw}/ide/internal.h | 0
->   include/hw/misc/macio/macio.h     | 2 +-
->   3 files changed, 2 insertions(+), 2 deletions(-)
->   rename {include/hw => hw}/ide/internal.h (100%)
+>   tests/tcg/Makefile.target | 9 +++------
+>   1 file changed, 3 insertions(+), 6 deletions(-)
 > 
-> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> index 5d3a574664..f027622a75 100644
-> --- a/hw/arm/sbsa-ref.c
-> +++ b/hw/arm/sbsa-ref.c
-> @@ -36,7 +36,7 @@
->   #include "hw/arm/smmuv3.h"
->   #include "hw/block/flash.h"
->   #include "hw/boards.h"
-> -#include "hw/ide/internal.h"
-> +#include "hw/ide/ide-bus.h"
->   #include "hw/ide/ahci_internal.h"
->   #include "hw/ide/ahci-sysbus.h"
->   #include "hw/intc/arm_gicv3_common.h"
-> diff --git a/include/hw/ide/internal.h b/hw/ide/internal.h
-> similarity index 100%
-> rename from include/hw/ide/internal.h
-> rename to hw/ide/internal.h
-> diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
-> index 86df2c2b60..2b54da6b31 100644
-> --- a/include/hw/misc/macio/macio.h
-> +++ b/include/hw/misc/macio/macio.h
-> @@ -28,7 +28,7 @@
+> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+> index 8cf65f68dd8..a4c25908fb7 100644
+> --- a/tests/tcg/Makefile.target
+> +++ b/tests/tcg/Makefile.target
+> @@ -93,12 +93,9 @@ QEMU_OPTS=
 >   
->   #include "hw/char/escc.h"
->   #include "hw/pci/pci_device.h"
-> -#include "hw/ide/internal.h"
-> +#include "hw/ide/ide-bus.h"
->   #include "hw/intc/heathrow_pic.h"
->   #include "hw/misc/macio/cuda.h"
->   #include "hw/misc/macio/gpio.h"
-
-Oh, I was sure that I got them all ... thanks for double checking!
+>   
+>   # If TCG debugging, or TCI is enabled things are a lot slower
+> -# ??? Makefile no longer has any indication that TCI is enabled,
+> -# but for the record:
+> -#   15s    original default
+> -#   60s    with --enable-debug
+> -#   90s    with --enable-tcg-interpreter
+> -TIMEOUT=90
+> +# so we have to set our timeout for that. The current worst case
+> +# offender is the system memory test running under TCI.
+> +TIMEOUT=120
+>   
+>   ifeq ($(filter %-softmmu, $(TARGET)),)
+>   # The order we include is important. We include multiarch first and
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
