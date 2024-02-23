@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C1EFC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E1AC48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:12:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdOkF-0003fn-7Y; Fri, 23 Feb 2024 01:09:15 -0500
+	id 1rdOn5-0004ss-EN; Fri, 23 Feb 2024 01:12:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rdOkA-0003fR-EZ
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:09:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rdOk8-0006Ke-Cn
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:09:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708668547;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rCMVUZ+45b/Z7/Qm3YQyYtcJYyWifBqUef0wO34Ua9w=;
- b=Jd66jqNwN6UwHdCZCu5fK1Sq4MGL2H5pI0U2eLmV/3JiUzNbF3XEVov8fsoDCUnuQHTQLn
- 1mxHpHZ0WZsyUJbjPJszPtwuAzIuM8M6Ico3/fHC3D70yAVn2VyjuSARVbP8H9O1zaYwjy
- d5ZgTgH2TkZ0Z4/BGZ2RUJHWa5ruQp0=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-QILXHr_ePn28tLcBLtvekA-1; Fri, 23 Feb 2024 01:09:05 -0500
-X-MC-Unique: QILXHr_ePn28tLcBLtvekA-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2d230281e64so4123411fa.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:09:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOn4-0004sK-3m
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:12:10 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOn2-0006p9-0w
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:12:09 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a3e85a76fa8so37964666b.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:12:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708668725; x=1709273525; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4Mu1jUbQ1hJ2IvsALS3VRQ0EeN+B0lzuoroT4sstyiQ=;
+ b=ZOX96J0ptCoaDxBGH5/esOrM3MRo+P9zgvk7WYOnuGu3DPxRgyeKk9wB3YB6qY46dP
+ 5M9WUfnuGXr9KRBhZwFAm9slal0LWlMDiDkKquUyh1rZ8+7IGzHDysHLXzxWpDKtmMkr
+ 9HgMDqBsqCo3FVndjovFsIlQFr157aqLys3K9tnaqMznDuvCc73rb+9HZF/Oie+knwU8
+ 9WKzTU1YVBYixQ5hvJKmnWUoiufxlfHWvAle2dWCwi1aM9HraExLmyEValABzg4Ry0Bj
+ MWuJU5jAIIYu4YbqxWxQc03S1CoQ+wZR5qNHf8Br85dLejX/scwJJFdtWfcaISpjIrzD
+ hxGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708668544; x=1709273344;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rCMVUZ+45b/Z7/Qm3YQyYtcJYyWifBqUef0wO34Ua9w=;
- b=pUR3kzS5RZKbWFTp9j4TxMnz46LHEAGuujL3+3RD/1iJ5PCcNOAtwJ7M4FiVdk6WuV
- Z5HsTei1oxXa0ZmUFnyCw8/o5INVh9b2bliWZ4G8Q2OT6GtvxSZy2Vqj0ee8BW44pVKA
- 5g7G1GY5VZ04wAajqz/KQ54EkrjXwOA3rnB3Li/ln9kn1wFy/TstkPjtl2MxZOxgjKOf
- R+yroegMVZqBRQLkJFmuTSmekponh5vkEqptIiu5ZFGVNr1ccj3P3ISv8rOdme0SlzTL
- zFSiQm3f9TTO5izr99VydDhk3gmmCxQpppnfZs/sfXtDz705E/pXubNeYyARRA1Ony02
- ozlQ==
-X-Gm-Message-State: AOJu0YwSSJfl7G/aayIXBe75L/U3bWYAnvcGLiftYihgD/Ih6950XnQ0
- LHobikouGjp5yjzUhYwN1jUoqzc00uc5o0CEA0FpAd2pijfpXX6k7DwDdYEbhR1q9KhaRG2y9hB
- /t5gY5qf6ZjgO49tT0CScXks5uzsLqiGA1Z2oKk5Moff+BtOEs/5c
-X-Received: by 2002:a2e:7219:0:b0:2d2:36e6:b76 with SMTP id
- n25-20020a2e7219000000b002d236e60b76mr638550ljc.49.1708668544049; 
- Thu, 22 Feb 2024 22:09:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXpCaU13jG9NxQVM7FU01MyOixul3P+Pjd3+9LdY9DAVQ6dO7xAg223Pt8BKHXLdXLRcJkKg==
-X-Received: by 2002:a2e:7219:0:b0:2d2:36e6:b76 with SMTP id
- n25-20020a2e7219000000b002d236e60b76mr638533ljc.49.1708668543639; 
- Thu, 22 Feb 2024 22:09:03 -0800 (PST)
-Received: from redhat.com ([147.235.213.72]) by smtp.gmail.com with ESMTPSA id
- b11-20020a5d634b000000b0033cf80ad6f5sm1451928wrw.60.2024.02.22.22.09.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 22:09:03 -0800 (PST)
-Date: Fri, 23 Feb 2024 01:09:00 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Srujana Challa <schalla@marvell.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, vattunuru@marvell.com,
- jerinj@marvell.com
-Subject: Re: [PATCH v3] virtio-pci: correctly set virtio pci queue mem
- multiplier
-Message-ID: <20240223010723-mutt-send-email-mst@kernel.org>
-References: <20240223052617.1867132-1-schalla@marvell.com>
+ d=1e100.net; s=20230601; t=1708668725; x=1709273525;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4Mu1jUbQ1hJ2IvsALS3VRQ0EeN+B0lzuoroT4sstyiQ=;
+ b=clErf8pIF5Vx8PgYs9RPQ4LD60WvdFJa+AmERGwCbk1JH++2UIwNprhD6ZonyeEH5x
+ MxOCcctYXVRNPoj56EFH8cVNJ91mgC+IHGdW+Pl29+uDFiJDbe2nmIRkHfdUiwh0FKuR
+ Jonb6/+GgJNhW5/Nwej1BPW99Fr03mIlHmt+kg2MXCtcFHh6Wi0zEevD8Qe4lONbElOS
+ 10YKx13GU5JyuKHQeDYKUQikEnUkk/itp31ftCIsIqnhxoj6I/hR3cn9oDDi3BTZQvU9
+ miqym8RLVbvxhA1rgJPBOaLBobM7TbzzVA4i0KgTz7b+GA9Xji9zC4Fd4N+hOWJX3mK0
+ 36Zw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnxBntgrjWUw8t4d8jTGPTYaHtrWF/7iMrrW0/NcnFEHV/67GYpMBfND4a6klNAngFiRqeeC/ELrXtxVS6+t2HQ4Gqaf4=
+X-Gm-Message-State: AOJu0Yx+EWCCwsj3heqZDKpkZLb3NlXmc8Vm4wVx/kstfA73SUsRP1/N
+ oUN1oRtBj9v93pQIpYIEMwBdwlEx8uxYe2+EqpMRIfTf/c3KBhAEw08PLynlacQ=
+X-Google-Smtp-Source: AGHT+IF+Pd0EUTM3OMX6B7IzcWgWuoYOOvN/kn+OIXUOCoUFWJCtyczEAH47aaxZ2I60e1rcxjTJBA==
+X-Received: by 2002:a17:906:3911:b0:a3e:5a14:a2f7 with SMTP id
+ f17-20020a170906391100b00a3e5a14a2f7mr522968eje.64.1708668725024; 
+ Thu, 22 Feb 2024 22:12:05 -0800 (PST)
+Received: from [192.168.69.100] (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
+ [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
+ ae2-20020a17090725c200b00a3e643e61e1sm5296597ejc.214.2024.02.22.22.12.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 22 Feb 2024 22:12:04 -0800 (PST)
+Message-ID: <a8c904b1-ec5a-419e-99bf-159ae1413948@linaro.org>
+Date: Fri, 23 Feb 2024 07:12:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240223052617.1867132-1-schalla@marvell.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] hw/i2c: Implement Broadcom Serial Controller (BSC)
+Content-Language: en-US
+To: Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, pbonzini@redhat.com, qemu-arm@nongnu.org
+References: <20240220134120.2961059-1-rayhan.faizel@gmail.com>
+ <20240220134120.2961059-2-rayhan.faizel@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240220134120.2961059-2-rayhan.faizel@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,87 +96,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 23, 2024 at 10:56:17AM +0530, Srujana Challa wrote:
-> Currently, virtio_pci_queue_mem_mult function always returns 4K
-> when VIRTIO_PCI_FLAG_PAGE_PER_VQ is set. But this won't
-> work for vhost vdpa when host has page size other than 4K.
-> This patch introduces a new property(host-page-per-vq) for vdpa
-> use case to fix the same.
+Hi Rayhan,
+
+On 20/2/24 14:41, Rayhan Faizel wrote:
+> A few deficiencies in the current device model need to be noted.
 > 
-> Signed-off-by: Srujana Challa <schalla@marvell.com>
-
-Looks good. I'd like to fail realize if both 
-   (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)
-and
-   (proxy->flags & VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ)
-so users do not start depending on this combination.
-
-
-
+> 1. FIFOs are not used. All sends and receives are done directly.
+> 2. Repeated starts are not emulated. Repeated starts can be triggered in real
+> hardware by sending a new read transfer request in the window time between
+> transfer active set of write transfer request and done bit set of the same.
+> 
+> Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
 > ---
-> v2->v3:
-> - Modified property name, page-per-vdpa-vq to host-page-per-vq.
-> 
-> v1->v2:
-> - Introduced a new property to get virtqueue mem multiplier for
->   vdpa use case.
-> 
->  hw/virtio/virtio-pci.c         | 10 ++++++++--
->  include/hw/virtio/virtio-pci.h |  5 +++++
->  2 files changed, 13 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 1a7039fb0c..f29e60830b 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -320,8 +320,12 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
->  
->  static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
->  {
-> -    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
-> -        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
-> +    if (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)
-> +        return QEMU_VIRTIO_PCI_QUEUE_MEM_MULT;
-> +    else if (proxy->flags & VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ)
-> +        return qemu_real_host_page_size();
-> +    else
-> +        return 4;
->  }
->  
->  static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
-> @@ -2301,6 +2305,8 @@ static Property virtio_pci_properties[] = {
->                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
->      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
->                      VIRTIO_PCI_FLAG_AER_BIT, false),
-> +    DEFINE_PROP_BIT("host-page-per-vq", VirtIOPCIProxy, flags,
-> +                    VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT, false),
->      DEFINE_PROP_END_OF_LIST(),
->  };
->  
-> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-> index 59d88018c1..81b6de4291 100644
-> --- a/include/hw/virtio/virtio-pci.h
-> +++ b/include/hw/virtio/virtio-pci.h
-> @@ -43,6 +43,7 @@ enum {
->      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
->      VIRTIO_PCI_FLAG_AER_BIT,
->      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
-> +    VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT,
->  };
->  
->  /* Need to activate work-arounds for buggy guests at vmstate load. */
-> @@ -89,6 +90,10 @@ enum {
->  #define VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED \
->    (1 << VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT)
->  
-> +/* page per vdpa vq flag to be used for vhost vdpa backends */
-> +#define VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ \
-> +    (1 << VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT)
-> +
->  typedef struct {
->      MSIMessage msg;
->      int virq;
-> -- 
-> 2.25.1
+>   docs/system/arm/raspi.rst    |   1 +
+>   hw/i2c/Kconfig               |   4 +
+>   hw/i2c/bcm2835_i2c.c         | 278 +++++++++++++++++++++++++++++++++++
+>   hw/i2c/meson.build           |   1 +
+>   include/hw/i2c/bcm2835_i2c.h |  80 ++++++++++
+>   5 files changed, 364 insertions(+)
+>   create mode 100644 hw/i2c/bcm2835_i2c.c
+>   create mode 100644 include/hw/i2c/bcm2835_i2c.h
 
+
+> new file mode 100644
+> index 0000000000..d6b9bf887a
+> --- /dev/null
+> +++ b/hw/i2c/bcm2835_i2c.c
+> @@ -0,0 +1,278 @@
+> +/*
+> + * Broadcom Serial Controller (BSC)
+> + *
+> + * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
+> + *
+> + * SPDX-License-Identifier: MIT
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "hw/i2c/bcm2835_i2c.h"
+> +#include "hw/irq.h"
+> +#include "migration/vmstate.h"
+> +
+> +static void bcm2835_i2c_update_interrupt(BCM2835I2CState *s)
+> +{
+> +    int do_interrupt = 0;
+> +    /* Interrupt on RXR (Needs reading) */
+> +    if (s->c & BCM2835_I2C_C_INTR && s->s & BCM2835_I2C_S_RXR) {
+> +        do_interrupt = 1;
+> +    }
+> +
+> +    /* Interrupt on TXW (Needs writing) */
+> +    if (s->c & BCM2835_I2C_C_INTT && s->s & BCM2835_I2C_S_TXW) {
+> +        do_interrupt = 1;
+> +    }
+> +
+> +    /* Interrupt on DONE (Transfer complete) */
+> +    if (s->c & BCM2835_I2C_C_INTD && s->s & BCM2835_I2C_S_DONE) {
+> +        do_interrupt = 1;
+> +    }
+> +    qemu_set_irq(s->irq, do_interrupt);
+> +}
+> +
+> +static void bcm2835_i2c_begin_transfer(BCM2835I2CState *s)
+> +{
+> +    int direction = s->c & BCM2835_I2C_C_READ;
+> +    if (i2c_start_transfer(s->bus, s->a, direction)) {
+> +        s->s |= BCM2835_I2C_S_ERR;
+> +    }
+> +    s->s |= BCM2835_I2C_S_TA;
+> +
+> +    if (direction) {
+> +        s->s |= BCM2835_I2C_S_RXR | BCM2835_I2C_S_RXD;
+> +    } else {
+> +        s->s |= BCM2835_I2C_S_TXW;
+> +    }
+> +}
+> +
+> +static void bcm2835_i2c_finish_transfer(BCM2835I2CState *s)
+> +{
+> +    /*
+> +     * STOP is sent when DLEN counts down to zero.
+> +     *
+> +     * https://github.com/torvalds/linux/blob/master/drivers/i2c/busses/i2c-bcm2835.c#L223-L261
+
+Sorry for not reviewing your patches earlier.
+
+Since this documentation will stay for long and the Linux master branch
+will change, better use a tag:
+https://github.com/torvalds/linux/blob//v6.7/drivers/i2c/busses/i2c-bcm2835.c#L223-L261
+
+Do you mind posting a patch to correct this?
+
+Thanks,
+
+Phil.
 
