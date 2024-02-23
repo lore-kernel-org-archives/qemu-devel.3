@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE7EC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AAAC54E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdQcX-000215-Hv; Fri, 23 Feb 2024 03:09:25 -0500
+	id 1rdQxL-000237-Gc; Fri, 23 Feb 2024 03:30:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rdQcW-00020r-RA
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 03:09:24 -0500
+ id 1rdQxK-00022r-4b
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 03:30:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rdQcU-00019c-Tt
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 03:09:24 -0500
+ id 1rdQxC-0006as-41
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 03:30:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708675762;
+ s=mimecast20190719; t=1708677045;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CpqRj/4pboJWJecyHa+O52UiEbhowMxbk6mQzdyglhQ=;
- b=FUgMHdD50nBCSiLhnO9vxUar57fBwrzB52M8kq2QXXsSnfPOQ2OjSAOidozi6CloYvxHUT
- skF7+qA2KD3aXAzc2v3BOwOeMXrPJZ1a/If2GBxyB+jSEQkGwz9GMVzyQ07//ISjx7Opbx
- vnUf9zuyXKYvpSeVe08v3d0+nFbV4bI=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6QSKwQC2SjIB9fpzU5eAJmTLEETfW3vtFhXqH1Cf948=;
+ b=R41kWyZhRO5zWL/8cFn2SVE7zdFc3FztRFo1ltYLIgA2ZIqWlWdAmTN5gMwf3enBJUZgSj
+ 5Z6VbnKf9+EglHlpqBrn7cfpjnP2Nx3XsEkqOqhfyr/b1hmSUk3rF8U09GVlmMQqyP/KUN
+ u9at4fytKNwELve5xMORdydZEUpnRDg=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-320-61MGwqBYNCCNNF7rS1uOfA-1; Fri, 23 Feb 2024 03:09:20 -0500
-X-MC-Unique: 61MGwqBYNCCNNF7rS1uOfA-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-68f8e8012b1so381016d6.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 00:09:20 -0800 (PST)
+ us-mta-114-6JSMmQrKPha46XciHCWglg-1; Fri, 23 Feb 2024 03:30:43 -0500
+X-MC-Unique: 6JSMmQrKPha46XciHCWglg-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c1879e491dso351044b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 00:30:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708675760; x=1709280560;
+ d=1e100.net; s=20230601; t=1708677043; x=1709281843;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CpqRj/4pboJWJecyHa+O52UiEbhowMxbk6mQzdyglhQ=;
- b=camSIchpxL+x/h/48gehr39Oi24G/f+pHe8Owevx6b6hHMp9SMTXkm1jFV8gRLhay9
- HsZousAEl8UYIh/WDOuMqEf56bEXgHpUFf3G14F5R8ymfpfNQDBgOo79hNFwSVx1wzw7
- 1NEjSNmBfNQBMeY+WO3kp4ndXbQb9koPRMdjSPuYHzYNaR/CVl51EKqe984rdz9SxtcL
- 17Pk5YcC8S8NQWWhelD72rmo6wxy8a26KfxC2GNg0cGWTpnsQiQ91zGJUpIVrv1XY7KP
- GOu+vU65zyX0+gnHAFO5Dq0iXxc6k4OmnQ1nhgDuy/uivARbk2TIHetx1oTTsrM0dUq9
- Qc1g==
+ bh=6QSKwQC2SjIB9fpzU5eAJmTLEETfW3vtFhXqH1Cf948=;
+ b=vpl8NCRh2cGXkLeuqapjYM1c8NZ/62z6ySyjHJmkJpmZbzb/xlFS/Sin/yE9ADIXHn
+ dU2fxpiSe2Vhv7JVN8T2XbfDMle7+/owNsJjeaS1giyombDtu4F26PYcMo5uobsABUkA
+ nOa4Kqomf6eHrfJZ8ndSXhqdPHRWF4ff7ZuN4iAUzYLH5LecvFSdizZ6jgUzcs0nkMoF
+ mPHrCejm8HkUQ8jsSWPSSbRIIz+39Hyw/mq2L8vVy9UJB7eHE8Mm//HBVuVrTJ9IprJq
+ mB29LO8qEcdv7SxW64dvQ/ZrkdLhtA9RHQzpOtyFls+FBGSB6tzrf0vRkm9g3zeNx+1C
+ 0gFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUML/NAD0HgQW/q1Wvo2VNtIXNWKTedwFfjKI7b2eQFDMfTiEJEmiwAn+d6trDFFiFTrI8cy7+rm69WLXjcWbdYOfv0UDE=
-X-Gm-Message-State: AOJu0Yw4h9lVpHLAv+9BS8qpR+duym7BnZBqmd8ryEcKdaVvylAHsynH
- d+Yb1yxEF9Q1+/WiSnFL7ASHxC8WLcleOfOk3MllBxDG3dXtoWTY0IPoQHSCDYLJ1+fQWyky9lR
- q3wJN3Q45hk1tz7CDBQUdh06Dre9l7jirwFsPxiX2S10twVsWI9L1
-X-Received: by 2002:ad4:5fcf:0:b0:68f:cbd2:ec8d with SMTP id
- jq15-20020ad45fcf000000b0068fcbd2ec8dmr1650988qvb.64.1708675760143; 
- Fri, 23 Feb 2024 00:09:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF79BCtP4Hc+RHujKXEGNvEtBDf2Q5NEkwvKheJrRgR4Gr5pANpk3033P9kQPP7Y8x/4PPfTg==
-X-Received: by 2002:ad4:5fcf:0:b0:68f:cbd2:ec8d with SMTP id
- jq15-20020ad45fcf000000b0068fcbd2ec8dmr1650970qvb.64.1708675759699; 
- Fri, 23 Feb 2024 00:09:19 -0800 (PST)
+ AJvYcCXmYLCKB5jwqYJacdKwbrZnacBKM7W9C1mL/dcfaQ8wtGzct4CCzBJO31cY9zHvdvpwlnExp1N9jsQmli7bQK91btf8cZw=
+X-Gm-Message-State: AOJu0YyKuaai6SuYHYJjOBq3RfOtD+Hnv3UQDiJAiJCxOET4sityGpds
+ fnJgRTRez9j9vSQlf7mKA6cAmw45akuacCax4NnuIqWZnj17xNzcmIrNSsDvtE32oIAfAz/CXAw
+ BWoaAZjB/qBTCLkn6a21e33nGJQwA1PFEunEMJJlCGZTbhl0yBXEi
+X-Received: by 2002:a05:6808:4485:b0:3c1:83c3:969b with SMTP id
+ eq5-20020a056808448500b003c183c3969bmr1742222oib.53.1708677042849; 
+ Fri, 23 Feb 2024 00:30:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE31r8vTwESgendQFaSf5UY/e+tmsbkqMpjkqalMWAtTfNEuMJ+Nep6ZnmOFOSmxqo9N8/9nQ==
+X-Received: by 2002:a05:6808:4485:b0:3c1:83c3:969b with SMTP id
+ eq5-20020a056808448500b003c183c3969bmr1742192oib.53.1708677042360; 
+ Fri, 23 Feb 2024 00:30:42 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- lx6-20020a0562145f0600b0068f6dfcca55sm5855974qvb.65.2024.02.23.00.09.17
+ cz2-20020a05620a36c200b0078734c20d45sm6223144qkb.121.2024.02.23.00.30.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 00:09:19 -0800 (PST)
-Message-ID: <81c2b165-0961-4fea-947d-f55677049e9f@redhat.com>
-Date: Fri, 23 Feb 2024 09:09:15 +0100
+ Fri, 23 Feb 2024 00:30:41 -0800 (PST)
+Message-ID: <fd894834-622f-4d1e-b594-87beb35deebf@redhat.com>
+Date: Fri, 23 Feb 2024 09:30:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/arm/smmu-common: Create virtual function for
- implementation defined StreamID
+Subject: Re: [PATCH v4 1/3] qdev: Add a granule_mode property
 Content-Language: en-US
-To: Nabih Estefan <nabihestefan@google.com>, peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org,
- its@irrelevant.dk, kbusch@kernel.org, roqueh@google.com
-References: <20240221171716.1260192-1-nabihestefan@google.com>
- <20240221171716.1260192-3-nabihestefan@google.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ mst@redhat.com, jean-philippe@linaro.org, peter.maydell@linaro.org,
+ clg@redhat.com, yanghliu@redhat.com, Markus Armbruster <armbru@redhat.com>
+Cc: alex.williamson@redhat.com, zhenzhong.duan@intel.com,
+ jasowang@redhat.com, pbonzini@redhat.com, berrange@redhat.com
+References: <20240223074459.63422-1-eric.auger@redhat.com>
+ <20240223074459.63422-2-eric.auger@redhat.com>
+ <07d4a2a4-1880-4402-a12a-94eeb649f8b0@linaro.org>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240221171716.1260192-3-nabihestefan@google.com>
+In-Reply-To: <07d4a2a4-1880-4402-a12a-94eeb649f8b0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -5
@@ -112,116 +115,76 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Philippe,
 
-On 2/21/24 18:17, Nabih Estefan wrote:
-> From: Roque Arcudia Hernandez <roqueh@google.com>
+On 2/23/24 08:52, Philippe Mathieu-Daudé wrote:
+> Hi Eric,
 >
-> According to the SMMU specification the StreamID construction and size is
-> IMPLEMENTATION DEFINED, the size being between 0 and 32 bits.
+> On 23/2/24 08:27, Eric Auger wrote:
+>> Introduce a new enum type property allowing to set an
+>> IOMMU granule. Values are 4K, 8K, 16K, 64K and host.
+>> This latter indicates the vIOMMU granule will match
+>> the host page size.
+>>
+>> A subsequent patch will add such a property to the
+>> virtio-iommu device.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> ---
+>>
+>> v3 -> v4:
+>> - Add 8K
+>> ---
+>>   include/hw/qdev-properties-system.h |  3 +++
+>>   include/hw/virtio/virtio-iommu.h    | 11 +++++++++++
+>>   hw/core/qdev-properties-system.c    | 15 +++++++++++++++
+>>   hw/virtio/virtio-iommu.c            | 11 +++++++++++
+>>   4 files changed, 40 insertions(+)
 >
-> This patch creates virtual functions get_sid and get_iommu_mr to allow different
-> implementations of how the StreamID is constructed via inheritance. The default
-> implementation of these functions will match the current ones where the BDF is
-> used directly as StreamID.
+>
+>> diff --git a/include/hw/virtio/virtio-iommu.h
+>> b/include/hw/virtio/virtio-iommu.h
+>> index 5fbe4677c2..e22327548f 100644
+>> --- a/include/hw/virtio/virtio-iommu.h
+>> +++ b/include/hw/virtio/virtio-iommu.h
+>> @@ -31,6 +31,17 @@ OBJECT_DECLARE_SIMPLE_TYPE(VirtIOIOMMU, VIRTIO_IOMMU)
+>>     #define TYPE_VIRTIO_IOMMU_MEMORY_REGION "virtio-iommu-memory-region"
+>>   +typedef enum GranuleMode {
+>> +    GRANULE_MODE_4K,
+>> +    GRANULE_MODE_8K,
+>> +    GRANULE_MODE_16K,
+>> +    GRANULE_MODE_64K,
+>> +    GRANULE_MODE_HOST,
+>> +    GRANULE_MODE__MAX,
+>> +} GranuleMode;
+>> +
+>> +extern const QEnumLookup GranuleMode_lookup;
+>
+> Aren't this, ...
+>
+>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+>> index 2ec5ef3cd1..a9bdc03d12 100644
+>> --- a/hw/virtio/virtio-iommu.c
+>> +++ b/hw/virtio/virtio-iommu.c
+>> @@ -44,6 +44,17 @@
+>>   #define VIOMMU_DEFAULT_QUEUE_SIZE 256
+>>   #define VIOMMU_PROBE_SIZE 512
+>>   +const QEnumLookup GranuleMode_lookup = {
+>> +    .array = (const char *const[]) {
+>> +        [GRANULE_MODE_4K]   = "4K",
+>> +        [GRANULE_MODE_8K]   = "8K",
+>> +        [GRANULE_MODE_16K]  = "16K",
+>> +        [GRANULE_MODE_64K]  = "64K",
+>> +        [GRANULE_MODE_HOST] = "host",
+>> +    },
+>> +    .size = GRANULE_MODE__MAX
+>> +};
+> ... and this supposed to be QAPI generated?
+If I remove both, it does not compile. How do you make it generated?
 
-The patch itself looks good to me but it lacks a concrete derived
-implementation of get_sid() and get_iommu_mr(). Until you do not
-upstream it I don't see the point in introducing those callbacks. Thanks
+Thanks
+
 Eric
->
-> Signed-off-by: Roque Arcudia Hernandez <roqueh@google.com>
-> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-> ---
->  hw/arm/smmu-common.c         | 12 ++++++++++++
->  include/hw/arm/smmu-common.h | 16 +++++++++++-----
->  2 files changed, 23 insertions(+), 5 deletions(-)
->
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 4caedb4998..14b3240a88 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -621,6 +621,11 @@ static const PCIIOMMUOps smmu_ops = {
->  };
->  
->  IOMMUMemoryRegion *smmu_iommu_mr(SMMUState *s, uint32_t sid)
-> +{
-> +    return ARM_SMMU_GET_CLASS(s)->get_iommu_mr(s, sid);
-> +}
-> +
-> +static IOMMUMemoryRegion *smmu_base_iommu_mr(SMMUState *s, uint32_t sid)
->  {
->      uint8_t bus_n, devfn;
->      SMMUPciBus *smmu_bus;
-> @@ -659,6 +664,11 @@ void smmu_inv_notifiers_all(SMMUState *s)
->      }
->  }
->  
-> +static uint32_t smmu_base_get_sid(SMMUDevice *sdev)
-> +{
-> +    return PCI_BUILD_BDF(pci_bus_num(sdev->bus), sdev->devfn);
-> +}
-> +
->  static void smmu_base_realize(DeviceState *dev, Error **errp)
->  {
->      SMMUState *s = ARM_SMMU(dev);
-> @@ -709,6 +719,8 @@ static void smmu_base_class_init(ObjectClass *klass, void *data)
->      device_class_set_parent_realize(dc, smmu_base_realize,
->                                      &sbc->parent_realize);
->      rc->phases.hold = smmu_base_reset_hold;
-> +    sbc->get_sid = smmu_base_get_sid;
-> +    sbc->get_iommu_mr = smmu_base_iommu_mr;
->  }
->  
->  static const TypeInfo smmu_base_info = {
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index 5ec2e6c1a4..d53121fe37 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -131,6 +131,9 @@ typedef struct SMMUIOTLBKey {
->      uint8_t level;
->  } SMMUIOTLBKey;
->  
-> +#define TYPE_ARM_SMMU "arm-smmu"
-> +OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
-> +
->  struct SMMUState {
->      /* <private> */
->      SysBusDevice  dev;
-> @@ -147,6 +150,9 @@ struct SMMUState {
->      PCIBus *primary_bus;
->  };
->  
-> +typedef uint32_t GetSidFunc(SMMUDevice *obj);
-> +typedef IOMMUMemoryRegion *GetIommuMr(SMMUState *s, uint32_t sid);
-> +
->  struct SMMUBaseClass {
->      /* <private> */
->      SysBusDeviceClass parent_class;
-> @@ -154,19 +160,19 @@ struct SMMUBaseClass {
->      /*< public >*/
->  
->      DeviceRealize parent_realize;
-> +    GetSidFunc *get_sid;
-> +    GetIommuMr *get_iommu_mr;
->  
->  };
->  
-> -#define TYPE_ARM_SMMU "arm-smmu"
-> -OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
-> -
->  /* Return the SMMUPciBus handle associated to a PCI bus number */
->  SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
->  
->  /* Return the stream ID of an SMMU device */
-> -static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
-> +static inline uint32_t smmu_get_sid(SMMUDevice *sdev)
->  {
-> -    return PCI_BUILD_BDF(pci_bus_num(sdev->bus), sdev->devfn);
-> +    SMMUState *s = sdev->smmu;
-> +    return ARM_SMMU_GET_CLASS(s)->get_sid(sdev);
->  }
->  
->  /**
 
 
