@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E57C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E729C54E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdY29-0008Bf-Lt; Fri, 23 Feb 2024 11:04:22 -0500
+	id 1rdY2E-0000QJ-Q3; Fri, 23 Feb 2024 11:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXkK-0007T2-RJ; Fri, 23 Feb 2024 10:45:57 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1rdXkP-0007Ws-Hq; Fri, 23 Feb 2024 10:46:02 -0500
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXkB-0006gt-4Z; Fri, 23 Feb 2024 10:45:48 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1dc5d0162bcso8031215ad.0; 
- Fri, 23 Feb 2024 07:45:46 -0800 (PST)
+ id 1rdXkM-0006iu-Nb; Fri, 23 Feb 2024 10:46:00 -0500
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e4751b97eeso350219b3a.1; 
+ Fri, 23 Feb 2024 07:45:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708703145; x=1709307945; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703156; x=1709307956; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hzfDi7HOkniGAA6UQoglk6USS7o2jQvpKtFieYYG7ZM=;
- b=k5BaidMM45Y8Q2TS/PC+/Ku2hE4aM0McLWV0n24r/R2cOHc0mOdFoQOuSksTpVuOWQ
- 79ES+rn9PV85YvtWOpV47bWfGWCM4GIIqG8C700bsYuRM4pH8uD+/lI5uHM+ahJ1BfMr
- 1t8kG8cPkUqX6dJcg4kzs+QDZIqvhcZO2RmhF0swm5wh+XBeyr4Ijg2tgBhMQFEnIKyy
- WecGP2to1tHw6a1jS8eb3BgYB9dXkn0z7sUWvA/jWe5MRLVIxidw7k1MpZMANDi7GwhQ
- Qje0MkJLxmsO2rBmTxRT/FlUMdzBRiEqBRsnUZTYwKPBfHCobBGkyIo7SL2R2NGcQpym
- LkSQ==
+ bh=yFqipXJsXEnafgLcmtHeug1c4B0ygbUJpknek1Zmhr0=;
+ b=AFcProYWLJTJUZBvcZ2ZiXmP4zTcDw9Z3G18HW2T8AEmaNfhUrp47amUxkwi9tR3AO
+ pS1Lk72zQ+s6RBUlAPMusmb5DF1UshXPsLzg2cgmWoFJ2BXUlY3+8ral7gwz/nNBPdrr
+ nHykWgDwtsuRdFCMni+JhUxbeKwwsj+vUctWmPUfZZgQWZ/C9mo/uNW1V5RQX53WeP37
+ PNAZgFgYYj5EaMYbThqyrm4zTnFt26Fmu7FjgvqkYZkAccDpvG46qnphOoFvWYv91Y0z
+ of4mczUU3wCHXqF3o4oXIn4KgmpTabjIY7WIg1FEfq08aQAtP+LFwWDIeB6rUqAdcyOj
+ PArA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708703145; x=1709307945;
+ d=1e100.net; s=20230601; t=1708703156; x=1709307956;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hzfDi7HOkniGAA6UQoglk6USS7o2jQvpKtFieYYG7ZM=;
- b=CHn9lZjaKydsfWeTcOD6vIx/hYp+drUO+VGyMyADRHZrB2Uf0hVVzm7CKk9xunq2kG
- OlAfds+4m5h1TZ0rSWLWlCgSSKYQFx6wVm83/QDZnrSLXZmtV66GfeL8bbIwYKOmJCQW
- iOnYFWH5Mw7mh7x8gaLtPv3HuKzPCsfP87ZOIYEaXqkJeeJAakbN9W9gGcgwBU9IAR03
- ONy5y7dtAUcUEkyPix1B1H8ZQYhssV1JZeEEWyf65QqgNOu1u/R0pqjdG0VXy7vpqWF9
- dfTrFUbEm8FlGd0e4Ip02yu+XcCqUF/MnwOCcO8LaCOUTtWPtoL42hr9yrgWYX6aXBm0
- 6xJQ==
+ bh=yFqipXJsXEnafgLcmtHeug1c4B0ygbUJpknek1Zmhr0=;
+ b=c+v+xUrI4Pe2hImFu4USjCof/QeQRZtfhnB/OBwkDgmdXjdBZD1ZKE39n3q/pSSpBh
+ cLxFk3xpL0JyQuTkfcywxgmpteMoPfMRCUHDerZFjeMFIDsNu1x95eQ8ZfyQ4X0lRtd9
+ 92qHTt2PiIpAN391esvqxnUl9iItyCtTvKyJLxbuSHEyuFbn/6l31BULsGkFkxVqeSb6
+ inEsuSPbwbjBid0m2EtR4z3+mLf4tUuPFvTt29SNEoRiDV3AdXlf0RHk3KruscUvlRmm
+ qMfa7XksvANYia9za4bGnYPeKxYO2Nr4PwYXcmukUzm6u0MClEwJMej/OMyNvDOegEG7
+ 3I0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwCqo+OGyA4G+lqBxJ9kpwyp09ILT8nufgWf9VSk/vxcUZhfBeEYJ+niWK2yR6BbOHUJRDW2XYov0Yb7pZIfKXZOGg
-X-Gm-Message-State: AOJu0Yy4mAk19FlZ1fLqOVZYxMtvT0dUcTnlgD1hj+loC4DvR1fvmpz2
- cTtgGHb+Fy3VeiTaot4fnC0f9f8WZa7e/Ozn/MNHmD/Fgy5pKeTbuE2hiAW7
-X-Google-Smtp-Source: AGHT+IFxqenxxO1+r4ATdmx5MtwYM+Ey+TcICGXcFcvrIMHcLugjcaYqbpgjOg/A1Mg3sDA6ENmWzA==
-X-Received: by 2002:a17:902:f7c3:b0:1db:cb13:10f1 with SMTP id
- h3-20020a170902f7c300b001dbcb1310f1mr157916plw.19.1708703144911; 
- Fri, 23 Feb 2024 07:45:44 -0800 (PST)
+ AJvYcCUfLMSiDUC0uvd8EWHNUIF2jqJK9Cw+zDABmfCJru+G/0SvZG/oOWizQ33KoDoXG8o2RrL8ZXar22MW4C6cMfBVRzUU
+X-Gm-Message-State: AOJu0YzF4ZIf42PeklVpbtefNmnADStcbAA9YUg9NpT2BUSM2DwSry8k
+ QIDuJEoHDQcfJeKvMwnxya+0D68L8knuxljYx0QgVkIhHHui6rgHGxy4/UGZ
+X-Google-Smtp-Source: AGHT+IEPl8WYQOgACvDQm+IPNmPrWo8ntElGxRCpDHP8/r8ec/O/c5tu+zirT2oL/vFhsi6fSkz7mg==
+X-Received: by 2002:a05:6a20:9c8d:b0:1a0:cd54:6d9f with SMTP id
+ mj13-20020a056a209c8d00b001a0cd546d9fmr109732pzb.23.1708703155726; 
+ Fri, 23 Feb 2024 07:45:55 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.45.42
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.45.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:45:44 -0800 (PST)
+ Fri, 23 Feb 2024 07:45:55 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 40/47] target/ppc: Implement core timebase state machine and
- TFMR
-Date: Sat, 24 Feb 2024 01:41:59 +1000
-Message-ID: <20240223154211.1001692-41-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 43/47] target/ppc: Factor out 4xx ppcemb_tlb_t flushing
+Date: Sat, 24 Feb 2024 01:42:02 +1000
+Message-ID: <20240223154211.1001692-44-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,317 +98,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This implements the core timebase state machine, which is the core side
-of the time-of-day system in POWER processors. This facility is operated
-by control fields in the TFMR register, which also contains status
-fields.
+Flushing the TCG TLB pages that cache a software TLB is a common
+operation, factor it into its own function.
 
-The core timebase interacts with the chiptod hardware, primarily to
-receive TOD updates, to synchronise timebase with other cores. This
-model does not actually update TB values with TOD or updates received
-from the chiptod, as timebases are always synchronised. It does step
-through the states required to perform the update.
-
-There are several asynchronous state transitions. These are modelled
-using using mfTFMR to drive state changes, because it is expected that
-firmware poll the register to wait for those states. This is good enough
-to test basic firmware behaviour without adding real timers. The values
-chosen are arbitrary.
-
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
 Acked-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h             |  36 ++++++
- target/ppc/timebase_helper.c | 210 ++++++++++++++++++++++++++++++++++-
- 2 files changed, 243 insertions(+), 3 deletions(-)
+ target/ppc/mmu_helper.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0e932838aa..ec14574d14 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1188,6 +1188,14 @@ DEXCR_ASPECT(PHIE, 6)
- struct pnv_tod_tbst {
-     int tb_ready_for_tod; /* core TB ready to receive TOD from chiptod */
-     int tod_sent_to_tb;   /* chiptod sent TOD to the core TB */
-+
-+    /*
-+     * "Timers" for async TBST events are simulated by mfTFAC because TFAC
-+     * is polled for such events. These are just used to ensure firmware
-+     * performs the polling at least a few times.
-+     */
-+    int tb_state_timer;
-+    int tb_sync_pulse_timer;
- };
- 
- /*****************************************************************************/
-@@ -2661,6 +2669,34 @@ enum {
-     HMER_XSCOM_STATUS_MASK      = PPC_BITMASK(21, 23),
- };
- 
-+/* TFMR */
-+enum {
-+    TFMR_CONTROL_MASK           = PPC_BITMASK(0, 24),
-+    TFMR_MASK_HMI               = PPC_BIT(10),
-+    TFMR_TB_ECLIPZ              = PPC_BIT(14),
-+    TFMR_LOAD_TOD_MOD           = PPC_BIT(16),
-+    TFMR_MOVE_CHIP_TOD_TO_TB    = PPC_BIT(18),
-+    TFMR_CLEAR_TB_ERRORS        = PPC_BIT(24),
-+    TFMR_STATUS_MASK            = PPC_BITMASK(25, 63),
-+    TFMR_TBST_ENCODED           = PPC_BITMASK(28, 31), /* TBST = TB State */
-+    TFMR_TBST_LAST              = PPC_BITMASK(32, 35), /* Previous TBST */
-+    TFMR_TB_ENABLED             = PPC_BIT(40),
-+    TFMR_TB_VALID               = PPC_BIT(41),
-+    TFMR_TB_SYNC_OCCURED        = PPC_BIT(42),
-+    TFMR_FIRMWARE_CONTROL_ERROR = PPC_BIT(46),
-+};
-+
-+/* TFMR TBST (Time Base State Machine). */
-+enum {
-+    TBST_RESET                  = 0x0,
-+    TBST_SEND_TOD_MOD           = 0x1,
-+    TBST_NOT_SET                = 0x2,
-+    TBST_SYNC_WAIT              = 0x6,
-+    TBST_GET_TOD                = 0x7,
-+    TBST_TB_RUNNING             = 0x8,
-+    TBST_TB_ERROR               = 0x9,
-+};
-+
- /*****************************************************************************/
- 
- #define is_isa300(ctx) (!!(ctx->insns_flags2 & PPC2_ISA300))
-diff --git a/target/ppc/timebase_helper.c b/target/ppc/timebase_helper.c
-index f618ed2922..b8b9afe0b6 100644
---- a/target/ppc/timebase_helper.c
-+++ b/target/ppc/timebase_helper.c
-@@ -18,6 +18,7 @@
-  */
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "hw/ppc/ppc.h"
- #include "exec/helper-proto.h"
- #include "exec/exec-all.h"
- #include "qemu/log.h"
-@@ -145,15 +146,218 @@ void helper_store_booke_tsr(CPUPPCState *env, target_ulong val)
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index c140f3c96d..949ae87f4f 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -749,12 +749,20 @@ target_ulong helper_4xx_tlbre_lo(CPUPPCState *env, target_ulong entry)
+     return ret;
  }
  
- #if defined(TARGET_PPC64)
--/* POWER processor Timebase Facility */
-+/*
-+ * POWER processor Timebase Facility
-+ */
-+
-+/*
-+ * The TBST is the timebase state machine, which is a per-core machine that
-+ * is used to synchronize the core TB with the ChipTOD. States 3,4,5 are
-+ * not used in POWER8/9/10.
-+ *
-+ * The state machine gets driven by writes to TFMR SPR from the core, and
-+ * by signals from the ChipTOD. The state machine table for common
-+ * transitions is as follows (according to hardware specs, not necessarily
-+ * this implementation):
-+ *
-+ * | Cur            | Event                            | New |
-+ * +----------------+----------------------------------+-----+
-+ * | 0 RESET        | TFMR |= LOAD_TOD_MOD             | 1   |
-+ * | 1 SEND_TOD_MOD | "immediate transition"           | 2   |
-+ * | 2 NOT_SET      | mttbu/mttbu40/mttbl              | 2   |
-+ * | 2 NOT_SET      | TFMR |= MOVE_CHIP_TOD_TO_TB      | 6   |
-+ * | 6 SYNC_WAIT    | "sync pulse from ChipTOD"        | 7   |
-+ * | 7 GET_TOD      | ChipTOD xscom MOVE_TOD_TO_TB_REG | 8   |
-+ * | 8 TB_RUNNING   | mttbu/mttbu40                    | 8   |
-+ * | 8 TB_RUNNING   | TFMR |= LOAD_TOD_MOD             | 1   |
-+ * | 8 TB_RUNNING   | mttbl                            | 9   |
-+ * | 9 TB_ERROR     | TFMR |= CLEAR_TB_ERRORS          | 0   |
-+ *
-+ * - LOAD_TOD_MOD will also move states 2,6 to state 1, omitted from table
-+ *   because it's not a typical init flow.
-+ *
-+ * - The ERROR state can be entered from most/all other states on invalid
-+ *   states (e.g., if some TFMR control bit is set from a state where it's
-+ *   not listed to cause a transition away from), omitted to avoid clutter.
-+ *
-+ * Note: mttbl causes a timebase error because this inevitably causes
-+ * ticks to be lost and TB to become unsynchronized, whereas TB can be
-+ * adjusted using mttbu* without losing ticks. mttbl behaviour is not
-+ * modelled.
-+ *
-+ * Note: the TB state machine does not actually cause any real TB adjustment!
-+ * TB starts out synchronized across all vCPUs (hardware threads) in
-+ * QMEU, so for now the purpose of the TBST and ChipTOD model is simply
-+ * to step through firmware initialisation sequences.
-+ */
-+static unsigned int tfmr_get_tb_state(uint64_t tfmr)
++static void ppcemb_tlb_flush(CPUState *cs, ppcemb_tlb_t *tlb)
 +{
-+    return (tfmr & TFMR_TBST_ENCODED) >> (63 - 31);
++    target_ulong ea;
++
++    for (ea = tlb->EPN; ea < tlb->EPN + tlb->size; ea += TARGET_PAGE_SIZE) {
++        tlb_flush_page(cs, ea);
++    }
 +}
 +
-+static uint64_t tfmr_new_tb_state(uint64_t tfmr, unsigned int tbst)
-+{
-+    tfmr &= ~TFMR_TBST_LAST;
-+    tfmr |= (tfmr & TFMR_TBST_ENCODED) >> 4; /* move state to last state */
-+    tfmr &= ~TFMR_TBST_ENCODED;
-+    tfmr |= (uint64_t)tbst << (63 - 31); /* move new state to state */
-+
-+    if (tbst == TBST_TB_RUNNING) {
-+        tfmr |= TFMR_TB_VALID;
-+    } else {
-+        tfmr &= ~TFMR_TB_VALID;
-+    }
-+
-+    return tfmr;
-+}
-+
-+static void tb_state_machine_step(CPUPPCState *env)
-+{
-+    uint64_t tfmr = env->spr[SPR_TFMR];
-+    unsigned int tbst = tfmr_get_tb_state(tfmr);
-+
-+    if (!(tfmr & TFMR_TB_ECLIPZ) || tbst == TBST_TB_ERROR) {
-+        return;
-+    }
-+
-+    if (env->pnv_tod_tbst.tb_sync_pulse_timer) {
-+        env->pnv_tod_tbst.tb_sync_pulse_timer--;
-+    } else {
-+        tfmr |= TFMR_TB_SYNC_OCCURED;
-+        env->spr[SPR_TFMR] = tfmr;
-+    }
-+
-+    if (env->pnv_tod_tbst.tb_state_timer) {
-+        env->pnv_tod_tbst.tb_state_timer--;
-+        return;
-+    }
-+
-+    if (tfmr & TFMR_LOAD_TOD_MOD) {
-+        tfmr &= ~TFMR_LOAD_TOD_MOD;
-+        if (tbst == TBST_GET_TOD) {
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-+            tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-+        } else {
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_SEND_TOD_MOD);
-+            /* State seems to transition immediately */
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_NOT_SET);
-+        }
-+    } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
-+        if (tbst == TBST_SYNC_WAIT) {
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_GET_TOD);
-+            env->pnv_tod_tbst.tb_state_timer = 3;
-+        } else if (tbst == TBST_GET_TOD) {
-+            if (env->pnv_tod_tbst.tod_sent_to_tb) {
-+                tfmr = tfmr_new_tb_state(tfmr, TBST_TB_RUNNING);
-+                tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
-+                env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+                env->pnv_tod_tbst.tod_sent_to_tb = 0;
-+            }
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
-+                          "state machine in invalid state 0x%x\n", tbst);
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-+            tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-+            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+        }
-+    }
-+
-+    env->spr[SPR_TFMR] = tfmr;
-+}
-+
- target_ulong helper_load_tfmr(CPUPPCState *env)
+ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
+                          target_ulong val)
  {
--    return env->spr[SPR_TFMR];
-+    tb_state_machine_step(env);
-+
-+    return env->spr[SPR_TFMR] | TFMR_TB_ECLIPZ;
- }
+     CPUState *cs = env_cpu(env);
+     ppcemb_tlb_t *tlb;
+-    target_ulong page, end;
  
- void helper_store_tfmr(CPUPPCState *env, target_ulong val)
- {
--    env->spr[SPR_TFMR] = val;
-+    uint64_t tfmr = env->spr[SPR_TFMR];
-+    uint64_t clear_on_write;
-+    unsigned int tbst = tfmr_get_tb_state(tfmr);
-+
-+    if (!(val & TFMR_TB_ECLIPZ)) {
-+        qemu_log_mask(LOG_UNIMP, "TFMR non-ECLIPZ mode not implemented\n");
-+        tfmr &= ~TFMR_TBST_ENCODED;
-+        tfmr &= ~TFMR_TBST_LAST;
-+        goto out;
-+    }
-+
-+    /* Update control bits */
-+    tfmr = (tfmr & ~TFMR_CONTROL_MASK) | (val & TFMR_CONTROL_MASK);
-+
-+    /* Several bits are clear-on-write, only one is implemented so far */
-+    clear_on_write = val & TFMR_FIRMWARE_CONTROL_ERROR;
-+    tfmr &= ~clear_on_write;
-+
-+    /*
-+     * mtspr always clears this. The sync pulse timer makes it come back
-+     * after the second mfspr.
-+     */
-+    tfmr &= ~TFMR_TB_SYNC_OCCURED;
-+    env->pnv_tod_tbst.tb_sync_pulse_timer = 1;
-+
-+    if (ppc_cpu_tir(env_archcpu(env)) != 0 &&
-+        (val & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB))) {
-+        qemu_log_mask(LOG_UNIMP, "TFMR timebase state machine can only be "
-+                                 "driven by thread 0\n");
-+        goto out;
-+    }
-+
-+    if (((tfmr | val) & (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) ==
-+                        (TFMR_LOAD_TOD_MOD | TFMR_MOVE_CHIP_TOD_TO_TB)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: LOAD_TOD_MOD and "
-+                                       "MOVE_CHIP_TOD_TO_TB both set\n");
-+        tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-+        tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-+        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+        goto out;
-+    }
-+
-+    if (tfmr & TFMR_CLEAR_TB_ERRORS) {
-+        /*
-+         * Workbook says TFMR_CLEAR_TB_ERRORS should be written twice.
-+         * This is not simulated/required here.
-+         */
-+        tfmr = tfmr_new_tb_state(tfmr, TBST_RESET);
-+        tfmr &= ~TFMR_CLEAR_TB_ERRORS;
-+        tfmr &= ~TFMR_LOAD_TOD_MOD;
-+        tfmr &= ~TFMR_MOVE_CHIP_TOD_TO_TB;
-+        tfmr &= ~TFMR_FIRMWARE_CONTROL_ERROR; /* XXX: should this be cleared? */
-+        env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+        env->pnv_tod_tbst.tod_sent_to_tb = 0;
-+        goto out;
-+    }
-+
-+    if (tbst == TBST_TB_ERROR) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: mtspr TFMR in TB_ERROR"
-+                                       " state\n");
-+        tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-+        return;
-+    }
-+
-+    if (tfmr & TFMR_LOAD_TOD_MOD) {
-+        /* Wait for an arbitrary 3 mfspr until the next state transition. */
-+        env->pnv_tod_tbst.tb_state_timer = 3;
-+    } else if (tfmr & TFMR_MOVE_CHIP_TOD_TO_TB) {
-+        if (tbst == TBST_NOT_SET) {
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_SYNC_WAIT);
-+            env->pnv_tod_tbst.tb_ready_for_tod = 1;
-+            env->pnv_tod_tbst.tb_state_timer = 3; /* arbitrary */
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR, "TFMR error: MOVE_CHIP_TOD_TO_TB "
-+                                           "not in TB not set state 0x%x\n",
-+                                           tbst);
-+            tfmr = tfmr_new_tb_state(tfmr, TBST_TB_ERROR);
-+            tfmr |= TFMR_FIRMWARE_CONTROL_ERROR;
-+            env->pnv_tod_tbst.tb_ready_for_tod = 0;
-+        }
-+    }
-+
-+out:
-+    env->spr[SPR_TFMR] = tfmr;
+     qemu_log_mask(CPU_LOG_MMU, "%s entry %d val " TARGET_FMT_lx "\n",
+                   __func__, (int)entry,
+@@ -763,13 +771,10 @@ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
+     tlb = &env->tlb.tlbe[entry];
+     /* Invalidate previous TLB (if it's valid) */
+     if (tlb->prot & PAGE_VALID) {
+-        end = tlb->EPN + tlb->size;
+         qemu_log_mask(CPU_LOG_MMU, "%s: invalidate old TLB %d start "
+                       TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
+-                      (int)entry, tlb->EPN, end);
+-        for (page = tlb->EPN; page < end; page += TARGET_PAGE_SIZE) {
+-            tlb_flush_page(cs, page);
+-        }
++                      (int)entry, tlb->EPN, tlb->EPN + tlb->size);
++        ppcemb_tlb_flush(cs, tlb);
+     }
+     tlb->size = booke_tlb_to_page_size((val >> PPC4XX_TLBHI_SIZE_SHIFT)
+                                        & PPC4XX_TLBHI_SIZE_MASK);
+@@ -805,13 +810,10 @@ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
+                   tlb->prot & PAGE_VALID ? 'v' : '-', (int)tlb->PID);
+     /* Invalidate new TLB (if valid) */
+     if (tlb->prot & PAGE_VALID) {
+-        end = tlb->EPN + tlb->size;
+         qemu_log_mask(CPU_LOG_MMU, "%s: invalidate TLB %d start "
+                       TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
+-                      (int)entry, tlb->EPN, end);
+-        for (page = tlb->EPN; page < end; page += TARGET_PAGE_SIZE) {
+-            tlb_flush_page(cs, page);
+-        }
++                      (int)entry, tlb->EPN, tlb->EPN + tlb->size);
++        ppcemb_tlb_flush(cs, tlb);
+     }
  }
- #endif
  
 -- 
 2.42.0
