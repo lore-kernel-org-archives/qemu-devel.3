@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEA9C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 05:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA40C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdOT9-0002gA-VC; Fri, 23 Feb 2024 00:51:35 -0500
+	id 1rdOcn-0000Ng-Hj; Fri, 23 Feb 2024 01:01:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOT7-0002fb-P3
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 00:51:33 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOcl-0000NT-7R
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:01:31 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOT6-0002xv-8m
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 00:51:33 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33d118a181fso330310f8f.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 21:51:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOcj-0005DM-Jb
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:01:30 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5640fef9fa6so486976a12.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:01:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708667490; x=1709272290; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708668088; x=1709272888; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=du98JuAFTGPNIDeuZhUVLEaj+AcU8975zvDnqpbUWu8=;
- b=VOf/wSvKinEn0yltGgZTFYDWx6swbCwsI930tlq5Zukka+BYPy5LKOxkuEsOE61Vrg
- J8mm8g5O1aeggWaaZpsLEp991MihHx3QTRJOVsCPQl1xl6xuP3Qs+Tje6rqAN9t4NDHf
- +jAgyCWDh6VaAoT2ld348E9p8/krMM4KM8Lf6vJgML5BMXkJW1/GdpgZBnN5MUzIlnfS
- nzOhlycs5UirXLPj3ilN7R1a/6uS1yOSiAm0O6Q45bEVtSQPqnTqxxyI/b8Mfq6KXZ8m
- degF8Uuv5Uz5TqJJ/Lh9+TSuoKYNgTVDcjWDdx97NhEit/RR1gjSwLKS7XF9Zq5ELPjm
- EfiQ==
+ bh=FoIRy7W0V+hytFtRoLx6BCKLQAybNtoivttYObssT4s=;
+ b=JCekcFCj67MXRvWAHLqv4DupukEuvnR6U3J3YIAZcnFj0n0IoWjH0sHZ6exttzM+Dk
+ H26siQXIemOpaNva+rWi9xUnYSUrL47jy/Cfyj/ZetJK3pSkA2gIxWLDBCo4fwneYfap
+ KRlEblYRcxMSU5re2YBY8XX1VcUeUe1sJtIA3qA0fhLG7RoTlWoEtMj1nMVI1eKdXwRo
+ WG1yqqkYUFROERSldw/3tGYT/NSir/FF3+RqpwgPOS11ybLmre80q2TMx44QtkKHZ4hD
+ 19J6dLdWpkXuAMsv7SymFqSx2fOwxIM5xXqZSZGZ6+3HvlrCYwrZ8DDa4sUaJSqGvV4R
+ 34Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708667490; x=1709272290;
+ d=1e100.net; s=20230601; t=1708668088; x=1709272888;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=du98JuAFTGPNIDeuZhUVLEaj+AcU8975zvDnqpbUWu8=;
- b=KJ27n5L83kAgiFjYnR+Yt8n2SaNCdrqSXI/p4t8fVmklGHej009WrQ1JifEBdXPcTv
- YMhKEGOIJFmuO43kN6/TR0tB2wC5mdxuHzNAlCf94eo5qjUPfVZEginBiEZrz3mBLcV/
- mwpHN/14Kad/r+MB+Epxx3KVmrNpcSpP2uZtJCbTM2MT5QQfH2iSVV7n9exuN+iLKv4B
- n4HZ0pO4CPD2d8Y6ITcVI+UzfXw8VS2jYArCdcRmb4Xj5stkqJV347Jez3TdQcjcEjG2
- sfWnyzlsHaM8/X/Ex44BZYFqUJhtOBNR+GuNeVOCfQThUmOTp9P7NI4bts9deKo2wy9/
- aoGQ==
+ bh=FoIRy7W0V+hytFtRoLx6BCKLQAybNtoivttYObssT4s=;
+ b=Mgo5avj61WHZAKD9B9femhJkhY1ELOWOgVSHXVkeUUAdj2i1tZZ/mfO9q7bsH8RanQ
+ vCLH1Mn+A2ettg6/I2zGE0uoFiuThPPNTZYEd2Ny+uTeMZoHGCPXcwUk26qgsRqi9VKu
+ Ejqph2IYc9FBjr/2HUYBwa0WFlXjpuhC6WAl28G9T00aXN4ao7iCdTR++jJ9l/tk7hsc
+ 3sFvE98QYGiqpbaly1IDVkHs+9AddRzbJx6Cwla6jMZvUQNCTrjoLs2fux9qvOseROOo
+ sML0ibx+TRz3D0OIPwDSUgf+SZD+lOwTWITMIvTLok+edZPxmMLY7civvlo5XhlbpWfK
+ ouYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzSVfI4bmS1+0Ra7ed15uV9B9d0X2fVN/xbLHPHJgHHhBEOs7NhvuXAG9TicSu+vTScSydE94f4smSiR3k6z50d26qaPI=
-X-Gm-Message-State: AOJu0Yx43xjtqSuKIFJn3AtSiJNclTgkX1hVO+iKJJcJuDbpne2585w5
- qsv01bRmUTED3p8/19GD5X9dgXnNCd+tgExLDvf96eweAB5fcpgx7Opi42A5ojPaluKZMUdvpfJ
- Ayt4=
-X-Google-Smtp-Source: AGHT+IHXYQ9qodSAlGnxuHf62xbeWWhJUWxZe0Qm2GedsRyWmsy7luwPqRK63xYz2ENFUD8VSPxhXg==
-X-Received: by 2002:a05:6000:144:b0:33d:500c:df17 with SMTP id
- r4-20020a056000014400b0033d500cdf17mr752732wrx.5.1708667490182; 
- Thu, 22 Feb 2024 21:51:30 -0800 (PST)
+ AJvYcCXC0BgfYbrDXvF83z61wjkric4BGC4tDK3YMyi/uh/ig84/jmj1nDtNlD80ydcVPM7O6KTQIZfFCSFEjC7T14FcFGdOZt8=
+X-Gm-Message-State: AOJu0Yz6qf0PWYCzOAwZqwKDORz25eofQOV4BashGg5prquDfGvt7PKn
+ TkzE2Y9CfpEjMOGzbNTSbrOlz36BjjgtR3Zh3LzCzqBAVaF+eabTE6REQIiBQbA=
+X-Google-Smtp-Source: AGHT+IH5q9GXQ01L1Zd6yw3+JSo1uvjWKPoW7czn+H+XKcnNkAUZdMo7stdzk34T8W1+NhzKvWwbVA==
+X-Received: by 2002:aa7:c693:0:b0:565:3a6b:9825 with SMTP id
+ n19-20020aa7c693000000b005653a6b9825mr478972edq.18.1708668088111; 
+ Thu, 22 Feb 2024 22:01:28 -0800 (PST)
 Received: from [192.168.69.100] (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
  [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
- q25-20020a056000137900b0033ce06c303csm1409286wrz.40.2024.02.22.21.51.28
+ q14-20020a056402248e00b0056518035195sm1617841eda.69.2024.02.22.22.01.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 21:51:29 -0800 (PST)
-Message-ID: <ae253529-a200-4838-b2d4-0ebd53f40973@linaro.org>
-Date: Fri, 23 Feb 2024 06:51:27 +0100
+ Thu, 22 Feb 2024 22:01:27 -0800 (PST)
+Message-ID: <ac4a19b6-9290-4c97-bc7d-eabfef079895@linaro.org>
+Date: Fri, 23 Feb 2024 07:01:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V5 1/5] util: str_split
@@ -75,9 +74,9 @@ References: <1708638470-114846-1-git-send-email-steven.sistare@oracle.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <1708638470-114846-2-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,6 +118,31 @@ On 22/2/24 22:47, Steve Sistare wrote:
 >   create mode 100644 include/qemu/strList.h
 >   create mode 100644 util/strList.c
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> +#include "qapi/qapi-builtin-types.h"
+> +
+> +/*
+> + * Split @str into a strList using the delimiter string @delim.
+> + * The delimiter is not included in the result.
+> + * Return NULL if @str is NULL or an empty string.
+> + * A leading, trailing, or consecutive delimiter produces an
+> + * empty string at that position in the output.
+> + * All strings are g_strdup'd, and the result can be freed
+> + * using qapi_free_strList.
+
+Note "qapi/qapi-builtin-types.h" defines:
+
+   G_DEFINE_AUTOPTR_CLEANUP_FUNC(strList, qapi_free_strList)
+
+Maybe mention we can also use:
+
+   g_autoptr(strList)
+
+?
+
+> + */
+> +strList *str_split(const char *str, const char *delim);
+> +
+> +#endif
 
 
