@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5124DC54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 11:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D42FC54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 11:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdTo9-0007cg-Jc; Fri, 23 Feb 2024 06:33:37 -0500
+	id 1rdTub-0002Fn-7R; Fri, 23 Feb 2024 06:40:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdTo5-0007VB-H6
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:33:35 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdTu8-00026U-Ag
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:39:48 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdTo3-0006VN-2m
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:33:32 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a3d01a9a9a2so77846866b.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 03:33:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdTu6-0007FT-Lj
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:39:48 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33d146737e6so213366f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 03:39:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708688008; x=1709292808; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708688384; x=1709293184; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2Rjdgl8h7xkEjAmUXGBg3htLnGe4QIxkWGOMpc374Yw=;
- b=TGjRUnI4GzVAIz0x1vWOYUoKtBLU/LyAssGnGl6QkOx+pKrXdxOyeYrMXgmMHRoJfH
- cNY2i5VAosPgMB0hJjcqCMrtR+bOCLi+FppT8gktyxR6ykD/3C4uu2JAxyJu1gGr3JV2
- aVZ1eluTmgAGasoaPvPLKOYpHbEfvbUozwKZsU8iopoC2gARxjmlWsR+HKfDTi6Zuun2
- 3nbasMbZZmSdtak59vv8gN56SWfYdFwK4u8gniulO7JeP38f7GjWLijDhjqfiBdpgeQ4
- BpLgJolTJCqfc9pHCnV+eTtxUCzdFnWuYt/z9um8cMWxNkRz3LhQrITN6ti22Avd/zUF
- 9aGw==
+ bh=vFrTC68/Vm1sl9Kf1uhunphqhN11iyt5Dx2XdhQzjgA=;
+ b=pnA8tjwcoy9IQi60p/k0XDBHhZIPTpcAQnEp8O1zJ7oad4B8MHTaHrZXB3QCK181Nw
+ NTTeceJxcTZ9CcRtiFFx6pqvLhDq37V07+GIBgJWvR9t5z2DOtJcGORkx9kH+NEV/4mH
+ wTO1CjNz35naioN4b7C1TSxO/XZ2WfNKJIc2SKYYdtlPkrh4w9eI6RvEufZ2y0pdTvJb
+ 9N9FZs+mTra0nNMGQg+24T5G84SXasgISFut0gPznDe5mSoQQKrOxWAp8fWEFaRCrwci
+ JDyNy5hgc3K3PDpGCKUYOafwRMG5nbHAX53w2FEJ6tZ1xutWrms4nxfnSL3qzJdaMGki
+ qqFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708688008; x=1709292808;
+ d=1e100.net; s=20230601; t=1708688384; x=1709293184;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2Rjdgl8h7xkEjAmUXGBg3htLnGe4QIxkWGOMpc374Yw=;
- b=Oq69ROERJQWdwK4+0DB+h6cyapdvGLhP8To9KSS3OP+TQnIOYCQZq0B8SI9B4K3hL3
- VCj1dO/L+1pyUeodZHPyG3vivDa7OPDzK1EuqqhDYsdvoNg20SGEa6Q2d6XY4eyw5tI/
- uU9rmdLfdLdNr8Zh1Hk8HTx5K5LXtQT52RH+vanKcRe3bePnVFwhJMTpOM5O4ucKrfCV
- nvJ+2cISgK6nrCXxYFN8xcmG0rbkhXt/00dkwKGCgyGhQutbcHbjJ0yjQnLvwMD/In8P
- 0YMV/8w8pstREhW8CX5HlTNh4ts5wmFscz4NiXgOd6AllT1uVKg9HNX85XLnlwc7j0Fu
- wBCQ==
+ bh=vFrTC68/Vm1sl9Kf1uhunphqhN11iyt5Dx2XdhQzjgA=;
+ b=eBEZlVBMHOfu5jysAdj3pZ43joJvEu8WuyHS3lEX0UOSq8kaWAhnY6bT19hIzHIVck
+ LhzCsgaaURHFq8cUwguOHAcdZs9LMc9DOkcZh6DqHNa5tuPOc+G446aHKkGqpFLeJLlo
+ JbHLMY1HIuQMpbLjJhgy0/oCRkSF/fKWuANhZ5pYLQHEZNQ4zTnHrFgF3OXTt3Xl5xX3
+ LKr5ne6KDyzPu3iWo4uEL2pnWL8xyhObLn82NCWbhuJPSIcn4avrWaHNjoNRqNk80mjD
+ BvU46TppLeo/1ysHmUl1TRI5eyL3VBA3rmuoTpUIokT5JjxL4oVRIppOG15GWlFkznOw
+ 20wA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYEUMxKrSkMPttAJOlBjwt9z/+iDU9pmBoW3/WdtLd0MpWrKzsYQVBhMx/zJzyBJo2is4gia4Q5wakae5qxgoIToP1YZU=
-X-Gm-Message-State: AOJu0Yx4TP3FlXjc1duqVaYvwyHpWPA8+/WsLGWpFOCGoZh7Ny38qbCI
- 1SkKIUDItvDUDAD9hmFXVny5Z7tZfeQmACa4a1MPhcpCODCzZ1yzOtT6Vd0E2g4=
-X-Google-Smtp-Source: AGHT+IGJ3tnDUlJbEZE28+/To9ybFbZR2vIzyWIO1GPN8IydpF26unItnxS+yLelTeQBWvyfuz/X1w==
-X-Received: by 2002:a17:906:7fd8:b0:a3e:96f4:492e with SMTP id
- r24-20020a1709067fd800b00a3e96f4492emr985467ejs.31.1708688007640; 
- Fri, 23 Feb 2024 03:33:27 -0800 (PST)
+ AJvYcCXSlV3KAKQ2cT6Tl6UQvf6UFFtr3cwJIS58v1nFLFeCBBjvBaLdEeGFKL6Edxe/bBCSQMaPAPnJ1kWfCZuhqid/06tPPwo=
+X-Gm-Message-State: AOJu0Yy3wMPGvdlXRiAWSAzrphHhSpO5O3gvQc7JXlwOmhTckD1x73L9
+ bagL3GcwYJOrqSO7uiRSbkQZEUw4fYugRF9rDdt3bgn5tT/F5bSNSPRhbES9liU=
+X-Google-Smtp-Source: AGHT+IFIleO98zEDjGXo7816D2w90h/K8ZhPz4ufFLhm0322UXovbZXkva1VEuSUsbM0JbJgqyr7tw==
+X-Received: by 2002:adf:e0c4:0:b0:33d:28a9:2fd8 with SMTP id
+ m4-20020adfe0c4000000b0033d28a92fd8mr1091529wri.39.1708688383663; 
+ Fri, 23 Feb 2024 03:39:43 -0800 (PST)
 Received: from [192.168.69.100] (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
  [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
- ts7-20020a170907c5c700b00a3f4bb02bc8sm2260206ejc.42.2024.02.23.03.33.25
+ q25-20020a056000137900b0033ce06c303csm2469799wrz.40.2024.02.23.03.39.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 03:33:27 -0800 (PST)
-Message-ID: <bdf48012-fdc4-449d-be12-fbbe985cc428@linaro.org>
-Date: Fri, 23 Feb 2024 12:33:24 +0100
+ Fri, 23 Feb 2024 03:39:43 -0800 (PST)
+Message-ID: <26eb60f4-d9e6-4be5-b114-5a695ab89509@linaro.org>
+Date: Fri, 23 Feb 2024 12:39:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/3] virtio-iommu: Change the default granule to the
- host page size
+Subject: Re: [PATCH v4 1/3] qdev: Add a granule_mode property
 Content-Language: en-US
 To: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
  peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Richard Henderson <richard.henderson@linaro.org>
+ Markus Armbruster <armbru@redhat.com>
 Cc: alex.williamson@redhat.com, zhenzhong.duan@intel.com,
  jasowang@redhat.com, pbonzini@redhat.com, berrange@redhat.com
 References: <20240223074459.63422-1-eric.auger@redhat.com>
- <20240223074459.63422-4-eric.auger@redhat.com>
- <bdab51cf-fca8-4fe7-9e47-31bd10259dfa@linaro.org>
- <c12ba73f-5eeb-47b7-bd16-cf686f13d108@redhat.com>
+ <20240223074459.63422-2-eric.auger@redhat.com>
+ <07d4a2a4-1880-4402-a12a-94eeb649f8b0@linaro.org>
+ <fd894834-622f-4d1e-b594-87beb35deebf@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c12ba73f-5eeb-47b7-bd16-cf686f13d108@redhat.com>
+In-Reply-To: <fd894834-622f-4d1e-b594-87beb35deebf@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,89 +102,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/2/24 09:38, Eric Auger wrote:
+On 23/2/24 09:30, Eric Auger wrote:
+> Hi Philippe,
 > 
-> 
-> On 2/23/24 09:08, Philippe Mathieu-Daudé wrote:
+> On 2/23/24 08:52, Philippe Mathieu-Daudé wrote:
 >> Hi Eric,
 >>
 >> On 23/2/24 08:27, Eric Auger wrote:
->>> We used to set the default granule to 4KB but with VFIO assignment
->>> it makes more sense to use the actual host page size.
+>>> Introduce a new enum type property allowing to set an
+>>> IOMMU granule. Values are 4K, 8K, 16K, 64K and host.
+>>> This latter indicates the vIOMMU granule will match
+>>> the host page size.
 >>>
->>> Indeed when hotplugging a VFIO device protected by a virtio-iommu
->>> on a 64kB/64kB host/guest config, we current get a qemu crash:
->>>
->>> "vfio: DMA mapping failed, unable to continue"
->>>
->>> This is due to the hot-attached VFIO device calling
->>> memory_region_iommu_set_page_size_mask() with 64kB granule
->>> whereas the virtio-iommu granule was already frozen to 4KB on
->>> machine init done.
->>>
->>> Set the granule property to "host" and introduce a new compat.
->>>
->>> Note that the new default will prevent 4kB guest on 64kB host
->>> because the granule will be set to 64kB which would be larger
->>> than the guest page size. In that situation, the virtio-iommu
->>> driver fails on viommu_domain_finalise() with
->>> "granule 0x10000 larger than system page size 0x1000".
->>>
->>> In that case the workaround is to request 4K granule.
->>>
->>> The current limitation of global granule in the virtio-iommu
->>> should be removed and turned into per domain granule. But
->>> until we get this upgraded, this new default is probably
->>> better because I don't think anyone is currently interested in
->>> running a 4KB page size guest with virtio-iommu on a 64KB host.
->>> However supporting 64kB guest on 64kB host with virtio-iommu and
->>> VFIO looks a more important feature.
+>>> A subsequent patch will add such a property to the
+>>> virtio-iommu device.
 >>>
 >>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> ---
->>>    hw/core/machine.c        | 1 +
->>>    hw/virtio/virtio-iommu.c | 2 +-
->>>    2 files changed, 2 insertions(+), 1 deletion(-)
 >>>
->>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>> index 70ac96954c..38851df4b8 100644
->>> --- a/hw/core/machine.c
->>> +++ b/hw/core/machine.c
->>> @@ -35,6 +35,7 @@
->>>      GlobalProperty hw_compat_8_2[] = {
->>>        { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
->>> +    { TYPE_VIRTIO_IOMMU_PCI, "granule", "4K" },
+>>> ---
+>>>
+>>> v3 -> v4:
+>>> - Add 8K
+>>> ---
+>>>    include/hw/qdev-properties-system.h |  3 +++
+>>>    include/hw/virtio/virtio-iommu.h    | 11 +++++++++++
+>>>    hw/core/qdev-properties-system.c    | 15 +++++++++++++++
+>>>    hw/virtio/virtio-iommu.c            | 11 +++++++++++
+>>>    4 files changed, 40 insertions(+)
 >>
->> IIUC the current value is qemu_target_page_mask(), not 4KiB.
->> Could this be an issue for arm / mips / mips / sparc64 guests?
-> The virtio-iommu currently is only supported on ARM and x86 where
-> qemu_target_page_mask() corresponds to a 4K granule. So I don't think it
-> makes any issue.
-
-Thanks, please explicit that in the commit description.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Regards,
-
-Phil.
-
->>>    };
->>>    const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
->>>    diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->>> index 0461b87ef2..e9e44a8ad8 100644
+>>
+>>> diff --git a/include/hw/virtio/virtio-iommu.h
+>>> b/include/hw/virtio/virtio-iommu.h
+>>> index 5fbe4677c2..e22327548f 100644
+>>> --- a/include/hw/virtio/virtio-iommu.h
+>>> +++ b/include/hw/virtio/virtio-iommu.h
+>>> @@ -31,6 +31,17 @@ OBJECT_DECLARE_SIMPLE_TYPE(VirtIOIOMMU, VIRTIO_IOMMU)
+>>>      #define TYPE_VIRTIO_IOMMU_MEMORY_REGION "virtio-iommu-memory-region"
+>>>    +typedef enum GranuleMode {
+>>> +    GRANULE_MODE_4K,
+>>> +    GRANULE_MODE_8K,
+>>> +    GRANULE_MODE_16K,
+>>> +    GRANULE_MODE_64K,
+>>> +    GRANULE_MODE_HOST,
+>>> +    GRANULE_MODE__MAX,
+>>> +} GranuleMode;
+>>> +
+>>> +extern const QEnumLookup GranuleMode_lookup;
+>>
+>> Aren't this, ...
+>>
+>>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+>>> index 2ec5ef3cd1..a9bdc03d12 100644
 >>> --- a/hw/virtio/virtio-iommu.c
 >>> +++ b/hw/virtio/virtio-iommu.c
->>> @@ -1558,7 +1558,7 @@ static Property virtio_iommu_properties[] = {
->>>        DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
->>>        DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
->>>        DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
->>> -                             GRANULE_MODE_4K),
->>> +                             GRANULE_MODE_HOST),
->>>        DEFINE_PROP_END_OF_LIST(),
->>>    };
->>>    
->>
-> 
+>>> @@ -44,6 +44,17 @@
+>>>    #define VIOMMU_DEFAULT_QUEUE_SIZE 256
+>>>    #define VIOMMU_PROBE_SIZE 512
+>>>    +const QEnumLookup GranuleMode_lookup = {
+>>> +    .array = (const char *const[]) {
+>>> +        [GRANULE_MODE_4K]   = "4K",
+>>> +        [GRANULE_MODE_8K]   = "8K",
+>>> +        [GRANULE_MODE_16K]  = "16K",
+>>> +        [GRANULE_MODE_64K]  = "64K",
+>>> +        [GRANULE_MODE_HOST] = "host",
+>>> +    },
+>>> +    .size = GRANULE_MODE__MAX
+>>> +};
+>> ... and this supposed to be QAPI generated?
+> If I remove both, it does not compile. How do you make it generated?
 
+The following:
+
+-- >8 --
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 19c7c36e36..c8d38d23e2 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -959 +959,19 @@
+    'data': { 'unused-iothread-vq-mapping': ['IOThreadVirtQueueMapping'] } }
++
++##
++# @GranuleMode:
++#
++# @4k: granule page size of 4KiB
++#
++# @8k: granule page size of 8KiB
++#
++# @16k: granule page size of 16KiB
++#
++# @64k: granule page size of 64KiB
++#
++# @host: granule matches the host page size
++#
++# Since: 9.0
++##
++{ 'enum': 'GranuleMode',
++  'data': [ '4k', '8k', '16k', '64k', 'host' ] }
+---
+
+generates in "qapi/qapi-types-virtio.h":
+
+---
+typedef enum GranuleMode {
+     GRANULE_MODE_4K,
+     GRANULE_MODE_8K,
+     GRANULE_MODE_16K,
+     GRANULE_MODE_64K,
+     GRANULE_MODE_HOST,
+     GRANULE_MODE__MAX,
+} GranuleMode;
+
+#define GranuleMode_str(val) \
+     qapi_enum_lookup(&GranuleMode_lookup, (val))
+
+extern const QEnumLookup GranuleMode_lookup;
+---
 
