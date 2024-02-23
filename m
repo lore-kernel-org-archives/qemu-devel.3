@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14DA7C48BC4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5259BC5478C
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdR9g-0003J3-K8; Fri, 23 Feb 2024 03:43:41 -0500
+	id 1rdR9Y-0003GI-Fr; Fri, 23 Feb 2024 03:43:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rdR9e-0003Ih-L9; Fri, 23 Feb 2024 03:43:38 -0500
+ id 1rdR9V-0003Ew-U2; Fri, 23 Feb 2024 03:43:29 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rdR9d-00006f-5o; Fri, 23 Feb 2024 03:43:38 -0500
+ id 1rdR9T-000050-Lr; Fri, 23 Feb 2024 03:43:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708677817; x=1740213817;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=MHvQ5woW3Z+EugV6VPlTEN8ySg00SOJs4AJTsCdkA7k=;
- b=JbMHDuvKL5q/vzofxjrkEIXocgCaZ8MTEUV5+gOKmrzMxERI3uKiEpaf
- AY3utzys4KgVJGwp1WxfCRIn4Z7Ej6Geus60R2icGq+1iJ0rbfXK1yvLC
- zQTHOpZEcwV7En1dM+lmWmNg2e+7wF+6NPFYdpehM3VEQ0NORCdty2KJ8
- siucRRRFfg3ueAothVT2OgS+TIiM3q2xyXJeVP5r5yifqj2ckfP1fYWSd
- 4YYSkqV/NAmBw6nc2SkZjlpcuIH5nXVd66NeL7BcP1itoos/wdf4ThTVz
- +i3UNINKDNNH9eUxHhGYpK52ELsarOWg0TAMYPSMc3h/dWdcEGACP79jr Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="28413839"
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="28413839"
+ t=1708677808; x=1740213808;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=GxcEpKUJhcD8tp/cNKnafhshJBtXmwMwR7V4Pnc77B4=;
+ b=eu1nVhwa2mO53YNnul35/Zfwk21St744Aig2WH2n36BgXSdfyJkcWcsj
+ cgnODusfgyFQXT4LwJW284cEQL4RoOtR17jgdKykRjLt41i+zW01GgEkz
+ RHxItTR9roAHvaXTZuD6ioghMgGCdy8ws09sFqBJkwrUYgkWZ1jjharFm
+ vLqmB4p1uTP1uJGLEkUQN706htr+ivG2mDS3syZBVLgQVebZ4fdx/hK84
+ Y83V8G0vvXycyAEPP2HCPNLt/6Bmgbz2akl8mDdU7tQrsloboMuRophgS
+ Y2TUlDEhKBgdWCW9Mgv2GVQhVZD7IBj3U8M6fjCHrICeg+Mwu3LgMw5e6 A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="28413789"
+X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="28413789"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Feb 2024 00:43:35 -0800
+ 23 Feb 2024 00:43:23 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; 
-   d="scan'208";a="5731795"
+   d="scan'208";a="5731723"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 23 Feb 2024 00:43:31 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 23 Feb 2024 00:43:19 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -55,13 +55,10 @@ To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Michael Tokarev <mjt@tls.msk.ru>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 3/7] hw/mem/cxl_type3: Fix missing ERRP_GUARD() in
- ct3_realize()
-Date: Fri, 23 Feb 2024 16:56:49 +0800
-Message-Id: <20240223085653.1255438-4-zhao1.liu@linux.intel.com>
+Subject: [PATCH v2 0/7] Cleanup and fix @errp dereference
+Date: Fri, 23 Feb 2024 16:56:46 +0800
+Message-Id: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
-References: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=192.198.163.7;
@@ -89,64 +86,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
+Hi all,
 
-* = Why, when and how to use ERRP_GUARD() =
-*
+This is my v2 series to clean and fix @errp dereference.
+
+Introduction
+============
+
+The patches 1-6 fix the cases that deference @errp without
+ERRP_GUARD(), and they are based on my previsous v1 [1].
+
+The patch 7 is merged in this series from another single patch [2].
+
+Based on v1, v2 mainly add more description about problematic codes to
+make review easier (with Markus' suggestion) and avoid dereferencing
+@errp in patch 3's special case.
+
+
+Future Work
+===========
+
+Additionally, I realized that my journey to fix @errp with ERRP_GUARD()
+is still not over, because @errp's second restriction said:
+
 * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
 ...
+* - It should not be passed to error_prepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
 * ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
 
-But in ct3_realize(), @errp is dereferenced without ERRP_GUARD():
+With this restrication, there're still many places need to add missing
+ERRP_GUARD().
 
-cxl_doe_cdat_init(cxl_cstate, errp);
-if (*errp) {
-    goto err_free_special_ops;
-}
+[1]: https://lore.kernel.org/qemu-devel/20240221094317.994454-1-zhao1.liu@linux.intel.com/
+[2]: https://lore.kernel.org/qemu-devel/20240221073948.768828-1-zhao1.liu@linux.intel.com/
 
-Here we check *errp, because cxl_doe_cdat_init() returns void. And
-ct3_realize() - as a PCIDeviceClass.realize() method - doesn't get the
-NULL @errp parameter, it hasn't triggered the bug that dereferencing
-the NULL @errp.
+Thanks and Best Regards,
+Zhao
 
-To follow the requirement of @errp, add missing ERRP_GUARD() in
-ct3_realize().
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
-Suggested by credit:
- Markus: Referred his explanation about ERRP_GUARD().
----
-v2:
- * Add the @errp dereference code in commit message to make review
-   easier. (Markus)
----
- hw/mem/cxl_type3.c | 1 +
- 1 file changed, 1 insertion(+)
+Zhao Liu (7):
+  hw/cxl/cxl-host: Fix missing ERRP_GUARD() in
+    cxl_fixed_memory_window_config()
+  hw/display/macfb: Fix missing ERRP_GUARD() in macfb_nubus_realize()
+  hw/mem/cxl_type3: Fix missing ERRP_GUARD() in ct3_realize()
+  hw/misc/xlnx-versal-trng: Check returned bool in
+    trng_prop_fault_event_set()
+  hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD() in
+    cxl_usp_realize()
+  hw/vfio/iommufd: Fix missing ERRP_GUARD() in iommufd_cdev_getfd()
+  hw/intc: Check @errp to handle the error of
+    IOAPICCommonClass.realize()
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index e8801805b90f..a3b0761f843b 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -645,6 +645,7 @@ static DOEProtocol doe_cdat_prot[] = {
- 
- static void ct3_realize(PCIDevice *pci_dev, Error **errp)
- {
-+    ERRP_GUARD();
-     CXLType3Dev *ct3d = CXL_TYPE3(pci_dev);
-     CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
-     ComponentRegisters *regs = &cxl_cstate->crb;
+ hw/cxl/cxl-host.c            | 1 +
+ hw/display/macfb.c           | 1 +
+ hw/intc/ioapic_common.c      | 4 ++++
+ hw/mem/cxl_type3.c           | 1 +
+ hw/misc/xlnx-versal-trng.c   | 3 +--
+ hw/pci-bridge/cxl_upstream.c | 1 +
+ hw/vfio/iommufd.c            | 1 +
+ 7 files changed, 10 insertions(+), 2 deletions(-)
+
 -- 
 2.34.1
 
