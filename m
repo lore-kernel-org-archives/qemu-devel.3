@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E957C54E49
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0941EC54E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdSst-0003ns-WB; Fri, 23 Feb 2024 05:34:28 -0500
+	id 1rdSt4-000462-40; Fri, 23 Feb 2024 05:34:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rdSsT-0003bW-JN; Fri, 23 Feb 2024 05:34:02 -0500
+ id 1rdSsY-0003eK-Oe; Fri, 23 Feb 2024 05:34:08 -0500
 Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rdSsP-0001we-Ou; Fri, 23 Feb 2024 05:34:01 -0500
+ id 1rdSsP-0001wP-PO; Fri, 23 Feb 2024 05:34:06 -0500
 Received: from mail.maildlp.com (unknown [172.19.88.234])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Th5pC3Gc3z1FLGW;
- Fri, 23 Feb 2024 18:28:51 +0800 (CST)
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Th5sJ2bZ3z1h05D;
+ Fri, 23 Feb 2024 18:31:32 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 530761400CC;
- Fri, 23 Feb 2024 18:33:45 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C420F1400CC;
+ Fri, 23 Feb 2024 18:33:42 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 23 Feb
- 2024 18:33:44 +0800
+ 2024 18:33:42 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v3 12/21] target/arm: Handle NMI in
- arm_cpu_do_interrupt_aarch64()
-Date: Fri, 23 Feb 2024 10:32:12 +0000
-Message-ID: <20240223103221.1142518-13-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v3 09/21] target/arm: Handle PSTATE.ALLINT on taking an
+ exception
+Date: Fri, 23 Feb 2024 10:32:09 +0000
+Message-ID: <20240223103221.1142518-10-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240223103221.1142518-1-ruanjinjie@huawei.com>
 References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
@@ -70,30 +70,38 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to Arm GIC section 4.6.3 Interrupt superpriority, the interrupt
-with superpriority is always IRQ, never FIQ, so the NMI exception trap entry
-behave like IRQ.
+Set or clear PSTATE.ALLINT on taking an exception to ELx according to the
+SCTLR_ELx.SPINTMASK bit.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
 v3:
-- Remove the FIQ NMI handle.
+- Add Reviewed-by.
 ---
- target/arm/helper.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/helper.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 0a69638651..1a5e992d26 100644
+index eb97ce0356..0a69638651 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -11452,6 +11452,7 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
-         break;
-     case EXCP_IRQ:
-     case EXCP_VIRQ:
-+    case EXCP_NMI:
-         addr += 0x80;
-         break;
-     case EXCP_FIQ:
+@@ -11532,6 +11532,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+         }
+     }
+ 
++    if (cpu_isar_feature(aa64_nmi, cpu) &&
++        (env->cp15.sctlr_el[new_el] & SCTLR_NMI)) {
++        if (!(env->cp15.sctlr_el[new_el] & SCTLR_SPINTMASK)) {
++            new_mode |= PSTATE_ALLINT;
++        } else {
++            new_mode &= ~PSTATE_ALLINT;
++        }
++    }
++
+     pstate_write(env, PSTATE_DAIF | new_mode);
+     env->aarch64 = true;
+     aarch64_restore_sp(env, new_el);
 -- 
 2.34.1
 
