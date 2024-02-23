@@ -4,117 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA34C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 14:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C3B1C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 14:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdWmK-0005Oz-8V; Fri, 23 Feb 2024 09:43:56 -0500
+	id 1rdWw3-0000NZ-Kc; Fri, 23 Feb 2024 09:54:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rdWgy-0004Yv-65
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:38:24 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rdWh3-0004ZY-Pu
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:38:29 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rdWgw-0002fj-26
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:38:23 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3C6F621EFD;
- Fri, 23 Feb 2024 14:38:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708699100; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iy9u19WtuGN34285HK6n9KImIsJ5Jj6gq6oG1yo2U3E=;
- b=oBoUOZG/R7J8I+RC3SSs47/7crbzTxqKKrij2VqaP4TZiJ37vhyJmkShGLEvBxXgR/c6ID
- iya0JnAmE/+xPITC98ho4SYAb2uKgPUecphwtlrWwnfHJrlVxmqW9afk7glDwZCTTgyhvN
- C1r/rSNokfwmUWcYqEZD6o1Hc1YGKoQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708699100;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iy9u19WtuGN34285HK6n9KImIsJ5Jj6gq6oG1yo2U3E=;
- b=HsmbGWbQJUivwGTcIc/7A5TZyaE1LkweZb5XB1FgWndgTxmyPo9XCx6KaehhzX23/4jtzE
- tiw45aqYCo4yweBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708699100; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iy9u19WtuGN34285HK6n9KImIsJ5Jj6gq6oG1yo2U3E=;
- b=oBoUOZG/R7J8I+RC3SSs47/7crbzTxqKKrij2VqaP4TZiJ37vhyJmkShGLEvBxXgR/c6ID
- iya0JnAmE/+xPITC98ho4SYAb2uKgPUecphwtlrWwnfHJrlVxmqW9afk7glDwZCTTgyhvN
- C1r/rSNokfwmUWcYqEZD6o1Hc1YGKoQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708699100;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iy9u19WtuGN34285HK6n9KImIsJ5Jj6gq6oG1yo2U3E=;
- b=HsmbGWbQJUivwGTcIc/7A5TZyaE1LkweZb5XB1FgWndgTxmyPo9XCx6KaehhzX23/4jtzE
- tiw45aqYCo4yweBQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B0ADE133DC;
- Fri, 23 Feb 2024 14:38:19 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id N+FKHdut2GVIFgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Feb 2024 14:38:19 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Hao Xiang <hao.xiang@bytedance.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
- peterx@redhat.com, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, qemu-devel@nongnu.org, jdenemar@redhat.com
-Subject: Re: [External] Re: [PATCH v2 4/7] migration/multifd: Enable zero
- page checking from multifd threads.
-In-Reply-To: <CAAYibXhGx=m8wbGMbpfy4vMQAQURaemLFOvCDEAMeGUiLXDfdg@mail.gmail.com>
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-5-hao.xiang@bytedance.com>
- <875xyhbk8k.fsf@suse.de>
- <CAAYibXhGx=m8wbGMbpfy4vMQAQURaemLFOvCDEAMeGUiLXDfdg@mail.gmail.com>
-Date: Fri, 23 Feb 2024 11:38:17 -0300
-Message-ID: <877civ9rfq.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <faiqueali.109@gmail.com>)
+ id 1rdWh1-0002gD-Dq
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:38:29 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-55a8fd60af0so627186a12.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 06:38:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708699105; x=1709303905; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TN5EcRDtZSAGnt//IbUB2QXiTqVCJuViKLlU/3gbOJY=;
+ b=GfbE0ZC2R7w+Uk3LFLko2oW72LTOPQPGWjiaprxDs7GYbMFbnRo8hVSSR96ZxAPWWG
+ eTs1mGMh4MhXk8AG+72Luga6447LhWSnDYk7u0QTOoNzfEqVbOcojZlU5XbnxM2kK3le
+ EsguTSJbJlozjs33NnkXCEVg7hZbKHCcqzWoSSx8g9mIUaUkNkHjYNWY0zgOUvajsGkj
+ CfFHZmXMI1/6PH7PsS119gqSiBYCgwusRphuBck8Wo7QAoVTDMICNBtgFqASxqHUQFNH
+ K+EKVP9sQ/KU55g98wQN1TEq8yV8Z7FQUz8SmA6xJJsugkSMi7+Qlxppo6I3K4rVSI63
+ V8tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708699105; x=1709303905;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TN5EcRDtZSAGnt//IbUB2QXiTqVCJuViKLlU/3gbOJY=;
+ b=PBnF6xmXjI0IyD5La/SJWIw6J8B4dpkRlcwNOTmQ96AR0YOaY2ExMgtSQPmH7ee5+J
+ 4CCaT7bOhtpy5pWaJn3resvyL2CO85ljsqG6y/0mde0MW38icvj0f4UbRX3Yz7J0Vu1t
+ rZ3SfFPhrjFHtKhYXc1aThLVna57brQ7XSYTQ0275ftBjjDRZ3Hlf53I5NTpSAwz3aZd
+ 4fg4X2sLUchy+7RIZjrPVofZruH95RJSGhb89AoLwFGOe3DPz3iOdGV0fJRbQEdyvlit
+ 3MHxE93m5dEnvFC7ypX3RGHtf+9Jja+S/yyOsih81p+VKDAu4YCIbMmTYh/dVuaK6U7j
+ ePnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7BJjmr6vw1bw9lk/qbllIYqRSqIWcxQgBp52aPCXnoZ92d18MxSMXEf1TVs/Zvlk94rxAVovjIWmNE8XOuL2C5JtScKw=
+X-Gm-Message-State: AOJu0Yyf+UlTB90EOayATYW8TjVPkjhS+v3RTgin9e5mkw/vXDhLa567
+ x8Oj5k38rQU+H1YEAdOqQ1aZqNE8cPYGtKJO5+ZVcsH7c9UA6EeBw+WsjaAe4wlasePCS9YjJJ9
+ 1TpPfioP4tHYlVy6P1CnXEVRqCGc=
+X-Google-Smtp-Source: AGHT+IFHJeARcWJzwshIMPD+TKqtno77dauaX39C1i/UVEyPXpecdm1vOWNI0R/DrV9UUITKSRscpFcvFuFj3+x2HBc=
+X-Received: by 2002:aa7:d751:0:b0:565:396b:2c1 with SMTP id
+ a17-20020aa7d751000000b00565396b02c1mr23233eds.8.1708699105325; Fri, 23 Feb
+ 2024 06:38:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="oBoUOZG/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=HsmbGWbQ
-X-Spamd-Result: default: False [-4.31 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- MIME_GOOD(-0.10)[text/plain];
- DWL_DNSWL_LOW(-1.00)[suse.de:dkim]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[11];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 3C6F621EFD
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <CAOpGCn+KdhjnXRHup6GXVbkoZkUBc7f-2urNzmvLjK1To_pp0A@mail.gmail.com>
+ <87a5nvci5n.fsf@draig.linaro.org>
+ <CAOpGCnLxVGhbJuAq+K+DNZBESEGGkSr8Sa0_cHsfMR7S-_ahkQ@mail.gmail.com>
+ <87y1bfawik.fsf@draig.linaro.org>
+ <CAOpGCn+_=5Uxi9mt-C1V3pguNT0OUJura-H3SwBOsJnW5tyJ4g@mail.gmail.com>
+ <CAFEAcA-03JYx9szd3FrQ_786gaRLWCJVHeMgjBxxvgH85f-78A@mail.gmail.com>
+ <CAOpGCn+vQ7wupMqeH8ZLarT0c4gD85R6cgRqBMhVeAXtZ1F_Mg@mail.gmail.com>
+ <CAFEAcA9Yp=ObPhgagAbf2Ev=6=D+9sCfHC_HCxPUr2JgvWa4oQ@mail.gmail.com>
+ <CAOpGCn+BHsVPG1_2-avx6Ex10dc-nKYuVv=3VTct=MYRb4TmYw@mail.gmail.com>
+ <CAFEAcA9_MDHQyQ6q76OpUXgEO9f_osS23oMhyTC4vNSBqtD1-A@mail.gmail.com>
+ <871q94ahui.fsf@draig.linaro.org>
+In-Reply-To: <871q94ahui.fsf@draig.linaro.org>
+From: Faiq Ali Sayed <faiqueali.109@gmail.com>
+Date: Fri, 23 Feb 2024 15:38:15 +0100
+Message-ID: <CAOpGCn+-T3e8arn0UPTM5-1gJu9626wP3=FHamXvUFW6NrDJcg@mail.gmail.com>
+Subject: Re: QNX VM hang on Qemu
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Stefano Stabellini <stefano.stabellini@amd.com>
+Content-Type: multipart/alternative; boundary="0000000000003374d906120d8345"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=faiqueali.109@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,245 +103,306 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hao Xiang <hao.xiang@bytedance.com> writes:
+--0000000000003374d906120d8345
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Wed, Feb 21, 2024 at 1:06=E2=80=AFPM Fabiano Rosas <farosas@suse.de> w=
-rote:
->>
->> Hao Xiang <hao.xiang@bytedance.com> writes:
->>
->> > This change adds a dedicated handler for MigrationOps::ram_save_target=
-_page in
->>
->> nit: Add a dedicated handler...
->>
->> Usually "this patch/change" is used only when necessary to avoid
->> ambiguity.
+So as far as my understanding, we provide these binaries using Qemu command
+as depicted in the example you provided and there is no way I found to put
+them into a single image.
+Regarding the overlapping space, I don't have much idea but I think we
+could provide a starting address separately to these images something like
+addr=3D0x00100000.
+
+So as per your suggestion, I compared my images and I found that the image
+does not show a virtual disk, and other commands like mkdir, do not have
+these binaries.
+So these binaries are not included at the time of image creation and I
+don't exactly know that how can we add these binaries into the QNX image.
+
+The Image that is currently installed in real hardware does not have a
+debugging symbol, so I can't use GDB  to debug that.
+Now I am looking for a way to create the correct QNX OS image for Qemu.
+
+Any lead in this regard will be really helpful :)
+
+
+BR!
+Faiq
+
+On Thu, Feb 22, 2024 at 11:55=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
-> Will do.
+> (adding the other ZyncMP maintainers to the CC)
 >
->>
->> > multifd live migration. Now zero page checking can be done in the mult=
-ifd threads
->> > and this becomes the default configuration. We still provide backward =
-compatibility
->> > where zero page checking is done from the migration main thread.
->> >
->> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
->> > ---
->> >  migration/multifd.c |  1 +
->> >  migration/options.c |  2 +-
->> >  migration/ram.c     | 53 ++++++++++++++++++++++++++++++++++-----------
->> >  3 files changed, 42 insertions(+), 14 deletions(-)
->> >
->> > diff --git a/migration/multifd.c b/migration/multifd.c
->> > index fbb40ea10b..ef5dad1019 100644
->> > --- a/migration/multifd.c
->> > +++ b/migration/multifd.c
->> > @@ -13,6 +13,7 @@
->> >  #include "qemu/osdep.h"
->> >  #include "qemu/cutils.h"
->>
->> This include...
->>
->> >  #include "qemu/rcu.h"
->> > +#include "qemu/cutils.h"
->>
->> is there already.
->>
->> >  #include "exec/target_page.h"
->> >  #include "sysemu/sysemu.h"
->> >  #include "exec/ramblock.h"
->> > diff --git a/migration/options.c b/migration/options.c
->> > index 3c603391b0..3c79b6ccd4 100644
->> > --- a/migration/options.c
->> > +++ b/migration/options.c
->> > @@ -181,7 +181,7 @@ Property migration_properties[] =3D {
->> >                        MIG_MODE_NORMAL),
->> >      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationS=
-tate,
->> >                         parameters.zero_page_detection,
->> > -                       ZERO_PAGE_DETECTION_LEGACY),
->> > +                       ZERO_PAGE_DETECTION_MULTIFD),
->>
->> I think we'll need something to avoid a 9.0 -> 8.2 migration with this
->> enabled. Otherwise it will go along happily until we get data corruption
->> because the new QEMU didn't send any zero pages on the migration thread
->> and the old QEMU did not look for them in the multifd packet.
->>
->> Perhaps bumping the MULTIFD_VERSION when ZERO_PAGE_DETECTION_MULTIFD is
->> in use. We'd just need to fix the test in the new QEMU to check
->> (msg.version > MULTIFD_VERSION) instead of (msg.version !=3D MULTIFD_VER=
-SION).
->>
->> >
->> >      /* Migration capabilities */
->> >      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
->> > diff --git a/migration/ram.c b/migration/ram.c
->> > index 5ece9f042e..b088c5a98c 100644
->> > --- a/migration/ram.c
->> > +++ b/migration/ram.c
->> > @@ -1123,10 +1123,6 @@ static int save_zero_page(RAMState *rs, PageSea=
-rchStatus *pss,
->> >      QEMUFile *file =3D pss->pss_channel;
->> >      int len =3D 0;
->> >
->> > -    if (migrate_zero_page_detection() !=3D ZERO_PAGE_DETECTION_LEGACY=
-) {
->> > -        return 0;
->> > -    }
->>
->> How does 'none' work now?
+> > On Wed, 21 Feb 2024 at 18:20, Faiq Ali Sayed <faiqueali.109@gmail.com>
+> wrote:
+> >>
+> >>
+> >>>
+> >>> This is also useful information. I would suggest you look
+> >>> at what the difference is between the image that boots and
+> >>> the one that doesn't: is it the same format (and what format
+> >>> is that)? is the way it is loaded on the real hardware the
+> >>> same, or different?
+> >>
+> >>
+> >> I am not able to distinguish between the images as they are in binary
+> form,
+> >> I noticed that the smaller size image can boot in Qemu.
+> >> I normally put the image into an SD card of the real hardware to boot.
+> >> so it is quite difficult for me now to distinguish.
+> >>
+> >>
+> >>> From the debug info from gdb you provided, the file clearly
+> >>> is not a raw binary file -- the initial bytes seem to be
+> >>> largely ASCII text. So it might be that this image is in
+> >>> a file format that whatever the real-hardware loader
+> >>> recognizes, but QEMU doesn't, whereas the images you have
+> >>> that work are really raw binaries. In that case you'd want
+> >>> to convert the image somehow to a format QEMU can understand
+> >>> (eg ELF, or raw-binary).
+> >>
+> >>
+> >> ahh, that also makes sense, ok now let me try to convert the images,
+> and let's see.
+> >> Does Qemu provide such a tool or do you know any?
+> >
+> > We don't know what format these images are in, so hard
+> > to say, but I would expect not (mostly QEMU's image
+> > conversion handling is for filesystems, not guest
+> > binaries). You'll probably do best to look on the QNX
+> > and/or Xilinx side -- Xilinx should document what
+> > file formats it is that their boot process accepts.
+> > Your third-party vendor presumably also knows what
+> > format it is that they're generating the image in.
 >
-> I tested it and all pages are transferred with payload (including the
-> zero pages).
+> I did have a brief look through the Xilinx wiki pages to see if I could
+> cobble together a test case for their PetaLinux images. A bunch of pages
+> led to login walls which I assume are customer only. I did find:
 >
->>
->> > -
->> >      if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
->> >          return 0;
->> >      }
->> > @@ -1256,6 +1252,10 @@ static int ram_save_page(RAMState *rs, PageSear=
-chStatus *pss)
->> >
->> >  static int ram_save_multifd_page(RAMBlock *block, ram_addr_t offset)
->> >  {
->> > +    assert(migrate_multifd());
->> > +    assert(!migrate_compress());
->> > +    assert(!migration_in_postcopy());
->>
->> Drop these, please. Keep only the asserts that are likely to trigger
->> during development, such as the existing ones at multifd_send_pages.
 >
-> I think I have got enough feedback regarding too many asserts. I will
-> drop these. assert is not compiled into the free build, correct?
+> https://github.com/Xilinx/soc-prebuilt-firmware/tree/xlnx_rel_v2023.1/zcu=
+102-zynqmp
+>
+> which has a number of the components for the firmware but there was no
+> clear way to combine them into a single image. I did try just feeding
+> the ELF's to the command line but there was a clash between zynqmp_fsbl
+> and the bl31 (which I think is the normal ATF image).
+>
+>   ./qemu-system-aarch64 -M xlnx-zcu102 -audio none -smp 4 -serial
+> mon:stdio -display none -s -S -device
+> loader,file=3D/home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zyn=
+qmp_fsbl.elf
+> -device
+> loader,file=3D/home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl3=
+1.elf,cpu-num=3D0
+> -device
+> loader,file=3D/home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/sys=
+tem.dtb,addr=3D0x00100000
+> -device
+> loader,file=3D/home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/u-b=
+oot.elf
+> -dtb /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/system.dtb
+>   qemu-system-aarch64: Some ROM regions are overlapping
+>   These ROM regions might have been loaded by direct user request or by
+> default.
+>   They could be BIOS/firmware images, a guest kernel, initrd or some othe=
+r
+> file loaded into guest memory.
+>   Check whether you intended to load all this guest code, and whether it
+> has been built to load to the correct addresses.
+>
+>   The following two regions overlap (in the cpu-memory-0 address space):
+>
+> /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zynqmp_fsbl.elf E=
+LF
+> program header segment 0 (addresses 0x00000000fffc0000 - 0x00000000fffe60=
+58)
+>     /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.elf ELF
+> program header segment 0 (addresses 0x00000000fffe0000 - 0x00000000ffffe0=
+00)
+>
+>   The following two regions overlap (in the cpu-memory-0 address space):
+>     /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.elf ELF
+> program header segment 0 (addresses 0x00000000fffe0000 - 0x00000000ffffe0=
+00)
+>
+> /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zynqmp_fsbl.elf E=
+LF
+> program header segment 1 (addresses 0x00000000fffe9e00 - 0x00000000fffe9e=
+88)
+>
+> Most of the use cases on the Xilinx pages are hidden behind their launch
+> scripts for their downstream fork. It would be nice if we could get at
+> least one image published somewhere that we could add an avocado test
+> for and hopefully an entry in the Arm system emulator pages (we have
+> fairly complete docs for xlnx-versal-virt).
+>
+> >
+> > -- PMM
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 >
 
-From include/qemu/osdep.h:
 
-  /*
-   * We have a lot of unaudited code that may fail in strange ways, or
-   * even be a security risk during migration, if you disable assertions
-   * at compile-time.  You may comment out these safety checks if you
-   * absolutely want to disable assertion overhead, but it is not
-   * supported upstream so the risk is all yours.  Meanwhile, please
-   * submit patches to remove any side-effects inside an assertion, or
-   * fixing error handling that should use Error instead of assert.
-   */
-  #ifdef NDEBUG
-  #error building with NDEBUG is not supported
-  #endif
-  #ifdef G_DISABLE_ASSERT
-  #error building with G_DISABLE_ASSERT is not supported
-  #endif
+--=20
+Kind Regard-
+Faiq Ali Sayed
 
->>
->> > +
->> >      if (!multifd_queue_page(block, offset)) {
->> >          return -1;
->> >      }
->> > @@ -2046,7 +2046,6 @@ static bool save_compress_page(RAMState *rs, Pag=
-eSearchStatus *pss,
->> >   */
->> >  static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus=
- *pss)
->> >  {
->> > -    RAMBlock *block =3D pss->block;
->> >      ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
->> >      int res;
->> >
->> > @@ -2062,17 +2061,40 @@ static int ram_save_target_page_legacy(RAMStat=
-e *rs, PageSearchStatus *pss)
->> >          return 1;
->> >      }
->> >
->> > +    return ram_save_page(rs, pss);
->>
->> Look at where git put this! Are you using the default diff algorithm? If
->> not try using --patience to see if it improves the diff.
+--0000000000003374d906120d8345
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">So as far as my understanding, we provide these binaries u=
+sing Qemu command as depicted in the example you provided and there is no w=
+ay I found to put them into a single image.<div>Regarding the overlapping s=
+pace, I don&#39;t have much idea but I think we could provide a starting ad=
+dress separately to these images something like addr=3D0x00100000.</div><di=
+v><br></div><div>So as per your suggestion,=C2=A0I compared my images and I=
+ found that the image does not show a virtual disk, and other commands like=
+ mkdir, do not have these binaries.</div><div>So these binaries are not inc=
+luded at the time of image creation and I don&#39;t exactly know that how c=
+an we add these binaries into the QNX image.</div><div><br></div><div>The I=
+mage that is currently installed in real hardware does not have a debugging=
+ symbol, so I can&#39;t use GDB=C2=A0 to debug that.</div><div>Now I am loo=
+king for a way to create the correct QNX OS image for Qemu.</div><div><br><=
+/div><div>Any lead in this regard will be really helpful :)</div><div><br><=
+/div><div><br></div><div>BR!</div><div>Faiq</div></div><br><div class=3D"gm=
+ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 22, 2024 at 11=
+:55=E2=80=AFAM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
+g">alex.bennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">Peter Maydell &lt;<a href=3D"mailto:peter.maydell@=
+linaro.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; writes:<br>
+<br>
+(adding the other ZyncMP maintainers to the CC)<br>
+<br>
+&gt; On Wed, 21 Feb 2024 at 18:20, Faiq Ali Sayed &lt;<a href=3D"mailto:fai=
+queali.109@gmail.com" target=3D"_blank">faiqueali.109@gmail.com</a>&gt; wro=
+te:<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; This is also useful information. I would suggest you look<br>
+&gt;&gt;&gt; at what the difference is between the image that boots and<br>
+&gt;&gt;&gt; the one that doesn&#39;t: is it the same format (and what form=
+at<br>
+&gt;&gt;&gt; is that)? is the way it is loaded on the real hardware the<br>
+&gt;&gt;&gt; same, or different?<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; I am not able to distinguish between the images as they are in bin=
+ary form,<br>
+&gt;&gt; I noticed that the smaller size image can boot in Qemu.<br>
+&gt;&gt; I normally put the image into an SD card of the real hardware to b=
+oot.<br>
+&gt;&gt; so it is quite difficult for me now to distinguish.<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;&gt; From the debug info from gdb you provided, the file clearly<br=
 >
-> I used the default diff algorithm.
+&gt;&gt;&gt; is not a raw binary file -- the initial bytes seem to be<br>
+&gt;&gt;&gt; largely ASCII text. So it might be that this image is in<br>
+&gt;&gt;&gt; a file format that whatever the real-hardware loader<br>
+&gt;&gt;&gt; recognizes, but QEMU doesn&#39;t, whereas the images you have<=
+br>
+&gt;&gt;&gt; that work are really raw binaries. In that case you&#39;d want=
+<br>
+&gt;&gt;&gt; to convert the image somehow to a format QEMU can understand<b=
+r>
+&gt;&gt;&gt; (eg ELF, or raw-binary).<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; ahh, that also makes sense, ok now let me try to convert the image=
+s, and let&#39;s see.<br>
+&gt;&gt; Does Qemu provide such a tool or do you know any?<br>
+&gt;<br>
+&gt; We don&#39;t know what format these images are in, so hard<br>
+&gt; to say, but I would expect not (mostly QEMU&#39;s image<br>
+&gt; conversion handling is for filesystems, not guest<br>
+&gt; binaries). You&#39;ll probably do best to look on the QNX<br>
+&gt; and/or Xilinx side -- Xilinx should document what<br>
+&gt; file formats it is that their boot process accepts.<br>
+&gt; Your third-party vendor presumably also knows what<br>
+&gt; format it is that they&#39;re generating the image in.<br>
+<br>
+I did have a brief look through the Xilinx wiki pages to see if I could<br>
+cobble together a test case for their PetaLinux images. A bunch of pages<br=
 >
->>
->> > +}
->> > +
->> > +/**
->> > + * ram_save_target_page_multifd: save one target page
->> > + *
->> > + * Returns the number of pages written
->>
->> We could be more precise here:
->>
->>  ram_save_target_page_multifd: send one target page to multifd workers
->>
->>  Returns 1 if the page was queued, -1 otherwise.
+led to login walls which I assume are customer only. I did find:<br>
+<br>
+=C2=A0 <a href=3D"https://github.com/Xilinx/soc-prebuilt-firmware/tree/xlnx=
+_rel_v2023.1/zcu102-zynqmp" rel=3D"noreferrer" target=3D"_blank">https://gi=
+thub.com/Xilinx/soc-prebuilt-firmware/tree/xlnx_rel_v2023.1/zcu102-zynqmp</=
+a><br>
+<br>
+which has a number of the components for the firmware but there was no<br>
+clear way to combine them into a single image. I did try just feeding<br>
+the ELF&#39;s to the command line but there was a clash between zynqmp_fsbl=
+<br>
+and the bl31 (which I think is the normal ATF image).<br>
+<br>
+=C2=A0 ./qemu-system-aarch64 -M xlnx-zcu102 -audio none -smp 4 -serial mon:=
+stdio -display none -s -S -device loader,file=3D/home/alex/lsrc/tests/testc=
+ases/zcu102-zyncmp-prebuilds/zynqmp_fsbl.elf -device loader,file=3D/home/al=
+ex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.elf,cpu-num=3D0 -devic=
+e loader,file=3D/home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/sys=
+tem.dtb,addr=3D0x00100000 -device loader,file=3D/home/alex/lsrc/tests/testc=
+ases/zcu102-zyncmp-prebuilds/u-boot.elf=C2=A0 -dtb /home/alex/lsrc/tests/te=
+stcases/zcu102-zyncmp-prebuilds/system.dtb<br>
+=C2=A0 qemu-system-aarch64: Some ROM regions are overlapping<br>
+=C2=A0 These ROM regions might have been loaded by direct user request or b=
+y default.<br>
+=C2=A0 They could be BIOS/firmware images, a guest kernel, initrd or some o=
+ther file loaded into guest memory.<br>
+=C2=A0 Check whether you intended to load all this guest code, and whether =
+it has been built to load to the correct addresses.<br>
+<br>
+=C2=A0 The following two regions overlap (in the cpu-memory-0 address space=
+):<br>
+=C2=A0 =C2=A0 /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zynqm=
+p_fsbl.elf ELF program header segment 0 (addresses 0x00000000fffc0000 - 0x0=
+0000000fffe6058)<br>
+=C2=A0 =C2=A0 /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.=
+elf ELF program header segment 0 (addresses 0x00000000fffe0000 - 0x00000000=
+ffffe000)<br>
+<br>
+=C2=A0 The following two regions overlap (in the cpu-memory-0 address space=
+):<br>
+=C2=A0 =C2=A0 /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/bl31.=
+elf ELF program header segment 0 (addresses 0x00000000fffe0000 - 0x00000000=
+ffffe000)<br>
+=C2=A0 =C2=A0 /home/alex/lsrc/tests/testcases/zcu102-zyncmp-prebuilds/zynqm=
+p_fsbl.elf ELF program header segment 1 (addresses 0x00000000fffe9e00 - 0x0=
+0000000fffe9e88)<br>
+<br>
+Most of the use cases on the Xilinx pages are hidden behind their launch<br=
 >
-> Will do.
->
->>
->> > + *
->> > + * @rs: current RAM state
->> > + * @pss: data about the page we want to send
->> > + */
->> > +static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatu=
-s *pss)
->> > +{
->> > +    RAMBlock *block =3D pss->block;
->> > +    ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
->> > +
->> > +    /* Multifd is not compatible with old compression. */
->> > +    assert(!migrate_compress());
->>
->> This should already be enforced at options.c.
->>
->> > +
->> > +    /* Multifd is not compabible with postcopy. */
->> > +    assert(!migration_in_postcopy());
->>
->> Same here.
->>
->> > +
->> >      /*
->> > -     * Do not use multifd in postcopy as one whole host page should be
->> > -     * placed.  Meanwhile postcopy requires atomic update of pages, s=
-o even
->> > -     * if host page size =3D=3D guest page size the dest guest during=
- run may
->> > -     * still see partially copied pages which is data corruption.
->> > +     * Backward compatibility support. While using multifd live
->> > +     * migration, we still need to handle zero page checking on the
->> > +     * migration main thread.
->> >       */
->> > -    if (migrate_multifd() && !migration_in_postcopy()) {
->> > -        return ram_save_multifd_page(block, offset);
->> > +    if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_LEGA=
-CY) {
->> > +        if (save_zero_page(rs, pss, offset)) {
->> > +            return 1;
->> > +        }
->> >      }
->> >
->> > -    return ram_save_page(rs, pss);
->> > +    return ram_save_multifd_page(block, offset);
->> >  }
->> >
->> >  /* Should be called before sending a host page */
->> > @@ -2984,7 +3006,12 @@ static int ram_save_setup(QEMUFile *f, void *op=
-aque)
->> >      }
->> >
->> >      migration_ops =3D g_malloc0(sizeof(MigrationOps));
->> > -    migration_ops->ram_save_target_page =3D ram_save_target_page_lega=
-cy;
->> > +
->> > +    if (migrate_multifd()) {
->> > +        migration_ops->ram_save_target_page =3D ram_save_target_page_=
-multifd;
->> > +    } else {
->> > +        migration_ops->ram_save_target_page =3D ram_save_target_page_=
-legacy;
->> > +    }
->> >
->> >      bql_unlock();
->> >      ret =3D multifd_send_sync_main();
+scripts for their downstream fork. It would be nice if we could get at<br>
+least one image published somewhere that we could add an avocado test<br>
+for and hopefully an entry in the Arm system emulator pages (we have<br>
+fairly complete docs for xlnx-versal-virt).<br>
+<br>
+&gt;<br>
+&gt; -- PMM<br>
+<br>
+-- <br>
+Alex Benn=C3=A9e<br>
+Virtualisation Tech Lead @ Linaro<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><div dir=3D"ltr">
+<div><span style=3D"color:rgb(34,34,34)">Kind Regard-</span><br style=3D"co=
+lor:rgb(34,34,34)"><div dir=3D"ltr" style=3D"color:rgb(34,34,34)"><div dir=
+=3D"ltr"><div dir=3D"ltr"><font color=3D"#073763">Faiq Ali Sayed</font></di=
+v></div></div></div>
+<div><font style=3D"background-color:rgb(255,255,255)" size=3D"1"><br></fon=
+t></div><br></div></div></div>
+
+--0000000000003374d906120d8345--
 
