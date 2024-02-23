@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E584C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 15:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8B4C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 15:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdXu4-0003Q2-J3; Fri, 23 Feb 2024 10:56:00 -0500
+	id 1rdXuC-00045A-Ma; Fri, 23 Feb 2024 10:56:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXhX-0004l7-RV; Fri, 23 Feb 2024 10:43:03 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1rdXjV-0006Ka-3H; Fri, 23 Feb 2024 10:45:05 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXhW-000641-0y; Fri, 23 Feb 2024 10:43:03 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dc0e5b223eso7723885ad.1; 
- Fri, 23 Feb 2024 07:43:00 -0800 (PST)
+ id 1rdXjT-0006Qe-Fv; Fri, 23 Feb 2024 10:45:04 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1dbf1fe91fcso7853655ad.3; 
+ Fri, 23 Feb 2024 07:45:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708702980; x=1709307780; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703101; x=1709307901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FP9KRL+SerwXW0dsmmqgLA3tloMgPQHHxabviXvEun8=;
- b=D/NP2aeEdH9DaI1Ald5YcjajCOpdcXsWYAeTmljLBnXDorVzFVTNzFk+EfQmqiqY+2
- pHBJGeHwv5ZthF9FzM5BEdiFhDlnzIGHBIkOqK8N7fefiJRD90q4/5ZJN9zWdna7yRRF
- wpgVUv3aKXLXyRK1ET8Xxc8VCh8VbWi1+btpI/Ep6c0zLAjFUis0jbOQw+1ZKOJVQEej
- 63x0HN1F2OHEp3WsXGzfgH7IwRmQpwjXqi+ganyEtJr/3WVAL3fS7G3EC/jRNLnQ3t7K
- kb3oE9jZR4GiE5ZWab6NgnpUcvMFAo5G5zP0FA7lzbPXTM9UMQ3XP5r+yC5w3VA1sRLK
- 0MFA==
+ bh=fEEjnwTPwPSl9XjoxG6VwSL0Y2eO/O+492wWXLaJtVY=;
+ b=VpR/V3fil7qbWCPaLgBwWRZMfr1czqBeTj2MT9E9YwgPUu4UX0EvEYByWUEwTxIF1p
+ D7c+TA/o++7a3Q0Og9SC8poWGUbeRLN/xg8taYyebxyvULzWilLFVlsjDRevTbZ/GGXm
+ wdB+MH4JgCrLA5oDe8OEFy0qihQLXZj3n94GpqTuXP0z7AwZ5xjRzEq9YScpE+zKNaZO
+ PR9TYrJcNcTq2Xa4dqQhLTGh5NnVnv4tORyM31EcGQ9XWwev7ruYF8iYb11a/Vioa64O
+ rJLY1lpzcA4ARbSD2YIRnrCfJ4rItNAD555DRoIXlyMrjBXA6fA75Yr9B3gIUNLtl+F7
+ bKtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708702980; x=1709307780;
+ d=1e100.net; s=20230601; t=1708703101; x=1709307901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FP9KRL+SerwXW0dsmmqgLA3tloMgPQHHxabviXvEun8=;
- b=DwO7anWHxkzFdi1TjhEBKOS7dnvr22efI0C0zGOZauj5PZst43PbFaMQ6Qi/NDuv2C
- ol7VyhEdf++dsLC03NuA7Qqlwm7zwtBZNdQGhW6udzm99Vc+EvO4mLf5uI9+SkNNRTsj
- 7B3qNvb9iBJKZNh2z43Al2FIPFejAEynZWnlNYFmAYEsen+AqhqWeBXSXFcOimvyOVp5
- LaoLTKQWIKgUZuQ+vk5jFdF281LhE/o8/zEFs0p+Q2ADOeV1mR8gdsQAL5uTdxE42KaQ
- 9fr/qKJJ1HVjjJDQkbRZ1NJnw0RtyRJCVDoaYoAN3zwSsfk9v3057VMVFZiz1acyLk+d
- Dn1g==
+ bh=fEEjnwTPwPSl9XjoxG6VwSL0Y2eO/O+492wWXLaJtVY=;
+ b=EKmIh928VvdQSwKBSNLGYidc2a+Hl5q66XwjtXWFopusnjgQg/j/O49jiS3wcaMfxY
+ orDMoDY+8WaQWrIn7gG9TjIXoMEH/yGsueC51pKPSCjFUNBu5FMEGboSvL5DD5+GHOh6
+ cgsm1icE3y97viA73mmQyauhSRGyP74u8sv+7w6HnCFVQYrLpAQuV6ZrXhejKx00RCbb
+ KN5N9HirH8skk2Q69ICOFUz2IHy+h5aqzLb8/UC7YV9JEcimREnnXNZLZlWgu7NE6XXp
+ DaMzu2n48U3Q6itM5TkQ/qOc+mkYegYRRQx3ufar0qWIKKfDkOmRuREcZfD9jPkCUQoH
+ KoBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUF9CfpUl7lNXaC4cEJ0XeCwlFWLYHdkabL3VzgPtaaO8IPkwKbhqMNxMTF1PLyicp0BGPjj75Gqq12m5pVNzeF9zDhv14TgyCk9YBk3zSXl2JDIT1/n38my3yJ
-X-Gm-Message-State: AOJu0Yy31bjQXIMz0umFniS37wB0e4nWPF/8KIqNfEXo56NnvHFMH/Wt
- qtCTkQWabYxl1eu3R0QdR+MczLp0Mn9x+lsrQaGNkppwpZ3+msDRlZv77CDu
-X-Google-Smtp-Source: AGHT+IECEf1HuITZ2tDNxR+a3DKYH49h3PZeGfnQwmI0C52utuFyyjM8i0J6mOTPKRVu862yp9lATQ==
-X-Received: by 2002:a17:902:d543:b0:1db:9fa4:c770 with SMTP id
- z3-20020a170902d54300b001db9fa4c770mr207968plf.34.1708702979583; 
- Fri, 23 Feb 2024 07:42:59 -0800 (PST)
+ AJvYcCXiUj+F0xFTfMmKsAM11Lv7TzJYmgEwFop5ZwGBazVl/8W3CnBij/Z79hAniIEDtL/t8L5OMYSAAyLowHORxZ165Y+W
+X-Gm-Message-State: AOJu0Yy+aAC+xur6k8CVk12YB7/149zYql/qzoxSPtIPd/5QqNeEGfSs
+ Ifee/nvfw19EG0CJaEKfrMvQP6PyJKPRH/wyBDfTEQe1ZNqjYyHqQMpXwJqi
+X-Google-Smtp-Source: AGHT+IEVlZPPSI0a3oJSttrN6i8jv9eyNXvtkD29CP6Njzeq0yDnD9wWWTAmXaZjZp6TQH5kwnS5JQ==
+X-Received: by 2002:a17:902:e548:b0:1dc:1391:e074 with SMTP id
+ n8-20020a170902e54800b001dc1391e074mr138729plf.49.1708703101420; 
+ Fri, 23 Feb 2024 07:45:01 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.42.56
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.44.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:42:59 -0800 (PST)
+ Fri, 23 Feb 2024 07:45:01 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PULL 02/47] target/ppc: Fix crash on machine check caused by ifetch
-Date: Sat, 24 Feb 2024 01:41:21 +1000
-Message-ID: <20240223154211.1001692-3-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.vnet.ibm.com>
+Subject: [PULL 28/47] ppc/pnv: Add a pca9554 I2C device to powernv10-rainier
+Date: Sat, 24 Feb 2024 01:41:47 +1000
+Message-ID: <20240223154211.1001692-29-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,114 +98,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-is_prefix_insn_excp() loads the first word of the instruction address
-which caused an exception, to determine whether or not it was prefixed
-so the prefix bit can be set in [H]SRR1.
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-This works if the instruction image can be loaded, but if the exception
-was caused by an ifetch, this load could fail and cause a recursive
-exception and crash. Machine checks caused by ifetch are not excluded
-from the prefix check and can crash (see issue 2108 for an example).
+For powernv10-rainier, the Power Hypervisor code expects to see a
+pca9554 device connected to the 3rd PNV I2C engine on port 1 at I2C
+address 0x25 (or left-justified address of 0x4A).  This is used by
+the hypervisor code to detect if a "Cable Card" is present.
 
-Fix this by excluding machine checks caused by ifetch from the prefix
-check.
-
-Cc: qemu-stable@nongnu.org
-Acked-by: Cédric Le Goater <clg@kaod.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2108
-Fixes: 55a7fa34f89 ("target/ppc: Machine check on invalid real address access on POWER9/10")
-Fixes: 5a5d3b23cb2 ("target/ppc: Add SRR1 prefix indication to interrupt handlers")
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/excp_helper.c | 36 +++++++++++++++++++++++++-----------
- 1 file changed, 25 insertions(+), 11 deletions(-)
+ hw/misc/Kconfig     | 4 ++++
+ hw/misc/meson.build | 1 +
+ hw/ppc/Kconfig      | 1 +
+ hw/ppc/pnv.c        | 6 ++++++
+ 4 files changed, 12 insertions(+)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 2ec6429e36..98952de267 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1312,6 +1312,10 @@ static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 4fc6b29b43..83ad849b62 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -34,6 +34,10 @@ config PCA9552
+     bool
+     depends on I2C
  
-+    if (!(env->insns_flags2 & PPC2_ISA310)) {
-+        return false;
-+    }
++config PCA9554
++    bool
++    depends on I2C
 +
-     if (!tcg_enabled()) {
-         /*
-          * This does not load instructions and set the prefix bit correctly
-@@ -1322,6 +1326,15 @@ static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
-     }
+ config I2C_ECHO
+     bool
+     default y if TEST_DEVICES
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index e4ef1da5a5..746686835b 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -4,6 +4,7 @@ system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
+ system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
+ system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
+ system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
++system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
+ system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
+ system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
+ system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index 0e5acfd1c4..a890699082 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -33,6 +33,7 @@ config POWERNV
+     select FDT_PPC
+     select PCI_POWERNV
+     select PCA9552
++    select PCA9554
  
-     switch (excp) {
-+    case POWERPC_EXCP_MCHECK:
-+        if (!(env->error_code & PPC_BIT(42))) {
-+            /*
-+             * Fetch attempt caused a machine check, so attempting to fetch
-+             * again would cause a recursive machine check.
-+             */
-+            return false;
-+        }
-+        break;
-     case POWERPC_EXCP_HDSI:
-         /* HDSI PRTABLE_FAULT has the originating access type in error_code */
-         if ((env->spr[SPR_HDSISR] & DSISR_PRTABLE_FAULT) &&
-@@ -1332,10 +1345,10 @@ static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
-              * instruction at NIP would cause recursive faults with the same
-              * translation).
-              */
--            break;
-+            return false;
-         }
--        /* fall through */
--    case POWERPC_EXCP_MCHECK:
-+        break;
+ config PPC405
+     bool
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 97bdfb2d1e..0755fab155 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1913,6 +1913,12 @@ static void pnv_rainier_i2c_init(PnvMachineState *pnv)
+         qdev_connect_gpio_out(DEVICE(dev), 2, qdev_get_gpio_in(DEVICE(dev), 7));
+         qdev_connect_gpio_out(DEVICE(dev), 3, qdev_get_gpio_in(DEVICE(dev), 8));
+         qdev_connect_gpio_out(DEVICE(dev), 4, qdev_get_gpio_in(DEVICE(dev), 9));
 +
-     case POWERPC_EXCP_DSI:
-     case POWERPC_EXCP_DSEG:
-     case POWERPC_EXCP_ALIGN:
-@@ -1346,17 +1359,13 @@ static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_VPU:
-     case POWERPC_EXCP_VSXU:
-     case POWERPC_EXCP_FU:
--    case POWERPC_EXCP_HV_FU: {
--        uint32_t insn = ppc_ldl_code(env, env->nip);
--        if (is_prefix_insn(env, insn)) {
--            return true;
--        }
-+    case POWERPC_EXCP_HV_FU:
-         break;
--    }
-     default:
--        break;
-+        return false;
++        /*
++         * Add a PCA9554 I2C device for cable card presence detection
++         * to engine 2, bus 1, address 0x25
++         */
++        i2c_slave_create_simple(chip10->i2c[2].busses[1], "pca9554", 0x25);
      }
--    return false;
-+
-+    return is_prefix_insn(env, ppc_ldl_code(env, env->nip));
  }
- #else
- static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
-@@ -3224,6 +3233,7 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
  
-     switch (env->excp_model) {
- #if defined(TARGET_PPC64)
-+    case POWERPC_EXCP_POWER8:
-     case POWERPC_EXCP_POWER9:
-     case POWERPC_EXCP_POWER10:
-         /*
-@@ -3245,6 +3255,10 @@ void ppc_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-             env->error_code |= PPC_BIT(42);
- 
-         } else { /* Fetch */
-+            /*
-+             * is_prefix_insn_excp() tests !PPC_BIT(42) to avoid fetching
-+             * the instruction, so that must always be clear for fetches.
-+             */
-             env->error_code = PPC_BIT(36) | PPC_BIT(44) | PPC_BIT(45);
-         }
-         break;
 -- 
 2.42.0
 
