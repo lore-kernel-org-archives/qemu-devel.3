@@ -4,157 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44885C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E025C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdbSl-0008D5-Oi; Fri, 23 Feb 2024 14:44:04 -0500
+	id 1rdbUJ-0003Fn-Ms; Fri, 23 Feb 2024 14:45:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb3f-0000I3-Ks
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:18:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb3c-0007RF-E0
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:18:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708715881;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=itQAUMMOZcJtxJNZcr/T1fsAp5e++SkYNEcWquRoLuQ=;
- b=B+5BZ1RemIO5r1BWb4xvyqyagLXAhnUHP/vNc0AI7O2gJvXrOZRSHUlgr+Zv3MueCDORil
- 9FcmfCzYe/i5pRK7bSUqN7aNbumyniuUcTm5mKqhNtMznaY1o9kPf2C4H3uF6P92kssvXi
- RBlQbueTuVkB8jiT9fAOMDJurXAHgJQ=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-AcWA52q2PGa7QkRkjlnhVA-1; Fri, 23 Feb 2024 14:18:00 -0500
-X-MC-Unique: AcWA52q2PGa7QkRkjlnhVA-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d22e2f9a0cso5561321fa.3
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 11:17:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708715878; x=1709320678;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdaec-0007RX-U9
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:52:16 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdaeb-0000AK-2N
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:52:14 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-563c403719cso1336651a12.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 10:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708714331; x=1709319131; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=itQAUMMOZcJtxJNZcr/T1fsAp5e++SkYNEcWquRoLuQ=;
- b=QOvc5x9NIjwzvfAU6cmHrnf1hjoOnCwHxismjzst1S5KSdKm+m65sGue5SfUbCKaob
- yGtrsX60blrHDin83HmfluHDRLpeUiTYjybsa8DmXyM7Ra8zQ0/iOCjV7jOFTlj1c1Yx
- iP4keLIS0eWpmX4cKMYiNl+26Ipoux2Q1gOJXcMmOg7oQNPukQdmLSmsherTV5G83OuQ
- Y6/2UGeOQK6NXkCBxZdrFXutXuJTO25E5mAyaxKG0HEK30CNwQzc8pg9cOhBU5nP6Lxp
- 5s+n7iQ5flvRi3WupwQA2j7KazhoN3dLPbNHEW/QYX1Q7nRf+90WDNo6D/gAA/4RtqbH
- cRHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWt2pSKJHfnz7plqukxxTm/6gr6bF7edPZ0OAo9Csci1WMO5NSiJvMWvPwQOyY6hOEwi3EWQZQ8mvbrzCCNZ6rDZsPKPCs=
-X-Gm-Message-State: AOJu0Yy2iviLh8r1qhsyQdVbJE0zLwAV8pq98XputT3quiQEAGgBdw/m
- QmKF+/6ADxr45w+0ADMks/oUHMUPzTMItnLciW2PWBaX0IvwvtFzygCyr3DMKxtVgzXyR9or2sm
- 99JVc5S4tawZ4cHuHVPqHSK0yf+J8SR+L88/zzKKjlwn48VuxwDlZ
-X-Received: by 2002:a2e:9003:0:b0:2d2:5275:b40d with SMTP id
- h3-20020a2e9003000000b002d25275b40dmr49934ljg.31.1708715878771; 
- Fri, 23 Feb 2024 11:17:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHffphPENJf/K5BqfHly9exWjb4OhKKNQl2w4Cq7SamUCMY3t6n8I3x+WLXZq7jx4VEkXvrBA==
-X-Received: by 2002:a2e:9003:0:b0:2d2:5275:b40d with SMTP id
- h3-20020a2e9003000000b002d25275b40dmr49918ljg.31.1708715878409; 
- Fri, 23 Feb 2024 11:17:58 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
- [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
- jl20-20020a05600c6a9400b004126101915esm3320007wmb.4.2024.02.23.11.17.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 11:17:57 -0800 (PST)
-Message-ID: <aed34f97-f2d9-4e4a-bfbe-9e90e1f96037@redhat.com>
-Date: Fri, 23 Feb 2024 20:17:48 +0100
+ bh=ERNgwyVq9X+VncDNCrBwHPDnxP8raLWVng2bJPO13RQ=;
+ b=h7bqIgtrHdG3DFTEvxrgutocdZghAPLU5Gyt0oRatHtgB6X9GJo25B47e+VJSMzILS
+ tv1yLN+a6iv9kdnNyMQTimbc1OMSypz3Oc1S8OrOaWoG0JHWadaJ2h8y2BGw5ysgtfNg
+ q9LOYHL8eI2No76+DL6UkQmWZwjHJ3+xVHp6CTdlMLvsMT6ZQji5d9zenlSmI6+RBcG5
+ D+6+Wt9jzLCctZFJeIkxzodZXJWgxMBJyWgcjUlpVG/q1EO5F8nN9JQnvuyP9EP7tcRp
+ rYmU9bxz/lzlu43Wg23NuSpPEKNvtmfsfst6PR/GlBGHKJqyZhMoFdd8254e0xom2tnV
+ THZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708714331; x=1709319131;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ERNgwyVq9X+VncDNCrBwHPDnxP8raLWVng2bJPO13RQ=;
+ b=b4NJ2XmZNFYUytQtQOFeQ1Re0fopTfLhfptGbMbq8bt8M43Mysk9+bS53pZoZpSqZR
+ GnP6Ic8YBhZc4l8U/GITuuRuEFXwY88h4OqyOvF9a3PGpnXrl3Pj0+mB07Q9wuB0aNlc
+ HgduoGxE8X5oaJIiyN1Izgt+HjO7+pMaDF4dgGDmHVChihDaL/mt/Qfi1pBbcbyvVijd
+ p5bfa8Sy6kKgZcRhX3ZkF/H5nCcnG/PULetONxTak3NYt1vP6cf0RQDWr99V5bQH4Q1+
+ DJ+c+RYAh/xEoCobrvDtvFquaKD2dJTi2qXFw6job7g7B0nGbtl7Z5L+O2+qxAsgPkwM
+ B9EA==
+X-Gm-Message-State: AOJu0YzAPp8zdLft9N9LBX7fcmyP7vuJBB0LAFtitZKCNkDyiSl5Gh4W
+ q9lhYCDi2CEyBQVIyfqhaq3kd7cHoZYv5Oud/0mX9AUNC1x4QYfnmayGrM6WvRuhDLSUNMc8i16
+ A8RrEMu8ogLsOUHIl+ZfmI6mt3tbArrv0OKiBag==
+X-Google-Smtp-Source: AGHT+IGqaG+RfwtsXwdVzrsTwgrwzvMigot5Ab7zsrhQSu4xgK+fJPrw4beNt5bpqeKwaDuBCZJawia9j1AJut6jSf8=
+X-Received: by 2002:a05:6402:3456:b0:565:6bbc:3839 with SMTP id
+ l22-20020a056402345600b005656bbc3839mr380531edc.40.1708714331050; Fri, 23 Feb
+ 2024 10:52:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/27] tests/tcg: bump TCG test timeout to 120s
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Bin Meng <bin.meng@windriver.com>, Yanan Wang <wangyanan55@huawei.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cleber Rosa <crosa@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
+References: <20240220192625.17944-1-philmd@linaro.org>
+In-Reply-To: <20240220192625.17944-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Feb 2024 18:51:59 +0000
+Message-ID: <CAFEAcA9T=EjG2TrgjwOxq=i-_5kXiO0RNpkxMwcuOeiYgqd5nA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] hw: Replace cpu_interrupt() calls by
+ qemu_irq(QDev GPIO)
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Bernhard Beschow <shentey@gmail.com>, 
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
- <peter.maydell@linaro.org>, Daniel Henrique Barboza <danielhb413@gmail.com>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
- Weiwei Li <liwei1518@gmail.com>, Alistair Francis
- <alistair.francis@wdc.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Brian Cain <bcain@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Michael Rolnik <mrolnik@gmail.com>
-References: <20240223162202.1936541-1-alex.bennee@linaro.org>
- <20240223162202.1936541-3-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240223162202.1936541-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ Markus Armbruster <armbru@redhat.com>, 
+ Alexander Graf <agraf@csgraf.de>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,36 +97,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/02/2024 17.21, Alex Bennée wrote:
-> This is less than ideal but easier than making sure we get all the
-> iterations of the memory test. Update the comment accordingly.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/tcg/Makefile.target | 9 +++------
->   1 file changed, 3 insertions(+), 6 deletions(-)
-> 
-> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-> index 8cf65f68dd8..a4c25908fb7 100644
-> --- a/tests/tcg/Makefile.target
-> +++ b/tests/tcg/Makefile.target
-> @@ -93,12 +93,9 @@ QEMU_OPTS=
->   
->   
->   # If TCG debugging, or TCI is enabled things are a lot slower
-> -# ??? Makefile no longer has any indication that TCI is enabled,
-> -# but for the record:
-> -#   15s    original default
-> -#   60s    with --enable-debug
-> -#   90s    with --enable-tcg-interpreter
-> -TIMEOUT=90
-> +# so we have to set our timeout for that. The current worst case
-> +# offender is the system memory test running under TCI.
-> +TIMEOUT=120
->   
->   ifeq ($(filter %-softmmu, $(TARGET)),)
->   # The order we include is important. We include multiarch first and
+On Tue, 20 Feb 2024 at 19:28, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+> cpu_interrupt() doesn't scale well with heterogenous machines
+> because its mask is target specific (defined in target/ARCH/cpu.h).
+>
+> While it is (often...) used by target-specific hw to notify cpu,
+> there is no restriction to use such target-specific hw in a
+> heterogeneous setup, where it'd still target the same kind of
+> target cpus.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+When would this target-specific hw call cpu_interrupt()
+on a CPU which is not of that target architecture?
+For instance, in the typhoon code you change in patch 2,
+the CPUState argument to cpu_interrupt() and cpu_reset_interrupt()
+is always that of one of the 4 CPUs pointed to by the
+TyphoonState struct, which are guaranteed to be Alpha CPUs.
+In some hypothetical world where this machine type had an
+Arm board-management CPU on it as well, that CPU would not
+be one of the ones pointed to by the TyphoonState struct,
+which would still all be Alpha.
 
+I can see that you would run into slight awkwardness on
+a device that wanted to do this same kind of thing on two
+CPU types at once, just because the defines are in cpu.h
+and you can't #include them both at once. But are we going to
+in practice have those on a heterogenous machine?
+
+> The Alpha Typhoon HW is unlikely to be used heterogeneously,
+> but it is the simplest case I found to illustrate how I plan
+> to remove cpu_interrupt() calls from hw/: use the QDev GPIO API.
+
+I do generally think that it's probably nicer design to
+have cpu_interrupt() be internal to target/foo (it's how
+arm does it, except for a handful of calls in obsolete SoC
+models). But I think it might be helpful if you could give
+a description of what the immediate issue is that means that
+we need to do this cleanup to progress with the heterogenous
+machine work (and to what extent we can leave existing code
+in old non-heterogenous board and device models alone).
+
+thanks
+-- PMM
 
