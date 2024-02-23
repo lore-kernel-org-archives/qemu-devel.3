@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F97C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 22:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E643C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 22:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rddsS-0008H1-IK; Fri, 23 Feb 2024 17:18:44 -0500
+	id 1rddsP-0008Gb-Bv; Fri, 23 Feb 2024 17:18:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdddH-0002AJ-C5
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 17:03:05 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1rddRz-0004T9-3H
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 16:51:24 -0500
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdddE-0002KT-JE
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 17:03:02 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dc13fb0133so10995695ad.3
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 14:02:59 -0800 (PST)
+ id 1rddRx-0000wr-8R
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 16:51:22 -0500
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-59fdcf8ebbcso454910eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 13:51:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708725778; x=1709330578; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1708725079; x=1709329879; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Gnb5KADM9/0vveYxc+cXc7XU6tL8RQmHf1g+yfBguPM=;
- b=V/8sMWPJs0ZR1lLjL0tuRjCK6Zl8C4XiWvH67+OdzJl4FMEvWRwtuN337ZvFOAe9Wj
- c6R7G/24bzmE6rkuliuWSm162ciy7ieoqFdjYe7JIWkLflkk0Y6Neiwedur5w3hLJW8D
- 2vXyLsSFmKpFsKLb7B7J51gV19jX4GIP+DT5LYRURgsby/3B3thwLOQSysiVUpUCdK9w
- KLJjtt8GsuW2l53JV5DvoFG+xszR3bS3zSh1s1BfUVIHZ2uOjYzJid2C+B+uLH8mr4tp
- AV5UayenSC8gGW5luXC7nBvq090EPdgH1o4s08qB7qFCjYQC0V6Ts62JTA/+LN2zVNoW
- 0XFw==
+ bh=mizjEVoqdEiINmGJ3Jk0y22fobxvwT16TlDZ6NB7Ioo=;
+ b=cYpTGlRL+MgGt1wyvdx60JacxtdaeEBlF4D7E1SBzpwqcqBILe8Wxxn01vqywZNj8E
+ h4r3UGQHs46Iotwgdf3fvqhCgEpBxL2rv9qL7Q2NkB2TT6ZuGMFgRlQgCQn1+hKD+iZQ
+ ukUdj20gARx+TBqNiWgsYXjzSXwEGtlasNlHB4/kjH9cwkXnU8WPXxS8eBeT3ZlTcH4+
+ ZMh1JBRc/LSAKkat+apKUeNpFqYmJl8kg5vG3qaZYvRhpoBYR1yZcnr+n+irkunuqXle
+ uow87HF2Hq3ates9nju5VywE+K+e00jd+PR3WQ07S5tCUwcTfOiCdzwKv3Mu5B/uAucP
+ rCNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708725778; x=1709330578;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1708725079; x=1709329879;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Gnb5KADM9/0vveYxc+cXc7XU6tL8RQmHf1g+yfBguPM=;
- b=dUXTLP3vYfJn/dNmh+A3m7WtJWkukbqXu2Om+oeejgzo3IBh3EfOlhfcVx1inLEma7
- iSxJRaNkPSggL3uf6vc9htnZzBIZU5hYMhe4G9ixpW3UbqxbSYR6y32HZCvKGarKSVVm
- bontjB98OXnzpzac9ozue4f7HRFwM/Y8bSQqdH9CHkoPKiu/JPM14isI8xOEMfgHOkhN
- TqlDrFWz3cV5K46w/RCpt41IJkBeXCj5ErVwCWJc/U8L51D5qDUb0iftNHpLkHe0TKUY
- p/theTiQNUDAATh4xd1xi0d25+PPM92WuHMQM3joeR53gDYDOuHbLDc81Ww726jNQdIn
- nk9Q==
+ bh=mizjEVoqdEiINmGJ3Jk0y22fobxvwT16TlDZ6NB7Ioo=;
+ b=g5gG9VZPF+adhSypDju79r+tthauxWGU8vOQk0g1E3SoUcJlWbjyX86xB73+ttEpk0
+ +81Fx67vPx9PducBloOVyh1/SUmjWF3RRlv5xSbf7ir8JjAsYOuLK9Lz0Sz3tTXoCNqB
+ zSPQotkkosBJ+d8QM4cwivHIfIy6Zm7UGKVos334Ecb2tDDv5tnPJ/par/pMfkUluvp7
+ 1M/Za0fWPEv9uayj8n1R8GWUFITryVPPqAKFQfP5V7TImQy0HmqJhGT/8r5IgLzxEf7U
+ Ld72QUbnsUamF8W/L9xV8APRoolNNNKrXuEU5WxOPz0uBYhM9yR2d+WeuqyvgsYr7e1F
+ 4Ilg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCULLW2CsbH8JkXPG9Jwc70rtZvdc/zmDS3Qhvnd/nbkzxaDrUc9tgnpL+NYDdI3yarQKGUoRP6HUvn6cfHfYRw3KBG4W6E=
-X-Gm-Message-State: AOJu0Yz+5WmF42RihZoDmO8sJJQDqM8kI/FJvMDv/anUKZssoGpOICpq
- RJq1QhGfO/0wrxVgSD8QFFfnIsQzyttJ+ItuSNcrcBrDs1FQgCR0OoQ8NvALRI7pXrRD9yi4XcG
- G
-X-Google-Smtp-Source: AGHT+IGyFRprTnuklIAo/z3+skxh0ebP22IpciEsn/33jdzQQBA2nH+YQAAG6Y7YahokVd8CnGCJbA==
-X-Received: by 2002:a17:902:ec85:b0:1dc:652d:708f with SMTP id
- x5-20020a170902ec8500b001dc652d708fmr1497599plg.15.1708725778129; 
- Fri, 23 Feb 2024 14:02:58 -0800 (PST)
+ AJvYcCWcLFhJpPGICgQhMPhfpT5UuMjbkaG0/EEbUFrS5RACbFqtXDH/TLKQikGIiKx23gglZ8e++Ox/2Yuih8Wj0D/P4KoK6YY=
+X-Gm-Message-State: AOJu0Yx/hscdqjgXHglRp0y3m+TZHgMKJip0wIlAPNR0fKwjlxIwyDCt
+ n6KmPlR2yHGUjEI+vvdsviHuOrnr5jO2ie2+EsVS/4dl+S3nhEk+G9JI7TW1rCc=
+X-Google-Smtp-Source: AGHT+IGkzKusiRvTKOjJ2K28l+/lR7oGJLjVTI/rWd/bo5vwOAW6FAmU7KRnv9ObVEIjAcjmWIhTcg==
+X-Received: by 2002:a05:6358:80aa:b0:17b:5635:b78b with SMTP id
+ a42-20020a05635880aa00b0017b5635b78bmr1478228rwk.14.1708725078825; 
+ Fri, 23 Feb 2024 13:51:18 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- 6-20020a170902e9c600b001d706e373a9sm12052710plk.292.2024.02.23.14.02.56
+ d188-20020a6336c5000000b005dc89957e06sm12691396pga.71.2024.02.23.13.51.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 14:02:57 -0800 (PST)
-Message-ID: <1e5d8d7c-d3e2-41c8-834f-6241f037999c@linaro.org>
-Date: Fri, 23 Feb 2024 12:02:53 -1000
+ Fri, 23 Feb 2024 13:51:18 -0800 (PST)
+Message-ID: <c20dcf6e-11ba-41a4-b810-f7e9c1a8a3e4@linaro.org>
+Date: Fri, 23 Feb 2024 11:51:16 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] linux-user: Rewrite target_shmat
+Subject: Re: [RFC PATCH v3 00/21] target/arm: Implement FEAT_NMI and
+ FEAT_GICv3_NMI
 Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, richard.purdie@linuxfoundation.org, mjt@tls.msk.ru
-References: <20240223030309.458451-1-richard.henderson@linaro.org>
- <20240223030309.458451-4-richard.henderson@linaro.org>
- <jwyuvao4apydvykmsnvacwshdgy3ixv7qvkh4dbxm3jkwgnttw@k4wpaayou7oq>
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <jwyuvao4apydvykmsnvacwshdgy3ixv7qvkh4dbxm3jkwgnttw@k4wpaayou7oq>
+In-Reply-To: <20240223103221.1142518-1-ruanjinjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/23/24 01:35, Ilya Leoshkevich wrote:
-> On Thu, Feb 22, 2024 at 05:03:09PM -1000, Richard Henderson wrote:
->> Handle combined host and guest alignment requirements.
->> Handle host and guest page size differences.
->> Handle SHM_EXEC.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/115
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   linux-user/mmap.c | 146 ++++++++++++++++++++++++++++++++++------------
->>   1 file changed, 110 insertions(+), 36 deletions(-)
+On 2/23/24 00:32, Jinjie Ruan via wrote:
+> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
+> introduce support for a new category of interrupts in the architecture
+> which we can use to provide NMI like functionality.
 > 
-> [...]
+> There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
+> PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
+> interrupts including those with superpriority to be masked on entry to ELn
+> until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
+> can be managed by software using the new register control ALLINT.ALLINT.
+> Independent controls are provided for this feature at each EL, usage at EL1
+> should not disrupt EL2 or EL3.
 > 
->> -    /* find out the length of the shared memory segment */
->> +    /*
->> +     * Because we can't use host shmat() unless the address is sufficiently
->> +     * aligned for the host, we'll need to check both.
->> +     * TODO: Could be fixed with softmmu.
->> +     */
+> I have tested it with the following linux patches which try to support
+> FEAT_NMI in linux kernel:
 > 
-> Are there any plans to introduce softmmu to qemu-user?
+> 	https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
+> 
+> In the test, SGI, PPI and SPI interrupts can all be set to have super priority
+> to be converted to a hardware NMI interrupt. The SGI is tested with kernel
+> IPI as NMI framework, and the PPI interrupt is tested with "perf top" command
+> with hardware NMI enabled, and the PPI interrupt is tested with a custom
+> test module, in which NMI interrupts can be received and transmitted normally.
+> 
+>           +-------------------------------------------------+
+>           |               Distributor                       |
+>           +-------------------------------------------------+
+>               SPI |  NMI                         |  NMI
+>                  \ /                            \ /
+>              +--------+                     +-------+
+>              | Redist |                     | Redist|
+>              +--------+                     +-------+
+>              SGI  | NMI                     PPI | NMI
+>                  \ /                           \ /
+>            +-------------+             +---------------+
+>            |CPU Interface|   ...       | CPU Interface |
+>            +-------------+             +---------------+
+>                 | NMI                         | NMI
+>                \ /                           \ /
+>              +-----+                       +-----+
+>              |  PE |                       |  PE |
+>              +-----+                       +-----+
+> 
+> Changes in v3:
+> - Remove the FIQ NMI.
+> - Adjust the patches Sequence.
+> - Reomve the patch "Set pstate.ALLINT in arm_cpu_reset_hold".
+> - Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
+> - With CPU_INTERRUPT_NMI, both CPSR_I and ISR_IS must be set.
+> - Not include NMI logic when FEAT_NMI or SCTLR_ELx.NMI not enabled.
+> - Refator nmi mask in arm_excp_unmasked().
+> - Add VNMI definitions, add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
+> - Add Reviewed-by and Acked-by.
+> - Update the commit message.
+> 
+> Changes in v2:
+> - Break up the patches so that each one does only one thing.
+> - Remove the command line option and just implement it in "max" cpu.
 
-Long-term ones, yes.  There are *so* many places for which emulation doesn't quite work 
-unless the host and guest page size match.  There are projects like asan which don't work 
-unless the guest has a *very* specific memory layout, which often conflicts with the host.
-
+Still missing all handling of virtual NMI, both within the CPU and the GIC.
+This is not an optional portion of the spec.
 
 
 r~
+
 
