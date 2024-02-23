@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DCDC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:45:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5DEC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdRA2-0003mS-Kh; Fri, 23 Feb 2024 03:44:02 -0500
+	id 1rdR9b-0003Hp-Op; Fri, 23 Feb 2024 03:43:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rdR9y-0003l7-1Q; Fri, 23 Feb 2024 03:43:58 -0500
+ id 1rdR9a-0003HI-7q; Fri, 23 Feb 2024 03:43:34 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rdR9w-0000BO-Cm; Fri, 23 Feb 2024 03:43:57 -0500
+ id 1rdR9Y-000050-KV; Fri, 23 Feb 2024 03:43:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708677836; x=1740213836;
+ t=1708677813; x=1740213813;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=F8skAR9lhlBSxUk/sclMG9tzN4DHjUmO6+uY1BPToZ0=;
- b=Xeo0nutKpIQ8BzicXiZOay9j4/u+95iBOF2KsgLtDEAlnV1czK3PwD3i
- oknKCjcUs3RlvOyj6x8TG7dGnosZ1YjylKIN2WkFgigP5w9idmbv0LEwY
- xrOlxK9gvpgb4yHBIpnIohYy171Ilgt1nsbvHrh2m11vibxDK7TUtKPso
- 9KCqxxuZ+3UFYMPCzWVyoh8ofpDj72YZTLrxhOGgeGXeo0Rr1G2FuvzLf
- /BITIQJ61CYL0JiDwwwN7zODfpZm0XWELCni/1I426L1W8pYGFki1dj3d
- E5S1qR+DjwNzKKGkj9btrluZo4uVrK2QgSoku8MU0jcWIA//65dVLq2yK g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="28413872"
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="28413872"
+ bh=vXMvs1cSNIKepRdMS6u3iCUNAtDkq5tZ/DJExY7Ps00=;
+ b=Czhk255JDjFy1wi7jmydhAj6VVVVy/enBElULpp5ZPXlKuq5sdRBZXn1
+ T8G5cQnHlqi3fLRiZcYOZTyvAU55QYzLEbNi1+F39uHEri7T3sVy742+m
+ TBo3pyIyt81Q28hugmj0CS6bANpELJatdR8/53L5mMv7bBtuwQ7oPV4HR
+ Mpuj1JrvbhE+NNkaJW4jZxlqJa8XBtbJO2ZSHYx+mfA59kZcnBnN5nBws
+ 5g+wllIk782XTU4/yaMgv35tn10ibS/HWkLx2M8P53cMOFeDKNtazxZKW
+ 2B/lao3yWgyGzzGfCYNJGkBze3haY1a68Co8d2Pzqg2y3f5a8aalOQRst A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="28413824"
+X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="28413824"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Feb 2024 00:43:44 -0800
+ 23 Feb 2024 00:43:31 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; 
-   d="scan'208";a="5731852"
+   d="scan'208";a="5731774"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 23 Feb 2024 00:43:39 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 23 Feb 2024 00:43:27 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -55,10 +55,10 @@ To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Michael Tokarev <mjt@tls.msk.ru>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 5/7] hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD()
- in cxl_usp_realize()
-Date: Fri, 23 Feb 2024 16:56:51 +0800
-Message-Id: <20240223085653.1255438-6-zhao1.liu@linux.intel.com>
+Subject: [PATCH v2 2/7] hw/display/macfb: Fix missing ERRP_GUARD() in
+ macfb_nubus_realize()
+Date: Fri, 23 Feb 2024 16:56:48 +0800
+Message-Id: <20240223085653.1255438-3-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
 References: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
@@ -106,20 +106,22 @@ ERRP_GUARD():
 * Using it when it's not needed is safe, but please avoid cluttering
 * the source with useless code.
 
-But in cxl_usp_realize(), @errp is dereferenced without ERRP_GUARD():
+But in macfb_nubus_realize(), @errp is dereferenced without
+ERRP_GUARD():
 
-cxl_doe_cdat_init(cxl_cstate, errp);
+ndc->parent_realize(dev, errp);
 if (*errp) {
-    goto err_cap;
+    return;
 }
 
-Here we check *errp, because cxl_doe_cdat_init() returns void. And since
-cxl_usp_realize() - as a PCIDeviceClass.realize() method - doesn't get
-the NULL @errp parameter, it hasn't triggered the bug that dereferencing
-the NULL @errp.
+Here we check *errp, because the ndc->parent_realize(), as a
+DeviceClass.realize() callback, returns void. And since
+macfb_nubus_realize(), also as a DeviceClass.realize(), doesn't get the
+NULL @errp parameter, it hasn't triggered the bug that dereferencing the
+NULL @errp.
 
 To follow the requirement of @errp, add missing ERRP_GUARD() in
-cxl_usp_realize().
+macfb_nubus_realize().
 
 Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
@@ -132,21 +134,21 @@ v2:
  * Add the @errp dereference code in commit message to make review
    easier. (Markus)
 ---
- hw/pci-bridge/cxl_upstream.c | 1 +
+ hw/display/macfb.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index e87eb4017713..03d123cca0ef 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -289,6 +289,7 @@ static void free_default_cdat_table(CDATSubHeader **cdat_table, int num,
+diff --git a/hw/display/macfb.c b/hw/display/macfb.c
+index 418e99c8e18e..1ace341a0ff4 100644
+--- a/hw/display/macfb.c
++++ b/hw/display/macfb.c
+@@ -714,6 +714,7 @@ static void macfb_nubus_set_irq(void *opaque, int n, int level)
  
- static void cxl_usp_realize(PCIDevice *d, Error **errp)
+ static void macfb_nubus_realize(DeviceState *dev, Error **errp)
  {
 +    ERRP_GUARD();
-     PCIEPort *p = PCIE_PORT(d);
-     CXLUpstreamPort *usp = CXL_USP(d);
-     CXLComponentState *cxl_cstate = &usp->cxl_cstate;
+     NubusDevice *nd = NUBUS_DEVICE(dev);
+     MacfbNubusState *s = NUBUS_MACFB(dev);
+     MacfbNubusDeviceClass *ndc = NUBUS_MACFB_GET_CLASS(dev);
 -- 
 2.34.1
 
