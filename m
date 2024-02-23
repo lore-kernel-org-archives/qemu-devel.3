@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631C3C54E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51007C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:04:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdY0x-0005oa-3U; Fri, 23 Feb 2024 11:03:07 -0500
+	id 1rdY1f-0006Pz-KX; Fri, 23 Feb 2024 11:03:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXjw-0006Py-3g; Fri, 23 Feb 2024 10:45:32 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1rdXid-0005a5-A1; Fri, 23 Feb 2024 10:44:11 -0500
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXjs-0006dS-Su; Fri, 23 Feb 2024 10:45:31 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dc13fb0133so7530625ad.3; 
- Fri, 23 Feb 2024 07:45:18 -0800 (PST)
+ id 1rdXia-0006FE-5P; Fri, 23 Feb 2024 10:44:11 -0500
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-5dcc4076c13so820656a12.0; 
+ Fri, 23 Feb 2024 07:44:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708703117; x=1709307917; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703046; x=1709307846; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=87BnQC30icaZczwd/UfBwrie1Am0WCArYW99YEPQzm0=;
- b=JnTyipDhHyr97HsSux+QDCgiuWYWqKvUDmaN/KCiT8Sv1x1sFZ2cqbXDXT0uwvJLQV
- JMHnrcUUW56sqSSmod2Z9kVErQ+36PjJodqj+qL0CWVayfyenN+Cn1e2SWB0YiZ5y+Aj
- Rb6ex2U3V6FCOjXgjddXpAYCvawWSzBj5jHMRvOGdkHkNCpnNPIXWQ6YstJlL7fA4sWh
- x/59b2rYLW5zCdgpe35Eqr5MO9i+pEMegRbv0Aa+kbHDu+MxrnMjoBh3FFNN0MIKSxSR
- Ry747/fa1F+FkNTDcdKqQQcPDMRjN4kzSf9dasKVLgWx23dey7U+ytPa3m00WKERJpRJ
- dj7A==
+ bh=BO+f3hPKeL5HSk7HpmCD/7SFZU9TBIYTsIyIXJfwhsQ=;
+ b=l7P2TXJWVa+kAXDw+z0HPgc0C/cpq1njmCeJ9drlB2VflZ6Nk9rp2Lw7UFuMByZqtO
+ cvJIzUaqG4h0OOse/qVwapCIAUkHVy02YecW5Fbj5AVgEVLVSQ0H2C8U7zo2Ggu9JKa7
+ SI+gN5lq7H59Ygz5UUQAeRhScp+KmJoPd95MM3My+iPRwLM348ERHtsI8dRraETfm/Fo
+ PAKHuqjPeUuh+19HZc/zR0CXCqVnkPmNFfRSk7mmou5gY+6qpEb7KpIJs6dGUOdN2Xo2
+ RoDmWkVtc2uuRatcJm12jvjrGSsDCAuuaJj1u46MFOkEqo94iwEQ8+gwRbhEf9B5aN+/
+ 8q3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708703117; x=1709307917;
+ d=1e100.net; s=20230601; t=1708703046; x=1709307846;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=87BnQC30icaZczwd/UfBwrie1Am0WCArYW99YEPQzm0=;
- b=LfdJNSwTDw7hXRKw0zNvATTIL/xwLISg7GfQb/TgC1kH6FimT7yJ419lUEXjt6iCf8
- sUhT496OVEf8eupY62nwUbRSmW8e6jnyoWx6LDwitwNA2jdau3cOYlYGC+zeaKxYf4sZ
- hH2PN9sWV5Ty7img7Sx4lZVSN1X9wPJNzJr6pgvsl5pjsI/BB/u3jGqtUCtCYDAyzBMP
- ZS/e7VVMSrkHR9KckUUAzpDiDMB5ZoiorjKMqK080f/le+U2YsGbNYIJFMpaHW85HgH/
- FWGZRt/ADOD2uRqogY50evKVRxPg8vw9lmHkCjofWvjwa4sm9Bj8vkVY0aBvABg98MLB
- gGCQ==
+ bh=BO+f3hPKeL5HSk7HpmCD/7SFZU9TBIYTsIyIXJfwhsQ=;
+ b=v25YXhUXkdR8wFH55p3p+S6Qz7C4GDmb6jhzxl3huxdKHujV5j9B2EFczhD/AqS+wr
+ 8mxgM+Y62+u6Imb5pVK2Ca9as4nkSokwBuzbhznsHL2+ioyMuEbdxRy67MPeWUNd7q6n
+ 3InfRixEKSuvSrxNuPfE3ibR23/O8tolvKylbbXvZqIYuxIB9NsD8RQFBkkkf0jLPiOh
+ tYBOdamCki8s3qlTsPq1NySDzjI2nXeD+iUfOMwAE3ohzucMx0CVmSohcoPt4YjxWDeV
+ EaTsj+ejORolWoVmlRCNRsuwuQIm7dBgTPqXt50Mdk+pffSMHl93qQhPD5pHp+njklMI
+ FMzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrjIEpHIQLk2PRnDPkk2QgQzddgYVQDUbB4GA7E5AiCy9NfW3wxv2dWG36LRLFoPqXStMcFnZFMSxqALXvRQAK3ngi
-X-Gm-Message-State: AOJu0Yzj4WZS4JmfDwhebiLzXRIKWxso9rml/59Bo7PZ8qclUM3J/sZT
- lCAS0/BAeZgz8877FnX3VM0wB4/IwELRodjEbgXmWXZgKVQ9Vv2EipziyiS0
-X-Google-Smtp-Source: AGHT+IElh1IzN3ssVTo2VyqzpZtJfdR9MYhAVtodPUopgXaiiF8HIngv+rIRvJ2awH7K9NSYkK+X6A==
-X-Received: by 2002:a17:902:e80d:b0:1dc:75ea:8561 with SMTP id
- u13-20020a170902e80d00b001dc75ea8561mr221020plg.17.1708703117179; 
- Fri, 23 Feb 2024 07:45:17 -0800 (PST)
+ AJvYcCXaVwSOIQ5+MdYcCuFQpeM+bTpAfv2vt61zIer+sIfkB8YXuRL+wEsphtNTvwXkMcIHI3O7unmZ4CAPsWXDPNicDGyO
+X-Gm-Message-State: AOJu0YzWBBVKPVd3FOBb+biXyNViKM5gBctvddanEc7FVAViAn85yRSa
+ woNOhzmhnesd8Yv+7ZJd2a8ZSOO2UQkXZZswd82VQFjMeQwW7y7Dba2d9bio
+X-Google-Smtp-Source: AGHT+IEL1i3QVJX18FoUVcQrE2jBQoetHJ8mW5JEfNLw6YDOP/r2un/Glo8DgRfIMzQUGTsJZ4hKNQ==
+X-Received: by 2002:a17:902:ce91:b0:1d9:4106:b8b5 with SMTP id
+ f17-20020a170902ce9100b001d94106b8b5mr178262plg.11.1708703045756; 
+ Fri, 23 Feb 2024 07:44:05 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.45.14
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.44.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:45:17 -0800 (PST)
+ Fri, 23 Feb 2024 07:44:05 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chalapathi V <chalapathi.v@linux.ibm.com>
-Subject: [PULL 32/47] hw/ppc: N1 chiplet wiring
-Date: Sat, 24 Feb 2024 01:41:51 +1000
-Message-ID: <20240223154211.1001692-33-npiggin@gmail.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 13/47] hw/ppc/spapr_hcall: Allow elision of
+ softmmu_resize_hpt_prep
+Date: Sat, 24 Feb 2024 01:41:32 +1000
+Message-ID: <20240223154211.1001692-14-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,71 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This part of the patchset connects the nest1 chiplet model to p10 chip.
+Check tcg_enabled() before calling softmmu_resize_hpt_prepare()
+and softmmu_resize_hpt_commit() to allow the compiler to elide
+their calls. The stubs are then unnecessary, remove them.
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c              | 15 +++++++++++++++
- include/hw/ppc/pnv_chip.h |  2 ++
- 2 files changed, 17 insertions(+)
+ hw/ppc/spapr_hcall.c  | 12 ++++++++----
+ target/ppc/tcg-stub.c | 15 ---------------
+ 2 files changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 0755fab155..acc4db00c1 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1688,6 +1688,8 @@ static void pnv_chip_power10_instance_init(Object *obj)
-     object_initialize_child(obj, "occ",  &chip10->occ, TYPE_PNV10_OCC);
-     object_initialize_child(obj, "sbe",  &chip10->sbe, TYPE_PNV10_SBE);
-     object_initialize_child(obj, "homer", &chip10->homer, TYPE_PNV10_HOMER);
-+    object_initialize_child(obj, "n1-chiplet", &chip10->n1_chiplet,
-+                            TYPE_PNV_N1_CHIPLET);
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index fcefd1d1c7..0d7d523e6d 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -123,9 +123,11 @@ static target_ulong h_resize_hpt_prepare(PowerPCCPU *cpu,
  
-     chip->num_pecs = pcc->num_pecs;
+     if (kvm_enabled()) {
+         return H_HARDWARE;
++    } else if (tcg_enabled()) {
++        return softmmu_resize_hpt_prepare(cpu, spapr, shift);
++    } else {
++        g_assert_not_reached();
+     }
+-
+-    return softmmu_resize_hpt_prepare(cpu, spapr, shift);
+ }
  
-@@ -1857,6 +1859,19 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(), PNV10_HOMER_BASE(chip),
-                                 &chip10->homer.regs);
+ static void do_push_sregs_to_kvm_pr(CPUState *cs, run_on_cpu_data data)
+@@ -191,9 +193,11 @@ static target_ulong h_resize_hpt_commit(PowerPCCPU *cpu,
  
-+    /* N1 chiplet */
-+    if (!qdev_realize(DEVICE(&chip10->n1_chiplet), NULL, errp)) {
-+        return;
-+    }
-+    pnv_xscom_add_subregion(chip, PNV10_XSCOM_N1_CHIPLET_CTRL_REGS_BASE,
-+             &chip10->n1_chiplet.nest_pervasive.xscom_ctrl_regs_mr);
-+
-+    pnv_xscom_add_subregion(chip, PNV10_XSCOM_N1_PB_SCOM_EQ_BASE,
-+                           &chip10->n1_chiplet.xscom_pb_eq_mr);
-+
-+    pnv_xscom_add_subregion(chip, PNV10_XSCOM_N1_PB_SCOM_ES_BASE,
-+                           &chip10->n1_chiplet.xscom_pb_es_mr);
-+
-     /* PHBs */
-     pnv_chip_power10_phb_realize(chip, &local_err);
-     if (local_err) {
-diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-index 0ab5c42308..9b06c8d87c 100644
---- a/include/hw/ppc/pnv_chip.h
-+++ b/include/hw/ppc/pnv_chip.h
-@@ -4,6 +4,7 @@
- #include "hw/pci-host/pnv_phb4.h"
- #include "hw/ppc/pnv_core.h"
- #include "hw/ppc/pnv_homer.h"
-+#include "hw/ppc/pnv_n1_chiplet.h"
- #include "hw/ppc/pnv_lpc.h"
- #include "hw/ppc/pnv_occ.h"
- #include "hw/ppc/pnv_psi.h"
-@@ -113,6 +114,7 @@ struct Pnv10Chip {
-     PnvOCC       occ;
-     PnvSBE       sbe;
-     PnvHomer     homer;
-+    PnvN1Chiplet     n1_chiplet;
+     if (kvm_enabled()) {
+         return H_HARDWARE;
++    } else if (tcg_enabled()) {
++        return softmmu_resize_hpt_commit(cpu, spapr, flags, shift);
++    } else {
++        g_assert_not_reached();
+     }
+-
+-    return softmmu_resize_hpt_commit(cpu, spapr, flags, shift);
+ }
  
-     uint32_t     nr_quads;
-     PnvQuad      *quads;
+ 
+diff --git a/target/ppc/tcg-stub.c b/target/ppc/tcg-stub.c
+index aadcf59d26..740d796b98 100644
+--- a/target/ppc/tcg-stub.c
++++ b/target/ppc/tcg-stub.c
+@@ -28,18 +28,3 @@ void create_ppc_opcodes(PowerPCCPU *cpu, Error **errp)
+ void destroy_ppc_opcodes(PowerPCCPU *cpu)
+ {
+ }
+-
+-target_ulong softmmu_resize_hpt_prepare(PowerPCCPU *cpu,
+-                                        SpaprMachineState *spapr,
+-                                        target_ulong shift)
+-{
+-    g_assert_not_reached();
+-}
+-
+-target_ulong softmmu_resize_hpt_commit(PowerPCCPU *cpu,
+-                                       SpaprMachineState *spapr,
+-                                       target_ulong flags,
+-                                       target_ulong shift)
+-{
+-    g_assert_not_reached();
+-}
 -- 
 2.42.0
 
