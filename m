@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE24C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 03:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A72C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 03:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdM8X-00042G-F7; Thu, 22 Feb 2024 22:22:09 -0500
+	id 1rdMSJ-0000Vp-Px; Thu, 22 Feb 2024 22:42:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rdM8V-000422-22
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:22:07 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rdM8S-0003vh-Be
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:22:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708658525; x=1740194525;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=VBbAKL/s5QKKAzFQYg0xK0ZTO0fF09wSYm1fPY9nymc=;
- b=NemOHgCNShptzXvpKVLbZ4LwYh71BxIX/vwHunqydTMoJxp8SruiFzaX
- prJkgDioelMiwevdXqhVW2P4e1AwosYbnv6dfaBj8yZvRVJHRyVNZFihN
- m/roFiWYQEinAHMo/jqw+Emw76kEw9OnkBHHjZvUgqBY/pPleFET++9En
- zFg/1dVrvIG2lUPsOJuLiyMbBtArnJ4jqOZIxzZdyGw7EFWexdbJLBcyK
- SG+mHZytMtr3eSvv+mIOTvPpuNFTvAUFXIuGN1CQMLxukeMB0nIQW6lPc
- Vk378npQ6INEHjwTz5qSzw9VqhkFXuRs9ixciA5IbyWwKjk58nwcH4p9B w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="3113455"
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; 
-   d="scan'208";a="3113455"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Feb 2024 19:22:02 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="36559813"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 22 Feb 2024 19:21:59 -0800
-Date: Fri, 23 Feb 2024 11:35:39 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Binbin Wu <binbin.wu@linux.intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- xiaoyao.li@intel.com, chao.gao@intel.com, robert.hu@linux.intel.com
-Subject: Re: [PATCH v4 2/2] target/i386: add control bits support for LAM
-Message-ID: <ZdgSi35/Lb9FeNoG@intel.com>
-References: <20240112060042.19925-1-binbin.wu@linux.intel.com>
- <20240112060042.19925-3-binbin.wu@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rdMSH-0000VZ-6V
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:42:33 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rdMSE-0007ml-AD
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 22:42:32 -0500
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxF+ggFNhlf4cQAA--.22816S3;
+ Fri, 23 Feb 2024 11:42:24 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx_c4cFNhlbHQ_AA--.34684S3; 
+ Fri, 23 Feb 2024 11:42:22 +0800 (CST)
+Subject: Re: [PATCH 1/3] linux-user/loongarch64: Remove TARGET_FORCE_SHMLBA
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, iii@linux.ibm.com, richard.purdie@linuxfoundation.org, 
+ mjt@tls.msk.ru
+References: <20240223030309.458451-1-richard.henderson@linaro.org>
+ <20240223030309.458451-2-richard.henderson@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <4eb92926-763c-3260-f2a9-d32bd9e196e4@loongson.cn>
+Date: Fri, 23 Feb 2024 11:42:20 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240112060042.19925-3-binbin.wu@linux.intel.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <20240223030309.458451-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Cx_c4cFNhlbHQ_AA--.34684S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoWrZw1rWw4DZr4rWw48Xw4fJFc_yoWkuFgEga
+ yIyw1DKr4kWF1IvanYqry5ZF15tF45AF42va1vgrW2g3W2q395J348u3yUZF1a9FW8Zrs8
+ A3yvqF4fuw13ZosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbxAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1WlkU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.172,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,96 +84,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jan 12, 2024 at 02:00:42PM +0800, Binbin Wu wrote:
-> Date: Fri, 12 Jan 2024 14:00:42 +0800
-> From: Binbin Wu <binbin.wu@linux.intel.com>
-> Subject: [PATCH v4 2/2] target/i386: add control bits support for LAM
-> X-Mailer: git-send-email 2.25.1
-> 
-> LAM uses CR3[61] and CR3[62] to configure/enable LAM on user pointers.
-> LAM uses CR4[28] to configure/enable LAM on supervisor pointers.
-> 
-> For CR3 LAM bits, no additional handling needed:
-> - TCG
->   LAM is not supported for TCG of target-i386.  helper_write_crN() and
->   helper_vmrun() check max physical address bits before calling
->   cpu_x86_update_cr3(), no change needed, i.e. CR3 LAM bits are not allowed
->   to be set in TCG.
-> - gdbstub
->   x86_cpu_gdb_write_register() will call cpu_x86_update_cr3() to update cr3.
->   Allow gdb to set the LAM bit(s) to CR3, if vcpu doesn't support LAM,
->   KVM_SET_SREGS will fail as other reserved bits.
-> 
-> For CR4 LAM bit, its reservation depends on vcpu supporting LAM feature or
-> not.
-> - TCG
->   LAM is not supported for TCG of target-i386.  helper_write_crN() and
->   helper_vmrun() check CR4 reserved bit before calling cpu_x86_update_cr4(),
->   i.e. CR4 LAM bit is not allowed to be set in TCG.
-> - gdbstub
->   x86_cpu_gdb_write_register() will call cpu_x86_update_cr4() to update cr4.
->   Mask out LAM bit on CR4 if vcpu doesn't support LAM.
-> - x86_cpu_reset_hold() doesn't need special handling.
-> 
-> Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
-> Tested-by: Xuelian Guo <xuelian.guo@intel.com>
+在 2024/2/23 上午11:03, Richard Henderson 写道:
+> The upstream linux kernel does not define __ARCH_FORCE_SHMLBA.
+>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>
 > ---
->  target/i386/cpu.h    | 7 ++++++-
->  target/i386/helper.c | 4 ++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
+>
+> Did this definition come from the port before it was merged upstream?
+Yes,
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+The patch [1]  dropped it .
+     [1] 
+https://patchew.org/linux/20240106145501.3370364-1-chenhuacai@loongson.cn/
 
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 18ea755644..598a3fa140 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -261,6 +261,7 @@ typedef enum X86Seg {
->  #define CR4_SMAP_MASK   (1U << 21)
->  #define CR4_PKE_MASK   (1U << 22)
->  #define CR4_PKS_MASK   (1U << 24)
-> +#define CR4_LAM_SUP_MASK (1U << 28)
->  
->  #define CR4_RESERVED_MASK \
->  (~(target_ulong)(CR4_VME_MASK | CR4_PVI_MASK | CR4_TSD_MASK \
-> @@ -269,7 +270,8 @@ typedef enum X86Seg {
->                  | CR4_OSFXSR_MASK | CR4_OSXMMEXCPT_MASK | CR4_UMIP_MASK \
->                  | CR4_LA57_MASK \
->                  | CR4_FSGSBASE_MASK | CR4_PCIDE_MASK | CR4_OSXSAVE_MASK \
-> -                | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK))
-> +                | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_PKS_MASK \
-> +                | CR4_LAM_SUP_MASK))
->  
->  #define DR6_BD          (1 << 13)
->  #define DR6_BS          (1 << 14)
-> @@ -2522,6 +2524,9 @@ static inline uint64_t cr4_reserved_bits(CPUX86State *env)
->      if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS)) {
->          reserved_bits |= CR4_PKS_MASK;
->      }
-> +    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-> +        reserved_bits |= CR4_LAM_SUP_MASK;
-> +    }
->      return reserved_bits;
->  }
->  
-> diff --git a/target/i386/helper.c b/target/i386/helper.c
-> index 2070dd0dda..1da7a7d315 100644
-> --- a/target/i386/helper.c
-> +++ b/target/i386/helper.c
-> @@ -219,6 +219,10 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
->          new_cr4 &= ~CR4_PKS_MASK;
->      }
->  
-> +    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-> +        new_cr4 &= ~CR4_LAM_SUP_MASK;
-> +    }
-> +
->      env->cr[4] = new_cr4;
->      env->hflags = hflags;
->  
-> -- 
-> 2.25.1
-> 
-> 
+
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+Thanks.
+Song Gao
+> Or was it incorrectly copied from MIPS?
+> ---
+>   linux-user/loongarch64/target_syscall.h | 7 -------
+>   1 file changed, 7 deletions(-)
+>
+> diff --git a/linux-user/loongarch64/target_syscall.h b/linux-user/loongarch64/target_syscall.h
+> index 8b5de52124..39f229bb9c 100644
+> --- a/linux-user/loongarch64/target_syscall.h
+> +++ b/linux-user/loongarch64/target_syscall.h
+> @@ -38,11 +38,4 @@ struct target_pt_regs {
+>   #define TARGET_MCL_FUTURE  2
+>   #define TARGET_MCL_ONFAULT 4
+>   
+> -#define TARGET_FORCE_SHMLBA
+> -
+> -static inline abi_ulong target_shmlba(CPULoongArchState *env)
+> -{
+> -    return 64 * KiB;
+> -}
+> -
+>   #endif
+
 
