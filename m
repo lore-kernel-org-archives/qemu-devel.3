@@ -4,86 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3AFC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:34:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 138DBC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdbH6-0007xi-0V; Fri, 23 Feb 2024 14:32:05 -0500
+	id 1rdbJi-000174-L9; Fri, 23 Feb 2024 14:34:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdauZ-0005XL-UV
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:08:44 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdauU-0004ct-Oe
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:08:43 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6e48eef8be5so905200b3a.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 11:08:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708715317; x=1709320117; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZDf7e7svQP9L1qovMccgNijnaASO0kpPckZo2GDKiME=;
- b=WkesYiNWmQZmUot0ObTyYkFHKNICoQP3Yrrmh9QsTF7kS9ivRgDNI0TlzlmQT8zOMD
- CvuDLZoW8yZByNsEY7Nk2siJJm5AnJUZf0VfrRRfKptF0kTXfu+VEfufQvPY8v0rgwnY
- +cnyFCdWTyTjdnGNSWB4fqiFz/QgDl75MTcQStmpBOXKpiD0ky6LDH0akdUgGXcKuUPG
- 7tc9ScvBwIkgMvowzKks6F/lsMJRX0Qltx06R579O+ZbN/bHVS5lxHglo4t6TRfVH1I9
- Bje6I3hXZcr98zJFd+pl6Db+LyvJs4N7ypXwY/L5e1dDPJFzAlPizDUnSvrLx8kWCWaf
- mPMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708715317; x=1709320117;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZDf7e7svQP9L1qovMccgNijnaASO0kpPckZo2GDKiME=;
- b=UEli2zpLsBUoeXK2M5Onzdj1/IYPqVLbnH1uI0I79kzRe9tX7XHxrer5QiXZwUfsAb
- Fx01JY4afaTZuei/Z9UMToogYGNRS/VQ7+SyEIIXWn/HRL0MiJhps95//Za/FDzJJrAL
- oRGwiBVGIvdzxjzPPWxcJ7i0loCxQUOLEOn4YD+fqJbeZpL7VMPNVFuwscIolrE30r66
- 4tPS58ZOBsG+Ejzvw1BjLCxvlVPmrgvsm23JkEwVLITOWMaZfAxKQrYr4mTuXifGcAG9
- 6arqUtsq1PcHW8IWIe+aGjkeuiNiLpdWBRoNUIc47rGZ9n8YFaFPVcEUQ1g1ZUSa1wiv
- Gd/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQkKpT5e0Ddw5QA59yktvKXiQANxe0QAYjdx2DhPOseQsh1UzWQWhghUTCCcdgeeRam3opILLLTX8Efi5gxSp4Zp2VGGo=
-X-Gm-Message-State: AOJu0YxGpvl56mTIgEgqrVhjzuekWMTRCm8PAXvOmHP7ZWav+Vm5dhTg
- uq9/YtLSxDhLlYs8tXCGrq/Km9WlPfm4Cu5A0uXQVugWvEINNGUgYEiAFkm90Oo=
-X-Google-Smtp-Source: AGHT+IF2QDvoL6pYnkHWvLBeOyyjnnaNSelhIKv4KGtfoQXr52/cyuqHYONJIebV5P76AZYeuigBgA==
-X-Received: by 2002:a05:6a00:234e:b0:6e4:6163:7e05 with SMTP id
- j14-20020a056a00234e00b006e461637e05mr814717pfj.6.1708715316973; 
- Fri, 23 Feb 2024 11:08:36 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- y4-20020a056a00190400b006e1463c18f8sm13142887pfi.37.2024.02.23.11.08.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 11:08:36 -0800 (PST)
-Message-ID: <69e42fda-e279-4e4f-82bd-95588cee3081@linaro.org>
-Date: Fri, 23 Feb 2024 09:08:32 -1000
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdawB-0005m6-4U
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdaw0-0005At-Ow
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708715410;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=o3bEtATyp9tRxwVqQamHVsA7dwSgZbW9H9fEsU3qThM=;
+ b=ANThoY3R3b0hfY55teEbMr2+wOeiBymfXwq64fzb3pbQRR0L23Z3lW9vDRSSaNqJwYpq2b
+ uu1ISEt+Vb6kQyoStMkT9pjsd9pmtle3aAMxlvVKnt4ApquvQcCVNucDVc0tdH3m42+q/0
+ nD7UbpVfjVQBRA/MfDNqgCNFRFLJZDQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-528-Y48CuBOZO0OWDsmoXEx3ZQ-1; Fri, 23 Feb 2024 14:10:07 -0500
+X-MC-Unique: Y48CuBOZO0OWDsmoXEx3ZQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D77EE85A589;
+ Fri, 23 Feb 2024 19:10:06 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.20])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B6DBB10800;
+ Fri, 23 Feb 2024 19:10:05 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Daniel Palmer <daniel@0x0f.com>
+Subject: [PULL 01/11] target/m68k: Fix exception frame format for 68010
+Date: Fri, 23 Feb 2024 20:09:53 +0100
+Message-ID: <20240223191003.6268-2-thuth@redhat.com>
+In-Reply-To: <20240223191003.6268-1-thuth@redhat.com>
+References: <20240223191003.6268-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 05/21] target/arm: Support MSR access to ALLINT
-Content-Language: en-US
-To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
- <20240223103221.1142518-6-ruanjinjie@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240223103221.1142518-6-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,16 +79,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/23/24 00:32, Jinjie Ruan via wrote:
-> +static CPAccessResult aa64_allint_access(CPUARMState *env,
-> +                                         const ARMCPRegInfo *ri, bool isread)
-> +{
-> +    if (arm_current_el(env) == 1 && arm_is_el2_enabled(env) &&
-> +        (arm_hcrx_el2_eff(env) & HCRX_TALLINT)) {
+From: Daniel Palmer <daniel@0x0f.com>
 
-No need to test arm_is_el2_enabled explicitly, as that is done by arm_hcrx_el2_eff.
-The bit test with TALLINT will fail if el2 is disabled.
+From the 68010 a word with the frame format and exception vector
+are placed on the stack before the PC and SR.
 
+M68K_FEATURE_QUAD_MULDIV is currently checked to workout if to do
+this or not for the configured CPU but that flag isn't set for
+68010 so currently the exception stack when 68010 is configured
+is incorrect.
 
-r~
+It seems like checking M68K_FEATURE_MOVEFROMSR_PRIV would do but
+adding a new flag that shows exactly what is going on here is
+maybe clearer.
+
+Add a new flag for the behaviour, M68K_FEATURE_EXCEPTION_FORMAT_VEC,
+and set it for 68010 and above, and then use it to control if the
+format and vector word are pushed/pop during exception entry/exit.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2164
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Message-ID: <20240115101643.2165387-1-daniel@0x0f.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ target/m68k/cpu.h       | 2 ++
+ target/m68k/cpu.c       | 4 +++-
+ target/m68k/op_helper.c | 4 ++--
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 646cacbdf1..346427e144 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -550,6 +550,8 @@ enum m68k_features {
+     M68K_FEATURE_TRAPCC,
+     /* MOVE from SR privileged (from 68010) */
+     M68K_FEATURE_MOVEFROMSR_PRIV,
++    /* Exception frame with format+vector (from 68010) */
++    M68K_FEATURE_EXCEPTION_FORMAT_VEC,
+ };
+ 
+ static inline bool m68k_feature(CPUM68KState *env, int feature)
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 8a8392e694..d5a71c6315 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -142,7 +142,8 @@ static void m68000_cpu_initfn(Object *obj)
+ }
+ 
+ /*
+- * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD
++ * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD,
++ *      format+vector in exception frame.
+  */
+ static void m68010_cpu_initfn(Object *obj)
+ {
+@@ -155,6 +156,7 @@ static void m68010_cpu_initfn(Object *obj)
+     m68k_set_feature(env, M68K_FEATURE_BKPT);
+     m68k_set_feature(env, M68K_FEATURE_MOVEC);
+     m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
++    m68k_set_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC);
+ }
+ 
+ /*
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 47b4173bb9..956e76eb5f 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -52,7 +52,7 @@ throwaway:
+     sp += 2;
+     env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+     sp += 4;
+-    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
++    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+         /*  all except 68000 */
+         fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+         sp += 2;
+@@ -256,7 +256,7 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
+                                   uint16_t format, uint16_t sr,
+                                   uint32_t addr, uint32_t retaddr)
+ {
+-    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
++    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+         /*  all except 68000 */
+         CPUState *cs = env_cpu(env);
+         switch (format) {
+-- 
+2.43.2
+
 
