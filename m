@@ -4,72 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA83BC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F18C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:12:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdape-00032a-Mp; Fri, 23 Feb 2024 14:03:38 -0500
+	id 1rdaxd-0006Jc-AE; Fri, 23 Feb 2024 14:11:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdag7-00085E-8d
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:53:47 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdag5-0000Ug-Ow
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:53:46 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-563d56ee65cso1368236a12.2
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 10:53:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708714423; x=1709319223; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9RZ17R5k4g87cMTBG1rXD5DGFpcZzbUQA8pkuFsASdk=;
- b=vKJwp7YtUitboMkX8BR+j9jUC3n6r1SA4W99BywuPmYvihiONWTPVKALYq94ncc3bX
- CAFwlP/uAAe7Yo1SmMBADSsg/ICyXph3cWyVJnGxhyBNIr68jznB6iQVC/LkCIwbAGE2
- ryGthS6qjv1gKjhnFUYI3G0eC+IcxzOPepOMGdoaD4xIIBasXwvEw7WQyevZRdu4tXEK
- xbjR0vjjKDEMdekH4K2GfPTnmWTRFVVraG2Swnhw63kGt5XDUB3EO2mbSWjKpNbxHPz1
- 3ixFTcALouV7HpsU4KYuXjXLGSF50YD5mF/khV8YcxQrEPg7q9msRVm3k/cl9VXCoLqN
- j5Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708714423; x=1709319223;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9RZ17R5k4g87cMTBG1rXD5DGFpcZzbUQA8pkuFsASdk=;
- b=v89yBS6JNcZDKYOctEiKmoF7/5eJsBN9Q3mYAdPjmiMQVkpQLkkC69GV08l+65r0Ht
- oc4xGZArTxlO392ROyARxTSkGq1TqEumZB2uUAKalmUtOpC6RDW3yps8jiEJc9AJ4S9O
- GMQD3b33euA/qnMQQCEOhO2v7fVbnHQbL+r9489xVjLvSVfhYUYUfDcYcT8oH4PXslJF
- m4l6tNTxSmCMoiHFEiR/1+myWwT5HUsYSIBatu79w1vsRHOSYXyH631GmsO7wuqRcnDR
- zEkM0Lau4Zwf2AeeCgjQbD9cv21z3Oor5GIC2GsGMDuymnBG8uNwPunR+3k8QuFwluXM
- PZzQ==
-X-Gm-Message-State: AOJu0Yx8cK2LMzXIFnYL94INrApE6IO9JiXKJfAWYgu5GJxbTpOA5Wpi
- IC7/wN8UQti4i0zbRagbRxW3RBU1V9GFCh4GvOg4bwcvPUsvbhPq9K4IcqtA3wvXaQv1+RRxry9
- kLUvCjiGJzS5/R7yTa4oPDNOA1Q64unpb+ONbVlHiX6aXcwqY
-X-Google-Smtp-Source: AGHT+IGPJS7/iolevaDXOKSnikcTUECGav+45QhQI3yKAkdMJ41hqL/gLyNH+A3dykGk6i0KnYBLvscghEF0wNhe0rQ=
-X-Received: by 2002:aa7:c58e:0:b0:564:5742:1e46 with SMTP id
- g14-20020aa7c58e000000b0056457421e46mr417092edq.42.1708714423462; Fri, 23 Feb
- 2024 10:53:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rdaJ3-0003Vp-Po; Fri, 23 Feb 2024 13:29:57 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rdaJ0-0003IW-U6; Fri, 23 Feb 2024 13:29:57 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 137554E6004;
+ Fri, 23 Feb 2024 19:29:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 6dhJnxTjsXcP; Fri, 23 Feb 2024 19:29:47 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id BB6624E6003; Fri, 23 Feb 2024 19:29:47 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B97557456FE;
+ Fri, 23 Feb 2024 19:29:47 +0100 (CET)
+Date: Fri, 23 Feb 2024 19:29:47 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: David Parsons <dave@daveparsons.net>
+cc: Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>, 
+ qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] ui/cocoa: Fix incorrect window clipping on macOS
+ Sonoma
+In-Reply-To: <E5C37F0E-3B73-45FA-8FC7-5E39CBF765BF@daveparsons.net>
+Message-ID: <3c915fba-f332-f0f1-056a-8d8a454b6383@eik.bme.hu>
+References: <DDADA9A9-DED4-4510-A532-7600C0233467@daveparsons.net>
+ <fdda385d-2e18-4554-88d0-e43cb5b90e39@tls.msk.ru>
+ <CAFEAcA9psJuvPz+mWYzWz0NLTcQTCNhknFrGZ2bx7Frtb3=B4A@mail.gmail.com>
+ <c018e266-0092-4d9e-ba2f-397cb0a1518e@daynix.com>
+ <E5C37F0E-3B73-45FA-8FC7-5E39CBF765BF@daveparsons.net>
 MIME-Version: 1.0
-References: <CAFEAcA_ncrw8nsD50Ov=Fse=gYFw3CabpURWM9yK3yWmL5CTQw@mail.gmail.com>
-In-Reply-To: <CAFEAcA_ncrw8nsD50Ov=Fse=gYFw3CabpURWM9yK3yWmL5CTQw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Feb 2024 18:53:32 +0000
-Message-ID: <CAFEAcA8x0EYbTuU44r5gB95OsoOL_smt6+8+8VAPkkh5895mag@mail.gmail.com>
-Subject: Re: proposed schedule for 9.0 release
-To: QEMU Developers <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-458185346-1708712987=:13514"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,26 +73,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jan 2024 at 17:14, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Here's my proposal for the freeze dates for 9.0:
->
-> 2024-03-12 Soft feature freeze (all feature changes must be in
->            a pullreq on list by this date)
-> 2024-03-19 Hard feature freeze. Tag rc0
-> 2024-03-26 Tag rc1
-> 2024-04-02 Tag rc2
-> 2024-04-09 Tag rc3
-> 2024-04-16 Release; or tag rc4 if needed
-> 2024-04-23 Release if we needed an rc4
->
-> (Easter is 29Mar-1Apr this year, but we can hardly avoid
-> that entirely.)
->
-> Any objections/suggested tweaks?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Nobody complained, so this is what we're going with.
-Softfreeze is just over two weeks away :-)
+--3866299591-458185346-1708712987=:13514
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
--- PMM
+On Fri, 23 Feb 2024, David Parsons wrote:
+> Hi Akihiko
+>
+> I’ve re-worked the patch to match your suggestion. I have compiled
+> and tested it on Sonoma and Monterey and both builds worked correctly.
+>
+> New patch is below. I’m new to sending patches to QEMU so please let
+> me know if I need to do anything else to get it incorporated into the
+> repo.
+
+See here for detailed docs:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+
+In short you'd need to make the patch the same way you did the first 
+version with the changed content but as [PATCH v2] and send it again as a 
+new patch like you did the first time. (You can use -v2 option to git 
+format-patch to add v2 to subject but if you're not using git format-patch 
+directly then I'm not sure what option will do that for the way you send 
+the patch.)
+
+Regards,
+BALATON Zoltan
+
+> Dave
+>
+> diff --git a/ui/cocoa.m b/ui/cocoa.m
+> index eb99064bee..bbf9704b8c 100644
+> --- a/ui/cocoa.m
+> +++ b/ui/cocoa.m
+> @@ -54,6 +54,10 @@
+> #define MAC_OS_X_VERSION_10_13 101300
+> #endif
+>
+> +#ifndef MAC_OS_VERSION_14_0
+> +#define MAC_OS_VERSION_14_0 140000
+> +#endif
+> +
+> /* 10.14 deprecates NSOnState and NSOffState in favor of
+>  * NSControlStateValueOn/Off, which were introduced in 10.13.
+>  * Define for older versions
+> @@ -365,6 +369,9 @@ - (id)initWithFrame:(NSRect)frameRect
+>         screen.width = frameRect.size.width;
+>         screen.height = frameRect.size.height;
+>         kbd = qkbd_state_init(dcl.con);
+> +#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
+> +        [self setClipsToBounds:YES];
+> +#endif
+>
+>     }
+>     return self;
+>
+>
+>> On 23 Feb 2024, at 11:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> On 2024/02/23 2:10, Peter Maydell wrote:
+>>> On Thu, 22 Feb 2024 at 06:08, Michael Tokarev <mjt@tls.msk.ru> wrote:
+>>>>
+>>>> [Adding a few more Ccs]
+>>>>
+>>>> 17.02.2024 18:58, David Parsons :
+>>>>> macOS Sonoma changes the NSView.clipsToBounds to false by default where it was true in
+>>>>> earlier version of macOS. This causes the window contents to be obscured by the window
+>>>>> frame. This fixes the issue by conditionally setting the clipping on Sonoma to true.
+>>
+>> Thanks for posting a patch for this critical problem.
+>>
+>>>>>
+>>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
+>>>>> Signed-off-by: David Parsons <dave@daveparsons.net>
+>>>>>
+>>>>> diff --git a/ui/cocoa.m b/ui/cocoa.m
+>>>>> index eb99064bee..c9e3b96004 100644
+>>>>> --- a/ui/cocoa.m
+>>>>> +++ b/ui/cocoa.m
+>>>>> @@ -365,6 +365,9 @@ - (id)initWithFrame:(NSRect)frameRect
+>>>>>           screen.width = frameRect.size.width;
+>>>>>           screen.height = frameRect.size.height;
+>>>>>           kbd = qkbd_state_init(dcl.con);
+>>>>> +        if (@available(macOS 14, *)) {
+>>>>> +            [self setClipsToBounds:YES];
+>>>>> +        }
+>>>>>
+>>>>>       }
+>>>>>       return self;
+>>>>>
+>>>>
+>>>> Hi David!
+>>>>
+>>>> While the code change is tiny, I for one know nothing about MacOS and
+>>>> its cocoa thing, so to me (with my trivial-patches hat on) this is a
+>>>> no-go.  I'd love to have a review from someone more knowlegeable in
+>>>> this area.
+>>> Mmm. Akihiko is the expert here, but I do notice that we don't
+>>> seem to be handling the "macos-version-specific" stuff in a
+>>> way we've done it before (we don't use @available elsewhere).
+>>> I did wonder if we could call the setClipsToBounds method unconditionally;
+>>> The release notes say
+>>> https://developer.apple.com/documentation/macos-release-notes/appkit-release-notes-for-macos-14#NSView
+>>> "This property is available back to macOS 10.9. This availability is
+>>> intended to allow code targeting older OSes to set this property to
+>>> true without guarding the setter in an availability check."
+>>> but I think that might only mean "you can do this building on a new
+>>> SDK that's targeting an old version", not "you can do this
+>>> when building on an older SDK" (at least judging from the
+>>> comments in the gitlab issue).
+>>
+>> Apparently it is that case.
+>>
+>> Please check if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
+>> instead of using @available. See commit 5e24600a7c1c ("ui/cocoa.m: Fix macOS 10.14 deprecation warnings") for example.
+>>
+>>> The other option would be to fix whatever it is that we're
+>>> presumably not getting right that means this default change
+>>> caused the bug. My guess is that we are in the case
+>>> "Confusing a view’s bounds and its dirty rect. The dirty rect
+>>>  passed to .drawRect() should be used to determine what to draw,
+>>>  not where to draw it. Use NSView.bounds when determining the
+>>>  layout of what your view draws."
+>>> But unless the fix for that is really obvious and easy I guess
+>>> that flipping the default back to its old value is the better
+>>> approach.
+>>
+>> It is a chore to convert the coordinates using NSView.bounds. Let's keep using clipsToBounds.
+>>
+>>> -- PMM
+>>
+>>
+>
+>
+--3866299591-458185346-1708712987=:13514--
 
