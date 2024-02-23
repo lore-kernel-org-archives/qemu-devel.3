@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87251C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E25C54E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdXxw-0006F4-3Y; Fri, 23 Feb 2024 11:00:00 -0500
+	id 1rdXy4-0006S6-Pi; Fri, 23 Feb 2024 11:00:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXiz-0005d7-Tg; Fri, 23 Feb 2024 10:44:33 -0500
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1rdXkY-0007pA-On; Fri, 23 Feb 2024 10:46:10 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXiy-0006Mt-EX; Fri, 23 Feb 2024 10:44:33 -0500
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5dca1efad59so865137a12.2; 
- Fri, 23 Feb 2024 07:44:31 -0800 (PST)
+ id 1rdXkX-0006kC-Af; Fri, 23 Feb 2024 10:46:10 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d911c2103aso2962035ad.0; 
+ Fri, 23 Feb 2024 07:46:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708703070; x=1709307870; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703167; x=1709307967; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZX8n0tNdAmuLPTHJh8fiQt/+xqsTkEf/Jf+VNbC4LxM=;
- b=PyhzZFElxpej+J5oeBqYPslWQdMEiHlM2Wc0MjrSHFMICAdcK25fII3f4CPrHNTmf7
- Ry+9BXf+sB+kzLyo/j6e8miaPW4IGMK4khy1UMHizTMcvRbmob716nizabMSz9zgs5LD
- /77bKbIbEWi6DlnEQliGslBTrWxx8Del2jHi57A/i1qeqimWoDVJHFln42bF/rhwC12c
- WOWbgbupBE+v9lrCptIVFcnNT8oO6z2VQyzDafEFjw2to5gAZOpmqB/eQ/5xNcj4pOCA
- lT8infcZqyIIIbLAIanILqADU0//cfGucwgSJBhCm8Yh3Me+UeaZnxHyRnKNt1MDC+iK
- 7qnQ==
+ bh=riaL4bBi2Km9JTxExie0v3jTFoU1wbNnTnAEl0s+MTk=;
+ b=VxLXarSMExff3YfzO3gJuzbH9i9qhUuCdPusr5tb5UU9XgqU6GXlrak30p7Jy9lMoV
+ oU6F95nByauv8Q3+ufjFBRc9QHeDEud+ZM6lVW7VsQND2s3EWpYNmwSpmIEwn6VY7tX5
+ 3p6uDIBpX1yvtNKmyR9XH8aLkexFt4++mhNXFRIdBZ+r4SnkiecLePfo11taxXcvzggF
+ MSBXXZ1cL+cnWirYNozffNnp32cqbZh4l53WF9OcYVGYfbm2XWllj2pMusi1s2CPSYcW
+ xf8Xe5t0WGl2yk84E/Wnq8tZTqrLM12EkF9RJu0rmenlDGyvgsWTBXtHyQuhh1rZChx+
+ dCBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708703070; x=1709307870;
+ d=1e100.net; s=20230601; t=1708703167; x=1709307967;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZX8n0tNdAmuLPTHJh8fiQt/+xqsTkEf/Jf+VNbC4LxM=;
- b=EWaU+tUq2N6/3vubklx4XoA7yw/YcmBZYSN4ZStZMRGDrDVjW+rx8lC4D+DrYam1AF
- UjNKaUFuyF2lJBX3QGakGW1lxw+CYWb1pkzZ+O8eRY6WGmIS96ki+HLwWJVAIADhyZMH
- ctCm1pcW6k7lKULXgghnjKiguWMZG2NvZTL8s0ldthjdp9KSXLjKwlflw0wLV178iRNO
- HibdFr3opBSKkW427jPnQhsZD8mXPWjCycLuROrP5ihoQLSW8/xQFh4ef7z2UB0ik670
- QZc4q5qj8oVSEMlPlDJptvS4wampj8/553Kc/c19i+mF4pR2e6nf/YFCsUDiVxM7EgUg
- pgVA==
+ bh=riaL4bBi2Km9JTxExie0v3jTFoU1wbNnTnAEl0s+MTk=;
+ b=DN/VlphrB3Zo1WlWeG44XhMt3e4WK1Q8G6hqoX8KpP+Yu+dZ86LsmBenHlv3KN89FD
+ fY3mcXOMlflrRoa7mE2CXaUZnJ/qvsSCqBeGXzizDuDzVtcFG3BSVxQHj3Yw/8CrwVvy
+ wTOGEB4Hu/KaD3Dwl8/qNAnva4f5UeOfDFVQmqBE4Bl7ySH3TlpSukHwEsNZgcnn4Je9
+ 4KWwtiG7Ne/FZTZm2u+HLUWj+or7NdcEouHWCIyiTkrRVNE18Fz3QlAW6T8LlMu5oV8b
+ bf/yMf8xYgP04pjp/XEQZgvyDL9tQcD50brDysuTgHnPf7DM7qm8mJt/o1Dd3ePlyMgh
+ SCaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVod0bzMSkbq0FVy8kF1rbPvumKkL+Dk2JUApx3jon7NZ3ejPdEJlUARXEo0AdNBXwRimeCJhfYX5jiI836ZKGugZA5
-X-Gm-Message-State: AOJu0YyzBfv1/+LwMEWIAVadeloLpncKFszO3WNWzdFaojeOL7z/vLgr
- 5cS2dhUr/lQLJjesStWvEmpYQFb1E2KVKHBatojFzPaxywGyYLJJLS5BtG4L
-X-Google-Smtp-Source: AGHT+IEsh9ucUQtW13McWTbgsEjl86EpFK/eXeiX1wjbPloBQ17yIljMAnbSnEziA1uCsuGoUN7WeA==
-X-Received: by 2002:a05:6a20:9f07:b0:1a0:a082:b2b8 with SMTP id
- mk7-20020a056a209f0700b001a0a082b2b8mr220481pzb.33.1708703070559; 
- Fri, 23 Feb 2024 07:44:30 -0800 (PST)
+ AJvYcCX79u0HZwTcX/qFwbkoed6x/x8rpIox0eaheHvSyOQ02i5UqMMVwBwW5kUjC/O53bgbJ6BGBp4tdV900pCFULUEFhag
+X-Gm-Message-State: AOJu0YxjjFO7gbTFNfJDDSNBsw4oKZrfacsAa/5pNAPEuPqjUzZn2Ex9
+ ME7TJL59MxVjWc4mLwwDGQuMOiuHZFzWipCwj8Gb4DJOd6VanFfuo/+U+WXx
+X-Google-Smtp-Source: AGHT+IEDj+BWWAHuHAx8scE99T4ca0Xhtj3nVnkd95VePsyP56fvmAwydnuRgEksIfmBIPRjr4PyGA==
+X-Received: by 2002:a17:902:e887:b0:1db:efef:f912 with SMTP id
+ w7-20020a170902e88700b001dbefeff912mr321281plg.2.1708703167306; 
+ Fri, 23 Feb 2024 07:46:07 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.44.27
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.46.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:44:30 -0800 (PST)
+ Fri, 23 Feb 2024 07:46:07 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 20/47] ppc/pnv: Change powernv default to powernv10
-Date: Sat, 24 Feb 2024 01:41:39 +1000
-Message-ID: <20240223154211.1001692-21-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 46/47] target/ppc: 440 optimise tlbwe TLB flushing
+Date: Sat, 24 Feb 2024 01:42:05 +1000
+Message-ID: <20240223154211.1001692-47-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,39 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-POWER10 is the latest IBM Power machine. Although it is not offered in
-"OPAL mode" (i.e., powernv configuration), so there is a case that it
-should remain at powernv9, most of the development work is going into
-powernv10 at the moment.
+Have 440 tlbwe flush only the range corresponding to the addresses
+covered by the software TLB entry being modified rather than the
+entire TLB. This matches what 4xx does.
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/ppc/mmu_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 0297871bdd..b949398689 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2242,8 +2242,6 @@ static void pnv_machine_power9_class_init(ObjectClass *oc, void *data)
+diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
+index 923779d052..ba965f1779 100644
+--- a/target/ppc/mmu_helper.c
++++ b/target/ppc/mmu_helper.c
+@@ -864,7 +864,7 @@ void helper_440_tlbwe(CPUPPCState *env, uint32_t word, target_ulong entry,
  
-     xfc->match_nvt = pnv_match_nvt;
+     /* Invalidate previous TLB (if it's valid) */
+     if (tlb->prot & PAGE_VALID) {
+-        tlb_flush(env_cpu(env));
++        ppcemb_tlb_flush(env_cpu(env), tlb);
+     }
  
--    mc->alias = "powernv";
--
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
-@@ -2267,6 +2265,8 @@ static void pnv_machine_power10_class_init(ObjectClass *oc, void *data)
-     mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("power10_v2.0");
-     compat_props_add(mc->compat_props, phb_compat, G_N_ELEMENTS(phb_compat));
- 
-+    mc->alias = "powernv";
-+
-     pmc->compat = compat;
-     pmc->compat_size = sizeof(compat);
-     pmc->dt_power_mgt = pnv_dt_power_mgt;
+     switch (word) {
 -- 
 2.42.0
 
