@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4B29C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08593C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdZaM-000331-S3; Fri, 23 Feb 2024 12:43:46 -0500
+	id 1rdZf3-0007JT-QE; Fri, 23 Feb 2024 12:48:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZPy-0001d7-W4
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:33:03 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZWo-0002T3-8L
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:40:06 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZPw-0002ob-7G
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:33:02 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-41275855dc4so8710925e9.0
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:32:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZWm-0003li-MM
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:40:05 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a3fd9063261so90978366b.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:40:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708709578; x=1709314378; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708710003; x=1709314803; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=20Qy7DS735n6Lgdwx0zYJ/Et6GVH8ibQhhFZjZwNaJM=;
- b=xPR7cJZaM54laFohftSv42qm1Gc5Nslps9fnn+MFDI/nlgShCwSqi3uHlUZ5nmrZF6
- C3Jm/Raju2SA6AS8V4eValn0oGT55JaYjQwwxNrWc9+2Q0UG92tsv9+H19Zbb2IbwMg9
- 23tlu91enrnoB9LB3Z1FGT3y987AQRLCXYyhWfRTCfdtqw+n0yGAykbE2B82HB6C5FC8
- 7TpTH0dQNCVwIa3i/bF6blDtqvdn0PVTopew6fm0wthY3uuSwq1MoK5E/4vM1MdA7DzC
- owa/VDPlXhnrJiAT18bDFG4mzlDw02FDK4+U7i2q56HjLcG2+HWNl/UEeZ9i2PCh0zdo
- s13A==
+ bh=VGGmYKBtGyrEXg7PQosxhJryPY1sVVs+n78Wd0Fnfx4=;
+ b=m9r25dsPolGtGjc1YVlLHKbdgudm5fwY0EhMXMM3vq4DX29C9k+O+VSevnO/oA8Znm
+ wHZnH6PlTBRRIljsyKS923HViVHIes79ZCeG+TmfwIrtKpAQBhtscAyzT/vdSVIyXyOM
+ G5ovj0oV0dIbLz6vrxUd3VRZL1Xhnq9JWDijW0YT7wwORt+NglJ0nXHDyPpAT2cjbMkL
+ IuQsErGvLY4jJZBmRDu1Isr1FJsWLmNg557gdQIW6Gif/JoabIwMN8zgWksUaTd4BZkD
+ L7qcibHIa1Dkyvr//O5GpGUNWVXuFWxLevtOxoiXfALmhlcHj2W4ZQI7NIBDhzsIl225
+ kmoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708709578; x=1709314378;
+ d=1e100.net; s=20230601; t=1708710003; x=1709314803;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=20Qy7DS735n6Lgdwx0zYJ/Et6GVH8ibQhhFZjZwNaJM=;
- b=L4ClQA8yy3vtCVm//XOYX2208O3KjHXLNfYehemXn4pZCG5NX564aSeQo+uNXNCYQH
- QbIyuDgEvVE+Cqc7XwpNm3jjfNrjHHX3Oa20naIdi27HHnMAfhjkJLzR0romPqE5KJ+B
- u/ex3fVkVXHq4C4lp6Xu+VpDUNvl9+rHYC5npn0k/Qn1nJ2+ErckUvDskGwpWH2NhNw3
- OBWNl7QtrCP6ezTl+l9iBjIGW60J+8WKoSqa7o5IrCM8kdynHrTA6lN+LoDKO8/2bY49
- /3jnaoCCkv4ja2QQPkVLD3oQwEHa0R4rjV4mvD23qPXgr98LVi3u1BuvyzNA9qfGUQiu
- rDag==
+ bh=VGGmYKBtGyrEXg7PQosxhJryPY1sVVs+n78Wd0Fnfx4=;
+ b=inzmcOwpLuMdDcm34fgEmIAlvrz5/liw0A2mJXvS9hFY9qMfgwpgkHgutNVQe23ksa
+ 9e0EGW6ESM8PPVaoTwNqiedyMSMaB/NYT69sSKzA+mHcFn+o9KgVIDT5Cusxm+OKBcbj
+ h7bqTjotVMzY4hjD8sjDo+xNld/ySge67+qgUbjiPi67IGgQEgKmsZJ7sfmuNIx/RacJ
+ icJmkjn3Yjqxfkr4rByIJljl4aHo16KVWokOn03IzFtudXjoJfHBEmeWNudr84NfGIe1
+ izNe96HdUwGuLZRWt0haRd8KLKal2/VOSJRhBsQldj9mbgji6JVx8wXD1swnbMcQ5Bf0
+ 10Bg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVn0Y646BohKPKYori8pstB8Oi+Ay3dS0boStw4FGX3uwyGlDyZZv3gGmLwqQ6WCWJ79uGTEfM7S93pkO+Cu53qn8+x6tM=
-X-Gm-Message-State: AOJu0YyoxI3pAZDmqZs3ktwtqDQreMKIrOthjlFojl+kjKigQ2BBjkaD
- X78baWtl3QATWTO80BF75b0O6OnOgaygfCcAveF12GmVqGn17wLxV/mhCF5Maz4=
-X-Google-Smtp-Source: AGHT+IGR5iH9o/xiBx7Ag2qMWtTpkY5xjmW5wT6/fZNmn9JeRrjtxykV6/6jD9gmSnUc3c73HjE4OQ==
-X-Received: by 2002:a05:600c:4743:b0:40f:cf69:3e1a with SMTP id
- w3-20020a05600c474300b0040fcf693e1amr301465wmo.39.1708709578390; 
- Fri, 23 Feb 2024 09:32:58 -0800 (PST)
+ AJvYcCUMkktOT0+9CXxnDFNRP9wDl33VRjbkHFCCCmCy5nA9p5zdbiRGcWSvlsiVFf+M1L/kgPgihSqZWntu8tFZrsuomI7oyJM=
+X-Gm-Message-State: AOJu0YyZT1n/DViEe+pTQePUDcHr7kBatjy9uCtHgPXpursUv8fP+f+s
+ 91TT/YOVyztkWFPyqxK2gZFOM4jSACEx9cA0A2H6SbDjIYICAMZo9wN8rJFBxGs=
+X-Google-Smtp-Source: AGHT+IHOyXceUiEgsBMwIpnDqX1vObgw0NzrLREYp9trbjW2IJxB9W2tFbbpQ8GiZVVre8T1O3P2Dg==
+X-Received: by 2002:a17:906:4749:b0:a3e:4cb3:13d2 with SMTP id
+ j9-20020a170906474900b00a3e4cb313d2mr333033ejs.17.1708710002683; 
+ Fri, 23 Feb 2024 09:40:02 -0800 (PST)
 Received: from [192.168.69.100] (xbn44-h02-176-184-35-109.dsl.sta.abo.bbox.fr.
  [176.184.35.109]) by smtp.gmail.com with ESMTPSA id
- l8-20020a5d6688000000b0033cf7eb4a85sm3440228wru.65.2024.02.23.09.32.57
+ ps10-20020a170906bf4a00b00a3f876b2f67sm1672122ejb.47.2024.02.23.09.40.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 09:32:57 -0800 (PST)
-Message-ID: <8341e152-1002-4350-8f23-2ab80ed253eb@linaro.org>
-Date: Fri, 23 Feb 2024 18:32:56 +0100
+ Fri, 23 Feb 2024 09:40:02 -0800 (PST)
+Message-ID: <09963d4b-cc83-420c-8c44-dba249bc332e@linaro.org>
+Date: Fri, 23 Feb 2024 18:40:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] pseries: do not require CONFIG_USB
+Subject: Re: [PATCH 10/10] usb: remove duplicate file in system_ss
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu, qemu-ppc <qemu-ppc@nongnu.org>
+Cc: balaton@eik.bme.hu
 References: <20240223124406.234509-1-pbonzini@redhat.com>
- <20240223124406.234509-8-pbonzini@redhat.com>
+ <20240223124406.234509-11-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240223124406.234509-8-pbonzini@redhat.com>
+In-Reply-To: <20240223124406.234509-11-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,53 +97,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 23/2/24 13:44, Paolo Bonzini wrote:
-> With --without-default-devices it is possible to build a binary that
-> does not include any USB host controller and therefore that does not
-> include the code guarded by CONFIG_USB.  While the simpler creation
-> functions such as usb_create_simple can be inlined, this is not true
-> of usb_bus_find().  Remove it, replacing it with a search of the single
-> USB bus on the machine.
+> Because USB_EHCI_SYSBUS selects USB_EHCI, there is no need to include
+> hcd-ehci.c explicitly.
 > 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/ppc/spapr.c | 7 +++----
->   hw/ppc/Kconfig | 1 +
->   2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 0d72d286d80..44d339982da 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -3024,10 +3024,9 @@ static void spapr_machine_init(MachineState *machine)
->           }
->   
->           if (has_vga) {
-
-Pre-existing, don't we want defaults_enabled() instead of has_vga here?
-
-> -            USBBus *usb_bus = usb_bus_find(-1);
-> -
-> -            usb_create_simple(usb_bus, "usb-kbd");
-> -            usb_create_simple(usb_bus, "usb-mouse");
-> +            Object *usb_bus = object_resolve_type_unambiguous(TYPE_USB_BUS, &error_abort);
-> +            usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
-> +            usb_create_simple(USB_BUS(usb_bus), "usb-mouse");
->           }
->       }
->   
-> diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-> index 9841c2c9690..d497fa2b825 100644
-> --- a/hw/ppc/Kconfig
-> +++ b/hw/ppc/Kconfig
-> @@ -1,5 +1,6 @@
->   config PSERIES
->       bool
-> +    imply USB_OHCI_PCI
->       imply PCI_DEVICES
->       imply TEST_DEVICES
->       imply VIRTIO_VGA
+>   hw/usb/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
 
