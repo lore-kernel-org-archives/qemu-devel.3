@@ -4,117 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3609AC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 11:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8919CC5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 12:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdTyy-0007no-4e; Fri, 23 Feb 2024 06:44:48 -0500
+	id 1rdUEz-0002ys-Ec; Fri, 23 Feb 2024 07:01:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdTyp-0007le-6t
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:44:39 -0500
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdTyj-0007wL-K8
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:44:38 -0500
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d180d6bd32so10433271fa.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 03:44:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708688671; x=1709293471; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DbOq+5s/X39YkRR/r8UlhWzXHHqLg9Z8IYVgikI+0+Q=;
- b=r9vuFsYRJUJdUnUGVc3WFIe6nOluzmfoQCN/crPrZ1x4w77Rx/vEXg6jk5IxHm6hCp
- pTAwQAPZZ+Uow+Y2sgYjL8ERmhllSDCTPLqqRKoi/FSDUiFfXsDfNN/DVtKxuHbmntED
- ruW4dLQYbkhWPRUc8ZVHBHCbf58+FKUuDQCGziyBv2WSbuLSCjfTc0gdR9owpAg7y+jp
- dHrTyO678eWh8TPkHWBtBYpDcyt9AR4vTSvxGkPWVsmmkLEmbsOp2LEpvOj625DYc7gZ
- 6u2+Qu0LbMgbdJF00ra4ibEA08Ra9IZt7onXzemIrq8LEt8iezrkboZeCmTRAm32mOYZ
- rztQ==
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rdUEo-0002tc-JQ
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:01:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1rdUEm-0002e0-4v
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:01:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708689666;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3uLfuFbRtlqLCT+VL8zQAYil5QZjCVo4msDIqtAkx0s=;
+ b=bm4j8Q5w6QgykGdtBd5UG31epthdqcifnYIp1iHvrVV/en7POo3VM3SJRV3M++DHyI9irp
+ Z5hdVuKN8badR0enwdJ/oAFC7hLxnKAw8GZI1aC0PWddIye53w1p2J8VAT334+xykNIsK/
+ T2q8bqxEGjojcKCURsqmRY3Hvi5bNfI=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683--uPBvd4nNdi-7xNTVyRBYA-1; Fri, 23 Feb 2024 07:01:04 -0500
+X-MC-Unique: -uPBvd4nNdi-7xNTVyRBYA-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-512aa50323cso877821e87.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 04:01:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708688671; x=1709293471;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DbOq+5s/X39YkRR/r8UlhWzXHHqLg9Z8IYVgikI+0+Q=;
- b=fnA/Lhro6dZNKpRqbct40e/kRV4nuFkd0uB8KcBSn+peUY7ubVjhLmpzJTeaeTS55X
- r69lucKt0G+xVnEdAV/NNy+apIt1k6Nv89+mkCT2yWpr/BEU4H7ypfEbVVwozG5LXYcl
- fUwSkFfLscBxXmyeEzqtfPIGOF3X4niG5iOS4sXPDY7E0BKIMUrTDv/fmyuGZBqugsjl
- nt3kpILTbcSPk+LCmyRHGwd34AedxVf3RGykYqRnfN862uPfHoxHaSP7g9qzvAXwaaye
- vzhzBB1T6g1+f4MCwqMNeMtW0PkA2S9C6nS2xANAFmU/F9zw0JvzKhynNvGnyjrPZBGW
- /DfQ==
-X-Gm-Message-State: AOJu0YzChA2cxE2oZ4yxNSM+LVZZQpid2KQz+n7Lvosg05PaHu8Nz80t
- jybPcxdJCKt/Kcm/szLvClZMRTOOXzXNsE4NlUcZSx0Z+H9vLJHfiTL3K9YXDSg=
-X-Google-Smtp-Source: AGHT+IG/7kH0tu1tHjmC1TQwROCMvUvxz92uTqu2QeX1Dc+UKq8ZpSA9GD5rV2zDSuu2A82nu4eQqA==
-X-Received: by 2002:ac2:5185:0:b0:512:be76:b15 with SMTP id
- u5-20020ac25185000000b00512be760b15mr1071984lfi.58.1708688671373; 
- Fri, 23 Feb 2024 03:44:31 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- x1-20020a05600c2a4100b0041292306f2csm2019847wme.16.2024.02.23.03.44.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 03:44:31 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 95A3D5F88C;
- Fri, 23 Feb 2024 11:44:30 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org,  Yoshinori Sato <ysato@users.sourceforge.jp>,
- David Hildenbrand <david@redhat.com>,  Weiwei Li <liwei1518@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Michael Rolnik
- <mrolnik@gmail.com>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  qemu-ppc@nongnu.org,  Paolo Bonzini
- <pbonzini@redhat.com>,  qemu-riscv@nongnu.org,  Cleber Rosa
- <crosa@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Song Gao
- <gaosong@loongson.cn>,  qemu-arm@nongnu.org,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  John Snow <jsnow@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@kaod.org>,  Nicholas Piggin <npiggin@gmail.com>,
- qemu-s390x@nongnu.org,  Laurent Vivier <laurent@vivier.eu>,  "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Yanan Wang <wangyanan55@huawei.com>,  Palmer
- Dabbelt <palmer@dabbelt.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Brian Cain <bcain@quicinc.com>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,
- Bin Meng <bin.meng@windriver.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Alistair Francis
- <alistair.francis@wdc.com>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH 18/23] plugins: add an API to read registers
-In-Reply-To: <308de8f7-5871-4d3d-847c-f4f55fb6f790@daynix.com> (Akihiko
- Odaki's message of "Fri, 23 Feb 2024 19:58:40 +0900")
-References: <20240216163025.424857-1-alex.bennee@linaro.org>
- <20240216163025.424857-19-alex.bennee@linaro.org>
- <c38a22b5-01e8-40f1-bfc4-4bba9bf7b516@daynix.com>
- <87il2jcje8.fsf@draig.linaro.org>
- <bf31a250-9539-448c-9c64-4168ab8741f1@daynix.com>
- <87bk8ab0f4.fsf@draig.linaro.org>
- <bf5e9471-c09f-47f2-a5a3-83713255c47a@daynix.com>
- <87zfvtaoqq.fsf@draig.linaro.org>
- <7e4b4ba6-3683-464f-ac37-3b7f19455643@daynix.com>
- <87cysoajhl.fsf@draig.linaro.org>
- <f4b0b535-9e2b-47c7-a84b-afd851deb88a@daynix.com>
- <87plwo8l56.fsf@draig.linaro.org>
- <308de8f7-5871-4d3d-847c-f4f55fb6f790@daynix.com>
-User-Agent: mu4e 1.11.28; emacs 29.1
-Date: Fri, 23 Feb 2024 11:44:30 +0000
-Message-ID: <87jzmv8kwx.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1708689663; x=1709294463;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3uLfuFbRtlqLCT+VL8zQAYil5QZjCVo4msDIqtAkx0s=;
+ b=n4A2uycSO3APGa7N6WZqrWNXEWn10JjcHQOF790QXzKFUcP4W7MyU1syuSa2JXzNf1
+ kGAkN4h+yeCiFi0IP2k5D4n9pU6EUpuSQbujEa4X/nr6odX5IatRTeVGMgKAWzSORiw8
+ Pu6adaSPCaNBEauvfApUzUPIbqxdnDyRyVrj7GdCI3oXScNWua1AgCjyaVICpyc84ywD
+ 7D6A2lL45Cqd7f/2HW/39BPdR1GcCgrMZULGa4u4qGK3kBroZq3Lhjou5zNrpjnlUs7C
+ 6Va0ASSs8++eGy6uoJCXPMVpAJhqlksP68PqK2o8Lz3FKVCDGwDTP6wezNlN12KAfbg2
+ Uv7A==
+X-Gm-Message-State: AOJu0Yx+dh4Dmnlhtfr7VmMvb+KNMmXUST4z0npuRocKRS8CDz4vJsma
+ WS8/BZfMFyFTKe0kz2jmboYQcTf+/azAVzy0hx5IkphHmYsXL/pG3pbPD8LmVfvIB+dws6aLhrP
+ qUpb+9s04CaWD2IhH/FI9lzn4hxQbLUCLpUalfNblXwlwymNGlMTVD4+HhAnbGaJoeudqKjwYqL
+ DKJ0yMTAJQUji7/ObXrd+rxg5+hqI=
+X-Received: by 2002:ac2:48ab:0:b0:512:cfac:3d81 with SMTP id
+ u11-20020ac248ab000000b00512cfac3d81mr1035335lfg.68.1708689663293; 
+ Fri, 23 Feb 2024 04:01:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE2gnI5dQDrlqikuxykKmjembFk7AwxNvB8m0AHraS49+HNJKqLrhLEVznsUhiHge8QLVZVl6bGzLjvukpB4jc=
+X-Received: by 2002:ac2:48ab:0:b0:512:cfac:3d81 with SMTP id
+ u11-20020ac248ab000000b00512cfac3d81mr1035329lfg.68.1708689662907; Fri, 23
+ Feb 2024 04:01:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240222152835.72095-1-philmd@linaro.org>
+ <20240222152835.72095-3-philmd@linaro.org>
+In-Reply-To: <20240222152835.72095-3-philmd@linaro.org>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Fri, 23 Feb 2024 14:00:51 +0200
+Message-ID: <CAPMcbCr5jRuxZAyGpqiPvw=QgMAqWpFb0qjpiFGRhqLSfr4jQg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] qga/commands-win32: Do not set
+ matrix_lookup_t/win_10_0_t arrays size
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Dehan Meng <demeng@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="00000000000063afe906120b5020"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,203 +98,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+--00000000000063afe906120b5020
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On 2024/02/23 2:27, Alex Benn=C3=A9e wrote:
->> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>=20
->>> On 2024/02/22 19:20, Alex Benn=C3=A9e wrote:
->>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>
->>>>> On 2024/02/21 23:14, Alex Benn=C3=A9e wrote:
->>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>>>
->>>>>>> On 2024/02/21 19:02, Alex Benn=C3=A9e wrote:
->>>>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>>>>>
->>>>>>>>> On 2024/02/20 23:14, Alex Benn=C3=A9e wrote:
->>>>>>>>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>>>>>>>>
->>>>>>>>>>> On 2024/02/17 1:30, Alex Benn=C3=A9e wrote:
->>>>>>>>>>>> We can only request a list of registers once the vCPU has been
->>>>>>>>>>>> initialised so the user needs to use either call the get funct=
-ion on
->>>>>>>>>>>> vCPU initialisation or during the translation phase.
->>>>>>>>>>>> We don't expose the reg number to the plugin instead hiding it
->>>>>>>>>>>> behind
->>>>>>>>>>>> an opaque handle. This allows for a bit of future proofing sho=
-uld the
->>>>>>>>>>>> internals need to be changed while also being hashed against t=
-he
->>>>>>>>>>>> CPUClass so we can handle different register sets per-vCPU in
->>>>>>>>>>>> hetrogenous situations.
->>>>>>>>>>>> Having an internal state within the plugins also allows us to =
-expand
->>>>>>>>>>>> the interface in future (for example providing callbacks on re=
-gister
->>>>>>>>>>>> change if the translator can track changes).
->>>>>>>>>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
->>>>>>>>>>>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>>>>>>>> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
->>>>>>>>>>>> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
->>>>>>>>>>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>>>>>>>>>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>>>>>> <snip>
->>>>>>>>>>>> +/*
->>>>>>>>>>>> + * Register handles
->>>>>>>>>>>> + *
->>>>>>>>>>>> + * The plugin infrastructure keeps hold of these internal data
->>>>>>>>>>>> + * structures which are presented to plugins as opaque handle=
-s. They
->>>>>>>>>>>> + * are global to the system and therefor additions to the has=
-h table
->>>>>>>>>>>> + * must be protected by the @reg_handle_lock.
->>>>>>>>>>>> + *
->>>>>>>>>>>> + * In order to future proof for up-coming heterogeneous work =
-we want
->>>>>>>>>>>> + * different entries for each CPU type while sharing them in =
-the
->>>>>>>>>>>> + * common case of multiple cores of the same type.
->>>>>>>>>>>> + */
->>>>>>>>>>>> +
->>>>>>>>>>>> +static QemuMutex reg_handle_lock;
->>>>>>>>>>>> +
->>>>>>>>>>>> +struct qemu_plugin_register {
->>>>>>>>>>>> +    const char *name;
->>>>>>>>>>>> +    int gdb_reg_num;
->>>>>>>>>>>> +};
->>>>>>>>>>>> +
->>>>>>>>>>>> +static GHashTable *reg_handles; /* hash table of PluginReg */
->>>>>>>>>>>> +
->>>>>>>>>>>> +/* Generate a stable key - would xxhash be overkill? */
->>>>>>>>>>>> +static gpointer cpu_plus_reg_to_key(CPUState *cs, int gdb_reg=
-num)
->>>>>>>>>>>> +{
->>>>>>>>>>>> +    uintptr_t key =3D (uintptr_t) cs->cc;
->>>>>>>>>>>> +    key ^=3D gdb_regnum;
->>>>>>>>>>>> +    return GUINT_TO_POINTER(key);
->>>>>>>>>>>> +}
->>>>>>>>>>>
->>>>>>>>>>> I have pointed out this is theoretically prone to collisions and
->>>>>>>>>>> unsafe.
->>>>>>>>>> How is it unsafe? The aim is to share handles for the same CPUCl=
-ass
->>>>>>>>>> rather than having a unique handle per register/cpu combo.
->>>>>>>>>
->>>>>>>>> THe intention is legitimate, but the implementation is not safe. =
-It
->>>>>>>>> assumes (uintptr)cs->cc ^ gdb_regnum is unique, but there is no s=
-uch
->>>>>>>>> guarantee. The key of GHashTable must be unique; generating hashe=
-s of
->>>>>>>>> keys should be done with hash_func given to g_hash_table_new().
->>>>>>>> This isn't a hash its a non-unique key. It is however unique for
->>>>>>>> the same register on the same class of CPU so for each vCPU in a s=
-ystem
->>>>>>>> can share the same opaque handles.
->>>>>>>> The hashing is done internally by glib. We would assert if there w=
-as
->>>>>>>> a
->>>>>>>> duplicate key referring to a different register.
->>>>>>>> I'm unsure what you want here? Do you have a suggestion for the key
->>>>>>>> generation algorithm? As the comment notes I did consider a more c=
-omplex
->>>>>>>> mixing algorithm using xxhash but that wouldn't guarantee no clash
->>>>>>>> either.
->>>>>>>
->>>>>>> I suggest using a struct that holds both of cs->cc and gdb_regnum, =
-and
->>>>>>> pass g_direct_equal() and g_direct_hash() to g_hash_table_new().
->>>>>> We already do:
->>>>>>            if (!reg_handles) {
->>>>>>                reg_handles =3D g_hash_table_new(g_direct_hash, g_dir=
-ect_equal);
->>>>>>            }
->>>>>> But we can't use g_direct_equal with something that exceeds the
->>>>>> width of
->>>>>> gpointer as it is a straight equality test of the key. What you are
->>>>>> suggesting requires allocating memory for each key and de-referencing
->>>>>> with a custom GEqualFunc.
->>>>>
->>>>> My bad. I wrongly remembered g_direct_equal() and g_direct_hash(). It
->>>>> indeed seems to need a more complicated solution.
->>>>>
->>>>> It is possible to write a GEqualFunc and a GHashFunc that consumes a
->>>>> struct but it is a chore. How about having a two-level GHashTable?
->>>>> reg_handles will be a GHashTable keyed with cs->cc, and another
->>>>> GHashTable will be keyed with gdb_regnum.
->>>> That still seems overkill for a clash that can't happen. What do you
->>>> think about the following:
->>>>     /*
->>>>      * Generate a stable key shared across CPUs of the same class
->>>>      *
->>>>      * In order to future proof for up-coming heterogeneous work we wa=
-nt
->>>>      * different entries for each CPU type while sharing them in the
->>>>      * common case of multiple cores of the same type. This makes the
->>>>      * assumption you won't see two CPUClass pointers that are similar
->>>>      * enough that the low bits mixed with different registers numbers
->>>>      * will give you the same key.
->>>>      *
->>>>      * The build time assert will fire if CPUClass goes on a sudden di=
-et
->>>>      * and we assert further down if we detect two keys representing
->>>>      * different regnums. In practice allocations of CPUClass are much
->>>>      * farther apart making clashes practically impossible.
->>>>      */
->>>>     static gpointer cpu_plus_reg_to_key(CPUState *cs, int gdb_regnum)
->>>>     {
->>>>         uintptr_t key =3D (uintptr_t) cs->cc;
->>>>         /* this protects some of the assumptions above */
->>>>         qemu_build_assert(sizeof(*cs->cc) >=3D 256);
->>>>         key ^=3D gdb_regnum;
->>>>         return GUINT_TO_POINTER(key);
->>>>     }
->>>
->>>
->>> I think the assertion and comments are overkill. Doesn't having a
->>> nested GHashTable save some words you have to wrote for the
->>> assumption?
->> A nested hash table for a single entry is overkill.
->
-> You mean that the first level will be indexed by only one CPUClass (or
-> few if we support a heterogeneous system).
->
-> I think it's still OK though. It's not like we will need more code
-> when having few entries.
->
->>=20
->>> I'm also not quite convinced that the comments and assertions are
->>> enough to say this hack is safe; what if some sort of pointer
->>> authentication is added and shuffles bits? Will this hack be
->>> compatible with static and dynamic checkers we may have in the future?
->> We are not using the value as a pointer so that should be irrelevant
->> although generally those bits tend to be at the top of pointers so they
->> can be masked off.
->> I'm not sure what we are trying to achieve here. I've got something
->> that
->> works, doesn't fail any tests and has some guards in for potential
->> future problems. At the same time I'm not prepared to over-engineer the
->> solution for a theoretical future problem we haven't got yet.
->> What about if I just key based of gdb_regnum and we accept that that
->> might break the one heterogeneous system we model today?
->>=20
->
-> That's the best option in my opinion. gdbstub won't work well with
-> such a system anyway, and fixing it will need something similar to
-> GHashTable. But if I would fix gdbstub for a heterogeneous system, I
-> would add a field to CPUClass instead of having a GHashTable keyed
-> with tuples of CPUClass pointers and register numbers. It should be
-> fine considering that CPUState already has gdbstub-specific fields
-> like gdb_regs.
+On Thu, Feb 22, 2024 at 5:28=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
 
-It would be nice to move all register code into CPUClass to avoid
-repeating ourselves but I suspect that is quite an invasive change for a
-later series. Currently all the CPUClass values are set on init and
-shouldn't really be changed after that otherwise we'll have to start
-messing with locking.=20
+> ga_get_win_name() iterates over all elements in the arrays by
+> checking the 'version' field is non-NULL. Since the arrays are
+> guarded by a NULL terminating element, we don't need to specify
+> their size:
+>
+>   static char *ga_get_win_name(...)
+>   {
+>       ...
+>       const ga_matrix_lookup_t *table =3D WIN_VERSION_MATRIX[tbl_idx];
+>       const ga_win_10_0_t *win_10_0_table =3D ...
+>       ...
+>       while (table->version !=3D NULL) {
+>                     ^^^^^^^^^^^^^^^
+>               while (win_10_0_table->version !=3D NULL) {
+>                                      ^^^^^^^^^^^^^^^
+>
+> This will simplify maintenance when adding new entries to these
+> arrays.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  qga/commands-win32.c | 19 +++++++++----------
+>  1 file changed, 9 insertions(+), 10 deletions(-)
+>
+> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+> index 79b5a580c9..87ce6e2870 100644
+> --- a/qga/commands-win32.c
+> +++ b/qga/commands-win32.c
+> @@ -2124,7 +2124,7 @@ typedef struct _ga_matrix_lookup_t {
+>      const char *version_id;
+>  } ga_matrix_lookup_t;
+>
+> -static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] =3D {
+> +static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][] =3D {
+>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I love this idea but mingw-gcc - no.
+
+../qga/commands-win32.c:2125:33: error: array type has incomplete element
+type =E2=80=98ga_matrix_lookup_t[]=E2=80=99 {aka =E2=80=98struct _ga_matrix=
+_lookup_t[]=E2=80=99}
+ 2125 | static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][] =3D {
+      |                                 ^~~~~~~~~~~~~~~~~~
+../qga/commands-win32.c:2125:33: note: declaration of =E2=80=98WIN_VERSION_=
+MATRIX=E2=80=99
+as multidimensional array must have bounds for all dimensions except the
+first
+
+I think we can do the same as with Win10 and create 2 variables:
+ WIN_SERVER_VERSION_MATRIX and WIN_CLIENT_VERSION_MATRIX
+
+If you want I can fix this by myself.
+
+
+Best Regards,
+Konstantin Kostiuk.
+
+     {
+>          /* Desktop editions */
+>          { 5, 0, "Microsoft Windows 2000",   "2000"},
+> @@ -2133,7 +2133,7 @@ static const ga_matrix_lookup_t
+> WIN_VERSION_MATRIX[2][7] =3D {
+>          { 6, 1, "Microsoft Windows 7"       "7"},
+>          { 6, 2, "Microsoft Windows 8",      "8"},
+>          { 6, 3, "Microsoft Windows 8.1",    "8.1"},
+> -        { 0, 0, 0}
+> +        { }
+>      },{
+>          /* Server editions */
+>          { 5, 2, "Microsoft Windows Server 2003",        "2003"},
+> @@ -2141,28 +2141,27 @@ static const ga_matrix_lookup_t
+> WIN_VERSION_MATRIX[2][7] =3D {
+>          { 6, 1, "Microsoft Windows Server 2008 R2",     "2008r2"},
+>          { 6, 2, "Microsoft Windows Server 2012",        "2012"},
+>          { 6, 3, "Microsoft Windows Server 2012 R2",     "2012r2"},
+> -        { 0, 0, 0},
+> -        { 0, 0, 0}
+> +        { },
+>      }
+>  };
+>
+>  typedef struct _ga_win_10_0_t {
+>      int first_build;
+> -    const char *version;
+> -    const char *version_id;
+> +    char const *version;
+> +    char const *version_id;
+>  } ga_win_10_0_t;
+>
+> -static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] =3D {
+> +static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[] =3D {
+>      {14393, "Microsoft Windows Server 2016",    "2016"},
+>      {17763, "Microsoft Windows Server 2019",    "2019"},
+>      {20344, "Microsoft Windows Server 2022",    "2022"},
+> -    {0, 0}
+> +    { }
+>  };
+>
+> -static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] =3D {
+> +static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[] =3D {
+>      {10240, "Microsoft Windows 10",    "10"},
+>      {22000, "Microsoft Windows 11",    "11"},
+> -    {0, 0}
+> +    { }
+>  };
+>
+>  static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **errp)
+> --
+> 2.41.0
+>
+>
+
+--00000000000063afe906120b5020
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 22, 2024 at 5:28=E2=80=AF=
+PM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">phi=
+lmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">ga_get_win_name() iterates over all elements in the arrays by=
+<br>
+checking the &#39;version&#39; field is non-NULL. Since the arrays are<br>
+guarded by a NULL terminating element, we don&#39;t need to specify<br>
+their size:<br>
+<br>
+=C2=A0 static char *ga_get_win_name(...)<br>
+=C2=A0 {<br>
+=C2=A0 =C2=A0 =C2=A0 ...<br>
+=C2=A0 =C2=A0 =C2=A0 const ga_matrix_lookup_t *table =3D WIN_VERSION_MATRIX=
+[tbl_idx];<br>
+=C2=A0 =C2=A0 =C2=A0 const ga_win_10_0_t *win_10_0_table =3D ...<br>
+=C2=A0 =C2=A0 =C2=A0 ...<br>
+=C2=A0 =C2=A0 =C2=A0 while (table-&gt;version !=3D NULL) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^^^^^=
+^^^^^^^^^^<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 while (win_10_0_table-&gt;=
+version !=3D NULL) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^^^^^<=
+br>
+<br>
+This will simplify maintenance when adding new entries to these<br>
+arrays.<br>
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0qga/commands-win32.c | 19 +++++++++----------<br>
+=C2=A01 file changed, 9 insertions(+), 10 deletions(-)<br>
+<br>
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
+index 79b5a580c9..87ce6e2870 100644<br>
+--- a/qga/commands-win32.c<br>
++++ b/qga/commands-win32.c<br>
+@@ -2124,7 +2124,7 @@ typedef struct _ga_matrix_lookup_t {<br>
+=C2=A0 =C2=A0 =C2=A0const char *version_id;<br>
+=C2=A0} ga_matrix_lookup_t;<br>
+<br>
+-static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] =3D {<br>
++static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][] =3D {<br></blockqu=
+ote><div><br></div><div>I love this idea but mingw-gcc - no.<br><br>../qga/=
+commands-win32.c:2125:33: error: array type has incomplete element type =E2=
+=80=98ga_matrix_lookup_t[]=E2=80=99 {aka =E2=80=98struct _ga_matrix_lookup_=
+t[]=E2=80=99}<br>=C2=A02125 | static const ga_matrix_lookup_t WIN_VERSION_M=
+ATRIX[2][] =3D {<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 ^~~~~~~~~~~~~~~~~~<br>../qga/commands-win32.c:2125:33: note: declara=
+tion of =E2=80=98WIN_VERSION_MATRIX=E2=80=99 as multidimensional array must=
+ have bounds for all dimensions except the first</div><div><br></div><div>I=
+ think we can do the same as with Win10 and create 2 variables:</div><div>=
+=C2=A0WIN_SERVER_VERSION_MATRIX and WIN_CLIENT_VERSION_MATRIX<br><br></div>=
+<div>If you want I can fix this by myself.</div><div><br></div><div><br cle=
+ar=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"=
+><div>Best Regards,</div><div>Konstantin Kostiuk.</div></div></div></div></=
+div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Desktop editions */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 5, 0, &quot;Microsoft Windows 2000&quot=
+;,=C2=A0 =C2=A0&quot;2000&quot;},<br>
+@@ -2133,7 +2133,7 @@ static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2]=
+[7] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 1, &quot;Microsoft Windows 7&quot;=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;7&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 2, &quot;Microsoft Windows 8&quot;,=
+=C2=A0 =C2=A0 =C2=A0 &quot;8&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 3, &quot;Microsoft Windows 8.1&quot;=
+,=C2=A0 =C2=A0 &quot;8.1&quot;},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 { 0, 0, 0}<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 { }<br>
+=C2=A0 =C2=A0 =C2=A0},{<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Server editions */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 5, 2, &quot;Microsoft Windows Server 20=
+03&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;2003&quot;},<br>
+@@ -2141,28 +2141,27 @@ static const ga_matrix_lookup_t WIN_VERSION_MATRIX[=
+2][7] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 1, &quot;Microsoft Windows Server 20=
+08 R2&quot;,=C2=A0 =C2=A0 =C2=A0&quot;2008r2&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 2, &quot;Microsoft Windows Server 20=
+12&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;2012&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 3, &quot;Microsoft Windows Server 20=
+12 R2&quot;,=C2=A0 =C2=A0 =C2=A0&quot;2012r2&quot;},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 { 0, 0, 0},<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 { 0, 0, 0}<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 { },<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0};<br>
+<br>
+=C2=A0typedef struct _ga_win_10_0_t {<br>
+=C2=A0 =C2=A0 =C2=A0int first_build;<br>
+-=C2=A0 =C2=A0 const char *version;<br>
+-=C2=A0 =C2=A0 const char *version_id;<br>
++=C2=A0 =C2=A0 char const *version;<br>
++=C2=A0 =C2=A0 char const *version_id;<br>
+=C2=A0} ga_win_10_0_t;<br>
+<br>
+-static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] =3D {<br>
++static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0{14393, &quot;Microsoft Windows Server 2016&quot;,=C2=
+=A0 =C2=A0 &quot;2016&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0{17763, &quot;Microsoft Windows Server 2019&quot;,=C2=
+=A0 =C2=A0 &quot;2019&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0{20344, &quot;Microsoft Windows Server 2022&quot;,=C2=
+=A0 =C2=A0 &quot;2022&quot;},<br>
+-=C2=A0 =C2=A0 {0, 0}<br>
++=C2=A0 =C2=A0 { }<br>
+=C2=A0};<br>
+<br>
+-static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] =3D {<br>
++static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[] =3D {<br>
+=C2=A0 =C2=A0 =C2=A0{10240, &quot;Microsoft Windows 10&quot;,=C2=A0 =C2=A0 =
+&quot;10&quot;},<br>
+=C2=A0 =C2=A0 =C2=A0{22000, &quot;Microsoft Windows 11&quot;,=C2=A0 =C2=A0 =
+&quot;11&quot;},<br>
+-=C2=A0 =C2=A0 {0, 0}<br>
++=C2=A0 =C2=A0 { }<br>
+=C2=A0};<br>
+<br>
+=C2=A0static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **er=
+rp)<br>
+-- <br>
+2.41.0<br>
+<br>
+</blockquote></div></div>
+
+--00000000000063afe906120b5020--
+
 
