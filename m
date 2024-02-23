@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77FA6C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 15:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E31C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 15:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdX89-0002Pi-OE; Fri, 23 Feb 2024 10:06:29 -0500
+	id 1rdX8f-0002YG-ST; Fri, 23 Feb 2024 10:07:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdX1D-0004Tf-Gg
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:59:19 -0500
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1rdWwe-0000Ve-Bo
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:54:36 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdX19-000789-RD
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:59:18 -0500
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-563b7b3e3ecso1167348a12.0
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 06:59:15 -0800 (PST)
+ id 1rdWwc-0005xC-Qa
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:54:36 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5648d92919dso1031968a12.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 06:54:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708700354; x=1709305154; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708700070; x=1709304870; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YhchQYK3xHNaMo+pI6y4G3x/L4qt4KFgd4CPdCCxneo=;
- b=dK2KRFdBLHo5vuGIVaBi9vijbfPNjO/GrFBffUEqjuQHxj75rtfGtrGWPWStlzcO+e
- s/mTvyImMset+71UiOpO0a/UGkOan0PwUFvtiNfyzoyFCe9DClt4cH5FZj57ULeLVJbr
- ISMvok6XRxi8zbYXVUp5xeO0JhzgH3fMVChrhTYUbLMlCgtFxMXSIaPHFujwkx4a7d/4
- INbXksuejfuOMgvV2uE8ieRT/N+u+qW58ZDzCrgOevi+QZt8XAth2mz9RGKVMlIqnXVW
- Fuy59xwBzT9s2Q1XAXeGrESDHR2/EPLl47VsHmk1sv27gOOLu39pz7BSXMIkAs9hfNba
- Ughw==
+ bh=WPQfjQWIvQBLRJ6qvfBoFUVUFt5Qf/N+PgIdEHrJilU=;
+ b=wKs4m66SpUeojcxrG0baQVYJj64GQvgMkpRo6ugRKhjrHaR2sKsu+1GN5fxzIiHi3N
+ XTxE5EJPGEqLn8CTDMbV2tt/QbdlF0lTOg5HC5yf3iKMHp0FtvH+eKTErjGUoQBUoMPT
+ 56LaSMQxSKnN18uUEuWRq7h54oRpRq6LDncbSzkMpi23X/6oA0FXOfMyW7pBknaYY2bR
+ HzEqru2t/ThCYEs6JGFXk20jzRKaxZVtzCSrLpuQ2tAS6kf+U97xK5/3THAhDQChX/pb
+ cdySDi+ik3XJ7+lKg2L8cPB4ZO0Bi3D9PdWWpYADL6SSs9QXdfT6uBbP9uGkwajjWvIQ
+ aLTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708700354; x=1709305154;
+ d=1e100.net; s=20230601; t=1708700070; x=1709304870;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YhchQYK3xHNaMo+pI6y4G3x/L4qt4KFgd4CPdCCxneo=;
- b=aeOTBblMuG+62GowHvEJen/7NEVPyUcjOK+651VNUy6wKtuNZZxP7V3ZTVcv4+5nZQ
- ImcBM8T33k4zpjUlKNO6904ElSgpEe6k0asame7xinMX4LY+t+AI5ZyrMSnrVAJNHsOB
- JXgLWildYiIJ+wR3q3I+aXkcwHRCgcjhT7i/E9SUsHTwNJvQj6MOCPcSQbDCOBazN3Dj
- +pRyWq3R/H9uTT5hx78IrfsRClSSL0+qJ7Wx74CojXVu2M/hlnfA07wuYDPPGl9RbwBe
- xbPWWr3elEHRRmx2fZe3gJ+8a1uZ+rnVRsBE99IEcsGVoyY8T0TxKJiFcsgmriUUNUXx
- HqtA==
-X-Gm-Message-State: AOJu0Yzxj/XZIAfmOZLY8qE+TlArZWQ5/BclCpguK0IGBzQwhWbtBtzy
- JOfIfGeiIZet7oBnvYw7fExnBERpnkahkNXKaAWSkwIc/ruAF/4NWc7NHHQ7bgXT9vWBi+FaybO
- Ces8I7JJXALdjCuh8fsv6GXGwECvv+A1qLQi2CYz9LajE/LTc
-X-Google-Smtp-Source: AGHT+IHt2OdYGgf5/dzBNwVZGuXgPykrx82wvAuewiT96fZ52vJPNNfNSoDtKjdBSCJZOo6mJ1TYhXFJo92jb60l29s=
-X-Received: by 2002:aa7:d297:0:b0:563:ccd1:26bd with SMTP id
- w23-20020aa7d297000000b00563ccd126bdmr54907edq.2.1708700353897; Fri, 23 Feb
- 2024 06:59:13 -0800 (PST)
+ bh=WPQfjQWIvQBLRJ6qvfBoFUVUFt5Qf/N+PgIdEHrJilU=;
+ b=YQ2B2gBvn6KdeOx9hDVcdquZ3Dg8NCHjNq8b6Q9+GkOWtTHhH8JS3Xfs4POHdMqgok
+ EYQ3TWptCOHNZtr/d/9iPrrGxf2QBgqXZ62OvfkP5yLat844CpreU8WUWX1jn5VfAXG5
+ 4F8RmnRPH0n2yqcmGS9NSd6dqwzj7pnEw2zHuxaFMebB2PC0VDbAMKMKKd+nVIti0ifR
+ Mj2egWRZWnqoD1YoVBB40yIWBmU+WSZyHgY2Hbj0ZiQ+A4gABcTk1Ux/y6drjI03VFxx
+ olaFsNldmVlXo/FUkQuJyg8UpCB96V3xFERj8SHTb3b7p1UNPXryfsV6O3oGHv6RERrf
+ 00pg==
+X-Gm-Message-State: AOJu0YxxdcpwbGgZ8hpjMCf1lj+f+72jhUke2rSp4N8s1S70xaLbJ0j0
+ 0KZA3T66AeRwsJ/uXdNQROGrTJnnwz+8qiYYfbaV+MEXV7zmg8Rr5f0D5lyES5BvOjsynf8u4B6
+ GJa5262O6c0r8Vgy9Dx0Bs0PHyTzG8RMgTytG1g==
+X-Google-Smtp-Source: AGHT+IFDKCPKLInO3LzhjwkJhTSK4tXr8wSHM3qhHeK9oim2424hXcp/9Iq5VmIhlW4J4fcnVmhj+kcn//s8XaOO5Ws=
+X-Received: by 2002:a05:6402:895:b0:563:d16b:a04f with SMTP id
+ e21-20020a056402089500b00563d16ba04fmr46877edy.42.1708700070578; Fri, 23 Feb
+ 2024 06:54:30 -0800 (PST)
 MIME-Version: 1.0
 References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
- <20240219200908.49551-7-arnaud.minier@telecom-paris.fr>
-In-Reply-To: <20240219200908.49551-7-arnaud.minier@telecom-paris.fr>
+ <20240219200908.49551-9-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240219200908.49551-9-arnaud.minier@telecom-paris.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Feb 2024 14:59:03 +0000
-Message-ID: <CAFEAcA_B=soMv78uDsDv-F5-0XQWDXfUr-i0iTUJHr0=VHmvkA@mail.gmail.com>
-Subject: Re: [PATCH v5 6/8] Add write protections to CR register
+Date: Fri, 23 Feb 2024 14:54:19 +0000
+Message-ID: <CAFEAcA-GPocNOoe=dp_3dwXvTbVuDOJJRQvhSkCqiwsLybavWw@mail.gmail.com>
+Subject: Re: [PATCH v5 8/8] Add tests for the STM32L4x5_RCC
 To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
  Laurent Vivier <lvivier@redhat.com>,
@@ -70,8 +70,8 @@ Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,104 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 at 20:16, Arnaud Minier
+On Mon, 19 Feb 2024 at 20:18, Arnaud Minier
 <arnaud.minier@telecom-paris.fr> wrote:
 >
-> Add write protections for the fields in the CR register.
-> PLL configuration write protections (among others) have not
-> been handled yet. This is planned in a future patch set.
-
-Can you make sure you include a suitable prefix (eg
-"hw/misc/stm32l4x5_rcc: ") at the front of patch subjects, please?
-
+> Tests:
+> - the ability to change the sysclk of the device
+> - the ability to enable/disable/configure the PLLs
+> - if the clock multiplexers work
+> - the register flags and the generation of irqs
 >
 > Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 > Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> ---
->  hw/misc/stm32l4x5_rcc.c | 164 ++++++++++++++++++++++++++++------------
->  1 file changed, 114 insertions(+), 50 deletions(-)
->
-> diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-> index a3b192e61b..198c6238b6 100644
-> --- a/hw/misc/stm32l4x5_rcc.c
-> +++ b/hw/misc/stm32l4x5_rcc.c
-> @@ -346,9 +346,47 @@ static void rcc_update_irq(Stm32l4x5RccState *s)
->      }
->  }
->
-> -static void rcc_update_cr_register(Stm32l4x5RccState *s)
-> +static void rcc_update_msi(Stm32l4x5RccState *s, uint32_t previous_value=
-)
+> Acked-by: Thomas Huth <thuth@redhat.com>
+
+
+> +static bool qts_wait_for_flag(QTestState *qts, uint32_t event_addr,
+> +                              uint32_t flag, uint32_t value)
 > +{
-> +    uint32_t val;
-> +
-> +    static const uint32_t msirange[] =3D {
-> +        100000, 200000, 400000, 800000, 1000000, 2000000,
-> +        4000000, 8000000, 16000000, 24000000, 32000000, 48000000
-> +    };
-> +    /* MSIRANGE and MSIRGSEL */
-> +    val =3D extract32(s->cr, R_CR_MSIRGSEL_SHIFT, R_CR_MSIRGSEL_LENGTH);
-
-registerfields.h provides macros for "extract a named field", so you
-can write this
-    val =3D FIELD_EX32(s->cr, CR, MSIRGSEL);
-
-> +    if (val) {
-> +        /* MSIRGSEL is set, use the MSIRANGE field */
-> +        val =3D extract32(s->cr, R_CR_MSIRANGE_SHIFT, R_CR_MSIRANGE_LENG=
-TH);
-
-and these as val =3D extract32(s->cr, CR, MSIRANGE)
-and so on.
-
-> +    } else {
-> +        /* MSIRGSEL is not set, use the MSISRANGE field */
-> +        val =3D extract32(s->csr, R_CSR_MSISRANGE_SHIFT, R_CSR_MSISRANGE=
-_LENGTH);
+> +    /* Wait at most 5 seconds */
+> +    for (int i =3D 0; i < 5000; i++) {
+> +        if ((qtest_readl(qts, event_addr) & flag) =3D=3D value) {
+> +            return true;
+> +        }
+> +        g_usleep(1000);
 > +    }
 > +
-> +    if (val < ARRAY_SIZE(msirange)) {
-> +        clock_update_hz(s->msi_rc, msirange[val]);
-> +    } else {
-> +        /*
-> +         * There is a hardware write protection if the value is out of b=
-ound.
-> +         * Restore the previous value.
-> +         */
-> +        s->cr =3D (s->cr & ~R_CSR_MSISRANGE_MASK) |
-> +                (previous_value & R_CSR_MSISRANGE_MASK);
-> +    }
+> +    return false;
 > +}
-> +
 
-> -    /* HSEON and update HSERDY */
-> +    /*
-> +     * HSEON and update HSERDY.
-> +     * HSEON cannot be reset if the HSE oscillator is used directly or
-> +     * indirectly as the system clock.
-> +     */
->      val =3D extract32(s->cr, R_CR_HSEON_SHIFT, R_CR_HSEON_LENGTH);
-> -    s->cr =3D (s->cr & ~R_CR_HSERDY_MASK) |
-> -            (val << R_CR_HSERDY_SHIFT);
-> -    if (val) {
-> -        clock_update_hz(s->hse, s->hse_frequency);
-> -        if (s->cier & R_CIER_HSERDYIE_MASK) {
-> -            s->cifr |=3D R_CIFR_HSERDYF_MASK;
-> +    if (extract32(s->cfgr, R_CFGR_SWS_SHIFT, R_CFGR_SWS_LENGTH) !=3D 0b1=
-0 &&
-> +        current_pll_src !=3D RCC_CLOCK_MUX_SRC_HSE) {
-> +        s->cr =3D (s->cr & ~R_CR_HSERDY_MASK) |
-> +                (val << R_CR_HSERDY_SHIFT);
-> +        if (val) {
-> +            clock_update_hz(s->hse, s->hse_frequency);
-> +            if (s->cier & R_CIER_HSERDYIE_MASK) {
-> +                s->cifr |=3D R_CIFR_HSERDYF_MASK;
-> +            }
-> +        } else {
-> +            clock_update_hz(s->hse, 0);
+Tests using the qtest accelerator shouldn't wait for real
+wall time to pass. The system under the test does not actually
+run, it only moves forward the system clock when the test
+asks it to do so by calling clock_step(). (We have only a few
+tests under tests/qtest which need to really run guest code
+and so can't use the qtest accelerator. Those may have a reason
+for wallclock timeouts, but need to take care because the timeout
+that works fine on a fast developer workstation may be insufficient
+on a slow heavily loaded server running a CI job...)
 
-As I mentioned earlier, please avoid clock_update_hz() for
-clock calculations if possible.
+Either the device being tested here will immediately
+set the flag we're waiting for here, in which case we don't
+need to do this loop at all, or else it will only set the
+flag after some amount of simulation time has passed, in which
+case the loop will always time out because simulation time won't
+pass until you call clock_step().
+
+Most device tests don't need to call clock_step(), because we tend
+to write our device models so that things that take time on real
+hardware (e.g. waiting for a PLL to settle) happen instantaneously.
+Timer device tests are the ones that usually do want to see what
+happens after simulation time has passed: you can look at
+tests/qtest/cmsdk-apb-timer-test.c for a simple example of that.
 
 thanks
 -- PMM
