@@ -4,145 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6197EC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F10C54E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 07:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdPF4-0008DE-Cw; Fri, 23 Feb 2024 01:41:06 -0500
+	id 1rdQFO-0001ZR-Ek; Fri, 23 Feb 2024 02:45:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Ray.Huang@amd.com>) id 1rdPF2-0008Cs-KK
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:41:04 -0500
-Received: from mail-mw2nam04on2051.outbound.protection.outlook.com
- ([40.107.101.51] helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rdQFN-0001Xl-N7
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 02:45:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Ray.Huang@amd.com>) id 1rdPEv-00035Y-GE
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:41:00 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iCkWhrwx0s8oFhENfvUQwM3f7GfVMPhx5KiwNiRSLHTczlRgzwGE2fRf6gGR8OIn51RfN9iTbg47LBo8cnoftJW5YaQqJXAfavGEWy24M8fUrxnRczdeppIxomN09hXqwzIxr0MhNWXCi1M6M4DneEvyICBdofGrfPq0pqvBNb53L5TRNrl+jriU85FYpz4MSV8zQZOuZOgeqbIFe/zWeXiUnawJ7oHzDX9C06q1V8I3WFIBHPENzaF7BiIF6ose0Uogsxqk8PRnEa3aV4dzA1tdAtLe/7wxyyfzfwh3OZICkujekvauOkgd4LE1wGFxZMur3UJ4uAftwsQ1oX7J6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MhACpc4kiVFwEdFtg6pExw1NBrA0ebSBvcu4VULNahc=;
- b=bssT6RMFhd+vVMYOxekW7wsGUdxP7Hqu34yVwm9KShlsT8jI8EltuHIsfbj8faJnOd6ZPvysdloXPqYC4AG96rDz5t5QJnpfQi00UJXpHPYvodNN6KqVvH1qfsk4RR6ByxNsYiNM+zDNReEO2JYejmAN23W5FNDl12TMbs8vBkVE750CZTEuvCUBi44oFLupEdXADZ1tUL6TZvJqrERewI26KAfHRqk/qLGmfBF3f2HPXZaQ4gicCDF64fHyRp334XvGwvfHhRf/joIHEKaScKH4mQpUbJt3VJMfPTC8l5rMGibqxKJbqDjdHQ8CLCE93cxQViYL2KkZxONJAtaHwA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MhACpc4kiVFwEdFtg6pExw1NBrA0ebSBvcu4VULNahc=;
- b=YJfJ5NmQOGkkHVjw7ubUzGNdyWHxpNdG6uBietYTfMe9/+rQnYJV9WbW6anM2o87TyE2hGmHmTGmbBXQ3hqr+j8WE9I1XgGB41eCSIi3d9Ift1YFvxgzTtIoV/2j19ql1e9oFvgQiepGMlrYSKmN11h9gxgk9ngzhmJhsLxR8BQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8690.namprd12.prod.outlook.com (2603:10b6:a03:540::10)
- by BY5PR12MB4066.namprd12.prod.outlook.com (2603:10b6:a03:207::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.26; Fri, 23 Feb
- 2024 06:35:50 +0000
-Received: from SJ2PR12MB8690.namprd12.prod.outlook.com
- ([fe80::e7a:5022:4b7d:ade1]) by SJ2PR12MB8690.namprd12.prod.outlook.com
- ([fe80::e7a:5022:4b7d:ade1%6]) with mapi id 15.20.7316.023; Fri, 23 Feb 2024
- 06:35:50 +0000
-Date: Fri, 23 Feb 2024 14:34:53 +0800
-To: Pierre-Eric Pelloux-Prayer <pierre-eric@damsy.net>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
- Gurchetan Singh <gurchetansingh@chromium.org>,
- "ernunes@redhat.com" <ernunes@redhat.com>, Alyssa Ross <hi@alyssa.is>,
- Roger Pau =?iso-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>,
- "Deucher, Alexander" <Alexander.Deucher@amd.com>,
- "Stabellini, Stefano" <stefano.stabellini@amd.com>,
- "Koenig, Christian" <Christian.Koenig@amd.com>,
- "Ragiadakou, Xenia" <Xenia.Ragiadakou@amd.com>,
- "Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
- "Huang, Honglei1" <Honglei1.Huang@amd.com>,
- "Zhang, Julia" <Julia.Zhang@amd.com>, "Chen, Jiqian" <Jiqian.Chen@amd.com>,
- Antonio Caggiano <antonio.caggiano@collabora.com>
-Subject: Re: [PATCH v6 07/11] virtio-gpu: Handle resource blob commands
-Message-ID: <Zdg8jYYI1e3+xyJi@amd.com>
-References: <20231219075320.165227-1-ray.huang@amd.com>
- <20231219075320.165227-8-ray.huang@amd.com>
- <ccc34ce0-44af-425e-8634-6f7a0583ee12@damsy.net>
- <c986f552-60b8-471a-a439-a8714936fa47@damsy.net>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c986f552-60b8-471a-a439-a8714936fa47@damsy.net>
-X-ClientProxiedBy: SI2PR04CA0007.apcprd04.prod.outlook.com
- (2603:1096:4:197::19) To SJ2PR12MB8690.namprd12.prod.outlook.com
- (2603:10b6:a03:540::10)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rdQFC-0004xi-Iz
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 02:45:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708674317;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KTWM9Kqbr+5bRD3vjqSa0WSyOt8CpfUimMU2ld0Fpc4=;
+ b=Hu37C6CjPGRPGCW7sioKrr98E5IzzjLLNTIOol7fFjXThyTkSw+X1mOgDTFB68sKumw3Nj
+ EYFBure9ZjyztbipgL6SbU8jHDw7rn3SnWuxeayUf36eT8Qgv95mBhRwASkUWGzKWprY8x
+ Ba9l8L295Q6OnT2k8zx4r0OV2Wa0k24=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-nwIMgYeJMmWsDJF5pfMuOg-1; Fri,
+ 23 Feb 2024 02:45:12 -0500
+X-MC-Unique: nwIMgYeJMmWsDJF5pfMuOg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DC3DB3C025B4;
+ Fri, 23 Feb 2024 07:45:11 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.195.78])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id A5A4B40D1B6A;
+ Fri, 23 Feb 2024 07:45:08 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
+ peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com
+Cc: alex.williamson@redhat.com, zhenzhong.duan@intel.com, jasowang@redhat.com,
+ pbonzini@redhat.com, berrange@redhat.com
+Subject: [PATCH v4 2/3] virtio-iommu: Add a granule property
+Date: Fri, 23 Feb 2024 08:27:24 +0100
+Message-ID: <20240223074459.63422-3-eric.auger@redhat.com>
+In-Reply-To: <20240223074459.63422-1-eric.auger@redhat.com>
+References: <20240223074459.63422-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8690:EE_|BY5PR12MB4066:EE_
-X-MS-Office365-Filtering-Correlation-Id: ce0c9367-f83f-4423-586b-08dc3439ad03
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: kect6Fcjm+yRcHAebXQQQHvGmmeDzRRYh16DT8bDiI7rf+9pBYeEyQnR1FK9zDhA+IxgdcvdOrS4iWcz7O9Bb1fkuQWUS6qORSxAo+GipgNc41jwADFM0S21/k42Z5MUGULnqA+hPEcNNWEVbwo9NWq0hVP7IyWhNXxWxPHL8HNCVDlAKFUff1Q92eTCp+Dj3HAOcJ1aanbamKGmYydn6Ap2Z+EW1vFGXg7iJOGiFovjB9BhsSSLEQegTHYSFw7gFFH2cE0TL86MUVZwMoORAe1RMttWzvSA4D+FCMRpjmQyryhwR5vYuVnMVw+L7h94mNMj+AvF6EbWCpqA9YWck+zzfV4XlWG67mGcPwQucvbRxtA/Lkoo0piajRVea/3f+26yla1qUXiKQd4WjqPWKFlDK6Lq+RH5AvXFbniJrpeHuhkIksqY/Z+nTdln+9C0rHz86ImZq4SnKQIvCGj4CI7qD3w6H5oimQCcxqqax/vh4xvl1VPlZS2MQwSgGgnmEa2TnyFNHVRFYRZoszlTLaA9thXQl5kwucqEjSYLm4k=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8690.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?oYPm5RAVwy/29ce+1TAKFZLEOna8JbXsEfylnSw20zVudHIEo8SebfQX3x?=
- =?iso-8859-1?Q?ZdVQ7Fw9EHiOLJDm7CBLXowJAKIjqVwdO8zUqh5pYT6H8UhVRUdMvL9y7H?=
- =?iso-8859-1?Q?GFAPDlCNf2lEm6eBTb++lIIt/Mc0tJ/Si3KoI0GbIywjZsfKQJGyjqsRem?=
- =?iso-8859-1?Q?yz8KbbPvK0scY/FSkzzOnd5AXarmaK0cVzLsnYjY+i2BQhuKYaCXI1pFkw?=
- =?iso-8859-1?Q?iVREN90xYbQFrds9pmSNwF+wgto6CoiUvr0yk722YjFs4tA1X1kmNfukN2?=
- =?iso-8859-1?Q?eR71IfdiwdRTykhMzko5jhEDvTciU2FkgLv7DMW+RnEAjX6o1txo6BNpVF?=
- =?iso-8859-1?Q?4wOTV8zMamFw4SErhqiiKz5gG6qpGdfSWo9W6f++/KUgcTL5W30WiPFW0T?=
- =?iso-8859-1?Q?E+9MZpzeglUjeAFSrRTeooY/idn8sUchE1LgZ2Ko7LE3kQvGuPATYg2/r8?=
- =?iso-8859-1?Q?KJHuPB1iXHgmfVy9lK7pyrf8LolXYrGbYz19c9BT8wX/eh0RA6ooSTjp67?=
- =?iso-8859-1?Q?Gn7dmxfiJLV01ixcy0s/wsquCyURUbTb48LQ66HixyG5thz7UtdPa7Y216?=
- =?iso-8859-1?Q?mfo0/eAm/oJJe0bXrmShBjkZC361TssFHRs2ptpk400ErQSgyanyTuT8sU?=
- =?iso-8859-1?Q?F7+wSDY5aIsa6qeYQC6L9woPCUwkW1qRJ6hiUG4OmUcHa7x+wb62O+SO6h?=
- =?iso-8859-1?Q?QZKugQM+F5VNydmaqzDNQphGJcsU31yXE3LTwu/FIMyf/9noUAaUBDTauH?=
- =?iso-8859-1?Q?661WUagOANxQdOmh+tTLNyYliz2BlVK6+MmjDjyHfMUuqwtl7gUPOz8L/3?=
- =?iso-8859-1?Q?yU70BLpa2wvF76p6Y05lWUTmnZl9p4b6i260DDs8W/3khZ1yriYZRnt46N?=
- =?iso-8859-1?Q?GJNSUKxYHBBoL8HRJSdiVWXfTLBACWJAgJDb0kaERGRUdrEJFdcOrlJUQE?=
- =?iso-8859-1?Q?C9TtJ/rrVYBVD38CB3/5DfcVJ2StIZIUJBEEbfNSAB3uTHpudNeF/Yed1v?=
- =?iso-8859-1?Q?Tt3dKnQOZNjVlMPD82N5jQKEH4SWzTD7u281Z/bvHtF6+InASiJqKZjbJO?=
- =?iso-8859-1?Q?O7/zUwLefsU/njDvHLr3oAPrudhOPN2VnE/4Iad8hL1wPNH8ryK7YwZk5j?=
- =?iso-8859-1?Q?7WT9mv9IGgQYTTdpq5le0J1pYOj8upcsekQvdWqoIcBUYQFtCamWBpHTEt?=
- =?iso-8859-1?Q?nAv8P7XNoaZBHIYB0REqD281zgs99go3znUT1wHVgR/0gH+MwfWQpvF7dl?=
- =?iso-8859-1?Q?QvM5K3+dDlT1o09qRavL3xIgCY05NtFzesG9+s6BjaMm6pNmzHa/2NQN1b?=
- =?iso-8859-1?Q?mOXppNU1oCNHFeyTLT/9epwiU9M8xBJE/plN63PSlS4CNe+DhAXPHx0pSj?=
- =?iso-8859-1?Q?GtwKwMLwnbdrhW3HvsPWvBGrQOqgyf+YViQQSq4puqEe/GCr5rL33nhDSe?=
- =?iso-8859-1?Q?FlkGZCtynNsZXPGvRnhRLUJp66LTP8OXpmSBsbKRfyZNGMDQyz24ADNJPN?=
- =?iso-8859-1?Q?klEZTfe9WpjK2QxAPgzRqqPUXgRC1izqonrCk91gVvRT23+mBVH9Kvz8kJ?=
- =?iso-8859-1?Q?GnOeNaT9f9O0f93r+N1Xs6NxWKCHwHPWgiWPRgxTLE36AyTiRV2r7nMgXG?=
- =?iso-8859-1?Q?sq/zW84mkUDJg/hfIlM8leENyWGcG0q90w?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce0c9367-f83f-4423-586b-08dc3439ad03
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8690.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2024 06:35:50.3883 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uWlO1D35SxwrtwgiIpy08JL/O/34S56jTfjPffcRww0m5di7qnZTfzpIAxDt6F1ELzZG3gocVeJJZ10aoxpm5A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4066
-Received-SPF: softfail client-ip=40.107.101.51; envelope-from=Ray.Huang@amd.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,441 +80,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Huang Rui <ray.huang@amd.com>
-From:  Huang Rui via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 10, 2024 at 04:51:31PM +0800, Pierre-Eric Pelloux-Prayer wrote:
-> 
-> 
-> Le 09/01/2024 à 17:50, Pierre-Eric Pelloux-Prayer a écrit :
-> > 
-> > 
-> > Le 19/12/2023 à 08:53, Huang Rui a écrit :
-> >> From: Antonio Caggiano <antonio.caggiano@collabora.com>
-> >>
-> >> Support BLOB resources creation, mapping and unmapping by calling the
-> >> new stable virglrenderer 0.10 interface. Only enabled when available and
-> >> via the blob config. E.g. -device virtio-vga-gl,blob=true
-> >>
-> >> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-> >> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> >> Signed-off-by: Xenia Ragiadakou <xenia.ragiadakou@amd.com>
-> >> Signed-off-by: Huang Rui <ray.huang@amd.com>
-> >> ---
-> >>
-> >> Changes in v6:
-> >> - Use new struct virgl_gpu_resource.
-> >> - Unmap, unref and destroy the resource only after the memory region
-> >>    has been completely removed.
-> >> - In unref check whether the resource is still mapped.
-> >> - In unmap_blob check whether the resource has been already unmapped.
-> >> - Fix coding style
-> >>
-> >>   hw/display/virtio-gpu-virgl.c | 274 +++++++++++++++++++++++++++++++++-
-> >>   hw/display/virtio-gpu.c       |   4 +-
-> >>   meson.build                   |   4 +
-> >>   3 files changed, 276 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> >> index faab374336..5a3a292f79 100644
-> >> --- a/hw/display/virtio-gpu-virgl.c
-> >> +++ b/hw/display/virtio-gpu-virgl.c
-> >> @@ -17,6 +17,7 @@
-> >>   #include "trace.h"
-> >>   #include "hw/virtio/virtio.h"
-> >>   #include "hw/virtio/virtio-gpu.h"
-> >> +#include "hw/virtio/virtio-gpu-bswap.h"
-> >>   #include "ui/egl-helpers.h"
-> >> @@ -24,8 +25,62 @@
-> >>   struct virgl_gpu_resource {
-> >>       struct virtio_gpu_simple_resource res;
-> >> +    uint32_t ref;
-> >> +    VirtIOGPU *g;
-> >> +
-> >> +#ifdef HAVE_VIRGL_RESOURCE_BLOB
-> >> +    /* only blob resource needs this region to be mapped as guest mmio */
-> >> +    MemoryRegion *region;
-> >> +#endif
-> >>   };
-> >> +static void vres_get_ref(struct virgl_gpu_resource *vres)
-> >> +{
-> >> +    uint32_t ref;
-> >> +
-> >> +    ref = qatomic_fetch_inc(&vres->ref);
-> >> +    g_assert(ref < INT_MAX);
-> >> +}
-> >> +
-> >> +static void virgl_resource_destroy(struct virgl_gpu_resource *vres)
-> >> +{
-> >> +    struct virtio_gpu_simple_resource *res;
-> >> +    VirtIOGPU *g;
-> >> +
-> >> +    if (!vres) {
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    g = vres->g;
-> >> +    res = &vres->res;
-> >> +    QTAILQ_REMOVE(&g->reslist, res, next);
-> >> +    virtio_gpu_cleanup_mapping(g, res);
-> >> +    g_free(vres);
-> >> +}
-> >> +
-> >> +static void virgl_resource_unref(struct virgl_gpu_resource *vres)
-> >> +{
-> >> +    struct virtio_gpu_simple_resource *res;
-> >> +
-> >> +    if (!vres) {
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    res = &vres->res;
-> >> +    virgl_renderer_resource_detach_iov(res->resource_id, NULL, NULL);
-> >> +    virgl_renderer_resource_unref(res->resource_id);
-> >> +}
-> >> +
-> >> +static void vres_put_ref(struct virgl_gpu_resource *vres)
-> >> +{
-> >> +    g_assert(vres->ref > 0);
-> >> +
-> >> +    if (qatomic_fetch_dec(&vres->ref) == 1) {
-> >> +        virgl_resource_unref(vres);
-> >> +        virgl_resource_destroy(vres);
-> >> +    }
-> >> +}
-> >> +
-> >>   static struct virgl_gpu_resource *
-> >>   virgl_gpu_find_resource(VirtIOGPU *g, uint32_t resource_id)
-> >>   {
-> >> @@ -59,6 +114,8 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
-> >>                                          c2d.width, c2d.height);
-> >>       vres = g_new0(struct virgl_gpu_resource, 1);
-> >> +    vres_get_ref(vres);
-> >> +    vres->g = g;
-> >>       vres->res.width = c2d.width;
-> >>       vres->res.height = c2d.height;
-> >>       vres->res.format = c2d.format;
-> >> @@ -91,6 +148,8 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
-> >>                                          c3d.width, c3d.height, c3d.depth);
-> >>       vres = g_new0(struct virgl_gpu_resource, 1);
-> >> +    vres_get_ref(vres);
-> >> +    vres->g = g;
-> >>       vres->res.width = c3d.width;
-> >>       vres->res.height = c3d.height;
-> >>       vres->res.format = c3d.format;
-> >> @@ -126,12 +185,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
-> >>           return;
-> >>       }
-> >> -    virgl_renderer_resource_detach_iov(unref.resource_id, NULL, NULL);
-> >> -    virgl_renderer_resource_unref(unref.resource_id);
-> >> +#ifdef HAVE_VIRGL_RESOURCE_BLOB
-> >> +    if (vres->region) {
-> >> +        VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-> >> +        MemoryRegion *mr = vres->region;
-> >> +
-> >> +        warn_report("%s: blob resource %d not unmapped",
-> >> +                    __func__, unref.resource_id);
-> >> +        vres->region = NULL;
-> > 
-> > Shouldn't there be a call to memory_region_unref(mr)?
-> > 
-> >> +        memory_region_set_enabled(mr, false);
-> >> +        memory_region_del_subregion(&b->hostmem, mr);
-> >> +        object_unparent(OBJECT(mr));
-> >> +    }
-> >> +#endif /* HAVE_VIRGL_RESOURCE_BLOB */
-> >> -    QTAILQ_REMOVE(&g->reslist, &vres->res, next);
-> >> -    virtio_gpu_cleanup_mapping(g, &vres->res);
-> >> -    g_free(vres);
-> >> +    vres_put_ref(vres);
-> >>   }
-> >>   static void virgl_cmd_context_create(VirtIOGPU *g,
-> >> @@ -470,6 +538,191 @@ static void virgl_cmd_get_capset(VirtIOGPU *g,
-> >>       g_free(resp);
-> >>   }
-> >> +#ifdef HAVE_VIRGL_RESOURCE_BLOB
-> >> +
-> >> +static void virgl_resource_unmap(struct virgl_gpu_resource *vres)
-> >> +{
-> >> +    if (!vres) {
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    virgl_renderer_resource_unmap(vres->res.resource_id);
-> >> +
-> >> +    vres_put_ref(vres);
-> >> +}
-> >> +
-> >> +static void virgl_resource_blob_async_unmap(void *obj)
-> >> +{
-> >> +    MemoryRegion *mr = MEMORY_REGION(obj);
-> >> +    struct virgl_gpu_resource *vres = mr->opaque;
-> >> +
-> >> +    virgl_resource_unmap(vres);
-> >> +
-> >> +    g_free(obj);
-> >> +}
-> >> +
-> >> +static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
-> >> +                                           struct virtio_gpu_ctrl_command *cmd)
-> >> +{
-> >> +    struct virgl_gpu_resource *vres;
-> >> +    struct virtio_gpu_resource_create_blob cblob;
-> >> +    struct virgl_renderer_resource_create_blob_args virgl_args = { 0 };
-> >> +    int ret;
-> >> +
-> >> +    VIRTIO_GPU_FILL_CMD(cblob);
-> >> +    virtio_gpu_create_blob_bswap(&cblob);
-> >> +    trace_virtio_gpu_cmd_res_create_blob(cblob.resource_id, cblob.size);
-> >> +
-> >> +    if (cblob.resource_id == 0) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource id 0 is not allowed\n",
-> >> +                      __func__);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    vres = virgl_gpu_find_resource(g, cblob.resource_id);
-> >> +    if (vres) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already exists %d\n",
-> >> +                      __func__, cblob.resource_id);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    vres = g_new0(struct virgl_gpu_resource, 1);
-> >> +    vres_get_ref(vres);
-> >> +    vres->g = g;
-> >> +    vres->res.resource_id = cblob.resource_id;
-> >> +    vres->res.blob_size = cblob.size;
-> >> +
-> >> +    if (cblob.blob_mem != VIRTIO_GPU_BLOB_MEM_HOST3D) {
-> >> +        ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
-> >> +                                            cmd, &vres->res.addrs,
-> >> +                                            &vres->res.iov, &vres->res.iov_cnt);
-> >> +        if (!ret) {
-> >> +            g_free(vres);
-> >> +            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-> >> +            return;
-> >> +        }
-> >> +    }
-> >> +
-> >> +    QTAILQ_INSERT_HEAD(&g->reslist, &vres->res, next);
-> >> +
-> >> +    virgl_args.res_handle = cblob.resource_id;
-> >> +    virgl_args.ctx_id = cblob.hdr.ctx_id;
-> >> +    virgl_args.blob_mem = cblob.blob_mem;
-> >> +    virgl_args.blob_id = cblob.blob_id;
-> >> +    virgl_args.blob_flags = cblob.blob_flags;
-> >> +    virgl_args.size = cblob.size;
-> >> +    virgl_args.iovecs = vres->res.iov;
-> >> +    virgl_args.num_iovs = vres->res.iov_cnt;
-> >> +
-> >> +    ret = virgl_renderer_resource_create_blob(&virgl_args);
-> >> +    if (ret) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: virgl blob create error: %s\n",
-> >> +                      __func__, strerror(-ret));
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-> >> +    }
-> >> +}
-> >> +
-> >> +static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
-> >> +                                        struct virtio_gpu_ctrl_command *cmd)
-> >> +{
-> >> +    struct virgl_gpu_resource *vres;
-> >> +    struct virtio_gpu_resource_map_blob mblob;
-> >> +    int ret;
-> >> +    void *data;
-> >> +    uint64_t size;
-> >> +    struct virtio_gpu_resp_map_info resp;
-> >> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-> >> +
-> >> +    VIRTIO_GPU_FILL_CMD(mblob);
-> >> +    virtio_gpu_map_blob_bswap(&mblob);
-> >> +
-> >> +    if (mblob.resource_id == 0) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource id 0 is not allowed\n",
-> >> +                      __func__);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    vres = virgl_gpu_find_resource(g, mblob.resource_id);
-> >> +    if (!vres) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist %d\n",
-> >> +                      __func__, mblob.resource_id);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +    if (vres->region) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already mapped %d\n",
-> >> +                      __func__, mblob.resource_id);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    ret = virgl_renderer_resource_map(vres->res.resource_id, &data, &size);
-> >> +    if (ret) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource map error: %s\n",
-> >> +                      __func__, strerror(-ret));
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    vres_get_ref(vres);
-> > 
-> > Why is this needed? And if it is, shouldn't virgl_cmd_resource_unmap_blob
-> > call "vres_put_ref(vres)" ?
-> > 
-> >> +    vres->region = g_new0(MemoryRegion, 1);
-> >> +    memory_region_init_ram_ptr(vres->region, OBJECT(g), NULL, size, data);
-> >> +    vres->region->opaque = vres;
-> >> +    OBJECT(vres->region)->free = virgl_resource_blob_async_unmap;
-> >> +    memory_region_add_subregion(&b->hostmem, mblob.offset, vres->region);
-> >> +    memory_region_set_enabled(vres->region, true);
-> >> +
-> >> +    memset(&resp, 0, sizeof(resp));
-> >> +    resp.hdr.type = VIRTIO_GPU_RESP_OK_MAP_INFO;
-> >> +    virgl_renderer_resource_get_map_info(mblob.resource_id, &resp.map_info);
-> >> +    virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
-> >> +}
-> >> +
-> >> +static void virgl_cmd_resource_unmap_blob(VirtIOGPU *g,
-> >> +                                          struct virtio_gpu_ctrl_command *cmd)
-> >> +{
-> >> +    struct virgl_gpu_resource *vres;
-> >> +    struct virtio_gpu_resource_unmap_blob ublob;
-> >> +    VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-> >> +    MemoryRegion *mr;
-> >> +
-> >> +    VIRTIO_GPU_FILL_CMD(ublob);
-> >> +    virtio_gpu_unmap_blob_bswap(&ublob);
-> >> +
-> >> +    if (ublob.resource_id == 0) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource id 0 is not allowed\n",
-> >> +                      __func__);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    vres = virgl_gpu_find_resource(g, ublob.resource_id);
-> >> +    if (!vres) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist %d\n",
-> >> +                      __func__, ublob.resource_id);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    if (!vres->region) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource already unmapped %d\n",
-> >> +                      __func__, ublob.resource_id);
-> >> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    mr = vres->region;
-> >> +    vres->region = NULL;
-> > 
-> > memory_region_unref(mr)?
-> > 
-> > Note that AFAICT without the added memory_region_unref() calls virgl_resource_unmap()
-> > was never called.
-> 
-> 
-> Xenia and I figured out the refcounting issue: this code is written based on the
-> assumption that:
->   
->     object_unparent(OBJECT(mr));
-> 
-> 
-> Will decrement the refcount. But this assumption is only true if mr->parent_obj.parent
-> is non-NULL.
-> 
-> The map_blob function uses the following arguments:
-> 
->     memory_region_init_ram_ptr(vres->region, OBJECT(g), NULL, size, data);
-> 
-> Since name is NULL, mr won't be added as a child of 'g' and thus object_unparent()
-> does nothing.
-> 
-> I'd suggest 2 changes:
->     * use a name ("blob_memory"?) to so mr can be a child of g
->     * increment mr's refcount when setting vres->region and decrement it when clearing it.
->       This change is not needed technically but when a variable is refcounted it seems
->       clearer to increment/decrement the refcount in these situations.
-> 
+This allows to choose which granule will be used by
+default by the virtio-iommu. Current page size mask
+default is qemu_target_page_mask so this translates
+into a 4K granule.
 
-Yes, issue is caused by NULL in name field, I will update according to your
-suggestions in V7.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-Thanks,
-Ray
+---
 
-> 
-> Pierre-Eric
-> 
-> 
-> > 
-> >> +    memory_region_set_enabled(mr, false);
-> >> +    memory_region_del_subregion(&b->hostmem, mr);
-> >> +    object_unparent(OBJECT(mr));
-> >> +}
-> >> +
-> >> +#endif /* HAVE_VIRGL_RESOURCE_BLOB */
-> >> +
-> >>   void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-> >>                                         struct virtio_gpu_ctrl_command *cmd)
-> >>   {
-> >> @@ -536,6 +789,17 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-> >>       case VIRTIO_GPU_CMD_GET_EDID:
-> >>           virtio_gpu_get_edid(g, cmd);
-> >>           break;
-> >> +#ifdef HAVE_VIRGL_RESOURCE_BLOB
-> >> +    case VIRTIO_GPU_CMD_RESOURCE_CREATE_BLOB:
-> >> +        virgl_cmd_resource_create_blob(g, cmd);
-> >> +        break;
-> >> +    case VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB:
-> >> +        virgl_cmd_resource_map_blob(g, cmd);
-> >> +        break;
-> >> +    case VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB:
-> >> +        virgl_cmd_resource_unmap_blob(g, cmd);
-> >> +        break;
-> >> +#endif /* HAVE_VIRGL_RESOURCE_BLOB */
-> >>       default:
-> >>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-> >>           break;
-> >> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> >> index 4c3ec9d0ea..8189c392dc 100644
-> >> --- a/hw/display/virtio-gpu.c
-> >> +++ b/hw/display/virtio-gpu.c
-> >> @@ -1449,10 +1449,12 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
-> >>               return;
-> >>           }
-> >> +#ifndef HAVE_VIRGL_RESOURCE_BLOB
-> >>           if (virtio_gpu_virgl_enabled(g->parent_obj.conf)) {
-> >> -            error_setg(errp, "blobs and virgl are not compatible (yet)");
-> >> +            error_setg(errp, "Linked virglrenderer does not support blob resources");
-> >>               return;
-> >>           }
-> >> +#endif
-> >>       }
-> >>       if (!virtio_gpu_base_device_realize(qdev,
-> >> diff --git a/meson.build b/meson.build
-> >> index ea52ef1b9c..629407128e 100644
-> >> --- a/meson.build
-> >> +++ b/meson.build
-> >> @@ -1054,6 +1054,10 @@ if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
-> >>                            cc.has_function('virgl_renderer_context_create_with_flags',
-> >>                                            prefix: '#include <virglrenderer.h>',
-> >>                                            dependencies: virgl))
-> >> +    config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB',
-> >> +                         cc.has_function('virgl_renderer_resource_create_blob',
-> >> +                                         prefix: '#include <virglrenderer.h>',
-> >> +                                         dependencies: virgl))
-> >>     endif
-> >>   endif
-> >>   rutabaga = not_found
-> > 
+v3 -> v4:
+- granule_mode introduction moved to that patch
+---
+ include/hw/virtio/virtio-iommu.h |  1 +
+ hw/virtio/virtio-iommu.c         | 27 ++++++++++++++++++++++++---
+ qemu-options.hx                  |  3 +++
+ 3 files changed, 28 insertions(+), 3 deletions(-)
+
+diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+index e22327548f..a3e5b35b1e 100644
+--- a/include/hw/virtio/virtio-iommu.h
++++ b/include/hw/virtio/virtio-iommu.h
+@@ -78,6 +78,7 @@ struct VirtIOIOMMU {
+     Notifier machine_done;
+     bool granule_frozen;
+     uint8_t aw_bits;
++    GranuleMode granule_mode;
+ };
+ 
+ #endif
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index a9bdc03d12..0461b87ef2 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1126,8 +1126,8 @@ static int virtio_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu_mr,
+ }
+ 
+ /*
+- * The default mask (TARGET_PAGE_MASK) is the smallest supported guest granule,
+- * for example 0xfffffffffffff000. When an assigned device has page size
++ * The default mask depends on the "granule" property. For example, with
++ * 4K granule, it is ~0xFFF. When an assigned device has page size
+  * restrictions due to the hardware IOMMU configuration, apply this restriction
+  * to the mask.
+  */
+@@ -1324,7 +1324,26 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+      * in vfio realize
+      */
+     s->config.bypass = s->boot_bypass;
+-    s->config.page_size_mask = qemu_target_page_mask();
++
++    switch (s->granule_mode) {
++    case GRANULE_MODE_4K:
++        s->config.page_size_mask = ~0xFFF;
++        break;
++    case GRANULE_MODE_8K:
++        s->config.page_size_mask = ~0x1FFF;
++        break;
++    case GRANULE_MODE_16K:
++        s->config.page_size_mask = ~0x3FFF;
++        break;
++    case GRANULE_MODE_64K:
++        s->config.page_size_mask = ~0xFFFF;
++        break;
++    case GRANULE_MODE_HOST:
++        s->config.page_size_mask = qemu_real_host_page_mask();
++        break;
++    default:
++        error_setg(errp, "Unsupported granule mode");
++    }
+     if (s->aw_bits < 32 || s->aw_bits > 64) {
+         error_setg(errp, "aw-bits must be within [32,64]");
+     }
+@@ -1538,6 +1557,8 @@ static Property virtio_iommu_properties[] = {
+                      TYPE_PCI_BUS, PCIBus *),
+     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+     DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
++    DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
++                             GRANULE_MODE_4K),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/qemu-options.hx b/qemu-options.hx
+index a98bc7bd60..8bc1e9e4aa 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1179,6 +1179,9 @@ SRST
+     ``aw-bits=val`` (val between 32 and 64, default depends on machine)
+         This decides the address width of IOVA address space. It defaults
+         to 39 bits on q35 machines and 48 bits on ARM virt machines.
++    ``granule=val`` (possible values are 4K, 8K, 16K, 64K and host)
++        This decides the default granule to be be exposed by the
++        virtio-iommu. If host, the granule matches the host page size.
+ 
+ ERST
+ 
+-- 
+2.41.0
+
 
