@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D3CEC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 09:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27378C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdSGK-0007WG-HL; Fri, 23 Feb 2024 04:54:36 -0500
+	id 1rdSOY-0001J7-QQ; Fri, 23 Feb 2024 05:03:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdSGH-0007Vh-1V
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:54:33 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1rdSOX-0001In-HK
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 05:03:05 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdSGA-0003Wa-JW
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:54:32 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-563c0f13cabso200748a12.3
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 01:54:14 -0800 (PST)
+ id 1rdSOU-0005UY-Hy
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 05:03:05 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-512bc0e8ce1so141796e87.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 02:03:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708682053; x=1709286853; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708682580; x=1709287380; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UfSa1JIPQDgOPcjSwttNa4K0v5842px0GxwssmihDe0=;
- b=MH3MMRpPGwqcco/7TDFd3x3XD8wGgv0hxE7hXJxxkQn7OSv73Kfl16SV0Jm/dYb9gc
- FKW0KnrYtN0+hEpb19ejJVxAnCy09Bk3BYneB3MJK+KwYbL5kVDY6cwZB5tbl6J475o0
- cSoft3Xwqw37U//ceXuw5Uhgf/AIVbWrEuj9PJv786VkFFPOL0xpmnW/wss9g08nh3RP
- OlPvQN4lM37CTbvmdLSWo9HJZciGPnEqJyBrlwwH2Ana3UCRYnkdoSrV91IDbG1tsCvy
- sE76q+gkAmspJ4q2FuzgU8LySdUBLUtLHXXzIGsoFw+XTJzrztQrzbh8B/tSrtpzfarn
- jeDw==
+ bh=u/ZEHHQQJ7TneXWz9Z91knv44YPnLKbvGbn+UTLm+fA=;
+ b=my+aI2r8rBzenQVEXWIaQ7lc7qRkG2KSC9HA03hpV2KOxmbUtFRMLDodlmuWvOx5Oc
+ 8cRcE0vUb3f2MzqS1C7PQU4wASR8uzwNQm80wdOF6qeC4hh383iDyRyKSMJ+Ldm3ERrQ
+ lU2lexZSb1bHrPJPltJtEEgIvTHn19JyFHdRJmmO+PlD7ByD0n+GaP+/w0i1UNN0fT/U
+ xDX2Db+rzzE4espD5ukd8KVplBIIxqwJ2/qf7dkh0wbuYgj8iiSkuEoj1PAHmO0u28BY
+ bt5+Ew5FuLN1i2D9v+PZnds/mLYv5YMRkmTUUy89XENJLhIv20Y/Wx6eIlGo/1ZhXEZD
+ eyeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708682053; x=1709286853;
+ d=1e100.net; s=20230601; t=1708682580; x=1709287380;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UfSa1JIPQDgOPcjSwttNa4K0v5842px0GxwssmihDe0=;
- b=dUdxnxLUXO1cNYAE5jwTpXhha5Z/Nix02YN2icWI01GxlUgY6yee/iUz6ZntxA8HoQ
- mToTPBYDj7PcGy+QvBjYciptKZwoXgjp+Z7fBKjwHzqJdwaKfxqHfQSgeI/hcFCoSpgA
- hqR0V+bGkgIiDavs5UZUARHMyc6C9CGPswQZiL8+aacZ36/Z3QIEx/RONh1eoh8xW3W6
- /5G6/TwNB2fgP6gcyGUWpjDEmzCNl19hDw/Left6UiL5ivPwcH5SyRVDAltTgffSD7zK
- BKovZJLxrPuRTH/YGrDEoJO1iR0k7h5YVWh5SnUdNMSgqT+C7ci7NslZtRE5duKXGjKL
- 1L6Q==
+ bh=u/ZEHHQQJ7TneXWz9Z91knv44YPnLKbvGbn+UTLm+fA=;
+ b=ohTVL9iNEyHLRLWvohMW//NDvZd4wA/i2sDLMQYDph9aaPY9KCEFpc7cudZFKe8MbG
+ Icsafr352owLmut0yFj/ahr/dGvYlGvX8TRTtE15F4oh86WayDIEobrRKHWi+7xW7jWq
+ ptmiZAm/v0RALni5V/jbbdsnVqSQ12KroeCbe9aO1gGgMRM6KD5zkU1Oe0bvLPBma2nq
+ P78tbgVKgv5MonvwEo387SzBBDM9F3PAUen9/bglYpXXIpoy5AO/8lKaJaTqGmScHihN
+ ka5ELoUPitXylDbLEp4dzydUWgDmyCEFMqDYPURglDwHuEi4rzuJBL6VLJ52AixMze+/
+ qUpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXw22PEe8fc/D4VcVd5waqGYve9bRIfqlAMXUDhE8/tat96AvjSRGWpijD7baJ/bfbAEV1/bFXckB3Jsef2f6IIOgfS0Uc=
-X-Gm-Message-State: AOJu0YygmNU22nQ31BFzAF6SlbaKrLm447CBvYRnfoeNBoWaPBb/MAvO
- b73jSGvakh9ezkd6kYrVd+NiiMMu9Nu5kGIK5eAYN2cHjW/8HHSeIfu1DnuP8cAQubDr/5ELlyQ
- YGZuxoVWYYhTercfNhdikjfmh5kNeSxr6gYeI/g==
-X-Google-Smtp-Source: AGHT+IF7QYTkWyqRIiI4B+0jAi6zkX1YhQw1460ZTaWnJ/Pkxqf8UaBnYTgccjNcR33lfpDqCwcOV5cQ3kiir2v9CrA=
-X-Received: by 2002:aa7:c990:0:b0:564:e278:60d2 with SMTP id
- c16-20020aa7c990000000b00564e27860d2mr856753edt.2.1708682053226; Fri, 23 Feb
- 2024 01:54:13 -0800 (PST)
+ AJvYcCVQ251fQunmvTCn5+DN9jIrTIcCd+/ut14PMiLIFzhxNGF7udNTnf0fZ6l7yZtyGQJPSEBuwK3ulyxf2D0I4XF8vlz5L2Q=
+X-Gm-Message-State: AOJu0YziQXZQFlJ9/SoaHktb/Ku7j5Y8E3QYArV2nIGPvR4zp/AXnwjb
+ nvpv2vHin26aEx17vgqAtF7SW3nWNxlpGkFF2f6Cc1cWVMVctnd0cTeQlPRxluDqgYTvpoO7msL
+ nFR1p+md8GTLsh/c6xANczR2TqQJQq9oOogHVkA==
+X-Google-Smtp-Source: AGHT+IGpTQcrZ/TLTvw8DWN+u0imyHimS8sPPc+GEzTF9iID+v37fJu9yS18AJbResR+Z92UzHJomAiBb8KAqgJbf/E=
+X-Received: by 2002:ac2:5b0c:0:b0:512:cbae:4e05 with SMTP id
+ v12-20020ac25b0c000000b00512cbae4e05mr1087260lfn.60.1708682579822; Fri, 23
+ Feb 2024 02:02:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
- <CAFEAcA-Wir3M7dVV5247uMPxCtrYs8j4Z3S7nucCx3Ha8pA1dg@mail.gmail.com>
- <caf1110f9e9445cab3aa00ebab24d263@auriga.com>
-In-Reply-To: <caf1110f9e9445cab3aa00ebab24d263@auriga.com>
+References: <20240219161229.11776-1-Jonathan.Cameron@huawei.com>
+ <cfa50d25-3a82-48f5-b715-1daf16932fc2@linaro.org>
+In-Reply-To: <cfa50d25-3a82-48f5-b715-1daf16932fc2@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Feb 2024 09:54:02 +0000
-Message-ID: <CAFEAcA8uDn6v+6jTDY_wbSmcFq=5Rao8LB=ce_RU8GCtuHzq+g@mail.gmail.com>
-Subject: Re: [PATCH v5 00/41] Raspberry Pi 4B machine
-To: "Kambalin, Sergey" <sergey.kambalin@auriga.com>
-Cc: Sergey Kambalin <serg.oker@gmail.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Date: Fri, 23 Feb 2024 10:02:48 +0000
+Message-ID: <CAFEAcA9g5dSDj1tQmk8og6DG+wQc14W5XvftZY0Y2XRd96PNWg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] arm/ptw: Handle atomic updates of page tables
+ entries in MMIO during PTW.
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org, 
+ Gregory Price <gregory.price@memverge.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,21 +94,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 Feb 2024 at 18:15, Kambalin, Sergey
-<sergey.kambalin@auriga.com> wrote:
+On Thu, 22 Feb 2024 at 21:21, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Hi Peter!
->
-> Sorry, it wasn't intentional.
->
-> How can I keep the tags from v4?
+> On 2/19/24 06:12, Jonathan Cameron wrote:
+> > I'm far from confident this handling here is correct. Hence
+> > RFC.  In particular not sure on what locks I should hold for this
+> > to be even moderately safe.
+> >
+> > The function already appears to be inconsistent in what it returns
+> > as the CONFIG_ATOMIC64 block returns the endian converted 'eventual'
+> > value of the cmpxchg whereas the TCG_OVERSIZED_GUEST case returns
+> > the previous value.
 
-If I reply with a 'Reviewed-by:' tag on a patch, and you
-don't make major changes for the next version, copy that
-tag into the commit message so it appears there under
-your 'Signed-off-by:' tag when you post a subsequent
-version of the patchset.
+I think this is a bug in the TCG_OVERSIZED_GUEST handling,
+which we've never noticed because you only see that case
+on a 32-bit host.
 
-thanks
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > ---
+> > v2: Thanks Peter for reviewing.
+> >   - Handle the address space as in arm_ldq_ptw() - I should have looked
+> >     at the code immediately above :(
+> >     The result ends up a little more convoluted than I'd like. Could factor
+> >     this block of code out perhaps. I'm also not sure on the fault type
+> >     that is appropriate here.
+> >   - Switch to 'need_lock' as per Philippe's feedback on the x86 fixes.
+> >     likely() doesn't seem appropriate here though.
+> >
+> > target/arm/ptw.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++--
+> >   1 file changed, 62 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> > index 5eb3577bcd..ba1a27ca2b 100644
+> > --- a/target/arm/ptw.c
+> > +++ b/target/arm/ptw.c
+> > @@ -711,8 +711,68 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
+> >       void *host = ptw->out_host;
+> >
+> >       if (unlikely(!host)) {
+> > -        fi->type = ARMFault_UnsuppAtomicUpdate;
+> > -        return 0;
+> > +        /* Page table in MMIO Memory Region */
+> > +        CPUState *cs = env_cpu(env);
+> > +        MemTxAttrs attrs = {
+> > +            .space = ptw->out_space,
+> > +            .secure = arm_space_is_secure(ptw->out_space),
+> > +        };
+> > +        AddressSpace *as = arm_addressspace(cs, attrs);
+> > +        MemTxResult result = MEMTX_OK;
+> > +        bool need_lock = !bql_locked();
+> > +
+> > +        if (need_lock) {
+> > +            bql_lock();
+> > +        }
+> > +        if (ptw->out_be) {
+> > +            cur_val = address_space_ldq_be(as, ptw->out_phys, attrs, &result);
+> > +            if (unlikely(result != MEMTX_OK)) {
+> > +                fi->type = ARMFault_SyncExternalOnWalk;
+> > +                fi->ea = arm_extabort_type(result);
+> > +                if (need_lock) {
+> > +                    bql_unlock();
+> > +                }
+> > +                return old_val;
+> > +            }
+>
+> Use BQL_LOCK_GUARD() and avoid all of the repeated unlocks at each return point.
+
+Is the BQL definitely sufficient to ensure atomicity here?
+I guess that given that we know it's not backed by host
+memory, any other vCPU trying to access the MMIO region
+at the same time will have to take the BQL first, so it
+seems like it ought to be good enough.
+
 -- PMM
 
