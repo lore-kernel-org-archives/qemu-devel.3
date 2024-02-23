@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88976C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48AD5C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdYVm-0000ZC-69; Fri, 23 Feb 2024 11:34:58 -0500
+	id 1rdYVt-0000hu-S4; Fri, 23 Feb 2024 11:35:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdYJP-0003wM-PT
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:22:11 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1rdYK2-0004KP-25
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:22:50 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdYJJ-000634-8W
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:22:11 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-412988afac9so203105e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:22:04 -0800 (PST)
+ id 1rdYJX-00069d-1m
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:22:49 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-412985a51ecso803695e9.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708705323; x=1709310123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708705337; x=1709310137; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eLoCVfGQA0B56KJFSLQeHKi/nYPeRXMDk6OZ3NrpqZo=;
- b=AuEij2KrfDXJQJPOiZrvW102piFeCYe4ETGij+XBsFqskIfYc7SBWRVtQ4FhDGTZOM
- cY4w/dz4MtYLT0HGjOydVtPck9JPrwtEWWgzTsmuAU23ZuUtQy+BICC6sUwvQdAXZuf1
- og20PKe2qqEAjYuixcMctF94jI6mr7buEOuWaWr9Uv9M/B6Svewme2XXtwV7MozfywOC
- wtkSMFIqsi42Auf17Rk2xd9OWrGlu42aFzz7DoX8WRc3gf3QygVXGD8eKBghZ+moCE5T
- 5E15hG6+EzX3DLpxHB2iteDpXAxw08qObSkfUmY7tDWpeSXb6hw7XlsgWLanUkOw27pa
- 1HyA==
+ bh=Nsgms6L+voXWYAHkd/mUu1uICRrRzOf2k5zfNnIBA/s=;
+ b=QIMgcQoW4/nA3DKFo2fvNDacLixT3TYqOQCRvzTM3x75RZeqcvsNueClZVDK8VoImN
+ dW4XBIM0+o1i6tY4TaaIgpVmzmqLf9Nh9cr8CCsBhlAM/UxZ6emkpPu0X8cFJVndsHAL
+ zPumP2OhMFTNxnorPXH8rdDyO7LFbXKzbpK0A8D90xghcvQI2Jrx/xmtdhmI3l9QTlkh
+ fGs+Do40RZt8lExstDpMmSYlQazNDJBaRjiXLDvw2TJy8R1Xjs8Az4Qw8KKA8SWB40VQ
+ VVZpgXZy9z83ColdlD9fi/xeglUqCzMN6G1ys0zPwURGh8olmNxZzR6F53T7xLeqCZiQ
+ zEvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708705323; x=1709310123;
+ d=1e100.net; s=20230601; t=1708705337; x=1709310137;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eLoCVfGQA0B56KJFSLQeHKi/nYPeRXMDk6OZ3NrpqZo=;
- b=Ij53lGse3fU/9xJXTRIoykoOpTLKFV+sRUgLxkVo/9ytz9rTPgdy3nFEQj77LcPq5e
- uXOtVim6LtytRFGijuMR6GN8e5XcTd0VzEh3igCm7Ko0qUsGJ/4sss59yxRYTfKCkIYg
- vX1zmyH6iuVAFJdzrXugW7Hi3zfaz+0rTENZLsmHRYhN3enmlprFzctOFAletEyvMEMF
- yIvWMGwmKqqPWQFX5mt15JvQZtwtFbgDDv0KUZSoCv6bntx7r5fXmFLO0n3oAFJeFdi8
- sH6sjHswMXECExBw2YAXo+6KEFWY8ouURkBTKJ20XOLisJZE367cJZ2zfMUMDoYFUymT
- 2TTg==
-X-Gm-Message-State: AOJu0YzMWkYwfQTEfgGacWv2316rNBToqP4OtBuTfUk8tSWN649xaiW/
- tM1ssJwURoOc+DV+eg0hmWi24FYCoX0boUq13gaHGKKeJyQzQS4GSsljiQK9rD8=
-X-Google-Smtp-Source: AGHT+IGcUCoViou239QibPBSUvZhRPwseyFY+ZLxBgrbA4mLNafh0ojegHnvH2Bd1uTDTYMGa7Nn/w==
-X-Received: by 2002:a05:600c:3548:b0:412:96d7:c4d6 with SMTP id
- i8-20020a05600c354800b0041296d7c4d6mr249661wmq.41.1708705323413; 
- Fri, 23 Feb 2024 08:22:03 -0800 (PST)
+ bh=Nsgms6L+voXWYAHkd/mUu1uICRrRzOf2k5zfNnIBA/s=;
+ b=d/join3f4Bon+z9ZRM/G3LEH6gdxPysY7JE7zQN8GLbPpEgeQFDtZffDQ44WBkHfDo
+ 69dFt0NSBQ6zBLBBRoV3u6sLV+C6fyk8jbpk0zvfSYvfWcVFa9Os43W+j0FXwFSSb0sn
+ OU2JjU247sD40heuZo7pQSzQkZo0BH1fsdQ8tuEyTQeOI+Ul8j5SKVLBzEoA9drHRfuF
+ fYcZOOL169C6KLaGVRkM27WI0qAoA/YjX7aIu8VblcdZlUk7KB3LlnaFYHU04HRse6lI
+ eNn0sqOX6JmEfsbFZhDUMDCbrHzHO4pMLE/+6fGR+k0vZbR3SxtdAQJm+5FUgzVyoODR
+ xEKw==
+X-Gm-Message-State: AOJu0YyPLczmC1wSpoAwDuMVVOjMTr9stx8VTPcfxBrQRcR6EqFHk9Du
+ UdJHjp8q56PhZy1m3Bb+JO1XbRwnycJYDPD0N/0xKWCa3V2kPOEzQLK3waqpp7o=
+X-Google-Smtp-Source: AGHT+IG+kxHNzCo6F+6sCKBgRCGiywePgSCAq5Y51hlBiTPtgUFyxvNtt8DJ0KYuHhe5XM6HFyMdIg==
+X-Received: by 2002:a05:600c:46d4:b0:412:913:5484 with SMTP id
+ q20-20020a05600c46d400b0041209135484mr210513wmo.11.1708705337525; 
+ Fri, 23 Feb 2024 08:22:17 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- t15-20020a5d49cf000000b0033d282c7537sm3313119wrs.23.2024.02.23.08.22.02
+ cc11-20020a5d5c0b000000b0033db2d6bf83sm448116wrb.34.2024.02.23.08.22.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 08:22:03 -0800 (PST)
+ Fri, 23 Feb 2024 08:22:12 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 883225F904;
- Fri, 23 Feb 2024 16:22:02 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 43F725F933;
+ Fri, 23 Feb 2024 16:22:04 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
@@ -88,25 +88,26 @@ Cc: Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  Brian Cain <bcain@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Michael Rolnik <mrolnik@gmail.com>
-Subject: [PATCH v2 01/27] tests/tcg: update licenses to GPLv2 as intended
-Date: Fri, 23 Feb 2024 16:21:36 +0000
-Message-Id: <20240223162202.1936541-2-alex.bennee@linaro.org>
+ Michael Rolnik <mrolnik@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH v2 18/27] plugins: Use different helpers when reading registers
+Date: Fri, 23 Feb 2024 16:21:53 +0000
+Message-Id: <20240223162202.1936541-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240223162202.1936541-1-alex.bennee@linaro.org>
 References: <20240223162202.1936541-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,241 +123,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-My default header template is GPLv3 but for QEMU code we really should
-stick to GPLv2-or-later (allowing others to up-license it if they
-wish). While this is test code we should still be consistent on the
-source distribution.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-I wrote all of this code so its not a problem. However there remains
-one GPLv3 file left which is the crt0-tc2x.S for TriCore.
+This avoids optimizations incompatible when reading registers.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240103173349.398526-37-alex.bennee@linaro.org>
+Message-Id: <20231213-gdb-v17-12-777047380591@daynix.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240215184036.214065-1-alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/aarch64/semicall.h                      | 4 ++--
- tests/tcg/arm/semicall.h                          | 4 ++--
- tests/tcg/multiarch/float_helpers.h               | 4 ++--
- tests/tcg/riscv64/semicall.h                      | 4 ++--
- tests/tcg/multiarch/arm-compat-semi/semiconsole.c | 4 ++--
- tests/tcg/multiarch/arm-compat-semi/semihosting.c | 4 ++--
- tests/tcg/multiarch/float_convd.c                 | 4 ++--
- tests/tcg/multiarch/float_convs.c                 | 4 ++--
- tests/tcg/multiarch/float_madds.c                 | 4 ++--
- tests/tcg/multiarch/libs/float_helpers.c          | 4 ++--
- tests/tcg/i386/system/boot.S                      | 6 +++---
- tests/tcg/x86_64/system/boot.S                    | 6 +++---
- 12 files changed, 26 insertions(+), 26 deletions(-)
+ accel/tcg/plugin-helpers.h |  3 ++-
+ include/qemu/plugin.h      |  1 +
+ accel/tcg/plugin-gen.c     | 43 ++++++++++++++++++++++++++++++++++----
+ plugins/api.c              | 12 +++++++++--
+ 4 files changed, 52 insertions(+), 7 deletions(-)
 
-diff --git a/tests/tcg/aarch64/semicall.h b/tests/tcg/aarch64/semicall.h
-index 8a3fce35c5f..30d4de9a549 100644
---- a/tests/tcg/aarch64/semicall.h
-+++ b/tests/tcg/aarch64/semicall.h
-@@ -1,10 +1,10 @@
+diff --git a/accel/tcg/plugin-helpers.h b/accel/tcg/plugin-helpers.h
+index 8e685e06545..11796436f35 100644
+--- a/accel/tcg/plugin-helpers.h
++++ b/accel/tcg/plugin-helpers.h
+@@ -1,4 +1,5 @@
+ #ifdef CONFIG_PLUGIN
+-DEF_HELPER_FLAGS_2(plugin_vcpu_udata_cb, TCG_CALL_NO_RWG | TCG_CALL_PLUGIN, void, i32, ptr)
++DEF_HELPER_FLAGS_2(plugin_vcpu_udata_cb_no_wg, TCG_CALL_NO_WG | TCG_CALL_PLUGIN, void, i32, ptr)
++DEF_HELPER_FLAGS_2(plugin_vcpu_udata_cb_no_rwg, TCG_CALL_NO_RWG | TCG_CALL_PLUGIN, void, i32, ptr)
+ DEF_HELPER_FLAGS_4(plugin_vcpu_mem_cb, TCG_CALL_NO_RWG | TCG_CALL_PLUGIN, void, i32, i32, i64, ptr)
+ #endif
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 7fdc3a4849f..b0c5ac68293 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -73,6 +73,7 @@ enum plugin_dyn_cb_type {
+ 
+ enum plugin_dyn_cb_subtype {
+     PLUGIN_CB_REGULAR,
++    PLUGIN_CB_REGULAR_R,
+     PLUGIN_CB_INLINE,
+     PLUGIN_N_CB_SUBTYPES,
+ };
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index 78b331b2510..b37ce7683e6 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -79,6 +79,7 @@ enum plugin_gen_from {
+ 
+ enum plugin_gen_cb {
+     PLUGIN_GEN_CB_UDATA,
++    PLUGIN_GEN_CB_UDATA_R,
+     PLUGIN_GEN_CB_INLINE,
+     PLUGIN_GEN_CB_MEM,
+     PLUGIN_GEN_ENABLE_MEM_HELPER,
+@@ -90,7 +91,10 @@ enum plugin_gen_cb {
+  * These helpers are stubs that get dynamically switched out for calls
+  * direct to the plugin if they are subscribed to.
+  */
+-void HELPER(plugin_vcpu_udata_cb)(uint32_t cpu_index, void *udata)
++void HELPER(plugin_vcpu_udata_cb_no_wg)(uint32_t cpu_index, void *udata)
++{ }
++
++void HELPER(plugin_vcpu_udata_cb_no_rwg)(uint32_t cpu_index, void *udata)
+ { }
+ 
+ void HELPER(plugin_vcpu_mem_cb)(unsigned int vcpu_index,
+@@ -98,7 +102,7 @@ void HELPER(plugin_vcpu_mem_cb)(unsigned int vcpu_index,
+                                 void *userdata)
+ { }
+ 
+-static void gen_empty_udata_cb(void)
++static void gen_empty_udata_cb(void (*gen_helper)(TCGv_i32, TCGv_ptr))
+ {
+     TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
+     TCGv_ptr udata = tcg_temp_ebb_new_ptr();
+@@ -106,12 +110,22 @@ static void gen_empty_udata_cb(void)
+     tcg_gen_movi_ptr(udata, 0);
+     tcg_gen_ld_i32(cpu_index, tcg_env,
+                    -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
+-    gen_helper_plugin_vcpu_udata_cb(cpu_index, udata);
++    gen_helper(cpu_index, udata);
+ 
+     tcg_temp_free_ptr(udata);
+     tcg_temp_free_i32(cpu_index);
+ }
+ 
++static void gen_empty_udata_cb_no_wg(void)
++{
++    gen_empty_udata_cb(gen_helper_plugin_vcpu_udata_cb_no_wg);
++}
++
++static void gen_empty_udata_cb_no_rwg(void)
++{
++    gen_empty_udata_cb(gen_helper_plugin_vcpu_udata_cb_no_rwg);
++}
++
  /*
-  * Semihosting Tests - AArch64 helper
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2019, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+  * For now we only support addi_i64.
+  * When we support more ops, we can generate one empty inline cb for each.
+@@ -192,7 +206,8 @@ static void plugin_gen_empty_callback(enum plugin_gen_from from)
+                     gen_empty_mem_helper);
+         /* fall through */
+     case PLUGIN_GEN_FROM_TB:
+-        gen_wrapped(from, PLUGIN_GEN_CB_UDATA, gen_empty_udata_cb);
++        gen_wrapped(from, PLUGIN_GEN_CB_UDATA, gen_empty_udata_cb_no_rwg);
++        gen_wrapped(from, PLUGIN_GEN_CB_UDATA_R, gen_empty_udata_cb_no_wg);
+         gen_wrapped(from, PLUGIN_GEN_CB_INLINE, gen_empty_inline_cb);
+         break;
+     default:
+@@ -588,6 +603,12 @@ static void plugin_gen_tb_udata(const struct qemu_plugin_tb *ptb,
+     inject_udata_cb(ptb->cbs[PLUGIN_CB_REGULAR], begin_op);
+ }
  
- uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-diff --git a/tests/tcg/arm/semicall.h b/tests/tcg/arm/semicall.h
-index ad8ac51310b..624937c5577 100644
---- a/tests/tcg/arm/semicall.h
-+++ b/tests/tcg/arm/semicall.h
-@@ -1,10 +1,10 @@
- /*
-  * Semihosting Tests - ARM Helper
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2019, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
++static void plugin_gen_tb_udata_r(const struct qemu_plugin_tb *ptb,
++                                  TCGOp *begin_op)
++{
++    inject_udata_cb(ptb->cbs[PLUGIN_CB_REGULAR_R], begin_op);
++}
++
+ static void plugin_gen_tb_inline(const struct qemu_plugin_tb *ptb,
+                                  TCGOp *begin_op)
+ {
+@@ -602,6 +623,14 @@ static void plugin_gen_insn_udata(const struct qemu_plugin_tb *ptb,
+     inject_udata_cb(insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_REGULAR], begin_op);
+ }
  
- uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-diff --git a/tests/tcg/multiarch/float_helpers.h b/tests/tcg/multiarch/float_helpers.h
-index 309f3f4bf10..c42ebe64b9e 100644
---- a/tests/tcg/multiarch/float_helpers.h
-+++ b/tests/tcg/multiarch/float_helpers.h
-@@ -1,9 +1,9 @@
- /*
-  * Common Float Helpers
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <inttypes.h>
-diff --git a/tests/tcg/riscv64/semicall.h b/tests/tcg/riscv64/semicall.h
-index f8c88f32dc5..11d0650cb06 100644
---- a/tests/tcg/riscv64/semicall.h
-+++ b/tests/tcg/riscv64/semicall.h
-@@ -1,10 +1,10 @@
- /*
-  * Semihosting Tests - RiscV64 Helper
-  *
-- * Copyright (c) 2021
-+ * Copyright (c) 2021, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- uintptr_t __semi_call(uintptr_t type, uintptr_t arg0)
-diff --git a/tests/tcg/multiarch/arm-compat-semi/semiconsole.c b/tests/tcg/multiarch/arm-compat-semi/semiconsole.c
-index 1d82efc589d..1e2268f4b75 100644
---- a/tests/tcg/multiarch/arm-compat-semi/semiconsole.c
-+++ b/tests/tcg/multiarch/arm-compat-semi/semiconsole.c
-@@ -1,10 +1,10 @@
- /*
-  * linux-user semihosting console
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #define SYS_READC       0x07
-diff --git a/tests/tcg/multiarch/arm-compat-semi/semihosting.c b/tests/tcg/multiarch/arm-compat-semi/semihosting.c
-index 8627eee3cf7..f609c01341a 100644
---- a/tests/tcg/multiarch/arm-compat-semi/semihosting.c
-+++ b/tests/tcg/multiarch/arm-compat-semi/semihosting.c
-@@ -1,10 +1,10 @@
- /*
-  * linux-user semihosting checks
-  *
-- * Copyright (c) 2019
-+ * Copyright (c) 2019, 2024
-  * Written by Alex Bennée <alex.bennee@linaro.org>
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #define SYS_WRITE0      0x04
-diff --git a/tests/tcg/multiarch/float_convd.c b/tests/tcg/multiarch/float_convd.c
-index 0a1f0f93dc5..58d7f8b4c58 100644
---- a/tests/tcg/multiarch/float_convd.c
-+++ b/tests/tcg/multiarch/float_convd.c
-@@ -1,9 +1,9 @@
- /*
-  * Floating Point Convert Doubles to Various
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/multiarch/float_convs.c b/tests/tcg/multiarch/float_convs.c
-index 2e4fa55324d..cb1fdd439e3 100644
---- a/tests/tcg/multiarch/float_convs.c
-+++ b/tests/tcg/multiarch/float_convs.c
-@@ -1,9 +1,9 @@
- /*
-  * Floating Point Convert Single to Various
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/multiarch/float_madds.c b/tests/tcg/multiarch/float_madds.c
-index 4888f8641f4..a692e052d5b 100644
---- a/tests/tcg/multiarch/float_madds.c
-+++ b/tests/tcg/multiarch/float_madds.c
-@@ -1,9 +1,9 @@
- /*
-  * Fused Multiply Add (Single)
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include <stdio.h>
-diff --git a/tests/tcg/multiarch/libs/float_helpers.c b/tests/tcg/multiarch/libs/float_helpers.c
-index 4e68d2b6598..fad5fc98933 100644
---- a/tests/tcg/multiarch/libs/float_helpers.c
-+++ b/tests/tcg/multiarch/libs/float_helpers.c
-@@ -5,9 +5,9 @@
-  * floating point constants useful for exercising the edge cases in
-  * floating point tests.
-  *
-- * Copyright (c) 2019 Linaro
-+ * Copyright (c) 2019, 2024 Linaro
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- /* we want additional float type definitions */
-diff --git a/tests/tcg/i386/system/boot.S b/tests/tcg/i386/system/boot.S
-index 9e8920cbfe0..28902c400d8 100644
---- a/tests/tcg/i386/system/boot.S
-+++ b/tests/tcg/i386/system/boot.S
-@@ -2,12 +2,12 @@
-  * i386 boot code, based on  qemu-bmibug.
-  *
-  * Copyright 2019 Doug Gale
-- * Copyright 2019 Linaro
-+ * Copyright 2019, 2024 Linaro
-  *
-- * This work is licensed under the terms of the GNU GPL, version 3 or later.
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-  * See the COPYING file in the top-level directory.
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-         .section .head
-diff --git a/tests/tcg/x86_64/system/boot.S b/tests/tcg/x86_64/system/boot.S
-index dac9bd534d7..7213aec63b2 100644
---- a/tests/tcg/x86_64/system/boot.S
-+++ b/tests/tcg/x86_64/system/boot.S
-@@ -1,16 +1,16 @@
- /*
-  * x86_64 boot and support code
-  *
-- * Copyright 2019 Linaro
-+ * Copyright 2019, 2024 Linaro
-  *
-- * This work is licensed under the terms of the GNU GPL, version 3 or later.
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-  * See the COPYING file in the top-level directory.
-  *
-  * Unlike the i386 version we instead use Xen's PVHVM booting header
-  * which should drop us automatically into 32 bit mode ready to go. I've
-  * nabbed bits of the Linux kernel setup to achieve this.
-  *
-- * SPDX-License-Identifier: GPL-3.0-or-later
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
-         .section .head
++static void plugin_gen_insn_udata_r(const struct qemu_plugin_tb *ptb,
++                                    TCGOp *begin_op, int insn_idx)
++{
++    struct qemu_plugin_insn *insn = g_ptr_array_index(ptb->insns, insn_idx);
++
++    inject_udata_cb(insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_REGULAR_R], begin_op);
++}
++
+ static void plugin_gen_insn_inline(const struct qemu_plugin_tb *ptb,
+                                    TCGOp *begin_op, int insn_idx)
+ {
+@@ -721,6 +750,9 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+                 case PLUGIN_GEN_CB_UDATA:
+                     plugin_gen_tb_udata(plugin_tb, op);
+                     break;
++                case PLUGIN_GEN_CB_UDATA_R:
++                    plugin_gen_tb_udata_r(plugin_tb, op);
++                    break;
+                 case PLUGIN_GEN_CB_INLINE:
+                     plugin_gen_tb_inline(plugin_tb, op);
+                     break;
+@@ -737,6 +769,9 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+                 case PLUGIN_GEN_CB_UDATA:
+                     plugin_gen_insn_udata(plugin_tb, op, insn_idx);
+                     break;
++                case PLUGIN_GEN_CB_UDATA_R:
++                    plugin_gen_insn_udata_r(plugin_tb, op, insn_idx);
++                    break;
+                 case PLUGIN_GEN_CB_INLINE:
+                     plugin_gen_insn_inline(plugin_tb, op, insn_idx);
+                     break;
+diff --git a/plugins/api.c b/plugins/api.c
+index 116b8bd603c..54df72c1c00 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -89,7 +89,11 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
+                                           void *udata)
+ {
+     if (!tb->mem_only) {
+-        plugin_register_dyn_cb__udata(&tb->cbs[PLUGIN_CB_REGULAR],
++        int index = flags == QEMU_PLUGIN_CB_R_REGS ||
++                    flags == QEMU_PLUGIN_CB_RW_REGS ?
++                    PLUGIN_CB_REGULAR_R : PLUGIN_CB_REGULAR;
++
++        plugin_register_dyn_cb__udata(&tb->cbs[index],
+                                       cb, flags, udata);
+     }
+ }
+@@ -109,7 +113,11 @@ void qemu_plugin_register_vcpu_insn_exec_cb(struct qemu_plugin_insn *insn,
+                                             void *udata)
+ {
+     if (!insn->mem_only) {
+-        plugin_register_dyn_cb__udata(&insn->cbs[PLUGIN_CB_INSN][PLUGIN_CB_REGULAR],
++        int index = flags == QEMU_PLUGIN_CB_R_REGS ||
++                    flags == QEMU_PLUGIN_CB_RW_REGS ?
++                    PLUGIN_CB_REGULAR_R : PLUGIN_CB_REGULAR;
++
++        plugin_register_dyn_cb__udata(&insn->cbs[PLUGIN_CB_INSN][index],
+                                       cb, flags, udata);
+     }
+ }
 -- 
 2.39.2
 
