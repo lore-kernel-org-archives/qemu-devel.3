@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7760BC54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC02CC54E4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdY16-0005tr-GE; Fri, 23 Feb 2024 11:03:16 -0500
+	id 1rdY11-0005r6-Hz; Fri, 23 Feb 2024 11:03:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXkV-0007nR-21; Fri, 23 Feb 2024 10:46:07 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1rdXjw-0006Pw-3p; Fri, 23 Feb 2024 10:45:32 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXkT-0006js-Hq; Fri, 23 Feb 2024 10:46:06 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dc49afb495so3570335ad.2; 
- Fri, 23 Feb 2024 07:46:04 -0800 (PST)
+ id 1rdXjt-0006dp-1M; Fri, 23 Feb 2024 10:45:31 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1dc1ff697f9so8317315ad.0; 
+ Fri, 23 Feb 2024 07:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708703163; x=1709307963; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703124; x=1709307924; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1m7BhFt0ST6ChSL1LESi22LcAsHCg1BKFvnmGi1yDfU=;
- b=kqNI7win+Pj4cAfCUDspBpW4KJd1lJVY7219H/Ho/SRFdBhIOaetQSOjw5PlJtNSMW
- 5u5a3G/vxxgJ9VFJ3ObGnL8/cuztETJbLPLKqHf0db4XrvW5MLgC4im1qSN5D3Xht2fT
- smh/Ub2pJvB0UgDGeEr5tObIJGAtUqTol+pamqdOkpYoFFvTtKTZx/MBA1SZhcKom0L8
- EPBif7WIALMNhcnt0ev4LP2Lx3PS00dp+Ir7sa9Q7WK1Lly341y5ksR1FZ6SCPQQGZmY
- xYL+Stz+rGqgloue2Gk5mFfcxKANKwbvJ6fziu5jOt+ZI/MG4uljJ0uZgzRZJRr9TXRW
- 4jmA==
+ bh=AqJcwEYF2slviNbCC3uKHS3/EJsPd3jqqt+Z7W2Nd+A=;
+ b=WvbX7lvjWijBCcHjySJNb6qTYgbXs1hiZv3Q8Wx3NFfOxsm9rRkV400vPYy72R8vNq
+ Q6egigVpufq7Zoy0dhHg3QBJTJhplnnXYYyxyy3JFip55nnN1obMwMxNXKNGga1xqBVs
+ dpG1Mmjiyqawie1dqm6T4NV4IIS0ufQRQKMMWUt0HVyIE3C2oyR9KSyo2xev0SOEygrP
+ 6YOsT4+JZ+vf67mUZaSBICyCv3x7/xr9PcMAuE5Z0/5fSkqYRj0dJYf15rI3vEUTJ9ZK
+ mVy4WEeEBDv/0Pww/cq/cmf1bC1MtTyjcxTTqA4Lt4GBhzZUQIUD7S0zCbcOnOD4In4w
+ eftw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708703163; x=1709307963;
+ d=1e100.net; s=20230601; t=1708703124; x=1709307924;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1m7BhFt0ST6ChSL1LESi22LcAsHCg1BKFvnmGi1yDfU=;
- b=f+Xc6KUnAsM8gubB4oDqQBePpHusJTIlL0e69gzHqrTMlmJTUGLtQqA7BZ2ANQ/YvM
- a6ZnXHAYiUGvM8PkxjuaWILsUQH3EbqlHNai9fRaT25mO5WNV9ldI9Afu7sN5J7/QeSq
- 4CG0ZtF0geBqT07pVnpru2uqDkMEFXO5lZ8NT9AAPpkXRrNzyYoANiLoBiWPLxdCiswT
- IxABeplpQOtB/SbnKTS5/k3l+kkkq1uzOn1bA73N9xwjGHW22JC4E+R7Oz+8QVtIT2wi
- u9HfSpBUeAUpsl3pd+l6BVA5kjFpPM0Z5tEgtslXWJwnvUNiI2zExfUfHmvgaBft0yLp
- DWpw==
+ bh=AqJcwEYF2slviNbCC3uKHS3/EJsPd3jqqt+Z7W2Nd+A=;
+ b=mGFpzh03ZQQOo0JCsGbmxpneq1k4KxDu3d6YMlfmbtVc8UiL9kCTDRneUYEoI/fBLT
+ N3FFskHYpdy+Jtz3m/ClYj4KUyw972VZoD+x3dBjKKlyfMt6G268lRSzL6P1pqGbTbtC
+ YXcvD1cIZtpuwBFhDRsDdEFaYEvbnoN+ZbsifVPi8K1AaJHsf22Hsh9TiuITpCexcvb9
+ zQZ1jsRiKDwePPRx5vzRsZRLibnfyXxBO/eRz5P36sDTKIWZmFnFq5gP+hLiR8ptkggL
+ lPyhkniDdJQvU/1VCrS6nJENyv504qHXWdtlPsPfrhG512mGGU0UeBNrptJdjXaJho4+
+ UBYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW64+jotbUeLp6Z1In81lUgAVkxj1Xrppsx+tli/NRpnfWWYquK8EsGZGJFJIksVc/acY3fwi6CGReipDWlD8R/ZqnA
-X-Gm-Message-State: AOJu0Yzk/JEliLl8MQLQZmp+5mDLrQerMX003HE8eSA6ncmWwWDwjLR/
- u8AthEZhijueXyL1DWAGt/8K9eXiU09NifI7xGEKBIeqF4y2ZU0VK0KIEMoF
-X-Google-Smtp-Source: AGHT+IGlqQmeuqHm+6kfYl/G2FXJDLgmgsy9PKc6nMQUsKjs1iZm+RwTQr1PuMFSdE/t0xcc6L4vAQ==
-X-Received: by 2002:a17:902:db0e:b0:1dc:6af:65e with SMTP id
- m14-20020a170902db0e00b001dc06af065emr186545plx.59.1708703163461; 
- Fri, 23 Feb 2024 07:46:03 -0800 (PST)
+ AJvYcCXWzLepz/1ceJRDv+05TI3ydgCRKuzeWu9pmAEdLVX2Pzs7Cm5SXeCAL1jgRi+eks8TS//xicjcos0wJIB5pSpehlSE
+X-Gm-Message-State: AOJu0Yz20lxIFwvD0THNZZ7AIEjrIDFPge+I+B4wSPR8AAZVlMoQmDI9
+ VyCAD/6yqCWxehIxS9dMMyeR83EavVQv05lU9cDkZ2wh9jGmNHlQsXftAGXt
+X-Google-Smtp-Source: AGHT+IEaIMOzX1OmpgIIwLVeGBI+ygeJRse3g0jULO7jxBFwqstbKW4XfsaAIleETaU+qk2CLC+INQ==
+X-Received: by 2002:a17:903:2343:b0:1db:d256:9327 with SMTP id
+ c3-20020a170903234300b001dbd2569327mr241969plh.19.1708703124323; 
+ Fri, 23 Feb 2024 07:45:24 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.46.00
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.45.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:46:03 -0800 (PST)
+ Fri, 23 Feb 2024 07:45:24 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 45/47] target/ppc: 4xx optimise tlbwe_lo TLB flushing
-Date: Sat, 24 Feb 2024 01:42:04 +1000
-Message-ID: <20240223154211.1001692-46-npiggin@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 34/47] target/ppc: Rename TBL to TB on 64-bit
+Date: Sat, 24 Feb 2024 01:41:53 +1000
+Message-ID: <20240223154211.1001692-35-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,50 +98,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than tlbwe_lo always flushing all TCG TLBs, have it flush just
-those corresponding to the old software TLB, and only if it was valid.
+From the earliest PowerPC ISA, TBR (later SPR) 268 has been called TB
+and accessed with mftb instruction. The problem is that TB is the name
+of the 64-bit register, and 32-bit implementations can only read the
+lower half with one instruction, so 268 has also been called TBL and
+it does only read TBL on 32-bit.
 
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Acked-by: Cédric Le Goater <clg@kaod.org>
+Change SPR 268 to be called TB on 64-bit implementations.
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu_helper.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ target/ppc/helper_regs.c  | 4 ++++
+ target/ppc/ppc-qmp-cmds.c | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index 68632bf54e..923779d052 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -813,12 +813,20 @@ void helper_4xx_tlbwe_hi(CPUPPCState *env, target_ulong entry,
- void helper_4xx_tlbwe_lo(CPUPPCState *env, target_ulong entry,
-                          target_ulong val)
- {
-+    CPUState *cs = env_cpu(env);
-     ppcemb_tlb_t *tlb;
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index 8324ff22db..8f5bd1536e 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -460,7 +460,11 @@ void register_generic_sprs(PowerPCCPU *cpu)
+     }
  
-     qemu_log_mask(CPU_LOG_MMU, "%s entry %i val " TARGET_FMT_lx "\n",
-                   __func__, (int)entry, val);
-     entry &= PPC4XX_TLB_ENTRY_MASK;
-     tlb = &env->tlb.tlbe[entry];
-+    /* Invalidate previous TLB (if it's valid) */
-+    if (tlb->prot & PAGE_VALID) {
-+        qemu_log_mask(CPU_LOG_MMU, "%s: invalidate old TLB %d start "
-+                      TARGET_FMT_lx " end " TARGET_FMT_lx "\n", __func__,
-+                      (int)entry, tlb->EPN, tlb->EPN + tlb->size);
-+        ppcemb_tlb_flush(cs, tlb);
-+    }
-     tlb->attr = val & PPC4XX_TLBLO_ATTR_MASK;
-     tlb->RPN = val & PPC4XX_TLBLO_RPN_MASK;
-     tlb->prot = PAGE_READ;
-@@ -836,8 +844,6 @@ void helper_4xx_tlbwe_lo(CPUPPCState *env, target_ulong entry,
-                   tlb->prot & PAGE_WRITE ? 'w' : '-',
-                   tlb->prot & PAGE_EXEC ? 'x' : '-',
-                   tlb->prot & PAGE_VALID ? 'v' : '-', (int)tlb->PID);
--
--    env->tlb_need_flush |= TLB_NEED_LOCAL_FLUSH;
- }
+     /* Time base */
++#if defined(TARGET_PPC64)
++    spr_register(env, SPR_VTBL,  "TB",
++#else
+     spr_register(env, SPR_VTBL,  "TBL",
++#endif
+                  &spr_read_tbl, SPR_NOACCESS,
+                  &spr_read_tbl, SPR_NOACCESS,
+                  0x00000000);
+diff --git a/target/ppc/ppc-qmp-cmds.c b/target/ppc/ppc-qmp-cmds.c
+index c0c137d9d7..ee0b99fce7 100644
+--- a/target/ppc/ppc-qmp-cmds.c
++++ b/target/ppc/ppc-qmp-cmds.c
+@@ -103,7 +103,11 @@ const MonitorDef monitor_defs[] = {
+     { "xer", 0, &monitor_get_xer },
+     { "msr", offsetof(CPUPPCState, msr) },
+     { "tbu", 0, &monitor_get_tbu, },
++#if defined(TARGET_PPC64)
++    { "tb", 0, &monitor_get_tbl, },
++#else
+     { "tbl", 0, &monitor_get_tbl, },
++#endif
+     { NULL },
+ };
  
- target_ulong helper_4xx_tlbsx(CPUPPCState *env, target_ulong address)
 -- 
 2.42.0
 
