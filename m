@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA88C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 04:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC965C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 04:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdN2C-0001s4-CC; Thu, 22 Feb 2024 23:19:40 -0500
+	id 1rdN2o-0002VP-4G; Thu, 22 Feb 2024 23:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rdN2B-0001pd-Az
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:19:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rdN29-0006Nw-PY
- for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:19:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708661976;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZQ1DekT4MltZp1po8fMR3o5/hw70gtfpqtv22kjWB5U=;
- b=cCkfJrtqkUZtCEBjWBhhHwUoy2dZZ2LFyQXlJJv8Bq8sKtVFA/gAmmaVt3ijFy4ZEE8Qlm
- Rzvxm3RuYJ9huXV9zfdfI5ovg2fBmqPDV2PzcxzRKZCIG2mDJT9ebrpc3lGbcN6iAipYEv
- fAKuHzNvMoSuMj/WhmwLjNHFHeNBG0c=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-384-q39IXGbsM9u9kcRSqX1Vww-1; Thu, 22 Feb 2024 23:19:35 -0500
-X-MC-Unique: q39IXGbsM9u9kcRSqX1Vww-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-1da0dd1dec4so1407055ad.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 20:19:35 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708661669; x=1709266469;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rdN2m-0002Ue-DZ
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:20:16 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
+ id 1rdN2k-0006hk-5w
+ for qemu-devel@nongnu.org; Thu, 22 Feb 2024 23:20:16 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a3ed9cae56fso317800566b.1
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 20:20:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1708662011; x=1709266811; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZQ1DekT4MltZp1po8fMR3o5/hw70gtfpqtv22kjWB5U=;
- b=W9nPax4Zg2nrTpyrIgvFcB91pXj6rMuT3iJ4wgGcTnISTowqeDW6jLAI3SSAYp8uCV
- 5E1Bk9P7iinG9pmuH13PktnFmCSp5hF+Kdn3+Z9hXxbK/T9rbW6+TVFwf3kTWMEQ00fs
- cQKKRLEwpA/gvaI7fZxon4XZws0xnZc1/vCdJBsR9hlrog177csKxvipXi4mBJGqqbnX
- Ii2UIIvdAcF3rzZmhySP8WqBRvKOnzvBRMxl4aXIw0Uxy55NE+Z6qIs28pKC9CbS/byE
- UMUWCYPi+bg+z43meDhcC2amz3TgKk4t4T8a/Qq1ewOnh/iBNf/MOrqY3Oxc+i/LpqRx
- iMOQ==
+ bh=blLoU+6k7MIlhBo6C/f6eewEZV3lVGSTs1jtLWtANGg=;
+ b=GkX1XQ2TnbtOVn71/iT/PmMWA9QBMei8MKUcMQOk/fONdXOzr2zKbKszPZkv1WHbey
+ ZS26+VRMKpy7o7J+dbc8O1rcDBrFoYqgvWYQp+o7aUPT/Fm7wpTcslHrb/1/17jWViRi
+ mz4OVb6uUdILiANVTyDlx+TIExGmB7cQydNuEDWF5oN5yDL8jfVAU4HzPu6pO+/qBVSv
+ 4D9H1MQxES6xffRqUDyo6sVQO31B/bxeX9D1EAMhgU2OexgwU8gSd1/WWgq8NbRF2mm6
+ oMbgj9oX6puAJCZEtsQGw1L0bIMvRSZNJoK0O7ui/cJXsB08z17FMUZHQFGlt4GY/msf
+ jN4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708662011; x=1709266811;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=blLoU+6k7MIlhBo6C/f6eewEZV3lVGSTs1jtLWtANGg=;
+ b=WKdvht2BZX9kWHJrRuatCXvmJNUywERVGyvc9PQ1sJu8oEKz3ccaEwczJNKx85C36c
+ 7ePaT07FQvyAXF5WHIkmREgEu5TKZNPFO7ZMbamDEBW9+k6hpQ5ZgPb37cn0XA8o0PyE
+ 2h9+mnSR+zJQUef3EiNS2HtL+pAv5aXPGJCFbSY7/tFHo3Tgsz/6fpH6SmNWeyjmvUKj
+ aA+RyP1FbGOhObqFwOZT300JicfaK8OH9Nt/0/g8LKVK7gDqAnAAhzYLoedO+A7BdBEX
+ Q0rKF75dCuzQuopCPA4359SnDqE4Sw1foqLcc3Sd9pJU5IwB17t9JiDTusl/OaKQxgAI
+ xGBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGI3cEmLU2RW5OIQUcU/WKMcJqlvzRNbThpKmUzHP7PTTxBYQNDCzUSoikpcSRanrfO5fIRVpMlFVgdzj6yoemxCjysgU=
-X-Gm-Message-State: AOJu0YxKhi/OI5GWcPdAI4jYU5ZnKSdAlBFcBaWK8tQV34tduraA3w1n
- 4QjXuEbISZf6aegXT5tseNokguhHMB3xvcdH7LmK2sk2EyrY1SBdUod6ot17Ur2Cg67St3/hLQT
- 0cxPAmUam4K7zBBxEIOfWLoteiVJBxowptW0q7t2r8+pzALYDd4RA
-X-Received: by 2002:a05:6a20:3d27:b0:1a0:dad3:a8ad with SMTP id
- y39-20020a056a203d2700b001a0dad3a8admr943568pzi.2.1708661669698; 
- Thu, 22 Feb 2024 20:14:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHsvWbUM7b2d46Sjgdtq1WXO7hcB0j+n6NqA46iVrbu+6WoZWd9z1OZe3sIqPnuS+cm5MTN3A==
-X-Received: by 2002:a05:6a20:3d27:b0:1a0:dad3:a8ad with SMTP id
- y39-20020a056a203d2700b001a0dad3a8admr943559pzi.2.1708661669381; 
- Thu, 22 Feb 2024 20:14:29 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- p12-20020a17090a348c00b0029a45b28d43sm368343pjb.14.2024.02.22.20.14.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Feb 2024 20:14:28 -0800 (PST)
-Date: Fri, 23 Feb 2024 12:14:19 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
-Subject: Re: [PATCH 13/14] migration: Use migrate_has_error() in
- close_return_path_on_source()
-Message-ID: <Zdgbm8i9KaSmOudk@x1n>
-References: <20240207133347.1115903-1-clg@redhat.com>
- <20240207133347.1115903-14-clg@redhat.com> <87y1bvayu7.fsf@suse.de>
+ AJvYcCXohmJt+z1/EFMkuPg9xRtCsbqZFMPSyo6ik2NpsfJwHl/WlrLY4u8hV7RZ6W/awcWnX6aa4aBtrpVSIXyAFlZ8L6PDkng=
+X-Gm-Message-State: AOJu0Ywb1G91R74RcGxlu9ouBzoo0XrI0QSUuc3C9rU7bzdvMWdXjBpj
+ WwLpx+cMpUonS+j7BRFXX/IpuVJoI/oTdkJKY0WObhqiVPjiQ9lGGe17HvQcfaS0QBBiBWkvHww
+ AVkEIas+7tOOO7X4iRjl3EFXZppzs7DKBKqv7PA==
+X-Google-Smtp-Source: AGHT+IGVj+rfylx8fgCJy4/1gXFia1/mi0o7J9AF+K8X21aJKcCKtyN4JEce4mJ6ZndGvRVhJFbaVdqipWhB+PonaoU=
+X-Received: by 2002:a17:907:b9c5:b0:a3f:cd6b:80fd with SMTP id
+ xa5-20020a170907b9c500b00a3fcd6b80fdmr290746ejc.7.1708662011195; Thu, 22 Feb
+ 2024 20:20:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87y1bvayu7.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
+ <20240216224002.1476890-6-hao.xiang@bytedance.com> <878r3dbkkq.fsf@suse.de>
+In-Reply-To: <878r3dbkkq.fsf@suse.de>
+From: Hao Xiang <hao.xiang@bytedance.com>
+Date: Thu, 22 Feb 2024 20:20:00 -0800
+Message-ID: <CAAYibXg1Q0DvsoOA65dp8uguL8xf7kxr5R7xUEMG8_wc_asERg@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v2 5/7] migration/multifd: Add new
+ migration test cases for legacy zero page checking.
+To: Fabiano Rosas <farosas@suse.de>
+Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
+ peterx@redhat.com, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com, 
+ lvivier@redhat.com, qemu-devel@nongnu.org, jdenemar@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,45 +95,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 08, 2024 at 10:07:44AM -0300, Fabiano Rosas wrote:
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index d5f705ceef4c925589aa49335969672c0d761fa2..5f55af3d7624750ca416c4177781241b3e291e5d 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -2372,8 +2372,7 @@ static bool close_return_path_on_source(MigrationState *ms)
-> >       * cause it to unblock if it's stuck waiting for the destination.
-> >       */
-> >      WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
-> > -        if (ms->to_dst_file && ms->rp_state.from_dst_file &&
-> > -            qemu_file_get_error(ms->to_dst_file)) {
-> > +        if (migrate_has_error(ms) && ms->rp_state.from_dst_file) {
-> >              qemu_file_shutdown(ms->rp_state.from_dst_file);
-> >          }
+On Wed, Feb 21, 2024 at 12:59=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wr=
+ote:
+>
+> Hao Xiang <hao.xiang@bytedance.com> writes:
+>
+> > Now that zero page checking is done on the multifd sender threads by
+> > default, we still provide an option for backward compatibility. This
+> > change adds a qtest migration test case to set the zero-page-detection
+> > option to "legacy" and run multifd migration with zero page checking on=
+ the
+> > migration main thread.
+> >
+> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> > ---
+> >  tests/qtest/migration-test.c | 52 ++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 52 insertions(+)
+> >
+> > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.=
+c
+> > index 8a5bb1752e..c27083110a 100644
+> > --- a/tests/qtest/migration-test.c
+> > +++ b/tests/qtest/migration-test.c
+> > @@ -2621,6 +2621,24 @@ test_migrate_precopy_tcp_multifd_start(QTestStat=
+e *from,
+> >      return test_migrate_precopy_tcp_multifd_start_common(from, to, "no=
+ne");
+> >  }
+> >
+> > +static void *
+> > +test_migrate_precopy_tcp_multifd_start_zero_page_legacy(QTestState *fr=
+om,
+> > +                                                        QTestState *to=
+)
+> > +{
+> > +    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
+> > +    migrate_set_parameter_str(from, "zero-page-detection", "legacy");
+> > +    return NULL;
+> > +}
+> > +
+> > +static void *
+> > +test_migration_precopy_tcp_multifd_start_no_zero_page(QTestState *from=
+,
+> > +                                                      QTestState *to)
+> > +{
+> > +    test_migrate_precopy_tcp_multifd_start_common(from, to, "none");
+> > +    migrate_set_parameter_str(from, "zero-page-detection", "none");
+> > +    return NULL;
+> > +}
+> > +
+> >  static void *
+> >  test_migrate_precopy_tcp_multifd_zlib_start(QTestState *from,
+> >                                              QTestState *to)
+> > @@ -2652,6 +2670,36 @@ static void test_multifd_tcp_none(void)
+> >      test_precopy_common(&args);
+> >  }
+> >
+> > +static void test_multifd_tcp_zero_page_legacy(void)
+> > +{
+> > +    MigrateCommon args =3D {
+> > +        .listen_uri =3D "defer",
+> > +        .start_hook =3D test_migrate_precopy_tcp_multifd_start_zero_pa=
+ge_legacy,
+> > +        /*
+> > +         * Multifd is more complicated than most of the features, it
+> > +         * directly takes guest page buffers when sending, make sure
+> > +         * everything will work alright even if guest page is changing=
+.
+> > +         */
+> > +        .live =3D true,
+> > +    };
+> > +    test_precopy_common(&args);
+> > +}
+> > +
+> > +static void test_multifd_tcp_no_zero_page(void)
+> > +{
+> > +    MigrateCommon args =3D {
+> > +        .listen_uri =3D "defer",
+> > +        .start_hook =3D test_migration_precopy_tcp_multifd_start_no_ze=
+ro_page,
+> > +        /*
+> > +         * Multifd is more complicated than most of the features, it
+> > +         * directly takes guest page buffers when sending, make sure
+> > +         * everything will work alright even if guest page is changing=
+.
+> > +         */
+> > +        .live =3D true,
+> > +    };
+> > +    test_precopy_common(&args);
+> > +}
+> > +
+> >  static void test_multifd_tcp_zlib(void)
+> >  {
+> >      MigrateCommon args =3D {
+> > @@ -3550,6 +3598,10 @@ int main(int argc, char **argv)
 > >      }
-> 
-> Hm, maybe Peter can help defend this, but this assumes that every
-> function that takes an 'f' and sets the file error also sets
-> migrate_set_error(). I'm not sure we have determined that, have we?
+> >      migration_test_add("/migration/multifd/tcp/plain/none",
+> >                         test_multifd_tcp_none);
+> > +    migration_test_add("/migration/multifd/tcp/plain/zero_page_legacy"=
+,
+> > +                       test_multifd_tcp_zero_page_legacy);
+> > +    migration_test_add("/migration/multifd/tcp/plain/no_zero_page",
+> > +                       test_multifd_tcp_no_zero_page);
+>
+> Here it's better to separate the main feature from the states. That way
+> we can run only the zero-page tests with:
+>
+>  migration-test -r /x86_64/migration/multifd/tcp/plain/zero-page
+>
+> Like so: (also dashes instead of underscores)
+> /zero-page/legacy
+> /zero-page/none
+>
 
-[apologies on getting back to this thread late.. I saw there's yet another
- proposal in the other email, will look at that soon]
+Sounds good.
 
-I think that should be set, or otherwise we lose an error?  After all
-s->error is the only thing we report, if there is a qemufile error that is
-not reported into s->error it can be lost then.
-
-On src QEMU we have both migration thread and return path thread.  For
-migration thread the file error should always be collected by
-migration_detect_error() by the qemu_file_get_error_obj_any() (it also
-looks after postcopy_qemufile_src).  For return path thread it's always
-collected when the loop quits.
-
-Would migrate_has_error() be safer than qemu_file_get_error() in some
-cases?  I'm considering when there is an error outside of qemufile itself,
-that's the case where qemu_file_get_error(ms->to_dst_file) can return
-false, however we may still need a kick to the from_dst_file?
-
--- 
-Peter Xu
-
+> >      migration_test_add("/migration/multifd/tcp/plain/cancel",
+> >                         test_multifd_tcp_cancel);
+> >      migration_test_add("/migration/multifd/tcp/plain/zlib",
 
