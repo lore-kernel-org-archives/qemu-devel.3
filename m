@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9ACC54E4C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6A1C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdZDG-00044h-Rq; Fri, 23 Feb 2024 12:19:54 -0500
+	id 1rdZR9-0003qF-Ty; Fri, 23 Feb 2024 12:34:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdYxZ-0001rU-Bv
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:03:41 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdZ0f-0006ZV-8f
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:06:53 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdYxX-0005Lq-89
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:03:41 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33d90dfe73cso720692f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:03:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdZ0d-0006LK-JE
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:06:52 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5640fef9fa6so1375194a12.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708707813; x=1709312613; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CKThRkOT4hcn8BPguJXY9z300E6tjibkEWgpEM/kf/4=;
- b=Ir21Yq556mvd2uvEtc0/Uoliu5TfybA7buKB1le6d97vOQmaeUs5+ZjzlzFWqbcfKq
- Xs8U9aR8j3YOGudrqT9YuNXAbluYTKX8yBiq8PrW+KkhAiOdRmH+35kPbn6Gospr0rP1
- pZ4GNNkdTaF+6pAblCvaiOemSeyKR9TuzKVPIsooBj1yyCesaAE4qL6g396juwLxOxDa
- lZJ/MKYd16xTjgeLScwODSVk+m1GBkDVvwQ1lD9hLw1Te3oK34O1c5rW9oIsv/9fUN9h
- uc0zUBDYB5Z+Nl81Zp2DNRO3/wnS2vChmVjs8rQNh7DrsQ0oQ46oVZLd5JvI2nSsQGPY
- WEjg==
+ d=linaro.org; s=google; t=1708708008; x=1709312808; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bCMMo86psNeJZCuJrJCFsnR1RQQH5tGN/zrD06/nxDc=;
+ b=CRyrim6dR/7FM1OyVnrVpXHoBDhYY4yBmFfu9/nPI+k3oY+eQUYZ+LDtZcLGxMWLYA
+ ts5rQ2lk4SROKw6JM1wuSAmVSXwOEV61s5UUT/JJRhloBCSFegt2Fnob8LMyTlytHPkW
+ vhohL0GTg2MORQLbCnkf1wPEQYjjk0sjIYGzpV5J9YkB0nI1vzxwct+P9umuSeWOx6Yg
+ jVk9W7KVsA7NEVvV9lTYyWyaQsXnjXWTysXwfS/DFtsXuIluLFicC2oky3F5CO8Ima3g
+ doCW9RHgt45Sf7BWMbswgr2RhBwzW93NYEUdC+FGoUQCk7Cl5lsu3YFsQRiwHo6U61fl
+ mLWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708707813; x=1709312613;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CKThRkOT4hcn8BPguJXY9z300E6tjibkEWgpEM/kf/4=;
- b=nMFs+qKGjC9wV3MrBdqYR6QvUxWGfJlop4siMNtipdrKoUDJiflQHpwyT3EIDnAsZh
- /qmE+jpUthSRpbWUnS2az/4wMzlc1RN1P822P46770AYtyteA18FOazjduEM3Q20Nd+E
- s8R15POR9r5ilahVMlUNPqWy1OFusn3qkXyLLNr8tei300Xz+BZv1TryCqtxi3DoEj4e
- Iur0W9aKFaKbzEcCr0IB9iOxFwlP2yo3r/GuQWZ24hweV/5KY4+pvZSs1i85Ux3xtvd8
- 7syxdY8VwUfnmSEwn/NWU5CZWR2Lq3A1T+GHrsyY+rLaxUAR2chXOTtW5M4QTJQIMWS9
- FrcQ==
+ d=1e100.net; s=20230601; t=1708708008; x=1709312808;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bCMMo86psNeJZCuJrJCFsnR1RQQH5tGN/zrD06/nxDc=;
+ b=Z8OuY/fIayKyT2roPxs7ZQdtKaSFsFlnvkeH5uQxPV7xlbpJFhwZXmKET9WwU/9wsC
+ kSmw0hT+dBm/Ia3kJCI0tgDJHdjjOdVHVptMIK24VI96r8MKgitjtpCP5DMGG+HhKhFe
+ 17FwUb7obPQJq1zZccbcAq9gxs3XxL1ZhTkcFc4zTwx0/ezYRUGiSCkANQMiqBUWgAqe
+ fnz74T/xaEeIAM4DdrmIW66/rZnzEIvGn8STm+xUZJKPzokl5FnN/mNNEo4AHn3aSdzu
+ b7Ex+U0md+e03fk6zJlIuRqlGI9Hcms9AylC73AvPMgfrztQvGnRZkAH7gZ/mZE1Hpi3
+ j5PQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXoav5mspda6dMNyMZ45EeZQzVduxefrCU8jJq7om9Bwg8zVfD/BvVCa7M49twkRxdyyFghpVNZTkkodMCU6jrd0L6UsBQ=
-X-Gm-Message-State: AOJu0Yw1ttw66CVXKhpsB7iHbIngBQcEo+K/xXTVJeb+n4iBFuqDbNbT
- fAALcwtOtlb1FXFoefer4jxsok1srEPv+sMYsZlWeB/lrs6RAAy3Nsiw5DVuCC8=
-X-Google-Smtp-Source: AGHT+IFWf5AtnByh3dazW9Xp/f178CW+NZ80wvnoOFfdhLQwNfmm7PthIlK25aZqQirfkIcrtkoR9Q==
-X-Received: by 2002:a05:6000:154c:b0:33d:4dbd:d05e with SMTP id
- 12-20020a056000154c00b0033d4dbdd05emr404567wry.22.1708707813436; 
- Fri, 23 Feb 2024 09:03:33 -0800 (PST)
-Received: from [192.168.69.100] (xbn44-h02-176-184-35-109.dsl.sta.abo.bbox.fr.
- [176.184.35.109]) by smtp.gmail.com with ESMTPSA id
- cm7-20020a5d5f47000000b0033d6fe3f6absm3549758wrb.62.2024.02.23.09.03.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 09:03:33 -0800 (PST)
-Message-ID: <ddbe482d-fec6-4d4c-8618-e868f77475d4@linaro.org>
-Date: Fri, 23 Feb 2024 18:03:32 +0100
+ AJvYcCV7UmalXmlmwi9LFVXl8Z0naAlf9PsRlNPjt5RjenCe4Ux4BWJUjbYX/Y7sOaRmnJX75bOVmT2eMMzIPhK8Uvwrbaokl9g=
+X-Gm-Message-State: AOJu0Yw7jvVIgSpAmLz1xOgjgpii/ksT48gr6/ZV8Why1JCYqlJx0q4J
+ /IwHITSTZaBWbbPkZAfwcw6zzsl6PxB/XonPDmOt0+kBZifzvYRe5+7c/tcRM7qspgbOLeNgZH8
+ 07ERh/9efbnQ7ugNFsVZhbtRncB5GgAOGvtg/nA==
+X-Google-Smtp-Source: AGHT+IG9/1MNprwtUJ4+fQS+8YeUXLXOjgGP6e+Nn4p4zPllpkRbwvbDb5velgF5FCMIADDKEo0pQ87KtoyTxESSgjQ=
+X-Received: by 2002:aa7:cf19:0:b0:565:3907:be45 with SMTP id
+ a25-20020aa7cf19000000b005653907be45mr319772edy.37.1708708008689; Fri, 23 Feb
+ 2024 09:06:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] usb: remove usb_bus_find
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: balaton@eik.bme.hu
-References: <20240223124406.234509-1-pbonzini@redhat.com>
- <20240223124406.234509-9-pbonzini@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240223124406.234509-9-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
+ <20240219011739.2316619-17-sergey.kambalin@auriga.com>
+In-Reply-To: <20240219011739.2316619-17-sergey.kambalin@auriga.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Feb 2024 17:06:37 +0000
+Message-ID: <CAFEAcA9-yfxyvOsk=5Yv8WbEi8rvrRHfybiAw164u8HsKyN8SQ@mail.gmail.com>
+Subject: Re: [PATCH v5 16/41] Add RPi4 RNG200
+To: Sergey Kambalin <serg.oker@gmail.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Sergey Kambalin <sergey.kambalin@auriga.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,15 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/2/24 13:44, Paolo Bonzini wrote:
-> Inline the sole remaining use, which is for the -usbdevice command line.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On Mon, 19 Feb 2024 at 01:20, Sergey Kambalin <serg.oker@gmail.com> wrote:
+>
+> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 > ---
->   include/hw/usb.h |  1 -
->   hw/usb/bus.c     | 15 +--------------
->   2 files changed, 1 insertion(+), 15 deletions(-)
+>  hw/arm/bcm2838.c                     |   4 +
+>  hw/arm/bcm2838_peripherals.c         |  14 +
+>  hw/arm/raspi4b.c                     |   1 -
+>  hw/misc/bcm2838_rng200.c             | 405 +++++++++++++++++++++++++++
+>  hw/misc/meson.build                  |   1 +
+>  hw/misc/trace-events                 |   9 +
+>  include/hw/arm/bcm2838_peripherals.h |   2 +
+>  include/hw/misc/bcm2838_rng200.h     |  43 +++
+>  8 files changed, 478 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/misc/bcm2838_rng200.c
+>  create mode 100644 include/hw/misc/bcm2838_rng200.h
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Compiling with clang detects an off-by-one-error in this patch:
 
+../../hw/misc/bcm2838_rng200.c:119:32: error: array index 9 is past
+the end of the array (which contains 9 elements)
+[-Werror,-Warray-bounds]
+        fifo_thld = FIELD_EX32(s->regs[R_RNG_FIFO_COUNT],
+                               ^       ~~~~~~~~~~~~~~~~
+
+This is because N_BCM2838_RNG200_REGS is 9, but
+R_RNG_FIFO_COUNT is 0x24 / 4 == 9.
+
+N_BCM2838_RNG200_REGS should be 10. (The regs[] array has
+an empty slot for the 0x14 offset.)
+
+thanks
+-- PMM
 
