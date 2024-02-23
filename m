@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F576C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 04:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6CF5C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 04:44:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdNPh-0004w3-IM; Thu, 22 Feb 2024 23:43:57 -0500
+	id 1rdNQ7-00057D-Aw; Thu, 22 Feb 2024 23:44:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rdNPf-0004vg-PG; Thu, 22 Feb 2024 23:43:55 -0500
+ id 1rdNQ5-00055x-NE; Thu, 22 Feb 2024 23:44:21 -0500
 Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rdNPd-0002cV-UI; Thu, 22 Feb 2024 23:43:55 -0500
+ id 1rdNQ0-0002hU-Cc; Thu, 22 Feb 2024 23:44:21 -0500
 Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-7d5a6b1dd60so154697241.3; 
- Thu, 22 Feb 2024 20:43:52 -0800 (PST)
+ a1e0cc1a2514c-7d2940ad0e1so307826241.1; 
+ Thu, 22 Feb 2024 20:44:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708663431; x=1709268231; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708663454; x=1709268254; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=haxMd9l7C2HPxjvaECWqQxz5ejMqzV9lc+Z8MlxFLok=;
- b=f+nUS0e0NrnZU1sJD3UECkv2EDwKY+3rIFc5tHg/66WVSX7SHellDcOQOvYTEwAVQB
- wTNa5S2Z9J55wJlT7C0C/Tq7TEbQ7sMUGJjC+dmyd5LpGC22ovzZA4Do2KdbDy4ZJ8bf
- OIyhKOrWiMvGStUTF5u+hrcs45DzyOij0Nu3+fo4CzC++tVR4dCL2eeLzSintE0CIk4m
- Jxauhkk+QwnNvwg42sttYXLUcYsyczyWiDlXmDo5RSIEkff2xI0VvzLPfEFFL5PGn+uZ
- fssZapMnzOaj9kZC4pdQ9u4km1S53FctzyOGah89wzRSRZVZe19HiD393bD72ik68Apd
- bLNg==
+ bh=R2qyJU4UFichwZizbV1c6YZASRQP684XsW5OD9lTT/Q=;
+ b=X8swepFMNj4PvaAIOe2sjkj54wEelSN3tCgWljAZwUTLliL1k4ydUXjot1C+HhjNyP
+ 16QJgOnuvKz5rwzXV+oL1wVPo3Re1klAzK0YpShI8iM/X9Kh8Xm6vnrG7a/1fi1mh/KB
+ oRBrx9mgJrxfWJxs1c3q8Ngr+L4WXgMbJ3pYj3yuaTiegMvUeFKeOCzkowK1jCbfuKMF
+ Wz0W4ioXWwxhStjUJmt1dnpXXAVJmo6sN+nLV46bQPOJ3aZqlPMppj6LG79LA46LBQNP
+ scZl9yzjutsDFGdGiWiT2bcQP6U6S8FL7kgIIXXGV9CapzzESLRzLxmyu5WYLxL3wb53
+ q+mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708663431; x=1709268231;
+ d=1e100.net; s=20230601; t=1708663454; x=1709268254;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=haxMd9l7C2HPxjvaECWqQxz5ejMqzV9lc+Z8MlxFLok=;
- b=YNsQq06GLh6eIFq9nTzOVfMQm4RJpQtfluhsPRYPUhdBNVy5P+SXH4vkPGm/pOZtGT
- ZItG3jC3uf+O1jJ2Km/M7iCQolrUmYWAiyGLAulrYWfQ9VODCOwXQLvCftYMHCW/nWHg
- xB9iWBe0Xsjcxv6mV9ZpDfEg1/g2BJvRQFrne+iffN9/8sB1jbmsbIdqQ3XgwZ+fShLQ
- etxTL/XumVIJOWuSDeo5LozQiwA4Xlu/zPUsNJPG8JjsSqG+KjBgej9tL4WtZY45OrZM
- KeDR5Ifw+aK0jFpvBlKhXITY7+gSh8rl0Wy1W8Hk7qmm/QdegcCrqxU2AklSKwZv+ny6
- gJCw==
+ bh=R2qyJU4UFichwZizbV1c6YZASRQP684XsW5OD9lTT/Q=;
+ b=NDFFO/vsbpbq/qQbectgbF4v3E0UKr2bI1UVRRS/4hYjKTed666HY3kqRgMoGnRI93
+ 6sLZm+wZDOpJH3HGJyE4kV/cXS34XfFpwpiN6taGM932x8gmM0Tps60bRS89V+8XqYp+
+ 1fzU9TxPURTz20b5SIavNv/I6Knm28BK2BT/vinVYHk73ee+K+UroF5XSPjSiuXh+LzU
+ NchIeHFUrrN2tLrGIORhuksFkKiyvrgw+/vuT6K/oJnZvGJkUHYKNPt2Fk+jvBXqVdKA
+ 6BMy++ch4ywKYlH6vEdl28ZicZaCT0r4elyASOM+eew10tiBQFZ88KDeZksdysF0kZp6
+ MVig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBfYoK+UL1FW2DfhBs/vHJ+eJg2Z4+YeK7xJFDhuFI2KDQkhf373UyEcM9odBZF2I9P1QhfFcctc1LlSnXBRFgICkU0hc=
-X-Gm-Message-State: AOJu0YyKSaCOL5JFlVyOrDNdDk8/IDWsrYlnkRxHaz2nPwZa2BhjcEJD
- QwyWLsKL7WCqBR/SJhit/QBIyJcy3Bn2WmR5XnaZZeNXn6RJbCABbEZ1SxRfGtNC8+53Dw2CwYC
- BbXxdNZKbjMLKJVfeJkvpxSODi64=
-X-Google-Smtp-Source: AGHT+IF5zo8C0ICDMaKroa2hGkpRTuvJDhLSwqxQOyJHQjvMFs0Yt6DE8ZCMok2cc9X2phHjVPFbX49rUvssIAAYInQ=
-X-Received: by 2002:a67:cd81:0:b0:470:543d:ddca with SMTP id
- r1-20020a67cd81000000b00470543dddcamr912874vsl.11.1708663431273; Thu, 22 Feb
- 2024 20:43:51 -0800 (PST)
+ AJvYcCVGCZ7NQWBg+UV+DmtwYJea+OIKIyw0zUVgkgVleZCPxCJ/y1RwfGf+CaE0ig6vA8zoGesKlpey7Ze7RUb9avfIpPebPSU=
+X-Gm-Message-State: AOJu0Yx7AxACzeupo1QLLr+W5BnLWnva03OvhjiIPhASrF6OpXDdUD9e
+ F3u9jm4npdUp5zu12aumD+LW3LExrH7h0yoUufAE/2A1+V2klJIropSxVPe5aHoQ129UTA7PW7L
+ OrOkzWDgIBrTtJpokVqiKEAurpVGq9gGDAS0=
+X-Google-Smtp-Source: AGHT+IEYeaz6pkcdGgp6AP1LJKKCjHbw8UXny0c8k2zOZUuhEb8s2Pps4I9zCsNsTJH9tXDUzSJqsGLs30xeHdRptX8=
+X-Received: by 2002:a1f:ea44:0:b0:4d0:36e3:40c3 with SMTP id
+ i65-20020a1fea44000000b004d036e340c3mr990577vkh.13.1708663453998; Thu, 22 Feb
+ 2024 20:44:13 -0800 (PST)
 MIME-Version: 1.0
 References: <20240220110907.10479-1-frank.chang@sifive.com>
 In-Reply-To: <20240220110907.10479-1-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 23 Feb 2024 14:43:25 +1000
-Message-ID: <CAKmqyKPn-wsbXeZLSzKshQDN5q2KQZZOQhtJ2ZByV+hJS8SU7A@mail.gmail.com>
+Date: Fri, 23 Feb 2024 14:43:47 +1000
+Message-ID: <CAKmqyKPrC6QR8k_PSENwkWiW2=Dyf2-gN=xaqecN5u7-q6ON-A@mail.gmail.com>
 Subject: Re: [PATCH] target/riscv: Add missing include guard in pmu.h
 To: frank.chang@sifive.com
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
@@ -72,14 +72,14 @@ Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
  envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,7 +104,9 @@ On Tue, Feb 20, 2024 at 9:09=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
 > Signed-off-by: Frank Chang <frank.chang@sifive.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
