@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792E9C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F3DC54E4C
 	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 15:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdXrc-0006Pb-Pk; Fri, 23 Feb 2024 10:53:28 -0500
+	id 1rdXre-0006Qf-Ap; Fri, 23 Feb 2024 10:53:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXhb-0004ls-G3; Fri, 23 Feb 2024 10:43:08 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1rdXj7-0005eL-RB; Fri, 23 Feb 2024 10:44:41 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXhZ-00064Q-R1; Fri, 23 Feb 2024 10:43:07 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1dc0e5b223eso7724495ad.1; 
- Fri, 23 Feb 2024 07:43:04 -0800 (PST)
+ id 1rdXj6-0006NR-6v; Fri, 23 Feb 2024 10:44:41 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1dc5d0162bcso8022355ad.0; 
+ Fri, 23 Feb 2024 07:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708702983; x=1709307783; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703078; x=1709307878; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qY6dAGjuanBxfUNkm+Wp8HJhSgEw1pVuG7LX12CZpas=;
- b=cxxWGvKPzJwwfivqSoB2+7wTaK0LyswMPT3w/Jy+QNI8UI3Vg27a3CVTHnnJVMnB9P
- ggL0wArCmhIu45Ac1TXnxUKO4BG9fjPW8FnlcxOK00rBBqlb9SzqwmhQoP7KIaeOd1a1
- dFGGtTD0o5xKzfzgqBJlWaFRYbtlbEfCC0V+QaZC3dat5+sLmQNoBHg7jE5KEzMYl9N9
- 6v0YY8ay3brf+OHrO4dzlI25nsui1Bdf+K0TfuBky3y4E/gMBt9RAM6A+mmQutjGyvPg
- EMr/QlOt+x8gz8cCMVEB82B8M+Ym9g8yteARXOB5E5HOnA8fOOvfzN9I+Xsxb/Yf23if
- FmiQ==
+ bh=q36jhjRJi9//Rq92Z4CXsjy5rE5fVHQHoeYIuEypDgo=;
+ b=hDSbfliXSt6twpr+oKyBA6Bft5OBb1qzYnvgllrFakQ6h7/ZetibfwaDEOh4GEGj/g
+ frC59idmidP+EcXNnUUBKLCpKReSsRJ8zjTY6AF1htZpRtxrN4ulFJr64SFB0vYDs87x
+ L4YjPvNTqSqrOd4QuQ4171pLPou2b/0gXVwtRWtRvVvWZYC4Vvj+r1T8MPk+ZR+XlSls
+ mpxxzlYLu6lKTMMZik9xDH50lMR/WtXp7amxDLn/UCluuGsEsIaZfOwDtxEmdt9rS4pq
+ 1lW3zpnfM+tH4vm1GiLvqAa9o6QBjEC95ezekY/CkMnu+Tj0FKsowTKdel3Jcvk4+5iO
+ O5QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708702983; x=1709307783;
+ d=1e100.net; s=20230601; t=1708703078; x=1709307878;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qY6dAGjuanBxfUNkm+Wp8HJhSgEw1pVuG7LX12CZpas=;
- b=DWVg+qOidEXynI8gwmOgiNvFAr7dezUoyh387K/OJU6WkyqWTWOVTZ1Pt5+oY735SY
- AGWdbxZq08dFTency0Y/f66rUh9V97rtase94z4yRkVdjmpA56muGlGVDrrv2UJK/Yke
- b2QKJotsgcPYBHLux1rnFJo1z7sR1abijkK4yrjq08m9f4+afPfowOB4DFdmIJSSRIB3
- xweIXe3VnBCqG/q3xiLg10Als+NTuu7f2aL/rjbaITTjdjiGtC9GZ44hu0aGgpTAEw5z
- eHCWVbV8aUixYa06mH0V5xGXgie8xTbvgWk24n9X/qK5DKikxE8sg+AqVYOdg6cdbO14
- EhLQ==
+ bh=q36jhjRJi9//Rq92Z4CXsjy5rE5fVHQHoeYIuEypDgo=;
+ b=sqR+XLLD5g/TYfFjZ1/D08Jp1ZPZCTQBVAKJk1Nrzf9WZdbZn8hWqAp6e4QjSM9gGb
+ aJTC5Dqba7wq4DpPE543bNiu9f4PclcZIPyF/wqJD96cSEkKvZI/vh40FvCahjedP3Pl
+ Cz51BUtkISV7787oCzB6WXl5mH5TUZRu0SZ1zDz/NK9w5IqrUFoSasUpuqMF/vVR2wVE
+ EdmZMc1ATI9IdB3G1hPwsO3OAisjOuTcvR0H2wyvxFHWSvfFyHUKXkuV1ZzaLvdtWZL1
+ hgq2nKtJ2RLjyRETkOnn/7In24+VPkVSajxTJunqh0i8Q4Ry0n3UpJ2L1KOFA80qOpG7
+ wnkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX0hxnlrw/HYFHUiXDHHMQxgdDjlJ4p4b7JRF7p6KImns3GJ1ahF0K9xKHWd/pZb23crwEu9LQHM1I0PA+Qdc+IUx9i
-X-Gm-Message-State: AOJu0YxNDem07tHSwkAT09+JKYx2fIJnwqyBWr1goocklt243KT18MgE
- 8x+0xEOEZrweR/i0cfdrUCG5SdD4YtwIC8QaONGBpc/IyWjIs6qKdDsrwzfD
-X-Google-Smtp-Source: AGHT+IHrBbDbyOPOdD4aAylp4Cvl1wOf/b4Xl9Ar9H6ILM9MV4w8c8ul2RVAqxNvjH7yTs0c9dZy/g==
-X-Received: by 2002:a17:903:8c7:b0:1dc:7362:7365 with SMTP id
- lk7-20020a17090308c700b001dc73627365mr209232plb.4.1708702983234; 
- Fri, 23 Feb 2024 07:43:03 -0800 (PST)
+ AJvYcCUdZZTN3LU/yFlNgEajyNupuR/Ssi69mLumEcw1E2+tuMFzvxfDC7J+VLZYpG2AakfxouywDp6mccO4jqESJMWLEgEz
+X-Gm-Message-State: AOJu0Yy4348znwkkpLlOpuo2yfLpJQdRHqVlXDZSc/csOjXx00xyzg28
+ Fjy7AbburE8geXS4HvuD5Vn5Yj2XD9NVMeLwKkQpaaSiIJJ6QFTotbm1NpFq
+X-Google-Smtp-Source: AGHT+IGWuaQySoRuhdqboM25THBmhk2DvZUvnOxionIfcT/LCuxMuLynBhHC+3oxNzj3WdBMNUID+Q==
+X-Received: by 2002:a17:902:f681:b0:1db:4213:41e8 with SMTP id
+ l1-20020a170902f68100b001db421341e8mr111796plg.69.1708703078369; 
+ Fri, 23 Feb 2024 07:44:38 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.43.00
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.44.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:43:02 -0800 (PST)
+ Fri, 23 Feb 2024 07:44:38 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 03/47] tests/avocado: mark boot_linux.py long runtime instead
- of flaky
-Date: Sat, 24 Feb 2024 01:41:22 +1000
-Message-ID: <20240223154211.1001692-4-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.vnet.ibm.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PULL 22/47] misc/pca9552: Let external devices set pca9552 inputs
+Date: Sat, 24 Feb 2024 01:41:41 +1000
+Message-ID: <20240223154211.1001692-23-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,81 +98,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ppc64 and s390x tests were first marked skipIf GITLAB_CI by commit
-c0c8687ef0f ("tests/avocado: disable BootLinuxPPC64 test in CI"), and
-commit 0f26d94ec9e ("tests/acceptance: skip s390x_ccw_vrtio_tcg on
-GitLab") due to being very heavy-weight for gitlab CI.
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-Commit 9b45cc99318 ("docs/devel: rationalise unstable gitlab tests under
-FLAKY_TESTS") changed this to being flaky but it isn't really, it just
-had a long runtime.
+Allow external devices to drive pca9552 input pins by adding
+input GPIO's to the model.  This allows a device to connect
+its output GPIO's to the pca9552 input GPIO's.
 
-So take the SPEED=slow variable from qtests and introduce it to avocado,
-and make these tests require it.
+In order for an external device to set the state of a pca9552
+pin, the pin must first be configured for high impedance (LED
+is off).  If the pca9552 pin is configured to drive the pin low
+(LED is on), then external input will be ignored.
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Here is a table describing the logical state of a pca9552 pin
+given the state being driven by the pca9552 and an external device:
+
+                   PCA9552
+                   Configured
+                   State
+
+                  | Hi-Z | Low |
+            ------+------+-----+
+  External   Hi-Z |  Hi  | Low |
+  Device    ------+------+-----+
+  State      Low  |  Low | Low |
+            ------+------+-----+
+
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- docs/devel/testing.rst      | 11 +++++++++++
- tests/avocado/boot_linux.py |  8 ++------
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ hw/misc/pca9552.c         | 50 +++++++++++++++++++++++++++++++++------
+ include/hw/misc/pca9552.h |  3 ++-
+ 2 files changed, 45 insertions(+), 8 deletions(-)
 
-diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
-index aa96eacec5..fa28e3ecb2 100644
---- a/docs/devel/testing.rst
-+++ b/docs/devel/testing.rst
-@@ -1346,6 +1346,17 @@ the environment.
- The definition of *large* is a bit arbitrary here, but it usually means an
- asset which occupies at least 1GB of size on disk when uncompressed.
+diff --git a/hw/misc/pca9552.c b/hw/misc/pca9552.c
+index f00a149d61..2ae13af35e 100644
+--- a/hw/misc/pca9552.c
++++ b/hw/misc/pca9552.c
+@@ -44,6 +44,8 @@ DECLARE_CLASS_CHECKERS(PCA955xClass, PCA955X,
+ #define PCA9552_LED_OFF  0x1
+ #define PCA9552_LED_PWM0 0x2
+ #define PCA9552_LED_PWM1 0x3
++#define PCA9552_PIN_LOW  0x0
++#define PCA9552_PIN_HIZ  0x1
  
-+SPEED
-+^^^^^
-+Tests which have a long runtime will not be run unless ``SPEED=slow`` is
-+exported on the environment.
+ static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
+ 
+@@ -110,22 +112,27 @@ static void pca955x_update_pin_input(PCA955xState *s)
+ 
+     for (i = 0; i < k->pin_count; i++) {
+         uint8_t input_reg = PCA9552_INPUT0 + (i / 8);
+-        uint8_t input_shift = (i % 8);
++        uint8_t bit_mask = 1 << (i % 8);
+         uint8_t config = pca955x_pin_get_config(s, i);
++        uint8_t old_value = s->regs[input_reg] & bit_mask;
++        uint8_t new_value;
+ 
+         switch (config) {
+         case PCA9552_LED_ON:
+             /* Pin is set to 0V to turn on LED */
+-            qemu_set_irq(s->gpio[i], 0);
+-            s->regs[input_reg] &= ~(1 << input_shift);
++            s->regs[input_reg] &= ~bit_mask;
+             break;
+         case PCA9552_LED_OFF:
+             /*
+              * Pin is set to Hi-Z to turn off LED and
+-             * pullup sets it to a logical 1.
++             * pullup sets it to a logical 1 unless
++             * external device drives it low.
+              */
+-            qemu_set_irq(s->gpio[i], 1);
+-            s->regs[input_reg] |= 1 << input_shift;
++            if (s->ext_state[i] == PCA9552_PIN_LOW) {
++                s->regs[input_reg] &= ~bit_mask;
++            } else {
++                s->regs[input_reg] |=  bit_mask;
++            }
+             break;
+         case PCA9552_LED_PWM0:
+         case PCA9552_LED_PWM1:
+@@ -133,6 +140,12 @@ static void pca955x_update_pin_input(PCA955xState *s)
+         default:
+             break;
+         }
 +
-+The definition of *long* is a bit arbitrary here, and it depends on the
-+usefulness of the test too. A unique test is worth spending more time on,
-+small variations on existing tests perhaps less so. As a rough guide,
-+a test or set of similar tests which take more than 100 seconds to
-+complete.
++        /* update irq state only if pin state changed */
++        new_value = s->regs[input_reg] & bit_mask;
++        if (new_value != old_value) {
++            qemu_set_irq(s->gpio_out[i], !!new_value);
++        }
+     }
+ }
+ 
+@@ -340,6 +353,7 @@ static const VMStateDescription pca9552_vmstate = {
+         VMSTATE_UINT8(len, PCA955xState),
+         VMSTATE_UINT8(pointer, PCA955xState),
+         VMSTATE_UINT8_ARRAY(regs, PCA955xState, PCA955X_NR_REGS),
++        VMSTATE_UINT8_ARRAY(ext_state, PCA955xState, PCA955X_PIN_COUNT_MAX),
+         VMSTATE_I2C_SLAVE(i2c, PCA955xState),
+         VMSTATE_END_OF_LIST()
+     }
+@@ -358,6 +372,7 @@ static void pca9552_reset(DeviceState *dev)
+     s->regs[PCA9552_LS2] = 0x55;
+     s->regs[PCA9552_LS3] = 0x55;
+ 
++    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
+     pca955x_update_pin_input(s);
+ 
+     s->pointer = 0xFF;
+@@ -380,6 +395,26 @@ static void pca955x_initfn(Object *obj)
+     }
+ }
+ 
++static void pca955x_set_ext_state(PCA955xState *s, int pin, int level)
++{
++    if (s->ext_state[pin] != level) {
++        uint16_t pins_status = pca955x_pins_get_status(s);
++        s->ext_state[pin] = level;
++        pca955x_update_pin_input(s);
++        pca955x_display_pins_status(s, pins_status);
++    }
++}
 +
- AVOCADO_ALLOW_UNTRUSTED_CODE
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- There are tests which will boot a kernel image or firmware that can be
-diff --git a/tests/avocado/boot_linux.py b/tests/avocado/boot_linux.py
-index 7c4769904e..de4c8805f7 100644
---- a/tests/avocado/boot_linux.py
-+++ b/tests/avocado/boot_linux.py
-@@ -93,13 +93,11 @@ class BootLinuxPPC64(LinuxTest):
++static void pca955x_gpio_in_handler(void *opaque, int pin, int level)
++{
++
++    PCA955xState *s = PCA955X(opaque);
++    PCA955xClass *k = PCA955X_GET_CLASS(s);
++
++    assert((pin >= 0) && (pin < k->pin_count));
++    pca955x_set_ext_state(s, pin, level);
++}
++
+ static void pca955x_realize(DeviceState *dev, Error **errp)
+ {
+     PCA955xClass *k = PCA955X_GET_CLASS(dev);
+@@ -389,7 +424,8 @@ static void pca955x_realize(DeviceState *dev, Error **errp)
+         s->description = g_strdup("pca-unspecified");
+     }
  
-     timeout = 360
+-    qdev_init_gpio_out(dev, s->gpio, k->pin_count);
++    qdev_init_gpio_out(dev, s->gpio_out, k->pin_count);
++    qdev_init_gpio_in(dev, pca955x_gpio_in_handler, k->pin_count);
+ }
  
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--
-+    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
-     def test_pseries_tcg(self):
-         """
-         :avocado: tags=machine:pseries
-         :avocado: tags=accel:tcg
--        :avocado: tags=flaky
-         """
-         self.require_accelerator("tcg")
-         self.vm.add_args("-accel", "tcg")
-@@ -113,13 +111,11 @@ class BootLinuxS390X(LinuxTest):
+ static Property pca955x_properties[] = {
+diff --git a/include/hw/misc/pca9552.h b/include/hw/misc/pca9552.h
+index b6f4e264fe..c36525f0c3 100644
+--- a/include/hw/misc/pca9552.h
++++ b/include/hw/misc/pca9552.h
+@@ -30,7 +30,8 @@ struct PCA955xState {
+     uint8_t pointer;
  
-     timeout = 240
+     uint8_t regs[PCA955X_NR_REGS];
+-    qemu_irq gpio[PCA955X_PIN_COUNT_MAX];
++    qemu_irq gpio_out[PCA955X_PIN_COUNT_MAX];
++    uint8_t ext_state[PCA955X_PIN_COUNT_MAX];
+     char *description; /* For debugging purpose only */
+ };
  
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--
-+    @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
-     def test_s390_ccw_virtio_tcg(self):
-         """
-         :avocado: tags=machine:s390-ccw-virtio
-         :avocado: tags=accel:tcg
--        :avocado: tags=flaky
-         """
-         self.require_accelerator("tcg")
-         self.vm.add_args("-accel", "tcg")
 -- 
 2.42.0
 
