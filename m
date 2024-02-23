@@ -4,85 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A9AC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 18:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D43FC54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 18:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdaWT-0005Zx-D3; Fri, 23 Feb 2024 13:43:49 -0500
+	id 1rdab0-00037O-3M; Fri, 23 Feb 2024 13:48:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdaBI-0006kW-8w
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:22:01 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdaBE-0002Nx-KS
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:21:55 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e332bc65b3so694537b3a.3
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 10:21:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708712506; x=1709317306; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7YKUGCOPT+JdTEjJ4JcaQB9kUWGXFYEylDzP9pi6MO0=;
- b=Fq9Ba3pcwGMifIqeXsPTqQgzAqwalojiNFb61eojSiQlhLOCiugEO3Y77kDneY+vqR
- TB87yafEnQpi2ku2/n6/P6FwcmyKW6WRAJM5l5WS1CyL9z9Evtickgz5Dz6WeAgdIT8D
- yIVZ65+yFE+Hz82mhPHhtdiyxtE4F7urOKYeZU66r/sya/+XQR9dmkSe8c0xlr8U7AbG
- ytIKRkptSm8lwxAH/LiMZgdosD5UTTyziM8no54E0NixUndcVsOVt+EYQaGnjKdSKPI+
- N7pgbtPD76TgWFQxQxrfpnTQhHtHITkdZeyKqFDWDSkRt6eoHW+jTrcsLK9zRLqzXfeC
- kG2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708712506; x=1709317306;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7YKUGCOPT+JdTEjJ4JcaQB9kUWGXFYEylDzP9pi6MO0=;
- b=B+Eq8W+M/cb44Lj08ZHI1kKFox47lWjrKnH2wQJOlJh2bWWaI6mmfUKDcWcgv5UaDJ
- c+Dw0YwAVeDdH8GLSRUg605+eypMQ4tLiC6LPE9PL3JcsmJLduHbbKhgmJIQYrhCjG5S
- I4UuD2OrDqEfYVtg/IWfk2L4Sk8h49fnG8w/P0WM2sHqgSd45e5wH28P1GNhchOBWVsQ
- uoYZ31naAiUEYDZFGGxudo0bCntxP9aG4f2bmiuY04dLTo9QMo4GFeVPbsGb1hXwBxL4
- /3KzKVIsbzXCjLQGFdrkUaTNVAtCqlFvcTLCe590r/gefmKU6u95EWgs9nmnkNU0vsaF
- 6YfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXH4zhXDBbuCIoE8W84I3wM3iKeVrSOZugHOik4qm0A6y6RM86gEkwjzXNIEazkG2Pf7TtNGbIB8ihU1IO3il3iqVSQpY=
-X-Gm-Message-State: AOJu0YzDoo9wrQxP6O4eXnuh1m5EsdnEALwaa1lxrF/xwzFgQH691y7s
- V+yYqGCZrEn3lGzQMA3lnPAnaMpJA47K9ol+McjaqVsqwXV/zErI0RP5jQMgxLMWJyKOiQqbFsW
- g
-X-Google-Smtp-Source: AGHT+IGe7rJ+I/rBfmY3V0XlmVEP964Z0SqlEKs1QKQzc0Xp/7hEcvEinllhYrvxMy4gVU2iPjzM3A==
-X-Received: by 2002:aa7:9984:0:b0:6e0:9149:a964 with SMTP id
- k4-20020aa79984000000b006e09149a964mr515721pfh.10.1708712506010; 
- Fri, 23 Feb 2024 10:21:46 -0800 (PST)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- e18-20020a656792000000b005dc389409c1sm10901115pgr.93.2024.02.23.10.21.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 10:21:45 -0800 (PST)
-Message-ID: <808e13f8-11da-4ec1-969d-d2495cbd3a88@linaro.org>
-Date: Fri, 23 Feb 2024 08:21:42 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rdaD3-0000Dd-2k
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:23:45 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rdaD0-0002XV-8c
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:23:44 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ThJDs3f70z67M1h;
+ Sat, 24 Feb 2024 02:19:09 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 9900A14058E;
+ Sat, 24 Feb 2024 02:23:35 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 23 Feb
+ 2024 18:23:35 +0000
+Date: Fri, 23 Feb 2024 18:23:34 +0000
+To: Richard Henderson <richard.henderson@linaro.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, <qemu-devel@nongnu.org>
 Subject: Re: [PATCH] atomic.h: Reword confusing comment for qatomic_cmpxchg
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-ID: <20240223182334.000014ca@Huawei.com>
+In-Reply-To: <808e13f8-11da-4ec1-969d-d2495cbd3a88@linaro.org>
 References: <20240223182035.1048541-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240223182035.1048541-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <808e13f8-11da-4ec1-969d-d2495cbd3a88@linaro.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+MIME-Version: 1.0
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,38 +66,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/23/24 08:20, Peter Maydell wrote:
-> The qatomic_cmpxchg() and qatomic_cmpxchg__nocheck() macros have
-> a comment that reads:
->   Returns the eventual value, failed or not
-> 
-> This is somewhere between cryptic and wrong, since the value actually
-> returned is the value that was in memory before the cmpxchg.  Reword
-> to match how we describe these macros in atomics.rst.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   include/qemu/atomic.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-> index f1d3d1702a9..99110abefb3 100644
-> --- a/include/qemu/atomic.h
-> +++ b/include/qemu/atomic.h
-> @@ -202,7 +202,7 @@
->       qatomic_xchg__nocheck(ptr, i);                          \
->   })
->   
-> -/* Returns the eventual value, failed or not */
-> +/* Returns the old value of '*ptr' (whether the cmpxchg failed or not) */
->   #define qatomic_cmpxchg__nocheck(ptr, old, new)    ({                   \
->       typeof_strip_qual(*ptr) _old = (old);                               \
->       (void)__atomic_compare_exchange_n(ptr, &_old, new, false,           \
+On Fri, 23 Feb 2024 08:21:42 -1000
+Richard Henderson <richard.henderson@linaro.org> wrote:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> On 2/23/24 08:20, Peter Maydell wrote:
+> > The qatomic_cmpxchg() and qatomic_cmpxchg__nocheck() macros have
+> > a comment that reads:
+> >   Returns the eventual value, failed or not
+> > 
+> > This is somewhere between cryptic and wrong, since the value actually
+> > returned is the value that was in memory before the cmpxchg.  Reword
+> > to match how we describe these macros in atomics.rst.
+> > 
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   include/qemu/atomic.h | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+> > index f1d3d1702a9..99110abefb3 100644
+> > --- a/include/qemu/atomic.h
+> > +++ b/include/qemu/atomic.h
+> > @@ -202,7 +202,7 @@
+> >       qatomic_xchg__nocheck(ptr, i);                          \
+> >   })
+> >   
+> > -/* Returns the eventual value, failed or not */
+> > +/* Returns the old value of '*ptr' (whether the cmpxchg failed or not) */
+> >   #define qatomic_cmpxchg__nocheck(ptr, old, new)    ({                   \
+> >       typeof_strip_qual(*ptr) _old = (old);                               \
+> >       (void)__atomic_compare_exchange_n(ptr, &_old, new, false,           \  
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-r~
+As the person it confused ;)
+> 
+> r~
+
 
