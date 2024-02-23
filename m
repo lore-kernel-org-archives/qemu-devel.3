@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A18FBC54E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 12:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD37C54E41
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 12:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdUwu-0005fm-I4; Fri, 23 Feb 2024 07:46:44 -0500
+	id 1rdUwl-0005e7-Fn; Fri, 23 Feb 2024 07:46:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rdUuu-0000r0-PE
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:44:42 -0500
+ id 1rdUur-0000ob-SL
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:44:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rdUuq-0003uo-4G
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:44:40 -0500
+ id 1rdUun-0003ub-ST
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:44:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708692275;
+ s=mimecast20190719; t=1708692273;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6xocwLyBkw11u09+Yx+wnt0tbL1R8DbbnKCk16lnu+c=;
- b=aAg+iBZTmFYvbiKYaWsBIChYObE9nMQkc6VRuTbGdXB6VCUCz+ENh0D7jo0A38TjvkhoMU
- ILO7e78KQyuk3nH00yo/ZKzDoFU2LUi3OjKF2OUyZy76rxJ+ASiVQw8eca6eOgeqI6DqVG
- 6dr+H+PrhqbUvvnn6cjUgnpskz2hp4Y=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wdFeJfFPd+rESlH0Stf2Q7C2WzvaU7Ne4mFpQgmpfoM=;
+ b=RrmFS3hI7BfhZkgdGJdgihNwbeKE0Ma+hgDkXjO3yx3im/8R7iS9Gs+hjJTLEA0gmc/9TX
+ mp+9Kdh9Fn3/+AibmKvoHME1HhiwWEwKdgpmWj1v5dT4oNSK2wIN7GxMaWFSB2hWWKnm2S
+ q8FNT5eKca4Dru4bNBWdShKn0hnTvms=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-435-amNMiNwcNlm_sFHti_nxyQ-1; Fri, 23 Feb 2024 07:44:34 -0500
-X-MC-Unique: amNMiNwcNlm_sFHti_nxyQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33d11878726so151226f8f.0
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 04:44:33 -0800 (PST)
+ us-mta-353-Ae52FGZxO_29WQSjnxE78g-1; Fri, 23 Feb 2024 07:44:32 -0500
+X-MC-Unique: Ae52FGZxO_29WQSjnxE78g-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33d23c8694dso130694f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 04:44:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708692272; x=1709297072;
+ d=1e100.net; s=20230601; t=1708692270; x=1709297070;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6xocwLyBkw11u09+Yx+wnt0tbL1R8DbbnKCk16lnu+c=;
- b=JY4H63chSuN0tVZ/GjNiMuZvuF+bxb6lvAAmxRLqPum9nBer1YyihacFRl7yJynvKy
- A7UKSKQ1WrxA8CAoRTfBk2dRXBSnlObNLyemo6ilONzQYTLoavbFJQg4vUsuZkwWU48z
- +4kZzhrbN8VUGRXdHpguqq3PkptKJb6u+ahQJ02JtJlZHOanA2ihgT21McuFQBUOz+hs
- kockgYtmYTGuWuK/B7GqoHpGmeVsb50dVgteJWzF159Az2jPZcaolTv5k/nmShQ+NpT5
- NdAgNi1Q9JJZAOdb2UGQ7BztrfwiyVa7nISMktc8Topw+Q9LRCKmdYqS4jpbHcFpLm57
- fYbg==
-X-Gm-Message-State: AOJu0Yzsov6CaJW/Vq501F1XBUEFvS/K4P8BHbuKh646zE5EEDD5NvIQ
- cl3kNk95PP2bLnVmETBYN6kUg1XHCccWXeGL8WLdwUJUDCooSWxxAi8NcD8ZW0GNDkHHSh18OBr
- 2C1LTody6+TZmDFyVM4Xh0SyOZ2uuG1x3aUmBbnjwnC8lVhleSCoyeBuylZe5ZcUUMMZcrjZpCr
- 7yhT+IPJQzsRTD4+5m/DDSOq9D42cORoD3seRk
-X-Received: by 2002:adf:f511:0:b0:33d:6bd3:9e28 with SMTP id
- q17-20020adff511000000b0033d6bd39e28mr1208229wro.70.1708692272303; 
- Fri, 23 Feb 2024 04:44:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGy1FDbIczoEV6HKRUyBgvdGYK3IcfHpgqyvOFFYwCFyYgBakQel3X9zAOz5YEEPxJ3bHXgLA==
-X-Received: by 2002:adf:f511:0:b0:33d:6bd3:9e28 with SMTP id
- q17-20020adff511000000b0033d6bd39e28mr1208218wro.70.1708692271998; 
- Fri, 23 Feb 2024 04:44:31 -0800 (PST)
+ bh=wdFeJfFPd+rESlH0Stf2Q7C2WzvaU7Ne4mFpQgmpfoM=;
+ b=t3BcvK3zIkO4rssli860QT2lff3A4hpPdKCtWFJaY9r+77DAxHfSSDmzVaRuZIzidA
+ FAJLCb1MdRD2eJVCF2n6KXlLdNdbw6FTbtJ7tIPHTa8vINUA+engp598MGXEAMa4CuE7
+ /VPb9UTbfhjUuSt+569L6wuXaRfVavGBsKSmbeeAMbNbpJOZTKVaeKBVnkVKr67Yx5pH
+ fSxtGewBoPqNNJP2zubBIip94oxYsACALs876WS3mwtPF0RyaKi1rIb/3jPDnPuHqCcB
+ sNU36F1VWaFi/dRr13mHhetH3ccnQcA36RTVigYuHvUt10ez82j1mfDFH2AtJbXtLCSB
+ RBFg==
+X-Gm-Message-State: AOJu0Yw0MHvvFODUY/hOWyZLofKRalPfgEv20DKMT2BzLdAwG6DJ2Gpo
+ quS7d/7pVB3NVPRq0fV0DXcIXVXsTO3WhKo87cek4pyvu4vDDN7QjeL3GhnIG7y9cKMpUL5urDd
+ RsxGHtVBe/NbWsT5WHuzoM3MvhA1FG8fzPpxrtxapELKsd7HYdxkhYFgdjdgdj//r8sVYjCBzeu
+ 9lX6kzCdrwcTWPcG9WWYkPY750tDQnKm7a9zAu
+X-Received: by 2002:a5d:4206:0:b0:33b:636e:c967 with SMTP id
+ n6-20020a5d4206000000b0033b636ec967mr1294125wrq.1.1708692269924; 
+ Fri, 23 Feb 2024 04:44:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFS0LU2NZ6+ixSSAqdRDaqXiQKZUgk7K7RMRwoMbR7rTgMASC/o2VDWNaw0NVSYvNF9nkBHzg==
+X-Received: by 2002:a5d:4206:0:b0:33b:636e:c967 with SMTP id
+ n6-20020a5d4206000000b0033b636ec967mr1294110wrq.1.1708692269551; 
+ Fri, 23 Feb 2024 04:44:29 -0800 (PST)
 Received: from [192.168.10.118] ([2001:b07:6468:f312:9af8:e5f5:7516:fa89])
  by smtp.gmail.com with ESMTPSA id
- z11-20020adfe54b000000b0033da18b05f2sm2676512wrm.32.2024.02.23.04.44.30
+ v9-20020a05600c444900b0041228b2e179sm2262252wmn.39.2024.02.23.04.44.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 04:44:30 -0800 (PST)
+ Fri, 23 Feb 2024 04:44:27 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	balaton@eik.bme.hu
-Subject: [PATCH 08/10] usb: remove usb_bus_find
-Date: Fri, 23 Feb 2024 13:44:04 +0100
-Message-ID: <20240223124406.234509-9-pbonzini@redhat.com>
+Subject: [PATCH 07/10] pseries: do not require CONFIG_USB
+Date: Fri, 23 Feb 2024 13:44:03 +0100
+Message-ID: <20240223124406.234509-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240223124406.234509-1-pbonzini@redhat.com>
 References: <20240223124406.234509-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -86,9 +87,8 @@ X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,59 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inline the sole remaining use, which is for the -usbdevice command line.
+With --without-default-devices it is possible to build a binary that
+does not include any USB host controller and therefore that does not
+include the code guarded by CONFIG_USB.  While the simpler creation
+functions such as usb_create_simple can be inlined, this is not true
+of usb_bus_find().  Remove it, replacing it with a search of the single
+USB bus on the machine.
 
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/usb.h |  1 -
- hw/usb/bus.c     | 15 +--------------
- 2 files changed, 1 insertion(+), 15 deletions(-)
+ hw/ppc/spapr.c | 7 +++----
+ hw/ppc/Kconfig | 1 +
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/usb.h b/include/hw/usb.h
-index cfeead28403..d46d96779ad 100644
---- a/include/hw/usb.h
-+++ b/include/hw/usb.h
-@@ -498,7 +498,6 @@ struct USBBusOps {
- void usb_bus_new(USBBus *bus, size_t bus_size,
-                  USBBusOps *ops, DeviceState *host);
- void usb_bus_release(USBBus *bus);
--USBBus *usb_bus_find(int busnr);
- void usb_legacy_register(const char *typename, const char *usbdevice_name,
-                          USBDevice *(*usbdevice_init)(void));
- USBDevice *usbdevice_create(const char *cmdline);
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 76fda41b7ec..796769fadb4 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -100,19 +100,6 @@ void usb_bus_release(USBBus *bus)
-     QTAILQ_REMOVE(&busses, bus, next);
- }
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 0d72d286d80..44d339982da 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3024,10 +3024,9 @@ static void spapr_machine_init(MachineState *machine)
+         }
  
--USBBus *usb_bus_find(int busnr)
--{
--    USBBus *bus;
+         if (has_vga) {
+-            USBBus *usb_bus = usb_bus_find(-1);
 -
--    if (-1 == busnr)
--        return QTAILQ_FIRST(&busses);
--    QTAILQ_FOREACH(bus, &busses, next) {
--        if (bus->busnr == busnr)
--            return bus;
--    }
--    return NULL;
--}
--
- static void usb_device_realize(USBDevice *dev, Error **errp)
- {
-     USBDeviceClass *klass = USB_DEVICE_GET_CLASS(dev);
-@@ -643,7 +630,7 @@ HumanReadableText *qmp_x_query_usb(Error **errp)
- /* handle legacy -usbdevice cmd line option */
- USBDevice *usbdevice_create(const char *driver)
- {
--    USBBus *bus = usb_bus_find(-1 /* any */);
-+    USBBus *bus = QTAILQ_FIRST(&busses);
-     LegacyUSBFactory *f = NULL;
-     Error *err = NULL;
-     GSList *i;
+-            usb_create_simple(usb_bus, "usb-kbd");
+-            usb_create_simple(usb_bus, "usb-mouse");
++            Object *usb_bus = object_resolve_type_unambiguous(TYPE_USB_BUS, &error_abort);
++            usb_create_simple(USB_BUS(usb_bus), "usb-kbd");
++            usb_create_simple(USB_BUS(usb_bus), "usb-mouse");
+         }
+     }
+ 
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index 9841c2c9690..d497fa2b825 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -1,5 +1,6 @@
+ config PSERIES
+     bool
++    imply USB_OHCI_PCI
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+     imply VIRTIO_VGA
 -- 
 2.43.0
 
