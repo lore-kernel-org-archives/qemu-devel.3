@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FB0C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 05:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD47C48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 05:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdO3m-0005fh-6l; Fri, 23 Feb 2024 00:25:22 -0500
+	id 1rdO5V-00077o-S2; Fri, 23 Feb 2024 00:27:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rdO3a-0005W4-Jz
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 00:25:11 -0500
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rdO3G-0005s7-Va
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 00:25:10 -0500
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a3e7ce7dac9so50881966b.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 21:24:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1708665889; x=1709270689; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kdFHXhmvDb25vHI+WXPFJhobvLWIcTUdohNv3qG2z8Y=;
- b=b+DX0fxVevnC13As7fvCwyVVwgX6lB9j+pwqSeVh0pLFtldwH+VbDZE8qPPdSa/G5P
- 3AlzjuTkvOsx140IkSrVSTcAtuHXPW6M0pcoa1ay+O1mmeqGtglIk/IicLuUwIYnP56Q
- lae4WLej1yLN4Egv1oKwRv56lG8UTy9a5inZROayTs1QOo+xzWdLo8uIgaButqVAsyto
- u16LyKjMz/VAyI411oUh7BTpePcCS5ZUWEbypq3JcMktOU6GoFQnmZFAQDRZ4LjZPcNz
- vq/KBstrOKfw1iKMyory0ZINfYB3EjEeJJA2jb1aR8yJDEdDQPziLhFNK/27ia+OusAI
- hJYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708665889; x=1709270689;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kdFHXhmvDb25vHI+WXPFJhobvLWIcTUdohNv3qG2z8Y=;
- b=IZoFuvUK2fj4f74G8QBa/rXIrjYowAzaDlJQFx8DPb5F/5je01TedOtToWZQLDxqiC
- L4s3ZO8vGfuhZOIndNCQZimt9A6Re443GByuYa9+ksGRHksC5bzLUbrVsyX8CMLHsFI1
- xYkds3/2/sL3n4f0fgryKevH7HNtHTFsHwTKI7gcyQjFUPDnWpuSz3LOrYC06VGSO9kh
- 6Yy1SqlUjzLk2PZtkVAXZWk1ipFOvzu4n1FESTkLsovtzMT908Oj/LcjXQtez2dT4dYQ
- fq2RzVe1X7sjJkbzd2RovNluFEFhiq24zb7ZyLPa/1btKNLl5cgtwBtASAI3lzTrE4zf
- ssgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyk8AR9alfFMiMHR6wP8v3dG7U9Fe6xSl0Jv5FHyJnBWIVBqqb6IhrcIFzIoGMq3c9SvscLdD/LtQFnDj1EeDmJ8wv7PE=
-X-Gm-Message-State: AOJu0Yy/rMxjgCfKb7IFn+7WMbDZY7uaWnFa7NNA71hxQ143rEFB4lpo
- xWwtxrJh3LMKm3/yEszvM2MsmWLJBKsDjCn3imXeRfClLqUxVQ94ONz0pYMHDFh9kPpZfqc3X+5
- EbRUbNs5vvIsxkhb3YQ+OkIky+UV19/HEyZWwiw==
-X-Google-Smtp-Source: AGHT+IF6aeJqhWpKCP/xxHaVhSxZekhpuF4fw2922dALovk72lcOeNH1wLLKyI0TNWH5V9x/puXp4OaCKavGsxXT33U=
-X-Received: by 2002:a17:906:1c09:b0:a3e:8808:fc1d with SMTP id
- k9-20020a1709061c0900b00a3e8808fc1dmr469647ejg.64.1708665889232; Thu, 22 Feb
- 2024 21:24:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=97838892c8=schalla@marvell.com>)
+ id 1rdO4t-0006uc-9S
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 00:26:35 -0500
+Received: from mx0b-0016f401.pphosted.com ([67.231.156.173])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <prvs=97838892c8=schalla@marvell.com>)
+ id 1rdO4q-0006xJ-Ri
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 00:26:30 -0500
+Received: from pps.filterd (m0045851.ppops.net [127.0.0.1])
+ by mx0b-0016f401.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 41ML8Snq001850; Thu, 22 Feb 2024 21:26:23 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=marvell.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=pfpt0220; bh=d+ckUkce
+ OoyeR4yJF6ZJfUSbi8m5w2Y0NH+3evoWjW0=; b=ABat2nioXhED1Wgwwu/GT2xm
+ skMRvNDbnPD4otH1uWKBzjBsfTNabRqDNFi97BXPbJs9CtcIlzaUiC5tpjyNe3SQ
+ 1U4WuiFS0+FAyAvU/dwjo+ZtDt02U4KBvg7jduc7OXA3eFAsYnCTtO4bQnNNewLo
+ PVfImwqJYwPuF2WO0m9z8wwDe+7wPznJmgjhArLWJsX0A4rEdhScW0ckpnMFHZZ9
+ WiL53ut6XAfRpQhjV4vuiJzwMbexY7tz0n4wzRgRegwrT8W1NICGMKOsmDSfm2oZ
+ mTul9iNm3u87c33P6qUxrCZ0lJjW8YnKx2do7auWqExDibeoLwE05gaWc26jLg==
+Received: from dc5-exch02.marvell.com ([199.233.59.182])
+ by mx0b-0016f401.pphosted.com (PPS) with ESMTPS id 3wedwxhd6t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+ Thu, 22 Feb 2024 21:26:23 -0800 (PST)
+Received: from DC5-EXCH02.marvell.com (10.69.176.39) by DC5-EXCH02.marvell.com
+ (10.69.176.39) with Microsoft SMTP Server (TLS) id 15.0.1497.48;
+ Thu, 22 Feb 2024 21:26:21 -0800
+Received: from maili.marvell.com (10.69.176.80) by DC5-EXCH02.marvell.com
+ (10.69.176.39) with Microsoft SMTP Server id 15.0.1497.48 via Frontend
+ Transport; Thu, 22 Feb 2024 21:26:21 -0800
+Received: from localhost.localdomain (unknown [10.28.36.175])
+ by maili.marvell.com (Postfix) with ESMTP id 0C99A3F7068;
+ Thu, 22 Feb 2024 21:26:18 -0800 (PST)
+From: Srujana Challa <schalla@marvell.com>
+To: <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <jasowang@redhat.com>, <vattunuru@marvell.com>,
+ <jerinj@marvell.com>, <schalla@marvell.com>
+Subject: [PATCH v3] virtio-pci: correctly set virtio pci queue mem multiplier
+Date: Fri, 23 Feb 2024 10:56:17 +0530
+Message-ID: <20240223052617.1867132-1-schalla@marvell.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-5-hao.xiang@bytedance.com>
- <CAEr7rXg5kZsUnDd8tcLu7Y4NmLrhWmu5bjh8KtAYnYubbHqbJA@mail.gmail.com>
-In-Reply-To: <CAEr7rXg5kZsUnDd8tcLu7Y4NmLrhWmu5bjh8KtAYnYubbHqbJA@mail.gmail.com>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Thu, 22 Feb 2024 21:24:38 -0800
-Message-ID: <CAAYibXir5+e3xeP1rwN49tp+fpQzH_GmSTKAag8xPwwMf0TUsg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2 4/7] migration/multifd: Enable zero page
- checking from multifd threads.
-To: Elena Ufimtseva <ufimtseva@gmail.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
- thuth@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org, 
- jdenemar@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Proofpoint-GUID: sf_XIhcGLMbJ8pFZHlAScyY8j5II3ULh
+X-Proofpoint-ORIG-GUID: sf_XIhcGLMbJ8pFZHlAScyY8j5II3ULh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-22_15,2024-02-22_01,2023-05-22_02
+Received-SPF: pass client-ip=67.231.156.173;
+ envelope-from=prvs=97838892c8=schalla@marvell.com;
+ helo=mx0b-0016f401.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,190 +86,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 21, 2024 at 8:11=E2=80=AFAM Elena Ufimtseva <ufimtseva@gmail.co=
-m> wrote:
->
->
->
-> On Fri, Feb 16, 2024 at 2:42=E2=80=AFPM Hao Xiang <hao.xiang@bytedance.co=
-m> wrote:
->>
->> This change adds a dedicated handler for MigrationOps::ram_save_target_p=
-age in
->> multifd live migration. Now zero page checking can be done in the multif=
-d threads
->> and this becomes the default configuration. We still provide backward co=
-mpatibility
->> where zero page checking is done from the migration main thread.
->>
->> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
->> ---
->>  migration/multifd.c |  1 +
->>  migration/options.c |  2 +-
->>  migration/ram.c     | 53 ++++++++++++++++++++++++++++++++++-----------
->>  3 files changed, 42 insertions(+), 14 deletions(-)
->>
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index fbb40ea10b..ef5dad1019 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
->> @@ -13,6 +13,7 @@
->>  #include "qemu/osdep.h"
->>  #include "qemu/cutils.h"
->>  #include "qemu/rcu.h"
->> +#include "qemu/cutils.h"
->>  #include "exec/target_page.h"
->>  #include "sysemu/sysemu.h"
->>  #include "exec/ramblock.h"
->> diff --git a/migration/options.c b/migration/options.c
->> index 3c603391b0..3c79b6ccd4 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -181,7 +181,7 @@ Property migration_properties[] =3D {
->>                        MIG_MODE_NORMAL),
->>      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationSta=
-te,
->>                         parameters.zero_page_detection,
->> -                       ZERO_PAGE_DETECTION_LEGACY),
->> +                       ZERO_PAGE_DETECTION_MULTIFD),
->>
->>      /* Migration capabilities */
->>      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
->> diff --git a/migration/ram.c b/migration/ram.c
->> index 5ece9f042e..b088c5a98c 100644
->> --- a/migration/ram.c
->> +++ b/migration/ram.c
->> @@ -1123,10 +1123,6 @@ static int save_zero_page(RAMState *rs, PageSearc=
-hStatus *pss,
->>      QEMUFile *file =3D pss->pss_channel;
->>      int len =3D 0;
->>
->> -    if (migrate_zero_page_detection() !=3D ZERO_PAGE_DETECTION_LEGACY) =
-{
->> -        return 0;
->> -    }
->> -
->>      if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
->>          return 0;
->>      }
->> @@ -1256,6 +1252,10 @@ static int ram_save_page(RAMState *rs, PageSearch=
-Status *pss)
->>
->>  static int ram_save_multifd_page(RAMBlock *block, ram_addr_t offset)
->>  {
->> +    assert(migrate_multifd());
->
-> We only call ram_save_multifd_page() if:
->  if (migrate_multifd()) {
->         migration_ops->ram_save_target_page =3D ram_save_target_page_mult=
-ifd;
-> So this assert is not needed.
+Currently, virtio_pci_queue_mem_mult function always returns 4K
+when VIRTIO_PCI_FLAG_PAGE_PER_VQ is set. But this won't
+work for vhost vdpa when host has page size other than 4K.
+This patch introduces a new property(host-page-per-vq) for vdpa
+use case to fix the same.
 
-The point of an assert is to ensure the current function is called
-with the correct assumptions. In the future, if someone moves this
-function to a different place, we can catch the potential issues.
+Signed-off-by: Srujana Challa <schalla@marvell.com>
+---
+v2->v3:
+- Modified property name, page-per-vdpa-vq to host-page-per-vq.
 
->
->> +    assert(!migrate_compress());
->>
->> +    assert(!migration_in_postcopy());
->
-> These two are redundant and done before we call in here.
->
->> +
->>      if (!multifd_queue_page(block, offset)) {
->>          return -1;
->>      }
->> @@ -2046,7 +2046,6 @@ static bool save_compress_page(RAMState *rs, PageS=
-earchStatus *pss,
->>   */
->>  static int ram_save_target_page_legacy(RAMState *rs, PageSearchStatus *=
-pss)
->>  {
->> -    RAMBlock *block =3D pss->block;
->>      ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
->>      int res;
->>
->> @@ -2062,17 +2061,40 @@ static int ram_save_target_page_legacy(RAMState =
-*rs, PageSearchStatus *pss)
->>          return 1;
->>      }
->>
->> +    return ram_save_page(rs, pss);
->> +}
->> +
->> +/**
->> + * ram_save_target_page_multifd: save one target page
->> + *
->> + * Returns the number of pages written
->> + *
->> + * @rs: current RAM state
->> + * @pss: data about the page we want to send
->> + */
->> +static int ram_save_target_page_multifd(RAMState *rs, PageSearchStatus =
-*pss)
->> +{
->> +    RAMBlock *block =3D pss->block;
->> +    ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_BITS;
->> +
->> +    /* Multifd is not compatible with old compression. */
->> +    assert(!migrate_compress());
->
-> Do we need to check this for every page?
->
->>
->> +    /* Multifd is not compabible with postcopy. */
->> +    assert(!migration_in_postcopy());
->> +
->>      /*
->> -     * Do not use multifd in postcopy as one whole host page should be
->> -     * placed.  Meanwhile postcopy requires atomic update of pages, so =
-even
->> -     * if host page size =3D=3D guest page size the dest guest during r=
-un may
->> -     * still see partially copied pages which is data corruption.
->> +     * Backward compatibility support. While using multifd live
->> +     * migration, we still need to handle zero page checking on the
->> +     * migration main thread.
->>       */
->> -    if (migrate_multifd() && !migration_in_postcopy()) {
->> -        return ram_save_multifd_page(block, offset);
->> +    if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_LEGACY=
-) {
->> +        if (save_zero_page(rs, pss, offset)) {
->> +            return 1;
->> +        }
->>      }
->>
->> -    return ram_save_page(rs, pss);
->> +    return ram_save_multifd_page(block, offset);
->>  }
->>
->>  /* Should be called before sending a host page */
->> @@ -2984,7 +3006,12 @@ static int ram_save_setup(QEMUFile *f, void *opaq=
-ue)
->>      }
->>
->>      migration_ops =3D g_malloc0(sizeof(MigrationOps));
->> -    migration_ops->ram_save_target_page =3D ram_save_target_page_legacy=
-;
->> +
->> +    if (migrate_multifd()) {
->> +        migration_ops->ram_save_target_page =3D ram_save_target_page_mu=
-ltifd;
->> +    } else {
->> +        migration_ops->ram_save_target_page =3D ram_save_target_page_le=
-gacy;
->> +    }
->>
->>      bql_unlock();
->>      ret =3D multifd_send_sync_main();
->> --
->> 2.30.2
->>
->>
->
->
-> --
-> Elena
+v1->v2:
+- Introduced a new property to get virtqueue mem multiplier for
+  vdpa use case.
+
+ hw/virtio/virtio-pci.c         | 10 ++++++++--
+ include/hw/virtio/virtio-pci.h |  5 +++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 1a7039fb0c..f29e60830b 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -320,8 +320,12 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
+ 
+ static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
+ {
+-    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
+-        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
++    if (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)
++        return QEMU_VIRTIO_PCI_QUEUE_MEM_MULT;
++    else if (proxy->flags & VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ)
++        return qemu_real_host_page_size();
++    else
++        return 4;
+ }
+ 
+ static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
+@@ -2301,6 +2305,8 @@ static Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_AER_BIT, false),
++    DEFINE_PROP_BIT("host-page-per-vq", VirtIOPCIProxy, flags,
++                    VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 59d88018c1..81b6de4291 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -43,6 +43,7 @@ enum {
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
++    VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT,
+ };
+ 
+ /* Need to activate work-arounds for buggy guests at vmstate load. */
+@@ -89,6 +90,10 @@ enum {
+ #define VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED \
+   (1 << VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT)
+ 
++/* page per vdpa vq flag to be used for vhost vdpa backends */
++#define VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ \
++    (1 << VIRTIO_PCI_FLAG_HOST_PAGE_PER_VQ_BIT)
++
+ typedef struct {
+     MSIMessage msg;
+     int virq;
+-- 
+2.25.1
+
 
