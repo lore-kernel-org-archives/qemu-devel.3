@@ -4,60 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F18C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE14C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdaxd-0006Jc-AE; Fri, 23 Feb 2024 14:11:53 -0500
+	id 1rdb36-00005d-4V; Fri, 23 Feb 2024 14:17:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rdaJ3-0003Vp-Po; Fri, 23 Feb 2024 13:29:57 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rdaJ0-0003IW-U6; Fri, 23 Feb 2024 13:29:57 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 137554E6004;
- Fri, 23 Feb 2024 19:29:50 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 6dhJnxTjsXcP; Fri, 23 Feb 2024 19:29:47 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id BB6624E6003; Fri, 23 Feb 2024 19:29:47 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B97557456FE;
- Fri, 23 Feb 2024 19:29:47 +0100 (CET)
-Date: Fri, 23 Feb 2024 19:29:47 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: David Parsons <dave@daveparsons.net>
-cc: Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>, 
- qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] ui/cocoa: Fix incorrect window clipping on macOS
- Sonoma
-In-Reply-To: <E5C37F0E-3B73-45FA-8FC7-5E39CBF765BF@daveparsons.net>
-Message-ID: <3c915fba-f332-f0f1-056a-8d8a454b6383@eik.bme.hu>
-References: <DDADA9A9-DED4-4510-A532-7600C0233467@daveparsons.net>
- <fdda385d-2e18-4554-88d0-e43cb5b90e39@tls.msk.ru>
- <CAFEAcA9psJuvPz+mWYzWz0NLTcQTCNhknFrGZ2bx7Frtb3=B4A@mail.gmail.com>
- <c018e266-0092-4d9e-ba2f-397cb0a1518e@daynix.com>
- <E5C37F0E-3B73-45FA-8FC7-5E39CBF765BF@daveparsons.net>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdakX-00026g-U2
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:58:22 -0500
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdakQ-0001qQ-U9
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 13:58:20 -0500
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2d1094b5568so8446761fa.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 10:58:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708714692; x=1709319492; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J/bB188QSPtliY19D0owRMygWLnL7OHeb/8O0+Oo0OQ=;
+ b=jjcKoFf8o96vphokXzTEuN8jp8ZYtUZGkFbyoxwUIyNsVN1W6mZ3/XWJWwQa+GQ4E8
+ lxGtZIhfECGXqJ+bVCToBpHQfERqc6h0OBzgO7LpSPGJI71iIBn821aYSpwZxQkDzQ79
+ nAqN5rthjdO7qdSm6kuRCRX4gxy8k/TZ/QT0mvuhvU0QUU1NvI2HGtPLf9chKSGe8D5r
+ HD/aO9oCPlzCjuclWrPk5ArpbFQsIBVQEUPHR4OPGnvA/zzDWZkVAFwyeQnXtggRz8jZ
+ NaIySfFg2YjeRWCI1HC1PbIaY9rsfVDnJfwYzxhkHJHl9IbFSUYp3f9u7+X8WITDr97D
+ Vchg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708714692; x=1709319492;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J/bB188QSPtliY19D0owRMygWLnL7OHeb/8O0+Oo0OQ=;
+ b=M2AciPIiqbXIT1f84DdNxZhvCy7RU6NlQbOpijX5bNK2XUr+57AkSAKZL5KaehRj98
+ twZ2DbCSjrnvwjOhSL+p/eyTdXB5w5naQpjs1lriVRzmNqoj1oqzUJAh2QjnAsthffqW
+ Ca3K12GJMUcA9EdCusGED+J+l1AeKe7lv3TBj6p9tFNk+zmFGw6jMkSYaB2qx42u7aFW
+ NegS1OZHAlWgvUoZULaQX7ieoUomApNuhsLJMA3LeFV82ZSKkuIXKo6X0ce9850XN7ea
+ yQJDEq63yB43poxqNeKuJQAUiySs+MIw3fvrWk9m9eUqd7LKcXLoeT2nkoN4xxsZUPnV
+ z15A==
+X-Gm-Message-State: AOJu0YwT9ZiWszEBz0DIXJpxDBnOcQOG6igQ++D2gN4eznQQWP6q1p0a
+ P9RLFqQ/AqDivvDliYcKeulU+Utj/QOLy8C2cXcI35KeIGel1rSotrHAlYpJVz0qV68Ng1D8PuX
+ I4arpVMtQPDguGYemHtgNL4ABUYiLmI34Bs1kOg==
+X-Google-Smtp-Source: AGHT+IFrHqs28swwi6lU3mj45bxy0zZUBWwCCy4WuVHG1N1Z2HtSRXagySQsB+6UaAebPBGhiLArHXYO1joGQxNc9pE=
+X-Received: by 2002:a2e:9003:0:b0:2d2:5275:b40d with SMTP id
+ h3-20020a2e9003000000b002d25275b40dmr21878ljg.31.1708714691772; Fri, 23 Feb
+ 2024 10:58:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-458185346-1708712987=:13514"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240220192625.17944-1-philmd@linaro.org>
+ <20240220192625.17944-2-philmd@linaro.org>
+In-Reply-To: <20240220192625.17944-2-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Feb 2024 18:58:01 +0000
+Message-ID: <CAFEAcA-i2e+MNiwkPyqOjFXJjBOW2WX-=Sz10YR9YQ2Lpm0ARQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/2] target/alpha: Expose TMR and SMP IRQ lines via
+ QDev
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Alexander Graf <agraf@csgraf.de>, Anton Johansson <anjo@rev.ng>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,141 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-458185346-1708712987=:13514
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 23 Feb 2024, David Parsons wrote:
-> Hi Akihiko
+On Tue, 20 Feb 2024 at 19:28, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> I’ve re-worked the patch to match your suggestion. I have compiled
-> and tested it on Sonoma and Monterey and both builds worked correctly.
+> In order to remove calls to cpu_interrupt() from hw/ code,
+> expose the TMR and SMP interrupts via QDev as named GPIOs.
 >
-> New patch is below. I’m new to sending patches to QEMU so please let
-> me know if I need to do anything else to get it incorporated into the
-> repo.
-
-See here for detailed docs:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html
-
-In short you'd need to make the patch the same way you did the first 
-version with the changed content but as [PATCH v2] and send it again as a 
-new patch like you did the first time. (You can use -v2 option to git 
-format-patch to add v2 to subject but if you're not using git format-patch 
-directly then I'm not sure what option will do that for the way you send 
-the patch.)
-
-Regards,
-BALATON Zoltan
-
-> Dave
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/alpha/cpu.c | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
 >
-> diff --git a/ui/cocoa.m b/ui/cocoa.m
-> index eb99064bee..bbf9704b8c 100644
-> --- a/ui/cocoa.m
-> +++ b/ui/cocoa.m
-> @@ -54,6 +54,10 @@
-> #define MAC_OS_X_VERSION_10_13 101300
-> #endif
+> diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+> index bf70173a25..619cd54593 100644
+> --- a/target/alpha/cpu.c
+> +++ b/target/alpha/cpu.c
+> @@ -25,6 +25,31 @@
+>  #include "cpu.h"
+>  #include "exec/exec-all.h"
 >
-> +#ifndef MAC_OS_VERSION_14_0
-> +#define MAC_OS_VERSION_14_0 140000
-> +#endif
+> +#ifndef CONFIG_USER_ONLY
+> +static void alpha_cpu_tmr_irq(void *opaque, int irq, int level)
+> +{
+> +    DeviceState *dev =3D opaque;
+> +    CPUState *cs =3D CPU(dev);
 > +
-> /* 10.14 deprecates NSOnState and NSOffState in favor of
->  * NSControlStateValueOn/Off, which were introduced in 10.13.
->  * Define for older versions
-> @@ -365,6 +369,9 @@ - (id)initWithFrame:(NSRect)frameRect
->         screen.width = frameRect.size.width;
->         screen.height = frameRect.size.height;
->         kbd = qkbd_state_init(dcl.con);
-> +#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
-> +        [self setClipsToBounds:YES];
-> +#endif
->
->     }
->     return self;
->
->
->> On 23 Feb 2024, at 11:28, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> On 2024/02/23 2:10, Peter Maydell wrote:
->>> On Thu, 22 Feb 2024 at 06:08, Michael Tokarev <mjt@tls.msk.ru> wrote:
->>>>
->>>> [Adding a few more Ccs]
->>>>
->>>> 17.02.2024 18:58, David Parsons :
->>>>> macOS Sonoma changes the NSView.clipsToBounds to false by default where it was true in
->>>>> earlier version of macOS. This causes the window contents to be obscured by the window
->>>>> frame. This fixes the issue by conditionally setting the clipping on Sonoma to true.
->>
->> Thanks for posting a patch for this critical problem.
->>
->>>>>
->>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
->>>>> Signed-off-by: David Parsons <dave@daveparsons.net>
->>>>>
->>>>> diff --git a/ui/cocoa.m b/ui/cocoa.m
->>>>> index eb99064bee..c9e3b96004 100644
->>>>> --- a/ui/cocoa.m
->>>>> +++ b/ui/cocoa.m
->>>>> @@ -365,6 +365,9 @@ - (id)initWithFrame:(NSRect)frameRect
->>>>>           screen.width = frameRect.size.width;
->>>>>           screen.height = frameRect.size.height;
->>>>>           kbd = qkbd_state_init(dcl.con);
->>>>> +        if (@available(macOS 14, *)) {
->>>>> +            [self setClipsToBounds:YES];
->>>>> +        }
->>>>>
->>>>>       }
->>>>>       return self;
->>>>>
->>>>
->>>> Hi David!
->>>>
->>>> While the code change is tiny, I for one know nothing about MacOS and
->>>> its cocoa thing, so to me (with my trivial-patches hat on) this is a
->>>> no-go.  I'd love to have a review from someone more knowlegeable in
->>>> this area.
->>> Mmm. Akihiko is the expert here, but I do notice that we don't
->>> seem to be handling the "macos-version-specific" stuff in a
->>> way we've done it before (we don't use @available elsewhere).
->>> I did wonder if we could call the setClipsToBounds method unconditionally;
->>> The release notes say
->>> https://developer.apple.com/documentation/macos-release-notes/appkit-release-notes-for-macos-14#NSView
->>> "This property is available back to macOS 10.9. This availability is
->>> intended to allow code targeting older OSes to set this property to
->>> true without guarding the setter in an availability check."
->>> but I think that might only mean "you can do this building on a new
->>> SDK that's targeting an old version", not "you can do this
->>> when building on an older SDK" (at least judging from the
->>> comments in the gitlab issue).
->>
->> Apparently it is that case.
->>
->> Please check if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
->> instead of using @available. See commit 5e24600a7c1c ("ui/cocoa.m: Fix macOS 10.14 deprecation warnings") for example.
->>
->>> The other option would be to fix whatever it is that we're
->>> presumably not getting right that means this default change
->>> caused the bug. My guess is that we are in the case
->>> "Confusing a view’s bounds and its dirty rect. The dirty rect
->>>  passed to .drawRect() should be used to determine what to draw,
->>>  not where to draw it. Use NSView.bounds when determining the
->>>  layout of what your view draws."
->>> But unless the fix for that is really obvious and easy I guess
->>> that flipping the default back to its old value is the better
->>> approach.
->>
->> It is a chore to convert the coordinates using NSView.bounds. Let's keep using clipsToBounds.
->>
->>> -- PMM
->>
->>
->
->
---3866299591-458185346-1708712987=:13514--
+> +    if (level) {
+> +        cs->interrupt_request |=3D CPU_INTERRUPT_TIMER;
+> +    } else {
+> +        cs->interrupt_request &=3D ~CPU_INTERRUPT_TIMER;
+> +    }
+
+These should call cpu_interrupt(), because otherwise you
+lose the logic that does a cpu-kick if one CPU triggers
+an interrupt on another. (Also you lose the handling for
+non-TCG accelerators, not that that's an issue for Alpha.)
+Compare arm_cpu_set_irq().
+
+thanks
+-- PMM
 
