@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A2DC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:44:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DCDC48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 08:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdRA6-0003o5-22; Fri, 23 Feb 2024 03:44:06 -0500
+	id 1rdRA2-0003mS-Kh; Fri, 23 Feb 2024 03:44:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rdRA0-0003lb-RG; Fri, 23 Feb 2024 03:44:02 -0500
+ id 1rdR9y-0003l7-1Q; Fri, 23 Feb 2024 03:43:58 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rdR9z-0000BO-7B; Fri, 23 Feb 2024 03:44:00 -0500
+ id 1rdR9w-0000BO-Cm; Fri, 23 Feb 2024 03:43:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708677839; x=1740213839;
+ t=1708677836; x=1740213836;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=MdIfh/jYydArR3D22MnTaJm9imdQCnDqtGGlbaFl++w=;
- b=JUCrwAi9HXFCrFIz9r7w0S/eZ3/WNjN+rEZE1zrp/wNGnZuACQ3u3lu9
- vzUEZeQklvzHG8TFgFhXEPqHwvmxox3OAHanNxY1mEbzQQ/uJAnHQjUoR
- 74KDJZsGygFQjX/LBYUnwXzF9aPAy+G4zMx2N/Pqs0qcKYaM2wlvX1cFu
- uTugGlgPv6dCErZZ1PncweFQeGdsxICjbXjEj0hF75hJRXGTYnL4jwsFU
- OlRzEn9Mk25fb2V5HlYbiEMa1QTo5RL82SPvy2BQ+b08bBRHheQJGsZ/F
- Q20iWGNVGy3hq7OUHl2g/V9mvjEwVMPsce5mkXitw+HHBmVdbLYuDvNlz w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="28413916"
-X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="28413916"
+ bh=F8skAR9lhlBSxUk/sclMG9tzN4DHjUmO6+uY1BPToZ0=;
+ b=Xeo0nutKpIQ8BzicXiZOay9j4/u+95iBOF2KsgLtDEAlnV1czK3PwD3i
+ oknKCjcUs3RlvOyj6x8TG7dGnosZ1YjylKIN2WkFgigP5w9idmbv0LEwY
+ xrOlxK9gvpgb4yHBIpnIohYy171Ilgt1nsbvHrh2m11vibxDK7TUtKPso
+ 9KCqxxuZ+3UFYMPCzWVyoh8ofpDj72YZTLrxhOGgeGXeo0Rr1G2FuvzLf
+ /BITIQJ61CYL0JiDwwwN7zODfpZm0XWELCni/1I426L1W8pYGFki1dj3d
+ E5S1qR+DjwNzKKGkj9btrluZo4uVrK2QgSoku8MU0jcWIA//65dVLq2yK g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10992"; a="28413872"
+X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; d="scan'208";a="28413872"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Feb 2024 00:43:52 -0800
+ 23 Feb 2024 00:43:44 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,179,1705392000"; 
-   d="scan'208";a="5731881"
+   d="scan'208";a="5731852"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 23 Feb 2024 00:43:48 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 23 Feb 2024 00:43:39 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Fan Ni <fan.ni@samsung.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -55,10 +55,10 @@ To: Jonathan Cameron <jonathan.cameron@huawei.com>,
  Michael Tokarev <mjt@tls.msk.ru>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-trivial@nongnu.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 7/7] hw/intc: Check @errp to handle the error of
- IOAPICCommonClass.realize()
-Date: Fri, 23 Feb 2024 16:56:53 +0800
-Message-Id: <20240223085653.1255438-8-zhao1.liu@linux.intel.com>
+Subject: [PATCH v2 5/7] hw/pci-bridge/cxl_upstream: Fix missing ERRP_GUARD()
+ in cxl_usp_realize()
+Date: Fri, 23 Feb 2024 16:56:51 +0800
+Message-Id: <20240223085653.1255438-6-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
 References: <20240223085653.1255438-1-zhao1.liu@linux.intel.com>
@@ -89,43 +89,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-IOAPICCommonClass implements its own private realize(), and this private
-realize() allows error.
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
-Since IOAPICCommonClass.realize() returns void, to check the error,
-dereference @errp with ERRP_GUARD().
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+...
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
 
+But in cxl_usp_realize(), @errp is dereferenced without ERRP_GUARD():
+
+cxl_doe_cdat_init(cxl_cstate, errp);
+if (*errp) {
+    goto err_cap;
+}
+
+Here we check *errp, because cxl_doe_cdat_init() returns void. And since
+cxl_usp_realize() - as a PCIDeviceClass.realize() method - doesn't get
+the NULL @errp parameter, it hasn't triggered the bug that dereferencing
+the NULL @errp.
+
+To follow the requirement of @errp, add missing ERRP_GUARD() in
+cxl_usp_realize().
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+---
+Suggested by credit:
+ Markus: Referred his explanation about ERRP_GUARD().
 ---
 v2:
- * Add the missing ERRP_GUARD(). (Markus)
- * Move this single patch into @errp fixing series. (Micheal)
+ * Add the @errp dereference code in commit message to make review
+   easier. (Markus)
 ---
- hw/intc/ioapic_common.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/pci-bridge/cxl_upstream.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
-index cb9bf6214608..efbe6958c8d7 100644
---- a/hw/intc/ioapic_common.c
-+++ b/hw/intc/ioapic_common.c
-@@ -152,6 +152,7 @@ static int ioapic_dispatch_post_load(void *opaque, int version_id)
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index e87eb4017713..03d123cca0ef 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -289,6 +289,7 @@ static void free_default_cdat_table(CDATSubHeader **cdat_table, int num,
  
- static void ioapic_common_realize(DeviceState *dev, Error **errp)
+ static void cxl_usp_realize(PCIDevice *d, Error **errp)
  {
 +    ERRP_GUARD();
-     IOAPICCommonState *s = IOAPIC_COMMON(dev);
-     IOAPICCommonClass *info;
- 
-@@ -162,6 +163,9 @@ static void ioapic_common_realize(DeviceState *dev, Error **errp)
- 
-     info = IOAPIC_COMMON_GET_CLASS(s);
-     info->realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
- 
-     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->io_memory);
-     ioapic_no++;
+     PCIEPort *p = PCIE_PORT(d);
+     CXLUpstreamPort *usp = CXL_USP(d);
+     CXLComponentState *cxl_cstate = &usp->cxl_cstate;
 -- 
 2.34.1
 
