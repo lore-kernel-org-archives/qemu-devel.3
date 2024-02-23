@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E59C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31785C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdYtR-0005HG-El; Fri, 23 Feb 2024 11:59:25 -0500
+	id 1rdYx1-000189-0S; Fri, 23 Feb 2024 12:03:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdYcu-0003JW-1i
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:42:20 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1rdYi0-0000fR-FY
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:47:36 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdYcs-00015G-9E
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:42:19 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-563bb51c36eso734297a12.2
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:42:17 -0800 (PST)
+ id 1rdYhy-0002Fh-Oc
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:47:36 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-565468bec51so1966612a12.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:47:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708706537; x=1709311337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708706853; x=1709311653; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=N++o/xZQDN2B/M4OL8iVIDR6P8lcXyUhAsIK1lW9Pf4=;
- b=FZCx0cAiRC1QNjCwcRUBmPVo7vHRKFjXPp1+j7iDLo9S8GZuLzZt6CIGxQGRehFVzu
- T1PlcSjemifkQiGo5NdnEBHqWGPXc9eX3LUVIe2GIsgSyStPH7+N6P5CnbBwO9r5zAio
- 7iCyarjmCnoKURng0FJKv19TMuqqcJrWBT0TOMtOe/qU5yOIZW8E1+l2lVDZNZEFtZGP
- Mfmf6GxHZmiEhj8KBAWvUtxtTGuVBVriaqujzrkDYhmm5sfSojqZv45RLy8caqJTfIlW
- GiTepOsxGYwzuI3DzF83om70A1feJFvVb0Q50E3oihiZRyCq520spXuS6ojkhzgXyMGl
- ZUgg==
+ bh=llXsudmdYQAx5QfO0HXhkgqlqTsadywEAWz29qbJw8E=;
+ b=THFyZ0bUAX/JeW6eF0ayyVSJ6WGvt0abosdMJBcUT4XE1Z/u7KS9Nq8q4mOdWgPTy/
+ PwdNm48z6Qy9koh62scD3UYHg5FIHEkdkVekdsKHCR4ooUZkqdNSe/8PM/+lMI5kVuZF
+ D9O+q4TazgMj4VNWIXaWqXPo9usAv+qgujUz18vSuM8Cq4UAkC7GEB9nbxq9uCC2PsJv
+ VmHU62/bQDKBHKBXaUhSJCHCqKBN9Kyk8rp1uYO+tbA+RLuUV36lDnsluxGxO3L3ivnR
+ C0DRxX2CSLX1bnBg9X5x0hgZ2Gmxa5DZPJhp1WYBBQke7VqJMfJ1q7Pd7R1sFhlgpcV8
+ ORyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708706537; x=1709311337;
+ d=1e100.net; s=20230601; t=1708706853; x=1709311653;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=N++o/xZQDN2B/M4OL8iVIDR6P8lcXyUhAsIK1lW9Pf4=;
- b=RYRdvPgkl+TnC1B/QehP6vAvgeqHYykZViz29d3k9dsLOWXXkl9IYJTMqn9Vbp1hzD
- 7MgpumoSDRxIkFyXrRGTHRPYKLIcMiS8G2xPtMcBzgr9yzSqoQWpHOZTLlVsgYPKkKEq
- yeQiEv4RWHBQyJOTsNsmlhr8zx3nS2uAjIQio5PyPdpgiZbA+CTrdvRc5fp8vrT3EhFl
- kaIKNSyNWwl0eX+MGJ3HSqyNS9HDf/t+beHk984ed4fjqxvb+ruGSatx5c+g6HT0DJt7
- X84a4FxY7YEE6DDQ2C9k1GalWBgsqlyTn1Vg7/yMq1JfAogx9lm21XkI3qAFevSAuYdl
- 0/Gw==
+ bh=llXsudmdYQAx5QfO0HXhkgqlqTsadywEAWz29qbJw8E=;
+ b=R1N2yTs+SAq8/heFDuWnlM7/iIHxQnvRd8vTf1mQa9FL8NJ3iWAr9bCEXTSenrfuIt
+ y//zEJgGkA5lpJm0B4904f9ENPsfIXNvV5hVTqRxRotJo3u/Lw/sJrxBqxUHIwhUYze6
+ PNdYJUvIlbCIDMa5Ay5Js2r48WY28roykvoBLNC/uMVIVZX8JOUqueCJ8YPVJYNBQZDD
+ B293V0oYUgYZDQh1RJKgmIX5oHvHJJuxBA2iYQqggcHgHJn5qzvlfeYesYacTh8r/W9B
+ JfvqIo3gWKxtFDl9N2bY3lxqQF325XiTZzVv+aFpgBlvzb7N0/pP8CDDxgMTx+zJNF3A
+ BUYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUslixTZ1Q4blCOJf2sGUR5U27CRa5jkyVogYEgn9dj3s0Oau8/X94Zp4qc9FrFAGaMtTxu1yqhoZ0vld0X2knL/PpVhDA=
-X-Gm-Message-State: AOJu0YyeNUAiHsPy0MKMtbyFWXJYlvSNpcKptw1ZVcNuClGjuF2ODvvW
- XOd4sCaV70fQZsEJDHbiEguSi6KoPRX+63W8Aqs2YtT7zb8os1/gTKg3fIkwhuiHq2/swXahMbB
- cJmMJE/ZK6inQILfBhIWmTYPA6wU5xIkpNdcO2Q==
-X-Google-Smtp-Source: AGHT+IHMcCLZWgr3SQDu+wNh8hJb0gs4oZj3ANldrKF/t73BKQn6gI17GToo0FvOrSMG6DOof/4y/5kKaNz4FyF4fCk=
-X-Received: by 2002:aa7:d751:0:b0:565:396b:2c1 with SMTP id
- a17-20020aa7d751000000b00565396b02c1mr248955eds.8.1708706536839; Fri, 23 Feb
- 2024 08:42:16 -0800 (PST)
+ AJvYcCVYkAfjmWeXzbfyVlBeyWmbIbju+DCSxv/87N8G0rXzcukMteNkIT+e4ErTwrrZlFPR7KLLGEriMFZxm6/zPABuWZcn5Rk=
+X-Gm-Message-State: AOJu0YzANOa9VWQiD0FvJTaTZVxHAIGuKTt0Cw72QR7x+Zu+jP35LHip
+ oXYfdtB9wgV0n7FrIFB5phhAiJBA+DMbXEjNOvc42nYYhgTSBMGZy6RzHd+RBEz4WoWJVWRVfPR
+ S6QM/NhAMg5fgS3M3E1GuyOoart0BJySWtp1LnQ==
+X-Google-Smtp-Source: AGHT+IGFGiIg5DaqkXk+xQecfC5BnXAf+/MOPsvM2aJQtY9kpBTO6Hta6d9qcfsbP6fY6JB8BmxHAYYDIB4ktIxHwoQ=
+X-Received: by 2002:a05:6402:40d1:b0:565:949e:1530 with SMTP id
+ z17-20020a05640240d100b00565949e1530mr135399edb.7.1708706853260; Fri, 23 Feb
+ 2024 08:47:33 -0800 (PST)
 MIME-Version: 1.0
 References: <20240219011739.2316619-1-sergey.kambalin@auriga.com>
- <20240219011739.2316619-7-sergey.kambalin@auriga.com>
-In-Reply-To: <20240219011739.2316619-7-sergey.kambalin@auriga.com>
+ <20240219011739.2316619-13-sergey.kambalin@auriga.com>
+In-Reply-To: <20240219011739.2316619-13-sergey.kambalin@auriga.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Feb 2024 16:42:06 +0000
-Message-ID: <CAFEAcA_0sa6bBUdja+bhMKKN+4ve6tTHC1Yqp+77=Fzede-4Dw@mail.gmail.com>
-Subject: Re: [PATCH v5 06/41] Add BCM2838 GPIO stub
+Date: Fri, 23 Feb 2024 16:47:22 +0000
+Message-ID: <CAFEAcA9Fc2oHp+vVxRgY0PMGeHcEW187rFFK5-4viQGb3hHgaQ@mail.gmail.com>
+Subject: Re: [PATCH v5 12/41] Add memory region for BCM2837 RPiVid ASB
 To: Sergey Kambalin <serg.oker@gmail.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
  Sergey Kambalin <sergey.kambalin@auriga.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,16 +91,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 19 Feb 2024 at 01:19, Sergey Kambalin <serg.oker@gmail.com> wrote:
+On Mon, 19 Feb 2024 at 01:23, Sergey Kambalin <serg.oker@gmail.com> wrote:
 >
 > Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 > ---
->  hw/gpio/bcm2838_gpio.c         | 153 +++++++++++++++++++++++++++++++++
->  hw/gpio/meson.build            |   5 +-
->  include/hw/gpio/bcm2838_gpio.h |  40 +++++++++
->  3 files changed, 197 insertions(+), 1 deletion(-)
->  create mode 100644 hw/gpio/bcm2838_gpio.c
->  create mode 100644 include/hw/gpio/bcm2838_gpio.h
+>  hw/arm/bcm2838_peripherals.c         | 3 +++
+>  include/hw/arm/bcm2838_peripherals.h | 2 ++
+>  include/hw/arm/raspi_platform.h      | 2 +-
+>  3 files changed, 6 insertions(+), 1 deletion(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
