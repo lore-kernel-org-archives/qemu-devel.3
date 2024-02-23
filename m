@@ -4,59 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861F2C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:39:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618B9C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 19:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdbNN-0001Sn-VC; Fri, 23 Feb 2024 14:38:30 -0500
+	id 1rdbSK-0007ib-7o; Fri, 23 Feb 2024 14:43:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdawG-0005nD-Pa
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb5N-0002GF-O5
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:19:54 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdawA-0005E2-2Q
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:10:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rdb5K-0007nq-5n
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 14:19:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708715420;
+ s=mimecast20190719; t=1708715988;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DgAxyS6IW8O7GbuGWIGuj6wMTsF+Z7lreojznlOTU8E=;
- b=MR3bFY0U296iY51Ey/nHYzXd0nloNqUXOYTxwDeZhfzhNbhczFP3RR65g3+DU+CiQZbKaE
- ufIO56XXJ3XFpsVpBKupTgM8kCQy1n0BdL/kyl6DUuFYHjv7GzKG6BpOFXybJb2cACOV59
- i/1zt5wRO7k4e+gvb70QXcPVeKR+O3M=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ZpqHWqbAN/MBEhiC/FJWHqxhIj4aptI5ngFUgePBW6Y=;
+ b=h7HtwJJmGQLCzhfuBnkvlEt0+UF9KUkWYKhD9IHHmrbj+xd4cmEp/UVomFd0E3joHBlL97
+ VkpkB7/78v+Hv46AMMHiHK5EdLjc19EdQJvwkscmIbaeJmDvJo5opBpTxZQBqnmhgivE3D
+ yKI3zl3MIms/fHCUVBn6aC/G0OYYwL4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-Afn-iO_3P6yO_6_NztL7Yw-1; Fri, 23 Feb 2024 14:10:18 -0500
-X-MC-Unique: Afn-iO_3P6yO_6_NztL7Yw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0D072800074;
- Fri, 23 Feb 2024 19:10:18 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.20])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CEF7D8CED;
- Fri, 23 Feb 2024 19:10:16 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 09/11] .gitlab-ci.d: Drop cross-win32-system job
-Date: Fri, 23 Feb 2024 20:10:01 +0100
-Message-ID: <20240223191003.6268-10-thuth@redhat.com>
-In-Reply-To: <20240223191003.6268-1-thuth@redhat.com>
-References: <20240223191003.6268-1-thuth@redhat.com>
+ us-mta-654-Ukj6UyqzMhOdzo5jAwZ2-Q-1; Fri, 23 Feb 2024 14:19:47 -0500
+X-MC-Unique: Ukj6UyqzMhOdzo5jAwZ2-Q-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33dadb50731so380917f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 11:19:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708715986; x=1709320786;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZpqHWqbAN/MBEhiC/FJWHqxhIj4aptI5ngFUgePBW6Y=;
+ b=M1dN+lRsWvav1fhup+rxmKrcvBbP8b1/gYmF4RGAGExS7HuEmv4+ZCLUQSIM0tCMPK
+ teEh6VQEm5cWRz7mweS1GaEjbS7c2tbBlRIY85oDIbXyi7IV97hZFZgGdPgTUMCNYSKn
+ 5ESKZqxQ78e+MjZ3zN1VUncewsdZsD2u8I0FDdXHFdj8GA/6MmvtGXSGIn+7xXWrjb09
+ BYuO87NVxbKpZR4Ubu2pnHrYR30KwBfSYAOBna/W+/wveqmQw6y0wUxFNgBEW2B1bRg9
+ ZQLwZfAn1Rv0sYwgvhCQANZW3np+OVCRkwRQoCISTy0jrTgDlbQIjikPHGrFuzkGmZHA
+ Nn4w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDVrrJ2k7+eghLz2uI9+lmQrrf2uyq7zTBlW5AY3O4m4eMndQyLHfmzWpC2q6iI+OiZ9G7UzoMA9vYliWiuXCkZUbCby0=
+X-Gm-Message-State: AOJu0YyCrAOG5q3pLfzM0oP+oSDqESQwXUggSUQUoI+2HJaiPNc2SW/2
+ ChJoFz/n77YmW10Rl2bli6zbchpDfdkRjrC80/vxhpvVQQ7T5XRG/GziMUR7T1R6i87TjIbk40+
+ i/0gmcOrt5bIFo1Td9r0eDW9VOIfhXaSEEmrEd6mZ5LSS2uMCNlji
+X-Received: by 2002:adf:f88f:0:b0:33d:2226:a26b with SMTP id
+ u15-20020adff88f000000b0033d2226a26bmr502484wrp.24.1708715986082; 
+ Fri, 23 Feb 2024 11:19:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF8BiqXEeDAx149bgRRErhjY5XVfClhAxL/0iGzOU+nMKqaraGJdWQRUXUBRx/Im6k5yigq4A==
+X-Received: by 2002:adf:f88f:0:b0:33d:2226:a26b with SMTP id
+ u15-20020adff88f000000b0033d2226a26bmr502473wrp.24.1708715985766; 
+ Fri, 23 Feb 2024 11:19:45 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
+ [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
+ ay28-20020a5d6f1c000000b0033d60cba289sm3950786wrb.68.2024.02.23.11.19.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Feb 2024 11:19:45 -0800 (PST)
+Message-ID: <3936c63a-b67a-484d-b7c0-5297b4c3aed4@redhat.com>
+Date: Fri, 23 Feb 2024 20:19:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ide: Remove last two uses of ide/internal.h outside of
+ hw/ide
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, philmd@linaro.org
+References: <20240223142633.933694E6004@zero.eik.bme.hu>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240223142633.933694E6004@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -82,200 +147,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+On 23/02/2024 15.26, BALATON Zoltan wrote:
+> Remove last two includes of hw/ide/intarnal.h outside of hw/ide and
+> replace them with newly added public header to allow moving internal.h
+> into hw/ide to really stop exposing it.
+> 
+> Fixes: a11f439a0e (hw/ide: Stop exposing internal.h to non-IDE files)
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/arm/sbsa-ref.c                 | 2 +-
+>   {include/hw => hw}/ide/internal.h | 0
+>   include/hw/misc/macio/macio.h     | 2 +-
+>   3 files changed, 2 insertions(+), 2 deletions(-)
+>   rename {include/hw => hw}/ide/internal.h (100%)
+> 
+> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+> index 5d3a574664..f027622a75 100644
+> --- a/hw/arm/sbsa-ref.c
+> +++ b/hw/arm/sbsa-ref.c
+> @@ -36,7 +36,7 @@
+>   #include "hw/arm/smmuv3.h"
+>   #include "hw/block/flash.h"
+>   #include "hw/boards.h"
+> -#include "hw/ide/internal.h"
+> +#include "hw/ide/ide-bus.h"
+>   #include "hw/ide/ahci_internal.h"
+>   #include "hw/ide/ahci-sysbus.h"
+>   #include "hw/intc/arm_gicv3_common.h"
+> diff --git a/include/hw/ide/internal.h b/hw/ide/internal.h
+> similarity index 100%
+> rename from include/hw/ide/internal.h
+> rename to hw/ide/internal.h
+> diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
+> index 86df2c2b60..2b54da6b31 100644
+> --- a/include/hw/misc/macio/macio.h
+> +++ b/include/hw/misc/macio/macio.h
+> @@ -28,7 +28,7 @@
+>   
+>   #include "hw/char/escc.h"
+>   #include "hw/pci/pci_device.h"
+> -#include "hw/ide/internal.h"
+> +#include "hw/ide/ide-bus.h"
+>   #include "hw/intc/heathrow_pic.h"
+>   #include "hw/misc/macio/cuda.h"
+>   #include "hw/misc/macio/gpio.h"
 
-We don't support 32-bit Windows any more, so we don't need to defend it
-with this CI job.
+Oh, I was sure that I got them all ... thanks for double checking!
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: "Daniel P. Berrangé" <berrange@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20240222130920.362517-3-peter.maydell@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .gitlab-ci.d/container-cross.yml              |   5 -
- .gitlab-ci.d/crossbuilds.yml                  |  14 ---
- .../dockerfiles/fedora-win32-cross.docker     | 111 ------------------
- tests/lcitool/refresh                         |   5 -
- 4 files changed, 135 deletions(-)
- delete mode 100644 tests/docker/dockerfiles/fedora-win32-cross.docker
-
-diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
-index 8d235cbea0..e3103940a0 100644
---- a/.gitlab-ci.d/container-cross.yml
-+++ b/.gitlab-ci.d/container-cross.yml
-@@ -101,11 +101,6 @@ cris-fedora-cross-container:
-   variables:
-     NAME: fedora-cris-cross
- 
--win32-fedora-cross-container:
--  extends: .container_job_template
--  variables:
--    NAME: fedora-win32-cross
--
- win64-fedora-cross-container:
-   extends: .container_job_template
-   variables:
-diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
-index d19d98cde0..987ba9694b 100644
---- a/.gitlab-ci.d/crossbuilds.yml
-+++ b/.gitlab-ci.d/crossbuilds.yml
-@@ -159,20 +159,6 @@ cross-mips64el-kvm-only:
-     IMAGE: debian-mips64el-cross
-     EXTRA_CONFIGURE_OPTS: --disable-tcg --target-list=mips64el-softmmu
- 
--cross-win32-system:
--  extends: .cross_system_build_job
--  needs:
--    job: win32-fedora-cross-container
--  variables:
--    IMAGE: fedora-win32-cross
--    EXTRA_CONFIGURE_OPTS: --enable-fdt=internal
--    CROSS_SKIP_TARGETS: alpha-softmmu avr-softmmu hppa-softmmu m68k-softmmu
--                        microblazeel-softmmu mips64el-softmmu nios2-softmmu
--  artifacts:
--    when: on_success
--    paths:
--      - build/qemu-setup*.exe
--
- cross-win64-system:
-   extends: .cross_system_build_job
-   needs:
-diff --git a/tests/docker/dockerfiles/fedora-win32-cross.docker b/tests/docker/dockerfiles/fedora-win32-cross.docker
-deleted file mode 100644
-index 08799219f9..0000000000
---- a/tests/docker/dockerfiles/fedora-win32-cross.docker
-+++ /dev/null
-@@ -1,111 +0,0 @@
--# THIS FILE WAS AUTO-GENERATED
--#
--#  $ lcitool dockerfile --layers all --cross-arch mingw32 fedora-38 qemu
--#
--# https://gitlab.com/libvirt/libvirt-ci
--
--FROM registry.fedoraproject.org/fedora:38
--
--RUN dnf install -y nosync && \
--    printf '#!/bin/sh\n\
--if test -d /usr/lib64\n\
--then\n\
--    export LD_PRELOAD=/usr/lib64/nosync/nosync.so\n\
--else\n\
--    export LD_PRELOAD=/usr/lib/nosync/nosync.so\n\
--fi\n\
--exec "$@"\n' > /usr/bin/nosync && \
--    chmod +x /usr/bin/nosync && \
--    nosync dnf update -y && \
--    nosync dnf install -y \
--               bash \
--               bc \
--               bison \
--               bzip2 \
--               ca-certificates \
--               ccache \
--               ctags \
--               dbus-daemon \
--               diffutils \
--               findutils \
--               flex \
--               gcc \
--               gcovr \
--               git \
--               glib2-devel \
--               glibc-langpack-en \
--               hostname \
--               llvm \
--               make \
--               meson \
--               mtools \
--               ninja-build \
--               nmap-ncat \
--               openssh-clients \
--               pcre-static \
--               python3 \
--               python3-PyYAML \
--               python3-numpy \
--               python3-opencv \
--               python3-pillow \
--               python3-pip \
--               python3-sphinx \
--               python3-sphinx_rtd_theme \
--               sed \
--               socat \
--               sparse \
--               spice-protocol \
--               swtpm \
--               tar \
--               tesseract \
--               tesseract-langpack-eng \
--               util-linux \
--               which \
--               xorriso \
--               zstd && \
--    nosync dnf autoremove -y && \
--    nosync dnf clean all -y
--
--ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
--ENV LANG "en_US.UTF-8"
--ENV MAKE "/usr/bin/make"
--ENV NINJA "/usr/bin/ninja"
--ENV PYTHON "/usr/bin/python3"
--
--RUN nosync dnf install -y \
--               mingw32-SDL2 \
--               mingw32-SDL2_image \
--               mingw32-bzip2 \
--               mingw32-curl \
--               mingw32-gcc \
--               mingw32-gcc-c++ \
--               mingw32-gettext \
--               mingw32-glib2 \
--               mingw32-gnutls \
--               mingw32-gtk3 \
--               mingw32-libepoxy \
--               mingw32-libgcrypt \
--               mingw32-libjpeg-turbo \
--               mingw32-libpng \
--               mingw32-libtasn1 \
--               mingw32-nettle \
--               mingw32-nsis \
--               mingw32-pixman \
--               mingw32-pkg-config && \
--    nosync dnf clean all -y && \
--    rpm -qa | sort > /packages.txt && \
--    mkdir -p /usr/libexec/ccache-wrappers && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/i686-w64-mingw32-c++ && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/i686-w64-mingw32-cc && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/i686-w64-mingw32-g++ && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/i686-w64-mingw32-gcc
--
--ENV ABI "i686-w64-mingw32"
--ENV MESON_OPTS "--cross-file=/usr/share/mingw/toolchain-mingw32.meson"
--ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-w64-mingw32-
--ENV DEF_TARGET_LIST i386-softmmu
--# As a final step configure the user (if env is defined)
--ARG USER
--ARG UID
--RUN if [ "${USER}" ]; then \
--  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 0c93557ad6..fe7692c500 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -192,11 +192,6 @@ try:
-                         trailer=cross_build("s390x-linux-gnu-",
-                                             "s390x-softmmu,s390x-linux-user"))
- 
--    generate_dockerfile("fedora-win32-cross", "fedora-38",
--                        cross="mingw32",
--                        trailer=cross_build("i686-w64-mingw32-",
--                                            "i386-softmmu"))
--
-     generate_dockerfile("fedora-win64-cross", "fedora-38",
-                         cross="mingw64",
-                         trailer=cross_build("x86_64-w64-mingw32-",
--- 
-2.43.2
 
 
