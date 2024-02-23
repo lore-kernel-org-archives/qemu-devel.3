@@ -4,100 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85072C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 14:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EC0C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 14:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdWd7-0008Qy-2G; Fri, 23 Feb 2024 09:34:25 -0500
+	id 1rdWdZ-0000Oi-0P; Fri, 23 Feb 2024 09:34:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rdWRP-0003vH-NY
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:22:19 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdWVx-0006by-Jk
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:27:01 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rdWRO-0007QD-0H
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:22:19 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5586D1F79C;
- Fri, 23 Feb 2024 14:22:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708698136; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rFl5yzktf5HUlYVWtBAvteQR2gUC7/3MKNZiD55SCT0=;
- b=MPLEppLB5fLUvuK6TRmhrnBD6thQ4J5FZ2EwTuH2LhwnoToSj5HMxW7iXr0urWep9KjE1A
- FsWTx9R3za8ePAWtvFpIcc/CTzxuv3qZpxABG5oakc18KnHUZHjt7l88Y9vQ8Cfmx75ig2
- u2OyE2dh5pFmPSVR0qXlc5BiWaXsUDk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708698136;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rFl5yzktf5HUlYVWtBAvteQR2gUC7/3MKNZiD55SCT0=;
- b=SLZC3MEpAvYBZarFKqNONoOFJ59w7yOhuQW4HdDSU6NBYqCMpaP82kPCjixvrBzq16RvMe
- 8aLGc+qbAHkDU3Dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708698136; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rFl5yzktf5HUlYVWtBAvteQR2gUC7/3MKNZiD55SCT0=;
- b=MPLEppLB5fLUvuK6TRmhrnBD6thQ4J5FZ2EwTuH2LhwnoToSj5HMxW7iXr0urWep9KjE1A
- FsWTx9R3za8ePAWtvFpIcc/CTzxuv3qZpxABG5oakc18KnHUZHjt7l88Y9vQ8Cfmx75ig2
- u2OyE2dh5pFmPSVR0qXlc5BiWaXsUDk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708698136;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rFl5yzktf5HUlYVWtBAvteQR2gUC7/3MKNZiD55SCT0=;
- b=SLZC3MEpAvYBZarFKqNONoOFJ59w7yOhuQW4HdDSU6NBYqCMpaP82kPCjixvrBzq16RvMe
- 8aLGc+qbAHkDU3Dw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D0026133DC;
- Fri, 23 Feb 2024 14:22:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id E4OTJReq2GWLEgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Feb 2024 14:22:15 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
- Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v4 00/34] migration: File based migration with multifd
- and fixed-ram
-In-Reply-To: <ZdgKJgxUqb1DrzRt@x1n>
-References: <20240220224138.24759-1-farosas@suse.de> <ZdgKJgxUqb1DrzRt@x1n>
-Date: Fri, 23 Feb 2024 11:22:12 -0300
-Message-ID: <87a5nr9s6j.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdWVw-0008Kl-2b
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 09:27:01 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-564a53b8133so533093a12.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 06:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708698418; x=1709303218; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+t5x9rR2LwXUuL+CTRbQc2GK1VB3ALj4Vmgi21EOVIw=;
+ b=ZE79DxZuVZfytbxP2/pfLskhSGrqXKjk3suDt+cuTQGdxjGyOCiv6puE6/BFflX2qj
+ 0tZmn31LgPxrpA+zLJaZ+Re88EU/MYy4B8hIEGkDq/SZ2QZSk97Gl2eU60Jm5G/GQ5IS
+ NNO3KIBWYFY9c53oqaKGN5Djc+nyJaO5m/ww09E18DXT7WUEBmOqFkGRShE6UzNJxXcC
+ lXbpZu4qp8aflj20R1H0PkITMX7AlWN3yTvAks69fhRTy4W8q9oBUfnIZu+J0lKjvX+d
+ e2G87BugO+tcJMtyTVVZM71WTZuODHOgEfphKPD5zJpdJwfpCXdx8q4tzzyKOM72ZjDn
+ tmxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708698418; x=1709303218;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+t5x9rR2LwXUuL+CTRbQc2GK1VB3ALj4Vmgi21EOVIw=;
+ b=dNUOLwy+rzcbViwBsH4pvDqtn4/TLbPYMMtc6f7nhhmstkmQdvorA6rHbTcnpTxWSc
+ pb1i7BLuS9vm5IWyaGmvnD6ueUuuMPMFUtPlNqndOCL0pS776sYosAp4SIVzEtDCDwdn
+ otqEWgzulfh/TD4mE5gdyWtwPJQz8sd5zsv2nkCjIMkJrulE64Q+HoXPY47HtcXbitUr
+ ikIsGpPW586GOjMb42jSqf+dl19dhZrDJ0Iu+tS71Pgpv8oyRIwx5h4jSHwFViGg456i
+ pwOEU50FMZJ0O2UnAbv4FjyEgPJ4Gxg9iFbBGNSTIMz3vw94w5ro14dH5sY9z+pPMSNb
+ Ffpg==
+X-Gm-Message-State: AOJu0YxX99sYFQi0aQpAxJsucyKcy2v0/m3O7Ir1/Q+eghhoeV7m/HEE
+ qBRlPzI5buLmanupoYPVF6BJwacsCFcdfc5Ss82c4voN10bcRdHgueHyN3zszB7Z9hGM8VeY46s
+ DHmCzrs/JytjwUEqibu0R0EW53FTK1M2g22NtWQ==
+X-Google-Smtp-Source: AGHT+IFBkQYeoyh78C6dKCumcRVkWk2yql/eHbXjC6N5Xe06g5yZUz8sqZ/1tx1DBvMlD7qwDs9zfcIUxUHhY81e4pI=
+X-Received: by 2002:a05:6402:160a:b0:564:7350:cac8 with SMTP id
+ f10-20020a056402160a00b005647350cac8mr1367755edv.15.1708698417766; Fri, 23
+ Feb 2024 06:26:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-2.46 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-1.16)[88.81%];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
+ <20240219200908.49551-2-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240219200908.49551-2-arnaud.minier@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Feb 2024 14:26:46 +0000
+Message-ID: <CAFEAcA_LZ6oGj_y+_9zKDZNVSk8zOb4hQG+OKETXyE3-ezP_Rg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/8] Implement STM32L4x5_RCC skeleton
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,48 +95,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Tue, Feb 20, 2024 at 07:41:04PM -0300, Fabiano Rosas wrote:
->> Latest numbers
->> ==============
->> 
->> => guest: 128 GB RAM - 120 GB dirty - 1 vcpu in tight loop dirtying memory
->> => host: 128 CPU AMD EPYC 7543 - 2 NVMe disks in RAID0 (8586 MiB/s) - xfs
->> => pinned vcpus w/ NUMA shortest distances - average of 3 runs - results
->>    from query-migrate
->> 
->> non-live           | time (ms)   pages/s   mb/s   MB/s
->> -------------------+-----------------------------------
->> file               |    110512    256258   9549   1193
->>   + bg-snapshot    |    245660    119581   4303    537
+On Mon, 19 Feb 2024 at 20:11, Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
 >
-> Is this the one using userfault?  I'm surprised it's much slower when
-> enabled; logically for a non-live snapshot it should take similar loops
-> like a normal migration as it should have zero faults, then it should be
-> similar performance.
+> Add the necessary files to add a simple RCC implementation with just
+> reads from and writes to registers. Also instanciate the RCC in the
 
-I just enabled the background-snapshot capability. Is there extra setup
-that must be done to enable this properly? The ufd_version_check from
-migration-test returns true on this system.
+"instantiate"
 
->> -------------------+-----------------------------------
->> fixed-ram          |    157975    216877   6672    834
->>   + multifd 8 ch.  |     95922    292178  10982   1372
->>      + direct-io   |     23268   1936897  45330   5666
->> -------------------------------------------------------
->> 
->> live               | time (ms)   pages/s   mb/s   MB/s
->> -------------------+-----------------------------------
->> file               |         -         -      -      - (file grew 4x the VM size)
->>   + bg-snapshot    |    357635    141747   2974    371
->> -------------------+-----------------------------------
->> fixed-ram          |         -         -      -      - (no convergence in 5 min)
->>   + multifd 8 ch.  |    230812    497551  14900   1862
->>      + direct-io   |     27475   1788025  46736   5842
->> -------------------------------------------------------
+> STM32L4x5_SoC. It is needed for accurate emulation of all the SoC
+> clocks and timers.
 >
-> Also surprised on direct-io too.. that is definitely something tremendous.
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
 
-Indeed. That was the intention with this series all along after all.
+
+
+> +static const MemoryRegionOps stm32l4x5_rcc_ops =3D {
+> +    .read =3D stm32l4x5_rcc_read,
+> +    .write =3D stm32l4x5_rcc_write,
+> +    .endianness =3D DEVICE_NATIVE_ENDIAN,
+> +    .valid =3D {
+> +        .max_access_size =3D 4,
+> +        .unaligned =3D false
+> +    },
+> +};
+
+What's the .valid.min_access_size ?
+Do we need to set the .impl max/min access size here too ?
+
+
+> +
+> +static const ClockPortInitArray stm32l4x5_rcc_clocks =3D {
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, hsi16_rc, NULL, 0),
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, msi_rc, NULL, 0),
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, hse, NULL, 0),
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, lsi_rc, NULL, 0),
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, lse_crystal, NULL, 0),
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, sai1_extclk, NULL, 0),
+> +    QDEV_CLOCK_IN(Stm32l4x5RccState, sai2_extclk, NULL, 0),
+> +    QDEV_CLOCK_END
+> +};
+
+These are input clocks, so they each need a VMSTATE_CLOCK()
+line in the VMStateDescription. (I think only input clocks
+need to be migrated.)
+
+> +
+> +
+> +static void stm32l4x5_rcc_init(Object *obj)
+> +{
+> +    Stm32l4x5RccState *s =3D STM32L4X5_RCC(obj);
+> +
+> +    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
+> +
+> +    memory_region_init_io(&s->mmio, obj, &stm32l4x5_rcc_ops, s,
+> +                          TYPE_STM32L4X5_RCC, 0x400);
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+> +
+> +    qdev_init_clocks(DEVICE(s), stm32l4x5_rcc_clocks);
+> +
+> +    s->gnd =3D clock_new(obj, "gnd");
+> +}
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
