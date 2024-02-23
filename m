@@ -4,110 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C3A8C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 20:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883CEC54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 21:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdcYA-0000MN-AG; Fri, 23 Feb 2024 15:53:43 -0500
+	id 1rdcyB-000828-F6; Fri, 23 Feb 2024 16:20:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rdbuq-0002uO-82
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 15:13:04 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rdcXY-0000CA-Ve
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 15:53:05 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rdbun-0005gq-6U
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 15:13:03 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id DCF4921F5A;
- Fri, 23 Feb 2024 20:12:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708719176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n74DUAWBwx3xDeSsRQwzKa9rFx6qh8ucOS9fd350eh0=;
- b=EZ+5tF7cmGztwnZOEle8w/+AMFQA7Y1F0eq0qypQNo6EN6MZJ4KGgfs+60ntEMeyFUuQbJ
- AkoeNbdvApyJWKc3OWRuDcjpA8mssS9QHi6IfwddMOmvlGXXBE6puI3577mEOxGlbJQ0Wm
- pb2265HNHOmK4lsH8JeEf5wFtHnFHPo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708719176;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n74DUAWBwx3xDeSsRQwzKa9rFx6qh8ucOS9fd350eh0=;
- b=Y2Q75eaVUI+O/K4Vva5fpfAYfqvwB43IDZ9/N6Q/MEIcjHjHLs0H5YjZZwkiJ1Ln7isHWI
- BBYKL7pv+a6nwhDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708719175; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n74DUAWBwx3xDeSsRQwzKa9rFx6qh8ucOS9fd350eh0=;
- b=DiYXOEKd6XsEjoqOBzpVBoZhMBY6t0N2D697QufeNLxL9ELvUT7l4cWJwR22Ky9vCM+x1q
- dGcu9HqZ8iVpa4sZPCiuF3LVhxm+/LUYUGkFHPJVG9W0tGcNXQb2eABU0xUyLoWpWFAwWx
- 5zHQbJEA7XPCuqYuy3AHz9cQFDshMIY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708719175;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n74DUAWBwx3xDeSsRQwzKa9rFx6qh8ucOS9fd350eh0=;
- b=jA86Y3H4Fgv9dGgyVdGAgzSaOdiYouWLfkJBkuPzzVwWmnERIkudYlLus/GUGsdo3FSTg9
- aawsUJv1fsBF0+Dw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 67284132C7;
- Fri, 23 Feb 2024 20:12:55 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JafOC0f82GU+YwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 23 Feb 2024 20:12:55 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com, Het Gala <het.gala@nutanix.com>
-Subject: Re: [PATCH v2 1/3] qtest: migration: Enhance qtest migration
- functions to support 'channels' argument
-In-Reply-To: <20240223152517.7834-2-het.gala@nutanix.com>
-References: <20240223152517.7834-1-het.gala@nutanix.com>
- <20240223152517.7834-2-het.gala@nutanix.com>
-Date: Fri, 23 Feb 2024 17:12:52 -0300
-Message-ID: <87zfvr7xdn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rdcXV-0007mW-F6
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 15:53:04 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dbf1fe91fcso10847465ad.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 12:53:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708721580; x=1709326380; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oLiC4OnbOh3lK4zPHLdHplQPQ3q/yVVUpzIq3J07Sec=;
+ b=uWzQSBL2ZfRRBqbTS2A2FbaMy74pxtcFzQ1+s7cWxzDN9QpJaKwQN3eLpIR/N8z3Bq
+ nQk+CPIucKcUbzVSG6Xhb4zwWNvFTwT49st9+wFuve8ZJWX0q/2w4qh0mg4ZzlcGS2gy
+ lm6DVlL70l6vNPSrTKSDZEWPpx/MR4eXy0gUfpHAbTTLwAXFDRjGIkppMVpJLEDTrLt2
+ jXP+0srHKhcVfyYogBE/T6aJ8B++JSKwDZqgVD0668xRGnqYhwy3Lg7PoXs5gfxi1PUl
+ JEtygWlTxHpYbosr84D7VJ9m3Wn1IKPqaTNkKGQ6S6yHf+h/IpmqIE/U43yDtp9YztdU
+ xZqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708721580; x=1709326380;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oLiC4OnbOh3lK4zPHLdHplQPQ3q/yVVUpzIq3J07Sec=;
+ b=U6WA7JJ+KxFarnLLPMl+mKILhuEUXvAqr8nC8W1A99Hm+fYQ6hLMujZhf0wAJijlgm
+ gaOy5/hETzwC7UXSjTXEHsMuvANwqDhhheaa+pAZNdXECDEUBsl8jCGB2Z7N/4cMOPVX
+ CRDOz1DnfqzelJ8nBqpLoF6wm0twKM3AfcVyRld7QDWngC/Tz0TH0NVCJ+k7i9CznQup
+ 85xXbFD4hFWD6swzooUaDazrEQgYKt6V7D9LfQLAdUrzb4xgC7wkNp/d6lg2INjRFLOo
+ UVSH0OltKZgTWv0noR3ZHl2mRT8NjK5FOk0N3zrkCC1EbaeB6GWvoYqvntjeLKAThPeR
+ ESsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXw7OthsYmhtlJXxURxUm3pzL6wJNeIBFTV84a8SShuCwTzo3fOCL/O7ERNNYmFV6bjYbec4zCcKQg0ViGYd/vAJP5nvvo=
+X-Gm-Message-State: AOJu0YxLLgZ7z4tM/74LI9n5e/umATkZdkc+OOudBbM1u1gqMFxW1Yqg
+ bvd6TdY8ItqSvL1MXEEMxWCc9FXMnlQpx22ekCPCpXx8xTzCdxMuMPFmb59s2IQefzQ5u080ogq
+ 4
+X-Google-Smtp-Source: AGHT+IEbGMxDvj/BueArQc/2hGDPy++2XKNi//qKk/rByJQb5kkBUzFM24/as/np0udaP+d8r4l6lA==
+X-Received: by 2002:a17:902:e752:b0:1dc:2d63:9bf6 with SMTP id
+ p18-20020a170902e75200b001dc2d639bf6mr1094466plf.4.1708721579757; 
+ Fri, 23 Feb 2024 12:52:59 -0800 (PST)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ k13-20020a170902f28d00b001dbcf653024sm11404614plc.293.2024.02.23.12.52.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 23 Feb 2024 12:52:59 -0800 (PST)
+Message-ID: <81167528-32e3-4741-84e4-3c70b788fc2c@linaro.org>
+Date: Fri, 23 Feb 2024 10:52:56 -1000
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DiYXOEKd;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jA86Y3H4
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.79 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-0.28)[74.23%];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,nutanix.com:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Queue-Id: DCF4921F5A
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 17/21] hw/intc/arm_gicv3: Add NMI handling CPU
+ interface registers
+Content-Language: en-US
+To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
+ <20240223103221.1142518-18-ruanjinjie@huawei.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240223103221.1142518-18-ruanjinjie@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,77 +101,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala <het.gala@nutanix.com> writes:
+On 2/23/24 00:32, Jinjie Ruan via wrote:
+> Add the NMIAR CPU interface registers which deal with acknowledging NMI.
+> 
+> When introduce NMI interrupt, there are some updates to the semantics for the
+> register ICC_IAR1_EL1 and ICC_HPPIR1_EL1. For ICC_IAR1_EL1 register, it
+> should return 1022 if the intid has super priority. And for ICC_NMIAR1_EL1
+> register, it should return 1023 if the intid do not have super priority.
+> Howerever, these are not necessary for ICC_HPPIR1_EL1 register.
+> 
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> ---
+>   hw/intc/arm_gicv3_cpuif.c | 46 ++++++++++++++++++++++++++++++++++++---
+>   hw/intc/gicv3_internal.h  |  1 +
+>   2 files changed, 44 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+> index e1a60d8c15..f5bf8df32b 100644
+> --- a/hw/intc/arm_gicv3_cpuif.c
+> +++ b/hw/intc/arm_gicv3_cpuif.c
+> @@ -1097,7 +1097,8 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+>       return cs->hppi.irq;
+>   }
+>   
+> -static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+> +static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env,
+> +                                 bool is_nmi, bool is_hppi)
+>   {
+>       /* Return the highest priority pending interrupt register value
+>        * for group 1.
+> @@ -1108,6 +1109,16 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+>           return INTID_SPURIOUS;
+>       }
+>   
+> +    if (!is_hppi) {
+> +        if (is_nmi && (!cs->hppi.superprio)) {
+> +            return INTID_SPURIOUS;
+> +        }
+> +
+> +        if ((!is_nmi) && cs->hppi.superprio) {
+> +            return INTID_NMI;
+> +        }
+> +    }
+> +
+>       /* Check whether we can return the interrupt or if we should return
+>        * a special identifier, as per the CheckGroup1ForSpecialIdentifiers
+>        * pseudocode. (We can simplify a little because for us ICC_SRE_EL1.RM
+> @@ -1168,7 +1179,30 @@ static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>       if (!icc_hppi_can_preempt(cs)) {
+>           intid = INTID_SPURIOUS;
+>       } else {
+> -        intid = icc_hppir1_value(cs, env);
+> +        intid = icc_hppir1_value(cs, env, false, false);
+> +    }
+> +
+> +    if (!gicv3_intid_is_special(intid)) {
+> +        icc_activate_irq(cs, intid);
+> +    }
+> +
+> +    trace_gicv3_icc_iar1_read(gicv3_redist_affid(cs), intid);
+> +    return intid;
+> +}
 
-> Introduce support for adding a 'channels' argument to migrate_qmp_fail,
-> migrate_incoming_qmp and migrate_qmp functions within the migration qtest
-> framework, enabling enhanced control over migration scenarios.
+This is incorrect.  For icc_iar1_read, you need something like
 
-Can't we just pass a channels string like you did in the original series
-with migrate_postcopy_prepare?
+     if (!is_hppi
+         && cs->hppi.superprio
+         && env->cp15.sctlr_el[current_el] & SCTLR_NMI) {
+         return INTID_NMI;
+     }
 
-We'd change migrate_* functions like this:
+I think that if SCTLR_NMI is not set, the whole system ignores Superpriority entirely, so 
+returning SPURIOUS here would be incorrect.  This would make sense, letting an OS that is 
+not configured for FEAT_NMI to run on ARMv8.8 hardware without modification.
 
-  void migrate_qmp(QTestState *who, const char *uri, const char *channels,
-                   const char *fmt, ...)
-  {
-  ...
-      g_assert(!qdict_haskey(args, "uri"));
-      if (uri) {
-          qdict_put_str(args, "uri", uri);
-      }
-  
-      g_assert(!qdict_haskey(args, "channels"));
-      if (channels) {
-          qdict_put_str(args, "channels", channels);
-      }
-  }
 
-Write the test like this:
+> +
+> +static uint64_t icc_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+> +{
+> +    GICv3CPUState *cs = icc_cs_from_env(env);
+> +    uint64_t intid;
+> +
+> +    if (icv_access(env, HCR_IMO)) {
+> +        return icv_iar_read(env, ri);
+> +    }
+> +
+> +    if (!icc_hppi_can_preempt(cs)) {
+> +        intid = INTID_SPURIOUS;
+> +    } else {
+> +        intid = icc_hppir1_value(cs, env, true, false);
 
-  static void test_multifd_tcp_none_channels(void)
-  {
-      MigrateCommon args = {
-          .listen_uri = "defer",
-          .start_hook = test_migrate_precopy_tcp_multifd_start,
-          .live = true,
-          .connect_channels = "'channels': [ { 'channel-type': 'main',"
-                              "      'addr': { 'transport': 'socket',"
-                              "                'type': 'inet',"
-                              "                'host': '127.0.0.1',"
-                              "                'port': '0' } } ]",
-          .connect_uri = NULL;
-                               
-      };
-      test_precopy_common(&args);
-  }
+Here... believe that the result *should* only consider superpriority.  I guess SPURIOUS is 
+the correct result when there is no pending interrupt with superpriority?  It's really 
+unclear to me from the register description.
 
-  static void do_test_validate_uri_channel(MigrateCommon *args)
-  {
-      QTestState *from, *to;
-      g_autofree char *connect_uri = NULL;
-  
-      if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
-          return;
-      }
-  
-      wait_for_serial("src_serial");
-  
-      if (args->result == MIG_TEST_QMP_ERROR) {
-          migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
-      } else {
-          migrate_qmp(from, args->connect_uri, args->connect_channels, "{}");
-      }
-  
-      test_migrate_end(from, to, false);
-  }
+Peter?
 
-It's better to require test writers to pass in their own uri and channel
-strings. Otherwise any new transport added will require people to modify
-these conversion helpers.
+> @@ -2344,6 +2378,12 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
+>         .access = PL1_R, .accessfn = gicv3_irq_access,
+>         .readfn = icc_iar1_read,
+>       },
+> +    { .name = "ICC_NMIAR1_EL1", .state = ARM_CP_STATE_BOTH,
+> +      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 9, .opc2 = 5,
+> +      .type = ARM_CP_IO | ARM_CP_NO_RAW,
+> +      .access = PL1_R, .accessfn = gicv3_irq_access,
+> +      .readfn = icc_nmiar1_read,
+> +    },
 
-Also, using the same string as the user would use in QMP helps with
-development in general. One could refer to the tests to see how to
-invoke the migration or experiment with the string in the tests during
-development.
+This register is UNDEFINED if FEAT_GICv3_NMI is not implemented.
+You need to register this separately.
+
+
+r~
 
