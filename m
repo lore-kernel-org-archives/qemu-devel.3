@@ -4,81 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3E1C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:23:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABC92C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 06:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdOy1-0002Xe-6p; Fri, 23 Feb 2024 01:23:29 -0500
+	id 1rdP3h-0005yI-QT; Fri, 23 Feb 2024 01:29:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOxz-0002XR-N0
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:23:27 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdP3f-0005xm-QF
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:29:19 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdOxu-0000Vm-If
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:23:27 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33d754746c3so311637f8f.1
- for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:23:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdP3R-0001Bc-Ix
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 01:29:17 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a3d5e77cfbeso95535366b.0
+ for <qemu-devel@nongnu.org>; Thu, 22 Feb 2024 22:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708669400; x=1709274200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708669743; x=1709274543; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kLeKvlMb3wGlcLhnVSk9eXKaCxlb27jnugpkFeDiUME=;
- b=rkoAuw4YSmeXl9wh9NjNFV1lsG43VoBE59bOTExO4PGxpBK0EMNE9zG5/d1S1p0hDj
- kn32GQeWjnorc65iWYa8JIArKefK65q4UNTvDx5hWJQk7brrGBFXk3UIv1MAm9d1BEUE
- 6z0gaaD1rddno5QN0N6O4KKrrgGUqooq5y4Rt+dwclPVUrEJ6VD6f/N7P6f5qHg6xtnF
- 5eIgS2Jjh9t96017tpJg+Crh6qNTRaOFx8AH3X66Qmzszf5GQhXGZvpgoOz9ZS6tQEhN
- 9uGNdn1Or5GYnLjtuwduTGeS8sXY93/3jm+bIQLMeXvRFoyW018YXQlzeD4neMTTNtYd
- FaWA==
+ bh=cw/A/P1yk9clR7XU1zO45ALsyOeTZOKcg37yUmDe984=;
+ b=GDSnPQGeyruDt+VoPq30YsH3FkKgsP8F/Vi6vAvPdeKeicLXJfdhPxJCmuEiPCS9rA
+ o9xADI7TqT/Gb0jvyoPL9qoMwFc5oi24kBJYlRwQL46xMXK16Df21SW8QtyAyMRZwyqq
+ js/UpZGrYgTUYdPxoo5Go397fIRT+wDw+M2uK9u5n7c96vI2PWe7atmsZwF9INxN9qJG
+ N12nu070G8VB0wzp8EZ2TZWt/2OcRB/LUxhqnGR8KSn5rJQaLgdEAJm2OiSf7n/8R8kL
+ p5En96VKdP6vdCikfF7ZwHoSsORqAJVpqbZWCkZ7r084et5Hzg0jNnvjabRaaISYnx4S
+ wBSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708669400; x=1709274200;
+ d=1e100.net; s=20230601; t=1708669743; x=1709274543;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kLeKvlMb3wGlcLhnVSk9eXKaCxlb27jnugpkFeDiUME=;
- b=Xi5Xd8Hd4LqYl6z17537VmkqL8DtPCyTfyaXWLTezd9sv0m4rPf5gRWHa3I0qBefQE
- 1EG+yslUAE+FNVlEHH8BHOYh6v0uXCaBwZy07XKgz1gOAFtHhvg/lHt27/KhjQiiWcv4
- 7zX9OmOz1HyH5Bu4x9RHT1O9YWDCKRgRgAnc314woQ/EYmDYFi36PuYB85SXBq5Hr4Vr
- pZEYGpAyOoNsl/Ke00Ks1JKaodGVo+xeu/NXGeZ+ETZgk6RBKtL8MlvG6kaHPKz56+3a
- iSMCSwyOSaoDftcA8qFamhaiyT65xqKamrgjay6bINUJbu0EExjUI/ZFknwF6Nu4q5bj
- Iu7A==
-X-Gm-Message-State: AOJu0Ywuujn4trMBcWRPT+g2CvU0c0DJZ12kp12ppriwNURbLhZSyMA4
- LL9S8j6+5r3pT86G5OErHLQ5sfi70ebychLyDGW/vDzB0s0gt0NrU4pvOQ0vRSo=
-X-Google-Smtp-Source: AGHT+IHZonBSHBqKECocMcHd719VvfQXcT0pMnutDOrKkhMWvn5AUZGCSkAfrhc/sWOTrXipvztEGQ==
-X-Received: by 2002:a5d:6288:0:b0:33d:9ee9:3c15 with SMTP id
- k8-20020a5d6288000000b0033d9ee93c15mr716595wru.1.1708669400276; 
- Thu, 22 Feb 2024 22:23:20 -0800 (PST)
+ bh=cw/A/P1yk9clR7XU1zO45ALsyOeTZOKcg37yUmDe984=;
+ b=oQobLffYnsjVrWBgk5aBmP6tNM2nYVMWuDkojaZlDR//L1mnwKj5iorCr+cyTD/lpZ
+ 7SbQKxGCy9P+8pT+7ZuC2PWEn4+o9x1uhOcOE+pPEti92cP1hu9IVSDdXt0muGGzOlz7
+ U52KuhxHYVvokGIxl+l7EZzTY5C2L+1grGN3VCqGjZWLpLZpHbO/Kg+8LppiWhaMUuml
+ TSAg+o2Nw1mjFOGMmrvyP99V6aQsAVq7m9NltrDLyDtwh1IkcmYleejH4fqrh4PNw9lF
+ IY6KCHMAicdw9JbOCJgttutBXyn15nK1ch6x5JNvV69lN/BX+ccbGhe1c4ikNoe+CBnP
+ ZU9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbbjS/7CCbgRW000aIi4L3+KF17HIMRFmg4AXIzLQNXa5T9SvGjhh/fvfDVk9kAjDjEur5DdKKQf2OwR2pB0sdYz3ZRlc=
+X-Gm-Message-State: AOJu0YxC1ku0+UAqrt5Oyof8ieps2Hhfm+6VpQXUmc4TmA30vfHh29B7
+ wKzTA5M21a0ROplkcooqMuwvAs2CVjRRxwc96myh3L7nJWAyHgHSF5CyM3EKjp8=
+X-Google-Smtp-Source: AGHT+IEUdjJ3WIL9hEKhVktFh9bCwYQp3lR/1zjVAwjV6icEpMOt9A2+xzGmP1AmhBIOm/d0t2rD7g==
+X-Received: by 2002:a17:906:f14d:b0:a3f:421:26a5 with SMTP id
+ gw13-20020a170906f14d00b00a3f042126a5mr939237ejb.12.1708669743519; 
+ Thu, 22 Feb 2024 22:29:03 -0800 (PST)
 Received: from [192.168.69.100] (sto95-h01-176-184-18-96.dsl.sta.abo.bbox.fr.
  [176.184.18.96]) by smtp.gmail.com with ESMTPSA id
- r1-20020a5d6941000000b0033d8aeb229csm1507775wrw.27.2024.02.22.22.23.19
+ x19-20020a1709064bd300b00a3cf168d084sm6600978ejv.165.2024.02.22.22.29.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 22 Feb 2024 22:23:19 -0800 (PST)
-Message-ID: <fe96d71d-6abc-43f7-9b83-8bec93ab5512@linaro.org>
-Date: Fri, 23 Feb 2024 07:23:17 +0100
+ Thu, 22 Feb 2024 22:29:03 -0800 (PST)
+Message-ID: <685d336b-2366-46c0-8d0d-088ef47a952c@linaro.org>
+Date: Fri, 23 Feb 2024 07:29:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] Add support for I2C in BCM2835 boards
+Subject: Re: [PATCH v2 1/2] hw/arm: Use TYPE_OR_IRQ when connecting STM32L4x5
+ EXTI fan-in IRQs
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Rayhan Faizel <rayhan.faizel@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, qemu-arm@nongnu.org
-References: <20240220134120.2961059-1-rayhan.faizel@gmail.com>
- <CAFEAcA8GFFQ-L6zGcft9q8arJxuggraHYRhcAf4q+Oi+VMSP3Q@mail.gmail.com>
+To: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240220184145.106107-1-ines.varhol@telecom-paris.fr>
+ <20240220184145.106107-2-ines.varhol@telecom-paris.fr>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA8GFFQ-L6zGcft9q8arJxuggraHYRhcAf4q+Oi+VMSP3Q@mail.gmail.com>
+In-Reply-To: <20240220184145.106107-2-ines.varhol@telecom-paris.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,30 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 20/2/24 19:34, Inès Varhol wrote:
+> Fixes: 52671f69f7a4 ("[PATCH v8 0/3] Add device STM32L4x5 EXTI")
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> ---
+>   include/hw/arm/stm32l4x5_soc.h |  4 ++
+>   hw/arm/stm32l4x5_soc.c         | 80 +++++++++++++++++++++++++++++-----
+>   2 files changed, 74 insertions(+), 10 deletions(-)
 
-On 22/2/24 18:54, Peter Maydell wrote:
-> On Tue, 20 Feb 2024 at 13:42, Rayhan Faizel <rayhan.faizel@gmail.com> wrote:
->>
->> This patch series implements support for the Broadcom Serial Controller used
->> by BCM2835 based boards for I2C.
+Thanks for cleaning that!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
->> Rayhan Faizel (3):
->>    hw/i2c: Implement Broadcom Serial Controller (BSC)
->>    hw/arm: Connect BSC to BCM2835 board as I2C0, I2C1 and I2C2
->>    tests/qtest: Add testcase for BCM2835 BSC
-> 
-> 
-> 
-> Applied to target-arm.next, thanks.
-
-Sorry I didn't notice earlier, the I2C[3] IRQ lines have
-to be OR-ed using a TYPE_OR_IRQ object before reaching the
-INTC. I'd rather a v4, but if you already posted your PR
-this can get fixed on top.
-
-Regards,
-
-Phil.
 
