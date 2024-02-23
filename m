@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 992D9C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 22:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F97C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 22:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdddz-0002qW-AJ; Fri, 23 Feb 2024 17:03:47 -0500
+	id 1rddsS-0008H1-IK; Fri, 23 Feb 2024 17:18:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdd1C-0003Kc-2H
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 16:23:42 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1rdddH-0002AJ-C5
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 17:03:05 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rdd19-0004i0-Uq
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 16:23:41 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5cddc5455aeso1172230a12.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 13:23:38 -0800 (PST)
+ id 1rdddE-0002KT-JE
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 17:03:02 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1dc13fb0133so10995695ad.3
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 14:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708723417; x=1709328217; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1708725778; x=1709330578; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IxyXl7urU3w5LyYVdJZCEAYTMHbHOgk3syipo1ACVGg=;
- b=sF+zUQlui+evHPyVM4RHnoSo2Uq1H/aP0vEDAmYeg+MFLTylKr1ZsTK3addF3M4SyO
- D60CcEFRC6qUtBqMdly+P3BPDI/CrPE08LXC0RdSeheLl4y4r04PM5Sr7nGNYpsk3IKd
- E0oU/899HAbA/UBwYB1wxNRPoYhBDtJeKODolEoci4kbBEyYTmg/QjrYCHp0mMUWZaaY
- +P6EhcyxxbL3gTEVN925RYJHH00mlOw79Iu22JduSapFzsuRa9RVUaDAOP2qt6wbGEE+
- VXpO5OwjEaZ1w1+3Aa5opHTSy+8m+yJ7Sjl16o4RM8R2TjNSoeynklEVApZF8ZJATfFE
- L/OQ==
+ bh=Gnb5KADM9/0vveYxc+cXc7XU6tL8RQmHf1g+yfBguPM=;
+ b=V/8sMWPJs0ZR1lLjL0tuRjCK6Zl8C4XiWvH67+OdzJl4FMEvWRwtuN337ZvFOAe9Wj
+ c6R7G/24bzmE6rkuliuWSm162ciy7ieoqFdjYe7JIWkLflkk0Y6Neiwedur5w3hLJW8D
+ 2vXyLsSFmKpFsKLb7B7J51gV19jX4GIP+DT5LYRURgsby/3B3thwLOQSysiVUpUCdK9w
+ KLJjtt8GsuW2l53JV5DvoFG+xszR3bS3zSh1s1BfUVIHZ2uOjYzJid2C+B+uLH8mr4tp
+ AV5UayenSC8gGW5luXC7nBvq090EPdgH1o4s08qB7qFCjYQC0V6Ts62JTA/+LN2zVNoW
+ 0XFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708723417; x=1709328217;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1708725778; x=1709330578;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IxyXl7urU3w5LyYVdJZCEAYTMHbHOgk3syipo1ACVGg=;
- b=SN5UGrjuy8qV8Alw9wnHvBcGUqR7fmE+P/OOb4aD/m9Z2uvM2EH44GxfzJ/n/hroGg
- oMtI/3QDJoXVvZWbzFD8+LQgrbbTg1BU+2AXC00zJmcgKq/708D4QPBwQXtuJrNYgFFs
- AMfB4X5FoIfqQ6H+EockLkH2eCkF1tjIhpWD8HRg6nih+EiU9q7NRtM0sW+3CyeXdYbW
- iJU9akUizSBk8QvoJFtnWb6/cttWjLExuprKahzwnrJLAr9+vNOPeMgakffoHwz90Cvg
- 2bCH2zFBXyABZyprCiH5XTW88DPq4CZU6tu30RSbpRzqBqjKigxn8ZqqVA9GF+O+DXLq
- LYuw==
+ bh=Gnb5KADM9/0vveYxc+cXc7XU6tL8RQmHf1g+yfBguPM=;
+ b=dUXTLP3vYfJn/dNmh+A3m7WtJWkukbqXu2Om+oeejgzo3IBh3EfOlhfcVx1inLEma7
+ iSxJRaNkPSggL3uf6vc9htnZzBIZU5hYMhe4G9ixpW3UbqxbSYR6y32HZCvKGarKSVVm
+ bontjB98OXnzpzac9ozue4f7HRFwM/Y8bSQqdH9CHkoPKiu/JPM14isI8xOEMfgHOkhN
+ TqlDrFWz3cV5K46w/RCpt41IJkBeXCj5ErVwCWJc/U8L51D5qDUb0iftNHpLkHe0TKUY
+ p/theTiQNUDAATh4xd1xi0d25+PPM92WuHMQM3joeR53gDYDOuHbLDc81Ww726jNQdIn
+ nk9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9DVKAd9VWgHYipzABStdvYmvbI6TjjDuNmQliXdxFCzptr2UvITmGWTkp6lYawcATzktwiAB074oLUy0bROFuc/1UOEg=
-X-Gm-Message-State: AOJu0Yw4xUqLZw2sAbTUjxM5LCpPaq5yKCG6e9yHUocM037LRJfSKjuF
- iiwdk1kTPwUR1aWCc4pX2ONCazd9HFmevX3vBrZvY4f/VrI1gwcDy/ISHXVv1bQ=
-X-Google-Smtp-Source: AGHT+IFm+E31/Pt8xiZp+ECtmd8r8Kp6miQOEB8Lng2rTFrCXeLwMcrmzDtf0VLAGbS3oo5gwfgwwA==
-X-Received: by 2002:a05:6a21:8796:b0:19a:4935:458 with SMTP id
- ph22-20020a056a21879600b0019a49350458mr1024514pzb.35.1708723417419; 
- Fri, 23 Feb 2024 13:23:37 -0800 (PST)
+ AJvYcCULLW2CsbH8JkXPG9Jwc70rtZvdc/zmDS3Qhvnd/nbkzxaDrUc9tgnpL+NYDdI3yarQKGUoRP6HUvn6cfHfYRw3KBG4W6E=
+X-Gm-Message-State: AOJu0Yz+5WmF42RihZoDmO8sJJQDqM8kI/FJvMDv/anUKZssoGpOICpq
+ RJq1QhGfO/0wrxVgSD8QFFfnIsQzyttJ+ItuSNcrcBrDs1FQgCR0OoQ8NvALRI7pXrRD9yi4XcG
+ G
+X-Google-Smtp-Source: AGHT+IGyFRprTnuklIAo/z3+skxh0ebP22IpciEsn/33jdzQQBA2nH+YQAAG6Y7YahokVd8CnGCJbA==
+X-Received: by 2002:a17:902:ec85:b0:1dc:652d:708f with SMTP id
+ x5-20020a170902ec8500b001dc652d708fmr1497599plg.15.1708725778129; 
+ Fri, 23 Feb 2024 14:02:58 -0800 (PST)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- d188-20020a6336c5000000b005dc89957e06sm12674114pga.71.2024.02.23.13.23.35
+ 6-20020a170902e9c600b001d706e373a9sm12052710plk.292.2024.02.23.14.02.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 13:23:36 -0800 (PST)
-Message-ID: <603344eb-d67c-4aa6-8e4b-09b9f570759b@linaro.org>
-Date: Fri, 23 Feb 2024 11:23:33 -1000
+ Fri, 23 Feb 2024 14:02:57 -0800 (PST)
+Message-ID: <1e5d8d7c-d3e2-41c8-834f-6241f037999c@linaro.org>
+Date: Fri, 23 Feb 2024 12:02:53 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 18/21] hw/intc/arm_gicv3: Implement NMI interrupt
- prioirty
+Subject: Re: [PATCH 3/3] linux-user: Rewrite target_shmat
 Content-Language: en-US
-To: Jinjie Ruan <ruanjinjie@huawei.com>, peter.maydell@linaro.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
- <20240223103221.1142518-19-ruanjinjie@huawei.com>
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, richard.purdie@linuxfoundation.org, mjt@tls.msk.ru
+References: <20240223030309.458451-1-richard.henderson@linaro.org>
+ <20240223030309.458451-4-richard.henderson@linaro.org>
+ <jwyuvao4apydvykmsnvacwshdgy3ixv7qvkh4dbxm3jkwgnttw@k4wpaayou7oq>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240223103221.1142518-19-ruanjinjie@huawei.com>
+In-Reply-To: <jwyuvao4apydvykmsnvacwshdgy3ixv7qvkh4dbxm3jkwgnttw@k4wpaayou7oq>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,101 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/23/24 00:32, Jinjie Ruan via wrote:
-> If GICD_CTLR_DS bit is zero and the NMI is non-secure, the NMI prioirty
-> is higher than 0x80, otherwise it is higher than 0x0. And save NMI
-> super prioirty information in hppi.superprio to deliver NMI exception.
-> Since both GICR and GICD can deliver NMI, it is both necessary to check
-> whether the pending irq is NMI in gicv3_redist_update_noirqset and
-> gicv3_update_noirqset. And In irqbetter(), only a non-NMI with the same
-> priority and a smaller interrupt number can be preempted but not NMI.
+On 2/23/24 01:35, Ilya Leoshkevich wrote:
+> On Thu, Feb 22, 2024 at 05:03:09PM -1000, Richard Henderson wrote:
+>> Handle combined host and guest alignment requirements.
+>> Handle host and guest page size differences.
+>> Handle SHM_EXEC.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/115
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   linux-user/mmap.c | 146 ++++++++++++++++++++++++++++++++++------------
+>>   1 file changed, 110 insertions(+), 36 deletions(-)
 > 
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> ---
-> v3:
-> - Add missing brace
-> ---
->   hw/intc/arm_gicv3.c | 63 ++++++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 56 insertions(+), 7 deletions(-)
+> [...]
 > 
-> diff --git a/hw/intc/arm_gicv3.c b/hw/intc/arm_gicv3.c
-> index 0b8f79a122..75999edd19 100644
-> --- a/hw/intc/arm_gicv3.c
-> +++ b/hw/intc/arm_gicv3.c
-> @@ -21,7 +21,7 @@
->   #include "hw/intc/arm_gicv3.h"
->   #include "gicv3_internal.h"
->   
-> -static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
-> +static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio, bool is_nmi)
->   {
->       /* Return true if this IRQ at this priority should take
->        * precedence over the current recorded highest priority
-> @@ -33,11 +33,21 @@ static bool irqbetter(GICv3CPUState *cs, int irq, uint8_t prio)
->       if (prio < cs->hppi.prio) {
->           return true;
->       }
-> +
-> +    /*
-> +     * Current highest prioirity pending interrupt is not a NMI
-> +     * and the new IRQ is a NMI with same priority.
-> +     */
-> +    if (prio == cs->hppi.prio && !cs->hppi.superprio && is_nmi) {
+>> -    /* find out the length of the shared memory segment */
+>> +    /*
+>> +     * Because we can't use host shmat() unless the address is sufficiently
+>> +     * aligned for the host, we'll need to check both.
+>> +     * TODO: Could be fixed with softmmu.
+>> +     */
+> 
+> Are there any plans to introduce softmmu to qemu-user?
 
-It would be best to not mix terminology -- superpriority or nmi but not a mix.  It's 
-unfortunate that the manual does so...
+Long-term ones, yes.  There are *so* many places for which emulation doesn't quite work 
+unless the host and guest page size match.  There are projects like asan which don't work 
+unless the guest has a *very* specific memory layout, which often conflicts with the host.
 
-It is very tempting expand prio to more bits so that all of the rest of this Just Works.
-Because of...
-
-> +            if (superprio) {
-> +                is_nmi = 1;
-> +
-> +                /* DS = 0 & Non-secure NMI */
-> +                if ((!(cs->gic->gicd_ctlr & GICD_CTLR_DS)) &&
-> +                    extract32(cs->gicr_igroupr0, i, 1)) {
-> +                    prio = 0x80;
-> +                } else {
-> +                    prio = 0x0;
-> +                }
-> +            } else {
-> +               is_nmi = 0;
-> +               prio = cs->gicr_ipriorityr[i];
-
-... the need to check GICD_CTLR_DS for interpreting superpriority within the continuum, 
-per section 4.8.1 (NMI prioritization), it would seem that we could map
-
-     Secure NMI         -> 0
-     Non-secure NMI     -> 0x100
-     prio 0x00 .. 0xff  -> prio * 2 + 1
-
-which matches the ordering in Figure 4-6.
-
-> @@ -240,10 +271,28 @@ static void gicv3_update_noirqset(GICv3State *s, int start, int len)
->                */
->               continue;
->           }
-> -        prio = s->gicd_ipriority[i];
-> -        if (irqbetter(cs, i, prio)) {
-> +
-> +        superprio = *gic_bmp_ptr32(s->superprio, i);
-> +        /* NMI */
-> +        if (superprio & (1 << (i & 0x1f))) {
-> +            is_nmi = 1;
-> +
-> +            /* DS = 0 & Non-secure NMI */
-> +            if ((!(s->gicd_ctlr & GICD_CTLR_DS)) &&
-> +                gicv3_gicd_group_test(s, i)) {
-> +                    prio = 0x80;
-> +            } else {
-> +                    prio = 0x0;
-> +            }
-> +        } else {
-> +            is_nmi = 0;
-> +            prio = s->gicd_ipriority[i];
-> +        }
-
-In any case, let's not have two copies of this resolution.
 
 
 r~
