@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B3BC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05BE7C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 17:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdZCK-0002Ns-IN; Fri, 23 Feb 2024 12:18:56 -0500
+	id 1rdZjT-0002mh-EY; Fri, 23 Feb 2024 12:53:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdYtf-0005NX-7B
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:59:39 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZYU-0002lu-8r
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:41:50 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdYtd-0004cn-Iw
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:59:38 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-412960dbb0eso4301785e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:59:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZYS-00049c-Ij
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:41:50 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a3eafbcb1c5so143177266b.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:41:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708707575; x=1709312375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708710107; x=1709314907; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EJtDN3jvV6Bj8KTt6+nIvPG6r5VgNuaGUyPGz//FAD8=;
- b=mrNmyZ/6xHdE11+UqVtl1vttGu73S/uHaWfbCfwxEq4wO05TKbEA5qbv/jhYQJ3Dle
- E0j1gJJbq98uLiMwLAfUuSuf6bz3zdRCUeY980RkkhFxs2P3n8Ovj6Gv5cwEHucNVXO/
- OwwGeu98xgdtml42zYrS6RAXln5wPCIcbJAhU/a3lSuKlGrCY5c5YKuoTRjTKUzWReDt
- c0kzRaEVxVnq/NEWsZTZBoGnBcAfZbsuiFngPRsS3WNV8hz/3GGyrzo1lQiFBMCSsIIA
- MIzCTBjrUpnlXxvl+dESyIlsR1PgoDcqVTD4P4GiU9FUCGKk1qae8Dd3HXbWRS59aznR
- 2uzg==
+ bh=VeQzTf1HI27j/S4e2f74MNw0Ba1I3PGZ0n6sLFJ50k0=;
+ b=CEQ7ynGCndRbCCkGwzDu2iXn7AXrjiHLky56hvCvq+AvtwpKxGRPPntB95RegfembF
+ IvwuC5N5V/a0M9+CGZ/YlnaNhPoPMER7kGcNCv94hn4kdNXtkDZUthOaRUV37YO34VLh
+ XlP0wKhO16xv9H9Wy5MgEOlRXP4FYWWZ5jmca4L96GLaefdJWVEp4E2m85HcqOMYe5pr
+ QlDPOnXzaHcN7O+HuQlPwQECG9rAe8jYsJl+O7ir3NtbOnF9DFfVmZhk6rtr61G5VcTe
+ g/Zxn9xA7OXLBCHwo1FrVPzmRLjE72LKju4BzmvvHxd///eDMa+lbPexLTCAv00ljtJw
+ 6zCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708707575; x=1709312375;
+ d=1e100.net; s=20230601; t=1708710107; x=1709314907;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EJtDN3jvV6Bj8KTt6+nIvPG6r5VgNuaGUyPGz//FAD8=;
- b=UZ+kjdM1qY+cQXH6lo/qNJIl0fDjT+4VVn8Em2dPGaP/ynPz4Hd1o5KtMa4s1Yz9e4
- hBz5lpwXIdWkKo9BQGNyJlghYzj9rVepdtBCxoguYnrbuNlVGtf9gRNDBLqg/9tAtctY
- X7g/9pig9JZXn3dUqtdT4CHvskQWTPfLjlT91QVV1sRDlT0RdcKSK90JPSBZsfIiR2IC
- J8U8dgEZA09/n3oUxJT0yh6p8REmx7M00qUVTSB0kPXBjAjiDjKLC+D7idgWjfLr29QS
- dN1Jhi/MZ/oi0FYoZYQdkWDe7i3pIOFdhjmGw7JpUDNTW/1q6zdzKWQLYrdOKOjAOfZu
- tKfg==
+ bh=VeQzTf1HI27j/S4e2f74MNw0Ba1I3PGZ0n6sLFJ50k0=;
+ b=HmIXExlIqfJfJntqM9WFYIhIOXIGTef1/F7e61fE7Gby+Ndk8UGy5MT5j5WbKcRDUS
+ SyYu6oyePpPvNNhukHWKItKFpGjwUBPYMwe6ibv7wDNMBwv4ypH01doEbu7y8cSOo9eq
+ M5bWjr6cyf+81qi7ZKVncnTvo9eyUFXvyVHErJVUHAjAaoNn/tvETMDgu7PVzw4UWQa0
+ N6ldr2RhdWLM0CMO10a5y2PT8ViPt49QQeUyeHhk8Hh0CE3kkP6xoh3Lnqt/L52sSGzR
+ hFwRrWNQObbDDTd7BV//sNkdm9CBcAUQiKxLVGge0Z2OU0sdSziq9X51aSWbmW3pSlUR
+ +gpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5mzrtKB28o7W0OvNLBUUOxC1+7y6z5l8LLNPnB+2vpEnOnR4VUaYB5KiQOSjsD0iVwNgp6ZQ+WGOlqqMvr7PN0i7gRng=
-X-Gm-Message-State: AOJu0YxaeZW8bMxi30HDm9NZW8d+Bt2nhWrQOe9c5qGcMoAI4UdQFwaF
- pCUzkdzmpEpBhhETdrTEA+ktAzlaDJz+fTWlS9aKcg+oAgvxP3EKf88k3+cFyXI=
-X-Google-Smtp-Source: AGHT+IGKslzmCY5IMrPdT60Bb19x427lwsGWjnZLW4wSNAMk+LEKHdzOGO0hjl8uZCC97P2g80IXQw==
-X-Received: by 2002:a05:600c:45ca:b0:412:7880:3da8 with SMTP id
- s10-20020a05600c45ca00b0041278803da8mr298496wmo.16.1708707574983; 
- Fri, 23 Feb 2024 08:59:34 -0800 (PST)
+ AJvYcCU0SJ1loMR2PHHbkLF8W0/t8hlk7L/qzRz45uAdzTR5ibdltFhO1hXkPmjiSDds8jIZsfOARbfmuHLiwXoCIv8PWnF0knE=
+X-Gm-Message-State: AOJu0YxzyLjC27F5mv4TYN4ppztoxH7n7LECxaIwbR2Wyz//H61B6EG/
+ 9HoFjmUZWhWAMctF9Oge1ZoX6KrfS4MLmadt8Ta7yEs61BJ+WIiTezUOhDiUOQE=
+X-Google-Smtp-Source: AGHT+IGD+WDVvPlW8d5Gj/Xu4dx3qa1hFd32oG5cuU8SEccC9VWRmwh1dE0iEPOMf/kbY3vXvwO71Q==
+X-Received: by 2002:a17:906:19c5:b0:a3f:9d69:3643 with SMTP id
+ h5-20020a17090619c500b00a3f9d693643mr304788ejd.32.1708710106855; 
+ Fri, 23 Feb 2024 09:41:46 -0800 (PST)
 Received: from [192.168.69.100] (xbn44-h02-176-184-35-109.dsl.sta.abo.bbox.fr.
  [176.184.35.109]) by smtp.gmail.com with ESMTPSA id
- m6-20020a7bce06000000b00410bca333b7sm2939507wmc.27.2024.02.23.08.59.34
+ rf20-20020a1709076a1400b00a3f2bf468b9sm2937337ejc.173.2024.02.23.09.41.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 08:59:34 -0800 (PST)
-Message-ID: <e44fde31-ca7f-4b79-87ab-bf94881d1be7@linaro.org>
-Date: Fri, 23 Feb 2024 17:59:33 +0100
+ Fri, 23 Feb 2024 09:41:46 -0800 (PST)
+Message-ID: <ed0f8248-81d0-41a7-a8a5-05fe0575e2c4@linaro.org>
+Date: Fri, 23 Feb 2024 18:41:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ide: Remove last two uses of ide/internal.h outside of
- hw/ide
+Subject: Re: [PATCH V5 1/5] util: str_split
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20240223142633.933694E6004@zero.eik.bme.hu>
+To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <1708638470-114846-1-git-send-email-steven.sistare@oracle.com>
+ <1708638470-114846-2-git-send-email-steven.sistare@oracle.com>
+ <ac4a19b6-9290-4c97-bc7d-eabfef079895@linaro.org>
+ <34d846ab-64e9-4fd4-8d99-62315a7c0f3b@oracle.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240223142633.933694E6004@zero.eik.bme.hu>
+In-Reply-To: <34d846ab-64e9-4fd4-8d99-62315a7c0f3b@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,20 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/2/24 15:26, BALATON Zoltan wrote:
-> Remove last two includes of hw/ide/intarnal.h outside of hw/ide and
-> replace them with newly added public header to allow moving internal.h
-> into hw/ide to really stop exposing it.
+On 23/2/24 15:01, Steven Sistare wrote:
+> On 2/23/2024 1:01 AM, Philippe Mathieu-Daudé wrote:
+>> On 22/2/24 22:47, Steve Sistare wrote:
+>>> Generalize hmp_split_at_comma() to take any delimiter string, rename
+>>> as str_split(), and move it to util/strList.c.
+>>>
+>>> No functional change.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>> ---
+>>>    include/monitor/hmp.h  |  1 -
+>>>    include/qemu/strList.h | 24 ++++++++++++++++++++++++
+>>>    monitor/hmp-cmds.c     | 19 -------------------
+>>>    net/net-hmp-cmds.c     |  3 ++-
+>>>    stats/stats-hmp-cmds.c |  3 ++-
+>>>    util/meson.build       |  1 +
+>>>    util/strList.c         | 24 ++++++++++++++++++++++++
+>>>    7 files changed, 53 insertions(+), 22 deletions(-)
+>>>    create mode 100644 include/qemu/strList.h
+>>>    create mode 100644 util/strList.c
+>>
+>>
+>>> +#include "qapi/qapi-builtin-types.h"
+>>> +
+>>> +/*
+>>> + * Split @str into a strList using the delimiter string @delim.
+>>> + * The delimiter is not included in the result.
+>>> + * Return NULL if @str is NULL or an empty string.
+>>> + * A leading, trailing, or consecutive delimiter produces an
+>>> + * empty string at that position in the output.
+>>> + * All strings are g_strdup'd, and the result can be freed
+>>> + * using qapi_free_strList.
+>>
+>> Note "qapi/qapi-builtin-types.h" defines:
+>>
+>>    G_DEFINE_AUTOPTR_CLEANUP_FUNC(strList, qapi_free_strList)
+>>
+>> Maybe mention we can also use:
+>>
+>>    g_autoptr(strList)
 > 
-> Fixes: a11f439a0e (hw/ide: Stop exposing internal.h to non-IDE files)
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/arm/sbsa-ref.c                 | 2 +-
->   {include/hw => hw}/ide/internal.h | 0
->   include/hw/misc/macio/macio.h     | 2 +-
->   3 files changed, 2 insertions(+), 2 deletions(-)
->   rename {include/hw => hw}/ide/internal.h (100%)
+> Thanks Philippe.  If we get to V6 for this series, I will mention this,
+> and also mention g_autoptr(GStrv) in the header comment for strv_from_strlist.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+If there is no need for v6, do you mind sharing here what would be
+the resulting comment? Maybe Markus can update it directly...
+(assuming he takes your series).
 
 
