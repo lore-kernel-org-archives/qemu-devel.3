@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEAC4C54E41
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF75C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdY1z-0007Mf-It; Fri, 23 Feb 2024 11:04:11 -0500
+	id 1rdY2E-0000QF-PS; Fri, 23 Feb 2024 11:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXin-0005bL-5r; Fri, 23 Feb 2024 10:44:21 -0500
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1rdXk8-0006p3-09; Fri, 23 Feb 2024 10:45:44 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rdXil-0006Jo-MU; Fri, 23 Feb 2024 10:44:20 -0500
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-5ce9555d42eso795744a12.2; 
- Fri, 23 Feb 2024 07:44:17 -0800 (PST)
+ id 1rdXk6-0006gO-5t; Fri, 23 Feb 2024 10:45:43 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1d918008b99so3573125ad.3; 
+ Fri, 23 Feb 2024 07:45:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708703057; x=1709307857; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708703140; x=1709307940; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G8ZPb3xPbgkM4M/2MGFfCLB8pnr23xttugE2MsKokaE=;
- b=TBozMG1hDv8/gQY0lwm5Q8ZuInZfKqzhWpYZhdQqHRiaVZS6RL6KRHnPMJ1t7SmjFg
- 5UMP1TiRBPCUpyjdTS3Yex0hUrHlY2Jhf8moK5ZylM6G6CkVzbYXVfvDLprObr8AcxLE
- 8ycEsQHine+sbKr2Z/0O5aC/509/xJGWgYhV4mPlcHcsl44+y+jhijkfKWIRDekc6Um7
- y+64UIQVDl3DyFNewfXezz6/fn5ZKrBuDMobjyu3pszmZ5LWv7Gt/ykR6n2bViO+BIeE
- 2Uvuw9oRDz6DpNglxd4h6CLSauB95Axz4I9PeYbFkONKe/OfCwAKCOSHSjeY+EKtCh7O
- 5x2g==
+ bh=9/uun2ht8z2zSr5QuOFbjyHW38BHeMwKID+9VW8Ltwg=;
+ b=ABL1wszizwP9l6XqrMh31X2tLCf1i8N5nK2JtAGz//GhBI2KuXR0+k8Yg3piQJb7Dt
+ KRTDkDEu+15I1IEpbhwz6vDhknV78CIjDkSiFnEIuGf28uV7sYmQagJimcGlTR6pNECY
+ yxoo8eov7bMFpfQpuKRXSR/hIWW4CfRvMIq/b9rrD8/Le0BlNmVMI7i4kbBjNww/sjcb
+ 4HaiHUU2V/+sRrGSTC0+DyUMfWFIKhD2PmR29Z/jBBwIbWmItPM6vsrhoxmW9cnG4EzC
+ bM9FNPHIolQzYp6frzm3B+V3+kk2wP/Q/k5vgf++9WM8flZbIx/rh5sbQideDRaXopXE
+ YoBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708703057; x=1709307857;
+ d=1e100.net; s=20230601; t=1708703140; x=1709307940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=G8ZPb3xPbgkM4M/2MGFfCLB8pnr23xttugE2MsKokaE=;
- b=isbDYqT/o8lPOH/MO55C21Smf3bBVSqDKm4Wf403iQlFJh4R81wzpW+YRXsxlVAI3B
- i6ZUvubq+zuD417COx1x1Hg7H3JAmKv/QHPl0YBiFxVs+aHqTICNZb0JOVd0XLb4grU6
- FMCFkTsrM1MT86bXqostJoomv2qgKqxRhnBKCUiDd+zfVlfyHeiWXCO6wDW5x6DQEGrv
- ja6VVTDMGslFa0um+dyu5E7b3p/Y3KWUwL8zBUCp6y6MQlE5ba0ET1IhO8EQcuNDNc1J
- NZN2Ec6r5skWfyI/MusNy7jxMCGfLFmVRbJdrNInJabrCqTGDvSfqk69YNiJnp+SpgQf
- Z/6g==
+ bh=9/uun2ht8z2zSr5QuOFbjyHW38BHeMwKID+9VW8Ltwg=;
+ b=oOVeblei2L+2IWTimcWYU+/BrO49+r0nxOjBXGcGRuKiQ9JhkWZsmCcATmaTEbN2Ob
+ tRYXc1+xc9JpoylPnSZFUGayUEGybIc5ChXpBVOhXOEteMSi3Gi0tz+e5BMvtS8NOgoz
+ VWYcyPogWPFl/LLNmMyD59WQvV85XAvZcnZIg+wu9hV0Z61gnAwdlPsWepyX+OraQcXZ
+ cES1Nj9fZjhs+VnatY2PHgTKlxud6ioOXsRkSm7pJioYmL20cbWuWKG7TkUC9qXTOJAm
+ dKvuukMH8P5pyBlFW9dZ2BfBKdhtfO+FrR6639Fsk9kvk/Xcnypx9cGTu9yLgQ2xdn66
+ vxZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcIDEscRc5ntmB9z5E7aIHhbODxtu4s1eb0hngUlmfpaT3cI4I1kngSY5lbtgBbTnJ7f5K8EDYTRE7Ln4jwDbpzACO
-X-Gm-Message-State: AOJu0YxKXg3X6Q0EE6RkzSc+x8uLAEqY+7aJawWXJwM0KtnUpJC/9MNA
- KwNQBbwLhPZ6hOpOlZxdb7a9ToHdCXOjb+tWuVVpy4djNcpB5tcHRqkcAw7q
-X-Google-Smtp-Source: AGHT+IE8r3VKx8NJwqiOUt78vFXosUqUNZDZEL3uUSene0I4CTZKT+t1JRGzGOvnM+4u3CsyKLAO7A==
-X-Received: by 2002:a05:6a20:c90a:b0:1a0:ccf2:8f44 with SMTP id
- gx10-20020a056a20c90a00b001a0ccf28f44mr301686pzb.21.1708703056690; 
- Fri, 23 Feb 2024 07:44:16 -0800 (PST)
+ AJvYcCV459cx96CFDnGi9Iqa39aZx9nqWAu5EWnfgrvKvZKAgYrcZlmEmxdlL3nH67/uPwGv58BoXLO2pf2/mGzCKAcwn4po
+X-Gm-Message-State: AOJu0YzzQ7JbQTYhpMWSeKIhi6dNcX8U76aCAg8LJI3mly3C3FVWtJX6
+ bPTT8FiXwXVqh2Iees3TvVjq+3bLl05hRR+KeFzlwha9pHiHgxHKeYDL2N85
+X-Google-Smtp-Source: AGHT+IH9mqVV29N91/NEMwtI8WKClQv6RJcOTjqpUBvbbdKOpi95vVWUYxb/c1Vu9I1VShzuu9/few==
+X-Received: by 2002:a17:902:c40d:b0:1d9:d341:b150 with SMTP id
+ k13-20020a170902c40d00b001d9d341b150mr195585plk.40.1708703138323; 
+ Fri, 23 Feb 2024 07:45:38 -0800 (PST)
 Received: from wheely.local0.net (220-235-194-103.tpgi.com.au.
  [220.235.194.103]) by smtp.gmail.com with ESMTPSA id
- h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.44.13
+ h18-20020a170902f2d200b001d913992d8csm11808208plc.242.2024.02.23.07.45.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 07:44:16 -0800 (PST)
+ Fri, 23 Feb 2024 07:45:38 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Kowshik Jois <kowsjois@linux.ibm.com>
-Subject: [PULL 16/47] ppc/spapr: Introduce SPAPR_IRQ_NR_IPIS to refer IRQ
- range for CPU IPIs.
-Date: Sat, 24 Feb 2024 01:41:35 +1000
-Message-ID: <20240223154211.1001692-17-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 38/47] ppc/pnv: Wire ChipTOD model to powernv9 and powernv10
+ machines
+Date: Sat, 24 Feb 2024 01:41:57 +1000
+Message-ID: <20240223154211.1001692-39-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240223154211.1001692-1-npiggin@gmail.com>
 References: <20240223154211.1001692-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,81 +98,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Wire the ChipTOD model to powernv9 and powernv10 machines.
 
-spapr_irq_init currently uses existing macro SPAPR_XIRQ_BASE to refer to
-the range of CPU IPIs during initialization of nr-irqs property.
-It is more appropriate to have its own define which can be further
-reused as appropriate for correct interpretation.
-
-Suggested-by: Cedric Le Goater <clg@kaod.org>
+Suggested-by-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Tested-by: Kowshik Jois <kowsjois@linux.ibm.com>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr_irq.c         |  6 ++++--
- include/hw/ppc/spapr_irq.h | 14 +++++++++++++-
- 2 files changed, 17 insertions(+), 3 deletions(-)
+ hw/ppc/pnv.c              | 30 ++++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_chip.h |  3 +++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/hw/ppc/spapr_irq.c b/hw/ppc/spapr_irq.c
-index a0d1e1298e..97b2fc42ab 100644
---- a/hw/ppc/spapr_irq.c
-+++ b/hw/ppc/spapr_irq.c
-@@ -23,6 +23,8 @@
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index acc4db00c1..8beddb1313 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1427,6 +1427,8 @@ static void pnv_chip_power9_instance_init(Object *obj)
  
- #include "trace.h"
+     object_initialize_child(obj, "lpc", &chip9->lpc, TYPE_PNV9_LPC);
  
-+QEMU_BUILD_BUG_ON(SPAPR_IRQ_NR_IPIS > SPAPR_XIRQ_BASE);
++    object_initialize_child(obj, "chiptod", &chip9->chiptod, TYPE_PNV9_CHIPTOD);
 +
- static const TypeInfo spapr_intc_info = {
-     .name = TYPE_SPAPR_INTC,
-     .parent = TYPE_INTERFACE,
-@@ -329,7 +331,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-         int i;
+     object_initialize_child(obj, "occ", &chip9->occ, TYPE_PNV9_OCC);
  
-         dev = qdev_new(TYPE_SPAPR_XIVE);
--        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+        qdev_prop_set_uint32(dev, "nr-irqs", smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
-         /*
-          * 8 XIVE END structures per CPU. One for each available
-          * priority
-@@ -356,7 +358,7 @@ void spapr_irq_init(SpaprMachineState *spapr, Error **errp)
-     }
+     object_initialize_child(obj, "sbe", &chip9->sbe, TYPE_PNV9_SBE);
+@@ -1573,6 +1575,19 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+     chip->dt_isa_nodename = g_strdup_printf("/lpcm-opb@%" PRIx64 "/lpc@0",
+                                             (uint64_t) PNV9_LPCM_BASE(chip));
  
-     spapr->qirqs = qemu_allocate_irqs(spapr_set_irq, spapr,
--                                      smc->nr_xirqs + SPAPR_XIRQ_BASE);
-+                                      smc->nr_xirqs + SPAPR_IRQ_NR_IPIS);
- 
-     /*
-      * Mostly we don't actually need this until reset, except that not
-diff --git a/include/hw/ppc/spapr_irq.h b/include/hw/ppc/spapr_irq.h
-index c22a72c9e2..4fd2d5853d 100644
---- a/include/hw/ppc/spapr_irq.h
-+++ b/include/hw/ppc/spapr_irq.h
-@@ -14,9 +14,21 @@
- #include "qom/object.h"
- 
- /*
-- * IRQ range offsets per device type
-+ * The XIVE IRQ backend uses the same layout as the XICS backend but
-+ * covers the full range of the IRQ number space. The IRQ numbers for
-+ * the CPU IPIs are allocated at the bottom of this space, below 4K,
-+ * to preserve compatibility with XICS which does not use that range.
-+ */
++    /* ChipTOD */
++    object_property_set_bool(OBJECT(&chip9->chiptod), "primary",
++                             chip->chip_id == 0, &error_abort);
++    object_property_set_bool(OBJECT(&chip9->chiptod), "secondary",
++                             chip->chip_id == 1, &error_abort);
++    object_property_set_link(OBJECT(&chip9->chiptod), "chip", OBJECT(chip),
++                             &error_abort);
++    if (!qdev_realize(DEVICE(&chip9->chiptod), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV9_XSCOM_CHIPTOD_BASE,
++                            &chip9->chiptod.xscom_regs);
 +
-+/*
-+ * CPU IPI range (XIVE only)
-  */
- #define SPAPR_IRQ_IPI        0x0
-+#define SPAPR_IRQ_NR_IPIS    0x1000
-+
-+/*
-+ * IRQ range offsets per device type
-+ */
+     /* Create the simplified OCC model */
+     if (!qdev_realize(DEVICE(&chip9->occ), NULL, errp)) {
+         return;
+@@ -1685,6 +1700,8 @@ static void pnv_chip_power10_instance_init(Object *obj)
+                               "xive-fabric");
+     object_initialize_child(obj, "psi", &chip10->psi, TYPE_PNV10_PSI);
+     object_initialize_child(obj, "lpc", &chip10->lpc, TYPE_PNV10_LPC);
++    object_initialize_child(obj, "chiptod", &chip10->chiptod,
++                            TYPE_PNV10_CHIPTOD);
+     object_initialize_child(obj, "occ",  &chip10->occ, TYPE_PNV10_OCC);
+     object_initialize_child(obj, "sbe",  &chip10->sbe, TYPE_PNV10_SBE);
+     object_initialize_child(obj, "homer", &chip10->homer, TYPE_PNV10_HOMER);
+@@ -1820,6 +1837,19 @@ static void pnv_chip_power10_realize(DeviceState *dev, Error **errp)
+     chip->dt_isa_nodename = g_strdup_printf("/lpcm-opb@%" PRIx64 "/lpc@0",
+                                             (uint64_t) PNV10_LPCM_BASE(chip));
  
- #define SPAPR_XIRQ_BASE      XICS_IRQ_BASE /* 0x1000 */
- #define SPAPR_IRQ_EPOW       (SPAPR_XIRQ_BASE + 0x0000)
++    /* ChipTOD */
++    object_property_set_bool(OBJECT(&chip10->chiptod), "primary",
++                             chip->chip_id == 0, &error_abort);
++    object_property_set_bool(OBJECT(&chip10->chiptod), "secondary",
++                             chip->chip_id == 1, &error_abort);
++    object_property_set_link(OBJECT(&chip10->chiptod), "chip", OBJECT(chip),
++                             &error_abort);
++    if (!qdev_realize(DEVICE(&chip10->chiptod), NULL, errp)) {
++        return;
++    }
++    pnv_xscom_add_subregion(chip, PNV10_XSCOM_CHIPTOD_BASE,
++                            &chip10->chiptod.xscom_regs);
++
+     /* Create the simplified OCC model */
+     if (!qdev_realize(DEVICE(&chip10->occ), NULL, errp)) {
+         return;
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index 9b06c8d87c..af4cd7a8b8 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -2,6 +2,7 @@
+ #define PPC_PNV_CHIP_H
+ 
+ #include "hw/pci-host/pnv_phb4.h"
++#include "hw/ppc/pnv_chiptod.h"
+ #include "hw/ppc/pnv_core.h"
+ #include "hw/ppc/pnv_homer.h"
+ #include "hw/ppc/pnv_n1_chiplet.h"
+@@ -79,6 +80,7 @@ struct Pnv9Chip {
+     PnvXive      xive;
+     Pnv9Psi      psi;
+     PnvLpcController lpc;
++    PnvChipTOD   chiptod;
+     PnvOCC       occ;
+     PnvSBE       sbe;
+     PnvHomer     homer;
+@@ -111,6 +113,7 @@ struct Pnv10Chip {
+     PnvXive2     xive;
+     Pnv9Psi      psi;
+     PnvLpcController lpc;
++    PnvChipTOD   chiptod;
+     PnvOCC       occ;
+     PnvSBE       sbe;
+     PnvHomer     homer;
 -- 
 2.42.0
 
