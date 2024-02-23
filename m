@@ -4,134 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60636C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 11:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE19C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 11:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdTOJ-0007CY-EB; Fri, 23 Feb 2024 06:06:55 -0500
+	id 1rdTWf-0000jT-Pp; Fri, 23 Feb 2024 06:15:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1rdTOF-0007Bg-4v; Fri, 23 Feb 2024 06:06:51 -0500
-Received: from mail-mw2nam10on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2412::600]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1rdTOC-0000Z4-NO; Fri, 23 Feb 2024 06:06:50 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MLKAlwEfmkLbDrD9JATtK9QTePcYezgHf0YhCiWv96syLJQVdJNoePPdwAbaLHjUVee/w2FFleOgLtk0jRMG/02RjQaqaZyoXKYbG5daxWi7b6/nYFtGYAwe/hJ2ygNlZbmQiQm0vh9b7lqRoO6xcZERc+3anvfsO0J/vs9o8/wXERnBob+5DVJS0TxJKc7jRStdqp4/A3bHp8xkedZu/xZdBgBAE4SdsX23GzpgXihdscDT8Z53tcyhJDwWcIMlfvzAK+RTXUSQy8DzsKviVMG8M43cE4jWjcpIJ5UYRn5ozLoboT9bXddAwS5LtO+vg9qc19E3o/OiZQM2+pr2MQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rueK3qSYXx+kwXMYcz2qOXHTRXBvaTSchHBbTF8txNg=;
- b=nKkC22mudkhPIwFh7StDuy0UcJDmbYWh3cjoZloIGoZauj/cu0G40L+eFINH6WF9iuMfZkcbar+LOVhnyI6rWN/71s9dtHzIJz0BR47jFH6XuSuHq7x3fVri8atLSb2GqMrCEquNRilMhoE/4DHflKLUiPh4t3rCu/hxr6VPahmYqLX+ovxWuxylVTAAiaOBptt3pLrOKTh/DxLmBAQaSARnPcqXFTjid9wIz1csMCoSirsAfzxL2y6/Dc/p/404O1HmqXs6l3IHlBu3pFr8gYfpFYa7IQVqbU1nVmc3sxYASjq6P/u2o0R7TSPpzt5cAJg626x6v1NXTKWzH2G+1Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rueK3qSYXx+kwXMYcz2qOXHTRXBvaTSchHBbTF8txNg=;
- b=OICPySvzG0A9Wd52NapDXBoWJ3WgE5N4pq0iser8IZ9krmm3YB21U8IPkbgCgFL2qK8oQJ4dDag4F2KFbB4+Q3tmhD0RmDdsXyzw7pq4joLZuo6zL0MFamMgJBVdsoE935gs9LWZQqDzkslrq+t/HB4seikEYA0jqBDi7HgRS2g=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by DM8PR12MB5415.namprd12.prod.outlook.com (2603:10b6:8:25::5) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7316.24; Fri, 23 Feb 2024 11:06:41 +0000
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::9ec4:e176:2c3e:6dc0]) by SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::9ec4:e176:2c3e:6dc0%7]) with mapi id 15.20.7316.023; Fri, 23 Feb 2024
- 11:06:40 +0000
-Message-ID: <9f3cb497-d49c-4a35-b365-847ae1b60b08@amd.com>
-Date: Fri, 23 Feb 2024 12:06:34 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/21] hw/net/can/versal: Prefer object_initialize_child
- over object_initialize
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- qemu-block@nongnu.org, Pavel Pisa <pisa@cmp.felk.cvut.cz>,
- Vikram Garhwal <fnu.vikram@xilinx.com>, Jason Wang <jasowang@redhat.com>
-References: <20240216110313.17039-1-philmd@linaro.org>
- <20240216110313.17039-17-philmd@linaro.org>
-From: Francisco Iglesias <francisco.iglesias@amd.com>
-In-Reply-To: <20240216110313.17039-17-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO4P265CA0125.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:2c6::11) To SJ2PR12MB8739.namprd12.prod.outlook.com
- (2603:10b6:a03:549::10)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdTWe-0000jE-RR
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:15:32 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rdTWb-0003BG-T0
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 06:15:31 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-563d56ee65cso736846a12.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 03:15:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708686928; x=1709291728; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=lmHQxMRvhUF4S4WlFFjnyvmRFPE9JIxE/feTAO1ztYA=;
+ b=s/StazRWJVj6NZwX7zXtMpaGahqoNw0JCJmNpbjyxSpiSvAUVXga6TwasJMb5AeA0U
+ UvF02aExcEaRsndXQc8BzUkq2xaj99YoTkcxOeNpg6v9Jyiam2vJIQEJeGTxETk6V6Oo
+ rE3AJ+CYeRZQHWv8FH+kFr5j9OZCd1ItDeQj/qKhayYsIJJ1v0eLApknyyLXunKWJSDN
+ id93sNTqtL9Js9WTEl00pcRzT8sBJMXwOLiMo01X/en+I8OmnKInH7uEBCLcZdpZiZiF
+ QZqUkPT48sCWeYEWNS+QJ2QEHsDhjNqsALQM1LhBj0sFE3fHkk7rEuGF2Upb29ZfkSeU
+ frug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708686928; x=1709291728;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lmHQxMRvhUF4S4WlFFjnyvmRFPE9JIxE/feTAO1ztYA=;
+ b=tVeIa/2fb6oWV6c1p/DoH47yIrTiyt/8DTsftwv/lrxwzf35gjTuyLtebwm1HKX3jZ
+ zUkw00UsAHpr5pCqs0AXogKKg97Kud209R08uPJSh/woHr3ts3R9ho7mhxRVCjPGLS4l
+ Nb39CUBaQrQMSa8YNq6EB4SqqDKRhf0RZxvGDnJ+jJWK5JpWnrKDx7WZuoUJP1YH6l+L
+ /MkDgLyzvna2LZrKJrRfEBpYWtGiZbkiJh5YT5QgLoxnx+Y3ct4b/7QpRVwIU4Q7CzJg
+ WsV0GV90KPb5aZJ/WBey7p/QmUjC/a0ty8qbHF3NqHyNjaVNfFww/74g3XVbd0oRdcyF
+ iusA==
+X-Gm-Message-State: AOJu0YxnzDDY+O+rkaW+OfWBWp59P6dt3phutkzHzJKEVwgmVR0+NyRn
+ /3yTyW9jyRitZEsobjF589BrO48MvMXjkI5UuvNl/Zic9UorxLYU+/kSSj3/QdTCPd4A1cC6K/n
+ y6KnlzTpWNl4p8QwVv9SmjpzKzxR5Mz3NT19A8Q==
+X-Google-Smtp-Source: AGHT+IHhChLB4aTxk9sYQBCYCZtRCBo1DRBxHFeITFAbPwCmM5CC3WU092xf+tTXKWpzjDJurTNLRaTtEDlMMxGwP94=
+X-Received: by 2002:a05:6402:14d2:b0:565:eb8:f3d2 with SMTP id
+ f18-20020a05640214d200b005650eb8f3d2mr835245edx.21.1708686927942; Fri, 23 Feb
+ 2024 03:15:27 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|DM8PR12MB5415:EE_
-X-MS-Office365-Filtering-Correlation-Id: a59258dc-bd69-440c-37ea-08dc345f8307
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: dTIv8xP2zlI0CVehJb3Iv8SLnZHu/lSq9G5ir7VxkKEZ1jYBXo3+9dWSHnVBedhICxByOxisF16kWxx9H2i1D+aa8u/NeTbHhGkjwUVG6hOenaxGWmtfSteBQcIwT0alEbsoLy2mvlovC9+dFcDoZIU/7rSWwZAIhLQo0Ji2ZLRjwEzOvJoU5wVqrA2QZY2UoPBg2CDXiIovo9bzQZa+b6/TdmnytH1UlASYlXElWYuTIslUIZIuu9gIg7eaucrkYtZgCkOsy3+d4oht0K+tBC4MgVJHlBD/KSW2GnNkiRR5Ja6fR4/AxHz4hEfVrni6/6mbW7ehFXjs791oAUjn9dPa1/568YjuHIa1ySjthSaRQ1SM6qLObERTVZ5w1lXRHWrK/8soPwzo1rhjHle1m/NDwEuIKhnJ2gOMbOnEHuqMepXlgMesLYmRnm9/qoiDO/lWyNnimuBHFNm0GqKa0GEDZY38eSsZ0FFdgAdkBC6GB8hi1v2L/1AhgGgUZESRUvdGTINw76v0oa85LhiwhqL4nCuj6EwmaJSMzLanwc4=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RXF6cDYzNSswWHBMVGgxR0UvcHg1alRzR3d5eXp4UVYyUUwzT3V6cGtKWDJ4?=
- =?utf-8?B?SERpOXpScU5QcGU3a25MVnQzbHlHUklRNVA2TTVuY0g5cHBTK08wNVFvWVU0?=
- =?utf-8?B?aEEycmR2NWNpWTV0Tk5pNXdTWDRWK0t3YmlUT2YxNzhuQjlVN2lJTUdKZkNC?=
- =?utf-8?B?bysrZ1FKTEhUNnJjRGNVZ1RGTnI2dXMweVE5cHJMUXI1UHpqT3g1aWpCNkox?=
- =?utf-8?B?NWM0dzBiM1dMUFA5ZWdYeng4bEZuTWQ3c0xwNUJpb0YyZFQ0QU0zQmNSUUdU?=
- =?utf-8?B?enJsN3BSeHF4bG9mOVNibUhRUS9LOTd1RHd0ekZBK1VxSC9RTkRlWjhwSHJn?=
- =?utf-8?B?dGdycTNHR0FXRFJNVTlOZUlVblNtYytXTFhLMkFRTG5KaE9wV1BwOVF6YW9L?=
- =?utf-8?B?T2daQkt2OXpndGU0R2xaZjlXZWdqYTZ3eUJnRlRRQ0pubTUzaFNmMmV4N01F?=
- =?utf-8?B?b1l6dnhBRWRkWkM5dFVWRG4yN3RMS1gzbXgvdVh1Nmc2UlptdzFDdDhXNXNx?=
- =?utf-8?B?UWE1RUlIVTlVeEJnTWVFSGFkQnVSc05WNE02QlJpYjFjS0hnKytRNVdZUFRB?=
- =?utf-8?B?aW14Q2dVcU9XMTJrTGNZVUI4K3JwTHk4NUJnUXNuVzRSUjk1TkhYV1QyMXBZ?=
- =?utf-8?B?eGtFV09tenhtalhoVEFDUXhRM0pBdUJUajhKcjBtSTFqclQ2M3U2WTdwUEdS?=
- =?utf-8?B?cEZGL1REeFdNOVZlMXg1cUVWNHNZNTNYN1lVcnE2YkM5WXB3SGNJa2lOM0RV?=
- =?utf-8?B?aHNqaEJoOXVLam9ucUhSTkdEc3RMUmt0SzJDVFNOVThEMFQ1WURxK1Eyb3B1?=
- =?utf-8?B?NytZYm9aaDZ3bDM0UEZrQ3BqM2dkcWoyNVc2Y0ZRcVRFRDU2dlF0OTlGa3BB?=
- =?utf-8?B?Y2pWUkducFY0a0Q2RlFiK0FYbnU0eHQ4dDZMdUZpOUdsMDR0aHJ6VlRqcWgy?=
- =?utf-8?B?R2FNcDVKOU5ER2N5OGFqNmxselRyekNLdXNBRW14V2ozNnBiUTlzR3BSMC9m?=
- =?utf-8?B?dENRb3NsbWNnVjNiSnRtOUVkeXpCcTNGWjRnNGhXdjhHZGlCZ3JZNGo0T2VI?=
- =?utf-8?B?STVwQ3RYUzlWRmNubGQwTVViUFI2cWdpU2t3K3FqK0w5cDFWV0J5ZG84WndN?=
- =?utf-8?B?L2FPS0NBTlp6QjY3ajVXT2F3clFCV3IxMEpxS2YvQWFGWXFlODVFcjRVK0hp?=
- =?utf-8?B?NFA0RzJ6RzhOUy9WSEJEaXlKRytWWmZvUldCY3ExZTdUTkc0MmZ6OSt4L1g2?=
- =?utf-8?B?azFHMU0xbDI1eUlGd2ZzenpHakY0MHJzWFlCa3dYME1KN0RobEZLMlFqME9J?=
- =?utf-8?B?UXV1L2pnOXVCZ0xQcnoyQlRad21WY1llUFdiWnpJS3hUc3dUeVp6MitrZkhD?=
- =?utf-8?B?UWp6UjNSd0YxeGRVTmtqNllTZTkxU001M1kyeDhqZjVzVVNPM05FUURtb1hC?=
- =?utf-8?B?NjJlRWQwY1UwMzgvc1FTZjZmV21yUVdBaWN3ajBqUmZzNnpNZjRiUUxQWU1q?=
- =?utf-8?B?NEM3VE9qVGNBRTBjU1VlNnNKdlBlQ1M5YTU4ay9jTlBZTXFqQWdralJwSXdP?=
- =?utf-8?B?OGV0bGJFeU5BaS9rTy9LQUdOL3BESXU3cGtua3JBWHVsR1NpQ3Z2bTRtbnJJ?=
- =?utf-8?B?VnVBUjJtMHZMU0FMam4xd2JjZVAzY2dwUVdnZzZqU0FJWXR6T204YnJPTW1k?=
- =?utf-8?B?cG1jb3JoRjliN2pwUzErS09zcnlHZC95RnNyUCtiaTc1OEtXbUpDVDlmUWdp?=
- =?utf-8?B?N1FpTXhrU1ZwYXVGVGlYR3R3U0o3MWQ4MDJtMEwrY3ZwYmV2OGdmTDk0ZnZ1?=
- =?utf-8?B?VnFQdzZIYjk0eUMzaDh3M2dZaTlCWExqTWZIQm5xNysyOVR1T1g1ZUxlSUFw?=
- =?utf-8?B?dC9LSUxHN0xmZFIvWUNHVnZoaGQ1bllrL1B2eG1XVU1mQkNSMDJGQVJwSUpa?=
- =?utf-8?B?UDJ3UXQ0ZEFYN3hzMnQ1dUdqVmlSRkpZY1pxRkQzam5DWXpVaWV5SzlrVHdS?=
- =?utf-8?B?eld4Ty9kbFBOS2QrWkNBNkNmV040bE9GZE5RN1JvNFJQM25VOWRNSldpaTVR?=
- =?utf-8?B?c2V6U3lDYVZ4WUkzNmtOVlBYY3hoUmJiMVkwQnhreFdpZVdUdW16Ty9Cb3Z2?=
- =?utf-8?Q?Pv0rKiuPSTISAE/jvq1LchBpT?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a59258dc-bd69-440c-37ea-08dc345f8307
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Feb 2024 11:06:40.6981 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Yh2LJpyK0/DTGXGOuTH9yYOKRZC26wt2TJ0Gon6PsLzaN9dbyEADICqULoDSC7AOdSrvKMamy0gboNX19q3lKQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR12MB5415
-Received-SPF: softfail client-ip=2a01:111:f403:2412::600;
- envelope-from=francisco.iglesias@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+References: <ZdhyX0eufxK1M8og@cormorant.local>
+In-Reply-To: <ZdhyX0eufxK1M8og@cormorant.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 23 Feb 2024 11:15:16 +0000
+Message-ID: <CAFEAcA_jnw2iocRMT8OBx0fWP5tct3H-g13KASib-yzCMsvz4w@mail.gmail.com>
+Subject: Re: Clarification on cross-version compatibility requirements
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.002,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,30 +87,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-02-16 12:03, Philippe Mathieu-Daudé wrote:
-> When the QOM parent is available, prefer object_initialize_child()
-> over object_initialize(), since it create the parent relationship.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri, 23 Feb 2024 at 10:25, Klaus Jensen <its@irrelevant.dk> wrote:
+>
+> Hi all,
+>
+> Yesterday, a bug but in hw/nvme (#2184) was filed
+>
+>         https://gitlab.com/qemu-project/qemu/-/issues/2184)
+>
+> The reporter ran into an issue with hibernating a guest from QEMU v4.1.0
+> and trying to resume it on v8.2.1. hw/nvme has received some changes
+> since then, including a change in the BAR layout which causes the boot
+> to fail.
+>
+> Now, hw/nvme is marked 'unmigratable'. I realize that this is only
+> observed and checked under live migration, but I honestly did not know
+> that hw/nvme were expected to ensure that the kind of "hibernation
+> migration" works.
+>
+> I already have a potential fix for the issue (because I don't just want
+> to say "wontfix", I'd like to fix it), but it got me thinking about what
+> the general requirements are. And I couldn't find any good documentation
+> on it.
+>
+> So, my question is: when is an emulated device required to support such
+> version compatibility? I'm asking because we've also deprecated some
+> stuff, like the device originally using an internal Intel PCI device id
+> that we wanted to get rid of. But now, I don't think I can actually
+> remove that parameter, I need to keep it around for hw/core/machine.c to
+> set if necessary.
 
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+So I think the answer is roughly "if it can be sensibly used in a
+versioned machine type" (we might make exceptions for obviously
+prototype/testing/whatever devices). It doesn't come up very often,
+because there aren't that many parts of device behaviour that are
+observable across hibernate-and-resume an the parts that are are
+usually nailed down by the hardware specification.
 
-
-> ---
->   hw/net/can/xlnx-versal-canfd.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
-> index 47a14cfe63..f8e4bd75e4 100644
-> --- a/hw/net/can/xlnx-versal-canfd.c
-> +++ b/hw/net/can/xlnx-versal-canfd.c
-> @@ -1900,7 +1900,7 @@ static int canfd_populate_regarray(XlnxVersalCANFDState *s,
->           int index = rae[i].addr / 4;
->           RegisterInfo *r = &s->reg_info[index];
->   
-> -        object_initialize(r, sizeof(*r), TYPE_REGISTER);
-> +        object_initialize_child(OBJECT(s), "reg[*]", r, TYPE_REGISTER);
->   
->           *r = (RegisterInfo) {
->               .data = &s->regs[index],
+-- PMM
 
