@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C951C5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC890C54E49
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdSsr-0003nT-4T; Fri, 23 Feb 2024 05:34:25 -0500
+	id 1rdSsz-0003tB-TU; Fri, 23 Feb 2024 05:34:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rdSsY-0003e1-3p; Fri, 23 Feb 2024 05:34:06 -0500
+ id 1rdSsV-0003c0-AM; Fri, 23 Feb 2024 05:34:05 -0500
 Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rdSsV-0001yj-8n; Fri, 23 Feb 2024 05:34:05 -0500
-Received: from mail.maildlp.com (unknown [172.19.88.214])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Th5pG6dzQz1FLHM;
- Fri, 23 Feb 2024 18:28:54 +0800 (CST)
+ id 1rdSsP-0001vF-Os; Fri, 23 Feb 2024 05:34:03 -0500
+Received: from mail.maildlp.com (unknown [172.19.88.234])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Th5p21p8sz1FHdW;
+ Fri, 23 Feb 2024 18:28:42 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id C626C1A016B;
- Fri, 23 Feb 2024 18:33:48 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 1F1CE1401E0;
+ Fri, 23 Feb 2024 18:33:36 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Fri, 23 Feb
- 2024 18:33:48 +0800
+ 2024 18:33:35 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v3 16/21] hw/intc: Enable FEAT_GICv3_NMI Feature
-Date: Fri, 23 Feb 2024 10:32:16 +0000
-Message-ID: <20240223103221.1142518-17-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v3 02/21] target/arm: Add PSTATE.ALLINT
+Date: Fri, 23 Feb 2024 10:32:02 +0000
+Message-ID: <20240223103221.1142518-3-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240223103221.1142518-1-ruanjinjie@huawei.com>
 References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
@@ -69,73 +69,78 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added properties to enable FEAT_GICv3_NMI feature, setup distributor
-and redistributor registers to indicate NMI support.
+The ALLINT bit in PSTATE is used to mask all IRQ or FIQ interrupts.
+
+Place this in its own field within ENV, as that will
+make it easier to handle ALLINT set/clear.
+
+With the change to pstate_read/write, exception entry
+and return are automatically handled.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 ---
- hw/intc/arm_gicv3_common.c         | 1 +
- hw/intc/arm_gicv3_dist.c           | 2 ++
- hw/intc/gicv3_internal.h           | 1 +
- include/hw/intc/arm_gicv3_common.h | 1 +
- 4 files changed, 5 insertions(+)
+v3:
+- Remove ALLINT dump in aarch64_cpu_dump_state().
+- Update the commit message.
+---
+ target/arm/cpu.h | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index c52f060026..2d2cea6858 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -569,6 +569,7 @@ static Property arm_gicv3_common_properties[] = {
-     DEFINE_PROP_UINT32("num-irq", GICv3State, num_irq, 32),
-     DEFINE_PROP_UINT32("revision", GICv3State, revision, 3),
-     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
-+    DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 0),
-     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
-     /*
-      * Compatibility property: force 8 bits of physical priority, even
-diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
-index 2f7280c524..65e7ca29cf 100644
---- a/hw/intc/arm_gicv3_dist.c
-+++ b/hw/intc/arm_gicv3_dist.c
-@@ -412,6 +412,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
-          *                      by GICD_TYPER.IDbits)
-          * MBIS == 0 (message-based SPIs not supported)
-          * SecurityExtn == 1 if security extns supported
-+         * NMI = 1 if Non-maskable interrupt property is supported
-          * CPUNumber == 0 since for us ARE is always 1
-          * ITLinesNumber == (((max SPI IntID + 1) / 32) - 1)
-          */
-@@ -425,6 +426,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
-         bool dvis = s->revision >= 4;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 63f31e0d98..f9646dbbfb 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -224,6 +224,7 @@ typedef struct CPUArchState {
+      *    semantics as for AArch32, as described in the comments on each field)
+      *  nRW (also known as M[4]) is kept, inverted, in env->aarch64
+      *  DAIF (exception masks) are kept in env->daif
++     *  ALLINT (all IRQ or FIQ interrupts masks) are kept in env->allint
+      *  BTYPE is kept in env->btype
+      *  SM and ZA are kept in env->svcr
+      *  all other bits are stored in their correct places in env->pstate
+@@ -261,6 +262,7 @@ typedef struct CPUArchState {
+     uint32_t btype;  /* BTI branch type.  spsr[11:10].  */
+     uint64_t daif; /* exception masks, in the bits they are in PSTATE */
+     uint64_t svcr; /* PSTATE.{SM,ZA} in the bits they are in SVCR */
++    uint64_t allint; /* All IRQ or FIQ interrupt mask, in the bit in PSTATE */
  
-         *data = (1 << 25) | (1 << 24) | (dvis << 18) | (sec_extn << 10) |
-+            (s->nmi_support << GICD_TYPER_NMI_SHIFT) |
-             (s->lpi_enable << GICD_TYPER_LPIS_SHIFT) |
-             (0xf << 19) | itlinesnumber;
-         return true;
-diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
-index a1fc34597e..8d793243f4 100644
---- a/hw/intc/gicv3_internal.h
-+++ b/hw/intc/gicv3_internal.h
-@@ -70,6 +70,7 @@
- #define GICD_CTLR_E1NWF             (1U << 7)
- #define GICD_CTLR_RWP               (1U << 31)
+     uint64_t elr_el[4]; /* AArch64 exception link regs  */
+     uint64_t sp_el[4]; /* AArch64 banked stack pointers */
+@@ -1543,6 +1545,7 @@ FIELD(VTCR, SL2, 33, 1)
+ #define PSTATE_D (1U << 9)
+ #define PSTATE_BTYPE (3U << 10)
+ #define PSTATE_SSBS (1U << 12)
++#define PSTATE_ALLINT (1U << 13)
+ #define PSTATE_IL (1U << 20)
+ #define PSTATE_SS (1U << 21)
+ #define PSTATE_PAN (1U << 22)
+@@ -1555,7 +1558,8 @@ FIELD(VTCR, SL2, 33, 1)
+ #define PSTATE_N (1U << 31)
+ #define PSTATE_NZCV (PSTATE_N | PSTATE_Z | PSTATE_C | PSTATE_V)
+ #define PSTATE_DAIF (PSTATE_D | PSTATE_A | PSTATE_I | PSTATE_F)
+-#define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE)
++#define CACHED_PSTATE_BITS (PSTATE_NZCV | PSTATE_DAIF | PSTATE_BTYPE | \
++                            PSTATE_ALLINT)
+ /* Mode values for AArch64 */
+ #define PSTATE_MODE_EL3h 13
+ #define PSTATE_MODE_EL3t 12
+@@ -1595,7 +1599,7 @@ static inline uint32_t pstate_read(CPUARMState *env)
+     ZF = (env->ZF == 0);
+     return (env->NF & 0x80000000) | (ZF << 30)
+         | (env->CF << 29) | ((env->VF & 0x80000000) >> 3)
+-        | env->pstate | env->daif | (env->btype << 10);
++        | env->pstate | env->allint | env->daif | (env->btype << 10);
+ }
  
-+#define GICD_TYPER_NMI_SHIFT           9
- #define GICD_TYPER_LPIS_SHIFT          17
- 
- /* 16 bits EventId */
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index df4380141d..16c5fa7256 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -251,6 +251,7 @@ struct GICv3State {
-     uint32_t num_irq;
-     uint32_t revision;
-     bool lpi_enable;
-+    bool nmi_support;
-     bool security_extn;
-     bool force_8bit_prio;
-     bool irq_reset_nonsecure;
+ static inline void pstate_write(CPUARMState *env, uint32_t val)
+@@ -1604,6 +1608,7 @@ static inline void pstate_write(CPUARMState *env, uint32_t val)
+     env->NF = val;
+     env->CF = (val >> 29) & 1;
+     env->VF = (val << 3) & 0x80000000;
++    env->allint = val & PSTATE_ALLINT;
+     env->daif = val & PSTATE_DAIF;
+     env->btype = (val >> 10) & 3;
+     env->pstate = val & ~CACHED_PSTATE_BITS;
 -- 
 2.34.1
 
