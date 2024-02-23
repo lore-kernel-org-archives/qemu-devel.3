@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887DEC48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 09:45:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9134DC48BC4
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 09:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdS6K-0008La-V4; Fri, 23 Feb 2024 04:44:16 -0500
+	id 1rdS7T-0000W8-UX; Fri, 23 Feb 2024 04:45:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdS6J-0008Kx-Ty
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:44:15 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1rdS7K-0000OS-U4
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:45:22 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdS6E-0001Uc-Qf
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:44:15 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-564647bcdbfso545306a12.2
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 01:44:10 -0800 (PST)
+ id 1rdS7J-0001nd-7Q
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 04:45:18 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-56454c695e6so1212730a12.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 01:45:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708681449; x=1709286249; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708681516; x=1709286316; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6XGxrLa5sW5SMtNskCL4fFQeVIwLt2ZkORTFwK4N4I8=;
- b=pTrdbpZeFT8385AVqcx9azjBY5WzV6cnxpqgQoA/xXmRicB2eiGK8+z8BT+KEtEhuG
- c8Zf7YF+D7RKd/bzEh7RvM/nkxT6aSnEPlnhcd81dZAwFPOQRXPMiGnfBW76UARAs4I8
- DSsyOKA5PmGB7jsO2pjncw1rOOupocJsC0+L075See9cU0hSRdUi8aCjoq+dv7gI8z4/
- ePAqZITiGafCZx8ghzbEAUfl4V3v9iWlH34pwqwtNkd/zInp7UHa2soSDlDDTFBaclN7
- oolPchJ3UR3S+zontGS2wyAEqj6CbgBss6HXrMl9V+beCSNLaM41+fiO7QS/52fCeZQm
- n7EQ==
+ bh=qtfuCc0DI3uOmH36JZ7TOlj8fPqrFAA3zUxE7rng8Ho=;
+ b=MbVz8n6DrnE/7wqXVYdinLeEm+8h/uQEdOqF5NsvAHmZTt5q031Zwlb11EayJXilKH
+ 0gNZbyvPdvMoPTfSre41zt1BTPLJKgQIBMO9AcRMecMkyHj3hMLOCuYvN80e90qriDgN
+ GlLtFAlSRtBPYXbXQ9pPLue/xPenxkNPJP8rQ9eFvjUXZuAiXcs0leGPcokc0empMkQs
+ jbAMUIknrOSFfU4KXIl8yGe0HQfW0H2183Vmxq0cpGUK4j3dmH9EgeYJQ1fAHyW4Iz4t
+ yVIq9Mo2If+9XJJYJG9I3js6BU61vWMbj6zA74JUf9+84TEwg/WxN6bwAvu9YVLTS0h9
+ 12hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708681449; x=1709286249;
+ d=1e100.net; s=20230601; t=1708681516; x=1709286316;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6XGxrLa5sW5SMtNskCL4fFQeVIwLt2ZkORTFwK4N4I8=;
- b=EgZG5rX+30D7F0VtgDMp48jzfw2+AOo7eC3gilApzuU0ZQZ+j9BJ34nszdCq6glMNa
- 8FV3p3hPb+WKcrrCDfTIRKOAHypxnEWpGyeoijLsTBJL3WcY3i0O2aXUk1X+y2FnhFMU
- pZfQas1iwoSQ790GKTuPCa4+O2JFtifkDhzwWutyAzI18E0uICBolLvYuRw5eOmiUkZ9
- lvPypzomItpuK3zq2N+/2mXxqxzsCIliPXu6JpH3B6X1SLPAPCMsfZTek8Kky7o4yNWU
- szBVsJFXQUkDo8M3gxBbyGAvSXVfFMQg9CqzRB6VvzhgaHxJHYdrThWjAS86IRuNZ2Rf
- USOw==
-X-Gm-Message-State: AOJu0Yzp4zEeynJ3w495f6ujehwi9fBgHlZdVvcZSGDHOsBwVpUxEwZ2
- TiHnP1GoK2CbYRWTwUknnkEy3z6vmnHAoh10Wp6P6fKQsBfZfofEGzvkZTiJ3ty8IPBCWhtC/3+
- 9p7UmcPCDBFZBn1lNmzHBxMThOinib4MWSsXzYg==
-X-Google-Smtp-Source: AGHT+IFcejkm0qq1pA8W/tPEjMoe9PcwEJqzk+FkHFSrsEiqeLPX8tMuM9iR8LqIn6n487WlbcUaTFGGhALa2fr7nq8=
-X-Received: by 2002:aa7:da57:0:b0:564:7962:4545 with SMTP id
- w23-20020aa7da57000000b0056479624545mr868392eds.15.1708681449020; Fri, 23 Feb
- 2024 01:44:09 -0800 (PST)
+ bh=qtfuCc0DI3uOmH36JZ7TOlj8fPqrFAA3zUxE7rng8Ho=;
+ b=TeocIUsi+07AtktD3Yl1dYqbP1Hf4tkslxGdkpWGXWdXODN6zjqGAtJOMofNopGdNh
+ YJ+SdLNFAa1vJg4YzFV61wDnk49LbiNYlpcINC0jOben4LZ2VoQ93r0ECopeJZSMFbTG
+ fRd+ceR6G0FrU0ju3gHGesy6SkecdA9gPOCNlr/n0/J26CyvOgSRtITWqibWZKVMcoPM
+ hxLfh2MGKT9IFDhHLOvl4TghXCBLvLTPxzD8vhyo6gOWTxsuf0242EAa49kLhxGPkLkC
+ 4pOAeZECtDWikurMqJmfxqADRbwiubDn9qTG2ZQf+KpNV2hVD7eefh50/MSqwIkzzEon
+ C1Fw==
+X-Gm-Message-State: AOJu0YyJ18pbVZoR+Qvxoe//qci1bV/otO/mKA4KZO2I33B1KCD9gctw
+ LvO8MB+V1qCYzJnCJOHYLNRsDnTGYl0dAC0kE0KIlW2N84cW0nrGz8TQExvfUsljyHcum/gU+Lv
+ kGAeKnd5WN1AP+MF+NronqxOxshQ0dolHH3MUlA==
+X-Google-Smtp-Source: AGHT+IGsYErOulHiTUIPXzw67Sf/v1WgIhCRzb7WWHt/wyjvsW15WWE/tbqisK+e5SWkqhYpoXWXp1q9zF3ww81PfWw=
+X-Received: by 2002:a05:6402:336:b0:561:33dd:621c with SMTP id
+ q22-20020a056402033600b0056133dd621cmr1222524edw.7.1708681515913; Fri, 23 Feb
+ 2024 01:45:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20240222125517.67131-1-philmd@linaro.org>
- <20240222125809.67291-1-philmd@linaro.org>
-In-Reply-To: <20240222125809.67291-1-philmd@linaro.org>
+References: <20240222114038.2348718-1-berrange@redhat.com>
+In-Reply-To: <20240222114038.2348718-1-berrange@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Feb 2024 09:43:57 +0000
-Message-ID: <CAFEAcA-+3-zt5SOTTrLnyWh8maDLE2QFR9S_eXOCQ071qyXZqg@mail.gmail.com>
-Subject: Re: [PULL v2 00/32] Misc HW patches for 2024-02-22
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org, 
- qemu-ppc@nongnu.org
+Date: Fri, 23 Feb 2024 09:45:05 +0000
+Message-ID: <CAFEAcA_UhVcayevMZBiwgNgO_1rFaetS5ztNA1Z=h5Q119=Vrw@mail.gmail.com>
+Subject: Re: [PATCH] gitlab: force allow use of pip in Cirrus jobs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,57 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 Feb 2024 at 12:58, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Thu, 22 Feb 2024 at 11:41, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
 >
-> The following changes since commit 760b4dcdddba4a40b9fa0eb78fdfc7eda7cb83=
-d0:
+> Python is transitioning to a world where you're not allowed to use 'pip
+> install' outside of a virutal env by default. The rationale is to stop
+> use of pip clashing with distro provided python packages, which creates
+> a major headache on distro upgrades.
 >
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into stagin=
-g (2024-02-20 10:11:08 +0000)
+> All our CI environments, however, are 100% disposable so the upgrade
+> headaches don't exist. Thus we can undo the python defaults to allow
+> pip to work.
 >
-> are available in the Git repository at:
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  .gitlab-ci.d/cirrus/build.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->   https://github.com/philmd/qemu.git tags/hw-misc-20240222
+> FYI lcitool recently added logic that purges the EXTERNALLY-MANAGED
+> marker in all the dockerfiles. QEMU will pick that up on the next
+> refresh, so Linux containers won't have trouble in future.
 >
-> for you to fetch changes up to 7164f7e4028ad3b01a5f98c27482587b401ad420:
+> The macos/FreeBSD build env isn't fully managed by lcitool though,
+> so we need this manual addition to purge the marker that prevents
+> use of 'pip'.
 >
->   hw/sparc/leon3: Fix wrong usage of DO_UPCAST macro (2024-02-22 12:47:40=
- +0100)
->
-> Supersedes: <20240221211626.48190-1-philmd@linaro.org>
->
-> Following checkpatch.pl error ignored:
->
->   ERROR: Macros with complex values should be enclosed in parenthesis
->   #62: FILE: include/hw/ide/ide-dev.h:31:
->   +#define DEFINE_IDE_DEV_PROPERTIES()                     \
->   +    DEFINE_BLOCK_PROPERTIES(IDEDrive, dev.conf),        \
->   +    DEFINE_BLOCK_ERROR_PROPERTIES(IDEDrive, dev.conf),  \
->   +    DEFINE_PROP_STRING("ver",  IDEDrive, dev.version),  \
->   +    DEFINE_PROP_UINT64("wwn",  IDEDrive, dev.wwn, 0),   \
->   +    DEFINE_PROP_STRING("serial",  IDEDrive, dev.serial),\
->   +    DEFINE_PROP_STRING("model", IDEDrive, dev.model)
->
-> ----------------------------------------------------------------
-> Misc HW patch queue
->
-> - Remove sysbus_add_io (Phil)
-> - Build PPC 4xx PCI host bridges once (Phil)
-> - Display QOM path while debugging SMBus targets (Joe)
-> - Simplify x86 PC code (Bernhard)
-> - Remove qemu_[un]register_reset() calls in x86 PC CMOS (Peter)
-> - Fix wiring of ICH9 LPC interrupts (Bernhard)
-> - Split core IDE as device / bus / dma (Thomas)
-> - Prefer QDev API over QOM for devices (Phil)
-> - Fix invalid use of DO_UPCAST() in Leon3 (Thomas)
->
+> This fixes the CI regression that just started hitting on Cirrus
+> CI macOS images, likely from homebrew python updates.
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+I've applied this directly to get the CI back to green; thanks.
 
 -- PMM
 
