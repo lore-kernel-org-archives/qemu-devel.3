@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27378C48BC4
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFAA9C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 10:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdSOY-0001J7-QQ; Fri, 23 Feb 2024 05:03:06 -0500
+	id 1rdSQU-0002ER-U3; Fri, 23 Feb 2024 05:05:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdSOX-0001In-HK
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 05:03:05 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1rdSQO-0002Bn-90
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 05:05:00 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rdSOU-0005UY-Hy
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 05:03:05 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-512bc0e8ce1so141796e87.0
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 02:03:01 -0800 (PST)
+ id 1rdSQL-0005cV-L7
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 05:04:58 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-563c595f968so756161a12.0
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 02:04:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708682580; x=1709287380; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=u/ZEHHQQJ7TneXWz9Z91knv44YPnLKbvGbn+UTLm+fA=;
- b=my+aI2r8rBzenQVEXWIaQ7lc7qRkG2KSC9HA03hpV2KOxmbUtFRMLDodlmuWvOx5Oc
- 8cRcE0vUb3f2MzqS1C7PQU4wASR8uzwNQm80wdOF6qeC4hh383iDyRyKSMJ+Ldm3ERrQ
- lU2lexZSb1bHrPJPltJtEEgIvTHn19JyFHdRJmmO+PlD7ByD0n+GaP+/w0i1UNN0fT/U
- xDX2Db+rzzE4espD5ukd8KVplBIIxqwJ2/qf7dkh0wbuYgj8iiSkuEoj1PAHmO0u28BY
- bt5+Ew5FuLN1i2D9v+PZnds/mLYv5YMRkmTUUy89XENJLhIv20Y/Wx6eIlGo/1ZhXEZD
- eyeg==
+ d=linaro.org; s=google; t=1708682696; x=1709287496; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4M5ntZVMWz/vrWsPij9TMstviqJG8jMeX2xD54Q+6R0=;
+ b=YY4IZ/5SpK0ICHScBN/s4hK+FIfibrnbsBuHlssT6GSw3J4dAMWzFKkeyTWXCMjMuC
+ AS1YIBfyrqJULnrfXJpSsnUp8oW3yxo53bxVqCpdtJIUJRrpDp3+0/aOkHDV8YceGxA6
+ oxqqat1dCv2NqirMQhkb/Ha/Y4YKhKXpo956vY8TmhPBw2cjr7hiU0ObmOBCoLcNo3t7
+ vmd/GqO4YpIqrywDC3viXgwjErg/sTKmsgMVoHT7gy9ReIQXLbZAOoAcNJ4ddvI+OKRt
+ TvWUrGABTqAt7ZZdVzM6CyimxRQX1bzgZVaCAUjuK7149kKLyynyogGdeh7Brs3ASFXL
+ 6Nqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708682580; x=1709287380;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u/ZEHHQQJ7TneXWz9Z91knv44YPnLKbvGbn+UTLm+fA=;
- b=ohTVL9iNEyHLRLWvohMW//NDvZd4wA/i2sDLMQYDph9aaPY9KCEFpc7cudZFKe8MbG
- Icsafr352owLmut0yFj/ahr/dGvYlGvX8TRTtE15F4oh86WayDIEobrRKHWi+7xW7jWq
- ptmiZAm/v0RALni5V/jbbdsnVqSQ12KroeCbe9aO1gGgMRM6KD5zkU1Oe0bvLPBma2nq
- P78tbgVKgv5MonvwEo387SzBBDM9F3PAUen9/bglYpXXIpoy5AO/8lKaJaTqGmScHihN
- ka5ELoUPitXylDbLEp4dzydUWgDmyCEFMqDYPURglDwHuEi4rzuJBL6VLJ52AixMze+/
- qUpQ==
+ d=1e100.net; s=20230601; t=1708682696; x=1709287496;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4M5ntZVMWz/vrWsPij9TMstviqJG8jMeX2xD54Q+6R0=;
+ b=NM0karHL0/6wkidwcOhObKj/oumMhfp0nBXSRcFJdU8apM46ma9A8Fr44RndLRehFc
+ 2MnMJyt/ftOZg1jhUE/h9Uz7ct+b93YBRz+c1PoS1EnVhUjlCOQGjjYbsM4NgzvigJLb
+ DGSoACg/8EpyBBK/iqcnokSOfyEr14GzeQEXS/G7S4RDqTksW1vcwDPiel92rrR73BOo
+ K+Qj3f+qftSQQXMQV2S3NL2h39zS4jDPbbtPsEshpJX3wwO1+WNQruvC4ZqmsEj7wTXK
+ hk+EGPPL9Z6Ew3bw4cJ1Bf82Dd9dJ539hbTVU1DEzKmBm6Tkos+nGUFlGT55L0QoLcLP
+ eaeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQ251fQunmvTCn5+DN9jIrTIcCd+/ut14PMiLIFzhxNGF7udNTnf0fZ6l7yZtyGQJPSEBuwK3ulyxf2D0I4XF8vlz5L2Q=
-X-Gm-Message-State: AOJu0YziQXZQFlJ9/SoaHktb/Ku7j5Y8E3QYArV2nIGPvR4zp/AXnwjb
- nvpv2vHin26aEx17vgqAtF7SW3nWNxlpGkFF2f6Cc1cWVMVctnd0cTeQlPRxluDqgYTvpoO7msL
- nFR1p+md8GTLsh/c6xANczR2TqQJQq9oOogHVkA==
-X-Google-Smtp-Source: AGHT+IGpTQcrZ/TLTvw8DWN+u0imyHimS8sPPc+GEzTF9iID+v37fJu9yS18AJbResR+Z92UzHJomAiBb8KAqgJbf/E=
-X-Received: by 2002:ac2:5b0c:0:b0:512:cbae:4e05 with SMTP id
- v12-20020ac25b0c000000b00512cbae4e05mr1087260lfn.60.1708682579822; Fri, 23
- Feb 2024 02:02:59 -0800 (PST)
+ AJvYcCUngEjyGfn2srigRUAIKwTILLkyaEMl4sBWcN2RdjP7rJVqvuxioNq5sxhFSNh0zbbGhQ+Tno7cFruqeccD8/4bP7f66S4=
+X-Gm-Message-State: AOJu0Yzi1jYiycgPEk2z+JYpl04t3ELMsPbDMGKaxTXTElihTJdoi7uK
+ vWq5DoUjPHYjXWwdJIIyG/YWU9JPbttwwRfn6WIBFUeFqBknQiqxL8/m+Dp//j9R1APaf+9rph8
+ dWqIounb2+4+xWNe/OYMALu/nRh1DJTIhuV4JJQ==
+X-Google-Smtp-Source: AGHT+IHeDjUCH631mr9r3r9hVRY7K/HLvjfYX0PiyvoiqdF3dROyL4iGzQo7ygCv+y/b0vUO0ILYBJpY6jgtCdMrGi0=
+X-Received: by 2002:aa7:da5a:0:b0:564:66c1:d527 with SMTP id
+ w26-20020aa7da5a000000b0056466c1d527mr798979eds.36.1708682696021; Fri, 23 Feb
+ 2024 02:04:56 -0800 (PST)
 MIME-Version: 1.0
-References: <20240219161229.11776-1-Jonathan.Cameron@huawei.com>
- <cfa50d25-3a82-48f5-b715-1daf16932fc2@linaro.org>
-In-Reply-To: <cfa50d25-3a82-48f5-b715-1daf16932fc2@linaro.org>
+References: <20240220134120.2961059-1-rayhan.faizel@gmail.com>
+ <CAFEAcA8GFFQ-L6zGcft9q8arJxuggraHYRhcAf4q+Oi+VMSP3Q@mail.gmail.com>
+ <fe96d71d-6abc-43f7-9b83-8bec93ab5512@linaro.org>
+In-Reply-To: <fe96d71d-6abc-43f7-9b83-8bec93ab5512@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 23 Feb 2024 10:02:48 +0000
-Message-ID: <CAFEAcA9g5dSDj1tQmk8og6DG+wQc14W5XvftZY0Y2XRd96PNWg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] arm/ptw: Handle atomic updates of page tables
- entries in MMIO during PTW.
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org, 
- Gregory Price <gregory.price@memverge.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- linux-cxl@vger.kernel.org, linuxarm@huawei.com
+Date: Fri, 23 Feb 2024 10:04:44 +0000
+Message-ID: <CAFEAcA_70D8t3xjM9TgnzzM31U8rqHFthY72nPk-te-2yEitxA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Add support for I2C in BCM2835 boards
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,78 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 22 Feb 2024 at 21:21, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, 23 Feb 2024 at 06:23, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> On 2/19/24 06:12, Jonathan Cameron wrote:
-> > I'm far from confident this handling here is correct. Hence
-> > RFC.  In particular not sure on what locks I should hold for this
-> > to be even moderately safe.
-> >
-> > The function already appears to be inconsistent in what it returns
-> > as the CONFIG_ATOMIC64 block returns the endian converted 'eventual'
-> > value of the cmpxchg whereas the TCG_OVERSIZED_GUEST case returns
-> > the previous value.
-
-I think this is a bug in the TCG_OVERSIZED_GUEST handling,
-which we've never noticed because you only see that case
-on a 32-bit host.
-
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > ---
-> > v2: Thanks Peter for reviewing.
-> >   - Handle the address space as in arm_ldq_ptw() - I should have looked
-> >     at the code immediately above :(
-> >     The result ends up a little more convoluted than I'd like. Could factor
-> >     this block of code out perhaps. I'm also not sure on the fault type
-> >     that is appropriate here.
-> >   - Switch to 'need_lock' as per Philippe's feedback on the x86 fixes.
-> >     likely() doesn't seem appropriate here though.
-> >
-> > target/arm/ptw.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++--
-> >   1 file changed, 62 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> > index 5eb3577bcd..ba1a27ca2b 100644
-> > --- a/target/arm/ptw.c
-> > +++ b/target/arm/ptw.c
-> > @@ -711,8 +711,68 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
-> >       void *host = ptw->out_host;
-> >
-> >       if (unlikely(!host)) {
-> > -        fi->type = ARMFault_UnsuppAtomicUpdate;
-> > -        return 0;
-> > +        /* Page table in MMIO Memory Region */
-> > +        CPUState *cs = env_cpu(env);
-> > +        MemTxAttrs attrs = {
-> > +            .space = ptw->out_space,
-> > +            .secure = arm_space_is_secure(ptw->out_space),
-> > +        };
-> > +        AddressSpace *as = arm_addressspace(cs, attrs);
-> > +        MemTxResult result = MEMTX_OK;
-> > +        bool need_lock = !bql_locked();
-> > +
-> > +        if (need_lock) {
-> > +            bql_lock();
-> > +        }
-> > +        if (ptw->out_be) {
-> > +            cur_val = address_space_ldq_be(as, ptw->out_phys, attrs, &result);
-> > +            if (unlikely(result != MEMTX_OK)) {
-> > +                fi->type = ARMFault_SyncExternalOnWalk;
-> > +                fi->ea = arm_extabort_type(result);
-> > +                if (need_lock) {
-> > +                    bql_unlock();
-> > +                }
-> > +                return old_val;
-> > +            }
+> Hi Peter,
 >
-> Use BQL_LOCK_GUARD() and avoid all of the repeated unlocks at each return point.
+> On 22/2/24 18:54, Peter Maydell wrote:
+> > On Tue, 20 Feb 2024 at 13:42, Rayhan Faizel <rayhan.faizel@gmail.com> w=
+rote:
+> >>
+> >> This patch series implements support for the Broadcom Serial Controlle=
+r used
+> >> by BCM2835 based boards for I2C.
+>
+>
+> >> Rayhan Faizel (3):
+> >>    hw/i2c: Implement Broadcom Serial Controller (BSC)
+> >>    hw/arm: Connect BSC to BCM2835 board as I2C0, I2C1 and I2C2
+> >>    tests/qtest: Add testcase for BCM2835 BSC
+> >
+> >
+> >
+> > Applied to target-arm.next, thanks.
+>
+> Sorry I didn't notice earlier, the I2C[3] IRQ lines have
+> to be OR-ed using a TYPE_OR_IRQ object before reaching the
+> INTC. I'd rather a v4, but if you already posted your PR
+> this can get fixed on top.
 
-Is the BQL definitely sufficient to ensure atomicity here?
-I guess that given that we know it's not backed by host
-memory, any other vCPU trying to access the MMIO region
-at the same time will have to take the BQL first, so it
-seems like it ought to be good enough.
+Oops, yes, you're right. I didn't notice that. I haven't yet
+got to the point of making a pullreq, so I'll drop this series,
+and send my r-by tags to the list for the other patches.
 
+thanks
 -- PMM
 
