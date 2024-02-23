@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01EC7C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 18:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 768F3C5478C
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 18:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdZrF-0001AC-Pv; Fri, 23 Feb 2024 13:01:14 -0500
+	id 1rdZvA-00051V-4P; Fri, 23 Feb 2024 13:05:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZfh-0007az-FM
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:49:18 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZak-0003AO-Nx
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:44:10 -0500
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZff-0005HQ-N8
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:49:17 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-412988afac9so811895e9.1
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:49:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rdZai-0004dD-MR
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 12:44:10 -0500
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a3f5808b0dfso152489166b.1
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 09:44:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708710554; x=1709315354; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1708710247; x=1709315047; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sYMViQZxpZ/oKbU6saSaPZG3/uaTby0qs1bVK8UlTCE=;
- b=c0Hy3X1lrQ7QtHNoXPdJF1O8JX8oUrKm+V4lirK9rEeaiZMNyEPPvZyAl6Y3xaYKwY
- jEZaaibePqmOdQZlPFJgFbncdEZ0F/py3yN0vVU0Sf2JPlp0+K11hv0plXyyPfRSMF+F
- mHhdziA+b7SxKZ2+ghB4xm7HHsMmiFhcGarPoqaFWw0jRT9B7rpm97CLRwG4u/JgGC8W
- mbQml+dlojm7cohumC8XKvrQBiO9rcKAizJj5SR2Tmys+cEcktZPMYOb5ANhqFQKv9MU
- FoWJaW+mZxPsVe6IR6K1bu8Ioey/RR1xvrswfZ/KWTaJXyGSFW+mCAdQxDSf0Jt2Ym6I
- NwKQ==
+ bh=6af/0QDU+kWNVY1p8K0vhdMQDrlBcIdcr0+mt/stI2c=;
+ b=OMCmJVbBJ8Iw2V/VcfkPBR5V/wmsAOYObxwBZ5+6/mu9NkTlItF44R5BsuscfXhNPR
+ oHy5Nr/duq/7y0vDwfYd/W8OeKVZjH/uYtrg24dXLIQ9LFhw0pp4PYcP+oKgAVEQDDxd
+ 2oaxbIYJfHGApEXvkjGJfmdA+inxhoRhgXC+6fy7YOaLS2dzWl7h/zStl9UnNpfbtowe
+ d2IHn2Y7IFLUkNPqJ/bswY8R8mdEn834eNBD2ejP9O19Krpsj7+0qn1r2a2UGfsTH4SB
+ 2Ajh14o2bc86LNfQUEN1kPSSJPfKYTpTz8DjU9m/c5N8fSI2JEjaomZd+nxB0TjDUF7x
+ ugrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708710554; x=1709315354;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1708710247; x=1709315047;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sYMViQZxpZ/oKbU6saSaPZG3/uaTby0qs1bVK8UlTCE=;
- b=dw/ai4HnkfK0tsoFxlEycloWrRXJocCE6l1YtNwi1kw5W6cfQyKNTduJwqZMfooOuG
- kbwMMcJbDgwgxC4qPoPpyWMj3pt+REwUOJCtWjYjUD2TcH1xZ0PHIWuI78btyC+s0HpC
- ZfRKrpMaoUwiToH9ANIzjz8hTBC09ttspX56I1hglvdJqZrFCXWBGXe7xnuJ9cDyW0ir
- N1dfI0PIkVUyOn8EQ3Ir2yTgNg97zGJS8g9skfu8xN39NT7ZBExR8hD4UpAeM+HB2UJD
- GOtSs5Z1sOiMpngxi7aub0dGa7qpGtDTXcPOAQ0BTw9qJJUwc8bYkOMpap34seoKY0A8
- zIFw==
-X-Gm-Message-State: AOJu0YzR8mha0G5k5C0oe396Z5F2XrLUQZPFo1lwE/8+7ub5Ip4/Z9E8
- JJDINUw8VaL/cdD6uYesD5Pbe1B0LyBFxGhG+8gX7HfDhRdMseWkNVALzCAuWqNj3DbwY1ZRJLc
- v
-X-Google-Smtp-Source: AGHT+IH1NrjFGll7w3yAhhYPa+Vimff/lyIxU8ApKurGWlz/YUH5GLdxUatcr8YuYy1+0wUNiTJdfA==
-X-Received: by 2002:adf:ee06:0:b0:33d:746b:f365 with SMTP id
- y6-20020adfee06000000b0033d746bf365mr285524wrn.52.1708710553767; 
- Fri, 23 Feb 2024 09:49:13 -0800 (PST)
+ bh=6af/0QDU+kWNVY1p8K0vhdMQDrlBcIdcr0+mt/stI2c=;
+ b=JZ2Os9dRjM9U/vjSu8JrD1IGH8eRVKBJyIq+qYX4M2jleOoPA7c7UKTIgGEBlHDIgf
+ UMkYDWLkPBjdWD7detyY7ks8AU7KO+Y2VYYqf4siOT2JWcseIA+pK1616cryf9f+6Im6
+ Hy32VTiRtnOs/vZe+XFkc+xhtAeUX/sK6mdbhUgHGlKgzNHZJFn+COfqTZUcS2xb5rw2
+ NpTVZrjxEbfmbxGc5Vao17e9aRO23GwbhBysEB0U1D3caetPV4f3k2HU24+7H2IFoNpF
+ QllXGm1fXoYG+/pOnl3684zQJM/f+4n7GSkw0mizdWywNcGTL8XGf3SA9HUsEND8ev+L
+ XHqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIGqH49QIz/1n/XLHNp0pTiAlpzQ9tved+O3ATtOzjjqQWOJPKEPXlUVWxZGXHWpup/PYFJTd+riN3JfXo0GSyYJGSwkg=
+X-Gm-Message-State: AOJu0YxAiOY5r2gg+o//ojSRYrPnx24yXAVsbgAmkEeWKlLCZbFPcEzL
+ 01rmF5yidPjqqnLyy9iH5+2sxKj3UHKmz1P0Op3709QYT1OgIEyTI1iIiz4YY9o=
+X-Google-Smtp-Source: AGHT+IGjt19ZafItpn9Wg+pZr1cpOViXcrUcE2ULc0fqgTEGua6O/Y76Slzd4Dsd74sScngBm71JxQ==
+X-Received: by 2002:a17:906:260d:b0:a3e:5de6:701d with SMTP id
+ h13-20020a170906260d00b00a3e5de6701dmr348222ejc.50.1708710247297; 
+ Fri, 23 Feb 2024 09:44:07 -0800 (PST)
 Received: from [192.168.69.100] (xbn44-h02-176-184-35-109.dsl.sta.abo.bbox.fr.
  [176.184.35.109]) by smtp.gmail.com with ESMTPSA id
- v9-20020a5d59c9000000b0033daaef7afcsm3054872wry.83.2024.02.23.09.49.12
+ cx7-20020a170907168700b00a3f1bf036d5sm3258323ejd.16.2024.02.23.09.44.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 23 Feb 2024 09:49:13 -0800 (PST)
-Message-ID: <c7a5d4a6-99e3-41ac-998c-5d7a320dfe99@linaro.org>
-Date: Fri, 23 Feb 2024 18:49:11 +0100
+ Fri, 23 Feb 2024 09:44:06 -0800 (PST)
+Message-ID: <ca9faf4d-e5ee-479e-88f7-043f6bb8cea6@linaro.org>
+Date: Fri, 23 Feb 2024 18:44:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] qga/commands-win32: Do not set
- matrix_lookup_t/win_10_0_t arrays size
+Subject: Re: [PATCH v3 0/3] nubus: add nubus-virtio-mmio device
 Content-Language: en-US
-To: qemu-devel@nongnu.org, Dehan Meng <demeng@redhat.com>
-Cc: Konstantin Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>
-References: <20240222152835.72095-1-philmd@linaro.org>
- <20240222152835.72095-3-philmd@linaro.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, laurent@vivier.eu,
+ qemu-devel@nongnu.org, elliotnunn@fastmail.com
+References: <20240111102954.449462-1-mark.cave-ayland@ilande.co.uk>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240222152835.72095-3-philmd@linaro.org>
+In-Reply-To: <20240111102954.449462-1-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,40 +95,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/2/24 16:28, Philippe Mathieu-Daudé wrote:
-> ga_get_win_name() iterates over all elements in the arrays by
-> checking the 'version' field is non-NULL. Since the arrays are
-> guarded by a NULL terminating element, we don't need to specify
-> their size:
-> 
->    static char *ga_get_win_name(...)
->    {
->        ...
->        const ga_matrix_lookup_t *table = WIN_VERSION_MATRIX[tbl_idx];
->        const ga_win_10_0_t *win_10_0_table = ...
->        ...
->        while (table->version != NULL) {
->                      ^^^^^^^^^^^^^^^
->                while (win_10_0_table->version != NULL) {
->                                       ^^^^^^^^^^^^^^^
-> 
-> This will simplify maintenance when adding new entries to these
-> arrays.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   qga/commands-win32.c | 19 +++++++++----------
->   1 file changed, 9 insertions(+), 10 deletions(-)
+On 11/1/24 11:29, Mark Cave-Ayland wrote:
 
+> Mark Cave-Ayland (3):
+>    nubus-device: round Declaration ROM memory region address to
+>      qemu_target_page_size()
+>    nubus.h: increase maximum Declaration ROM size from 128k to 1Mb
+>    nubus: add nubus-virtio-mmio device
 
->   typedef struct _ga_win_10_0_t {
->       int first_build;
-> -    const char *version;
-> -    const char *version_id;
-> +    char const *version;
-> +    char const *version_id;
-
-Oops, missed rebase.
-
->   } ga_win_10_0_t;
+Thanks, series queued.
 
