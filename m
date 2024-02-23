@@ -4,85 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8919CC5478C
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 12:02:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D7DC54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 12:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdUEz-0002ys-Ec; Fri, 23 Feb 2024 07:01:21 -0500
+	id 1rdUHQ-0004YL-WB; Fri, 23 Feb 2024 07:03:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rdUEo-0002tc-JQ
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:01:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rdUHP-0004Y0-3b
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:03:51 -0500
+Received: from mout.kundenserver.de ([212.227.126.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1rdUEm-0002e0-4v
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:01:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708689666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3uLfuFbRtlqLCT+VL8zQAYil5QZjCVo4msDIqtAkx0s=;
- b=bm4j8Q5w6QgykGdtBd5UG31epthdqcifnYIp1iHvrVV/en7POo3VM3SJRV3M++DHyI9irp
- Z5hdVuKN8badR0enwdJ/oAFC7hLxnKAw8GZI1aC0PWddIye53w1p2J8VAT334+xykNIsK/
- T2q8bqxEGjojcKCURsqmRY3Hvi5bNfI=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683--uPBvd4nNdi-7xNTVyRBYA-1; Fri, 23 Feb 2024 07:01:04 -0500
-X-MC-Unique: -uPBvd4nNdi-7xNTVyRBYA-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-512aa50323cso877821e87.0
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 04:01:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708689663; x=1709294463;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3uLfuFbRtlqLCT+VL8zQAYil5QZjCVo4msDIqtAkx0s=;
- b=n4A2uycSO3APGa7N6WZqrWNXEWn10JjcHQOF790QXzKFUcP4W7MyU1syuSa2JXzNf1
- kGAkN4h+yeCiFi0IP2k5D4n9pU6EUpuSQbujEa4X/nr6odX5IatRTeVGMgKAWzSORiw8
- Pu6adaSPCaNBEauvfApUzUPIbqxdnDyRyVrj7GdCI3oXScNWua1AgCjyaVICpyc84ywD
- 7D6A2lL45Cqd7f/2HW/39BPdR1GcCgrMZULGa4u4qGK3kBroZq3Lhjou5zNrpjnlUs7C
- 6Va0ASSs8++eGy6uoJCXPMVpAJhqlksP68PqK2o8Lz3FKVCDGwDTP6wezNlN12KAfbg2
- Uv7A==
-X-Gm-Message-State: AOJu0Yx+dh4Dmnlhtfr7VmMvb+KNMmXUST4z0npuRocKRS8CDz4vJsma
- WS8/BZfMFyFTKe0kz2jmboYQcTf+/azAVzy0hx5IkphHmYsXL/pG3pbPD8LmVfvIB+dws6aLhrP
- qUpb+9s04CaWD2IhH/FI9lzn4hxQbLUCLpUalfNblXwlwymNGlMTVD4+HhAnbGaJoeudqKjwYqL
- DKJ0yMTAJQUji7/ObXrd+rxg5+hqI=
-X-Received: by 2002:ac2:48ab:0:b0:512:cfac:3d81 with SMTP id
- u11-20020ac248ab000000b00512cfac3d81mr1035335lfg.68.1708689663293; 
- Fri, 23 Feb 2024 04:01:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE2gnI5dQDrlqikuxykKmjembFk7AwxNvB8m0AHraS49+HNJKqLrhLEVznsUhiHge8QLVZVl6bGzLjvukpB4jc=
-X-Received: by 2002:ac2:48ab:0:b0:512:cfac:3d81 with SMTP id
- u11-20020ac248ab000000b00512cfac3d81mr1035329lfg.68.1708689662907; Fri, 23
- Feb 2024 04:01:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1rdUHN-000379-39
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 07:03:50 -0500
+Received: from [192.168.100.1] ([82.142.8.70]) by mrelayeu.kundenserver.de
+ (mreue012 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1Mkn8B-1rChu31Ll1-00mILl; Fri, 23 Feb 2024 13:03:44 +0100
+Message-ID: <6ee33d49-4add-4354-964e-788ba6c9a13d@vivier.eu>
+Date: Fri, 23 Feb 2024 13:03:43 +0100
 MIME-Version: 1.0
-References: <20240222152835.72095-1-philmd@linaro.org>
- <20240222152835.72095-3-philmd@linaro.org>
-In-Reply-To: <20240222152835.72095-3-philmd@linaro.org>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Fri, 23 Feb 2024 14:00:51 +0200
-Message-ID: <CAPMcbCr5jRuxZAyGpqiPvw=QgMAqWpFb0qjpiFGRhqLSfr4jQg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] qga/commands-win32: Do not set
- matrix_lookup_t/win_10_0_t arrays size
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Dehan Meng <demeng@redhat.com>, 
- Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="00000000000063afe906120b5020"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.066,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/m68k: Fix exception frame format for 68010
+Content-Language: fr
+To: Daniel Palmer <daniel@0x0f.com>
+Cc: qemu-devel@nongnu.org
+References: <20240115101643.2165387-1-daniel@0x0f.com>
+From: Laurent Vivier <laurent@vivier.eu>
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20240115101643.2165387-1-daniel@0x0f.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:SIPbm9CWv79bNyg4y838DcNo53BcOPBbRMJZ/YnUIFDtcC20E1b
+ sIdLByAuMEbmYJW4pjPnuI2nYBGZOerH0Gfach3dX9F/Gn1ZzO4+8xcf9kHMM1XLEieyIBd
+ Q28/RaS4EzGM0ut7AeyZ3bi0n9Rzx3rPZbLsj/ioCcYxxuYH3ysSNdcjF1vV/kMJhBeIhVw
+ tQaX+QoTkWirKtqCZ00yw==
+UI-OutboundReport: notjunk:1;M01:P0:rAusvNAoNNk=;VAe5+tScgam9YcZkByaIWzB6KHK
+ 7G7UL4qq2P9ZgSl5FsDBNechqnPYe21odRI7y2gy5cv1WIGUb+ldM1tzR9gYfToSvn3SaOaVX
+ rm/4oGBMZ8qrLdLreMoJW5AisZblyO6ftm43UoIO0y72vE1awGVN80olYdtJpjQA47KZtz8ly
+ FJEJxCgM7FS98arzk9siYlkI99VUrkxW8X1pkQEVtKqEyJRvTvnICIR98w2pIID+1m2Tsw0Y0
+ qQaPyLPI8bc9cl1KqZgABAXxk5+l8b3QCuPjTt/0L27poKsY4y5OHtdA5Y2n/5Eew/iZ3QLbC
+ qu9VG4jIa9sBDVzeedPrBg5wLIiPLjTORy5kyBozQhMEQdC0YpvofrBs0IfwYhYMg4Os1jomA
+ qMvSsB7IK6pavR4R3YgN8uKURcJa3xhfz5+EPTeIurFHWM1U9sugFUhP22NSJSb/4uJ1BsPsZ
+ n4mDzBTH6PKNmUDE3zacOUEWIqfTHWqnnfmC+HP4PQyLKdocqDFaSfzjbhA+x5dLbC5p/SKtp
+ HpBFOes41VfGP4H5xpx8EZ6aJEM3PWG1BwlQygHQAs1QUBLRcPl+iVQ0jDBGoKg7dFWE7TCgL
+ hFgfiUZ8KWZRAR4dEL3vRS39Rtrfk53iPacoPrRbHP4G4JohczkRV/UJHNMPdYiPADtZytPyt
+ OGuJ04fm0cXmhE+c5xoBZ7VfG2ZduU24Fjf0eNcg+4ZPm1/hGniEJYdVOSrmwDZczItNH6KnU
+ GhiHvbnglWBdU9Nk50K0FDTb7MTL1Q+JpksdFhU/RjTvqAt6CKzZPw=
+Received-SPF: pass client-ip=212.227.126.133; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,261 +115,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000063afe906120b5020
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Feb 22, 2024 at 5:28=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
-
-> ga_get_win_name() iterates over all elements in the arrays by
-> checking the 'version' field is non-NULL. Since the arrays are
-> guarded by a NULL terminating element, we don't need to specify
-> their size:
->
->   static char *ga_get_win_name(...)
->   {
->       ...
->       const ga_matrix_lookup_t *table =3D WIN_VERSION_MATRIX[tbl_idx];
->       const ga_win_10_0_t *win_10_0_table =3D ...
->       ...
->       while (table->version !=3D NULL) {
->                     ^^^^^^^^^^^^^^^
->               while (win_10_0_table->version !=3D NULL) {
->                                      ^^^^^^^^^^^^^^^
->
-> This will simplify maintenance when adding new entries to these
-> arrays.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Le 15/01/2024 à 11:16, Daniel Palmer a écrit :
+>  From the 68010 a word with the frame format and exception vector
+> are placed on the stack before the PC and SR.
+> 
+> M68K_FEATURE_QUAD_MULDIV is currently checked to workout if to do
+> this or not for the configured CPU but that flag isn't set for
+> 68010 so currently the exception stack when 68010 is configured
+> is incorrect.
+> 
+> It seems like checking M68K_FEATURE_MOVEFROMSR_PRIV would do but
+> adding a new flag that shows exactly what is going on here is
+> maybe clearer.
+> 
+> Add a new flag for the behaviour, M68K_FEATURE_EXCEPTION_FORMAT_VEC,
+> and set it for 68010 and above, and then use it to control if the
+> format and vector word are pushed/pop during exception entry/exit.
+> 
+> Signed-off-by: Daniel Palmer <daniel@0x0f.com>
 > ---
->  qga/commands-win32.c | 19 +++++++++----------
->  1 file changed, 9 insertions(+), 10 deletions(-)
->
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index 79b5a580c9..87ce6e2870 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -2124,7 +2124,7 @@ typedef struct _ga_matrix_lookup_t {
->      const char *version_id;
->  } ga_matrix_lookup_t;
->
-> -static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] =3D {
-> +static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][] =3D {
->
+>   target/m68k/cpu.c       | 4 +++-
+>   target/m68k/cpu.h       | 2 ++
+>   target/m68k/op_helper.c | 4 ++--
+>   3 files changed, 7 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+> index 1421e77c2c07..20718944b4c8 100644
+> --- a/target/m68k/cpu.c
+> +++ b/target/m68k/cpu.c
+> @@ -137,7 +137,8 @@ static void m68000_cpu_initfn(Object *obj)
+>   }
+>   
+>   /*
+> - * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD
+> + * Adds BKPT, MOVE-from-SR *now priv instr, and MOVEC, MOVES, RTD,
+> + *      format+vector in exception frame.
+>    */
+>   static void m68010_cpu_initfn(Object *obj)
+>   {
+> @@ -150,6 +151,7 @@ static void m68010_cpu_initfn(Object *obj)
+>       m68k_set_feature(env, M68K_FEATURE_BKPT);
+>       m68k_set_feature(env, M68K_FEATURE_MOVEC);
+>       m68k_set_feature(env, M68K_FEATURE_MOVEFROMSR_PRIV);
+> +    m68k_set_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC);
+>   }
+>   
+>   /*
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index d13427b0fe61..0fc591e618f6 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -549,6 +549,8 @@ enum m68k_features {
+>       M68K_FEATURE_TRAPCC,
+>       /* MOVE from SR privileged (from 68010) */
+>       M68K_FEATURE_MOVEFROMSR_PRIV,
+> +    /* Exception frame with format+vector (from 68010) */
+> +    M68K_FEATURE_EXCEPTION_FORMAT_VEC,
+>   };
+>   
+>   static inline bool m68k_feature(CPUM68KState *env, int feature)
+> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+> index 1ce850bbc594..b09771672dec 100644
+> --- a/target/m68k/op_helper.c
+> +++ b/target/m68k/op_helper.c
+> @@ -52,7 +52,7 @@ throwaway:
+>       sp += 2;
+>       env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+>       sp += 4;
+> -    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
+> +    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+>           /*  all except 68000 */
+>           fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+>           sp += 2;
+> @@ -256,7 +256,7 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
+>                                     uint16_t format, uint16_t sr,
+>                                     uint32_t addr, uint32_t retaddr)
+>   {
+> -    if (m68k_feature(env, M68K_FEATURE_QUAD_MULDIV)) {
+> +    if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+>           /*  all except 68000 */
+>           CPUState *cs = env_cpu(env);
+>           switch (format) {
 
-I love this idea but mingw-gcc - no.
-
-../qga/commands-win32.c:2125:33: error: array type has incomplete element
-type =E2=80=98ga_matrix_lookup_t[]=E2=80=99 {aka =E2=80=98struct _ga_matrix=
-_lookup_t[]=E2=80=99}
- 2125 | static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][] =3D {
-      |                                 ^~~~~~~~~~~~~~~~~~
-../qga/commands-win32.c:2125:33: note: declaration of =E2=80=98WIN_VERSION_=
-MATRIX=E2=80=99
-as multidimensional array must have bounds for all dimensions except the
-first
-
-I think we can do the same as with Win10 and create 2 variables:
- WIN_SERVER_VERSION_MATRIX and WIN_CLIENT_VERSION_MATRIX
-
-If you want I can fix this by myself.
-
-
-Best Regards,
-Konstantin Kostiuk.
-
-     {
->          /* Desktop editions */
->          { 5, 0, "Microsoft Windows 2000",   "2000"},
-> @@ -2133,7 +2133,7 @@ static const ga_matrix_lookup_t
-> WIN_VERSION_MATRIX[2][7] =3D {
->          { 6, 1, "Microsoft Windows 7"       "7"},
->          { 6, 2, "Microsoft Windows 8",      "8"},
->          { 6, 3, "Microsoft Windows 8.1",    "8.1"},
-> -        { 0, 0, 0}
-> +        { }
->      },{
->          /* Server editions */
->          { 5, 2, "Microsoft Windows Server 2003",        "2003"},
-> @@ -2141,28 +2141,27 @@ static const ga_matrix_lookup_t
-> WIN_VERSION_MATRIX[2][7] =3D {
->          { 6, 1, "Microsoft Windows Server 2008 R2",     "2008r2"},
->          { 6, 2, "Microsoft Windows Server 2012",        "2012"},
->          { 6, 3, "Microsoft Windows Server 2012 R2",     "2012r2"},
-> -        { 0, 0, 0},
-> -        { 0, 0, 0}
-> +        { },
->      }
->  };
->
->  typedef struct _ga_win_10_0_t {
->      int first_build;
-> -    const char *version;
-> -    const char *version_id;
-> +    char const *version;
-> +    char const *version_id;
->  } ga_win_10_0_t;
->
-> -static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] =3D {
-> +static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[] =3D {
->      {14393, "Microsoft Windows Server 2016",    "2016"},
->      {17763, "Microsoft Windows Server 2019",    "2019"},
->      {20344, "Microsoft Windows Server 2022",    "2022"},
-> -    {0, 0}
-> +    { }
->  };
->
-> -static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] =3D {
-> +static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[] =3D {
->      {10240, "Microsoft Windows 10",    "10"},
->      {22000, "Microsoft Windows 11",    "11"},
-> -    {0, 0}
-> +    { }
->  };
->
->  static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **errp)
-> --
-> 2.41.0
->
->
-
---00000000000063afe906120b5020
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 22, 2024 at 5:28=E2=80=AF=
-PM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">phi=
-lmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">ga_get_win_name() iterates over all elements in the arrays by=
-<br>
-checking the &#39;version&#39; field is non-NULL. Since the arrays are<br>
-guarded by a NULL terminating element, we don&#39;t need to specify<br>
-their size:<br>
-<br>
-=C2=A0 static char *ga_get_win_name(...)<br>
-=C2=A0 {<br>
-=C2=A0 =C2=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 const ga_matrix_lookup_t *table =3D WIN_VERSION_MATRIX=
-[tbl_idx];<br>
-=C2=A0 =C2=A0 =C2=A0 const ga_win_10_0_t *win_10_0_table =3D ...<br>
-=C2=A0 =C2=A0 =C2=A0 ...<br>
-=C2=A0 =C2=A0 =C2=A0 while (table-&gt;version !=3D NULL) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^^^^^=
-^^^^^^^^^^<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 while (win_10_0_table-&gt;=
-version !=3D NULL) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^^^^^^^^^^^^^^^<=
-br>
-<br>
-This will simplify maintenance when adding new entries to these<br>
-arrays.<br>
-<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
----<br>
-=C2=A0qga/commands-win32.c | 19 +++++++++----------<br>
-=C2=A01 file changed, 9 insertions(+), 10 deletions(-)<br>
-<br>
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
-index 79b5a580c9..87ce6e2870 100644<br>
---- a/qga/commands-win32.c<br>
-+++ b/qga/commands-win32.c<br>
-@@ -2124,7 +2124,7 @@ typedef struct _ga_matrix_lookup_t {<br>
-=C2=A0 =C2=A0 =C2=A0const char *version_id;<br>
-=C2=A0} ga_matrix_lookup_t;<br>
-<br>
--static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][7] =3D {<br>
-+static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2][] =3D {<br></blockqu=
-ote><div><br></div><div>I love this idea but mingw-gcc - no.<br><br>../qga/=
-commands-win32.c:2125:33: error: array type has incomplete element type =E2=
-=80=98ga_matrix_lookup_t[]=E2=80=99 {aka =E2=80=98struct _ga_matrix_lookup_=
-t[]=E2=80=99}<br>=C2=A02125 | static const ga_matrix_lookup_t WIN_VERSION_M=
-ATRIX[2][] =3D {<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 ^~~~~~~~~~~~~~~~~~<br>../qga/commands-win32.c:2125:33: note: declara=
-tion of =E2=80=98WIN_VERSION_MATRIX=E2=80=99 as multidimensional array must=
- have bounds for all dimensions except the first</div><div><br></div><div>I=
- think we can do the same as with Win10 and create 2 variables:</div><div>=
-=C2=A0WIN_SERVER_VERSION_MATRIX and WIN_CLIENT_VERSION_MATRIX<br><br></div>=
-<div>If you want I can fix this by myself.</div><div><br></div><div><br cle=
-ar=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"=
-><div>Best Regards,</div><div>Konstantin Kostiuk.</div></div></div></div></=
-div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Desktop editions */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 5, 0, &quot;Microsoft Windows 2000&quot=
-;,=C2=A0 =C2=A0&quot;2000&quot;},<br>
-@@ -2133,7 +2133,7 @@ static const ga_matrix_lookup_t WIN_VERSION_MATRIX[2]=
-[7] =3D {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 1, &quot;Microsoft Windows 7&quot;=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;7&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 2, &quot;Microsoft Windows 8&quot;,=
-=C2=A0 =C2=A0 =C2=A0 &quot;8&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 3, &quot;Microsoft Windows 8.1&quot;=
-,=C2=A0 =C2=A0 &quot;8.1&quot;},<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 { 0, 0, 0}<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 { }<br>
-=C2=A0 =C2=A0 =C2=A0},{<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Server editions */<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 5, 2, &quot;Microsoft Windows Server 20=
-03&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;2003&quot;},<br>
-@@ -2141,28 +2141,27 @@ static const ga_matrix_lookup_t WIN_VERSION_MATRIX[=
-2][7] =3D {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 1, &quot;Microsoft Windows Server 20=
-08 R2&quot;,=C2=A0 =C2=A0 =C2=A0&quot;2008r2&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 2, &quot;Microsoft Windows Server 20=
-12&quot;,=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;2012&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ 6, 3, &quot;Microsoft Windows Server 20=
-12 R2&quot;,=C2=A0 =C2=A0 =C2=A0&quot;2012r2&quot;},<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 { 0, 0, 0},<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 { 0, 0, 0}<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 { },<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0};<br>
-<br>
-=C2=A0typedef struct _ga_win_10_0_t {<br>
-=C2=A0 =C2=A0 =C2=A0int first_build;<br>
--=C2=A0 =C2=A0 const char *version;<br>
--=C2=A0 =C2=A0 const char *version_id;<br>
-+=C2=A0 =C2=A0 char const *version;<br>
-+=C2=A0 =C2=A0 char const *version_id;<br>
-=C2=A0} ga_win_10_0_t;<br>
-<br>
--static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[4] =3D {<br>
-+static const ga_win_10_0_t WIN_10_0_SERVER_VERSION_MATRIX[] =3D {<br>
-=C2=A0 =C2=A0 =C2=A0{14393, &quot;Microsoft Windows Server 2016&quot;,=C2=
-=A0 =C2=A0 &quot;2016&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{17763, &quot;Microsoft Windows Server 2019&quot;,=C2=
-=A0 =C2=A0 &quot;2019&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{20344, &quot;Microsoft Windows Server 2022&quot;,=C2=
-=A0 =C2=A0 &quot;2022&quot;},<br>
--=C2=A0 =C2=A0 {0, 0}<br>
-+=C2=A0 =C2=A0 { }<br>
-=C2=A0};<br>
-<br>
--static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[3] =3D {<br>
-+static const ga_win_10_0_t WIN_10_0_CLIENT_VERSION_MATRIX[] =3D {<br>
-=C2=A0 =C2=A0 =C2=A0{10240, &quot;Microsoft Windows 10&quot;,=C2=A0 =C2=A0 =
-&quot;10&quot;},<br>
-=C2=A0 =C2=A0 =C2=A0{22000, &quot;Microsoft Windows 11&quot;,=C2=A0 =C2=A0 =
-&quot;11&quot;},<br>
--=C2=A0 =C2=A0 {0, 0}<br>
-+=C2=A0 =C2=A0 { }<br>
-=C2=A0};<br>
-<br>
-=C2=A0static void ga_get_win_version(RTL_OSVERSIONINFOEXW *info, Error **er=
-rp)<br>
--- <br>
-2.41.0<br>
-<br>
-</blockquote></div></div>
-
---00000000000063afe906120b5020--
-
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
