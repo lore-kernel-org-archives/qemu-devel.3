@@ -4,109 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68385C54798
-	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AF4C54798
+	for <qemu-devel@archiver.kernel.org>; Fri, 23 Feb 2024 16:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdYhS-00063G-JK; Fri, 23 Feb 2024 11:47:02 -0500
+	id 1rdYj9-00039L-0j; Fri, 23 Feb 2024 11:48:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdYQM-00063o-0g
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:29:22 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1rdYU7-00005g-W8
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:33:16 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rdYPx-0007Hz-9Y
- for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:29:21 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-512ed314881so307209e87.2
- for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:28:54 -0800 (PST)
+ id 1rdYU6-00087I-A3
+ for qemu-devel@nongnu.org; Fri, 23 Feb 2024 11:33:15 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33d9c3f36c2so299243f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 23 Feb 2024 08:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708705733; x=1709310533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1708705992; x=1709310792; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t+Lu1aUTzILJv+8PeOqcfRU9ypZOJg6L0bg1/V/uBfw=;
- b=J/KRmmowADFlAtBnGoqzU1KZyO+jTwJQG+wWxx1iYc24huxWQiuq+ppWtYJrauVuTV
- mQ8Ib0QlPwvi0IVai74tSd9BTRuFh66GktmCpMxMMxFSQ5WyG0st05LY7hmupGu3pqn8
- td+5BLfhLuzi0GHEoYrPw5ucDQWw9lNVxNLifBzpkU5RnCAxtDWCM1aFV1EuxqaNurJa
- nAHg4OHgEXi/bUEOlQeXOg3sSVaET3kbH36NqW3oXk9NW6dnosiqGxKSqT8Ye+i/hFBJ
- Pkp+QOueVKs/MJYlMWxXejsYJLV0JVh/KP1+8G90OzckcXMN5yIaT8zxeRueJcHzQ6V/
- A2cg==
+ bh=AdAqcPISjCpda4bvmvurEoPcFsLJ6rzzW5hX9Mb98eY=;
+ b=AgbuL3n8pwiThPwqLc6hdmujdlbTDNbFajYsGuxMtvnCUnpX5IxCNtvYG2nUJdCDg7
+ 5iOwlKMXAvLzqW0spI8B2YRw200eazhA7mboGD3R0Zu51xeSa2GuaXiIM1jFCbw0VJho
+ IFMzAtPubwu2PydRNCSNN5au+xU2S1h+W5D2ysJT4HzBMukvkCronET/khWFIetF2lJQ
+ 1GTIe4c+Qt03JROuxWTXsVw3j7FhbweX9KMtymYiySlWYA3e/P+4svg5YU59Z/Akgpas
+ NrVDGM49toL2RiFKjI9WB247rZz6zSIABIZ2LwWqLLFsCVTmC0ahzqFWC9GOnCEkPV9E
+ OLgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708705733; x=1709310533;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t+Lu1aUTzILJv+8PeOqcfRU9ypZOJg6L0bg1/V/uBfw=;
- b=InYTNRAaNfTzSIOxTlP1wZ5pM3oJOtlQ8i2ULNRK/TVn1QRAxV3017S0/+8jAhRny2
- hDMUMK+XFifP7n7fALGsO0Zpt0vWj46duWtI+kkLcwby8kdkaX0tecuOHl0/viIOs7PC
- Wkn9PFzlnwI25K81JBbhysiRdk3zJfXYbpir0vGZH4sqFaKc0zUOZg81rFF+tZffFEnO
- BvFH4OV3RiBgnxAdI5QLYbS1mWitA5vlYF5euipnuuQjcszyOv53n0Tw4F0q2hfCtYfH
- mBDfhfeBJFLWTzoFrjT/RryuV+TvcY69sBmmxEfHBPnAdmwVlxXJ+GjG3Jnu/A68luH4
- Hghw==
-X-Gm-Message-State: AOJu0YyVlpXUgK4C4ZzLZg6XBDCnYd4OyiKhdiCHY0tmseAX2QyNPogo
- ngwlM+jzHMuB8gR2SoBGw/8631WAeLu7sOBsTFhW/4Th6eap+Oz54it2frrAEao=
-X-Google-Smtp-Source: AGHT+IGplN59rkQLEB1uSrd2cCAiWoie3bboaYuyype8i1MvIe/5fGf1ZlOLRAjTeemqlxnv/K4+Iw==
-X-Received: by 2002:a05:6512:ba2:b0:512:e394:5357 with SMTP id
- b34-20020a0565120ba200b00512e3945357mr251388lfv.54.1708705733398; 
- Fri, 23 Feb 2024 08:28:53 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708705992; x=1709310792;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AdAqcPISjCpda4bvmvurEoPcFsLJ6rzzW5hX9Mb98eY=;
+ b=Bk8FXn/MP/cBj/1H3TJFBskESMRELEMgM8LAaREz5loKsHKlbWRxs0HgGGyaWUeMu/
+ FGvqZPxFeCrisNv75rtcI2GbfKLpp2TVEDrGGuRM0ZpJIvweNi5nIlm9QhA/Pxjy2DBN
+ KnpdRUaP+UUZ3gPZixIyeBATFfrThQC44zMKqfVQJIxJIe5NzZlC0KKYpqN6mVw2dbWQ
+ +TxIzbsmSRQhhUKxv9Bp0UCcLxQB9KzEMtylveMnesUeymorc667luDJFZJeepIYLHhK
+ Ix1ASae/96qz2UdVF6qgfB41u8qa5xryqg+AcMptbh51DTGqSF02IifRYBzzwzeo57Bk
+ zNpQ==
+X-Gm-Message-State: AOJu0YyxTh2IeTGzQhopym36+RErq2iD2PT/9mbjrcFnchvBhG8OvVS1
+ zutmeFr3p6gUrXTI+kAlpHaFsnU7m465SzwMesJbOvV2YMTVTJEb4hJzkwQr3Qc=
+X-Google-Smtp-Source: AGHT+IEZnLDgNVHquA56sm+4tgHOkxe0Ul+tCfu72PxxjAQevIcsEO9BFkYzhDQxj7a60e0s5RaDtw==
+X-Received: by 2002:a5d:4802:0:b0:33d:b376:89ed with SMTP id
+ l2-20020a5d4802000000b0033db37689edmr39962wrq.8.1708705992627; 
+ Fri, 23 Feb 2024 08:33:12 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- z6-20020a05600c0a0600b0041266f5b041sm2984960wmp.34.2024.02.23.08.28.47
+ y6-20020adfe6c6000000b0033d06dfcf84sm3302754wrm.100.2024.02.23.08.33.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 23 Feb 2024 08:28:52 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D92085F93B;
- Fri, 23 Feb 2024 16:22:04 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Bin Meng <bin.meng@windriver.com>, Yanan Wang <wangyanan55@huawei.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Cleber Rosa <crosa@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Brian Cain <bcain@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Michael Rolnik <mrolnik@gmail.com>
-Subject: [PATCH v2 25/27] docs/devel: lift example and plugin API sections up
-Date: Fri, 23 Feb 2024 16:22:00 +0000
-Message-Id: <20240223162202.1936541-26-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240223162202.1936541-1-alex.bennee@linaro.org>
-References: <20240223162202.1936541-1-alex.bennee@linaro.org>
+ Fri, 23 Feb 2024 08:33:12 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E58255F754;
+ Fri, 23 Feb 2024 16:33:11 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  Artyom Tarasenko <atar4qemu@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Markus
+ Armbruster
+ <armbru@redhat.com>,  Eduardo Habkost <ehabkost@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH] hw/rtc/sun4v-rtc: Relicense to GPLv2-or-later
+In-Reply-To: <20240223161300.938542-1-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Fri, 23 Feb 2024 16:13:00 +0000")
+References: <20240223161300.938542-1-peter.maydell@linaro.org>
+User-Agent: mu4e 1.11.28; emacs 29.1
+Date: Fri, 23 Feb 2024 16:33:11 +0000
+Message-ID: <8734tj87js.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,42 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This makes them a bit more visible in the TCG emulation menu rather
-than hiding them away bellow the ToC limit.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Message-Id: <20240103173349.398526-43-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/devel/tcg-plugins.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> The sun4v RTC device model added under commit a0e893039cf2ce0 in 2016
+> was unfortunately added with a license of GPL-v3-or-later, which is
+> not compatible with other QEMU code which has a GPL-v2-only license.
+>
+> Relicense the code in the .c and the .h file to GPL-v2-or-later,
+> to make it compatible with the rest of QEMU.
+>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-index fa7421279f5..535a74684c5 100644
---- a/docs/devel/tcg-plugins.rst
-+++ b/docs/devel/tcg-plugins.rst
-@@ -143,7 +143,7 @@ requested. The plugin isn't completely uninstalled until the safe work
- has executed while all vCPUs are quiescent.
- 
- Example Plugins
-----------------
-+===============
- 
- There are a number of plugins included with QEMU and you are
- encouraged to contribute your own plugins plugins upstream. There is a
-@@ -591,8 +591,8 @@ The plugin has a number of arguments, all of them are optional:
-   configuration arguments implies ``l2=on``.
-   (default: N = 2097152 (2MB), B = 64, A = 16)
- 
--API
-----
-+Plugin API
-+==========
- 
- The following API is generated from the inline documentation in
- ``include/qemu/qemu-plugin.h``. Please ensure any updates to the API
--- 
-2.39.2
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
