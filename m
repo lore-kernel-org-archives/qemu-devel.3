@@ -4,114 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C99EC48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 14:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A04C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 14:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdsfx-0003Co-CH; Sat, 24 Feb 2024 09:06:49 -0500
+	id 1rdsoJ-0005g4-Ew; Sat, 24 Feb 2024 09:15:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@daveparsons.net>)
- id 1rdsfm-00039C-SQ; Sat, 24 Feb 2024 09:06:40 -0500
-Received: from hamster.birch.relay.mailchannels.net ([23.83.209.80])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@daveparsons.net>)
- id 1rdsfj-0004Kf-Cb; Sat, 24 Feb 2024 09:06:38 -0500
-X-Sender-Id: thundermail|x-authsender|dave@daveparsons.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id A194E802DA4;
- Sat, 24 Feb 2024 14:06:31 +0000 (UTC)
-Received: from mailclean11.thundermail.uk (unknown [127.0.0.6])
- (Authenticated sender: thundermail)
- by relay.mailchannels.net (Postfix) with ESMTPA id 1E3868033A5;
- Sat, 24 Feb 2024 14:06:28 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1708783590; a=rsa-sha256;
- cv=none;
- b=uT08J277UT8z+8EHQxgeQ/PJYYza7L8zLa1+fP7hF4lzPIOZOUvFJZvdohurG3swmfT167
- rEAZ+qgcrhRo9APVMi/fjwvALURHQzmCa7FkEMC0q0WivhvicYEE/t+/DJBEUiQ14/FRGe
- BW9We6ax7vYOdBympa0ozH3YnGfuF1Dm8DtVOCs8MrhQcVLqdWKGh1sBI9qMgaKStzjfNL
- 9KCb7Es0Ui6zxlVGGRKhmQk/v9b0bGztKUjbSr+JW2IBOx/k4NEwLYdPa6Z3b0gL3249+h
- 9chTx1ADuv1cqj2i/ggiqg+wRC2VfWzALiMjdfGrcMJznfWRV7hIhUVFhDLx+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1708783590;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:dkim-signature;
- bh=Z9X1HZr3mu0mTTUfwzTQhmsSc2asmpSe1PaQrzRDq60=;
- b=pZAAIkM+6hrpPorE4eE+rMXJ9JP5y6kaqH6E82ZoAf3v57JREmrFzIo1zXWjUmMkpefllm
- 2WMqQZDuhkdP90LTfw52v66xkapWcr3skvHI4XRjHAiZPQSpzgIv5hWkqU9ynZ8uaMtUZl
- jPuZb6AMfUaMsYfX5QNjjloyEf2bcBYU1xKxydi1BAUk7pQ5VG2X8SVj3OcONlCFKarhM3
- zGlxPE1Ik79nztv5fTdKGn7n728N8kWaXTcJSEEGenFT1oXR66IUxIgLpDmEfpnL9C7vxu
- f0TTrc7cMvR7AHIV8Shu1qho7yO3FJGhjecFxcYRi92ZjESpZh6ZFvvT9Y078A==
-ARC-Authentication-Results: i=1; rspamd-55b4bfd7cb-pb77f;
- auth=pass smtp.auth=thundermail smtp.mailfrom=dave@daveparsons.net
-X-Sender-Id: thundermail|x-authsender|dave@daveparsons.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: thundermail|x-authsender|dave@daveparsons.net
-X-MailChannels-Auth-Id: thundermail
-X-Drop-Army: 459133923eb00e63_1708783590758_2107120092
-X-MC-Loop-Signature: 1708783590758:696577549
-X-MC-Ingress-Time: 1708783590758
-Received: from mailclean11.thundermail.uk (mailclean11.thundermail.uk
- [149.255.60.66]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.101.14.245 (trex/6.9.2); Sat, 24 Feb 2024 14:06:30 +0000
-Received: from cloud227.thundercloud.uk (cloud227.thundercloud.uk
- [149.255.62.108])
- by mailclean11.thundermail.uk (Postfix) with ESMTPS id B82DE402E9;
- Sat, 24 Feb 2024 14:06:23 +0000 (GMT)
-Received: from localhost.localdomain
- (host109-149-93-149.range109-149.btcentralplus.com [109.149.93.149])
- (Authenticated sender: dave@daveparsons.net)
- by cloud227.thundercloud.uk (Postfix) with ESMTPSA id 4B52F104073;
- Sat, 24 Feb 2024 14:07:12 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=daveparsons.net;
- s=default; t=1708783632;
- bh=Z9X1HZr3mu0mTTUfwzTQhmsSc2asmpSe1PaQrzRDq60=; h=From:To:Subject;
- b=TrE1bDrEANirvipotOnFB13aBTbwQAkhf5lOkLLlCflbY3Vl1s3EWd7o9i+sdp2I4
- t/Ql8JqiSEHQNt9ycCmDAXDPl1b7VM2VA64ix3TJAB2fsCMzCACOsRoudst0jAsU6k
- FQBheqzRHxg5+96JEIPN2DEPN4IXmF8ywBfI9M8g=
-Authentication-Results: cloud227.thundercloud.uk;
- spf=pass (sender IP is 109.149.93.149) smtp.mailfrom=dave@daveparsons.net
- smtp.helo=localhost.localdomain
-Received-SPF: pass (cloud227.thundercloud.uk: connection is authenticated)
-From: David Parsons <dave@daveparsons.net>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rdso7-0005W7-NX
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 09:15:19 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rdso4-0005hS-Ty
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 09:15:14 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-41276a43dc3so12881075e9.0
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 06:15:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708784110; x=1709388910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QL98g+jdA4UYeVSxM1zfb4G5x62Ew6jGfwQjKPaZXhw=;
+ b=nrOtHKRp/0aqW3riu4Wjmjs7DhFPurgoLIdBl8++5yWgmXaOsye2s/cTwdWTUaYwpi
+ Gl4sA5eXKt36zaTqhopyvzVKQmEO+QE85D+V+TkKxxw6ED3D1EPYCA7wuSt1NTGKoUwd
+ 0ywCp0llxD2KJIO6Zkjaggjz83+J11/O5AwmIr6bhGwkBLdQUkoEHYVn5TLOO47VcXxY
+ WoA7h9WGWhXOmzsppUjMREJeSqVDd+96xXOWMpKFs5Ich5dRXdr4ONqP1MYEe7+wuwaG
+ 0plr2Y7KtXiM7qxAO6a8U3tC2dPl9V7wIUlrDSBBR1jeBHn9w8XcgL18Ap+SJBqdYs5s
+ xArw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708784110; x=1709388910;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QL98g+jdA4UYeVSxM1zfb4G5x62Ew6jGfwQjKPaZXhw=;
+ b=PFWomHnN7Vk1cEBu44oka14AXfVyV9gZTLzkr7phfg4jj7cHoqu+4S4CzXQWaJoP/e
+ ydUzIb3RhJJiKkZi2uy8SN9EDUSfHed+kPHkzg16BpCAhCxJQddbfwI2ZrNvdIGL9EIz
+ rN99l7O8hY8CwMEbM4KPbSPYCGg/oDAuT0N753S0Xq4TSF7wsPEiF2XLtgaO+ifbXbBR
+ EDUX+W7sRxoE3iz26AOr32yApvQhzQiI+/BqLX4ICPslK0s6kUw6vxuIG3r3zTQgw7Wn
+ MbCXUn6CTDqqmxSfL8+Kg9uo5r/NP8R/OVSYlC+Ybf4xZbfnTe5kRj34YuYQNO3TQD7t
+ 8ctA==
+X-Gm-Message-State: AOJu0YxV7TVssGsJAejeOIAuws5nyjtXXa8JRGMEn6haXiStk6CEOcLO
+ ttKq7noc1CnZuwYwZz8SX6X9bkQIr5aj3nrJfIQ/jIthqbmXpHfR1X7V6DVQ
+X-Google-Smtp-Source: AGHT+IGYonOIe2x6Ez6PHg3DV9XJVlc4fmxH6lZOr7Z9TV9RH2neVp9gRz98JPj4+sNB3RhTZiiNzA==
+X-Received: by 2002:a05:600c:3588:b0:40e:a569:3555 with SMTP id
+ p8-20020a05600c358800b0040ea5693555mr2218026wmq.35.1708784110252; 
+ Sat, 24 Feb 2024 06:15:10 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-089-012-138-060.89.12.pool.telefonica.de.
+ [89.12.138.60]) by smtp.gmail.com with ESMTPSA id
+ h12-20020a05600c350c00b0041285ffec13sm2395968wmq.41.2024.02.24.06.15.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 24 Feb 2024 06:15:09 -0800 (PST)
+Date: Sat, 24 Feb 2024 14:15:08 +0000
+From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, akihiko.odaki@daynix.com, mjt@tls.msk.ru,
- philmd@linaro.org, kraxel@redhat.com, marcandre.lureau@redhat.com,
- David Parsons <dave@daveparsons.net>
-Subject: [PATCH v2] ui/cocoa: Fix window clipping on macOS 14
-Date: Sat, 24 Feb 2024 14:06:20 +0000
-Message-Id: <20240224140620.39200-1-dave@daveparsons.net>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+CC: Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Paul Durrant <paul@xen.org>,
+ Igor Mammedov <imammedo@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, Sergio Lopez <slp@redhat.com>
+Subject: Re: [PATCH v2 0/6] Simplify initialization of PC machines
+In-Reply-To: <20240224135851.100361-1-shentey@gmail.com>
+References: <20240224135851.100361-1-shentey@gmail.com>
+Message-ID: <B737FEF4-744F-4B91-8F31-08A6818F8612@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <170878363277.3104394.709066910959988231@cloud227.thundercloud.uk>
-X-PPP-Vhost: daveparsons.net
-X-Rspamd-Server: mailclean11
-X-Rspamd-Queue-Id: B82DE402E9
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.49 / 999.00]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; ONCE_RECEIVED(0.10)[];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_ONE(0.00)[1]; TO_DN_SOME(0.00)[];
- ASN(0.00)[asn:34931, ipnet:149.255.60.0/22, country:GB];
- ARC_NA(0.00)[]; DMARC_NA(0.00)[daveparsons.net];
- RCPT_COUNT_SEVEN(0.00)[8]; NEURAL_SPAM(0.00)[0.956];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_SOME(0.00)[];
- DKIM_TRACE(0.00)[daveparsons.net:+];
- R_SPF_SOFTFAIL(0.00)[~all];
- R_DKIM_ALLOW(0.00)[daveparsons.net:s=default];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=23.83.209.80; envelope-from=dave@daveparsons.net;
- helo=hamster.birch.relay.mailchannels.net
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -129,45 +99,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-macOS Sonoma changes the NSView.clipsToBounds to false by default
-where it was true in earlier version of macOS. This causes the window
-contents to be occluded by the frame at the top of the window. This
-fixes the issue by conditionally compiling the clipping on Sonoma to
-true. NSView only exposes the clipToBounds in macOS 14 and so has
-to be fixed via conditional compilation.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
-Signed-off-by: David Parsons <dave@daveparsons.net>
----
- ui/cocoa.m | 7 +++++++
- 1 file changed, 7 insertions(+)
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index eb99064bee..bbf9704b8c 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -54,6 +54,10 @@
- #define MAC_OS_X_VERSION_10_13 101300
- #endif
- 
-+#ifndef MAC_OS_VERSION_14_0
-+#define MAC_OS_VERSION_14_0 140000
-+#endif
-+
- /* 10.14 deprecates NSOnState and NSOffState in favor of
-  * NSControlStateValueOn/Off, which were introduced in 10.13.
-  * Define for older versions
-@@ -365,6 +369,9 @@ - (id)initWithFrame:(NSRect)frameRect
-         screen.width = frameRect.size.width;
-         screen.height = frameRect.size.height;
-         kbd = qkbd_state_init(dcl.con);
-+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_VERSION_14_0
-+        [self setClipsToBounds:YES];
-+#endif
- 
-     }
-     return self;
--- 
-2.39.3 (Apple Git-145)
+Am 24=2E Februar 2024 13:58:45 UTC schrieb Bernhard Beschow <shentey@gmail=
+=2Ecom>:
+>The series aims to simplify the initialization process of all PC-based ma=
+chines
+>
+>by streamlining redundant code=2E
+>
+>
+>
+>Since I haven't seen patches on the list so far for folding CMOS data
+>
+>generation into pc=2Ec, which frees all PC machines from performing this =
+duty
+>
+>explicitly, I've appended this cleanup as the last two patches=2E
+>
+>
+>
+>Testing done:
+>
+>* `make check`
+>
 
+The `boot-order-test` actually fails=2E We'd have to ignore the last patch=
+ for now=2E
+
+Best regards,
+Bernhard
+
+>* `make check-avocado`
+>
+>* I'm sending this series from within a VM containing these changes=2E
+>
+>
+>
+>v2:
+>
+>* Rebase onto master, leaving only patches 1, 3, and 5
+>
+>* Patch 2: Rename "bus" attribute to "pcibus" (Phil)
+>
+>* Patch 4: Spotted while rebasing
+>
+>* Patch 6: New patch possible after [1]
+>
+>
+>
+>Best regards,
+>
+>Bernhard
+>
+>
+>
+>[1]
+>
+>https://patchew=2Eorg/QEMU/20240221211626=2E48190-1-philmd@linaro=2Eorg/2=
+0240221211626
+>
+>=2E48190-10-philmd@linaro=2Eorg/
+>
+>
+>
+>Bernhard Beschow (6):
+>
+>  hw/i386/x86: Let ioapic_init_gsi() take parent as pointer
+>
+>  hw/i386/pc: Rename "bus" attribute to "pcibus"
+>
+>  hw/i386/pc_{piix,q35}: Eliminate local pci_bus/pci_host variables
+>
+>  hw/i386/pc: Remove unneeded class attribute "kvmclock_enabled"
+>
+>  hw/i386/pc: Populate RTC attribute directly
+>
+>  hw/i386/pc: Inline pc_cmos_init() into pc_cmos_init_late() and remove
+>
+>    it
+>
+>
+>
+> include/hw/i386/pc=2Eh     |  5 +----
+>
+> include/hw/i386/x86=2Eh    |  2 +-
+>
+> hw/i386/acpi-build=2Ec     |  2 +-
+>
+> hw/i386/amd_iommu=2Ec      |  2 +-
+>
+> hw/i386/intel_iommu=2Ec    |  2 +-
+>
+> hw/i386/kvm/xen_evtchn=2Ec |  2 +-
+>
+> hw/i386/microvm=2Ec        |  2 +-
+>
+> hw/i386/pc=2Ec             | 27 ++++----------------------
+>
+> hw/i386/pc_piix=2Ec        | 42 +++++++++++++++++-----------------------=
+
+>
+> hw/i386/pc_q35=2Ec         | 25 ++++++++++--------------
+>
+> hw/i386/x86-iommu=2Ec      |  2 +-
+>
+> hw/i386/x86=2Ec            |  7 +++----
+>
+> 12 files changed, 43 insertions(+), 77 deletions(-)
+>
+>
+>
+>-- >
+>2=2E44=2E0
+>
+>
+>
 
