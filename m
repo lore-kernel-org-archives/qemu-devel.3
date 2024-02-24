@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D417DC48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 20:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4512CC48BF6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 20:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdygu-0003ts-1K; Sat, 24 Feb 2024 15:32:17 -0500
+	id 1rdyh8-00044q-B6; Sat, 24 Feb 2024 15:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1rdygm-0003pB-IU; Sat, 24 Feb 2024 15:32:04 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ id 1rdygq-0003vq-Fs; Sat, 24 Feb 2024 15:32:11 -0500
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1rdygk-00063b-7a; Sat, 24 Feb 2024 15:32:04 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a3d01a9a9a2so205995066b.1; 
- Sat, 24 Feb 2024 12:32:01 -0800 (PST)
+ id 1rdygo-00064T-8l; Sat, 24 Feb 2024 15:32:07 -0500
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a3e7f7b3d95so225271566b.3; 
+ Sat, 24 Feb 2024 12:32:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708806720; x=1709411520; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708806724; x=1709411524; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qxx8rQKYfraslaYyKwdGIO4V2NDujCMxU7+I2hvizZs=;
- b=JSZJPB78QL8PfoTmztCwd3AmJLTsnnU74umVLUhkRZqiDkwATy48BjYimys+G0NVwD
- SkatVP0MNYhGgiQj3LN1uSAFSnxu7+WLa+vnmlYUW9Mg3GrOv7QAazOowKhunFc8PMtL
- H6INaQB1AFrZDAq40m1r/eICtA7dGD7W9cwAojiBXXHWMYvtwwh+qVXe5hJME7+jCUYD
- mZrhuEVvZtexEC5mmjJ338CJi4ZuDE63GcH3v6im/fNybW6DSdahQiA6F+5nL8X6l1PA
- 7izQ9iHkoLzoyoX/mgbfvLf7kkfTKRdknsREFPzXJJStLneGLh2bcySVd8neidzDu5Ac
- BYwA==
+ bh=13OHCQV4gOWKyRBUqNbkx8gEZsa9oMxaeAkREwVQxP4=;
+ b=gppdoHe6mwecLyTIUh3yvqT0vEfuDeD1TJo7VIOwRKY91KpN6K8DyjXll1+4gjvDtg
+ uvamhVSkg2Jdbny2ZIeu+msxOeQBLVligQRaWGz5d+enXHa1uItfr0BHauW0UqpFMLiL
+ ZUoOkBXe+9CZLeGP9/aBprYLMiDdqM+DdCtIE1sGuDD1s3J3WFq3C5CNqqdER5Vxla+3
+ 2daAm3TwDcnKW3totx8tCWOmXzQFeyyTm2tANmOkWVNwMeLSKvqZWJ3U/+Xyygr/4v6E
+ BQI97hPTOXW/EmrtRpA3QPW5Q6SVTpe+c/c14TT90tKbgCcrWWXcxQp3cgSXeLFtCEke
+ P44g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708806720; x=1709411520;
+ d=1e100.net; s=20230601; t=1708806724; x=1709411524;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qxx8rQKYfraslaYyKwdGIO4V2NDujCMxU7+I2hvizZs=;
- b=ORLAfo1+mgPb6mgdxeEbFlGW8/dLBKAQg+DMgrHW6LiGOdxtyd/6PO4DdcnnPSQxg/
- 9UuyfOTcDgCt3kzopmFrR8QstzbvJcMUJ0fd1SIqObMoWws33p9HQGCz3HN1zIUi+6RO
- pELAqN+PUTINl9ltdKJTHllMwv+RsLHwS37OGiZMa9a4/Rhxb9l2FVR0q2Q9/E+Ej0l3
- cEbw/JmxKRa06HqrRlT2qZgwPUL5cWJ4M9TGNKTQbd8tWcr1pnJExYIJIDbWcojkHvxe
- af5E90Do8hi+TywB3zhjrjvfuqIEvvFFmDRkGOukaVSj8LMqr0HOKnuhmpIha2m6sCt6
- WTlw==
+ bh=13OHCQV4gOWKyRBUqNbkx8gEZsa9oMxaeAkREwVQxP4=;
+ b=xM+V+foFBl80dy9Eszb/k6k5IQ6z3wBq6t5notK6GgNGFsNnYia21XudtpkV64VXaV
+ VrrUh6n3NhRzQBTIjZjXS4ACA76sa11vaeSP3fRj4URBJutL7z39co0OKUN0sYzn/vma
+ gSTuUXfkRIDCAFWW9JYm+C8oDNVtr1JN1jgiFghG4CJyyrRf75OzTofjFLCIikE1eNiK
+ 19Gj0AginWI+9bDdVmj0tP1azdDU+TovbmtpDKYRpDUpznYsVda7XgO+UW1j1zvdOmRs
+ drPV5J9tHYsnV5dFRqxBEXKRVhgHAs+B3M0Pm82ijUfhUk/I/JnNOkLwnttRUIG4930u
+ cu5Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUQmVVbOg84RispjcuS9/pgb8Fd6oMp23cFUbVZQapdJfEkAeJZaX+tq1WNmDSLZb8ffQ/O+3B0ObHDBU40POfD0B3I
-X-Gm-Message-State: AOJu0YxU/5DY6X1jC34g29wKCxZS8ZIXX26hkmKS2s+Fh6n93JMrvgxm
- tva6mzdpUJxL2223yYhQJ1FFYT2v61zs0i/i4R2rfyDV5rAuWFZzJTzkh/lJ
-X-Google-Smtp-Source: AGHT+IGab0dj/8Yahe1pIAC6si9cUfJQWBvI7xtIXpinF/9txJQX/mt3SDLzCwVk+1a3aqAoxSk4jg==
-X-Received: by 2002:a17:906:e11:b0:a43:5a1:1017 with SMTP id
- l17-20020a1709060e1100b00a4305a11017mr721663eji.66.1708806719881; 
- Sat, 24 Feb 2024 12:31:59 -0800 (PST)
+ AJvYcCX7iXSHwgCqx5CwiaFmu4rgozgkyfx1fQb+FUcqXIrZtlidcR3pZPteZV3eqhWmuKXoAr7YN79WYwQtevCI/u4b8Vay
+X-Gm-Message-State: AOJu0Ywvf8maDLn3MNmOlxbCS56JaWuG4OplnLmC0PgzL7UFAmuYmh8Y
+ /j8OM2Y6JDER4XnnCtjiLyPdQ75W8ocfa1VVUYVQlpaYP+UssBNpgj+H+mbL
+X-Google-Smtp-Source: AGHT+IGQjqceD7w8+mJ9JyHG24y41S0/lBmYpRljdmkiIyw6Beg0OyeylKmwwL4tXS3cKhg+E8T5EA==
+X-Received: by 2002:a17:906:cd0f:b0:a41:3950:d11c with SMTP id
+ oz15-20020a170906cd0f00b00a413950d11cmr2193997ejb.28.1708806724097; 
+ Sat, 24 Feb 2024 12:32:04 -0800 (PST)
 Received: from localhost.localdomain ([212.70.108.232])
  by smtp.gmail.com with ESMTPSA id
- n11-20020a170906088b00b00a3d636e412bsm863405eje.123.2024.02.24.12.31.58
+ n11-20020a170906088b00b00a3d636e412bsm863405eje.123.2024.02.24.12.32.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Feb 2024 12:31:59 -0800 (PST)
+ Sat, 24 Feb 2024 12:32:03 -0800 (PST)
 From: Rayhan Faizel <rayhan.faizel@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, philmd@linaro.org, pbonzini@redhat.com,
- qemu-arm@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>
-Subject: [PATCH v5 1/3] hw/i2c: Implement Broadcom Serial Controller (BSC)
-Date: Sun, 25 Feb 2024 00:40:36 +0530
-Message-Id: <20240224191038.2409945-2-rayhan.faizel@gmail.com>
+ qemu-arm@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v5 3/3] tests/qtest: Add testcase for BCM2835 BSC
+Date: Sun, 25 Feb 2024 00:40:38 +0530
+Message-Id: <20240224191038.2409945-4-rayhan.faizel@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240224191038.2409945-1-rayhan.faizel@gmail.com>
 References: <20240224191038.2409945-1-rayhan.faizel@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=rayhan.faizel@gmail.com; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,57 +95,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A few deficiencies in the current device model need to be noted.
-
-1. FIFOs are not used. All sends and receives are done directly.
-2. Repeated starts are not emulated. Repeated starts can be triggered in real
-hardware by sending a new read transfer request in the window time between
-transfer active set of write transfer request and done bit set of the same.
+Simple testcase for validating proper operation of read and write for all
+three BSC controllers.
 
 Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/raspi.rst    |   1 +
- hw/i2c/Kconfig               |   4 +
- hw/i2c/bcm2835_i2c.c         | 282 +++++++++++++++++++++++++++++++++++
- hw/i2c/meson.build           |   1 +
- include/hw/i2c/bcm2835_i2c.h |  80 ++++++++++
- 5 files changed, 368 insertions(+)
- create mode 100644 hw/i2c/bcm2835_i2c.c
- create mode 100644 include/hw/i2c/bcm2835_i2c.h
+ tests/qtest/bcm2835-i2c-test.c | 115 +++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build        |   2 +-
+ 2 files changed, 116 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/bcm2835-i2c-test.c
 
-diff --git a/docs/system/arm/raspi.rst b/docs/system/arm/raspi.rst
-index d0a6f08b2b..f2c0d6d6b8 100644
---- a/docs/system/arm/raspi.rst
-+++ b/docs/system/arm/raspi.rst
-@@ -34,6 +34,7 @@ Implemented devices
-  * MailBox controller (MBOX)
-  * VideoCore firmware (property)
-  * Peripheral SPI controller (SPI)
-+ * Broadcom Serial Controller (I2C)
- 
- 
- Missing devices
-diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
-index 14886b35da..596a7a3165 100644
---- a/hw/i2c/Kconfig
-+++ b/hw/i2c/Kconfig
-@@ -45,3 +45,7 @@ config PCA954X
- config PMBUS
-     bool
-     select SMBUS
-+
-+config BCM2835_I2C
-+    bool
-+    select I2C
-diff --git a/hw/i2c/bcm2835_i2c.c b/hw/i2c/bcm2835_i2c.c
+diff --git a/tests/qtest/bcm2835-i2c-test.c b/tests/qtest/bcm2835-i2c-test.c
 new file mode 100644
-index 0000000000..20ec46eeab
+index 0000000000..513ecce61d
 --- /dev/null
-+++ b/hw/i2c/bcm2835_i2c.c
-@@ -0,0 +1,282 @@
++++ b/tests/qtest/bcm2835-i2c-test.c
+@@ -0,0 +1,115 @@
 +/*
-+ * Broadcom Serial Controller (BSC)
++ * QTest testcase for Broadcom Serial Controller (BSC)
 + *
 + * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
 + *
@@ -170,357 +139,107 @@ index 0000000000..20ec46eeab
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/log.h"
++#include "libqtest-single.h"
++
 +#include "hw/i2c/bcm2835_i2c.h"
-+#include "hw/irq.h"
-+#include "migration/vmstate.h"
++#include "hw/sensor/tmp105_regs.h"
 +
-+static void bcm2835_i2c_update_interrupt(BCM2835I2CState *s)
-+{
-+    int do_interrupt = 0;
-+    /* Interrupt on RXR (Needs reading) */
-+    if (s->c & BCM2835_I2C_C_INTR && s->s & BCM2835_I2C_S_RXR) {
-+        do_interrupt = 1;
-+    }
-+
-+    /* Interrupt on TXW (Needs writing) */
-+    if (s->c & BCM2835_I2C_C_INTT && s->s & BCM2835_I2C_S_TXW) {
-+        do_interrupt = 1;
-+    }
-+
-+    /* Interrupt on DONE (Transfer complete) */
-+    if (s->c & BCM2835_I2C_C_INTD && s->s & BCM2835_I2C_S_DONE) {
-+        do_interrupt = 1;
-+    }
-+    qemu_set_irq(s->irq, do_interrupt);
-+}
-+
-+static void bcm2835_i2c_begin_transfer(BCM2835I2CState *s)
-+{
-+    int direction = s->c & BCM2835_I2C_C_READ;
-+    if (i2c_start_transfer(s->bus, s->a, direction)) {
-+        s->s |= BCM2835_I2C_S_ERR;
-+    }
-+    s->s |= BCM2835_I2C_S_TA;
-+
-+    if (direction) {
-+        s->s |= BCM2835_I2C_S_RXR | BCM2835_I2C_S_RXD;
-+    } else {
-+        s->s |= BCM2835_I2C_S_TXW;
-+    }
-+}
-+
-+static void bcm2835_i2c_finish_transfer(BCM2835I2CState *s)
-+{
-+    /*
-+     * STOP is sent when DLEN counts down to zero.
-+     *
-+     * https://github.com/torvalds/linux/blob/v6.7/drivers/i2c/busses/i2c-bcm2835.c#L223-L261
-+     * It is possible to initiate repeated starts on real hardware.
-+     * However, this requires sending another ST request before the bytes in
-+     * TX FIFO are shifted out.
-+     *
-+     * This is not emulated currently.
-+     */
-+    i2c_end_transfer(s->bus);
-+    s->s |= BCM2835_I2C_S_DONE;
-+
-+    /* Ensure RXD is cleared, otherwise the driver registers an error */
-+    s->s &= ~(BCM2835_I2C_S_TA | BCM2835_I2C_S_RXR |
-+              BCM2835_I2C_S_TXW | BCM2835_I2C_S_RXD);
-+}
-+
-+static uint64_t bcm2835_i2c_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    BCM2835I2CState *s = opaque;
-+    uint32_t readval = 0;
-+
-+    switch (addr) {
-+    case BCM2835_I2C_C:
-+        readval = s->c;
-+        break;
-+    case BCM2835_I2C_S:
-+        readval = s->s;
-+        break;
-+    case BCM2835_I2C_DLEN:
-+        readval = s->dlen;
-+        break;
-+    case BCM2835_I2C_A:
-+        readval = s->a;
-+        break;
-+    case BCM2835_I2C_FIFO:
-+        /* We receive I2C messages directly instead of using FIFOs */
-+        if (s->s & BCM2835_I2C_S_TA) {
-+            readval = i2c_recv(s->bus);
-+            s->dlen -= 1;
-+
-+            if (s->dlen == 0) {
-+                bcm2835_i2c_finish_transfer(s);
-+            }
-+        }
-+        bcm2835_i2c_update_interrupt(s);
-+        break;
-+    case BCM2835_I2C_DIV:
-+        readval = s->div;
-+        break;
-+    case BCM2835_I2C_DEL:
-+        readval = s->del;
-+        break;
-+    case BCM2835_I2C_CLKT:
-+        readval = s->clkt;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, addr);
-+    }
-+
-+    return readval;
-+}
-+
-+static void bcm2835_i2c_write(void *opaque, hwaddr addr,
-+                              uint64_t value, unsigned int size)
-+{
-+    BCM2835I2CState *s = opaque;
-+    uint32_t writeval = value;
-+
-+    switch (addr) {
-+    case BCM2835_I2C_C:
-+        /* ST is a one-shot operation; it must read back as 0 */
-+        s->c = writeval & ~BCM2835_I2C_C_ST;
-+
-+        /* Start transfer */
-+        if (writeval & (BCM2835_I2C_C_ST | BCM2835_I2C_C_I2CEN)) {
-+            bcm2835_i2c_begin_transfer(s);
-+            /*
-+             * Handle special case where transfer starts with zero data length.
-+             * Required for zero length i2c quick messages to work.
-+             */
-+            if (s->dlen == 0) {
-+                bcm2835_i2c_finish_transfer(s);
-+            }
-+        }
-+
-+        bcm2835_i2c_update_interrupt(s);
-+        break;
-+    case BCM2835_I2C_S:
-+        if (writeval & BCM2835_I2C_S_DONE && s->s & BCM2835_I2C_S_DONE) {
-+            /* When DONE is cleared, DLEN should read last written value. */
-+            s->dlen = s->last_dlen;
-+        }
-+
-+        /* Clear DONE, CLKT and ERR by writing 1 */
-+        s->s &= ~(writeval & (BCM2835_I2C_S_DONE |
-+                  BCM2835_I2C_S_ERR | BCM2835_I2C_S_CLKT));
-+        break;
-+    case BCM2835_I2C_DLEN:
-+        s->dlen = writeval;
-+        s->last_dlen = writeval;
-+        break;
-+    case BCM2835_I2C_A:
-+        s->a = writeval;
-+        break;
-+    case BCM2835_I2C_FIFO:
-+        /* We send I2C messages directly instead of using FIFOs */
-+        if (s->s & BCM2835_I2C_S_TA) {
-+            if (s->s & BCM2835_I2C_S_TXD) {
-+                if (!i2c_send(s->bus, writeval & 0xff)) {
-+                    s->dlen -= 1;
-+                } else {
-+                    s->s |= BCM2835_I2C_S_ERR;
-+                }
-+            }
-+
-+            if (s->dlen == 0) {
-+                bcm2835_i2c_finish_transfer(s);
-+            }
-+        }
-+        bcm2835_i2c_update_interrupt(s);
-+        break;
-+    case BCM2835_I2C_DIV:
-+        s->div = writeval;
-+        break;
-+    case BCM2835_I2C_DEL:
-+        s->del = writeval;
-+        break;
-+    case BCM2835_I2C_CLKT:
-+        s->clkt = writeval;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, addr);
-+    }
-+}
-+
-+static const MemoryRegionOps bcm2835_i2c_ops = {
-+    .read = bcm2835_i2c_read,
-+    .write = bcm2835_i2c_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
++static const uint32_t bsc_base_addrs[] = {
++    0x3f205000,                         /* I2C0 */
++    0x3f804000,                         /* I2C1 */
++    0x3f805000,                         /* I2C2 */
 +};
 +
-+static void bcm2835_i2c_realize(DeviceState *dev, Error **errp)
++static void bcm2835_i2c_init_transfer(uint32_t base_addr, bool read)
 +{
-+    BCM2835I2CState *s = BCM2835_I2C(dev);
-+    s->bus = i2c_init_bus(dev, NULL);
++    /* read flag is bit 0 so we can write it directly */
++    int interrupt = read ? BCM2835_I2C_C_INTR : BCM2835_I2C_C_INTT;
 +
-+    memory_region_init_io(&s->iomem, OBJECT(dev), &bcm2835_i2c_ops, s,
-+                          TYPE_BCM2835_I2C, 0x24);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-+    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
++    writel(base_addr + BCM2835_I2C_C,
++           BCM2835_I2C_C_I2CEN | BCM2835_I2C_C_INTD |
++           BCM2835_I2C_C_ST | BCM2835_I2C_C_CLEAR | interrupt | read);
 +}
 +
-+static void bcm2835_i2c_reset(DeviceState *dev)
++static void test_i2c_read_write(gconstpointer data)
 +{
-+    BCM2835I2CState *s = BCM2835_I2C(dev);
++    uint32_t i2cdata;
++    intptr_t index = (intptr_t) data;
++    uint32_t base_addr = bsc_base_addrs[index];
 +
-+    /* Reset values according to BCM2835 Peripheral Documentation */
-+    s->c = 0x0;
-+    s->s = BCM2835_I2C_S_TXD | BCM2835_I2C_S_TXE;
-+    s->dlen = 0x0;
-+    s->a = 0x0;
-+    s->div = 0x5dc;
-+    s->del = 0x00300030;
-+    s->clkt = 0x40;
++    /* Write to TMP105 register */
++    writel(base_addr + BCM2835_I2C_A, 0x50);
++    writel(base_addr + BCM2835_I2C_DLEN, 3);
++
++    bcm2835_i2c_init_transfer(base_addr, 0);
++
++    writel(base_addr + BCM2835_I2C_FIFO, TMP105_REG_T_HIGH);
++    writel(base_addr + BCM2835_I2C_FIFO, 0xde);
++    writel(base_addr + BCM2835_I2C_FIFO, 0xad);
++
++    /* Clear flags */
++    writel(base_addr + BCM2835_I2C_S, BCM2835_I2C_S_DONE | BCM2835_I2C_S_ERR |
++                                      BCM2835_I2C_S_CLKT);
++
++    /* Read from TMP105 register */
++    writel(base_addr + BCM2835_I2C_A, 0x50);
++    writel(base_addr + BCM2835_I2C_DLEN, 1);
++
++    bcm2835_i2c_init_transfer(base_addr, 0);
++
++    writel(base_addr + BCM2835_I2C_FIFO, TMP105_REG_T_HIGH);
++
++    writel(base_addr + BCM2835_I2C_DLEN, 2);
++    bcm2835_i2c_init_transfer(base_addr, 1);
++
++    i2cdata = readl(base_addr + BCM2835_I2C_FIFO);
++    g_assert_cmpint(i2cdata, ==, 0xde);
++
++    i2cdata = readl(base_addr + BCM2835_I2C_FIFO);
++    g_assert_cmpint(i2cdata, ==, 0xad);
++
++    /* Clear flags */
++    writel(base_addr + BCM2835_I2C_S, BCM2835_I2C_S_DONE | BCM2835_I2C_S_ERR |
++                                      BCM2835_I2C_S_CLKT);
++
 +}
 +
-+static const VMStateDescription vmstate_bcm2835_i2c = {
-+    .name = TYPE_BCM2835_I2C,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(c, BCM2835I2CState),
-+        VMSTATE_UINT32(s, BCM2835I2CState),
-+        VMSTATE_UINT32(dlen, BCM2835I2CState),
-+        VMSTATE_UINT32(a, BCM2835I2CState),
-+        VMSTATE_UINT32(div, BCM2835I2CState),
-+        VMSTATE_UINT32(del, BCM2835I2CState),
-+        VMSTATE_UINT32(clkt, BCM2835I2CState),
-+        VMSTATE_UINT32(last_dlen, BCM2835I2CState),
-+        VMSTATE_END_OF_LIST()
++int main(int argc, char **argv)
++{
++    int ret;
++    int i;
++
++    g_test_init(&argc, &argv, NULL);
++
++    for (i = 0; i < 3; i++) {
++        g_autofree char *test_name =
++        g_strdup_printf("/bcm2835/bcm2835-i2c%d/read_write", i);
++        qtest_add_data_func(test_name, (void *)(intptr_t) i,
++                            test_i2c_read_write);
 +    }
-+};
 +
-+static void bcm2835_i2c_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
++    /* Run I2C tests with TMP105 slaves on all three buses */
++    qtest_start("-M raspi3b "
++                "-device tmp105,address=0x50,bus=i2c-bus.0 "
++                "-device tmp105,address=0x50,bus=i2c-bus.1 "
++                "-device tmp105,address=0x50,bus=i2c-bus.2");
++    ret = g_test_run();
++    qtest_end();
 +
-+    dc->reset = bcm2835_i2c_reset;
-+    dc->realize = bcm2835_i2c_realize;
-+    dc->vmsd = &vmstate_bcm2835_i2c;
++    return ret;
 +}
-+
-+static const TypeInfo bcm2835_i2c_info = {
-+    .name = TYPE_BCM2835_I2C,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(BCM2835I2CState),
-+    .class_init = bcm2835_i2c_class_init,
-+};
-+
-+static void bcm2835_i2c_register_types(void)
-+{
-+    type_register_static(&bcm2835_i2c_info);
-+}
-+
-+type_init(bcm2835_i2c_register_types)
-diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
-index b58bc167db..c459adcb59 100644
---- a/hw/i2c/meson.build
-+++ b/hw/i2c/meson.build
-@@ -17,4 +17,5 @@ i2c_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_i2c.c'))
- i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files('ppc4xx_i2c.c'))
- i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
- i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
-+i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
- system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
-diff --git a/include/hw/i2c/bcm2835_i2c.h b/include/hw/i2c/bcm2835_i2c.h
-new file mode 100644
-index 0000000000..0a56df4720
---- /dev/null
-+++ b/include/hw/i2c/bcm2835_i2c.h
-@@ -0,0 +1,80 @@
-+/*
-+ * Broadcom Serial Controller (BSC)
-+ *
-+ * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
-+ *
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#include "hw/sysbus.h"
-+#include "hw/i2c/i2c.h"
-+#include "qom/object.h"
-+
-+#define TYPE_BCM2835_I2C "bcm2835-i2c"
-+OBJECT_DECLARE_SIMPLE_TYPE(BCM2835I2CState, BCM2835_I2C)
-+
-+#define BCM2835_I2C_C       0x0                   /* Control */
-+#define BCM2835_I2C_S       0x4                   /* Status */
-+#define BCM2835_I2C_DLEN    0x8                   /* Data Length */
-+#define BCM2835_I2C_A       0xc                   /* Slave Address */
-+#define BCM2835_I2C_FIFO    0x10                  /* FIFO */
-+#define BCM2835_I2C_DIV     0x14                  /* Clock Divider */
-+#define BCM2835_I2C_DEL     0x18                  /* Data Delay */
-+#define BCM2835_I2C_CLKT    0x20                  /* Clock Stretch Timeout */
-+
-+#define BCM2835_I2C_C_I2CEN     BIT(15)           /* I2C enable */
-+#define BCM2835_I2C_C_INTR      BIT(10)           /* Interrupt on RXR */
-+#define BCM2835_I2C_C_INTT      BIT(9)            /* Interrupt on TXW */
-+#define BCM2835_I2C_C_INTD      BIT(8)            /* Interrupt on DONE */
-+#define BCM2835_I2C_C_ST        BIT(7)            /* Start transfer */
-+#define BCM2835_I2C_C_CLEAR     (BIT(5) | BIT(4)) /* Clear FIFO */
-+#define BCM2835_I2C_C_READ      BIT(0)            /* I2C read mode */
-+
-+#define BCM2835_I2C_S_CLKT      BIT(9)            /* Clock stretch timeout */
-+#define BCM2835_I2C_S_ERR       BIT(8)            /* Slave error */
-+#define BCM2835_I2C_S_RXF       BIT(7)            /* RX FIFO full */
-+#define BCM2835_I2C_S_TXE       BIT(6)            /* TX FIFO empty */
-+#define BCM2835_I2C_S_RXD       BIT(5)            /* RX bytes available */
-+#define BCM2835_I2C_S_TXD       BIT(4)            /* TX space available */
-+#define BCM2835_I2C_S_RXR       BIT(3)            /* RX FIFO needs reading */
-+#define BCM2835_I2C_S_TXW       BIT(2)            /* TX FIFO needs writing */
-+#define BCM2835_I2C_S_DONE      BIT(1)            /* I2C Transfer complete */
-+#define BCM2835_I2C_S_TA        BIT(0)            /* I2C Transfer active */
-+
-+struct BCM2835I2CState {
-+    /* <private> */
-+    SysBusDevice parent_obj;
-+
-+    /* <public> */
-+    MemoryRegion iomem;
-+    I2CBus *bus;
-+    qemu_irq irq;
-+
-+    uint32_t c;
-+    uint32_t s;
-+    uint32_t dlen;
-+    uint32_t a;
-+    uint32_t div;
-+    uint32_t del;
-+    uint32_t clkt;
-+
-+    uint32_t last_dlen;
-+};
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 39557d5ecb..8fe303160e 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -228,7 +228,7 @@ qtests_aarch64 = \
+     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
+   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test'] : []) +  \
++  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
 -- 
 2.34.1
 
