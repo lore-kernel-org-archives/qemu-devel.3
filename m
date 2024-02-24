@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40E8C5478C
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 14:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DEBC5478C
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 14:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdt9Q-0007G8-9a; Sat, 24 Feb 2024 09:37:16 -0500
+	id 1rdt9R-0007Ia-K4; Sat, 24 Feb 2024 09:37:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1rdt9O-0007Ey-32
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 09:37:14 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1rdt9P-0007FO-DW
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 09:37:15 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1rdt9L-0000RU-3g
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 09:37:13 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-5d8ddbac4fbso1197529a12.0
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 06:35:10 -0800 (PST)
+ id 1rdt9M-0000Ri-S5
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 09:37:15 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e459b39e2cso853553b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 06:35:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708785309; x=1709390109;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1708785311; x=1709390111;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HEAUQXaewLQabLkDxXiHtiKTTgmZlvEOTUytk5PKit0=;
- b=K5IHtTthUgzKER8dFivGnbAIn3f1Aoz3iOxU2qbxk931PpnJvY6NFDeu0utZ+SsSqo
- TZAcSL83Ni9QsECqiMOUX1KXUql6hxWUMqv1rhTgMELS2cjg5W++pG7s8HO1X5rPGtwV
- 5PaVhhFPc0VIm5TgtwfL6QylYLRAfe7IpvZNIjJAsYQ9iMR/eXJRLa71FALCAJupdR08
- yzP+gBTNoYQbniDjmmOrkvr8lQlaBx52Tgp1+EjZ0jQkDM/GR4SnANXiYZCk3QUlzLJ8
- 6KCeLD+JOBt/0/uZW+Gze3UIBmJsYmQypNFURODJP5mw/vYKlMq/xcBWYhXwKJdU9dnc
- 9dsw==
+ bh=2wkSK7HMotGBnad3jfIz/xzrfOJ05rzsV8RJd/Voy6w=;
+ b=l1E/+mw4IMe9Z7vTH8MV890Yaa8H8flemSLA+g4oAoK9KcJJ5hrj4qSMbXNm70LMMN
+ 57XUXKXMHiFTxmuMYcqVM08Lvsuv/uFKVNRRrmEQQNWbPtcX4cdSGUwbb3C9TCRKmThi
+ lqtPQhEBjOHMsgHLxpXsKcbcEJRJpgYSKwaUf5uGzXDDdT5cOLUS2HbC4hOt6+yLjLck
+ ScqrjwB/dNWL1LwTQZemIicqMs19Y15+rSlYfx6+UbFI/hvBYsuiglJ3H36PanZRc2PS
+ PF1z0P58aweiCl0CnQK/aiQ/XhocKLgK7gTOpz/jhjkwAiCfr8DeqSxusSdqXFRB2Bs4
+ o52A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708785309; x=1709390109;
+ d=1e100.net; s=20230601; t=1708785311; x=1709390111;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HEAUQXaewLQabLkDxXiHtiKTTgmZlvEOTUytk5PKit0=;
- b=lLejDpZsoctp6g6y46cAA4fFUeawmF+ptrYDllvietSb52TZUXPUlJ2RFbOnNQSSge
- 8uxeC1HCtO8KGE+01EEDnZrdJUG8LRE/7vmf5LYl7frWWFYmWXC1fZgPHd97gDV9Whr+
- 3avGEVHgxqZoP/LoFky6L9RtoLoXwSSQ1UWTIGUfj91Vl2thsikxery63Ix2Udfl5W7L
- 8lqcdL6GVoUJFdpHoMlAefQiygJpvSPXGktCRicHdn117o+0gbKyYPjmYmTwJHMPrzTH
- 1YBd5kByB8RVGooAmBiyJzI1/GLmGzF1FgZVsk60+vY33YqPuCOVEGPYfTKYsp+v8qSm
- +GHw==
-X-Gm-Message-State: AOJu0YxCx/vXzG1Xx1cMS5f1PxRd8PQBC5v72SFUo4dVH3KPtISyPoT2
- 2QQwIRqjqIJhpVCLqhDA4jhMK48twc4DvWuF1bWFfUSKYktr6sF4jWl2i5NBBFaaOrzCQvZO4vr
- cr9wzMw==
-X-Google-Smtp-Source: AGHT+IHM6DXVuDYtlRfaqVrzGZKkRUAM3ZwfJWDPaf3hVTuCzx8+m6RbyOzYc01uHkrZLT4YWjPLzQ==
-X-Received: by 2002:a05:6a20:c78d:b0:1a0:a43b:cbe4 with SMTP id
- hk13-20020a056a20c78d00b001a0a43bcbe4mr4064250pzb.22.1708785308065; 
- Sat, 24 Feb 2024 06:35:08 -0800 (PST)
+ bh=2wkSK7HMotGBnad3jfIz/xzrfOJ05rzsV8RJd/Voy6w=;
+ b=URBRaO8bFz0z16N3oXcSTpgslUrC+pYDsK49wZ9/xXGS0UVzFY2GfxPHGRL4V/kBWI
+ ZFJsCyJICy1F8WGPNGHPCtO8HHRVPVWntM0/zQvW1V0ES+1WWa0uAvezPSoTC8zx9FfQ
+ wZ71zA3f1VMHi64m6d7HW643LTe0lfNOPhEIdO6HHg+ICJeyAuXUueqYGUHh+VCvOeT0
+ Qeov2z6SRMNayRu/ynOVCkMBQjnhfkESSJqoaK+KO5y4NXdVeHzQ+TsyW5RqBUHmYZXf
+ rc5nthty3tw5Fw+0tYywHtK5qM02tQeC+LZgjNXpbQRb6aBYP+KZyr3McSfpdCgJFv1q
+ Sang==
+X-Gm-Message-State: AOJu0Yx0XaerwNPmy0EGW9AywVK/ihNUNgzfCAWc6qqUERF8RlZBcxV0
+ 0UT5unPAwV5tan9eQRQ0s0mT0oUf/Dhwr+OAOhuRTWaYfaOra/Ex/dstMfeAoAxEeT4tyNoH88Z
+ pgXMu/g==
+X-Google-Smtp-Source: AGHT+IHjTmh4tUEesL/iokZqtDaWqL4Yq1S221nIfW4osbvJZjQAsDG3I8hY6h2fG55Kzibe0P5/1Q==
+X-Received: by 2002:a05:6a20:d492:b0:19e:4ab2:c362 with SMTP id
+ im18-20020a056a20d49200b0019e4ab2c362mr4050102pzb.14.1708785310283; 
+ Sat, 24 Feb 2024 06:35:10 -0800 (PST)
 Received: from anolis-dev.zelin.local ([221.122.98.162])
  by smtp.gmail.com with ESMTPSA id
- u22-20020a632356000000b005dc49afed53sm1181887pgm.55.2024.02.24.06.35.06
+ u22-20020a632356000000b005dc49afed53sm1181887pgm.55.2024.02.24.06.35.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Feb 2024 06:35:07 -0800 (PST)
+ Sat, 24 Feb 2024 06:35:09 -0800 (PST)
 From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -68,17 +68,17 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  yong.huang@smartx.com
-Subject: [PATCH RFC 1/3] crypto: Introduce GM/T 0018-2012 cryptographic driver
-Date: Sat, 24 Feb 2024 22:34:56 +0800
-Message-Id: <cf63cff38e5346a3b36e7dd8874a1775ed965683.1708527979.git.yong.huang@smartx.com>
+Subject: [PATCH RFC 2/3] meson.build: Support GM/T 0018-2012 cryptographic
+ standard
+Date: Sat, 24 Feb 2024 22:34:57 +0800
+Message-Id: <0623bdfb2ea1bdb66b2a6d67cf014ab721cd227a.1708527979.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <cover.1708527979.git.yong.huang@smartx.com>
 References: <cover.1708527979.git.yong.huang@smartx.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::534;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x534.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::430;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,349 +101,125 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 GM/T 0018-2012 is a cryptographic standard issued by the State
-Cryptography Administration of China. For more information about
-the standard, visit https://hbba.sacinfo.org.cn.
+Cryptography Administration of China.
 
-The objective of the standard is to develop a uniform application
-interface standard for the service-based cryptography device under
-the public key cryptographic infrastructure application framework,
-and to call the cryptography device through this interface to
-provide basic cryptographic services for the uppler layer. For
-more information about contents of the standard, download the
-specificaiton from:
-"https://github.com/guanzhi/GM-Standards/blob/master/GMT密码行标/
-GMT%200018-2012%20密码设备应用接口规范.pdf"
-
-This patch implement the basic functions of GM/T 0018-2012
-standard. Currently, for block encryption, it support SM4 cipher
-algorithm only.
+The implement of the standard could support symmetric cipher
+algorithm for block encryption. SM4 cipher algorithms could be
+applied currently, so detect SM4 cipher algorithms via GM/T
+0018-2012 API and enable the feature if crypto-gmt is given
+explictly. This feature defaults to disabled.
 
 Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 ---
- MAINTAINERS         |   3 +-
- crypto/cipher-gmt.c | 263 ++++++++++++++++++++++++++++++++++++++++++++
- crypto/cipher.c     |   2 +
- crypto/cipherpriv.h |   6 +
- 4 files changed, 273 insertions(+), 1 deletion(-)
- create mode 100644 crypto/cipher-gmt.c
+ crypto/meson.build            |  3 +++
+ meson.build                   | 30 ++++++++++++++++++++++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 4 files changed, 38 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a24c2b51b6..822726e9da 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3418,10 +3418,11 @@ F: migration/dirtyrate.c
- F: migration/dirtyrate.h
- F: include/sysemu/dirtyrate.h
+diff --git a/crypto/meson.build b/crypto/meson.build
+index c46f9c22a7..dd49d03780 100644
+--- a/crypto/meson.build
++++ b/crypto/meson.build
+@@ -46,6 +46,9 @@ endif
+ if have_afalg
+   crypto_ss.add(if_true: files('afalg.c', 'cipher-afalg.c', 'hash-afalg.c'))
+ endif
++if gmt_0018_2012.found()
++  crypto_ss.add(gmt_0018_2012, files('cipher-gmt.c'))
++endif
  
--Detached LUKS header
-+Detached LUKS header and GM/T 0018-2012 cryptography
- M: Hyman Huang <yong.huang@smartx.com>
- S: Maintained
- F: tests/qemu-iotests/tests/luks-detached-header
-+F: crypto/cipher-gmt.c
+ system_ss.add(when: gnutls, if_true: files('tls-cipher-suites.c'))
  
- D-Bus
- M: Marc-André Lureau <marcandre.lureau@redhat.com>
-diff --git a/crypto/cipher-gmt.c b/crypto/cipher-gmt.c
-new file mode 100644
-index 0000000000..40e32c114f
---- /dev/null
-+++ b/crypto/cipher-gmt.c
-@@ -0,0 +1,263 @@
-+/*
-+ * QEMU GM/T 0018-2012 cryptographic standard support
-+ *
-+ * Copyright (c) 2024 SmartX Inc
-+ *
-+ * Authors:
-+ *    Hyman Huang <yong.huang@smartx.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or
-+ * (at your option) any later version.  See the COPYING file in the
-+ * top-level directory.
-+ */
-+#include <gmt-0018-2012.h>
-+
-+#include "qemu/osdep.h"
-+#include "qemu/thread.h"
-+#include "qapi/error.h"
-+#include "crypto/cipher.h"
-+#include "cipherpriv.h"
-+
-+#include "qemu/error-report.h"
-+
-+typedef struct QCryptoGMT QCryptoGMT;
-+
-+struct QCryptoGMT {
-+    QCryptoCipher base;
-+
-+    SGD_HANDLE session;
-+    SGD_HANDLE key;
-+    SGD_UINT32 alg;
-+    unsigned char iv[16];  /* not used for SM4 algo currently */
-+};
-+
-+typedef struct QCryptoGMTDeviceInfo QCryptoGMTDeviceInfo;
-+
-+struct QCryptoGMTDeviceInfo {
-+    SGD_HANDLE device;
-+    struct DeviceInfo_st info;
-+    bool opened;
-+    gint ref_count;
-+};
-+/*
-+ * It is advised to use numerous sessions with one open device
-+ * as opposed to single sessions with several devices.
-+ */
-+static QCryptoGMTDeviceInfo gmt_device;
-+/* Protect the gmt_device */
-+static QemuMutex gmt_device_mutex;
-+
-+static const struct QCryptoCipherDriver qcrypto_cipher_gmt_driver;
-+
-+static void gmt_device_lock(void)
-+{
-+    qemu_mutex_lock(&gmt_device_mutex);
-+}
-+
-+static void gmt_device_unlock(void)
-+{
-+    qemu_mutex_unlock(&gmt_device_mutex);
-+}
-+
-+static void
-+__attribute__((__constructor__)) gmt_device_mutex_init(void)
-+{
-+    qemu_mutex_init(&gmt_device_mutex);
-+}
-+
-+static void
-+gmt_device_ref(void)
-+{
-+    g_assert(gmt_device.device != NULL);
-+    g_atomic_int_inc(&gmt_device.ref_count);
-+}
-+
-+static void
-+gmt_device_unref(void)
-+{
-+    g_assert(gmt_device.device != NULL);
-+    if (g_atomic_int_dec_and_test(&gmt_device.ref_count)) {
-+        SDF_CloseDevice(gmt_device.device);
-+        gmt_device.opened = false;
-+        gmt_device.device = NULL;
-+        memset(&gmt_device.info, 0, sizeof(struct DeviceInfo_st));
-+    }
-+}
-+
-+static bool
-+qcrypto_gmt_cipher_supports(QCryptoCipherAlgorithm alg,
-+                            QCryptoCipherMode mode)
-+{
-+    switch (alg) {
-+    case QCRYPTO_CIPHER_ALG_SM4:
-+        break;
-+    default:
-+        return false;
-+    }
-+
-+    switch (mode) {
-+    case QCRYPTO_CIPHER_MODE_ECB:
-+        return true;
-+    default:
-+        return false;
-+    }
-+}
-+
-+QCryptoCipher *
-+qcrypto_gmt_cipher_ctx_new(QCryptoCipherAlgorithm alg,
-+                           QCryptoCipherMode mode,
-+                           const uint8_t *key,
-+                           size_t nkey,
-+                           Error **errp)
-+{
-+    QCryptoGMT *gmt;
-+    int rv;
-+
-+    if (!qcrypto_gmt_cipher_supports(alg, mode)) {
-+        return NULL;
-+    }
-+
-+    gmt = g_new0(QCryptoGMT, 1);
-+    if (!gmt) {
-+        return NULL;
-+    }
-+
-+    switch (alg) {
-+    case QCRYPTO_CIPHER_ALG_SM4:
-+        gmt->alg = SGD_SM4_ECB;
-+        break;
-+    default:
-+        return NULL;
-+    }
-+
-+    gmt_device_lock();
-+    if (!gmt_device.opened) {
-+        rv = SDF_OpenDevice(&gmt_device.device);
-+        if (rv != SDR_OK) {
-+            info_report("Could not open encryption card device, disabling");
-+            goto abort;
-+        }
-+        gmt_device.opened = true;
-+    }
-+
-+    /*
-+     * multi-sessions correspond to an opened device handle
-+     */
-+    rv = SDF_OpenSession(gmt_device.device, &gmt->session);
-+    if (rv != SDR_OK) {
-+        error_setg(errp, "Open session failed");
-+        goto abort;
-+    }
-+
-+    gmt_device_ref();
-+
-+    if (!(gmt_device.info.SymAlgAbility)) {
-+        rv = SDF_GetDeviceInfo(gmt->session, &gmt_device.info);
-+        if (rv != SDR_OK) {
-+            error_setg(errp, "Get device info failed");
-+            goto abort;
-+        }
-+    }
-+    gmt_device_unlock();
-+
-+    if (!(gmt_device.info.SymAlgAbility & SGD_SM4_ECB & SGD_SYMM_ALG_MASK)) {
-+        /* encryption card do not support SM4 cipher algorithm */
-+        info_report("SM4 cipher algorithm is not supported, disabling");
-+        return NULL;
-+    }
-+
-+    rv = SDF_ImportKey(gmt->session, (SGD_UCHAR *)key,
-+                       (SGD_UINT32)nkey, &gmt->key);
-+    if (rv != SDR_OK) {
-+        error_setg(errp, "Import key failed");
-+        return NULL;
-+    }
-+
-+    gmt->base.alg = alg;
-+    gmt->base.mode = mode;
-+    gmt->base.driver = &qcrypto_cipher_gmt_driver;
-+    return &gmt->base;
-+
-+abort:
-+    gmt_device_unlock();
-+    return NULL;
-+}
-+
-+static int
-+qcrypto_gmt_cipher_setiv(QCryptoCipher *cipher,
-+                         const uint8_t *iv,
-+                         size_t niv, Error **errp)
-+{
-+    error_setg(errp, "Setting IV is not supported");
-+    return -1;
-+}
-+
-+static int
-+qcrypto_gmt_cipher_op(QCryptoGMT *gmt,
-+                      const void *in, void *out,
-+                      size_t len, bool do_encrypt,
-+                      Error **errp)
-+{
-+    unsigned int rlen;
-+    int rv;
-+
-+    if (do_encrypt) {
-+        rv = SDF_Encrypt(gmt->session, gmt->key, gmt->alg, gmt->iv,
-+                         (SGD_UCHAR *)in, len, out, &rlen);
-+    } else {
-+        rv = SDF_Decrypt(gmt->session, gmt->key, gmt->alg, gmt->iv,
-+                         (SGD_UCHAR *)in, len, out, &rlen);
-+    }
-+
-+    if (rv != SDR_OK) {
-+        error_setg(errp, "Crypto operation failed");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static void
-+qcrypto_gmt_free(QCryptoGMT *gmt)
-+{
-+    g_assert(gmt != NULL);
-+
-+    SDF_DestroyKey(gmt->session, gmt->key);
-+    SDF_CloseSession(gmt->session);
-+
-+    gmt_device_lock();
-+    gmt_device_unref();
-+    gmt_device_unlock();
-+}
-+
-+static int
-+qcrypto_gmt_cipher_encrypt(QCryptoCipher *cipher,
-+                           const void *in, void *out,
-+                           size_t len, Error **errp)
-+{
-+    QCryptoGMT *gmt = container_of(cipher, QCryptoGMT, base);
-+    return qcrypto_gmt_cipher_op(gmt, in, out, len, true, errp);
-+}
-+
-+static int
-+qcrypto_gmt_cipher_decrypt(QCryptoCipher *cipher,
-+                           const void *in, void *out,
-+                           size_t len, Error **errp)
-+{
-+    QCryptoGMT *gmt = container_of(cipher, QCryptoGMT, base);
-+    return qcrypto_gmt_cipher_op(gmt, in, out, len, false, errp);
-+}
-+
-+static void qcrypto_gmt_comm_ctx_free(QCryptoCipher *cipher)
-+{
-+    QCryptoGMT *gmt = container_of(cipher, QCryptoGMT, base);
-+    qcrypto_gmt_free(gmt);
-+    g_free(gmt);
-+}
-+
-+static const struct QCryptoCipherDriver qcrypto_cipher_gmt_driver = {
-+    .cipher_encrypt = qcrypto_gmt_cipher_encrypt,
-+    .cipher_decrypt = qcrypto_gmt_cipher_decrypt,
-+    .cipher_setiv = qcrypto_gmt_cipher_setiv,
-+    .cipher_free = qcrypto_gmt_comm_ctx_free,
-+};
-diff --git a/crypto/cipher.c b/crypto/cipher.c
-index 5f512768ea..785f231948 100644
---- a/crypto/cipher.c
-+++ b/crypto/cipher.c
-@@ -157,6 +157,8 @@ QCryptoCipher *qcrypto_cipher_new(QCryptoCipherAlgorithm alg,
+diff --git a/meson.build b/meson.build
+index c1dc83e4c0..cd188582b5 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1693,6 +1693,34 @@ if not gnutls_crypto.found()
+   endif
+ endif
  
- #ifdef CONFIG_AF_ALG
-     cipher = qcrypto_afalg_cipher_ctx_new(alg, mode, key, nkey, NULL);
-+#elif defined CONFIG_GMT_0018_2012
-+    cipher = qcrypto_gmt_cipher_ctx_new(alg, mode, key, nkey, NULL);
- #endif
- 
-     if (!cipher) {
-diff --git a/crypto/cipherpriv.h b/crypto/cipherpriv.h
-index 396527857d..b8e542134c 100644
---- a/crypto/cipherpriv.h
-+++ b/crypto/cipherpriv.h
-@@ -46,7 +46,13 @@ qcrypto_afalg_cipher_ctx_new(QCryptoCipherAlgorithm alg,
-                              QCryptoCipherMode mode,
-                              const uint8_t *key,
-                              size_t nkey, Error **errp);
-+#elif defined CONFIG_GMT_0018_2012
- 
-+extern QCryptoCipher *
-+qcrypto_gmt_cipher_ctx_new(QCryptoCipherAlgorithm alg,
-+                           QCryptoCipherMode mode,
-+                           const uint8_t *key,
-+                           size_t nkey, Error **errp);
- #endif
- 
- #endif
++if get_option('crypto_gmt').enabled() and get_option('crypto_afalg').enabled()
++  error('Only one of GM/T 0018-2012 & afalg can be enabled')
++endif
++
++gmt_0018_2012 = not_found
++if (not get_option('crypto_gmt').auto() or have_system)
++  gmt_0018_2012 = cc.find_library('gmt_0018_2012', has_headers: ['gmt-0018-2012.h'],
++                                  required: get_option('crypto_gmt'))
++  if gmt_0018_2012.found() and not cc.links('''
++    #include <stddef.h>
++    #include <gmt-0018-2012.h>
++    int main(void) {
++      unsigned char iv[16] = {0};
++      unsigned char plainData[16] = {0};
++      unsigned char cipherData[16] = {0};
++      unsigned int rlen;
++      SDF_Encrypt(NULL, NULL, SGD_SM4_ECB, iv, plainData, 16, cipherData, &rlen);
++      return 0;
++    }''', dependencies: gmt_0018_2012)
++    gmt_0018_2012 = not_found
++    if get_option('crypto_gmt').enabled()
++      error('could not link gmt_0018_2012')
++    else
++      warning('could not link gmt_0018_2012, disabling')
++    endif
++  endif
++endif
++
+ capstone = not_found
+ if not get_option('capstone').auto() or have_system or have_user
+   capstone = dependency('capstone', version: '>=3.0.5',
+@@ -2291,6 +2319,7 @@ config_host_data.set('CONFIG_GNUTLS_CRYPTO', gnutls_crypto.found())
+ config_host_data.set('CONFIG_TASN1', tasn1.found())
+ config_host_data.set('CONFIG_GCRYPT', gcrypt.found())
+ config_host_data.set('CONFIG_NETTLE', nettle.found())
++config_host_data.set('CONFIG_GMT_0018_2012', gmt_0018_2012.found())
+ config_host_data.set('CONFIG_CRYPTO_SM4', crypto_sm4.found())
+ config_host_data.set('CONFIG_HOGWEED', hogweed.found())
+ config_host_data.set('CONFIG_QEMU_PRIVATE_XTS', xts == 'private')
+@@ -4333,6 +4362,7 @@ if nettle.found()
+ endif
+ summary_info += {'SM4 ALG support':   crypto_sm4}
+ summary_info += {'AF_ALG support':    have_afalg}
++summary_info += {'GM/T 0018-2012 support': gmt_0018_2012.found()}
+ summary_info += {'rng-none':          get_option('rng_none')}
+ summary_info += {'Linux keyring':     have_keyring}
+ summary_info += {'Linux keyutils':    keyutils}
+diff --git a/meson_options.txt b/meson_options.txt
+index 0a99a059ec..4f35d3d62d 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -174,6 +174,8 @@ option('gcrypt', type : 'feature', value : 'auto',
+        description: 'libgcrypt cryptography support')
+ option('crypto_afalg', type : 'feature', value : 'disabled',
+        description: 'Linux AF_ALG crypto backend driver')
++option('crypto_gmt', type : 'feature', value : 'disabled',
++       description: 'GM/T 0018-2012 cryptographic standard driver')
+ option('libdaxctl', type : 'feature', value : 'auto',
+        description: 'libdaxctl support')
+ option('libpmem', type : 'feature', value : 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 680fa3f581..e116e7b9ed 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -106,6 +106,7 @@ meson_options_help() {
+   printf "%s\n" '  colo-proxy      colo-proxy support'
+   printf "%s\n" '  coreaudio       CoreAudio sound support'
+   printf "%s\n" '  crypto-afalg    Linux AF_ALG crypto backend driver'
++  printf "%s\n" '  crypto-gmt      GM/T 0018-2012 crypto backend driver'
+   printf "%s\n" '  curl            CURL block device driver'
+   printf "%s\n" '  curses          curses UI'
+   printf "%s\n" '  dbus-display    -display dbus support'
+@@ -282,6 +283,8 @@ _meson_option_parse() {
+     --disable-coroutine-pool) printf "%s" -Dcoroutine_pool=false ;;
+     --enable-crypto-afalg) printf "%s" -Dcrypto_afalg=enabled ;;
+     --disable-crypto-afalg) printf "%s" -Dcrypto_afalg=disabled ;;
++    --enable-crypto-gmt) printf "%s" -Dcrypto_gmt=enabled ;;
++    --disable-crypto-gmt) printf "%s" -Dcrypto_gmt=disabled ;;
+     --enable-curl) printf "%s" -Dcurl=enabled ;;
+     --disable-curl) printf "%s" -Dcurl=disabled ;;
+     --enable-curses) printf "%s" -Dcurses=enabled ;;
 -- 
 2.39.3
 
