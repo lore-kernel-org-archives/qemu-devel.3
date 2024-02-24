@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A43DC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81081C54E49
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 09:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdoIC-00089d-Gh; Sat, 24 Feb 2024 04:26:00 -0500
+	id 1rdoHR-0006WO-N0; Sat, 24 Feb 2024 04:25:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdoI8-00082q-Ev
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 04:25:56 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rdoHF-0006RY-H0
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 04:25:01 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdoI0-0002ze-6p
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 04:25:54 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e332bc65b3so975470b3a.3
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 01:25:47 -0800 (PST)
+ id 1rdoHD-0002Rm-QK
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 04:25:01 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-5a04bbe0a18so535011eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 01:24:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708766746; x=1709371546;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708766698; x=1709371498;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aXVXrZfj4eKut/1F5S6KzL9XetrG4kGGwxBLnYRlsmU=;
- b=koKY5rCILSXIDf7Q7f5lWcZY2QsT1yQP61oz1CnAxMdM/z9uzkgEn4aWpZ2DBiNN5H
- CpNm/8HCjzNCJT2O95x+bQwuwPDkc7v/yZrRn9aNnl6dislyzEw7gqJaCtNibuIRsvgH
- OMuCFkgTd4r29AJorDAcaM4ERBOmjAUr6SiHDLmopSdVYR09ZnUGZrvlmhvts81hSyRb
- QqvwawZyIBqkLm1DnqUZHciFYiUCmS6pEu4lA1KTKQ0byxaJIk8n2DeOarFc4G5Cu6Ab
- FjW4hJ+ie/wHm3CGB7fL6mRakb+uYj+l+bHFSmAfrBkYV4VAULEqyee4kgWNcjWopGRe
- 6vgA==
+ :reply-to; bh=CWn2MCi797aQrb9iMuPcNohCGcLthp8Y3kdNV7UN6ps=;
+ b=IJSBWiP3lq2Ew4U2Pu/mnUZBjHQyLWREXzzHcr5r0t3H/gXCZPMe6XpUH5+Cmw5c91
+ LLwF19wSTt6hMP3XTfSBuAKamjiEJXf4Kq/LeOKgzYiFLO5OydPAqadKIjTCDRnXSYrC
+ eQofCNzQhFjv2RPBq93qAL8HBodpzlnWMJI/Onh96LnL32FARu6MtDu7AIfdVbuDkyQX
+ pYtcIjk/0tE6fDJGqoV6wlolpOUCR/RvM22O/uDsA/ee4xfeCd+qh6cZTHySyr5q+bux
+ XMTKE4MLOtgtp1D+2il8Xgp9ncq3nOH8aP1y0ypjv5i1iheE8YcwBmxQ3XGfB7OfAEP/
+ fapg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708766746; x=1709371546;
+ d=1e100.net; s=20230601; t=1708766698; x=1709371498;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aXVXrZfj4eKut/1F5S6KzL9XetrG4kGGwxBLnYRlsmU=;
- b=XnrXG2viEnMv8uUcKVXkPTQ+XhhVwY/MTJy/mKJn7gSjsMQVdCTOYdwxRuRXv0BEIH
- c2YPrVyq1IFjV8qVA+QsUSjeiSPUzg0KHIP9MMiDzS7ipC/Lwv1iyJ8vlELw1fJ10CFC
- TERd9E1RcVUdgQDLJOL4CuCCiPxN+lAH27lum0GfFJOXDQ9TZFeRhMjRmkPQaQcC0S5t
- avKqx5dOgjD2YYLhrdPF5/VbVO2rx83nyWNkO+au34Yh5iQ5K9QudAluRs+r4HcBLZYD
- 2lCA6xK+ucPIkNjfI1aI0vuGKY08acfedcgU/hwaI+I8uvgr1jjpSiqyxI+8Frns9Dos
- 5fTA==
-X-Gm-Message-State: AOJu0YzEflw7Fc0IIoWv/tHuTIAhpgtVXEF53C0ZmaDHZwzYnveuzfDu
- AilRYQhYr5dYxU+smN+dKIfXuX884pa98NcoI6CiOkvUGuPufMn1PVZ3RLjpJxI=
-X-Google-Smtp-Source: AGHT+IG8Fg1diNL+lpUWIgGXrNLRULOAB+Rl/E2osOya7ajPjPG14rnRAW1Wc2fIUq5U4H5OgdT/hw==
-X-Received: by 2002:a05:6a20:9c9b:b0:1a0:e70d:2e3 with SMTP id
- mj27-20020a056a209c9b00b001a0e70d02e3mr2314310pzb.23.1708766746658; 
- Sat, 24 Feb 2024 01:25:46 -0800 (PST)
+ bh=CWn2MCi797aQrb9iMuPcNohCGcLthp8Y3kdNV7UN6ps=;
+ b=THRhgXqYehwCrpupxfkbWH9vvKwJUUMZyT1MW4/xjplsS13aoug9vie6wquUmmvGkb
+ OwEDt7mHeaTdtwwwRl1e6YOa315YrSqkRITzwVpITAljFfLqNj4rZcozphuZQhGu8WeF
+ eD01YIEgjyal0ktCtOvYDeemVPsY51LIlFLJX89b5OyIq42m54gwEm7eYeNTZgE60ps/
+ VSi3jeUGUkzYQCfl50iL72QPABGCIdopp+bHoYKYbNAry1W2GrAH4iG73Hd7Jlfin5NM
+ dccZDlMF6z2h7sZ3BkVd1wEISaysmYh4ZGkDJiFzFgWJwgIUjvTnFLUhGcaxjZKfTO96
+ 0t0g==
+X-Gm-Message-State: AOJu0YxV1UX0g9xqzHCNVejM+21LNsxkIYo3UY2nhB+u8aI4lTsfPDqT
+ syDQTrOYX5zm+W1uTY1+VAeukU+hO2+zcL1nbMDGTbU1C+egw0v344zRxdayL5M=
+X-Google-Smtp-Source: AGHT+IFK9A3xjCeaFRlUSkHY5zWMYnsvLRbPLzBpfeiGhXyW7Peb2e52PydHvLDqa6rUeCfRTN8Isg==
+X-Received: by 2002:a05:6358:b395:b0:177:afce:b12 with SMTP id
+ pa21-20020a056358b39500b00177afce0b12mr2564758rwc.31.1708766698539; 
+ Sat, 24 Feb 2024 01:24:58 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- z11-20020a1709028f8b00b001db4433ef95sm668912plo.152.2024.02.24.01.25.43
+ y1-20020a17090ad70100b0029a71e7ef55sm845013pju.10.2024.02.24.01.24.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Feb 2024 01:25:46 -0800 (PST)
+ Sat, 24 Feb 2024 01:24:58 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 24 Feb 2024 18:24:45 +0900
-Subject: [PATCH v7 13/16] hw/pci: Use UINT32_MAX as a default value for rombar
+Date: Sat, 24 Feb 2024 18:24:35 +0900
+Subject: [PATCH v7 03/16] pcie_sriov: Reset SR-IOV extended capability
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240224-reuse-v7-13-29c14bcb952e@daynix.com>
+Message-Id: <20240224-reuse-v7-3-29c14bcb952e@daynix.com>
 References: <20240224-reuse-v7-0-29c14bcb952e@daynix.com>
 In-Reply-To: <20240224-reuse-v7-0-29c14bcb952e@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,15 +81,14 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +104,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently there is no way to distinguish the case that rombar is
-explicitly specified as 1 and the case that rombar is not specified.
+pcie_sriov_pf_disable_vfs() is called when resetting the PF, but it only
+disables VFs and does not reset SR-IOV extended capability, leaking the
+state and making the VF Enable register inconsistent with the actual
+state.
 
-Set rombar UINT32_MAX by default to distinguish these cases just as it
-is done for addr and romsize. It was confirmed that changing the default
-value to UINT32_MAX will not change the behavior by looking at
-occurences of rom_bar.
-
-$ git grep -w rom_bar
-hw/display/qxl.c:328:    QXLRom *rom = memory_region_get_ram_ptr(&d->rom_bar);
-hw/display/qxl.c:431:    qxl_set_dirty(&qxl->rom_bar, 0, qxl->rom_size);
-hw/display/qxl.c:1048:    QXLRom *rom = memory_region_get_ram_ptr(&qxl->rom_bar);
-hw/display/qxl.c:2131:    memory_region_init_rom(&qxl->rom_bar, OBJECT(qxl), "qxl.vrom",
-hw/display/qxl.c:2154: PCI_BASE_ADDRESS_SPACE_MEMORY, &qxl->rom_bar);
-hw/display/qxl.h:101:    MemoryRegion       rom_bar;
-hw/pci/pci.c:74:    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-hw/pci/pci.c:2329:    if (!pdev->rom_bar) {
-hw/vfio/pci.c:1019:    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
-hw/xen/xen_pt_load_rom.c:29:    if (dev->romfile || !dev->rom_bar) {
-include/hw/pci/pci_device.h:150:    uint32_t rom_bar;
-
-rom_bar refers to a different variable in qxl. It is only tested if
-the value is 0 or not in the other places.
-
-This changes the semantics of UINT32_MAX, which has always been a valid
-value to explicitly say rombar is enabled to denote the implicit default
-value. Nobody should have been set UINT32_MAX to rombar however,
-considering that its meaning was no different from 1 and typing a
-literal UINT32_MAX (0xffffffff or 4294967295) is more troublesome.
+Replace pcie_sriov_pf_disable_vfs() with pcie_sriov_pf_reset(), which
+does not only disable VFs but also resets the capability.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/pci/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/pci/pcie_sriov.h |  4 ++--
+ hw/net/igb.c                |  2 +-
+ hw/nvme/ctrl.c              |  2 +-
+ hw/pci/pcie_sriov.c         | 26 ++++++++++++++++++--------
+ 4 files changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 84df07a2789b..cb5ac46e9f27 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -71,7 +71,7 @@ static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
--    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-+    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, UINT32_MAX),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 095fb0c9edf9..b77eb7bf58ac 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -58,8 +58,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
+ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+                              uint32_t val, int len);
+ 
+-/* Reset SR/IOV VF Enable bit to unregister all VFs */
+-void pcie_sriov_pf_disable_vfs(PCIDevice *dev);
++/* Reset SR/IOV */
++void pcie_sriov_pf_reset(PCIDevice *dev);
+ 
+ /* Get logical VF number of a VF - only valid for VFs */
+ uint16_t pcie_sriov_vf_number(PCIDevice *dev);
+diff --git a/hw/net/igb.c b/hw/net/igb.c
+index 0b5c31a58bba..9345506f81ec 100644
+--- a/hw/net/igb.c
++++ b/hw/net/igb.c
+@@ -493,7 +493,7 @@ static void igb_qdev_reset_hold(Object *obj)
+ 
+     trace_e1000e_cb_qdev_reset_hold();
+ 
+-    pcie_sriov_pf_disable_vfs(d);
++    pcie_sriov_pf_reset(d);
+     igb_core_reset(&s->core);
+ }
+ 
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 7a56e7b79b4d..7c0d3f108724 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7116,7 +7116,7 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
+             }
+ 
+             if (rst != NVME_RESET_CONTROLLER) {
+-                pcie_sriov_pf_disable_vfs(pci_dev);
++                pcie_sriov_pf_reset(pci_dev);
+             }
+         }
+ 
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index da209b7f47fd..51b66d1bb342 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -249,16 +249,26 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+ }
+ 
+ 
+-/* Reset SR/IOV VF Enable bit to trigger an unregister of all VFs */
+-void pcie_sriov_pf_disable_vfs(PCIDevice *dev)
++/* Reset SR/IOV */
++void pcie_sriov_pf_reset(PCIDevice *dev)
+ {
+     uint16_t sriov_cap = dev->exp.sriov_cap;
+-    if (sriov_cap) {
+-        uint32_t val = pci_get_byte(dev->config + sriov_cap + PCI_SRIOV_CTRL);
+-        if (val & PCI_SRIOV_CTRL_VFE) {
+-            val &= ~PCI_SRIOV_CTRL_VFE;
+-            pcie_sriov_config_write(dev, sriov_cap + PCI_SRIOV_CTRL, val, 1);
+-        }
++    if (!sriov_cap) {
++        return;
++    }
++
++    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_CTRL, 0);
++    unregister_vfs(dev);
++
++    /*
++     * Default is to use 4K pages, software can modify it
++     * to any of the supported bits
++     */
++    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
++
++    for (uint16_t i = 0; i < PCI_NUM_REGIONS; i++) {
++        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
++                     dev->exp.sriov_pf.vf_bar_type[i]);
+     }
+ }
+ 
 
 -- 
 2.43.2
