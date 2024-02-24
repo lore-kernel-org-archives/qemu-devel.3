@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16926C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 19:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A3EFC48BF6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 20:24:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdxM4-0004kb-VR; Sat, 24 Feb 2024 14:06:36 -0500
+	id 1rdyYf-0006zb-II; Sat, 24 Feb 2024 15:23:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rdxM3-0004kQ-Ay
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 14:06:35 -0500
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1rdyYb-0006xR-IK; Sat, 24 Feb 2024 15:23:37 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1rdxM0-00089u-TN
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 14:06:35 -0500
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-512eb0f0616so2046017e87.3
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 11:06:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1rdyYZ-0004I7-Sl; Sat, 24 Feb 2024 15:23:37 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5654f700705so2445809a12.1; 
+ Sat, 24 Feb 2024 12:23:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1708801585; x=1709406385; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1708806214; x=1709411014; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xnBYEUpcfxOBBv+CnhBeSl0C37kpDQCXoY37KCY9FuU=;
- b=f69B4FKJ8akHuhnSrxRKXxB7lYjB3A2KaBuF+AZRODbg1zKEQREFGgqlHBqMHMnZxN
- Z6P/VzN2VMBXjtx9tcYkSUC4wDSLWP4N8b9IwbU8kgQDhnUeA6ulEORMphpsbkc3oHD4
- OAaGMpPa6LeEPhNPZTCT5k3TOtSC0Rs9r239wu0SeYxnPeo8EDwVKunsifqB8f8DlnRj
- /pY2frug24dWG2ViH+dUyJU7VnhoMs1NKsULkxkeCHCKRsx0lPYQTLfDiOu3X0NSgaQq
- rcbhZZCDuDyAKBTMOPQz/uqlKrtGHhtro5+4EbTFl3/xKB0WzhyXD7qC+0IwX7Mw1rF3
- tuFw==
+ bh=ytWfPiHTfSX9hu1E+RJxwGcfyenLHqm6QqCMK5xCqPg=;
+ b=C5dPyUr3LEdsusEbLGc4Raqyizjrzs6JZCKaWcs7FE3kyuSyfy9C67xQKZWKacwl+U
+ zkWYkUf4SQaN/tEnCH0Qpf+So6MWbpyGq+icPaOj3jt+MjgbFtqQe6C2QbFRloQNJXM7
+ Hc071RNpUTLMkTvpj1PwKJdNAj25gpx0jXlZYvwCkZIYhkLIipbqOefSlU5F3bIFw2QE
+ M+003Mq3cSMFIzSRETUJV9oIthhhTil3ITzVJdnUkwcP8XzTVJHjbidT5joYKpT5JFrf
+ GDhKqwn9CZoULZgu6zkHZ6+oZgqITBt9mik8jiV++zVgTgcT1NnGxcQQ0Oyr5I7gPjn/
+ Pc2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708801585; x=1709406385;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1708806214; x=1709411014;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xnBYEUpcfxOBBv+CnhBeSl0C37kpDQCXoY37KCY9FuU=;
- b=g7eG+ZIEaSJ10+1enoC1p0clqwSZeYUa2QMjOQmzwEqZuGdHgbAcpgWRvEv4gPwEy/
- t64fGVDcOxXPdEttWvvUByFO1JOEIWobIivpM29bs5VypPNhlN+DCB+f23regykWfFXB
- ymEXWIvkFPMqDOXLrDEsJYIAnQbAMTXQYYLiSfsCod+icAcGuFStfnbg5asvRU4FCwO1
- FGFqa/AGODW/1HjgW9LzKqKAcSpWGS3ve/t4yQ7gV7vjHU1NSvfYIPK3b1yohXtQsgsU
- E14eGFYItgVU18ijo3xxoj2pP84PmgPmOX+IFolXGLHVkQvdAfLVMdAxcPOvK7KJ0UcO
- 6gsw==
+ bh=ytWfPiHTfSX9hu1E+RJxwGcfyenLHqm6QqCMK5xCqPg=;
+ b=bkm9Zx6i9RgxBuKufsSkj9QLduZcpRAojwc/wXmsGcjDCITr59jlvpkMHyokk9TNsR
+ Abuq+qgccTLiw5LlSfKUOuaMa/Ry3ph9b/1vsAVsf6FZZvhoETKJlGtZ0gnYN2/ieA+D
+ oG3vqyWL3hxqQ9oJODvRLemQv0YqmZBO9KcRCMPNzwIw9QZSKMFFKDsxxNDqGQnWevpV
+ lBKhqpZQAE6/1xYzVBZK4m7VMaPEROBjezkaHeoGBXoY2mgTSj7VKjpC/PMNs1k0k4/R
+ z5HuSnWOdBMFjJlidTu4ykl6D9Gaz0HC7jIw9mmry82YksdEKiv3SU4xpCp1Jjgip+LM
+ ZYEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhHr80CVTYcE5m3eIcHBTmlDaOAVTjg5B/re+QURtHLsSJVaEpCa7jT17QasX1vJCmTpITN83tBwqJyq9w3ybNTHZ0yog=
-X-Gm-Message-State: AOJu0YwZP0KgYAx91Nv0ZA1zDzK/+3xrC8gscQxGjxqvtWx49x0J8JMY
- 3dGqRI36YSWU0o9YboxeRX9f5U6Vmh+WPWftK2hoauZm4cDUaRcSowQ7NYNDK0uKCPThMobWO7w
- yBcjk6HMOLIk7gsFoa3r/RdDf1FIy7MSb2Ho0NQ==
-X-Google-Smtp-Source: AGHT+IFGxN6Uq2JawQ+9hpGlwZW/9u0sxG0MR0mLrAVmJGO3pzDBm77UM8J6vS0A6ufxGmWyokGHwZf3/at+yKMpfwk=
-X-Received: by 2002:a05:6512:3b2c:b0:512:f719:aec5 with SMTP id
- f44-20020a0565123b2c00b00512f719aec5mr270258lfv.9.1708801585360; Sat, 24 Feb
- 2024 11:06:25 -0800 (PST)
+ AJvYcCWeVsNSFeK7lFbcSu47oTUY+tTEMxdOkjdXu8nATN/WMqbk1g57RSfyY52v5ucP91+/3ljLO0xbJStNHfUJsXQettQi
+X-Gm-Message-State: AOJu0YwqXIRmsgm9fvWPVfhEmaSDw5x2luUbe40M83vW2yAeW2LVs0Xj
+ B1b713C99O0f/29e48QPnv1gaCecbFDSxuMkTxtz/Nssg//yOp8s+ey6nugC
+X-Google-Smtp-Source: AGHT+IHNdHPNAtOA/Q0Da3pLMtyh5Y4VptljvbUU+ctTV+0WJYy5BQu11fzY7InUzOeldfPW7HPi+A==
+X-Received: by 2002:aa7:cd19:0:b0:564:4a18:45f1 with SMTP id
+ b25-20020aa7cd19000000b005644a1845f1mr2386360edw.17.1708806213426; 
+ Sat, 24 Feb 2024 12:23:33 -0800 (PST)
+Received: from localhost.localdomain ([212.70.108.232])
+ by smtp.gmail.com with ESMTPSA id
+ g2-20020a50ee02000000b00560c6ff443esm816108eds.66.2024.02.24.12.23.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 24 Feb 2024 12:23:33 -0800 (PST)
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, pbonzini@redhat.com,
+ qemu-arm@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>
+Subject: [PATCH v4 2/3] hw/arm: Connect BSC to BCM2835 board as I2C0,
+ I2C1 and I2C2
+Date: Sun, 25 Feb 2024 00:32:44 +0530
+Message-Id: <20240224190245.2405016-3-rayhan.faizel@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240224190245.2405016-1-rayhan.faizel@gmail.com>
+References: <20240224190245.2405016-1-rayhan.faizel@gmail.com>
 MIME-Version: 1.0
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-4-hao.xiang@bytedance.com>
- <5265633a-9d28-44b9-96d7-a310c2a2a304@linaro.org>
- <CAAYibXgWXah+sLGLzTA4g+fufY7xDb3LY3P5T-DM+Ci04AME1A@mail.gmail.com>
-In-Reply-To: <CAAYibXgWXah+sLGLzTA4g+fufY7xDb3LY3P5T-DM+Ci04AME1A@mail.gmail.com>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Sat, 24 Feb 2024 11:06:14 -0800
-Message-ID: <CAAYibXib+TWnJpV22E=adncdBmwXJRqgRjJXK7X71J=bDfaxDg@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2 3/7] migration/multifd: Zero page
- transmission on the multifd thread.
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
- thuth@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org, 
- jdenemar@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=hao.xiang@bytedance.com; helo=mail-lf1-x131.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,35 +95,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 8:38=E2=80=AFPM Hao Xiang <hao.xiang@bytedance.com>=
- wrote:
->
-> On Fri, Feb 16, 2024 at 9:08=E2=80=AFPM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
-> >
-> > On 2/16/24 12:39, Hao Xiang wrote:
-> > > +void multifd_zero_page_check_recv(MultiFDRecvParams *p)
-> > > +{
-> > > +    for (int i =3D 0; i < p->zero_num; i++) {
-> > > +        void *page =3D p->host + p->zero[i];
-> > > +        if (!buffer_is_zero(page, p->page_size)) {
-> > > +            memset(page, 0, p->page_size);
-> > > +        }
-> > > +    }
-> > > +}
-> >
-> > You should not check the buffer is zero here, you should just zero it.
->
-> I will fix it in the next version.
+BCM2835 has three I2C controllers. All of them share the same interrupt line.
 
-I tested with zero out all pages but the performance is bad compared
-to previously. In my test case, most pages are zero pages. I think
-what happened is that the destination host already has the pages being
-zero so performing a memcmp is much faster than memset on all zero
-pages.
+Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
+---
+ hw/arm/Kconfig                       |  1 +
+ hw/arm/bcm2835_peripherals.c         | 45 ++++++++++++++++++++++++++--
+ include/hw/arm/bcm2835_peripherals.h |  4 ++-
+ 3 files changed, 46 insertions(+), 4 deletions(-)
 
->
-> >
-> >
-> > r~
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 980b14d58d..2b52cec980 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -430,6 +430,7 @@ config RASPI
+     select SDHCI
+     select USB_DWC2
+     select BCM2835_SPI
++    select BCM2835_I2C
+ 
+ config STM32F100_SOC
+     bool
+diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+index d5573fd954..9642df22cf 100644
+--- a/hw/arm/bcm2835_peripherals.c
++++ b/hw/arm/bcm2835_peripherals.c
+@@ -30,6 +30,9 @@
+ #define SEPARATE_DMA_IRQ_MAX 10
+ #define ORGATED_DMA_IRQ_COUNT 4
+ 
++/* All three I2C controllers share the same IRQ */
++#define ORGATED_I2C_IRQ_COUNT 3
++
+ static void create_unimp(BCM2835PeripheralState *ps,
+                          UnimplementedDeviceState *uds,
+                          const char *name, hwaddr ofs, hwaddr size)
+@@ -148,6 +151,19 @@ static void bcm2835_peripherals_init(Object *obj)
+     /* SPI */
+     object_initialize_child(obj, "bcm2835-spi0", &s->spi[0],
+                             TYPE_BCM2835_SPI);
++
++    /* I2C */
++    object_initialize_child(obj, "bcm2835-i2c0", &s->i2c[0],
++                            TYPE_BCM2835_I2C);
++    object_initialize_child(obj, "bcm2835-i2c1", &s->i2c[1],
++                            TYPE_BCM2835_I2C);
++    object_initialize_child(obj, "bcm2835-i2c2", &s->i2c[2],
++                            TYPE_BCM2835_I2C);
++
++    object_initialize_child(obj, "orgated-i2c-irq",
++                            &s->orgated_i2c_irq, TYPE_OR_IRQ);
++    object_property_set_int(OBJECT(&s->orgated_i2c_irq), "num-lines",
++                            ORGATED_I2C_IRQ_COUNT, &error_abort);
+ }
+ 
+ static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
+@@ -418,14 +434,37 @@ static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
+                                               BCM2835_IC_GPU_IRQ,
+                                               INTERRUPT_SPI));
+ 
++    /* I2C */
++    for (n = 0; n < 3; n++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[n]), errp)) {
++            return;
++        }
++    }
++
++    memory_region_add_subregion(&s->peri_mr, BSC0_OFFSET,
++            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[0]), 0));
++    memory_region_add_subregion(&s->peri_mr, BSC1_OFFSET,
++            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[1]), 0));
++    memory_region_add_subregion(&s->peri_mr, BSC2_OFFSET,
++            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[2]), 0));
++
++    if (!qdev_realize(DEVICE(&s->orgated_i2c_irq), NULL, errp)) {
++        return;
++    }
++    for (n = 0; n < ORGATED_I2C_IRQ_COUNT; n++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[n]), 0,
++                           qdev_get_gpio_in(DEVICE(&s->orgated_i2c_irq), n));
++    }
++    qdev_connect_gpio_out(DEVICE(&s->orgated_i2c_irq), 0,
++                          qdev_get_gpio_in_named(DEVICE(&s->ic),
++                              BCM2835_IC_GPU_IRQ,
++                              INTERRUPT_I2C));
++
+     create_unimp(s, &s->txp, "bcm2835-txp", TXP_OFFSET, 0x1000);
+     create_unimp(s, &s->armtmr, "bcm2835-sp804", ARMCTRL_TIMER0_1_OFFSET, 0x40);
+     create_unimp(s, &s->i2s, "bcm2835-i2s", I2S_OFFSET, 0x100);
+     create_unimp(s, &s->smi, "bcm2835-smi", SMI_OFFSET, 0x100);
+     create_unimp(s, &s->bscsl, "bcm2835-spis", BSC_SL_OFFSET, 0x100);
+-    create_unimp(s, &s->i2c[0], "bcm2835-i2c0", BSC0_OFFSET, 0x20);
+-    create_unimp(s, &s->i2c[1], "bcm2835-i2c1", BSC1_OFFSET, 0x20);
+-    create_unimp(s, &s->i2c[2], "bcm2835-i2c2", BSC2_OFFSET, 0x20);
+     create_unimp(s, &s->otp, "bcm2835-otp", OTP_OFFSET, 0x80);
+     create_unimp(s, &s->dbus, "bcm2835-dbus", DBUS_OFFSET, 0x8000);
+     create_unimp(s, &s->ave0, "bcm2835-ave0", AVE0_OFFSET, 0x8000);
+diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
+index 0203bb79d8..09a3c06533 100644
+--- a/include/hw/arm/bcm2835_peripherals.h
++++ b/include/hw/arm/bcm2835_peripherals.h
+@@ -32,6 +32,7 @@
+ #include "hw/timer/bcm2835_systmr.h"
+ #include "hw/usb/hcd-dwc2.h"
+ #include "hw/ssi/bcm2835_spi.h"
++#include "hw/i2c/bcm2835_i2c.h"
+ #include "hw/misc/unimp.h"
+ #include "qom/object.h"
+ 
+@@ -68,7 +69,8 @@ struct BCM2835PeripheralState {
+     Bcm2835ThermalState thermal;
+     UnimplementedDeviceState i2s;
+     BCM2835SPIState spi[1];
+-    UnimplementedDeviceState i2c[3];
++    BCM2835I2CState i2c[3];
++    OrIRQState orgated_i2c_irq;
+     UnimplementedDeviceState otp;
+     UnimplementedDeviceState dbus;
+     UnimplementedDeviceState ave0;
+-- 
+2.34.1
+
 
