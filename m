@@ -4,91 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04B8C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 09:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24993C54E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 10:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdoHo-0006zo-RB; Sat, 24 Feb 2024 04:25:36 -0500
+	id 1rdpfu-0004CD-5G; Sat, 24 Feb 2024 05:54:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdoHn-0006sB-Hq
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 04:25:35 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdoHl-0002oK-KA
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 04:25:35 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6e480d8fb5eso613222a34.1
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 01:25:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708766732; x=1709371532;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=n60IjDHaz7q1D7DDq4+a1GNpkeEaPlCZ35n5E8Xd1EI=;
- b=hawbZw3ltC1vLqu7Y1Km9MzJ5lRFV+TkAqTj6N6J+CbMdkPH0Dkalv3bmOC1OAWJXh
- TucbFC28RPaCw6R1O2XNZHwEbl5u/mVB8APnQIBKjiYIkaIhWJPqgJud9JB140Pm+MN1
- 7FzNIZHnAsJC1EKe+b0TJGUr//1xgo3EtTg7MuEp9ykp65AdcLg/qr9LlQh0n4gCm2ZH
- GnOaUv+MtEommQnxQC6TMVrln2cZs9fTIZzn6zcx72ZmAmcjfKd0efokbaY4PVJxmRgD
- B+cJ2KNaSC146HsiuDQBzAYH12lj319aqNOCkbakJENPejs4C2hE9lsfSP4aJNVSf8L6
- tDsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708766732; x=1709371532;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n60IjDHaz7q1D7DDq4+a1GNpkeEaPlCZ35n5E8Xd1EI=;
- b=N/F5ifPusHiltjHDsfCrbE8xMAeZhlLEAb5/zRZLvZupPAAiXlhrAjn4a4kBXjcLso
- HHpFvLM5JVSs/rpFpCMu6oHlxF4hSnhbGLsCU2/ojxLNEJu9kHQObQSk5sRbbBYpaUUK
- XA64RxPRz2AmPvYtaIMYm6yQA6x2p6ujvVulQmAVVMlyXRGHuzL5oxPbNO1piBwsyJHd
- oYPN2BrV4QcAi/2MSaoPy8KRHX4XoW9QGGemE4M6nJjOqnyCPLgKa+KmWvPQbDxL86KP
- UXNR1ToTUgD4NJqeHjnvlWy+ZK6FqNRLWWxO4vmknHFTluQ25WTpYqXrAuRuY0YP5DAO
- Yusw==
-X-Gm-Message-State: AOJu0YyXJuAWU2atnn+DDMoUG3YBygvuSOcbJwLlOtUIJBAc/g+n/lrT
- DCvrSJxjBrC0jOJeHVOgjDRiJo3KXJElT030vlI0fOWR2m07ywYmAYHJY3tm1oI=
-X-Google-Smtp-Source: AGHT+IHjN4F7A3iO7k2KwRkpU+hK7lgyuweJIrrQ16RFAFo6eQbcfyn+o1peZZIm9GWiMDES/xHCxA==
-X-Received: by 2002:a05:6358:7618:b0:17b:304f:b3d with SMTP id
- r24-20020a056358761800b0017b304f0b3dmr2568082rwg.23.1708766731909; 
- Sat, 24 Feb 2024 01:25:31 -0800 (PST)
-Received: from localhost ([157.82.203.206])
- by smtp.gmail.com with UTF8SMTPSA id
- gu17-20020a056a004e5100b006e4e584ed59sm743082pfb.116.2024.02.24.01.25.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Feb 2024 01:25:31 -0800 (PST)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 24 Feb 2024 18:24:42 +0900
-Subject: [PATCH v7 10/16] pcie_sriov: Remove num_vfs from PCIESriovPF
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rdpfr-0004Au-Fn; Sat, 24 Feb 2024 05:54:31 -0500
+Received: from zproxy1.enst.fr ([137.194.2.220])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
+ id 1rdpfp-0003MT-3B; Sat, 24 Feb 2024 05:54:31 -0500
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy1.enst.fr (Postfix) with ESMTP id 595D5C07A3;
+ Sat, 24 Feb 2024 11:54:26 +0100 (CET)
+Received: from zproxy1.enst.fr ([IPv6:::1])
+ by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
+ id 2WH-2omtthdW; Sat, 24 Feb 2024 11:54:25 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+ by zproxy1.enst.fr (Postfix) with ESMTP id 71718C0C92;
+ Sat, 24 Feb 2024 11:54:25 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy1.enst.fr 71718C0C92
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1708772065;
+ bh=aPcc7JOhQRBPYJ0O4vbJVBvXNe6xZ+TUkYH7f9RLaFg=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=Im1siKSulEFBKBjm7Gyl+cUkvtm2P8cIexYN+HYTMzErff/l4O795twxAAdG8OwJV
+ 4Yh+OfN7eIhECq9LMa7A0QBn6wBpfHLVgXKllKsDnqN/3jCePJ3SU9aRPQw6liWH/c
+ pvKlaPq0ERv+DtzPyi5DpnR3hmfDrAlLl5XLCnXk=
+X-Virus-Scanned: amavis at enst.fr
+Received: from zproxy1.enst.fr ([IPv6:::1])
+ by localhost (zproxy1.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
+ id 1LbHAA6AbB48; Sat, 24 Feb 2024 11:54:25 +0100 (CET)
+Received: from inesv-Inspiron-3501.lan (unknown
+ [IPv6:2001:861:4680:b1b0:34c1:5884:a33c:51fd])
+ by zproxy1.enst.fr (Postfix) with ESMTPSA id 0826CC0642;
+ Sat, 24 Feb 2024 11:54:24 +0100 (CET)
+From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+To: qemu-devel@nongnu.org
+Cc: Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair@alistair23.me>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org
+Subject: [PATCH v6 0/3] Add device STM32L4x5 GPIO
+Date: Sat, 24 Feb 2024 11:47:31 +0100
+Message-ID: <20240224105417.195674-1-ines.varhol@telecom-paris.fr>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240224-reuse-v7-10-29c14bcb952e@daynix.com>
-References: <20240224-reuse-v7-0-29c14bcb952e@daynix.com>
-In-Reply-To: <20240224-reuse-v7-0-29c14bcb952e@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=137.194.2.220;
+ envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy1.enst.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,129 +83,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-num_vfs is not migrated so use PCI_SRIOV_CTRL_VFE and PCI_SRIOV_NUM_VF
-instead.
+This patch adds a new device STM32L4x5 GPIO device and is part
+of a series implementing the STM32L4x5 with a few peripherals.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/hw/pci/pcie_sriov.h |  1 -
- hw/pci/pcie_sriov.c         | 28 ++++++++++++++++++++--------
- hw/pci/trace-events         |  2 +-
- 3 files changed, 21 insertions(+), 10 deletions(-)
+Changes from v5 :
+- remove duplicate macro constant `GPIO_NUM_PINS` from syscfg.h
+(it's defined in gpio.h)
+- moving definition of constant `NUM_GPIOS` from syscfg.h to gpio.h
+- soc.c : replacing a hardcoded 16 by the correct `GPIO_NUM_PINS`
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 4b1133f79e15..793d03c5f12e 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -16,7 +16,6 @@
- #include "hw/pci/pci.h"
- 
- struct PCIESriovPF {
--    uint16_t num_vfs;   /* Number of virtual functions created */
-     uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
-     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
- };
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 8710ee95b26d..fb48c1a18c9a 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -44,7 +44,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-     pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
-                         offset, PCI_EXT_CAP_SRIOV_SIZEOF);
-     dev->exp.sriov_cap = offset;
--    dev->exp.sriov_pf.num_vfs = 0;
-     dev->exp.sriov_pf.vf = NULL;
- 
-     pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
-@@ -173,6 +172,12 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
-     }
- }
- 
-+static void clear_ctrl_vfe(PCIDevice *dev)
-+{
-+    uint8_t *ctrl = dev->config + dev->exp.sriov_cap + PCI_SRIOV_CTRL;
-+    pci_set_word(ctrl, pci_get_word(ctrl) & ~PCI_SRIOV_CTRL_VFE);
-+}
-+
- static void register_vfs(PCIDevice *dev)
- {
-     uint16_t num_vfs;
-@@ -182,6 +187,7 @@ static void register_vfs(PCIDevice *dev)
-     assert(sriov_cap > 0);
-     num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-     if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-+        clear_ctrl_vfe(dev);
-         return;
-     }
- 
-@@ -190,20 +196,18 @@ static void register_vfs(PCIDevice *dev)
-     for (i = 0; i < num_vfs; i++) {
-         pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
-     }
--    dev->exp.sriov_pf.num_vfs = num_vfs;
- }
- 
- static void unregister_vfs(PCIDevice *dev)
- {
--    uint16_t num_vfs = dev->exp.sriov_pf.num_vfs;
-     uint16_t i;
-+    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
- 
-     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
--                               PCI_FUNC(dev->devfn), num_vfs);
--    for (i = 0; i < num_vfs; i++) {
-+                               PCI_FUNC(dev->devfn));
-+    for (i = 0; i < pci_get_word(cfg + PCI_SRIOV_TOTAL_VF); i++) {
-         pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
-     }
--    dev->exp.sriov_pf.num_vfs = 0;
- }
- 
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-@@ -229,6 +233,9 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-         } else {
-             unregister_vfs(dev);
-         }
-+    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
-+        clear_ctrl_vfe(dev);
-+        unregister_vfs(dev);
-     }
- }
- 
-@@ -291,7 +298,7 @@ PCIDevice *pcie_sriov_get_pf(PCIDevice *dev)
- PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
- {
-     assert(!pci_is_vf(dev));
--    if (n < dev->exp.sriov_pf.num_vfs) {
-+    if (n < pcie_sriov_num_vfs(dev)) {
-         return dev->exp.sriov_pf.vf[n];
-     }
-     return NULL;
-@@ -299,5 +306,10 @@ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
- 
- uint16_t pcie_sriov_num_vfs(PCIDevice *dev)
- {
--    return dev->exp.sriov_pf.num_vfs;
-+    uint16_t sriov_cap = dev->exp.sriov_cap;
-+    uint8_t *cfg = dev->config + sriov_cap;
-+
-+    return sriov_cap &&
-+           (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) ?
-+           pci_get_word(cfg + PCI_SRIOV_NUM_VF) : 0;
- }
-diff --git a/hw/pci/trace-events b/hw/pci/trace-events
-index 42430869ce05..b30e31619787 100644
---- a/hw/pci/trace-events
-+++ b/hw/pci/trace-events
-@@ -14,5 +14,5 @@ msix_write_config(char *name, bool enabled, bool masked) "dev %s enabled %d mask
- 
- # hw/pci/pcie_sriov.c
- sriov_register_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: creating %d vf devs"
--sriov_unregister_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: Unregistering %d vf devs"
-+sriov_unregister_vfs(const char *name, int slot, int function) "%s %02x:%x: Unregistering vf devs"
- sriov_config_write(const char *name, int slot, int fun, uint32_t offset, uint32_t val, uint32_t len) "%s %02x:%x: sriov offset 0x%x val 0x%x len %d"
+Changes from v4 :
+- gpio.c : use helpers `is_pull_up()`, `is_pull_down()`, `is_output()`
+for more clarity
+- gpio.c : correct `update_gpio_idr()` in case of open-drain pin
+set to 1 in ODR and set to 0 externally
+- gpio.c : rename `get_gpio_pins_to_disconnect()` to
+`get_gpio_pinmask_to_disconnect()` and associated comments
+- gpio.c : correct coding style issues (alignment and declaration)
+- soc.c : unite structs `gpio_addr` and `stm32l4x5_gpio_initval`
 
--- 
+Changes from v3 :
+- replacing occurences of '16' with the correct macro `GPIO_NUM_PINS`
+- updating copyright year
+- rebasing on latest version of STM32L4x5 RCC
+
+Changes from v2 :
+- correct memory leaks caused by re-assigning a `g_autofree`
+pointer without freeing it
+- gpio-test : test that reset values (and not just initialization
+values) are correct, correct `stm32l4x5_gpio_reset()` accordingly
+- adding a `clock-freq-hz` object property to test that
+enabling GPIO clock in RCC sets the GPIO clocks
+
+Changes from v1 :
+- replacing test GPIO register `DISCONNECTED_PINS` with an object
+property accessed using `qtest_qmp()` in the qtest (through helpers
+`get_disconnected_pins()` and `disconnect_all_pins()`)
+- removing GPIO subclasses and storing MODER, OSPEEDR and PUPDR reset
+values in properties
+- adding a `name` property and using it for more lisible traces
+- using `g_strdup_printf()` to facilitate setting irqs in the qtest,
+and initializing GPIO children in soc_initfn
+
+Changes from RFC v1 :
+- `stm32l4x5-gpio-test.c` : correct typos, make the test generic,
+add a test for bitwise writing in register ODR
+- `stm32l4x5_soc.c` : connect gpios to their clock, use an
+array of GpioState
+- `stm32l4x5_gpio.c` : correct comments in `update_gpio_idr()`,
+correct `get_gpio_pins_to_disconnect()`, correct `stm32l4x5_gpio_init()`
+and initialize the clock, add a realize function
+- update MAINAINERS
+
+Based-on: 20240219200908.49551-1-arnaud.minier@telecom-paris.fr
+([PATCH v5 0/8] Add device STM32L4x5 RCC)
+
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+
+In=C3=A8s Varhol (3):
+  hw/gpio: Implement STM32L4x5 GPIO
+  hw/arm: Connect STM32L4x5 GPIO to STM32L4x5 SoC
+  tests/qtest: Add STM32L4x5 GPIO QTest testcase
+
+ MAINTAINERS                        |   1 +
+ docs/system/arm/b-l475e-iot01a.rst |   2 +-
+ include/hw/arm/stm32l4x5_soc.h     |   2 +
+ include/hw/gpio/stm32l4x5_gpio.h   |  71 ++++
+ include/hw/misc/stm32l4x5_syscfg.h |   3 +-
+ hw/arm/stm32l4x5_soc.c             |  71 +++-
+ hw/gpio/stm32l4x5_gpio.c           | 477 +++++++++++++++++++++++
+ hw/misc/stm32l4x5_syscfg.c         |   1 +
+ tests/qtest/stm32l4x5_gpio-test.c  | 586 +++++++++++++++++++++++++++++
+ hw/arm/Kconfig                     |   3 +-
+ hw/gpio/Kconfig                    |   3 +
+ hw/gpio/meson.build                |   1 +
+ hw/gpio/trace-events               |   6 +
+ tests/qtest/meson.build            |   3 +-
+ 14 files changed, 1210 insertions(+), 20 deletions(-)
+ create mode 100644 include/hw/gpio/stm32l4x5_gpio.h
+ create mode 100644 hw/gpio/stm32l4x5_gpio.c
+ create mode 100644 tests/qtest/stm32l4x5_gpio-test.c
+
+--=20
 2.43.2
 
 
