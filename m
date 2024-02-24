@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76E6C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 12:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5372C54E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 12:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdrNl-00025z-GU; Sat, 24 Feb 2024 07:43:57 -0500
+	id 1rdrNW-00023M-Ay; Sat, 24 Feb 2024 07:43:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrNj-00025p-Nz
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:55 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1rdrNU-00022r-9p
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:40 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrNi-0006q4-73
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:55 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1d95d67ff45so11253785ad.2
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:43:53 -0800 (PST)
+ id 1rdrNS-0006iz-DX
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:40 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e43ee3f6fbso1503860b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:43:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708778633; x=1709383433;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708778616; x=1709383416;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KT8BcIb11mqz+9fAbvto/wj31bQu+F9olqAkWWMLAX4=;
- b=W05cjieE5E1/T80SA0KWISasWLQsProlbp8FQjL/uxPVLmM0I4r5j1uuEUlBbrdoXk
- Bu5eLomaePY+vJHIqoCdutZnjNvXebLv6K34GolcEnLTV+tmDMxxP+YgWnE9g3ee2yna
- G9Fb6dujDNESPxadNA5adJ8dWg5A1GHLLcXLaT2aNck4Bv6Z58lSPIHoCalkH6y1kD05
- jmQGM8U0dhrzuIhK3nHQDs6QoRgM/mkVlfcFY9wrdc7VgLfnNKse5V3/uoyg7suQEv+a
- 9yqJqPFLTEsN4lDBNy0F6lZvJsHs1j2w4c1oDOn82SE87HtWkFR2R4chevVYmR33qW4k
- NG7w==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CmAC7eTTvI3PfLipbSfRM377cTGrXFOp/fodQZ5ZMPM=;
+ b=hAU3bWsDYW1SXof/+LHnOGKCY+3pRj8oIuU/zRBkEnTUGjDy/AX2GzLdM56xecyB87
+ zbn/D8sX7nIOlZnjW+10U1HKqd1ZIo4vTCZEoVVTChu6vof722aI3I8skhhNt4vS9/m/
+ 0hu3FV49+Jvkmkmlw0LrKeBgT1MKKn3tG8e/dA2330F9PRXlOYUPUgbimA8lzITElMBN
+ YBAT3sKdRq2osPtNE2mroCK2EkuGJBRAK1L169+Mlrkw4Jq7ZRA5gmGyeiw24lmoVSVQ
+ 3ulCqCMWnHcSpGkv/+ZO04CIbH9qF2w7VAHgVUrKSXV8FXHyFvAx1wyXyyA9NIAWCjwA
+ xxvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708778633; x=1709383433;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KT8BcIb11mqz+9fAbvto/wj31bQu+F9olqAkWWMLAX4=;
- b=oZs3DPB1UcxH/h3Ng1VmxBI3bMehcvjooYsF9bUGfCPVESzNyFKtnFq4kSSwNn2ipn
- REE0HybHxjo30jYzkTMg8ns6H8WSyFfBdioh5TTeHFFQZV2LnA5qjBE3Uw5zynlIIkQ5
- QaSuHfZDRUDA3lpN+AsDJ/+aw8TGDCpX3XlOJ0Rtl2QbVL5EzXSkwKd4SNwZkNXSt1qG
- olwo02lC6fKAHxn1/sU8qAOqbt07mUk918evGY1m3tYD0cBLIUseZijCUnZ/NTDNRZ2W
- 5p4zZDl29f2qTtU08udMdnqMPMt6VbENxPAALKL5rZVBoWnrrxHLH5oHCdthpz4Zqktp
- mabg==
-X-Gm-Message-State: AOJu0Ywq2I4OyC6VSLyGikGtZuWy/BJglDVX24+skmbrMzXNdmU/x1jr
- TIbBth5wuXwHb8jQ53HwWx4mUd4hb7L+DiNZ0sy+QBk8lIZynKNDYVw96bIUCc0=
-X-Google-Smtp-Source: AGHT+IE6eUdD5Y4L+f5k2vx8a8DMok24SACD8W3Dyq2GP4wCyxnoidNicpPK2Y5NI9iT53+69d+K+A==
-X-Received: by 2002:a17:902:6806:b0:1db:3a0d:1cf9 with SMTP id
- h6-20020a170902680600b001db3a0d1cf9mr2328358plk.48.1708778632952; 
- Sat, 24 Feb 2024 04:43:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708778616; x=1709383416;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CmAC7eTTvI3PfLipbSfRM377cTGrXFOp/fodQZ5ZMPM=;
+ b=Fp7I+DMljj4gr9bFeUyiiymV9WJY9KWLGvYWG8/U26kO2icjy1grwzCvTSafs3Sosd
+ +QJMB1jAXi8HiJRCRzR7LZXUtn4oNt6C6ASTttKqhEm2OwohmcELTbLto/KwaEN6cQ26
+ 2fWLu+3u4lz8lnqc5BEZo7b4SdTCw7O2VtHkFNwwGQv+B6UzG2aVV9wtdsCY1MxAkTaU
+ u6gpp55URGr1tfI39dGsDiyHi2Phdv/XRvHDOFywnzZ6xL9vDt5eXfKr9ZkEwose9bgd
+ yJbY0OsU3FV2ZcxrGMfCvo1zjU426FqdJ6YzAVex4JYxbUewLbKHvEZ1pqTMLxfwRE4d
+ VGow==
+X-Gm-Message-State: AOJu0YycJpWD+PruNiQcOZr0RpZ3v53QdatCkksW+UojFuALTWt0NUhe
+ RviXl3EEfTy8YRNsxE7nl7okxR/SlATPruLxJzJhNnil6ANu4oX7DJFWAhmxUFE=
+X-Google-Smtp-Source: AGHT+IFNcjqIQPjS+HB1iIJq71kYHykluq55bi/5H663T8vIwXYmgODq5eaAvPmCFKgiI2k7txIj8A==
+X-Received: by 2002:a05:6a00:be5:b0:6e4:d1f9:ba35 with SMTP id
+ x37-20020a056a000be500b006e4d1f9ba35mr2672672pfu.30.1708778616231; 
+ Sat, 24 Feb 2024 04:43:36 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- j6-20020a170902758600b001dc8923a2c4sm596219pll.294.2024.02.24.04.43.50
+ j10-20020a63550a000000b005ceeeea1816sm1047222pgb.77.2024.02.24.04.43.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Feb 2024 04:43:52 -0800 (PST)
+ Sat, 24 Feb 2024 04:43:35 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 24 Feb 2024 21:43:35 +0900
-Subject: [PATCH v12 04/10] ui/cocoa: Scale with NSView instead of Core Graphics
+Subject: [PATCH v12 00/10] ui/cocoa: Use NSWindow's ability to resize
+Date: Sat, 24 Feb 2024 21:43:31 +0900
+Message-Id: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240224-cocoa-v12-4-e89f70bdda71@daynix.com>
-References: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
-In-Reply-To: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAHPk2WUC/2XQzWrDMAwH8FcpPs/D8rd32nuUHhxbWn1YPJIRW
+ krefU7BI1uOEvr9hfRgM04FZ/Z2erAJlzKXOrYC5MuJpWscP5CX3BpMCqlAAvBUU43cODt4qwK
+ GIbM2+zUhldsz6Hxp9bXM33W6P3MXu3X/JyyWA9eB1IACApB8z/E+lttrqp9si1jcnrnOXGM2k
+ gQkZ6wXB+b3zHfmueDZUcxeJIdkDyx0poUE1VnYmIkGYSChw3EbiL3T3YFoMDkiNDmQ8PEIYQ9
+ /z2v/aTSCiw6N0ln/geu6/gChaQz4swEAAA==
 To: Peter Maydell <peter.maydell@linaro.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Gerd Hoffmann <kraxel@redhat.com>, 
@@ -75,8 +78,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
  Rene Engel <ReneEngel80@emailn.de>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::434;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,79 +101,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Core Graphics is not accelerated and slow.
+V5 -> V6:
+  Rebased.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- ui/cocoa.m | 24 ++++++++++--------------
- 1 file changed, 10 insertions(+), 14 deletions(-)
+Changes in v12:
+- Extracted patches "ui/cocoa: Split [-QemuCocoaView handleEventLocked:]",
+  "ui/cocoa: Immediately call [-QemuCocoaView handleMouseEvent:buttons:]" from
+  "ui/cocoa: Release specific mouse buttons". (Peter Maydell)
+- Changed the message of patch "ui/cocoa: Call console_select() with the BQL" to
+  refer to [-QemuCocoaView displayConsole:]. (Peter Maydell)
+- Added patch "ui/cocoa: Fix pause label coordinates".
+- Added patch "ui/cocoa: Remove normalWindow".
+- Removed [-QemuCocoaView fixZoomedFullScreenSize:], which turned out
+  unnecessary.
+- Simplified references to NSWindow.styleMask.
+- Link to v11: https://lore.kernel.org/r/20240217-cocoa-v11-0-0a17a7e534d4@daynix.com
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index c73ef8884454..644fd32eaa4d 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -496,10 +496,8 @@ - (void) drawRect:(NSRect) rect
- 
-         [self getRectsBeingDrawn:&rectList count:&rectCount];
-         for (i = 0; i < rectCount; i++) {
--            clipRect.origin.x = rectList[i].origin.x / cdx;
--            clipRect.origin.y = (float)h - (rectList[i].origin.y + rectList[i].size.height) / cdy;
--            clipRect.size.width = rectList[i].size.width / cdx;
--            clipRect.size.height = rectList[i].size.height / cdy;
-+            clipRect = rectList[i];
-+            clipRect.origin.y = (float)h - (clipRect.origin.y + clipRect.size.height);
-             clipImageRef = CGImageCreateWithImageInRect(
-                                                         imageRef,
-                                                         clipRect
-@@ -545,6 +543,11 @@ - (void) setContentDimensions
-     }
- }
- 
-+- (void) updateBounds
-+{
-+    [self setBoundsSize:NSMakeSize(screen.width, screen.height)];
-+}
-+
- - (void) updateUIInfoLocked
- {
-     /* Must be called with the BQL, i.e. via updateUIInfo */
-@@ -634,6 +637,7 @@ - (void) switchSurface:(pixman_image_t *)image
-         screen.height = h;
-         [self setContentDimensions];
-         [self setFrame:NSMakeRect(cx, cy, cw, ch)];
-+        [self updateBounds];
-     }
- 
-     // update screenBuffer
-@@ -1297,6 +1301,7 @@ - (void)windowDidChangeScreen:(NSNotification *)notification
- 
- - (void)windowDidResize:(NSNotification *)notification
- {
-+    [cocoaView updateBounds];
-     [cocoaView updateUIInfo];
- }
- 
-@@ -1945,16 +1950,7 @@ static void cocoa_update(DisplayChangeListener *dcl,
-     COCOA_DEBUG("qemu_cocoa: cocoa_update\n");
- 
-     dispatch_async(dispatch_get_main_queue(), ^{
--        NSRect rect;
--        if ([cocoaView cdx] == 1.0) {
--            rect = NSMakeRect(x, [cocoaView gscreen].height - y - h, w, h);
--        } else {
--            rect = NSMakeRect(
--                x * [cocoaView cdx],
--                ([cocoaView gscreen].height - y - h) * [cocoaView cdy],
--                w * [cocoaView cdx],
--                h * [cocoaView cdy]);
--        }
-+        NSRect rect = NSMakeRect(x, [cocoaView gscreen].height - y - h, w, h);
-         [cocoaView setNeedsDisplayInRect:rect];
-     });
- }
+Changes in v11:
+- Ensured to reflect screen size changes to bounds
+- Link to v10: https://lore.kernel.org/r/20240214-cocoa-v10-0-c7ffe5d9f08a@daynix.com
 
+Changes in v10:
+- Removed relative mouse input scaling.
+- Link to v9: https://lore.kernel.org/r/20240213-cocoa-v9-0-d5a5e1bf0490@daynix.com
+
+Changes in v9:
+- Split patch "ui/cocoa: Use NSWindow's ability to resize" into patches
+  "ui/cocoa: Let the platform toggle fullscreen", "ui/cocoa: Make window
+  resizable", "ui/cocoa: Call console_select() with the BQL".
+- Added patch "ui/cocoa: Scale with NSView instead of Core Graphics".
+- Rebased.
+- Dropped Tested-by: from patch "ui/cocoa: Use NSWindow's ability to
+  resize".
+- Link to v8: https://lore.kernel.org/r/20231218-cocoa-v8-0-d7fad80c7ef6@daynix.com
+
+Changes in v8:
+- Split into three patches. (BALATON Zoltan)
+- Removed negative full-screen conditions. (BALATON Zoltan)
+- Converted a C++-style comment to C style.
+- Link to v7: https://lore.kernel.org/r/20231217-cocoa-v7-1-6af21ef75680@daynix.com
+
+Changes in v7:
+- Fixed zoom-to-fit option. (Marek Glogowski)
+- Link to v6: https://lore.kernel.org/r/20231211-cocoa-v6-1-49f3be0191f2@daynix.com
+
+---
+Akihiko Odaki (10):
+      ui/cocoa: Split [-QemuCocoaView handleEventLocked:]
+      ui/cocoa: Immediately call [-QemuCocoaView handleMouseEvent:buttons:]
+      ui/cocoa: Release specific mouse buttons
+      ui/cocoa: Scale with NSView instead of Core Graphics
+      ui/cocoa: Fix pause label coordinates
+      ui/cocoa: Let the platform toggle fullscreen
+      ui/cocoa: Remove normalWindow
+      ui/cocoa: Make window resizable
+      ui/cocoa: Call console_select() with the BQL
+      ui/cocoa: Remove stretch_video flag
+
+ ui/cocoa.m | 552 +++++++++++++++++++++++++++----------------------------------
+ 1 file changed, 242 insertions(+), 310 deletions(-)
+---
+base-commit: 5005aed8a7e728d028efb40e243ecfc2b4f3df3a
+change-id: 20231211-cocoa-576b8639e9bd
+
+Best regards,
 -- 
-2.43.2
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
