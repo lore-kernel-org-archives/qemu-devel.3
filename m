@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3638C54E49
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 12:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F83C54E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 13:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdrWa-0005Nc-6G; Sat, 24 Feb 2024 07:53:04 -0500
+	id 1rdrd2-0000c4-D4; Sat, 24 Feb 2024 07:59:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrWY-0005N4-1P
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:53:02 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1rdrd1-0000bu-IR
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:59:43 -0500
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrWR-0008MT-Rl
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:52:57 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1d71cb97937so19554545ad.3
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:52:55 -0800 (PST)
+ id 1rdrcz-0000pU-Fw
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:59:43 -0500
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-5dbd519bde6so1139864a12.1
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708779174; x=1709383974;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708779580; x=1709384380;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xIavSNyiB25TEOX1x/gl18rUkI3SgYhH1jQmrJtWc8g=;
- b=ukfChCoPzDArn5O2CeQVaQ3Ws0jnJaZMcXn9HPgQGg7Xx7adyFQG8mpVCYYEtx9R3O
- uc7NN2wyaQc3PL9c3V58/sLHHMV5NA5iMeHjD0SaYrRLV1cJ7etkZnP5aXW7UjnzuCMX
- ZHzhNHezbRJw1EcJZOA0T11AlLuxh4vqY9+ZyqrXZrCVz/2vk2T4xo+DYbhbTTvOang5
- T+D8xs5BtkkrdK3OamS2dGoUQxX6EuhXhIDnNIpTISQ89YUdbq1x0/gvKrVmddB4hCLg
- eOrx2vqkyzgk1/EMYWHnABOuFw3AwBhZp8TItGz0zrCMuw+W3Y/SupyowhRQLb8SvBzS
- kUpg==
+ bh=avJOyotMME/6+cL0v/0lmhORRZhfc7rw1aAAbPPirgY=;
+ b=QGc1dXZaFAScKMCQuAu8suMNjSCJd80ByHZeYO1k6inOz1KixelCe0HcxuPVVuZcQw
+ ofVjEnUFD7CgtQLx4Qz/G87Q+WAtk8bmR68xI0ITLiFqWX1ATqnVOLtYw7vH57o5hmdn
+ pNyr9HpGSPnhbJjqx471P0i0hNBL8k1kohpOdt4JMBxvdgu6O34M/kKyn7lMjwZjF5q3
+ fdeqEHCo8/UDr+I91Sg0b+5Se4BGJqznMz2m91YAzO89fYmjWGfUvgcdCcX5gwmtF7kL
+ zFZuQRwruciYLQTYgO2gvqMmiZPg6rsYC1ZZvF8rgzfJaNFYIACYZ/4tQ6693T4YVsof
+ 8WGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708779174; x=1709383974;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1708779580; x=1709384380;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xIavSNyiB25TEOX1x/gl18rUkI3SgYhH1jQmrJtWc8g=;
- b=G/dpHkvfRqkckg1Nzgr5AHXUTW5FfXIl6fNvicZtWH9DhWFfezCG4XQavrglAuWPqC
- 2PZ6BWLK7jOqRdCj9Imqxv0G/527WqyTJjW2q4GjMIX1WRevPIxq5vDTiWzn8TzB7T4E
- S/JAcCGFyaA5dAeUlRprJFB0/nryi54qPlGVAcWlMhatXnVN8tc4hCx8MB2WOH7TC4Ej
- Qyj3ji3z29rHaZiH3q7A7MWpYc/GzdYxjxEYDsJzukeRbwvxnwEGmwEUrmTK7E/l9X4u
- Nwu7flTYKzHwHR+i/MsjHEPc1XaJPKRVF/Ow0JAGYY3VjWcJFtdbkabZFHiPE6lTlTW8
- dsvg==
+ bh=avJOyotMME/6+cL0v/0lmhORRZhfc7rw1aAAbPPirgY=;
+ b=f62EUN/Tz8DX8O6b93lgNcJQZDOaHR4qHucHFCEaPaYANwBgHch8+YOyRaaiEZgMnf
+ DVBjIB/ZAXVM/9KHvmCWRsPv/5uaKujsath8gMr4SUhDyyodNbCdfSvdvNOw7gsOzTzq
+ UY9wgd+Y6bvGELBT5q2y56MRPTSFMeRFDuieO3Iq+WctJPw3JdwjII+1oZK/9AblvCcS
+ dXF2mY8nRWBjpHHEsZtokWSqbhX2cvpj3wL8c0msfYVxyGDIsG5a+f9FrnMOtgh7gX46
+ ytJ3xRkFij6tKrIDuH56w5MjRk+hYwN5B/m5gby2GjTcMbTNkqi2RFtV/qpz2BWF0bmg
+ gwdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUj8sd2leEmbTWJWMgtDekldFfgZE93gR1VNcB4N4bWSkXm9rVEVO/PvIFU2U4Fdp0EzQfF3TkGnUjs8RM6BrZXS1thfQ=
-X-Gm-Message-State: AOJu0Yz8Svqc2rJ08rB/QgHM9Ofk2ygfYxV1a71KoRcx+dcaYSfF7RaJ
- fViYza5QIYtBe/zm8hvLpjZdhdt6fWSMm/qc+wv2CBv8kMLkXC3GFHzE9xLKBtI=
-X-Google-Smtp-Source: AGHT+IEvJyzn1e53pXs6TUmNZ7fynRAJt5ZOPhjAqIC5pnqrzoY3hIpxvXHzHdldth8z5lNMVZL/CQ==
-X-Received: by 2002:a05:6a21:3118:b0:1a0:dfc4:a8c8 with SMTP id
- yz24-20020a056a21311800b001a0dfc4a8c8mr2879744pzb.20.1708779174233; 
- Sat, 24 Feb 2024 04:52:54 -0800 (PST)
+ AJvYcCVGzsI7JPOY4koRahyC0ke1Uazp+FcTIEwN1ipoajABpq6Uk4bnwNqSXXttLrumgdv0VgmlKSPOxEUJEA0s3TZXJ+ot3Cg=
+X-Gm-Message-State: AOJu0YwZuZuJ3XuIuQI6bEFhP+H9aTGyi5FQRHmz1RxcLWgBO8DlOeO6
+ h1oQXIzdhyasSczB0+0TR65FipoQxPcbyOi/FYs4T5oEpcxB0imV0KFQQBvdq+Q=
+X-Google-Smtp-Source: AGHT+IGxGHfaETL0l1ouQDA/IbuElpOPCEdz07uk6MYNve398b7QWAfoY/QoAgRmIN/2+PeLDiz3Yg==
+X-Received: by 2002:a05:6a20:c896:b0:1a0:dbe3:ce5b with SMTP id
+ hb22-20020a056a20c89600b001a0dbe3ce5bmr2439217pzb.20.1708779580035; 
+ Sat, 24 Feb 2024 04:59:40 -0800 (PST)
 Received: from [157.82.203.206] ([157.82.203.206])
  by smtp.gmail.com with ESMTPSA id
- pl1-20020a17090b268100b0029a4f1335d1sm3265074pjb.0.2024.02.24.04.52.52
+ y6-20020a17090a1f4600b00299a8011e67sm1276833pjy.55.2024.02.24.04.59.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Feb 2024 04:52:53 -0800 (PST)
-Message-ID: <9df821ff-1ab9-4ae0-b954-6da095d48c4f@daynix.com>
-Date: Sat, 24 Feb 2024 21:52:50 +0900
+ Sat, 24 Feb 2024 04:59:39 -0800 (PST)
+Message-ID: <d65d0dea-b76b-4a22-9d71-e60965c5c868@daynix.com>
+Date: Sat, 24 Feb 2024 21:59:36 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/6] ui/cocoa: Let the platform toggle fullscreen
+Subject: Re: [PATCH v11 6/6] ui/cocoa: Remove stretch_video flag
+Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>,
@@ -73,15 +74,14 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Marek Glogowski <smarkusg@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Rene Engel <ReneEngel80@emailn.de>, qemu-devel@nongnu.org
 References: <20240217-cocoa-v11-0-0a17a7e534d4@daynix.com>
- <20240217-cocoa-v11-3-0a17a7e534d4@daynix.com>
- <CAFEAcA-P_kX_wM9VxTCLgOPp-Sw4VmvUJzC3ZyYrEgppUAqXow@mail.gmail.com>
-Content-Language: en-US
+ <20240217-cocoa-v11-6-0a17a7e534d4@daynix.com>
+ <CAFEAcA_QUMsOXbwOSAEZu5Qkc+G85DfchunxQQbEhRAEBv+Xqw@mail.gmail.com>
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA-P_kX_wM9VxTCLgOPp-Sw4VmvUJzC3ZyYrEgppUAqXow@mail.gmail.com>
+In-Reply-To: <CAFEAcA_QUMsOXbwOSAEZu5Qkc+G85DfchunxQQbEhRAEBv+Xqw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::533;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,27 +103,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/02/23 1:56, Peter Maydell wrote:
+On 2024/02/23 1:53, Peter Maydell wrote:
 > On Sat, 17 Feb 2024 at 11:19, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >>
->> It allows making the window full screen by clicking full screen button
->> provided by the platform (the left-top green button) and save some code.
+>> Evaluate [normalWindow styleMask] & NSWindowStyleMaskResizable instead.
 >>
 >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 >> ---
->>   ui/cocoa.m | 423 ++++++++++++++++++++++++++++++-------------------------------
->>   1 file changed, 207 insertions(+), 216 deletions(-)
+>>   ui/cocoa.m | 11 ++++-------
+>>   1 file changed, 4 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/ui/cocoa.m b/ui/cocoa.m
+>> index 81de8d92669b..401ed0c3f1f5 100644
+>> --- a/ui/cocoa.m
+>> +++ b/ui/cocoa.m
+>> @@ -103,7 +103,6 @@ static void cocoa_switch(DisplayChangeListener *dcl,
+>>   static int left_command_key_enabled = 1;
+>>   static bool swap_opt_cmd;
+>>
+>> -static bool stretch_video;
+>>   static NSTextField *pauseLabel;
+>>
+>>   static bool allow_events;
+>> @@ -533,7 +532,7 @@ - (void) resizeWindow
+>>   {
+>>       [[self window] setContentAspectRatio:NSMakeSize(screen.width, screen.height)];
+>>
+>> -    if (!stretch_video) {
+>> +    if (!([[self window] styleMask] & NSWindowStyleMaskResizable)) {
+>>           [[self window] setContentSize:NSMakeSize(screen.width, screen.height)];
+>>           [[self window] center];
+>>       } else if ([[self window] styleMask] & NSWindowStyleMaskFullScreen) {
+>> @@ -1296,7 +1295,7 @@ - (BOOL)windowShouldClose:(id)sender
+>>
+>>   - (NSSize) window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
+>>   {
+>> -    if (stretch_video) {
+>> +    if ([normalWindow styleMask] & NSWindowStyleMaskResizable) {
+>>           return [cocoaView fixZoomedFullScreenSize:proposedSize];
+>>       }
+>>
+>> @@ -1377,8 +1376,7 @@ - (void)showQEMUDoc:(id)sender
+>>   /* Stretches video to fit host monitor size */
+>>   - (void)zoomToFit:(id) sender
+>>   {
+>> -    stretch_video = !stretch_video;
+>> -    if (stretch_video == true) {
+>> +    if (([normalWindow styleMask] & NSWindowStyleMaskResizable) == 0) {
+>>           [normalWindow setStyleMask:[normalWindow styleMask] | NSWindowStyleMaskResizable];
+>>           [sender setState: NSControlStateValueOn];
+>>       } else {
+>> @@ -1650,7 +1648,7 @@ static void create_initial_menus(void)
+>>       menu = [[NSMenu alloc] initWithTitle:@"View"];
+>>       [menu addItem: [[[NSMenuItem alloc] initWithTitle:@"Enter Fullscreen" action:@selector(doToggleFullScreen:) keyEquivalent:@"f"] autorelease]]; // Fullscreen
+>>       menuItem = [[[NSMenuItem alloc] initWithTitle:@"Zoom To Fit" action:@selector(zoomToFit:) keyEquivalent:@""] autorelease];
+>> -    [menuItem setState: stretch_video ? NSControlStateValueOn : NSControlStateValueOff];
+>> +    [menuItem setState: [normalWindow styleMask] & NSWindowStyleMaskResizable ? NSControlStateValueOn : NSControlStateValueOff];
+>>       [menu addItem: menuItem];
+>>       menuItem = [[[NSMenuItem alloc] initWithTitle:@"View" action:nil keyEquivalent:@""] autorelease];
+>>       [menuItem setSubmenu:menu];
+>> @@ -2036,7 +2034,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+>>       }
+>>
+>>       if (opts->u.cocoa.has_zoom_to_fit && opts->u.cocoa.zoom_to_fit) {
+>> -        stretch_video = true;
+>>           [normalWindow setStyleMask:[normalWindow styleMask] | NSWindowStyleMaskResizable];
+>>       }
 > 
-> This is a big patch and I'm having difficulty figuring out what
-> it's doing. Is it possible to split it up a bit?
+> It's nice to get rid of the boolean, but
+>   [normalWindow styleMask] & NSWindowStyleMaskResizable
+> feels a bit clunky -- maybe we should wrap it in a method with
+> a suitable name ? (isZoomToFit, maybe? but I'm not too familiar
+> with what cocoa function naming style is.)
 
-Not really. It indeed does a few different things:
-1. Removes fullScreenWindow
-2. Changes mouse event handling.
-3. Changes coordinate calculations.
+I don't think we should have a method for this. It's verbose but the 
+main reason of that is NSWindowStyleMaskResizable is wordy; otherwise 
+it's quite a simple. There are few places that use this construct after all.
 
-Unfortunately we have to do these at once because how window is 
-organized affects both of mouse event handling and coordinate calculations.
+In any case, I put a bit more effort to simplify style mask references 
+with v12 so please check it out.
 
 Regards,
 Akihiko Odaki
