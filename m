@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48572C48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97065C54E4A
 	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 12:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdrNa-000244-OH; Sat, 24 Feb 2024 07:43:46 -0500
+	id 1rdrO1-0002B1-HU; Sat, 24 Feb 2024 07:44:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrNY-00023e-T4
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:44 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rdrO0-0002Aa-Ri
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:44:12 -0500
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrNW-0006kI-8s
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:44 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e459b39e2cso822960b3a.1
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:43:41 -0800 (PST)
+ id 1rdrNy-0006ui-H0
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:44:12 -0500
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-599f5e71d85so1225951eaf.3
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:44:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708778620; x=1709383420;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708778649; x=1709383449;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QHNJuFjiujtFNVkkX8VyNbVFZUCFddQxl5GcQ9h6SbA=;
- b=reb01+HU2hpC5vFNZ8Iba+m6Ri4HMjUZIGBiGE6QDIf/bPURq6zxt931XfYxiRy79K
- 9Jo1E/SzgspCgtikOkLfmxBYoqnTlpbBbvnG4P8r5QpikdHpWZEiWCPxOjgW5d+eLjM7
- TVCsZVxiaQzOCljJSKa/JwUZ8/3EVIGigk1xgn1U2aaVLOIKAprfbO3xNMfY2BlJoO/C
- UIbb/cwNYrW8cXzHE9C+QCV8Mimduy4HZof4l56PqR4Y8YssTCMUygl/rrhdXpYRjyRG
- nDHx/5JF4xpMDszKCOKrk+Bg8em/I8fsFu9o/Z1fRRRsEn0Tkq4PVIcq+xHapLZmvLxL
- Dy/Q==
+ :reply-to; bh=quIPhkmGqk/yzrPnEiTwezMNDD4NMK43Kc2jTugQyzc=;
+ b=WP/UNA/fiWbga2aZWy5vnbSWmTFmqyIKjdrBMb/4R6roPufHV9qFlJxARi4zpt3MIi
+ O2y4TPJhiQpB3o7X9TFq9kbKgDKAgcn67F4oS0pZ8tZY1rMt8PqJBP62/8ZmMuZGjXoT
+ igoSTKIgWK2kpjU3qH8KdVXH3SND63KiVnAfcBZtClEot1AHTQH72cvFSuOERSFikI/m
+ VFp34I/Y8QXR8eYz5MtCYBLneFFDJWhH0+4mZlzl0+aPkLWChLI71fQpT+wPdgbFewJF
+ qKej+hjc3LPowGrXqsL/haWqbASOVFLTtXeDZG8p6Bl4GOYvt00sM3XjgjMWAjI2stVe
+ Xi5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708778620; x=1709383420;
+ d=1e100.net; s=20230601; t=1708778649; x=1709383449;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QHNJuFjiujtFNVkkX8VyNbVFZUCFddQxl5GcQ9h6SbA=;
- b=musLgx+ZJW3JZBFwyd0rbztq0taTKe+Ir895HjPPQR9ELo0bx4ZTRNK+CI+fNrW9GN
- kLYp7Q+wD6lP6GtU56S0n2ynixDxWYiVA1esyQsbo4VqdqfeYQpdRq9RNSyG5oAMa5nf
- tGbDBkqmMAFcS4U/x1HG1vaBSfF4JG4w36R4msLDbXOHESXB9E9lriHBUmmDiNBOcdIY
- 1UNvpzB7PCxnI5Cjyg5ec8I6RlWPivEoRAl2OVNyNFVq/XP8Y9r/C+vsn+1o4ZO2Ow04
- cpnaAHYI46JSPuiixlhx1O/Os5FWnl2yJahkIMkGvLlZV6YR5u08KqAAHeEuELhHAxvQ
- JOcA==
-X-Gm-Message-State: AOJu0YwGh7hy46iEwGU2EvTUKYjIzAD4MacjkXFWOu4rs2dJF10GdExT
- sE2XoiDgcZtQNwknbUOI9PJTsM0HPkkjw8CzyMhR8y8cmKtHi9R/DPuCABqDZY8=
-X-Google-Smtp-Source: AGHT+IEqN3l+HIWWlk309bl0EmSulcmlS4VfnuKf47bSxJRJktlnpxWdCvG5v7ZjQVqP/DN68cb7Fg==
-X-Received: by 2002:a05:6a20:d48c:b0:1a0:5de4:2f53 with SMTP id
- im12-20020a056a20d48c00b001a05de42f53mr3354939pzb.25.1708778620369; 
- Sat, 24 Feb 2024 04:43:40 -0800 (PST)
+ bh=quIPhkmGqk/yzrPnEiTwezMNDD4NMK43Kc2jTugQyzc=;
+ b=UNp+0MxszOOoUtPksQHq0IxY532v6qg+SyekWh5Rz3kdYnuWaXZRAbgDmsqhD/+6az
+ txkYUDn+9tAEt3C9RFXTYXYP/Dzaunt7or8cVGJA9IE6BebMAuGkH2De2aCH6i0/DWZ9
+ 5kpI2BO3cIoE02lI0uFPP5Rw8x+73Fqj7WngyEjGiPAM23THK/vOF/MTi8YBv1ICk+c8
+ TIBLCfLaiO9784P2jthYZlcDhmE9Dek4igcqOSFPnnkkylhv3gv5rXQmnerYUhVpi9wy
+ 8mw0piPkxT9VRBNjVja3J/th2taN38o2HUid9DnTQ/+BYG3NF/hJ7JQy7gmTVvkcxNTD
+ 9Y+A==
+X-Gm-Message-State: AOJu0Yy+jrBSCczn6D7d4Qym1E26jL21uMTn4z963mwogKY5o1ff6UUw
+ Cy9wW1iFd1IawVX/3iDt0MBTZhVZLdnt0zKY2hAQ5Qsm2fFDv9kBXP5lbc3dYsc=
+X-Google-Smtp-Source: AGHT+IECVgOsib4PfzgLWg+OSbRtOgsYIHms35kijUmDnt8mro5ybPXVRCF/3KvXSe6utOgKZZMtKA==
+X-Received: by 2002:a05:6358:7f87:b0:17b:c8d:f396 with SMTP id
+ c7-20020a0563587f8700b0017b0c8df396mr3331471rwo.29.1708778648566; 
+ Sat, 24 Feb 2024 04:44:08 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- j15-20020a63fc0f000000b005dc2ca5b667sm1023913pgi.10.2024.02.24.04.43.38
+ q10-20020a056a00084a00b006e45e20e3ecsm1054167pfk.60.2024.02.24.04.44.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Feb 2024 04:43:40 -0800 (PST)
+ Sat, 24 Feb 2024 04:44:08 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 24 Feb 2024 21:43:32 +0900
-Subject: [PATCH v12 01/10] ui/cocoa: Split [-QemuCocoaView handleEventLocked:]
+Date: Sat, 24 Feb 2024 21:43:39 +0900
+Subject: [PATCH v12 08/10] ui/cocoa: Make window resizable
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240224-cocoa-v12-1-e89f70bdda71@daynix.com>
+Message-Id: <20240224-cocoa-v12-8-e89f70bdda71@daynix.com>
 References: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
 In-Reply-To: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
@@ -75,8 +75,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
  Rene Engel <ReneEngel80@emailn.de>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::436;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x436.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,116 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently [-QemuCocoaView handleEventLocked:] parses the passed event,
-stores operations to be done to variables, and perform them according
-to the variables. This construct will be cluttered with variables and
-hard to read when we need more different operations for different
-events.
-
-Split the methods so that we can call appropriate methods depending on
-events instead of relying on variables.
+The window will be resizable when zoom-to-fit is on.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- ui/cocoa.m | 82 +++++++++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 49 insertions(+), 33 deletions(-)
+ ui/cocoa.m | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/ui/cocoa.m b/ui/cocoa.m
-index eb99064beeb4..32d61e226507 100644
+index 05c91e4eed53..cebfae04d9e8 100644
 --- a/ui/cocoa.m
 +++ b/ui/cocoa.m
-@@ -1094,42 +1094,58 @@ - (bool) handleEventLocked:(NSEvent *)event
+@@ -1348,8 +1348,10 @@ - (void)zoomToFit:(id) sender
+ {
+     stretch_video = !stretch_video;
+     if (stretch_video == true) {
++        [cocoaView window].styleMask |= NSWindowStyleMaskResizable;
+         [sender setState: NSControlStateValueOn];
+     } else {
++        [cocoaView window].styleMask &= ~NSWindowStyleMaskResizable;
+         [cocoaView resizeWindow];
+         [sender setState: NSControlStateValueOff];
+     }
+@@ -2002,6 +2004,7 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+ 
+     if (opts->u.cocoa.has_zoom_to_fit && opts->u.cocoa.zoom_to_fit) {
+         stretch_video = true;
++        [cocoaView window].styleMask |= NSWindowStyleMaskResizable;
      }
  
-     if (mouse_event) {
--        /* Don't send button events to the guest unless we've got a
--         * mouse grab or window focus. If we have neither then this event
--         * is the user clicking on the background window to activate and
--         * bring us to the front, which will be done by the sendEvent
--         * call below. We definitely don't want to pass that click through
--         * to the guest.
-+        return [self handleMouseEvent:event buttons:buttons];
-+    }
-+    return true;
-+}
-+
-+- (bool) handleMouseEvent:(NSEvent *)event buttons:(uint32_t)buttons
-+{
-+    /* Don't send button events to the guest unless we've got a
-+     * mouse grab or window focus. If we have neither then this event
-+     * is the user clicking on the background window to activate and
-+     * bring us to the front, which will be done by the sendEvent
-+     * call below. We definitely don't want to pass that click through
-+     * to the guest.
-+     */
-+    if ((isMouseGrabbed || [[self window] isKeyWindow]) &&
-+        (last_buttons != buttons)) {
-+        static uint32_t bmap[INPUT_BUTTON__MAX] = {
-+            [INPUT_BUTTON_LEFT]       = MOUSE_EVENT_LBUTTON,
-+            [INPUT_BUTTON_MIDDLE]     = MOUSE_EVENT_MBUTTON,
-+            [INPUT_BUTTON_RIGHT]      = MOUSE_EVENT_RBUTTON
-+        };
-+        qemu_input_update_buttons(dcl.con, bmap, last_buttons, buttons);
-+        last_buttons = buttons;
-+    }
-+
-+    return [self handleMouseEvent:event];
-+}
-+
-+- (bool) handleMouseEvent:(NSEvent *)event
-+{
-+    if (!isMouseGrabbed) {
-+        return false;
-+    }
-+
-+    if (isAbsoluteEnabled) {
-+        NSPoint p = [self screenLocationOfEvent:event];
-+
-+        /* Note that the origin for Cocoa mouse coords is bottom left, not top left.
-+         * The check on screenContainsPoint is to avoid sending out of range values for
-+         * clicks in the titlebar.
-          */
--        if ((isMouseGrabbed || [[self window] isKeyWindow]) &&
--            (last_buttons != buttons)) {
--            static uint32_t bmap[INPUT_BUTTON__MAX] = {
--                [INPUT_BUTTON_LEFT]       = MOUSE_EVENT_LBUTTON,
--                [INPUT_BUTTON_MIDDLE]     = MOUSE_EVENT_MBUTTON,
--                [INPUT_BUTTON_RIGHT]      = MOUSE_EVENT_RBUTTON
--            };
--            qemu_input_update_buttons(dcl.con, bmap, last_buttons, buttons);
--            last_buttons = buttons;
-+        if ([self screenContainsPoint:p]) {
-+            qemu_input_queue_abs(dcl.con, INPUT_AXIS_X, p.x, 0, screen.width);
-+            qemu_input_queue_abs(dcl.con, INPUT_AXIS_Y, screen.height - p.y, 0, screen.height);
-         }
--        if (isMouseGrabbed) {
--            if (isAbsoluteEnabled) {
--                /* Note that the origin for Cocoa mouse coords is bottom left, not top left.
--                 * The check on screenContainsPoint is to avoid sending out of range values for
--                 * clicks in the titlebar.
--                 */
--                if ([self screenContainsPoint:p]) {
--                    qemu_input_queue_abs(dcl.con, INPUT_AXIS_X, p.x, 0, screen.width);
--                    qemu_input_queue_abs(dcl.con, INPUT_AXIS_Y, screen.height - p.y, 0, screen.height);
--                }
--            } else {
--                qemu_input_queue_rel(dcl.con, INPUT_AXIS_X, (int)[event deltaX]);
--                qemu_input_queue_rel(dcl.con, INPUT_AXIS_Y, (int)[event deltaY]);
--            }
--        } else {
--            return false;
--        }
--        qemu_input_event_sync();
-+    } else {
-+        qemu_input_queue_rel(dcl.con, INPUT_AXIS_X, (int)[event deltaX]);
-+        qemu_input_queue_rel(dcl.con, INPUT_AXIS_Y, (int)[event deltaY]);
-     }
-+
-+    qemu_input_event_sync();
-+
-     return true;
- }
- 
+     create_initial_menus();
 
 -- 
 2.43.2
