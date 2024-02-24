@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4512CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 20:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB9B0C54E41
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 20:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdyh8-00044q-B6; Sat, 24 Feb 2024 15:32:27 -0500
+	id 1rdygv-0003w6-Sh; Sat, 24 Feb 2024 15:32:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1rdygq-0003vq-Fs; Sat, 24 Feb 2024 15:32:11 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1rdygo-0003pr-3Q; Sat, 24 Feb 2024 15:32:06 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1rdygo-00064T-8l; Sat, 24 Feb 2024 15:32:07 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a3e7f7b3d95so225271566b.3; 
- Sat, 24 Feb 2024 12:32:05 -0800 (PST)
+ id 1rdygm-00063y-DK; Sat, 24 Feb 2024 15:32:05 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-512b29f82d1so2274230e87.1; 
+ Sat, 24 Feb 2024 12:32:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708806724; x=1709411524; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708806722; x=1709411522; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=13OHCQV4gOWKyRBUqNbkx8gEZsa9oMxaeAkREwVQxP4=;
- b=gppdoHe6mwecLyTIUh3yvqT0vEfuDeD1TJo7VIOwRKY91KpN6K8DyjXll1+4gjvDtg
- uvamhVSkg2Jdbny2ZIeu+msxOeQBLVligQRaWGz5d+enXHa1uItfr0BHauW0UqpFMLiL
- ZUoOkBXe+9CZLeGP9/aBprYLMiDdqM+DdCtIE1sGuDD1s3J3WFq3C5CNqqdER5Vxla+3
- 2daAm3TwDcnKW3totx8tCWOmXzQFeyyTm2tANmOkWVNwMeLSKvqZWJ3U/+Xyygr/4v6E
- BQI97hPTOXW/EmrtRpA3QPW5Q6SVTpe+c/c14TT90tKbgCcrWWXcxQp3cgSXeLFtCEke
- P44g==
+ bh=ft9ScgMPYrX962/fy5rpfMzpqIALAe9W+5EeD1CSYrw=;
+ b=kIJxQVnESYQqp4ek44TrdT+GXxf242yBWDquRcwbwqQ7KACWatVMMTzMW72OQwiWC+
+ L/QkrIoplo2KVh1VXLxIwHPydIcmzuyzv+nHrZ7LnlvaQruAl5lu0diRs1LgBosxdjO9
+ rb2Gb2BcDnCdcpaUUiMyMmF+1RN/7pve4lOsaOiUxnP3JYVZ4ueBh9EJqXefwnB/yRa4
+ Xvyie5fPD13bIGrZ8aFRybAONZlY7ZCcoF7FnVY2UhKDjTuBwaHD1vtbgekCFnOtx2TK
+ W0tfjzfn4tItQIor07OH9VMgWOBTqK0UgTktnrMAaHBy5wFanTkZ5sM65fUlW/4NoNPo
+ rXHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708806724; x=1709411524;
+ d=1e100.net; s=20230601; t=1708806722; x=1709411522;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=13OHCQV4gOWKyRBUqNbkx8gEZsa9oMxaeAkREwVQxP4=;
- b=xM+V+foFBl80dy9Eszb/k6k5IQ6z3wBq6t5notK6GgNGFsNnYia21XudtpkV64VXaV
- VrrUh6n3NhRzQBTIjZjXS4ACA76sa11vaeSP3fRj4URBJutL7z39co0OKUN0sYzn/vma
- gSTuUXfkRIDCAFWW9JYm+C8oDNVtr1JN1jgiFghG4CJyyrRf75OzTofjFLCIikE1eNiK
- 19Gj0AginWI+9bDdVmj0tP1azdDU+TovbmtpDKYRpDUpznYsVda7XgO+UW1j1zvdOmRs
- drPV5J9tHYsnV5dFRqxBEXKRVhgHAs+B3M0Pm82ijUfhUk/I/JnNOkLwnttRUIG4930u
- cu5Q==
+ bh=ft9ScgMPYrX962/fy5rpfMzpqIALAe9W+5EeD1CSYrw=;
+ b=r/kZ0DRQKeSt/c8j/EVhwDnKxOcQet108cjPGl7SsHh6zU9HHhO/jS7yExVcZVXfxm
+ zFyVcd6KeT8druB4vz7dWHZ3W88xtLkQnXjYUqtTf6f0pLS/zU7BbSeaUKuGOI1Y0VMN
+ QmdmYG67t6iEaTA2G37W4mcdqIsedXz8IoXEY72DxZjxgq82N+mcPvqN0oQUPDEQiS3K
+ 9dzNPcM9N6vzzoLTOaWRv5pSROyyT1lVT1ApeOE0bSXagNPR0ZaHsfxrKi7iMgAm4vfi
+ LmXruX5Njk1T1EZDcQBC8euAnI8+BioakRD7rDld20qjPFLs0PAVPcsGhbKqGOq1pvcf
+ cyjg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7iXSHwgCqx5CwiaFmu4rgozgkyfx1fQb+FUcqXIrZtlidcR3pZPteZV3eqhWmuKXoAr7YN79WYwQtevCI/u4b8Vay
-X-Gm-Message-State: AOJu0Ywvf8maDLn3MNmOlxbCS56JaWuG4OplnLmC0PgzL7UFAmuYmh8Y
- /j8OM2Y6JDER4XnnCtjiLyPdQ75W8ocfa1VVUYVQlpaYP+UssBNpgj+H+mbL
-X-Google-Smtp-Source: AGHT+IGQjqceD7w8+mJ9JyHG24y41S0/lBmYpRljdmkiIyw6Beg0OyeylKmwwL4tXS3cKhg+E8T5EA==
-X-Received: by 2002:a17:906:cd0f:b0:a41:3950:d11c with SMTP id
- oz15-20020a170906cd0f00b00a413950d11cmr2193997ejb.28.1708806724097; 
- Sat, 24 Feb 2024 12:32:04 -0800 (PST)
+ AJvYcCU4k2YNhN3HEMz63efqn4zoiGtYi0vEDHObrLJ0EHjcprAknnYxYR0yBaqi6vDpA5bis26Dj9szCfp+1PzArvH+/2T6
+X-Gm-Message-State: AOJu0YzYI2iOvKPho6KBY65LrRYEcSwsALyZ2NmXnpUrpU1s83ki0zgN
+ TB2X7WJ4gYa1pe1YlbApp/22YtzWbk2TQcR2WMEDfzXi/jcQBlipt9ulPQwi
+X-Google-Smtp-Source: AGHT+IE7sB8CF8Onjqi6jvMI/G7v2FH4x9/OkMGOJ8NEo/Oo2x/gjeWpb4matnsq0ABFdnK8rFjx4A==
+X-Received: by 2002:a05:6512:614:b0:512:e51f:b58 with SMTP id
+ b20-20020a056512061400b00512e51f0b58mr2086446lfe.24.1708806721866; 
+ Sat, 24 Feb 2024 12:32:01 -0800 (PST)
 Received: from localhost.localdomain ([212.70.108.232])
  by smtp.gmail.com with ESMTPSA id
- n11-20020a170906088b00b00a3d636e412bsm863405eje.123.2024.02.24.12.32.02
+ n11-20020a170906088b00b00a3d636e412bsm863405eje.123.2024.02.24.12.32.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 24 Feb 2024 12:32:03 -0800 (PST)
+ Sat, 24 Feb 2024 12:32:01 -0800 (PST)
 From: Rayhan Faizel <rayhan.faizel@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, philmd@linaro.org, pbonzini@redhat.com,
- qemu-arm@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v5 3/3] tests/qtest: Add testcase for BCM2835 BSC
-Date: Sun, 25 Feb 2024 00:40:38 +0530
-Message-Id: <20240224191038.2409945-4-rayhan.faizel@gmail.com>
+ qemu-arm@nongnu.org, Rayhan Faizel <rayhan.faizel@gmail.com>
+Subject: [PATCH v5 2/3] hw/arm: Connect BSC to BCM2835 board as I2C0,
+ I2C1 and I2C2
+Date: Sun, 25 Feb 2024 00:40:37 +0530
+Message-Id: <20240224191038.2409945-3-rayhan.faizel@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240224191038.2409945-1-rayhan.faizel@gmail.com>
 References: <20240224191038.2409945-1-rayhan.faizel@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=rayhan.faizel@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,151 +95,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simple testcase for validating proper operation of read and write for all
-three BSC controllers.
+BCM2835 has three I2C controllers. All of them share the same interrupt line.
 
 Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bcm2835-i2c-test.c | 115 +++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |   2 +-
- 2 files changed, 116 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/bcm2835-i2c-test.c
+ hw/arm/Kconfig                       |  1 +
+ hw/arm/bcm2835_peripherals.c         | 45 ++++++++++++++++++++++++++--
+ include/hw/arm/bcm2835_peripherals.h |  4 ++-
+ 3 files changed, 46 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/bcm2835-i2c-test.c b/tests/qtest/bcm2835-i2c-test.c
-new file mode 100644
-index 0000000000..513ecce61d
---- /dev/null
-+++ b/tests/qtest/bcm2835-i2c-test.c
-@@ -0,0 +1,115 @@
-+/*
-+ * QTest testcase for Broadcom Serial Controller (BSC)
-+ *
-+ * Copyright (c) 2024 Rayhan Faizel <rayhan.faizel@gmail.com>
-+ *
-+ * SPDX-License-Identifier: MIT
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 980b14d58d..2b52cec980 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -430,6 +430,7 @@ config RASPI
+     select SDHCI
+     select USB_DWC2
+     select BCM2835_SPI
++    select BCM2835_I2C
+ 
+ config STM32F100_SOC
+     bool
+diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+index d5573fd954..f6069b23f6 100644
+--- a/hw/arm/bcm2835_peripherals.c
++++ b/hw/arm/bcm2835_peripherals.c
+@@ -30,6 +30,9 @@
+ #define SEPARATE_DMA_IRQ_MAX 10
+ #define ORGATED_DMA_IRQ_COUNT 4
+ 
++/* All three I2C controllers share the same IRQ */
++#define ORGATED_I2C_IRQ_COUNT 3
 +
-+#include "qemu/osdep.h"
-+#include "libqtest-single.h"
+ static void create_unimp(BCM2835PeripheralState *ps,
+                          UnimplementedDeviceState *uds,
+                          const char *name, hwaddr ofs, hwaddr size)
+@@ -148,6 +151,19 @@ static void bcm2835_peripherals_init(Object *obj)
+     /* SPI */
+     object_initialize_child(obj, "bcm2835-spi0", &s->spi[0],
+                             TYPE_BCM2835_SPI);
 +
-+#include "hw/i2c/bcm2835_i2c.h"
-+#include "hw/sensor/tmp105_regs.h"
++    /* I2C */
++    object_initialize_child(obj, "bcm2835-i2c0", &s->i2c[0],
++                            TYPE_BCM2835_I2C);
++    object_initialize_child(obj, "bcm2835-i2c1", &s->i2c[1],
++                            TYPE_BCM2835_I2C);
++    object_initialize_child(obj, "bcm2835-i2c2", &s->i2c[2],
++                            TYPE_BCM2835_I2C);
 +
-+static const uint32_t bsc_base_addrs[] = {
-+    0x3f205000,                         /* I2C0 */
-+    0x3f804000,                         /* I2C1 */
-+    0x3f805000,                         /* I2C2 */
-+};
-+
-+static void bcm2835_i2c_init_transfer(uint32_t base_addr, bool read)
-+{
-+    /* read flag is bit 0 so we can write it directly */
-+    int interrupt = read ? BCM2835_I2C_C_INTR : BCM2835_I2C_C_INTT;
-+
-+    writel(base_addr + BCM2835_I2C_C,
-+           BCM2835_I2C_C_I2CEN | BCM2835_I2C_C_INTD |
-+           BCM2835_I2C_C_ST | BCM2835_I2C_C_CLEAR | interrupt | read);
-+}
-+
-+static void test_i2c_read_write(gconstpointer data)
-+{
-+    uint32_t i2cdata;
-+    intptr_t index = (intptr_t) data;
-+    uint32_t base_addr = bsc_base_addrs[index];
-+
-+    /* Write to TMP105 register */
-+    writel(base_addr + BCM2835_I2C_A, 0x50);
-+    writel(base_addr + BCM2835_I2C_DLEN, 3);
-+
-+    bcm2835_i2c_init_transfer(base_addr, 0);
-+
-+    writel(base_addr + BCM2835_I2C_FIFO, TMP105_REG_T_HIGH);
-+    writel(base_addr + BCM2835_I2C_FIFO, 0xde);
-+    writel(base_addr + BCM2835_I2C_FIFO, 0xad);
-+
-+    /* Clear flags */
-+    writel(base_addr + BCM2835_I2C_S, BCM2835_I2C_S_DONE | BCM2835_I2C_S_ERR |
-+                                      BCM2835_I2C_S_CLKT);
-+
-+    /* Read from TMP105 register */
-+    writel(base_addr + BCM2835_I2C_A, 0x50);
-+    writel(base_addr + BCM2835_I2C_DLEN, 1);
-+
-+    bcm2835_i2c_init_transfer(base_addr, 0);
-+
-+    writel(base_addr + BCM2835_I2C_FIFO, TMP105_REG_T_HIGH);
-+
-+    writel(base_addr + BCM2835_I2C_DLEN, 2);
-+    bcm2835_i2c_init_transfer(base_addr, 1);
-+
-+    i2cdata = readl(base_addr + BCM2835_I2C_FIFO);
-+    g_assert_cmpint(i2cdata, ==, 0xde);
-+
-+    i2cdata = readl(base_addr + BCM2835_I2C_FIFO);
-+    g_assert_cmpint(i2cdata, ==, 0xad);
-+
-+    /* Clear flags */
-+    writel(base_addr + BCM2835_I2C_S, BCM2835_I2C_S_DONE | BCM2835_I2C_S_ERR |
-+                                      BCM2835_I2C_S_CLKT);
-+
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    int ret;
-+    int i;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    for (i = 0; i < 3; i++) {
-+        g_autofree char *test_name =
-+        g_strdup_printf("/bcm2835/bcm2835-i2c%d/read_write", i);
-+        qtest_add_data_func(test_name, (void *)(intptr_t) i,
-+                            test_i2c_read_write);
++    object_initialize_child(obj, "orgated-i2c-irq",
++                            &s->orgated_i2c_irq, TYPE_OR_IRQ);
++    object_property_set_int(OBJECT(&s->orgated_i2c_irq), "num-lines",
++                            ORGATED_I2C_IRQ_COUNT, &error_abort);
+ }
+ 
+ static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
+@@ -418,14 +434,37 @@ static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
+                                               BCM2835_IC_GPU_IRQ,
+                                               INTERRUPT_SPI));
+ 
++    /* I2C */
++    for (n = 0; n < 3; n++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[n]), errp)) {
++            return;
++        }
 +    }
 +
-+    /* Run I2C tests with TMP105 slaves on all three buses */
-+    qtest_start("-M raspi3b "
-+                "-device tmp105,address=0x50,bus=i2c-bus.0 "
-+                "-device tmp105,address=0x50,bus=i2c-bus.1 "
-+                "-device tmp105,address=0x50,bus=i2c-bus.2");
-+    ret = g_test_run();
-+    qtest_end();
++    memory_region_add_subregion(&s->peri_mr, BSC0_OFFSET,
++            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[0]), 0));
++    memory_region_add_subregion(&s->peri_mr, BSC1_OFFSET,
++            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[1]), 0));
++    memory_region_add_subregion(&s->peri_mr, BSC2_OFFSET,
++            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c[2]), 0));
 +
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 39557d5ecb..8fe303160e 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -228,7 +228,7 @@ qtests_aarch64 = \
-     ['tpm-tis-device-test', 'tpm-tis-device-swtpm-test'] : []) +                                         \
-   (config_all_devices.has_key('CONFIG_XLNX_ZYNQMP_ARM') ? ['xlnx-can-test', 'fuzz-xlnx-dp-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test'] : []) +  \
-+  (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
-   (config_all_accel.has_key('CONFIG_TCG') and                                            \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
++    if (!qdev_realize(DEVICE(&s->orgated_i2c_irq), NULL, errp)) {
++        return;
++    }
++    for (n = 0; n < ORGATED_I2C_IRQ_COUNT; n++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[n]), 0,
++                           qdev_get_gpio_in(DEVICE(&s->orgated_i2c_irq), n));
++    }
++    qdev_connect_gpio_out(DEVICE(&s->orgated_i2c_irq), 0,
++                          qdev_get_gpio_in_named(DEVICE(&s->ic),
++                                                 BCM2835_IC_GPU_IRQ,
++                                                 INTERRUPT_I2C));
++
+     create_unimp(s, &s->txp, "bcm2835-txp", TXP_OFFSET, 0x1000);
+     create_unimp(s, &s->armtmr, "bcm2835-sp804", ARMCTRL_TIMER0_1_OFFSET, 0x40);
+     create_unimp(s, &s->i2s, "bcm2835-i2s", I2S_OFFSET, 0x100);
+     create_unimp(s, &s->smi, "bcm2835-smi", SMI_OFFSET, 0x100);
+     create_unimp(s, &s->bscsl, "bcm2835-spis", BSC_SL_OFFSET, 0x100);
+-    create_unimp(s, &s->i2c[0], "bcm2835-i2c0", BSC0_OFFSET, 0x20);
+-    create_unimp(s, &s->i2c[1], "bcm2835-i2c1", BSC1_OFFSET, 0x20);
+-    create_unimp(s, &s->i2c[2], "bcm2835-i2c2", BSC2_OFFSET, 0x20);
+     create_unimp(s, &s->otp, "bcm2835-otp", OTP_OFFSET, 0x80);
+     create_unimp(s, &s->dbus, "bcm2835-dbus", DBUS_OFFSET, 0x8000);
+     create_unimp(s, &s->ave0, "bcm2835-ave0", AVE0_OFFSET, 0x8000);
+diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
+index 0203bb79d8..09a3c06533 100644
+--- a/include/hw/arm/bcm2835_peripherals.h
++++ b/include/hw/arm/bcm2835_peripherals.h
+@@ -32,6 +32,7 @@
+ #include "hw/timer/bcm2835_systmr.h"
+ #include "hw/usb/hcd-dwc2.h"
+ #include "hw/ssi/bcm2835_spi.h"
++#include "hw/i2c/bcm2835_i2c.h"
+ #include "hw/misc/unimp.h"
+ #include "qom/object.h"
+ 
+@@ -68,7 +69,8 @@ struct BCM2835PeripheralState {
+     Bcm2835ThermalState thermal;
+     UnimplementedDeviceState i2s;
+     BCM2835SPIState spi[1];
+-    UnimplementedDeviceState i2c[3];
++    BCM2835I2CState i2c[3];
++    OrIRQState orgated_i2c_irq;
+     UnimplementedDeviceState otp;
+     UnimplementedDeviceState dbus;
+     UnimplementedDeviceState ave0;
 -- 
 2.34.1
 
