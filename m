@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFA8C54E49
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 12:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A8EBC48BF6
+	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 12:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rdrNd-00024t-DB; Sat, 24 Feb 2024 07:43:49 -0500
+	id 1rdrO8-0002CF-9q; Sat, 24 Feb 2024 07:44:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrNc-00024E-2m
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:48 -0500
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1rdrO6-0002C5-Iw
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:44:18 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rdrNa-0006n5-DL
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:43:47 -0500
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-5cfd95130c6so769004a12.1
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:43:46 -0800 (PST)
+ id 1rdrO5-0006xn-1g
+ for qemu-devel@nongnu.org; Sat, 24 Feb 2024 07:44:18 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1d95d67ff45so11255405ad.2
+ for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 04:44:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708778625; x=1709383425;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1708778656; x=1709383456;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GG87OFLhC3noDXFr+Lno/CpVrGOAWm4AVgErsmIKfbI=;
- b=hY7fEoXBSBHVGVbDq3+C2Sy4A6yBIwhMeUx9BdYIUOdCbBXLoSyGMoGZpfgluY6EDt
- r5xbUGu9qQ7GDTv44octgzg3eGNYHUCgDaJezyVhfkOMSjCUHfZpXxBI5T4658SfK2hP
- Z28nbxcmChQoUFnnrD1lHZvo6z6reMBUT6rU9EePaR+HHAsg8ApNeYBwYXUo3c0u+kDS
- qhxxvXCBlQtRlB0OEzshSj3ZorpK2jfbL6kBfzam/+89SzI9Hv4yeMa3bwUsDqN6V/2h
- mOdzDygvZe/AjfHKYFEQOY4Vu0WturlUQ91Xx6HJcugKm4uRSIjRtxJsGMSgPGY7wTEn
- +DkQ==
+ :reply-to; bh=jqtng6eTMtQKGpQNRytiSork9i3+Tz3l9sTU1dsSA4k=;
+ b=wTa8W2I8ButUqG8AvFmDCmqCChKKW/imSFNkkQ4bLEzKfrerSQnHY4SI2f6oM8Tdo5
+ gVDYfuXUa2wysNgdLnqOOXSzoJFnodLPchfI8wvAbZtemCQtVYwfsbBoCBZIROrVLSok
+ 2C5cO2s77mqiYgYUU7k1/+LIbVfi8kMyHHO7FhxP+pdHaoZ+p5iburGHTvAC5iiqzDRd
+ YVC25g74lRi/olEXSfTXd5+tPv4eMncegUmuX5Kz4pPy3qNA6zdkJyFlg2HKbrQJZaOd
+ d6BmRP/VjNwhEfKpz1rz5rt8fdFCfAv/g7TU4ljgsvd4Dcp2WdnjJrPpD/BKqaK1BJ31
+ HKaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708778625; x=1709383425;
+ d=1e100.net; s=20230601; t=1708778656; x=1709383456;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GG87OFLhC3noDXFr+Lno/CpVrGOAWm4AVgErsmIKfbI=;
- b=dRmWQgGtbhJe65y6VoCP0/BJohI4KZpY2Ea1lvpOMgvnBi1W6pWoi7Fy0QXEu7TOpv
- bvTa96tBbv1a6WhsPRhGh0FuFzo9+NcYGpcP7LBlzWF+BDUM71foJ++Uex6DVep38wqS
- xGxq3a5YOp2BlZMnB9fkx3kln72NExId7a9+8f9XscijviQA8W9HCkICo/yb6fUuvZAE
- EZEwwTaXnZBVrrbYvfUxAL7Z8sRnmdYEzVztNVdrX5OHAPH+ke2oKEXiPz/ayM4FSgFt
- tObr01SC2u0K6kkIjpgzseztXi4EQYPt2FZGHS8Aat6afUErNoLRlrIOCmB5S5hEgKai
- CzhQ==
-X-Gm-Message-State: AOJu0YyEBV4Utx1Lte9HTbrzON1pswG2zHNsvnbAUW+AkO1wVYlqcSPk
- ZtzuKBQpTLJ8vOeK4mYO/zkBi8v86ywO4nQNC43mp+EN/7b2fAlGsAyb9l+J6+LXSlM3qMJajMi
- n
-X-Google-Smtp-Source: AGHT+IHLiIGBQezQQBfLFKZz7e/D00/30rQFx0ybNZddasXRaa4lW7sheBPLt4Hzhj0gsDGNrJv7Jw==
-X-Received: by 2002:a17:90b:358b:b0:299:544c:4933 with SMTP id
- mm11-20020a17090b358b00b00299544c4933mr2015676pjb.14.1708778624815; 
- Sat, 24 Feb 2024 04:43:44 -0800 (PST)
+ bh=jqtng6eTMtQKGpQNRytiSork9i3+Tz3l9sTU1dsSA4k=;
+ b=MhVh89uXfre93Nn0yaiRNNEYqjnN9XyWDWhlYtWAO+GRTHE1C6NZbzJp3wyyRpAUVg
+ eivKKO8jOsBZt5PE6iSeX4EysdE1dnd1IIz4zWE0vMlVSCvcAkOL9fFFPUVOUe/7cPhu
+ OFk+HfuH+lU47K6kwKUyZ5kLg87PMmtPmW7IqtqowTA11xPWSCQlOA3ZbFRWCgj5KV+o
+ s+DuRJTseJS2s9aDXNNCzjY29/fiGimNYzIvLJhbZEJ3eRx0fbqfQPCIEkSjlDqauqos
+ a7MtR2Gu/mpcpKl1LgbSFlYPZXwpLX5pok5+WEOSZyzLqE9PuoNx9AvDmQl5iBY4xgSS
+ gXvw==
+X-Gm-Message-State: AOJu0YyM3szaRT96RoIuExFWi0XaUGnp9My1ltxDk8CePBMfxQgDzWbE
+ npInckYzGqTDRhyVKRWNeLVoaHc3CXyT0vfSAc5KDo8p7MOdXv8vWe5YbQi1wPM=
+X-Google-Smtp-Source: AGHT+IF2Ute0k5bWDUygAaUdeqJGFJ8UIkSu+OXUfsDZOGe79DVEk2/usZZpam3DjUrfA3pgvG3W8g==
+X-Received: by 2002:a17:902:720c:b0:1db:51ee:8677 with SMTP id
+ ba12-20020a170902720c00b001db51ee8677mr2622657plb.59.1708778655889; 
+ Sat, 24 Feb 2024 04:44:15 -0800 (PST)
 Received: from localhost ([157.82.203.206])
  by smtp.gmail.com with UTF8SMTPSA id
- p1-20020a17090ac00100b0029969cc66f2sm1143862pjt.48.2024.02.24.04.43.42
+ y18-20020a170902b49200b001d94e6a7685sm953135plr.234.2024.02.24.04.44.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 24 Feb 2024 04:43:44 -0800 (PST)
+ Sat, 24 Feb 2024 04:44:15 -0800 (PST)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 24 Feb 2024 21:43:33 +0900
-Subject: [PATCH v12 02/10] ui/cocoa: Immediately call [-QemuCocoaView
- handleMouseEvent:buttons:]
+Date: Sat, 24 Feb 2024 21:43:41 +0900
+Subject: [PATCH v12 10/10] ui/cocoa: Remove stretch_video flag
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240224-cocoa-v12-2-e89f70bdda71@daynix.com>
+Message-Id: <20240224-cocoa-v12-10-e89f70bdda71@daynix.com>
 References: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
 In-Reply-To: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
@@ -77,8 +75,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
  Rene Engel <ReneEngel80@emailn.de>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::52c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::629;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,171 +98,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of using mouse_event variable to tell to handle a mouse event
-later, immediately call [-QemuCocoaView handleMouseEvent:buttons:].
+Evaluate [normalWindow styleMask] & NSWindowStyleMaskResizable instead.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- ui/cocoa.m | 87 ++++++++++++++++++++++----------------------------------------
- 1 file changed, 30 insertions(+), 57 deletions(-)
+ ui/cocoa.m | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
 diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 32d61e226507..06bd5737636b 100644
+index 33d31b82bcab..b33842e70280 100644
 --- a/ui/cocoa.m
 +++ b/ui/cocoa.m
-@@ -799,9 +799,8 @@ - (bool) handleEventLocked:(NSEvent *)event
+@@ -102,7 +102,6 @@ static void cocoa_switch(DisplayChangeListener *dcl,
+ static int left_command_key_enabled = 1;
+ static bool swap_opt_cmd;
+ 
+-static bool stretch_video;
+ static NSTextField *pauseLabel;
+ 
+ static bool allow_events;
+@@ -514,7 +513,7 @@ - (void) resizeWindow
  {
-     /* Return true if we handled the event, false if it should be given to OSX */
-     COCOA_DEBUG("QemuCocoaView: handleEvent\n");
--    int buttons = 0;
-+    InputButton button;
-     int keycode = 0;
--    bool mouse_event = false;
-     // Location of event in virtual screen coordinates
-     NSPoint p = [self screenLocationOfEvent:event];
-     NSUInteger modifiers = [event modifierFlags];
-@@ -947,7 +946,7 @@ - (bool) handleEventLocked:(NSEvent *)event
-                     }
-                     break;
-             }
--            break;
-+            return true;
-         case NSEventTypeKeyDown:
-             keycode = cocoa_keycode_to_qemu([event keyCode]);
+     [[self window] setContentAspectRatio:NSMakeSize(screen.width, screen.height)];
  
-@@ -983,7 +982,7 @@ - (bool) handleEventLocked:(NSEvent *)event
-             } else {
-                 [self handleMonitorInput: event];
-             }
--            break;
-+            return true;
-         case NSEventTypeKeyUp:
-             keycode = cocoa_keycode_to_qemu([event keyCode]);
- 
-@@ -996,7 +995,7 @@ - (bool) handleEventLocked:(NSEvent *)event
-             if (qemu_console_is_graphic(NULL)) {
-                 qkbd_state_key_event(kbd, keycode, false);
-             }
--            break;
-+            return true;
-         case NSEventTypeMouseMoved:
-             if (isAbsoluteEnabled) {
-                 // Cursor re-entered into a window might generate events bound to screen coordinates
-@@ -1012,34 +1011,20 @@ - (bool) handleEventLocked:(NSEvent *)event
-                     }
-                 }
-             }
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:0];
-         case NSEventTypeLeftMouseDown:
--            buttons |= MOUSE_EVENT_LBUTTON;
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:MOUSE_EVENT_LBUTTON];
-         case NSEventTypeRightMouseDown:
--            buttons |= MOUSE_EVENT_RBUTTON;
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:MOUSE_EVENT_RBUTTON];
-         case NSEventTypeOtherMouseDown:
--            buttons |= MOUSE_EVENT_MBUTTON;
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:MOUSE_EVENT_MBUTTON];
-         case NSEventTypeLeftMouseDragged:
--            buttons |= MOUSE_EVENT_LBUTTON;
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:MOUSE_EVENT_LBUTTON];
-         case NSEventTypeRightMouseDragged:
--            buttons |= MOUSE_EVENT_RBUTTON;
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:MOUSE_EVENT_RBUTTON];
-         case NSEventTypeOtherMouseDragged:
--            buttons |= MOUSE_EVENT_MBUTTON;
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:MOUSE_EVENT_MBUTTON];
-         case NSEventTypeLeftMouseUp:
--            mouse_event = true;
-             if (!isMouseGrabbed && [self screenContainsPoint:p]) {
-                 /*
-                  * In fullscreen mode, the window of cocoaView may not be the
-@@ -1050,53 +1035,41 @@ - (bool) handleEventLocked:(NSEvent *)event
-                     [self grabMouse];
-                 }
-             }
--            break;
-+            return [self handleMouseEvent:event buttons:0];
-         case NSEventTypeRightMouseUp:
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:0];
-         case NSEventTypeOtherMouseUp:
--            mouse_event = true;
--            break;
-+            return [self handleMouseEvent:event buttons:0];
-         case NSEventTypeScrollWheel:
-             /*
-              * Send wheel events to the guest regardless of window focus.
-              * This is in-line with standard Mac OS X UI behaviour.
-              */
- 
--            /*
--             * We shouldn't have got a scroll event when deltaY and delta Y
--             * are zero, hence no harm in dropping the event
--             */
--            if ([event deltaY] != 0 || [event deltaX] != 0) {
-             /* Determine if this is a scroll up or scroll down event */
--                if ([event deltaY] != 0) {
--                  buttons = ([event deltaY] > 0) ?
-+            if ([event deltaY] != 0) {
-+                button = ([event deltaY] > 0) ?
-                     INPUT_BUTTON_WHEEL_UP : INPUT_BUTTON_WHEEL_DOWN;
--                } else if ([event deltaX] != 0) {
--                  buttons = ([event deltaX] > 0) ?
-+            } else if ([event deltaX] != 0) {
-+                button = ([event deltaX] > 0) ?
-                     INPUT_BUTTON_WHEEL_LEFT : INPUT_BUTTON_WHEEL_RIGHT;
--                }
--
--                qemu_input_queue_btn(dcl.con, buttons, true);
--                qemu_input_event_sync();
--                qemu_input_queue_btn(dcl.con, buttons, false);
--                qemu_input_event_sync();
-+            } else {
-+                /*
-+                 * We shouldn't have got a scroll event when deltaY and delta Y
-+                 * are zero, hence no harm in dropping the event
-+                 */
-+                return true;
-             }
- 
--            /*
--             * Since deltaX/deltaY also report scroll wheel events we prevent mouse
--             * movement code from executing.
--             */
--            mouse_event = false;
--            break;
-+            qemu_input_queue_btn(dcl.con, button, true);
-+            qemu_input_event_sync();
-+            qemu_input_queue_btn(dcl.con, button, false);
-+            qemu_input_event_sync();
-+
-+            return true;
-         default:
-             return false;
-     }
--
--    if (mouse_event) {
--        return [self handleMouseEvent:event buttons:buttons];
+-    if (!stretch_video) {
++    if (!([[self window] styleMask] & NSWindowStyleMaskResizable)) {
+         [[self window] setContentSize:NSMakeSize(screen.width, screen.height)];
+         [[self window] center];
+     } else if ([[self window] styleMask] & NSWindowStyleMaskFullScreen) {
+@@ -1346,15 +1345,10 @@ - (void)showQEMUDoc:(id)sender
+ /* Stretches video to fit host monitor size */
+ - (void)zoomToFit:(id) sender
+ {
+-    stretch_video = !stretch_video;
+-    if (stretch_video == true) {
+-        [cocoaView window].styleMask |= NSWindowStyleMaskResizable;
+-        [sender setState: NSControlStateValueOn];
+-    } else {
+-        [cocoaView window].styleMask &= ~NSWindowStyleMaskResizable;
+-        [cocoaView resizeWindow];
+-        [sender setState: NSControlStateValueOff];
 -    }
--    return true;
++    NSWindowStyleMask styleMask = [[cocoaView window] styleMask] ^ NSWindowStyleMaskResizable;
++
++    [[cocoaView window] setStyleMask:styleMask];
++    [sender setState:styleMask & NSWindowStyleMaskResizable ? NSControlStateValueOn : NSControlStateValueOff];
  }
  
- - (bool) handleMouseEvent:(NSEvent *)event buttons:(uint32_t)buttons
+ /* Displays the console on the screen */
+@@ -1619,7 +1613,7 @@ static void create_initial_menus(void)
+     menu = [[NSMenu alloc] initWithTitle:@"View"];
+     [menu addItem: [[[NSMenuItem alloc] initWithTitle:@"Enter Fullscreen" action:@selector(doToggleFullScreen:) keyEquivalent:@"f"] autorelease]]; // Fullscreen
+     menuItem = [[[NSMenuItem alloc] initWithTitle:@"Zoom To Fit" action:@selector(zoomToFit:) keyEquivalent:@""] autorelease];
+-    [menuItem setState: stretch_video ? NSControlStateValueOn : NSControlStateValueOff];
++    [menuItem setState: [[cocoaView window] styleMask] & NSWindowStyleMaskResizable ? NSControlStateValueOn : NSControlStateValueOff];
+     [menu addItem: menuItem];
+     menuItem = [[[NSMenuItem alloc] initWithTitle:@"View" action:nil keyEquivalent:@""] autorelease];
+     [menuItem setSubmenu:menu];
+@@ -2005,7 +1999,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+     }
+ 
+     if (opts->u.cocoa.has_zoom_to_fit && opts->u.cocoa.zoom_to_fit) {
+-        stretch_video = true;
+         [cocoaView window].styleMask |= NSWindowStyleMaskResizable;
+     }
+ 
 
 -- 
 2.43.2
