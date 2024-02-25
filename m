@@ -4,58 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4C6C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 21:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F9AC47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 21:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reLe0-0000US-T3; Sun, 25 Feb 2024 16:02:44 -0500
+	id 1reMD1-0008Qp-J6; Sun, 25 Feb 2024 16:38:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <g1pi@libero.it>) id 1reJAH-0005QX-8m
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 13:23:54 -0500
-Received: from smtp-31-wd.italiaonline.it ([213.209.13.31] helo=libero.it)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <g1pi@libero.it>) id 1reJAD-0006EN-HJ
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 13:23:52 -0500
-Received: from localhost ([151.29.140.90]) by smtp-31.iol.local with ESMTPA
- id eJA7rSi5Qj2oceJA8r59Ji; Sun, 25 Feb 2024 19:23:44 +0100
-x-libjamoibt: 1601
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2021;
- t=1708885424; bh=kEHOZUFx16cfj7YE4Nv0UpBUYdnUSjT7/NpAfjx163c=;
- h=From;
- b=ngVwSYp6ztt0PKQXQPDW6ndAagLYDB1g5CITipc8aih8cCwU72ceV2+NB/XMdDpFW
- aPWBjdESUtqrL9HQOcfTlt7BDjCAetFHrrb/9qXe1e4NmJatBFjjjAYWF+DoFzVeOf
- 6+l/+PDOO7Z1uBXtfVfHl8lLHseYTSwOQ3iBYDnmB+RwKKWAUJxEZndrPymo72UQHQ
- vUn3YqwVunLc6q853s8QXByKhubEGbCp5dvylDOpq5cpzlCS2QHdqwnmda4SmuTJTD
- lla7G5umeoDzd0coruxkMJM0FaGmP4PJk/PnWhJhrzUnoa8FhnFJTjDfge505h9kfI
- Ehgz5aH47U7fA==
-X-CNFS-Analysis: v=2.4 cv=d4pWygjE c=1 sm=1 tr=0 ts=65db85b0 cx=a_exe
- a=ysqyREb6S0hakrSWcZdePw==:117 a=ysqyREb6S0hakrSWcZdePw==:17 a=A1X0JdhQAAAA:8
- a=XkRKQH6RAAAA:8 a=xNf9USuDAAAA:8 a=jpfQ5zAA-lF3Itj3ug0A:9 a=CjuIK1q_8ugA:10
- a=S9t9CVBMNsWLYKe4UCoA:9 a=Df3jFdWbhGDLdZNm0fyq:22 a=1gUyE30hU_ULiMxJiLUW:22
- a=SEwjQc04WA-l_NiBhQ7s:22
-Date: Sun, 25 Feb 2024 19:22:50 +0100
-From: g1pi@libero.it
-To: qemu-devel@nongnu.org
-Subject: possible race condition in qemu nat layer or virtio-net
-Message-ID: <ZduFeuu-QvWe6OG7@moon>
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1reMCz-0008QU-UU
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 16:38:53 -0500
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1reMCy-0000u6-8J
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 16:38:53 -0500
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-6e49812ba77so350721a34.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 13:38:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708897131; x=1709501931; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=us8G/Byu5G78tf+FwbD6ydw9ev0wN0j/EMModdVh+mk=;
+ b=c4UzA3VB34Cf5iGXs08/qnU6PK139uvfO583CnPR6/x9kFsQrlDsdhTm8vL2KD2qZ6
+ X5zN/XSAh6EUH6lg5MR0Xo5exXDghu5MNoHqaCfna0xQyEydiZRQGcEMv4SX7ZD3XUWL
+ vGLVB4ASeSymJ0r8PvJT0vAOpk5r+p3xBOWwNHLApkOPhdui/u+4IkpA0R0NE5mqL4/6
+ MirK3AWa7VTCQ7gsbARkoR38Fp0BH67QKs8kliVC/UoF2T1gycWp6M7RB4vQKEEuKzrM
+ GgGp/V26badV/+ENb0mWHj0j7VmDIEm58FhAj6wfQwjkgEe1pzHxPdjIUIfitb+5bA+2
+ vmow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708897131; x=1709501931;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=us8G/Byu5G78tf+FwbD6ydw9ev0wN0j/EMModdVh+mk=;
+ b=ky6WtXaJ+JmIZGPdxgwywJ4zSHDPyR7F+22yhPnXozoIkoax6DmqdHmxcI/xZW2fK+
+ lfc4cZ9rkvGwVWS9lkbHiRy8YOIw8v/ZgacbHmqNEi4eP7eZxVV5czHAzrueC+/FuRL8
+ OyMXOfIR0tw87NE/ZOhUwYlr5rvQzdVZ9kuhE4Bahul73CsdmagE+g3kr6IaCtMxj571
+ 2HnMgipKZgIZdoxrnZGnKf7JAs9bRwWdOvVYobol6R8vaVH3ZpBVmiYDHoxse35QAs7Q
+ fmGZhBUem1kXlsuEaiiTtHkkPDykXff1S3WB4dpMJejHvQFjp0OUPhJM1haUkHWXBc6u
+ kHqw==
+X-Gm-Message-State: AOJu0YwWMUim8r/SGv7ODwhU2SkFM2USFJlomIHtVPg6jy9Z9jynFCmd
+ RKsIu44hkZipQyPtjrdzzFd1D01lNlpnLVuKlMqL0HpUS2WUctYR
+X-Google-Smtp-Source: AGHT+IF2Fz+F+Y4vW7TK4tjNf1/qHV4U19cfyNcP56TOeJSV5tKs1oP236bnMn9CW9U5i8poLik/pA==
+X-Received: by 2002:a05:6830:120c:b0:6e4:7be4:393a with SMTP id
+ r12-20020a056830120c00b006e47be4393amr6977458otp.5.1708897130697; 
+ Sun, 25 Feb 2024 13:38:50 -0800 (PST)
+Received: from valdaarhun.localnet ([223.233.82.79])
+ by smtp.gmail.com with ESMTPSA id
+ f6-20020a63f746000000b005dcc8a3b26esm2716500pgk.16.2024.02.25.13.38.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 25 Feb 2024 13:38:50 -0800 (PST)
+From: Sahil <icegambit91@gmail.com>
+To: eperezma@redhat.com, sgarzare@redhat.com
+Cc: qemu-devel@nongnu.org
+Subject: Intention to work on GSoC project
+Date: Mon, 26 Feb 2024 03:08:47 +0530
+Message-ID: <13625712.uLZWGnKmhe@valdaarhun>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="poLAErXQDklQCV3C"
-Content-Disposition: inline
-X-CMAE-Envelope: MS4xfFCJ2Q43oTylWpb1wwmTLDxQH3FBYDr/FhC/MRXeWlWhlcBYj4FY+KwLTVVxKxNm0yJsrtZ9lRaNhX/IjHiT7SsVNHWF+/xr3OA5glACepNZmvdkAQ7G
- hsw2gyMiPiUaWeWopiy5ZzYxPBQaE8sTV97Wy9mF3J5eRNc00KONhWTiNiA4fxP0yFvZHFz7mrbL+R2NATE3P+YF6RxsVMPBxCs=
-Received-SPF: pass client-ip=213.209.13.31; envelope-from=g1pi@libero.it;
- helo=libero.it
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=icegambit91@gmail.com; helo=mail-ot1-x32a.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 25 Feb 2024 16:02:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,184 +91,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
---poLAErXQDklQCV3C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+My name is Sahil and I go by the pseudonym 'valdaarhun' on Github. I have
+never contributed to QEMU before but I have used it a few times as an end
+user. I developed an interest in virtualization during my internship at
+VMware and would like to dive deeper in this subfield.
 
-Hi all.
+My current full-time job does not allow me to take part in external programs
+that are paid. I would like to work on one of the proposed projects outside
+of GSoC. I have gone through QEMU's list of GSoC '24 projects [1] and am
+interested in two of them:
 
-I believe I spotted a race condition in virtio-net or qemu/kvm (but
-only when virtio-net is involved).
+1. Add packed virtqueue to Shadow Virtqueue
+2. vhost-user memory isolation
 
-To replicate, one needs a virtualization environment similar to
+Based on what I have understood, they are somewhat related and are part
+of the migration subsystem. I feel the learning curve of the first project
+will be less steep and will make me better prepared to tackle the second
+project as well.
 
-Host:
-- debian 12 x86_64, kernel 6.1.0-18-amd64
-- caching name server listening on 127.0.0.1
-- qemu version 7.2.9 (Debian 1:7.2+dfsg-7+deb12u5)
-- command line:
-    qemu-system-x86_64 \
-	-enable-kvm \
-	-daemonize \
-	-parallel none \
-	-serial none \
-	-m 256 \
-	-drive if=virtio,format=raw,file=void.raw \
-	-monitor unix:run/void.mon,server,nowait \
-	-nic user,model=virtio,hostfwd=tcp:127.0.0.1:3822-:22
+I have read the "Getting Started for Developers" [2] wiki page. I have also
+built QEMU from source.
 
-Guest:
-- x86_64, linux/musl or linux/glibc or freebsd or openbsd
-- /etc/resolv.conf:
-    nameserver 10.0.2.2         i.e. the caching dns in the host
-    nameserver 192.168.1.123    non existent
+I think my next step should be to read the documentation on the migration
+subsystem [3], the blog posts attached in the first project's description
+and virtqueue's implementation. Would you also recommend that I work on a
+QEMU issue that is open on Gitlab and related to virtqueues/virtio to 
+familiarize
+myself with the codebase? I went through the issues tagged as "device:virtio" 
+[4]
+but can't really tell if any of them are good for beginners. One of them has 
+the
+"bite-size" tag [5]. It also has a patch attached but hasn't been merged. 
+Shall I
+work on getting that merged?
 
-and run the attached program in the guest.
+I have worked on a few smaller systems programming issues in other
+organizations (eg: strace [6], htop [7]) in the past.
 
-The program opens a UDP socket, sends out a bunch of (dns) requests,
-poll()s on the socket, and then receives the responses.
+I look forward to hearing from you.
 
-If a delay is inserted between the sendto() calls, the (unique) response
-from the host is received correctly:
+Regards,
+Sahil
+https://github.com/valdaarhun
 
-    $ ./a.out 10.0.2.2 >/dev/null # to warm up the host cache
-    $ ./a.out 10.0.2.2 delay 192.168.1.123
-    poll: 1 1 1
-    recvfrom() 45
-    <response packet>
-    recvfrom() -1
+[1] https://wiki.qemu.org/Google_Summer_of_Code_2024
+[2] https://wiki.qemu.org/Documentation/GettingStartedDevelopers
+[3] https://qemu-project.gitlab.io/qemu/devel/migration/index.html
+[4] https://gitlab.com/qemu-project/qemu/-/issues/?
+label_name%5B%5D=device%3Avirtio
+[5] https://gitlab.com/qemu-project/qemu/-/issues/230
+[6] https://github.com/strace/strace/commits?author=valdaarhun
+[7] https://github.com/htop-dev/htop/commits?author=valdaarhun
 
-If the sento()s are performed in short order, the response packet
-gets lost:
 
-    $ ./a.out 10.0.2.2 >/dev/null # to warm up the host cache
-    $ ./a.out 10.0.2.2 192.168.1.123
-    poll: 0 1 0
-    recvfrom() -1
-    recvfrom() -1
-
-A tcpdump capture on the host side shows no difference between the two cases.
-
-Tcpdump on the guest side is another story: in the good case, it looks like
-this
-
-7:32:44.332 IP 10.0.2.15.43276 > 10.0.2.2.53: 33452+ A? example.com. (29)
-7:32:44.333 IP 10.0.2.2.53 > 10.0.2.15.43276: 33452 1/0/0 A 93.184.216.34 (45)
-7:32:44.349 IP 10.0.2.15.43276 > 192.168.1.123.53: 33452+ A? example.com. (29)
-
-while in the bad case it looks like this
-
-7:32:55.358 IP 10.0.2.15.46537 > 10.0.2.2.53: 33452+ A? example.com. (29)
-7:32:55.358 IP 10.0.2.15.46537 > 192.168.1.123.53: 33452+ A? example.com. (29)
-7:32:55.358 IP *127.0.0.1*.53 > 10.0.2.15.46537: 33452 1/0/0 A 93.184.216.34 (45)
-
-where the response packet has wrong src ip.
-
-Looks like a failure of the NAT layer, but it does not happen when
-the guest uses another emulated network driver: don't know whether it's
-because the relevant code is in virtio-net or because other drivers add
-overhead that masks the issue.
-
-There's nothing special in port 53: I was just investigating
-a weird failure in name resolution in a MUSL based guest
-(https://www.openwall.com/lists/musl/2024/02/17/3) and wrote the program
-to mimic MUSL resolver's behaviour.
-
-But it succeeds/fails consistently with a different port, and in all
-guests I tried (as long as the emulated network device is virtio-net).
-
-To see the issue, it's important that the response to the first request
-is so fast that it's simultaneous with the second request: that's the reason
-behind the caching nameserver in the host.
-
-I also opened a bug report to debian
-(https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1064634).
-
-I'm not subscribed to qemu-devel, so please CC me in replies.
-
-Best regards,
-        g.b.
-
---poLAErXQDklQCV3C
-Content-Type: text/x-csrc; charset=us-ascii
-Content-Disposition: attachment; filename="m.c"
-
-#include <stdio.h>
-#include <time.h>
-#include <poll.h>
-#include <assert.h>
-#include <string.h>
-
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-
-static void dump(const char *s, size_t len) {
-    while (len--) {
-        char t = *s++;
-        if (' ' <= t && t <= '~' && t != '\\')
-            printf("%c", t);
-        else
-            printf("\\%o", t & 0xff);
-    }
-    printf("\n");
-}
-
-int main(int argc, char *argv[]) {
-    int sock, rv, n;
-    const char req[] =
-        "\202\254\1\0\0\1\0\0\0\0\0\0\7example\3com\0\0\1\0\1";
-    struct timespec delay_l = { 1, 0 }; /* 1 sec */
-    struct pollfd pfs;
-    struct sockaddr_in me = { 0 };
-
-    sock = socket(AF_INET, SOCK_DGRAM | SOCK_CLOEXEC | SOCK_NONBLOCK,
-                  IPPROTO_IP);
-    assert(sock >= 0);
-
-    me.sin_family = AF_INET;
-    me.sin_port = 0;
-    me.sin_addr.s_addr = inet_addr("0.0.0.0");
-    rv = bind(sock, (struct sockaddr *) &me, sizeof me);
-    assert(0 == rv);
-
-    for (n = 1; n < argc; n++) {
-        if (0 == strcmp("delay", argv[n])) {
-            struct timespec delay_s = { 0, (1 << 24) }; /* ~ 16 msec */
-            nanosleep(&delay_s, NULL);
-        } else {
-            struct sockaddr_in dst = { 0 };
-            dst.sin_family = AF_INET;
-            dst.sin_port = htons(53);
-            dst.sin_addr.s_addr = inet_addr(argv[n]);
-            rv = sendto(sock, req, sizeof req - 1, MSG_NOSIGNAL,
-                        (struct sockaddr *) &dst, sizeof dst);
-            assert(rv >= 0);
-        }
-    }
-
-    nanosleep(&delay_l, NULL);
-    pfs.fd = sock;
-    pfs.events = POLLIN;
-    rv = poll(&pfs, 1, 2000);
-    printf("poll: %d %d %d\n", rv, pfs.events, pfs.revents);
-
-    for (n = 1; n < argc; n++) {
-        char resp[4000];
-        if (0 == strcmp("delay", argv[n]))
-            continue;
-        rv = recvfrom(sock, resp, sizeof resp, 0, NULL, NULL);
-        printf("recvfrom() %d\n", rv);
-        if (rv > 0)
-            dump(resp, rv);
-    }
-
-    return 0;
-}
-
---poLAErXQDklQCV3C--
 
