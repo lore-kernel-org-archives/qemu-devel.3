@@ -4,72 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F59AC54E49
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 22:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C2DC47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 22:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reMcp-0005U0-0O; Sun, 25 Feb 2024 17:05:35 -0500
+	id 1reMh7-00073u-Rk; Sun, 25 Feb 2024 17:10:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jandryuk@gmail.com>)
- id 1reMcm-0005TX-JF
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 17:05:32 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1reMh5-00073V-0p
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 17:09:59 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jandryuk@gmail.com>)
- id 1reMcl-0001Ls-4k
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 17:05:32 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-563c403719cso2934795a12.2
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 14:05:28 -0800 (PST)
+ id 1reMh3-0002cW-Gq
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 17:09:58 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-563c0f13cabso3034325a12.3
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 14:09:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708898727; x=1709503527; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708898995; x=1709503795; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DkKvfyrMBWj0+DlETuXifPbtp+G+CbFdvNnXMM5MeUs=;
- b=W9P2SxQ4LQ9dOKG9daaWCnPolod9YbEq2nsh115N3PbEIrT+TKlnp/ulXQ2mSKvjCA
- X9+VQHFD779BmIf/WvviGvEsYka1es8hPfW515eolZGbYFBgZArAj57CDrZxFEZVTLQA
- TJVOFblkr3xfs4jehMxyYoRXmQsL+/Xegx4IfJMCxDac0fHa2aLvSPkJZlVd/CnZ8nc5
- Y29ENflfDvDTGqvNnrD9S2fjRGyxCemBqe034vU6P+4wECvvsH+WMk+BAh2Wbu91dWmf
- 92CXJuP/kpA0+mWTk5ftxXdDhZBIhllSqFg0Rdx7NISdqfuLB6GR860swD5SweSRjD86
- cwcQ==
+ bh=rpmwRK0QweucH9b9Rs/GnZrRDx/RfA9K31A46yAtE+M=;
+ b=dgyxf0YA05Be66A+tKpGsc9+7RJDkzLWZpJrGCNcXKm9bYR5yNoteAWKSo5hkDlaRo
+ hfCe1JD/rVJ1E6ffO2nFfnM/plHwMfMiCcbbAryJF3+zOv9AiPxK6JFx5W6eQY+JB2RB
+ Y4ref8SXNcp2K46OyBKV8WCQroOG92gxYDorf926TbfNxrIIwH73ZVQjZgqjDzcXGvKd
+ 3mXfTETZcr5QYLFDhZOwjmjNe9V7vm6o0hwTnOcwiVweBGINjtkR7ex7fnZG6tIv5wc4
+ QZSHUboQL52Drtj2SMp+fRszA70HJ/KD2SL1wdSIEXxTkGC7lJrLNU5zXMnaNw0I5l8/
+ 8hmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708898727; x=1709503527;
+ d=1e100.net; s=20230601; t=1708898995; x=1709503795;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DkKvfyrMBWj0+DlETuXifPbtp+G+CbFdvNnXMM5MeUs=;
- b=PgYnBzmII9awfKRlSCSB9Vg5oKr/AlnFBGZIUO7SP5Hr4OTKfvgXfCJtTeus19aBQz
- Fz+0to0rJluPq3hd1T+UsgAMfwgP4LOHmGCjh0FqtOfHuAJbAiP+THZBYxq/dCYzXsdL
- mYC+h7we6fsvv0WXWsTHJY2H87fFa0wEqnnECfpNgsAhJ8w/yk8tPblduBmg1Q2mCHWO
- OWkgKxepu4HsqLEM6QisRn9d9IdKB+L0/NKb76oHY4V8/Kht4w6q6z2BJFUP4mdrXziu
- huHa+VnPQC5GQWkNQfvp4SuZSjLfGVQ1ttw5Mlo/UJgTwvCkt9yvH1vMmNuqxdNkb5MJ
- aMwQ==
-X-Gm-Message-State: AOJu0Yx6KT0kbUEnuLTG2MMH4EQC1XP0fazYoxcPEHMKQLfPNGCZcbCB
- ZvNq2jf06lklilEtMrFBrLYzmos3CgPYH5peJpCKEvfuy+Y/+DBqMaY1WlxycQ9pDWIU/m125k0
- B6k3+EK2Y52aIK/+MeDENphjTPs4=
-X-Google-Smtp-Source: AGHT+IHPh56IyeB2dNiGOUUfRg2lexOS+IfInlHodGvxOzUuY8w69pmiHjOZgl3KhqRNlKV7KBSPMR5uatl6c+8GdWo=
-X-Received: by 2002:aa7:df83:0:b0:564:ded0:6072 with SMTP id
- b3-20020aa7df83000000b00564ded06072mr3954699edy.1.1708898726812; Sun, 25 Feb
- 2024 14:05:26 -0800 (PST)
+ bh=rpmwRK0QweucH9b9Rs/GnZrRDx/RfA9K31A46yAtE+M=;
+ b=jlTEFIPYGjUKu/P3p+i9zokD78rr9VoEDaMMTUBcqvYifRycDmpM06N7MUlYUvGCtY
+ ZSKHSJ0fMSVrNX1iW2lKIwkTeUymjRvR9IbvdfdfYnLHKvBmMO/3Co7Fy9RHkCYlmWNC
+ UPOD5zWpcgVLXGBo4ww7KwpZMp9s1P57Oim8MGNq+IFFOJTZdj1/Wf/HZxOZrQF1avfp
+ 8DxqppFu0uXr61TYquw30CHUuMJHrNGplqrC6tNsjdmJKI4b8j3C0XFlw6v6PxpbRFuN
+ VXXKvIWU8L5SsQQ3keyhEkKqIlV4c00PorY8d0Z8Vu4s4pP9R5xkuwzZ+69tkCFLliJs
+ GkTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrjfIiACB8hwVzJID78rbngaL3bVciCSv/AO6cfrSJ4p2aTImyw9TtkDTEhcpOMyX3HJp/IJ0xKhgnl4xQl/aoOboZAcY=
+X-Gm-Message-State: AOJu0Yxxh4XvYa6zUszxgeBkdgmCVd1GBE0D4iFCWOy7SoW7NjXlPkB/
+ KXHBgmHC45CzWHsbAQ7Jq1GmJqW5Zd6Fy7agxqM3OmrGCUKrhhy8VbtddRFcQ0lrTb2aKwWx6wU
+ lo+vevlbuOsNFlnSohPtMA6Q7/JQ=
+X-Google-Smtp-Source: AGHT+IH5E3VRU8H5r8MxSJ69s61CROiFH/aDaz3qpmcnhpDcgzaqoQggtpdDq4fx2fyMmLEawOzXhXI2jdHbOujNZkE=
+X-Received: by 2002:a05:6402:717:b0:565:cc2d:533 with SMTP id
+ w23-20020a056402071700b00565cc2d0533mr1513727edx.1.1708898995198; Sun, 25 Feb
+ 2024 14:09:55 -0800 (PST)
 MIME-Version: 1.0
 References: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
-In-Reply-To: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
+ <429a5a27-21b9-45bd-a1a6-a1c2ccc484c9@linaro.org>
+In-Reply-To: <429a5a27-21b9-45bd-a1a6-a1c2ccc484c9@linaro.org>
 From: Jason Andryuk <jandryuk@gmail.com>
-Date: Sun, 25 Feb 2024 17:05:15 -0500
-Message-ID: <CAKf6xps-wWgFiwwdAF26-HxXPdaLism5viD=NY=g5EWJGLTCVg@mail.gmail.com>
+Date: Sun, 25 Feb 2024 17:09:43 -0500
+Message-ID: <CAKf6xpsG9bhRv9QPwhXtCoM+Zy+JCy+ceFEP2j-ZVVZC_yOe1w@mail.gmail.com>
 Subject: Re: [PATCH 1/2] hw/xen: detect when running inside stubdomain
-To: =?UTF-8?Q?Marek_Marczykowski=2DG=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?Q?Marek_Marczykowski=2DG=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>, 
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Claudio Fontana <cfontana@suse.de>, Stefano Stabellini <sstabellini@kernel.org>,
  Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>,
+ David Woodhouse <dwmw2@infradead.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=jandryuk@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=jandryuk@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,19 +98,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 19, 2024 at 1:17=E2=80=AFPM Marek Marczykowski-G=C3=B3recki
-<marmarek@invisiblethingslab.com> wrote:
+On Tue, Feb 20, 2024 at 1:50=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> Introduce global xen_is_stubdomain variable when qemu is running inside
-> a stubdomain instead of dom0. This will be relevant for subsequent
-> patches, as few things like accessing PCI config space need to be done
-> differently.
+> On 19/2/24 19:16, Marek Marczykowski-G=C3=B3recki wrote:
+> > Introduce global xen_is_stubdomain variable when qemu is running inside
+> > a stubdomain instead of dom0. This will be relevant for subsequent
+> > patches, as few things like accessing PCI config space need to be done
+> > differently.
+> >
+> > Signed-off-by: Marek Marczykowski-G=C3=B3recki <marmarek@invisiblething=
+slab.com>
+> > ---
+> >   hw/xen/xen-legacy-backend.c | 15 +++++++++++++++
+> >   include/hw/xen/xen.h        |  1 +
+> >   system/globals.c            |  1 +
+> >   3 files changed, 17 insertions(+)
 >
-> Signed-off-by: Marek Marczykowski-G=C3=B3recki <marmarek@invisiblethingsl=
-ab.com>
+>
+> > diff --git a/include/hw/xen/xen.h b/include/hw/xen/xen.h
+> > index 37ecc91fc3..ecb89ecfc1 100644
+> > --- a/include/hw/xen/xen.h
+> > +++ b/include/hw/xen/xen.h
+> > @@ -36,6 +36,7 @@ enum xen_mode {
+> >   extern uint32_t xen_domid;
+> >   extern enum xen_mode xen_mode;
+> >   extern bool xen_domid_restrict;
+> > +extern bool xen_is_stubdomain;
+> >
+> >   int xen_pci_slot_get_pirq(PCIDevice *pci_dev, int irq_num);
+> >   int xen_set_pci_link_route(uint8_t link, uint8_t irq);
+> > diff --git a/system/globals.c b/system/globals.c
+> > index b6d4e72530..ac27d88bd4 100644
+> > --- a/system/globals.c
+> > +++ b/system/globals.c
+> > @@ -62,6 +62,7 @@ bool qemu_uuid_set;
+> >   uint32_t xen_domid;
+> >   enum xen_mode xen_mode =3D XEN_DISABLED;
+> >   bool xen_domid_restrict;
+> > +bool xen_is_stubdomain;
+>
+> Note for myself, Paolo and Claudio, IIUC these fields belong
+> to TYPE_XEN_ACCEL in accel/xen/xen-all.c. Maybe resulting in
+> smth like:
 
-Reviewed-by: Jason Andryuk <jandryuk@gmail.com>
+I think some of these are used by the KVM Xen-emulation, so they can't
+just be moved into the Xen accelerator.  David?
 
-Thanks,
+Regards,
 Jason
 
