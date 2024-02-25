@@ -4,113 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E320C54E49
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 17:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85981C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 19:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reIVV-0003Xp-UO; Sun, 25 Feb 2024 12:41:45 -0500
+	id 1reKLW-0008DE-7i; Sun, 25 Feb 2024 14:39:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
- id 1reIVU-0003Xe-AH; Sun, 25 Feb 2024 12:41:44 -0500
-Received: from mail-bjschn02on20721.outbound.protection.partner.outlook.cn
- ([2406:e500:4440:2::721]
- helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
- id 1reIVR-0007vW-Lx; Sun, 25 Feb 2024 12:41:43 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=V9964d3OXOiLk/5QVq+wN0sZF8mcZiR9aIjRH9fdGBHayckf3zCbaraqjRSdFnn2YGeHoBwiXx5C2GLj8otvpp/rI6Z+AGaS59BXMMSd89iPQJnfNOvdIz0xUVeUcHdJS/r6nb/aHF7BgZJzi8aaYn5SBjLFhlJQqxLq9ikiqT7GuipBGw4pZUQVX3xL2SrBh2JCgkYpGx0a1YjOyBPEUw6MOfc74h6GF05SdOElsPM74DBXFWN2NCj1t8+BRn/M54UvUwsOzKOiC36+KhG49DNe9wscmuuOMY3eO9XNCM9zCs8EiOmTPDcGYxEu/Ne0QSKJmM93y6+rhkpa/shNEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uf3389rY33uXWIzVMnuwj0pGKqXqGuzNB8dBSizBsII=;
- b=BCDqZ7ADGMcUGbIOra3HWnvSaubsHKVnxk90hKquL1Dwjxg9tbcS+lq0bdu78mv14snIjwPtdRrqrOtR4n7bJG72O9M9AceMiJTWHhzZRq2AMslw6JvTT7awYCu0lfhKngAwEqp1r5YhVyZ7ei6e2ziDxNk//KtEabo+qHkPEg4ZSXLQ7XS6ZOefbRvuUiRpgyZg+MNneVn39jGQdsazgGgczRkIDgGq7RTbz7ybrbI7uGLtD2TWqoaZkmMcNE2NEnD1PWabcCkl0ES2s/FiPz2puH/u0ePgaazBvJo/XU4WRbeADcRsvxGee9o5fmEwAg/vi0jJIAwm2sa7D3Oifw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=starfivetech.com; dmarc=pass action=none
- header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=starfivetech.com;
-Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:d::13) by ZQ0PR01MB1304.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:19::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.47; Sun, 25 Feb
- 2024 17:41:24 +0000
-Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- ([fe80::21d1:48e1:7ca0:1d76]) by
- ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn ([fe80::21d1:48e1:7ca0:1d76%4])
- with mapi id 15.20.7270.047; Sun, 25 Feb 2024 17:41:24 +0000
-From: "demin.han" <demin.han@starfivetech.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, dbarboza@ventanamicro.com, alistair.francis@wdc.com,
- philmd@linaro.org
-Subject: [PATCH v3] target/riscv: Fix shift count overflow
-Date: Mon, 26 Feb 2024 01:41:14 +0800
-Message-ID: <20240225174114.5298-1-demin.han@starfivetech.com>
-X-Mailer: git-send-email 2.43.2
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SH0PR01CA0024.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c311:5::36) To ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
- (2406:e500:c550:d::13)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1reKLQ-0008Cl-0B
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:39:28 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1reKLK-0003Ya-3Y
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:39:24 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a26ed1e05c7so387532166b.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 11:39:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708889960; x=1709494760; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6qkp8qmmrpHEI3Gi0vduWPTE9/8rwQPVbWBxRKF16zY=;
+ b=Ea5Ns75qGv2LPnUVSTOPcHSveSQWI9MbjtGxBU9qCtFvC+Bitb+xhhsLCu6yOv4e7Y
+ LRbpZJiNuGuIm1huzPioYH1I/5Sna//9paFX6N7U9CUS4zL5MxKTQtPLKBSKjEutT5Pn
+ rqVHXreHHfs4MnHF1j2uONXY2L7m0gtEe8ziHeLpsyumLqUA6J+xCxVw2Dw0dZKbH5Yz
+ VDcFqvmt1PlQLVkCZV5OhvSLE5uQKiJoNZyZKUBRiAFta9AG/MSL/GB03uBGiDtFjwiq
+ NsDQQikX1blL7nqx9j+0xkJuznF+VWGI/hmk4K0Arrpg0cf/vZ70GfER2jr96Z++4cVE
+ H3Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708889960; x=1709494760;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6qkp8qmmrpHEI3Gi0vduWPTE9/8rwQPVbWBxRKF16zY=;
+ b=vfhu4g5xdveRu/SZSChEGX3gbCJe/Ew3MGo0A1QEymzvv9olXfjsxrxVV+QAN57DFZ
+ 6i+ccwCUUsm0AjN5eRVnwSCRm0To2YoCYS6ILTh6us3MoTrMQnpcgqdABUlmH44rwpMo
+ itJ6itDsyHuRupICI+R+RL9l7cSf1N2jSvh66x/sREVHN3tu724o3lv3IJB0Q3HBsQwx
+ st6QP29HsI2D+OnbC2FPXiDmtRdsyVTtjstX1jA3tS3MMrVshOC8Ou2jbm5oeFpMzVwO
+ XjZ/7DPosyCxohjpblQJPyvN63qRox59eDBMfBiPIWnczD46mr1vRsKiMMYviiwSLzAg
+ D8gQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgP6h48Hsi2kJsgZdVowRb6ue8P5Enjwzqb1oFjqtewqRewOIKrGyz7UJDvlU+hmEgLj7tN2gFunUQSNNBHvWKL7ZgvpQ=
+X-Gm-Message-State: AOJu0YyORruR6Uggyk/pCz15qGaCCQLhhNZCUo/XFvaP/b+KowvdDZmj
+ ZbGJYC4PdGVOk3nnxLYyw0UdvGK+HeyqIODMa0KFMI6HQh7xYD14
+X-Google-Smtp-Source: AGHT+IGDEPJgHleNOzw07QredD8CGcYbz9mnXZehduUb+8ssBvLj/UTt6VHFb+uiHyuByPWpk0ddFw==
+X-Received: by 2002:a17:906:6c8c:b0:a43:6146:a4df with SMTP id
+ s12-20020a1709066c8c00b00a436146a4dfmr10802ejr.21.1708889959937; 
+ Sun, 25 Feb 2024 11:39:19 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-078-054-210-016.78.54.pool.telefonica.de.
+ [78.54.210.16]) by smtp.gmail.com with ESMTPSA id
+ b17-20020a170906195100b00a3e53eb1dcasm1709507eje.107.2024.02.25.11.39.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 25 Feb 2024 11:39:19 -0800 (PST)
+Date: Sun, 25 Feb 2024 19:39:19 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>
+CC: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPULL_14/25=5D_hw/i386/pc=3A_Confin?=
+ =?US-ASCII?Q?e_system_flash_handling_to_pc=5Fsysfw?=
+In-Reply-To: <9e82a04b-f2c1-4e34-b4b6-46a0581b572f@t-online.de>
+References: <20240221211626.48190-1-philmd@linaro.org>
+ <20240221211626.48190-15-philmd@linaro.org>
+ <9e82a04b-f2c1-4e34-b4b6-46a0581b572f@t-online.de>
+Message-ID: <F6997639-17B1-476D-B9F6-D2E37DCB23C5@gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZQ0PR01MB1063:EE_|ZQ0PR01MB1304:EE_
-X-MS-Office365-Filtering-Correlation-Id: 739d89d5-f71e-4e4f-26ad-08dc3628fc4f
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 3y7mBQcHiLa5spDVfj0w2cMMvS4zIWSocXhZYTy/Wf70q4kaHuaIZDtK7mPKAMbS2T+dN1c/R9wqFyqPcGS9Y+pTrxtuO8kWpiY78FjkNausthcLwoa+A5Oi2sTI+QvE9bS2vMgq3373UgyMaGSDNPaMnMs+ThCgX+lvlg3HTcg6EKECMlyjteqkrkiu54LXylRRLQb1SniBzgvA6Y7fcrsNnqeT0AYrI34VD56vBjYSQjPr8+CZYOYZMiYY/UiPjidu+v2SvL43o/Z0H9wdPjR7isEnsD5OUKXXqikYKbhpCKRqL63dyFApdpksyExmMqCD3Yx9J0bM7dzDOOfeI4TvDD/Y40cII2rjkvKvwSV6xgKNvN5qRpq6tYwQYTQtnuqJQLTDJMfbxfYUqWrJsZERMoU0nUpt+PAXczuw67a4Q8F+JsjsdmMm543ZBUsx6taGuBOgU7ZHV2PC5dCxbjXHWctA8H9kGKfbzAp0WMnvUCI2QTevxGM9vck8w9/mClA5a4Bf2ojCq0kCmgivXlDdjOr9hDKsmOKSoT8h/7Ga/5qU90psY7M7/TFXV+Ba
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn; PTR:;
- CAT:NONE; SFS:(13230031)(38350700005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?14Mc+5an48YemeIj1yVVnY76u7krYNYAXhQfQpM/fprwI4lSkXYHLuNoyXaB?=
- =?us-ascii?Q?hSTPpWfVgYp/k2ep3MGinTXQGyU5lm25TJOdbCGRCdhpGSrIXMqREiPCkZV7?=
- =?us-ascii?Q?7rnqkX53AbSzzAfaNRl8o1skN4aw3F8ahPTfxKNvaAv/hkhU1ptjiEu0M0cg?=
- =?us-ascii?Q?rzbc6qBeJ/Fk2OV+7YKI/6GxmFdqp/e9kXEk9hAQQEODmUDg/q2cYOuu7V0u?=
- =?us-ascii?Q?nwCZaGmo50z8DSbvqqLBLfmc7K8rSUdykh7c5sucKfN39/AqkhKiGoaJIjzx?=
- =?us-ascii?Q?mFp4sqw322zVi08TfJpM4OA1WHwoTia3ut723+HIYwvZ7EPoL40v3/klyt6X?=
- =?us-ascii?Q?pJ1tfckyWPfaLGk6vziixTRraiJMxaP37CBjPu/AHvvnh6RKJFUtKcxWBIGF?=
- =?us-ascii?Q?GIrUfSz1+FcmFsDH+gEMjqYvq+8/52GiLjRguRzybHhzTQCtvktxkniPnf3e?=
- =?us-ascii?Q?+2GEWVgsIxGE9YkBewNOsnaRCPQ1supgbwhjLmgf6NKee3GEsqSmnJ1mg8ny?=
- =?us-ascii?Q?8uKX05wd8f6lgIbV41cRBBs3NmnkHvOd10Y292IDJlR2to34QOTvPOdG5Acb?=
- =?us-ascii?Q?f178ujr/2UTC7uSedYLM7sNcWWnyuWebtxIls197/4tujlBl/NQx+bc6WPKh?=
- =?us-ascii?Q?Flec9nyJFnPu30C3ox7fSwh4LAHqxfBlN2C9TaipuU9T7uxMPP1vXyOagJyL?=
- =?us-ascii?Q?ph5tigrj4rQOD9vscBrv9/b64GG9rwzNDLmr8hjHXlQ2ZVVPMl5Jz91Kvq53?=
- =?us-ascii?Q?gDnxLH6C26oOjMbV/CAZgykQN+oa6p2l4OyYRnnCopG3KTmQp4btxTYzbNOW?=
- =?us-ascii?Q?ZvR5wmKAm7W88odN6L02caSO9bfaU3i2xF5Mhc/HVNx0IEDwRh6CmLKvLJt6?=
- =?us-ascii?Q?FwNQtyav7ssewLgQc0lWGZVzFo9cdfROsvymfhhBsg8BGoaOqHwJISvzWnkJ?=
- =?us-ascii?Q?dfowmTwoh/ogIbwwhY+nHUqdj8cSfyIAdWLj5uukCdFQU6Jp9zKs4rb4pnTb?=
- =?us-ascii?Q?8IGCJy4C8e93B+oczn0WuEXtlD+YtTWNHRwmNPE+TBrfi9caof8F4LPJhGTG?=
- =?us-ascii?Q?ci/mxXiPQ5xeCoyVkwWrIBJcq2sWphvaQBA4lLD9q2CyUWyyq5IzgCTeWo5M?=
- =?us-ascii?Q?ZGcoogYkhT+XQES71Tx5+gEmbt9HhJDj0oEb9u8Hz1JvNKQ7fLL8xeSyTjMe?=
- =?us-ascii?Q?A67sHHaikE9+I6uvxMvwqXhWKIMjpbRZJrQui4uwYWZCZiEQqWwKaWm0oVZM?=
- =?us-ascii?Q?LHeLuSckyX869Bbkn/+7p63o5UKAZRrxWnSoq0oz7RGegkDic6RWR6VOJ9ml?=
- =?us-ascii?Q?3gG9NYNndlitpkuD4xBJ2Hf9pAmOQo5MyKK/Sb4nXs8l2/ATosXQWdnwcKbT?=
- =?us-ascii?Q?U3eHDvnV5tdi5QPPAXcoisQRTicqF2aMWn9Wlw2qmNZ1LOrOmNDSvBbxadoK?=
- =?us-ascii?Q?RptHjqYPwEdv1k2Z6tEa/4nS0xmM75ScEsNxf/S2SSZuaRmmntZVSHSQyRVW?=
- =?us-ascii?Q?ZKpMXGsonJQNqX+Qbm8oM9dsBrlnsoHa1S5JGQM+haIuan8xPzLsyp4P8q8J?=
- =?us-ascii?Q?5N/imoyEWzJHfmLTdBQ3ZOfwkTiDkVjYHX8ctk46v8/IwzsxuB+tys6bqHAH?=
- =?us-ascii?Q?kQ=3D=3D?=
-X-OriginatorOrg: starfivetech.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 739d89d5-f71e-4e4f-26ad-08dc3628fc4f
-X-MS-Exchange-CrossTenant-AuthSource: ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2024 17:41:24.1868 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7mtCpX1h16vQ8Gfnw8ZdtoCmP6V4m6XDg/+oiHw5XVVLOkmnyeK7V9UHTybBBGk5g+U9ewiO4Jnsi03Oj0ekHci3ZORJHADZRa/iJyJL6hc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZQ0PR01MB1304
-Received-SPF: pass client-ip=2406:e500:4440:2::721;
- envelope-from=demin.han@starfivetech.com;
- helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,45 +98,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The result of (8 - 3 - vlmul) is negative when vlmul >= 6,
-and results in wrong vill.
 
-Signed-off-by: demin.han <demin.han@starfivetech.com>
----
-Changes in v2:
-- Add vlen var
 
-Changes in v3:
-- Fix commit msg typo
+Am 25=2E Februar 2024 13:03:46 UTC schrieb "Volker R=C3=BCmelin" <vr_qemu@=
+t-online=2Ede>:
+>Am 21=2E02=2E24 um 22:16 schrieb Philippe Mathieu-Daud=C3=A9:
+>> From: Bernhard Beschow <shentey@gmail=2Ecom>
+>>
+>> Rather than distributing PC system flash handling across three files, l=
+et's
+>> confine it to one=2E Now, pc_system_firmware_init() creates, configures=
+ and cleans
+>> up the system flash which makes the code easier to understand=2E It als=
+o avoids
+>> the extra call to pc_system_flash_cleanup_unused() in the Xen case=2E
+>>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>> Message-ID: <20240208220349=2E4948-7-shentey@gmail=2Ecom>
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro=2Eorg>
+>> ---
+>>  include/hw/i386/pc=2Eh | 2 --
+>>  hw/i386/pc=2Ec         | 1 -
+>>  hw/i386/pc_piix=2Ec    | 1 -
+>>  hw/i386/pc_sysfw=2Ec   | 6 ++++--
+>>  4 files changed, 4 insertions(+), 6 deletions(-)
+>
+>Hi Bernhard,
 
- target/riscv/vector_helper.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Hi Volker,
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 84cec73eb2..fe56c007d5 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -44,6 +44,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     target_ulong reserved = s2 &
-                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-+    uint16_t vlen = cpu->cfg.vlenb << 3;
-     int8_t lmul;
- 
-     if (vlmul & 4) {
-@@ -53,10 +54,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-          * VLEN * LMUL >= SEW
-          * VLEN >> (8 - lmul) >= sew
-          * (vlenb << 3) >> (8 - lmul) >= sew
--         * vlenb >> (8 - 3 - lmul) >= sew
-          */
--        if (vlmul == 4 ||
--            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
-+        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
-             vill = true;
-         }
-     }
--- 
-2.43.2
+>
+>this patch breaks QEMU on my system=2E
+>
+>=2E/qemu-system-x86_64 -machine q35,pflash0=3Dpflash0-storage -blockdev
+>driver=3Dfile,node-name=3Dpflash0-storage,filename=3D/usr/share/qemu/ovmf=
+-x86_64=2Ebin,read-only=3Dtrue
+>qemu-system-x86_64: Property 'pc-q35-9=2E0-machine=2Epflash0' not found
+>
+>I had to revert cb05cc1602 ("hw/i386/pc_sysfw: Inline
+>pc_system_flash_create() and remove it") and 6f6ad2b245 ("hw/i386/pc:
+>Confine system flash handling to pc_sysfw") to make it work again=2E
 
+In my tests I've followed https://wiki=2Earchlinux=2Eorg/title/QEMU#Bootin=
+g_in_UEFI_mode for both pc and q35 machine, and therefore missed the machin=
+e properties=2E If there is no way to fix it with compat properties or the =
+like, I propose to revert the two patches until a different solution is fou=
+nd=2E
+
+Best regards,
+Bernhard
+
+>
+>With best regards,
+>Volker
+>
+>> diff --git a/include/hw/i386/pc=2Eh b/include/hw/i386/pc=2Eh
+>> index 0a8a96600c=2E=2Ee8f4af5d5c 100644
+>> --- a/include/hw/i386/pc=2Eh
+>> +++ b/include/hw/i386/pc=2Eh
+>> @@ -193,8 +193,6 @@ void pc_i8259_create(ISABus *isa_bus, qemu_irq *i82=
+59_irqs);
+>>  #define TYPE_PORT92 "port92"
+>> =20
+>>  /* pc_sysfw=2Ec */
+>> -void pc_system_flash_create(PCMachineState *pcms);
+>> -void pc_system_flash_cleanup_unused(PCMachineState *pcms);
+>>  void pc_system_firmware_init(PCMachineState *pcms, MemoryRegion *rom_m=
+emory);
+>>  bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
+>>                                 int *data_len);
+>> diff --git a/hw/i386/pc=2Ec b/hw/i386/pc=2Ec
+>> index e526498164=2E=2E1ee41a5e56 100644
+>> --- a/hw/i386/pc=2Ec
+>> +++ b/hw/i386/pc=2Ec
+>> @@ -1733,7 +1733,6 @@ static void pc_machine_initfn(Object *obj)
+>>  #endif
+>>      pcms->default_bus_bypass_iommu =3D false;
+>> =20
+>> -    pc_system_flash_create(pcms);
+>>      pcms->pcspk =3D isa_new(TYPE_PC_SPEAKER);
+>>      object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+>>                                OBJECT(pcms->pcspk), "audiodev");
+>> diff --git a/hw/i386/pc_piix=2Ec b/hw/i386/pc_piix=2Ec
+>> index 34203927e1=2E=2Eec7c07b362 100644
+>> --- a/hw/i386/pc_piix=2Ec
+>> +++ b/hw/i386/pc_piix=2Ec
+>> @@ -231,7 +231,6 @@ static void pc_init1(MachineState *machine,
+>>          assert(machine->ram_size =3D=3D x86ms->below_4g_mem_size +
+>>                                      x86ms->above_4g_mem_size);
+>> =20
+>> -        pc_system_flash_cleanup_unused(pcms);
+>>          if (machine->kernel_filename !=3D NULL) {
+>>              /* For xen HVM direct kernel boot, load linux here */
+>>              xen_load_linux(pcms);
+>> diff --git a/hw/i386/pc_sysfw=2Ec b/hw/i386/pc_sysfw=2Ec
+>> index c8d9e71b88=2E=2Eb4c3833352 100644
+>> --- a/hw/i386/pc_sysfw=2Ec
+>> +++ b/hw/i386/pc_sysfw=2Ec
+>> @@ -91,7 +91,7 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *=
+pcms,
+>>      return PFLASH_CFI01(dev);
+>>  }
+>> =20
+>> -void pc_system_flash_create(PCMachineState *pcms)
+>> +static void pc_system_flash_create(PCMachineState *pcms)
+>>  {
+>>      PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
+>> =20
+>> @@ -103,7 +103,7 @@ void pc_system_flash_create(PCMachineState *pcms)
+>>      }
+>>  }
+>> =20
+>> -void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+>> +static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+>>  {
+>>      char *prop_name;
+>>      int i;
+>> @@ -212,6 +212,8 @@ void pc_system_firmware_init(PCMachineState *pcms,
+>>          return;
+>>      }
+>> =20
+>> +    pc_system_flash_create(pcms);
+>> +
+>>      /* Map legacy -drive if=3Dpflash to machine properties */
+>>      for (i =3D 0; i < ARRAY_SIZE(pcms->flash); i++) {
+>>          pflash_cfi01_legacy_drive(pcms->flash[i],
+>
 
