@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3B5C54E41
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 10:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F0CEC47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 11:53:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reBYs-0005ue-63; Sun, 25 Feb 2024 05:16:46 -0500
+	id 1reD3c-00081N-J5; Sun, 25 Feb 2024 06:52:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1reBYq-0005uK-8e
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 05:16:44 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reD3a-000806-G5
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 06:52:34 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1reBYo-0003Ky-Np
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 05:16:43 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-59d489e8d68so1039529eaf.2
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 02:16:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reD3Y-00023o-QX
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 06:52:34 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-56533e30887so2243401a12.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 03:52:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708856201; x=1709461001; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KgUAZqcf4NokaguLeLczXKMjS0HPveziLQK00VWV5Js=;
- b=DWLyyn0lNV1sDYjJghcdK+Zjf0c7k5QvW8bYD0LKqIzPCIQvpMc4kAuozXdh3UWzgb
- jR2xjqj1nWr5sF+rFqZ5auDBiFyj16+l6VjzShgWD0PnGOZL/EyeHsDENBgfwbd28IDZ
- JWQ8R76/WGeoo7Ts8MJ4Q739OPwlMavMJ/DWybOgznVHC2C5/pkF3Tf2jUcWv9K4K6aL
- oDD6QE8jkKw/HYI5PYXanlHfv8GLvDfc87nqosjcHBkWyT5RV5Deii4WzXnxwcKjAgE8
- aosh7YOX9PJSwgV9kkIKzBebYn1ICSAlovnPPfSMGt7HQYy3UKJWi3ZlUKt5LUp3/fQm
- LHCQ==
+ d=linaro.org; s=google; t=1708861950; x=1709466750; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gOfc+o6YVJY9n0PKQbdoguE6/mGYQ1ZnE0tbMGd1dXY=;
+ b=PVP26I2uUocDwSzvQdal+VnMfN24H6XhI5YH/2WzifsB8OtD2JKukUQ4yvCMGW/Kdx
+ JaIQzuTOzIve/NUA0fDAYJfJeUK+blVA6gqTGY7e9YBFOgFJg+4L2E29JPhpMR58+8bW
+ Xo7YcYvNIVUbeSPZg2tt/n06l2/l4o6BlcJUa8shw8036lF8xyWij+vrTKduc+KOwLaW
+ hkb5RvWHt/ptHPRjVgl95BIjzuYIwk9VdKKAmkWZFhGRpKYYltNvpKs4WNtBym641EWq
+ LirpvRjuqkA9VwC+JN+j62NFhJ2CFZzZi236BVsMRksJYZSQk5k36ORSBdCypsgNr/fd
+ twHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708856201; x=1709461001;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KgUAZqcf4NokaguLeLczXKMjS0HPveziLQK00VWV5Js=;
- b=RAEvoBQL9gXveiq/1c02RJ9SypKE2pMWbAg6h8FA2livmo8fAvXpF6htzZWDemHUHH
- V0UlN04I2Ir1WTjeBTzvsI/7SmcGN3u4j0ZHymizPAWJC4yzzKej8XDe938+jj6GFFBo
- 9vF9ekn2irJhLdUKRpnL3D/Otv996lzRLVEg6G0q3+QWbumbfS/3Nxbc6A8wVy6aAuOm
- fKcBfPVTU/qVPvAvWfMU0uLE7q1wMz1Emd6h9QCqK76jksMz7Klp7n+K3nznomU6qFf0
- gTyQrinkWftx6G09k1CupnpjIUcM0NU0DPpTAdD2TwdkLf/lMtjhKpzz9EsHnqQVzdn/
- WOaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX+gO0kh642cGz024Q1VhLzvGrudJE+ubQQd2gZAqYPzz84OjEU67hiOhBpsQCUHiEJO8Bpg6HsNmJJA6cLJxpPswXMBrI=
-X-Gm-Message-State: AOJu0YxGFbVRToii6N5YxFNlJGCoRBEaw3p4ZXJEj6SxnWXhwueyPoIb
- RHa0bBEyQh27Udgh9E1CAx/UynJlnSBbPzseE+CyjjTizrfeHAjKJO1qMb4MYgg=
-X-Google-Smtp-Source: AGHT+IGoMljyIaMPS3xAXPt8XS4Bise8Xc7SixJRNQQnqiwEzjOB+ZbokE1jIyrevjR7DFo4VtzO/A==
-X-Received: by 2002:a05:6358:a09c:b0:17b:5864:4ae4 with SMTP id
- u28-20020a056358a09c00b0017b58644ae4mr6102550rwn.20.1708856200880; 
- Sun, 25 Feb 2024 02:16:40 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- c8-20020a62e808000000b006e0ad616be3sm2147142pfi.110.2024.02.25.02.16.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Feb 2024 02:16:40 -0800 (PST)
-Message-ID: <439bbdad-ad63-4975-968a-e050564f002e@ventanamicro.com>
-Date: Sun, 25 Feb 2024 07:16:36 -0300
+ d=1e100.net; s=20230601; t=1708861950; x=1709466750;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gOfc+o6YVJY9n0PKQbdoguE6/mGYQ1ZnE0tbMGd1dXY=;
+ b=JStkuONw8Lk93wntepLQdqfUUMP8sJRj9hGeVmfWxdsoEPjpyQDeW2wL/NdsC87C1z
+ GKzO++GPDcqLSW+LCrd8Zlnqk4+6sXncMMJrcT4WfXbAOTWck4C8lo95srP8EpIaZzS0
+ q1ZdAPcBihZ0Bbl36hfWucup4pC02s10w7aqrO27ZQtdddk9r5yqClXXW9pkMd/pjVTo
+ VrajMD+GKulYzmepDal5Z9XeL2P590RNUe/HM/++EeBxRUgaR/hsCh8vPqFIeRsGszJ/
+ DbhBuKNCbCaHcR/ODDSFaoUtimph2Py4T1ZeReUXHvIbbPEoPIGPgRr/uKF/CKltX2YJ
+ Q0zA==
+X-Gm-Message-State: AOJu0YyOwEZqLrX8poCc0xVo4Sj5L47xGlvC0LFdhVr8YtsFsORoSK1b
+ irxtMPx/23VOeXT1CTen7xH9jRHX6rswYQYAnBXjLYuKLdB1tNPjnct4WqzJwxxEnS4mPi35qBp
+ thcrg5BONpciN0ZMzF6KkvB03LqKO84ynKbu7FgbXV3k/hiZY
+X-Google-Smtp-Source: AGHT+IFAov0GF5uV1/+IQstWVcD9l0u9iw9M1xqVYfe5N1yINsx1Gwu+1JJgT5WdMVjDQSqIgFmwgeu1gcOxW+TML4E=
+X-Received: by 2002:aa7:d959:0:b0:564:b882:bc5a with SMTP id
+ l25-20020aa7d959000000b00564b882bc5amr3149553eds.37.1708861950477; Sun, 25
+ Feb 2024 03:52:30 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Fix shift count overflow
-To: "demin.han" <demin.han@starfivetech.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com
-References: <20240225032720.375078-1-demin.han@starfivetech.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240225032720.375078-1-demin.han@starfivetech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc36.google.com
+References: <20240223191003.6268-1-thuth@redhat.com>
+In-Reply-To: <20240223191003.6268-1-thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 25 Feb 2024 11:52:19 +0000
+Message-ID: <CAFEAcA-vBDBPrs9+sHzYoUG3nfhYzEOCVR83UoA00mqkdWfZAw@mail.gmail.com>
+Subject: Re: [PULL 00/11] Test and misc patches
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,42 +87,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 23 Feb 2024 at 19:10, Thomas Huth <thuth@redhat.com> wrote:
+>
+>  Hi Peter!
+>
+> The following changes since commit 3d54cbf269d63ff1d500b35b2bcf4565ff8ad485:
+>
+>   Merge tag 'hw-misc-20240222' of https://github.com/philmd/qemu into staging (2024-02-22 15:44:29 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-02-23
+>
+> for you to fetch changes up to 028ade14da9eb31a8c5dde48dd5b140e49888908:
+>
+>   target/i386: do not filter processor tracing features except on KVM (2024-02-23 08:13:52 +0100)
+>
+> ----------------------------------------------------------------
+> * m68k: Fix exception frame format for 68010
+> * Add cdrom test for LoongArch virt machine
+> * Fix qtests when using --without-default-devices
+> * Enable -Wvla
+> * Windows 32-bit removal
+> * Silence warnings in the test-x86-cpuid-compat qtest
+>
+> ----------------------------------------------------------------
 
 
-On 2/25/24 00:27, demin.han wrote:
-> The result of (8 - 3 - vlmul) is negtive when vlmul >= 6,
-> and results in wrong vill.
-> 
-> Signed-off-by: demin.han <demin.han@starfivetech.com>
-> ---
+Applied, thanks.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
->   target/riscv/vector_helper.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 84cec73eb2..fe56c007d5 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -44,6 +44,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->       target_ulong reserved = s2 &
->                               MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->                                               xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-> +    uint16_t vlen = cpu->cfg.vlenb << 3;
->       int8_t lmul;
->   
->       if (vlmul & 4) {
-> @@ -53,10 +54,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->            * VLEN * LMUL >= SEW
->            * VLEN >> (8 - lmul) >= sew
->            * (vlenb << 3) >> (8 - lmul) >= sew
-> -         * vlenb >> (8 - 3 - lmul) >= sew
->            */
-> -        if (vlmul == 4 ||
-> -            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
-> +        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
->               vill = true;
->           }
->       }
+-- PMM
 
