@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6CF8C54798
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 16:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B766C54798
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 16:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reHge-0006l8-8P; Sun, 25 Feb 2024 11:49:12 -0500
+	id 1reHmh-0008M1-Oo; Sun, 25 Feb 2024 11:55:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reHga-0006gH-4M
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:49:08 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reHgY-00065P-IR
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:49:07 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-412a4b42c03so1263725e9.3
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 08:49:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708879745; x=1709484545; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cQ93+U4iF7Lp6xVGeVCZ93z2WCS/RCy7fhk0Vh/5pHY=;
- b=pb3ncUXeenJGC+qqCaa3hc7czLb+XsB2KP2Gkjx2oWE95rJg6UG1YJmvaQWfkR49ZR
- Trl6Mdd7TsWDC+p8WDsvorPKwDfdGdVlRXA8VHm4mI0EwDBHUZykZl602amO7DzWJy4A
- U6lLrnA7Z9m6O8ouldF6cYwve2KuSUio/p1p47cP9+047rp93Jlht8cLuIqDeiBU0m3u
- i6Tkry6a3dNyh5B7KBZFUydwQqguoCq2uinq0i2ulmdOyNafQJkWs2n3q+es4znMaZB7
- 8nm97/9AT5t5U/HchT2RtMc26w93+3V1qZ27ci14VR9nHk6iaK7LYCtbXn2v/eg9hP/h
- Sx2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708879745; x=1709484545;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cQ93+U4iF7Lp6xVGeVCZ93z2WCS/RCy7fhk0Vh/5pHY=;
- b=JtN56WK0Qktkm7G/n0UX4bwXxDFP5bemAjHj1DCROracJYsHsaoBkXwc3FS86mBH+L
- AOg3G0YQ2OXcmHMHtXP09lqAptn6OGAQRz47+IvFY4d6/xj3RV96DAERViavU7ax2YKI
- p9dqG1Ky2kZw5fsqyYiGDDDgxEPPGWXbjazXCtjufg86mTijWZobn16ih6XUBaI9PIvL
- DdnFG8T9vyD2l/QypFBWE3O6EHrNHegh4SwIngnJNA+LngYB6qM7Ga8LbXjMFBe6p62y
- DnWG05Sd6iqlXYJbyWJfqAMVtAwv7GqhpR60wJxUqPwdrh4KmdbheXofT4m2rqMsrazJ
- gI9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUjJ9LLvSpmKC8N0cLbCYu23sX9SU6U285/+pyLNu7dJ32KxAUeLdyaMgVhKvs5CI6H1LzQ88XAQh6AQ97S3schf55+WHo=
-X-Gm-Message-State: AOJu0Yy2yC0ooflxkwPOrr+KKg8Kg2uMgvhIqNAFs+VrtLvPZQMiu9BH
- 6Dm6jKd+pvRyYK90n0UPPT6aNTyN2IVS6vEn4qWB84V9GaGsHLS0eIlIazuczc7dJan2spQEyTL
- a
-X-Google-Smtp-Source: AGHT+IFwr04bKRwYcQOWkROh2+PK8cHsjqoQCqqEuJq8LlXhDX3Vi4ddqM2FmeQ5nYpZRSAQ6inJRw==
-X-Received: by 2002:a05:600c:a385:b0:412:96e2:96aa with SMTP id
- hn5-20020a05600ca38500b0041296e296aamr3725947wmb.28.1708879744742; 
- Sun, 25 Feb 2024 08:49:04 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.164.69])
- by smtp.gmail.com with ESMTPSA id
- u16-20020a05600c211000b004126732390asm9333876wml.37.2024.02.25.08.49.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Feb 2024 08:49:04 -0800 (PST)
-Message-ID: <d3bd9fa7-3034-4423-b3fa-d3761c3008ce@linaro.org>
-Date: Sun, 25 Feb 2024 17:49:02 +0100
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1reHmg-0008Le-4t
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:55:26 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1reHmd-0007qs-CD
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:55:25 -0500
+Received: from juju-98d295-prod-launchpad-16.localdomain (scripts.lp.internal
+ [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id A63423F9CF
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 16:55:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1708880116;
+ bh=VUNMwVpdkN2FmXHlcpYOVfrdSGUEQ2DEp1ty/w2jwX8=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=RFisW3xCkXawlwVhI/pL378qEZ2Y9JTpzuIgSUec0TGDwh1jPINoEzc+6AZaZabu+
+ InJK0bi1P0LFnWVLzIss1II7uvJJJ+7tEs9coJRVsCFKMUIh38a4yXyOuAdK8lGgVs
+ YdJZnP4vBfY2mPyRO9j9bCVOfpuFQJmm6MlU0LZVhl5BFPkwatrw0ooLVDkWfzf+y7
+ Ri4+24ioyiBl+b1naGHOoVoYJqjJMMBBstPxRwEdcg1qAGMEpSdL8tUgAqxFM+AMsD
+ nCBHsip/3qveMtj7IhzMPpIoawVMP3GnOwqa+LfRQRZJir9RRL0IQULzzmAofQvqzp
+ VPI1b2ZdvNqHg==
+Received: from [10.131.215.246] (localhost [127.0.0.1])
+ by juju-98d295-prod-launchpad-16.localdomain (Postfix) with ESMTP id
+ 96C4B7E2C6
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 16:55:16 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Fix shift count overflow
-Content-Language: en-US
-To: "demin.han" <demin.han@starfivetech.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, dbarboza@ventanamicro.com, alistair.francis@wdc.com
-References: <20240225032720.375078-1-demin.han@starfivetech.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240225032720.375078-1-demin.han@starfivetech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 25 Feb 2024 16:46:13 -0000
+From: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <2054889@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Confirmed; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug-Tags: pcap usb
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: fysnet philmd
+X-Launchpad-Bug-Reporter: Benjamin David Lunt (fysnet)
+X-Launchpad-Bug-Modifier: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9_=28philmd=29?=
+References: <170879673718.858735.7795185871522080358.malonedeb@juju-98d295-prod-launchpad-4>
+Message-Id: <170887957315.1973561.1801135968014195536.malone@juju-98d295-prod-launchpad-4>
+Subject: [Bug 2054889] Re: pcap streams are text files which insert 0xD in
+ Windows version
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="9643586c585856148a18782148972ae9c1179d06";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: e239269b32334f3d24536c79f699caefec0fd463
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -93,44 +89,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2054889 <2054889@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/2/24 04:27, demin.han wrote:
-> The result of (8 - 3 - vlmul) is negtive when vlmul >= 6,
+Hi Benjamin,
 
-Typo "negative".
+QEMU bug tracker is on GitLab:
+https://gitlab.com/qemu-project/qemu/-/issues
 
-> and results in wrong vill.
-> 
-> Signed-off-by: demin.han <demin.han@starfivetech.com>
-> ---
->   target/riscv/vector_helper.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 84cec73eb2..fe56c007d5 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -44,6 +44,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->       target_ulong reserved = s2 &
->                               MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->                                               xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-> +    uint16_t vlen = cpu->cfg.vlenb << 3;
->       int8_t lmul;
->   
->       if (vlmul & 4) {
-> @@ -53,10 +54,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->            * VLEN * LMUL >= SEW
->            * VLEN >> (8 - lmul) >= sew
->            * (vlenb << 3) >> (8 - lmul) >= sew
-> -         * vlenb >> (8 - 3 - lmul) >= sew
->            */
-> -        if (vlmul == 4 ||
-> -            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
-> +        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
->               vill = true;
->           }
->       }
+But instead of re-opening the issue there, since you
+already figured the problem, do you mind directly post
+your patch? See guidelines there:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
+
+Thanks!
+
+Phil.
+
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2054889
+
+Title:
+  pcap streams are text files which insert 0xD in Windows version
+
+Status in QEMU:
+  Confirmed
+
+Bug description:
+  Since Windows text files use CRLFs for all \n, the Windows version of
+  QEMU inserts a CR in the PCAP stream when a LF is encountered when
+  using USB PCAP files.
+
+  Starting at line 275 in hw/usb/bus (https://gitlab.com/qemu-
+  project/qemu/-/blob/master/hw/usb/bus.c?ref_type=3Dheads#L275), the file
+  is opened as text instead of binary.
+
+  I think the following patch would fix the issue:
+      if (dev->pcap_filename) {
+  -       int fd =3D qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |=
+ O_TRUNC, 0666);
+  +       int fd =3D qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |=
+ O_TRUNC | O_BINARY, 0666);
+          if (fd < 0) {
+              error_setg(errp, "open %s failed", dev->pcap_filename);
+              usb_qdev_unrealize(qdev);
+              return;
+          }
+  -       dev->pcap =3D fdopen(fd, "w");
+  +       dev->pcap =3D fdopen(fd, "wb");
+          usb_pcap_init(dev->pcap);
+      }
+
+  To show an example, when using a very common protocol to USB disks,
+  the BBB protocol uses a 10-byte command packet. For example, the
+  READ_CAPACITY(10) command (implemented at https://gitlab.com/qemu-
+  project/qemu/-/blob/master/hw/scsi/scsi-disk.c#L2068) will have a
+  command block length of 10 (0xA). When this 10-byte command (part of
+  the 31-byte CBW) is placed into the PCAP file, the Windows file
+  manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
+  32-byte CBW.
+
+  Actual CBW:
+    0040   55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25   USBC..........=
+..
+    0050   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00      %..............
+
+  PCAP CBW
+    0040   55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a   USBC..........=
+..
+    0050   25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   %..............
+
+  I believe simply opening the PCAP file as BINARY instead of TEXT will
+  fix this issue.
+
+  Thank you.
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2054889/+subscriptions
 
 
