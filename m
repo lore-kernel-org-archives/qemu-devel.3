@@ -4,81 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B674C54E4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 21:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4C6C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 21:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reLe1-0000Uz-Gg; Sun, 25 Feb 2024 16:02:45 -0500
+	id 1reLe0-0000US-T3; Sun, 25 Feb 2024 16:02:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=Zi23GS=KC=fysnet.net=benlunt@eigbox.net>)
- id 1reL2O-0000gd-CP
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 15:23:52 -0500
-Received: from bosmailout06.eigbox.net ([66.96.187.6])
+ (Exim 4.90_1) (envelope-from <g1pi@libero.it>) id 1reJAH-0005QX-8m
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 13:23:54 -0500
+Received: from smtp-31-wd.italiaonline.it ([213.209.13.31] helo=libero.it)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <SRS0=Zi23GS=KC=fysnet.net=benlunt@eigbox.net>)
- id 1reL2M-0004jh-PY
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 15:23:52 -0500
-Received: from bosmailscan06.eigbox.net ([10.20.15.6])
- by bosmailout06.eigbox.net with esmtp (Exim) id 1reKWf-0001CM-7v
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:51:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fysnet.net; 
- s=dkim;
- h=Sender:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-ID:Date:Subject:To:From:Reply-To:Cc:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=CTgUnaLsCihC8z32cJNR5EDENJWs83hTcEYvtrdlE6g=; b=nbKi/sMD3EZjXxmtV2Kh1MMoDL
- AS03orwX9WrTc73kfBM7OrOrki4owqHuJsfW2/RlMDRmhrVkhGCmSBZoa8yOQuEYqWAk81uoD3pPJ
- L2T/833GZ7N7enpUmXLHv+T3nB6zmQ8zC2VDoMCY5FWboJ7TwMu4EzgalMhtTVXr+mPoKIg+xa6sT
- JnjpO7f1wzXrPABUIxUe2tY48knby6P+7224PCzE412jvDYYg6pgtW/8TjCP3qBH8q2Kmducw1/AO
- WH0ymFb/yWqZPb4FpF2RYQQAOWgNGiOLR0ZXUQItezjy2VypDGWE6aRK4igs/L+jwjpnH4Lo4BnO+
- M8T4OuBg==;
-Received: from [10.115.3.33] (helo=bosimpout13)
- by bosmailscan06.eigbox.net with esmtp (Exim) id 1reKWd-0003Y2-22
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:51:03 -0500
-Received: from bosauthsmtp10.yourhostingaccount.com ([10.20.18.10])
- by bosimpout13 with 
- id rXpu2B0010D2CUy01Xpxu8; Sun, 25 Feb 2024 14:50:41 -0500
-X-Authority-Analysis: v=2.3 cv=Q6tJH7+a c=1 sm=1 tr=0
- a=Kpo39fPXdbgqDwiI3/AEUA==:117 a=S3MT/dRO/ryrFfNS2TKYag==:17
- a=kj9zAlcOel0A:10 a=k7vzHIieQBIA:10 a=danhDmx_AAAA:8 a=03UIiu-VAAAA:8
- a=jPOicQp0w2Md6mnQZXQA:9 a=CjuIK1q_8ugA:10 a=P4VdviVPEcjfz_PVVggX:22
- a=TDsaGBozw4ymKzHYph0x:22
-Received: from 72-24-79-116.cpe.sparklight.net ([72.24.79.116]:51211
- helo=Fys64) by bosauthsmtp10.eigbox.net with esmtpa (Exim)
- id 1reKVW-0005gC-3g
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:49:54 -0500
-From: <benlunt@fysnet.net>
-To: <qemu-devel@nongnu.org>
-Subject: [PATCH] hw/us/bus.c PCAP adding 0xA in Windows version
-Date: Sun, 25 Feb 2024 12:49:51 -0700
-Message-ID: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
+ (Exim 4.90_1) (envelope-from <g1pi@libero.it>) id 1reJAD-0006EN-HJ
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 13:23:52 -0500
+Received: from localhost ([151.29.140.90]) by smtp-31.iol.local with ESMTPA
+ id eJA7rSi5Qj2oceJA8r59Ji; Sun, 25 Feb 2024 19:23:44 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2021;
+ t=1708885424; bh=kEHOZUFx16cfj7YE4Nv0UpBUYdnUSjT7/NpAfjx163c=;
+ h=From;
+ b=ngVwSYp6ztt0PKQXQPDW6ndAagLYDB1g5CITipc8aih8cCwU72ceV2+NB/XMdDpFW
+ aPWBjdESUtqrL9HQOcfTlt7BDjCAetFHrrb/9qXe1e4NmJatBFjjjAYWF+DoFzVeOf
+ 6+l/+PDOO7Z1uBXtfVfHl8lLHseYTSwOQ3iBYDnmB+RwKKWAUJxEZndrPymo72UQHQ
+ vUn3YqwVunLc6q853s8QXByKhubEGbCp5dvylDOpq5cpzlCS2QHdqwnmda4SmuTJTD
+ lla7G5umeoDzd0coruxkMJM0FaGmP4PJk/PnWhJhrzUnoa8FhnFJTjDfge505h9kfI
+ Ehgz5aH47U7fA==
+X-CNFS-Analysis: v=2.4 cv=d4pWygjE c=1 sm=1 tr=0 ts=65db85b0 cx=a_exe
+ a=ysqyREb6S0hakrSWcZdePw==:117 a=ysqyREb6S0hakrSWcZdePw==:17 a=A1X0JdhQAAAA:8
+ a=XkRKQH6RAAAA:8 a=xNf9USuDAAAA:8 a=jpfQ5zAA-lF3Itj3ug0A:9 a=CjuIK1q_8ugA:10
+ a=S9t9CVBMNsWLYKe4UCoA:9 a=Df3jFdWbhGDLdZNm0fyq:22 a=1gUyE30hU_ULiMxJiLUW:22
+ a=SEwjQc04WA-l_NiBhQ7s:22
+Date: Sun, 25 Feb 2024 19:22:50 +0100
+From: g1pi@libero.it
+To: qemu-devel@nongnu.org
+Subject: possible race condition in qemu nat layer or virtio-net
+Message-ID: <ZduFeuu-QvWe6OG7@moon>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdpoIjhwSpNg4Nf3TrCXeVbHYOrrTQ==
-Content-Language: en-us
-X-EN-UserInfo: 0be0d87d7bf3726c278d97b9639d48f5:931c98230c6409dcc37fa7e93b490c27
-X-EN-AuthUser: benlunt@fysnet.net
-X-EN-OrigIP: 72.24.79.116
-X-EN-OrigHost: 72-24-79-116.cpe.sparklight.net
-Received-SPF: pass client-ip=66.96.187.6;
- envelope-from=SRS0=Zi23GS=KC=fysnet.net=benlunt@eigbox.net;
- helo=bosmailout06.eigbox.net
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: multipart/mixed; boundary="poLAErXQDklQCV3C"
+Content-Disposition: inline
+X-CMAE-Envelope: MS4xfFCJ2Q43oTylWpb1wwmTLDxQH3FBYDr/FhC/MRXeWlWhlcBYj4FY+KwLTVVxKxNm0yJsrtZ9lRaNhX/IjHiT7SsVNHWF+/xr3OA5glACepNZmvdkAQ7G
+ hsw2gyMiPiUaWeWopiy5ZzYxPBQaE8sTV97Wy9mF3J5eRNc00KONhWTiNiA4fxP0yFvZHFz7mrbL+R2NATE3P+YF6RxsVMPBxCs=
+Received-SPF: pass client-ip=213.209.13.31; envelope-from=g1pi@libero.it;
+ helo=libero.it
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Sun, 25 Feb 2024 16:02:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,56 +70,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since Windows text files use CRLFs for all \n, the Windows version of QEMU
-inserts a CR in the PCAP stream when a LF is encountered when using USB PCAP
-files. This is due to the fact that the PCAP file is opened as TEXT instead
-of BINARY.
 
-To show an example, when using a very common protocol to USB disks, the BBB
-protocol uses a 10-byte command packet. For example, the READ_CAPACITY(10)
-command will have a command block length of 10 (0xA). When this 10-byte
-command (part of the 31-byte CBW) is placed into the PCAP file, the Windows
-file manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
-32-byte CBW.
+--poLAErXQDklQCV3C
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Actual CBW:
-  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25 USBC...........%
-  0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00       ...............
+Hi all.
 
-PCAP CBW
-  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a USBC............
-  0050 25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 %..............
+I believe I spotted a race condition in virtio-net or qemu/kvm (but
+only when virtio-net is involved).
 
-I believe simply opening the PCAP file as BINARY instead of TEXT will fix
-this issue.
+To replicate, one needs a virtualization environment similar to
 
-Resolves: https://bugs.launchpad.net/qemu/+bug/2054889
-Signed-off-by: Benjamin David Lunt <benlunt@fysnet.net>
----
- hw/usb/bus.c | 2 +-
-1 file changed, 2 insertions(+), 2 deletions(-)
+Host:
+- debian 12 x86_64, kernel 6.1.0-18-amd64
+- caching name server listening on 127.0.0.1
+- qemu version 7.2.9 (Debian 1:7.2+dfsg-7+deb12u5)
+- command line:
+    qemu-system-x86_64 \
+	-enable-kvm \
+	-daemonize \
+	-parallel none \
+	-serial none \
+	-m 256 \
+	-drive if=virtio,format=raw,file=void.raw \
+	-monitor unix:run/void.mon,server,nowait \
+	-nic user,model=virtio,hostfwd=tcp:127.0.0.1:3822-:22
 
-diff -u a/hw/usb/bus.c b/hw/usb/bus.c
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -273,13 +273,13 @@
-     }
- 
-     if (dev->pcap_filename) {
--        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
-O_TRUNC, 0666);
-+        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
-O_TRUNC | O_BINARY, 0666);
-         if (fd < 0) {
-             error_setg(errp, "open %s failed", dev->pcap_filename);
-             usb_qdev_unrealize(qdev);
-             return;
-         }
--        dev->pcap = fdopen(fd, "w");
-+        dev->pcap = fdopen(fd, "wb");
-         usb_pcap_init(dev->pcap);
-     }
- }
+Guest:
+- x86_64, linux/musl or linux/glibc or freebsd or openbsd
+- /etc/resolv.conf:
+    nameserver 10.0.2.2         i.e. the caching dns in the host
+    nameserver 192.168.1.123    non existent
 
+and run the attached program in the guest.
 
+The program opens a UDP socket, sends out a bunch of (dns) requests,
+poll()s on the socket, and then receives the responses.
+
+If a delay is inserted between the sendto() calls, the (unique) response
+from the host is received correctly:
+
+    $ ./a.out 10.0.2.2 >/dev/null # to warm up the host cache
+    $ ./a.out 10.0.2.2 delay 192.168.1.123
+    poll: 1 1 1
+    recvfrom() 45
+    <response packet>
+    recvfrom() -1
+
+If the sento()s are performed in short order, the response packet
+gets lost:
+
+    $ ./a.out 10.0.2.2 >/dev/null # to warm up the host cache
+    $ ./a.out 10.0.2.2 192.168.1.123
+    poll: 0 1 0
+    recvfrom() -1
+    recvfrom() -1
+
+A tcpdump capture on the host side shows no difference between the two cases.
+
+Tcpdump on the guest side is another story: in the good case, it looks like
+this
+
+7:32:44.332 IP 10.0.2.15.43276 > 10.0.2.2.53: 33452+ A? example.com. (29)
+7:32:44.333 IP 10.0.2.2.53 > 10.0.2.15.43276: 33452 1/0/0 A 93.184.216.34 (45)
+7:32:44.349 IP 10.0.2.15.43276 > 192.168.1.123.53: 33452+ A? example.com. (29)
+
+while in the bad case it looks like this
+
+7:32:55.358 IP 10.0.2.15.46537 > 10.0.2.2.53: 33452+ A? example.com. (29)
+7:32:55.358 IP 10.0.2.15.46537 > 192.168.1.123.53: 33452+ A? example.com. (29)
+7:32:55.358 IP *127.0.0.1*.53 > 10.0.2.15.46537: 33452 1/0/0 A 93.184.216.34 (45)
+
+where the response packet has wrong src ip.
+
+Looks like a failure of the NAT layer, but it does not happen when
+the guest uses another emulated network driver: don't know whether it's
+because the relevant code is in virtio-net or because other drivers add
+overhead that masks the issue.
+
+There's nothing special in port 53: I was just investigating
+a weird failure in name resolution in a MUSL based guest
+(https://www.openwall.com/lists/musl/2024/02/17/3) and wrote the program
+to mimic MUSL resolver's behaviour.
+
+But it succeeds/fails consistently with a different port, and in all
+guests I tried (as long as the emulated network device is virtio-net).
+
+To see the issue, it's important that the response to the first request
+is so fast that it's simultaneous with the second request: that's the reason
+behind the caching nameserver in the host.
+
+I also opened a bug report to debian
+(https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1064634).
+
+I'm not subscribed to qemu-devel, so please CC me in replies.
+
+Best regards,
+        g.b.
+
+--poLAErXQDklQCV3C
+Content-Type: text/x-csrc; charset=us-ascii
+Content-Disposition: attachment; filename="m.c"
+
+#include <stdio.h>
+#include <time.h>
+#include <poll.h>
+#include <assert.h>
+#include <string.h>
+
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+static void dump(const char *s, size_t len) {
+    while (len--) {
+        char t = *s++;
+        if (' ' <= t && t <= '~' && t != '\\')
+            printf("%c", t);
+        else
+            printf("\\%o", t & 0xff);
+    }
+    printf("\n");
+}
+
+int main(int argc, char *argv[]) {
+    int sock, rv, n;
+    const char req[] =
+        "\202\254\1\0\0\1\0\0\0\0\0\0\7example\3com\0\0\1\0\1";
+    struct timespec delay_l = { 1, 0 }; /* 1 sec */
+    struct pollfd pfs;
+    struct sockaddr_in me = { 0 };
+
+    sock = socket(AF_INET, SOCK_DGRAM | SOCK_CLOEXEC | SOCK_NONBLOCK,
+                  IPPROTO_IP);
+    assert(sock >= 0);
+
+    me.sin_family = AF_INET;
+    me.sin_port = 0;
+    me.sin_addr.s_addr = inet_addr("0.0.0.0");
+    rv = bind(sock, (struct sockaddr *) &me, sizeof me);
+    assert(0 == rv);
+
+    for (n = 1; n < argc; n++) {
+        if (0 == strcmp("delay", argv[n])) {
+            struct timespec delay_s = { 0, (1 << 24) }; /* ~ 16 msec */
+            nanosleep(&delay_s, NULL);
+        } else {
+            struct sockaddr_in dst = { 0 };
+            dst.sin_family = AF_INET;
+            dst.sin_port = htons(53);
+            dst.sin_addr.s_addr = inet_addr(argv[n]);
+            rv = sendto(sock, req, sizeof req - 1, MSG_NOSIGNAL,
+                        (struct sockaddr *) &dst, sizeof dst);
+            assert(rv >= 0);
+        }
+    }
+
+    nanosleep(&delay_l, NULL);
+    pfs.fd = sock;
+    pfs.events = POLLIN;
+    rv = poll(&pfs, 1, 2000);
+    printf("poll: %d %d %d\n", rv, pfs.events, pfs.revents);
+
+    for (n = 1; n < argc; n++) {
+        char resp[4000];
+        if (0 == strcmp("delay", argv[n]))
+            continue;
+        rv = recvfrom(sock, resp, sizeof resp, 0, NULL, NULL);
+        printf("recvfrom() %d\n", rv);
+        if (rv > 0)
+            dump(resp, rv);
+    }
+
+    return 0;
+}
+
+--poLAErXQDklQCV3C--
 
