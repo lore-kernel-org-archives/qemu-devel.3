@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B228C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 16:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 840CDC54798
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 16:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reHQm-0001wg-EY; Sun, 25 Feb 2024 11:32:48 -0500
+	id 1reHVY-00036O-6j; Sun, 25 Feb 2024 11:37:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reHQh-0001w2-UG
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:32:44 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reHVV-00035h-W1
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:37:42 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reHQa-0001zG-Lw
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:32:42 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33dcad9e3a2so208928f8f.3
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 08:32:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reHVT-0003D0-GT
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 11:37:41 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-33d7b8f563eso1988988f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 08:37:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708878754; x=1709483554; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708879057; x=1709483857; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=g/GNyCnLz3fyBBwt0ByN+hEzkJQVnK647j3aEW72zZ0=;
- b=w2cm1yp7pD1ImjIWPHlQZrThj9tNl6PmEHgem3WADCDOqGyuUswz6ToGO9fccC22gF
- rD/FaxNWIOl8artIW6KDFAOngHVr/ZPwDN9Ukfp9JIaDD/fzr1yezVAAYn7LRCWRKQfh
- QM4K3ngcEbjn/pXaF4UBvsHsKFYIEunLZ7K7stT4mz5FTVyoe/8HyK95cM5H3Wpxy1mG
- 2ADTQpCNvvy2JlW4EryoUvN7zI3KhLYwrOEl72H05GGpmEAVAgWKnGuUAhIL/DO+DdH9
- B2CuXpvwkeoV+xRMfOSRJTs7Z+Vz+41Jw7EIJhtxfu2SoFoa+RQNsibjzsK9lUwD0uUS
- tLOw==
+ bh=HH9ZVJjU3ny/yCgfzCsl80z+BCOkPFPDedDjPZ3RTXI=;
+ b=BFT+vMvWOvwEBr7yZp8jLfdnYUt05o8dQyv7gXAk/6/rxB4DOXAvJbTBCrGN/CUC8g
+ 1g7YvKfGLgwGr9oZoKG0vk+MeVnxkz9DBk2xfWRaSyAL7fX2fDeN/VKBeXCIL7iMll81
+ /DW7gkbuEgo7/2PNMM00FkqKnk3X3qXoIueT6i9D5OklJp75Ghct5DIdAfCKEjOUzGlP
+ 1uREB82WAEf+t6VkJgmhUIZE0xbFNzSHfldkOa+vor4P34ki8XDQ2XGgXgYkCc/bfXyN
+ tPzSW2CynzFRHANbxWNgSzMSxLIVaCGraJuN97S0jZhJwofULqehjWgc/ws9ZHQZg79t
+ r1vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708878754; x=1709483554;
+ d=1e100.net; s=20230601; t=1708879057; x=1709483857;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g/GNyCnLz3fyBBwt0ByN+hEzkJQVnK647j3aEW72zZ0=;
- b=P4MnYt+3PbZpTTnhlbEu8JVrvKyoMofW2YL8Fj3FQlP8OeV3DyYS035sgmF9+i45Iw
- 6bO2/nkXRGBQ1JnWh1FqsgFrIE0tOzK5tFbCP25GBMO/r06U4K87xXPI9GnuuTR+RSHZ
- 82TKxEJ6DF+wHmE5I/jluZQyVYsj3zAZprG5MlnHaA5sbGPvfJzBOvju9wpAmMtUX4pt
- msMplKzeJ1tjl7j++TBjXaEYlPIQNjMQKVICefqmmTTM/NVMSJZTkBOQ9IsxxAeFWO/i
- GZAgx5iZ67nHsdjlgAAryPR15h/QwFis6kP8DK31sct97f4r6MhnSuF6NXgzOujDQPyd
- t/uQ==
+ bh=HH9ZVJjU3ny/yCgfzCsl80z+BCOkPFPDedDjPZ3RTXI=;
+ b=naeHwivcsc26oUDQFIgKfmypTlkkBZrUvRjuYzGbUwmDBls4KIPgQWC4Ua3jpVIYDT
+ /4pLd3yGDe3vEuprLFOLLEQrqYRS3VjR1PzP0AZGF8bPnkRMsPjZKH6Uw9B32zRycgn1
+ 1fZqBn94Lt3EBQxBMv6dLD5x7gndmpJI1x8b+WhdK2xZwNsxljtDZ/jxRR+Rt7yubCL3
+ JFYahKvbz1yvIx2J1pL+MDlpXx/MAZtwqHPFG3aRfijDG11vDk+tZ7vOERUlcSZ95p8Y
+ zm7kLdedYkFvB+IaWTl44A8nGlIBKkppkRgF+zh8XWEiDS/UH1VwCzdieuRRL/8TUlo+
+ qzaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsT3x4p7hErIJPLA8u8/cyxWAOt53BacZQamGjevxJtnvWzpsjNuU+wbJcVdmigbXHheYZOXdJYoGqIiiQrtfYDLSBgHk=
-X-Gm-Message-State: AOJu0YxNQ3A5DEUKtlVn5dXMLSy+Npr87lWQgnh+P2jmnasp53+zc31e
- Q1b4Lh8IwUQN8wTpW6Gp5gAuKBInaBU5EoHwiqQ713Jp6FpNRHd1foBvRy2eSrM=
-X-Google-Smtp-Source: AGHT+IE0bQkNKHXWgH31pVKuWDoVOjS4d6pgrEDjWeiJvH6NYZ66v2YIOoQnXg5qMWIq/o83PEiShA==
-X-Received: by 2002:adf:e34d:0:b0:33d:a943:48f3 with SMTP id
- n13-20020adfe34d000000b0033da94348f3mr780353wrj.66.1708878754512; 
- Sun, 25 Feb 2024 08:32:34 -0800 (PST)
+ AJvYcCW4cVKqWjqQNTHuZ+4m9LkNBALlffH00r5p/FHgmycC1sgBvQIeI9NlKwl/3bkwXpiWs5hn6GBGEJUx3gjYFqBKCPZcopE=
+X-Gm-Message-State: AOJu0YwzWrzir5f+7dIqOa/1BddpjDqh8wwRLm5h5GfaL4BOOKDonSjd
+ 0Pzye4++hllSRj1eON2oDxW8eyQSGz9nfB+Ceea12eo0r8OzW1XA6vVPI7CLOvA=
+X-Google-Smtp-Source: AGHT+IFn3l6IwLvtB1HQkTZ5j1gheKUOOR7Q731E7UUHftKh8PxdeMiS9n3qh5TU/bWf8yj4Eu96eQ==
+X-Received: by 2002:adf:e6cf:0:b0:33d:67f5:a3a4 with SMTP id
+ y15-20020adfe6cf000000b0033d67f5a3a4mr3739569wrm.67.1708879057367; 
+ Sun, 25 Feb 2024 08:37:37 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.164.69])
  by smtp.gmail.com with ESMTPSA id
- cl7-20020a5d5f07000000b0033dc931eb06sm2615117wrb.0.2024.02.25.08.32.32
+ v15-20020adfedcf000000b0033ce727e728sm5438196wro.94.2024.02.25.08.37.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Feb 2024 08:32:33 -0800 (PST)
-Message-ID: <31d9a060-dcaf-46b1-b3b3-ba12d21a09ab@linaro.org>
-Date: Sun, 25 Feb 2024 17:32:31 +0100
+ Sun, 25 Feb 2024 08:37:36 -0800 (PST)
+Message-ID: <1154e495-b1cc-4de0-a107-51fb3627e6d5@linaro.org>
+Date: Sun, 25 Feb 2024 17:37:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] hw/i386/pc: Remove unneeded class attribute
- "kvmclock_enabled"
+Subject: Re: [PATCH v5 2/3] hw/arm: Connect BSC to BCM2835 board as I2C0, I2C1
+ and I2C2
 Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Paul Durrant <paul@xen.org>,
- Igor Mammedov <imammedo@redhat.com>, Jason Wang <jasowang@redhat.com>,
- David Woodhouse <dwmw2@infradead.org>, Sergio Lopez <slp@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-References: <20240224135851.100361-1-shentey@gmail.com>
- <20240224135851.100361-5-shentey@gmail.com>
+To: Rayhan Faizel <rayhan.faizel@gmail.com>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, pbonzini@redhat.com, qemu-arm@nongnu.org
+References: <20240224191038.2409945-1-rayhan.faizel@gmail.com>
+ <20240224191038.2409945-3-rayhan.faizel@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240224135851.100361-5-shentey@gmail.com>
+In-Reply-To: <20240224191038.2409945-3-rayhan.faizel@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/2/24 14:58, Bernhard Beschow wrote:
-> PCMachineClass introduces the attribute into the class hierarchy and sets it to
-> true. There is no sub class overriding the attribute. Commit 30d2a17b46e9
-> "hw/i386: Remove the deprecated machines 0.12 up to 0.15" removed the last
-> overrides of this attribute. The attribute is now unneeded and can be removed.
+On 24/2/24 20:10, Rayhan Faizel wrote:
+> BCM2835 has three I2C controllers. All of them share the same interrupt line.
 > 
-> Fixes: 30d2a17b46e9 "hw/i386: Remove the deprecated machines 0.12 up to 0.15"
-> Cc: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
 > ---
->   include/hw/i386/pc.h | 1 -
->   hw/i386/pc.c         | 1 -
->   hw/i386/pc_piix.c    | 2 +-
->   3 files changed, 1 insertion(+), 3 deletions(-)
+>   hw/arm/Kconfig                       |  1 +
+>   hw/arm/bcm2835_peripherals.c         | 45 ++++++++++++++++++++++++++--
+>   include/hw/arm/bcm2835_peripherals.h |  4 ++-
+>   3 files changed, 46 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
