@@ -4,51 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D48BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 21:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F59AC54E49
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 22:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reMSx-0003XY-Kq; Sun, 25 Feb 2024 16:55:23 -0500
+	id 1reMcp-0005U0-0O; Sun, 25 Feb 2024 17:05:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1reMSt-0003XP-S8
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 16:55:20 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1reMSo-0006ee-FR
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 16:55:16 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BD7E34E6013;
- Sun, 25 Feb 2024 22:55:11 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id bfgOlsNH1CFQ; Sun, 25 Feb 2024 22:55:09 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7C3054E6076; Sun, 25 Feb 2024 22:55:09 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7B1087456B4;
- Sun, 25 Feb 2024 22:55:09 +0100 (CET)
-Date: Sun, 25 Feb 2024 22:55:09 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: benlunt@fysnet.net
-cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/us/bus.c PCAP adding 0xA in Windows version
-In-Reply-To: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
-Message-ID: <5c3f66e1-e2a3-b26d-f598-fb7fc1f780df@eik.bme.hu>
-References: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
+ (Exim 4.90_1) (envelope-from <jandryuk@gmail.com>)
+ id 1reMcm-0005TX-JF
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 17:05:32 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jandryuk@gmail.com>)
+ id 1reMcl-0001Ls-4k
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 17:05:32 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-563c403719cso2934795a12.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 14:05:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708898727; x=1709503527; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DkKvfyrMBWj0+DlETuXifPbtp+G+CbFdvNnXMM5MeUs=;
+ b=W9P2SxQ4LQ9dOKG9daaWCnPolod9YbEq2nsh115N3PbEIrT+TKlnp/ulXQ2mSKvjCA
+ X9+VQHFD779BmIf/WvviGvEsYka1es8hPfW515eolZGbYFBgZArAj57CDrZxFEZVTLQA
+ TJVOFblkr3xfs4jehMxyYoRXmQsL+/Xegx4IfJMCxDac0fHa2aLvSPkJZlVd/CnZ8nc5
+ Y29ENflfDvDTGqvNnrD9S2fjRGyxCemBqe034vU6P+4wECvvsH+WMk+BAh2Wbu91dWmf
+ 92CXJuP/kpA0+mWTk5ftxXdDhZBIhllSqFg0Rdx7NISdqfuLB6GR860swD5SweSRjD86
+ cwcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708898727; x=1709503527;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DkKvfyrMBWj0+DlETuXifPbtp+G+CbFdvNnXMM5MeUs=;
+ b=PgYnBzmII9awfKRlSCSB9Vg5oKr/AlnFBGZIUO7SP5Hr4OTKfvgXfCJtTeus19aBQz
+ Fz+0to0rJluPq3hd1T+UsgAMfwgP4LOHmGCjh0FqtOfHuAJbAiP+THZBYxq/dCYzXsdL
+ mYC+h7we6fsvv0WXWsTHJY2H87fFa0wEqnnECfpNgsAhJ8w/yk8tPblduBmg1Q2mCHWO
+ OWkgKxepu4HsqLEM6QisRn9d9IdKB+L0/NKb76oHY4V8/Kht4w6q6z2BJFUP4mdrXziu
+ huHa+VnPQC5GQWkNQfvp4SuZSjLfGVQ1ttw5Mlo/UJgTwvCkt9yvH1vMmNuqxdNkb5MJ
+ aMwQ==
+X-Gm-Message-State: AOJu0Yx6KT0kbUEnuLTG2MMH4EQC1XP0fazYoxcPEHMKQLfPNGCZcbCB
+ ZvNq2jf06lklilEtMrFBrLYzmos3CgPYH5peJpCKEvfuy+Y/+DBqMaY1WlxycQ9pDWIU/m125k0
+ B6k3+EK2Y52aIK/+MeDENphjTPs4=
+X-Google-Smtp-Source: AGHT+IHPh56IyeB2dNiGOUUfRg2lexOS+IfInlHodGvxOzUuY8w69pmiHjOZgl3KhqRNlKV7KBSPMR5uatl6c+8GdWo=
+X-Received: by 2002:aa7:df83:0:b0:564:ded0:6072 with SMTP id
+ b3-20020aa7df83000000b00564ded06072mr3954699edy.1.1708898726812; Sun, 25 Feb
+ 2024 14:05:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
+In-Reply-To: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
+From: Jason Andryuk <jandryuk@gmail.com>
+Date: Sun, 25 Feb 2024 17:05:15 -0500
+Message-ID: <CAKf6xps-wWgFiwwdAF26-HxXPdaLism5viD=NY=g5EWJGLTCVg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/xen: detect when running inside stubdomain
+To: =?UTF-8?Q?Marek_Marczykowski=2DG=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>
+Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, 
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=jandryuk@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,66 +92,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 25 Feb 2024, benlunt@fysnet.net wrote:
-> Since Windows text files use CRLFs for all \n, the Windows version of QEMU
-> inserts a CR in the PCAP stream when a LF is encountered when using USB PCAP
-> files. This is due to the fact that the PCAP file is opened as TEXT instead
-> of BINARY.
+On Mon, Feb 19, 2024 at 1:17=E2=80=AFPM Marek Marczykowski-G=C3=B3recki
+<marmarek@invisiblethingslab.com> wrote:
 >
-> To show an example, when using a very common protocol to USB disks, the BBB
-> protocol uses a 10-byte command packet. For example, the READ_CAPACITY(10)
-> command will have a command block length of 10 (0xA). When this 10-byte
-> command (part of the 31-byte CBW) is placed into the PCAP file, the Windows
-> file manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
-> 32-byte CBW.
+> Introduce global xen_is_stubdomain variable when qemu is running inside
+> a stubdomain instead of dom0. This will be relevant for subsequent
+> patches, as few things like accessing PCI config space need to be done
+> differently.
 >
-> Actual CBW:
->  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25 USBC...........%
->  0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00       ...............
->
-> PCAP CBW
->  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a USBC............
->  0050 25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 %..............
->
-> I believe simply opening the PCAP file as BINARY instead of TEXT will fix
-> this issue.
+> Signed-off-by: Marek Marczykowski-G=C3=B3recki <marmarek@invisiblethingsl=
+ab.com>
 
-Do you believe or also tested it? :-) There's a typo in the subject, 
-should be hw/usb/. No need to resend, just noting it for whoever will 
-manage this patch.
+Reviewed-by: Jason Andryuk <jandryuk@gmail.com>
 
-Regards,
-BALATON Zoltan
-
-> Resolves: https://bugs.launchpad.net/qemu/+bug/2054889
-> Signed-off-by: Benjamin David Lunt <benlunt@fysnet.net>
-> ---
-> hw/usb/bus.c | 2 +-
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff -u a/hw/usb/bus.c b/hw/usb/bus.c
-> --- a/hw/usb/bus.c
-> +++ b/hw/usb/bus.c
-> @@ -273,13 +273,13 @@
->     }
->
->     if (dev->pcap_filename) {
-> -        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
-> O_TRUNC, 0666);
-> +        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
-> O_TRUNC | O_BINARY, 0666);
->         if (fd < 0) {
->             error_setg(errp, "open %s failed", dev->pcap_filename);
->             usb_qdev_unrealize(qdev);
->             return;
->         }
-> -        dev->pcap = fdopen(fd, "w");
-> +        dev->pcap = fdopen(fd, "wb");
->         usb_pcap_init(dev->pcap);
->     }
-> }
->
->
->
->
+Thanks,
+Jason
 
