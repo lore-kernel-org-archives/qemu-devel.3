@@ -4,84 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8F1C48BF6
-	for <qemu-devel@archiver.kernel.org>; Sat, 24 Feb 2024 23:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9BE1C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 03:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1re13Q-0008BA-FA; Sat, 24 Feb 2024 18:03:36 -0500
+	id 1re5B0-0003zd-8k; Sat, 24 Feb 2024 22:27:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1re13N-0008Ak-Sy
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 18:03:33 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1re13L-00054o-19
- for qemu-devel@nongnu.org; Sat, 24 Feb 2024 18:03:33 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-563d32ee33aso2460323a12.2
- for <qemu-devel@nongnu.org>; Sat, 24 Feb 2024 15:03:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1708815807; x=1709420607; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lPxYHkE60Dt4XkcVM0AZ+GrkOMp2a5g44W92hbn4zio=;
- b=MYpHhnhiiSQl0qfeyG6p+lC+EN8Y46ZX3Iu/DFUtSyn18hBKTR4EEk2GKGqJmRSdSk
- 6ULjFbUcWAQw8E9BRp2mX1nCi/JikXP1/K+kvMCi2XbcSMWrd5/nGsCcc87AlPwmylgr
- wipD4TXVkBsCxOkSGpkwClieycsxuijkyjiJgwXezCWwRxs3R99XPESsCHF0KcLED44z
- NxvJxBQYGMXFCLUw8auaB2XOIBtOK8IIKl6JTHlaE+dQQYLx9BLecEVgiloPuXUO6AZB
- NuGreU1SoT6fw7wn6ldo+6S4ASYl1Rq6DNX6VgR9qJ1JNdCiacyY1/GSsopvj/wdA/2+
- ycyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708815807; x=1709420607;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lPxYHkE60Dt4XkcVM0AZ+GrkOMp2a5g44W92hbn4zio=;
- b=fM17BmDuY/eLeEfAkKJgemI6lCdiW+r8skiArPjvwKhIer9dOwsbEB1f+OBC7LvBQU
- Rj5YZ4vIST3XaWjo60z41V88vz0ERwfnSKIjbi7ep4Q87habA/HrS8UtfGIHifN0cSwh
- +dbAhiUNJMKiWz2SQ+q2MqjNViqNdadgpbRvK8g0OznsznUCawagDQFKpbqK9fVIy+I/
- d+UTkJ9vconntOuqImD5hkiYGx0O06qmEeYznpy55/PDstBmBwiLQHQhe1AE82l7zqQl
- s05jHSmFUMRyNE8NcqppSOG8Hj9MB7t55a+QJ8vb6l0hiGtU9CCVImHQVMWC1tOrrKHo
- dZ4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxsSo8bfcppeo7O54NbHKfJXpgeOGJouPDFrwttCdrub5Gb1RD6Uqjl+hZY7n5y+LD3dqtkl4c10a+P/outC8UBE1q+UM=
-X-Gm-Message-State: AOJu0YyfSGCseaUnsIlhJqqkKJmTE6F66f1Fu5GK1+bshK6ldnl6EUcL
- xx7MNoiyvH9VvhAGl+EbGarVO0hfOAmY6ps6xGUZm70L86UCz880a4RO/w2YJeoF3IFeYcMDptE
- o6GnL4HXl17cqrxN0NR71/WmiQzCXc9cfBkQqmg==
-X-Google-Smtp-Source: AGHT+IFn+EkfWdby7Q9SvgCSSR6c212h2jeTS7lOiftFxaUdu8sA+W4KOnNg3pq6B+8SfyZgZjWqKWGUYQ9XYpT6ztk=
-X-Received: by 2002:a05:6402:b2d:b0:564:151c:747a with SMTP id
- bo13-20020a0564020b2d00b00564151c747amr2170330edb.27.1708815806903; Sat, 24
- Feb 2024 15:03:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
+ id 1re5Ax-0003wY-8w; Sat, 24 Feb 2024 22:27:39 -0500
+Received: from mail-bjschn02on20702.outbound.protection.partner.outlook.cn
+ ([2406:e500:4440:2::702]
+ helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <demin.han@starfivetech.com>)
+ id 1re5Av-0004FI-9r; Sat, 24 Feb 2024 22:27:39 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AcBz0lmajLKuZ/vnRSdNc3Xc5zkZESU5ksqpczgRYNnA/lwt+8o83E4rfnOZ06PF4xLoJ3NgO9vzevEg8+dJ5RYJNvkdgFfVpAhgURf0WUHQQhMAzMxcP2ovDB1UgqfUmS4zv2zIwl4Ykrs0z9uWxYU3IURhS2ymoLdQfxnzcJSHCmvZ2mvEYyN3L1oSZf8jHNUIOUi+PFPMFI9IsgbkH9qNKIw0h0kTL3pB5yOQxH22TwTBU49FDtrv9F06iE1tK3F/I86O4TFKx0jf1Sm6GMwsNfiiVdsutUSbpQNmuAr2v5qampn9KYtOskoFbHr9y9wCqxp7eddXaLcdMSXRDw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CCq/SaJx9rwv02rTBjaDaid+fZwXOboVxfB3x/YTO/k=;
+ b=HDZjJk6jD2D9olwj+RTT4Z+9NTptWkK8LRgsrYoyW+i3iuq2PdkTiQOG1iP7bBUrtz23K00PlQLRRsRQyApM8gWaH0BT1EmdkOprMazfemDWc/HNJtKVCsr6GAj1p83J/icW00/VD2i2bFp2l2ui6PPeez9TfTH+OyLlXQkBqe/qHZEasWP3+53x2fWEHPt4Vhl3/USgXIkoVluGvzaDUDfkY8YiMz/RJ5G+f3c396FQYMsEvJrfCMQP+D4aqVmRfrVVYMsQjhiJCAUi3o3HdMgMpEhJfShy/q+VMeMcv5XQLEvGwmYabZ9sVJUGAz/cPsFwHl/5W3oLIkMN5uzJ7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=starfivetech.com; dmarc=pass action=none
+ header.from=starfivetech.com; dkim=pass header.d=starfivetech.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=starfivetech.com;
+Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c550:d::13) by ZQ0PR01MB1240.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c550:19::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.47; Sun, 25 Feb
+ 2024 03:27:27 +0000
+Received: from ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
+ ([fe80::21d1:48e1:7ca0:1d76]) by
+ ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn ([fe80::21d1:48e1:7ca0:1d76%4])
+ with mapi id 15.20.7270.047; Sun, 25 Feb 2024 03:27:27 +0000
+From: "demin.han" <demin.han@starfivetech.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, dbarboza@ventanamicro.com, alistair.francis@wdc.com
+Subject: [PATCH v2] target/riscv: Fix shift count overflow
+Date: Sun, 25 Feb 2024 11:27:20 +0800
+Message-ID: <20240225032720.375078-1-demin.han@starfivetech.com>
+X-Mailer: git-send-email 2.43.2
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: ZQ0PR01CA0004.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c550:5::12) To ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
+ (2406:e500:c550:d::13)
 MIME-Version: 1.0
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-5-hao.xiang@bytedance.com> <875xyhbk8k.fsf@suse.de>
- <ZdgD-eqUYxbQMJQN@x1n>
- <CAAYibXjBX8CeCL3-9BcUoGxY6UY9-N8sriJ7N_GUzVPUX1y3YQ@mail.gmail.com>
-In-Reply-To: <CAAYibXjBX8CeCL3-9BcUoGxY6UY9-N8sriJ7N_GUzVPUX1y3YQ@mail.gmail.com>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Sat, 24 Feb 2024 15:03:15 -0800
-Message-ID: <CAAYibXgp-NGqE5ATby_Y6=s7WR5yToTxWQbdeVydv0Jez98iEQ@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2 4/7] migration/multifd: Enable zero page
- checking from multifd threads.
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, pbonzini@redhat.com, berrange@redhat.com, 
- eduardo@habkost.net, eblake@redhat.com, armbru@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, qemu-devel@nongnu.org, jdenemar@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: ZQ0PR01MB1063:EE_|ZQ0PR01MB1240:EE_
+X-MS-Office365-Filtering-Correlation-Id: 340fdad4-9c72-4fd5-f76c-08dc35b1b0ee
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: dsFeJrGiYspGsgdF19cpilYKUdhsUZHJM+1OFa/S+kFSPGkTHiR2y5lAqivKp/+bLSFu2DWKFBouZLL9MNfjAd8IkyfCbIGqGXIUkXRDdASjVUMWwKMDwxZEdVAl4GQq2p8RbIqRh5EdX7YH3HorgovCPiL3HpE2/0ykRkT2JzvY+7r6yUWyMLdT2h4y4iGKEF6aeC9lBY+khUYiOIBzjFwmC5wxkeBLhpMjUBcRDeCAqNDOocJQLadRjorWOpbgP/EextymxV+lcXStiLHde+KhzON8FeEAsiCNqdNzciug/5Yi3cWpiZBlh+BtVvzJNa3y0tARd1jNl+g6IV+lRPYHC5b14zbbXdeeBs6xFubA+H2vaZeLjVBv3uxowY7uKsHVxv2LX8WE1GmXdFSX0wbnEE8dB0DWhUZm5AGPK/7tWQbAFzkhBKCZZm87ehNB9bc+Eb7iHniiufpGfsDR6Pore8oS1nKejft+zCBxi5Ovlg/ULgYnfWeB0FU5VxTLYCIL/yZ3j4AkuzD+u3qkEJBbmI7hHu0TI5JSxU/aBipDzKHqaqiikL6dc2WngpyC
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn; PTR:;
+ CAT:NONE; SFS:(13230031)(38350700005); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?rkRJxOt5R6d/OFPFLulYE7jIknNPMnWkoc6N1d8jrghzsCLWmTg8meniUtcY?=
+ =?us-ascii?Q?PstzLE3zsTFVoKMCgceyyW9FZRh9Q9usMQrn9EWCK6zVajxFGIi3oSJc7pbq?=
+ =?us-ascii?Q?cUiqGdHpQytNj75vj+zMoKCFmnrK05YI5OOG5BLjIWrTm4nHY2M2cjFYbZEs?=
+ =?us-ascii?Q?v3GzWUWHk5AV7A7yJ4tZ5MjuGJBoyEtdppyaZAtLz5TxCl/STvdbuv4znQzh?=
+ =?us-ascii?Q?Pc+YNf/F+AFBB3v4U9vEPyI/+OtvWW1R0l5dJu8g1hDFNUoLl+lmXImmYRLS?=
+ =?us-ascii?Q?uy28qDN4+fUc8Y+Q19A7lT9HIa3UaH2jqwTUnaiRNpp5v4Ci7ngnWV1UU3kc?=
+ =?us-ascii?Q?XGgUaai28fCtZnIqGiqv0aKbTOH+PQ0ew/5TuN1gyMiWQ9/0UFQy3/GhjFci?=
+ =?us-ascii?Q?Q8dOSrzCEicUzZjke5+1YbaATSYnRlzryZ91hYMieVu+AqcbHz0OETLJ8gRH?=
+ =?us-ascii?Q?WgaakibCwbcAnRPAuBGtyNAeWIpl98S51AZ9t1jLEBGpwKI+3GUlxz+F0x+5?=
+ =?us-ascii?Q?BfoAygtWkTDsgT0wFV/8Ih8t3+fBvY7AOU6lmI7x3F5Iwe3cj6dti0V1cK0a?=
+ =?us-ascii?Q?uEzZZ7DzA2y99tYPk69a93/jYbm6dFPCYFn1W/Os3cyafE9Fgw6xWw5dpEey?=
+ =?us-ascii?Q?q3yrFi7mRkfv3tqxx67u8nvoVtXoE4p+ptzQHvB3yYZSyN3ZPpmkZI51fDuo?=
+ =?us-ascii?Q?9fmdwd8J0hHTmIYtM5kR6Gku0u63Vq0rF3euIZIr6iOfeURhlP83noMORhSp?=
+ =?us-ascii?Q?PA9g2JhFtQ+vGZUhrKlwATHeaUtPES+E/UT4CBhGxcHDxUbxZaCyWCPphIKG?=
+ =?us-ascii?Q?qGLd8haD9wtYZY6Fh8Hh0GpHhX3yp4qKVLDCi8EUWCK3lkWsGcryNmuBio8m?=
+ =?us-ascii?Q?5VaizC1KbhxqriowjktC9smW3ovVkPIYmY19u9ao1L+NmWNmAA3xmHSmL4WI?=
+ =?us-ascii?Q?2Etq+1x9CKSHPVs4cjbjTC7L5cFwF36JyjmMKNDp3t3RheudWDJIG/5emnvF?=
+ =?us-ascii?Q?3r3JpHoaiF3NOk3qJ9pyYHI8JRu4TG4mJ7cMMb969vGAAqUhxpGH8OI9feJI?=
+ =?us-ascii?Q?AdiPnB2u19aSEzyP2nJQWkheWVfQbgkQDXZuTINgQDp5M2XS2MPRL1nyIFOk?=
+ =?us-ascii?Q?qIwp9uOF6+y6x6fMCUWqjBAGzQd1qS4wR+nNW+mAhqGMrQKjYV15+DuQTZ10?=
+ =?us-ascii?Q?1fu8U1T05YxPQZYkSvVY809iYylGhN6/nnqVh37fUKpUMDCSLMzTV1gcCh7r?=
+ =?us-ascii?Q?y+UTU5fkU/QPVJu/CRDIUghIOwKur+YqZpTVo5AI3uU0YewbsKMXzcuiUkuj?=
+ =?us-ascii?Q?XazlBaM0vK6IT74SLxfyBDNzr12lDegmT/JOh91FWcz55YcAWZwC30pBKUVH?=
+ =?us-ascii?Q?GaDgu6YDi2O4kGcAXx96nhH3aKu535bzFWss8emKM5TTQWAD2gqmdUdnRJzM?=
+ =?us-ascii?Q?1Ryx7PJMy8KIDRfu8LFnCl1qecQ3DzxX8o9SNZtHlB5HpoJOjDuDRcgjhHLl?=
+ =?us-ascii?Q?QigWlhQOEpQkA+1q2ueXZfD8B4VPbS18BZRYYjhXJho8FGMiLCUrm3S9x7tt?=
+ =?us-ascii?Q?sjLhEpysZKCGqTsTdCbWWX330QKD8I6g61hCdrFpSy55PMIPgSDWWRA6OZ6v?=
+ =?us-ascii?Q?Fg=3D=3D?=
+X-OriginatorOrg: starfivetech.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 340fdad4-9c72-4fd5-f76c-08dc35b1b0ee
+X-MS-Exchange-CrossTenant-AuthSource: ZQ0PR01MB1063.CHNPR01.prod.partner.outlook.cn
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2024 03:27:27.5543 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 06fe3fa3-1221-43d3-861b-5a4ee687a85c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yw8QtvKyEGuCs9fn1/SeNdpkYPSFy6ncFr7sut45VgomrQ2WCzjGUr5UAJ0hR0KeSqKB/bc2jc3OdI+CcdR8xASc5UPwQI1p5sgi6smwPqU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZQ0PR01MB1240
+Received-SPF: pass client-ip=2406:e500:4440:2::702;
+ envelope-from=demin.han@starfivetech.com;
+ helo=CHN02-BJS-obe.outbound.protection.partner.outlook.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,263 +125,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 10:02=E2=80=AFPM Hao Xiang <hao.xiang@bytedance.com=
-> wrote:
->
-> On Thu, Feb 22, 2024 at 6:33=E2=80=AFPM Peter Xu <peterx@redhat.com> wrot=
-e:
-> >
-> > On Wed, Feb 21, 2024 at 06:06:19PM -0300, Fabiano Rosas wrote:
-> > > Hao Xiang <hao.xiang@bytedance.com> writes:
-> > >
-> > > > This change adds a dedicated handler for MigrationOps::ram_save_tar=
-get_page in
-> > >
-> > > nit: Add a dedicated handler...
-> > >
-> > > Usually "this patch/change" is used only when necessary to avoid
-> > > ambiguity.
-> > >
-> > > > multifd live migration. Now zero page checking can be done in the m=
-ultifd threads
-> > > > and this becomes the default configuration. We still provide backwa=
-rd compatibility
-> > > > where zero page checking is done from the migration main thread.
-> > > >
-> > > > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > > > ---
-> > > >  migration/multifd.c |  1 +
-> > > >  migration/options.c |  2 +-
-> > > >  migration/ram.c     | 53 ++++++++++++++++++++++++++++++++++-------=
-----
-> > > >  3 files changed, 42 insertions(+), 14 deletions(-)
-> > > >
-> > > > diff --git a/migration/multifd.c b/migration/multifd.c
-> > > > index fbb40ea10b..ef5dad1019 100644
-> > > > --- a/migration/multifd.c
-> > > > +++ b/migration/multifd.c
-> > > > @@ -13,6 +13,7 @@
-> > > >  #include "qemu/osdep.h"
-> > > >  #include "qemu/cutils.h"
-> > >
-> > > This include...
-> > >
-> > > >  #include "qemu/rcu.h"
-> > > > +#include "qemu/cutils.h"
-> > >
-> > > is there already.
-> > >
-> > > >  #include "exec/target_page.h"
-> > > >  #include "sysemu/sysemu.h"
-> > > >  #include "exec/ramblock.h"
-> > > > diff --git a/migration/options.c b/migration/options.c
-> > > > index 3c603391b0..3c79b6ccd4 100644
-> > > > --- a/migration/options.c
-> > > > +++ b/migration/options.c
-> > > > @@ -181,7 +181,7 @@ Property migration_properties[] =3D {
-> > > >                        MIG_MODE_NORMAL),
-> > > >      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", Migrati=
-onState,
-> > > >                         parameters.zero_page_detection,
-> > > > -                       ZERO_PAGE_DETECTION_LEGACY),
-> > > > +                       ZERO_PAGE_DETECTION_MULTIFD),
-> > >
-> > > I think we'll need something to avoid a 9.0 -> 8.2 migration with thi=
-s
-> > > enabled. Otherwise it will go along happily until we get data corrupt=
-ion
-> > > because the new QEMU didn't send any zero pages on the migration thre=
-ad
-> > > and the old QEMU did not look for them in the multifd packet.
-> >
-> > It could be even worse, as the new QEMU will only attach "normal" pages
-> > after the multifd packet, the old QEMU could read more than it could,
-> > expecting all pages..
-> >
-> > >
-> > > Perhaps bumping the MULTIFD_VERSION when ZERO_PAGE_DETECTION_MULTIFD =
-is
-> > > in use. We'd just need to fix the test in the new QEMU to check
-> > > (msg.version > MULTIFD_VERSION) instead of (msg.version !=3D MULTIFD_=
-VERSION).
-> >
-> > IMHO we don't need yet to change MULTIFD_VERSION, what we need is perha=
-ps a
-> > compat entry in hw_compat_8_2 setting "zero-page-detection" to "legacy"=
-.
-> > We should make sure when "legacy" is set, multifd ran the old protocol
-> > (zero_num will always be 0, and will be ignored by old QEMUs, IIUC).
-> >
-> > One more comment is, when repost please consider split this patch into =
-two;
-> > The new ram_save_target_page_multifd() hook can be done in another patc=
-h,
-> > AFAIU.
->
-> Sorry, I kept missing this. I will keep telling myself, compatibility
-> is king. I will set the hw_compat_8_2 setting and make sure to test
-> migration 9.0 -> 8.2 fails with "multifd" option set.
-> Will split patches.
+The result of (8 - 3 - vlmul) is negtive when vlmul >= 6,
+and results in wrong vill.
 
-So I just want to make sure I am coding the right solution. I added
-setting "zero-page-detection" to "legacy" in hw_compat_8_2 and tested
-it. The behavior is that if I set machine type to pc-q35-8.2,
-zero-page-detection will automatically be set to "legacy". But if I
-set the machine type to pc-q35-9.0, zero-page-detection will be the
-default value "multifd". However, this doesn't seem to be a hard
-requirement because I can still override zero-page-detection to
-multifd on machine type pc-q35-8.2. Is this OK?
+Signed-off-by: demin.han <demin.han@starfivetech.com>
+---
+ target/riscv/vector_helper.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
->
-> >
-> > >
-> > > >
-> > > >      /* Migration capabilities */
-> > > >      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-> > > > diff --git a/migration/ram.c b/migration/ram.c
-> > > > index 5ece9f042e..b088c5a98c 100644
-> > > > --- a/migration/ram.c
-> > > > +++ b/migration/ram.c
-> > > > @@ -1123,10 +1123,6 @@ static int save_zero_page(RAMState *rs, Page=
-SearchStatus *pss,
-> > > >      QEMUFile *file =3D pss->pss_channel;
-> > > >      int len =3D 0;
-> > > >
-> > > > -    if (migrate_zero_page_detection() !=3D ZERO_PAGE_DETECTION_LEG=
-ACY) {
-> > > > -        return 0;
-> > > > -    }
-> > >
-> > > How does 'none' work now?
-> > >
-> > > > -
-> > > >      if (!buffer_is_zero(p, TARGET_PAGE_SIZE)) {
-> > > >          return 0;
-> > > >      }
-> > > > @@ -1256,6 +1252,10 @@ static int ram_save_page(RAMState *rs, PageS=
-earchStatus *pss)
-> > > >
-> > > >  static int ram_save_multifd_page(RAMBlock *block, ram_addr_t offse=
-t)
-> > > >  {
-> > > > +    assert(migrate_multifd());
-> > > > +    assert(!migrate_compress());
-> > > > +    assert(!migration_in_postcopy());
-> > >
-> > > Drop these, please. Keep only the asserts that are likely to trigger
-> > > during development, such as the existing ones at multifd_send_pages.
-> > >
-> > > > +
-> > > >      if (!multifd_queue_page(block, offset)) {
-> > > >          return -1;
-> > > >      }
-> > > > @@ -2046,7 +2046,6 @@ static bool save_compress_page(RAMState *rs, =
-PageSearchStatus *pss,
-> > > >   */
-> > > >  static int ram_save_target_page_legacy(RAMState *rs, PageSearchSta=
-tus *pss)
-> > > >  {
-> > > > -    RAMBlock *block =3D pss->block;
-> > > >      ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_B=
-ITS;
-> > > >      int res;
-> > > >
-> > > > @@ -2062,17 +2061,40 @@ static int ram_save_target_page_legacy(RAMS=
-tate *rs, PageSearchStatus *pss)
-> > > >          return 1;
-> > > >      }
-> > > >
-> > > > +    return ram_save_page(rs, pss);
-> > >
-> > > Look at where git put this! Are you using the default diff algorithm?=
- If
-> > > not try using --patience to see if it improves the diff.
-> > >
-> > > > +}
-> > > > +
-> > > > +/**
-> > > > + * ram_save_target_page_multifd: save one target page
-> > > > + *
-> > > > + * Returns the number of pages written
-> > >
-> > > We could be more precise here:
-> > >
-> > >  ram_save_target_page_multifd: send one target page to multifd worker=
-s
-> > >
-> > >  Returns 1 if the page was queued, -1 otherwise.
-> > >
-> > > > + *
-> > > > + * @rs: current RAM state
-> > > > + * @pss: data about the page we want to send
-> > > > + */
-> > > > +static int ram_save_target_page_multifd(RAMState *rs, PageSearchSt=
-atus *pss)
-> > > > +{
-> > > > +    RAMBlock *block =3D pss->block;
-> > > > +    ram_addr_t offset =3D ((ram_addr_t)pss->page) << TARGET_PAGE_B=
-ITS;
-> > > > +
-> > > > +    /* Multifd is not compatible with old compression. */
-> > > > +    assert(!migrate_compress());
-> > >
-> > > This should already be enforced at options.c.
-> > >
-> > > > +
-> > > > +    /* Multifd is not compabible with postcopy. */
-> > > > +    assert(!migration_in_postcopy());
-> > >
-> > > Same here.
-> > >
-> > > > +
-> > > >      /*
-> > > > -     * Do not use multifd in postcopy as one whole host page shoul=
-d be
-> > > > -     * placed.  Meanwhile postcopy requires atomic update of pages=
-, so even
-> > > > -     * if host page size =3D=3D guest page size the dest guest dur=
-ing run may
-> > > > -     * still see partially copied pages which is data corruption.
-> > > > +     * Backward compatibility support. While using multifd live
-> > > > +     * migration, we still need to handle zero page checking on th=
-e
-> > > > +     * migration main thread.
-> > > >       */
-> > > > -    if (migrate_multifd() && !migration_in_postcopy()) {
-> > > > -        return ram_save_multifd_page(block, offset);
-> > > > +    if (migrate_zero_page_detection() =3D=3D ZERO_PAGE_DETECTION_L=
-EGACY) {
-> > > > +        if (save_zero_page(rs, pss, offset)) {
-> > > > +            return 1;
-> > > > +        }
-> > > >      }
-> > > >
-> > > > -    return ram_save_page(rs, pss);
-> > > > +    return ram_save_multifd_page(block, offset);
-> > > >  }
-> > > >
-> > > >  /* Should be called before sending a host page */
-> > > > @@ -2984,7 +3006,12 @@ static int ram_save_setup(QEMUFile *f, void =
-*opaque)
-> > > >      }
-> > > >
-> > > >      migration_ops =3D g_malloc0(sizeof(MigrationOps));
-> > > > -    migration_ops->ram_save_target_page =3D ram_save_target_page_l=
-egacy;
-> > > > +
-> > > > +    if (migrate_multifd()) {
-> > > > +        migration_ops->ram_save_target_page =3D ram_save_target_pa=
-ge_multifd;
-> > > > +    } else {
-> > > > +        migration_ops->ram_save_target_page =3D ram_save_target_pa=
-ge_legacy;
-> > > > +    }
-> > > >
-> > > >      bql_unlock();
-> > > >      ret =3D multifd_send_sync_main();
-> > >
-> >
-> > --
-> > Peter Xu
-> >
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 84cec73eb2..fe56c007d5 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -44,6 +44,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     target_ulong reserved = s2 &
+                             MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
+                                             xlen - 1 - R_VTYPE_RESERVED_SHIFT);
++    uint16_t vlen = cpu->cfg.vlenb << 3;
+     int8_t lmul;
+ 
+     if (vlmul & 4) {
+@@ -53,10 +54,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+          * VLEN * LMUL >= SEW
+          * VLEN >> (8 - lmul) >= sew
+          * (vlenb << 3) >> (8 - lmul) >= sew
+-         * vlenb >> (8 - 3 - lmul) >= sew
+          */
+-        if (vlmul == 4 ||
+-            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
++        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
+             vill = true;
+         }
+     }
+-- 
+2.43.2
+
 
