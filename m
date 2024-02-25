@@ -4,51 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FCAC54E4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 13:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA449C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 13:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reEAg-00042A-F4; Sun, 25 Feb 2024 08:03:58 -0500
+	id 1reF0a-0002pS-CT; Sun, 25 Feb 2024 08:57:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1reEAc-00041f-7T
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 08:03:54 -0500
-Received: from mailout06.t-online.de ([194.25.134.19])
+ (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1reF0Y-0002p5-Q2
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 08:57:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1reEAa-0007MF-5H
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 08:03:53 -0500
-Received: from fwd70.aul.t-online.de (fwd70.aul.t-online.de [10.223.144.96])
- by mailout06.t-online.de (Postfix) with SMTP id 4059918C2F;
- Sun, 25 Feb 2024 14:03:47 +0100 (CET)
-Received: from [192.168.211.200] ([79.208.24.6]) by fwd70.t-online.de
- with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1reEAU-0IoCPp0; Sun, 25 Feb 2024 14:03:46 +0100
-Message-ID: <9e82a04b-f2c1-4e34-b4b6-46a0581b572f@t-online.de>
-Date: Sun, 25 Feb 2024 14:03:46 +0100
+ (Exim 4.90_1) (envelope-from <lersek@redhat.com>) id 1reF0W-0000ZA-UQ
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 08:57:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708869450;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8/JXIUgngW2iuXX2sfMj/Zfqo7xFMB9b7gRFoeC4Eng=;
+ b=h/YUiM4CGdrWXj4p38KvXwKAcwhzO9wPYALDwymEAaqKaZAd2fh6JqfDQIvAstWGD1/YXO
+ aCS+ZfxVKNhloCjLU7Csx6PcJ9pwmWB1qHNPdS13iazfvIpcNfvmOatawLN+hpmodeTyjA
+ 2kYBCrEh4VTIamg7FiKkPbNOJ7pImG4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-ufGDc-4EOL-eK7UAkchQQA-1; Sun,
+ 25 Feb 2024 08:57:26 -0500
+X-MC-Unique: ufGDc-4EOL-eK7UAkchQQA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5100738130B1;
+ Sun, 25 Feb 2024 13:57:26 +0000 (UTC)
+Received: from [10.39.192.57] (unknown [10.39.192.57])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 216A48CE8;
+ Sun, 25 Feb 2024 13:57:23 +0000 (UTC)
+Message-ID: <46bd8ed1-eea5-095b-1a55-043754f4f2ef@redhat.com>
+Date: Sun, 25 Feb 2024 14:57:22 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 14/25] hw/i386/pc: Confine system flash handling to pc_sysfw
+Subject: Re: [PATCH V2 1/1] loongarch: Change the UEFI loading mode to
+ loongarch
 Content-Language: en-US
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240221211626.48190-1-philmd@linaro.org>
- <20240221211626.48190-15-philmd@linaro.org>
-From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-In-Reply-To: <20240221211626.48190-15-philmd@linaro.org>
+To: Andrea Bolognani <abologna@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org,
+ maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
+ zhaotianrui@loongson.cn, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?= <berrange@redhat.com>
+References: <cover.1708336919.git.lixianglai@loongson.cn>
+ <0bd892aa9b88e0f4cc904cb70efd0251fc1cde29.1708336919.git.lixianglai@loongson.cn>
+ <582cb02c-9778-46af-97d3-5b248b30b02e@linaro.org>
+ <CABJz62ML+ye=mwX2vfZJG==TOHLyLoFMGZaAvTS36Dcax8jcaA@mail.gmail.com>
+From: Laszlo Ersek <lersek@redhat.com>
+In-Reply-To: <CABJz62ML+ye=mwX2vfZJG==TOHLyLoFMGZaAvTS36Dcax8jcaA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1708866226-33FFC937-3EF97DBF/0/0 CLEAN NORMAL
-X-TOI-MSGID: 6c7a0ef1-7f6a-4a8b-8504-6b75a35d0277
-Received-SPF: pass client-ip=194.25.134.19; envelope-from=vr_qemu@t-online.de;
- helo=mailout06.t-online.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lersek@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -66,107 +88,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 21.02.24 um 22:16 schrieb Philippe Mathieu-Daudé:
-> From: Bernhard Beschow <shentey@gmail.com>
->
-> Rather than distributing PC system flash handling across three files, let's
-> confine it to one. Now, pc_system_firmware_init() creates, configures and cleans
-> up the system flash which makes the code easier to understand. It also avoids
-> the extra call to pc_system_flash_cleanup_unused() in the Xen case.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Message-ID: <20240208220349.4948-7-shentey@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  include/hw/i386/pc.h | 2 --
->  hw/i386/pc.c         | 1 -
->  hw/i386/pc_piix.c    | 1 -
->  hw/i386/pc_sysfw.c   | 6 ++++--
->  4 files changed, 4 insertions(+), 6 deletions(-)
+On 2/22/24 16:49, Andrea Bolognani wrote:
+> On Thu, Feb 22, 2024 at 04:10:20PM +0100, Philippe Mathieu-Daudé wrote:
+>> On 19/2/24 11:34, Xianglai Li wrote:
+>>> The UEFI loading mode in loongarch is very different
+>>> from that in other architectures:loongarch's UEFI code
+>>> is in rom, while other architectures' UEFI code is in flash.
+>>>
+>>> loongarch UEFI can be loaded as follows:
+>>> -machine virt,pflash=pflash0-format
+>>> -bios ./QEMU_EFI.fd
+>>>
+>>> Other architectures load UEFI using the following methods:
+>>> -machine virt,pflash0=pflash0-format,pflash1=pflash1-format
+>>>
+>>> loongarch's UEFI loading method makes qemu and libvirt incompatible
+>>> when using NVRAM, and the cost of loongarch's current loading method
+>>> far outweighs the benefits, so we decided to use the same UEFI loading
+>>> scheme as other architectures.
+>>
+>> This is unfortunate, since LoongArch was a fresh new target added,
+>> we had the possibility to make this right. Are you saying libvirt
+>> didn't accept to add support for the correct HW behavior which is
+>> to simply load a ROM instead of a PNOR flash device? Could you
+>> point me to the libvirt discussion please? libvirt is very good at
+>> supporting a broad range of legacy options, so I'm surprise 'Doing
+>> The Right Thing' is too costly.
+>>
+>> What is really the problem here, is it your use of the the -bios
+>> CLI option?
+> 
+> Hi Philippe,
+> 
+> the thread is here:
+> 
+>   https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/7PV3IXWNX3UXQN2BNV5UA5ASVXNVOQIF/
+> 
+> Unfortunately hyperkitty makes it impossible to link to a subthread
+> directly, so you're going to have to scroll around. The relevant part
+> of the discussion happens entirely as reply to the cover letter.
+> 
+> You were actually CC'd to that subthread right after my first reply,
+> so you should be able to find the relevant messages locally as well,
+> which is probably going to be more convenient.
+> 
+> In short, the discussion is similar to the one we had a while ago
+> about RISC-V, and my argument in favor of this change is largely the
+> same: barring exceptional circumstances, the overall (maintenance,
+> cognitive) cost of straying from the established norm, now spanning
+> three existing architectures, likely outweighs the benefits.
+> 
 
-Hi Bernhard,
+I'm surprised that the UEFI payload (?) on *physical* loongarch machines
+is supposed (?) to launch from ROM. That means "no firmware updates",
+which is quite unusual nowadays. Recent versions of the UEFI spec have
+introduced a bunch of interfaces just for standardizing firmware
+updates, meaning both add-on card firmware, and platform/system firmware.
 
-this patch breaks QEMU on my system.
+(Unfortunately, I have nothing "constructive" to add; apologies.)
 
-./qemu-system-x86_64 -machine q35,pflash0=pflash0-storage -blockdev
-driver=file,node-name=pflash0-storage,filename=/usr/share/qemu/ovmf-x86_64.bin,read-only=true
-qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
-
-I had to revert cb05cc1602 ("hw/i386/pc_sysfw: Inline
-pc_system_flash_create() and remove it") and 6f6ad2b245 ("hw/i386/pc:
-Confine system flash handling to pc_sysfw") to make it work again.
-
-With best regards,
-Volker
-
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 0a8a96600c..e8f4af5d5c 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -193,8 +193,6 @@ void pc_i8259_create(ISABus *isa_bus, qemu_irq *i8259_irqs);
->  #define TYPE_PORT92 "port92"
->  
->  /* pc_sysfw.c */
-> -void pc_system_flash_create(PCMachineState *pcms);
-> -void pc_system_flash_cleanup_unused(PCMachineState *pcms);
->  void pc_system_firmware_init(PCMachineState *pcms, MemoryRegion *rom_memory);
->  bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
->                                 int *data_len);
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index e526498164..1ee41a5e56 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1733,7 +1733,6 @@ static void pc_machine_initfn(Object *obj)
->  #endif
->      pcms->default_bus_bypass_iommu = false;
->  
-> -    pc_system_flash_create(pcms);
->      pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
->      object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
->                                OBJECT(pcms->pcspk), "audiodev");
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 34203927e1..ec7c07b362 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -231,7 +231,6 @@ static void pc_init1(MachineState *machine,
->          assert(machine->ram_size == x86ms->below_4g_mem_size +
->                                      x86ms->above_4g_mem_size);
->  
-> -        pc_system_flash_cleanup_unused(pcms);
->          if (machine->kernel_filename != NULL) {
->              /* For xen HVM direct kernel boot, load linux here */
->              xen_load_linux(pcms);
-> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> index c8d9e71b88..b4c3833352 100644
-> --- a/hw/i386/pc_sysfw.c
-> +++ b/hw/i386/pc_sysfw.c
-> @@ -91,7 +91,7 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
->      return PFLASH_CFI01(dev);
->  }
->  
-> -void pc_system_flash_create(PCMachineState *pcms)
-> +static void pc_system_flash_create(PCMachineState *pcms)
->  {
->      PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
->  
-> @@ -103,7 +103,7 @@ void pc_system_flash_create(PCMachineState *pcms)
->      }
->  }
->  
-> -void pc_system_flash_cleanup_unused(PCMachineState *pcms)
-> +static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
->  {
->      char *prop_name;
->      int i;
-> @@ -212,6 +212,8 @@ void pc_system_firmware_init(PCMachineState *pcms,
->          return;
->      }
->  
-> +    pc_system_flash_create(pcms);
-> +
->      /* Map legacy -drive if=pflash to machine properties */
->      for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
->          pflash_cfi01_legacy_drive(pcms->flash[i],
+Laszlo
 
 
