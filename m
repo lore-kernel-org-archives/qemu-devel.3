@@ -4,74 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F0CEC47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 11:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FCAC54E4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 13:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reD3c-00081N-J5; Sun, 25 Feb 2024 06:52:36 -0500
+	id 1reEAg-00042A-F4; Sun, 25 Feb 2024 08:03:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1reD3a-000806-G5
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 06:52:34 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1reD3Y-00023o-QX
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 06:52:34 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56533e30887so2243401a12.1
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 03:52:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708861950; x=1709466750; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=gOfc+o6YVJY9n0PKQbdoguE6/mGYQ1ZnE0tbMGd1dXY=;
- b=PVP26I2uUocDwSzvQdal+VnMfN24H6XhI5YH/2WzifsB8OtD2JKukUQ4yvCMGW/Kdx
- JaIQzuTOzIve/NUA0fDAYJfJeUK+blVA6gqTGY7e9YBFOgFJg+4L2E29JPhpMR58+8bW
- Xo7YcYvNIVUbeSPZg2tt/n06l2/l4o6BlcJUa8shw8036lF8xyWij+vrTKduc+KOwLaW
- hkb5RvWHt/ptHPRjVgl95BIjzuYIwk9VdKKAmkWZFhGRpKYYltNvpKs4WNtBym641EWq
- LirpvRjuqkA9VwC+JN+j62NFhJ2CFZzZi236BVsMRksJYZSQk5k36ORSBdCypsgNr/fd
- twHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708861950; x=1709466750;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gOfc+o6YVJY9n0PKQbdoguE6/mGYQ1ZnE0tbMGd1dXY=;
- b=JStkuONw8Lk93wntepLQdqfUUMP8sJRj9hGeVmfWxdsoEPjpyQDeW2wL/NdsC87C1z
- GKzO++GPDcqLSW+LCrd8Zlnqk4+6sXncMMJrcT4WfXbAOTWck4C8lo95srP8EpIaZzS0
- q1ZdAPcBihZ0Bbl36hfWucup4pC02s10w7aqrO27ZQtdddk9r5yqClXXW9pkMd/pjVTo
- VrajMD+GKulYzmepDal5Z9XeL2P590RNUe/HM/++EeBxRUgaR/hsCh8vPqFIeRsGszJ/
- DbhBuKNCbCaHcR/ODDSFaoUtimph2Py4T1ZeReUXHvIbbPEoPIGPgRr/uKF/CKltX2YJ
- Q0zA==
-X-Gm-Message-State: AOJu0YyOwEZqLrX8poCc0xVo4Sj5L47xGlvC0LFdhVr8YtsFsORoSK1b
- irxtMPx/23VOeXT1CTen7xH9jRHX6rswYQYAnBXjLYuKLdB1tNPjnct4WqzJwxxEnS4mPi35qBp
- thcrg5BONpciN0ZMzF6KkvB03LqKO84ynKbu7FgbXV3k/hiZY
-X-Google-Smtp-Source: AGHT+IFAov0GF5uV1/+IQstWVcD9l0u9iw9M1xqVYfe5N1yINsx1Gwu+1JJgT5WdMVjDQSqIgFmwgeu1gcOxW+TML4E=
-X-Received: by 2002:aa7:d959:0:b0:564:b882:bc5a with SMTP id
- l25-20020aa7d959000000b00564b882bc5amr3149553eds.37.1708861950477; Sun, 25
- Feb 2024 03:52:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1reEAc-00041f-7T
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 08:03:54 -0500
+Received: from mailout06.t-online.de ([194.25.134.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
+ id 1reEAa-0007MF-5H
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 08:03:53 -0500
+Received: from fwd70.aul.t-online.de (fwd70.aul.t-online.de [10.223.144.96])
+ by mailout06.t-online.de (Postfix) with SMTP id 4059918C2F;
+ Sun, 25 Feb 2024 14:03:47 +0100 (CET)
+Received: from [192.168.211.200] ([79.208.24.6]) by fwd70.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1reEAU-0IoCPp0; Sun, 25 Feb 2024 14:03:46 +0100
+Message-ID: <9e82a04b-f2c1-4e34-b4b6-46a0581b572f@t-online.de>
+Date: Sun, 25 Feb 2024 14:03:46 +0100
 MIME-Version: 1.0
-References: <20240223191003.6268-1-thuth@redhat.com>
-In-Reply-To: <20240223191003.6268-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 25 Feb 2024 11:52:19 +0000
-Message-ID: <CAFEAcA-vBDBPrs9+sHzYoUG3nfhYzEOCVR83UoA00mqkdWfZAw@mail.gmail.com>
-Subject: Re: [PULL 00/11] Test and misc patches
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 14/25] hw/i386/pc: Confine system flash handling to pc_sysfw
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240221211626.48190-1-philmd@linaro.org>
+ <20240221211626.48190-15-philmd@linaro.org>
+From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+In-Reply-To: <20240221211626.48190-15-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TOI-EXPURGATEID: 150726::1708866226-33FFC937-3EF97DBF/0/0 CLEAN NORMAL
+X-TOI-MSGID: 6c7a0ef1-7f6a-4a8b-8504-6b75a35d0277
+Received-SPF: pass client-ip=194.25.134.19; envelope-from=vr_qemu@t-online.de;
+ helo=mailout06.t-online.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,37 +66,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Feb 2024 at 19:10, Thomas Huth <thuth@redhat.com> wrote:
+Am 21.02.24 um 22:16 schrieb Philippe Mathieu-Daudé:
+> From: Bernhard Beschow <shentey@gmail.com>
 >
->  Hi Peter!
+> Rather than distributing PC system flash handling across three files, let's
+> confine it to one. Now, pc_system_firmware_init() creates, configures and cleans
+> up the system flash which makes the code easier to understand. It also avoids
+> the extra call to pc_system_flash_cleanup_unused() in the Xen case.
 >
-> The following changes since commit 3d54cbf269d63ff1d500b35b2bcf4565ff8ad485:
->
->   Merge tag 'hw-misc-20240222' of https://github.com/philmd/qemu into staging (2024-02-22 15:44:29 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-02-23
->
-> for you to fetch changes up to 028ade14da9eb31a8c5dde48dd5b140e49888908:
->
->   target/i386: do not filter processor tracing features except on KVM (2024-02-23 08:13:52 +0100)
->
-> ----------------------------------------------------------------
-> * m68k: Fix exception frame format for 68010
-> * Add cdrom test for LoongArch virt machine
-> * Fix qtests when using --without-default-devices
-> * Enable -Wvla
-> * Windows 32-bit removal
-> * Silence warnings in the test-x86-cpuid-compat qtest
->
-> ----------------------------------------------------------------
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Message-ID: <20240208220349.4948-7-shentey@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  include/hw/i386/pc.h | 2 --
+>  hw/i386/pc.c         | 1 -
+>  hw/i386/pc_piix.c    | 1 -
+>  hw/i386/pc_sysfw.c   | 6 ++++--
+>  4 files changed, 4 insertions(+), 6 deletions(-)
 
+Hi Bernhard,
 
-Applied, thanks.
+this patch breaks QEMU on my system.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+./qemu-system-x86_64 -machine q35,pflash0=pflash0-storage -blockdev
+driver=file,node-name=pflash0-storage,filename=/usr/share/qemu/ovmf-x86_64.bin,read-only=true
+qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
 
--- PMM
+I had to revert cb05cc1602 ("hw/i386/pc_sysfw: Inline
+pc_system_flash_create() and remove it") and 6f6ad2b245 ("hw/i386/pc:
+Confine system flash handling to pc_sysfw") to make it work again.
+
+With best regards,
+Volker
+
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index 0a8a96600c..e8f4af5d5c 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -193,8 +193,6 @@ void pc_i8259_create(ISABus *isa_bus, qemu_irq *i8259_irqs);
+>  #define TYPE_PORT92 "port92"
+>  
+>  /* pc_sysfw.c */
+> -void pc_system_flash_create(PCMachineState *pcms);
+> -void pc_system_flash_cleanup_unused(PCMachineState *pcms);
+>  void pc_system_firmware_init(PCMachineState *pcms, MemoryRegion *rom_memory);
+>  bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
+>                                 int *data_len);
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index e526498164..1ee41a5e56 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1733,7 +1733,6 @@ static void pc_machine_initfn(Object *obj)
+>  #endif
+>      pcms->default_bus_bypass_iommu = false;
+>  
+> -    pc_system_flash_create(pcms);
+>      pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
+>      object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+>                                OBJECT(pcms->pcspk), "audiodev");
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 34203927e1..ec7c07b362 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -231,7 +231,6 @@ static void pc_init1(MachineState *machine,
+>          assert(machine->ram_size == x86ms->below_4g_mem_size +
+>                                      x86ms->above_4g_mem_size);
+>  
+> -        pc_system_flash_cleanup_unused(pcms);
+>          if (machine->kernel_filename != NULL) {
+>              /* For xen HVM direct kernel boot, load linux here */
+>              xen_load_linux(pcms);
+> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> index c8d9e71b88..b4c3833352 100644
+> --- a/hw/i386/pc_sysfw.c
+> +++ b/hw/i386/pc_sysfw.c
+> @@ -91,7 +91,7 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+>      return PFLASH_CFI01(dev);
+>  }
+>  
+> -void pc_system_flash_create(PCMachineState *pcms)
+> +static void pc_system_flash_create(PCMachineState *pcms)
+>  {
+>      PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+>  
+> @@ -103,7 +103,7 @@ void pc_system_flash_create(PCMachineState *pcms)
+>      }
+>  }
+>  
+> -void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+> +static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+>  {
+>      char *prop_name;
+>      int i;
+> @@ -212,6 +212,8 @@ void pc_system_firmware_init(PCMachineState *pcms,
+>          return;
+>      }
+>  
+> +    pc_system_flash_create(pcms);
+> +
+>      /* Map legacy -drive if=pflash to machine properties */
+>      for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+>          pflash_cfi01_legacy_drive(pcms->flash[i],
+
 
