@@ -4,58 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E57C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 20:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B674C54E4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 25 Feb 2024 21:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reL76-0001Hf-KP; Sun, 25 Feb 2024 15:28:44 -0500
+	id 1reLe1-0000Uz-Gg; Sun, 25 Feb 2024 16:02:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1reL74-0001Gn-RC; Sun, 25 Feb 2024 15:28:42 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1)
+ (envelope-from <SRS0=Zi23GS=KC=fysnet.net=benlunt@eigbox.net>)
+ id 1reL2O-0000gd-CP
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 15:23:52 -0500
+Received: from bosmailout06.eigbox.net ([66.96.187.6])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1reL71-0006Va-Rj; Sun, 25 Feb 2024 15:28:42 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 29C564E6099;
- Sun, 25 Feb 2024 21:28:35 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id lQzbAKF0xXt6; Sun, 25 Feb 2024 21:28:33 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 22A944E609C; Sun, 25 Feb 2024 21:28:33 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 205777456FE;
- Sun, 25 Feb 2024 21:28:33 +0100 (CET)
-Date: Sun, 25 Feb 2024 21:28:33 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Leif Lindholm <quic_llindhol@quicinc.com>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
- Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
- John Snow <jsnow@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH v2 3/3] hw/ide: Include 'ide_internal.h' from current path
-In-Reply-To: <20240225171637.4709-4-philmd@linaro.org>
-Message-ID: <feffd329-59e0-0291-0dd6-76a625da190b@eik.bme.hu>
-References: <20240225171637.4709-1-philmd@linaro.org>
- <20240225171637.4709-4-philmd@linaro.org>
+ (Exim 4.90_1)
+ (envelope-from <SRS0=Zi23GS=KC=fysnet.net=benlunt@eigbox.net>)
+ id 1reL2M-0004jh-PY
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 15:23:52 -0500
+Received: from bosmailscan06.eigbox.net ([10.20.15.6])
+ by bosmailout06.eigbox.net with esmtp (Exim) id 1reKWf-0001CM-7v
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:51:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fysnet.net; 
+ s=dkim;
+ h=Sender:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ Message-ID:Date:Subject:To:From:Reply-To:Cc:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=CTgUnaLsCihC8z32cJNR5EDENJWs83hTcEYvtrdlE6g=; b=nbKi/sMD3EZjXxmtV2Kh1MMoDL
+ AS03orwX9WrTc73kfBM7OrOrki4owqHuJsfW2/RlMDRmhrVkhGCmSBZoa8yOQuEYqWAk81uoD3pPJ
+ L2T/833GZ7N7enpUmXLHv+T3nB6zmQ8zC2VDoMCY5FWboJ7TwMu4EzgalMhtTVXr+mPoKIg+xa6sT
+ JnjpO7f1wzXrPABUIxUe2tY48knby6P+7224PCzE412jvDYYg6pgtW/8TjCP3qBH8q2Kmducw1/AO
+ WH0ymFb/yWqZPb4FpF2RYQQAOWgNGiOLR0ZXUQItezjy2VypDGWE6aRK4igs/L+jwjpnH4Lo4BnO+
+ M8T4OuBg==;
+Received: from [10.115.3.33] (helo=bosimpout13)
+ by bosmailscan06.eigbox.net with esmtp (Exim) id 1reKWd-0003Y2-22
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:51:03 -0500
+Received: from bosauthsmtp10.yourhostingaccount.com ([10.20.18.10])
+ by bosimpout13 with 
+ id rXpu2B0010D2CUy01Xpxu8; Sun, 25 Feb 2024 14:50:41 -0500
+X-Authority-Analysis: v=2.3 cv=Q6tJH7+a c=1 sm=1 tr=0
+ a=Kpo39fPXdbgqDwiI3/AEUA==:117 a=S3MT/dRO/ryrFfNS2TKYag==:17
+ a=kj9zAlcOel0A:10 a=k7vzHIieQBIA:10 a=danhDmx_AAAA:8 a=03UIiu-VAAAA:8
+ a=jPOicQp0w2Md6mnQZXQA:9 a=CjuIK1q_8ugA:10 a=P4VdviVPEcjfz_PVVggX:22
+ a=TDsaGBozw4ymKzHYph0x:22
+Received: from 72-24-79-116.cpe.sparklight.net ([72.24.79.116]:51211
+ helo=Fys64) by bosauthsmtp10.eigbox.net with esmtpa (Exim)
+ id 1reKVW-0005gC-3g
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 14:49:54 -0500
+From: <benlunt@fysnet.net>
+To: <qemu-devel@nongnu.org>
+Subject: [PATCH] hw/us/bus.c PCAP adding 0xA in Windows version
+Date: Sun, 25 Feb 2024 12:49:51 -0700
+Message-ID: <000101da6823$ce1bbf80$6a533e80$@fysnet.net>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-190602859-1708892913=:78302"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdpoIjhwSpNg4Nf3TrCXeVbHYOrrTQ==
+Content-Language: en-us
+X-EN-UserInfo: 0be0d87d7bf3726c278d97b9639d48f5:931c98230c6409dcc37fa7e93b490c27
+X-EN-AuthUser: benlunt@fysnet.net
+X-EN-OrigIP: 72.24.79.116
+X-EN-OrigHost: 72-24-79-116.cpe.sparklight.net
+Received-SPF: pass client-ip=66.96.187.6;
+ envelope-from=SRS0=Zi23GS=KC=fysnet.net=benlunt@eigbox.net;
+ helo=bosmailout06.eigbox.net
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 25 Feb 2024 16:02:42 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,269 +95,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Since Windows text files use CRLFs for all \n, the Windows version of QEMU
+inserts a CR in the PCAP stream when a LF is encountered when using USB PCAP
+files. This is due to the fact that the PCAP file is opened as TEXT instead
+of BINARY.
 
---3866299591-190602859-1708892913=:78302
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+To show an example, when using a very common protocol to USB disks, the BBB
+protocol uses a 10-byte command packet. For example, the READ_CAPACITY(10)
+command will have a command block length of 10 (0xA). When this 10-byte
+command (part of the 31-byte CBW) is placed into the PCAP file, the Windows
+file manager inserts a 0xD before the 0xA, turning the 31-byte CBW into a
+32-byte CBW.
 
-On Sun, 25 Feb 2024, Philippe Mathieu-Daudé wrote:
-> Rename "internal.h" as "ide_internal.h", and include
+Actual CBW:
+  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0a 25 USBC...........%
+  0050 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00       ...............
 
-Is there a convention about using underscore or dash in file names? The 
-headers Thomas added are using - as well as ahci-allwinner.c, only 
-ahci_internal.h has _ (but there are others elsewhere such as 
-pci_device.h). Maybe we should be consistent at least within IDE and this 
-series is now a good opportunity for renaming these headers to match. But 
-it's just a small nit, thanks for picking this up.
+PCAP CBW
+  0040 55 53 42 43 01 00 00 00 08 00 00 00 80 00 0d 0a USBC............
+  0050 25 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 %..............
 
-Regards,
-BALATON Zoltan
+I believe simply opening the PCAP file as BINARY instead of TEXT will fix
+this issue.
 
-> it via its relative local path, instead of absolute
-> to the project root path.
->
-> Mechanical patch doing:
->
->  $ sed -i -e 's#hw/ide/internal.h#ide_internal.h#' \
->        $(git grep -l hw/ide/internal)
->  $ git mv hw/ide/internal.h hw/ide/ide_internal.h
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> hw/ide/ahci_internal.h                | 2 +-
-> hw/ide/{internal.h => ide_internal.h} | 0
-> hw/ide/ahci.c                         | 2 +-
-> hw/ide/atapi.c                        | 2 +-
-> hw/ide/cmd646.c                       | 2 +-
-> hw/ide/core.c                         | 2 +-
-> hw/ide/ide-bus.c                      | 2 +-
-> hw/ide/ide-dev.c                      | 2 +-
-> hw/ide/ioport.c                       | 2 +-
-> hw/ide/isa.c                          | 2 +-
-> hw/ide/macio.c                        | 2 +-
-> hw/ide/microdrive.c                   | 2 +-
-> hw/ide/mmio.c                         | 2 +-
-> hw/ide/pci.c                          | 2 +-
-> hw/ide/piix.c                         | 2 +-
-> hw/ide/sii3112.c                      | 2 +-
-> hw/ide/via.c                          | 2 +-
-> 17 files changed, 16 insertions(+), 16 deletions(-)
-> rename hw/ide/{internal.h => ide_internal.h} (100%)
->
-> diff --git a/hw/ide/ahci_internal.h b/hw/ide/ahci_internal.h
-> index 4e13329bb2..34f3d50ca9 100644
-> --- a/hw/ide/ahci_internal.h
-> +++ b/hw/ide/ahci_internal.h
-> @@ -25,7 +25,7 @@
-> #define HW_IDE_AHCI_INTERNAL_H
->
-> #include "hw/ide/ahci.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/pci/pci_device.h"
->
-> #define AHCI_MEM_BAR_SIZE         0x1000
-> diff --git a/hw/ide/internal.h b/hw/ide/ide_internal.h
-> similarity index 100%
-> rename from hw/ide/internal.h
-> rename to hw/ide/ide_internal.h
-> diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-> index 54c9685495..c2af344ac5 100644
-> --- a/hw/ide/ahci.c
-> +++ b/hw/ide/ahci.c
-> @@ -34,7 +34,7 @@
-> #include "qemu/module.h"
-> #include "sysemu/block-backend.h"
-> #include "sysemu/dma.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/ide/pci.h"
-> #include "hw/ide/ahci-pci.h"
-> #include "hw/ide/ahci-sysbus.h"
-> diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
-> index dcc39df9a4..8ac99f64d2 100644
-> --- a/hw/ide/atapi.c
-> +++ b/hw/ide/atapi.c
-> @@ -24,7 +24,7 @@
->  */
->
-> #include "qemu/osdep.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/scsi/scsi.h"
-> #include "sysemu/block-backend.h"
-> #include "scsi/constants.h"
-> diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
-> index 23d213ff01..be72f4d3ed 100644
-> --- a/hw/ide/cmd646.c
-> +++ b/hw/ide/cmd646.c
-> @@ -33,7 +33,7 @@
-> #include "sysemu/reset.h"
->
-> #include "hw/ide/pci.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "trace.h"
->
-> /* CMD646 specific */
-> diff --git a/hw/ide/core.c b/hw/ide/core.c
-> index 9c4a812902..8f2004f93b 100644
-> --- a/hw/ide/core.c
-> +++ b/hw/ide/core.c
-> @@ -41,7 +41,7 @@
-> #include "qemu/cutils.h"
-> #include "sysemu/replay.h"
-> #include "sysemu/runstate.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "trace.h"
->
-> /* These values were based on a Seagate ST3500418AS but have been modified
-> diff --git a/hw/ide/ide-bus.c b/hw/ide/ide-bus.c
-> index 57fe67b29c..32e9f62137 100644
-> --- a/hw/ide/ide-bus.c
-> +++ b/hw/ide/ide-bus.c
-> @@ -21,7 +21,7 @@
-> #include "qapi/error.h"
-> #include "qemu/error-report.h"
-> #include "qemu/module.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "sysemu/block-backend.h"
-> #include "sysemu/blockdev.h"
-> #include "sysemu/runstate.h"
-> diff --git a/hw/ide/ide-dev.c b/hw/ide/ide-dev.c
-> index c8e2033469..832293ca69 100644
-> --- a/hw/ide/ide-dev.c
-> +++ b/hw/ide/ide-dev.c
-> @@ -23,7 +23,7 @@
-> #include "qemu/error-report.h"
-> #include "qemu/module.h"
-> #include "hw/ide/ide-dev.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "sysemu/block-backend.h"
-> #include "sysemu/blockdev.h"
-> #include "sysemu/sysemu.h"
-> diff --git a/hw/ide/ioport.c b/hw/ide/ioport.c
-> index 0b283ac783..7a80c549ec 100644
-> --- a/hw/ide/ioport.c
-> +++ b/hw/ide/ioport.c
-> @@ -25,7 +25,7 @@
->
-> #include "qemu/osdep.h"
-> #include "hw/isa/isa.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "trace.h"
->
-> int ide_init_ioport(IDEBus *bus, ISADevice *dev, int iobase, int iobase2)
-> diff --git a/hw/ide/isa.c b/hw/ide/isa.c
-> index cc865c83dc..2fc28d64b6 100644
-> --- a/hw/ide/isa.c
-> +++ b/hw/ide/isa.c
-> @@ -32,7 +32,7 @@
-> #include "sysemu/dma.h"
->
-> #include "hw/ide/isa.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "qom/object.h"
->
-> /***********************************************************/
-> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-> index 0d2c6ba910..7611a99ef5 100644
-> --- a/hw/ide/macio.c
-> +++ b/hw/ide/macio.c
-> @@ -33,7 +33,7 @@
-> #include "sysemu/block-backend.h"
-> #include "sysemu/dma.h"
->
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
->
-> /* debug MACIO */
-> // #define DEBUG_MACIO
-> diff --git a/hw/ide/microdrive.c b/hw/ide/microdrive.c
-> index a7f415f0fc..09781658f9 100644
-> --- a/hw/ide/microdrive.c
-> +++ b/hw/ide/microdrive.c
-> @@ -31,7 +31,7 @@
-> #include "sysemu/dma.h"
-> #include "hw/irq.h"
->
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "qom/object.h"
->
-> #define TYPE_MICRODRIVE "microdrive"
-> diff --git a/hw/ide/mmio.c b/hw/ide/mmio.c
-> index e8f41c0610..1ba2541b40 100644
-> --- a/hw/ide/mmio.c
-> +++ b/hw/ide/mmio.c
-> @@ -30,7 +30,7 @@
-> #include "sysemu/dma.h"
->
-> #include "hw/ide/mmio.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/qdev-properties.h"
->
-> /***********************************************************/
-> diff --git a/hw/ide/pci.c b/hw/ide/pci.c
-> index 73efeec7f4..855cbb031d 100644
-> --- a/hw/ide/pci.c
-> +++ b/hw/ide/pci.c
-> @@ -30,7 +30,7 @@
-> #include "sysemu/dma.h"
-> #include "qemu/error-report.h"
-> #include "qemu/module.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/ide/pci.h"
-> #include "trace.h"
->
-> diff --git a/hw/ide/piix.c b/hw/ide/piix.c
-> index 1773a068c3..886cf840f1 100644
-> --- a/hw/ide/piix.c
-> +++ b/hw/ide/piix.c
-> @@ -30,7 +30,7 @@
-> #include "qemu/osdep.h"
-> #include "qapi/error.h"
-> #include "hw/pci/pci.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/ide/piix.h"
-> #include "hw/ide/pci.h"
-> #include "trace.h"
-> diff --git a/hw/ide/sii3112.c b/hw/ide/sii3112.c
-> index 321b9e46a1..e28bbd160d 100644
-> --- a/hw/ide/sii3112.c
-> +++ b/hw/ide/sii3112.c
-> @@ -13,7 +13,7 @@
->  */
->
-> #include "qemu/osdep.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/ide/pci.h"
-> #include "qemu/module.h"
-> #include "trace.h"
-> diff --git a/hw/ide/via.c b/hw/ide/via.c
-> index cf151e70ec..ceecb3aa01 100644
-> --- a/hw/ide/via.c
-> +++ b/hw/ide/via.c
-> @@ -25,7 +25,7 @@
->  */
->
-> #include "qemu/osdep.h"
-> -#include "hw/ide/internal.h"
-> +#include "ide_internal.h"
-> #include "hw/pci/pci.h"
-> #include "migration/vmstate.h"
-> #include "qemu/module.h"
->
---3866299591-190602859-1708892913=:78302--
+Resolves: https://bugs.launchpad.net/qemu/+bug/2054889
+Signed-off-by: Benjamin David Lunt <benlunt@fysnet.net>
+---
+ hw/usb/bus.c | 2 +-
+1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff -u a/hw/usb/bus.c b/hw/usb/bus.c
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -273,13 +273,13 @@
+     }
+ 
+     if (dev->pcap_filename) {
+-        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
+O_TRUNC, 0666);
++        int fd = qemu_open_old(dev->pcap_filename, O_CREAT | O_WRONLY |
+O_TRUNC | O_BINARY, 0666);
+         if (fd < 0) {
+             error_setg(errp, "open %s failed", dev->pcap_filename);
+             usb_qdev_unrealize(qdev);
+             return;
+         }
+-        dev->pcap = fdopen(fd, "w");
++        dev->pcap = fdopen(fd, "wb");
+         usb_pcap_init(dev->pcap);
+     }
+ }
+
+
 
