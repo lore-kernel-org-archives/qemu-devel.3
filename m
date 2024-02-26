@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7363CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC95DC54E49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reXeg-0007OW-SA; Mon, 26 Feb 2024 04:52:14 -0500
+	id 1reXgV-00089n-E4; Mon, 26 Feb 2024 04:54:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1reXef-0007OL-Dt
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:52:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1reXed-0002kP-GT
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:52:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708941130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pivNeLXapLHiETOSI1vjkecBaMuozhvQfaWmLqTHpXE=;
- b=E4g9PC4/zO3gOpAcz+KBE2MALZp8CPJnyFdScIQgrK7ZD+RNUlUjbJ6YKvPGo235kug0xl
- eKPHHIe3lGWKdqqQPFRR26oQIgOvayarYhv847QOWnvwM1vBPHpT6x1PzLxfnh/bnIFdQF
- pU6Vuz7cgKojdD/i810a0lKOFHhT2UE=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-244-W5zcnLCIMWiTdd-ZXCwoXw-1; Mon, 26 Feb 2024 04:52:08 -0500
-X-MC-Unique: W5zcnLCIMWiTdd-ZXCwoXw-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d2617b1214so23053181fa.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:52:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reXgQ-00089W-T8
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:54:02 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reXgP-0002so-7F
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:54:02 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33d7b8f563eso2417485f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:54:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708941239; x=1709546039; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5XWituQf04KJDE8spGWGxo8ogwe4I6409rOOZOhxXsQ=;
+ b=KADZzG+VvZ4l0hcoVQfx9Td8PJVjLT5U5NgUvh+0BXLdeGeHltVrpZxehsH88F9V0q
+ c3sobYasHMYRZZ0aUwYgi1lQfPlGKipnw8PlTG3eI6TmE+xBJ1vuM3PPvC6WABNeThwc
+ yFSQ8u/lqEOQpFSNQBzYgG4n8NKWngOd7BwjGOoxzeXkW5vlNNkKsyv79UYtuSMCxDUi
+ 8t5cQ5Z3RjyTpK/TaiRf/yBHLK/Py9T0ud3ROobViZ/KdXkT4/6cvZxACeYtK9+h+DCQ
+ j/AjX0yqtHay+ghNbE+XHIkJfxzINmOFRAUA2ozh+U8Ebpb6v4COp0o5Jo6BdVT760OS
+ 7LEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708941126; x=1709545926;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pivNeLXapLHiETOSI1vjkecBaMuozhvQfaWmLqTHpXE=;
- b=VmSuxkWPfN7s9wGMJJT4VzyLq5l5tfKiobMINN/vnZNyl4/fWZQ01peZegpLo+h/tB
- 8V4KnesWnA2WUDD9SDCHoPm+DjoPSXp5/Co5R2IU5UtO4Wr2A/KxCHzyd5ibHP2vTtgL
- fxHGxGbufAlb3+ZS+4eP0xbWamqJ4wAlu7KElUxBUchUi/cac8s63hH1Rn83297LP7DL
- ut2Nbzz/EMaRhdp90ZkMfynPlZxLcXD9W7nVnG9gcDfyThQNcrxlV2zX1mCkDV5ooJXR
- LIh07FiKtlQadJNCwXdwfzW7gkf3w6YNEY70wiTwmlOI9OOW+nMH+Zl94ZStS3407iyJ
- eNHQ==
-X-Gm-Message-State: AOJu0YxUzB8WhQ4wjpVZCdSw40gMmmaHrRlPSDb3vwUrlxqIbingQLRQ
- DcU1MF3Wg2xmSnuJ0T+SWiIIm5sKvh+Egynt5g74wDke1II7raDLCnuer12UBSylfs67ygcryLx
- 4yDl2BFjzIxrgWj2aL3QDUhwoXQNMLFRziHK8iaeoOY3oqmIRGWJJ6VRgk5Zx/0vgvRVJTnfcDs
- niXY3VeG9wL6pF+UBWVEhhMtP1tycCgfQxJcA=
-X-Received: by 2002:a2e:97c2:0:b0:2d2:8bb4:179c with SMTP id
- m2-20020a2e97c2000000b002d28bb4179cmr1127173ljj.25.1708941126092; 
- Mon, 26 Feb 2024 01:52:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEKHgVEKap36ZBD9DC0PRl+N2SnbIp9fZfGd8Z1k5h04m6rCY2ewd7Z0I0JK/mHBVj+RP/MPtn0TCakHwQ3T+o=
-X-Received: by 2002:a2e:97c2:0:b0:2d2:8bb4:179c with SMTP id
- m2-20020a2e97c2000000b002d28bb4179cmr1127161ljj.25.1708941125762; Mon, 26 Feb
- 2024 01:52:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708941239; x=1709546039;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5XWituQf04KJDE8spGWGxo8ogwe4I6409rOOZOhxXsQ=;
+ b=BsxnioOlpRQuO0zYDURepnJUWR1Dkojmj9QaYyxlwK9yrllPwbAxrJyp2LRbj9kFZj
+ FEa1hKEN5ILEqO8G6AziDq4ocmbN8OaPHX12ryAvrpB1jBFzxFKA5ZCUaNJCReP2Igui
+ XzAa0DeHAsN8+W3NTEdEz4nouKRSw9m5ylivKFHil+7Owa1lZyOVzJaQbipMsoP8EXRE
+ 3xuV1SbhhRc40k1g8rKJR56A5xcHNa3EMhuZETa1eh2jQlHSoGF8JZrJ2bUDFdjsH9xn
+ hZ5wWeGsS5ifdMmiUsGO74di4ntXHMl3kQPPd5sl4HAvii4ao5T8CC6W4Q5y3bD3uMhX
+ YXbQ==
+X-Gm-Message-State: AOJu0YweD1KcSma4eflFIRm8TAte7GNxS8peyhsvVdBPEQLYvYqk82r2
+ V0DgFLFqhxxYXqPBGmDpSJXauDC1S0+3tqgaed045H2fMFkGzHlthEVRdaEttaxj+p1/AsSiYnC
+ 2
+X-Google-Smtp-Source: AGHT+IEro5Vdl0Bz/XqcdelVSiwMUJBdq+ON/iIjPVXYTjvDjbEE0itxjNJsy1oSMzDGxL0YTW8TBA==
+X-Received: by 2002:adf:f390:0:b0:33d:afbc:6c76 with SMTP id
+ m16-20020adff390000000b0033dafbc6c76mr5198692wro.1.1708941239148; 
+ Mon, 26 Feb 2024 01:53:59 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.164.69])
+ by smtp.gmail.com with ESMTPSA id
+ a7-20020a056000188700b0033d926bf7b5sm7863904wri.76.2024.02.26.01.53.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Feb 2024 01:53:58 -0800 (PST)
+Message-ID: <b0e25d2b-5d72-4074-a346-4546e1eeefd7@linaro.org>
+Date: Mon, 26 Feb 2024 10:53:56 +0100
 MIME-Version: 1.0
-References: <20240226082941.90364-1-pbonzini@redhat.com>
- <4965a0a5-e161-4953-89a0-09fd1bd73286@tls.msk.ru>
-In-Reply-To: <4965a0a5-e161-4953-89a0-09fd1bd73286@tls.msk.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 26 Feb 2024 10:51:53 +0100
-Message-ID: <CABgObfYA3vMmAOti7kbXoh4OKUmQvcnXx9_FY7HF49E0ft_GXA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] ide,
- vl: turn -win2k-hack into a property on IDE devices
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/14] hw/acpi/ich9_tco: Restrict ich9_generate_smi()
+ declaration
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+References: <20240219163855.87326-1-philmd@linaro.org>
+ <20240219163855.87326-6-philmd@linaro.org>
+ <d90dd6b2-92fc-4440-a546-bd3f558a425c@linaro.org>
+In-Reply-To: <d90dd6b2-92fc-4440-a546-bd3f558a425c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,21 +104,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 26, 2024 at 10:24=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> w=
-rote:
-> On another hand, these aren't used often these days.  This particular
-> option isn't necessary with windows 2000, at least with two different
-> kits of it which I have locally.  So finding the thing when you actually
-> need it (if it gets moved elsewhere) will be difficult.
->
-> On yet another, the code to handle this stuff is small enough and does
-> not require much to maintain, -- at least for now, maybe in future it
-> will be more difficult.
+On 20/2/24 07:32, Philippe Mathieu-Daudé wrote:
+> On 19/2/24 17:38, Philippe Mathieu-Daudé wrote:
+>> Only files including "hw/acpi/ich9_tco.h" require
+>> the ich9_generate_smi() declaration.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/acpi/ich9_tco.h    | 1 +
+>>   include/hw/southbridge/ich9.h | 2 --
+>>   2 files changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/include/hw/acpi/ich9_tco.h b/include/hw/acpi/ich9_tco.h
+>> index 1c99781a79..68ee64942f 100644
+>> --- a/include/hw/acpi/ich9_tco.h
+>> +++ b/include/hw/acpi/ich9_tco.h
+>> @@ -76,6 +76,7 @@ typedef struct TCOIORegs {
+>>   } TCOIORegs;
+>>   void ich9_acpi_pm_tco_init(TCOIORegs *tr, MemoryRegion *parent);
+>> +void ich9_generate_smi(void);
+> 
+> Bah it is only used in hw/acpi/ich9_tco.c, I'll declare it
+> statically there.
 
-Yes, I agree. The purpose of these patches is to keep the
-implementation of the options separate from the implementation of the
-workaround, and that makes things even simpler.
+Unfortunately can't do that now because I really don't want
+to add a x86 specific dependency here:
 
-Paolo
+../../hw/acpi/ich9_tco.c:35:30: error: use of undeclared identifier 
+'CPU_INTERRUPT_SMI'
+     cpu_interrupt(first_cpu, CPU_INTERRUPT_SMI);
+                              ^
 
 
