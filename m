@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A32C47DD9
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 00:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E01AC54E49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 00:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reOT3-0006ov-Bg; Sun, 25 Feb 2024 19:03:37 -0500
+	id 1reOTz-0007u4-Uk; Sun, 25 Feb 2024 19:04:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1reOSz-0006j5-1S; Sun, 25 Feb 2024 19:03:33 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1reOTM-0006zt-5H; Sun, 25 Feb 2024 19:04:00 -0500
+Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1reOSw-0000RH-VU; Sun, 25 Feb 2024 19:03:32 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-608e3530941so8235547b3.1; 
- Sun, 25 Feb 2024 16:03:29 -0800 (PST)
+ id 1reOTH-0000ah-Rz; Sun, 25 Feb 2024 19:03:55 -0500
+Received: by mail-yw1-x112d.google.com with SMTP id
+ 00721157ae682-607e54b6cf5so16966947b3.0; 
+ Sun, 25 Feb 2024 16:03:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708905808; x=1709510608; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708905827; x=1709510627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+Rjbw5RYP1TnoKVdXAKQhTrSFNyGeuEqSS68XHm6tGg=;
- b=NgugXKjFCkDFqpzgrfcmj2IQxz/4hIWmZi9AVyw2ScjUCRYgxlmxxTvdJAl47K6jkg
- ++9llQ8KJAZQ9jc5lgRk4lzkFfVIQVl5HD2XlHnNjblnS5ymoGNvMM87pJIOSUoYLRix
- qCLluhlmP6RMCnilunxHQteh7+u9vQgV6bGyYj/pqBLQBrm2Pi+06G6Cuy/JTS8/n9Vy
- dIsMoc1OlGX86ls8FQJLnyuVjD3boWDMdXxJT0gIYcUaATZSRi+ditmnplWJNqRwMxzE
- 5Vdv5va9S5/LMgRfHIeLufAI0mimTDYbajPPybDMmBGawEoHttr13704rrd3WpnTPf1t
- Duww==
+ bh=kP3rP5kDO6a2F7RySUKQZtGqTq+p08N2Zl2emdCf9Jg=;
+ b=D7X7pWP12ggAiXAUWiq5wsK1x1x7Pppmzm42ngd1+osoibDlXrOyMLVfLcfiXI3lj+
+ awMpCiCFPHdoS2pCr0wD2oDye9SSxpsSTBkrZSqVrhpIxqcbGKx88f0EGnYKdmlC4oGa
+ lC1lEo4wwRUCnX8D3uv2wO2zCnJStKj1Or8BkZRBMun1WrbrGOYjY9wcZh7dN1gPc3Vq
+ h7lZ9nDkH+H5qrHeitW/e0pedQglDZlqCJIWZn4mNnF+DncyDXoBsctEAR41ZZmX1xcA
+ 4hwNz+P7nDU6433O0z6dwQjCctslK0LUcmyMRY6BrYki2n0s2OGP8HPcRZlGlrVar3hM
+ SvaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708905808; x=1709510608;
+ d=1e100.net; s=20230601; t=1708905827; x=1709510627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+Rjbw5RYP1TnoKVdXAKQhTrSFNyGeuEqSS68XHm6tGg=;
- b=ws+fK+DmtgLsZBgxWc3qzojmzhbmgOUyhhH1exx0cr2UVHMcUNt4CPnDc0MkoyNxMA
- EGbAxDayCm2Wbi4FVFfbRSU2+cKN42L9WFLNzxKOAa5UdLnqfHHMeGn/wDNa5UE4wvvP
- FauhGz2dU20DDQ9agnXh/v/5JsYXrIsr8F3qd5Su8XqO1coXyv1BKeQWGL+/YUChec+Z
- 1rsSD0T6JTd+aAB+h9RiWSI3mGPtpE7B/6x4n0ZM5cUdMdSf706YKbsg8E8kZhmq3fQ1
- SzTXzazEIGeTEOuqy1me1tBwlKTrAm1VfSpab+MAascyhPySp0MxJ0hpuWeXSVNLnAN7
- fyYg==
-X-Gm-Message-State: AOJu0YxM0hUQhYv1J0ECV5tcPlhotUOgVCmO5rudtt79Yh/TQHGVyRcf
- JFJYNL9Jz/p7YKZcTr2suloiSWI98F6LTfR4VzUMlMfxqe56ngzKeTxWLr49iD+9Mg==
-X-Google-Smtp-Source: AGHT+IGOl6b/XW+DJ+CiwsYLzZsoWR4KN0dic3C/d0+4+FLervpVUhEDGJstXSgv1AiKOMctjHIbaA==
-X-Received: by 2002:a0d:d507:0:b0:607:9dd9:ce65 with SMTP id
- x7-20020a0dd507000000b006079dd9ce65mr4678715ywd.44.1708905808336; 
- Sun, 25 Feb 2024 16:03:28 -0800 (PST)
+ bh=kP3rP5kDO6a2F7RySUKQZtGqTq+p08N2Zl2emdCf9Jg=;
+ b=DTPuR7sgjFuFnUrBmsoraPC+S7EIbEmf/ChXM/x9cNAb+2QnBjH/c6jcBiiodulQFZ
+ IUcJwUVQ0maiOex7rrakaYLjU0EI2zOBDZ1ryS7XsPL6LelAojUPtcjPd2/rlMoIhqN0
+ 6T8TGo0fXwZ6dWIbH0bkpnJmjbfAlUskfHzfPY3HQR7bEosTPaMDmYc5UuxInOkBtNqy
+ jfd7uo6UKFSnani6q3ZWRVXf7y8pv3mU2FbP1EyzTJe2iP1IAvUUotaYRRKB+nu0M9s1
+ K/sQN30KkPJsB6IIQdWz6ePx8jLBG5FHt3OXufqFZD78+DoAGBgcGRTy7yHlHD6T4Lgd
+ i2dg==
+X-Gm-Message-State: AOJu0YwWeTdarcOqrnL2Jsy39W0+81ionE5kbKg/eoM5Fvn4tCenRMq3
+ lddu31Vei77bXg7aqhS5lsnERsYMlD12DOqrbfGji9XmXhSbjpsaxTePMZP8TCdCvQ==
+X-Google-Smtp-Source: AGHT+IFuLWkS5BBYLNN6tPQbCGXS0oDH2gWeQJG1XdOjd31QH0Gp99YeRD9faWPZV7CXb5xRdS2aLw==
+X-Received: by 2002:a0d:db57:0:b0:607:7bce:fe28 with SMTP id
+ d84-20020a0ddb57000000b006077bcefe28mr3725646ywe.13.1708905826971; 
+ Sun, 25 Feb 2024 16:03:46 -0800 (PST)
 Received: from localhost.localdomain ([201.203.117.224])
  by smtp.gmail.com with ESMTPSA id
- t18-20020a818312000000b00607bfa1913csm938171ywf.114.2024.02.25.16.03.26
+ t18-20020a818312000000b00607bfa1913csm938171ywf.114.2024.02.25.16.03.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Feb 2024 16:03:27 -0800 (PST)
+ Sun, 25 Feb 2024 16:03:46 -0800 (PST)
 From: Sergey Kambalin <serg.oker@gmail.com>
 X-Google-Original-From: Sergey Kambalin <sergey.kambalin@auriga.com>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org,
 	Sergey Kambalin <sergey.kambalin@auriga.com>
-Subject: [PATCH v6 21/41] Add GENET register structs. Part 2
-Date: Sun, 25 Feb 2024 18:02:39 -0600
-Message-Id: <20240226000259.2752893-22-sergey.kambalin@auriga.com>
+Subject: [PATCH v6 37/41] Add mailbox property tests. Part 2
+Date: Sun, 25 Feb 2024 18:02:55 -0600
+Message-Id: <20240226000259.2752893-38-sergey.kambalin@auriga.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
 References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=serg.oker@gmail.com; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
+ envelope-from=serg.oker@gmail.com; helo=mail-yw1-x112d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,231 +96,230 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 ---
- hw/net/bcm2838_genet.c         | 89 ++++++++++++++++++++++++++++++++++
- include/hw/net/bcm2838_genet.h | 89 ++++++++++++++++++++++++++++++++++
- 2 files changed, 178 insertions(+)
+ tests/qtest/bcm2838-mbox-property-test.c | 196 ++++++++++++++++++++++-
+ 1 file changed, 195 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/bcm2838_genet.c b/hw/net/bcm2838_genet.c
-index 0d98d1b30e..9a99f34c4a 100644
---- a/hw/net/bcm2838_genet.c
-+++ b/hw/net/bcm2838_genet.c
-@@ -19,6 +19,7 @@
- #include "hw/net/bcm2838_genet.h"
- #include "trace.h"
+diff --git a/tests/qtest/bcm2838-mbox-property-test.c b/tests/qtest/bcm2838-mbox-property-test.c
+index acb421915b..b251d3f552 100644
+--- a/tests/qtest/bcm2838-mbox-property-test.c
++++ b/tests/qtest/bcm2838-mbox-property-test.c
+@@ -50,7 +50,8 @@ FIELD(GET_CLOCK_STATE_CMD, NPRES, 1, 1)
+                       (TEST_TAG_TYPE(testname) * tag);                         \
+     static void CHECK_FN_NAME(testname, __VA_ARGS__)                           \
+                              (TEST_TAG_TYPE(testname) *tag);                   \
+-    static void TEST_FN_NAME(testname, __VA_ARGS__)(void) {                    \
++    static void TEST_FN_NAME(testname, __VA_ARGS__)(void)                      \
++    {                                                                          \
+         struct {                                                               \
+             MboxBufHeader header;                                              \
+             TEST_TAG_TYPE(testname) tag;                                       \
+@@ -189,6 +190,179 @@ DECLARE_TEST_CASE_SETUP(GET_MIN_CLOCK_RATE, EMMC) {
+ }
  
-+/* GENET layouts */
- REG32(GENET_SYS_REV_CTRL,              0)
- FIELD(GENET_SYS_REV_CTRL, GPHY_REV,    0, 16)
- FIELD(GENET_SYS_REV_CTRL, MINOR_REV,   16, 4)
-@@ -55,6 +56,94 @@ REG32(GENET_INTRL_1,              0)
- FIELD(GENET_INTRL_1, TX_INTRS,    0, 16)
- FIELD(GENET_INTRL_1, RX_INTRS,    16, 16)
- 
-+REG32(GENET_UMAC_CMD,                  0)
-+FIELD(GENET_UMAC_CMD, TX_EN,           0, 1)
-+FIELD(GENET_UMAC_CMD, RX_EN,           1, 1)
-+FIELD(GENET_UMAC_CMD, SPEED,           2, 2)
-+FIELD(GENET_UMAC_CMD, PROMISC,         4, 1)
-+FIELD(GENET_UMAC_CMD, PAD_EN,          5, 1)
-+FIELD(GENET_UMAC_CMD, CRC_FWD,         6, 1)
-+FIELD(GENET_UMAC_CMD, PAUSE_FWD,       7, 1)
-+FIELD(GENET_UMAC_CMD, RX_PAUSE_IGNORE, 8, 1)
-+FIELD(GENET_UMAC_CMD, TX_ADDR_INS,     9, 1)
-+FIELD(GENET_UMAC_CMD, HD_EN,           10, 1)
-+FIELD(GENET_UMAC_CMD, SW_RESET_OLD,    11, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_12,         12, 1)
-+FIELD(GENET_UMAC_CMD, SW_RESET,        13, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_14,         14, 1)
-+FIELD(GENET_UMAC_CMD, LCL_LOOP_EN,     15, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_16_21,      16, 6)
-+FIELD(GENET_UMAC_CMD, AUTO_CONFIG,     22, 1)
-+FIELD(GENET_UMAC_CMD, CNTL_FRM_EN,     23, 1)
-+FIELD(GENET_UMAC_CMD, NO_LEN_CHK,      24, 1)
-+FIELD(GENET_UMAC_CMD, RMT_LOOP_EN,     25, 1)
-+FIELD(GENET_UMAC_CMD, RX_ERR_DISC,     26, 1)
-+FIELD(GENET_UMAC_CMD, PRBL_EN,         27, 1)
-+FIELD(GENET_UMAC_CMD, TX_PAUSE_IGNORE, 28, 1)
-+FIELD(GENET_UMAC_CMD, TX_RX_EN,        29, 1)
-+FIELD(GENET_UMAC_CMD, RUNT_FILTER_DIS, 30, 1)
-+FIELD(GENET_UMAC_CMD, RSVD_31,         31, 1)
+ /*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_CLOCK_RATE, UART) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_UART);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_UART);
++}
++DECLARE_TEST_CASE_SETUP(GET_CLOCK_RATE, UART) {
++    tag->request.value.clock_id = CLOCK_ID_UART;
++}
 +
-+REG32(GENET_UMAC_MAC_0,         0)
-+FIELD(GENET_UMAC_MAC_0, ADDR_3, 0,  8)
-+FIELD(GENET_UMAC_MAC_0, ADDR_2, 8,  8)
-+FIELD(GENET_UMAC_MAC_0, ADDR_1, 16, 8)
-+FIELD(GENET_UMAC_MAC_0, ADDR_0, 24, 8)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MAX_CLOCK_RATE, UART) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_UART);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_UART);
++}
++DECLARE_TEST_CASE_SETUP(GET_MAX_CLOCK_RATE, UART) {
++    tag->request.value.clock_id = CLOCK_ID_UART;
++}
 +
-+REG32(GENET_UMAC_MAC_1,             0)
-+FIELD(GENET_UMAC_MAC_1, ADDR_5,     0,  8)
-+FIELD(GENET_UMAC_MAC_1, ADDR_4,     8,  8)
-+FIELD(GENET_UMAC_MAC_1, RSVD_16_31, 16, 8)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MIN_CLOCK_RATE, UART) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_UART);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_UART);
++}
++DECLARE_TEST_CASE_SETUP(GET_MIN_CLOCK_RATE, UART) {
++    tag->request.value.clock_id = CLOCK_ID_UART;
++}
 +
-+REG32(GENET_UMAC_MDIO_CMD,             0)
-+FIELD(GENET_UMAC_MDIO_CMD, REG_DATA,   0, 16)
-+FIELD(GENET_UMAC_MDIO_CMD, REG_ID,     16, 5)
-+FIELD(GENET_UMAC_MDIO_CMD, PHY_ID,     21, 5)
-+FIELD(GENET_UMAC_MDIO_CMD, WR,         26, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, RD,         27, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, RD_FAIL,    28, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, START_BUSY, 29, 1)
-+FIELD(GENET_UMAC_MDIO_CMD, RSVD_30_31, 30, 2)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_CLOCK_RATE, CORE) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_CORE);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_CORE);
++}
++DECLARE_TEST_CASE_SETUP(GET_CLOCK_RATE, CORE) {
++    tag->request.value.clock_id = CLOCK_ID_CORE;
++}
 +
-+REG32(GENET_DMA_RING_CFG,             0)
-+FIELD(GENET_DMA_RING_CFG, EN,         0, 17)
-+FIELD(GENET_DMA_RING_CFG, RSVD_17_31, 17, 14)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MAX_CLOCK_RATE, CORE) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_CORE);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_CORE);
++}
++DECLARE_TEST_CASE_SETUP(GET_MAX_CLOCK_RATE, CORE) {
++    tag->request.value.clock_id = CLOCK_ID_CORE;
++}
 +
-+REG32(GENET_DMA_CTRL,              0)
-+FIELD(GENET_DMA_CTRL, EN,          0, 1)
-+FIELD(GENET_DMA_CTRL, RING_BUF_EN, 1, 17)
-+FIELD(GENET_DMA_CTRL, RSVD_18_19,  18, 2)
-+FIELD(GENET_DMA_CTRL, TSB_SWAP_EN, 20, 1)
-+FIELD(GENET_DMA_CTRL, RSVD_21_31,  21, 11)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MIN_CLOCK_RATE, CORE) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_CORE);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_CORE);
++}
++DECLARE_TEST_CASE_SETUP(GET_MIN_CLOCK_RATE, CORE) {
++    tag->request.value.clock_id = CLOCK_ID_CORE;
++}
 +
-+REG32(GENET_DMA_PROD_INDEX,              0)
-+FIELD(GENET_DMA_PROD_INDEX, INDEX,       0, 16)
-+FIELD(GENET_DMA_PROD_INDEX, DISCARD_CNT, 16, 16)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_CLOCK_RATE, ANY) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_UNDEFINED);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_ANY);
++}
++DECLARE_TEST_CASE_SETUP(GET_CLOCK_RATE, ANY) {
++    tag->request.value.clock_id = CLOCK_ID_UNDEFINED;
++}
 +
-+REG32(GENET_DMA_CONS_INDEX,             0)
-+FIELD(GENET_DMA_CONS_INDEX, INDEX,      0, 16)
-+FIELD(GENET_DMA_CONS_INDEX, RSVD_16_31, 16, 16)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MAX_CLOCK_RATE, ANY) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_UNDEFINED);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_ANY);
++}
++DECLARE_TEST_CASE_SETUP(GET_MAX_CLOCK_RATE, ANY) {
++    tag->request.value.clock_id = CLOCK_ID_UNDEFINED;
++}
 +
-+REG32(GENET_DMA_STATUS,                     0)
-+FIELD(GENET_DMA_STATUS, DISABLED,           0, 1)
-+FIELD(GENET_DMA_STATUS, DESC_RAM_INIT_BUSY, 1, 1)
-+FIELD(GENET_DMA_STATUS, RSVD_2_31,          2, 30)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MIN_CLOCK_RATE, ANY) {
++    g_assert_cmphex(tag->response.value.clock_id, ==, CLOCK_ID_UNDEFINED);
++    g_assert_cmphex(tag->response.value.rate, ==, CLOCK_RATE_ANY);
++}
++DECLARE_TEST_CASE_SETUP(GET_MIN_CLOCK_RATE, ANY) {
++    tag->request.value.clock_id = CLOCK_ID_UNDEFINED;
++}
 +
-+REG32(GENET_RDMA_LENGTH_STATUS,             0)
-+FIELD(GENET_RDMA_LENGTH_STATUS, OVERRUN,    0, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, CRC_ERROR,  1, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, RXERR,      2, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, NO,         3, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, LG,         4, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, MULTICAST,  5, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, BROADCAST,  6, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, RSVD_7_11,  7, 5)
-+FIELD(GENET_RDMA_LENGTH_STATUS, WRAP,       12, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, SOP,        13, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, EOP,        14, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, OWN,        15, 1)
-+FIELD(GENET_RDMA_LENGTH_STATUS, BUFLENGTH,  16, 12)
-+FIELD(GENET_RDMA_LENGTH_STATUS, RSVD_28_31, 29, 4)
- 
- static uint64_t bcm2838_genet_read(void *opaque, hwaddr offset, unsigned size)
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_TEMPERATURE) {
++    g_assert_cmphex(tag->response.value.temperature_id, ==, TEMPERATURE_ID_SOC);
++    g_assert_cmpint(tag->response.value.temperature, ==, TEMPERATURE_SOC);
++}
++DECLARE_TEST_CASE_SETUP(GET_TEMPERATURE) {
++    tag->request.value.temperature_id = TEMPERATURE_ID_SOC;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(GET_MAX_TEMPERATURE) {
++    g_assert_cmphex(tag->response.value.temperature_id, ==, TEMPERATURE_ID_SOC);
++    g_assert_cmpint(tag->response.value.temperature, ==, TEMPERATURE_SOC_MAX);
++}
++DECLARE_TEST_CASE_SETUP(GET_MAX_TEMPERATURE) {
++    tag->request.value.temperature_id = TEMPERATURE_ID_SOC;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_ALLOCATE) {
++    g_assert_cmphex(tag->response.value.base, ==, VC_FB_BASE);
++    g_assert_cmphex(tag->response.value.size, ==, VC_FB_SIZE);
++}
++DECLARE_TEST_CASE_SETUP(FRAMEBUFFER_ALLOCATE) {
++    tag->request.value.alignment = ALIGN_4K;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_RELEASE) {
++    /* No special checks are needed for this test */
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_BLANK) {
++    g_assert_cmphex(tag->response.value.on, ==, 0);
++}
++DECLARE_TEST_CASE_SETUP(FRAMEBUFFER_BLANK) {
++    tag->request.value.on = 0;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_TEST_PHYSICAL_WIDTH_HEIGHT) {
++    g_assert_cmpint(tag->response.value.width, ==, DUMMY_VALUE);
++    g_assert_cmpint(tag->response.value.height, ==, DUMMY_VALUE);
++}
++DECLARE_TEST_CASE_SETUP(FRAMEBUFFER_TEST_PHYSICAL_WIDTH_HEIGHT) {
++    tag->request.value.width = DUMMY_VALUE;
++    tag->request.value.height = DUMMY_VALUE;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_GET_PHYSICAL_WIDTH_HEIGHT, INITIAL) {
++    g_assert_cmpint(tag->response.value.width, ==, 640);
++    g_assert_cmpint(tag->response.value.height, ==, 480);
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_SET_PHYSICAL_WIDTH_HEIGHT) {
++    g_assert_cmpint(tag->response.value.width, ==, 800);
++    g_assert_cmpint(tag->response.value.height, ==, 600);
++}
++DECLARE_TEST_CASE_SETUP(FRAMEBUFFER_SET_PHYSICAL_WIDTH_HEIGHT) {
++    tag->request.value.width = 800;
++    tag->request.value.height = 600;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_TEST_VIRTUAL_WIDTH_HEIGHT) {
++    g_assert_cmpint(tag->response.value.width, ==, DUMMY_VALUE);
++    g_assert_cmpint(tag->response.value.height, ==, DUMMY_VALUE);
++}
++DECLARE_TEST_CASE_SETUP(FRAMEBUFFER_TEST_VIRTUAL_WIDTH_HEIGHT) {
++    tag->request.value.width = DUMMY_VALUE;
++    tag->request.value.height = DUMMY_VALUE;
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_GET_VIRTUAL_WIDTH_HEIGHT, INITIAL) {
++    g_assert_cmpint(tag->response.value.width, ==, 640);
++    g_assert_cmpint(tag->response.value.height, ==, 480);
++}
++
++/*----------------------------------------------------------------------------*/
++DECLARE_TEST_CASE(FRAMEBUFFER_SET_VIRTUAL_WIDTH_HEIGHT) {
++    g_assert_cmpint(tag->response.value.width, ==, 800);
++    g_assert_cmpint(tag->response.value.height, ==, 600);
++}
++DECLARE_TEST_CASE_SETUP(FRAMEBUFFER_SET_VIRTUAL_WIDTH_HEIGHT) {
++    tag->request.value.width = 800;
++    tag->request.value.height = 600;
++}
++
++//==============================================================================
+ int main(int argc, char **argv)
  {
-diff --git a/include/hw/net/bcm2838_genet.h b/include/hw/net/bcm2838_genet.h
-index f583818399..736b4d1757 100644
---- a/include/hw/net/bcm2838_genet.h
-+++ b/include/hw/net/bcm2838_genet.h
-@@ -18,6 +18,10 @@ OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GenetState, BCM2838_GENET)
- #define BCM2838_GENET_REV_MAJOR         6
- #define BCM2838_GENET_REV_MINOR         0
+     g_test_init(&argc, &argv, NULL);
+@@ -202,6 +376,26 @@ int main(int argc, char **argv)
+     QTEST_ADD_TEST_CASE(GET_CLOCK_RATE, EMMC);
+     QTEST_ADD_TEST_CASE(GET_MAX_CLOCK_RATE, EMMC);
+     QTEST_ADD_TEST_CASE(GET_MIN_CLOCK_RATE, EMMC);
++    QTEST_ADD_TEST_CASE(GET_CLOCK_RATE, UART);
++    QTEST_ADD_TEST_CASE(GET_MAX_CLOCK_RATE, UART);
++    QTEST_ADD_TEST_CASE(GET_MIN_CLOCK_RATE, UART);
++    QTEST_ADD_TEST_CASE(GET_CLOCK_RATE, CORE);
++    QTEST_ADD_TEST_CASE(GET_MAX_CLOCK_RATE, CORE);
++    QTEST_ADD_TEST_CASE(GET_MIN_CLOCK_RATE, CORE);
++    QTEST_ADD_TEST_CASE(GET_CLOCK_RATE, ANY);
++    QTEST_ADD_TEST_CASE(GET_MAX_CLOCK_RATE, ANY);
++    QTEST_ADD_TEST_CASE(GET_MIN_CLOCK_RATE, ANY);
++    QTEST_ADD_TEST_CASE(GET_TEMPERATURE);
++    QTEST_ADD_TEST_CASE(GET_MAX_TEMPERATURE);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_ALLOCATE);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_RELEASE);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_BLANK);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_TEST_PHYSICAL_WIDTH_HEIGHT);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_GET_PHYSICAL_WIDTH_HEIGHT, INITIAL);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_SET_PHYSICAL_WIDTH_HEIGHT);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_TEST_VIRTUAL_WIDTH_HEIGHT);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_GET_VIRTUAL_WIDTH_HEIGHT, INITIAL);
++    QTEST_ADD_TEST_CASE(FRAMEBUFFER_SET_VIRTUAL_WIDTH_HEIGHT);
  
-+#define BCM2838_GENET_DMA_DESC_CNT      256
-+#define BCM2838_GENET_DMA_RING_CNT      17
-+#define BCM2838_GENET_DMA_RING_DEFAULT  (BCM2838_GENET_DMA_RING_CNT - 1)
-+
- typedef struct {
-     uint32_t rev_ctrl;
-     uint32_t port_ctrl;
-@@ -83,6 +87,88 @@ typedef struct {
-     uint32_t reserved_0x18[58];
- } BCM2838GenetRegsTbuf;
- 
-+typedef struct {
-+    uint32_t reserved_0x0;
-+    uint32_t hd_bkp_ctrl;
-+    uint32_t cmd;
-+    uint32_t mac0;
-+    uint32_t mac1;
-+    uint32_t max_frame_len;
-+    uint32_t pause_quanta;
-+    uint32_t reserved_0x1C[10];
-+    uint32_t mode;
-+    uint32_t frm_tag0;
-+    uint32_t frm_tag1;
-+    uint32_t reserved_0x50[3];
-+    uint32_t tx_ipg_len;
-+    uint32_t reserved_0x60;
-+    uint32_t eee_ctrl;
-+    uint32_t eee_lpi_timer;
-+    uint32_t eee_wake_timer;
-+    uint32_t eee_ref_count;
-+    uint32_t reserved_0x74;
-+    uint32_t rx_ipg_inv;
-+    uint32_t reserved_0x7C[165];
-+    uint32_t macsec_prog_tx_crc;
-+    uint32_t macsec_ctrl;
-+    uint32_t reserved_0x318[6];
-+    uint32_t pause_ctrl;
-+    uint32_t tx_flush;
-+    uint32_t rx_fifo_status;
-+    uint32_t tx_fifo_status;
-+    uint32_t reserved_0x340[48];
-+    uint32_t mib[96];
-+    uint32_t mib_ctrl;
-+    uint32_t reserved_0x584[36];
-+    uint32_t mdio_cmd;
-+    uint32_t reserved_0x618[2];
-+    uint32_t mpd_ctrl;
-+    uint32_t mpd_pw_ms;
-+    uint32_t mpd_pw_ls;
-+    uint32_t reserved_0x62C[3];
-+    uint32_t mdf_err_cnt;
-+    uint32_t reserved_0x63C[5];
-+    uint32_t mdf_ctrl;
-+    uint32_t mdf_addr;
-+    uint32_t reserved_0x658[106];
-+} BCM2838GenetRegsUmac;
-+
-+typedef struct {
-+    uint32_t length_status;
-+    uint32_t address_lo;
-+    uint32_t address_hi;
-+} BCM2838GenetRdmaDesc;
-+
-+typedef struct {
-+    uint32_t write_ptr;
-+    uint32_t write_ptr_hi;
-+    uint32_t prod_index;
-+    uint32_t cons_index;
-+    uint32_t ring_buf_size;
-+    uint32_t start_addr;
-+    uint32_t start_addr_hi;
-+    uint32_t end_addr;
-+    uint32_t end_addr_hi;
-+    uint32_t mbuf_done_tresh;
-+    uint32_t xon_xoff_tresh;
-+    uint32_t read_ptr;
-+    uint32_t read_ptr_hi;
-+    uint32_t reserved_0x34[3];
-+} BCM2838GenetRdmaRing;
-+
-+typedef struct {
-+    BCM2838GenetRdmaDesc descs[BCM2838_GENET_DMA_DESC_CNT];
-+    BCM2838GenetRdmaRing rings[BCM2838_GENET_DMA_RING_CNT];
-+    uint32_t ring_cfg;
-+    uint32_t ctrl;
-+    uint32_t status;
-+    uint32_t scb_burst_size;
-+    uint32_t reserved_0x1050[7];
-+    uint32_t ring_timeout[17];
-+    uint32_t index2ring[8];
-+    uint32_t reserved_0x10D0[972];
-+} BCM2838GenetRegsRdma;
-+
- typedef struct {
-     BCM2838GenetRegsSys sys;
-     BCM2838GenetRegsGrBridge gr_bridge;
-@@ -95,6 +181,9 @@ typedef struct {
-     uint32_t reserved_0x400[128];
-     BCM2838GenetRegsTbuf tbuf;
-     uint32_t reserved_0x700[64];
-+    BCM2838GenetRegsUmac umac;
-+    uint32_t reserved_0x1000[1024];
-+    BCM2838GenetRegsRdma rdma;
- } BCM2838GenetRegs;
- 
- struct BCM2838GenetState {
+     return g_test_run();
+ }
 -- 
 2.34.1
 
