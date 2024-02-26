@@ -4,83 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3980CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330F5C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ref42-000642-HO; Mon, 26 Feb 2024 12:46:54 -0500
+	id 1ref5S-0006r3-NZ; Mon, 26 Feb 2024 12:48:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ref3v-000601-6I
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:46:51 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1ref3t-0000VO-OY
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:46:46 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-412a9a61545so2979675e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 09:46:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708969603; x=1709574403; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/iX7CVh0CvYZYKZo+EQYkcaTBYd6mrWc2+etueIh3hU=;
- b=xLeu3gy2aLqQiw2WQeiqX6MYHD73ied/wQKujA5VWZy1936QngM643+M9Uf+t/HBH7
- hrh9Xkgjq13ZNFrsdy5cU5YAoqgi0146uQNfuES8Kocj7Goia94Mj2YZXpv22gOUEzm7
- hwqsh4TiEz3t7bTZe+CpAJdJVJ40Ks+Ekpav5VuHWvwZ64WXeeQszo/yvJ92r37BGWz0
- zTJgGwKzevaHC7/mxIvMw3G9pvKZjAuXfXCsQx9FWqEL/3bZRcEpeUaT6BblbXoFqrq+
- cyuF79d5SsgO2Woz7kz8K6QFJLVhogjAYY0293SK9NddnoSX8+yuHmhSmWkzox8TTKew
- 9XuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708969603; x=1709574403;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/iX7CVh0CvYZYKZo+EQYkcaTBYd6mrWc2+etueIh3hU=;
- b=sCsJFJiHOzr6XlphBVPc1YE4605thyQ7iAGZFoErRGrrPRbmvd1Dkq0l/j0xsyDPss
- 0Zzz3oyZYRYkYQawtzOJynL7KMvr0oA/Uqz522olWhkHmFtggZ82InJAKgT5PUQHOMAp
- 2p/lv6A0XVuX+ozfAdVLmo3Kx9eFQidhiTLoq9nLi8tWluOAeV1Sy6XbRIyyZ6DKeebC
- xLOJDUIlI0igWqrd84Ac38szhkp18J+EFqw0uc82Yf8ODkQVWu4ceHmKeJfkmxMt/02n
- d8Az1uccERpvcCY9RizeOmSM3s61IAMwB5P/bfzUi6XvEYIo5XJIwIG3uRYDCTC6sGNo
- IskA==
-X-Gm-Message-State: AOJu0YwFxiZrb3uK32j4f2jQuqfRfgw8v8a5CZjmHNAs9pLCnYWE4Nbe
- nX3J8dL5mTh8C+2+KJrbWhkkt5QlskI92em5FoZJHlJG+LDo0ru+vH7oSmWtbnM=
-X-Google-Smtp-Source: AGHT+IGmzCPlNV5Spu5v62qqkG07c1CUJ6NOnboatvoYo5zbdGrXOFjUbTQTb7xC7PlFVMLBY7lfuQ==
-X-Received: by 2002:a05:600c:35cb:b0:412:a1c1:207c with SMTP id
- r11-20020a05600c35cb00b00412a1c1207cmr3045480wmq.3.1708969603385; 
- Mon, 26 Feb 2024 09:46:43 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- hi17-20020a05600c535100b0041290251dc2sm12361306wmb.14.2024.02.26.09.46.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 09:46:43 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 666AB5F753;
- Mon, 26 Feb 2024 17:46:42 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [RFC PATCH] tests/vm: avoid re-building the VM images all the time
-Date: Mon, 26 Feb 2024 17:46:39 +0000
-Message-Id: <20240226174639.438987-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ref5Q-0006qp-Td
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:48:21 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1ref5K-0000ZZ-Tj
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:48:20 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tk7Jn6YmVz6K6DN;
+ Tue, 27 Feb 2024 01:43:53 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 27FB4140A35;
+ Tue, 27 Feb 2024 01:48:13 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 26 Feb
+ 2024 17:48:12 +0000
+Date: Mon, 26 Feb 2024 17:48:11 +0000
+To: <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <ira.weiny@intel.com>,
+ <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+ <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>, Fan Ni
+ <fan.ni@samsung.com>
+Subject: Re: [PATCH v4 07/10] hw/mem/cxl_type3: Add DC extent list
+ representative and get DC extent list mailbox support
+Message-ID: <20240226174811.00001549@Huawei.com>
+In-Reply-To: <20240221182020.1086096-8-nifan.cxl@gmail.com>
+References: <20240221182020.1086096-1-nifan.cxl@gmail.com>
+ <20240221182020.1086096-8-nifan.cxl@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,50 +71,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are two problems.
+On Wed, 21 Feb 2024 10:16:00 -0800
+nifan.cxl@gmail.com wrote:
 
-The first is a .PHONY target will always evaluate which triggers a
-full re-build of the VM images. Drop the requirement knowing that this
-introduces a manual step on freshly configure build dirs.
+> From: Fan Ni <fan.ni@samsung.com>
+> 
+> Add dynamic capacity extent list representative to the definition of
+> CXLType3Dev and add get DC extent list mailbox command per
+> CXL.spec.3.1:.8.2.9.9.9.2.
+> 
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Follow on from earlier comment on my preference for anonymous
+structure types when we only use them in one place.
 
-The second is a minor unrelated tweak to the Makefile also triggers an
-expensive full re-build. Solve this be avoiding the dependency and
-putting a comment just above the bit that matters and hope developers
-notice the comment.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> +/*
+> + * CXL r3.1 section 8.2.9.9.9.2:
+> + * Get Dynamic Capacity Extent List (Opcode 4801h)
+> + */
+> +static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
+> +                                               uint8_t *payload_in,
+> +                                               size_t len_in,
+> +                                               uint8_t *payload_out,
+> +                                               size_t *len_out,
+> +                                               CXLCCI *cci)
+> +{
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    struct get_dyn_cap_ext_list_in_pl {
+> +        uint32_t extent_cnt;
+> +        uint32_t start_extent_id;
+> +    } QEMU_PACKED;
+> +
+> +    struct get_dyn_cap_ext_list_out_pl {
+> +        uint32_t count;
+> +        uint32_t total_extents;
+> +        uint32_t generation_num;
+> +        uint8_t rsvd[4];
+> +        CXLDCExtentRaw records[];
+> +    } QEMU_PACKED;
+> +
+> +    struct get_dyn_cap_ext_list_in_pl *in = (void *)payload_in;
+> +    struct get_dyn_cap_ext_list_out_pl *out = (void *)payload_out;
 
----
+As for earlier patches, I think anonymous struct types are fine for
+these and lead to shorter code.
 
-This is hacky and sub-optimal. There surely must be a way to have our cake
-and eat it?
----
- tests/vm/Makefile.include | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
-index bf12e0fa3c5..a109773c588 100644
---- a/tests/vm/Makefile.include
-+++ b/tests/vm/Makefile.include
-@@ -88,10 +88,11 @@ vm-build-all: $(addprefix vm-build-, $(IMAGES))
- vm-clean-all:
- 	rm -f $(IMAGE_FILES)
- 
-+# Rebuilding the VMs every time this Makefile is tweaked is very
-+# expensive for most users. If you tweak the recipe bellow you will
-+# need to manually zap $(IMAGES_DIR)/%.img to rebuild.
- $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
--			$(SRC_PATH)/tests/vm/basevm.py \
--			$(SRC_PATH)/tests/vm/Makefile.include \
--			$(VM_VENV)
-+			$(SRC_PATH)/tests/vm/basevm.py
- 	@mkdir -p $(IMAGES_DIR)
- 	$(call quiet-command, \
- 		$(VM_PYTHON) $< \
--- 
-2.39.2
+> +    uint16_t record_count = 0, i = 0, record_done = 0;
+> +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
+> +    CXLDCExtent *ent;
+> +    uint16_t out_pl_len;
+> +    uint32_t start_extent_id = in->start_extent_id;
+> +
+> +    if (start_extent_id > ct3d->dc.total_extent_count) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    record_count = MIN(in->extent_cnt,
+> +                       ct3d->dc.total_extent_count - start_extent_id);
+> +
+> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+> +    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
+> +
+> +    stl_le_p(&out->count, record_count);
+> +    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
+> +    stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
+> +
+> +    if (record_count > 0) {
+> +        QTAILQ_FOREACH(ent, extent_list, node) {
+> +            if (i++ < start_extent_id) {
+> +                continue;
+> +            }
+> +            stq_le_p(&out->records[record_done].start_dpa, ent->start_dpa);
+> +            stq_le_p(&out->records[record_done].len, ent->len);
+> +            memcpy(&out->records[record_done].tag, ent->tag, 0x10);
+> +            stw_le_p(&out->records[record_done].shared_seq, ent->shared_seq);
+> +            record_done++;
+> +            if (record_done == record_count) {
+> +                break;
+> +            }
+> +        }
+> +    }
+> +
+> +    *len_out = out_pl_len;
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
 
 
