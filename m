@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85F4C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6638EC54E49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reXLK-0002MK-Hw; Mon, 26 Feb 2024 04:32:17 -0500
+	id 1reXay-0005p0-Ok; Mon, 26 Feb 2024 04:48:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1reXL6-0002LI-10
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:32:01 -0500
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reXat-0005ml-Ce
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:48:20 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1reXL3-000863-IK
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:31:58 -0500
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-5a05923b689so673174eaf.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:31:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reXar-0002Ba-QG
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:48:19 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-33d754746c3so1982328f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:48:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1708939916; x=1709544716; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1708940896; x=1709545696; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ccZ5bJcvobWlI1SRGear5DT3BclbrKPFW9Nrv/yIA+o=;
- b=fX71Z4HSzbyHJEsJ7DzcjOy1UTe5qEwNJRJhkbdDHzne7YJRNetne1lFuR0aezSWbB
- I+arRxlYtRaRrHmEs8dPlqF3O8Mf8S9pONyuJFUQwLfvBg4RFHLbg/DcT3FTPCK48sgH
- 9GmPGj0gUckxnFH2mt5kyn36DL/8i9B+Ng31L0mTYsW6SAlCT7NRhKYcO3opV6s5faxz
- yku69MLcXdV5tXmldylZP7hSgWXnH/Hla6+IpqwCXFRwdkUViZvs9u9ynVvucDK2F55b
- QfjBG9ZBUkA0TvFQkeV7ksh7MJuqljRhmHPxr/+BlYs78+igKyB5MMSnnatfd8rahh7g
- artA==
+ bh=L2Y5I6pfV08TFTJVMY4z5FkHj01zJWSR77Daet5fXvo=;
+ b=D2uZbJjmiof/GWvdeM+/HIj+ZarT5xsKgRsVmaz5FXaIaRyPOAowkekKPZhaXcCcoE
+ H1EbkRM/VEPVB2R/w4vt+5EuhhYtG6HPy3epX/pMpX3dcuzqvBxkslL044wBofgphuf1
+ ldguxP8v9Qs6J/UlswFsmhUxtmJGpqVqDExW/uBh6FNu2SvFaR19CVz55VKYweYZLgRB
+ OdOKR6agSzHGeh3yEGgE4PWFobB80zB+FOxoAX6shDFIySUEGTIFdv3WVQWnlPyNKA7Y
+ TPT2tH48Rby3hfVJH5EK22pNeKdJCIhOoCA3AkOSGJNkkyaN7CePRwEl3wwTi3OPF/BR
+ dPqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708939916; x=1709544716;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1708940896; x=1709545696;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ccZ5bJcvobWlI1SRGear5DT3BclbrKPFW9Nrv/yIA+o=;
- b=moR9CubW0XFJL3IDaa9mtC512E/TVwc9h+txUJi1LEx6yBbg2EiyPLIwu5gz36C75s
- f/obLYOn7kKpk2M4elY2xdFU7QzmS4pUZ3jaZjpjrX4NNG7Bsby9fPPoShTktrGBim2U
- FzuRehUMIeiXuJ7HKiF7hoMwApn/1A5zT0zSgWdhbcYFbl81HJXpJoYx72EAX3POhNhn
- 0JKmqibdoM7I0pS8y1L21SfomdJbO2ihEqM5b1a9Luhco0MvVDKMyKuEMetPbK4XS2XF
- YuGIBl8bUP77j3gEvf5Mw0TCA1sDuOaBjUqJgxYynYaoEUsMXSXUA6aW1R6/RW4z6qtf
- 6vjw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVeyH5gVKjCiaGTn+rcHopZRrPk4wfK3MS/nH+uXA8PSpFysewn/Xh6S2GH+1L6PpZJ0KmCETHUYGf/g4xjgImsb1uaCrk=
-X-Gm-Message-State: AOJu0YxfrkK7CfDVjD8d/HPNgnmhR66TeNlNbp/8j389uxi1AG2Sq+N4
- dJ2Xw2JY5g/APncEpZHIqGhOQUcGlbB4aF7oF6ha8ZYfU5PTX4wtxrd3Z+4a7+Q=
-X-Google-Smtp-Source: AGHT+IEvomSh8BiTiQXsCCTh6c2BFQcQV8J9lpWQTX5ECSpHY6y4C4ru0NuIySJ/uZ+FS+TKvztwRQ==
-X-Received: by 2002:a05:6358:6422:b0:178:6211:871 with SMTP id
- f34-20020a056358642200b0017862110871mr9532487rwh.0.1708939915808; 
- Mon, 26 Feb 2024 01:31:55 -0800 (PST)
-Received: from [192.168.68.110] ([177.94.15.159])
+ bh=L2Y5I6pfV08TFTJVMY4z5FkHj01zJWSR77Daet5fXvo=;
+ b=ItLOHiqAif4yVXlAvS5Ijr6llkhrt0Yn197+0c05hw1fOjHsXZldsNcEjsSe0X5dN8
+ MV6PSkVd5egh28ptYjE95AVHfTbxpr9L+R3cxVTEfRzGY3IFi3XlFyC8feM7YYVRZ50Q
+ uQpnol/16uziuLMYUr8w/Ngh8WX2Sq08mEXEMSKJzNwLAyVn7tn5WbF/ckoxu1w5st2m
+ C2JrWp1ww7C/Wo74bVX32V9+OG4t68YRskmG9Yh43PyTOc7ye7MkgVQOWAll38bDUejD
+ PRklyHKlauVSc0GwSXF/hz+4N9z5cfgtDvFlxJgpo1Lfr4TMpIPVJCpQPVHwgLD0KukI
+ CgSw==
+X-Gm-Message-State: AOJu0Yw5pokYoj8DAT3tZxHIa2mYcbjt32mygcHUpUF/itxABN3zMvz2
+ D55Nhj5LC3eq2PZCwG5Yzof59SvgBL6vv7rgrEzUvYjlkRSOyggk+PuShBY5gJk=
+X-Google-Smtp-Source: AGHT+IGx05avEH/seaOYx3JEl9kBNhHeuWT1t21H50/Ce4NSC7AqPakTFpdahNcHtBQVG5MHzNehlA==
+X-Received: by 2002:a5d:528f:0:b0:33d:e1d2:2694 with SMTP id
+ c15-20020a5d528f000000b0033de1d22694mr648421wrv.63.1708940896119; 
+ Mon, 26 Feb 2024 01:48:16 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.164.69])
  by smtp.gmail.com with ESMTPSA id
- v34-20020a634822000000b005dc816b2369sm3489594pga.28.2024.02.26.01.31.53
+ bw1-20020a0560001f8100b0033af3a43e91sm7819078wrb.46.2024.02.26.01.48.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 01:31:54 -0800 (PST)
-Message-ID: <a5c8ed1b-0b67-449a-83b9-accf0754c562@ventanamicro.com>
-Date: Mon, 26 Feb 2024 06:31:51 -0300
+ Mon, 26 Feb 2024 01:48:15 -0800 (PST)
+Message-ID: <2b3f15a8-93ba-4d4f-bfd6-7af11aade2dc@linaro.org>
+Date: Mon, 26 Feb 2024 10:48:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/riscv: Fix shift count overflow
-To: "demin.han" <demin.han@starfivetech.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, philmd@linaro.org
-References: <20240225174114.5298-1-demin.han@starfivetech.com>
+Subject: Re: [PATCH] semihosting/uaccess.c: Replaced a malloc call with
+ g_malloc
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240225174114.5298-1-demin.han@starfivetech.com>
+To: dinglimin <dinglimin@cmss.chinamobile.com>, richard.henderson@linaro.org
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20240226090628.1986-1-dinglimin@cmss.chinamobile.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240226090628.1986-1-dinglimin@cmss.chinamobile.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc29.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,48 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
-
-On 2/25/24 14:41, demin.han wrote:
-> The result of (8 - 3 - vlmul) is negative when vlmul >= 6,
-> and results in wrong vill.
-> 
-> Signed-off-by: demin.han <demin.han@starfivetech.com>
+On 26/2/24 10:06, dinglimin wrote:
+> Signed-off-by: dinglimin <dinglimin@cmss.chinamobile.com>
 > ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-> Changes in v2:
-> - Add vlen var
+>   semihosting/uaccess.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> Changes in v3:
-> - Fix commit msg typo
-> 
->   target/riscv/vector_helper.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 84cec73eb2..fe56c007d5 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -44,6 +44,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->       target_ulong reserved = s2 &
->                               MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
->                                               xlen - 1 - R_VTYPE_RESERVED_SHIFT);
-> +    uint16_t vlen = cpu->cfg.vlenb << 3;
->       int8_t lmul;
->   
->       if (vlmul & 4) {
-> @@ -53,10 +54,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->            * VLEN * LMUL >= SEW
->            * VLEN >> (8 - lmul) >= sew
->            * (vlenb << 3) >> (8 - lmul) >= sew
-> -         * vlenb >> (8 - 3 - lmul) >= sew
->            */
-> -        if (vlmul == 4 ||
-> -            cpu->cfg.vlenb >> (8 - 3 - vlmul) < sew) {
-> +        if (vlmul == 4 || (vlen >> (8 - vlmul)) < sew) {
->               vill = true;
+> diff --git a/semihosting/uaccess.c b/semihosting/uaccess.c
+> index dc587d73bc..7788ead9b2 100644
+> --- a/semihosting/uaccess.c
+> +++ b/semihosting/uaccess.c
+> @@ -14,10 +14,10 @@
+>   void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
+>                           target_ulong len, bool copy)
+>   {
+> -    void *p = malloc(len);
+> +    void *p = g_try_malloc(len);
+>       if (p && copy) {
+>           if (cpu_memory_rw_debug(env_cpu(env), addr, p, len, 0)) {
+> -            free(p);
+> +            g_free(p);
+>               p = NULL;
 >           }
 >       }
+
+This seems dangerous, now all users of uaccess_lock_user() must
+use g_free(), in particular lock_user_string() which is used more
+than a hundred of times:
+
+$ git grep -w lock_user_string | wc -l
+      116
+
+> @@ -87,5 +87,5 @@ void uaccess_unlock_user(CPUArchState *env, void *p,
+>       if (len) {
+>           cpu_memory_rw_debug(env_cpu(env), addr, p, len, 1);
+>       }
+> -    free(p);
+> +    g_free(p);
+>   }
+
 
