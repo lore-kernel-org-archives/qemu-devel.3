@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CEEC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 07:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBBEC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 07:04:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reV1r-00028V-Rs; Mon, 26 Feb 2024 02:03:59 -0500
+	id 1reV2O-0002TK-H1; Mon, 26 Feb 2024 02:04:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reV1p-000282-L3
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:03:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reV2M-0002Sl-LW
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:04:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reV1m-0003Xc-VK
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:03:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reV2H-0003cB-8Z
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:04:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708931034;
+ s=mimecast20190719; t=1708931063;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UrTT/1LiI4b1H9dc+St0RM4tqsTcron0dHZ2fCWst9k=;
- b=emVX4KSt2WyadGUAbO5TfKnQuPLqJLhGKw/hT38IpG6sPd62eSn65Ro/1jot6GfIii/9cv
- 0lptVehA9TX+kQ3bgjMLZLIgw56t1Qd789QKw60Xg44pMM0yT5vrXFdH6NT+xQslf00Hal
- txUgY9oZ1fD8hrUAYEzyeIdHRRBS9QQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LfRURWK6oYZl/Fbj3F0n1k9dog/oTC7o3rBVtl+5lxA=;
+ b=IcB1We88Yz92CU7zxthDdSp5qoQO68eXCXI/wtUugh1adhbl6VT86+fsTf1i6oTlLB7XdV
+ 0SNxDKdLJ9sGAwan0meTTmhVEtRcPun4lYXGekP6BhxC6XOYoGzGPXeejkZ4AxBiOxO5bT
+ IAX3ZytlCK8T/3By1SNnwKcvvsJwNTI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-qc57O8ddMyewWIAvrUKscA-1; Mon, 26 Feb 2024 02:03:51 -0500
-X-MC-Unique: qc57O8ddMyewWIAvrUKscA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-412a44c72cfso7586965e9.2
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 23:03:51 -0800 (PST)
+ us-mta-156-KQjEJ0LoN5-QAY7Ze3YMrg-1; Mon, 26 Feb 2024 02:04:22 -0500
+X-MC-Unique: KQjEJ0LoN5-QAY7Ze3YMrg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-412a805f783so686525e9.3
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 23:04:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708931030; x=1709535830;
+ d=1e100.net; s=20230601; t=1708931061; x=1709535861;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UrTT/1LiI4b1H9dc+St0RM4tqsTcron0dHZ2fCWst9k=;
- b=hFowjpY2z+WfhaDcohspHvYfcARSQKigfCHGSH+Y4s5VGlNEVa7EvmB4smB+gr9yDR
- VYfGJRDVz2YI8m+KjyJGK934ZRbyBvEW/oumI1g3awDym7z3u1RbbPCtqFSUrMaCQWyS
- GXnUoTkXMV9TnuqHyP+wIHJ7ZpNFXkiffB7+5NZnA7WtBFptL06Wg9UT/275FV+dTuQ0
- t+M6RdGMnlnKNivGuII+k0EmbmsRDWl7amGQoDShvliqNO0SUDGdtm4rX1bWsjZdkuQ6
- TF1xiNYULgxFRFY1OJhqvE1DOR8PYxBXQjccPn4xaZOMLbOkxco/6WRK1wVoOCprNg2i
- g32w==
+ bh=LfRURWK6oYZl/Fbj3F0n1k9dog/oTC7o3rBVtl+5lxA=;
+ b=YhJFkvNasG+AthBuCttfDK+8aOLs2dZdzd5xaANGqs211IFx6Q8AZ5bZXiCSQ0fLLL
+ aKYP19jSlYE4bUjQV29fvQbACTvJFr0GD7tXwatc/YII8YTajNdu2f8otXpTyubKqXLo
+ WGLL9xjkoymnGhxStFZ4umWbPiNB3teX3UZiTQGV/db9IAhJH8a5B0C4RBdkn/t97lnH
+ TMOUMMIHKHdUjgdJjZw6zYC+JRIpQCySclXCHKGBamwYgXa01bMm782d4rDVt+57n69e
+ ORN1XpoWHKHBApQPSf/Ry0Q6pKz1W7t215bTfmKlOyHDMLjcICSWRMtIR+mMHUVZqIgw
+ usBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2zig6UrC5qQG7tMs2sdRjjTx3FROW9JwAWDvTVlinlB9EEuXEQSmgF2PKM5Gpo80xsg80WYLrxwU0taCfQmg/06AZ9tM=
-X-Gm-Message-State: AOJu0Yx3zm6v5FzRBTwHYI9KAivChtNa+Px+hE+gAj1ILHIVLSemGxhU
- dnDQuY2eFUK5GGiVVaILCLfV1NB4OBU5jIVKdD9XuOJODko+3woTgJschRyJzdnLc+gmUE6pKfq
- WQ3lkR2BfbnBG73H+FCn8x97LBng6nycL+LdjLYA0pu3oiE4oEFdw
-X-Received: by 2002:a05:600c:3147:b0:412:a45d:e322 with SMTP id
- h7-20020a05600c314700b00412a45de322mr1383520wmo.34.1708931030564; 
- Sun, 25 Feb 2024 23:03:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQX3zyvycWjeSBaefxOLUDBgJJG4QwflfPkkxp4qqfRRE4+jv4brd/kxx+35JrUGAcTnTpow==
-X-Received: by 2002:a05:600c:3147:b0:412:a45d:e322 with SMTP id
- h7-20020a05600c314700b00412a45de322mr1383510wmo.34.1708931030287; 
- Sun, 25 Feb 2024 23:03:50 -0800 (PST)
+ AJvYcCUe0Lm3WCb2rRUAFd5QW2h8yeg6vDtCkM324ogL5NUh01+8p5aI4uoeexnl4CDkGFpQVcUWPJw4hmrKwxC8+Pkv06Rlpmc=
+X-Gm-Message-State: AOJu0YwTfmH2HhEINNl6lXk/fBVQYN8EqQMHblb11Tiyd4JXzEaUo3Kw
+ S/HJCG8wR1TmNqOhEkE5NX5UMYoDqJ4gfKdQu7Flwn8VTYFXnk5us6N+Vy8zNhhduwXXWOZKTID
+ 0DCkI+m8V36IMUYjWVw7aj7lb0ThonSQMD+OlIXhnyaXCu/IWD6NATexe11Zn
+X-Received: by 2002:a05:600c:358f:b0:412:a7da:8286 with SMTP id
+ p15-20020a05600c358f00b00412a7da8286mr315309wmq.4.1708931061197; 
+ Sun, 25 Feb 2024 23:04:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF8/r8g7QJxgT+faMbdsfMnRWTjOpPapqf9VmdkeRJNS4LyNNCB8LfWBtatz5cxedP19B6axw==
+X-Received: by 2002:a05:600c:358f:b0:412:a7da:8286 with SMTP id
+ p15-20020a05600c358f00b00412a7da8286mr315294wmq.4.1708931060899; 
+ Sun, 25 Feb 2024 23:04:20 -0800 (PST)
 Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
  [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
- x1-20020a05600c2a4100b0041292306f2csm10858780wme.16.2024.02.25.23.03.49
+ x1-20020a05600c2a4100b0041292306f2csm10858780wme.16.2024.02.25.23.04.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Feb 2024 23:03:49 -0800 (PST)
-Message-ID: <38b0c14f-0288-493c-a5a4-a12c70ee3c70@redhat.com>
-Date: Mon, 26 Feb 2024 08:03:48 +0100
+ Sun, 25 Feb 2024 23:04:20 -0800 (PST)
+Message-ID: <c904a74d-8793-48ca-a6de-cb99f7913ce8@redhat.com>
+Date: Mon, 26 Feb 2024 08:04:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] ppc: sam460ex: do not use usb_bus_find()
+Subject: Re: [PATCH 03/10] sh4: r2d: do not use usb_bus_find()
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, balaton@eik.bme.hu
 References: <20240223124406.234509-1-pbonzini@redhat.com>
- <20240223124406.234509-3-pbonzini@redhat.com>
+ <20240223124406.234509-4-pbonzini@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -118,18 +118,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240223124406.234509-3-pbonzini@redhat.com>
+In-Reply-To: <20240223124406.234509-4-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,33 +152,31 @@ On 23/02/2024 13.43, Paolo Bonzini wrote:
 > Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/ppc/sam460ex.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+>   hw/sh4/r2d.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-> index 1e615b8d355..4d5655ab6b4 100644
-> --- a/hw/ppc/sam460ex.c
-> +++ b/hw/ppc/sam460ex.c
-> @@ -273,6 +273,7 @@ static void sam460ex_init(MachineState *machine)
->       DeviceState *uic[4];
->       int i;
+> diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+> index c73e8f49b8a..4d34ad00d93 100644
+> --- a/hw/sh4/r2d.c
+> +++ b/hw/sh4/r2d.c
+> @@ -244,6 +244,7 @@ static void r2d_init(MachineState *machine)
+>       SysBusDevice *busdev;
+>       MemoryRegion *address_space_mem = get_system_memory();
 >       PCIBus *pci_bus;
 > +    USBBus *usb_bus;
->       PowerPCCPU *cpu;
->       CPUPPCState *env;
->       I2CBus *i2c;
-> @@ -420,8 +421,9 @@ static void sam460ex_init(MachineState *machine)
->       sysbus_realize_and_unref(sbdev, &error_fatal);
->       sysbus_mmio_map(sbdev, 0, 0x4bffd0000);
->       sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(uic[2], 30));
+>   
+>       cpu = SUPERH_CPU(cpu_create(machine->cpu_type));
+>       env = &cpu->env;
+> @@ -312,7 +313,8 @@ static void r2d_init(MachineState *machine)
+>       pci_init_nic_devices(pci_bus, mc->default_nic);
+>   
+>       /* USB keyboard */
 > -    usb_create_simple(usb_bus_find(-1), "usb-kbd");
-> -    usb_create_simple(usb_bus_find(-1), "usb-mouse");
 > +    usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS, &error_abort));
 > +    usb_create_simple(usb_bus, "usb-kbd");
-> +    usb_create_simple(usb_bus, "usb-mouse");
 >   
->       /* PCIe buses */
->       dev = qdev_new(TYPE_PPC460EX_PCIE_HOST);
+>       /* Todo: register on board registers */
+>       memset(&boot_params, 0, sizeof(boot_params));
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
