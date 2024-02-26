@@ -4,81 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03953C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B859C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1redqb-0001WF-06; Mon, 26 Feb 2024 11:28:57 -0500
+	id 1redwz-0003DO-QG; Mon, 26 Feb 2024 11:35:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1redqY-0001UF-SM
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:28:54 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1redqX-0002UU-0o
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:28:54 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5654f700705so4377352a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 08:28:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708964931; x=1709569731; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oEkng3ZE/vlKyJr1xJbRI5B7Go9cYFsY9HcbjAsbMbY=;
- b=SjGj1qNs2ScTSqDbNlp4sIeHbrkSAui31wWSOSWwsPVtpb061l9jzSB7Y5m8HTcfdT
- iEr8Oau+wbtFtMdF050e8WPkTNJcc79a4CjuwGNTV7HFYSLytlXzCMP/Gm4yZXhfHaaI
- 4vSq5SRwOXkBH9aJ8VGOBY8OPKpLnOZLOLRFyv7ksbKDrdx2UYQojV0yJqmNeYpOek0I
- Ly4Yf0oPAw50FEjmS0nL2HYhs3xBE3WtvF6blBWOEHfZSuyGtv395rtCOQpUqSFPmAEt
- 6eBNgCfgY2DQBfpjc8QgRfevDBlWmUG8vFZl42BMm4Tzk0mNQdsuBA7PmTkQAIDoqyjG
- fRMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708964931; x=1709569731;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oEkng3ZE/vlKyJr1xJbRI5B7Go9cYFsY9HcbjAsbMbY=;
- b=LyQoh7rXl24+DSx9E/+BQHT51n0eMH0c8qyNCFkv8boedGLRCRz/trqWbbF7xyHVnf
- 8ZxM+BFjKH8Ctz7B2ASwQxGwep4riA0xG2GKYRwjxC1zBKcvo3kQwOCZrj1PAMt1KVon
- 1El4si2E1cfU6j/IM1h7ptbHmcsPLgN1mfNqCZ8O73JrWviqWYT3+/cy71SEgl0dV3Ei
- mg7neHwwVmU4il0ixlT+aEzMry2bbgkplg3aWNFCZ7sNjX54AaAhOEvI/N5AnjCpSexX
- 6fKecm3+6bPMNuACHBX+8Fofia5WTSGCCh3U8yqNr8in0J5IbdmHVWhjplCn3/YGqvqB
- Wdcg==
-X-Gm-Message-State: AOJu0Yx3oCEsgd7sNsVrJq2WXoqadZyttcFOGvCvXnvkkWAYu/0oMYLL
- 5ZxCQzMxa1TTM0dUzNYmUs9t6XG0KKLAUfJla4sUt1zdXyYCrhTU3bUiiiSjNsA=
-X-Google-Smtp-Source: AGHT+IGFnsz6gZIbQOWrfas0fCE+2J1tFVc+ulN8kK6UhPNP8zfEyU8iqdMcmB7TLR2QdsXskwGJhw==
-X-Received: by 2002:aa7:d14e:0:b0:566:1683:6370 with SMTP id
- r14-20020aa7d14e000000b0056616836370mr1113277edo.19.1708964931349; 
- Mon, 26 Feb 2024 08:28:51 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.223.153])
- by smtp.gmail.com with ESMTPSA id
- bo13-20020a0564020b2d00b005658186279csm2431258edb.18.2024.02.26.08.28.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 08:28:50 -0800 (PST)
-Message-ID: <c1462a44-a5a0-46b6-8312-7cd1a7962718@linaro.org>
-Date: Mon, 26 Feb 2024 17:28:49 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1redwu-0003D0-7U; Mon, 26 Feb 2024 11:35:28 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1redwa-0003ed-S3; Mon, 26 Feb 2024 11:35:27 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tk5hL3BNrz6K6Zs;
+ Tue, 27 Feb 2024 00:30:42 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 78704140A35;
+ Tue, 27 Feb 2024 00:35:01 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 26 Feb
+ 2024 16:35:00 +0000
+Date: Mon, 26 Feb 2024 16:34:59 +0000
+To: <ankita@nvidia.com>
+CC: <jgg@nvidia.com>, <alex.williamson@redhat.com>, <clg@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <peter.maydell@linaro.org>, <ani@anisinha.ca>,
+ <berrange@redhat.com>, <eduardo@habkost.net>, <imammedo@redhat.com>,
+ <mst@redhat.com>, <eblake@redhat.com>, <armbru@redhat.com>,
+ <david@redhat.com>, <gshan@redhat.com>, <zhiw@nvidia.com>,
+ <mochs@nvidia.com>, <pbonzini@redhat.com>, <aniketa@nvidia.com>,
+ <cjia@nvidia.com>, <kwankhede@nvidia.com>, <targupta@nvidia.com>,
+ <vsethi@nvidia.com>, <acurrid@nvidia.com>, <dnigam@nvidia.com>,
+ <udhoke@nvidia.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
+Message-ID: <20240226163459.00002211@Huawei.com>
+In-Reply-To: <20240223124223.800078-3-ankita@nvidia.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-3-ankita@nvidia.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 14/41] Add BCM2838 PCIE host
-Content-Language: en-US
-To: Sergey Kambalin <serg.oker@gmail.com>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, Sergey Kambalin <sergey.kambalin@auriga.com>
-References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
- <20240226000259.2752893-15-sergey.kambalin@auriga.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240226000259.2752893-15-sergey.kambalin@auriga.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,95 +71,274 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sergey,
+On Fri, 23 Feb 2024 12:42:23 +0000
+<ankita@nvidia.com> wrote:
 
-On 26/2/24 01:02, Sergey Kambalin wrote:
-> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+> From: Ankit Agrawal <ankita@nvidia.com>
+>=20
+> ACPI spec provides a scheme to associate "Generic Initiators" [1]
+> (e.g. heterogeneous processors and accelerators, GPUs, and I/O devices wi=
+th
+> integrated compute or DMA engines GPUs) with Proximity Domains. This is
+> achieved using Generic Initiator Affinity Structure in SRAT. During bootu=
+p,
+> Linux kernel parse the ACPI SRAT to determine the PXM ids and create a NU=
+MA
+> node for each unique PXM ID encountered. Qemu currently do not implement
+> these structures while building SRAT.
+>=20
+> Add GI structures while building VM ACPI SRAT. The association between
+> device and node are stored using acpi-generic-initiator object. Lookup
+> presence of all such objects and use them to build these structures.
+>=20
+> The structure needs a PCI device handle [2] that consists of the device B=
+DF.
+> The vfio-pci device corresponding to the acpi-generic-initiator object is
+> located to determine the BDF.
+>=20
+> [1] ACPI Spec 6.3, Section 5.2.16.6
+> [2] ACPI Spec 6.3, Table 5.80
+>=20
+> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+Hi Ankit,
+
+As the code stands the use of a list seems overkill.
+
+Otherwise looks good to me.  I need Generic Ports support for CXL
+stuff so will copy your approach for that as it's ended up nice
+and simple.
+
+Jonathan
+
 > ---
->   hw/arm/bcm2838_pcie.c         | 217 +++++++++++++++++++++++++++++++++-
->   hw/arm/trace-events           |   4 +
->   include/hw/arm/bcm2838_pcie.h |  22 ++++
->   3 files changed, 241 insertions(+), 2 deletions(-)
-
-
-> +static void bcm2838_pcie_host_realize(DeviceState *dev, Error **errp)
+>  hw/acpi/acpi-generic-initiator.c         | 84 ++++++++++++++++++++++++
+>  hw/arm/virt-acpi-build.c                 |  3 +
+>  include/hw/acpi/acpi-generic-initiator.h | 26 ++++++++
+>  3 files changed, 113 insertions(+)
+>=20
+> diff --git a/hw/acpi/acpi-generic-initiator.c b/hw/acpi/acpi-generic-init=
+iator.c
+> index 1ade2f723f..d78382bc63 100644
+> --- a/hw/acpi/acpi-generic-initiator.c
+> +++ b/hw/acpi/acpi-generic-initiator.c
+> @@ -68,3 +68,87 @@ static void acpi_generic_initiator_class_init(ObjectCl=
+ass *oc, void *data)
+>      object_class_property_add(oc, "node", "int", NULL,
+>          acpi_generic_initiator_set_node, NULL, NULL);
+>  }
+> +
+> +static int acpi_generic_initiator_list(Object *obj, void *opaque)
 > +{
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
-> +    BCM2838PcieHostState *s = BCM2838_PCIE_HOST(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    GSList **list =3D opaque;
 > +
-> +    int i;
-> +
-> +    memory_region_init_io(&s->cfg_regs, OBJECT(s), &bcm2838_pcie_host_ops, s,
-> +                          "bcm2838_pcie_cfg_regs", BCM2838_PCIE_REGS_SIZE);
-> +    sysbus_init_mmio(sbd, &s->cfg_regs);
-> +
-> +    /*
-> +     * The MemoryRegions io_mmio and io_ioport that we pass to
-> +     * pci_register_root_bus() are not the same as the MemoryRegions
-> +     * io_mmio_window and io_ioport_window that we expose as SysBus MRs.
-> +     * The difference is in the behavior of accesses to addresses where no PCI
-> +     * device has been mapped.
-> +     *
-> +     * io_mmio and io_ioport are the underlying PCI view of the PCI address
-> +     * space, and when a PCI device does a bus master access to a bad address
-> +     * this is reported back to it as a transaction failure.
-> +     *
-> +     * io_mmio_window and io_ioport_window implement "unmapped addresses read as
-> +     * -1 and ignore writes"; this is a traditional x86 PC behavior, which is
-> +     * not mandated properly by the PCI spec but expected by the majority of
-> +     * PCI-using guest software, including Linux.
-> +     *
-> +     * We implement it in the PCIe host controller, by providing the *_window
-> +     * MRs, which are containers with io ops that implement the 'background'
-> +     * behavior and which hold the real PCI MRs as sub-regions.
-> +     */
-> +    memory_region_init(&s->io_mmio, OBJECT(s), "bcm2838_pcie_mmio", UINT64_MAX);
-> +    memory_region_init(&s->io_ioport, OBJECT(s), "bcm2838_pcie_ioport",
-> +                       64 * 1024);
-> +
-> +    memory_region_init_io(&s->io_mmio_window, OBJECT(s),
-> +                            &unassigned_io_ops, OBJECT(s),
-> +                            "bcm2838_pcie_mmio_window", UINT64_MAX);
-> +    memory_region_init_io(&s->io_ioport_window, OBJECT(s),
-> +                            &unassigned_io_ops, OBJECT(s),
-> +                            "bcm2838_pcie_ioport_window", 64 * 1024);
-> +
-> +    memory_region_add_subregion(&s->io_mmio_window, 0, &s->io_mmio);
-> +    memory_region_add_subregion(&s->io_ioport_window, 0, &s->io_ioport);
-> +    sysbus_init_mmio(sbd, &s->io_mmio_window);
-> +    sysbus_init_mmio(sbd, &s->io_ioport_window);
-> +
-> +    for (i = 0; i < BCM2838_PCIE_NUM_IRQS; i++) {
-> +        sysbus_init_irq(sbd, &s->irq[i]);
-> +        s->irq_num[i] = -1;
+> +    if (object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
+> +        *list =3D g_slist_append(*list, ACPI_GENERIC_INITIATOR(obj));
 > +    }
 > +
-> +    pci->bus = pci_register_root_bus(dev, "pcie.0", bcm2838_pcie_host_set_irq,
-> +                                     bcm2838_pcie_host_map_irq, s, &s->io_mmio,
-> +                                     &s->io_ioport, 0, BCM2838_PCIE_NUM_IRQS,
-> +                                     TYPE_PCIE_BUS);
-> +    pci_bus_set_route_irq_fn(pci->bus, bcm2838_pcie_host_route_intx_pin_to_irq);
-> +    qdev_realize(DEVICE(&s->root_port), BUS(pci->bus), &error_fatal);
+> +    object_child_foreach(obj, acpi_generic_initiator_list, opaque);
+
+See below.  There is a recursive helper that avoids need for this.
+
+> +    return 0;
 > +}
+> +
+> +/*
+> + * Identify Generic Initiator objects and link them into the list which =
+is
+> + * returned to the caller.
+> + *
+> + * Note: it is the caller's responsibility to free the list to avoid
+> + * memory leak.
+> + */
+> +static GSList *acpi_generic_initiator_get_list(void)
+> +{
+> +    GSList *list =3D NULL;
+> +
+> +    object_child_foreach(object_get_root(),
+> +                         acpi_generic_initiator_list, &list);
 
-Something is odd:
+I think you can use object_child_foreach_recursive() and skip the manual
+calling above?
 
-(qemu) info mtree
-...
-address-space: memory
-   0000000000000000-ffffffffffffffff (prio 0, i/o): system
-...
-[DETECTED OVERFLOW!]     0000000600000000-00000005ffffffff (prio 0, 
-i/o): bcm2838_pcie_mmio_window
-[DETECTED OVERFLOW!]       0000000600000000-00000005ffffffff (prio 0, 
-i/o): bcm2838_pcie_mmio
-         0000000600000000-0000000600000000 (prio 1, i/o): alias 
-pci_bridge_mem @pci_bridge_pci 0000000000000000-0000000000000000
-         0000000600000000-0000000600000000 (prio 1, i/o): alias 
-pci_bridge_pref_mem @pci_bridge_pci 0000000000000000-0000000000000000
+> +    return list;
+> +}
+> +
+> +/*
+> + * ACPI 6.3:
+> + * Table 5-78 Generic Initiator Affinity Structure
+> + */
+> +static void
+> +build_srat_generic_pci_initiator_affinity(GArray *table_data, int node,
+> +                                          PCIDeviceHandle *handle)
+> +{
+> +    uint8_t index;
+> +
+> +    build_append_int_noprefix(table_data, 5, 1);  /* Type */
+> +    build_append_int_noprefix(table_data, 32, 1); /* Length */
+> +    build_append_int_noprefix(table_data, 0, 1);  /* Reserved */
+> +    build_append_int_noprefix(table_data, 1, 1);  /* Device Handle Type:=
+ PCI */
+> +    build_append_int_noprefix(table_data, node, 4);  /* Proximity Domain=
+ */
+> +
+> +    /* Device Handle - PCI */
+> +    build_append_int_noprefix(table_data, handle->segment, 2);
+> +    build_append_int_noprefix(table_data, handle->bdf, 2);
+> +    for (index =3D 0; index < 12; index++) {
+> +        build_append_int_noprefix(table_data, 0, 1);
+> +    }
+> +
+> +    build_append_int_noprefix(table_data, GEN_AFFINITY_ENABLED, 4); /* F=
+lags */
+> +    build_append_int_noprefix(table_data, 0, 4);     /* Reserved */
+> +}
+> +
+> +void build_srat_generic_pci_initiator(GArray *table_data)
+> +{
+> +    GSList *gi_list, *list =3D acpi_generic_initiator_get_list();
+
+
+Did you consider just have the functional called in the scan do this?
+Not sure you need anything as a parameter beyond the GArray *table_data
+
+Something like...
+
+static int acpi_generic_initiator_list(Object *obj, void *opaque)
+{
+    uint8_t index;
+    AcpiGenericInitiator *gi;
+    GArray *table_data =3D opaque;
+    PCIDeviceHandle dev_handle;
+    PCIDevice *pci_dev;
+    Object *o;
+
+    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
+        return 0;
+    }
+
+    gi =3D ACPI_GENERIC_INITIATOR(obj);
+    o =3D object_resolve_path_type(gi->pci_dev, TYPE_PCI_DEVICE, NULL);
+    if (!o) {
+	error_setg(&error_abort, "GI: Specified device must be a PCI device.\n")
+	return 1;
+    }
+    pci_dev =3D PCI_DEVICE(o);
+
+    dev_handle.segment =3D 0;
+    dev_handle.bdf =3D PCI_BUILD_BDF(pci_bus_num(pci_get_bus(pci_dev)),
+                                               pci_dev->devfn);
+    build_srat_generic_pci_initiator_affinity(table_data,
+                                              gi->node, &dev_handle);
+}
+
++ a call to.
+    object_child_foreach_recursive(object_get_root(),
+                                   acpi_generic_srat, table_data);=09
+
+> +    AcpiGenericInitiator *gi;
+> +
+> +    for (gi_list =3D list; gi_list; gi_list =3D gi_list->next) {
+> +        PCIDeviceHandle dev_handle;
+> +        PCIDevice *pci_dev;
+> +        Object *o;
+> +
+> +        gi =3D gi_list->data;
+> +
+> +        o =3D object_resolve_path_type(gi->pci_dev, TYPE_PCI_DEVICE, NUL=
+L);
+> +        if (!o) {
+> +            error_printf("Specified device must be a PCI device.\n");
+as above, use an errp rather than exit(1);
+> +            exit(1);
+> +        }
+> +        pci_dev =3D PCI_DEVICE(o);
+> +
+> +        dev_handle.segment =3D 0;
+> +        dev_handle.bdf =3D PCI_BUILD_BDF(pci_bus_num(pci_get_bus(pci_dev=
+)),
+> +                                                   pci_dev->devfn);
+> +        build_srat_generic_pci_initiator_affinity(table_data,
+> +                                                  gi->node, &dev_handle);
+Should we check for consistency of gi->node and
+-numa node,id=3DX entries?
+
+Maybe just check less than numa_state->num_nodes as that's the variable
+used to walk the other structures when building srat.
+
+> +    }
+> +
+> +    g_slist_free(list);
+> +}
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 8bc35a483c..00d77327e0 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -58,6 +58,7 @@
+>  #include "migration/vmstate.h"
+>  #include "hw/acpi/ghes.h"
+>  #include "hw/acpi/viot.h"
+> +#include "hw/acpi/acpi-generic-initiator.h"
+> =20
+>  #define ARM_SPI_BASE 32
+> =20
+> @@ -558,6 +559,8 @@ build_srat(GArray *table_data, BIOSLinker *linker, Vi=
+rtMachineState *vms)
+>          }
+>      }
+> =20
+> +    build_srat_generic_pci_initiator(table_data);
+Perhaps passing in a suitable Error ** would be sensible.
+
+> +
+>      if (ms->nvdimms_state->is_enabled) {
+>          nvdimm_build_srat(table_data);
+>      }
+> diff --git a/include/hw/acpi/acpi-generic-initiator.h b/include/hw/acpi/a=
+cpi-generic-initiator.h
+> index 2f183b029a..213545e614 100644
+> --- a/include/hw/acpi/acpi-generic-initiator.h
+> +++ b/include/hw/acpi/acpi-generic-initiator.h
+> @@ -29,4 +29,30 @@ typedef struct AcpiGenericInitiatorClass {
+>          ObjectClass parent_class;
+>  } AcpiGenericInitiatorClass;
+> =20
+> +/*
+> + * ACPI 6.3:
+> + * Table 5-81 Flags =E2=80=93 Generic Initiator Affinity Structure
+> + */
+> +typedef enum {
+> +    GEN_AFFINITY_ENABLED =3D (1 << 0), /*
+> +                                      * If clear, the OSPM ignores the c=
+ontents
+> +                                      * of the Generic Initiator/Port Af=
+finity
+> +                                      * Structure. This allows system fi=
+rmware
+> +                                      * to populate the SRAT with a stat=
+ic
+> +                                      * number of structures, but only e=
+nable
+> +                                      * them as necessary.
+> +                                      */
+I'd put the comment above the definition to avoid wrapping so much!
+> +} GenericAffinityFlags;
+> +
+> +/*
+> + * ACPI 6.3:
+> + * Table 5-80 Device Handle - PCI
+> + */
+> +typedef struct PCIDeviceHandle {
+> +    uint16_t segment;
+> +    uint16_t bdf;
+> +} PCIDeviceHandle;
+> +
+> +void build_srat_generic_pci_initiator(GArray *table_data);
+> +
+>  #endif
 
 
