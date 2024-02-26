@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C356C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E62C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reW4t-0001dQ-Fx; Mon, 26 Feb 2024 03:11:11 -0500
+	id 1reWBe-0003ye-1K; Mon, 26 Feb 2024 03:18:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW4p-0001bl-Dq
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:11:07 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWBb-0003xr-3p
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:18:07 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW4n-0002dC-Qr
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:11:07 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5656e5754ccso3331831a12.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:11:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWBZ-0003pO-53
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:18:06 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a3e550ef31cso294936466b.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708935064; x=1709539864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708935483; x=1709540283; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IXxTAwoJKY2jfKurotE+rFCHnfcn+5saUQNAytaPDDk=;
- b=hpW2teennsvUyXYD4DAlYBH61/J/IQd7quphUYPHodY59J31ASQ14ag387H7yU9wbQ
- bF43DkD3bLZeJSpf1Ef9D8iMT/drMh4anGdm07eFCfIhwyZQnP1qTsNjm7EThihiOMyL
- HIE1jcP6Tt7QPt3zCHuwmMX0ttrp5Aluo0YC2KhM3lj9qfttWHoFNwzIzSIc1129gt4I
- 1nfmo8wVUiz8Gf20G1LW2jKwYTIlAGBfFWuQXsRGcDBgesmVAJBZidG4dyhJD0zJrEmi
- X0Tjj4dHJULVsXMPnjTR739Zm8g+LhHu8Uf3WSeQfjZbdCJZ1OZ/wt4L3VjaX/j0ZW6X
- qKUw==
+ bh=ehfKb/GXBKJJhlhNDhvn5qEI/0dzYxZOynPkWDOGcpY=;
+ b=zp+Q8TeGtMdvrw1vPDCRDXZYNHCwNypfbjy4vPXqf5N5AUSK5Ui6FSi+kL34ftlh2n
+ 3l5jy+saVrtWOn8VilYkJwJeF1AxNcQ3jrBm9tssPabzrqWQP7n76gsmw6G1Zst/PEhb
+ +z4eGxjFd7MdMT0+yEEGXDz8kbLdi+b2llZV2+hyMsA6GrDDfA/IrsTxo0svpb/KMrl9
+ 9YKW6c8yQFZqqKq4jNQoY+PQN6NXVZ4wFi3fMrqP+oMYpwcEAjLNhFVoabC5oLylgwV7
+ bMQtCsmHhmDlIN70OI7rjZ5pWxINVGnm5ePxKeH0F22f+QMMMcxVVmabfcyAtYnHMYKt
+ H5AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708935064; x=1709539864;
+ d=1e100.net; s=20230601; t=1708935483; x=1709540283;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IXxTAwoJKY2jfKurotE+rFCHnfcn+5saUQNAytaPDDk=;
- b=PfOu/NzQqY1UVV18YVlENMfbYYYqofYvEQjTeieHSfeMegvOwXn189y6iroea+92Ia
- /3zcz4Yx1njDwGejaEca/OWRY3V6O5MWCzj5sYJCWM8tBV4h0anRl1H3ANwZv44ZKj2w
- jh8NvbhYcpDaAouQlfCjVdRv3vp8ZJD7YoqTmwLK1m2Fa0JJw7r6hgpGzx4Ez8FbxKu3
- BZat/sDljD9cCYGYbqeZLYo7QQ+AUSV13ursU0H2tJprmoTUurPx61OceqR8ybZn4qoN
- 32+jtLp6+/AXERil5IqAbC5FrySeqESMr65rDzpZ/gjmr1Fl0a2QsKQceKV9JSPXFjBL
- 1Tvw==
+ bh=ehfKb/GXBKJJhlhNDhvn5qEI/0dzYxZOynPkWDOGcpY=;
+ b=s1NlhOKzrV+B9HdiCdfW+bYcCAGvRRX+U1pLqyt6ek72+AxEJXwmOnd5aOxPxX7yZ8
+ tSApn99Ush3mRSeURD9p7dF1/OvGpIHP5oqvurQYV9mCYJLjVUlWcTCRAHpywZs6nID2
+ Vak1TzeOQ00uicDum7WBOeOSDO7MWgRwqUUujRDrRMJQvI8JoMhy/ZImjO/vXgHcwBnZ
+ BJjZSq8ZFGh5lsOXEjBGTyvZgRIVqeYzcSBDQGCrNSIs56n1otIzexyoH8ED7NPogBo9
+ r03v3C9WM3QZv2eaSwdmoTJPz0j3Qo7/GGSK4lqngGNT4IV1VjmBOhEOTMdYlilMHREn
+ tXbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsW6EKjVhbjJFFwXsNEJrurt6GV1Ihrg9+FUBahRcMFXJXA9TMtuEUUTxUozOAyd2VRRhfkFUKa0bgKUlUEMxbfrT7aWY=
-X-Gm-Message-State: AOJu0Yy3zkRBYQOY/OmwKjTkLTOHkx/dUF/zu6tm9Q7l94MrDcLhZmjZ
- ub/chD+YGEO+yFZ5rqkgEFqsMlj0LKacjHRS9DvnbxjSeos7Nbnyp0ZCbhNXrVs=
-X-Google-Smtp-Source: AGHT+IEUzjguIvkERSszRezAEUNX5PU20OKfYznX22BzTzPMfMcO6fG96j4iVNrClVcUhP5cyoH4yQ==
-X-Received: by 2002:a17:906:2e89:b0:a3f:5144:ada2 with SMTP id
- o9-20020a1709062e8900b00a3f5144ada2mr4542878eji.2.1708935064325; 
- Mon, 26 Feb 2024 00:11:04 -0800 (PST)
+ AJvYcCULbnDzVi9epQ8PWngDgd3zwVFrXyDMFv+XhuNzYBntMde0He/GuR8o+LK+IL9FzEP5z+qiCOHTfekxf3tU3JogGGq25hI=
+X-Gm-Message-State: AOJu0YwUyJkVAc+TB3YOEz7D4PXJ3G+WgLZFxxDJ1g8Doa8n/44OSd2F
+ 4YklrGVX682EZG6FHWhGj4CkGSTCCFUsyAqgTMS0uZKudngcWX4LSCBLavKgvRA=
+X-Google-Smtp-Source: AGHT+IFEGFzMSX6KeM4pf82eoQaZ4syFdXkKRw35Z9XVaibKuMJ4RUszn42YDMUdkyENxXxtGf+Y9w==
+X-Received: by 2002:a17:906:fb0b:b0:a43:5429:499d with SMTP id
+ lz11-20020a170906fb0b00b00a435429499dmr1067198ejb.27.1708935483076; 
+ Mon, 26 Feb 2024 00:18:03 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.164.69])
  by smtp.gmail.com with ESMTPSA id
- tb24-20020a1709078b9800b00a42fa329ebfsm1948745ejc.54.2024.02.26.00.11.02
+ vu2-20020a170907a64200b00a42fa8c207bsm1970682ejc.94.2024.02.26.00.18.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 00:11:03 -0800 (PST)
-Message-ID: <c2a2b5b5-10ca-4a7c-84aa-308273e6c7d9@linaro.org>
-Date: Mon, 26 Feb 2024 09:11:02 +0100
+ Mon, 26 Feb 2024 00:18:02 -0800 (PST)
+Message-ID: <295b6a29-d0a7-40b1-ae37-34faab925d67@linaro.org>
+Date: Mon, 26 Feb 2024 09:18:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ui/cocoa: Fix window clipping on macOS 14
+Subject: Re: [PATCH] hw/nvme: fix invalid endian conversion
 Content-Language: en-US
-To: David Parsons <dave@daveparsons.net>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, akihiko.odaki@daynix.com, mjt@tls.msk.ru,
- kraxel@redhat.com, marcandre.lureau@redhat.com
-References: <20240224140620.39200-1-dave@daveparsons.net>
+To: Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Klaus Jensen <k.jensen@samsung.com>, Kevin Wolf <kwolf@redhat.com>
+References: <20240222-fix-sriov-numcntl-v1-1-d60bea5e72d0@samsung.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240224140620.39200-1-dave@daveparsons.net>
+In-Reply-To: <20240222-fix-sriov-numcntl-v1-1-d60bea5e72d0@samsung.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,19 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/2/24 15:06, David Parsons wrote:
-> macOS Sonoma changes the NSView.clipsToBounds to false by default
-> where it was true in earlier version of macOS. This causes the window
-> contents to be occluded by the frame at the top of the window. This
-> fixes the issue by conditionally compiling the clipping on Sonoma to
-> true. NSView only exposes the clipToBounds in macOS 14 and so has
-> to be fixed via conditional compilation.
+On 22/2/24 10:29, Klaus Jensen wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
-> Signed-off-by: David Parsons <dave@daveparsons.net>
+> numcntl is one byte and so is max_vfs. Using cpu_to_le16 on big endian
+> hosts results in numcntl being set to 0.
+> 
+> Fix by dropping the endian conversion.
+> 
+> Fixes: 746d42b13368 ("hw/nvme: Initialize capability structures for primary/secondary controllers")
+> Reported-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 > ---
->   ui/cocoa.m | 7 +++++++
->   1 file changed, 7 insertions(+)
+>   hw/nvme/ctrl.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patch queued, thanks!
+Hi Klaus, I'm not seeing other NVMe patches on the list,
+so I'll queue this on my hw-misc tree, but feel free to
+object and I'll unqueue :)
+
+Thanks,
+
+Phil.
 
