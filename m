@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBEAC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026F8C54E41
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 22:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rej0P-0004oy-6x; Mon, 26 Feb 2024 16:59:25 -0500
+	id 1rej0O-0004oF-LS; Mon, 26 Feb 2024 16:59:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rej0M-0004nX-Ck
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rej0M-0004nW-CH
  for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:59:22 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rej0K-0007gn-65
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rej0K-0007gm-69
  for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:59:21 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-412a87d5afcso6530755e9.3
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-412acb93e2aso298625e9.3
  for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 13:59:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20230601; t=1708984757; x=1709589557; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4klEzet8aHWpX9bQlWaepUmSR2xNV2bS+e5k8Ehj/tQ=;
- b=hbTj0JlixwAHTiDytZdy2Q+fgq1pGKqGDAtSxPiPVxArdm18gVNLEDQPDOSGuMy8Ej
- /5R6Hsxppwcs/t5XkVWjD6o1zPqKI760ITDkUZlYouVc5X7ZqXKIHR9gG5CsXmgprxwx
- EKPwdS8u349f1C2q8Dm/hyNa8jLT0B60PWhxIbJnqPigaSLsKJoGye61RH14EjsTDq6F
- HE3g0SHOsqGCYsX0uC30WQq4VFgwhpXxPHVlBpfaY6IhbY2Pz/xh3gohpyu3SWuswSJ8
- 12/z32rCsn46JkDhECzdIotk9SrfjWavTWIsEN0wPVBn72xBErdifP2RraMQiNHDKJ2b
- ZR+w==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=KmnyP4q0jy9nANsN13GP3PZyPgqHfAUAZ17+LFCx0pg=;
+ b=Uit+JdFY6eSWtgeQlQMegQXNvjzylvI9vdvYXzwFpEzkji/9aAknlqHIasmnfGHtPf
+ qA0DcHaGjb0gGq7+1fGeV3d62eqB0Rv2kfwtUGLTow/eVDbnqw+4XmHKb+HvxzoMnrIn
+ gBo5aro8tGQIGPsLiVvy2vNeCwOyNlGhZywTkiMLhJYQXG4RXiSr0pUVNJbEqXNk083i
+ 91GaxzEGlzDNx1icLjJHHreJ0p49BO48f/RHD0SJEX45TO/63OEKz3X8CLaOWDi3MNOF
+ zKwu/kOnQ0ZD3MfQIAsjZ10kiqFg+yWt3e2IZz5lgfjIR0bC1LmBM5IokGL8mWlbCokC
+ Mo8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1708984757; x=1709589557;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4klEzet8aHWpX9bQlWaepUmSR2xNV2bS+e5k8Ehj/tQ=;
- b=fzp9ZeQDUFxz0BCh6DqbtWypOwxoPRHyT4GhBMIERHHGlQXrvtNWujzyIg1kg8Joad
- ZJd9Fv7FiepkJ0yJBGiEGsjUKmwKfPzxjvdQqZW1GNUqh5d9jjLxEyo6DmE6WV0jlByx
- 01ZaKEN2xQrhW+/I9FRUgfbkiB6+kYgz2hKnMjFB8SYhd/k0hz22QXwTD2ZB1YLPDlzR
- MgUG8QxA4cQ2PJPxC3DTtXz1o69qCsmrcLrTVYxYI7/sJfXwxtGGkAU9PM0Xwry0KOnp
- ouMLQfTeM5DrwFJlRWXptfweTr42nIGNSazJ4l746neA6yQKxhWC0dToEKE7G1EN7/qv
- rFKw==
-X-Gm-Message-State: AOJu0YxMLWgnD8p7h4PWWViPwxv16fRVeeatYiKYTBHcFk7EMQxcGDsv
- X43anI6PHCShkzWbyRr5NaI5CY/03MeL9FFuvdrAMHSooQneVsSYFCyOWxg2
-X-Google-Smtp-Source: AGHT+IEAKoiB/SwRzqiWIZzu4KXctDE4U3g4bGT5PFx4HLAKgV2za+crwHUQoQ2ges2LUVUsTSt1Lw==
-X-Received: by 2002:a5d:4b4f:0:b0:33d:81ca:532e with SMTP id
- w15-20020a5d4b4f000000b0033d81ca532emr6358708wrs.47.1708984757438; 
- Mon, 26 Feb 2024 13:59:17 -0800 (PST)
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KmnyP4q0jy9nANsN13GP3PZyPgqHfAUAZ17+LFCx0pg=;
+ b=C66ahfhSCl+t1TyyFLi5HmNVm0nEAnpApsLbAxfAFN5jDNn42gKqlk+2IyAZXfaXPX
+ e0VlahtStflZl/HQBMhp7bkKl3Qp1ZOPccVxZlIyh18f7up9RQR/Hg6xnSDqaktJEGSw
+ aj7g/+qOrN7gAME3NHkzgvjNjGRodyIoPfxsNjoHyBKK26ZMfUWtiuG4AobZ8w+UiOdd
+ GGMBY6nDv26YFi8qt8xlj7IheqUMpqmsxJyuwJeGkzNZ9gcubUsTepJFubOQ33mTcmhx
+ hKkeTRYmsbGLu4Xnu6/CNQgjaiIdAnIx//gHwGbx8fdTIlvPbVHEQQod/kG6oFJbWtSC
+ pA1g==
+X-Gm-Message-State: AOJu0Ywbb5jgliw4YClwwV6svK4o+iq/4fLJyfftQkO78mng5oaZ+/Px
+ wBFJGTfulrOxG1GWgmaSa27delFJ2gn3LjFVoVXyAe4U23BVQy8yjK70NQSI
+X-Google-Smtp-Source: AGHT+IH1bjoLVKmNL4UbKqCSKqj5fw5u4sqGY6sISdj9/QFDz3soEWMHkaDZwvqhZ4XhAQNKfTQbcw==
+X-Received: by 2002:a5d:50c6:0:b0:33d:6984:3f80 with SMTP id
+ f6-20020a5d50c6000000b0033d69843f80mr5305715wrt.67.1708984756711; 
+ Mon, 26 Feb 2024 13:59:16 -0800 (PST)
 Received: from Provence.localdomain
  (dynamic-077-188-008-186.77.188.pool.telefonica.de. [77.188.8.186])
  by smtp.gmail.com with ESMTPSA id
- h4-20020a05600016c400b0033dda0e82e5sm3985753wrf.32.2024.02.26.13.59.16
+ h4-20020a05600016c400b0033dda0e82e5sm3985753wrf.32.2024.02.26.13.59.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 13:59:17 -0800 (PST)
+ Mon, 26 Feb 2024 13:59:16 -0800 (PST)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -66,17 +65,16 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 1/2] Revert "hw/i386/pc_sysfw: Inline pc_system_flash_create()
- and remove it"
-Date: Mon, 26 Feb 2024 22:59:08 +0100
-Message-ID: <20240226215909.30884-2-shentey@gmail.com>
+Subject: [PATCH 0/2] Revert "hw/i386/pc: Confine system flash handling to
+ pc_sysfw"
+Date: Mon, 26 Feb 2024 22:59:07 +0100
+Message-ID: <20240226215909.30884-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240226215909.30884-1-shentey@gmail.com>
-References: <20240226215909.30884-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,53 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 6f6ad2b24582 "hw/i386/pc: Confine system flash handling to pc_sysfw"
-causes a regression when specifying the property `-M pflash0` in the PCI PC
-machines:
-  qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
-In order to revert the commit, the commit below must be reverted first.
-
-This reverts commit cb05cc16029bb0a61ac5279ab7b3b90dcf2aa69f.
-
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/i386/pc_sysfw.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index b02e285579..b9c1eb352d 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -91,6 +91,18 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
-     return PFLASH_CFI01(dev);
- }
- 
-+static void pc_system_flash_create(PCMachineState *pcms)
-+{
-+    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
-+
-+    if (pcmc->pci_enabled) {
-+        pcms->flash[0] = pc_pflash_create(pcms, "system.flash0",
-+                                          "pflash0");
-+        pcms->flash[1] = pc_pflash_create(pcms, "system.flash1",
-+                                          "pflash1");
-+    }
-+}
-+
- static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
- {
-     char *prop_name;
-@@ -198,8 +210,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
-         return;
-     }
- 
--    pcms->flash[0] = pc_pflash_create(pcms, "system.flash0", "pflash0");
--    pcms->flash[1] = pc_pflash_create(pcms, "system.flash1", "pflash1");
-+    pc_system_flash_create(pcms);
- 
-     /* Map legacy -drive if=pflash to machine properties */
-     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
--- 
-2.44.0
-
+As reported by Volker [1], commit 6f6ad2b24582 "hw/i386/pc: Confine system=
+=0D
+flash handling to pc_sysfw" causes a regression when specifying the propert=
+y=0D
+`-M pflash0` in the PCI PC machines:=0D
+  qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found=0D
+Revert the commit for now until a solution is found.=0D
+=0D
+Best regards,=0D
+Bernhard=0D
+=0D
+[1] https://lore.kernel.org/qemu-devel/9e82a04b-f2c1-4e34-b4b6-46a0581b572f=
+@t-online.de/=0D
+=0D
+Bernhard Beschow (2):=0D
+  Revert "hw/i386/pc_sysfw: Inline pc_system_flash_create() and remove=0D
+    it"=0D
+  Revert "hw/i386/pc: Confine system flash handling to pc_sysfw"=0D
+=0D
+ include/hw/i386/pc.h |  2 ++=0D
+ hw/i386/pc.c         |  1 +=0D
+ hw/i386/pc_piix.c    |  1 +=0D
+ hw/i386/pc_sysfw.c   | 17 +++++++++++++----=0D
+ 4 files changed, 17 insertions(+), 4 deletions(-)=0D
+=0D
+-- =0D
+2.44.0=0D
+=0D
 
