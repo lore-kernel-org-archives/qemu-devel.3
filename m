@@ -4,93 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FF9C54E41
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF716C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebGa-0000mk-0q; Mon, 26 Feb 2024 08:43:36 -0500
+	id 1recGv-0007er-ID; Mon, 26 Feb 2024 09:48:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rebGY-0000kh-4r
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:43:34 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rebGV-0005WC-Fa
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:43:33 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-412a7b68809so3990665e9.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 05:43:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1recGu-0007eX-8g
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:48:00 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1recGs-0000oK-CK
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:48:00 -0500
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41QDL48N025836; Mon, 26 Feb 2024 14:47:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=FpKE41IItV4igqwixQ6zH/NdaRb7lfCUWXVdeYXUb6g=;
+ b=a/HsxtbtynKYhcA6n4PpXGKV5Q3M5hsHNR0SEFpvtuUF/dvEqHYslqNLceo+ZEsUM7Ci
+ +3wtaMme7K6k8f4hsntfeAAgJGOrQrpiquxm0sk7PlkcDwM0W20atR1XAXpolbDrKj5T
+ ALcoyoL0C9NrAfN2/xWR+BajbCGM16fllT1d/FaBxBNI9g3qmDdLywf/bsl4nE6RkDLH
+ lsiXgYbQXC3QJH6apAfagNSPZ/edKOjrvbUlUpJDE8rzTccHydj4n9J64E7hmTk+Fm8e
+ 50hororVTMMGpuMjuufEsT/CkWkvlpeet/RVXTAVdBkeY7v27a7z4nPApiaBzThdriCW dw== 
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wf7cccqnf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Feb 2024 14:47:52 +0000
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41QETuRh015303; Mon, 26 Feb 2024 14:47:51 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2040.outbound.protection.outlook.com [104.47.66.40])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wf6w5vqx8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 26 Feb 2024 14:47:51 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=B/KOtH5zpdgg6eoQcwymMU7NQX9AYCPgOT/ZJPi9RNpHeSiqxwqBScvvl9TbFZAi/LGtO3PHyp4aoqJrVy1NipGjpvXhHS+j9L6/+PF/22HSRvJrxSB9Nlj5amJhbdfEIYuiTyoRFWX+4aNfblrqw1Hg3q/RDt9B/QuTN3m9S0N3ZZK4BLU4cAIp2/T8dO298eInjJqlVmKEk2p3BfctRp1JyNMcoeTV8cHLbh1xOEh64JL4oF7SsdbAibWSR3c36jIXmfDe5Gp9agHKlg0dJhSHnbdF/TFYz6jWOUNnPjDP+Nm2NTofRLTrkduNFoxsvTwsf16e4mAXS8PqaHqCIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FpKE41IItV4igqwixQ6zH/NdaRb7lfCUWXVdeYXUb6g=;
+ b=haiS7uxQu8VRysVVufhXUI4/divJZ1SK84WIPzxh4VhY7DQr67iC27zXNEgPNOPm15NPM9tAnLdOblomv1jc8Ymxavlpvs6+qvfmAqlfrJnMx39a5L8SURazmaF1V6gwRLFUThNF9sj95C/u1X1oLSjl7lfx5amiVFoZksZ/OX4FUYin37+xLs6sFBK6mtN+FPphnaOG+CXiFyUwLFujVtTqJD9TfBDkPcPQ5ORptsn8y5w7KLkMUeajB3Fn4UtWYKmSCRCx0A183a47DNWoMei301gGzpuFQEE2XyXVN9h6EEqoF1iQFe/Ggz66YdX1TZiDUeCIsi0qRvWGo6WyKA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708955010; x=1709559810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=p5V6T/S23ro90/XXslrjXWQ3eNACND7aZH/oW8xf9V8=;
- b=SPgkj17byEVLFWVdrcAexxRnGPd0NloCPN4VXMAHkwRBSvaBP+a1z7iTD+VFtNz1OR
- dkOBrGN+knH3prV/2pyY5JxEv1M005YwaVC0f+P0FK1AnZU12Mv6cMrBvWouwXvdL/MG
- nueYL3k7GkMmdHvmid5uXnQFTHrsTuaTwBXA7ANqF8HydEkd+8SiRYOeHh9OD+WC/Tdd
- PAlpmsNdtLD8Sf3fyIVY0JhDhltA3uC/MPCOWKzMEZ/SlxYYsq2UPLUiyBhc+zI9N1pY
- +L8S84P6VbaR7jSzjH5u8/SUy5vdSIsKzzKRzPScNSXRoIGZ07SUZrscTH5uCHGX2ZSb
- 36Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708955010; x=1709559810;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p5V6T/S23ro90/XXslrjXWQ3eNACND7aZH/oW8xf9V8=;
- b=SUVMcY2ef3Tzgn5wY7jQYs3HnI1S6sJ4wFkEZ6SHEFKkZ0O8jeE1HtEFFpMgBjHwWv
- aZBPKB2DBYkFWQJe24Vnr+OPVbWfahSZf0ZtjxowyQJx2+RJ0EkCaN8CSFsclojteI8K
- o3Ap9py1ZGb+9AugCv5oIIUhfuiIo/6RqI5DgPUlAuzs84sktEP9N6mwdOPAJzvt1Yo+
- sYsAad4OzYWTuxVijq0OkeZWyWKn0pbNv1FnW+8oaE63w7/5MbXXgO9LmFnM6PuxPtzb
- 0/jNxkV1nlKdV4ta6xYud03NlqLgoW4roQ2HGKDxKsSpXCAd4GS1NDRoSFJgDtBgnj/Q
- p4JQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUm2HiI1AgMP6eXG0xx8X2YAyow+0BfUgyNf2sbSxl9+vR8uGU0zkURqVEgEaufQIBqay6iKoj5MdO7lJox+8ZcaKupq0c=
-X-Gm-Message-State: AOJu0Ywl5DPd7DbRBPWVBLCtR1xomP7gEujCvv3TczQ3WZpCOBEC/Zp7
- AstoQiHp9wJRJkwXGNQ6bfV+lxynTvBiF11RjICKcCB6jZdH/XkoBLzkZ6CTIP0=
-X-Google-Smtp-Source: AGHT+IGIZ9hBmiQMOxOtbvM37It0r5GwzKWfjr3s9MfGnEWZF/Iqq2k1mM1bmr/Bhd69ktMmf2uwxQ==
-X-Received: by 2002:a05:6000:110:b0:33d:ca9:1fab with SMTP id
- o16-20020a056000011000b0033d0ca91fabmr4687694wrx.5.1708955009696; 
- Mon, 26 Feb 2024 05:43:29 -0800 (PST)
-Received: from [192.168.69.100] ([176.187.223.153])
- by smtp.gmail.com with ESMTPSA id
- d3-20020adffbc3000000b0033dd2c3131fsm4573228wrs.65.2024.02.26.05.43.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 05:43:29 -0800 (PST)
-Message-ID: <5dfafae8-c429-4d2d-9ec4-240b8d4290ca@linaro.org>
-Date: Mon, 26 Feb 2024 14:43:27 +0100
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FpKE41IItV4igqwixQ6zH/NdaRb7lfCUWXVdeYXUb6g=;
+ b=VGDgUarVx+KLz/qN690y39Tnihsj9rvGmWwuZyAIiW7MWsy57PARaVzwOgylmEESVw4G+OnXgeCjMqgTrcBN/XcM7kN/IFwKx+EH/aZe9cvLT4hRmbFvpcQEODKmqdsOpVkUxyyjV8IVyUprspFtthVIc7BYYMlyEwdgSYVtJWE=
+Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
+ by PH8PR10MB6359.namprd10.prod.outlook.com (2603:10b6:510:1be::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.33; Mon, 26 Feb
+ 2024 14:47:49 +0000
+Received: from SA2PR10MB4684.namprd10.prod.outlook.com
+ ([fe80::c3ce:7c28:7db1:656b]) by SA2PR10MB4684.namprd10.prod.outlook.com
+ ([fe80::c3ce:7c28:7db1:656b%6]) with mapi id 15.20.7316.035; Mon, 26 Feb 2024
+ 14:47:49 +0000
+Message-ID: <d2ebb808-caf0-4f71-ae38-aed03dcd2d8f@oracle.com>
+Date: Mon, 26 Feb 2024 09:47:45 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] hw/ide: Include 'ide_internal.h' from current path
+Subject: Re: [PATCH v6 0/5] string list functions
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240225171637.4709-1-philmd@linaro.org>
- <20240225171637.4709-4-philmd@linaro.org>
- <feffd329-59e0-0291-0dd6-76a625da190b@eik.bme.hu>
- <878r37lll6.fsf@pond.sub.org>
- <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
- <90219760-aad5-82b2-41aa-be563f52fdf9@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <90219760-aad5-82b2-41aa-be563f52fdf9@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Jason Wang <jasowang@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20240226141108.73664-1-philmd@linaro.org>
+From: Steven Sistare <steven.sistare@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <20240226141108.73664-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-ClientProxiedBy: SJ0PR03CA0129.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c::14) To SA2PR10MB4684.namprd10.prod.outlook.com
+ (2603:10b6:806:119::14)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|PH8PR10MB6359:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4c37d189-24eb-42c6-0d53-08dc36d9e6f0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Y8LJCjxkbbAtQIUNmFmhWuPBvXUaH5++2lpNBbJIAaHFWemHYyrvk/9eofi67Y9ErVNXsUxokyFdh+8XAULsf70V3NvNHIRhjVtoheLlk5Iiv7oJKw7yydUbnNWN6EyOAEIDp0SdGc874zjG2PnO/Qgw+HQIs66ryWgpkxnuo/TuXbZgQsuVqkIKe1rzbr93zBNrdmBHX5VOxquwEoiW8XDXclFN3XsPtkoXIXsc+UFew9zef1fGHYjhF/SrHc308qI8QIFHP3qa+Bp+YKrHu5sP6FoB8p2cguAW+4eXPGdyhJic8iehl+G3Nb+M1HXD95ehL0DFqxbycZ85I1zO0JwhuA34cOmvwRXDijEnQNa3Jg7GR/5vARLkBYR9A9AOh9n4BKZRRkFiRgy/UpsxdajCfAkxxliqyA0cVBQCpep9Y5vVf5d+7ZWutAE5oyLw3irBtqLkpjO1EHKQzqbzF7c3w/ePzt+H86FYp3iVuULR9G816hzNgVvB/oDXRQ2DMg2+aTLL8E9z83xL5MOmD4Hlj7yijqafrbXN91XR48f6k1G1SDTtWLSQgHpYn+Lm2yNSQ8HEgQJxBV8GBe8DNGemx+09zQp5lYGjnWtd+JM/X6dJtSOmxZh5nUDZHwl0
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M2JXRldkdmIyRUhqZzRmSTg4dFU3Z1pLTXo0bTZYckREWlFmRUs1NzluTUFl?=
+ =?utf-8?B?alpjTUJFK3ZNZWltckZRWTlCSmJDQ3ZrNitaZExvbmtCdmdldUJ6UWFWc2wy?=
+ =?utf-8?B?eDNEUGdxUTYvUlYzMjRtTkFUZ2xERUh3bVcwYmN0cXp0Vzk1MUR6RGtmYS8v?=
+ =?utf-8?B?N2RoVC8vYjYwUEhocXB5Zk1UdDN1RGZWdTY4WEt5NDlTV3dIcitTcG5HUmFv?=
+ =?utf-8?B?RG9lYmZaUERBTnViaXpmaWNlZEU2eHVkZnJlNDNGTy9rclU0R2I3UHBaYlJU?=
+ =?utf-8?B?THNKQk9zYjJUenNROTBMU1F6TFJacTR5SlVocW1Uc1U3cjdYc3grVDF0bFlC?=
+ =?utf-8?B?aFFOTE5oN2J2cEI5cE9YWW9sZERRTG80UVg2aFdRSzFXczRtUUt2TUF3cEVk?=
+ =?utf-8?B?a1dyem1ZMGhWV0QvdzNtTk51RHhTY080WFNCcFZueXRTaFkrU3pYZDBsTzB1?=
+ =?utf-8?B?Szh3c2h0cDg1UkY2VEhuR3VIQWUwRkpNNlRHSnFXcEFhS2psTGVGNDZMMFcx?=
+ =?utf-8?B?SklRaTJqZHY1dVFMeDVVUW9xMW5OWll0cUJqZFRtWlRlRWM0RVhNSzVEMm94?=
+ =?utf-8?B?clpMLzZzeUtKLzZoNGdGT1MrMnppRkE2U3FOUE9QTWN2cHJvYVVEOWt2anYw?=
+ =?utf-8?B?L3NkVk5VUkdmUWYyd2I0WTRxYSthcm1FSk1LK09QRHV1eGRQdDRRUDJzbnJr?=
+ =?utf-8?B?TDhWR0IzUFk3S0g3V0xlemdONlY2OW1WZCtXRll1dGZ6V0d2VlVNRkdnRWda?=
+ =?utf-8?B?T09iWUlaODNkY01lS05CN3B2RlhjVThwUWxsYUZNZzQ1eXlWK3Y4RkRHT3lv?=
+ =?utf-8?B?QTI3ek9QczhxT3ZJOTFuc05LelUzMGM2eFo2VUdlRVZwbXV5STdQY3BNZ0dD?=
+ =?utf-8?B?UzdVNi9qM2pPdTRvM05aWDAvMWt1VmpldGRYanM0VDZGcVRoNUNEdVNkLzY4?=
+ =?utf-8?B?Vk9YelUraVFkYVJObU12ZHFYZFdvUExQUWg4R1JmcTU4RVozekRVak16L1du?=
+ =?utf-8?B?R1VkeHp3YlJxOVNMNGtXZW5UNlcyQmt6QzRhOXdvR0UzRkJLOWZQLzBTbStZ?=
+ =?utf-8?B?MUJxUWhraTlMbHN1Z3pZaDJBYkVxMWYzU0h2VHRubUYvc2FKU0JrWkNZaTBD?=
+ =?utf-8?B?Z3E2UW1EM2pqa2htUWhGZXJTdy9wN1NNaU00Z1VuaFdrd2VSYit5TTlSa2J4?=
+ =?utf-8?B?ZzhLOCtjUk5lVVczYlJIWlVGbExhc3Nid2ZzNTlsOGlyRGlYT0Q5UlQ2K3kx?=
+ =?utf-8?B?MDVMUGEyRHdnaXR6UjhQRWJGR3RQY0ZzdjYxSnNvM1BzbldKMERXRFp5VVBu?=
+ =?utf-8?B?UmkwclIrZEh1ZEpVaFM3Mkd0Vk8vOGJtTTYzTGdrcG5UbllyYVl5MVBPMk9R?=
+ =?utf-8?B?NXpqVUc0NERlQVpSN1J0L3VHVnVFSVBPZ2RYSWt3V01Uc1I1V2F5YllwdTBH?=
+ =?utf-8?B?U3RrdXlybzBhcHNIVXhsMys2MVBlS011blZiSEpGNDUxRzBvNXhxNm1TeGN6?=
+ =?utf-8?B?QXlLbFZnV0dIOGord3F2YXd1OThnWG5wSUxDQzVkS1lVT0RUNDllNDdvZzBC?=
+ =?utf-8?B?VTJXWENDM1dOL1I0TnA2NWZVYUoxcEVheEZyK3l5TVlkazZyZjgrQUJ1cGVi?=
+ =?utf-8?B?WUpzbnp3U245dDhXQzdHczVJSTZMb1B4WmxhNHRkVTZTSWJRa0RoU0ErSDJi?=
+ =?utf-8?B?QUtpTWcxTGZMNUk2U0JUdzB4Y1ZuKzlXbWlVSmF1dVBwWHUyektrWTYzU2tF?=
+ =?utf-8?B?ZGtxT0cveVh0TFRaTXhVdEYzSm11d0V5dDJkaVUvTzlJblJZVGM2QmlZbDB0?=
+ =?utf-8?B?U0p3dkFuZW13bTZyUk1PSnR5K2Zqd3N3dVQ1bGNicVRWWWVlRVRBQUFxNi9p?=
+ =?utf-8?B?WTJHcGorZ0JQbnowenNOc0hXUDhKU0t1bnAvSHJwR3NZVWFPVUFHV1VHWENY?=
+ =?utf-8?B?N3RHQ0NCWlNmSkU0NS80Rm1GL1dJNmhPU0hiZXNBNTdLVUtFOS9ESVNQWThJ?=
+ =?utf-8?B?VVFLRGRVRXJlWEM1am5FRjlxenFVNkprZVNzOGxURjg3M0ZzTTBxV2tGNGR4?=
+ =?utf-8?B?RTBnZkMxNitHSUhTUWpHSTNOODJXWEtmTUhydFQxbHlaQzN6L0JDMTZFSmto?=
+ =?utf-8?B?ckZOVm9IRU1mcmI4WXZjVkFraDcwM2RvK3RGdWhFWk03bDM4US96R3Nuc1Zl?=
+ =?utf-8?B?N0E9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: FBAolnVc/hYGYkeE4YPlz7F1mYzTDfAiydrCmzF/9942THFbbBbItIiPVJRragQwWmxUZTddpablHYIVvpCufMHp8PNMadM8xo3tAgZv9q3d5/pv0guWdpty8MtO9ROoFmpKy2zr/dSQigtMftXbQXF0qA58iJQqGBSkkWLwOvl9ONB52bKlkd87PGsnqFQO32zUz08bYZX84I2tsAR6rq98NiwGpaVEtAIyW0y0gHwoRnjq9JFWyV6Il9+CO0IF/waXBIiJiAO8RMMZB5wdqsvmFg3/mZzrI7lsyY+ACDOfF+kp1b6P6iiZFNXsr/KWlGa3BiQWR7VNGDoKeZskfM5VWlbvVxptOwaf9MPy5zfzdPipwpFYpSFFzuGl1g1zz5Ec9I8CBijlFgrtrwxKRCqzwbol5F5K1T5XQqzjxOCdSYP9gI2T7v82VpL8a20pLPBpyPKtVofvZT8Zc5M1OwfvXqQXK84y+4yo/a8QBaM0XvAcM6lZJEji+9lqJspWG0StPgDh+R7/2qwxKpsk2NiO+Bodysp8KWRGP8A8LM4tWGfQcVUj8INwlm+ii4fvwHRlV7wysNZknGnCzC18YP4OPj2woQTHW4g6dk1ovqA=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c37d189-24eb-42c6-0d53-08dc36d9e6f0
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2024 14:47:49.1240 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BnDqOUCioq2LWDW3OnDlliBDItewIS1NYT9Ei2nBn5Ak8ZrpolRu4h2mLbtU1CDNj48yQaDpsu4qwPOJ+E5StG7MqXTBfosalISl9V6Egqk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR10MB6359
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-26_10,2024-02-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ suspectscore=0 phishscore=0
+ spamscore=0 mlxlogscore=999 malwarescore=0 adultscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2402260111
+X-Proofpoint-ORIG-GUID: ob0LfnoZIzuLVmYYWdF0lugOjA1pXpnx
+X-Proofpoint-GUID: ob0LfnoZIzuLVmYYWdF0lugOjA1pXpnx
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +186,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/2/24 11:50, BALATON Zoltan wrote:
-> On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
->> On 26/2/24 08:40, Markus Armbruster wrote:
->>> BALATON Zoltan <balaton@eik.bme.hu> writes:
->>>
->>>> On Sun, 25 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>>> Rename "internal.h" as "ide_internal.h", and include
->>>>
->>>> Is there a convention about using underscore or dash in file names? 
->>>> The headers Thomas added are using - as well as ahci-allwinner.c, 
->>>> only ahci_internal.h has _ (but there are others elsewhere such as 
->>>> pci_device.h). Maybe we should be consistent at least within IDE and 
->>>> this series is now a good opportunity for renaming these headers to 
->>>> match. But it's just a small nit, thanks for picking this up.
->>>
->>> This is one of the many unnecessary inconsistencies we're inflicting on
->>> ourselves.
->>>
->>> We have more than 3600 file names containing '-', and more almost 2700
->>> containing '_'.  Bizarrely, 68 of them contain both.
->>>
->>> I strongly prefer '_' myself.
->>>
->>> Zoltan is making a local consistency argument for '-'.
->>>
->>> Let's use '-' here.
->>
->> Fine, patch updated.
+Thanks for trying a V6 Philippe.  I'll take it from here.  It helps to know
+that someone besides me thinks these functions are worth having.
+
+- Steve
+
+On 2/26/2024 9:11 AM, Philippe Mathieu-Daudé wrote:
+> Hi Markus,
 > 
-> And then please also rename ahci_internal.h to use '-' to be really 
-> consistent.
-
-I'm sorry but I don't have time. Maybe fill a ByteSized task?
-
+> Here are the patches I queued until you told me you'd
+> object to the CamelCase filename strList.[ch].
+> 
+> Steve, please take over ;)
+> 
+> Since v5:
+> - Cover files in MAINTAINERS
+> - Complete @docstring mentioning g_auto.
+> 
+> v5: https://lore.kernel.org/qemu-devel/1708638470-114846-3-git-send-email-steven.sistare@oracle.com/
+> 
+> Steve Sistare (5):
+>   util: str_split
+>   qapi: QAPI_LIST_LENGTH
+>   util: strv_from_strList
+>   util: strList unit tests
+>   migration: simplify exec migration functions
+> 
+>  MAINTAINERS               |  2 +
+>  include/monitor/hmp.h     |  1 -
+>  include/qapi/util.h       | 13 +++++++
+>  include/qemu/strList.h    | 33 ++++++++++++++++
+>  migration/exec.c          | 57 ++++------------------------
+>  monitor/hmp-cmds.c        | 19 ----------
+>  net/net-hmp-cmds.c        |  3 +-
+>  stats/stats-hmp-cmds.c    |  3 +-
+>  tests/unit/test-strList.c | 80 +++++++++++++++++++++++++++++++++++++++
+>  util/strList.c            | 38 +++++++++++++++++++
+>  tests/unit/meson.build    |  1 +
+>  util/meson.build          |  1 +
+>  12 files changed, 180 insertions(+), 71 deletions(-)
+>  create mode 100644 include/qemu/strList.h
+>  create mode 100644 tests/unit/test-strList.c
+>  create mode 100644 util/strList.c
+> 
 
