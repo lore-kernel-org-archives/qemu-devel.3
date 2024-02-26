@@ -4,60 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C903C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 18:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF2AC54E4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 18:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1refL2-0005WB-T4; Mon, 26 Feb 2024 13:04:29 -0500
+	id 1refLh-0005eP-1r; Mon, 26 Feb 2024 13:05:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1refL0-0005VV-SA
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:04:26 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1refKx-0003DH-PH
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:04:26 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tk7g46pzmz6JBVH;
- Tue, 27 Feb 2024 01:59:44 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 3D3B6142056;
- Tue, 27 Feb 2024 02:04:19 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 26 Feb
- 2024 18:04:18 +0000
-Date: Mon, 26 Feb 2024 18:04:17 +0000
-To: <nifan.cxl@gmail.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <gregory.price@memverge.com>, <ira.weiny@intel.com>,
- <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
- <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>, Fan Ni
- <fan.ni@samsung.com>
-Subject: Re: [PATCH v4 08/10] hw/cxl/cxl-mailbox-utils: Add mailbox commands
- to support add/release dynamic capacity response
-Message-ID: <20240226180417.00004dc4@Huawei.com>
-In-Reply-To: <20240221182020.1086096-9-nifan.cxl@gmail.com>
-References: <20240221182020.1086096-1-nifan.cxl@gmail.com>
- <20240221182020.1086096-9-nifan.cxl@gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1refLc-0005dY-0F
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:05:06 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1refLM-0003E3-Re
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:05:03 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d240d8baf6so42921271fa.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 10:04:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708970684; x=1709575484; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HeKiIVm+BC/GikSEmoHqMEFFJmK1NiGpSfArmtk3C/c=;
+ b=ZZ3CK/R2MHb3MesheVZYE4ZANlxGqkNLwlD3ucgg27q2vE+cxSLcEUjMkj1TCD/y64
+ LBFgOdRiU1TSfdzqUh4QL2kmwFaxsGYKjdqwDS8YwviTmgpNQ89qD4AKlbKDifCZj7X3
+ VxLIgqNW6hUSEY+qpB7FObp7s0D1t50ZuggwoeGfDtoX6A6cGMLqDmym7XXSazs4XRQ2
+ fqd42xiztxI6HUnzYQzazb3nK2ATcvG/t9GUNnQ2n43HtkMBzfsiFJnXa0fhvZvuuDHL
+ cWO87hTa+i7UIwD7r16rEhExVo3OGQOFp/vFsHw2i0v3dSoP6lZyYSeO47jJ5JYb1s0Z
+ jWLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708970684; x=1709575484;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HeKiIVm+BC/GikSEmoHqMEFFJmK1NiGpSfArmtk3C/c=;
+ b=NhQfxLt+MgJyCHi9TUAZnohtgq/FrpORZ8EC0fNnhK2KX4rRv5r9aSTrrrF1Zlz6fB
+ UAUDO8J+zofoBIMZUvcID8EtMSGkgqtc2RiP0vz1abMIgEzy2O0QbOqWNMQauWJuGIBE
+ h5Blnby2o8eG79dU3xxD4qaKqGXhWPCGfs/eJ/xHjhwgIu08xuLdE0+xdJmB+6tYWUH5
+ +/unFuK9SC0+8WWCDAQ/+ZYNlWR9ufGAWoZbrP5Mnt4NvPInz9Zcdo0X91yOrFlLHf4b
+ aMHKpSfBJ1XMdx3R2AAt2gRVCOgQhcDypOIvfqafsRYg4M8ocV5ugslSedmvM3Rs/7AW
+ ACgA==
+X-Gm-Message-State: AOJu0YziLB6yaUi1zaDW/H37OKaS7djo8uiEDH3hyJR/afBggo/ydJ02
+ Xg4DThMgjLPjUxos2ayXvQdWJht+/YFmPHcKejv5FKIvO1ClzIVb2Cx1IOulivk=
+X-Google-Smtp-Source: AGHT+IH+jZZISs65LKclX7JvA70vhnfAh9jgxGCJwNrJdyrw4Xz1A1AAJeBnqmViEdsTawTtqecGIg==
+X-Received: by 2002:a2e:a16e:0:b0:2d2:36a7:64ae with SMTP id
+ u14-20020a2ea16e000000b002d236a764aemr4271541ljl.32.1708970684637; 
+ Mon, 26 Feb 2024 10:04:44 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bw11-20020a0560001f8b00b0033da4b06632sm9139140wrb.6.2024.02.26.10.04.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Feb 2024 10:04:44 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id D0B905F796;
+ Mon, 26 Feb 2024 18:04:43 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
+ <thuth@redhat.com>,  Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: Re: [RFC PATCH] tests/vm: avoid re-building the VM images all the time
+In-Reply-To: <20240226174639.438987-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?=
+ message of "Mon, 26 Feb 2024 17:46:39 +0000")
+References: <20240226174639.438987-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.12.0; emacs 29.1
+Date: Mon, 26 Feb 2024 18:04:43 +0000
+Message-ID: <87msrndrus.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,146 +96,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 21 Feb 2024 10:16:01 -0800
-nifan.cxl@gmail.com wrote:
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-> From: Fan Ni <fan.ni@samsung.com>
-> 
-> Per CXL spec 3.1, two mailbox commands are implemented:
-> Add Dynamic Capacity Response (Opcode 4802h) 8.2.9.9.9.3, and
-> Release Dynamic Capacity (Opcode 4803h) 8.2.9.9.9.4.
-> 
-> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> There are two problems.
+>
+> The first is a .PHONY target will always evaluate which triggers a
+> full re-build of the VM images. Drop the requirement knowing that this
+> introduces a manual step on freshly configure build dirs.
+>
+> The second is a minor unrelated tweak to the Makefile also triggers an
+> expensive full re-build. Solve this be avoiding the dependency and
+> putting a comment just above the bit that matters and hope developers
+> notice the comment.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> ---
+>
+> This is hacky and sub-optimal. There surely must be a way to have our cake
+> and eat it?
+> ---
+>  tests/vm/Makefile.include | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+> index bf12e0fa3c5..a109773c588 100644
+> --- a/tests/vm/Makefile.include
+> +++ b/tests/vm/Makefile.include
+> @@ -88,10 +88,11 @@ vm-build-all: $(addprefix vm-build-, $(IMAGES))
+>  vm-clean-all:
+>  	rm -f $(IMAGE_FILES)
+>=20=20
+> +# Rebuilding the VMs every time this Makefile is tweaked is very
+> +# expensive for most users. If you tweak the recipe bellow you will
+> +# need to manually zap $(IMAGES_DIR)/%.img to rebuild.
+>  $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+> -			$(SRC_PATH)/tests/vm/basevm.py \
+> -			$(SRC_PATH)/tests/vm/Makefile.include \
+> -			$(VM_VENV)
+> +			$(SRC_PATH)/tests/vm/basevm.py
 
-Hi Fan, 
+Maybe:
 
-Comments on this are all about corner cases. If we can I think we need
-to cover a few more.  Linux won't hit them (I think) so it will be
-a bit of a pain to test but maybe raw commands enabled and some
-userspace code will let us exercise the corner cases?
+ # need to manually zap $(IMAGES_DIR)/%.img to rebuild.
+ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 			$(SRC_PATH)/tests/vm/basevm.py
++	$(if $(VM_VENV), make $(VM_VENV))
+ 	@mkdir -p $(IMAGES_DIR)
+ 	$(call quiet-command, \
 
-Jonathan
-
-
-
-> +
-> +/*
-> + * CXL r3.1 section 8.2.9.9.9.4: Release Dynamic Capacity (opcode 4803h)
-> + */
-> +static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-> +                                          uint8_t *payload_in,
-> +                                          size_t len_in,
-> +                                          uint8_t *payload_out,
-> +                                          size_t *len_out,
-> +                                          CXLCCI *cci)
-> +{
-> +    CXLUpdateDCExtentListInPl *in = (void *)payload_in;
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLDCExtentList *extent_list = &ct3d->dc.extents;
-> +    CXLDCExtent *ent;
-> +    uint32_t i;
-> +    uint64_t dpa, len;
-> +    CXLRetCode ret;
-> +
-> +    if (in->num_entries_updated == 0) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    ret = cxl_detect_malformed_extent_list(ct3d, in);
-> +    if (ret != CXL_MBOX_SUCCESS) {
-> +        return ret;
-> +    }
-> +
-> +    for (i = 0; i < in->num_entries_updated; i++) {
-> +        bool found = false;
-> +
-> +        dpa = in->updated_entries[i].start_dpa;
-> +        len = in->updated_entries[i].len;
-> +
-> +        QTAILQ_FOREACH(ent, extent_list, node) {
-> +            if (ent->start_dpa <= dpa &&
-> +                dpa + len <= ent->start_dpa + ent->len) {
-> +                /*
-> +                 * If an incoming extent covers a portion of an extent
-> +                 * in the device extent list, remove only the overlapping
-> +                 * portion, meaning
-> +                 * 1. the portions that are not covered by the incoming
-> +                 *    extent at both end of the original extent will become
-> +                 *    new extents and inserted to the extent list; and
-> +                 * 2. the original extent is removed from the extent list;
-> +                 * 3. dc extent count is updated accordingly.
-> +                 */
-> +                uint64_t ent_start_dpa = ent->start_dpa;
-> +                uint64_t ent_len = ent->len;
-> +                uint64_t len1 = dpa - ent_start_dpa;
-> +                uint64_t len2 = ent_start_dpa + ent_len - dpa - len;
-> +
-> +                found = true;
-> +                cxl_remove_extent_from_extent_list(extent_list, ent);
-> +                ct3d->dc.total_extent_count -= 1;
-> +
-> +                if (len1) {
-> +                    cxl_insert_extent_to_extent_list(extent_list,
-> +                                                     ent_start_dpa, len1,
-> +                                                     NULL, 0);
-> +                    ct3d->dc.total_extent_count += 1;
-> +                }
-> +                if (len2) {
-> +                    cxl_insert_extent_to_extent_list(extent_list, dpa + len,
-> +                                                     len2, NULL, 0);
-> +                    ct3d->dc.total_extent_count += 1;
-
-There is a non zero chance that we'll overflow however many extents we claim
-to support. So we need to check that and fail the remove if it happens.
-Could ignore this for now though as that value is (I think!) conservative
-to allow for complex extent list tracking implementations.  Succeeding
-when a naive solution would fail due to running out of extents that it can
-manage is not (I think) a bug.
-
-> +                }
-> +                break;
-> +                /*Currently we reject the attempt to remove a superset*/
-
-Space after /* and before */
-
-I think we need to fix this. Linux isn't going to do it any time soon, but
-I think it's allowed to allocate two extents next to each other then free them
-in one go.  Isn't this case easy to do or are there awkward corners?
-If it's sufficiently nasty (maybe because only part of extent provided exists?)
-then maybe we can leave it for now.
-
-I worry about something like
-
-|  EXTENT TO FREE                                        |
-| Exists    |   gap   | Exists                           |
-Where we have to check for gap before removing anything?
-Does the spec address this? Not that I can find.
-I think the implication is we have to do a validation pass, then a free
-pass after we know whole of requested extent is valid.
-Nasty to test if nothing else :(  Would look much like your check
-on malformed extent lists.
+?
 
 
-> +            } else if ((dpa < ent->start_dpa + ent->len &&
-> +                        dpa + len > ent->start_dpa + ent->len) ||
-> +                       (dpa < ent->start_dpa && dpa + len > ent->start_dpa)) {
-> +                return CXL_MBOX_INVALID_EXTENT_LIST;
-> +            }
-> +        }
-> +
-> +        if (!found) {
-> +            /* Try to remove a non-existing extent */
-> +            return CXL_MBOX_INVALID_PA;
-> +        }
-> +    }
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
+>  	@mkdir -p $(IMAGES_DIR)
+>  	$(call quiet-command, \
+>  		$(VM_PYTHON) $< \
 
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
