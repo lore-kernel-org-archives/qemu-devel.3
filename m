@@ -4,70 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCFDC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 18:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4768CC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 18:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1refUl-0005FP-0d; Mon, 26 Feb 2024 13:14:31 -0500
+	id 1refaM-0001f8-F8; Mon, 26 Feb 2024 13:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1refUi-0005Ek-SW
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:14:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1refUU-00058y-DF
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:14:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708971252;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tLxoFwBniMzzRTmjC94fnXeOryYlKWv3cZzBB1FVazQ=;
- b=OIx6aekPUl4KcH8oR0DYdkcp8J62d0Pr+0iY+g/Ojke3vbtoxltcu6P/dGdELI8rxSESKe
- j1jSE4WdgQzpiR2mrTw6IWvr4maGv6RdcPhtWTwxwAYXl3oEtb9ics4KIWUfQ0ufbbvOa0
- zcTflfoHVdX/giCuPj0pDA6FstrV3Ns=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-htOJg4IUPlShTb5kYYX9Lw-1; Mon,
- 26 Feb 2024 13:14:10 -0500
-X-MC-Unique: htOJg4IUPlShTb5kYYX9Lw-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 41C743C000BC;
- Mon, 26 Feb 2024 18:14:10 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.192.130])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4BA1340C1020;
- Mon, 26 Feb 2024 18:14:06 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
- peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com
-Cc: alex.williamson@redhat.com, zhenzhong.duan@intel.com, jasowang@redhat.com,
- pbonzini@redhat.com, berrange@redhat.com
-Subject: [PATCH v5 2/3] virtio-iommu: Add a granule property
-Date: Mon, 26 Feb 2024 19:11:11 +0100
-Message-ID: <20240226181337.24148-3-eric.auger@redhat.com>
-In-Reply-To: <20240226181337.24148-1-eric.auger@redhat.com>
-References: <20240226181337.24148-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1refaE-0001bU-EW
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:20:11 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1refa7-00060F-RR
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 13:20:08 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56454c695e6so5979867a12.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 10:20:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708971600; x=1709576400; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8Vy8XrCUGCZFXrVdlkgzA75I+qAilXgipfSOtnC2c1k=;
+ b=sO+PfuZPlF6MtcCvSE+llU3bs8Oby2KU1ffjhDvpwYHTRK0vaG7K2kO5Ogha0o+Z35
+ McjPgmRXxjfyrSVl8MMLr8Y0SSD/odVYZAwPofNOHmUvnTkBOpP3iYszxO0mi1omQZcJ
+ EDwm69Xre70Fm0T6Pfars3XQyDkGEY1C+TeUgDDvkJxGTxyUZRmaGZWi4vc719pXXUOn
+ +g/g/Xl1N4LgYgty2s8orcZfIx9+RgNim1Xd5K+2JkIcYG610BwsgGIxSNLzy/9WEMzQ
+ +JGBH62h0jPmwfnTs+2ZMgNM1PxR9HN8fM+KC6pAoR3DuSRuW4OpbUT0QgRjYSgpf9ZD
+ KPTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708971600; x=1709576400;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8Vy8XrCUGCZFXrVdlkgzA75I+qAilXgipfSOtnC2c1k=;
+ b=lg15gsMv+PJwcgfFGOMS3aJSjCVx6wp8sTUy0FbwbhFIcMZ8Vng+e7M01bUWv3vSz1
+ aF4seYY6LzVRbp0Grc+wbRtk268RJ4r5Xx/FRGN2Q3zK8+N+TeEOpn4z/jCWmMnCSKKG
+ zbV0U6CwmcaR92BPfSWhD54BVlckl2WF8kgPTdS/2H0+iLTb46mazF+Kxsx5TbWxJlMo
+ KBK2GMRiJp6Rqg4GTuH8tQ00xkoUbqQ4WJqF/nW9BVUZr5xVNLeWF4xnqeX6BDyvW+Gu
+ MLgz/4gwzXDjy8PvGt9ERZjkYzig19lWlajNNtgF17UL11+CbZFvxjqZdNOZXlNcVYch
+ Z5QA==
+X-Gm-Message-State: AOJu0YyT8BB6e6sX0XfjFRV9c4MAO/HDyGb3bOKBx2Roz8gSlswkvvax
+ cJRzH4hcHqtY+dIuBQ3zjRRc5Rj3X3MCokEw1wRKagvIcM4adZoU5CVzkrb9K5E=
+X-Google-Smtp-Source: AGHT+IFjn9p/q/pjPsPZnozDY0kXdnCJddnhDbcj/OuQyviKgSgdUu2FYpY04UD01V/mcrHA1l4D0g==
+X-Received: by 2002:aa7:c318:0:b0:565:211b:32ea with SMTP id
+ l24-20020aa7c318000000b00565211b32eamr7026359edq.19.1708971600238; 
+ Mon, 26 Feb 2024 10:20:00 -0800 (PST)
+Received: from [192.168.69.100] ([176.187.223.153])
+ by smtp.gmail.com with ESMTPSA id
+ p2-20020a50c942000000b005657eefa8e9sm728edh.4.2024.02.26.10.19.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Feb 2024 10:19:59 -0800 (PST)
+Message-ID: <35055891-c514-493b-980a-993dfc3b6a14@linaro.org>
+Date: Mon, 26 Feb 2024 19:19:57 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 00/10] ui/cocoa: Use NSWindow's ability to resize
+Content-Language: en-US
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Marek Glogowski <smarkusg@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Rene Engel <ReneEngel80@emailn.de>
+Cc: qemu-devel@nongnu.org
+References: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240224-cocoa-v12-0-e89f70bdda71@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,120 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows to choose which granule will be used by
-default by the virtio-iommu. Current page size mask
-default is qemu_target_page_mask so this translates
-into a 4K granule.
+On 24/2/24 13:43, Akihiko Odaki wrote:
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Akihiko Odaki (10):
+>        ui/cocoa: Split [-QemuCocoaView handleEventLocked:]
+>        ui/cocoa: Immediately call [-QemuCocoaView handleMouseEvent:buttons:]
+>        ui/cocoa: Release specific mouse buttons
+>        ui/cocoa: Scale with NSView instead of Core Graphics
+>        ui/cocoa: Fix pause label coordinates
+>        ui/cocoa: Let the platform toggle fullscreen
+>        ui/cocoa: Remove normalWindow
+>        ui/cocoa: Make window resizable
+>        ui/cocoa: Call console_select() with the BQL
+>        ui/cocoa: Remove stretch_video flag
 
----
-v4 -> v5:
-- use -(n * KiB) (Phild)
-
-v3 -> v4:
-- granule_mode introduction moved to that patch
----
- include/hw/virtio/virtio-iommu.h |  2 ++
- hw/virtio/virtio-iommu.c         | 28 +++++++++++++++++++++++++---
- qemu-options.hx                  |  3 +++
- 3 files changed, 30 insertions(+), 3 deletions(-)
-
-diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-index 5fbe4677c2..f2785f7997 100644
---- a/include/hw/virtio/virtio-iommu.h
-+++ b/include/hw/virtio/virtio-iommu.h
-@@ -24,6 +24,7 @@
- #include "hw/virtio/virtio.h"
- #include "hw/pci/pci.h"
- #include "qom/object.h"
-+#include "qapi/qapi-types-virtio.h"
- 
- #define TYPE_VIRTIO_IOMMU "virtio-iommu-device"
- #define TYPE_VIRTIO_IOMMU_PCI "virtio-iommu-pci"
-@@ -67,6 +68,7 @@ struct VirtIOIOMMU {
-     Notifier machine_done;
-     bool granule_frozen;
-     uint8_t aw_bits;
-+    GranuleMode granule_mode;
- };
- 
- #endif
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 2ec5ef3cd1..33e0520bc8 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -29,6 +29,7 @@
- #include "sysemu/reset.h"
- #include "sysemu/sysemu.h"
- #include "qemu/reserved-region.h"
-+#include "qemu/units.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "trace.h"
-@@ -1115,8 +1116,8 @@ static int virtio_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu_mr,
- }
- 
- /*
-- * The default mask (TARGET_PAGE_MASK) is the smallest supported guest granule,
-- * for example 0xfffffffffffff000. When an assigned device has page size
-+ * The default mask depends on the "granule" property. For example, with
-+ * 4K granule, it is -(4 * KiB). When an assigned device has page size
-  * restrictions due to the hardware IOMMU configuration, apply this restriction
-  * to the mask.
-  */
-@@ -1313,7 +1314,26 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
-      * in vfio realize
-      */
-     s->config.bypass = s->boot_bypass;
--    s->config.page_size_mask = qemu_target_page_mask();
-+
-+    switch (s->granule_mode) {
-+    case GRANULE_MODE_4K:
-+        s->config.page_size_mask = -(4 * KiB);
-+        break;
-+    case GRANULE_MODE_8K:
-+        s->config.page_size_mask = -(8 * KiB);
-+        break;
-+    case GRANULE_MODE_16K:
-+        s->config.page_size_mask = -(16 * KiB);
-+        break;
-+    case GRANULE_MODE_64K:
-+        s->config.page_size_mask = -(64 * KiB);
-+        break;
-+    case GRANULE_MODE_HOST:
-+        s->config.page_size_mask = qemu_real_host_page_mask();
-+        break;
-+    default:
-+        error_setg(errp, "Unsupported granule mode");
-+    }
-     if (s->aw_bits < 32 || s->aw_bits > 64) {
-         error_setg(errp, "aw-bits must be within [32,64]");
-     }
-@@ -1527,6 +1547,8 @@ static Property virtio_iommu_properties[] = {
-                      TYPE_PCI_BUS, PCIBus *),
-     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
-     DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
-+    DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
-+                             GRANULE_MODE_4K),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 3b670758b0..c7b43b67d5 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1179,6 +1179,9 @@ SRST
-     ``aw-bits=val`` (val between 32 and 64, default depends on machine)
-         This decides the address width of IOVA address space. It defaults
-         to 39 bits on q35 machines and 48 bits on ARM virt machines.
-+    ``granule=val`` (possible values are 4K, 8K, 16K, 64K and host)
-+        This decides the default granule to be be exposed by the
-+        virtio-iommu. If host, the granule matches the host page size.
- 
- ERST
- 
--- 
-2.41.0
-
+Series queued, thanks for all the people involved over
+the various iterations!
 
