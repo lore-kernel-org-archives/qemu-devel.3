@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0711FC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 21:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBEAC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 22:00:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reiTU-0003zg-23; Mon, 26 Feb 2024 16:25:24 -0500
+	id 1rej0P-0004oy-6x; Mon, 26 Feb 2024 16:59:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1reiTN-0003z4-PP
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:25:18 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rej0M-0004nX-Ck
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:59:22 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1reiTF-0002Am-SD
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:25:17 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56533e30887so3884279a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 13:25:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1rej0K-0007gn-65
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:59:21 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-412a87d5afcso6530755e9.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 13:59:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708982708; x=1709587508; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=bQRQ0XH65pU8LNMR6pUZZg2xwkLvwO3/j0KVncA7cF0=;
- b=fpbgbQEaU6CNF3v3Tp6dlk7NImhkSNC8oX+qA11zjDld0mvdIyoeMBet87n/KfYG1S
- 7wzf4A9h1Q98XzrkBEllHd3mCm95s5oyS4py4dSh/IpxBwm8/8UtewfjTVv4klcK0kz3
- 2q3GEZ8HWWE40QKbGbWCQYnQgNCILoF7eWBVqLA0ett9RvyvC6DEhJEU1RBZ4iDTplyP
- Fw0fry2ho/UwLpmq+WdzxOSXbGs5Ow+AbsM2O24EaD+LojXZjppC04JFaWspH1uXEBXY
- 0paWHJ4zTufMkKrfcjHQRymexKex56yFM9rK9hEp0rY/CTgyu1d33u1neKXC6kR3UvZR
- 1GYQ==
+ d=gmail.com; s=20230601; t=1708984757; x=1709589557; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4klEzet8aHWpX9bQlWaepUmSR2xNV2bS+e5k8Ehj/tQ=;
+ b=hbTj0JlixwAHTiDytZdy2Q+fgq1pGKqGDAtSxPiPVxArdm18gVNLEDQPDOSGuMy8Ej
+ /5R6Hsxppwcs/t5XkVWjD6o1zPqKI760ITDkUZlYouVc5X7ZqXKIHR9gG5CsXmgprxwx
+ EKPwdS8u349f1C2q8Dm/hyNa8jLT0B60PWhxIbJnqPigaSLsKJoGye61RH14EjsTDq6F
+ HE3g0SHOsqGCYsX0uC30WQq4VFgwhpXxPHVlBpfaY6IhbY2Pz/xh3gohpyu3SWuswSJ8
+ 12/z32rCsn46JkDhECzdIotk9SrfjWavTWIsEN0wPVBn72xBErdifP2RraMQiNHDKJ2b
+ ZR+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708982708; x=1709587508;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bQRQ0XH65pU8LNMR6pUZZg2xwkLvwO3/j0KVncA7cF0=;
- b=Ly3Tc/rsUJvziZw/27S9l+RuxpmqQ/1yBC7t2tJe1mfU+tO0R5zrxKMW9IzgPP3p2h
- UeQF4zaVZ+sMzrTMGL0gwWv2pOo8O5VhEcaalCjLRk62EaD0oNHhg5m64MPHnrVTFX44
- gF6EKVnc12T5ndp1GXa7LtKlQBIC193TxLGefzBumoKW2MU3OtWJPteBhX336cy0lRBU
- N7n4lm/pT0DFurXcvZlaj/A+AdrbLl+ExGefgD3EN2EySayUF8Q7HbbJnnbzT/1zFe4F
- V7fDYD/kruEJssMtJ5v7JCI3xuRRgHUyydQFx0Xzn0Bl9qczoudcL+bM+CM6hZHZzsBJ
- 2QHA==
-X-Gm-Message-State: AOJu0YwrGM0FQg++jY6upAYuqZS7FilsdX7/qyZX3xqP2BwBrRgthZL+
- C6sT5lDxBXgtDKyNycgL+xcZ8Ysi9gi43cobpQp4RkfK5LI+z5fAMZnrJKohLX9zXd9QSGxlX++
- pMVf71nTXMGVCwdNQSZQVMlIO/tZWptWHyQHvXA==
-X-Google-Smtp-Source: AGHT+IHpRO4A/Kw57w5STsE3Tv7+qBT5QthPXirZ29ieBxht7DLwiP5UZs2kRyE29ijPyV/mHgZcFh4U86EQVscW+4k=
-X-Received: by 2002:a05:6402:1c82:b0:565:9892:a74e with SMTP id
- cy2-20020a0564021c8200b005659892a74emr4478196edb.21.1708982708180; Mon, 26
- Feb 2024 13:25:08 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708984757; x=1709589557;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4klEzet8aHWpX9bQlWaepUmSR2xNV2bS+e5k8Ehj/tQ=;
+ b=fzp9ZeQDUFxz0BCh6DqbtWypOwxoPRHyT4GhBMIERHHGlQXrvtNWujzyIg1kg8Joad
+ ZJd9Fv7FiepkJ0yJBGiEGsjUKmwKfPzxjvdQqZW1GNUqh5d9jjLxEyo6DmE6WV0jlByx
+ 01ZaKEN2xQrhW+/I9FRUgfbkiB6+kYgz2hKnMjFB8SYhd/k0hz22QXwTD2ZB1YLPDlzR
+ MgUG8QxA4cQ2PJPxC3DTtXz1o69qCsmrcLrTVYxYI7/sJfXwxtGGkAU9PM0Xwry0KOnp
+ ouMLQfTeM5DrwFJlRWXptfweTr42nIGNSazJ4l746neA6yQKxhWC0dToEKE7G1EN7/qv
+ rFKw==
+X-Gm-Message-State: AOJu0YxMLWgnD8p7h4PWWViPwxv16fRVeeatYiKYTBHcFk7EMQxcGDsv
+ X43anI6PHCShkzWbyRr5NaI5CY/03MeL9FFuvdrAMHSooQneVsSYFCyOWxg2
+X-Google-Smtp-Source: AGHT+IEAKoiB/SwRzqiWIZzu4KXctDE4U3g4bGT5PFx4HLAKgV2za+crwHUQoQ2ges2LUVUsTSt1Lw==
+X-Received: by 2002:a5d:4b4f:0:b0:33d:81ca:532e with SMTP id
+ w15-20020a5d4b4f000000b0033d81ca532emr6358708wrs.47.1708984757438; 
+ Mon, 26 Feb 2024 13:59:17 -0800 (PST)
+Received: from Provence.localdomain
+ (dynamic-077-188-008-186.77.188.pool.telefonica.de. [77.188.8.186])
+ by smtp.gmail.com with ESMTPSA id
+ h4-20020a05600016c400b0033dda0e82e5sm3985753wrf.32.2024.02.26.13.59.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Feb 2024 13:59:17 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 1/2] Revert "hw/i386/pc_sysfw: Inline pc_system_flash_create()
+ and remove it"
+Date: Mon, 26 Feb 2024 22:59:08 +0100
+Message-ID: <20240226215909.30884-2-shentey@gmail.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240226215909.30884-1-shentey@gmail.com>
+References: <20240226215909.30884-1-shentey@gmail.com>
 MIME-Version: 1.0
-References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
- <20240219200908.49551-2-arnaud.minier@telecom-paris.fr>
- <CAFEAcA_LZ6oGj_y+_9zKDZNVSk8zOb4hQG+OKETXyE3-ezP_Rg@mail.gmail.com>
- <1459219120.11729362.1708975293687.JavaMail.zimbra@enst.fr>
-In-Reply-To: <1459219120.11729362.1708975293687.JavaMail.zimbra@enst.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Feb 2024 21:24:56 +0000
-Message-ID: <CAFEAcA-BtQ2d+UE6menpHoBaEwe1gA_gN=fatoXg6MsBeRBQaw@mail.gmail.com>
-Subject: Re: [PATCH v5 1/8] Implement STM32L4x5_RCC skeleton
-To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
- qemu-arm <qemu-arm@nongnu.org>, 
- Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,38 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 at 19:21, Arnaud Minier
-<arnaud.minier@telecom-paris.fr> wrote:
-> > From: "Peter Maydell"
-> >> +static const MemoryRegionOps stm32l4x5_rcc_ops = {
-> >> +    .read = stm32l4x5_rcc_read,
-> >> +    .write = stm32l4x5_rcc_write,
-> >> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> >> +    .valid = {
-> >> +        .max_access_size = 4,
-> >> +        .unaligned = false
-> >> +    },
-> >> +};
-> >
-> > What's the .valid.min_access_size ?
-> > Do we need to set the .impl max/min access size here too ?
->
-> I honestly don't really understand the differences between .valid and .impl.
-> However, since all the code assumes that 4-byte accesses are made,
-> I think we can set all these values to 4 for now.
+Commit 6f6ad2b24582 "hw/i386/pc: Confine system flash handling to pc_sysfw"
+causes a regression when specifying the property `-M pflash0` in the PCI PC
+machines:
+  qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
+In order to revert the commit, the commit below must be reverted first.
 
-.valid is "what is the guest allowed to do?". If the guest tries
-something not permitted by the .valid settings, it gets a transaction
-failure instead, which then becomes a bus fault or whatever the
-architectural equivalent is.
+This reverts commit cb05cc16029bb0a61ac5279ab7b3b90dcf2aa69f.
 
-.impl is "what does my device code implement?". If the guest tries
-something that is permitted by .valid but not within the bounds
-specified by .impl, the core memory subsystem will try to synthesise
-it (eg handling a guest word write by doing 4 byte writes to the
-device write function, if a 4-byte write is permitted by .valid
-but .impl only permits 1 byte writes).
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/i386/pc_sysfw.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-thanks
--- PMM
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index b02e285579..b9c1eb352d 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -91,6 +91,18 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+     return PFLASH_CFI01(dev);
+ }
+ 
++static void pc_system_flash_create(PCMachineState *pcms)
++{
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++
++    if (pcmc->pci_enabled) {
++        pcms->flash[0] = pc_pflash_create(pcms, "system.flash0",
++                                          "pflash0");
++        pcms->flash[1] = pc_pflash_create(pcms, "system.flash1",
++                                          "pflash1");
++    }
++}
++
+ static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+ {
+     char *prop_name;
+@@ -198,8 +210,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
+         return;
+     }
+ 
+-    pcms->flash[0] = pc_pflash_create(pcms, "system.flash0", "pflash0");
+-    pcms->flash[1] = pc_pflash_create(pcms, "system.flash1", "pflash1");
++    pc_system_flash_create(pcms);
+ 
+     /* Map legacy -drive if=pflash to machine properties */
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+-- 
+2.44.0
+
 
