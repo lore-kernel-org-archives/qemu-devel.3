@@ -4,87 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00917C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 07:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25404C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 07:14:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reV86-0006xs-N7; Mon, 26 Feb 2024 02:10:26 -0500
+	id 1reVC1-00016c-G2; Mon, 26 Feb 2024 02:14:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reV84-0006nF-PI
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:10:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reVBy-00015n-EE
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:14:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reV82-0005BR-LH
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:10:24 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reVBw-0006hk-5J
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:14:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708931421;
+ s=mimecast20190719; t=1708931663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MTr3PSRdXXnSJdb2dwgpBCAsYecK5RoqZiZw2csi6JE=;
- b=MPFcs97wl4LiqBq1I3WRY+MPLTR60c/SlYgbGnBbVQ3nj6pOILTlCo6dH6STJP1ZMfzcqY
- 1Ft4f5GinMeZD0UGGXGN7L8ri1+Ll+MZXANdUpg/JZTweP6PwvLRtxIZcFZaf/AvW0CGhZ
- WRBkUz7L0/KwrDOB05xFJKK3twAjcok=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ryahn8oWBoNVpAVOinE/8svlC57vuBgTLQW9sWBOC40=;
+ b=TNm4EQlOLAOGY5bEtE3S0PUY4LyDRZpBKRiG90Mt0WwqoKO1TTNvlu207rx33kk14Xw62O
+ aVMDgVXOs0cvvZj3dqX7UXMfIdNzqOpY/hsI721SOn/OfzdsevPg2RMni2HXdxiP/jvM1t
+ 7jRRWFRyc2hKPYZrpEDqylx0SAoZsZ0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81-vv32stCvPWK7B7g1D_aHpg-1; Mon, 26 Feb 2024 02:10:18 -0500
-X-MC-Unique: vv32stCvPWK7B7g1D_aHpg-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-5cfccde4a54so1300625a12.1
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 23:10:18 -0800 (PST)
+ us-mta-612-ccA3XCX5Mcu8Lwf3Qn122g-1; Mon, 26 Feb 2024 02:14:21 -0500
+X-MC-Unique: ccA3XCX5Mcu8Lwf3Qn122g-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33d29de76abso1594287f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 23:14:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708931418; x=1709536218;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MTr3PSRdXXnSJdb2dwgpBCAsYecK5RoqZiZw2csi6JE=;
- b=UbbJIyY5QGx0hCdK7N/M54LaGxIhrESODFKB6sfEnHQVVxJEbBId38lFXnaE26TXCL
- aLfJXqQTsdIMJ3nM9T5jflLca8yXjVaLMKyzmEY6ljLjlePAmT7oBkkc00lfQSSNmJTd
- XFTZa6ZOAAmkJalmXpYkbEK70YOEQWq11aY6gkHXZVKbdAeR8KUQksUPCgRRYt1mCD2N
- vmyqO3MQyL37E7R1/O2zt+1VTAZRFt4PnufrrcVbJ0OmBtDycmz6eT5vvnAS/mE3EM80
- mGhDg/p3lKtmW+2M4ZC8LmaUmvmF+4Og8ToX+oe8Eb0uSdqq/uxTAW8cpn/aYQNpYHBV
- fkrQ==
-X-Gm-Message-State: AOJu0Yy96apo9PgX6OfxXqkcjjFcVZL+X4lLmrSofecHabMkMb4bjKZA
- YyF2+EgqHFQ4i6C7ZDbOfUu3bPoo0G0gDWsi3+TPU0vgU1xY/9eHSoMV8wE4tIJIMzZr7EZG1DK
- 6qazcjRMlWidb2kfq+bRF46GS6lWff9eePmglBPlhlFg1vo3gwLzE
-X-Received: by 2002:a05:6a00:2985:b0:6e5:355a:1270 with SMTP id
- cj5-20020a056a00298500b006e5355a1270mr770663pfb.2.1708931417257; 
- Sun, 25 Feb 2024 23:10:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF4VEyra6S+PTK6cjPLfCsO/QUYTdgkHFVpi9fomvstGjd3XvcqCUxcfVCi+E3Tg5sgNHktDA==
-X-Received: by 2002:a05:6a00:2985:b0:6e5:355a:1270 with SMTP id
- cj5-20020a056a00298500b006e5355a1270mr770651pfb.2.1708931416886; 
- Sun, 25 Feb 2024 23:10:16 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- r5-20020aa79ec5000000b006e37814cb11sm3129205pfq.4.2024.02.25.23.10.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Feb 2024 23:10:16 -0800 (PST)
-Date: Mon, 26 Feb 2024 15:10:10 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v4 20/34] migration/multifd: Add outgoing QIOChannelFile
- support
-Message-ID: <Zdw5UmOYQM-8KBBK@x1n>
-References: <20240220224138.24759-1-farosas@suse.de>
- <20240220224138.24759-21-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1708931660; x=1709536460;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ryahn8oWBoNVpAVOinE/8svlC57vuBgTLQW9sWBOC40=;
+ b=KPDckfKCsM87TtxQs6S4byILtF0G7ZGvFjMFO9rYRavxegsfrvf0BfH+llmuq3JuhR
+ bpspy+ZnrVg3ydPDTe7lGpnnssnaLG8tNyvsHcn3wIl9wteLcsldjMA/8dEaZgvGI3k3
+ XMBEDDadd3m7GjmmpUYZi8FyzhPAsvBdQsRc5xJ1/rKKT6KVrK2Q5r1GJH5RKF33U+8j
+ vevDCSKm5bH8nWTgqf8dNsqiWT3obfA31uowkU7BiohRDoOFbNueNRYpn6eKoC5qKgCL
+ sovVRmGOf+baOal/WkwS4lGGy+Hv+rgEddByta/GFQROHghREgHBdrNMjut/sBebxsgV
+ ohEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrZAk085vS8ZaIL41j8UzFOFXeY1XuPL5up2Dcos80zyDVi9UygOS9PwZnqhZPPinz242HGpu1zn2rM2dPd/QEIVAVNjo=
+X-Gm-Message-State: AOJu0YzLi2TPuO81Pcrmgou/SQqJabjvCoq8p4+KurF6LTcj+Us9XSib
+ JU8FAkwQjEGJlVNRNF2x28kFHyGWru90QSrVuvaOZphdFZKU422tfOplMe6t1+BT2AARjXets1E
+ P2Ayjf9S8OxgxjuOsmWF9w2X9MgOntP8mvkxQnH19OvgVRGBIdKg+azF8oCGX
+X-Received: by 2002:a5d:59a8:0:b0:33d:c771:a253 with SMTP id
+ p8-20020a5d59a8000000b0033dc771a253mr2863605wrr.14.1708931660460; 
+ Sun, 25 Feb 2024 23:14:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IES8dGFOuTIaql3talA9qC66qfsDMmUY+f+B4sObvG8sB362iIwzms77rEBwW9SxsDwRAkqrQ==
+X-Received: by 2002:a5d:59a8:0:b0:33d:c771:a253 with SMTP id
+ p8-20020a5d59a8000000b0033dc771a253mr2863589wrr.14.1708931660127; 
+ Sun, 25 Feb 2024 23:14:20 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
+ [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
+ d9-20020a5d6449000000b0033d9ee8b5dcsm7276636wrw.15.2024.02.25.23.14.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 25 Feb 2024 23:14:19 -0800 (PST)
+Message-ID: <3a8be4f5-212f-4c5c-8014-321e085a2830@redhat.com>
+Date: Mon, 26 Feb 2024 08:14:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240220224138.24759-21-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/10] usb: extract sysbus-ohci to a separate file
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, balaton@eik.bme.hu
+References: <20240223124406.234509-1-pbonzini@redhat.com>
+ <20240223124406.234509-10-pbonzini@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240223124406.234509-10-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,233 +146,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 07:41:24PM -0300, Fabiano Rosas wrote:
-> Allow multifd to open file-backed channels. This will be used when
-> enabling the fixed-ram migration stream format which expects a
-> seekable transport.
+On 23/02/2024 13.44, Paolo Bonzini wrote:
+> Split the sysbus version to a separate file so that it is not
+> included in PCI-only machines, and adjust Kconfig for machines
+> that do need sysbus-ohci.  The copyrights are based on the
+> time and employer of balrog and Paul Brook's contributions.
 > 
-> The QIOChannel read and write methods will use the preadv/pwritev
-> versions which don't update the file offset at each call so we can
-> reuse the fd without re-opening for every channel.
+> While adjusting the SM501 dependency, move it to the right place
+> instead of keeping it in the R4D machine.
 > 
-> Contrary to the socket migration, the file migration doesn't need an
-> asynchronous channel creation process, so expose
-> multifd_channel_connect() and call it directly.
-> 
-> Note that this is just setup code and multifd cannot yet make use of
-> the file channels.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  migration/file.c    | 40 ++++++++++++++++++++++++++++++++++++++--
->  migration/file.h    |  5 +++++
->  migration/multifd.c | 27 ++++++++++++++++++++++-----
->  migration/multifd.h |  2 ++
->  4 files changed, 67 insertions(+), 7 deletions(-)
+>   hw/usb/hcd-ohci-sysbus.c | 91 ++++++++++++++++++++++++++++++++++++++++
+>   hw/usb/hcd-ohci.c        | 58 ------------------------
+>   hw/arm/Kconfig           | 12 +++--
+>   hw/display/Kconfig       |  1 +
+>   hw/ppc/Kconfig           |  2 +-
+>   hw/sh4/Kconfig           |  1 -
+>   hw/usb/Kconfig           |  4 ++
+>   hw/usb/meson.build       |  1 +
+>   8 files changed, 105 insertions(+), 65 deletions(-)
+>   create mode 100644 hw/usb/hcd-ohci-sysbus.c
 > 
-> diff --git a/migration/file.c b/migration/file.c
-> index 22d052a71f..ac9f6ae40a 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -12,12 +12,17 @@
->  #include "channel.h"
->  #include "file.h"
->  #include "migration.h"
-> +#include "multifd.h"
->  #include "io/channel-file.h"
->  #include "io/channel-util.h"
->  #include "trace.h"
->  
->  #define OFFSET_OPTION ",offset="
->  
-> +static struct FileOutgoingArgs {
-> +    char *fname;
-> +} outgoing_args;
+> diff --git a/hw/usb/hcd-ohci-sysbus.c b/hw/usb/hcd-ohci-sysbus.c
+> new file mode 100644
+> index 00000000000..4e4481232b6
+> --- /dev/null
+> +++ b/hw/usb/hcd-ohci-sysbus.c
+> @@ -0,0 +1,91 @@
+> +/*
+> + * QEMU USB OHCI Emulation
+> + * Copyright (c) 2006 Openedhand Ltd.
+> + * Copyright (c) 2010 CodeSourcery
+> + * Copyright (c) 2024 Red Hat, Inc.
+> + *
+> + * This library is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU Lesser General Public
+> + * License as published by the Free Software Foundation; either
+> + * version 2.1 of the License, or (at your option) any later version.
+> + *
+> + * This library is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + * Lesser General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU Lesser General Public
+> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+> + */
 > +
->  /* Remove the offset option from @filespec and return it in @offsetp. */
->  
->  int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
-> @@ -37,6 +42,34 @@ int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp)
->      return 0;
->  }
->  
-> +int file_send_channel_destroy(QIOChannel *ioc)
-> +{
-> +    if (ioc) {
-> +        qio_channel_close(ioc, NULL);
-> +    }
-> +    g_free(outgoing_args.fname);
-> +    outgoing_args.fname = NULL;
+> +#include "qemu/osdep.h"
+> +#include "hw/irq.h"
+> +#include "qapi/error.h"
+> +#include "qemu/module.h"
+> +#include "qemu/timer.h"
+> +#include "hw/usb.h"
+> +#include "migration/vmstate.h"
+> +#include "hw/sysbus.h"
+> +#include "hw/qdev-dma.h"
+> +#include "hw/qdev-properties.h"
+> +#include "trace.h"
+> +#include "hcd-ohci.h"
 > +
-> +    return 0;
-> +}
 > +
-> +bool file_send_channel_create(gpointer opaque, Error **errp)
-> +{
-> +    QIOChannelFile *ioc;
-> +    int flags = O_WRONLY;
-> +
-> +    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> +    if (!ioc) {
-> +        return false;
-> +    }
-> +
-> +    if (!multifd_channel_connect(opaque, QIO_CHANNEL(ioc), errp)) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  void file_start_outgoing_migration(MigrationState *s,
->                                     FileMigrationArgs *file_args, Error **errp)
->  {
-> @@ -44,15 +77,18 @@ void file_start_outgoing_migration(MigrationState *s,
->      g_autofree char *filename = g_strdup(file_args->filename);
->      uint64_t offset = file_args->offset;
->      QIOChannel *ioc;
-> +    int flags = O_CREAT | O_TRUNC | O_WRONLY;
-> +    mode_t mode = 0660;
->  
->      trace_migration_file_outgoing(filename);
->  
-> -    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC,
-> -                                     0600, errp);
-> +    fioc = qio_channel_file_new_path(filename, flags, mode, errp);
+> +static void ohci_realize_pxa(DeviceState *dev, Error **errp)
 
-This change seems irrelevant, could be squashed into the previous patch
-when introduced?
+Maybe this could be renamed to ohci_sysbs_realize() now since the code is 
+used in non-pxa devices nowadays, too?
 
->      if (!fioc) {
->          return;
->      }
->  
-> +    outgoing_args.fname = g_strdup(filename);
-> +
->      ioc = QIO_CHANNEL(fioc);
->      if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
->          return;
-> diff --git a/migration/file.h b/migration/file.h
-> index 37d6a08bfc..90794b494b 100644
-> --- a/migration/file.h
-> +++ b/migration/file.h
-> @@ -9,10 +9,15 @@
->  #define QEMU_MIGRATION_FILE_H
->  
->  #include "qapi/qapi-types-migration.h"
-> +#include "io/task.h"
-> +#include "channel.h"
->  
->  void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp);
->  
->  void file_start_outgoing_migration(MigrationState *s,
->                                     FileMigrationArgs *file_args, Error **errp);
->  int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
-> +
-> +bool file_send_channel_create(gpointer opaque, Error **errp);
-> +int file_send_channel_destroy(QIOChannel *ioc);
->  #endif
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 45a0c7aaa8..507b497d52 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -17,6 +17,7 @@
->  #include "exec/ramblock.h"
->  #include "qemu/error-report.h"
->  #include "qapi/error.h"
-> +#include "file.h"
->  #include "ram.h"
->  #include "migration.h"
->  #include "migration-stats.h"
-> @@ -28,6 +29,7 @@
->  #include "threadinfo.h"
->  #include "options.h"
->  #include "qemu/yank.h"
-> +#include "io/channel-file.h"
->  #include "io/channel-socket.h"
->  #include "yank_functions.h"
->  
-> @@ -680,6 +682,9 @@ static void multifd_send_terminate_threads(void)
->  
->  static int multifd_send_channel_destroy(QIOChannel *send)
->  {
-> +    if (!multifd_use_packets()) {
-> +        return file_send_channel_destroy(send);
-> +    }
->      return socket_send_channel_destroy(send);
->  }
->  
-> @@ -959,9 +964,8 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
->      return true;
->  }
->  
-> -static bool multifd_channel_connect(MultiFDSendParams *p,
-> -                                    QIOChannel *ioc,
-> -                                    Error **errp)
-> +bool multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc,
-> +                             Error **errp)
->  {
->      qio_channel_set_delay(ioc, false);
->  
-> @@ -1031,9 +1035,14 @@ out:
->      error_free(local_err);
->  }
->  
-> -static void multifd_new_send_channel_create(gpointer opaque)
-> +static bool multifd_new_send_channel_create(gpointer opaque, Error **errp)
->  {
-> +    if (!multifd_use_packets()) {
-> +        return file_send_channel_create(opaque, errp);
-> +    }
-> +
->      socket_send_channel_create(multifd_new_send_channel_async, opaque);
-> +    return true;
->  }
->  
->  bool multifd_send_setup(void)
-> @@ -1082,7 +1091,15 @@ bool multifd_send_setup(void)
->          p->page_size = qemu_target_page_size();
->          p->page_count = page_count;
->          p->write_flags = 0;
-> -        multifd_new_send_channel_create(p);
-> +
-> +        if (!multifd_new_send_channel_create(p, &local_err)) {
-> +            /*
-> +             * File channel creation is synchronous, we don't need the
-> +             * semaphore below, it's safe to return now.
-> +             */
-> +            assert(migrate_fixed_ram());
-
-This comment and assert() is slightly confusing to me.  Drop them?
-
-IMHO it's always safe to directly return here, the channels_created sem
-will be destroyed later anyway so the number shouldn't matter.
-
-And as I commented in the other email, IMHO it's cleaner we also post that
-sem in file_send_channel_create().
-
-> +            return -1;
-> +        }
->      }
->  
->      if (use_packets) {
-> diff --git a/migration/multifd.h b/migration/multifd.h
-> index 19188815a3..135f6ed098 100644
-> --- a/migration/multifd.h
-> +++ b/migration/multifd.h
-> @@ -228,5 +228,7 @@ static inline void multifd_send_prepare_header(MultiFDSendParams *p)
->      p->iovs_num++;
->  }
->  
-> +bool multifd_channel_connect(MultiFDSendParams *p, QIOChannel *ioc,
-> +                             Error **errp);
->  
->  #endif
-> -- 
-> 2.35.3
-> 
-
--- 
-Peter Xu
+Anyway:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
