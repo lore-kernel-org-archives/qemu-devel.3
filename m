@@ -4,62 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B81A0C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DF7C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ree3v-0000wi-TI; Mon, 26 Feb 2024 11:42:44 -0500
+	id 1ree4o-00022c-9Q; Mon, 26 Feb 2024 11:43:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ree3r-0000mv-SQ; Mon, 26 Feb 2024 11:42:40 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1ree3p-0004xU-TT; Mon, 26 Feb 2024 11:42:39 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tk5rm5rpFz6J9p9;
- Tue, 27 Feb 2024 00:38:00 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 00C31140B73;
- Tue, 27 Feb 2024 00:42:35 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 26 Feb
- 2024 16:42:34 +0000
-Date: Mon, 26 Feb 2024 16:42:29 +0000
-To: <ankita@nvidia.com>
-CC: <jgg@nvidia.com>, <alex.williamson@redhat.com>, <clg@redhat.com>,
- <shannon.zhaosl@gmail.com>, <peter.maydell@linaro.org>, <ani@anisinha.ca>,
- <berrange@redhat.com>, <eduardo@habkost.net>, <imammedo@redhat.com>,
- <mst@redhat.com>, <eblake@redhat.com>, <armbru@redhat.com>,
- <david@redhat.com>, <gshan@redhat.com>, <zhiw@nvidia.com>,
- <mochs@nvidia.com>, <pbonzini@redhat.com>, <aniketa@nvidia.com>,
- <cjia@nvidia.com>, <kwankhede@nvidia.com>, <targupta@nvidia.com>,
- <vsethi@nvidia.com>, <acurrid@nvidia.com>, <dnigam@nvidia.com>,
- <udhoke@nvidia.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
-Message-ID: <20240226164229.00001536@Huawei.com>
-In-Reply-To: <20240223124223.800078-3-ankita@nvidia.com>
-References: <20240223124223.800078-1-ankita@nvidia.com>
- <20240223124223.800078-3-ankita@nvidia.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ree4Z-0001uO-6f
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:43:23 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1ree4W-00052W-9b
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:43:22 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5643eccad0bso5134258a12.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 08:43:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708965799; x=1709570599; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zacmyTmiqU9SagCBBD4kEIuUv8302gDFeGTxL6SrB94=;
+ b=K5YuYL0VHDQZeduBMJ0wuopizUdfpdbDgjuau4tOGM3woev4jdQ7t0uu6adxcJ2yNg
+ fjHktMJOFaGlbYZ15MlvJUoafechBI8QpUU0rxEIU1Z0+I9RG6e1dM0yZBbfmJtH2rVi
+ CIwRFG78mkiPMPQyHGg/iaa7C1yHlyI5fDrUvSdivXqzuivIJwevXb2YBIvjemYrDhJD
+ 9lO1EObdoAgA62CfgsKbUF1kA4l7oeS9lKEdoxMz0mQ8cv+DUzRP84BTzXb32ejXdyvg
+ Cn4eJQxg7fbTdhuXOGkvq2RSXUhefy9VJDsuuaqoX2f7zTndroznSjt0cA9hE27Poo5R
+ Jipw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708965799; x=1709570599;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zacmyTmiqU9SagCBBD4kEIuUv8302gDFeGTxL6SrB94=;
+ b=OAMgPNSIY1+dZVXBiBUvqKppPbhQqA9YQTiIrveUN94o7BpbR/gWDCP+DSvuLqN5CT
+ nxEnntOMlJtQ5HpO9UYKSt+o1AM2hefOE+YjOl6LRAYts0pOG3m4kRQFBq9nZzsfersf
+ mG8n4ou3+Gw5BxgXoHyPv64xZSl3gCiqC0XTB7O1vDFlZiZnDjUgJufD3SObn6lTiRr0
+ JTRrhNiGDITEUE1wM2nV+rl7zR6GZOPfr4O8w00RtzH4zEJuN6dGd85hyKdeLVaGV2Y6
+ KT5J+I7W0N9NWZPxhrmlx8+Qy+7J42DpsLIcfMqaSiFzzcmsItVIs4r1b3t9y/Rkd39E
+ agqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyg76kdOpOrX4ezxAHiC3c/Zr9k1ESQ5+LfTgTIFH2oj8+Q4t4rA5kv6awkPuoz8E4N858VvsZbAstXjcVDd34ZdD4V+c=
+X-Gm-Message-State: AOJu0YyleEmBczYBquCn5GAKIbaIhb/AWeLNskjmuMpBHH1VU0zcsrdS
+ zxj1R9wf5+VJcdAgoFVH+JmlnBhwuWFxUAXxBKWes7l/cot0DEdp4DxZSwRLnzSob/fWpyliKk8
+ GmbM+tX1/9XI8vX9g34P3OIzxgG/eM3pCRDZaAA==
+X-Google-Smtp-Source: AGHT+IE0SV44QYePlmJBSsO5+nMHd/GKwOXVF6OVFaWdoFSrpV/bJUin46kjBocSXuDPzUI9iBD8jBazT4NUD1l7+KI=
+X-Received: by 2002:aa7:c908:0:b0:565:dfac:a686 with SMTP id
+ b8-20020aa7c908000000b00565dfaca686mr2923244edt.38.1708965798762; Mon, 26 Feb
+ 2024 08:43:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
+ <20240226000259.2752893-42-sergey.kambalin@auriga.com>
+ <CAFEAcA_xdowvZkxFC7ypEFRJSTLDkdx+9E3_fwPNY=S2sK5=UA@mail.gmail.com>
+In-Reply-To: <CAFEAcA_xdowvZkxFC7ypEFRJSTLDkdx+9E3_fwPNY=S2sK5=UA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Feb 2024 16:43:08 +0000
+Message-ID: <CAFEAcA88NqshmyH5czz8ZC0Kbb81_-8VHRMCSQDbpHrPwm6AWA@mail.gmail.com>
+Subject: Re: [PATCH v6 41/41] Add RPi4B to raspi.rst
+To: Sergey Kambalin <serg.oker@gmail.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Sergey Kambalin <sergey.kambalin@auriga.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,43 +89,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Feb 2024 12:42:23 +0000
-<ankita@nvidia.com> wrote:
+On Mon, 26 Feb 2024 at 16:42, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Mon, 26 Feb 2024 at 00:03, Sergey Kambalin <serg.oker@gmail.com> wrote:
+> >
+> > Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >  docs/system/arm/raspi.rst | 11 +++++++----
+> >  1 file changed, 7 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/docs/system/arm/raspi.rst b/docs/system/arm/raspi.rst
+> > index d0a6f08b2b..c21b27744e 100644
+> > --- a/docs/system/arm/raspi.rst
+> > +++ b/docs/system/arm/raspi.rst
+> > @@ -1,5 +1,5 @@
+> > -Raspberry Pi boards (``raspi0``, ``raspi1ap``, ``raspi2b``, ``raspi3ap``, ``raspi3b``)
+> > -======================================================================================
+> > +Raspberry Pi boards (``raspi0``, ``raspi1ap``, ``raspi2b``, ``raspi3ap``, ``raspi3b``, ``raspi4b-2g``)
+> > +======================================================================================================
+> >
+> >
+> >  QEMU provides models of the following Raspberry Pi boards:
+> > @@ -12,12 +12,13 @@ QEMU provides models of the following Raspberry Pi boards:
+> >    Cortex-A53 (4 cores), 512 MiB of RAM
+> >  ``raspi3b``
+> >    Cortex-A53 (4 cores), 1 GiB of RAM
+> > -
+> > +``raspi4b-2g``
+> > +  Cortex-A72 (4 cores), 2 GiB of RAM
+> >
+> >  Implemented devices
+> >  -------------------
+> >
+> > - * ARM1176JZF-S, Cortex-A7 or Cortex-A53 CPU
+> > + * ARM1176JZF-S, Cortex-A7, Cortex-A53 or Cortex-A72 CPU
+> >   * Interrupt controller
+> >   * DMA controller
+> >   * Clock and reset controller (CPRMAN)
+> > @@ -34,6 +35,8 @@ Implemented devices
+> >   * MailBox controller (MBOX)
+> >   * VideoCore firmware (property)
+> >   * Peripheral SPI controller (SPI)
+> > + * PCIE Root Port (raspi4b-2g)
+> > + * GENET Ethernet Controller (raspi4b-2g)
+>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>
+> For the "no PCI/no ethernet" initial version, I'll drop these last
+> two lines; we can add them in when we land the pci and ethernet
+> patches.
 
-> From: Ankit Agrawal <ankita@nvidia.com>
-> 
-> ACPI spec provides a scheme to associate "Generic Initiators" [1]
-> (e.g. heterogeneous processors and accelerators, GPUs, and I/O devices with
-> integrated compute or DMA engines GPUs) with Proximity Domains. This is
-> achieved using Generic Initiator Affinity Structure in SRAT. During bootup,
-> Linux kernel parse the ACPI SRAT to determine the PXM ids and create a NUMA
-> node for each unique PXM ID encountered. Qemu currently do not implement
-> these structures while building SRAT.
-> 
-> Add GI structures while building VM ACPI SRAT. The association between
-> device and node are stored using acpi-generic-initiator object. Lookup
-> presence of all such objects and use them to build these structures.
-> 
-> The structure needs a PCI device handle [2] that consists of the device BDF.
-> The vfio-pci device corresponding to the acpi-generic-initiator object is
-> located to determine the BDF.
-> 
-> [1] ACPI Spec 6.3, Section 5.2.16.6
-> [2] ACPI Spec 6.3, Table 5.80
-> 
-> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+...better, I'll move them to "missing devices":
 
-One thing I forgot.
+--- a/docs/system/arm/raspi.rst
++++ b/docs/system/arm/raspi.rst
+@@ -35,12 +35,11 @@ Implemented devices
+  * MailBox controller (MBOX)
+  * VideoCore firmware (property)
+  * Peripheral SPI controller (SPI)
+- * PCIE Root Port (raspi4b-2g)
+- * GENET Ethernet Controller (raspi4b-2g)
+-
 
-Please add a test.  tests/qtest/bios-tables-test.c
-+ relevant table dumps.
+ Missing devices
+ ---------------
 
-Could also hook this up for x86 with a oneline addition and improve
-test coverage.  If not, I'll do it when I add Generic Ports as annoyingly
-people still care about x86 for some reason.
+  * Analog to Digital Converter (ADC)
+  * Pulse Width Modulation (PWM)
++ * PCIE Root Port (raspi4b-2g)
++ * GENET Ethernet Controller (raspi4b-2g)
+
+-- PMM
 
