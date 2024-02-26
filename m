@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB06AC54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 018E6C5478C
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rehdU-00058N-JD; Mon, 26 Feb 2024 15:31:40 -0500
+	id 1rehdV-00058f-0s; Mon, 26 Feb 2024 15:31:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rehdL-000575-Ct
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rehdM-00057I-Fb
  for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:31:34 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rehdJ-0001m0-QU
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:31:31 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rehdK-0001mL-Ql
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:31:32 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D85B51FD29;
- Mon, 26 Feb 2024 20:31:27 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 79AE21FB6D;
+ Mon, 26 Feb 2024 20:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708979488; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1708979489; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6fsTNSmlvw6Wc8XIGulbf+rzkCpKJFJ5TMcijkA4B4A=;
- b=q3b7HMZXp2+R6gunKMg2BQikvhf5Ux35Y8IQsGmc2OPNp71S4uV0txGOinepyEFo4ejrqw
- snBx6ZtyfF4q3pqZpAVGUH4LnRJtbB4halBczK0Xv0hEGLfyP7u11IEECZYumrbgdjw+Ik
- 39KWys9nE9I5poOHKXvEgCSSSBsQ8+U=
+ bh=rkYAKUbIVXfvlnyqRX1w3xvaidp9O1g9QosMrFa8HGU=;
+ b=d8ga6ytykxrNyG5HkpWysGgSmmLgxYug74MxF3GGOJHZqyv1UD+ovTH5PBUrmbU698gntg
+ qeGIqS323W7U/r/hgFLXwbQlf3JeAyakYOzzY6aZwCDpT/lrb60yhp/sOFM46C1WrjTkry
+ onY3fzIChsZWjLXzmKDbmwUD7DGTxek=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708979488;
+ s=susede2_ed25519; t=1708979489;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6fsTNSmlvw6Wc8XIGulbf+rzkCpKJFJ5TMcijkA4B4A=;
- b=VBL5eHjXUMmAGN6OlX8GVEb+1GSQ/Y4vXMtRGYcV64XDcJ9/LE2ch2ZXcOpNbMSU+edM60
- z3t/9XWVjoIRLKDQ==
+ bh=rkYAKUbIVXfvlnyqRX1w3xvaidp9O1g9QosMrFa8HGU=;
+ b=l9h0AU9YNCqthciVh/pusJPGWdfDguLzUfnXEfzEx6z65+Bop2B9eDjKw9KuTQaFjMjho5
+ sIWW8sonwXDm+sCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708979487; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1708979489; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6fsTNSmlvw6Wc8XIGulbf+rzkCpKJFJ5TMcijkA4B4A=;
- b=ImhJxcxzzBti2sWa7yKCrMlVLVT8VyKNQW0MIERZEnpeHQqX5eG04VdfY2vik8On9LrMli
- 5GCCbZ2ajgsitd16SA0AKggwL6ZWAVYKkvSwh8CfXTPaopvqsnBIz9IZgvlnfNJWTulx+c
- /Ougc6lVMKPd6Z/USz6zImSsMLPAMlM=
+ bh=rkYAKUbIVXfvlnyqRX1w3xvaidp9O1g9QosMrFa8HGU=;
+ b=d8ga6ytykxrNyG5HkpWysGgSmmLgxYug74MxF3GGOJHZqyv1UD+ovTH5PBUrmbU698gntg
+ qeGIqS323W7U/r/hgFLXwbQlf3JeAyakYOzzY6aZwCDpT/lrb60yhp/sOFM46C1WrjTkry
+ onY3fzIChsZWjLXzmKDbmwUD7DGTxek=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708979487;
+ s=susede2_ed25519; t=1708979489;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6fsTNSmlvw6Wc8XIGulbf+rzkCpKJFJ5TMcijkA4B4A=;
- b=dS3XbVFW0jz1MqDpkz4FxOTi6cXiKjKdR3EW6PVuSBUKqiuu5R0ZgQ+P/mH5LIuBgcqxjs
- STsExr/86aKfelDA==
+ bh=rkYAKUbIVXfvlnyqRX1w3xvaidp9O1g9QosMrFa8HGU=;
+ b=l9h0AU9YNCqthciVh/pusJPGWdfDguLzUfnXEfzEx6z65+Bop2B9eDjKw9KuTQaFjMjho5
+ sIWW8sonwXDm+sCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B300513A3A;
- Mon, 26 Feb 2024 20:31:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 54A9113A3A;
+ Mon, 26 Feb 2024 20:31:28 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sHFRHh713GWJSgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 26 Feb 2024 20:31:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OEU/ByD13GWJSgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 26 Feb 2024 20:31:28 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Peter Xu <peterx@redhat.com>
-Subject: [PATCH 1/2] migration: Join the return path thread before releasing
- to_dst_file
-Date: Mon, 26 Feb 2024 17:31:21 -0300
-Message-Id: <20240226203122.22894-2-farosas@suse.de>
+Subject: [PATCH 2/2] migration: Use migrate_has_error() in
+ close_return_path_on_source()
+Date: Mon, 26 Feb 2024 17:31:22 -0300
+Message-Id: <20240226203122.22894-3-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240226203122.22894-1-farosas@suse.de>
 References: <20240226203122.22894-1-farosas@suse.de>
@@ -85,28 +84,20 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ImhJxcxz;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=dS3XbVFW
-X-Spamd-Result: default: False [-3.81 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_DKIM_ARC_DNSWL_HI(-1.00)[]; FROM_HAS_DN(0.00)[];
+	none
+X-Spamd-Result: default: False [-2.09 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_THREE(0.00)[3]; TO_DN_SOME(0.00)[];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
  RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
  MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+];
- RCVD_IN_DNSWL_HI(-0.50)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: D85B51FD29
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-2.99)[99.96%]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -129,80 +120,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The return path thread might hang at a blocking system call. Before
-joining the thread we might need to issue a shutdown() on the socket
-file descriptor to release it. To determine whether the shutdown() is
-necessary we look at the QEMUFile error.
+From: Cédric Le Goater <clg@redhat.com>
 
-Make sure we only clean up the QEMUFile after the return path has been
-waited for.
+close_return_path_on_source() retrieves the migration error from the
+the QEMUFile '->to_dst_file' to know if a shutdown is required. This
+shutdown is required to exit the return-path thread.
 
-This fixes a hang when qemu_savevm_state_setup() produced an error
-that was detected by migration_detect_error(). That skips
-migration_completion() so close_return_path_on_source() would get
-stuck waiting for the RP thread to terminate.
+Avoid relying on '->to_dst_file' and use migrate_has_error() instead.
 
-Reported-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
+(using to_dst_file is a heuristic to infer whether
+rp_state.from_dst_file might be stuck on a recvmsg(). Using a generic
+method for detecting errors is more reliable. We also want to reduce
+dependency on QEMUFile::last_error)
+
+Suggested-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+[added some words about the motivation for this patch]
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ migration/migration.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/migration/migration.c b/migration/migration.c
-index ab21de2cad..3161be7cde 100644
+index 3161be7cde..5316bbe670 100644
 --- a/migration/migration.c
 +++ b/migration/migration.c
-@@ -1326,6 +1326,8 @@ static void migrate_fd_cleanup(MigrationState *s)
- 
-     qemu_savevm_state_cleanup();
- 
-+    close_return_path_on_source(s);
-+
-     if (s->to_dst_file) {
-         QEMUFile *tmp;
- 
-@@ -1350,12 +1352,6 @@ static void migrate_fd_cleanup(MigrationState *s)
-         qemu_fclose(tmp);
+@@ -2380,8 +2380,7 @@ static bool close_return_path_on_source(MigrationState *ms)
+      * cause it to unblock if it's stuck waiting for the destination.
+      */
+     WITH_QEMU_LOCK_GUARD(&ms->qemu_file_lock) {
+-        if (ms->to_dst_file && ms->rp_state.from_dst_file &&
+-            qemu_file_get_error(ms->to_dst_file)) {
++        if (migrate_has_error(ms) && ms->rp_state.from_dst_file) {
+             qemu_file_shutdown(ms->rp_state.from_dst_file);
+         }
      }
- 
--    /*
--     * We already cleaned up to_dst_file, so errors from the return
--     * path might be due to that, ignore them.
--     */
--    close_return_path_on_source(s);
--
-     assert(!migration_is_active(s));
- 
-     if (s->state == MIGRATION_STATUS_CANCELLING) {
-@@ -2874,6 +2870,13 @@ static MigThrError postcopy_pause(MigrationState *s)
-     while (true) {
-         QEMUFile *file;
- 
-+        /*
-+         * We're already pausing, so ignore any errors on the return
-+         * path and just wait for the thread to finish. It will be
-+         * re-created when we resume.
-+         */
-+        close_return_path_on_source(s);
-+
-         /*
-          * Current channel is possibly broken. Release it.  Note that this is
-          * guaranteed even without lock because to_dst_file should only be
-@@ -2893,13 +2896,6 @@ static MigThrError postcopy_pause(MigrationState *s)
-         qemu_file_shutdown(file);
-         qemu_fclose(file);
- 
--        /*
--         * We're already pausing, so ignore any errors on the return
--         * path and just wait for the thread to finish. It will be
--         * re-created when we resume.
--         */
--        close_return_path_on_source(s);
--
-         migrate_set_state(&s->state, s->state,
-                           MIGRATION_STATUS_POSTCOPY_PAUSED);
- 
 -- 
 2.35.3
 
