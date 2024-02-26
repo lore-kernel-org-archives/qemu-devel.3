@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48144C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:23:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F358C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWGb-0005x2-OE; Mon, 26 Feb 2024 03:23:17 -0500
+	id 1reWGl-00068m-Bz; Mon, 26 Feb 2024 03:23:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reWGY-0005vt-Ub
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:23:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reWGX-0004bs-15
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:23:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708935792;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zjPaPGj5s3aVhMFul/v781tyjt/wzgZVW9WmyogkM4I=;
- b=axuJHYhnD8FCvY2rT2tCtcY8iSf+yFnifQUmhLK4v8vPbrz+4vrw+UiQEx5HHNlo9s0/Fd
- DGawhirfnkxDV5oNHZwC9XxG4AuvfzHC4Ly39nzGR9Crn7sX6arW5wSGlEx+gDMR/SmHGU
- zsBANyEeMEzkbskN/jHETHjqYExShR8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-141-2H9wsBxEOCSjOvyk5X0mIw-1; Mon, 26 Feb 2024 03:23:05 -0500
-X-MC-Unique: 2H9wsBxEOCSjOvyk5X0mIw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B1BFA1021F66;
- Mon, 26 Feb 2024 08:23:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7CCFF8CEC;
- Mon, 26 Feb 2024 08:23:04 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 39FCA21E6767; Mon, 26 Feb 2024 09:23:03 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Mark Cave-Ayland
- <mark.cave-ayland@ilande.co.uk>,  Marcin Juszkiewicz
- <marcin.juszkiewicz@linaro.org>,  John Snow <jsnow@redhat.com>,  Leif
- Lindholm <quic_llindhol@quicinc.com>,  qemu-block@nongnu.org,  Radoslaw
- Biernacki <rad@semihalf.com>,  BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-ppc@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v3 3/3] hw/ide: Include 'ide_internal.h' from current path
-In-Reply-To: <20240226080632.9596-4-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 26 Feb 2024 09:06:31
- +0100")
-References: <20240226080632.9596-1-philmd@linaro.org>
- <20240226080632.9596-4-philmd@linaro.org>
-Date: Mon, 26 Feb 2024 09:23:03 +0100
-Message-ID: <8734tfk520.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWGi-00067M-FU
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:23:25 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWGh-0004eA-0Y
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:23:24 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a36126ee41eso312179966b.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:23:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708935800; x=1709540600; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IHkkhH3shB94Aa6njH/RF4O9pI/05EhqdX+P2NTRny8=;
+ b=B+aFsomzD0eAGwbumIYL4oG7zdSK5r7n9kNv3hhd3JAkGNcETZo4/UuVFVkd1XI9J0
+ dkrQdm7MvQN8j9psbpeQhn4Yk9a+VXUcTfs5aNkQ7Ge0v691xOsK5HCHbnxu7pXW1Svb
+ dJ4gOXNejAixASLgp3r+6eIpHGcZAG75zUt8q0y1fLb5vmvlITxP6Slc1CVbFOcjm3Yo
+ sfKzp4XThUqjYxzTLQTKJSdeVs1IrUmxfCnY/z/AAjhByvmMflor7krRjQW00wQKhHQz
+ eHaT3RFXOOaimUbuC7elAMryaUPYox1YSAXN0QP4TcWDhKrpqk8i6vbFkDLTHmjbYZYJ
+ wDkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708935800; x=1709540600;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IHkkhH3shB94Aa6njH/RF4O9pI/05EhqdX+P2NTRny8=;
+ b=hbAmhMueKuA34004DcuaICM66IpPkOSESrFs9T5wDFI/aiVj4yWikHXcFyy0/UxOJP
+ IyTV5S7jZFP/6ksWizfc8ig7j2IiyrhmEX3MNtJEFQ7vxgPqht+Q6UFWid94Se0Plgh+
+ GTLKdtw9IQmmfMM9defczx+hNGA3CAGuOyNZV8aetG3bvcShdCWWyLNGvWwqhCmJRx6q
+ EQJVNIkXYPhYXZmy6dNbojQtw+Auy243tnbvwZ9kB2fNFCILljAhK25l0/I1Mp41Ow2V
+ tktSCXjJoa58TktPiLfGvXGSuxa6rpf49Ttipb4l89Olo1QFxQDPX4s2Syx0jnbifkLw
+ fUlQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwffVT7tg0hWCcOYmat3h3OeEL5Wk/oW4Y+nz/D/DeXLNjXwndLRW0jwm5ugnpHLjuqbySqaGPutTfs9cE0tAWrMDVBdE=
+X-Gm-Message-State: AOJu0YwqmG2PRzZftNTsLmxDObKkbQBKNENqLFbikTWMGf7zv+aGuNuf
+ xsGklAK0LumUQnMQwmXeP0LPYrhEL5Gwccw7L7GxQ/fDuz/n5+mhFdNbbzc6/kE=
+X-Google-Smtp-Source: AGHT+IHOnMGtNqT1/asAZtr5MYy0RSUUVEKYMToG1GqpcICWSSVYwVWbEB7USOctPs4WSxY3+ruo5g==
+X-Received: by 2002:a17:906:40d1:b0:a3e:93d0:3443 with SMTP id
+ a17-20020a17090640d100b00a3e93d03443mr3955053ejk.34.1708935800385; 
+ Mon, 26 Feb 2024 00:23:20 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.164.69])
+ by smtp.gmail.com with ESMTPSA id
+ fj8-20020a1709069c8800b00a42ec98b9afsm2127370ejc.158.2024.02.26.00.23.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Feb 2024 00:23:20 -0800 (PST)
+Message-ID: <601bae2e-4e42-4e88-aa97-e94bb4696ab8@linaro.org>
+Date: Mon, 26 Feb 2024 09:23:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/xen: detect when running inside stubdomain
+Content-Language: en-US
+To: =?UTF-8?Q?Marek_Marczykowski-G=C3=B3recki?=
+ <marmarek@invisiblethingslab.com>, qemu-devel@nongnu.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
+References: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240219181627.282097-1-marmarek@invisiblethingslab.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,17 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On 19/2/24 19:16, Marek Marczykowski-Górecki wrote:
+> Introduce global xen_is_stubdomain variable when qemu is running inside
+> a stubdomain instead of dom0. This will be relevant for subsequent
+> patches, as few things like accessing PCI config space need to be done
+> differently.
+> 
+> Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+> ---
+>   hw/xen/xen-legacy-backend.c | 15 +++++++++++++++
+>   include/hw/xen/xen.h        |  1 +
+>   system/globals.c            |  1 +
+>   3 files changed, 17 insertions(+)
 
-> Rename "internal.h" as "ide_internal.h", and include
 
-ide-internal.h
+> +static bool xen_check_stubdomain(void)
+> +{
+> +    char *dm_path = g_strdup_printf("/local/domain/%d/image", xen_domid);
+> +    uint32_t dm_domid;
+> +    bool is_stubdom = false;
+> +
+> +    if (!xenstore_read_int(dm_path, "device-model-domid", &dm_domid))
 
-> it via its relative local path, instead of absolute
-> to the project root path.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+BTW missing braces for QEMU coding style: {
 
-The series is a lovely little cleanup; thanks, guys!
+> +        is_stubdom = dm_domid != 0;
+
+}
+
+> +
+> +    g_free(dm_path);
+> +    return is_stubdom;
+> +}
 
 
