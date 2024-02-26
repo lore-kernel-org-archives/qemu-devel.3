@@ -4,104 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06957C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4909DC54E41
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rec37-0000wJ-C6; Mon, 26 Feb 2024 09:33:45 -0500
+	id 1rec3o-0001Ft-B7; Mon, 26 Feb 2024 09:34:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rec35-0000vr-Ph
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:33:43 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rec33-0006Cl-NO
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:33:43 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rec3l-0001EO-Oj
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:34:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rec3g-0006LB-T6
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:34:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708958060;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=MwJ0+BYWkc2eh7iDVk+5cu5cv6XU5bQ9na6gXAM21F4=;
+ b=Or0cqZT0ZAoOx2OglkcJbGLrlsYdNKZXeWKsYm7Dw6UReU3N6PCGlQcsPXoCw3HaEtAGxj
+ ou2BgpLzrzAIDIBiPNrAAlxI03AmadqSVMWZAZbirnk89QdYK/0p0ylRGqoM0P7PZmnIge
+ CuDygpr9eQngrvjul/KODubGvU6gu6M=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-538-SuQ7yQjIM6OvETUHfi7w8g-1; Mon, 26 Feb 2024 09:34:16 -0500
+X-MC-Unique: SuQ7yQjIM6OvETUHfi7w8g-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id E2251224F8;
- Mon, 26 Feb 2024 14:33:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708958020; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hM5mnMIObkv+sFV22ZAHx3tsxUqEnwCDhsuuDjoGvRI=;
- b=d522xle2Etf1f8RSnblPx3wtXXSpsfi21ONCyCgwEWJ8YiXbdAo3vfZpDAgzELx/9tpTTU
- mbdU8sm84chgfXNJfYVccckrRomjG/ZkRp5/CIMM9W1tD9SjFG8Xn7h1g4l42K+FyAaoMx
- vAu2qdlC0KHWSG4sVvV9qLewzRBq7kc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708958020;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hM5mnMIObkv+sFV22ZAHx3tsxUqEnwCDhsuuDjoGvRI=;
- b=xQUtD3eMHUhNXVRJghj5/LLbBpmkVq1BUtz9jKumIoAcCErbzPBXWZ+yNQ2s38NhTrjzTt
- CzSAtpZDw41JqwAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708958018; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hM5mnMIObkv+sFV22ZAHx3tsxUqEnwCDhsuuDjoGvRI=;
- b=frgDT/hChVDy6y6M2pLJ5Jm0Je8XUnyywTKcARFg96HNACbVrVee9avFMi/62N2X9qR9b8
- 8pFLb2OnizVX+mSRW2ptt8C/xFEtY5Nmk8L1PWkKtbl/PlUnIkPYNgr01mlsJK7pkpHZzd
- ep2KOvO+LzaFKvx4ZxrmwEdv9vQm4y0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708958018;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=hM5mnMIObkv+sFV22ZAHx3tsxUqEnwCDhsuuDjoGvRI=;
- b=PVC0uHDHq4XIJtPbk4s8KL56x81vp5/eJodsJ2uGj6z650A4HZZ5RBxXBI+MjEtZvIoBeU
- 8NRK64Ey/4DM9xCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F32C513A58;
- Mon, 26 Feb 2024 14:33:37 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id bpHsLUGh3GUhcAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 26 Feb 2024 14:33:37 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2] migration: Fix qmp_query_migrate mbps value
-Date: Mon, 26 Feb 2024 11:33:35 -0300
-Message-Id: <20240226143335.14282-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7522E1064C6C;
+ Mon, 26 Feb 2024 14:34:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.127])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id DE8488CE8;
+ Mon, 26 Feb 2024 14:34:14 +0000 (UTC)
+Date: Mon, 26 Feb 2024 14:34:12 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH 06/28] qemu-img: create: refresh options/--help
+Message-ID: <ZdyhZAve4WtPnmkc@redhat.com>
+References: <cover.1708544927.git.mjt@tls.msk.ru>
+ <20240221211622.2335170-6-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: /
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="frgDT/hC";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PVC0uHDH
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-0.51 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
- BROKEN_CONTENT_TYPE(1.50)[]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_TWO(0.00)[2];
- MX_GOOD(-0.01)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- BAYES_HAM(-3.00)[100.00%]; ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- DWL_DNSWL_LOW(-1.00)[suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email,gitlab.com:url];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[]
-X-Rspamd-Queue-Id: E2251224F8
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240221211622.2335170-6-mjt@tls.msk.ru>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,119 +80,165 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QMP command query_migrate might see incorrect throughput numbers
-if it runs after we've set the migration completion status but before
-migration_calculate_complete() has updated s->total_time and s->mbps.
+On Thu, Feb 22, 2024 at 12:15:47AM +0300, Michael Tokarev wrote:
+> Create helper function cmd_help() to display command-specific
+> help text, and use it to print --help for 'create' subcommand.
+> 
+> Add missing long options (eg --format) in img_create().
+> 
+> Remove usage of missing_argument()/unrecognized_option() in
+> img_create().
+> 
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> ---
+>  qemu-img.c | 68 +++++++++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 60 insertions(+), 8 deletions(-)
+> 
+> diff --git a/qemu-img.c b/qemu-img.c
+> index 38ac0f1845..7e4c993b9c 100644
+> --- a/qemu-img.c
+> +++ b/qemu-img.c
+> @@ -132,6 +132,31 @@ void unrecognized_option(const char *option)
+>      error_exit("qemu-img", "unrecognized option '%s'", option);
+>  }
+>  
+> +/*
+> + * Print --help output for a command and exit.
+> + * syntax and description are multi-line with trailing EOL
+> + * (to allow easy extending of the text)
+> + * syntax has each subsequent line indented by 8 chars.
+> + * desrciption is indented by 2 chars for argument on each own line,
+> + * and with 5 chars for argument description (like -h arg below).
+> + */
+> +static G_NORETURN
+> +void cmd_help(const img_cmd_t *ccmd,
+> +              const char *syntax, const char *arguments)
+> +{
+> +    printf(
+> +"Usage:\n"
+> +"  %s %s %s"
 
-The migration status would show COMPLETED, but the throughput value
-would be the one from the last iteration and not the one from the
-whole migration. This will usually be a larger value due to the time
-period being smaller (one iteration).
+For the global help there's an extra '\n' after 'Usage'. It would be
+good go be consistent in this between global and per-command help.
 
-Move migration_calculate_complete() earlier so that the status
-MIGRATION_STATUS_COMPLETED is only emitted after the final counters
-update. Keep everything under the BQL so the QMP thread sees the
-updates as atomic.
+$ ./build/qemu-img --help
+qemu-img version 8.2.50 (v8.2.0-1677-g81b20f4b55)
+Copyright (c) 2003-2023 Fabrice Bellard and the QEMU Project developers
+QEMU disk image utility.  Usage:
 
-Rename migration_calculate_complete to migration_completion_end to
-reflect its new purpose of also updating s->state.
+  qemu-img [standard options] COMMAND [--help | command options]
+...snip...
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-v2:
-- improved comments;
-- took the suggestion of creating a new function but used 'end'
-  instead of 'finalize' to avoid possible confusion with QOM.
+vs
 
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1191024660
----
- migration/migration.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+$ ./build/qemu-img info --help
+Display information about image.  Usage:
+  qemu-img info [-f FMT | --image-opts] [-b] [-U] [--object OBJDEF]
+        [--output human|json] FILENAME
+...snip...
 
-diff --git a/migration/migration.c b/migration/migration.c
-index ab21de2cad..7b0e528d01 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -102,6 +102,7 @@ static int migration_maybe_pause(MigrationState *s,
-                                  int new_state);
- static void migrate_fd_cancel(MigrationState *s);
- static bool close_return_path_on_source(MigrationState *s);
-+static void migration_completion_end(MigrationState *s);
- 
- static void migration_downtime_start(MigrationState *s)
- {
-@@ -2746,8 +2747,7 @@ static void migration_completion(MigrationState *s)
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-                           MIGRATION_STATUS_COLO);
-     } else {
--        migrate_set_state(&s->state, current_active_state,
--                          MIGRATION_STATUS_COMPLETED);
-+        migration_completion_end(s);
-     }
- 
-     return;
-@@ -2784,8 +2784,7 @@ static void bg_migration_completion(MigrationState *s)
-         goto fail;
-     }
- 
--    migrate_set_state(&s->state, current_active_state,
--                      MIGRATION_STATUS_COMPLETED);
-+    migration_completion_end(s);
-     return;
- 
- fail:
-@@ -2987,18 +2986,28 @@ static MigThrError migration_detect_error(MigrationState *s)
-     }
- }
- 
--static void migration_calculate_complete(MigrationState *s)
-+static void migration_completion_end(MigrationState *s)
- {
-     uint64_t bytes = migration_transferred_bytes();
-     int64_t end_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     int64_t transfer_time;
- 
-+    /*
-+     * Take the BQL here so that query-migrate on the QMP thread sees:
-+     * - atomic update of s->total_time and s->mbps;
-+     * - correct ordering of s->mbps update vs. s->state;
-+     */
-+    bql_lock();
-     migration_downtime_end(s);
-     s->total_time = end_time - s->start_time;
-     transfer_time = s->total_time - s->setup_time;
-     if (transfer_time) {
-         s->mbps = ((double) bytes * 8.0) / transfer_time / 1000;
-     }
-+
-+    migrate_set_state(&s->state, s->state,
-+                      MIGRATION_STATUS_COMPLETED);
-+    bql_unlock();
- }
- 
- static void update_iteration_initial_status(MigrationState *s)
-@@ -3145,7 +3154,6 @@ static void migration_iteration_finish(MigrationState *s)
-     bql_lock();
-     switch (s->state) {
-     case MIGRATION_STATUS_COMPLETED:
--        migration_calculate_complete(s);
-         runstate_set(RUN_STATE_POSTMIGRATE);
-         break;
-     case MIGRATION_STATUS_COLO:
-@@ -3189,9 +3197,6 @@ static void bg_migration_iteration_finish(MigrationState *s)
-     bql_lock();
-     switch (s->state) {
-     case MIGRATION_STATUS_COMPLETED:
--        migration_calculate_complete(s);
--        break;
--
-     case MIGRATION_STATUS_ACTIVE:
-     case MIGRATION_STATUS_FAILED:
-     case MIGRATION_STATUS_CANCELLED:
+
+I wonder if we should repeat '[standard options]' for the
+per-command help too ?
+
+
+> +"\n"
+> +"Arguments:\n"
+
+In the global help you called it 'Standard options', so for
+consistency lets use 'Options:' here too.
+
+> +"  -h, --help\n"
+> +"     print this help and exit\n"
+> +"%s\n",
+> +           "qemu-img", ccmd->name,
+> +           syntax, arguments);
+> +    exit(EXIT_SUCCESS);
+> +}
+> +
+>  /* Please keep in synch with docs/tools/qemu-img.rst */
+>  static G_NORETURN
+>  void help(void)
+> @@ -530,23 +555,48 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
+>      for(;;) {
+>          static const struct option long_options[] = {
+>              {"help", no_argument, 0, 'h'},
+> +            {"quiet", no_argument, 0, 'q'},
+>              {"object", required_argument, 0, OPTION_OBJECT},
+> +            {"format", required_argument, 0, 'f'},
+> +            {"backing", required_argument, 0, 'b'},
+> +            {"backing-format", required_argument, 0, 'F'},
+> +            {"backing-unsafe", no_argument, 0, 'u'},
+> +            {"options", required_argument, 0, 'o'},
+>              {0, 0, 0, 0}
+>          };
+> -        c = getopt_long(argc, argv, ":F:b:f:ho:qu",
+> +        c = getopt_long(argc, argv, "F:b:f:ho:qu",
+>                          long_options, NULL);
+>          if (c == -1) {
+>              break;
+>          }
+>          switch(c) {
+> -        case ':':
+> -            missing_argument(argv[optind - 1]);
+> -            break;
+> -        case '?':
+> -            unrecognized_option(argv[optind - 1]);
+> -            break;
+>          case 'h':
+> -            help();
+> +            cmd_help(ccmd,
+> +"[-f FMT] [-o FMT_OPTS] [-b BACKING_FILENAME [-F BACKING_FMT]]\n"
+> +"        [--object OBJDEF] [-u] FILENAME [SIZE[bkKMGTPE]]\n"
+> +,
+> +"  -q, --quiet\n"
+> +"     quiet operations\n"
+> +"  -f, --format FMT\n"
+> +"     specifies format of the new image, default is raw\n"
+> +"  -o, --options FMT_OPTS\n"
+> +"     format-specific options ('-o list' for list)\n"
+> +"  -b, --backing BACKING_FILENAME\n"
+> +"     stack new image on top of BACKING_FILENAME\n"
+> +"     (for formats which support stacking)\n"
+> +"  -F, --backing-format BACKING_FMT\n"
+> +"     specify format of BACKING_FILENAME\n"
+> +"  -u, --backing-unsafe\n"
+> +"     do not fail if BACKING_FMT can not be read\n"
+> +"  --object OBJDEF\n"
+> +"     QEMU user-creatable object (eg encryption key)\n"
+> +"  FILENAME\n"
+> +"     image file to create.  It will be overridden if exists\n"
+> +"  SIZE\n"
+> +"     image size with optional suffix (multiplies in 1024)\n"
+> +"     SIZE is required unless BACKING_IMG is specified,\n"
+> +"     in which case it will be the same as size of BACKING_IMG\n"
+> +);
+>              break;
+>          case 'F':
+>              base_fmt = optarg;
+> @@ -571,6 +621,8 @@ static int img_create(const img_cmd_t *ccmd, int argc, char **argv)
+>          case OPTION_OBJECT:
+>              user_creatable_process_cmdline(optarg);
+>              break;
+> +        default:
+> +            tryhelp(argv[0]);
+>          }
+>      }
+>  
+> -- 
+> 2.39.2
+> 
+> 
+
+With regards,
+Daniel
 -- 
-2.35.3
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
