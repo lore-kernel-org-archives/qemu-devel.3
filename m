@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61F91C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 11:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 215B2C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 11:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reZBO-0007gP-UP; Mon, 26 Feb 2024 06:30:07 -0500
+	id 1reZDm-0000Iq-K3; Mon, 26 Feb 2024 06:32:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1reZBI-0007fR-Q8; Mon, 26 Feb 2024 06:30:01 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1reZBF-00032P-8b; Mon, 26 Feb 2024 06:29:58 -0500
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41Q9EHoD017013; Mon, 26 Feb 2024 11:29:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=pp1;
- bh=3Yt0HHcfgQJQ2mVUFCVFY7JwRkHlZOjHbpu/ccz6oww=;
- b=LgDctyMEr9PUjd/hIY3RSzFX/MRH7Xfvy/Bo6z2NGr9II6JmM04WjwsqL0rfi6859Hbc
- js05rZdCQ5szr2/xVN30vcfTU2al/57t66yehvQxAL62EfcTIQgUlBY/VPL5tfkT8ud1
- qRcqyk8FdxCm8C7KMqnFWYkuwkmgJuSgat6kbLgcdU5L1pETI2WjwrX8IN3XzyiHngHY
- FBtK6E4BX5bOOT0Gd63i4sfwauFuIAM3C7g6oa2RroeFY8oZdHXLRWIC1jvOtBnhCtW1
- ZEpLKm7U0AGMHNfytKa1J6Gj5UHIZJ+Qm6fFGIUuR5VJVGpd9iYwMmrwshNteKkS1x3p iA== 
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wg56yuntu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Feb 2024 11:29:53 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41QAi5Kc012338; Mon, 26 Feb 2024 11:29:53 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wfwg206ka-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 26 Feb 2024 11:29:52 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41QBTnHP16581292
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Feb 2024 11:29:51 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A4C22004B;
- Mon, 26 Feb 2024 11:29:49 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C94EE20040;
- Mon, 26 Feb 2024 11:29:48 +0000 (GMT)
-Received: from heavy (unknown [9.171.71.141])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 26 Feb 2024 11:29:48 +0000 (GMT)
-Date: Mon, 26 Feb 2024 12:29:47 +0100
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-Subject: Re: [PATCH] linux-user: Make TARGET_NR_setgroups affect only the
- current thread
-Message-ID: <vqmdjxoplrifjs53kkl2e7td3rymw6t6p66gkqgsa4y7mhooct@y54pgwyceatk>
-References: <20240131001851.15932-1-iii@linux.ibm.com>
- <f39cb7d6-beaa-4365-bbd8-7fc8546cf655@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reZDl-0000IM-7D
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 06:32:33 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reZDj-0003nw-OI
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 06:32:32 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-563d32ee33aso3868095a12.2
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 03:32:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708947149; x=1709551949; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=m0nMnDapFvvatrHhVmCWyHBrI/DiblXmep0imBoSKP0=;
+ b=FGvAC2XwnRO/nPcxPv8XyWqPTJvkTBdrCIKFPmhPL0Bk1qHekd1L8KPZaDcSaINyu9
+ OOFGKZc4x+sE2112MMqkKiruYwscF4N3bEAOV1dJfbJoILolgOELLuesDtRCVvNrqC/b
+ fumkhDTqT1sgWnJTrs1WcxHo2NJ3SOZmTJH9XZ/cY9njpNLu5/GZkqLPfhbdDoxQqNZX
+ wKc2x6dW0bOXnKRiBU2aVXiCoBvDW6k3oT2TnP1Sq8DwSUvPjqGwrhQ1ScmwQRzFzaQy
+ usJ0HlVmTpATAUVEi5MRwAB1aOodTmTDrK9KMmU8tOoqVAoQpVWi3CMrdLvWcL5yvMvI
+ Wv1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708947149; x=1709551949;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m0nMnDapFvvatrHhVmCWyHBrI/DiblXmep0imBoSKP0=;
+ b=Qykh5yHonGScDkTdbtYWujHyJiyQsdmg9xtPkYYH1Pj4gFoWG++yAPiSJ+/UBB96ws
+ SjrZas5KuJVO0Oc4mdR4icOOvxA4JyuRhzmDhzbe1eLiGVNFJG6r03DXUS0ZDyvewnHJ
+ V6cDnhOk8XIx9FYZ8OUEgIOOc7E6zlN+epezckEyNtkWJbx/67qeZKa7WlupScfo9TcJ
+ a1RGHSTV1zjnNbvFWOKtkkc7OmcQVx/2JnsKliCQxCF/CXb5OJA02LcPK6Ir1cu/0FUH
+ 9pKI+0GjkXxFZ06IdTyquJnotM+DAdMaku+2DjNH3FnVr3kR3bdFqS1IS3wqCQe3ELLA
+ BFTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHoSnL1q3pJyKcaGg4tLZngPsSapmr8G5xB5k3YoyLg84YiwvxO9g+2g7hE24/f0IXKCg7XsG1e6uh4gMH9TckJDUHrUs=
+X-Gm-Message-State: AOJu0YzBzKfKE53GCtBa73tbAkB/2saBFDFYTe+l6t47xlu4cUU7O5WJ
+ +jE2E4UIWdiP8l7A41BymJWXmq/cwvsb00UPQTxaVtkQdyq2p+Fm37XzlQakSDDC1cxyQ+GY1p7
+ djICvaNRszH3Fj0LFkbKW6y9koYQ041vj/S6NIw==
+X-Google-Smtp-Source: AGHT+IGkLN6tkrnXQn6rx+kTALydVQ6UCBkniksr0sVPTfAuoHzlxtFIaiG3Jzrzf6dWyajnYsbV7DJMaL8sjHeILqY=
+X-Received: by 2002:aa7:d958:0:b0:564:f6d5:f291 with SMTP id
+ l24-20020aa7d958000000b00564f6d5f291mr4745407eds.34.1708947148878; Mon, 26
+ Feb 2024 03:32:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f39cb7d6-beaa-4365-bbd8-7fc8546cf655@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: gN5tOhq47WQt2YGRe0q2DZFall6ZvC9l
-X-Proofpoint-ORIG-GUID: gN5tOhq47WQt2YGRe0q2DZFall6ZvC9l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_07,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 mlxscore=0
- lowpriorityscore=0 malwarescore=0 mlxlogscore=952 suspectscore=0
- phishscore=0 spamscore=0 adultscore=0 clxscore=1011 impostorscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402260086
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20240223103221.1142518-1-ruanjinjie@huawei.com>
+ <20240223103221.1142518-18-ruanjinjie@huawei.com>
+ <81167528-32e3-4741-84e4-3c70b788fc2c@linaro.org>
+In-Reply-To: <81167528-32e3-4741-84e4-3c70b788fc2c@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Feb 2024 11:32:17 +0000
+Message-ID: <CAFEAcA9vxm0V3XNo_VVw3bVH1ucW1gWZY=rpvaOk3iv0fqOuVQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v3 17/21] hw/intc/arm_gicv3: Add NMI handling CPU
+ interface registers
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, 
+ philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,23 +95,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jan 31, 2024 at 02:10:55PM +0100, Philippe Mathieu-Daudé wrote:
-> On 31/1/24 01:18, Ilya Leoshkevich wrote:
-> > Like TARGET_NR_setuid, TARGET_NR_setgroups should affect only the
-> > calling thread, and not the entire process. Therefore, implement it
-> > using a syscall, and not a libc call.
-> > 
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: 19b84f3c35d7 ("added setgroups and getgroups syscalls")
-> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> > ---
-> >   linux-user/syscall.c | 10 ++++++++--
-> >   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Fri, 23 Feb 2024 at 20:53, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 2/23/24 00:32, Jinjie Ruan via wrote:
+> > Add the NMIAR CPU interface registers which deal with acknowledging NMI.
+> >
+> > When introduce NMI interrupt, there are some updates to the semantics for the
+> > register ICC_IAR1_EL1 and ICC_HPPIR1_EL1. For ICC_IAR1_EL1 register, it
+> > should return 1022 if the intid has super priority. And for ICC_NMIAR1_EL1
+> > register, it should return 1023 if the intid do not have super priority.
+> > Howerever, these are not necessary for ICC_HPPIR1_EL1 register.
+> >
+> > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-Thanks for the review!
+> > +static uint64_t icc_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+> > +{
+> > +    GICv3CPUState *cs = icc_cs_from_env(env);
+> > +    uint64_t intid;
+> > +
+> > +    if (icv_access(env, HCR_IMO)) {
+> > +        return icv_iar_read(env, ri);
+> > +    }
+> > +
+> > +    if (!icc_hppi_can_preempt(cs)) {
+> > +        intid = INTID_SPURIOUS;
+> > +    } else {
+> > +        intid = icc_hppir1_value(cs, env, true, false);
+>
+> Here... believe that the result *should* only consider superpriority.  I guess SPURIOUS is
+> the correct result when there is no pending interrupt with superpriority?  It's really
+> unclear to me from the register description.
 
-A few weeks have passed and I wonder if this patch fell through the
-cracks. Do I need to do something to have it applied?
+Should be 1023: the ICC_NMIAR1_EL1[] pseudocode in the GIC
+architecture spec (13.1.8) does this:
+
+    if !IsNMI(intID) then
+        return ZeroExtend(INTID_SPURIOUS);
+
+(Note that the logic is "find the highest priority
+pending interrupt, and then see if it is an NMI or not",
+not "find the highest priority pending NMI".)
+
+-- PMM
 
