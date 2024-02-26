@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BECCC54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:02:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79223C54E4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWrS-0004VU-BH; Mon, 26 Feb 2024 04:01:22 -0500
+	id 1reWwJ-0007Ai-2B; Mon, 26 Feb 2024 04:06:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reWrR-0004Uu-Cu
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:01:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reWrP-0002l5-Vu
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:01:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708938078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LG1v1RlOEltJThm61dDzjy4J1Pxvqzv2IToclSKtxgY=;
- b=DFB7zu8K0/4LIxHxbVWY5ETOBHfZwlu70rbj+zEs+aTYb51JPWeZlUAmXlhR5z/Ny5zBFW
- IuDvJo95oWvEbK0jE8+OzAiBEjyxsynf/6MQc3gkpKMt9PtYcrvG1LU4Ha5VU4HaWtuLJR
- GRSLiYZyh7mPGVOZwupmBAdyTJWQZ3o=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-ZUtnGmhnPN-JsdrhFj1GqA-1; Mon, 26 Feb 2024 04:01:17 -0500
-X-MC-Unique: ZUtnGmhnPN-JsdrhFj1GqA-1
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-5dc97ac2facso1330250a12.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:01:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWwH-0007AG-Bm
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:06:21 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWwF-0003Xj-8Y
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:06:20 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a3f4464c48dso307148866b.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:06:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708938376; x=1709543176; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7oVTgSJUCJ05vrSeKkBPqU1gIvTy5EgxgQEBwc+GsnM=;
+ b=BNwhKoFnTEdW+A4DVb5HmHw5P7SVuU3u3anlujgv69wEqvueoRKAbn4eywnVLXs9z/
+ W7rwnsE8K6SDY5BHr+i5MjK6UWbc1BbKbl/1Vp9pAtQPauiCa0Jrge2vsHEtGkP6LJtN
+ u7qZPgkAtF28rlIHFExxM9jbOkxaJzRmYJUpHYSiTgxVqQS0HGqLbP8JkajKPt6JHsYG
+ 6vhJtgFqdh5ZpHLa7LUOLSb5UeVhphZFH7MC6p8p/xOYB51LxZmJuU9528s215nIzaGf
+ XFsB32aIY0KS9noYgHPP1aHrHe8b9uhmThRVPeOfwO/o8fvvnMtQe3s75gKVPZqojA6b
+ +gfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708938076; x=1709542876;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LG1v1RlOEltJThm61dDzjy4J1Pxvqzv2IToclSKtxgY=;
- b=r0tQYDLfoINzY80uljgWgRsHsCu5++w71QNrSaf6z79VcfP+NtzxkBFVgWvABYgVn6
- oEgPgGBpWBOZRByDlKwOywED3Hq8rt3pl0L4DvwSbzuGe3LB9+J0j6Ws8N05hAc3lX14
- 5TOdpAWDqXn5xczvA5w21WDS3ngIhl3ufdzhpIW7pfjzXpvOxnCt8ts8RThNqD8y9u+0
- Gw/XrvHmpjOnR/FTxi5/jc7K32jNqRSJrV9udsCvayXIE7LIAvvk9JeisWI3o8VqlUT2
- 3i8VS29J74Og9Txa61jJrWoZ6hrXVYhqagNHSv9MOKiI/WQsbKFq629lltPPPTB3kCGj
- Hlgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZrAmpX0D9gNUZu8wASI87BtZBd7z/jVQoByt9ECqYXDj/0uqj9Odl/boHejyV/Y+Y3BASXpo9UkFckDiAr2uVW+ugAFw=
-X-Gm-Message-State: AOJu0YyeknM49hgWurjnNou/zZvOxkibFPUXrmoB2H2M8pYLJOMw7aEy
- IaBD+eboWXnVNaNrn+i1UPQuB9gkfhFtQH3y04ugQmHlupnYvlKu3J6JU3ZMm1SO3fno07Hrm6O
- dxWKB1aqtEoLlq4pKtBIvRCCYPsH0KolAoOSuGprQhSTRAWb9fuFX
-X-Received: by 2002:a17:90a:15cf:b0:298:bc90:3b69 with SMTP id
- w15-20020a17090a15cf00b00298bc903b69mr4529321pjd.3.1708938075625; 
- Mon, 26 Feb 2024 01:01:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFAjZMCh67wJMNYUiDxAb36Ccns6tsemyoMqVkLvslDw1kCn1Fl7dHwEbv7joFVQhbf8WQHRw==
-X-Received: by 2002:a17:90a:15cf:b0:298:bc90:3b69 with SMTP id
- w15-20020a17090a15cf00b00298bc903b69mr4529300pjd.3.1708938075308; 
- Mon, 26 Feb 2024 01:01:15 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- cu12-20020a17090afa8c00b00298f2ad430csm3931334pjb.0.2024.02.26.01.01.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 01:01:15 -0800 (PST)
-Date: Mon, 26 Feb 2024 17:01:08 +0800
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- David Hildenbrand <david@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH V4 00/14] allow cpr-reboot for vfio
-Message-ID: <ZdxTVHJ8p4lYRPxo@x1n>
-References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
- <c95b3c15-0154-438c-baa0-98f4c539355a@oracle.com>
- <Zdv0BNtJxkd8413g@x1n>
- <02bf2132-ed34-4ecd-841b-5f93eded7ea4@redhat.com>
+ d=1e100.net; s=20230601; t=1708938376; x=1709543176;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7oVTgSJUCJ05vrSeKkBPqU1gIvTy5EgxgQEBwc+GsnM=;
+ b=coA3JSPT/fUnY4cflTl/d66Jmm4QdjiAxO9e8D7e08kG95x3IC6bJlV07Jnu2w/DhA
+ FuhFyR+ZCK7mcBJeeCRjUgw60ai1D1BTtMMObKV+G9dkL+w2QmWD1D1112gFP0xVDRp3
+ bqjqog0dLEV9ocLRSyvm7VVYfZKxVqWMmpZZ9WpzWaLGSKkIrOe0cs3wRTllgamQv6F1
+ S7kE5aVYf53jOWcuq3JI0gIa0kP/sz1DBczBJUafWq7JfZWVnC1/ytsTx/OcU2Cw4Hjw
+ aGfcNutVUbL+RCN2jj2qRR4+xMLgjC0WOI0zABTxXA7yinZvtpjPadQTm5PGBOk8deIW
+ gX7w==
+X-Gm-Message-State: AOJu0YzgNfUEFW00YvG8Gdk5SctnGlMyHa47bTrNWMvDf3wiv5cyr7Z8
+ YOIVOtlcRBx3860NSH3cY+bSH0Wdr2MdZET8GQ3v+0+R9kMh9o4EpDLd8N1Dw2zi9zqpDcW1xn5
+ w
+X-Google-Smtp-Source: AGHT+IGO3jGtHMSN/HP//kxXs5Lz0HjhOYPU4EmaJEde0/u/s+C/8DK2WVwGlFc4MI7h+PchkSdiYQ==
+X-Received: by 2002:a17:906:13db:b0:a42:f40e:3ac0 with SMTP id
+ g27-20020a17090613db00b00a42f40e3ac0mr3740303ejc.6.1708938376553; 
+ Mon, 26 Feb 2024 01:06:16 -0800 (PST)
+Received: from m1x-phil.lan ([176.176.164.69])
+ by smtp.gmail.com with ESMTPSA id
+ d25-20020a170906305900b00a3eb1b1896bsm2196669ejd.58.2024.02.26.01.06.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 26 Feb 2024 01:06:16 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 2/2] hw/i386/q35: Include missing 'hw/acpi/acpi.h' header
+Date: Mon, 26 Feb 2024 10:06:00 +0100
+Message-ID: <20240226090600.31952-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240226090600.31952-1-philmd@linaro.org>
+References: <20240226090600.31952-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <02bf2132-ed34-4ecd-841b-5f93eded7ea4@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,14 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 26, 2024 at 09:49:46AM +0100, Cédric Le Goater wrote:
-> Go ahead. It will help me for the changes I am doing on error reporting
-> for VFIO migration. I will rebase on top.
+"hw/acpi/acpi.h" is implicitly included. Include it
+explicitly to avoid the following error when refactoring
+headers:
 
-Thanks for confirming.  I queued the migration patches then, but leave the
-two vfio one for further discussion.
+hw/i386/pc_q35.c:209:43: error: use of undeclared identifier 'ACPI_PM_PROP_ACPI_PCIHP_BRIDGE'
+                              ACPI_PM_PROP_ACPI_PCIHP_BRIDGE,
+                              ^
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/i386/pc_q35.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index e0b3f55a02..45a4102e75 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -30,6 +30,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/units.h"
++#include "hw/acpi/acpi.h"
+ #include "hw/char/parallel-isa.h"
+ #include "hw/loader.h"
+ #include "hw/i2c/smbus_eeprom.h"
 -- 
-Peter Xu
+2.41.0
 
 
