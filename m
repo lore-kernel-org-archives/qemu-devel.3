@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4192C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E30C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:26:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rednQ-0005Hg-Mr; Mon, 26 Feb 2024 11:25:40 -0500
+	id 1rednr-0006Ff-Ng; Mon, 26 Feb 2024 11:26:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rednO-000548-Hk
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:25:38 -0500
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rednK-0001gk-Hx
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:25:36 -0500
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-55a5e7fa471so4415433a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 08:25:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708964733; x=1709569533; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nElDGtBS5T/6qd8QCponMvUB3AnJDsvyWP+1b7EH2jg=;
- b=eIdRicZAMGGwwibwqB5oymlzxW5Ph8SKQPVozfRezoUJtXS1yx3POHGF0ZNlJ16x03
- YALfqOEhNJpT98wNKVGohwHkwNMoRrSL5eyw3avDLEbZ1jjpYu0E4fK3c/NSmGpD8/qk
- iIF1nzIjapsw4hPawijPL6LQrY18gjt72TcrOHszyh8LaOsFNOofW0/44aQTJy0SqbZx
- 3L2XAcBSvDEtivurzI1TAiN4vz+9t5sMV7/wmuMIgwLRDfYRN97B1tqyAJBOUH2wQ2eT
- NQAdjNnUQGBeT/iWSVtzBDPxuTpWySMp6dhEFhfMuCMVJgh+0zLat4ahxjMOp0Qcgbf0
- sjKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708964733; x=1709569533;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nElDGtBS5T/6qd8QCponMvUB3AnJDsvyWP+1b7EH2jg=;
- b=dlQi9X/+964qrJ3ZWaDDHQt7Kd6JLW3b4Ot4PCOVcHLwTMI2RxB9oZL73h9h4i8ZL/
- VjPcUqh5PSgiQtyWmIwjEu6KyzmeKj8fpVYCj8JAR9H3RA5Mth6pM7L+GO4n7ulUlxpE
- prvpJEOzm3/HGbpSY8aue10BVDk449Qap5ZBozDgcxB74qZgvIcIPY3htOTABUHC3vL1
- JLSUZh2jLRFyhhjue+1km5IgXt82NUR9ta8yVvUDzVRYHRTlsNqwVeIGrhNWu3aC8Uzq
- yQJumArUDZTj7YmPm4SBEleb7oqwpBECFI1gue9ObdtHpXH/ihs9gQVa11GZWerm4oXq
- AEew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNYTqAv0VyUqhcmkycEfi3pK5bywbaUG7KCdTzTS7jalR9XhDKNcLScz95uz9ocHnuthPyvHH47brwshLSlNWWWcnnfYo=
-X-Gm-Message-State: AOJu0YwK+a7e6Wd4yZMLmd6vtXJrjj/5cYF4xZ5BoDmcpkDVvLpC7dcv
- Kxsav3W0oA9hQYy3NCH2aQKraYN6TvWDXYKmKu8UojsOjB6b6yWTqwScPyiRfCh446R8GV4AgCw
- pokv5X9RZANqZWzVMK+qt37IOUhn0TjP3Z2MfWrBhFb1BxqEN
-X-Google-Smtp-Source: AGHT+IEfqYcYsjfEoSbsZ9oZBQW6v2BJaQSKmww8A+Rrp/fh8wlyL1uIVp9osKgKZ0IwtUgZfbrKxxwxAuuegEqWM28=
-X-Received: by 2002:aa7:c898:0:b0:566:1745:162d with SMTP id
- p24-20020aa7c898000000b005661745162dmr1064889eds.24.1708964733234; Mon, 26
- Feb 2024 08:25:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1redne-000655-Hc; Mon, 26 Feb 2024 11:25:56 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rednc-0001mv-R2; Mon, 26 Feb 2024 11:25:54 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6B9D550AFA;
+ Mon, 26 Feb 2024 19:26:21 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 251AA89ADB;
+ Mon, 26 Feb 2024 19:25:49 +0300 (MSK)
+Message-ID: <cac29c0d-f67f-4adf-a727-3c06f847ff1c@tls.msk.ru>
+Date: Mon, 26 Feb 2024 19:25:48 +0300
 MIME-Version: 1.0
-References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
- <20240226000259.2752893-40-sergey.kambalin@auriga.com>
-In-Reply-To: <20240226000259.2752893-40-sergey.kambalin@auriga.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Feb 2024 16:25:22 +0000
-Message-ID: <CAFEAcA8SEGvDOW0swyTYJiOPjmd+buoYPGVHXYGjTEY8nTAFWA@mail.gmail.com>
-Subject: Re: [PATCH v6 39/41] Add missed BCM2835 properties
-To: Sergey Kambalin <serg.oker@gmail.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Sergey Kambalin <sergey.kambalin@auriga.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/28] qemu-img: global option processing and error
+ printing
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <cover.1708544927.git.mjt@tls.msk.ru>
+ <20240221211622.2335170-4-mjt@tls.msk.ru> <Zdyw6Z1a8r8atJqi@redhat.com>
+ <ec2c31d2-3847-4212-9365-9decd515ebe4@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <ec2c31d2-3847-4212-9365-9decd515ebe4@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,16 +87,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 at 00:09, Sergey Kambalin <serg.oker@gmail.com> wrote:
->
-> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-> ---
->  hw/misc/bcm2835_property.c           | 21 +++++++++++++++++++++
->  include/hw/arm/raspberrypi-fw-defs.h | 11 +++++++++++
->  2 files changed, 32 insertions(+)
+26.02.2024 18:43, Michael Tokarev wrote:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> The reason is most likely the argv/argc handling (lack of optind reset).
+> In the later change it is fixed but at that stage it's broken.
 
-thanks
--- PMM
+Nope. GNU getopt_long really needs resetting the state.
+Or else it keeps return_in_order/permute/etc setting from
+the previous init call.
+
+So this patch needs tweaking, - the reset must be kept, and argv[0] init
+should be done a bit differently.
+
+An easy change.
+
+/mjt
 
