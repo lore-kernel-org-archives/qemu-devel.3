@@ -4,85 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F035C54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39FEBC5478C
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWOW-0003OM-KX; Mon, 26 Feb 2024 03:31:31 -0500
+	id 1reWQd-0005V2-CU; Mon, 26 Feb 2024 03:33:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reWNm-0002pG-QY
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:30:50 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reWNl-0005mO-Bx
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:30:42 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dc09556599so24260895ad.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:30:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708936239; x=1709541039; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sX+3Krub3diCCCNJrHu+195GG4MbJLHurBfYcEWAXIE=;
- b=DHZzNmeyhVbrH004LOM04B2jSbXOOjfbd1/WJTxuEN9SuzENNWoEa31mTuKa2MhLJ+
- yuVp4EqzEJJD8Zo7gQWI9v+xrOKpP0MY4M2kalfVbRJKfTON7PuWg4IpDDA676xka0As
- 6jSuAck484WfGAtWh/MAg+8YKA+YzRVkOeiyQLfsRRc09UTDmufr3phKX0PLhgLO1bui
- hUdlEqa8L6EA4A4syPyQ05Gs5kcXQ4PXJX/06vBh8dMomnp3L6nOJdpJA4Ad9+pDwpj9
- qbHeRfyHtot1FBeeM3uCsp3fEhkfenNpYs+hEEb0GDlex87aWIiTmk4NX4WX1U/z3MWr
- JlYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708936239; x=1709541039;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sX+3Krub3diCCCNJrHu+195GG4MbJLHurBfYcEWAXIE=;
- b=sfl4gFkVRPIQYzuXIz8u0Wvkw/CFmDUIos/e631QI51HhZThuVW+4orErszc28sA8w
- r2B/bALQ/XDTvKRdLZskgS+odVp39r9QPKRxpP/YhCumQ2eVqD3TJPOUUkbo/Hekg24e
- e2h1D8VZo1BUVubBj7xB0UXmGu1Qp7tnnTWkpd18n2CrVUzCWVIRbb/F4ar12lgvp5v8
- iNuKrKpwSOpozWw7V7rLhG7BW5764Yk1XlJPWINIWEkmRAEDya7/rElFvdJLaQZXiEJS
- h02ojtn6oIIeKqhh8K0btw34vbkY4z6FufZVGFZvUgolVCCfl3PYyrwEVoAIHr5F0aEl
- eOug==
-X-Gm-Message-State: AOJu0YwKRIirugOMzsxLDu6PLPK+9TfvyIG54HJkqPYdmvBzhYaeA/bv
- oxvfMR13Ub6isMh4TziHJ7u3aLe4NpItny6M0XMpjMzg7B1kEa89TX2ny9ji
-X-Google-Smtp-Source: AGHT+IHmTn9JIgmWhSBi+6XQYvJUtdfRfGZUdkQ+N54vLeHeOlM7NxlgyKLrjRRIpYqe4D0MrUA4fg==
-X-Received: by 2002:a17:902:f544:b0:1db:e672:3704 with SMTP id
- h4-20020a170902f54400b001dbe6723704mr9670516plf.33.1708936239680; 
- Mon, 26 Feb 2024 00:30:39 -0800 (PST)
-Received: from wheely.local0.net ([1.146.74.212])
- by smtp.gmail.com with ESMTPSA id
- w16-20020a1709026f1000b001d9641003cfsm3511260plk.142.2024.02.26.00.30.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 00:30:39 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [PATCH v3 7/9] replay: Fix migration use of clock
-Date: Mon, 26 Feb 2024 18:29:43 +1000
-Message-ID: <20240226082945.1452499-8-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240226082945.1452499-1-npiggin@gmail.com>
-References: <20240226082945.1452499-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1reWPR-0004XJ-Vu
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:32:31 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1reWPP-0005zE-0V
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:32:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708936343; x=1740472343;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=WsTR/gAkAzlIQ57Tf6rwYKhkUCHa2v9haeK6E/saU2c=;
+ b=nXtADgs2ct/qt+Arb8v7KY1h0AixT9Bjk0Z+WQj1pCtx4lyTtcdDvO9E
+ fQMqv8aSRk2VL/GduMJtt6cHW5BdaPLtSSJcfFGPKl8Gn2c3Zyz4CpS+i
+ 6uulTSISJHP2xQludEo1Jzj+rnMRyxmZI9pD7hhHDozJEFitFUDCRBJjZ
+ 4xc2siue6llnlXzPsiXjXX5f7oQ5hJVzS7TEZbcFWOJVhKpjm+2AjY2i9
+ k8hoUlLVaUVJ2iA8Ri0j2+Y2dAFQ1DNFVCGHu4wPJldOioQ3TqzeMwIE4
+ rGEH54D5eLsPIAV8txH+YXIH7e97n1BjPNyzxNYs2OVzYQu2Yxg6uX5gg A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="13849589"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="13849589"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 00:32:20 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="11181198"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 26 Feb 2024 00:32:19 -0800
+Date: Mon, 26 Feb 2024 16:46:01 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: Re: [PATCH] atomic.h: Reword confusing comment for qatomic_cmpxchg
+Message-ID: <ZdxPyeqBPAP5hWZD@intel.com>
+References: <20240223182035.1048541-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240223182035.1048541-1-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,57 +78,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration reads host clocks when not holding the replay_mutex, which
-asserts when recording a trace. It seems that the times should be host
-times like other statistics in MigrationState, so this can easily be
-converted.
+On Fri, Feb 23, 2024 at 06:20:35PM +0000, Peter Maydell wrote:
+> Date: Fri, 23 Feb 2024 18:20:35 +0000
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH] atomic.h: Reword confusing comment for qatomic_cmpxchg
+> X-Mailer: git-send-email 2.34.1
+> 
+> The qatomic_cmpxchg() and qatomic_cmpxchg__nocheck() macros have
+> a comment that reads:
+>  Returns the eventual value, failed or not
+> 
+> This is somewhere between cryptic and wrong, since the value actually
+> returned is the value that was in memory before the cmpxchg.  Reword
+> to match how we describe these macros in atomics.rst.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  include/qemu/atomic.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- migration/migration.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-diff --git a/migration/migration.c b/migration/migration.c
-index ab21de2cad..2e794db75c 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3316,7 +3316,7 @@ static void *migration_thread(void *opaque)
- {
-     MigrationState *s = opaque;
-     MigrationThread *thread = NULL;
--    int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
-+    int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     MigThrError thr_error;
-     bool urgent = false;
- 
-@@ -3368,7 +3368,7 @@ static void *migration_thread(void *opaque)
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
--    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-+    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_start;
- 
-     trace_migration_thread_setup_complete();
- 
-@@ -3447,7 +3447,7 @@ static void *bg_migration_thread(void *opaque)
- 
-     migration_rate_set(RATE_LIMIT_DISABLED);
- 
--    setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
-+    setup_start = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     /*
-      * We want to save vmstate for the moment when migration has been
-      * initiated but also we want to save RAM content while VM is running.
-@@ -3480,7 +3480,7 @@ static void *bg_migration_thread(void *opaque)
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
--    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-+    s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_start;
- 
-     trace_migration_thread_setup_complete();
-     migration_downtime_start(s);
--- 
-2.42.0
-
+> 
+> diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+> index f1d3d1702a9..99110abefb3 100644
+> --- a/include/qemu/atomic.h
+> +++ b/include/qemu/atomic.h
+> @@ -202,7 +202,7 @@
+>      qatomic_xchg__nocheck(ptr, i);                          \
+>  })
+>  
+> -/* Returns the eventual value, failed or not */
+> +/* Returns the old value of '*ptr' (whether the cmpxchg failed or not) */
+>  #define qatomic_cmpxchg__nocheck(ptr, old, new)    ({                   \
+>      typeof_strip_qual(*ptr) _old = (old);                               \
+>      (void)__atomic_compare_exchange_n(ptr, &_old, new, false,           \
+> -- 
+> 2.34.1
+> 
+> 
 
