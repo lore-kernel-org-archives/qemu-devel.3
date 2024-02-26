@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91526C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 11:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2C84C54E49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 11:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reYwX-0000cl-4u; Mon, 26 Feb 2024 06:14:45 -0500
+	id 1reYyT-0003xO-IF; Mon, 26 Feb 2024 06:16:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reYwU-0000aa-O4
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 06:14:42 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reYxj-0002xf-0x
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 06:16:02 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reYwS-0008Rk-4G
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 06:14:42 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412a4055897so7474215e9.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 03:14:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reYxf-0000S6-6K
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 06:15:57 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33dc3fe739aso828118f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 03:15:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708946078; x=1709550878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708946152; x=1709550952; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7QBqOyXgT7orA7qPi5TfakjR96hU4MOD2t1dujux2Zs=;
- b=H0ThD5ylskWje9aLan9+WVqTHLInbCs8lyyvkbnzJ3jWfyr+1WogGiFmhSINnO5WM3
- KKloHYofNPb9qluCMG7mtNOxiZaN/DqI4rTSi3ysJ34kfm3KnwWJhIVvNSE/vN2t+uc+
- 0Sz9vZOpZPrGV3oIv1FagFgQpbvOM/rPs4/RIB9RbK8mC8GxtFi9n6SukjYa2W7c3I9F
- ryN7zx8ECZCwRZzjzuzx2D5ObNiVs2cjpvdaUrYNIg/zCAJJi5hlF5t+JUS4J/CGTbTU
- hQqxdpZdHfl6vzyafJFpmXOvAgUvcSozi8SL4Pg5HIuF5Xuj+coYsfN8YWh9Dy19lU/L
- iV9w==
+ bh=NakYM+jWDMcLHNPOOXYJjk0hTuKh2AH8qxOcwl0V/RA=;
+ b=ZjCLDfeTOHrdJ9H0MsgCia5loQblM/OWcqJSOR6/Y2P7u/RwYNg8MWf5jXobAp6yZa
+ HSWWMaAXSMCjnSGbJb3J2b4+dLbmIK2kdG7eDxbgJavoFgN0kfA5Y/NvYq8c7h7xhAVe
+ fhWIallJbR85XBt2RQrUbsi5iBqIHTVQS/TSChPhCAZcGMHdnnBBhtC09iGuokrqPN+d
+ dX4RpdmqGvP+PvQI6fsXKuOFHd9VNu/SIjCC7uu2/fo8YyttU5PB5o1SNBf09FdlOnRl
+ p74xUPch+z4Yx7HBMdnWS90fH3fNggQxakbMtu3qtOnqi3IJGQvg7JOyeYsC0eF2enu4
+ 7mvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708946078; x=1709550878;
+ d=1e100.net; s=20230601; t=1708946152; x=1709550952;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7QBqOyXgT7orA7qPi5TfakjR96hU4MOD2t1dujux2Zs=;
- b=Ih2EfiQKBpZvA5IO3gmGauZG4YEQSaYvUg70DYJvD/F2KiF41M65UHWNvvIfJdu99F
- ijlOcpWFtwJ9bhtMvIpiIeL6iRt/NfJbuQ5Oz3abKY8G5/yxvgk3I5yP+qYUUqY2iFwD
- OjGh6Wi5Q2OQDRRBI8GrLJ1p+O6NT97XMx1xwcaYNWXOTZAY4GRP7OfEaT+S4Nc7ck/c
- x6z8qxsnzqWQ2z1wLYjdwhFdARGNSiCPoRdda2giv+C1UZQoHn3yGIq8DgjFgftM7YBJ
- z3qiQyFpw9wWKyRt3o5YjN+YYEKBn2JiXhdjcu6Epy8jJIji7rb6mkFXV50lsIVPQoC5
- Yy6g==
-X-Gm-Message-State: AOJu0Yxddr/oqynfAknNM9+td487vDtctwtkFq7Y1xbJmhN86KVqjjyN
- I+dOFgRSIwij5x33UojqTG9XIFbvzNAvsAEPDHbss2ZoXEwF5BSc8lBZKLykVJnmRTvMwf3v5az
- 1
-X-Google-Smtp-Source: AGHT+IHwuvebxgZaX3nPwlCy9vfi9tPjsJPtUQYGi5V/cqQf9DvYjIwJwpP61R+qjgYpWztCNyKgIw==
-X-Received: by 2002:a05:600c:2e04:b0:410:a039:ed5d with SMTP id
- o4-20020a05600c2e0400b00410a039ed5dmr5953078wmf.33.1708946078313; 
- Mon, 26 Feb 2024 03:14:38 -0800 (PST)
+ bh=NakYM+jWDMcLHNPOOXYJjk0hTuKh2AH8qxOcwl0V/RA=;
+ b=DgFMX3HRkqd7UcjjfXjFogJa3XMYPcARh5mPE/tcwi6pt7nck4XGchle+RVAhFzKdW
+ lYlPVPdkcgbWbzewEdK33D04pgQcmo4A7FOZ1eIRCbocyPWaKCviQF4aWGYTAL+07eyb
+ PC1pyek2R7zRT+nTvDlXIsruxMHswX9pgeeeJrkKlJJfgfN6ASwWPa9EXYiI1IjNAh6x
+ /FIv2vVajPBcqYAsEu2y59ieVO+PT+yWAD+P4/9qTZ0UNP/ktG0GWto58FfrXGgdLjn6
+ vI8KGC7Euy5bLwgBcaXYr8lzSrWOW2/6eSdCaHCgGRjQvuew0DglGx/qjs5G9nzDLIPY
+ rNig==
+X-Gm-Message-State: AOJu0YxRXcYs0rigdApCYj9fCm5nrtAKY+d32wXx3efLV2q2QpO/IXNL
+ 5ZWoxDTLAJSpadNMGWMNmpoSaIiffkmabtLisqu/iuKufJyDjXDHM3gPI6lK1MFU6Ho2YzwbN3+
+ e
+X-Google-Smtp-Source: AGHT+IGEe+7RhEBIaT1I5YKLlMeKEK0DxU6RaOXo6TAWssiOiM2DfXepLVmdDt2AL2yBMO/24f6nFA==
+X-Received: by 2002:a5d:4b8f:0:b0:33d:d7be:5852 with SMTP id
+ b15-20020a5d4b8f000000b0033dd7be5852mr2096555wrt.2.1708946151894; 
+ Mon, 26 Feb 2024 03:15:51 -0800 (PST)
 Received: from m1x-phil.lan ([176.176.164.69])
  by smtp.gmail.com with ESMTPSA id
- 9-20020a05600c020900b004104bc8d841sm11534200wmi.13.2024.02.26.03.14.36
+ q1-20020adffec1000000b0033cf80ad6f5sm7903422wrs.60.2024.02.26.03.15.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Feb 2024 03:14:37 -0800 (PST)
+ Mon, 26 Feb 2024 03:15:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Bernhard Beschow <shentey@gmail.com>
@@ -69,18 +69,18 @@ Cc: Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 03/15] hw/acpi/ich9: Restrict definitions from
- 'hw/southbridge/ich9.h'
-Date: Mon, 26 Feb 2024 12:14:02 +0100
-Message-ID: <20240226111416.39217-4-philmd@linaro.org>
+Subject: [PATCH v2 15/15] hw/southbridge/ich9: Add the LPC / ISA bridge
+ function
+Date: Mon, 26 Feb 2024 12:14:14 +0100
+Message-ID: <20240226111416.39217-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240226111416.39217-1-philmd@linaro.org>
 References: <20240226111416.39217-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,84 +103,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict ACPI definitions from "hw/southbridge/ich9.h"
-to the ACPI files where they are used.
+Instantiate TYPE_ICH9_LPC_DEVICE in TYPE_ICH9_SOUTHBRIDGE.
+
+Expose the SMM property so the Q35 machine can disable it
+(depending on the accelerator used).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/acpi/ich9.h        | 15 +++++++++++++++
- include/hw/southbridge/ich9.h | 18 ------------------
- hw/acpi/ich9.c                |  4 ++++
- 3 files changed, 19 insertions(+), 18 deletions(-)
+ include/hw/southbridge/ich9.h |  4 ----
+ hw/i386/pc_q35.c              | 20 ++++++--------------
+ hw/isa/ich9_lpc.c             |  3 +++
+ hw/southbridge/ich9.c         | 15 +++++++++++++++
+ hw/i386/Kconfig               |  1 -
+ hw/southbridge/Kconfig        |  1 +
+ 6 files changed, 25 insertions(+), 19 deletions(-)
 
-diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
-index 215de3c91f..3587a35c9f 100644
---- a/include/hw/acpi/ich9.h
-+++ b/include/hw/acpi/ich9.h
-@@ -91,4 +91,19 @@ void ich9_pm_device_unplug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
- bool ich9_pm_is_hotpluggable_bus(HotplugHandler *hotplug_dev, BusState *bus);
- 
- void ich9_pm_ospm_status(AcpiDeviceIf *adev, ACPIOSTInfoList ***list);
-+
-+#define ICH9_PMIO_PM1_STS                       0x00
-+#define ICH9_PMIO_PM1_EN                        0x02
-+#define ICH9_PMIO_PM1_CNT                       0x04
-+#define ICH9_PMIO_PM1_TMR                       0x08
-+#define ICH9_PMIO_GPE0_STS                      0x20
-+#define ICH9_PMIO_GPE0_EN                       0x28
-+#define ICH9_PMIO_GPE0_LEN                      16
-+#define ICH9_PMIO_SMI_EN                        0x30
-+#define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
-+#define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
-+#define ICH9_PMIO_SMI_STS                       0x34
-+#define ICH9_PMIO_TCO_RLD                       0x60
-+#define ICH9_PMIO_TCO_LEN                       32
-+
- #endif /* HW_ACPI_ICH9_H */
 diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-index fd01649d04..1ac4238f7e 100644
+index d6c3b5ece3..a8da4a8665 100644
 --- a/include/hw/southbridge/ich9.h
 +++ b/include/hw/southbridge/ich9.h
-@@ -183,24 +183,6 @@ struct ICH9LPCState {
- /* D31:F0 power management I/O registers
-    offset from the address ICH9_LPC_PMBASE */
+@@ -16,10 +16,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(ICH9State, ICH9_SOUTHBRIDGE)
+ #define ICH9_PCIE_DEV                           28
+ #define ICH9_PCIE_FUNC_MAX                      6
  
--/* ICH9 LPC PM I/O registers are 128 ports and 128-aligned */
--#define ICH9_PMIO_SIZE                          128
--#define ICH9_PMIO_MASK                          (ICH9_PMIO_SIZE - 1)
+-/* D31:F1 LPC controller */
+-#define ICH9_LPC_DEV                            31
+-#define ICH9_LPC_FUNC                           0
 -
--#define ICH9_PMIO_PM1_STS                       0x00
--#define ICH9_PMIO_PM1_EN                        0x02
--#define ICH9_PMIO_PM1_CNT                       0x04
--#define ICH9_PMIO_PM1_TMR                       0x08
--#define ICH9_PMIO_GPE0_STS                      0x20
--#define ICH9_PMIO_GPE0_EN                       0x28
--#define ICH9_PMIO_GPE0_LEN                      16
--#define ICH9_PMIO_SMI_EN                        0x30
--#define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
--#define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
--#define ICH9_PMIO_SMI_STS                       0x34
--#define ICH9_PMIO_TCO_RLD                       0x60
--#define ICH9_PMIO_TCO_LEN                       32
--
- /* FADT ACPI_ENABLE/ACPI_DISABLE */
- #define ICH9_APM_ACPI_ENABLE                    0x2
- #define ICH9_APM_ACPI_DISABLE                   0x3
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 6205de6046..4c75d1b56b 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -49,6 +49,10 @@ do { printf("%s "fmt, __func__, ## __VA_ARGS__); } while (0)
- #define ICH9_DEBUG(fmt, ...)    do { } while (0)
- #endif
+ #define ICH9_GPIO_GSI "gsi"
  
-+/* ICH9 LPC PM I/O registers are 128 ports and 128-aligned */
-+#define ICH9_PMIO_SIZE                          128
-+#define ICH9_PMIO_MASK                          (ICH9_PMIO_SIZE - 1)
+ #define ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP "x-smi-negotiated-features"
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 14df9e910b..31ab0ae77b 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -50,7 +50,6 @@
+ #include "hw/ide/ahci-pci.h"
+ #include "hw/intc/ioapic.h"
+ #include "hw/southbridge/ich9.h"
+-#include "hw/isa/ich9_lpc.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "sysemu/numa.h"
+@@ -67,9 +66,7 @@ static void pc_q35_init(MachineState *machine)
+     X86MachineState *x86ms = X86_MACHINE(machine);
+     Object *phb;
+     DeviceState *ich9;
+-    PCIDevice *lpc;
+     Object *lpc_obj;
+-    DeviceState *lpc_dev;
+     MemoryRegion *system_memory = get_system_memory();
+     MemoryRegion *system_io = get_system_io();
+     MemoryRegion *pci_memory = g_new(MemoryRegion, 1);
+@@ -168,24 +165,19 @@ static void pc_q35_init(MachineState *machine)
+     object_property_add_child(OBJECT(machine), "ich9", OBJECT(ich9));
+     object_property_set_link(OBJECT(ich9), "mch-pcie-bus",
+                              OBJECT(pcms->pcibus), &error_abort);
++    for (i = 0; i < IOAPIC_NUM_PINS; i++) {
++        qdev_connect_gpio_out_named(ich9, ICH9_GPIO_GSI, i, x86ms->gsi[i]);
++    }
+     qdev_prop_set_bit(ich9, "d2p-enabled", false);
++    qdev_prop_set_bit(ich9, "smm-enabled", x86_machine_is_smm_enabled(x86ms));
+     qdev_prop_set_bit(ich9, "sata-enabled", pcms->sata_enabled);
+     qdev_prop_set_bit(ich9, "smbus-enabled", pcms->smbus_enabled);
+     /* Should we create 6 UHCI according to ich9 spec? */
+     qdev_prop_set_uint8(ich9, "ehci-count", machine_usb(machine) ? 1 : 0);
+     qdev_realize_and_unref(ich9, NULL, &error_fatal);
+ 
+-    /* create ISA bus */
+-    lpc = pci_new_multifunction(PCI_DEVFN(ICH9_LPC_DEV, ICH9_LPC_FUNC),
+-                                TYPE_ICH9_LPC_DEVICE);
+-    lpc_obj = OBJECT(lpc);
+-    lpc_dev = DEVICE(lpc);
+-    qdev_prop_set_bit(lpc_dev, "smm-enabled",
+-                      x86_machine_is_smm_enabled(x86ms));
+-    for (i = 0; i < IOAPIC_NUM_PINS; i++) {
+-        qdev_connect_gpio_out_named(lpc_dev, ICH9_GPIO_GSI, i, x86ms->gsi[i]);
+-    }
+-    pci_realize_and_unref(lpc, pcms->pcibus, &error_fatal);
++    /* ISA bus */
++    lpc_obj = object_resolve_path_component(OBJECT(ich9), "lpc");
+ 
+     x86ms->rtc = ISA_DEVICE(object_resolve_path_component(lpc_obj, "rtc"));
+ 
+diff --git a/hw/isa/ich9_lpc.c b/hw/isa/ich9_lpc.c
+index 17d4a95bd2..2339f66e0f 100644
+--- a/hw/isa/ich9_lpc.c
++++ b/hw/isa/ich9_lpc.c
+@@ -54,6 +54,9 @@
+ #include "hw/acpi/acpi_aml_interface.h"
+ #include "trace.h"
+ 
++#define ICH9_LPC_DEV                            31
++#define ICH9_LPC_FUNC                           0
 +
- static void ich9_pm_update_sci_fn(ACPIREGS *regs)
+ #define ICH9_A2_LPC_REVISION                    0x2
+ #define ICH9_LPC_NB_PIRQS                       8       /* PCI A-H */
+ 
+diff --git a/hw/southbridge/ich9.c b/hw/southbridge/ich9.c
+index f05012959d..521925b462 100644
+--- a/hw/southbridge/ich9.c
++++ b/hw/southbridge/ich9.c
+@@ -13,6 +13,7 @@
+ #include "hw/southbridge/ich9.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci-bridge/ich9_dmi.h"
++#include "hw/isa/ich9_lpc.h"
+ #include "hw/ide/ahci-pci.h"
+ #include "hw/ide/ide-dev.h"
+ #include "hw/i2c/ich9_smbus.h"
+@@ -21,6 +22,7 @@
+ #include "hw/usb/hcd-uhci.h"
+ 
+ #define ICH9_D2P_DEVFN          PCI_DEVFN(30, 0)
++#define ICH9_LPC_DEVFN          PCI_DEVFN(31, 0)
+ #define ICH9_SATA1_DEVFN        PCI_DEVFN(31, 2)
+ #define ICH9_SMB_DEVFN          PCI_DEVFN(31, 3)
+ #define ICH9_EHCI_FUNC          7
+@@ -34,6 +36,7 @@ struct ICH9State {
+ 
+     I82801b11Bridge d2p;
+     AHCIPCIState sata0;
++    ICH9LPCState lpc;
+     ICH9SMBState smb;
+     EHCIPCIState ehci[EHCI_PER_FN];
+     UHCIState uhci[EHCI_PER_FN * UHCI_PER_FN];
+@@ -57,6 +60,14 @@ static Property ich9_props[] = {
+ 
+ static void ich9_init(Object *obj)
  {
-     ICH9LPCPMRegs *pm = container_of(regs, ICH9LPCPMRegs, acpi_regs);
++    ICH9State *s = ICH9_SOUTHBRIDGE(obj);
++
++    object_initialize_child(obj, "lpc", &s->lpc, TYPE_ICH9_LPC_DEVICE);
++    qdev_pass_gpios(DEVICE(&s->lpc), DEVICE(s), ICH9_GPIO_GSI);
++    qdev_prop_set_int32(DEVICE(&s->lpc), "addr", ICH9_LPC_DEVFN);
++    qdev_prop_set_bit(DEVICE(&s->lpc), "multifunction", true);
++    object_property_add_alias(obj, "smm-enabled",
++                              OBJECT(&s->lpc), "smm-enabled");
+ }
+ 
+ static bool ich9_realize_d2p(ICH9State *s, Error **errp)
+@@ -163,6 +174,10 @@ static void ich9_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    if (!qdev_realize(DEVICE(&s->lpc), BUS(s->pci_bus), errp)) {
++        return;
++    }
++
+     if (s->sata_enabled && !ich9_realize_sata(s, errp)) {
+         return;
+     }
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index 226d7f6916..eccc834e49 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -100,7 +100,6 @@ config Q35
+     select PC_ACPI
+     select PCI_EXPRESS_Q35
+     select ICH9
+-    select LPC_ICH9
+     select DIMM
+     select SMBIOS
+     select FW_CFG_DMA
+diff --git a/hw/southbridge/Kconfig b/hw/southbridge/Kconfig
+index 31eb125bf7..8ce62b703c 100644
+--- a/hw/southbridge/Kconfig
++++ b/hw/southbridge/Kconfig
+@@ -8,3 +8,4 @@ config ICH9
+     select ACPI_ICH9
+     imply USB_EHCI_PCI
+     imply USB_UHCI
++    select LPC_ICH9
 -- 
 2.41.0
 
