@@ -4,88 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A265C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF567C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reVuJ-00022C-Fs; Mon, 26 Feb 2024 03:00:15 -0500
+	id 1reVvA-00033j-Ef; Mon, 26 Feb 2024 03:01:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reVuG-00020z-P0
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:00:12 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reVuB-0000MS-Fi
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:00:12 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33d26da3e15so1402790f8f.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:00:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708934406; x=1709539206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tocygTPe2CdZOmeFdwrBgDUzjE4zNS6gAo1CazRChe8=;
- b=XxoEnQRytQMNeW+5KRBNJZp3GxviUHrMaI1zmW/F+HPevazC/p4hukikvZcPP82dYf
- joE6Sm1dC1CuoOjffYC91JAEoIUkTNWirtKAtsa41ybAGTFe1khXyCo+abyyGeRudHHw
- 6d77ypkIxQ87+mdXgX7BOEV0R6FPPVsLBhhNiyQpIF7jrxSQcBXrWmkkhajFu97umFLn
- 4nI0TTaq2VL9HjrQcS2Kay1Ra7zIsYCtXbLlf0xGoLFs12wZgI0vr0hswX+oS0PxINMC
- LqLyiIu9Y+9wEzJxwy+oKwEJU3FtyVQFJTSkE0rbOBvr7XtJJf0s/fElRLPCMOt3MWk0
- a6cw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reVv4-00030K-SP
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:01:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reVv2-0000XD-Pg
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:01:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708934460;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=/UiYJyxUM9xkP4u0DXwmFcgzWF7AV2LuaiRxAZcLzb8=;
+ b=SAiTcG07iTRgk2pzDJzdDQdEXov84ks10pj/OuU03wJknJsn5AaHcaplBcTLWXYk10aonX
+ gIAK1/zyXLxQSgcC/N47GRJSQdiwHMy6Fg+N7fREZWo2J+qNrxPsJVMPS46pxQY0H4GZra
+ n8LrYoIEGfbNuuKvcRQfUwQUbV+k6pA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-196-k8MR_-XFMm-DiWq7YH4FNA-1; Mon, 26 Feb 2024 03:00:58 -0500
+X-MC-Unique: k8MR_-XFMm-DiWq7YH4FNA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33d256ca4c8so2039433f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:00:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708934406; x=1709539206;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1708934457; x=1709539257;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tocygTPe2CdZOmeFdwrBgDUzjE4zNS6gAo1CazRChe8=;
- b=LzlOCk6hLRPaMc2OUC3JZKahDkS4PmPNH5U4c7NsZvoJLN+xRm4PKYpn6AqAb9qiAn
- qbfoIThlZH+lRt440nZTfh+EaNPUASV00Ci0xMTwWC53aM7dfIBK4JLnETBkoSoyovTd
- cCrpfiS6K7Z7t99x5SfLLRcdIRqWwRyyfiXZDpJpqyunFQLJVtPvYgMPDjLOVtSf7TmB
- u0Uz55+OloQUdO6LMPenmWWRBcd6PLzPTKJ8fllFwbmvL1ihfrs1viyjBCav8A6fou+R
- /3ns43UdFvbdcdZIqZQC3K2PFoOXrFL7OBllxe0Yw97JMmci7Tw0itlHU4UyhED7e/3D
- JroQ==
-X-Gm-Message-State: AOJu0YytUDwqu9jUzLydIHS21iO4DiCJJ98YYrDm/+cyxwi8x+1m/uU5
- A2du8y1nU0LfTTXhqbkKpKZ4rlaa5+IQtZBhSEwkAYnmNGnDxqgdOWK8eOZAjxU=
-X-Google-Smtp-Source: AGHT+IGVZ0Dw93E+6XEnZTIPq+HxhbA2RwBAPV/8Oez2hQNVXFRofnnRggURvWMN8XixKtQLAXq1Cg==
-X-Received: by 2002:adf:ce10:0:b0:33d:7682:49a8 with SMTP id
- p16-20020adfce10000000b0033d768249a8mr290647wrn.16.1708934405686; 
- Mon, 26 Feb 2024 00:00:05 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.164.69])
- by smtp.gmail.com with ESMTPSA id
- a7-20020a056000188700b0033d926bf7b5sm7521110wri.76.2024.02.26.00.00.04
+ bh=/UiYJyxUM9xkP4u0DXwmFcgzWF7AV2LuaiRxAZcLzb8=;
+ b=dXuXXr3ZAOLYlVPylPqutxCy/ySQKqe4dz2twfCXru0jhpWs9+BpycsB7aKCtdNVqv
+ nklRGLcaNyit4FS3ekJiVPwmaA1th92kSZeAdpEAIN2QMqnnUjOnwV7JlAKjfZOI05kr
+ 5ZxBfmVwfXb4AB2pRXKzyLm01jmuMxRjl8no1aKUDaZK6IcFPJxajnQ6kVwZ73iiZUGu
+ +VuKu0jnIWF1tylzsfoRiCFZ3Trmy8eE2K/vFlTbRIF9GUAk1YIrTPXBi6n9brS53BNT
+ YlF+p+3IXAznWfZ5b/E4IPKyjyA2NVDXrej8csnbOcsv3Tfq5UfOI2o/DNXcnZix/V9s
+ PvLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhurXZy1qA2C8M65BpXECdEomzuMCTV5Kpj4K4tY1M+VJPxCs76sUitKSNr0tZpVteIpeUXJuWdivI/5fANEzGcZu+/lc=
+X-Gm-Message-State: AOJu0YxKkGCNqT7q5O6q3FDq/AAChaXZNnmYxzcjA8ItVcPPLvlQ3Gw6
+ 7mouvmWol9UAdSQxehpnQoAYJGez5BemDG69K6xsbOxJNHa8MaJ3G5ldaxvXmP/UV8XbRxrvCqR
+ Y4Jrhi1JT8/AyMi8+eevuuePHd3uxbK1vy0YWH9xciNJ4sMNf1A6F
+X-Received: by 2002:a5d:52cb:0:b0:33d:7d88:cae5 with SMTP id
+ r11-20020a5d52cb000000b0033d7d88cae5mr3727522wrv.69.1708934456825; 
+ Mon, 26 Feb 2024 00:00:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGmNFLl3tqkzaPnqmTLQcYdWn6bah9dgXfZx8TzblXVMaLt+QvwiwmKsPuMtHS4ehwHt6uz2w==
+X-Received: by 2002:a5d:52cb:0:b0:33d:7d88:cae5 with SMTP id
+ r11-20020a5d52cb000000b0033d7d88cae5mr3727508wrv.69.1708934456544; 
+ Mon, 26 Feb 2024 00:00:56 -0800 (PST)
+Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
+ [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
+ t9-20020adfeb89000000b0033dbeb2eb4dsm7236248wrn.110.2024.02.26.00.00.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 00:00:05 -0800 (PST)
-Message-ID: <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
-Date: Mon, 26 Feb 2024 09:00:03 +0100
+ Mon, 26 Feb 2024 00:00:56 -0800 (PST)
+Message-ID: <93bdd39e-c3bf-4854-b724-1500f86a8388@redhat.com>
+Date: Mon, 26 Feb 2024 09:00:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] hw/ide: Include 'ide_internal.h' from current path
+Subject: Re: [PATCH 6/6] tests/qtest: Add ivshmem-flat test
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240225171637.4709-1-philmd@linaro.org>
- <20240225171637.4709-4-philmd@linaro.org>
- <feffd329-59e0-0291-0dd6-76a625da190b@eik.bme.hu>
- <878r37lll6.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <878r37lll6.fsf@pond.sub.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org
+Cc: lvivier@redhat.com, qemu-arm@nongnu.org, alex.bennee@linaro.org,
+ pbonzini@redhat.com, anton.kochkov@proton.me, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+References: <20240222222218.2261956-1-gustavo.romero@linaro.org>
+ <20240222222218.2261956-7-gustavo.romero@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240222222218.2261956-7-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,26 +149,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/2/24 08:40, Markus Armbruster wrote:
-> BALATON Zoltan <balaton@eik.bme.hu> writes:
+On 22/02/2024 23.22, Gustavo Romero wrote:
+> This commit adds a qtest for the ivshmem-flat device to test memory
+> sharing, IRQ triggering, and the memory mapped registers in the device.
 > 
->> On Sun, 25 Feb 2024, Philippe Mathieu-Daudé wrote:
->>> Rename "internal.h" as "ide_internal.h", and include
->>
->> Is there a convention about using underscore or dash in file names? The headers Thomas added are using - as well as ahci-allwinner.c, only ahci_internal.h has _ (but there are others elsewhere such as pci_device.h). Maybe we should be consistent at least within IDE and this series is now a good opportunity for renaming these headers to match. But it's just a small nit, thanks for picking this up.
-> 
-> This is one of the many unnecessary inconsistencies we're inflicting on
-> ourselves.
-> 
-> We have more than 3600 file names containing '-', and more almost 2700
-> containing '_'.  Bizarrely, 68 of them contain both.
-> 
-> I strongly prefer '_' myself.
-> 
-> Zoltan is making a local consistency argument for '-'.
-> 
-> Let's use '-' here.
+> Based-on: https://lists.gnu.org/archive/html/qemu-devel/2023-11/msg03176.html
+> Message-ID: <20231127052024.435743-4-gustavo.romero@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   tests/qtest/ivshmem-flat-test.c | 338 ++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build         |   2 +
+>   2 files changed, 340 insertions(+)
+>   create mode 100644 tests/qtest/ivshmem-flat-test.c
 
-Fine, patch updated.
+
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
