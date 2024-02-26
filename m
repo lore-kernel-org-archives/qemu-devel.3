@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D86BC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C9BC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 16:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1redmn-00048M-3P; Mon, 26 Feb 2024 11:25:01 -0500
+	id 1redmz-0004OU-Nt; Mon, 26 Feb 2024 11:25:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1redmj-00044P-Qy
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:24:59 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1redmx-0004F3-O1
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:25:11 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1redmg-0001IS-7x
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:24:57 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-565a3910f86so3128157a12.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 08:24:52 -0800 (PST)
+ id 1redmw-0001V2-6N
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:25:11 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5655c7dd3b1so5167162a12.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 08:25:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708964692; x=1709569492; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708964708; x=1709569508; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QWK/x+n65Ya6ddEAD/ARo1Y0xXgsCF/MLY528U2ZJak=;
- b=fTrsY1CSNAv8NmP/n8mcNc/pKfZxyd7c7FzjVhrnQVRryp8T3c5frZ2k6o3tMxVFTf
- MkMmsbbHIoETEcAzQXlAYrUPs2m4g1crJehI+DSp5F9j6bUPgR+59/Kg15X7EJrOvzVk
- WFlQQvj4ND3Trl7AfJGt9DmQxluqVMICxfo1neDuHCP+twGmSM5vuXrJl6VSfbk6a3tR
- 5H7OTiRJ3n7XcwSS5hs51MJzp4n7UKjLUrmyYOo7ss9xTzaKTMfTFJVnaMXz+BJ4WwZ4
- COmhSu4Nq8HHHRcr9kzFAtrxc9sJmQaku6e0f0BMfIHVJdd0Ov3q5MlR9yC0nT5YADI8
- 8BhQ==
+ bh=k7GJMaif4C8touOdi6/5ipo4KREU60REdl/IFOMu7UI=;
+ b=oWm41z8wW2N2hNu9wI2SBu1Ty0Lj6edA6ygzbAFYJ1+i6YODIN9Jh88O7DnF0ZaURt
+ ILvNCdqs/B5xDIs7K1BhvP4Tok8uaFpbutqUZnCl31wxym3DEfrtAjUlee8kVjNJFZrM
+ enoYripUemFK2rWxfddYYNnqkn6EowNIAIm7mLfYETSX2DoXHrwopqBhJjoZFRUbD+bt
+ Qnq1lVRlUOfV+SthtPk2R8m1uEmNGsOO1LP6Wu5Dvl747a3EkY9jLjqvg6HDH++JDOkP
+ R4DBE0bzXz5HpeVPxEUmGJ3eSM6crV2fVOYW0RcgF9v0s0CitF7jiuiVqXRbtI2Tl77a
+ WYJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708964692; x=1709569492;
+ d=1e100.net; s=20230601; t=1708964708; x=1709569508;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QWK/x+n65Ya6ddEAD/ARo1Y0xXgsCF/MLY528U2ZJak=;
- b=fSTJeqsL09ui6G8bAdQqlHsDlbs7Zrj+/fBz2iZZ1DN+oLRlZQM1a72ODsaKzvBzYA
- lQz4TSClmSoD6csYuljoMoD9dy2Zcrxe3ncDw2AgXL/AD6g9n+vOkIc401ceqOQcd8Rs
- X9j/2TuTHG/sY0eZeN6g2YlFdGEN2B5NG4pp3jX05uekkGOnFYdB7YW0Y55DOSZp/g/m
- lIGSS+6LBE8Gth10JSC8aPqn4H2nXxza+tFEmVGvPYJRN6fKnrx7OFsPFcejgNU+tfOu
- fQaXWJ5TCBXHiLbdzrxI3PfVf6Tjqn+gqf+aEY7xnDqOWaFhyRYG6tzvLXMeZYFwE6O0
- cQPw==
+ bh=k7GJMaif4C8touOdi6/5ipo4KREU60REdl/IFOMu7UI=;
+ b=S1WM/ywdtQxj/jKeOkrnA8d9Q8BQT58NHozQaFO8zpP2+P64omFBZNIgEObtdulwf6
+ gkywnKdTcseWjbAxAua3LxGj4kWMSPzXXK/mK7jDKGt7ZKjXE+VZxYGLCtNdVvS3N4C7
+ GIfUulHkIRC6IWWkVHBfvLm+S49DBTwj64hYmHfAu7Z87woA15TB7/lTuAoJVYxKsBIE
+ 2eAGvmrXjvEyvY2HqwzQGAgrxBlunRq1hIvs5ef7+oT91B9xU8CZ6HUBQI7Qyp1ePUUe
+ HqP+OTkCUdfwfoBZXGlhMMJkleqMtxqe1ETxNjIQjSudTCyuFenmi5rqtnKkWsPucv3V
+ tS+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHoPh2mjfIhuWc2M/bntBworWUJ0L+fdNX8xj2HobfTvLpM7Uk659lnT5h3whb1/p/zyQllbB2EXj5UpH+1pCIGYdx/6I=
-X-Gm-Message-State: AOJu0YzNR5BjuAQK6TKpL3I3k/C2WCq3N13iOUzrNt6SuHGVFuGhWYq8
- KO9qPAjDDTAi9Yu8dcV/ggwn4hPKCpL0+594OZVSuuSpXRQ8R06CTliNfV9vRgutYH4NRTzyW2K
- mit3tQwS+dXZifxcRy2WmF3YHFrZ5l6e4tRyuzA==
-X-Google-Smtp-Source: AGHT+IGlduWPmAHugonfF1YhR1rEdiOcc8MxpTC1UQFFaCBKHygNLSyLCdMEBDbgv1GMZuS7oQ9n32pKxhtz99nX1kw=
-X-Received: by 2002:aa7:c419:0:b0:565:a000:ec93 with SMTP id
- j25-20020aa7c419000000b00565a000ec93mr4073136edq.20.1708964691933; Mon, 26
- Feb 2024 08:24:51 -0800 (PST)
+ AJvYcCWRnKUw/DeSxTI4IVxO2k7wT7eMJMcaD7nTHkCzWXszS2As//bmrT54XAZTIIMuE4pwk/xUslnnq6fBcg3JpwgQryuKIh8=
+X-Gm-Message-State: AOJu0YwMivqKxPgXC3wz52xadD2sfKGHiirKgk6TivFD7FlJRO15zspD
+ mSxY5bQjuw881O5Lftx+wWRY4lEk6MEBdwuQ+IbBAkUi2l39evc/Q5qlcxKay4sFVZUm6VQ1FUk
+ sECgjNQTEp2Ku3F49nkdDpPtaVSFcKRX5vScN0Q==
+X-Google-Smtp-Source: AGHT+IEeQjbY3m4ba4Ngaen+gr8r1i4V6uJfx1kWJsJBD/jM6d5SxuXIkWNqdYI/nC8jbIn3E272A1Ug+z/bwpD67wA=
+X-Received: by 2002:a05:6402:5249:b0:566:2be1:b0e0 with SMTP id
+ t9-20020a056402524900b005662be1b0e0mr52634edd.9.1708964708725; Mon, 26 Feb
+ 2024 08:25:08 -0800 (PST)
 MIME-Version: 1.0
 References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
- <20240226000259.2752893-38-sergey.kambalin@auriga.com>
-In-Reply-To: <20240226000259.2752893-38-sergey.kambalin@auriga.com>
+ <20240226000259.2752893-39-sergey.kambalin@auriga.com>
+In-Reply-To: <20240226000259.2752893-39-sergey.kambalin@auriga.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Feb 2024 16:24:41 +0000
-Message-ID: <CAFEAcA8WkH6092rugK_30O7o9fkiqX=TeHw6TJ3T=5AfG8A9yg@mail.gmail.com>
-Subject: Re: [PATCH v6 37/41] Add mailbox property tests. Part 2
+Date: Mon, 26 Feb 2024 16:24:58 +0000
+Message-ID: <CAFEAcA8tVARcCph9dN=+ZYz0=-0tO3WAcbTGhc=+MuqFhomkOw@mail.gmail.com>
+Subject: Re: [PATCH v6 38/41] Add mailbox property tests. Part 3
 To: Sergey Kambalin <serg.oker@gmail.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
  Sergey Kambalin <sergey.kambalin@auriga.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,8 +95,8 @@ On Mon, 26 Feb 2024 at 00:07, Sergey Kambalin <serg.oker@gmail.com> wrote:
 >
 > Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
 > ---
->  tests/qtest/bcm2838-mbox-property-test.c | 196 ++++++++++++++++++++++-
->  1 file changed, 195 insertions(+), 1 deletion(-)
+>  tests/qtest/bcm2838-mbox-property-test.c | 213 ++++++++++++++++++++++-
+>  1 file changed, 212 insertions(+), 1 deletion(-);
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
