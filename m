@@ -4,108 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EADC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 07:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C48C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 07:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reVVQ-0002qj-EE; Mon, 26 Feb 2024 02:34:32 -0500
+	id 1reVVd-0002tp-6q; Mon, 26 Feb 2024 02:34:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1reVV6-0002m5-Hi
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:34:14 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1reVUw-0003ok-Tx
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:34:08 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412a5de8a06so2310595e9.2
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 23:33:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708932836; x=1709537636; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PqbO8Zo3BK0NNwhfT/8Qo3PiBudESu5zoLxwvaadXDw=;
- b=J7Vi8LgxXwaHBLB6M02qs/2y4Rt8Y+jt3nT2oUs+2Xgtb0kuKxtM8O/ilYh5BRMg7n
- kVBzdtAth1wtscbcI6kBQiAUbUuQaRqRHeu7d1eHZ/Bw3wRIItUhIKutL2MQEjoIW8M8
- qZNz23lWHVb3In7hxaf4xKgfT32zXTzUlJQXgGC7a9UvyMrvcpF34ePc9862af7JWX4K
- oQ/4rhSkeZkrXgo0mHTlTVMa8DvSigyeGG8nrxm7ejkSf3C6tblukwf4kKkgdyVe5D9R
- +1s4Kr9+wQlMp9Dxihx36kspW634DWNxlT0/bLd7VT/2SnxgTdwJejE8ufRVEH2goDmE
- 31uw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reVVb-0002tV-64
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:34:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reVVX-0003sf-A2
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 02:34:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708932877;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NfTc6fSMO0CdQITTz5OZREVrUXh3OXtN6aLdSPJu01g=;
+ b=B75oujsLQCMXFkq+pIc5hJPscG35MGXB4nQt4asw6GlAQfjhq53OuGdLU0W7zxHNCWgQIy
+ 7+2A6WFw+qkgn5odO/i38tLKmUdwWHHAFBZxDRaXklY6+6LvzH3s/IreXi2sBWTnZpuqvV
+ wJEapMNlDzpVI2VU5aqWOcPI4vy59I0=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-pv8-ju64M4qHB4G5fIImWQ-1; Mon, 26 Feb 2024 02:34:36 -0500
+X-MC-Unique: pv8-ju64M4qHB4G5fIImWQ-1
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-21edf18bbbcso73580fac.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 23:34:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708932836; x=1709537636;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PqbO8Zo3BK0NNwhfT/8Qo3PiBudESu5zoLxwvaadXDw=;
- b=qfyj4Hr8vBQBILK8MNum15W6IscM02RycNtyQrCRoG6euBFuGiIU/4UqHKDOkbS1sj
- f2YqlDl+KGWnDq6TttKyTmfYjbIEggS/kk7boOiwCcX09h+sonu4acWG7fV5Cng6qrx5
- 1m42angsHj1RSich5tdla8emX9q5kb2pwkBPGm74PK+hR0/OiQJP1XoV8mvRjmHBEUom
- YLpPldgFfq8471k9qMIKqIdz3yINOrYQDMWaEDs9aCx+/9loDa/J992oKIEZb7OAc3bA
- ATuQ+d/qwvEXG+B9VO+LFD89BOl+aakCxfFAQRT7HemJcmYJobAR8UoaqRzLGPUkDZVZ
- F1eA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDEGsVk1jZhvzXUCkLiYY8HvN+NP+UFk8VUEmJoiKGeAW4UkB6XxO3p6yr5EcReeh5MCB0rhbkotnDnuf5Gwvroww5pKY=
-X-Gm-Message-State: AOJu0YyrGzH4Zz3wzMrPUH4eHz1wY8ZNpC2NkRl4Ax8OJDMFIedfgM79
- +7T5tIFnLxuLUUWixckB1qrqakeeljl3ouRng6cg8ZYZ+VjCjtxotj10kj1+OOA=
-X-Google-Smtp-Source: AGHT+IFrBUebrGJ/+dWHvzqGw17x7Jzzl5efzz+lCMtJq9RwtHzvsVV6+4muKvwtE0SNOYlTalkZgQ==
-X-Received: by 2002:a5d:6b03:0:b0:33d:bb61:71f3 with SMTP id
- v3-20020a5d6b03000000b0033dbb6171f3mr3490341wrw.12.1708932836209; 
- Sun, 25 Feb 2024 23:33:56 -0800 (PST)
-Received: from [192.168.1.24] ([102.35.208.160])
- by smtp.gmail.com with ESMTPSA id
- bx27-20020a5d5b1b000000b0033daa63807fsm7474271wrb.24.2024.02.25.23.33.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 25 Feb 2024 23:33:55 -0800 (PST)
-Message-ID: <969427d2-a954-4603-b4c0-107a47796464@linaro.org>
-Date: Mon, 26 Feb 2024 11:33:45 +0400
+ d=1e100.net; s=20230601; t=1708932875; x=1709537675;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NfTc6fSMO0CdQITTz5OZREVrUXh3OXtN6aLdSPJu01g=;
+ b=Y4bQsD/6avdMJ3NiEm6A9FjEgpkt8W/DEDDDATrOkkMoH2crLa9qbDrGOb+vXbyMrc
+ fQ1r4+jloB8DdEI5lyjHS3KoUWnvBXgWWYIqKFpXhrxfKuecpEsurLbSd0npkO9Urn7U
+ 5MulJm2H2IxatpORogcETqHJsa1CfRW7BXSzOQPVbUJMgLzekTl60cc83tx048I7dgm2
+ clj5DuBnYy5Nm59vPhJDaepUHlXnOjVPaq8WErB6hoA0fjKcWhKThv7Fd3ZV9mdpW1B6
+ qlS1Qq1zgEzG4em80+aUhN91TcF78ZT8MWD1NhZVzZs+QMw8uRXplvGj1PE4A/4rVKJ3
+ g3pw==
+X-Gm-Message-State: AOJu0YydMVVuVOYYTCXq30EV3gOu41qV7TPx4kZnK3Aw08zzdJ/2Tpkl
+ LYHgDX7lyz3kKaik7wfvPQwtijgj95v7P3Jl8O8Aqld8mr1QO4Bu2DJiASiQ+egMWUhUE7eFDBS
+ guyXHvx9xluNtpBoFYmJDyJf0g7NO71HIXRPESybunGudA11Cbie/
+X-Received: by 2002:a05:6358:706:b0:178:8c44:aa8b with SMTP id
+ e6-20020a056358070600b001788c44aa8bmr3751071rwj.3.1708932875362; 
+ Sun, 25 Feb 2024 23:34:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE6Md35nYfD1tAVdZ1mZwCeqTeXy194iaupgf07DEuO4BJWF7nnQKTU28T2ngr8ltrrqmsLMQ==
+X-Received: by 2002:a05:6358:706:b0:178:8c44:aa8b with SMTP id
+ e6-20020a056358070600b001788c44aa8bmr3751065rwj.3.1708932875013; 
+ Sun, 25 Feb 2024 23:34:35 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ k62-20020a632441000000b005dc3fc53f19sm3374794pgk.7.2024.02.25.23.34.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 25 Feb 2024 23:34:34 -0800 (PST)
+Date: Mon, 26 Feb 2024 15:34:26 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>
+Subject: Re: [PATCH v4 21/34] migration/multifd: Add incoming QIOChannelFile
+ support
+Message-ID: <Zdw_AuH7bO1zleN0@x1n>
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-22-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/27] plugins: create CPUPluginState and migrate
- plugin_mask
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, qemu-s390x@nongnu.org,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Thomas Huth <thuth@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Bin Meng <bin.meng@windriver.com>, Yanan Wang <wangyanan55@huawei.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cleber Rosa <crosa@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Peter Maydell
- <peter.maydell@linaro.org>, Daniel Henrique Barboza <danielhb413@gmail.com>,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, John Snow <jsnow@redhat.com>,
- Weiwei Li <liwei1518@gmail.com>, Alistair Francis
- <alistair.francis@wdc.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Brian Cain <bcain@quicinc.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Michael Rolnik <mrolnik@gmail.com>
-References: <20240223162202.1936541-1-alex.bennee@linaro.org>
- <20240223162202.1936541-21-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240223162202.1936541-21-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240220224138.24759-22-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,133 +100,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMi8yMy8yNCA4OjIxIFBNLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+IFdlIGFyZSBnb2lu
-ZyB0byB3YW50IHRvIGtlZXAgdHJhY2sgb2Ygc29tZSBwZXItdkNQVSBkYXRhIGZvciBwbHVn
-aW5zDQo+IGFuZCB0aGUgbG9naWNhbCBwbGFjZSB0byBkbyBzbyBpcyBpbiB0cmFjayBpdCBp
-biBDUFVTdGF0ZS4gRm9yIG5vdw0KPiB0aGlzIGp1c3QgbW92ZXMgdGhlIHBsdWdpbl9tYXNr
-IChyZW5hbWVkIHRvIGV2ZW50X21hc2spIGFzIHRoZSBtZW1vcnkNCj4gY2FsbGJhY2tzIGFy
-ZSBhY2Nlc3NlZCBkaXJlY3RseSBieSBUQ0cgZ2VuZXJhdGVkIGNvZGUuDQo+IA0KPiBTaWdu
-ZWQtb2ZmLWJ5OiBBbGV4IEJlbm7DqWUgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+IC0t
-LQ0KPiAgIGluY2x1ZGUvaHcvY29yZS9jcHUuaCAgIHwgMTEgKysrKysrKy0tLS0NCj4gICBp
-bmNsdWRlL3FlbXUvcGx1Z2luLmggICB8IDEzICsrKysrKysrKysrKysNCj4gICBpbmNsdWRl
-L3FlbXUvdHlwZWRlZnMuaCB8ICAxICsNCj4gICBhY2NlbC90Y2cvcGx1Z2luLWdlbi5jICB8
-ICAzICsrLQ0KPiAgIGh3L2NvcmUvY3B1LWNvbW1vbi5jICAgIHwgIDEgKw0KPiAgIHBsdWdp
-bnMvY29yZS5jICAgICAgICAgIHwgMTIgKysrKysrKysrLS0tDQo+ICAgNiBmaWxlcyBjaGFu
-Z2VkLCAzMyBpbnNlcnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdp
-dCBhL2luY2x1ZGUvaHcvY29yZS9jcHUuaCBiL2luY2x1ZGUvaHcvY29yZS9jcHUuaA0KPiBp
-bmRleCA0YjY1OTc5OWIwMC4uYWYxYTI5NTI2ZDQgMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUv
-aHcvY29yZS9jcHUuaA0KPiArKysgYi9pbmNsdWRlL2h3L2NvcmUvY3B1LmgNCj4gQEAgLTMx
-LDcgKzMxLDYgQEANCj4gICAjaW5jbHVkZSAicWVtdS9yY3VfcXVldWUuaCINCj4gICAjaW5j
-bHVkZSAicWVtdS9xdWV1ZS5oIg0KPiAgICNpbmNsdWRlICJxZW11L3RocmVhZC5oIg0KPiAt
-I2luY2x1ZGUgInFlbXUvcGx1Z2luLWV2ZW50LmgiDQo+ICAgI2luY2x1ZGUgInFvbS9vYmpl
-Y3QuaCINCj4gICANCj4gICB0eXBlZGVmIGludCAoKldyaXRlQ29yZUR1bXBGdW5jdGlvbiko
-Y29uc3Qgdm9pZCAqYnVmLCBzaXplX3Qgc2l6ZSwNCj4gQEAgLTQzNCw3ICs0MzMsOCBAQCBz
-dHJ1Y3QgcWVtdV93b3JrX2l0ZW07DQo+ICAgICogQGt2bV9mZDogdkNQVSBmaWxlIGRlc2Ny
-aXB0b3IgZm9yIEtWTS4NCj4gICAgKiBAd29ya19tdXRleDogTG9jayB0byBwcmV2ZW50IG11
-bHRpcGxlIGFjY2VzcyB0byBAd29ya19saXN0Lg0KPiAgICAqIEB3b3JrX2xpc3Q6IExpc3Qg
-b2YgcGVuZGluZyBhc3luY2hyb25vdXMgd29yay4NCj4gLSAqIEBwbHVnaW5fbWFzazogUGx1
-Z2luIGV2ZW50IGJpdG1hcC4gTW9kaWZpZWQgb25seSB2aWEgYXN5bmMgd29yay4NCj4gKyAq
-IEBwbHVnaW5fbWVtX2NiczogYWN0aXZlIHBsdWdpbiBtZW1vcnkgY2FsbGJhY2tzDQo+ICsg
-KiBAcGx1Z2luX3N0YXRlOiBwZXItQ1BVIHBsdWdpbiBzdGF0ZQ0KPiAgICAqIEBpZ25vcmVf
-bWVtb3J5X3RyYW5zYWN0aW9uX2ZhaWx1cmVzOiBDYWNoZWQgY29weSBvZiB0aGUgTWFjaGlu
-ZVN0YXRlDQo+ICAgICogICAgZmxhZyBvZiB0aGUgc2FtZSBuYW1lOiBhbGxvd3MgdGhlIGJv
-YXJkIHRvIHN1cHByZXNzIGNhbGxpbmcgb2YgdGhlDQo+ICAgICogICAgQ1BVIGRvX3RyYW5z
-YWN0aW9uX2ZhaWxlZCBob29rIGZ1bmN0aW9uLg0KPiBAQCAtNTI2LDEwICs1MjYsMTMgQEAg
-c3RydWN0IENQVVN0YXRlIHsNCj4gICAgICAgLyogVXNlIGJ5IGFjY2VsLWJsb2NrOiBDUFUg
-aXMgZXhlY3V0aW5nIGFuIGlvY3RsKCkgKi8NCj4gICAgICAgUWVtdUxvY2tDbnQgaW5faW9j
-dGxfbG9jazsNCj4gICANCj4gLSAgICBERUNMQVJFX0JJVE1BUChwbHVnaW5fbWFzaywgUUVN
-VV9QTFVHSU5fRVZfTUFYKTsNCj4gLQ0KPiAgICNpZmRlZiBDT05GSUdfUExVR0lODQo+ICsg
-ICAgLyoNCj4gKyAgICAgKiBUaGUgY2FsbGJhY2sgcG9pbnRlciBzdGF5cyBpbiB0aGUgbWFp
-biBDUFVTdGF0ZSBhcyBpdCBpcw0KPiArICAgICAqIGFjY2Vzc2VkIHZpYSBUQ0cgKHNlZSBn
-ZW5fZW1wdHlfbWVtX2hlbHBlcikuDQo+ICsgICAgICovDQo+ICAgICAgIEdBcnJheSAqcGx1
-Z2luX21lbV9jYnM7DQo+ICsgICAgQ1BVUGx1Z2luU3RhdGUgKnBsdWdpbl9zdGF0ZTsNCj4g
-ICAjZW5kaWYNCj4gICANCj4gICAgICAgLyogVE9ETyBNb3ZlIGNvbW1vbiBmaWVsZHMgZnJv
-bSBDUFVBcmNoU3RhdGUgaGVyZS4gKi8NCj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvcWVtdS9w
-bHVnaW4uaCBiL2luY2x1ZGUvcWVtdS9wbHVnaW4uaA0KPiBpbmRleCBiMGM1YWM2ODI5My4u
-MGU3Yjk2OTNkODAgMTAwNjQ0DQo+IC0tLSBhL2luY2x1ZGUvcWVtdS9wbHVnaW4uaA0KPiAr
-KysgYi9pbmNsdWRlL3FlbXUvcGx1Z2luLmgNCj4gQEAgLTE4Niw2ICsxODYsMTkgQEAgc3Ry
-dWN0IHFlbXVfcGx1Z2luX2luc24gKnFlbXVfcGx1Z2luX3RiX2luc25fZ2V0KHN0cnVjdCBx
-ZW11X3BsdWdpbl90YiAqdGIsDQo+ICAgICAgIHJldHVybiBpbnNuOw0KPiAgIH0NCj4gICAN
-Cj4gKy8qKg0KPiArICogc3RydWN0IENQVVBsdWdpblN0YXRlIC0gcGVyLUNQVSBzdGF0ZSBm
-b3IgcGx1Z2lucw0KPiArICogQGV2ZW50X21hc2s6IHBsdWdpbiBldmVudCBiaXRtYXAuIE1v
-ZGlmaWVkIG9ubHkgdmlhIGFzeW5jIHdvcmsuDQo+ICsgKi8NCj4gK3N0cnVjdCBDUFVQbHVn
-aW5TdGF0ZSB7DQo+ICsgICAgREVDTEFSRV9CSVRNQVAoZXZlbnRfbWFzaywgUUVNVV9QTFVH
-SU5fRVZfTUFYKTsNCj4gK307DQo+ICsNCj4gKy8qKg0KPiArICogcWVtdV9wbHVnaW5fY3Jl
-YXRlX3ZjcHVfc3RhdGU6IGFsbG9jYXRlIHBsdWdpbiBzdGF0ZQ0KPiArICovDQo+ICtDUFVQ
-bHVnaW5TdGF0ZSAqIHFlbXVfcGx1Z2luX2NyZWF0ZV92Y3B1X3N0YXRlKHZvaWQpOw0KPiAr
-DQo+ICAgdm9pZCBxZW11X3BsdWdpbl92Y3B1X2luaXRfaG9vayhDUFVTdGF0ZSAqY3B1KTsN
-Cj4gICB2b2lkIHFlbXVfcGx1Z2luX3ZjcHVfZXhpdF9ob29rKENQVVN0YXRlICpjcHUpOw0K
-PiAgIHZvaWQgcWVtdV9wbHVnaW5fdGJfdHJhbnNfY2IoQ1BVU3RhdGUgKmNwdSwgc3RydWN0
-IHFlbXVfcGx1Z2luX3RiICp0Yik7DQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL3FlbXUvdHlw
-ZWRlZnMuaCBiL2luY2x1ZGUvcWVtdS90eXBlZGVmcy5oDQo+IGluZGV4IGQ3YzcwM2I0YWU5
-Li5hMDI4ZGJhNGQwYiAxMDA2NDQNCj4gLS0tIGEvaW5jbHVkZS9xZW11L3R5cGVkZWZzLmgN
-Cj4gKysrIGIvaW5jbHVkZS9xZW11L3R5cGVkZWZzLmgNCj4gQEAgLTQyLDYgKzQyLDcgQEAg
-dHlwZWRlZiBzdHJ1Y3QgQ29tcGF0UHJvcGVydHkgQ29tcGF0UHJvcGVydHk7DQo+ICAgdHlw
-ZWRlZiBzdHJ1Y3QgQ29uZmlkZW50aWFsR3Vlc3RTdXBwb3J0IENvbmZpZGVudGlhbEd1ZXN0
-U3VwcG9ydDsNCj4gICB0eXBlZGVmIHN0cnVjdCBDUFVBZGRyZXNzU3BhY2UgQ1BVQWRkcmVz
-c1NwYWNlOw0KPiAgIHR5cGVkZWYgc3RydWN0IENQVUFyY2hTdGF0ZSBDUFVBcmNoU3RhdGU7
-DQo+ICt0eXBlZGVmIHN0cnVjdCBDUFVQbHVnaW5TdGF0ZSBDUFVQbHVnaW5TdGF0ZTsNCj4g
-ICB0eXBlZGVmIHN0cnVjdCBDcHVJbmZvRmFzdCBDcHVJbmZvRmFzdDsNCj4gICB0eXBlZGVm
-IHN0cnVjdCBDUFVKdW1wQ2FjaGUgQ1BVSnVtcENhY2hlOw0KPiAgIHR5cGVkZWYgc3RydWN0
-IENQVVN0YXRlIENQVVN0YXRlOw0KPiBkaWZmIC0tZ2l0IGEvYWNjZWwvdGNnL3BsdWdpbi1n
-ZW4uYyBiL2FjY2VsL3RjZy9wbHVnaW4tZ2VuLmMNCj4gaW5kZXggYjM3Y2U3NjgzZTYuLmFj
-NmI1MmI5ZWM5IDEwMDY0NA0KPiAtLS0gYS9hY2NlbC90Y2cvcGx1Z2luLWdlbi5jDQo+ICsr
-KyBiL2FjY2VsL3RjZy9wbHVnaW4tZ2VuLmMNCj4gQEAgLTQzLDYgKzQzLDcgQEANCj4gICAg
-KiBDUFUncyBpbmRleCBpbnRvIGEgVENHIHRlbXAsIHNpbmNlIHRoZSBmaXJzdCBjYWxsYmFj
-ayBkaWQgaXQgYWxyZWFkeS4NCj4gICAgKi8NCj4gICAjaW5jbHVkZSAicWVtdS9vc2RlcC5o
-Ig0KPiArI2luY2x1ZGUgInFlbXUvcGx1Z2luLmgiDQo+ICAgI2luY2x1ZGUgImNwdS5oIg0K
-PiAgICNpbmNsdWRlICJ0Y2cvdGNnLmgiDQo+ICAgI2luY2x1ZGUgInRjZy90Y2ctdGVtcC1p
-bnRlcm5hbC5oIg0KPiBAQCAtODMxLDcgKzgzMiw3IEBAIGJvb2wgcGx1Z2luX2dlbl90Yl9z
-dGFydChDUFVTdGF0ZSAqY3B1LCBjb25zdCBEaXNhc0NvbnRleHRCYXNlICpkYiwNCj4gICB7
-DQo+ICAgICAgIGJvb2wgcmV0ID0gZmFsc2U7DQo+ICAgDQo+IC0gICAgaWYgKHRlc3RfYml0
-KFFFTVVfUExVR0lOX0VWX1ZDUFVfVEJfVFJBTlMsIGNwdS0+cGx1Z2luX21hc2spKSB7DQo+
-ICsgICAgaWYgKHRlc3RfYml0KFFFTVVfUExVR0lOX0VWX1ZDUFVfVEJfVFJBTlMsIGNwdS0+
-cGx1Z2luX3N0YXRlLT5ldmVudF9tYXNrKSkgew0KPiAgICAgICAgICAgc3RydWN0IHFlbXVf
-cGx1Z2luX3RiICpwdGIgPSB0Y2dfY3R4LT5wbHVnaW5fdGI7DQo+ICAgICAgICAgICBpbnQg
-aTsNCj4gICANCj4gZGlmZiAtLWdpdCBhL2h3L2NvcmUvY3B1LWNvbW1vbi5jIGIvaHcvY29y
-ZS9jcHUtY29tbW9uLmMNCj4gaW5kZXggNjg3ODYzNjBlYTUuLjZhOGMyOTBmYzc1IDEwMDY0
-NA0KPiAtLS0gYS9ody9jb3JlL2NwdS1jb21tb24uYw0KPiArKysgYi9ody9jb3JlL2NwdS1j
-b21tb24uYw0KPiBAQCAtMjI0LDYgKzIyNCw3IEBAIHN0YXRpYyB2b2lkIGNwdV9jb21tb25f
-cmVhbGl6ZWZuKERldmljZVN0YXRlICpkZXYsIEVycm9yICoqZXJycCkNCj4gICANCj4gICAg
-ICAgLyogUGx1Z2luIGluaXRpYWxpemF0aW9uIG11c3Qgd2FpdCB1bnRpbCB0aGUgY3B1IHN0
-YXJ0IGV4ZWN1dGluZyBjb2RlICovDQo+ICAgICAgIGlmICh0Y2dfZW5hYmxlZCgpKSB7DQo+
-ICsgICAgICAgIGNwdS0+cGx1Z2luX3N0YXRlID0gcWVtdV9wbHVnaW5fY3JlYXRlX3ZjcHVf
-c3RhdGUoKTsNCj4gICAgICAgICAgIGFzeW5jX3J1bl9vbl9jcHUoY3B1LCBxZW11X3BsdWdp
-bl92Y3B1X2luaXRfX2FzeW5jLCBSVU5fT05fQ1BVX05VTEwpOw0KPiAgICAgICB9DQo+ICAg
-DQo+IGRpZmYgLS1naXQgYS9wbHVnaW5zL2NvcmUuYyBiL3BsdWdpbnMvY29yZS5jDQo+IGlu
-ZGV4IDIzOTJiYmI4ODg5Li44Mzc0NTY2M2YzMiAxMDA2NDQNCj4gLS0tIGEvcGx1Z2lucy9j
-b3JlLmMNCj4gKysrIGIvcGx1Z2lucy9jb3JlLmMNCj4gQEAgLTE3LDYgKzE3LDcgQEANCj4g
-ICAjaW5jbHVkZSAicWFwaS9lcnJvci5oIg0KPiAgICNpbmNsdWRlICJxZW11L2xvY2thYmxl
-LmgiDQo+ICAgI2luY2x1ZGUgInFlbXUvb3B0aW9uLmgiDQo+ICsjaW5jbHVkZSAicWVtdS9w
-bHVnaW4uaCINCj4gICAjaW5jbHVkZSAicWVtdS9yY3VfcXVldWUuaCINCj4gICAjaW5jbHVk
-ZSAicWVtdS94eGhhc2guaCINCj4gICAjaW5jbHVkZSAicWVtdS9yY3UuaCINCj4gQEAgLTUz
-LDcgKzU0LDcgQEAgc3RydWN0IHFlbXVfcGx1Z2luX2N0eCAqcGx1Z2luX2lkX3RvX2N0eF9s
-b2NrZWQocWVtdV9wbHVnaW5faWRfdCBpZCkNCj4gICANCj4gICBzdGF0aWMgdm9pZCBwbHVn
-aW5fY3B1X3VwZGF0ZV9fYXN5bmMoQ1BVU3RhdGUgKmNwdSwgcnVuX29uX2NwdV9kYXRhIGRh
-dGEpDQo+ICAgew0KPiAtICAgIGJpdG1hcF9jb3B5KGNwdS0+cGx1Z2luX21hc2ssICZkYXRh
-Lmhvc3RfdWxvbmcsIFFFTVVfUExVR0lOX0VWX01BWCk7DQo+ICsgICAgYml0bWFwX2NvcHko
-Y3B1LT5wbHVnaW5fc3RhdGUtPmV2ZW50X21hc2ssICZkYXRhLmhvc3RfdWxvbmcsIFFFTVVf
-UExVR0lOX0VWX01BWCk7DQo+ICAgICAgIHRjZ19mbHVzaF9qbXBfY2FjaGUoY3B1KTsNCj4g
-ICB9DQo+ICAgDQo+IEBAIC0yMDgsNiArMjA5LDExIEBAIHBsdWdpbl9yZWdpc3Rlcl9jYl91
-ZGF0YShxZW11X3BsdWdpbl9pZF90IGlkLCBlbnVtIHFlbXVfcGx1Z2luX2V2ZW50IGV2LA0K
-PiAgICAgICBkb19wbHVnaW5fcmVnaXN0ZXJfY2IoaWQsIGV2LCBmdW5jLCB1ZGF0YSk7DQo+
-ICAgfQ0KPiAgIA0KPiArQ1BVUGx1Z2luU3RhdGUgKiBxZW11X3BsdWdpbl9jcmVhdGVfdmNw
-dV9zdGF0ZSh2b2lkKQ0KPiArew0KPiArICAgIHJldHVybiBnX25ldzAoQ1BVUGx1Z2luU3Rh
-dGUsIDEpOw0KPiArfQ0KPiArDQo+ICAgdm9pZCBxZW11X3BsdWdpbl92Y3B1X2luaXRfaG9v
-ayhDUFVTdGF0ZSAqY3B1KQ0KPiAgIHsNCj4gICAgICAgYm9vbCBzdWNjZXNzOw0KPiBAQCAt
-MzU2LDcgKzM2Miw3IEBAIHFlbXVfcGx1Z2luX3ZjcHVfc3lzY2FsbChDUFVTdGF0ZSAqY3B1
-LCBpbnQ2NF90IG51bSwgdWludDY0X3QgYTEsIHVpbnQ2NF90IGEyLA0KPiAgICAgICBzdHJ1
-Y3QgcWVtdV9wbHVnaW5fY2IgKmNiLCAqbmV4dDsNCj4gICAgICAgZW51bSBxZW11X3BsdWdp
-bl9ldmVudCBldiA9IFFFTVVfUExVR0lOX0VWX1ZDUFVfU1lTQ0FMTDsNCj4gICANCj4gLSAg
-ICBpZiAoIXRlc3RfYml0KGV2LCBjcHUtPnBsdWdpbl9tYXNrKSkgew0KPiArICAgIGlmICgh
-dGVzdF9iaXQoZXYsIGNwdS0+cGx1Z2luX3N0YXRlLT5ldmVudF9tYXNrKSkgew0KPiAgICAg
-ICAgICAgcmV0dXJuOw0KPiAgICAgICB9DQo+ICAgDQo+IEBAIC0zNzgsNyArMzg0LDcgQEAg
-dm9pZCBxZW11X3BsdWdpbl92Y3B1X3N5c2NhbGxfcmV0KENQVVN0YXRlICpjcHUsIGludDY0
-X3QgbnVtLCBpbnQ2NF90IHJldCkNCj4gICAgICAgc3RydWN0IHFlbXVfcGx1Z2luX2NiICpj
-YiwgKm5leHQ7DQo+ICAgICAgIGVudW0gcWVtdV9wbHVnaW5fZXZlbnQgZXYgPSBRRU1VX1BM
-VUdJTl9FVl9WQ1BVX1NZU0NBTExfUkVUOw0KPiAgIA0KPiAtICAgIGlmICghdGVzdF9iaXQo
-ZXYsIGNwdS0+cGx1Z2luX21hc2spKSB7DQo+ICsgICAgaWYgKCF0ZXN0X2JpdChldiwgY3B1
-LT5wbHVnaW5fc3RhdGUtPmV2ZW50X21hc2spKSB7DQo+ICAgICAgICAgICByZXR1cm47DQo+
-ICAgICAgIH0NCj4gICANCg0KUmV2aWV3ZWQtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJy
-aWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCg==
+On Tue, Feb 20, 2024 at 07:41:25PM -0300, Fabiano Rosas wrote:
+> On the receiving side we don't need to differentiate between main
+> channel and threads, so whichever channel is defined first gets to be
+> the main one. And since there are no packets, use the atomic channel
+> count to index into the params array.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/file.c      | 34 ++++++++++++++++++++++++++--------
+>  migration/migration.c |  3 ++-
+>  migration/multifd.c   |  3 +--
+>  3 files changed, 29 insertions(+), 11 deletions(-)
+> 
+> diff --git a/migration/file.c b/migration/file.c
+> index ac9f6ae40a..a186dc592a 100644
+> --- a/migration/file.c
+> +++ b/migration/file.c
+> @@ -8,6 +8,7 @@
+>  #include "qemu/osdep.h"
+>  #include "exec/ramblock.h"
+>  #include "qemu/cutils.h"
+> +#include "qemu/error-report.h"
+>  #include "qapi/error.h"
+>  #include "channel.h"
+>  #include "file.h"
+> @@ -15,6 +16,7 @@
+>  #include "multifd.h"
+>  #include "io/channel-file.h"
+>  #include "io/channel-util.h"
+> +#include "options.h"
+>  #include "trace.h"
+>  
+>  #define OFFSET_OPTION ",offset="
+> @@ -111,7 +113,8 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
+>      g_autofree char *filename = g_strdup(file_args->filename);
+>      QIOChannelFile *fioc = NULL;
+>      uint64_t offset = file_args->offset;
+> -    QIOChannel *ioc;
+> +    int channels = 1;
+> +    int i = 0, fd;
+>  
+>      trace_migration_file_incoming(filename);
+>  
+> @@ -120,13 +123,28 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
+>          return;
+>      }
+>  
+> -    ioc = QIO_CHANNEL(fioc);
+> -    if (offset && qio_channel_io_seek(ioc, offset, SEEK_SET, errp) < 0) {
+> +    if (offset &&
+> +        qio_channel_io_seek(QIO_CHANNEL(fioc), offset, SEEK_SET, errp) < 0) {
+>          return;
+>      }
+> -    qio_channel_set_name(QIO_CHANNEL(ioc), "migration-file-incoming");
+> -    qio_channel_add_watch_full(ioc, G_IO_IN,
+> -                               file_accept_incoming_migration,
+> -                               NULL, NULL,
+> -                               g_main_context_get_thread_default());
+> +
+> +    if (migrate_multifd()) {
+> +        channels += migrate_multifd_channels();
+> +    }
+> +
+> +    fd = fioc->fd;
+> +
+> +    do {
+> +        QIOChannel *ioc = QIO_CHANNEL(fioc);
+> +
+> +        qio_channel_set_name(ioc, "migration-file-incoming");
+> +        qio_channel_add_watch_full(ioc, G_IO_IN,
+> +                                   file_accept_incoming_migration,
+> +                                   NULL, NULL,
+> +                                   g_main_context_get_thread_default());
+> +    } while (++i < channels && (fioc = qio_channel_file_new_fd(fd)));
+
+Note that reusing fd here has similar risk in the future that one iochannel
+can affect the other, as potentially all shares the same fd underneath; I
+think it's the same as "two qemufile v.s. one iochannel" issue that we're
+fighting recently.
+
+IIUC the clean case is still that we open one fd for each iochannel.  Or
+e.g. as long as one iochannel close() its fd, it immediately invalidates
+all the rest iochannels on something like use-after-free of that fd index;
+any fd operates races with another fd being opened concurrently.
+
+Maybe we can already use a loop of qio_channel_file_new_path()?  OS should
+already cached the dentry etc. so I assume the following ones should be
+super fast?  Or there's other complexities that I didn't aware?
+
+> +
+> +    if (!fioc) {
+> +        error_setg(errp, "Error creating migration incoming channel");
+> +    }
+>  }
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 16da269847..e2218b9de7 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -896,7 +896,8 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
+>      uint32_t channel_magic = 0;
+>      int ret = 0;
+>  
+> -    if (migrate_multifd() && !migrate_postcopy_ram() &&
+> +    if (migrate_multifd() && !migrate_fixed_ram() &&
+> +        !migrate_postcopy_ram() &&
+>          qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
+>          /*
+>           * With multiple channels, it is possible that we receive channels
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index 507b497d52..cb5f4fb3e0 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -1520,8 +1520,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+>          }
+>          trace_multifd_recv_new_channel(id);
+>      } else {
+> -        /* next patch gives this a meaningful value */
+> -        id = 0;
+> +        id = qatomic_read(&multifd_recv_state->count);
+>      }
+>  
+>      p = &multifd_recv_state->params[id];
+> -- 
+> 2.35.3
+> 
+
+-- 
+Peter Xu
+
 
