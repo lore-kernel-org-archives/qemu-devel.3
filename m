@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E12AC54E41
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50957C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:14:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebir-00046w-5N; Mon, 26 Feb 2024 09:12:49 -0500
+	id 1rebk8-0006vD-41; Mon, 26 Feb 2024 09:14:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rebib-0003lk-6O
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:12:34 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rebiZ-0002Eq-OZ
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:12:32 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-55a8fd60af0so4018134a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 06:12:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708956750; x=1709561550; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=gjCci5g3m1cdPDY+ARHKmFFSrEMmQtPvDpFEpLERfQE=;
- b=nadLZJuYGlnIwo1P6mEqVHquZuEkfIxp/aB/EMfANTnH/BS3fqM/v6lci30uI+i09G
- 7gyYOrQOy9mOTW616LtbNlV4m/5yoXEsjH1aASORzQwngMV/XhiXgyV9Bydyk/0F33WR
- c7xYu3CnFAgVIcUZ0qVYFXb5Ma9Gy7MdtKGW7/pDOIl/gPc2Z1MT6Knc93Sof4YrSsXd
- 7R1HUFq1yky/sxImUiMpZT/d+9ueQSTft3waR3J6PWu9IbdhHKTWH+5Wn9E2rQ63fZyp
- 07L9qdBKbbGdAKLScvMD5h2YJ4FhFCfv201mrLusrDNFBmdbCHFGOQFjWfke4f4Uai2R
- dAEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708956750; x=1709561550;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gjCci5g3m1cdPDY+ARHKmFFSrEMmQtPvDpFEpLERfQE=;
- b=tlZ6XoMtnKqXxdALOAnZyqSsLixBk0gwGsbVchHJYX+R74Bkn9SeoUH2WuaVLNct19
- Hu/dOa+sUswf2n2B3ycgtMxe5xm5JzHJOJkZ39N7BrIaXwNOK4Pm6JzUcssWYlCYXEue
- 18YX17cinZmrzZ02qkIOnBCpIKkWaDaBXRSQC9g4Gr8UZ1gjM1oXBbYb8Q1ij+WRaTYh
- Y0q6gMlt8oYnUSV6vTtoJjjcT0if6rU5nnTxp3AOhRK43sagx5HDVohCffqdjuGWseQV
- DuFQDm/K1n4lPGvCOFz7v+JUINacTfu9MipiMCl6ln3LWeRFwog2q16N0uOSimLcxLE6
- U1aQ==
-X-Gm-Message-State: AOJu0YwGF5LLye5Vs7k8h/a3akGSRC/pFPyePLoCqx+mKkx32GXdj3XT
- 1wBnOEpjcljkD9qeCPQlhKm7KtAHLBpuUbTp9sT0UggorZGOQVax+qXl50tsV8t2qmHcP+S6wJs
- JMJ9JW+xYNfoxFqYi6Hv1DhKDWRN8aXIQ2kRDbw==
-X-Google-Smtp-Source: AGHT+IGughasO44d2xK82G4ryMlpdtXPRJMNaeLmZri/kuytdaeETHB8NhO9xCLNvnfEw/fQt6EGab9gQuF+oVff6wo=
-X-Received: by 2002:aa7:c3c8:0:b0:565:f90c:1263 with SMTP id
- l8-20020aa7c3c8000000b00565f90c1263mr1549811edr.9.1708956750102; Mon, 26 Feb
- 2024 06:12:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebjt-0006gg-V3
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:13:55 -0500
+Received: from mgamail.intel.com ([192.198.163.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebjr-0002Pq-L0
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:13:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708956831; x=1740492831;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=uiIBa4NE10MCDcFb1wCFmJuVpzEfYoLwaY2GrJ7E7O4=;
+ b=eKFJFHISP6gYcwFDOhUAlZ8IZVUIa2Usn8S0b/xHYqbzP7U5D/odKato
+ rA+UaKU4gQF+5knywPm/ccOWeSgnSE9Mq0pfaUrs570U0Ovkg7ahawgkp
+ /2u/4TGXxeBCsZoDZ8DtfY2CemNlr2IOMAC3U0zFQPqlL1Lb1SH7AYUv0
+ u+6cKLC+Wzs8I3Huq9rWFyr3ajjzeX1xY8fMWRMXBQi/+X6JP0QqEP2rS
+ oamYytQ+Cgn5yfAeveA0rtEr/TEIrDtrC6k5Oz9GwcnaNvnieoo00eSz9
+ DO9Z57OwuAwFOAhrzHItg6yQScVpDzKIxbJxKCAwOOYct92kMEv5dkGzl w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="13884842"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="13884842"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 06:13:48 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="6708041"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa009.jf.intel.com with ESMTP; 26 Feb 2024 06:13:45 -0800
+Date: Mon, 26 Feb 2024 22:27:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: Re: [PATCH 05/10] hw/core: Add documentation and license comments to
+ reset.h
+Message-ID: <Zdyfz8kc9/iumCAA@intel.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-6-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20240223180102.7657-1-Jonathan.Cameron@huawei.com>
-In-Reply-To: <20240223180102.7657-1-Jonathan.Cameron@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Feb 2024 14:12:18 +0000
-Message-ID: <CAFEAcA9X9Mvz4CL2-yFJN4a04eoODn6Yr_VcD-O6P-PJ1ioSKw@mail.gmail.com>
-Subject: Re: [PATCH v3] arm/ptw: Handle atomic updates of page tables entries
- in MMIO during PTW.
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Gregory Price <gregory.price@memverge.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- richard.henderson@linaro.org, linux-cxl@vger.kernel.org, linuxarm@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240220160622.114437-6-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,26 +86,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Feb 2024 at 18:01, Jonathan Cameron
-<Jonathan.Cameron@huawei.com> wrote:
->
-> Seen testing of CXL emulation on arm64 (currently out of tree).
->
-> CXL interleave occurs at subpage granularity so is emulated using an IO
-> Memory Region. The memory is general purpose and as such may contain page
-> tables. FEAT_HADFS using atomic accesses from the page table walkers to
-> update accessed and dirty bits.
->
-> Note that disabling kernel support this ARM 8.1 feature avoids this issue
-> as the PTW no longer does an atomic update of the page table entries, but
-> that is a nasty workaround beyond its use in root causing this issue.
->
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Hi Peter,
+
+On Tue, Feb 20, 2024 at 04:06:17PM +0000, Peter Maydell wrote:
+> Date: Tue, 20 Feb 2024 16:06:17 +0000
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH 05/10] hw/core: Add documentation and license comments to
+>  reset.h
+> X-Mailer: git-send-email 2.34.1
+> 
+> Add the usual boilerplate license/copyright comment to reset.h (using
+> the text from reset.c), and document the existing functions.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
+>  include/sysemu/reset.h | 79 ++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 79 insertions(+)
+> 
+> diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
+> index 609e4d50c26..6aa11846a69 100644
+> --- a/include/sysemu/reset.h
+> +++ b/include/sysemu/reset.h
+> @@ -1,3 +1,29 @@
+> +/*
+> + *  Reset handlers.
+> + *
+> + * Copyright (c) 2003-2008 Fabrice Bellard
+> + * Copyright (c) 2016 Red Hat, Inc.
+> + * Copyright (c) 2024 Linaro, Ltd.
 
+An additional question, when there is a new (notable) contribution to a
+file, then it's time to add the company's copyright. Right?
 
+> + *
+> + * Permission is hereby granted, free of charge, to any person obtaining a copy
+> + * of this software and associated documentation files (the "Software"), to deal
+> + * in the Software without restriction, including without limitation the rights
+> + * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> + * copies of the Software, and to permit persons to whom the Software is
+> + * furnished to do so, subject to the following conditions:
+> + *
+> + * The above copyright notice and this permission notice shall be included in
+> + * all copies or substantial portions of the Software.
+> + *
+> + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> + * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+> + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> + * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+> + * THE SOFTWARE.
+> + */
+> +
+>  #ifndef QEMU_SYSEMU_RESET_H
+>  #define QEMU_SYSEMU_RESET_H
+>  
+> @@ -5,9 +31,62 @@
+>  
+>  typedef void QEMUResetHandler(void *opaque);
+>  
+> +/**
+> + * qemu_register_reset: Register a callback for system reset
+> + * @func: function to call
+> + * @opaque: opaque data to pass to @func
+> + *
+> + * Register @func on the list of functions which are called when the
+> + * entire system is reset. The functions are called in the order in
+> + * which they are registered.
+> + *
+> + * In general this function should not be used in new code where possible;
+> + * for instance device model reset is better accomplished using the
 
-Applied to target-arm.next, thanks.
+s/for instance device/for instance, device/
 
--- PMM
+> + * methods on DeviceState.
+> + *
+> + * It is not permitted to register or unregister reset functions from
+> + * within the @func callback.
+> + *
+> + * We assume that the caller holds the BQL.
+
+HMM, what does BQL stand for?
+
+Others LGTM.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
