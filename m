@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC77FC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34256C54E41
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebT2-0006MC-HU; Mon, 26 Feb 2024 08:56:29 -0500
+	id 1rebZY-0000MB-LA; Mon, 26 Feb 2024 09:03:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rebSs-0006KL-KJ
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:56:20 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebZW-0000Lj-KP
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:03:10 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rebSq-000812-5y
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:56:18 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1D24F4E601F;
- Mon, 26 Feb 2024 14:56:14 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id qfQ3i88-hDkl; Mon, 26 Feb 2024 14:56:12 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 18D924E601E; Mon, 26 Feb 2024 14:56:12 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 165547456B4;
- Mon, 26 Feb 2024 14:56:12 +0100 (CET)
-Date: Mon, 26 Feb 2024 14:56:12 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- Bernhard Beschow <shentey@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Igor Mammedov <imammedo@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Laurent Vivier <lvivier@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 06/14] hw/pci-bridge: Extract QOM ICH definitions to
- 'ich_dmi_pci.h'
-In-Reply-To: <de867567-f486-4b3a-93cc-9b109e9d549a@linaro.org>
-Message-ID: <8ea9bad7-d986-5231-9709-4d34f95b278e@eik.bme.hu>
-References: <20240219163855.87326-1-philmd@linaro.org>
- <20240219163855.87326-7-philmd@linaro.org>
- <0841e333-3d7d-0440-a8bf-8a7fd2f0011f@eik.bme.hu>
- <19500c79-8e4a-2160-3622-dbf145655046@eik.bme.hu>
- <cee6951f-234e-4806-b6a1-147c39455f07@linaro.org>
- <055d34b8-64c6-fcc4-9bf9-b8491a50ce5f@eik.bme.hu>
- <5726ea2c-425b-40a3-80a2-9fa3503a7f4c@redhat.com>
- <de867567-f486-4b3a-93cc-9b109e9d549a@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebZU-0000q6-LY
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:03:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708956189; x=1740492189;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=5wEYYpmZkxs1H4X8Y1yE9Mox0E5gGGJ5UqnSqzdv0p4=;
+ b=FEF6zaMRdbTw1oaq2gLlbXwdu/u6OBn71PbcBTsvZe9OiVet+PSVoEMj
+ eb95K1rASr233CB4W+HOtkS56D54tSDCKskJGNlxLx1V35BqCH9JkyR09
+ ihaIlf8Hokgd1Wew8a2ByvHTiI6WUfYkFBd4eJ+GfPmiLlAo8dIUXLpQs
+ VklL85ZJ/TS0l82zvVs/ntdQkgeNvolfEBkBcTYUWL5H+EUPlP3hMgC+K
+ QQ1NttrjNgNNGqrnv5yGM+aTysnXS+zw16Y/HaSyfc+mE7uuky9xkjhaP
+ aLnCn9fk4d5mZvB9BEdqeVD6mmEXMJFjSlGrJnqV8LkN+7HYKFs+qi7sB Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="3357881"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="3357881"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 06:03:05 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="29853497"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa002.fm.intel.com with ESMTP; 26 Feb 2024 06:03:02 -0800
+Date: Mon, 26 Feb 2024 22:16:44 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: Re: [PATCH 03/10] system/bootdevice: Don't unregister reset handler
+ in restore_boot_order()
+Message-ID: <ZdydTCIEicNCL7Ns@intel.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-4-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1152411081-1708955772=:37179"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240220160622.114437-4-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,120 +86,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Feb 20, 2024 at 04:06:15PM +0000, Peter Maydell wrote:
+> Date: Tue, 20 Feb 2024 16:06:15 +0000
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH 03/10] system/bootdevice: Don't unregister reset handler in
+>  restore_boot_order()
+> X-Mailer: git-send-email 2.34.1
+> 
+> Currently the qemu_register_reset() API permits the reset handler functions
+> registered with it to remove themselves from within the callback function.
+> This is fine with our current implementation, but is a bit odd, because
+> generally reset is supposed to be idempotent, and doesn't fit well in a
+> three-phase-reset world where a resettable object will get multiple
+> callbacks as the system is reset.
+> 
+> We now have only one user of qemu_register_reset() which makes use of
+> the ability to unregister itself within the callback:
+> restore_boot_order().  We want to change our implementation of
+> qemu_register_reset() to something where it would be awkward to
+> maintain the "can self-unregister" feature.  Rather than making that
+> reimplementation complicated, change restore_boot_order() so that it
+> doesn't unregister itself but instead returns doing nothing for any
+> calls after it has done the "restore the boot order" work.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> It would be nicer not to use reset at all, especially since I'm not
+> a fan of conflating "system is reset" with "system boots", but I
+> didn't have a good idea for how to do that.
+> ---
+>  system/bootdevice.c | 25 ++++++++++++++-----------
+>  1 file changed, 14 insertions(+), 11 deletions(-)
 
---3866299591-1152411081-1708955772=:37179
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
-> On 20/2/24 13:55, Thomas Huth wrote:
->> On 20/02/2024 13.20, BALATON Zoltan wrote:
->>> On Tue, 20 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>> On 19/2/24 19:24, BALATON Zoltan wrote:
->>>>> On Mon, 19 Feb 2024, BALATON Zoltan wrote:
->>>>>> On Mon, 19 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>>>>> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
->>>>>>> "hw/pci-bridge/ich_dmi_pci.h" header.
->>>>>>> 
->>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>> ---
->>>>>>> MAINTAINERS                         |  1 +
->>>>>>> include/hw/pci-bridge/ich_dmi_pci.h | 20 ++++++++++++++++++++
->>>>>>> include/hw/southbridge/ich9.h       |  2 --
->>>>>>> hw/pci-bridge/i82801b11.c           | 11 ++++-------
->>>>>>> 4 files changed, 25 insertions(+), 9 deletions(-)
->>>>>>> create mode 100644 include/hw/pci-bridge/ich_dmi_pci.h
->>>>>>> 
->>>>>>> diff --git a/MAINTAINERS b/MAINTAINERS
->>>>>>> index 1b210c5cc1..50507c3dd6 100644
->>>>>>> --- a/MAINTAINERS
->>>>>>> +++ b/MAINTAINERS
->>>>>>> @@ -2609,6 +2609,7 @@ F: hw/acpi/ich9*.c
->>>>>>> F: hw/i2c/smbus_ich9.c
->>>>>>> F: hw/isa/lpc_ich9.c
->>>>>>> F: include/hw/acpi/ich9*.h
->>>>>>> +F: include/hw/pci-bridge/ich_dmi_pci.h
->>>>>>> F: include/hw/southbridge/ich9.h
->>>>>>> 
->>>>>>> PIIX4 South Bridge (i82371AB)
->>>>>>> diff --git a/include/hw/pci-bridge/ich_dmi_pci.h 
->>>>>>> b/include/hw/pci-bridge/ich_dmi_pci.h
->>>>>>> new file mode 100644
->>>>>>> index 0000000000..7623b32b8e
->>>>>>> --- /dev/null
->>>>>>> +++ b/include/hw/pci-bridge/ich_dmi_pci.h
->>>>>>> @@ -0,0 +1,20 @@
->>>>>>> +/*
->>>>>>> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
->>>>>>> + *
->>>>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>>>>>> + */
->>>>>>> +
->>>>>>> +#ifndef HW_PCI_BRIDGE_ICH_D2P_H
->>>>>>> +#define HW_PCI_BRIDGE_ICH_D2P_H
->>>>>>> +
->>>>>>> +#include "qom/object.h"
->>>>>>> +#include "hw/pci/pci_bridge.h"
->>>>>>> +
->>>>>>> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
->>>>>>> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
->>>>>>> +
->>>>>>> +struct I82801b11Bridge {
->>>>>>> +    PCIBridge parent_obj;
->>>>>>> +};
->>>>>> 
->>>>>> If this class has no fields of its own why does it need its own state 
->>>>>> struct defined? You could just set .instance_size = sizeof(PCIBridge) 
->>>>>> in the TypeInfo i82801b11_bridge_info below and delete this struct 
->>>>>> completely as it's not even used anywhere. One less needless QOM 
->>>>>> complication :-) For an example see the empty via-mc97 device in 
->>>>>> hw/audio/via-ac97.c.
->>>>>> 
->>>>>> Then you can put the OBJECT_DECLARE_SIMPLE_TYPE in 
->>>>>> hw/pci-bridge/i82801b11.c where this object is defined and the #define 
->>>>>> TYPE_ICH_DMI_PCI_BRIDGE in
->>>>> 
->>>>> You don't even need OBJECT_DECLARE_SIMPLE_TYPE if there's no state 
->>>>> struct. But on second look what is this object at all? It's never 
->>>>> instantiated anywhere. Is it used somewhere?
->>>> 
->>>> Here my view is we should always define QOM type names in headers
->>>> and use them, in particular in the TypeInfo registration. To unify
->>>> style and copy/pasting, better use the QOM DECLARE_TYPE macros.
->>>> I envision that might help moving toward DSL and have HW modelling
->>>> checks done externally, before starting QEMU. But then this is my
->>>> view and I dunno about when we'll get that DSL in so I'm OK to
->>>> revisit this patch.
->>> 
->>> The question here is more if we need this object at all because it wasn't 
->>> enstantiated before, and after your series it could be instantiated by a 
->>> property that's never set. So unless I misunderstood somthing this whole 
->>> thing could just be removed as dead code and let it be re-added later when 
->>> it's actually implemented following whatever conventions we'll have then. 
->>> No need to keep around empty placeholders that aren't used. Or does it 
->>> serve any purpose?
->
-> This isn't a virtual hardware, and is well specified, I'm trying to
-> plug all the parts we have so the full chipset can be used to create
-> a dynamic machine.
-
-This isn't prevented by moving this object implementation from its 
-separate file to the file where the southbridge that's the sole user of 
-this device it implemented. The rationale is that there's no need to make 
-it a full object with all the headers and defines when it's not used 
-anywhere else than that southbridge and its "implementation" consists of 
-only the TypeInfo and a realize method. These could just be defined in the 
-southbridge as a local object and do away with all the other boilerplate 
-which would remove some unneeded cruft. This won't affect your modelling 
-of the southbridge as you can still instantiate it there but don't need to 
-define this empty bridge device as external object when it's not needed 
-outside of the south bridge. Just like the via-mc97 device. I did not put 
-that in a separate file and add a separate header for it because it just 
-seems to be overkill for an empty device that does nothing.
-
-Regards,
-BALATON Zoltan
---3866299591-1152411081-1708955772=:37179--
 
