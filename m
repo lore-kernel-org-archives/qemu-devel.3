@@ -4,55 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80590C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9028C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reeI0-0005ec-1S; Mon, 26 Feb 2024 11:57:16 -0500
+	id 1reeNN-0003qF-Fq; Mon, 26 Feb 2024 12:02:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1reeHl-0005XZ-Ck
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:57:01 -0500
-Received: from relay.virtuozzo.com ([130.117.225.111])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1reeHX-0007aL-LW
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:57:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=r5CvpnosciMvnPjJjGTldJRMDdV43tlw4uH7/lKch6E=; b=dtlyLU6FeP4B
- qx8qFI0H+B8T5/zLRuIcSt0qlRAoJwlJYYoBxHu3JBoY0X3B1Mccm8RDfKO7mp7gNwcX4h1NmrxB6
- gf03183uaQDFbd5cPqhoKHyRErVtaEq0AGe1ztQhnp6Nti1YF/S/bj7BovzdUn+ffQ+3E18a4MXZw
- L8RrgwL2XF/gzRvXRMUPQZQ0vzH0llTL0sbu9v9JhbUtHRtuuTlml+lyLzrs51er908dSDCsDVghd
- S6MkXce1pa+0CewqIw5ZCMPgjkHkmhXFCU68mzr0LqNOLInvQZq0NJY3uDMtQpf45GnAa8L0mz2ha
- jxVEo8b6tRc1vZWSsBUkxA==;
-Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1reeG3-001AD7-0t;
- Mon, 26 Feb 2024 17:56:34 +0100
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1reeNJ-0003hN-UP
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:02:45 -0500
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1reeNI-0000mF-8l
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:02:45 -0500
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d220e39907so54400921fa.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 09:02:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708966962; x=1709571762; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t+Lu1aUTzILJv+8PeOqcfRU9ypZOJg6L0bg1/V/uBfw=;
+ b=doABZ6ewQ7esAxNthv3kgVmKdmnhmbZvZjyyAGbXlsG4tV13qppCd5N52JlBzxyXB4
+ h5jOqcrFwuOi4s7Moj/ZmBDeBE/lWcqj4kt3y1B+17ZOh/Dn6BsdKw8TGZdMpwGyrw7Q
+ HU6/1tblj8yNRTaCVEGjc/Xyp6miMddUq+4hrv3VlOx3TyHxCiwwQZx3XhSqvNKT9zFu
+ mLo3EoxDpYxcs8B5pKT1OyjAUNR9re0u7F5dQ8Z5rdvN0eXOb/XyoAedTIe4cy0jR1JZ
+ D0m41kepm9qkKeqDRfoxjt3eY0qu5A1R9dk8ZVGuMJhaXadx7Kp1YIj63i7t3vj+CDMk
+ 6M/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708966962; x=1709571762;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t+Lu1aUTzILJv+8PeOqcfRU9ypZOJg6L0bg1/V/uBfw=;
+ b=E7sx2/xHI9EzA43r6ivGoUenSSqRtF29+20QhVdXesSCBXIoJIJjdfQaenw3n6KCQ3
+ uHYaqhjQzXZmXsVxnwv6Ig0Fe/7sMo/2Ww+v9l7oCKOycjWjl2Oj1ukX3ZyxU0EHdWh/
+ rGTxhqv0ZzxcSECoM2MfADyhbRaUtyJHpUJntzUrGyQIQXUZQvjwct+2SZyx0YM8sX0O
+ 7Ya4JQozXRchIu/wXNMykw6legUJ31qQGX/bMcS5zu3GJwpEPC1hZn1ol/VkgHffSKii
+ v4Y9U/l5jDFz0Uvc7+z6gq9o8hAVnL1VLcfQrO82NIKJ606VpW+uFCjaQrjwtbd0MlbW
+ 0EIg==
+X-Gm-Message-State: AOJu0Yz2lJwO6ldl0tJJpqvO0wALfcTU0KpGQDGvOYreYHBNe7KkWCVe
+ VDcKL7OtAGkjeCiFNoKF+HsjtCL8sF7AGgi5ux+UNMawIV/g2ADB2oa3PP0VXRk=
+X-Google-Smtp-Source: AGHT+IEvy/Dv9/G1HtfCIPS1qljPMysCpVRZPiDVG/kbIEDAJVSr7euuk5/zXWEhyyCStLcWcKYjoA==
+X-Received: by 2002:a2e:be8e:0:b0:2d2:864c:8220 with SMTP id
+ a14-20020a2ebe8e000000b002d2864c8220mr3908224ljr.5.1708966962301; 
+ Mon, 26 Feb 2024 09:02:42 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ bh21-20020a05600c3d1500b00412a5903673sm3262250wmb.26.2024.02.26.09.02.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Feb 2024 09:02:41 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 24EBC5F932;
+ Mon, 26 Feb 2024 16:56:49 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com, kkostiuk@redhat.com, marcandre.lureau@redhat.com,
- andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH 6/7] qga/commands-posix: use ga_run_command helper when
- suspending via sysfs
-Date: Mon, 26 Feb 2024 18:56:41 +0200
-Message-Id: <20240226165642.807350-7-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240226165642.807350-1-andrey.drobyshev@virtuozzo.com>
-References: <20240226165642.807350-1-andrey.drobyshev@virtuozzo.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-riscv@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
+ Song Gao <gaosong@loongson.cn>, Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Snow <jsnow@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-s390x@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Yanan Wang <wangyanan55@huawei.com>, Brian Cain <bcain@quicinc.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>, Laurent Vivier <laurent@vivier.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH v3 25/27] docs/devel: lift example and plugin API sections up
+Date: Mon, 26 Feb 2024 16:56:44 +0000
+Message-Id: <20240226165646.425600-26-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240226165646.425600-1-alex.bennee@linaro.org>
+References: <20240226165646.425600-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=130.117.225.111;
- envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,73 +120,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We replace the direct call to open() with a "sh -c 'echo ...'" call, so
-that it becomes an executable command.
+This makes them a bit more visible in the TCG emulation menu rather
+than hiding them away bellow the ToC limit.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Message-Id: <20240103173349.398526-43-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qga/commands-posix.c | 36 ++++--------------------------------
- 1 file changed, 4 insertions(+), 32 deletions(-)
+ docs/devel/tcg-plugins.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 6baaabc29e..599f59a323 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -1917,49 +1917,21 @@ static void linux_sys_state_suspend(SuspendMode mode, Error **errp)
-     Error *local_err = NULL;
-     const char *sysfile_strs[3] = {"disk", "mem", NULL};
-     const char *sysfile_str = sysfile_strs[mode];
--    pid_t pid;
--    int status;
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index fa7421279f5..535a74684c5 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -143,7 +143,7 @@ requested. The plugin isn't completely uninstalled until the safe work
+ has executed while all vCPUs are quiescent.
  
-     if (!sysfile_str) {
-         error_setg(errp, "unknown guest suspend mode");
-         return;
-     }
+ Example Plugins
+----------------
++===============
  
--    pid = fork();
--    if (!pid) {
--        /* child */
--        int fd;
--
--        setsid();
--        reopen_fd_to_null(0);
--        reopen_fd_to_null(1);
--        reopen_fd_to_null(2);
--
--        fd = open(LINUX_SYS_STATE_FILE, O_WRONLY);
--        if (fd < 0) {
--            _exit(EXIT_FAILURE);
--        }
--
--        if (write(fd, sysfile_str, strlen(sysfile_str)) < 0) {
--            _exit(EXIT_FAILURE);
--        }
--
--        _exit(EXIT_SUCCESS);
--    } else if (pid < 0) {
--        error_setg_errno(errp, errno, "failed to create child process");
--        return;
--    }
-+    g_autofree char *echo_cmd = g_strdup_printf(
-+        "echo %s > " LINUX_SYS_STATE_FILE, sysfile_str);
-+    const char *argv[] = {"sh", "-c", echo_cmd, NULL};
+ There are a number of plugins included with QEMU and you are
+ encouraged to contribute your own plugins plugins upstream. There is a
+@@ -591,8 +591,8 @@ The plugin has a number of arguments, all of them are optional:
+   configuration arguments implies ``l2=on``.
+   (default: N = 2097152 (2MB), B = 64, A = 16)
  
--    ga_wait_child(pid, &status, &local_err);
-+    ga_run_command(argv, NULL, "suspend", &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-     }
--
--    if (WEXITSTATUS(status)) {
--        error_setg(errp, "child process has failed to suspend");
--    }
--
- }
+-API
+----
++Plugin API
++==========
  
- static void guest_suspend(SuspendMode mode, Error **errp)
+ The following API is generated from the inline documentation in
+ ``include/qemu/qemu-plugin.h``. Please ensure any updates to the API
 -- 
-2.39.3
+2.39.2
 
 
