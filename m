@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0AD5C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48144C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:23:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWGG-0005nZ-VN; Mon, 26 Feb 2024 03:22:56 -0500
+	id 1reWGb-0005x2-OE; Mon, 26 Feb 2024 03:23:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1reWGG-0005nP-DJ
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:22:56 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reWGY-0005vt-Ub
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:23:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1reWGE-0004W6-Td
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:22:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708935775; x=1740471775;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=RbiVZhx4U0HYlLH53dh6YvD41tDN1IyKQp0WaEI9vSc=;
- b=Wx3pW71VNXufL2shsFqdxjYz2x4SfDEmth/lyOP/Ejha32ValtpvaFSb
- wS2mm1lAo2WZr1hUD0Zk4oBZHj0z6Y0MqoTRREt/w47lj2NC+JJcL7vZ1
- +Vk7b3/8EFNUU8IoWS/8PH76isCk6Pn/3nCvfWIRXZEF8RAJ2u1kDLAyN
- P8Apzm+dQcnr8m8SeCmh79Vi8XSDCR9Nk5S5l72h/9bPj+uVLRW1PFjuF
- EGco3uvGtQAMSLaJhBwsA+jY7dJa0dztliuBFQQDuOGvbDxIHDZz/PPWo
- /9f+tuT3tnD/gESvX8P1XjBDcJBDaS8LoTcYob4rJLHd3J0v65cfPO/pH g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="20750468"
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="20750468"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2024 00:22:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
-   d="scan'208";a="6577125"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 26 Feb 2024 00:22:51 -0800
-Date: Mon, 26 Feb 2024 16:36:33 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, mcb30@ipxe.org
-Subject: Re: [PATCH v2 4/7] target/i386: use separate MMU indexes for 32-bit
- accesses
-Message-ID: <ZdxNkStjZyB6iJtk@intel.com>
-References: <20240223130948.237186-1-pbonzini@redhat.com>
- <20240223130948.237186-5-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reWGX-0004bs-15
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:23:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708935792;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zjPaPGj5s3aVhMFul/v781tyjt/wzgZVW9WmyogkM4I=;
+ b=axuJHYhnD8FCvY2rT2tCtcY8iSf+yFnifQUmhLK4v8vPbrz+4vrw+UiQEx5HHNlo9s0/Fd
+ DGawhirfnkxDV5oNHZwC9XxG4AuvfzHC4Ly39nzGR9Crn7sX6arW5wSGlEx+gDMR/SmHGU
+ zsBANyEeMEzkbskN/jHETHjqYExShR8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-141-2H9wsBxEOCSjOvyk5X0mIw-1; Mon, 26 Feb 2024 03:23:05 -0500
+X-MC-Unique: 2H9wsBxEOCSjOvyk5X0mIw-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B1BFA1021F66;
+ Mon, 26 Feb 2024 08:23:04 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7CCFF8CEC;
+ Mon, 26 Feb 2024 08:23:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 39FCA21E6767; Mon, 26 Feb 2024 09:23:03 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Marcin Juszkiewicz
+ <marcin.juszkiewicz@linaro.org>,  John Snow <jsnow@redhat.com>,  Leif
+ Lindholm <quic_llindhol@quicinc.com>,  qemu-block@nongnu.org,  Radoslaw
+ Biernacki <rad@semihalf.com>,  BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-ppc@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 3/3] hw/ide: Include 'ide_internal.h' from current path
+In-Reply-To: <20240226080632.9596-4-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 26 Feb 2024 09:06:31
+ +0100")
+References: <20240226080632.9596-1-philmd@linaro.org>
+ <20240226080632.9596-4-philmd@linaro.org>
+Date: Mon, 26 Feb 2024 09:23:03 +0100
+Message-ID: <8734tfk520.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240223130948.237186-5-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,44 +91,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Feb 23, 2024 at 02:09:45PM +0100, Paolo Bonzini wrote:
-> Date: Fri, 23 Feb 2024 14:09:45 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH v2 4/7] target/i386: use separate MMU indexes for 32-bit
->  accesses
-> X-Mailer: git-send-email 2.43.0
-> 
-> Accesses from a 32-bit environment (32-bit code segment for instruction
-> accesses, EFER.LMA==0 for processor accesses) have to mask away the
-> upper 32 bits of the address.  While a bit wasteful, the easiest way
-> to do so is to use separate MMU indexes.  These days, QEMU anyway is
-> compiled with a fixed value for NB_MMU_MODES.  Split MMU_USER_IDX,
-> MMU_KSMAP_IDX and MMU_KNOSMAP_IDX in two.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Maybe s/in/into/ ?
+> Rename "internal.h" as "ide_internal.h", and include
 
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/cpu.h                    | 34 ++++++++++++++++++++--------
->  target/i386/cpu.c                    | 11 +++++----
->  target/i386/tcg/sysemu/excp_helper.c |  3 ++-
->  3 files changed, 33 insertions(+), 15 deletions(-)
-> 
+ide-internal.h
 
-[snip]
+> it via its relative local path, instead of absolute
+> to the project root path.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
->  
->  static inline int cpu_mmu_index_kernel(CPUX86State *env)
->  {
-> -    return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
-> -        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK))
-> -        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
-> +    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
-> +    int mmu_index_base =
-> +        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-> +        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
-
-Change the line?
+The series is a lovely little cleanup; thanks, guys!
 
 
