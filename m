@@ -4,77 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E525C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5BCC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rehkp-0008DH-JN; Mon, 26 Feb 2024 15:39:15 -0500
+	id 1rehzP-00033B-6n; Mon, 26 Feb 2024 15:54:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aminier-21@enst.fr>)
- id 1rehkj-0008AK-Dr; Mon, 26 Feb 2024 15:39:09 -0500
-Received: from zproxy4.enst.fr ([137.194.2.223])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aminier-21@enst.fr>)
- id 1rehkZ-00035d-Bt; Mon, 26 Feb 2024 15:39:09 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 8115D20589;
- Mon, 26 Feb 2024 21:38:56 +0100 (CET)
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 9WBpJiU_brWR; Mon, 26 Feb 2024 21:38:55 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 96C4C205A2;
- Mon, 26 Feb 2024 21:38:55 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 96C4C205A2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1708979935;
- bh=HCeYBth8krepZlcIcrM/gCF1oQ3Ck2v+dYRDqiEDAN8=;
- h=Date:From:To:Message-ID:MIME-Version;
- b=rHi9sv2cmlQad81cWaN5oKWWscLLhGgQ32sSPs7ZKrB9UXynhpfuREZ/pbE0O2orJ
- wF3O89CB8+BnAH/eo0cw+GTJIocp/Q8IiPM0iWB8B51RKeQYnC46m6xL/PXHizApXl
- dgpUHHiR3HG2eNLlGw4sRbyFY+bShCbQfxm99+LU=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id pCBU97WH5uFq; Mon, 26 Feb 2024 21:38:55 +0100 (CET)
-Received: from zmail-tp1.enst.fr (zmail-tp1.enst.fr [137.194.2.198])
- by zproxy4.enst.fr (Postfix) with ESMTP id CFDD8205A5;
- Mon, 26 Feb 2024 21:38:54 +0100 (CET)
-Date: Mon, 26 Feb 2024 21:38:54 +0100 (CET)
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, 
- =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>, 
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, 
- qemu-arm <qemu-arm@nongnu.org>, 
- Alistair Francis <alistair@alistair23.me>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <1729495377.11787593.1708979934438.JavaMail.zimbra@enst.fr>
-In-Reply-To: <CAFEAcA_EVoayec6Qec4EoU6atXhG7fdqb+QtFEvSQge88xJNPg@mail.gmail.com>
-References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
- <20240219200908.49551-3-arnaud.minier@telecom-paris.fr>
- <CAFEAcA_EVoayec6Qec4EoU6atXhG7fdqb+QtFEvSQge88xJNPg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/8] Add an internal clock multiplexer object
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rehzN-000333-RO
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:54:17 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rehzM-0005No-3E
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:54:17 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 001951FB69;
+ Mon, 26 Feb 2024 20:54:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708980854; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MIKChZRfLfdftf53J8SO5i5uLGrZ1/K/GlMGgTGNg1g=;
+ b=iQrCRPTzbuf5D/+Ldm1VeaS+PY5dgX3sZ4TwaHrYsl4IqzOroK8mdfBSP/rEl2wUGhd8L7
+ 7d0TdG9S7qQw+3FnYKcouk5J+71Nc37ShGqDo3O88uMbB0x+FiKd9Gt4p3JRDonpSNAfev
+ 5dMW7XyPyo5wP/GoDStW4G3h0Rzz0BM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708980854;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MIKChZRfLfdftf53J8SO5i5uLGrZ1/K/GlMGgTGNg1g=;
+ b=wRohaj7y298wRKXSBn36HvPIqRd6fuc1+Rwarioo6Rc/aW9gzvYAjUWmF7cI0ohbjYkk4o
+ UpFPFr8YgiKc8MDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1708980854; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MIKChZRfLfdftf53J8SO5i5uLGrZ1/K/GlMGgTGNg1g=;
+ b=iQrCRPTzbuf5D/+Ldm1VeaS+PY5dgX3sZ4TwaHrYsl4IqzOroK8mdfBSP/rEl2wUGhd8L7
+ 7d0TdG9S7qQw+3FnYKcouk5J+71Nc37ShGqDo3O88uMbB0x+FiKd9Gt4p3JRDonpSNAfev
+ 5dMW7XyPyo5wP/GoDStW4G3h0Rzz0BM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1708980854;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MIKChZRfLfdftf53J8SO5i5uLGrZ1/K/GlMGgTGNg1g=;
+ b=wRohaj7y298wRKXSBn36HvPIqRd6fuc1+Rwarioo6Rc/aW9gzvYAjUWmF7cI0ohbjYkk4o
+ UpFPFr8YgiKc8MDg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7E81513A58;
+ Mon, 26 Feb 2024 20:54:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Qk9zEXX63GWPTwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 26 Feb 2024 20:54:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
+ Fontana <cfontana@suse.de>
+Subject: Re: [PATCH v4 19/34] migration/multifd: Allow receiving pages
+ without packets
+In-Reply-To: <875xybav9b.fsf@suse.de>
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-20-farosas@suse.de> <Zdw2qilH4DVdmmjB@x1n>
+ <875xybav9b.fsf@suse.de>
+Date: Mon, 26 Feb 2024 17:54:11 -0300
+Message-ID: <871q8zaqvg.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [::ffff:46.193.4.103]
-X-Mailer: Zimbra 9.0.0_GA_4583 (ZimbraWebClient - FF122 (Linux)/9.0.0_GA_4583)
-Thread-Topic: Add an internal clock multiplexer object
-Thread-Index: NrImc00nNVHxguUng59clwHQlfCEKQ==
-Received-SPF: pass client-ip=137.194.2.223; envelope-from=aminier-21@enst.fr;
- helo=zproxy4.enst.fr
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=iQrCRPTz;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=wRohaj7y
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-5.86 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_DN_SOME(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ NEURAL_HAM_SHORT(-0.05)[-0.234]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; BAYES_HAM(-3.00)[100.00%];
+ MID_RHS_MATCH_FROM(0.00)[]; ARC_NA(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_DKIM_ARC_DNSWL_HI(-1.00)[]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_IN_DNSWL_HI(-0.50)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_TLS_ALL(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+X-Rspamd-Queue-Id: 001951FB69
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,213 +128,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
------ Original Message -----
-> From: "Peter Maydell" <peter.maydell@linaro.org>
-> To: "Arnaud Minier" <arnaud.minier@telecom-paris.fr>
-> Cc: "qemu-devel" <qemu-devel@nongnu.org>, "Thomas Huth" <thuth@redhat.com=
->, "Laurent Vivier" <lvivier@redhat.com>, "In=C3=A8s
-> Varhol" <ines.varhol@telecom-paris.fr>, "Samuel Tardieu" <samuel.tardieu@=
-telecom-paris.fr>, "qemu-arm"
-> <qemu-arm@nongnu.org>, "Alistair Francis" <alistair@alistair23.me>, "Paol=
-o Bonzini" <pbonzini@redhat.com>, "Alistair
-> Francis" <alistair.francis@wdc.com>
-> Sent: Friday, February 23, 2024 3:44:59 PM
-> Subject: Re: [PATCH v5 2/8] Add an internal clock multiplexer object
+Fabiano Rosas <farosas@suse.de> writes:
 
-> On Mon, 19 Feb 2024 at 20:12, Arnaud Minier
-> <arnaud.minier@telecom-paris.fr> wrote:
+> Peter Xu <peterx@redhat.com> writes:
+>
+>> On Tue, Feb 20, 2024 at 07:41:23PM -0300, Fabiano Rosas wrote:
+>>> Currently multifd does not need to have knowledge of pages on the
+>>> receiving side because all the information needed is within the
+>>> packets that come in the stream.
+>>> 
+>>> We're about to add support to fixed-ram migration, which cannot use
+>>> packets because it expects the ramblock section in the migration file
+>>> to contain only the guest pages data.
+>>> 
+>>> Add a data structure to transfer pages between the ram migration code
+>>> and the multifd receiving threads.
+>>> 
+>>> We don't want to reuse MultiFDPages_t for two reasons:
+>>> 
+>>> a) multifd threads don't really need to know about the data they're
+>>>    receiving.
+>>> 
+>>> b) the receiving side has to be stopped to load the pages, which means
+>>>    we can experiment with larger granularities than page size when
+>>>    transferring data.
+>>> 
+>>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>>> ---
+>>> @Peter: a 'quit' flag cannot be used instead of pending_job. The
+>>> receiving thread needs know there's no more data coming. If the
+>>> migration thread sets a 'quit' flag, the multifd thread would see the
+>>> flag right away and exit.
 >>
->> This object is used to represent every multiplexer in the clock tree as
->> well as every clock output, every presecaler, frequency multiplier, etc.
->> This allows to use a generic approach for every component of the clock t=
-ree
->> (except the PLLs).
+>> Hmm.. isn't this exactly what we want?  I'll comment for this inline below.
 >>
->> Wasn't sure about how to handle the reset and the migration so used the
->> same appproach as the BCM2835 CPRMAN.
->=20
-> I think hw/misc/zynq_sclr.c is also probably a good model to look at.
->=20
-> AIUI the way it works is:
-> * input Clock objects must be migrated
-> * output Clock objects do not need to be migrated
-> * your reset needs to be a three-phase one:
->   - in the 'enter' method you reset register values (including
->     all the values that define oscillator frequencies, enable bits, etc)
->   - in the 'hold' method you compute the values for the output clocks
->     as if the input clock is disabled, and propagate them
->   - in the 'exit' method you compute the values for the output clocks
->     according to the value of the input clock, and propagate them
->=20
-
-Thanks for the indication.
-I have changed the way we handle the reset to have a three phase one.
-
->=20
->=20
->> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
->> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
->> Acked-by: Alistair Francis <alistair.francis@wdc.com>
->> ---
->>  hw/misc/stm32l4x5_rcc.c                   | 158 ++++++++++++++++++++++
->>  hw/misc/trace-events                      |   5 +
->>  include/hw/misc/stm32l4x5_rcc.h           | 119 ++++++++++++++++
->>  include/hw/misc/stm32l4x5_rcc_internals.h |  29 ++++
->>  4 files changed, 311 insertions(+)
+>>> The only way is to clear pending_job on the
+>>> thread and spin once more.
+>>> ---
+>>>  migration/file.c    |   1 +
+>>>  migration/multifd.c | 122 +++++++++++++++++++++++++++++++++++++++++---
+>>>  migration/multifd.h |  15 ++++++
+>>>  3 files changed, 131 insertions(+), 7 deletions(-)
+>>> 
+>>> diff --git a/migration/file.c b/migration/file.c
+>>> index 5d4975f43e..22d052a71f 100644
+>>> --- a/migration/file.c
+>>> +++ b/migration/file.c
+>>> @@ -6,6 +6,7 @@
+>>>   */
+>>>  
+>>>  #include "qemu/osdep.h"
+>>> +#include "exec/ramblock.h"
+>>>  #include "qemu/cutils.h"
+>>>  #include "qapi/error.h"
+>>>  #include "channel.h"
+>>> diff --git a/migration/multifd.c b/migration/multifd.c
+>>> index 0a5279314d..45a0c7aaa8 100644
+>>> --- a/migration/multifd.c
+>>> +++ b/migration/multifd.c
+>>> @@ -81,9 +81,15 @@ struct {
+>>>  
+>>>  struct {
+>>>      MultiFDRecvParams *params;
+>>> +    MultiFDRecvData *data;
+>>>      /* number of created threads */
+>>>      int count;
+>>> -    /* syncs main thread and channels */
+>>> +    /*
+>>> +     * For sockets: this is posted once for each MULTIFD_FLAG_SYNC flag.
+>>> +     *
+>>> +     * For files: this is only posted at the end of the file load to mark
+>>> +     *            completion of the load process.
+>>> +     */
+>>>      QemuSemaphore sem_sync;
+>>>      /* global number of generated multifd packets */
+>>>      uint64_t packet_num;
+>>> @@ -1110,6 +1116,53 @@ bool multifd_send_setup(void)
+>>>      return true;
+>>>  }
+>>>  
+>>> +bool multifd_recv(void)
+>>> +{
+>>> +    int i;
+>>> +    static int next_recv_channel;
+>>> +    MultiFDRecvParams *p = NULL;
+>>> +    MultiFDRecvData *data = multifd_recv_state->data;
 >>
->> diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
->> index 38ca8aad7d..ed10832f88 100644
->> --- a/hw/misc/stm32l4x5_rcc.c
->> +++ b/hw/misc/stm32l4x5_rcc.c
->> @@ -36,6 +36,132 @@
->>  #define LSE_FRQ 32768ULL
->>  #define LSI_FRQ 32000ULL
+>> [1]
 >>
->> +static void clock_mux_update(RccClockMuxState *mux)
->> +{
->> +    uint64_t src_freq, old_freq, freq;
->> +
->> +    src_freq =3D clock_get_hz(mux->srcs[mux->src]);
->> +    old_freq =3D clock_get_hz(mux->out);
->=20
-> You should try to avoid using clock_get_hz() and clock_update_hz()
-> when doing clock calculations like this. There is inherently
-> rounding involved if the clock isn't running at an exact number of Hz.
-> It's best to use clock_get() and clock_set(), which work with
-> the clock period specified in units of 2^-32ns.
->=20
->=20
->> +
->> +    if (!mux->enabled || !mux->divider) {
->> +        freq =3D 0;
->> +    } else {
->> +        freq =3D muldiv64(src_freq, mux->multiplier, mux->divider);
->=20
-> Consider whether you can use the Clock's builtin period
-> multiplier/divider (clock_set_mul_div()).
+>>> +
+>>> +    /*
+>>> +     * next_channel can remain from a previous migration that was
+>>> +     * using more channels, so ensure it doesn't overflow if the
+>>> +     * limit is lower now.
+>>> +     */
+>>> +    next_recv_channel %= migrate_multifd_channels();
+>>> +    for (i = next_recv_channel;; i = (i + 1) % migrate_multifd_channels()) {
+>>> +        if (multifd_recv_should_exit()) {
+>>> +            return false;
+>>> +        }
+>>> +
+>>> +        p = &multifd_recv_state->params[i];
+>>> +
+>>> +        /*
+>>> +         * Safe to read atomically without a lock because the flag is
+>>> +         * only set by this function below. Reading an old value of
+>>> +         * true is not an issue because it would only send us looking
+>>> +         * for the next idle channel.
+>>> +         */
+>>> +        if (qatomic_read(&p->pending_job) == false) {
+>>> +            next_recv_channel = (i + 1) % migrate_multifd_channels();
+>>> +            break;
+>>> +        }
+>>> +    }
+>>
+>> IIUC you'll need an smp_mb_acquire() here.  The ordering of "reading
+>> pending_job" and below must be guaranteed, similar to the sender side.
+>>
+>
+> I've been thinking about this even on the sending side.
+>
+> We shouldn't need the barrier here because there's a control flow
+> dependency on breaking the loop. I think pending_job *must* be read
+> prior to here, otherwise the program is just wrong. Does that make
+> sense?
 
-I have changed it to use the period and the builtin clock_set_mul_div() but=
- I had to discard
-the check below that prevents a lot of spam in the logs due to no longer
-having access to the children frequency without using muldiv64 again.
-Any idea on how to keep a similar functionnality .
+Hm, nevermind actually. We need to order this against data->size update
+on the other thread anyway.
 
->=20
->> +    }
->> +
->> +    /* No change, early return to avoid log spam and useless propagatio=
-n */
->> +    if (old_freq =3D=3D freq) {
->> +        return;
->> +    }
->> +
->> +    clock_update_hz(mux->out, freq);
->> +    trace_stm32l4x5_rcc_mux_update(mux->id, mux->src, src_freq, freq);
->> +}
->> +
->> +static void clock_mux_src_update(void *opaque, ClockEvent event)
->> +{
->> +    RccClockMuxState **backref =3D opaque;
->> +    RccClockMuxState *s =3D *backref;
->> +    /*
->> +     * The backref value is equal to:
->> +     * s->backref + (sizeof(RccClockMuxState *) * update_src).
->> +     * By subtracting we can get back the index of the updated clock.
->> +     */
->> +    const uint32_t update_src =3D backref - s->backref;
->> +    /* Only update if the clock that was updated is the current source*=
-/
->> +    if (update_src =3D=3D s->src) {
->> +        clock_mux_update(s);
->> +    }
->> +}
->> +
->> +static void clock_mux_init(Object *obj)
->> +{
->> +    RccClockMuxState *s =3D RCC_CLOCK_MUX(obj);
->> +    size_t i;
->> +
->> +    for (i =3D 0; i < RCC_NUM_CLOCK_MUX_SRC; i++) {
->> +        char *name =3D g_strdup_printf("srcs[%zu]", i);
->> +        s->backref[i] =3D s;
->> +        s->srcs[i] =3D qdev_init_clock_in(DEVICE(s), name,
->> +                                        clock_mux_src_update,
->> +                                        &s->backref[i],
->> +                                        ClockUpdate);
->> +        g_free(name);
->> +    }
->> +
->> +    s->out =3D qdev_init_clock_out(DEVICE(s), "out");
->> +}
->> +
->> +static void clock_mux_reset_hold(Object *obj)
->> +{ }
->> +
->> +static const VMStateDescription clock_mux_vmstate =3D {
->> +    .name =3D TYPE_RCC_CLOCK_MUX,
->> +    .version_id =3D 1,
->> +    .minimum_version_id =3D 1,
->> +    .fields =3D (VMStateField[]) {
->> +        VMSTATE_UINT32(id, RccClockMuxState),
->> +        VMSTATE_ARRAY_CLOCK(srcs, RccClockMuxState,
->> +                            RCC_NUM_CLOCK_MUX_SRC),
->> +        VMSTATE_CLOCK(out, RccClockMuxState),
->=20
-> Output clocks don't need VMSTATE_CLOCK lines. (We trust
-> the device on the other end to migrate its state as needed.)
-
-Done. This line was removed.
-
->=20
->> +        VMSTATE_BOOL(enabled, RccClockMuxState),
->> +        VMSTATE_UINT32(src, RccClockMuxState),
->> +        VMSTATE_UINT32(multiplier, RccClockMuxState),
->> +        VMSTATE_UINT32(divider, RccClockMuxState),
->> +        VMSTATE_END_OF_LIST()
->> +    }
->> +};
->=20
->=20
->> diff --git a/hw/misc/trace-events b/hw/misc/trace-events
->> index 62a7599353..d5e471811c 100644
->> --- a/hw/misc/trace-events
->> +++ b/hw/misc/trace-events
->> @@ -177,6 +177,11 @@ stm32l4x5_exti_write(uint64_t addr, uint64_t data) =
-"reg
->> write: addr: 0x%" PRIx64
->>  # stm32l4x5_rcc.c
->>  stm32l4x5_rcc_read(uint64_t addr, uint32_t data) "RCC: Read <0x%" PRIx6=
-4 "> ->
->>  0x%" PRIx32 ""
->>  stm32l4x5_rcc_write(uint64_t addr, uint32_t data) "RCC: Write <0x%" PRI=
-x64 "> <-
->>  0x%" PRIx32 ""
->> +stm32l4x5_rcc_mux_enable(uint32_t mux_id) "RCC: Mux %d enabled"
->> +stm32l4x5_rcc_mux_disable(uint32_t mux_id) "RCC: Mux %d disabled"
->> +stm32l4x5_rcc_mux_set_factor(uint32_t mux_id, uint32_t old_multiplier, =
-uint32_t
->> new_multiplier, uint32_t old_divider, uint32_t new_divider) "RCC: Mux %d=
- factor
->> changed: multiplier (%u -> %u), divider (%u -> %u)"
->> +stm32l4x5_rcc_mux_set_src(uint32_t mux_id, uint32_t old_src, uint32_t n=
-ew_src)
->> "RCC: Mux %d source changed: from %u to %u"
->> +stm32l4x5_rcc_mux_update(uint32_t mux_id, uint32_t src, uint64_t src_fr=
-eq,
->> uint64_t new_freq) "RCC: Mux %d src %d update: src_freq %" PRIu64 " new_=
-freq %"
->> PRIu64 ""
->=20
-> You don't need the trailing "" in this kind of string
-> concatenation with a PRIu64 or similar: adding the empty
-> string on the end of a string has no effect.
-
-The useless trailing "" have been removed for every commit of this patch se=
-t.
-
->=20
-> thanks
-> -- PMM
-
-Thanks for the review !
 
