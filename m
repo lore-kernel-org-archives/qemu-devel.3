@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D59D0C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:11:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C356C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reW3q-0000Ks-J0; Mon, 26 Feb 2024 03:10:06 -0500
+	id 1reW4t-0001dQ-Fx; Mon, 26 Feb 2024 03:11:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW3m-0000F7-8M
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:10:02 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW4p-0001bl-Dq
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:11:07 -0500
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW3k-0002Hu-Ct
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:10:01 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a34c5ca2537so364088966b.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:09:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW4n-0002dC-Qr
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:11:07 -0500
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-5656e5754ccso3331831a12.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:11:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708934998; x=1709539798; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1708935064; x=1709539864; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6KTu94ApO0yIdxKXWWYSfCBDITcDdBmGOkZCWUjAx+I=;
- b=UgZep0yg8Bj7qEqEie6C5PebADbJZmxBsFyjYc50s0NfTamzm21YU6qej1W7/2DKsr
- YjumGzJsB955dF+tDcbmDcVztQnw3PAM6upT7u4ZgV9f5Sreod6AH9uSeKc+W19zerp4
- yWmtI1sS7BJtmp+zNA8hCbwi8oHqm9a/Z9y0B/wvKjAFQpXzZIO2NB2bDZpE6UNbNBqH
- BKqIVWqZ56wsXI1elnR6nulSe7M6Ll58iGRnjvjq1dY8L3mGhd2TO7kNHhs+Dr5NXHsP
- UGn2aepPiipI2B8rocxtLJICqUw6cOTQG3qyCqcEmLwzRR1A059w0S/WXYZC696XRW14
- tyew==
+ bh=IXxTAwoJKY2jfKurotE+rFCHnfcn+5saUQNAytaPDDk=;
+ b=hpW2teennsvUyXYD4DAlYBH61/J/IQd7quphUYPHodY59J31ASQ14ag387H7yU9wbQ
+ bF43DkD3bLZeJSpf1Ef9D8iMT/drMh4anGdm07eFCfIhwyZQnP1qTsNjm7EThihiOMyL
+ HIE1jcP6Tt7QPt3zCHuwmMX0ttrp5Aluo0YC2KhM3lj9qfttWHoFNwzIzSIc1129gt4I
+ 1nfmo8wVUiz8Gf20G1LW2jKwYTIlAGBfFWuQXsRGcDBgesmVAJBZidG4dyhJD0zJrEmi
+ X0Tjj4dHJULVsXMPnjTR739Zm8g+LhHu8Uf3WSeQfjZbdCJZ1OZ/wt4L3VjaX/j0ZW6X
+ qKUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708934998; x=1709539798;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1708935064; x=1709539864;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6KTu94ApO0yIdxKXWWYSfCBDITcDdBmGOkZCWUjAx+I=;
- b=wcxDSCC4FHM00VRrFKnTmPknQojsARUXCKpn3M5hclQOu1cExKeJ4sEQrowV9AvcSO
- GBQXy+ycT9SL/VMUlT65Msbpts40PrG3hAIEoLy+ZYkK5D7pOGvg1S5IFc4zIG2kl+SF
- E29xVRXGtK34D9zwPHwt3kARliKLOAXXgstYMnRSjsxk58WGsZ2DnFo/oxVH2hzPuEjf
- Bep0DOzQ9snpnQcUH59yQJyEd+OWNLjtTOH4VzEEPSc2t3tpn7cvz6VqsGxCOmzsykHo
- Wgc+mDRNXQrd9hvOgSFtAR7i1uGbxzHjBCVGfd4PMZ33ANvMdu9lh3rmaOC2sS/mEpXD
- 2rCg==
-X-Gm-Message-State: AOJu0YyBsL17pH9BTnxH8I/Z/Dk2cioqNf9Tw2slNOjzTZGrg43NC2Fl
- QKQecT+GU74cyGeCDRslrkaMJzZe1YWWzgGfkahMaki4KqTd1QmScJyQIFoc+0rF7HzZnKt3J86
- z
-X-Google-Smtp-Source: AGHT+IHvsse/rDZAfawaJhBkgtmoAsFpFuu1wmAKSLYhLMo1HxYDJOUEaYLHTnmyXMNB39dAJCQ0UA==
-X-Received: by 2002:a17:906:ce30:b0:a3f:bd94:4d80 with SMTP id
- sd16-20020a170906ce3000b00a3fbd944d80mr3974881ejb.76.1708934998279; 
- Mon, 26 Feb 2024 00:09:58 -0800 (PST)
+ bh=IXxTAwoJKY2jfKurotE+rFCHnfcn+5saUQNAytaPDDk=;
+ b=PfOu/NzQqY1UVV18YVlENMfbYYYqofYvEQjTeieHSfeMegvOwXn189y6iroea+92Ia
+ /3zcz4Yx1njDwGejaEca/OWRY3V6O5MWCzj5sYJCWM8tBV4h0anRl1H3ANwZv44ZKj2w
+ jh8NvbhYcpDaAouQlfCjVdRv3vp8ZJD7YoqTmwLK1m2Fa0JJw7r6hgpGzx4Ez8FbxKu3
+ BZat/sDljD9cCYGYbqeZLYo7QQ+AUSV13ursU0H2tJprmoTUurPx61OceqR8ybZn4qoN
+ 32+jtLp6+/AXERil5IqAbC5FrySeqESMr65rDzpZ/gjmr1Fl0a2QsKQceKV9JSPXFjBL
+ 1Tvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVsW6EKjVhbjJFFwXsNEJrurt6GV1Ihrg9+FUBahRcMFXJXA9TMtuEUUTxUozOAyd2VRRhfkFUKa0bgKUlUEMxbfrT7aWY=
+X-Gm-Message-State: AOJu0Yy3zkRBYQOY/OmwKjTkLTOHkx/dUF/zu6tm9Q7l94MrDcLhZmjZ
+ ub/chD+YGEO+yFZ5rqkgEFqsMlj0LKacjHRS9DvnbxjSeos7Nbnyp0ZCbhNXrVs=
+X-Google-Smtp-Source: AGHT+IEUzjguIvkERSszRezAEUNX5PU20OKfYznX22BzTzPMfMcO6fG96j4iVNrClVcUhP5cyoH4yQ==
+X-Received: by 2002:a17:906:2e89:b0:a3f:5144:ada2 with SMTP id
+ o9-20020a1709062e8900b00a3f5144ada2mr4542878eji.2.1708935064325; 
+ Mon, 26 Feb 2024 00:11:04 -0800 (PST)
 Received: from [192.168.69.100] ([176.176.164.69])
  by smtp.gmail.com with ESMTPSA id
- tb24-20020a1709078b9800b00a42fa329ebfsm1948745ejc.54.2024.02.26.00.09.56
+ tb24-20020a1709078b9800b00a42fa329ebfsm1948745ejc.54.2024.02.26.00.11.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 00:09:57 -0800 (PST)
-Message-ID: <fded510c-88d9-4bbb-8a80-08898c5850b2@linaro.org>
-Date: Mon, 26 Feb 2024 09:09:55 +0100
+ Mon, 26 Feb 2024 00:11:03 -0800 (PST)
+Message-ID: <c2a2b5b5-10ca-4a7c-84aa-308273e6c7d9@linaro.org>
+Date: Mon, 26 Feb 2024 09:11:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] hw/ide: Include 'ide_internal.h' from current path
+Subject: Re: [PATCH v2] ui/cocoa: Fix window clipping on macOS 14
 Content-Language: en-US
+To: David Parsons <dave@daveparsons.net>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, akihiko.odaki@daynix.com, mjt@tls.msk.ru,
+ kraxel@redhat.com, marcandre.lureau@redhat.com
+References: <20240224140620.39200-1-dave@daveparsons.net>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Markus Armbruster <armbru@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- John Snow <jsnow@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240225171637.4709-1-philmd@linaro.org>
- <20240225171637.4709-4-philmd@linaro.org>
- <feffd329-59e0-0291-0dd6-76a625da190b@eik.bme.hu>
- <878r37lll6.fsf@pond.sub.org>
- <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
-In-Reply-To: <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
+In-Reply-To: <20240224140620.39200-1-dave@daveparsons.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/2/24 09:00, Philippe Mathieu-Daudé wrote:
-> On 26/2/24 08:40, Markus Armbruster wrote:
->> BALATON Zoltan <balaton@eik.bme.hu> writes:
->>
->>> On Sun, 25 Feb 2024, Philippe Mathieu-Daudé wrote:
->>>> Rename "internal.h" as "ide_internal.h", and include
->>>
->>> Is there a convention about using underscore or dash in file names? 
->>> The headers Thomas added are using - as well as ahci-allwinner.c, 
->>> only ahci_internal.h has _ (but there are others elsewhere such as 
->>> pci_device.h). Maybe we should be consistent at least within IDE and 
->>> this series is now a good opportunity for renaming these headers to 
->>> match. But it's just a small nit, thanks for picking this up.
->>
->> This is one of the many unnecessary inconsistencies we're inflicting on
->> ourselves.
->>
->> We have more than 3600 file names containing '-', and more almost 2700
->> containing '_'.  Bizarrely, 68 of them contain both.
->>
->> I strongly prefer '_' myself.
->>
->> Zoltan is making a local consistency argument for '-'.
->>
->> Let's use '-' here.
-
-BTW by "here" I understood "in this patch". After v3 only a single
-file use '_': "ahci_internal.h", but Zoltan said he is uninterested
-and doesn't care about it so I'm not renaming it.
-(https://lore.kernel.org/qemu-devel/3e576d33-1973-3f44-afd1-9224609f89a6@eik.bme.hu/)
-
+On 24/2/24 15:06, David Parsons wrote:
+> macOS Sonoma changes the NSView.clipsToBounds to false by default
+> where it was true in earlier version of macOS. This causes the window
+> contents to be occluded by the frame at the top of the window. This
+> fixes the issue by conditionally compiling the clipping on Sonoma to
+> true. NSView only exposes the clipToBounds in macOS 14 and so has
+> to be fixed via conditional compilation.
 > 
-> Fine, patch updated.
-> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1994
+> Signed-off-by: David Parsons <dave@daveparsons.net>
+> ---
+>   ui/cocoa.m | 7 +++++++
+>   1 file changed, 7 insertions(+)
 
+Patch queued, thanks!
 
