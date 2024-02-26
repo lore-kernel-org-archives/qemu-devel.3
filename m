@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F6A8C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AD8C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWUS-00047X-SA; Mon, 26 Feb 2024 03:37:36 -0500
+	id 1reWXZ-0005I8-CE; Mon, 26 Feb 2024 03:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reWUQ-00044H-Jb
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:37:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1reWXX-0005Hj-0T
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:40:47 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reWUO-0006oD-Vy
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:37:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708936651;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NYoViIQxuYsoGw8nG94ne08EEqz/c1kGvIogAb4+D1o=;
- b=VT8Gr/cWP5rWiPfEF6MYoMv4lVcDs8HkRqtItJkGOVso5I3Graa1ClLyIgAKs+nbscGalB
- jb2YCiLIa3XkQeENbM0NxccRODcOt0L4Z9xGS4jiD1H9YkcMBboEMswwnSO0pIo25o7CY8
- fufWyfwVRm2i2aC0sAMZZzBOEmZKJ5U=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-FjkK29cCPwqaf59KKcqv1A-1; Mon, 26 Feb 2024 03:37:30 -0500
-X-MC-Unique: FjkK29cCPwqaf59KKcqv1A-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-1dc90a15eeeso1007065ad.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:37:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708936649; x=1709541449;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NYoViIQxuYsoGw8nG94ne08EEqz/c1kGvIogAb4+D1o=;
- b=D/1TiBBd6x6z/tnK0kqHVrVJt3s9w4T9lgRwGWaULsL7I7iZdqN3sHu43bDlsxQu2x
- ZdIG9xjY49S4oWBqKfQgxgfxD1OBSjFDD92TJVljPp3gxu2ZVCxD3izfW3EgoW2EPp5D
- ZyzeGixPc1VwKeeiSVQte/8AIZ5pdHGpxrJfxgKjMKH0jebUg7iuA8xsSz5jGyb4r6kq
- q7gltCv2zexg+37MZpy0pylXuY4PBhaWefpR1wdAIjBTA4IpOzIB7S7uWBpH0BIaXCuj
- aLp6d1IzL+8w9l4ZnIm2YX9lM5JuK1EulTz3jmz2M7REatXHP775THfAUrh8t1EgIkcl
- voYQ==
-X-Gm-Message-State: AOJu0YzuVTgl+Afm4Do5ppDD0yoA7ddokX8LpHfoIkSDWnbA6bF+j7zD
- cQEplNdxk9Fj/EUI3VS3SKcavi85oWF/clSaN9nS1OgXxqg6f2k8yhhphn5+2RTOd5z3vpkPh+M
- tAFR32tIeLpOsD+3/2jjRNl0U9KZRDJDmQfp+o9I8uGL+QeY3IcrS
-X-Received: by 2002:a17:902:c184:b0:1dc:2be8:f61a with SMTP id
- d4-20020a170902c18400b001dc2be8f61amr7229477pld.2.1708936649227; 
- Mon, 26 Feb 2024 00:37:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHTa/9oEtuxBrekKtZSPTLXJGl6DsT81aOB7ml1uHMGHA9GZG/R06V/4CStfRK9ENHbSMV0fQ==
-X-Received: by 2002:a17:902:c184:b0:1dc:2be8:f61a with SMTP id
- d4-20020a170902c18400b001dc2be8f61amr7229461pld.2.1708936648814; 
- Mon, 26 Feb 2024 00:37:28 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- x2-20020a170902b40200b001db9c3d6506sm3380033plr.209.2024.02.26.00.37.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 00:37:28 -0800 (PST)
-Date: Mon, 26 Feb 2024 16:37:21 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>
-Subject: Re: [PATCH v4 25/34] migration/multifd: Add fixed-ram support to fd:
- URI
-Message-ID: <ZdxNwX-eqtmbZNac@x1n>
-References: <20240220224138.24759-1-farosas@suse.de>
- <20240220224138.24759-26-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1reWXV-0007Iq-0g
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:40:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708936845; x=1740472845;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=br1WkH1phXgm1RMAK2+mgUZNLEHz4CnmsvUPZjpmXU0=;
+ b=lWy18JME83xa3ictx6uD6dsckEMpR356YFlJPbcR7tQ7F/Xek3ZVGU7I
+ BX/gi0YIptJX7BMeHpMyFS/lfKwMj7q9tDX5PhAYxK1KUU9PwTtjPWa0a
+ JGrU1Iac/ht92VLhxoaGjeDmhGedpOefQ+2XRXzmOrfMeSxfZN6Y45eAL
+ D89jeNZBaR522xColQXgkK7Eq9ZLnXDYm0hs6GER6Ui9ie5CF1vyJTUzy
+ bdk2aMXD3IUoT/1WWihMt2NhXbzS9q2faBqFTuEMDSzpPdkceY5+MQZvy
+ S4jn+PTWjN9IUPoNVohJRwZtA4wd5mBuE1k1SUUo2cw/9HGv5vT/73fMT A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="6994274"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="6994274"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 00:40:42 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="37595417"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 26 Feb 2024 00:40:39 -0800
+Date: Mon, 26 Feb 2024 16:54:21 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Paul Durrant <paul@xen.org>,
+ Igor Mammedov <imammedo@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, Sergio Lopez <slp@redhat.com>
+Subject: Re: [PATCH v2 1/6] hw/i386/x86: Let ioapic_init_gsi() take parent as
+ pointer
+Message-ID: <ZdxRvRw1hUXoHvbr@intel.com>
+References: <20240224135851.100361-1-shentey@gmail.com>
+ <20240224135851.100361-2-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240220224138.24759-26-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20240224135851.100361-2-shentey@gmail.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,157 +88,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 20, 2024 at 07:41:29PM -0300, Fabiano Rosas wrote:
-> If we receive a file descriptor that points to a regular file, there's
-> nothing stopping us from doing multifd migration with fixed-ram to
-> that file.
+On Sat, Feb 24, 2024 at 02:58:46PM +0100, Bernhard Beschow wrote:
+> Date: Sat, 24 Feb 2024 14:58:46 +0100
+> From: Bernhard Beschow <shentey@gmail.com>
+> Subject: [PATCH v2 1/6] hw/i386/x86: Let ioapic_init_gsi() take parent as
+>  pointer
+> X-Mailer: git-send-email 2.44.0
 > 
-> Enable the fd: URI to work with multifd + fixed-ram.
+> Rather than taking a QOM name which has to be resolved, let's pass the parent
+> directly as pointer. This simplifies the code.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 > ---
->  migration/fd.c        | 30 ++++++++++++++++++++++++++++++
->  migration/fd.h        |  1 +
->  migration/file.c      | 12 +++++++++---
->  migration/migration.c |  4 ++++
->  4 files changed, 44 insertions(+), 3 deletions(-)
+>  include/hw/i386/x86.h | 2 +-
+>  hw/i386/microvm.c     | 2 +-
+>  hw/i386/pc_piix.c     | 7 +++----
+>  hw/i386/pc_q35.c      | 2 +-
+>  hw/i386/x86.c         | 7 +++----
+>  5 files changed, 9 insertions(+), 11 deletions(-)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 > 
-> diff --git a/migration/fd.c b/migration/fd.c
-> index 0eb677dcae..b7e4d071a4 100644
-> --- a/migration/fd.c
-> +++ b/migration/fd.c
-> @@ -19,14 +19,28 @@
->  #include "fd.h"
->  #include "migration.h"
->  #include "monitor/monitor.h"
-> +#include "io/channel-file.h"
->  #include "io/channel-util.h"
-> +#include "options.h"
->  #include "trace.h"
+> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+> index 8e306db7bb..4dc30dcb4d 100644
+> --- a/include/hw/i386/x86.h
+> +++ b/include/hw/i386/x86.h
+> @@ -139,7 +139,7 @@ typedef struct GSIState {
 >  
+>  qemu_irq x86_allocate_cpu_irq(void);
+>  void gsi_handler(void *opaque, int n, int level);
+> -void ioapic_init_gsi(GSIState *gsi_state, const char *parent_name);
+> +void ioapic_init_gsi(GSIState *gsi_state, Object *parent);
+>  DeviceState *ioapic_init_secondary(GSIState *gsi_state);
 >  
-> +static struct FdOutgoingArgs {
-> +    int fd;
-> +} outgoing_args;
-> +
-> +int fd_args_get_fd(void)
-> +{
-> +    return outgoing_args.fd;
-> +}
-> +
->  void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **errp)
->  {
->      QIOChannel *ioc;
->      int fd = monitor_get_fd(monitor_cur(), fdname, errp);
-> +
-> +    outgoing_args.fd = -1;
-
-I suggest we either drop this, or close() it before releasing; basically
-each fd reference holds a real fd index would be easier, IMHO.
-
-Also, we'd want to free the fd (by closing it) just like we free
-outgoing_args.fname?  Otherwise if a fd is passed in, who is responsible to
-close it and release the fd resource?
-
-> +
->      if (fd == -1) {
->          return;
+>  /* pc_sysfw.c */
+> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+> index ca55aecc3b..61a772dfe6 100644
+> --- a/hw/i386/microvm.c
+> +++ b/hw/i386/microvm.c
+> @@ -175,7 +175,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
+>                            &error_abort);
+>      isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
+>  
+> -    ioapic_init_gsi(gsi_state, "machine");
+> +    ioapic_init_gsi(gsi_state, OBJECT(mms));
+>      if (ioapics > 1) {
+>          x86ms->ioapic2 = ioapic_init_secondary(gsi_state);
 >      }
-> @@ -38,6 +52,8 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
->          return;
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index ec7c07b362..7724396ead 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -107,6 +107,7 @@ static void pc_init1(MachineState *machine,
+>      X86MachineState *x86ms = X86_MACHINE(machine);
+>      MemoryRegion *system_memory = get_system_memory();
+>      MemoryRegion *system_io = get_system_io();
+> +    Object *phb = NULL;
+>      PCIBus *pci_bus = NULL;
+>      ISABus *isa_bus;
+>      Object *piix4_pm = NULL;
+> @@ -189,8 +190,6 @@ static void pc_init1(MachineState *machine,
 >      }
 >  
-> +    outgoing_args.fd = fd;
-
-If agree with above, then dup(fd) here.
-
-> +
->      qio_channel_set_name(ioc, "migration-fd-outgoing");
->      migration_channel_connect(s, ioc, NULL, NULL);
->      object_unref(OBJECT(ioc));
-> @@ -73,4 +89,18 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
->                                 fd_accept_incoming_migration,
->                                 NULL, NULL,
->                                 g_main_context_get_thread_default());
-> +
-> +    if (migrate_multifd()) {
-> +        int channels = migrate_multifd_channels();
-> +
-> +        while (channels--) {
-> +            ioc = QIO_CHANNEL(qio_channel_file_new_fd(fd));
-
-dup(fd)?
-
-> +
-> +            qio_channel_set_name(ioc, "migration-fd-incoming");
-> +            qio_channel_add_watch_full(ioc, G_IO_IN,
-> +                                       fd_accept_incoming_migration,
-> +                                       NULL, NULL,
-> +                                       g_main_context_get_thread_default());
-> +        }
-> +    }
+>      if (pcmc->pci_enabled) {
+> -        Object *phb;
+> -
+>          pci_memory = g_new(MemoryRegion, 1);
+>          memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
+>          rom_memory = pci_memory;
+> @@ -303,8 +302,8 @@ static void pc_init1(MachineState *machine,
+>          pc_i8259_create(isa_bus, gsi_state->i8259_irq);
+>      }
+>  
+> -    if (pcmc->pci_enabled) {
+> -        ioapic_init_gsi(gsi_state, "i440fx");
+> +    if (phb) {
+> +        ioapic_init_gsi(gsi_state, phb);
+>      }
+>  
+>      if (tcg_enabled()) {
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 53fb3db26d..c89ff63579 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -263,7 +263,7 @@ static void pc_q35_init(MachineState *machine)
+>          pc_i8259_create(isa_bus, gsi_state->i8259_irq);
+>      }
+>  
+> -    ioapic_init_gsi(gsi_state, "q35");
+> +    ioapic_init_gsi(gsi_state, OBJECT(phb));
+>  
+>      if (tcg_enabled()) {
+>          x86_register_ferr_irq(x86ms->gsi[13]);
+> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+> index 684dce90e9..807e09bcdb 100644
+> --- a/hw/i386/x86.c
+> +++ b/hw/i386/x86.c
+> @@ -640,20 +640,19 @@ void gsi_handler(void *opaque, int n, int level)
+>      }
 >  }
-> diff --git a/migration/fd.h b/migration/fd.h
-> index b901bc014e..1be980c130 100644
-> --- a/migration/fd.h
-> +++ b/migration/fd.h
-> @@ -20,4 +20,5 @@ void fd_start_incoming_migration(const char *fdname, Error **errp);
 >  
->  void fd_start_outgoing_migration(MigrationState *s, const char *fdname,
->                                   Error **errp);
-> +int fd_args_get_fd(void);
->  #endif
-> diff --git a/migration/file.c b/migration/file.c
-> index 1a18e608fc..27ccfc6a1d 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -11,6 +11,7 @@
->  #include "qemu/error-report.h"
->  #include "qapi/error.h"
->  #include "channel.h"
-> +#include "fd.h"
->  #include "file.h"
->  #include "migration.h"
->  #include "io/channel-file.h"
-> @@ -58,10 +59,15 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
+> -void ioapic_init_gsi(GSIState *gsi_state, const char *parent_name)
+> +void ioapic_init_gsi(GSIState *gsi_state, Object *parent)
 >  {
->      QIOChannelFile *ioc;
->      int flags = O_WRONLY;
-> +    int fd = fd_args_get_fd();
+>      DeviceState *dev;
+>      SysBusDevice *d;
+>      unsigned int i;
 >  
-> -    ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> -    if (!ioc) {
-> -        return false;
-> +    if (fd && fd != -1) {
-> +        ioc = qio_channel_file_new_fd(fd);
-> +    } else {
-> +        ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> +        if (!ioc) {
-> +            return false;
-> +        }
+> -    assert(parent_name);
+> +    assert(parent);
+>      if (kvm_ioapic_in_kernel()) {
+>          dev = qdev_new(TYPE_KVM_IOAPIC);
+>      } else {
+>          dev = qdev_new(TYPE_IOAPIC);
 >      }
->  
->      if (!multifd_channel_connect(opaque, QIO_CHANNEL(ioc), errp)) {
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 32b291a282..ce7e6f5065 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -134,6 +134,10 @@ static bool transport_supports_multi_channels(MigrationAddress *addr)
->      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
->          SocketAddress *saddr = &addr->u.socket;
->  
-> +        if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
-> +            return migrate_fixed_ram();
-> +        }
-> +
->          return (saddr->type == SOCKET_ADDRESS_TYPE_INET ||
->                  saddr->type == SOCKET_ADDRESS_TYPE_UNIX ||
->                  saddr->type == SOCKET_ADDRESS_TYPE_VSOCK);
+> -    object_property_add_child(object_resolve_path(parent_name, NULL),
+> -                              "ioapic", OBJECT(dev));
+> +    object_property_add_child(parent, "ioapic", OBJECT(dev));
+>      d = SYS_BUS_DEVICE(dev);
+>      sysbus_realize_and_unref(d, &error_fatal);
+>      sysbus_mmio_map(d, 0, IO_APIC_DEFAULT_ADDRESS);
 > -- 
-> 2.35.3
+> 2.44.0
 > 
-
--- 
-Peter Xu
-
+> 
 
