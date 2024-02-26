@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D195C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 03:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551C0C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 03:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reRjv-0000oa-Na; Sun, 25 Feb 2024 22:33:15 -0500
+	id 1reRzY-00054M-5O; Sun, 25 Feb 2024 22:49:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRju-0000oH-4O
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:33:14 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRzW-00053x-53
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:49:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRjs-0002YQ-Mv
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:33:13 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRzU-0000Wl-J6
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:49:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708918391;
+ s=mimecast20190719; t=1708919359;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=B5i9T5i7yljMwNBMVo4eYZVc+eAF+mvVLs+opWsuOr0=;
- b=dp9Bxa0HsdHf3a0KtuDbxnXE0Cra771vYRfMzFFaO/80h4CVfv1dLnXdG1utz2Aip37mLf
- IyAZ8YLSgMMkSMldmqrfzfwP8E508a2HHeg32o2Wd+itVWUBTr+iQkfz4HDAGArUUStgRE
- uEstzKmCB3mPvvSB5NEHcVQfX/HRynY=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W9EOUYcphJ/QFT2T0d71f6sYYpmbax/7RmsDV13YL1o=;
+ b=dS2AJeJfO6sVr1fWMWZT7BfHz8+t3hcCIqrPMERsuvgRp88wexpYM9NW8tYjxKsuG+ziUP
+ ZbByCnoi3aizJQluPP7DqjPSFKmG6Pv49FkSm8fOrMcEGShyG+9u8/N+VKnV445x74ImlD
+ FmNBaJEKM8vdN9lHepocRk4DAV9e6qc=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-240-EzTm-g2ZOi-4rffpTsETyg-1; Sun, 25 Feb 2024 22:33:10 -0500
-X-MC-Unique: EzTm-g2ZOi-4rffpTsETyg-1
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-5a01c10bd75so1376380eaf.0
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 19:33:10 -0800 (PST)
+ us-mta-418-8NkDF0UvMSGnEN96VZFY2Q-1; Sun, 25 Feb 2024 22:49:18 -0500
+X-MC-Unique: 8NkDF0UvMSGnEN96VZFY2Q-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-5c683944ab0so731157a12.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 19:49:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708918389; x=1709523189;
+ d=1e100.net; s=20230601; t=1708919357; x=1709524157;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B5i9T5i7yljMwNBMVo4eYZVc+eAF+mvVLs+opWsuOr0=;
- b=T+QDO34b3mgwTEoMtRQpIgBHM8zgn1kJgIAgNTd45TQrm0gSLnn0kZuy02phyqjxV3
- 30F/HW3OkM8f4gdaBNH1e29+aZfqOF3JgFsl754xOIQr/hAb61DxaJcEP+d2VoRHP0y9
- ceaMAIodtS8N3TAp+Dk6BIRjjzOwRXXtjXwoFdEgI62MIMOCPVDUcgJDbJhoroQM2AUd
- y019T8Uati6htO5kSkg9nBn2fWHqYR6sgBbVCJ28A5wGzWmhQCJBi4Ju+VdGp1naOEol
- Mi7gVDteGbCzrKJV+RLAL+vWcZnbUjQjkkYb2JDOBtt3RvCWEzJUZ020LaGvcqswaIFP
- uMZg==
-X-Gm-Message-State: AOJu0Yz+6Jbto9yAqzaH4VzTTyWiwoqjo3kBdpyv2HihKo4MeqhIA8HA
- B/jJoaJ+eBKE2n9//Rzje97cH8mPYHYndZ2rjn+7wGY1Bj0ZfSj33HzADZiWmyr5dIgzZWR7d7Z
- IIPIX7ymz9UYFa9ZVZrUAz4YrSd8IfQbL9AedcLhLFLoYnfE/BkiP8Sx0jSWn4oooRRLrvmS9C9
- c/ujjOOr0L8PbF1eGHFr6bRyHe6+SxCN6sCFdg
-X-Received: by 2002:a05:6359:4588:b0:178:b44b:1b5f with SMTP id
- no8-20020a056359458800b00178b44b1b5fmr4368891rwb.0.1708918389235; 
- Sun, 25 Feb 2024 19:33:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHXe+mNOjzw3IF62yhGSwq/Rp3LluTCVcw6RfMYiKvUWOZwc1K1eGcwrFkP0TPg1VqMgAQ8Dw==
-X-Received: by 2002:a05:6359:4588:b0:178:b44b:1b5f with SMTP id
- no8-20020a056359458800b00178b44b1b5fmr4368871rwb.0.1708918388845; 
- Sun, 25 Feb 2024 19:33:08 -0800 (PST)
+ bh=W9EOUYcphJ/QFT2T0d71f6sYYpmbax/7RmsDV13YL1o=;
+ b=Jl8GbOTTLG0PUr2L+qMnTTGwRHd/Uimvhlx4KK4WOICGwVKwLu6g/gDfvRgHXGuNpX
+ B5/RnJ5k39u9VplCOJcPm4/sMLYVr1i4zm55OZaBbePATLr1E1jeCtNKnRJsT4EQTQll
+ fBFBIdcuHBiolhz9/GO7ysCxzJ8l7g33zJ3SwELzxyySp6vV1xTLNZwZ4/z5bCOVS/UK
+ LfIgjtkTZA/etUfwqWd5oK0nSZ5BHvQE6xq0XnRscOuGmHkcymfRQvoB6MQU2/eulbLx
+ EYZKixhdzsDP/rtdDs5Sj0CtJzVvq6xvzUU6NPDsPFqT0pLgQy4T/lnm36jAQcB1Zwqv
+ rxAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVBMC0IInu5leIkA18RFCWCeZiXpA9LcrOO9RA05zDrybbEWg1NZXNQcHVdXTnVptNoF7CwnGKDy4EWQIxWZAzsP69Nd6g=
+X-Gm-Message-State: AOJu0YyWx7ZeKQEpi2K/M+Ye8yzK19wdcvOZnVzTZ4lpkpr3awbdkNbZ
+ gIaDzU6cSaj3+o/LzuM4G/2sHHGpxx97IOOAQvcLr0DWm5wt+4AW7rB40vP9V7esUClfTiAmaTt
+ Xx4oUJNGlL1bTgO07yAhUiMjOsgGBAy/WSgQ+Bqnkd0D/Sg0OKfbf
+X-Received: by 2002:aa7:8011:0:b0:6e4:68fa:f1ff with SMTP id
+ j17-20020aa78011000000b006e468faf1ffmr7564444pfi.0.1708919356998; 
+ Sun, 25 Feb 2024 19:49:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH3sopuJKxbIY2qaaS5DTN1OnUBg7A6pllRRtx65C+xcb04T9cH+zH7Tf86YoKQ1FA9mbf78g==
+X-Received: by 2002:aa7:8011:0:b0:6e4:68fa:f1ff with SMTP id
+ j17-20020aa78011000000b006e468faf1ffmr7564434pfi.0.1708919356634; 
+ Sun, 25 Feb 2024 19:49:16 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- jw13-20020a056a00928d00b006e506cf450csm1777433pfb.181.2024.02.25.19.33.07
+ i16-20020a635410000000b005df41b00ee9sm2945734pgb.68.2024.02.25.19.49.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Feb 2024 19:33:08 -0800 (PST)
-Date: Mon, 26 Feb 2024 11:33:02 +0800
+ Sun, 25 Feb 2024 19:49:16 -0800 (PST)
+Date: Mon, 26 Feb 2024 11:49:09 +0800
 From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Avihai Horon <avihaih@nvidia.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 0/5] migration: cleanup TLS channel referencing
-Message-ID: <ZdwGbpnABAMChw_9@x1n>
-References: <20240222095301.171137-1-peterx@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Steve Sistare <steven.sistare@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] migration: Free argv
+Message-ID: <ZdwKNYI-uhkXJ4B5@x1n>
+References: <20240225-argv-v1-1-a11e772884d9@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240222095301.171137-1-peterx@redhat.com>
+In-Reply-To: <20240225-argv-v1-1-a11e772884d9@daynix.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -99,30 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 05:52:56PM +0800, peterx@redhat.com wrote:
-> From: Peter Xu <peterx@redhat.com>
+On Sun, Feb 25, 2024 at 02:54:01PM +0900, Akihiko Odaki wrote:
+> exec_start_outgoing_migration() and exec_start_incoming_migration()
+> leak argv because it uses g_steal_pointer() is used to pass argv
+> qio_channel_command_new_spawn() while it does not free argv either.
 > 
-> v2:
-> - add patches
->   - migration/multifd: Make multifd_channel_connect() return void
->   - migration/multifd: Cleanup outgoing_args in state destroy
->   - migration/multifd: Drop unnecessary helper to destroy IOC
-> - fix spelling
+> Removing g_steal_pointer() is not sufficient though because argv is
+> typed g_auto(GStrv), which means the array of strings *and strings* will
+> be freed. The strings are only borrowed from the caller of
+> exec_start_outgoing_migration() and exec_start_incoming_migration() so
+> freeing them result in double-free.
 > 
-> This is a small cleanup patchset to firstly cleanup tls iochannel deref on
-> error paths, then further remove one unused var on yank if the cleanup
-> applies.  In v2 three more small cleanups on top as suggested by reviewers.
+> Instead, type argv as g_autofree char **. This ensures only the array
+> of strings will be freed and the strings won't be freed. Also, remove
+> unnecessary casts according to the new type.
 > 
-> Please feel free to have a look, thanks.
-> 
-> Peter Xu (5):
->   migration/multifd: Cleanup TLS iochannel referencing
->   migration/multifd: Drop registered_yank
->   migration/multifd: Make multifd_channel_connect() return void
->   migration/multifd: Cleanup outgoing_args in state destroy
->   migration/multifd: Drop unnecessary helper to destroy IOC
+> Fixes: cbab4face57b ("migration: convert exec backend to accept MigrateAddress.")
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-queued.
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+This should conflict with Steve's other series:
+
+https://lore.kernel.org/r/1708638470-114846-1-git-send-email-steven.sistare@oracle.com
+
+Considering this can be stable material, should be easier if we have the
+other series rebased on top of this, even if that was sent first..
+
+Steve, do you still plan to repost your series?  Maybe you can review it &
+pick this up into your series?  Then whoever pick up your series will pick
+up both (Markus will?)?
+
+Thanks,
 
 -- 
 Peter Xu
