@@ -4,81 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C89AC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F55AC54E41
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebDK-0007TX-S3; Mon, 26 Feb 2024 08:40:14 -0500
+	id 1rebED-0008RI-6X; Mon, 26 Feb 2024 08:41:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rebDI-0007Sv-7Y
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:40:12 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rebDG-000561-Io
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:40:11 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-565d1656c12so2283068a12.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 05:40:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708954809; x=1709559609; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jieytYaQ+nN4bXnK0Fs+GW555aeEe4W+nRHFe6bD0Og=;
- b=UqQWX75R4GRiaj4lmFuDFlBtOrb0408soJhfPLMeuc8l1OBvVCOcIja7D/KRtnyihl
- BUvyJaZGNvGPY10KG3EI/GqB78w3esR6noZ9/G4qpdXUBPHDvW7p2b4JOb4UF7NYmANL
- yCfVaJ3sRSaNIM6HNaPsoUEGFibc3uxAwk2P4Fu0OfqWmkadEOM7zyy0omzwifxrv5ZF
- EjezDVQgvuGPncWvXkqyYmT68kQTrYCTEg6v6jaCNWaEpvPsI1otiLD3DnAydh1ZOQEA
- b8BNIbd8Ki+VSCx6u4z5lJ6RYmIhmnqd3F7/sqUx8ETSBSFKQdMpmtoQxWOgZ9r1/blV
- buMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708954809; x=1709559609;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jieytYaQ+nN4bXnK0Fs+GW555aeEe4W+nRHFe6bD0Og=;
- b=cl+F0MswdoUeociYSccJOEGHDgEZ6ZxBTOvo4rIQlxUrJJYqkEjJQ1oNUM0wQr2zB4
- G5pvRkY74pQHNmVAhyDBj8nPL1O72WZQEagRB72WVAEhXv9hVWT/Jr64/BFlzw35C/1H
- TVOQipKOHTnnDVxahuj1YfXYtnN6XJxfth2SPBCRqOnByp4DcAgCRlM114N0FzEROpFx
- JZmU3R2gPWkxERVVXx6pg0VRr85H5nIwBMfJZfrSCJrJIqVMCrU6A12quS73T2f8eMok
- a+Y9js8EqgIDb2H3hUHBBLoygLofVtIDPjjXpZ7vqaSrmeteXOmsX5IHcZhV6eibBveq
- 1yFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVaoxr2ol9fNAo3RbCsynKttYXPjBx4vQhZMh0+Lg3X6wrp/4rdefiJeLJ+zfWW3erG3I5Q+2mYXLk0mhl1AR/xWWoYUJ0=
-X-Gm-Message-State: AOJu0Yz+/e2eGhLRwuqADt7LUGV0EXa5auDkt1ZB0/BtDHvqcuHbh4D5
- SGhBIaGxgHGAP6WJWc2iBmRtcJZ7ueXIn3D7q7xSZiG0NrtGhyVLnDUTGA/5vwplU99CvsRxDEM
- 8ar7ne9LBgiph4y+Dszino1kRKMq2AcLcfK1OWg==
-X-Google-Smtp-Source: AGHT+IHgjTPGTFL2ihz6/yzk90+fMvUcQtdar+Sa9NHW9hg0wabtmAYo8QQaqQSxQJRhT2alxcq+ulvMUrNSRfjnR2c=
-X-Received: by 2002:aa7:c39a:0:b0:565:ff41:472f with SMTP id
- k26-20020aa7c39a000000b00565ff41472fmr1624282edq.21.1708954808876; Mon, 26
- Feb 2024 05:40:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebEA-0008Qh-NV
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:41:07 -0500
+Received: from mgamail.intel.com ([198.175.65.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebE8-0005L8-IX
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:41:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708954865; x=1740490865;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=xOERUjUBA55FpSzL1epAsjFSjEkhtvuHM6DIMBxjZK8=;
+ b=I63zWZUAca/iDQSYc3TI0E7MHLUlF3qQy4G8dpxYuFPsQ7UkxGXtseVN
+ IxXRp9GXFa82mLP5LUu1EC/D3V+QM0+FaAKikddDBX9Dom4c58BFVtN2W
+ wcuwnK+ItIHfCo0WMakDCah0jkpjVhAoxF5cD8ukJj1e6MWVBE38r/61a
+ KbTWMEPpDD7az5aNqwfuU74rbgSjTNs7QUT06uX0IdfboBYcQ5Nityeil
+ /WXrCcOOCJurP1zcKA0R19zismG7bnu/Gb06byFb3ZNCBX+spwspROmJF
+ H19YFW8fGKavC7Ai+vdSFiPnEUjkAaHvTJp5U/2/B+OOAbVZPORE5q69i g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="3111289"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="3111289"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 05:41:00 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="44154501"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa001.jf.intel.com with ESMTP; 26 Feb 2024 05:40:57 -0800
+Date: Mon, 26 Feb 2024 21:54:39 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: Re: [PATCH 01/10] hw/i386: Store pointers to IDE buses in
+ PCMachineState
+Message-ID: <ZdyYH1IwzaE+A4Cq@intel.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-2-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
- <20240226000259.2752893-12-sergey.kambalin@auriga.com>
- <2ab7b523-816b-409b-a58a-f09e3f71ff8e@linaro.org>
-In-Reply-To: <2ab7b523-816b-409b-a58a-f09e3f71ff8e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Feb 2024 13:39:58 +0000
-Message-ID: <CAFEAcA-WwWQnAQTmoCixaW5aeRWrdx__YoSHp_VyGEbk-rOkpg@mail.gmail.com>
-Subject: Re: [PATCH v6 11/41] Temporarily disable unimplemented rpi4b devices
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Sergey Kambalin <serg.oker@gmail.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Sergey Kambalin <sergey.kambalin@auriga.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240220160622.114437-2-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,47 +86,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 at 13:35, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 26/2/24 01:02, Sergey Kambalin wrote:
-> > +static void raspi4_modify_dtb(const struct arm_boot_info *info, void *=
-fdt)
-> > +{
-> > +    uint64_t ram_size;
-> > +
-> > +    /* Temporarily disable following devices until they are implemente=
-d */
-> > +    const char *nodes_to_remove[] =3D {
-> > +        "brcm,bcm2711-pcie",
-> > +        "brcm,bcm2711-rng200",
-> > +        "brcm,bcm2711-thermal",
-> > +        "brcm,bcm2711-genet-v5",
-> > +    };
-> > +
-> > +    for (int i =3D 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
-> > +        const char *dev_str =3D nodes_to_remove[i];
-> > +
-> > +        int offset =3D fdt_node_offset_by_compatible(fdt, -1, dev_str)=
-;
-> > +        if (offset >=3D 0) {
-> > +            if (!fdt_nop_node(fdt, offset)) {
->
-> Peter, I remember a discussion where you wre not keen on altering DTB
-> for non-Virt machines.
->
-> Since these devices are all implemented at the end of the series, why
-> not add the devices then the raspi4 board at the end, so this patch is
-> not even required?
+On Tue, Feb 20, 2024 at 04:06:13PM +0000, Peter Maydell wrote:
+> Date: Tue, 20 Feb 2024 16:06:13 +0000
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH 01/10] hw/i386: Store pointers to IDE buses in
+>  PCMachineState
+> X-Mailer: git-send-email 2.34.1
+> 
+> Add the two IDE bus BusState pointers to the set we keep in PCMachineState.
+> This allows us to avoid passing them to pc_cmos_init(), and also will
+> allow a refactoring of how we call pc_cmos_init_late().
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  include/hw/i386/pc.h |  4 +++-
+>  hw/i386/pc.c         |  5 ++---
+>  hw/i386/pc_piix.c    | 16 +++++++---------
+>  hw/i386/pc_q35.c     |  9 ++++-----
+>  4 files changed, 16 insertions(+), 18 deletions(-)
 
-I'm not super-keen on it, but as you say it goes away once all
-the devices are implemented, so I'm not too worried.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-Doing it this way around would let us take the first 11 patches
-in the series into git now (they've all been reviewed), which
-gives us (I think) a functional raspi4 with some missing devices,
-which seems useful in the interim until the rest of the series
-gets reviewed and committed.
-
--- PMM
+> 
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index ec0e5efcb28..8f8ac894b10 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -17,6 +17,8 @@
+>  
+>  #define HPET_INTCAP "hpet-intcap"
+>  
+> +#define MAX_IDE_BUS 2
+> +
+>  /**
+>   * PCMachineState:
+>   * @acpi_dev: link to ACPI PM device that performs ACPI hotplug handling
+> @@ -37,6 +39,7 @@ typedef struct PCMachineState {
+>      PFlashCFI01 *flash[2];
+>      ISADevice *pcspk;
+>      DeviceState *iommu;
+> +    BusState *idebus[MAX_IDE_BUS];
+>  
+>      /* Configuration options: */
+>      uint64_t max_ram_below_4g;
+> @@ -182,7 +185,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+>                            bool create_fdctrl,
+>                            uint32_t hpet_irqs);
+>  void pc_cmos_init(PCMachineState *pcms,
+> -                  BusState *ide0, BusState *ide1,
+>                    ISADevice *s);
+>  void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus);
+>  
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 196827531a5..8b0f54e284c 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -574,7 +574,6 @@ static void pc_cmos_init_late(void *opaque)
+>  }
+>  
+>  void pc_cmos_init(PCMachineState *pcms,
+> -                  BusState *idebus0, BusState *idebus1,
+>                    ISADevice *rtc)
+>  {
+>      int val;
+> @@ -634,8 +633,8 @@ void pc_cmos_init(PCMachineState *pcms,
+>  
+>      /* hard drives and FDC */
+>      arg.rtc_state = s;
+> -    arg.idebus[0] = idebus0;
+> -    arg.idebus[1] = idebus1;
+> +    arg.idebus[0] = pcms->idebus[0];
+> +    arg.idebus[1] = pcms->idebus[1];
+>      qemu_register_reset(pc_cmos_init_late, &arg);
+>  }
+>  
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 999b7b806ca..8df88a6ccd1 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -68,7 +68,6 @@
+>  #include "kvm/kvm-cpu.h"
+>  #include "target/i386/cpu.h"
+>  
+> -#define MAX_IDE_BUS 2
+>  #define XEN_IOAPIC_NUM_PIRQS 128ULL
+>  
+>  #ifdef CONFIG_IDE_ISA
+> @@ -114,7 +113,6 @@ static void pc_init1(MachineState *machine,
+>      Object *piix4_pm = NULL;
+>      qemu_irq smi_irq;
+>      GSIState *gsi_state;
+> -    BusState *idebus[MAX_IDE_BUS];
+>      ISADevice *rtc_state;
+>      MemoryRegion *ram_memory;
+>      MemoryRegion *pci_memory = NULL;
+> @@ -299,8 +297,8 @@ static void pc_init1(MachineState *machine,
+>          piix4_pm = object_resolve_path_component(OBJECT(pci_dev), "pm");
+>          dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
+>          pci_ide_create_devs(PCI_DEVICE(dev));
+> -        idebus[0] = qdev_get_child_bus(dev, "ide.0");
+> -        idebus[1] = qdev_get_child_bus(dev, "ide.1");
+> +        pcms->idebus[0] = qdev_get_child_bus(dev, "ide.0");
+> +        pcms->idebus[1] = qdev_get_child_bus(dev, "ide.1");
+>      } else {
+>          isa_bus = isa_bus_new(NULL, system_memory, system_io,
+>                                &error_abort);
+> @@ -312,8 +310,8 @@ static void pc_init1(MachineState *machine,
+>  
+>          i8257_dma_init(OBJECT(machine), isa_bus, 0);
+>          pcms->hpet_enabled = false;
+> -        idebus[0] = NULL;
+> -        idebus[1] = NULL;
+> +        pcms->idebus[0] = NULL;
+> +        pcms->idebus[1] = NULL;
+>      }
+>  
+>      if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
+> @@ -342,7 +340,7 @@ static void pc_init1(MachineState *machine,
+>      pc_nic_init(pcmc, isa_bus, pci_bus);
+>  
+>      if (pcmc->pci_enabled) {
+> -        pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
+> +        pc_cmos_init(pcms, rtc_state);
+>      }
+>  #ifdef CONFIG_IDE_ISA
+>      else {
+> @@ -361,9 +359,9 @@ static void pc_init1(MachineState *machine,
+>               * second one.
+>               */
+>              busname[4] = '0' + i;
+> -            idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+> +            pcms->idebus[i] = qdev_get_child_bus(DEVICE(dev), busname);
+>          }
+> -        pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
+> +        pc_cmos_init(pcms, rtc_state);
+>      }
+>  #endif
+>  
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index d346fa3b1d6..71402c36eb2 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -126,7 +126,6 @@ static void pc_q35_init(MachineState *machine)
+>      PCIBus *host_bus;
+>      PCIDevice *lpc;
+>      DeviceState *lpc_dev;
+> -    BusState *idebus[MAX_SATA_PORTS];
+>      ISADevice *rtc_state;
+>      MemoryRegion *system_memory = get_system_memory();
+>      MemoryRegion *system_io = get_system_io();
+> @@ -300,13 +299,13 @@ static void pc_q35_init(MachineState *machine)
+>                                                           ICH9_SATA1_FUNC),
+>                                                 "ich9-ahci");
+>          ich9 = ICH9_AHCI(pdev);
+> -        idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
+> -        idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
+> +        pcms->idebus[0] = qdev_get_child_bus(DEVICE(pdev), "ide.0");
+> +        pcms->idebus[1] = qdev_get_child_bus(DEVICE(pdev), "ide.1");
+>          g_assert(MAX_SATA_PORTS == ich9->ahci.ports);
+>          ide_drive_get(hd, ich9->ahci.ports);
+>          ahci_ide_create_devs(&ich9->ahci, hd);
+>      } else {
+> -        idebus[0] = idebus[1] = NULL;
+> +        pcms->idebus[0] = pcms->idebus[1] = NULL;
+>      }
+>  
+>      if (machine_usb(machine)) {
+> @@ -327,7 +326,7 @@ static void pc_q35_init(MachineState *machine)
+>          smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
+>      }
+>  
+> -    pc_cmos_init(pcms, idebus[0], idebus[1], rtc_state);
+> +    pc_cmos_init(pcms, rtc_state);
+>  
+>      /* the rest devices to which pci devfn is automatically assigned */
+>      pc_vga_init(isa_bus, host_bus);
+> -- 
+> 2.34.1
+> 
+> 
 
