@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB7C4C48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE40BC54E51
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebhb-00039f-05; Mon, 26 Feb 2024 09:11:31 -0500
+	id 1rebhL-00037G-SO; Mon, 26 Feb 2024 09:11:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rebhX-000396-5e
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:11:27 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rebhK-00036z-IJ
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:11:14 -0500
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rebhV-00024A-H5
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:11:26 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-565ef8af2f5so1276032a12.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 06:11:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rebhI-00023P-VF
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:11:14 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a26fa294e56so537890266b.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 06:11:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708956684; x=1709561484; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vKjecqdxRCZ5NMK4buR6wBDSR91vGXc+/LHUa2wYvFI=;
- b=XFvPHYIy8rbpshtkBkvNl9VXn6hnwQj3Y2qWZRXvSHnjxIiz+O1XAzqMY+0DSBY3eP
- oQuNfHC7sSWPd9fVF3444nVIzz/tDEvdAIEMf6EPqhGiDZTfMBCbnponDGySsFL+t9Js
- 3IjLUeSjPWfLefyvKhmN9JJ78AaNb4WHPY6wrvJ2DQuRieEqG32ABAXEf8U6LwcDIskX
- DgF7JVK4IhqVqW89nozt3g08o2WxKcBudaD9xEycPy6pAdr7a/JafGW4gAxH/HNwJypr
- lZw0+K+SYlx1F+yqQjXSb+JsdDGmOhmvuOELo18IsVrPFB52ixPE5BBekMp8UDM2G63/
- /mwA==
+ d=linaro.org; s=google; t=1708956671; x=1709561471; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IhvcWs1xcDSEDBqqBHd4sfNHg5BFoMMt+2CzoTmQ4us=;
+ b=N6rx9LbyNxLCC6YMzZImtjlR2zuM0icEAhyNzi5eNWK5uRi3U341psOoZP8x1o2AlE
+ 0nXWUF6G2bbWUDW9ItJLrPM+cRpFLTJwLP7kRnRqVAAqcKHqPrL7qQJwzqSDCmfyBzxT
+ jJBFmhw8V2Dsb/Z2rEDQ3V1kd7y22yzaoRWi48BvFwk0AVqzynaPEKoOv4spCkZ5qJKp
+ U+M4scUARhQeVs6Q4ah770wQmFLbr+rGR9AjBDKfIaxD+qcHRmtLeVQxAgWrHqBYc0oO
+ jXyrzwtoyyVm6Vrn1ioyK+ELBdjlCQgTNqqyYW7ZjBc2ue45JDNCmY3idasamZAY1opx
+ SVxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708956684; x=1709561484;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vKjecqdxRCZ5NMK4buR6wBDSR91vGXc+/LHUa2wYvFI=;
- b=fArWBlVnVSim7/SjU+aqeghIqJbE2ONc62R5JrjwCebjZ8gTOkrWroawCovJiLC3kP
- J752vwgA7Wyc4nLiKNapIoaSAhI0WQbjxuPDYWukOb1sawQ0+OW3zNYLvC4mw0W8RZX2
- u0P9ACfKudDoiSDV0oHbOUJoKBLNhA+LtrotAR+gjRIwh5cXTGI1vglKnn7wSDG+x6nA
- ntnIcZLhw0m51ZANHAqgnCEFJgZZlGjnsxL3UHaazk/UDkliMsZhj9gp2tEEjUr6MGUJ
- wt1NUxtw9FBEEt7L5YJf1i3lXYcrSq4ro6RuEtcbN2ZBAsxIOQOGBnO3n1sCONDLON8Y
- nofw==
+ d=1e100.net; s=20230601; t=1708956671; x=1709561471;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IhvcWs1xcDSEDBqqBHd4sfNHg5BFoMMt+2CzoTmQ4us=;
+ b=SHvHdHklGYsYoQtfx6tXtau4A5f4aCXuTkmV032ZeNXSkhnFq2fss+4KaE7401l+fW
+ daRLWNnB26Sb3ge4MyGGVsd5LS7J48O/20XJ5L1IM54QnODjQQbjUDfn8WSZAGN7Yjac
+ CTUMcPbo+TuZz609KMtwUkHc32zO3lYiRWwlJkrkb7PD6Vup9vUcXLKG/Lhy55G9WtqB
+ Z4Gwgt1efE0xSyHXYZNIHN2ypOwoZeHcb2MQTFIbntTdwZVdMjkc3vsUgxzW65R71jsX
+ cvodu2xUiZaKb7c/Zo8ijo+SL3jjRk8N+Y9FsifZkzjZBVYiOEKiZc5P/kjPAIzzbMJA
+ j5Vw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXE0ndVnzVJeXyq/zgTQMQ13TTy7O8Zm2zia4VMHLZmBk7rekm0hxCB4o0ET0cyUlP3CuswbM6VkvPVibj9S9v7dACOs2A=
-X-Gm-Message-State: AOJu0YwdvmNx9LY9iY+AtP07ZmiB6Bb7lAoVYLI3eaZ+A6WxtolGVOks
- JxzlGCTJ0Yp7EsYVwXRHm9/Qm8FvFskaLi2BOabUo1CiwzQe4sdAmIuFFOc2/gg=
-X-Google-Smtp-Source: AGHT+IFxGhT9FNZWJ+dorAita6X6FN6sgnQt3C3KAKJ8Rhq0QI8Hp9eZimdEcW0d36MaOC2hI/54RA==
-X-Received: by 2002:aa7:d48f:0:b0:565:9f59:b3bf with SMTP id
- b15-20020aa7d48f000000b005659f59b3bfmr4383451edr.6.1708956683815; 
- Mon, 26 Feb 2024 06:11:23 -0800 (PST)
+ AJvYcCV5fO1T9kEKuNvpRC0g78mq+CqyJmIDVfumOBipgNC02qjbjPXzZOLjx6Gn/YdBWJS3u/b+uPNhuQSHmihwtei76SxfHY8=
+X-Gm-Message-State: AOJu0Yz6BuIiaeSIlftTA4hqaaBzPA3Zx8AFMv2/hUxxuvKkRYZ0i9Bf
+ hUj78gF5XLd7swus/V9KXB3UUdvycV5Uo6duKN2JqF9K9pix3dUU0Nkg5w9s5GU=
+X-Google-Smtp-Source: AGHT+IEmTzKBeoABVgf9PChDJTeT4Cc9IPdT44DTIGW/EE68eIfjg/1jSNbQ4l9Xo6NX2Sp/6xqfyg==
+X-Received: by 2002:a17:906:3912:b0:a3e:8b9d:dfea with SMTP id
+ f18-20020a170906391200b00a3e8b9ddfeamr5025923eje.66.1708956671441; 
+ Mon, 26 Feb 2024 06:11:11 -0800 (PST)
 Received: from m1x-phil.lan ([176.187.223.153])
  by smtp.gmail.com with ESMTPSA id
- eo8-20020a056402530800b00565001948dfsm2374623edb.44.2024.02.26.06.11.22
+ rv7-20020a17090710c700b00a3efce660c2sm2455332ejb.198.2024.02.26.06.11.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 26 Feb 2024 06:11:23 -0800 (PST)
+ Mon, 26 Feb 2024 06:11:10 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
  Steve Sistare <steven.sistare@oracle.com>
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Jason Wang <jasowang@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v6 2/5] qapi: QAPI_LIST_LENGTH
-Date: Mon, 26 Feb 2024 15:11:04 +0100
-Message-ID: <20240226141108.73664-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 0/5] string list functions
+Date: Mon, 26 Feb 2024 15:11:02 +0100
+Message-ID: <20240226141108.73664-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240226141108.73664-1-philmd@linaro.org>
-References: <20240226141108.73664-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,37 +95,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+Hi Markus,
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <1708638470-114846-3-git-send-email-steven.sistare@oracle.com>
----
- include/qapi/util.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Here are the patches I queued until you told me you'd
+object to the CamelCase filename strList.[ch].
 
-diff --git a/include/qapi/util.h b/include/qapi/util.h
-index 81a2b13a33..20dfea8a54 100644
---- a/include/qapi/util.h
-+++ b/include/qapi/util.h
-@@ -56,4 +56,17 @@ int parse_qapi_name(const char *name, bool complete);
-     (tail) = &(*(tail))->next; \
- } while (0)
- 
-+/*
-+ * For any GenericList @list, return its length.
-+ */
-+#define QAPI_LIST_LENGTH(list)                                      \
-+    ({                                                              \
-+        size_t _len = 0;                                            \
-+        typeof(list) _tail;                                         \
-+        for (_tail = list; _tail != NULL; _tail = _tail->next) {    \
-+            _len++;                                                 \
-+        }                                                           \
-+        _len;                                                       \
-+    })
-+
- #endif
+Steve, please take over ;)
+
+Since v5:
+- Cover files in MAINTAINERS
+- Complete @docstring mentioning g_auto.
+
+v5: https://lore.kernel.org/qemu-devel/1708638470-114846-3-git-send-email-steven.sistare@oracle.com/
+
+Steve Sistare (5):
+  util: str_split
+  qapi: QAPI_LIST_LENGTH
+  util: strv_from_strList
+  util: strList unit tests
+  migration: simplify exec migration functions
+
+ MAINTAINERS               |  2 +
+ include/monitor/hmp.h     |  1 -
+ include/qapi/util.h       | 13 +++++++
+ include/qemu/strList.h    | 33 ++++++++++++++++
+ migration/exec.c          | 57 ++++------------------------
+ monitor/hmp-cmds.c        | 19 ----------
+ net/net-hmp-cmds.c        |  3 +-
+ stats/stats-hmp-cmds.c    |  3 +-
+ tests/unit/test-strList.c | 80 +++++++++++++++++++++++++++++++++++++++
+ util/strList.c            | 38 +++++++++++++++++++
+ tests/unit/meson.build    |  1 +
+ util/meson.build          |  1 +
+ 12 files changed, 180 insertions(+), 71 deletions(-)
+ create mode 100644 include/qemu/strList.h
+ create mode 100644 tests/unit/test-strList.c
+ create mode 100644 util/strList.c
+
 -- 
 2.41.0
 
