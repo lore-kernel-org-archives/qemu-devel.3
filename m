@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D8F2C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 06:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8626C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 06:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reUW2-0000jZ-R1; Mon, 26 Feb 2024 01:31:07 -0500
+	id 1reUem-0002O4-73; Mon, 26 Feb 2024 01:40:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1reUVx-0000j8-OX
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 01:31:01 -0500
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reUej-0002NQ-Uq
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 01:40:06 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1reUVu-0002sS-99
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 01:31:01 -0500
-Received: from [192.168.178.59] (p57b42e65.dip0.t-ipconnect.de [87.180.46.101])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 247C4DA078B;
- Mon, 26 Feb 2024 07:30:55 +0100 (CET)
-Content-Type: multipart/alternative;
- boundary="------------zAyEWsJIpIGBrkY2ohHhoi0t"
-Message-ID: <3b6e065d-c50f-4503-bcd1-f6f08e734d97@weilnetz.de>
-Date: Mon, 26 Feb 2024 07:30:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] scripts/nsis.py: Automatically package required DLLs
- of QEMU executables
-To: Bin Meng <bmeng.cn@gmail.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "qemu-devel@nongnu.org Developers" <qemu-devel@nongnu.org>,
- Bin Meng <bin.meng@windriver.com>, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>
-References: <20220908132817.1831008-1-bmeng.cn@gmail.com>
- <20220908132817.1831008-4-bmeng.cn@gmail.com>
- <556496df-4362-6780-8379-e14bf4269e3f@ilande.co.uk>
- <CAEUhbmVmKhJJk0pQcVJKryie+V4uZEznZCu0dzjftYCycBtD8w@mail.gmail.com>
- <504673a3-d269-428d-876d-fd3dcc8fe680@weilnetz.de>
- <CAEUhbmUdvtbAZSOh_hQRLFmQtr8zeUadm6XBo+Ayg=CvidCOag@mail.gmail.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <CAEUhbmUdvtbAZSOh_hQRLFmQtr8zeUadm6XBo+Ayg=CvidCOag@mail.gmail.com>
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reUeh-0004vQ-DO
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 01:40:04 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1d94b222a3aso28233265ad.2
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 22:40:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708929599; x=1709534399; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/NkEcHBjUCcnwDk4fGmBsFSOuqO+L+gewo6t4yLKtY0=;
+ b=RyEpfzEDSvqBdKhDB4a+4muoanJkkQ0OAAgyjoZZ8c7ahLOnFApJkJ06GQ15ohzK4H
+ qqDo2v5oA69NoKOW0tNnEAe3EppMmImgTmr5/8up65bSp8BOEJ6ZBiKWOYMBRQZWrFJ5
+ 1w9/8JtGCRgZP22OsVP3dBoA4bE48GZKoDyqDaO9lgMKvY9danY7ojhb81cZxdBJh8iK
+ LaF7uaRsZqLT309HdNxDW65trIAl4G2nbePtkJBzKdmcmqZwzBYkBboJfB5FwsYdwYyC
+ MZu/86qaR/svQn7JFGMVuPX6zeUgC/sSihnq6QkqGtIRNNzkVtrqrz6KRnQFV6FdiEaN
+ wpLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708929599; x=1709534399;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/NkEcHBjUCcnwDk4fGmBsFSOuqO+L+gewo6t4yLKtY0=;
+ b=pfxqSGKrJtOtvp2kK7YM3EWx5FYCGOnlhCnsW7tZUvICvz8x0iEBc+Nrf9TdTxw5Pc
+ +yms5Rip/kyVduCnE1gWCMTVbnlp4igYxL0wBW4QSda3laJJ7HP/vxwqTdGUery8H6vg
+ LfBfynpYH4WxtyXI4Mgt5abNqcl7WqeQCm5DcLWtLO1N99M5gKGAMn70d4FpooPo770+
+ ruOToT71aXDGl1FitvR3cTavA6vYIY70OhKq8mq0KoAM+w9pXesYkaZkRqHfteV2BrDV
+ YsMU2eKfuAewOJzQd9FPLELWvQ1bYum2ScVyNi+JA3Z+E8PbPimTe4HuFpvJZaPLjJTx
+ BhEw==
+X-Gm-Message-State: AOJu0YyQ7gCfb7lX4SCl/bH/r6bfV+tDdU0I+Y3qhMOdmlYkjJsUWFJt
+ bAgX7Ai2BaaLeA5a9ce7p88+H/OYbnR7S6qaO6WSkdcwlrYum4O1UsXqPiNX
+X-Google-Smtp-Source: AGHT+IGPRZfLHS3DtZekPzcaZYloARxS4FKgOAzgBYIf9Lrnq1gTbH0bszC7mdIDem4/hSqBrRPKXA==
+X-Received: by 2002:a17:902:e844:b0:1db:e78e:b38d with SMTP id
+ t4-20020a170902e84400b001dbe78eb38dmr8536843plg.18.1708929599270; 
+ Sun, 25 Feb 2024 22:39:59 -0800 (PST)
+Received: from localhost ([1.146.74.212]) by smtp.gmail.com with ESMTPSA id
+ jb1-20020a170903258100b001db5753e8b8sm3166984plb.218.2024.02.25.22.39.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 25 Feb 2024 22:39:58 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 26 Feb 2024 16:39:51 +1000
+Message-Id: <CZESZCGZ5VE5.2ILQXAT261OX@wheely>
+Cc: <qemu-devel@nongnu.org>, "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "Cleber
+ Rosa" <crosa@redhat.com>, "Wainer dos Santos Moschetta"
+ <wainersm@redhat.com>, "Beraldo Leal" <bleal@redhat.com>
+Subject: Re: [PATCH v2 2/4] scripts/replay-dump.py: Update to current rr
+ record format
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "John Snow" <jsnow@redhat.com>
+X-Mailer: aerc 0.15.2
+References: <20240125160835.480488-1-npiggin@gmail.com>
+ <20240125160835.480488-3-npiggin@gmail.com>
+ <CAFn=p-aB94Y+WSJOdHOsxmrrETy-W76KK4z1qY05QCq2dzV=zg@mail.gmail.com>
+In-Reply-To: <CAFn=p-aB94Y+WSJOdHOsxmrrETy-W76KK4z1qY05QCq2dzV=zg@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,305 +96,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------zAyEWsJIpIGBrkY2ohHhoi0t
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Wed Jan 31, 2024 at 7:36 AM AEST, John Snow wrote:
+> On Thu, Jan 25, 2024 at 11:09=E2=80=AFAM Nicholas Piggin <npiggin@gmail.c=
+om> wrote:
+> >
+> > The v12 format support for replay-dump has a few issues still. This
+> > fixes async decoding; adds event, shutdown, and end decoding; fixes
+> > audio in / out events, fixes checkpoint checking of following async
+> > events.
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >  scripts/replay-dump.py | 132 ++++++++++++++++++++++++++++++-----------
+> >  1 file changed, 98 insertions(+), 34 deletions(-)
+> >
+> > diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+> > index d668193e79..35732da08f 100755
+> > --- a/scripts/replay-dump.py
+> > +++ b/scripts/replay-dump.py
+> > @@ -20,6 +20,7 @@
+> >
+> >  import argparse
+> >  import struct
+> > +import os
+> >  from collections import namedtuple
+> >  from os import path
+> >
+> > @@ -63,6 +64,10 @@ def read_byte(fin):
+> >      "Read a single byte"
+> >      return struct.unpack('>B', fin.read(1))[0]
+> >
+> > +def read_bytes(fin, nr):
+> > +    "Read a nr bytes"
+>
+> Existing problem in this file, but please use """triple quotes""" for
+> docstrings.
 
-Am 26.02.24 um 05:35 schrieb Bin Meng:
+Just coming back to this, sorry, was struggling a bit with ppc merge :/
 
-> On Mon, Feb 26, 2024 at 1:37 AM Stefan Weil<sw@weilnetz.de>  wrote:
->> Am 10.09.22 um 02:37 schrieb Bin Meng:
->>> On Sat, Sep 10, 2022 at 12:49 AM Mark Cave-Ayland
->>> <mark.cave-ayland@ilande.co.uk>  wrote:
->>>> On 08/09/2022 14:28, Bin Meng wrote:
->>>>
->>>>> From: Bin Meng<bin.meng@windriver.com>
->>>>>
->>>>> At present packaging the required DLLs of QEMU executables is a
->>>>> manual process, and error prone.
->>>>>
->>>>> Actually build/config-host.mak contains a GLIB_BINDIR variable
->>>>> which is the directory where glib and other DLLs reside. This
->>>>> works for both Windows native build and cross-build on Linux.
->>>>> We can use it as the search directory for DLLs and automate
->>>>> the whole DLL packaging process.
->>>>>
->>>>> Signed-off-by: Bin Meng<bin.meng@windriver.com>
->>>>> ---
->>>>>
->>>>>     meson.build     |  1 +
->>>>>     scripts/nsis.py | 46 ++++++++++++++++++++++++++++++++++++++++++----
->>>>>     2 files changed, 43 insertions(+), 4 deletions(-)
->>>>>
->> [...]>>> diff --git a/scripts/nsis.py b/scripts/nsis.py
->>>>> index baa6ef9594..03ed7608a2 100644
->>>>> --- a/scripts/nsis.py
->>>>> +++ b/scripts/nsis.py
->>>>> @@ -18,12 +18,36 @@ def signcode(path):
->>>>>             return
->>>>>         subprocess.run([cmd, path])
->>>>>
->>>>> +def find_deps(exe_or_dll, search_path, analyzed_deps):
->>>>> +    deps = [exe_or_dll]
->>>>> +    output = subprocess.check_output(["objdump", "-p", exe_or_dll], text=True)
->> This fails on non x86 hosts where objdump does not know how to handle a
->> Windows x86_64 exe file.
-> Does this command work in the MSYS2 environment on Windows Arm?
+> > +    return fin.read(nr)
+> > +
+>
+> Does it really save a lot of typing to alias fin.read(1) to
+> read_bytes(fin, 1) ...?
 
+Not really, I'll squash it.
 
-I don't know and cannot test that, because I don't run Windows on ARM.
+>
+> >  def read_event(fin):
+> >      "Read a single byte event, but save some state"
+> >      if replay_state.already_read:
+> > @@ -134,6 +139,18 @@ def swallow_async_qword(eid, name, dumpfile):
+> >      print("  %s(%d) @ %d" % (name, eid, step_id))
+> >      return True
+> >
+> > +def swallow_bytes(eid, name, dumpfile, nr):
+> > +    "Swallow nr bytes of data without looking at it"
+> > +    dumpfile.seek(nr, os.SEEK_CUR)
+> > +    return True
+> > +
+>
+> Why bother returning a bool if it's not based on any condition? Add an
+> error check or just drop the return value.
+>
+> > +def decode_exception(eid, name, dumpfile):
+> > +    print_event(eid, name)
+> > +    return True
+> > +
+>
+> I suppose in this case, the return is to fit a common signature.
 
->>>>> +    output = output.split("\n")
->>>>> +    for line in output:
->>>>> +        if not line.startswith("\tDLL Name: "):
->>>>> +            continue
->>>>> +
->>>>> +        dep = line.split("DLL Name: ")[1].strip()
->>>>> +        if dep in analyzed_deps:
->>>>> +            continue
->>>>> +
->>>>> +        dll = os.path.join(search_path, dep)
->>>>> +        if not os.path.exists(dll):
->>>>> +            # assume it's a Windows provided dll, skip it
->>>>> +            continue
->>>>> +
->>>>> +        analyzed_deps.add(dep)
->>>>> +        # locate the dll dependencies recursively
->>>>> +        rdeps = find_deps(dll, search_path, analyzed_deps)
->>>>> +        deps.extend(rdeps)
->>>>> +
->>>>> +    return deps
->> [...]
->>>> FWIW I wrote a similar script a while back to help package a custom Windows build for
->>>> a client, however I used ldd instead of objdump since it provided the full paths for
->>>> DLLs installed in the msys2/mingw-w64 environment via pacman which were outside the
->>>> QEMU build tree.
->>>>
->>> Yep, ldd also works, but only on Windows native build. objdump can
->>> work on both Windows native and Linux cross builds.
->>
->> objdump fails on Linux cross builds on any non x86 host, because objdump
->> typically only supports the native host architecture.
->>
->> Therefore I get an error on an ARM64 host (podman on Mac M1):
->>
->>           objdump: /tmp/tmpvae5u0qm/qemu/qemu-system-aarch64.exe: file
->> format not recognized
->>
->> I could use x86_64-w64-mingw32-objdump to fix the cross builds, but then
->> native builds might fail because they don't have x86_64-w64-mingw32-objdump.
->>
->> Is there a simple way how we can get the information here whether
->> objdump requires a cross build prefix?
-> For QEMU Windows, I believe the only supported architecture is x86_64,
-> correct? Do we want to support (cross) building QEMU for Windows Arm?
+Yes that's why I did it, but it actually can't fit in the normal
+decoder pattern because a nr has to be supplied as well. I'll
+change it as you say.
 
-
-Yes, I think we only support QEMU on Windows x86_64. I also don't know 
-anyone who has tried building for Windows ARM. And up to now I also was 
-never asked for that, so obviously there is still no need for it.
-
-
-> Based on your observation, objdump on Linux cross builds on any x86
-> host works, but not on non x86 host.
-> Maybe it's a hint to ask for binutils guys to include the PE format
-> support for objdump Arm by default.
-
-
-I am afraid that we'll have to find a solution on the QEMU side, not 
-wait until all binutils support the PE format for x86_64 (which would 
-make the binaries or the library much larger).
-
-Stefan
-
-
---------------zAyEWsJIpIGBrkY2ohHhoi0t
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Am 26.02.24 um 05:35 schrieb Bin Meng:</p>
-    <blockquote type="cite"
-cite="mid:CAEUhbmUdvtbAZSOh_hQRLFmQtr8zeUadm6XBo+Ayg=CvidCOag@mail.gmail.com">
-      <pre class="moz-quote-pre" wrap="">On Mon, Feb 26, 2024 at 1:37 AM Stefan Weil <a class="moz-txt-link-rfc2396E" href="mailto:sw@weilnetz.de">&lt;sw@weilnetz.de&gt;</a> wrote:
-</pre>
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">
-Am 10.09.22 um 02:37 schrieb Bin Meng:
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">On Sat, Sep 10, 2022 at 12:49 AM Mark Cave-Ayland
-<a class="moz-txt-link-rfc2396E" href="mailto:mark.cave-ayland@ilande.co.uk">&lt;mark.cave-ayland@ilande.co.uk&gt;</a> wrote:
-</pre>
-          <blockquote type="cite">
-            <pre class="moz-quote-pre" wrap="">
-On 08/09/2022 14:28, Bin Meng wrote:
-
-</pre>
-            <blockquote type="cite">
-              <pre class="moz-quote-pre" wrap="">From: Bin Meng <a class="moz-txt-link-rfc2396E" href="mailto:bin.meng@windriver.com">&lt;bin.meng@windriver.com&gt;</a>
-
-At present packaging the required DLLs of QEMU executables is a
-manual process, and error prone.
-
-Actually build/config-host.mak contains a GLIB_BINDIR variable
-which is the directory where glib and other DLLs reside. This
-works for both Windows native build and cross-build on Linux.
-We can use it as the search directory for DLLs and automate
-the whole DLL packaging process.
-
-Signed-off-by: Bin Meng <a class="moz-txt-link-rfc2396E" href="mailto:bin.meng@windriver.com">&lt;bin.meng@windriver.com&gt;</a>
----
-
-   meson.build     |  1 +
-   scripts/nsis.py | 46 ++++++++++++++++++++++++++++++++++++++++++----
-   2 files changed, 43 insertions(+), 4 deletions(-)
-
-</pre>
-            </blockquote>
-          </blockquote>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">[...]&gt;&gt;&gt; diff --git a/scripts/nsis.py b/scripts/nsis.py
-</pre>
-        <blockquote type="cite">
-          <blockquote type="cite">
-            <blockquote type="cite">
-              <pre class="moz-quote-pre" wrap="">index baa6ef9594..03ed7608a2 100644
---- a/scripts/nsis.py
-+++ b/scripts/nsis.py
-@@ -18,12 +18,36 @@ def signcode(path):
-           return
-       subprocess.run([cmd, path])
-
-+def find_deps(exe_or_dll, search_path, analyzed_deps):
-+    deps = [exe_or_dll]
-+    output = subprocess.check_output(["objdump", "-p", exe_or_dll], text=True)
-</pre>
-            </blockquote>
-          </blockquote>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">
-This fails on non x86 hosts where objdump does not know how to handle a
-Windows x86_64 exe file.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-Does this command work in the MSYS2 environment on Windows Arm?</pre>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>I don't know and cannot test that, because I don't run Windows on
-      ARM.</p>
-    <p><span style="white-space: pre-wrap">
-</span></p>
-    <blockquote type="cite"
-cite="mid:CAEUhbmUdvtbAZSOh_hQRLFmQtr8zeUadm6XBo+Ayg=CvidCOag@mail.gmail.com">
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">
-</pre>
-        <blockquote type="cite">
-          <blockquote type="cite">
-            <blockquote type="cite">
-              <pre class="moz-quote-pre" wrap="">+    output = output.split("\n")
-+    for line in output:
-+        if not line.startswith("\tDLL Name: "):
-+            continue
-+
-+        dep = line.split("DLL Name: ")[1].strip()
-+        if dep in analyzed_deps:
-+            continue
-+
-+        dll = os.path.join(search_path, dep)
-+        if not os.path.exists(dll):
-+            # assume it's a Windows provided dll, skip it
-+            continue
-+
-+        analyzed_deps.add(dep)
-+        # locate the dll dependencies recursively
-+        rdeps = find_deps(dll, search_path, analyzed_deps)
-+        deps.extend(rdeps)
-+
-+    return deps
-</pre>
-            </blockquote>
-          </blockquote>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">[...]
-</pre>
-        <blockquote type="cite">
-          <blockquote type="cite">
-            <pre class="moz-quote-pre" wrap="">
-FWIW I wrote a similar script a while back to help package a custom Windows build for
-a client, however I used ldd instead of objdump since it provided the full paths for
-DLLs installed in the msys2/mingw-w64 environment via pacman which were outside the
-QEMU build tree.
-
-</pre>
-          </blockquote>
-          <pre class="moz-quote-pre" wrap="">
-Yep, ldd also works, but only on Windows native build. objdump can
-work on both Windows native and Linux cross builds.
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">
-
-objdump fails on Linux cross builds on any non x86 host, because objdump
-typically only supports the native host architecture.
-
-Therefore I get an error on an ARM64 host (podman on Mac M1):
-
-         objdump: /tmp/tmpvae5u0qm/qemu/qemu-system-aarch64.exe: file
-format not recognized
-
-I could use x86_64-w64-mingw32-objdump to fix the cross builds, but then
-native builds might fail because they don't have x86_64-w64-mingw32-objdump.
-
-Is there a simple way how we can get the information here whether
-objdump requires a cross build prefix?
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-For QEMU Windows, I believe the only supported architecture is x86_64,
-correct? Do we want to support (cross) building QEMU for Windows Arm?</pre>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>Yes, I think we only support QEMU on Windows x86_64. I also don't
-      know anyone who has tried building for Windows ARM. And up to now
-      I also was never asked for that, so obviously there is still no
-      need for it.<br>
-    </p>
-    <p><br>
-    </p>
-    <blockquote type="cite"
-cite="mid:CAEUhbmUdvtbAZSOh_hQRLFmQtr8zeUadm6XBo+Ayg=CvidCOag@mail.gmail.com">
-      <pre class="moz-quote-pre" wrap="">Based on your observation, objdump on Linux cross builds on any x86
-host works, but not on non x86 host.
-Maybe it's a hint to ask for binutils guys to include the PE format
-support for objdump Arm by default.
-</pre>
-    </blockquote>
-    <p><br>
-    </p>
-    <p>I am afraid that we'll have to find a solution on the QEMU side,
-      not wait until all binutils support the PE format for x86_64
-      (which would make the binaries or the library much larger).</p>
-    <p>Stefan</p>
-    <p><br>
-    </p>
-  </body>
-</html>
-
---------------zAyEWsJIpIGBrkY2ohHhoi0t--
+Thanks,
+Nick
 
