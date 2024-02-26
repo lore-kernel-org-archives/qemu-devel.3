@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06492C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 19:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E51C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 19:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1regCL-0004Ck-7H; Mon, 26 Feb 2024 13:59:33 -0500
+	id 1regT6-0008J2-Pv; Mon, 26 Feb 2024 14:16:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1regCB-0004CC-LG; Mon, 26 Feb 2024 13:59:24 -0500
+ id 1regT0-0008HA-6N; Mon, 26 Feb 2024 14:16:46 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1regC3-0003sq-Bk; Mon, 26 Feb 2024 13:59:23 -0500
+ id 1regSx-0006jc-FQ; Mon, 26 Feb 2024 14:16:45 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B85C950B75;
- Mon, 26 Feb 2024 21:59:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D0E6350B9A;
+ Mon, 26 Feb 2024 22:17:08 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E55289B8B;
- Mon, 26 Feb 2024 21:58:46 +0300 (MSK)
-Message-ID: <9989296b-6397-405f-91e9-15d8c0464b09@tls.msk.ru>
-Date: Mon, 26 Feb 2024 21:58:46 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 848A489BA7;
+ Mon, 26 Feb 2024 22:16:36 +0300 (MSK)
+Message-ID: <b8e70517-eb7f-4267-a4ce-1df97ff88e6f@tls.msk.ru>
+Date: Mon, 26 Feb 2024 22:16:36 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/28] qemu-img: stop printing error twice in a few places
+Subject: Re: [PATCH 28/28] qemu-img: extend cvtnum() and use it in more places
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+To: qemu-devel@nongnu.org, qemu-block@nongnu.org
 References: <cover.1708544927.git.mjt@tls.msk.ru>
- <20240221211622.2335170-1-mjt@tls.msk.ru> <Zdycz4ZjT60HSPM-@redhat.com>
+ <20240221211622.2335170-28-mjt@tls.msk.ru>
+Cc: "Daniel P. Berrange" <berrange@redhat.com>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -59,9 +59,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <Zdycz4ZjT60HSPM-@redhat.com>
+In-Reply-To: <20240221211622.2335170-28-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -85,41 +85,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.02.2024 17:14, Daniel P. Berrangé :
-> On Thu, Feb 22, 2024 at 12:15:42AM +0300, Michael Tokarev wrote:
->> Currently we have:
->>
->>    ./qemu-img resize none +10
->>    qemu-img: Could not open 'none': Could not open 'none': No such file or directory
->>
->> stop printing the message twice, - local_err already has
->> all the info, no need to prepend additional text there.
->>
->> There are a few other places like this, but I'm unsure
->> about these.
->>
->> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->> ---
->>   qemu-img.c | 8 +++-----
->>   1 file changed, 3 insertions(+), 5 deletions(-)
-> 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+22.02.2024 00:16, Michael Tokarev wrote:
 
-Unfortunately I have to drop this one for now, - it requires
-much more work.  For example, after this we have:
+> -static int64_t cvtnum_full(const char *name, const char *value, int64_t min,
+> -                           int64_t max)
+> +static int64_t cvtnum_full(const char *name, const char *value,
+> +                           bool issize, int64_t min, int64_t max)
+>   {
+>       int err;
+>       uint64_t res;
+>   
+> -    err = qemu_strtosz(value, NULL, &res);
+> +    err = issize ? qemu_strtosz(value, NULL, &res) :
+> +                   qemu_strtou64(value, NULL, 0, &res);
+>       if (err < 0 && err != -ERANGE) {
+> -        error_report("Invalid %s specified. You may use "
+> -                     "k, M, G, T, P or E suffixes for", name);
+> -        error_report("kilobytes, megabytes, gigabytes, terabytes, "
+> -                     "petabytes and exabytes.");
+> +        if (issize) {
+> +            error_report("Invalid %s specified. You may use "
+> +                         "k, M, G, T, P or E suffixes for", name);
+> +            error_report("kilobytes, megabytes, gigabytes, terabytes, "
+> +                         "petabytes and exabytes.");
+> +        } else {
+> +            error_report("Invalid %s specified.", name);
+> +        }
 
--qemu-img: TEST_DIR/t.IMGFMT: Extended L2 entries are only supported with cluster sizes of at least 16384 bytes
-+qemu-img: Extended L2 entries are only supported with cluster sizes of at least 16384 bytes
+I've added actual value supplied to these error messages now.
+And I think the list of possible suffixes makes little sense here.
 
--qemu-img: Could not open 'TEST_DIR/t.IMGFMT': L1 table is too small
-+qemu-img: L1 table is too small
 
--qemu-img: Could not open 'TEST_DIR/t.IMGFMT': Could not open 'foo': No such file or directory
-+qemu-img: Could not open 'foo': No such file or directory
+> @@ -5090,7 +5060,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
+>               src_fmt = optarg;
+>               break;
+>           case 'g':
+> -            granularity = cvtnum("granularity", optarg);
+> +            granularity = cvtnum("granularity", optarg, false);
 
-and a few other interesting cases.
-
-This whole thing needs a much bigger revisit.
+Here, this is a size, so last arg should be true.  In the tests (190),
+we already use -g 2M.  I didn't really knew what a granularity is while
+converting it.
 
 /mjt
 
