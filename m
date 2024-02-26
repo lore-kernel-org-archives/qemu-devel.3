@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB40C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FDFC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reeNP-00047a-6n; Mon, 26 Feb 2024 12:02:52 -0500
+	id 1reeOT-0005eO-Cs; Mon, 26 Feb 2024 12:03:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reeNL-0003pp-LN
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:02:49 -0500
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ id 1reeNe-0004PV-BU
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:03:11 -0500
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reeNI-0000mP-Cu
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:02:47 -0500
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-512bc0e8ce1so3343628e87.0
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 09:02:43 -0800 (PST)
+ id 1reeNN-0000pO-U8
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:03:05 -0500
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d28e465655so11979381fa.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 09:02:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708966962; x=1709571762; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708966968; x=1709571768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eZ1nEd8NJNCNQAO45v/M0dXLXOT0Wd7jVxF+jov+Saw=;
- b=LlPaXiaWdyY1Tt53Va3b5t2Kw/bagc37MDyNOhd8xxypQETVZMGJGnSDJ187mPXQb5
- 1MKrhcV6t1K0Tj3RaUF6cteSLDSDjsa4nj7W4cxyq4rDTcenSHAKWeFfmKucHyNXy2sS
- uKp32orca98/bx0zItGLhVgwAPJ+pEqJ9u9mxqfDQq8y7MHR7JIsLPWSGeI3N9Czcpjj
- +ZVt5tpUEwcIJMrBMbP/jggmN/Ns3vyxBQtq4XPQBu3EagCyTIPkRRb2DZFSyK0b8LLR
- 5Fm2ixtbe9svcVnzSsyWLG1FgM0kkfhrgv3q0p0r5d8KEJR2H6cJeZ7EnyRcAOJhX/kA
- 4yXg==
+ bh=v93sjlrKGHF/8PcF+jkx1JshiyYwDWnn08uJwR8C/sE=;
+ b=P9aEdzqtR5Hy+CkVZofR9lKcj/UbNq1xJzNu+J9orYvOg6HSjeigOdbuX94S8wJnrS
+ +proRR1Gu3FhGjD9vTL8B7UB/U2Q86EWIXlZjqun37Soe2NNrNbpAdemMe75bI0N5kNa
+ vdrEQJrbRTZltynp+H1C1C+l2+GSzmMeG5+XJAubm4KPfFz1hHZ49xP6z+zPY8pdEe+F
+ McbUrAtnAYcemkpTVSY1wrqCAgk82nHruiq9/10n8gZoI1zwv3emaCIn64ELRMAc4Gfk
+ rtcEMeoW0ZzHq8kq7FgO/yHqOWLN7UoML679IjdlxIGtEDsRdr9DbY+2pVQu0pPO5jSq
+ cFTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708966962; x=1709571762;
+ d=1e100.net; s=20230601; t=1708966968; x=1709571768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eZ1nEd8NJNCNQAO45v/M0dXLXOT0Wd7jVxF+jov+Saw=;
- b=gbiy3Pk2UKAdf5bwipq9ljqMyfU/w+peJYhdL3txPjuUFF10Qdonp5mxyeSj1Y1dIs
- ZWBrYDoR44hLtXqxOd3hbwa7Y1idH3k9mGIqgbw4tCAbeQXF8EKt/P1mouDDPUFBogdI
- BHgbpR04l6SxcGP/6gC7oFhH/SZksGQSKWZLa9N5Xq6VmT6DRRhwtI3+R6jnB9s0oObx
- Xea8bBiSwRI/DfNAxwZFovBdq1YAY86GhzRnTNE5eSPnTBDDU9NBb+qnLIBvklMEBkz2
- NHW2njaayWPW9Lk12vxmoWHeIiCxVuPvnndypEStYNGsiquaM/htXn4og3LsGbqFZHKj
- EjhA==
-X-Gm-Message-State: AOJu0YwKEdpOGKG4Qh/kofUD3+UJoJlX1hMskBUPrfa3UFAm8mx/pN4o
- ho1tzIcVShb0ZY2vBZl8o9Eua8Z0vLf/bfwuN6SC0ZhKZ7wzy1+NSkEGr5VjaSs=
-X-Google-Smtp-Source: AGHT+IEwVu9Vs9v1UsJhn/jHYC1+ql7nxmwglqPw3ApuKGdW0/lPYfZjzOEUqd50h5T9eTNz7uq3Qg==
-X-Received: by 2002:ac2:46fc:0:b0:512:e25b:2e77 with SMTP id
- q28-20020ac246fc000000b00512e25b2e77mr4427967lfo.44.1708966962565; 
- Mon, 26 Feb 2024 09:02:42 -0800 (PST)
+ bh=v93sjlrKGHF/8PcF+jkx1JshiyYwDWnn08uJwR8C/sE=;
+ b=jjAPQVJarlpxDqC4iHCbO4BxnuwWdkXRqOftyma0sadADI9c5mHJWXkBD1Zn5Zn+tN
+ fo+l/fN3f9FE7EB3i0vRCYWD7AnrXPf9BzlOmKhi7Izmvo9yBAgFECXjpgtNfhCKtDB7
+ 25W+XdoQsGD3ldAjHXg2EjLbidRZP6PFpB+ysBtEHU0YyGEIeGfu+6repB38JBrOARrg
+ b4O494luqgv24PYcLyFRmeM+UqzLJU5H0bYfE3UKUrBkEXW+/tUnfxzW/8XsQhqns0iy
+ etmZ6R14KXrcU5ToTiC3gtjVGboXwVzRDNCrv61bjwED7hCBPJMvS5KPA/nwFIrbHxCx
+ Y8CQ==
+X-Gm-Message-State: AOJu0Yzi1ufqFMq4cHkJQO4qnR7SJp2cLASsh9fmJf0ebQ1IU+guEeDd
+ Vmaz1tqcCUXvM+QV8vX4B7Uyy9X0Pe+NMejs9Snzo5Vgqo7wEPvRkNGWzKkytIs=
+X-Google-Smtp-Source: AGHT+IGbDugMR0kDdCrbQaJkrbtleHSHhjIH2zSNNRFtFTPf/4DMzgoMm5ynIOMjVnPd+x1jOaDl1A==
+X-Received: by 2002:a2e:bc19:0:b0:2d2:6ed5:e45a with SMTP id
+ b25-20020a2ebc19000000b002d26ed5e45amr5648419ljf.12.1708966968037; 
+ Mon, 26 Feb 2024 09:02:48 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- o25-20020a05600c379900b004129051a8f7sm12280385wmr.41.2024.02.26.09.02.41
+ 20-20020a05600c22d400b0041069adbd87sm12429148wmg.21.2024.02.26.09.02.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 09:02:41 -0800 (PST)
+ Mon, 26 Feb 2024 09:02:45 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F06095F930;
+ by draig.lan (Postfix) with ESMTP id DDFA65F92F;
  Mon, 26 Feb 2024 16:56:48 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -87,17 +87,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v3 23/27] contrib/plugins: fix imatch
-Date: Mon, 26 Feb 2024 16:56:42 +0000
-Message-Id: <20240226165646.425600-24-alex.bennee@linaro.org>
+Subject: [PATCH v3 22/27] tests/tcg: expand insn test case to exercise
+ register API
+Date: Mon, 26 Feb 2024 16:56:41 +0000
+Message-Id: <20240226165646.425600-23-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240226165646.425600-1-alex.bennee@linaro.org>
 References: <20240226165646.425600-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x132.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,30 +121,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can't directly save the ephemeral imatch from argv as that memory
-will get recycled.
+This ensure we at least read every register the plugin API reports at
+least once during the check-tcg checks.
 
-Message-Id: <20240103173349.398526-40-alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- contrib/plugins/execlog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/plugin/insn.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-index 82dc2f584e2..f262e5555eb 100644
---- a/contrib/plugins/execlog.c
-+++ b/contrib/plugins/execlog.c
-@@ -199,7 +199,7 @@ static void parse_insn_match(char *match)
-     if (!imatches) {
-         imatches = g_ptr_array_new();
-     }
--    g_ptr_array_add(imatches, match);
-+    g_ptr_array_add(imatches, g_strdup(match));
- }
+diff --git a/tests/plugin/insn.c b/tests/plugin/insn.c
+index 5fd3017c2b3..54da06fcf26 100644
+--- a/tests/plugin/insn.c
++++ b/tests/plugin/insn.c
+@@ -46,6 +46,25 @@ typedef struct {
+     char *disas;
+ } Instruction;
  
- static void parse_vaddr_match(char *match)
++/*
++ * Initialise a new vcpu with reading the register list
++ */
++static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
++{
++    g_autoptr(GArray) reg_list = qemu_plugin_get_registers();
++    g_autoptr(GByteArray) reg_value = g_byte_array_new();
++
++    if (reg_list) {
++        for (int i = 0; i < reg_list->len; i++) {
++            qemu_plugin_reg_descriptor *rd = &g_array_index(
++                reg_list, qemu_plugin_reg_descriptor, i);
++            int count = qemu_plugin_read_register(rd->handle, reg_value);
++            g_assert(count > 0);
++        }
++    }
++}
++
++
+ static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
+ {
+     unsigned int i = cpu_index % MAX_CPUS;
+@@ -212,6 +231,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+         sizes = g_array_new(true, true, sizeof(unsigned long));
+     }
+ 
++    /* Register init, translation block and exit callbacks */
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+     return 0;
 -- 
 2.39.2
 
