@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8E3C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B37C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:33:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWOw-00045O-TG; Mon, 26 Feb 2024 03:31:57 -0500
+	id 1reWNb-0002T5-4y; Mon, 26 Feb 2024 03:30:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reWNt-0002wS-Ht
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:30:54 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reWNW-0002Qg-45
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:30:26 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reWNs-0005mi-0O
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:30:49 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1dca3951ad9so5383085ad.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:30:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1reWNU-0005iV-EL
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:30:25 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1dc09556599so24259035ad.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:30:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708936245; x=1709541045; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708936223; x=1709541023; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ylQ7cG8ZxhS/Ow0dss1QvZgVNdYukV9TtCfdFWWomLA=;
- b=YtwKnT6nXEobL5QTWxW1dawYekO6IVJyPVvKLacs50beClLHp89BdaD9sPMts+ZZDu
- qBu0uXNuUc4R8U0hPEo7NfrVvG/cYojrzKYTlYb6z42YjR8XX1PXHfLV30nUbsq7yCZF
- 2P0vUUDJVZUsPX8Xb9V+wFrhcf8LDBcr+1wmCEw7UaN1AHDoESv3d65NkYaUhBXe3q+8
- SWM8kOFb7Kzi9MaGwlAdbiC60R1ScFXFvSHrPKJmW7ZGr+qkqWrEKJfOoky0+i6nLHKI
- QXjilexBQ/eb64MQJ9eKW5XHuGm57ZWkHELOVkTBtzo8T51uwWFqTt1vC8S/QCFZd2wF
- 618A==
+ bh=AQuCe4WHCbklHlT19DTaQUw/vc5/AugcEjGjIpSmyJk=;
+ b=VkopBpRfcB3vV4GKmQSISWbSJrCOcQnJxdoGTgsiI4fmFR5iPhbeCeDsZH/PEO8nP+
+ cFt+tN2h2G3wXyT8QyigDOOz0PFM1vGG1IILr7t4oUPQy/pNv/AUydz4lp8tqGYOBgsC
+ sATaYUpBUjcFuZmFG3tbnwn+N8mKA3zzq1nDjGZ+jK6/BKzipZ9ISriYnDig8R8Dvu/G
+ 1D4HI0nRznEt11L11WpCIDZrTJ9T/401MIC6/QjPcqBUf+Dj4Ojtrj+zXx9QL3PYrVEC
+ i/47q8FjmBNrdgWyDpczu8FUH9zcda+VoCkKQ47GQ/gRS59BPkG9+/IW9on2U0T5DYEQ
+ G52w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708936245; x=1709541045;
+ d=1e100.net; s=20230601; t=1708936223; x=1709541023;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ylQ7cG8ZxhS/Ow0dss1QvZgVNdYukV9TtCfdFWWomLA=;
- b=s5PRz6ylr+3EBqAa6lLN0x0DCZoZZKBH6puRZJ1qGlxmPyfsd2iJ+PRb3S8xc9LhlR
- 8h77HVdS7wbL8me7Wk+qYKgEC+GYO+Y684driTj8irJcyGK0kEuSOOokzvWu48r3oAzz
- y0IyOpbr50guSAuQqIck2BWxscSae9jjkRy0B+BIxm9hNnCRpBDOHw04rsCCjhhPObLm
- c/Ct7CspevlABdilhGzvEzyvdT7DYB5mNr5w54W/H28zTqaPsDoTx7/RZiulJmWcQA2O
- eAVkcIorWNnP4w2XtKNR7U9YifeDU1PqJa79JxsNipkiQFAHP0cCbAEYyW6Tke+o2VtZ
- e9Cg==
-X-Gm-Message-State: AOJu0YxISoMIgM5ETPjyrSIutkAtpZKhpNV4x2gyBPwAOxoDkpIxdy5v
- akbjIECFE7f+wgfpOlTq4yFzJpgkVMtanP4I5C40cM8tJpJjmxvZKUDt2Ahv
-X-Google-Smtp-Source: AGHT+IFTF1HJu+wK4KicZHqGLPJMzGv5rfFpMc0AqsSCpU+xbQjGsC9IQSF3QuytmK2riLP8YnQ8cg==
-X-Received: by 2002:a17:903:24c:b0:1da:190c:3481 with SMTP id
- j12-20020a170903024c00b001da190c3481mr8726448plh.34.1708936245385; 
- Mon, 26 Feb 2024 00:30:45 -0800 (PST)
+ bh=AQuCe4WHCbklHlT19DTaQUw/vc5/AugcEjGjIpSmyJk=;
+ b=It/nbBWGhPOTz3GjsAqupsTbzeNW+y26N7yDoaS4tffJBTYKSKVYBlRdZd4HzBEocN
+ WHlTsxGU5LMG/EX3+B2RkDjhHtR0BlIKhc2ezxycpW9ee3gIwQeJu1JnEYagxeck3fCJ
+ XLYphm39cCBhnNW7g9i4ZSdd/vqZZOyLHO/iB/xJudC3DP/oscu2rg3sZ78bV47zpYs8
+ 7qinqcaYWM3E7SWew+3deI08AD/5F6TtLX+XuiyCGA3bK+kKUffJWHy4gO9g60A7s+Gg
+ BvZ+tk4CNAf8wk6KeDW6B4CE8FefN14+4vN3UVBunMgFR7u+o+qZhxGsZDA3t+q9uxJ8
+ Lzig==
+X-Gm-Message-State: AOJu0Yxw3pX/xUjDxBi343Fw0HaZcdsy56Kl+9U1mnRF+mwESWnt8JaP
+ Y06zWGdauJITPnIEkzC1KVeSb36bSVMLlIgIItCNObrDnJZduTliTRsMWwnb
+X-Google-Smtp-Source: AGHT+IFHPAJZZbd282Gn6yrVKd0J8Ika6JlAfhK8qRmTVQsLfph7xSVpChW59Uyn6Vvg++JDy0ndHQ==
+X-Received: by 2002:a17:902:ef48:b0:1dc:8eba:42c3 with SMTP id
+ e8-20020a170902ef4800b001dc8eba42c3mr6740617plx.23.1708936222765; 
+ Mon, 26 Feb 2024 00:30:22 -0800 (PST)
 Received: from wheely.local0.net ([1.146.74.212])
  by smtp.gmail.com with ESMTPSA id
- w16-20020a1709026f1000b001d9641003cfsm3511260plk.142.2024.02.26.00.30.40
+ w16-20020a1709026f1000b001d9641003cfsm3511260plk.142.2024.02.26.00.30.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 00:30:45 -0800 (PST)
+ Mon, 26 Feb 2024 00:30:22 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,16 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
-Subject: [PATCH v3 8/9] replay: Fix migration replay_mutex locking
-Date: Mon, 26 Feb 2024 18:29:44 +1000
-Message-ID: <20240226082945.1452499-9-npiggin@gmail.com>
+Subject: [PATCH v3 4/9] replay: allow runstate shutdown->running when
+ replaying trace
+Date: Mon, 26 Feb 2024 18:29:40 +1000
+Message-ID: <20240226082945.1452499-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240226082945.1452499-1-npiggin@gmail.com>
 References: <20240226082945.1452499-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,115 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration causes a number of events that need to go in the replay
-trace, such as vm state transitions. The replay_mutex lock needs to
-be held for these.
+When replaying a trace, it is possible to go from shutdown to running
+with a reverse-debugging step. This can be useful if the problem being
+debugged triggers a reset or shutdown.
 
-The simplest approach seems to be just take it up-front when taking
-the bql.
+This can be tested by making a recording of a machine that shuts down,
+then using -action shutdown=pause when replaying it. Continuing to the
+end of the trace then reverse-stepping in gdb crashes due to invalid
+runstate transition.
 
+Just permitting the transition seems to be all that's necessary for
+reverse-debugging to work well in such a state.
+
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- migration/migration.h |  2 --
- migration/migration.c | 11 ++++++++++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ include/sysemu/runstate.h |  1 +
+ replay/replay.c           |  2 ++
+ system/runstate.c         | 19 +++++++++++++++++++
+ 3 files changed, 22 insertions(+)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index f2c8b8f286..0621479a4e 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -543,6 +543,4 @@ int migration_rp_wait(MigrationState *s);
-  */
- void migration_rp_kick(MigrationState *s);
+diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+index 0117d243c4..fe25eed3c0 100644
+--- a/include/sysemu/runstate.h
++++ b/include/sysemu/runstate.h
+@@ -9,6 +9,7 @@ void runstate_set(RunState new_state);
+ RunState runstate_get(void);
+ bool runstate_is_running(void);
+ bool runstate_needs_reset(void);
++void runstate_replay_enable(void);
  
--int migration_stop_vm(RunState state);
--
- #endif
-diff --git a/migration/migration.c b/migration/migration.c
-index 2e794db75c..80a5ce17d1 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -24,6 +24,7 @@
- #include "socket.h"
- #include "sysemu/runstate.h"
- #include "sysemu/sysemu.h"
-+#include "sysemu/replay.h"
- #include "sysemu/cpu-throttle.h"
- #include "rdma.h"
- #include "ram.h"
-@@ -162,7 +163,7 @@ static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
-     return (a > b) - (a < b);
+ typedef void VMChangeStateHandler(void *opaque, bool running, RunState state);
+ 
+diff --git a/replay/replay.c b/replay/replay.c
+index 3fd241a4fc..2951eed3bd 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -383,6 +383,8 @@ static void replay_enable(const char *fname, int mode)
+         /* go to the beginning */
+         fseek(replay_file, HEADER_SIZE, SEEK_SET);
+         replay_fetch_data_kind();
++
++        runstate_replay_enable();
+     }
+ 
+     replay_init_events();
+diff --git a/system/runstate.c b/system/runstate.c
+index d6ab860eca..bd0fed8657 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -182,6 +182,12 @@ static const RunStateTransition runstate_transitions_def[] = {
+     { RUN_STATE__MAX, RUN_STATE__MAX },
+ };
+ 
++static const RunStateTransition replay_runstate_transitions_def[] = {
++    { RUN_STATE_SHUTDOWN, RUN_STATE_RUNNING},
++
++    { RUN_STATE__MAX, RUN_STATE__MAX },
++};
++
+ static bool runstate_valid_transitions[RUN_STATE__MAX][RUN_STATE__MAX];
+ 
+ bool runstate_check(RunState state)
+@@ -189,6 +195,19 @@ bool runstate_check(RunState state)
+     return current_run_state == state;
  }
  
--int migration_stop_vm(RunState state)
-+static int migration_stop_vm(RunState state)
++void runstate_replay_enable(void)
++{
++    const RunStateTransition *p;
++
++    assert(replay_mode == REPLAY_MODE_PLAY);
++
++    for (p = &replay_runstate_transitions_def[0]; p->from != RUN_STATE__MAX;
++         p++) {
++        runstate_valid_transitions[p->from][p->to] = true;
++    }
++
++}
++
+ static void runstate_init(void)
  {
-     int ret = vm_stop_force_state(state);
- 
-@@ -2433,6 +2434,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     }
- 
-     trace_postcopy_start();
-+    replay_mutex_lock();
-     bql_lock();
-     trace_postcopy_start_set_run();
- 
-@@ -2542,6 +2544,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     migration_downtime_end(ms);
- 
-     bql_unlock();
-+    replay_mutex_unlock();
- 
-     if (migrate_postcopy_ram()) {
-         /*
-@@ -2583,6 +2586,7 @@ fail:
-         }
-     }
-     bql_unlock();
-+    replay_mutex_unlock();
-     return -1;
- }
- 
-@@ -2634,6 +2638,7 @@ static int migration_completion_precopy(MigrationState *s,
- {
-     int ret;
- 
-+    replay_mutex_lock();
-     bql_lock();
-     migration_downtime_start(s);
- 
-@@ -2662,6 +2667,7 @@ static int migration_completion_precopy(MigrationState *s,
-                                              s->block_inactive);
- out_unlock:
-     bql_unlock();
-+    replay_mutex_unlock();
-     return ret;
- }
- 
-@@ -3485,6 +3491,7 @@ static void *bg_migration_thread(void *opaque)
-     trace_migration_thread_setup_complete();
-     migration_downtime_start(s);
- 
-+    replay_mutex_lock();
-     bql_lock();
- 
-     s->vm_old_state = runstate_get();
-@@ -3522,6 +3529,7 @@ static void *bg_migration_thread(void *opaque)
-      */
-     migration_bh_schedule(bg_migration_vm_start_bh, s);
-     bql_unlock();
-+    replay_mutex_unlock();
- 
-     while (migration_is_active(s)) {
-         MigIterateState iter_state = bg_migration_iteration_run(s);
-@@ -3551,6 +3559,7 @@ fail:
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-                 MIGRATION_STATUS_FAILED);
-         bql_unlock();
-+        replay_mutex_unlock();
-     }
- 
-     bg_migration_iteration_finish(s);
+     const RunStateTransition *p;
 -- 
 2.42.0
 
