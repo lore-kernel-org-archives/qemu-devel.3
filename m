@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04100C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 21:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0711FC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 21:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reiP7-0002Cd-Aa; Mon, 26 Feb 2024 16:20:53 -0500
+	id 1reiTU-0003zg-23; Mon, 26 Feb 2024 16:25:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aminier-21@enst.fr>)
- id 1reiP5-0002CA-71; Mon, 26 Feb 2024 16:20:51 -0500
-Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aminier-21@enst.fr>)
- id 1reiP3-0001TO-2Y; Mon, 26 Feb 2024 16:20:50 -0500
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 08F452055E;
- Mon, 26 Feb 2024 22:20:45 +0100 (CET)
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 9g5ojEoZDx7I; Mon, 26 Feb 2024 22:20:44 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 121F7205AE;
- Mon, 26 Feb 2024 22:20:44 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 121F7205AE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1708982444;
- bh=oDDqEa7TVP+PicOhICN0EDwccbVAw447PBX5Y4cT60Q=;
- h=Date:From:To:Message-ID:MIME-Version;
- b=2PRTloHwTiWaiIJh2GDwG6CRI0Bn1tL8bAYWr5eezuQcDDpGWO6KIuCvDEev1M9+d
- NoE+y3WmJUC+sEsM5drVMnC+7YiLCIAY0m+OhMXh8Hy/i+zRHKnWWcNq2k1hKkPWqp
- NVY0ppkc7rSwiuGT4gVFly6S8H4Khn84xtjgKyEQ=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id N-PxUIaM7lSc; Mon, 26 Feb 2024 22:20:43 +0100 (CET)
-Received: from zmail-tp1.enst.fr (zmail-tp1.enst.fr [137.194.2.198])
- by zproxy4.enst.fr (Postfix) with ESMTP id D41BC2055E;
- Mon, 26 Feb 2024 22:20:42 +0100 (CET)
-Date: Mon, 26 Feb 2024 22:20:42 +0100 (CET)
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, 
- =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>, 
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, 
- qemu-arm <qemu-arm@nongnu.org>, 
- Alistair Francis <alistair@alistair23.me>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <1283821622.11802412.1708982442539.JavaMail.zimbra@enst.fr>
-In-Reply-To: <CAFEAcA_B=soMv78uDsDv-F5-0XQWDXfUr-i0iTUJHr0=VHmvkA@mail.gmail.com>
-References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
- <20240219200908.49551-7-arnaud.minier@telecom-paris.fr>
- <CAFEAcA_B=soMv78uDsDv-F5-0XQWDXfUr-i0iTUJHr0=VHmvkA@mail.gmail.com>
-Subject: Re: [PATCH v5 6/8] Add write protections to CR register
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reiTN-0003z4-PP
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:25:18 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reiTF-0002Am-SD
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 16:25:17 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-56533e30887so3884279a12.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 13:25:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708982708; x=1709587508; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bQRQ0XH65pU8LNMR6pUZZg2xwkLvwO3/j0KVncA7cF0=;
+ b=fpbgbQEaU6CNF3v3Tp6dlk7NImhkSNC8oX+qA11zjDld0mvdIyoeMBet87n/KfYG1S
+ 7wzf4A9h1Q98XzrkBEllHd3mCm95s5oyS4py4dSh/IpxBwm8/8UtewfjTVv4klcK0kz3
+ 2q3GEZ8HWWE40QKbGbWCQYnQgNCILoF7eWBVqLA0ett9RvyvC6DEhJEU1RBZ4iDTplyP
+ Fw0fry2ho/UwLpmq+WdzxOSXbGs5Ow+AbsM2O24EaD+LojXZjppC04JFaWspH1uXEBXY
+ 0paWHJ4zTufMkKrfcjHQRymexKex56yFM9rK9hEp0rY/CTgyu1d33u1neKXC6kR3UvZR
+ 1GYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708982708; x=1709587508;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bQRQ0XH65pU8LNMR6pUZZg2xwkLvwO3/j0KVncA7cF0=;
+ b=Ly3Tc/rsUJvziZw/27S9l+RuxpmqQ/1yBC7t2tJe1mfU+tO0R5zrxKMW9IzgPP3p2h
+ UeQF4zaVZ+sMzrTMGL0gwWv2pOo8O5VhEcaalCjLRk62EaD0oNHhg5m64MPHnrVTFX44
+ gF6EKVnc12T5ndp1GXa7LtKlQBIC193TxLGefzBumoKW2MU3OtWJPteBhX336cy0lRBU
+ N7n4lm/pT0DFurXcvZlaj/A+AdrbLl+ExGefgD3EN2EySayUF8Q7HbbJnnbzT/1zFe4F
+ V7fDYD/kruEJssMtJ5v7JCI3xuRRgHUyydQFx0Xzn0Bl9qczoudcL+bM+CM6hZHZzsBJ
+ 2QHA==
+X-Gm-Message-State: AOJu0YwrGM0FQg++jY6upAYuqZS7FilsdX7/qyZX3xqP2BwBrRgthZL+
+ C6sT5lDxBXgtDKyNycgL+xcZ8Ysi9gi43cobpQp4RkfK5LI+z5fAMZnrJKohLX9zXd9QSGxlX++
+ pMVf71nTXMGVCwdNQSZQVMlIO/tZWptWHyQHvXA==
+X-Google-Smtp-Source: AGHT+IHpRO4A/Kw57w5STsE3Tv7+qBT5QthPXirZ29ieBxht7DLwiP5UZs2kRyE29ijPyV/mHgZcFh4U86EQVscW+4k=
+X-Received: by 2002:a05:6402:1c82:b0:565:9892:a74e with SMTP id
+ cy2-20020a0564021c8200b005659892a74emr4478196edb.21.1708982708180; Mon, 26
+ Feb 2024 13:25:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [::ffff:46.193.4.103]
-X-Mailer: Zimbra 9.0.0_GA_4583 (ZimbraWebClient - FF122 (Linux)/9.0.0_GA_4583)
-Thread-Topic: Add write protections to CR register
-Thread-Index: ZdboMa7kkJkgiid2tTp9Nf5KMlm69A==
-Received-SPF: pass client-ip=2001:660:330f:2::df;
- envelope-from=aminier-21@enst.fr; helo=zproxy4.enst.fr
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240219200908.49551-1-arnaud.minier@telecom-paris.fr>
+ <20240219200908.49551-2-arnaud.minier@telecom-paris.fr>
+ <CAFEAcA_LZ6oGj_y+_9zKDZNVSk8zOb4hQG+OKETXyE3-ezP_Rg@mail.gmail.com>
+ <1459219120.11729362.1708975293687.JavaMail.zimbra@enst.fr>
+In-Reply-To: <1459219120.11729362.1708975293687.JavaMail.zimbra@enst.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Feb 2024 21:24:56 +0000
+Message-ID: <CAFEAcA-BtQ2d+UE6menpHoBaEwe1gA_gN=fatoXg6MsBeRBQaw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/8] Implement STM32L4x5_RCC skeleton
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
+ qemu-arm <qemu-arm@nongnu.org>, 
+ Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,133 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thank you for the review and for the tips ! It really helps.
-I will address the problems you have highlighted and will send a new versio=
-n later this week.
+On Mon, 26 Feb 2024 at 19:21, Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
+> > From: "Peter Maydell"
+> >> +static const MemoryRegionOps stm32l4x5_rcc_ops = {
+> >> +    .read = stm32l4x5_rcc_read,
+> >> +    .write = stm32l4x5_rcc_write,
+> >> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> >> +    .valid = {
+> >> +        .max_access_size = 4,
+> >> +        .unaligned = false
+> >> +    },
+> >> +};
+> >
+> > What's the .valid.min_access_size ?
+> > Do we need to set the .impl max/min access size here too ?
+>
+> I honestly don't really understand the differences between .valid and .impl.
+> However, since all the code assumes that 4-byte accesses are made,
+> I think we can set all these values to 4 for now.
 
-Arnaud
+.valid is "what is the guest allowed to do?". If the guest tries
+something not permitted by the .valid settings, it gets a transaction
+failure instead, which then becomes a bus fault or whatever the
+architectural equivalent is.
 
------ Original Message -----
-> From: "Peter Maydell" <peter.maydell@linaro.org>
-> To: "Arnaud Minier" <arnaud.minier@telecom-paris.fr>
-> Cc: "qemu-devel" <qemu-devel@nongnu.org>, "Thomas Huth" <thuth@redhat.com=
->, "Laurent Vivier" <lvivier@redhat.com>, "In=C3=A8s
-> Varhol" <ines.varhol@telecom-paris.fr>, "Samuel Tardieu" <samuel.tardieu@=
-telecom-paris.fr>, "qemu-arm"
-> <qemu-arm@nongnu.org>, "Alistair Francis" <alistair@alistair23.me>, "Paol=
-o Bonzini" <pbonzini@redhat.com>
-> Sent: Friday, February 23, 2024 3:59:03 PM
-> Subject: Re: [PATCH v5 6/8] Add write protections to CR register
+.impl is "what does my device code implement?". If the guest tries
+something that is permitted by .valid but not within the bounds
+specified by .impl, the core memory subsystem will try to synthesise
+it (eg handling a guest word write by doing 4 byte writes to the
+device write function, if a 4-byte write is permitted by .valid
+but .impl only permits 1 byte writes).
 
-> On Mon, 19 Feb 2024 at 20:16, Arnaud Minier
-> <arnaud.minier@telecom-paris.fr> wrote:
->>
->> Add write protections for the fields in the CR register.
->> PLL configuration write protections (among others) have not
->> been handled yet. This is planned in a future patch set.
->=20
-> Can you make sure you include a suitable prefix (eg
-> "hw/misc/stm32l4x5_rcc: ") at the front of patch subjects, please?
-
-Sorry. This will be done for the next version.
-
->=20
->>
->> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
->> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
->> ---
->>  hw/misc/stm32l4x5_rcc.c | 164 ++++++++++++++++++++++++++++------------
->>  1 file changed, 114 insertions(+), 50 deletions(-)
->>
->> diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
->> index a3b192e61b..198c6238b6 100644
->> --- a/hw/misc/stm32l4x5_rcc.c
->> +++ b/hw/misc/stm32l4x5_rcc.c
->> @@ -346,9 +346,47 @@ static void rcc_update_irq(Stm32l4x5RccState *s)
->>      }
->>  }
->>
->> -static void rcc_update_cr_register(Stm32l4x5RccState *s)
->> +static void rcc_update_msi(Stm32l4x5RccState *s, uint32_t previous_valu=
-e)
->> +{
->> +    uint32_t val;
->> +
->> +    static const uint32_t msirange[] =3D {
->> +        100000, 200000, 400000, 800000, 1000000, 2000000,
->> +        4000000, 8000000, 16000000, 24000000, 32000000, 48000000
->> +    };
->> +    /* MSIRANGE and MSIRGSEL */
->> +    val =3D extract32(s->cr, R_CR_MSIRGSEL_SHIFT, R_CR_MSIRGSEL_LENGTH)=
-;
->=20
-> registerfields.h provides macros for "extract a named field", so you
-> can write this
->    val =3D FIELD_EX32(s->cr, CR, MSIRGSEL);
-
-It seems really convenient ! Will use them !
-
->=20
->> +    if (val) {
->> +        /* MSIRGSEL is set, use the MSIRANGE field */
->> +        val =3D extract32(s->cr, R_CR_MSIRANGE_SHIFT, R_CR_MSIRANGE_LEN=
-GTH);
->=20
-> and these as val =3D extract32(s->cr, CR, MSIRANGE)
-> and so on.
->=20
->> +    } else {
->> +        /* MSIRGSEL is not set, use the MSISRANGE field */
->> +        val =3D extract32(s->csr, R_CSR_MSISRANGE_SHIFT, R_CSR_MSISRANG=
-E_LENGTH);
->> +    }
->> +
->> +    if (val < ARRAY_SIZE(msirange)) {
->> +        clock_update_hz(s->msi_rc, msirange[val]);
->> +    } else {
->> +        /*
->> +         * There is a hardware write protection if the value is out of =
-bound.
->> +         * Restore the previous value.
->> +         */
->> +        s->cr =3D (s->cr & ~R_CSR_MSISRANGE_MASK) |
->> +                (previous_value & R_CSR_MSISRANGE_MASK);
->> +    }
->> +}
->> +
->=20
->> -    /* HSEON and update HSERDY */
->> +    /*
->> +     * HSEON and update HSERDY.
->> +     * HSEON cannot be reset if the HSE oscillator is used directly or
->> +     * indirectly as the system clock.
->> +     */
->>      val =3D extract32(s->cr, R_CR_HSEON_SHIFT, R_CR_HSEON_LENGTH);
->> -    s->cr =3D (s->cr & ~R_CR_HSERDY_MASK) |
->> -            (val << R_CR_HSERDY_SHIFT);
->> -    if (val) {
->> -        clock_update_hz(s->hse, s->hse_frequency);
->> -        if (s->cier & R_CIER_HSERDYIE_MASK) {
->> -            s->cifr |=3D R_CIFR_HSERDYF_MASK;
->> +    if (extract32(s->cfgr, R_CFGR_SWS_SHIFT, R_CFGR_SWS_LENGTH) !=3D 0b=
-10 &&
->> +        current_pll_src !=3D RCC_CLOCK_MUX_SRC_HSE) {
->> +        s->cr =3D (s->cr & ~R_CR_HSERDY_MASK) |
->> +                (val << R_CR_HSERDY_SHIFT);
->> +        if (val) {
->> +            clock_update_hz(s->hse, s->hse_frequency);
->> +            if (s->cier & R_CIER_HSERDYIE_MASK) {
->> +                s->cifr |=3D R_CIFR_HSERDYF_MASK;
->> +            }
->> +        } else {
->> +            clock_update_hz(s->hse, 0);
->=20
-> As I mentioned earlier, please avoid clock_update_hz() for
-> clock calculations if possible.
-
-This will be changed to use clock_update.
-
->=20
-> thanks
-> -- PMM
+thanks
+-- PMM
 
