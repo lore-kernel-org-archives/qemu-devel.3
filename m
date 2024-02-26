@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF43C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9542AC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rehD1-0007Gq-HD; Mon, 26 Feb 2024 15:04:19 -0500
+	id 1rehPq-0001bt-Jd; Mon, 26 Feb 2024 15:17:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rehCy-0007GV-EM; Mon, 26 Feb 2024 15:04:17 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rehCw-0005gz-FC; Mon, 26 Feb 2024 15:04:16 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9BD1F4E601E;
- Mon, 26 Feb 2024 21:04:08 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id wLBUWJt-thNp; Mon, 26 Feb 2024 21:04:06 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 9F81E4E6005; Mon, 26 Feb 2024 21:04:06 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9D6CA7456B4;
- Mon, 26 Feb 2024 21:04:06 +0100 (CET)
-Date: Mon, 26 Feb 2024 21:04:06 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, qemu-arm@nongnu.org, 
- kvm@vger.kernel.org, Igor Mitsyanko <i.mitsyanko@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 1/6] hw/arm: Inline sysbus_create_simple(PL110 / PL111)
-In-Reply-To: <c5d5f835-5b7f-46bb-8393-6d638cbad012@linaro.org>
-Message-ID: <14dc34ed-be4a-e3d1-dfae-95d141519d3f@eik.bme.hu>
-References: <20240216153517.49422-1-philmd@linaro.org>
- <20240216153517.49422-2-philmd@linaro.org>
- <bcfd3f9d-04e3-79c9-c15f-c3c8d7669bdb@eik.bme.hu>
- <2f8ec2e2-c4c7-48c3-9c3d-3e20bc3d6b9b@linaro.org>
- <b40fd79f-4d41-4e04-90c1-6f4b2fde811d@linaro.org>
- <00e2b898-3c5f-d19c-fddc-e657306e071f@eik.bme.hu>
- <2b9ea923-c4f9-4ee4-8ed2-ba9f62c15579@linaro.org>
- <6b5758d6-f464-2461-f9dd-71d2e15b610a@eik.bme.hu>
- <bc5929e4-1782-4719-8231-fe04a9719c40@ilande.co.uk>
- <CAFEAcA-Mvd4NVY2yDgNEdjZ_YPrN93PDZRyfCi7JyCjmPs4gAQ@mail.gmail.com>
- <0a31f410-415d-474b-bcea-9cb18f41aeb2@ilande.co.uk>
- <9ef2075b-b26b-41d2-a7d0-456cec3b104a@eik.bme.hu>
- <c5d5f835-5b7f-46bb-8393-6d638cbad012@linaro.org>
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1rehPo-0001bE-Vw
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:33 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1rehPn-0007zS-2X
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:32 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3bbbc6bcc78so2686305b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 12:17:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708978648; x=1709583448; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=34hyOq9fT2wY/9uJL975rSySKZ4ZdVHzRHf6WhirkXw=;
+ b=CYbgfOBa374bDvWsey0snO37YHu/6zF5sC2oeVjXU+G/McgbCueSFd7g73DxBQqR94
+ UI9Wkk+3tfE2g9vdR96nW6a4nXSMdcZwswTpzQ8JylO6i8Oa0Erdf+gzuG1s4rKwo4ab
+ TBpqXrrNeKFKGBamVR15oZkV6bQryQomnl0xWPCZd3jUpEKG5wVVDjfCp42P8JPGbvMc
+ nGpD4N2JKPqSgeoopwbU8Z4/gmRdGjeTb9GFD5UKLOiZwgLiFYCKXSW+ClcryL8kjADI
+ 8j88n3JGJndH/inHk1+cdzwHxlRO9yb10RgsYZqBvHdNnXHnjrqxWQbBXraXxQNo1D6i
+ 6d2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708978648; x=1709583448;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=34hyOq9fT2wY/9uJL975rSySKZ4ZdVHzRHf6WhirkXw=;
+ b=OKlfnp4yOGxivsWHz7/D67ppJQUWXWCDRJhE5WIpL+QnZltqJHLaFAV+ZwCmyXwEIj
+ 3drtPSMbCvgV6ILZ41+wOkYhWpm2BfR7ocdWpcuMvJnJC2gUQi4hnUtSEbB4IDnXDVQv
+ qa8QDjMFvjYTXQlHGeTVHeqqZw+tZa6u9wspCsY8+laj2R4SEPNY29U7+0l+1wJ7dYAQ
+ qZ52cZf8q3oXw4CnOBN8PiTNZysZw1iDFa7TmXITs7NFQ0fraNioWrOkpk2O4XBD/6Pc
+ //bLYhIc3t6+BcaE4/bZqdbh8WcQ5Y1MwiGkcWW5ZyxvuVyi7wQK/Qzf4muq5BsgeZnB
+ SGFw==
+X-Gm-Message-State: AOJu0Yw/kF/+8H9a/emgipfI8EADYg06cC7n/yhXKt9aB8AllM5dDEZt
+ czEURhbq0Pljt8ri5SZ6EvJOWdG3a+5a5/ZSzvvlBQyoMXSdRX5X3bfnI41Rq5c=
+X-Google-Smtp-Source: AGHT+IFMnfcuz/BXJtpbev/b7IA7y65QBd6hv40SImK1PfsehBx87OTUNsQ85p/oxW3H9HrvbTYHhQ==
+X-Received: by 2002:a05:6808:11c1:b0:3c1:78b0:9ce1 with SMTP id
+ p1-20020a05680811c100b003c178b09ce1mr264941oiv.13.1708978648442; 
+ Mon, 26 Feb 2024 12:17:28 -0800 (PST)
+Received: from taylor-ubuntu.austin.rr.com (068-203-008-061.res.spectrum.com.
+ [68.203.8.61]) by smtp.gmail.com with ESMTPSA id
+ by11-20020a056808340b00b003c1a4a9ad17sm330594oib.46.2024.02.26.12.17.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Feb 2024 12:17:27 -0800 (PST)
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
+ quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
+ ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
+Subject: [PATCH 2/9] Hexagon (target/hexagon) Mark new_read_idx in trans
+ functions
+Date: Mon, 26 Feb 2024 13:17:15 -0700
+Message-Id: <20240226201722.391879-3-ltaylorsimpson@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
+References: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-2026228376-1708977846=:54539"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,96 +97,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Check that the value matches opcode_reginfo
 
---3866299591-2026228376-1708977846=:54539
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+ target/hexagon/insn.h                   |  3 ++-
+ target/hexagon/decode.c                 |  2 ++
+ target/hexagon/mmvec/decode_ext_mmvec.c |  2 ++
+ target/hexagon/gen_trans_funcs.py       | 15 ++++++++++-----
+ 4 files changed, 16 insertions(+), 6 deletions(-)
 
-On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
-> On 19/2/24 15:05, BALATON Zoltan wrote:
->> On Mon, 19 Feb 2024, Mark Cave-Ayland wrote:
->>> On 19/02/2024 13:05, Peter Maydell wrote:
->>>> On Mon, 19 Feb 2024 at 12:49, Mark Cave-Ayland
->>>> <mark.cave-ayland@ilande.co.uk> wrote:
->>>>> 
->>>>> On 19/02/2024 12:00, BALATON Zoltan wrote:
->>>>>> For new people trying to contribute to QEMU QDev is overwhelming so 
->>>>>> having some way
->>>>>> to need less of it to do simple things would help them to get started.
->>>>> 
->>>>> It depends what how you define "simple": for QEMU developers most people 
->>>>> search for
->>>>> similar examples in the codebase and copy/paste them. I'd much rather 
->>>>> have a slightly
->>>>> longer, but consistent API for setting properties rather than coming up 
->>>>> with many
->>>>> special case wrappers that need to be maintained just to keep the line 
->>>>> count down for
->>>>> "simplicity".
->>>>> 
->>>>> I think that Phil's approach here is the best one for now, particularly 
->>>>> given that it
->>>>> allows us to take another step towards heterogeneous machines. As the 
->>>>> work in this
->>>>> area matures it might be that we can consider other approaches, but 
->>>>> that's not a
->>>>> decision that can be made right now and so shouldn't be a reason to 
->>>>> block this change.
->>>> 
->>>> Mmm. It's unfortunate that we're working with C, so we're a bit limited
->>>> in what tools we have to try to make a better and lower-boilerplate
->>>> interface for the "create, configure, realize and wire up devices" task.
->>>> (I think you could do much better in a higher level language...)
->>>> sysbus_create_simple() was handy at the time, but it doesn't work so
->>>> well for more complicated SoC-based boards. It's noticeable that
->>>> if you look at the code that uses it, it's almost entirely the older
->>>> and less maintained board models, especially those which don't actually
->>>> model an SoC and just have the board code create all the devices.
->>> 
->>> Yeah I was thinking that you'd use the DSL (e.g. YAML templates or 
->>> similar) to provide some of the boilerplating around common actions, 
->>> rather than the C API itself. Even better, once everything has been moved 
->>> to use a DSL then the C API shouldn't really matter so much as it is no 
->>> longer directly exposed to the user.
->> 
->> That may be a few more releases away (although Philippe is doing an 
->> excellent job with doing this all alone and as efficient as he is it might 
->> be reached sooner). So I think board code will stay for a while therefore 
->> if something can be done to keep it simple with not much work then maybe 
->> that's worth considering. That's why I did not propose to keep 
->> sysbus_create_simple and add properties to it because that might need 
->> something like a properties array with values that's hard to describe in C 
->> so it would be a bit more involved to implement and defining such arrays 
->> would only make it a litle less cluttered. So just keeping the parts that 
->> work for simple devices in sysbus_realize_simple and also keep 
->> sysbus_create_simple where it's already used is probably enough now rather 
->> than converting those to low level calls everywhere now.
->> 
->> Then we'll see how well the declarative machines will turn out and then if 
->> we no longer need to write board code these wrappers could go away then but 
->> for now it may be too early when we still have a lot of board code to 
->> maintain.
->
-> I'll keep forward with this patch inlining sysbus_create_simple();
-> if we notice in few releases the DSL experiment is a failure, I don't
-> mind going back reverting it.
+diff --git a/target/hexagon/insn.h b/target/hexagon/insn.h
+index 3e7a22c91e..36502bf056 100644
+--- a/target/hexagon/insn.h
++++ b/target/hexagon/insn.h
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright(c) 2019-2022 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -39,6 +39,7 @@ struct Instruction {
+     uint32_t slot:3;
+     uint32_t which_extended:1;    /* If has an extender, which immediate */
+     uint32_t new_value_producer_slot:4;
++    int32_t new_read_idx;
+ 
+     bool part1;              /*
+                               * cmp-jumps are split into two insns.
+diff --git a/target/hexagon/decode.c b/target/hexagon/decode.c
+index a40210ca1e..4595e30384 100644
+--- a/target/hexagon/decode.c
++++ b/target/hexagon/decode.c
+@@ -131,6 +131,8 @@ decode_fill_newvalue_regno(Packet *packet)
+                 use_regidx = strchr(opcode_reginfo[use_opcode], 's') -
+                     opcode_reginfo[use_opcode];
+             }
++            g_assert(packet->insn[i].new_read_idx != -1 &&
++                     packet->insn[i].new_read_idx == use_regidx);
+ 
+             /*
+              * What's encoded at the N-field is the offset to who's producing
+diff --git a/target/hexagon/mmvec/decode_ext_mmvec.c b/target/hexagon/mmvec/decode_ext_mmvec.c
+index 202d84c7c0..e9007f5d71 100644
+--- a/target/hexagon/mmvec/decode_ext_mmvec.c
++++ b/target/hexagon/mmvec/decode_ext_mmvec.c
+@@ -41,6 +41,8 @@ check_new_value(Packet *pkt)
+             GET_ATTRIB(use_opcode, A_STORE)) {
+             int use_regidx = strchr(opcode_reginfo[use_opcode], 's') -
+                 opcode_reginfo[use_opcode];
++            g_assert(pkt->insn[i].new_read_idx != -1 &&
++                     pkt->insn[i].new_read_idx == use_regidx);
+             /*
+              * What's encoded at the N-field is the offset to who's producing
+              * the value.
+diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
+index 53e844a44b..79475b2946 100755
+--- a/target/hexagon/gen_trans_funcs.py
++++ b/target/hexagon/gen_trans_funcs.py
+@@ -84,14 +84,15 @@ def gen_trans_funcs(f):
+                 insn->opcode = {tag};
+         """))
+ 
+-        regno = 0
+-        for reg in regs:
+-            reg_type = reg[0]
+-            reg_id = reg[1]
++        new_read_idx = -1
++        for regno, regstruct in enumerate(regs):
++            reg_type, reg_id, _, _ = regstruct
++            reg = hex_common.get_register(tag, reg_type, reg_id)
+             f.write(code_fmt(f"""\
+                 insn->regno[{regno}] = args->{reg_type}{reg_id};
+             """))
+-            regno += 1
++            if reg.is_read() and reg.is_new():
++                new_read_idx = regno
+ 
+         if len(imms) != 0:
+             mark_which_imm_extended(f, tag)
+@@ -112,6 +113,9 @@ def gen_trans_funcs(f):
+                     insn->immed[{immno}] = args->{imm_type}{imm_letter};
+                 """))
+ 
++        f.write(code_fmt(f"""\
++            insn->new_read_idx = {new_read_idx};
++        """))
+         f.write(textwrap.dedent(f"""\
+                 return true;
+             {close_curly}
+@@ -120,5 +124,6 @@ def gen_trans_funcs(f):
+ 
+ if __name__ == "__main__":
+     hex_common.read_semantics_file(sys.argv[1])
++    hex_common.init_registers()
+     with open(sys.argv[2], "w") as f:
+         gen_trans_funcs(f)
+-- 
+2.34.1
 
-I'm OK with that. Just thought that keeping a sysbus_realize_simple 
-function that's the same as sysbus_create simple minus creating the device 
-would not be a big change and cause less churn. But if you plan te remove 
-this completely in near future so another API would be needed anyway then 
-maybe not worth keeping it. Having only low level functions to create and 
-wire devices seems impractical for writing boeards in C so eventually some 
-replacement will be needed. I doubt every board can be quickly converted 
-to a new declarative way soon but you can prove me wrong. If this helps 
-you to progress to that direction then I'm not attached to it to much but 
-would like to keep some simplicity in board code wherever possible as it's 
-already quite complex to do simple things with low level APIs so I'd 
-prefer if convenience APIs don't go away.
-
-Regards,
-BALATON Zoltan
---3866299591-2026228376-1708977846=:54539--
 
