@@ -4,69 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58136C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF60C54E4A
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 15:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1red5r-0003PY-B5; Mon, 26 Feb 2024 10:40:39 -0500
+	id 1red5a-0003MJ-Uu; Mon, 26 Feb 2024 10:40:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1red5n-0003Oo-Dn
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 10:40:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1red5Y-0003La-5L; Mon, 26 Feb 2024 10:40:20 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1red5l-0001YZ-1B
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 10:40:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708962030;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=7sANzpOKMUdm/hUnGoCcXTJ/dW4aA8xUIbcpLqiUuPQ=;
- b=TEIKKvGodinL5vZAvQkcew/+sZc9+xD8sX5DQNPIH/jgdDxmlC1x8NCgYKysGTh4rknh2m
- F3jMASM5mE7q7eGfGl9TZfeUEmpvbyMNVa/CgIq9tfqcGOz2/BfyKwo9VUplT7ZuPJdpwU
- C2powcO84NtIzcrnbSuXTRIb3+ZLwsM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-jYgZNZNcM6msOloaKErZQQ-1; Mon, 26 Feb 2024 10:40:29 -0500
-X-MC-Unique: jYgZNZNcM6msOloaKErZQQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C401D881C80;
- Mon, 26 Feb 2024 15:40:28 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id DF66C2166B5D;
- Mon, 26 Feb 2024 15:40:27 +0000 (UTC)
-Date: Mon, 26 Feb 2024 15:40:25 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 04/28] qemu-img: global option processing and error
- printing
-Message-ID: <Zdyw6Z1a8r8atJqi@redhat.com>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
- <20240221211622.2335170-4-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1red5S-0001ES-3m; Mon, 26 Feb 2024 10:40:18 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tk4Sg116Hz6K6VK;
+ Mon, 26 Feb 2024 23:35:31 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 1708B140A08;
+ Mon, 26 Feb 2024 23:39:50 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 26 Feb
+ 2024 15:39:49 +0000
+Date: Mon, 26 Feb 2024 15:39:47 +0000
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+CC: "Daniel P . =?ISO-8859-1?Q?Berrang=E9?=" <berrange@redhat.com>, "Eduardo
+ Habkost" <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, "Michael S .
+ Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>, "Sia Jee Heng" <jeeheng.sia@starfivetech.com>,
+ <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, <qemu-riscv@nongnu.org>,
+ <qemu-arm@nongnu.org>, "Zhenyu Wang" <zhenyu.z.wang@intel.com>, Dapeng Mi
+ <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [RFC 4/8] hw/core: Add cache topology options in -smp
+Message-ID: <20240226153947.00006fd6@Huawei.com>
+In-Reply-To: <20240220092504.726064-5-zhao1.liu@linux.intel.com>
+References: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
+ <20240220092504.726064-5-zhao1.liu@linux.intel.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240221211622.2335170-4-mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,109 +76,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 12:15:45AM +0300, Michael Tokarev wrote:
-> In order to correctly print executable name in various
-> error messages, pass argv[0] to error_exit() function.
-> This way, error messages will refer to actual executable
-> name, which may be different from 'qemu-img'.
+On Tue, 20 Feb 2024 17:25:00 +0800
+Zhao Liu <zhao1.liu@linux.intel.com> wrote:
+
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> For subcommands, pass whole argv[] array, so argv[0] is
-> the executable name, not subcommand name.  In order to
-> do that, avoid resetting optind but continue with the
-> next option.  Also don't require at least 3 options on
-> the command line: it makes no sense with options before
-> subcommand.
+> Add "l1d-cache", "l1i-cache". "l2-cache", and "l3-cache" options in
+> -smp to define the cache topology for SMP system.
 > 
-> Before invoking a subcommand, replace argv[0] to include
-> the subcommand name.
-> 
-> Introduce tryhelp() function which just prints
-> 
->  try 'command-name --help' for more info
-> 
-> and exits.  When tryhelp() is called from within a subcommand
-> handler, the message will look like:
-> 
->  try 'command-name subcommand --help' for more info
-> 
-> qemu-img uses getopt_long() with ':' as the first char in
-> optstring parameter, which means it doesn't print error
-> messages but return ':' or '?' instead, and qemu-img uses
-> unrecognized_option() or missing_argument() function to
-> print error messages.  But it doesn't quite work:
-> 
->  $ ./qemu-img -xx
->  qemu-img: unrecognized option './qemu-img'
-> 
-> so the aim is to let getopt_long() to print regular error
-> messages instead (removing ':' prefix from optstring) and
-> remove handling of '?' and ':' "options" entirely.  With
-> concatenated argv[0] and the subcommand, it all finally
-> does the right thing in all cases.  This will be done in
-> subsequent changes command by command, with main() done
-> last.
-> 
-> unrecognized_option() and missing_argument() functions
-> prototypes aren't changed by this patch, since they're
-> called from many places and will be removed a few patches
-> later.  Only artifical "qemu-img" argv0 is provided in
-> there for now.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Hi Zhao Liu
+
+I like the scheme.  Strikes a good balance between complexity of description
+and systems that actually exist. Sure there are systems with more cache
+levels etc but they are rare and support can be easily added later
+if people want to model them.
+
+A few minor comments inline.
+
+Jonathan
 > ---
->  qemu-img.c | 75 +++++++++++++++++++++++++++---------------------------
->  1 file changed, 38 insertions(+), 37 deletions(-)
+>  hw/core/machine-smp.c | 128 ++++++++++++++++++++++++++++++++++++++++++
+>  hw/core/machine.c     |   4 ++
+>  qapi/machine.json     |  14 ++++-
+>  system/vl.c           |  15 +++++
+>  4 files changed, 160 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+> index 8a8296b0d05b..2cbd19f4aa57 100644
+> --- a/hw/core/machine-smp.c
+> +++ b/hw/core/machine-smp.c
+> @@ -61,6 +61,132 @@ static char *cpu_hierarchy_to_string(MachineState *ms)
+>      return g_string_free(s, false);
+>  }
+>  
+> +static bool machine_check_topo_support(MachineState *ms,
+> +                                       CPUTopoLevel topo)
+> +{
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+> +
+> +    if (topo == CPU_TOPO_LEVEL_MODULE && !mc->smp_props.modules_supported) {
+> +        return false;
+> +    }
+> +
+> +    if (topo == CPU_TOPO_LEVEL_CLUSTER && !mc->smp_props.clusters_supported) {
+> +        return false;
+> +    }
+> +
+> +    if (topo == CPU_TOPO_LEVEL_DIE && !mc->smp_props.dies_supported) {
+> +        return false;
+> +    }
+> +
+> +    if (topo == CPU_TOPO_LEVEL_BOOK && !mc->smp_props.books_supported) {
+> +        return false;
+> +    }
+> +
+> +    if (topo == CPU_TOPO_LEVEL_DRAWER && !mc->smp_props.drawers_supported) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static int smp_cache_string_to_topology(MachineState *ms,
 
-I'm not sure how, but this change seems to have broken the iotests.
-Just one example:
+Not a good name for a function that does rather more than that.
 
-$ (cd  tests/qemu-iotests/ && ./check -qcow2 249)
-QEMU          -- "/var/home/berrange/src/virt/qemu/build/qemu-system-x86_64" -nodefaults -display none -accel qtest
-QEMU_IMG      -- "/var/home/berrange/src/virt/qemu/build/qemu-img" 
-QEMU_IO       -- "/var/home/berrange/src/virt/qemu/build/qemu-io" --cache writeback --aio threads -f qcow2
-QEMU_NBD      -- "/var/home/berrange/src/virt/qemu/build/qemu-nbd" 
-IMGFMT        -- qcow2
-IMGPROTO      -- file
-PLATFORM      -- Linux/x86_64 toolbox 6.6.12-200.fc39.x86_64
-TEST_DIR      -- /var/home/berrange/src/virt/qemu/build/tests/qemu-iotests/scratch
-SOCK_DIR      -- /tmp/qemu-iotests-0t8h94bu
-GDB_OPTIONS   -- 
-VALGRIND_QEMU -- 
-PRINT_QEMU_OUTPUT -- 
+> +                                        char *topo_str,
+> +                                        CPUTopoLevel *topo,
+> +                                        Error **errp)
+> +{
+> +    *topo = string_to_cpu_topo(topo_str);
+> +
+> +    if (*topo == CPU_TOPO_LEVEL_MAX || *topo == CPU_TOPO_LEVEL_INVALID) {
+> +        error_setg(errp, "Invalid cache topology level: %s. The cache "
+> +                   "topology should match the CPU topology level", topo_str);
+> +        return -1;
+> +    }
+> +
+> +    if (!machine_check_topo_support(ms, *topo)) {
+> +        error_setg(errp, "Invalid cache topology level: %s. The topology "
+> +                   "level is not supported by this machine", topo_str);
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static void machine_parse_smp_cache_config(MachineState *ms,
+> +                                           const SMPConfiguration *config,
+> +                                           Error **errp)
+> +{
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+> +
+> +    if (config->l1d_cache) {
+> +        if (!mc->smp_props.l1_separated_cache_supported) {
+> +            error_setg(errp, "L1 D-cache topology not "
+> +                       "supported by this machine");
+> +            return;
+> +        }
+> +
+> +        if (smp_cache_string_to_topology(ms, config->l1d_cache,
+> +            &ms->smp_cache.l1d, errp)) {
 
-249   fail       [15:39:25] [15:39:25]   0.2s   (last: 0.4s)  failed, exit status 1
---- /var/home/berrange/src/virt/qemu/tests/qemu-iotests/249.out
-+++ /var/home/berrange/src/virt/qemu/build/tests/qemu-iotests/scratch/qcow2-file-249/249.out.bad
-@@ -1,47 +1,7 @@
- QA output created by 249
- Formatting 'TEST_DIR/t.IMGFMT.base', fmt=IMGFMT size=1048576
--Formatting 'TEST_DIR/t.IMGFMT.int', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=IMGFMT
--Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.IMGFMT.int backing_fmt=IMGFMT
--{ 'execute': 'qmp_capabilities' }
--{"return": {}}
-
-...snip....
-
--*** done
-+qemu-img: Invalid image size specified. You may use k, M, G, T, P or E suffixes for
-+qemu-img: kilobytes, megabytes, gigabytes, terabytes, petabytes and exabytes.
-+qemu-img: Invalid image size specified. You may use k, M, G, T, P or E suffixes for
-+qemu-img: kilobytes, megabytes, gigabytes, terabytes, petabytes and exabytes.
-+Timeout waiting for capabilities on handle 0
-Failures: 249
-Failed 1 of 1 iotests
+Indent is to wrong opening bracket.
+Same for other cases.
 
 
+> +            return;
+> +        }
+> +    }
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +}
+> +
+>  /*
+>   * machine_parse_smp_config: Generic function used to parse the given
+>   *                           SMP configuration
+> @@ -249,6 +375,8 @@ void machine_parse_smp_config(MachineState *ms,
+>                     mc->name, mc->max_cpus);
+>          return;
+>      }
+> +
+> +    machine_parse_smp_cache_config(ms, config, errp);
+>  }
+>  
+>  unsigned int machine_topo_get_cores_per_socket(const MachineState *ms)
 
 
