@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEFCCC54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 00:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C9AC47DD9
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 00:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reOT2-0006nA-8Y; Sun, 25 Feb 2024 19:03:36 -0500
+	id 1reOSx-0006iR-CA; Sun, 25 Feb 2024 19:03:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1reOSu-0006gl-Cr; Sun, 25 Feb 2024 19:03:29 -0500
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1reOSp-0006c2-9b; Sun, 25 Feb 2024 19:03:23 -0500
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <serg.oker@gmail.com>)
- id 1reOSs-0000PK-Tl; Sun, 25 Feb 2024 19:03:28 -0500
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-607e60d01b2so10517567b3.1; 
- Sun, 25 Feb 2024 16:03:26 -0800 (PST)
+ id 1reOSm-0000LW-8J; Sun, 25 Feb 2024 19:03:22 -0500
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-6087192b092so27904167b3.0; 
+ Sun, 25 Feb 2024 16:03:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708905804; x=1709510604; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708905797; x=1709510597; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u5a2w/rK6Bkb8GbGdExqQD2sclDIKNcGfVOyOWOm/V4=;
- b=J/GVaXz0ZMiAKq608z/juXWZk8GFH+Xiv4S+lG+T/0Y11JBicP0VNDZ9GrVgZYCo+8
- kYYr25IMOTgPLf+WnVn8lfrtFaR2lxnEXQQujU8+hfo+gRzVT3frrOrUbRo9oVPDmAB5
- W8IKlA7/HEPsFOxjOnqVcRgvClBqaWCYt0UTbsc8Cp70IxSqIdHolo2Bf5FxxfoV5mkc
- 2lL7uUq9P8IIFboREn3ZCsV1SsVxXk5xDGEzEEcQu82WpBWsm8sUydI75p5xzk1gfiAl
- js6u2p4/hNLW+YZoW96HJ4Uc5m49oiWoWOzFB3YhoijJT/gcU0r+7YFgduz4C5S/JR2O
- YI6A==
+ bh=Sdj2LKjTWfRffh840NVkRHn4jF2vWhTAo+Ql2VJiLDU=;
+ b=kEHGShQHlfoUMJieCpCBr/0R9Ydm+gCDUpzWasJQGVgCooNZNQRaJQS1Ro2Nd6cZin
+ 39Ea7ZVKRlTMFiMQ5O8Wcd5s/HGjcsJr7+u7JnxQOJ32SJgxkCifp0R9mgInfyJfx7Hn
+ yJJ5xMN0F5qcp6rgBJiB33c87kmbxtLG1dF/VXVA0QPybiTeFrpVnTOhC8kcO+ZueXKb
+ L7L6rpZkdzwhPaDg7/ih4aYdCporTK0+A+4WfaFiqGz6OUjrhD4eJVYMGv+F680PdlPO
+ XdfarBwPADdMuNnLBWm9Y36y1jsFZ5WGwBALQXSXGgFV+4ukcgcICc07nXK59Hf65or0
+ s0nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708905804; x=1709510604;
+ d=1e100.net; s=20230601; t=1708905797; x=1709510597;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u5a2w/rK6Bkb8GbGdExqQD2sclDIKNcGfVOyOWOm/V4=;
- b=ASuoMD53E/Ji+UKy7e10/h5jDILhVi7Gv2PmGdAGleeves2p87pqM5UhivVQ2nSjLm
- rhbct0q4TaA0cOcMvv+22XaDslQSWH1n5kErI0hFOBW3kS3oAwSo/9RLEJKCbK+mmSxw
- wKkawizQWi0U7C2BuRQHGiSgJuU/vX8x6J8A437ssvanjjbp4k79kPKfD3CI+44sBK1Y
- z7E087QU22FeyUhtxlfjCoByJtiLhuhOwVmZn3kOv8F7kA6n2bC9tJloTa5GqwHi2HIb
- fzMovvhboosWMNFVdvgT37I96ThxwuYFY5b5xBBL8uvOwqB79ruOzT83GPShjCnd2D4H
- DqHQ==
-X-Gm-Message-State: AOJu0YxRxqbdMquzVSKLOZgscEBa/o7aO83NOeqr5vkfW9w+GCU3TrC6
- OEEisJRtqoaDxLKJ+Klbz/gFf7HjUQPbQdZnn096GOekfRkjgNmjYgvKQs/OXOC8Kg==
-X-Google-Smtp-Source: AGHT+IFHryWgVKT6KVjryIumMj81xR2SzF5JXniiV7EA1DBCG0jQo/QGdnJPu3Q8pG1jGGschG0/WQ==
-X-Received: by 2002:a05:690c:80d:b0:5ff:aa34:7c5f with SMTP id
- bx13-20020a05690c080d00b005ffaa347c5fmr3388368ywb.46.1708905804275; 
- Sun, 25 Feb 2024 16:03:24 -0800 (PST)
+ bh=Sdj2LKjTWfRffh840NVkRHn4jF2vWhTAo+Ql2VJiLDU=;
+ b=Veym9yU0yiKxrgKHfRGkAuGTBATZkz7IqIiqf42hiLDQRhRbYN4bJQduHvxZWRJoFm
+ vj+UVHDZL6uTvHtkpXfezfnTCjuzXC/U+dO28fXQ+LQcF60nuPCdnPalxBspB34qrMr1
+ zxHKKruV/zvEaAbNdwZUmh6TYuuWrcFOQmfjRCHKUbbYFUQIG2ZXT87pdA2Z51nFhHIO
+ 6+BtjpvdsFXbIsS1eAzIo5VNzHojVbdQIJf4WPvQAgZFKXn/2eSQ9Zz86YI3quqr3s0v
+ HxDMd3xOrJjcZ4ea9jmLqOwCn3FMV6YxbVH0HFHCkiQs/JzsNjC5Ejc4E5TVTDcwFngi
+ 13mQ==
+X-Gm-Message-State: AOJu0YxUCwwwwYsNNm8RHPS4AoJhyWczK9Lcel/co0R1g5S8A3B/pf4Q
+ YdNO7dQiRp1SRKKJFWcKuqBUOGd/erOMYMGYNup6clpVpm7i5fWs5KBoEkKVi+33Yw==
+X-Google-Smtp-Source: AGHT+IEt133fqQ4W6Izbw1Fkc8sszhBgBVRP2XNwCm2OX6PG1gAgN98PETat94c0nig5sEnSY/HSLA==
+X-Received: by 2002:a81:e701:0:b0:608:42ac:1116 with SMTP id
+ x1-20020a81e701000000b0060842ac1116mr5000259ywl.29.1708905797694; 
+ Sun, 25 Feb 2024 16:03:17 -0800 (PST)
 Received: from localhost.localdomain ([201.203.117.224])
  by smtp.gmail.com with ESMTPSA id
- t18-20020a818312000000b00607bfa1913csm938171ywf.114.2024.02.25.16.03.23
+ t18-20020a818312000000b00607bfa1913csm938171ywf.114.2024.02.25.16.03.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Feb 2024 16:03:23 -0800 (PST)
+ Sun, 25 Feb 2024 16:03:17 -0800 (PST)
 From: Sergey Kambalin <serg.oker@gmail.com>
 X-Google-Original-From: Sergey Kambalin <sergey.kambalin@auriga.com>
 To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org,
-	Sergey Kambalin <sergey.kambalin@auriga.com>
-Subject: [PATCH v6 18/41] Add clock_isp stub
-Date: Sun, 25 Feb 2024 18:02:36 -0600
-Message-Id: <20240226000259.2752893-19-sergey.kambalin@auriga.com>
+Cc: qemu-devel@nongnu.org, Sergey Kambalin <sergey.kambalin@auriga.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v6 12/41] Add memory region for BCM2837 RPiVid ASB
+Date: Sun, 25 Feb 2024 18:02:30 -0600
+Message-Id: <20240226000259.2752893-13-sergey.kambalin@auriga.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
 References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=serg.oker@gmail.com; helo=mail-yw1-x1133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=serg.oker@gmail.com; helo=mail-yw1-x1129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,47 +94,53 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/bcm2838_peripherals.c         | 6 ++++++
- include/hw/arm/bcm2838_peripherals.h | 1 +
- 2 files changed, 7 insertions(+)
+ hw/arm/bcm2838_peripherals.c         | 3 +++
+ include/hw/arm/bcm2838_peripherals.h | 2 ++
+ include/hw/arm/raspi_platform.h      | 2 +-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
-index 6badda3045..1f41028649 100644
+index 55ae56733f..ca2f37b260 100644
 --- a/hw/arm/bcm2838_peripherals.c
 +++ b/hw/arm/bcm2838_peripherals.c
-@@ -17,6 +17,9 @@
- #define PCIE_MMIO_ARM_OFFSET    0x600000000
- #define PCIE_MMIO_SIZE          0x40000000
+@@ -185,6 +185,9 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
+         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gpio), 0));
  
-+#define CLOCK_ISP_OFFSET        0xc11000
-+#define CLOCK_ISP_SIZE          0x100
+     object_property_add_alias(OBJECT(s), "sd-bus", OBJECT(&s->gpio), "sd-bus");
 +
- /* Lower peripheral base address on the VC (GPU) system bus */
- #define BCM2838_VC_PERI_LOW_BASE 0x7c000000
++    /* BCM2838 RPiVid ASB must be mapped to prevent kernel crash */
++    create_unimp(s_base, &s->asb, "bcm2838-asb", BRDG_OFFSET, 0x24);
+ }
  
-@@ -228,6 +231,9 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(), PCIE_MMIO_ARM_OFFSET,
-                                 mmio_mr);
- 
-+    create_unimp(s_base, &s->clkisp, "bcm2835-clkisp", CLOCK_ISP_OFFSET,
-+                 CLOCK_ISP_SIZE);
-+
-     /* GPIO */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-         return;
+ static void bcm2838_peripherals_class_init(ObjectClass *oc, void *data)
 diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index 49bb4fab08..adc02894c1 100644
+index 86b0d96944..af085934c9 100644
 --- a/include/hw/arm/bcm2838_peripherals.h
 +++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -77,6 +77,7 @@ struct BCM2838PeripheralState {
+@@ -69,6 +69,8 @@ struct BCM2838PeripheralState {
+     OrIRQState mmc_irq_orgate;
+     OrIRQState dma_7_8_irq_orgate;
      OrIRQState dma_9_10_irq_orgate;
- 
-     UnimplementedDeviceState asb;
-+    UnimplementedDeviceState clkisp;
++
++    UnimplementedDeviceState asb;
  };
  
  struct BCM2838PeripheralClass {
+diff --git a/include/hw/arm/raspi_platform.h b/include/hw/arm/raspi_platform.h
+index 0db146e592..7bc4807fa5 100644
+--- a/include/hw/arm/raspi_platform.h
++++ b/include/hw/arm/raspi_platform.h
+@@ -73,7 +73,7 @@ uint64_t board_ram_size(uint32_t board_rev);
+ #define MPHI_OFFSET             0x6000   /* Message-based Parallel Host Intf. */
+ #define DMA_OFFSET              0x7000   /* DMA controller, channels 0-14 */
+ #define ARBA_OFFSET             0x9000
+-#define BRDG_OFFSET             0xa000
++#define BRDG_OFFSET             0xa000   /* RPiVid ASB for BCM2838 (BCM2711) */
+ #define ARM_OFFSET              0xB000   /* ARM control block */
+ #define ARMCTRL_OFFSET          (ARM_OFFSET + 0x000)
+ #define ARMCTRL_IC_OFFSET       (ARM_OFFSET + 0x200) /* Interrupt controller */
 -- 
 2.34.1
 
