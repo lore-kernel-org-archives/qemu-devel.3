@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED93C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B7CFC54E41
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:56:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebRI-0005QQ-HT; Mon, 26 Feb 2024 08:54:40 -0500
+	id 1rebSp-0006JC-97; Mon, 26 Feb 2024 08:56:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rebRH-0005Q8-MF
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:54:39 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rebRF-0007TQ-Ut
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:54:39 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-564647bcdbfso3055811a12.2
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 05:54:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708955676; x=1709560476; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QciyHgdpbvK4vbD420qln7gWc4lW77b8IPkbdD0k6Qw=;
- b=jQxfItkmrrpyvTL8ey5PSsR/pPwR2ZJQ3pp1PiQjXfeNQNfhCQBiwOUivqkMMjDdAH
- S36ZEK/eB0tH13F5iiTIMLkOywnoXnC+9zYJ10rXuh05eo6QI+gbThF9kMQ6wU9wUa9U
- YmacFqk76Yg2S9JU8ykyUAWaeNrkH6AOWWsV1LWg4OO+l/9XEvNDddEk1rpCV6S09ugU
- zNdS6U7MdlJJIJ+0DqtdbxxVbtOXAYyT0TVOLOlv8nFCRSfCD8CinG9a2bEs/LWF/sU3
- H3dsMVTT/xmiy3TPF6desM1MeBncFEuvFVG21A7E07SGHb1QFto/KXo+g5sRj7Umbjtl
- InQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708955676; x=1709560476;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QciyHgdpbvK4vbD420qln7gWc4lW77b8IPkbdD0k6Qw=;
- b=C0RHopVD6KcDJS7u5urJ6ZjC9tslQTO9k9sC45kPM74ZpeZl+cz0kzXmanz4Djk5fQ
- fioEcycjqQ9UDMnU2rqP+4ibc4vv2waGV/KbnwCMSNUepXuHSzhpyWX6BNGgEughQZIr
- 5HsIzDriyt45MEYByiAAsNkslng5ry/u/JSrZ9Pqs6HMpG9zdc/fcJysuRT5+wdO76bC
- Jvh+2E8S1xu/ZPkHKPqqFg/4oLx5JiK3O9yRfTFGMZV5SXFdgCfS7L2nEC9CWibxgKNn
- PTf8ZxNDwm3O8/WXDaokGY8PVi3jqgQeYhUHMZQWoikJgq3LpuRgdhTm2QfllLR5RZ3q
- 2epQ==
-X-Gm-Message-State: AOJu0Yy5LeK8m8klEicpYf0wsUaMt6Ufi4kBEZ5l7uGqvxc7xtXc2LyV
- 96KtuGnQHZ8ixwgIRVxVymA6dSBmerJ9mVIsE16hsJzTO55TWjOPlCUf6YHzi4Wq2UxvTe6hxPk
- JJS3P/QUnfl3+r+WqK2E/y0N3XS4k5yg9UKiRTg==
-X-Google-Smtp-Source: AGHT+IGKL03oAwgYeDuRA6Y6EblY7JtTg1Z91ZeXLGZmuLAxIAa9lxc/QxlJ/UGqhUDT/VPBQZQbAD9SbAqUn0j9xAM=
-X-Received: by 2002:aa7:c695:0:b0:566:ef9:a499 with SMTP id
- n21-20020aa7c695000000b005660ef9a499mr1011682edq.1.1708955676071; Mon, 26 Feb
- 2024 05:54:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebSi-0006IH-Nk
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:56:08 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rebSf-0007yN-Sg
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:56:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708955766; x=1740491766;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=RjE2hXjKIY2J3+psJTzlcUkkch1XdbF0A6fZS1slcAY=;
+ b=UvLn6kQOenv1qxH9Y4gSPwk1/jyaungQAHk03oPHH1I2MiZ6tJOo1NWS
+ PbK7z9NBXwxiGtlD8jq9xvXfs2yIIaMzIsd4n0JS1/bj81Lz4iv3FRD+i
+ 8OrjjKTtVs8Nu5Ph61lmhxOWxMCE93F3vHzWk+A2cbiirCYCQ8CnSIN1b
+ NGAqM4jYxlhxW6vSxUvxkxOevKS0BNIvNn9c4gE7PoPOvbhCPRYq45xbj
+ AX09gQ2MTR/DuCbVw+xpN35WQkl827AX6LO2Cc9hbgcaYwUs1IkPGnGrD
+ pKyXhOLLTnxb5WCqYxe5Nrb4T+FsDiq0Cy+VesFMY0rLVYNBsagrxtetn g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="13934107"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="13934107"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 05:56:02 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; 
+   d="scan'208";a="6662934"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa010.jf.intel.com with ESMTP; 26 Feb 2024 05:56:00 -0800
+Date: Mon, 26 Feb 2024 22:09:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Subject: Re: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
+ pc_machine_done()
+Message-ID: <ZdybpokP2q+ayi2Z@intel.com>
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-3-peter.maydell@linaro.org>
 MIME-Version: 1.0
-References: <20240226104954.3781985-1-armbru@redhat.com>
-In-Reply-To: <20240226104954.3781985-1-armbru@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 26 Feb 2024 13:54:25 +0000
-Message-ID: <CAFEAcA_tbkGdK9jXCGzWHRaDjDvGYhaJ8U+LUsxoxMzBtyLmwQ@mail.gmail.com>
-Subject: Re: [PULL 00/17] QAPI patches patches for 2024-02-26
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240220160622.114437-3-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,29 +86,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 at 10:49, Markus Armbruster <armbru@redhat.com> wrote:
->
-> The following changes since commit dd88d696ccecc0f3018568f8e281d3d526041e6f:
->
->   Merge tag 'pull-request-2024-02-23' of https://gitlab.com/thuth/qemu into staging (2024-02-24 16:12:51 +0000)
->
-> are available in the Git repository at:
->
->   https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-02-26
->
-> for you to fetch changes up to adb0193b90bd1fecd7d6dda70fc1c2d2e45ceae0:
->
->   qapi: Divorce QAPIDoc from QAPIParseError (2024-02-26 10:43:56 +0100)
->
-> ----------------------------------------------------------------
-> QAPI patches patches for 2024-02-26
->
+On Tue, Feb 20, 2024 at 04:06:14PM +0000, Peter Maydell wrote:
+> Date: Tue, 20 Feb 2024 16:06:14 +0000
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH 02/10] hw/i386/pc: Do pc_cmos_init_late() from
+>  pc_machine_done()
+> X-Mailer: git-send-email 2.34.1
+> 
+> In the i386 PC machine, we want to run the pc_cmos_init_late()
+> function only once the IDE and floppy drive devices have been set up.
+> We currently do this using qemu_register_reset(), and then have the
+> function call qemu_unregister_reset() on itself, so it runs exactly
+> once.
+> 
+> This was an expedient way to do it back in 2010 when we first added
+> this (in commit c0897e0cb94e8), but now we have a more obvious point
+> to do "machine initialization that has to happen after generic device
+> init": the machine-init-done hook.
+> 
+> Do the pc_cmos_init_late() work from our existing PC machine init
+> done hook function, so we can drop the use of qemu_register_reset()
+> and qemu_unregister_reset().
+> 
+> Because the pointers to the devices we need (the IDE buses and the
+> RTC) are now all in the machine state, we don't need the
+> pc_cmos_init_late_arg struct and can just pass the PCMachineState
+> pointer.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  hw/i386/pc.c | 39 ++++++++++++++++-----------------------
+>  1 file changed, 16 insertions(+), 23 deletions(-)
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
 
