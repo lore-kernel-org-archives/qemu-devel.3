@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 237ACC5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E987C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWN1-0001y0-S2; Mon, 26 Feb 2024 03:29:56 -0500
+	id 1reWNA-00020T-6p; Mon, 26 Feb 2024 03:30:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1reWMw-0001w9-1c
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:29:51 -0500
+ id 1reWN2-0001zE-0x
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:29:57 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1reWMu-0005PQ-Mh
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:29:49 -0500
+ id 1reWN0-0005Pm-4t
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:29:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708936187;
+ s=mimecast20190719; t=1708936193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=newgzwZxlRjUCtpataUEBcNKFRr7hyhCuxKG5bXa9nA=;
- b=aaMuKkwmOabEyEsnj1M0Cb4Y9Ft3wjpuqX+NA2XmAbFlGOfIe0tzQg4/L9xbWGvXbbTJ4Z
- qrMv6dpb9VYPEfCd7A2elF8Vup6/8oKVnCw2ZYaQUePl/X/CQpeQ1tMhF4tXEkopfLYfkG
- V9qgmjf9GeFkNJfMW2p8sSvLXTjUH+g=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=M1eDmbIANOn5GUFnwUNctW2wFwCkHAYHYCToWMrxESA=;
+ b=CDvxwg7uiVtqq9Cw6yAFwnLBJfp0INFrYpO9dwl1Nz+LpD4mmjJHxH7HFcBuG4hCEoqQeT
+ AGMElfQvGasS1zn6NkwCkpVw5MCIkm1bzNogEZuZ8Mtc4pQ+ee3PEkEfejHD6z6V4VuuCR
+ am/srYuMxRl+gL50U/mTQNWOdoazkJQ=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-265-5xtB7M0iNv-XSgLWWIq94Q-1; Mon, 26 Feb 2024 03:29:45 -0500
-X-MC-Unique: 5xtB7M0iNv-XSgLWWIq94Q-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-565146088eeso1510722a12.2
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:29:45 -0800 (PST)
+ us-mta-403-LV2HJsL6PyKYlaCdauIpUA-1; Mon, 26 Feb 2024 03:29:48 -0500
+X-MC-Unique: LV2HJsL6PyKYlaCdauIpUA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a431a294ebeso32232466b.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:29:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708936183; x=1709540983;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=newgzwZxlRjUCtpataUEBcNKFRr7hyhCuxKG5bXa9nA=;
- b=U2GiExHE0cpyWTut2bUl7qIYMwLA7jurG6fGH4O4KDmNCpSFW2yBctNGxLWGbmoDz/
- +xJAqWchPmeTGFOLw5uLgzz/9QHJgfFmcX98BPBcPxXI3pYf9PeEqy2pj6ZvF47F62iI
- L+uRk7sYHF2BHYBQdP1nwFKStZQRNPIhSGGcaNCLpzCHL7rO09UHOowtzy8GEpHWQUUd
- wIg7DEL4W5UwWF5E2sXwKz5r4fokrK80G7pbGCYcOAA9rT4CxVoO655hvkWLqsf1Wk8P
- +lKC6Fm8TxE/gxmeySOUSQIf4QNfaSXIhzAmn3NlQUHh1XgVMs98L59YOMtL9ZeYLGlz
- q2GA==
-X-Gm-Message-State: AOJu0YwhjPuf3IG1qupq8DBJj2OE1EjIXx6DgmcH7Hz0K9pjlqqke19T
- 8l1tqhEqlh0BiYMezJ7CXlZOqzv7dGYfx7b0CtqthlxG+otCNownYtzjvVkjXGTPOH3Kkzn9H5C
- SZabtj/OmEuzmKloiNPDdZNGoQOJCSAsbVVLMOJQwCwaV9VATSfLc1JqBXJ6HoHMV7Z4jZIn6lj
- 9G6iqiVvFQABMx38qw/ZjCZScsNbbrxqtNwI+B
-X-Received: by 2002:aa7:c318:0:b0:565:eb8:ed47 with SMTP id
- l24-20020aa7c318000000b005650eb8ed47mr3746496edq.35.1708936183628; 
- Mon, 26 Feb 2024 00:29:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHdOoYdUrA4tKK90tkl9QcOr9E7kLwDqAP7Vyq+T3/lw86S8jO5jU7j7IwDpQcSMCUEpJib2A==
-X-Received: by 2002:aa7:c318:0:b0:565:eb8:ed47 with SMTP id
- l24-20020aa7c318000000b005650eb8ed47mr3746482edq.35.1708936183247; 
- Mon, 26 Feb 2024 00:29:43 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708936187; x=1709540987;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=M1eDmbIANOn5GUFnwUNctW2wFwCkHAYHYCToWMrxESA=;
+ b=e+dPiZt2U1WvXr7KMp0SFhKX/k+z/0X46sICDDS3PPoIVSdEqI8HEAhL0aLZjBWdVz
+ eSc5R7L/GQLlstlZeOoAPKBMMCsjgAwtLQA4vDj6L+U84V7Ib1GG/wMMktRWnIuyLsvx
+ cyqsJs7PudZFkx/wHt82MYKnTalFPOdNnlTxuXzKo2KihOlMq46duwuR+H74NiZTX/p1
+ Pkf7wqet1UHW/XfbY9bPE29xFxBP2nFI3PC8PBU/7APKwJDNuyEdoStUW+Ivp3jtCQ6+
+ Y09eN3eSHz0+9isqoS8ax5jWh/vIA8+s9dBCnOmNeOB6Mhl3GQQx+CQu574HrGSagYi+
+ ggGg==
+X-Gm-Message-State: AOJu0YzcGkKv5yKHVe/l389c8fIxfde4RwQ9Vq69qXKEhdd62KVJuJqX
+ sWiBqr4dujDJrN3GN7HJ8cOP9ezMW1mXyFIW4rnyNz6leBEQs1yFkUTgaPwND5WxjJ5iSeSgZiE
+ w9WWoiXerNOGWiPoH6lj2N2Ja7HpgzbkuyvKyrwoMricCvhFH5fH1+eCFy9v1MQ3w2mXIYjuunr
+ rJRBD/rqA5cwKoAY85Ca/qJd678gX4bdis/WhG
+X-Received: by 2002:a17:906:aed5:b0:a3f:ee60:4e15 with SMTP id
+ me21-20020a170906aed500b00a3fee604e15mr4144270ejb.55.1708936187054; 
+ Mon, 26 Feb 2024 00:29:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGdFpKpC7Ruhw9H/LpSIe8mncILi6Ijo6d8qGOe++uiDEGkhYUABuXwcZGXjGmbYEw3V7sl7A==
+X-Received: by 2002:a17:906:aed5:b0:a3f:ee60:4e15 with SMTP id
+ me21-20020a170906aed500b00a3fee604e15mr4144254ejb.55.1708936186482; 
+ Mon, 26 Feb 2024 00:29:46 -0800 (PST)
 Received: from [192.168.10.118] ([2001:b07:6468:f312:9af8:e5f5:7516:fa89])
  by smtp.gmail.com with ESMTPSA id
- v16-20020a056402185000b0056518035195sm2088939edy.69.2024.02.26.00.29.42
+ kx5-20020a170907774500b00a3d81b90ffcsm2162974ejc.218.2024.02.26.00.29.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 00:29:42 -0800 (PST)
+ Mon, 26 Feb 2024 00:29:46 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/2] ide, vl: turn -win2k-hack into a property on IDE devices
-Date: Mon, 26 Feb 2024 09:29:39 +0100
-Message-ID: <20240226082941.90364-1-pbonzini@redhat.com>
+Subject: [PATCH 1/2] ide: collapse parameters to ide_init_drive
+Date: Mon, 26 Feb 2024 09:29:40 +0100
+Message-ID: <20240226082941.90364-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240226082941.90364-1-pbonzini@redhat.com>
+References: <20240226082941.90364-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -98,26 +102,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As per $SUBJECT, one less global and one more syntactic sugar property.
-Like -no-fd-bootchk, this could be deprecated but it can be done
-separately---and would slightly worsen documentation, so I'm leaving
-it aside for now.
+All calls to ide_init_drive comes from ide_dev_initfn.  Just pass down the
+IDEDevice (IDEState is kinda obsolete and should be merged into IDEDevice).
 
-Paolo
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/hw/ide/internal.h |  6 +-----
+ hw/ide/core.c             | 40 ++++++++++++++++++---------------------
+ hw/ide/qdev.c             |  5 +----
+ 3 files changed, 20 insertions(+), 31 deletions(-)
 
-Paolo Bonzini (2):
-  ide: collapse parameters to ide_init_drive
-  ide, vl: turn -win2k-hack into a property on IDE devices
-
- include/hw/ide/internal.h |  8 +++-----
- include/sysemu/sysemu.h   |  1 -
- hw/ide/core.c             | 43 ++++++++++++++++++---------------------
- hw/ide/qdev.c             |  6 ++----
- system/globals.c          |  1 -
- system/vl.c               |  2 +-
- qemu-options.hx           |  3 ++-
- 7 files changed, 28 insertions(+), 36 deletions(-)
-
+diff --git a/include/hw/ide/internal.h b/include/hw/ide/internal.h
+index 3bdcc75597d..0ad0d59d578 100644
+--- a/include/hw/ide/internal.h
++++ b/include/hw/ide/internal.h
+@@ -614,11 +614,7 @@ uint32_t ide_data_readw(void *opaque, uint32_t addr);
+ void ide_data_writel(void *opaque, uint32_t addr, uint32_t val);
+ uint32_t ide_data_readl(void *opaque, uint32_t addr);
+ 
+-int ide_init_drive(IDEState *s, BlockBackend *blk, IDEDriveKind kind,
+-                   const char *version, const char *serial, const char *model,
+-                   uint64_t wwn,
+-                   uint32_t cylinders, uint32_t heads, uint32_t secs,
+-                   int chs_trans, Error **errp);
++int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp);
+ void ide_exit(IDEState *s);
+ void ide_bus_init_output_irq(IDEBus *bus, qemu_irq irq_out);
+ int ide_init_ioport(IDEBus *bus, ISADevice *isa, int iobase, int iobase2);
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 9c4a8129028..3c42d72ac25 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -2589,24 +2589,20 @@ static const BlockDevOps ide_hd_block_ops = {
+     .resize_cb = ide_resize_cb,
+ };
+ 
+-int ide_init_drive(IDEState *s, BlockBackend *blk, IDEDriveKind kind,
+-                   const char *version, const char *serial, const char *model,
+-                   uint64_t wwn,
+-                   uint32_t cylinders, uint32_t heads, uint32_t secs,
+-                   int chs_trans, Error **errp)
++int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp)
+ {
+     uint64_t nb_sectors;
+ 
+-    s->blk = blk;
++    s->blk = dev->conf.blk;
+     s->drive_kind = kind;
+ 
+-    blk_get_geometry(blk, &nb_sectors);
+-    s->cylinders = cylinders;
+-    s->heads = s->drive_heads = heads;
+-    s->sectors = s->drive_sectors = secs;
+-    s->chs_trans = chs_trans;
++    blk_get_geometry(s->blk, &nb_sectors);
++    s->cylinders = dev->conf.cyls;
++    s->heads = s->drive_heads = dev->conf.heads;
++    s->sectors = s->drive_sectors = dev->conf.secs;
++    s->chs_trans = dev->chs_trans;
+     s->nb_sectors = nb_sectors;
+-    s->wwn = wwn;
++    s->wwn = dev->wwn;
+     /* The SMART values should be preserved across power cycles
+        but they aren't.  */
+     s->smart_enabled = 1;
+@@ -2614,26 +2610,26 @@ int ide_init_drive(IDEState *s, BlockBackend *blk, IDEDriveKind kind,
+     s->smart_errors = 0;
+     s->smart_selftest_count = 0;
+     if (kind == IDE_CD) {
+-        blk_set_dev_ops(blk, &ide_cd_block_ops, s);
++        blk_set_dev_ops(s->blk, &ide_cd_block_ops, s);
+     } else {
+         if (!blk_is_inserted(s->blk)) {
+             error_setg(errp, "Device needs media, but drive is empty");
+             return -1;
+         }
+-        if (!blk_is_writable(blk)) {
++        if (!blk_is_writable(s->blk)) {
+             error_setg(errp, "Can't use a read-only drive");
+             return -1;
+         }
+-        blk_set_dev_ops(blk, &ide_hd_block_ops, s);
++        blk_set_dev_ops(s->blk, &ide_hd_block_ops, s);
+     }
+-    if (serial) {
+-        pstrcpy(s->drive_serial_str, sizeof(s->drive_serial_str), serial);
++    if (dev->serial) {
++        pstrcpy(s->drive_serial_str, sizeof(s->drive_serial_str), dev->serial);
+     } else {
+         snprintf(s->drive_serial_str, sizeof(s->drive_serial_str),
+                  "QM%05d", s->drive_serial);
+     }
+-    if (model) {
+-        pstrcpy(s->drive_model_str, sizeof(s->drive_model_str), model);
++    if (dev->model) {
++        pstrcpy(s->drive_model_str, sizeof(s->drive_model_str), dev->model);
+     } else {
+         switch (kind) {
+         case IDE_CD:
+@@ -2648,14 +2644,14 @@ int ide_init_drive(IDEState *s, BlockBackend *blk, IDEDriveKind kind,
+         }
+     }
+ 
+-    if (version) {
+-        pstrcpy(s->version, sizeof(s->version), version);
++    if (dev->version) {
++        pstrcpy(s->version, sizeof(s->version), dev->version);
+     } else {
+         pstrcpy(s->version, sizeof(s->version), qemu_hw_version());
+     }
+ 
+     ide_reset(s);
+-    blk_iostatus_enable(blk);
++    blk_iostatus_enable(s->blk);
+     return 0;
+ }
+ 
+diff --git a/hw/ide/qdev.c b/hw/ide/qdev.c
+index 1b3b4da01df..9244c5a0fdb 100644
+--- a/hw/ide/qdev.c
++++ b/hw/ide/qdev.c
+@@ -208,10 +208,7 @@ static void ide_dev_initfn(IDEDevice *dev, IDEDriveKind kind, Error **errp)
+         return;
+     }
+ 
+-    if (ide_init_drive(s, dev->conf.blk, kind,
+-                       dev->version, dev->serial, dev->model, dev->wwn,
+-                       dev->conf.cyls, dev->conf.heads, dev->conf.secs,
+-                       dev->chs_trans, errp) < 0) {
++    if (ide_init_drive(s, dev, kind, errp) < 0) {
+         return;
+     }
+ 
 -- 
 2.43.2
 
