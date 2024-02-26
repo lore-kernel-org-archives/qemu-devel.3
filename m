@@ -4,177 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592E5C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28EFC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rehTv-0000tW-1j; Mon, 26 Feb 2024 15:21:47 -0500
+	id 1rehX9-0002QE-RN; Mon, 26 Feb 2024 15:25:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rehTt-0000sd-8V
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:21:45 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rehX8-0002PO-BK
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:25:06 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rehTr-0000Km-Jn
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:21:45 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41QGmjSL028013; Mon, 26 Feb 2024 20:21:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=h//WTGAsnfu+a1DthAroLo4oGyiCTg+45TxK32yQt1Y=;
- b=B6c5IrF5Olr0UufhdNSmfnWFpswNCjtJHFOJbbe8wqet74vKOOOyRlL8HsHn0eJow0tG
- EWNP3gGTGjfFBHE3g+yownFZHBZGmV4xqEk6QGiBRPmNCkdxeaB5ieib/fOG5Wu7metU
- t/Mztx8hbg5wcA5bwBgn43b6+9YmSFon1UrAkUsEQQoCw88v0JrmCyLzi5iilB9Pl6k6
- sxyxgMA9/yKOKVeX18le828ROiPCb6oNg+i9Pa8JaYa1Fplgk97+BiCo9t/sKtU4UuPg
- IiffcDxWlTW9fJReUm731gGoXv7l+snI7uJztOCNUNXVsIQNxko7JsKtEAHQwOn8iLdA oQ== 
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wf6vdwjtm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Feb 2024 20:21:41 +0000
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41QIrdGU009790; Mon, 26 Feb 2024 20:21:40 GMT
-Received: from nam02-sn1-obe.outbound.protection.outlook.com
- (mail-sn1nam02lp2041.outbound.protection.outlook.com [104.47.57.41])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wf6w64df8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Feb 2024 20:21:40 +0000
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rehX2-0000iZ-4n
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:25:03 -0500
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 41QG0Eq5013410; Mon, 26 Feb 2024 12:24:55 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-type:message-id:date:subject:from:to:cc:references
+ :in-reply-to:mime-version; s=proofpoint20171006; bh=HD/eZ6lZubdq
+ IIJdyZzIuZlAmEd6MwE2/IsAO45JT80=; b=fa7qCIUNeru3GdbaUdu5ozxXk84i
+ d70Ab6sRizFiw4GKR/rBPjD/x/PXRyA/v+79ouE0tBjrUM9liIRrfCxburW5NwpR
+ YykqZm5Qrj4o6aPGSqmjG2SLrWuCvT0XXAi6Kr6Yeu6zps3MDULQ8bjmGFR6541r
+ 5r9KaGjcPDXzl/eazMzmY1MN/vRaIoxKSKlDrFTqpj3k4YhJg3YIvqTfqd/f1Exr
+ nTJfxP/gEEFYCGVkWR8P73+UtCSav7cp8P8S0SBaHzfoISZjE87bls2oJTW/CCFV
+ F4t2+7CzI+lMqCk3t2agHDvLGlXD/39yYbeOGOfNbdNO4kp6U858vh0OFA==
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04lp2040.outbound.protection.outlook.com [104.47.74.40])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 3wfgw0mb1s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 26 Feb 2024 12:24:55 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Q8iC/z/rnzrSPz5YSUEaj+foTzbZn4dVmTvX0ShsmycCXdX+SJ4g/aFrYctEkkO/4UXfsySOlO0yyuoOqy1j12/bXXCTnvEhmKeFWaZS4VmnDJw94uz4bC5edvnXo7SD/+pwr+H4Q5tTjIm8BphUe5yu+3UisXyEO92ZhbrUhKC/4YoYPoCQDl/Tb9mGFY2n1WY4t/YtZQiYEPBp2N82TYQrslgO0YhhLjp3DO1BzQQDpXu79WTlNPmiwTMTjnAY3fUmnPyG7hIjo3qHxOrI79e4A/M6Dle29MjvVQA6cp8nX/YdFvltVln9n9LYsf4K3PtCBKYtzuWK4FhQfT8j6w==
+ b=Bnx4ACHEkkTlzPwawxld9MywPkF0HfRFQqI26uy0GAnlW/bf6QAdzbSnV95j59k/iCW02dV9liPfDVYrB7SwIZRNehgzYRs3yReK67JH1EKddZRUbTarK1mgy0GhrvmQ8LDQeJ5EKAork2sQgAXa9LVoiLf2XVDuHNCQcnt/nUNc7oryEGGjcc9vSfr3dbXr2HBScifTTcLdxpik01bofkxI2APvF7A2u7IaPnmgrY4N6RvSa/hXn/SI3Pk1FJ/hrJojOroMnHxduvRgTucbntlLsNIoDigtSFmA2F8ghPEzyK+6Sf8xquI/va8rruDleGuob/IfEuj4GTVmo0ejCA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h//WTGAsnfu+a1DthAroLo4oGyiCTg+45TxK32yQt1Y=;
- b=Eb2t4ZobQYd4rpSQe2+3B9r0r+j3mNkJzcaZBSs44wkJJfGis0UNRvwOIgsrwgeqNJXoeqXQMLbLjeku8kCDEaTlZZrXSZySOk7ztVYmbE6dmbERhEzQSFX3rf3OR2z03BA9i9rbc8yAudfO0IbYmyf5Vr6v8H15tgMp5fnwVkLhFHSuNxzQfF+ExnIcjnszaqzxuEMf+poCC6T1oLDKJ1JEgUQ0FjX87F+fDbtgERnVdgfnZsHAX3fHVNj5pYJhuEhKcx460BcwgkeoJtpgYwFM4F38aq/dA18foR3Vr7FrjyA8PedPOJoNpG/cq5+HF6bHeiVbKHlG/b4q7mtsTw==
+ bh=HD/eZ6lZubdqIIJdyZzIuZlAmEd6MwE2/IsAO45JT80=;
+ b=cNujA82299oSIpP76fDIvu0tXKovhcka6W55cpCZpjeOypC2DFNaRYPYSzNX2rRQ5SDIjIAdaAfGPFRgI96AE/86KCqnHj2nC05E0dfuJT33LS8KEuxgD96jy/ThgXQYLXjq2Eo7PsDtQrkC/2StAV2jepCIyF3DRAcc7Xp03WIBhkc5AORYMtTxDOYN2XbOrOEkqv4Mo82la1t92glXaA+jLYS4Ns/F5BAcH8/biQ//QqlR8RLtwArgRRnQzii780UsTykZPvh8BWk9dyQRJAx6d+09FH9+hTpfUJCnIoD57SK+uM+7o9vhGtX+84nCA7Wogy2TEqcySTZu8VIADg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h//WTGAsnfu+a1DthAroLo4oGyiCTg+45TxK32yQt1Y=;
- b=XjhDcA12r06JYxtHj1pITtfyZx7ShdiBbfcqwd8G9S89Yl+mjRzvXBrGXTktRGZUkeshG7zBeu0lKTnQ+34JroG6kkl5KHb6NHESw50ryy16KJ5+hM8jF5hWyS9tzJMsRzfLquYR+9gqKlyM+PPyNZiLuaBaEXo5/EEJ4MmWhCE=
-Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
- by BLAPR10MB5106.namprd10.prod.outlook.com (2603:10b6:208:30c::14)
+ bh=HD/eZ6lZubdqIIJdyZzIuZlAmEd6MwE2/IsAO45JT80=;
+ b=Sq8RhRu/pcoNd6mEUpsUJHjGBUbaey0wi9eHK6/ZqI3Wagge6sm1yjgD9838ouvNpF2dvud1XcXuB3tqmhZEGdNt8l1JR2Cdgcp7v8BKRPZIXH+xKJxsGyYQ0ePySQAv8iEn/Zw4Ku+mUdJGQ2lUdoyLFx9B2rxifnIjePFPmHRqr1DxaUPS+Of7ylcLmehm9DZcOXe2/celXMV3u8inNdsdZlTxNN5fsVbq6MKGhtUePTg6h0Zd9Xake05wBsyf/FEvltVtV2q/wnOIC4k+0ra3QRlNU3JqyxDqsyd9MhBhxuGIyXRu6d8DjWBGMrwoC9itDkHaGh1fGexDSIDaaw==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by CY8PR02MB9524.namprd02.prod.outlook.com (2603:10b6:930:6c::10)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Mon, 26 Feb
- 2024 20:21:38 +0000
-Received: from SA2PR10MB4684.namprd10.prod.outlook.com
- ([fe80::c3ce:7c28:7db1:656b]) by SA2PR10MB4684.namprd10.prod.outlook.com
- ([fe80::c3ce:7c28:7db1:656b%6]) with mapi id 15.20.7316.035; Mon, 26 Feb 2024
- 20:21:38 +0000
-Message-ID: <0b7b2a2e-efa8-4280-b7cf-dc6bfb6e4bac@oracle.com>
-Date: Mon, 26 Feb 2024 15:21:34 -0500
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.34; Mon, 26 Feb
+ 2024 20:24:53 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7316.034; Mon, 26 Feb 2024
+ 20:24:53 +0000
+Content-Type: multipart/alternative;
+ boundary="------------ZoYSPtfjO1Maiw10PSPFt0Dv"
+Message-ID: <894b5da4-0af1-4ca0-b8a7-da288bb20774@nutanix.com>
+Date: Tue, 27 Feb 2024 01:54:46 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 00/14] allow cpr-reboot for vfio
+Subject: Re: [PATCH v2 1/3] qtest: migration: Enhance qtest migration
+ functions to support 'channels' argument
 Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>
-References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
- <c95b3c15-0154-438c-baa0-98f4c539355a@oracle.com> <Zdv0BNtJxkd8413g@x1n>
- <02bf2132-ed34-4ecd-841b-5f93eded7ea4@redhat.com> <ZdxTVHJ8p4lYRPxo@x1n>
-From: Steven Sistare <steven.sistare@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <ZdxTVHJ8p4lYRPxo@x1n>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0029.namprd03.prod.outlook.com
- (2603:10b6:a03:33a::34) To SA2PR10MB4684.namprd10.prod.outlook.com
- (2603:10b6:806:119::14)
+From: Het Gala <het.gala@nutanix.com>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com
+References: <20240223152517.7834-1-het.gala@nutanix.com>
+ <20240223152517.7834-2-het.gala@nutanix.com> <87zfvr7xdn.fsf@suse.de>
+ <1988bb0f-6ebe-4335-b761-d11313c772fd@nutanix.com> <87bk83bcqj.fsf@suse.de>
+ <32687fa3-78dc-457b-ae50-854d2c72c922@nutanix.com>
+In-Reply-To: <32687fa3-78dc-457b-ae50-854d2c72c922@nutanix.com>
+X-ClientProxiedBy: MA0PR01CA0046.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:81::16) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|BLAPR10MB5106:EE_
-X-MS-Office365-Filtering-Correlation-Id: b6efded9-66fb-446e-e0d0-08dc37088940
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CY8PR02MB9524:EE_
+X-MS-Office365-Filtering-Correlation-Id: 420b6ce7-d0bb-4afb-5bb0-08dc3708fd3c
+x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: cTzlZXHKIErZeVqz4Pqsm2ohE7n+KafaPYCqQSX5RDw8Xz16LpZena2qxoBkMWbcHmIrBuiXTR8eN+CuswMuxCXAaGhMEdUA4DuKch9KtAb42lMH42blndrwWO4AlbdcMvpsaHVvUKXH0qnxKKkMa2npfpEhq5EmA/y6LuExg+Kx3oG8QLufrkjSaTdOSojAZy/vwhrYP/sGwlVuGY5G9+/jKaVArmwnCRZrY7+FSb+8BLOhzXRQBCjVhewQeO5jXZAR1gErBgxS2e5lZrk1NgDJYoBdPywlgEFmkFOIcZFE4ISvcT6j7jxAgI9BJwzVbdgsiNxd17tCjjRVllcK3IdL5vLPuTs2AYWG1C2XRWy+9YZjD9JC7FTCTA/F4E/kjveetQVCvtHuVCwVVORxO0eDa315+2jLIAZow9aDdpH/4GJiqNQ2lt5nPevCu81tJIFBejFcaSuFhj7us6d+YHwzoh/AJ01yChKq1cgfWOjwm0H/a+rp9u5O9D9318mdbnlx7x3jrP9PKNfBtIyJHUmI8aBLGMrvFIsugXPkQOr5EE8spDdum4SY7MATvKIuEVxF4+U0HqntN0ElTLFWVlJR4ecqLECMqrVbCFmi87UvpXvfa62ouf42bFAeevaj
+X-Microsoft-Antispam-Message-Info: qbnIl+Uw2m5UDAnpXcw2izFVpynE4eG39jJgFcNTez0Dtx/ezTWQiN4v0TpI3t0qCNgF9n+Q93YUsdA4OoD22SxpfCeFqih66afGyIYSuoUxU18D+mb+l0IdjxmwKMhU3ILFflqZ/FlEndzhJ/U0YhTVZtOwVJPt4Kdj1U1MMbHVR/z90rYhqV1MIfNOTCy6qu+IsjEBH0gjHoQURb2Vqt5zU+NTESnhUMJ9QQfm3X9AGCmkiAk6dYFolGYVhQBtNVTBb9kMuyDYK6ijMokFfrdrK5b0zQCh0QVgfEjDcgfVTYDg/vNVfnN5nTaUrJAG+bWdkX0bwe5740Vfoi4ajlzySgIzr2CEs7FteD5AafiUCx+k1UfIoOBrrOVZ58FKo038jQeQunHrJdA/Ph0F4oloQDMAi2PRBsubWdif9CqChh6dlti6lBvW/3xuahmkylAybMn+4w3Hgp/ZsTO31QQNj/+cgfcMe1eZMDfwYyiua0kA2Loe+A0/4/982zM89GStL35DguwjCBLrCPkVBLIFUCTJY1RN+73HIt2jRxruJsykyfBCBy/K92zkuDYgnfLY+6ojjT4KoLU9stIhEcevynvtNKlIndv5j8trT8wvESIoKjNRaS8aX8Bll4CeANnQcwiWopUfCyUg+hMf3g==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031); DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NmRIdmVOcGJEWkx0WTJEdVJRN2FIRmI5bUNLMUphY2Q4czlmMkJxakM3cHI3?=
- =?utf-8?B?YXB2LzRDdHYwcFZONTZBWHZ4RExNS3ZOSWZPZ01OcTVNaUl0WXoyWlpDQSs2?=
- =?utf-8?B?MGk2N0p1OUlxM0JRTzVnbVdodXkyYU1HOUdyVU15eDdkWWZGSVpXczRnWEJU?=
- =?utf-8?B?RnFPL1FacGZqd1RvYWZMajZZTEVJR0lOTDNIUWNEM0NvNDRISGZJVEc1UFpZ?=
- =?utf-8?B?MXVobDI5bzFmbWhGODZKQTBjOGxHNHREeXdSQy9EOVd2eUpZNXUrWEc3ZVJV?=
- =?utf-8?B?K3dSNlVTcjB1SEIrZWowR2xWNnpQNlFRaDVZbVhLOWc4SkZ3YXhXWGhHdmpK?=
- =?utf-8?B?Y1pxUldQckRZZXRSN05MY1RtY2diNWRkMmNpS2dPQWZacGgxWjY1andpTEFj?=
- =?utf-8?B?em5CMXdWMXAyV295NkViSytDSXNFM28zTFpHd1ZTUXp6MnBUWEsvRlFDK0Vr?=
- =?utf-8?B?M080cTcvRklGT0dQVWZ0ZU9ieFVjTTZlZ2MvZGRIUWtuYWFKYUhCTStLMXpY?=
- =?utf-8?B?ZXBKcCt3NXBXT0RtbHVZQzhKMGtsK0swVDFMM3Y1VCs3cUx4RkMwUWdYK3lj?=
- =?utf-8?B?cjVvZFEvM0x5aEkrcjBaZk9CSlJoK2d0YUV4dExvQmt5ajdUSXl2SzFML0NB?=
- =?utf-8?B?emlEaEhpMUsxcTkvODZWRXJueWhySTg1enNYa1dybWErWkV4WGxXWUEzZCtV?=
- =?utf-8?B?RFpyRVlXVS9Tb05JVWZISEFFZnZyM1RIc05WY1ozQWxuNGpFS04zSmxTVHA3?=
- =?utf-8?B?L2kwb0czR0luZmdnYVBpVzYrWGoxcTI0TlFRbjd3NGMyWUpRZ3lONFNEVGhh?=
- =?utf-8?B?ZE9WUGdSN2hNTWFYOFN1T1lGQ1EzT2g4UnVuNGpmU1lrVHJMa0hLdHU5SzM2?=
- =?utf-8?B?LzhEaUdJWXY3algzNmcveTlRU1ZVcGZCSm0rbkRkN2lHbVdPVGQ5bzhyMFB5?=
- =?utf-8?B?OGMvL1FhL2puTVFZQzJzVHZSZkpuL2hGaERObU9STnFoTVNacEhycW9tWFB2?=
- =?utf-8?B?bnEwRkZQQWJUdDR4UlRBWEZ0N0ZDNU8rRlZ6TVA2LzgrRjhXditveWRIUkds?=
- =?utf-8?B?bUhnLzBtREc1eU4vWWpXWkZWQmVrTU1lc3FqMTBseDUvZ1k4V3ZFQnZyMmRK?=
- =?utf-8?B?OGp3RU8xSDFYSnJwSXBUdS82emRJM0JPd3FxdTAxSlhPdndXakpycjd0d0N0?=
- =?utf-8?B?a1czMnM0dTdMUnpWVGhUUHpoenN2aXBUSFAvZUljSHlNeXlGWTNxM1UyWWxo?=
- =?utf-8?B?eEtHcjhTWVNNQVM5WXhNTG5VKzZrMTZWMHZaY09PM0NYNjd0eVpNN0F4bmti?=
- =?utf-8?B?ak52Y3lVdU8rcmEwM2pzZy9sU2t4TzJtbUt2bWkxNEZiSzFGcUt3NVgxd2JB?=
- =?utf-8?B?NVk1NGRDaE1OeTdOVEhWRjZiSFVydkorVEtVV3QrOXNUSjQ5QStzVjhaMnVJ?=
- =?utf-8?B?cStvV0JwVnozbUVLbGdRK0ZCT2RkZG9IZnpqd0hoR1NFUlF5a3FXNmE4L25W?=
- =?utf-8?B?OWxRQi9EMUJrRnlFWGlnZzlHcWdWR3hSTDRKNkY4ekExcVRacnBTNE9Zc1Qv?=
- =?utf-8?B?aTBsRnlWNDJYdHliRS82YVUySGFYNSs3dFVZbjI3M3E1TlIrdEFNdks5bmdR?=
- =?utf-8?B?V0s3YkYyekhkZUtWamtnSzJJL253aUxwSkI1WGZ3RVppazkybGRDRlhrMlhR?=
- =?utf-8?B?RHIxbjlWbjcvbEY0SGNyWmZzOGpRa3FMZmRDVFR1bXlaSTFkaWk4dWkvTXRB?=
- =?utf-8?B?aVJMazJJM0RBOXcyRTUrT0dBTm56NzNSNXhrUGdLQ2RCdGhIOGlib3ZXSkNG?=
- =?utf-8?B?MmxsSjI4Y0NXQXh0dHk0L3hadlBIR2tXaXo1d1V0dHVuNVpITGxmdHZwS0Rn?=
- =?utf-8?B?RE5yS0N1V0hIYzEvdmsrQ2cxTDh4ZXJFUnEyRC9mWkFGaXdsc3RETUhCdDMy?=
- =?utf-8?B?NzhSdld6RWR1S0xBeVRMMFE3WWlzSUdSTkxhdE1mNUw1QlI4R3dqeUxkSlZ0?=
- =?utf-8?B?Rjdkbm5WTjFtQ2NwNTU0czJvSlBGVzQrTE9WRmhTVDFId3Q0RngrY1NiZ3p6?=
- =?utf-8?B?QWdrR1d5U0pYY05maHZ0RGRlUklFTy9Ra09vdUt6YWlaay9rSktBQ2pONGZC?=
- =?utf-8?B?QkI0TWNOcjlyYXphQUdmZVF5Z3FBV1NDWTQ4TVluSDlXSWNrdGJDM1Zva1Bj?=
- =?utf-8?B?bnc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: wj5SOv0OrPZi1zTuEysJy9oPK4sabXREY/BIGtuEIzzO2F7XLcHbu6UKnzv4l/jXQ2jc2TfMxW6s3Mr6RzHM/HucWs8C81apOXE9R2j2EZ4O11J1Gk5FEPjbWy//Nk6zfx1DKT9sDLtwdAiqYGhfcxSpAyaa8Ae3Ab0MbFf+sUcN8X8pZ8V6Vz7yQRt9yyFly7wXssYjNrLeKujbSMSVpzDEtfEdvaev2T8H9UO3iFh2TC4jh7ZVH0sNUSdu/RpbpvBvzC0QA+uFqUCc2DwsMOWY423TwS/5tCXDdoFQXIaEt/yU2fcoQTDbEJnb1D6KjBfUpM+OsD/pfqmPuFwkGw/OkYHC501xsLCpNRKyZvvIct8q1AFE2FD86whOcdxfre+CvAAZdbehSxxnUJvZawTf3BRJDHKHHKoTfydWsjd47aPUFv4FOPyOVbteYJYETl/XznzRERo+DJNE8Elc1T7A5Hmk/5m1tyEb7Cu1Q5HS9h3s+Gpw6nYQEcO20aQl44kdchN/2Fv2vgW07RW41ACGLiZMa9coZNi4ALzpmrK9nmiJTVEiMijAhaQqtQNZzKyCXhzHt3bbbeyNBvgJeuOnqRMaS/Hk7TOtKSIfdXY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b6efded9-66fb-446e-e0d0-08dc37088940
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bVR4T0ptd05tV21IRngwdGtUSTYvcHllak0vSUIxa1k3emdBWGxUb2Nnd1l0?=
+ =?utf-8?B?UHl0QXFpVlZMdWU2K1JoZEJlVG8vNXN1bDZuWGl2ZkFtWURvVWp4YmZGZm0v?=
+ =?utf-8?B?allJdExzSC8rejhOT1lvei9JTGlaaGRJQ09tanRCaHh1WFNKNTZNUTBvaXd0?=
+ =?utf-8?B?cm5pL1ZJOENocUxGbGJzM0hzS1MySFNnMmExai9FT0I0OUp5NXRRWEd1b3lP?=
+ =?utf-8?B?QzhkWGJJL2h6aXc4NEtIVGlreCtFVlJteEtpTncydjBPNW13VDlNc1JkVjhL?=
+ =?utf-8?B?MjJ0bCsxQmxqaTdTWExXTy9uWVRXcGtBdWVsTit4MmdtWjhqY2c5d3VHSml5?=
+ =?utf-8?B?ODZXdFcxbVVQc1VpM3pPZERQZ3VNZWtwSjZYbHRGZFUyZWNlUWpWRWhScis0?=
+ =?utf-8?B?VitqVVhBOW4vc3NSRjZndTlXZ090MUh5cks1Z2JpZ0QrT2lGLzVheVRucFNG?=
+ =?utf-8?B?VFJKOWFXZnZOZExVNlpDRjRJeVhseGZUQS8wNUFzTURxUHp6bWxER0tuNHgw?=
+ =?utf-8?B?NDJjR0ZXNFp3WDZkdzVJRVdLK0JJajBXMWtvVVltY2ZDVS9qbUtQYkZrZUZ1?=
+ =?utf-8?B?NnJ1Y2VUeFBXd0tiYnpUZ0dUQmNRVG0vUGZoRlFuV3QvWGFjT2hRS0RvZnNM?=
+ =?utf-8?B?WnlrazB6QURUNE1Vc0YwVHdFRHgzUXhLODc2YXg5eExQZndIWXlJVHo0VUFV?=
+ =?utf-8?B?a3h2MXVhcU5qaEk5T094REJNTmN5Rnd2RlZUV005QVBObEdON0hOVi9DMWZ1?=
+ =?utf-8?B?MXRWRzdzTjVJOSs2LzVBaFJPWnM2N1N4Q2g2SG9NaWJDSU1wdzVJbzNzU2tC?=
+ =?utf-8?B?Z3pXTmQ4THlmV3pvZVJ1SHloamM1SElLTVgrQ25vQmgvaEpseCtXc3pzbFZa?=
+ =?utf-8?B?MWltQ1k0QWRaZkJwUGlSYTZJa1BiWTFEeWRsTndCWGhKWTI0NmVLZWlocTQ3?=
+ =?utf-8?B?cVk4QzVVUDNUUG5LdzRMdDdENSsvT215WXdSQ1lEN2o1TGVsSnMrRWl4ZFlO?=
+ =?utf-8?B?TzZ0cUt0Viszd1p1YXRMZVhRQkIwbzRtV1U2OThMMEhJNFJPTHV4eHRlZ3Zp?=
+ =?utf-8?B?S2NtZGJlcERXRTZMNTdBalJFdGhydEFZaitBbUd6bDlIb3VndldENS9SMVdE?=
+ =?utf-8?B?aWJPVzJScG1xcU5MdUdUZ2xtVlFTMWJwZjVGWEVVQ1hPNlJvY2pXSWpPMFEy?=
+ =?utf-8?B?ZU91bnRPL2VYQnYzWmgydkZKV3RvaDNMdzA5SlpUZzdXaitvc3VFdmgxL1ZY?=
+ =?utf-8?B?dVFGTUNUL3ZISWpQbm9TVi9uV3NhT1JISk9EY0hCNittbGRvMjZkdTMrSTlR?=
+ =?utf-8?B?V3dWamJMV3haeU8vZ0Q5U0tNUTNoYTZqc1FuMkRnL1p3Y2VjS2xidDFlSnVy?=
+ =?utf-8?B?bERENzRIS1ZxM2tUUGUvMUpIdVBsWDFIUG1nTmVEeWs3b2Z5ZTY4ekhEU2pj?=
+ =?utf-8?B?eUdTS21MdEx6REFqcm5jT1V4blZFZUl3bEpyU0tmYVViWTR1QmE0T3VJcGdn?=
+ =?utf-8?B?Q0ZiM3ZtaHI0Nk8vZDF3U1F1R2lkK1A0RjYyL3dJNW1HMFl0cHZvR1p2Nkpw?=
+ =?utf-8?B?SEttWlhVN2ZlRlF5Ny8xZ0UwQnR0MnJnd2hGOWxCV0dJVU5ud2p6aHdsUkQ1?=
+ =?utf-8?B?S3BlSVpGb0JvN25RNkVCTjVBc3dLU2tOR3NrUlFxTUxYYjdUanZsVDB4V1h4?=
+ =?utf-8?B?YnBZdjVZcVpicW1WeGs1T0dBamtIU0Jja2RlV3pER2xkd3hvZEN3VllOcUp4?=
+ =?utf-8?B?a3UrbzErbE9nbTJ2YWZuNk5VOXNqUS80dnIvQllUajh0UjQveWhLQ3prcGh6?=
+ =?utf-8?B?UTcxanJDdzVSWXkzKzRQNmpEc21iRHZjTUFlQmJkdy9NU3BEWTAxVDF5QjBn?=
+ =?utf-8?B?T0p6cnZFY1RDdUpRYlIvaXF2YjdFSVdFNWkyVkVyV0kyc1I3Y21MYmE3aFdN?=
+ =?utf-8?B?NHNtZzZ0Vk13N2xnMlNIcmJNMFZKOEdQdms0R3M2TU1nQlFNcFVvb2lrZDdq?=
+ =?utf-8?B?a3JKb3FZcnphYktXM1VRUVVsSEUwUVdyMXFzbEQ5RXJVbk00dTdaMWNlUmRS?=
+ =?utf-8?B?VkFaVC9pNnM2djZESGxSbWpuM2V4bGUyZmpFOHB2ZHpxTXA2b0pMZExkRXB4?=
+ =?utf-8?Q?A6dkrVtx6OLvqHC/iHAhPOQYG?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 420b6ce7-d0bb-4afb-5bb0-08dc3708fd3c
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2024 20:21:38.3773 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Feb 2024 20:24:53.1351 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ESNXvB++dXJk4NttcOLQ2dxS8O/9ZvrYlm5dopGV8ghTHARnQsAdR6q5SxSB9Z3dMraW4J6UF2WmoSa91GpzKbdb1NfDbgxWw4EZhvAJ8kA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR10MB5106
+X-MS-Exchange-CrossTenant-UserPrincipalName: WM4e7YDJBn1am7segUB+7+0BLYX3DhlvUarPypIwu8HXiiHgXn/JHn0JmeW4aC+OEyeJXK21NnQMwdI6RREuxg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR02MB9524
+X-Proofpoint-ORIG-GUID: QXRVOHc-6XwAdQnA8wOWPlpxNHPq44wg
+X-Proofpoint-GUID: QXRVOHc-6XwAdQnA8wOWPlpxNHPq44wg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- malwarescore=0 bulkscore=0
- spamscore=0 mlxlogscore=869 phishscore=0 suspectscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2402260156
-X-Proofpoint-ORIG-GUID: hGHChVT2JjCnuyt2_PCn8UPfsR-xUpYP
-X-Proofpoint-GUID: hGHChVT2JjCnuyt2_PCn8UPfsR-xUpYP
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68; envelope-from=het.gala@nutanix.com;
+ helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -191,17 +170,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/26/2024 4:01 AM, Peter Xu wrote:
-> On Mon, Feb 26, 2024 at 09:49:46AM +0100, Cédric Le Goater wrote:
->> Go ahead. It will help me for the changes I am doing on error reporting
->> for VFIO migration. I will rebase on top.
-> 
-> Thanks for confirming.  I queued the migration patches then, but leave the
-> two vfio one for further discussion.
+--------------ZoYSPtfjO1Maiw10PSPFt0Dv
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Very good, thanks.  I am always happy to move the ball a few yards closer to
-the goal line :)
 
-- Steve
+On 27/02/24 1:04 am, Het Gala wrote:
+>
+>
+> On 26/02/24 6:31 pm, Fabiano Rosas wrote:
+>> Het Gala<het.gala@nutanix.com>  writes:
+>>
+>>> On 24/02/24 1:42 am, Fabiano Rosas wrote:
+>>> this was the same first approach that I attempted. It won't work because
+>>>
+>>> The final 'migrate' QAPI with channels string would look like
+>>>
+>>> { "execute": "migrate", "arguments": { "channels": "[ { "channel-type":
+>>> "main", "addr": { "transport": "socket", "type": "inet", "host":
+>>> "10.117.29.84", "port": "4000" }, "multifd-channels": 2 } ]" } }
+>>>
+>>> instead of
+>>>
+>>> { "execute": "migrate", "arguments": { "channels": [ { "channel-type":
+>>> "main", "addr": { "transport": "socket", "type": "inet", "host":
+>>> "10.117.29.84", "port": "4000" }, "multifd-channels": 2 } ] } }
+>>>
+>>> It would complain, that channels should be an *array* and not a string.
+>>>
+>>> So, that's the reason parsing was required in qtest too.
+>>>
+>>> I would be glad to hear if there are any ideas to convert /string ->
+>>> json object -> add it inside qdict along with uri/ ?
+>>>
+>> Isn't this what the various qobject_from_json do? How does it work with
+>> the existing tests?
+>>
+>>      qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
+>>                               "  'arguments': { "
+>>                               "      'channels': [ { 'channel-type': 'main',"
+>>                               "      'addr': { 'transport': 'socket',"
+>>                               "                'type': 'inet',"
+>>                               "                'host': '127.0.0.1',"
+>>                               "                'port': '0' } } ] } }");
+>>
+>> We can pass this^ string successfully to QMP somehow...
+>
+> I think, here in qtest_qmp_assert_success, we actually can pass the 
+> whole QMP command, and it just asserts that return key is present in 
+> the response, though I am not very much familiar with qtest codebase 
+> to verify how swiftly we can convert string into an actual QObject.
+>
+> [...]
+>
+I tried with qobject_from_json type of utility functions and the error I 
+got was this :
 
+migration-test: /rpmbuild/SOURCES/qemu/include/qapi/qmp/qobject.h:126: 
+qobject_type: Assertion `QTYPE_NONE < obj->base.type && obj->base.type < 
+QTYPE__MAX' failed.
+
+And I suppose this was the case because, there are only limited types of 
+QTYPE available
+
+typedefenumQType{
+QTYPE_NONE,
+QTYPE_QNULL,
+QTYPE_QNUM,
+QTYPE_QSTRING,
+QTYPE_QDICT,
+QTYPE_QLIST,
+QTYPE_QBOOL,
+QTYPE__MAX,
+} QType;
+
+And 'channels' is a mixture of QDICT and QLIST and hence it is not able 
+to easily convert from string to json.
+
+Thoughts on this ?
+
+>>>>     static void do_test_validate_uri_channel(MigrateCommon *args)
+>>>>     {
+>>>>         QTestState *from, *to;
+>>>>         g_autofree char *connect_uri = NULL;
+>>>>     
+>>>>         if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
+>>>>             return;
+>>>>         }
+>>>>
+>>>>
+>>>>
+>>>> Regards,
+>>>>
+>>>> Het Gala
+
+Regards,
+
+Het Gala
+
+
+--------------ZoYSPtfjO1Maiw10PSPFt0Dv
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 27/02/24 1:04 am, Het Gala wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:32687fa3-78dc-457b-ae50-854d2c72c922@nutanix.com">
+      
+      <p><br>
+      </p>
+      <div class="moz-cite-prefix">On 26/02/24 6:31 pm, Fabiano Rosas
+        wrote:<br>
+      </div>
+      <blockquote type="cite" cite="mid:87bk83bcqj.fsf@suse.de">
+        <pre class="moz-quote-pre" wrap="">Het Gala <a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com" moz-do-not-send="true">&lt;het.gala@nutanix.com&gt;</a> writes:
+
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">On 24/02/24 1:42 am, Fabiano Rosas wrote:
+</pre>
+          <span style="white-space: pre-wrap">
+</span>
+          <pre class="moz-quote-pre" wrap="">this was the same first approach that I attempted. It won't work because
+
+The final 'migrate' QAPI with channels string would look like
+
+{ &quot;execute&quot;: &quot;migrate&quot;, &quot;arguments&quot;: { &quot;channels&quot;: &quot;[ { &quot;channel-type&quot;: 
+&quot;main&quot;, &quot;addr&quot;: { &quot;transport&quot;: &quot;socket&quot;, &quot;type&quot;: &quot;inet&quot;, &quot;host&quot;: 
+&quot;10.117.29.84&quot;, &quot;port&quot;: &quot;4000&quot; }, &quot;multifd-channels&quot;: 2 } ]&quot; } }
+
+instead of
+
+{ &quot;execute&quot;: &quot;migrate&quot;, &quot;arguments&quot;: { &quot;channels&quot;: [ { &quot;channel-type&quot;: 
+&quot;main&quot;, &quot;addr&quot;: { &quot;transport&quot;: &quot;socket&quot;, &quot;type&quot;: &quot;inet&quot;, &quot;host&quot;: 
+&quot;10.117.29.84&quot;, &quot;port&quot;: &quot;4000&quot; }, &quot;multifd-channels&quot;: 2 } ] } }
+
+It would complain, that channels should be an *array* and not a string.
+
+So, that's the reason parsing was required in qtest too.
+
+I would be glad to hear if there are any ideas to convert /string -&gt; 
+json object -&gt; add it inside qdict along with uri/ ?
+
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">Isn't this what the various qobject_from_json do? How does it work with
+the existing tests?
+
+    qtest_qmp_assert_success(to, &quot;{ 'execute': 'migrate-incoming',&quot;
+                             &quot;  'arguments': { &quot;
+                             &quot;      'channels': [ { 'channel-type': 'main',&quot;
+                             &quot;      'addr': { 'transport': 'socket',&quot;
+                             &quot;                'type': 'inet',&quot;
+                             &quot;                'host': '127.0.0.1',&quot;
+                             &quot;                'port': '0' } } ] } }&quot;);
+
+We can pass this^ string successfully to QMP somehow...</pre>
+      </blockquote>
+      <p><font face="monospace">I think, here in </font><span style="white-space: pre-wrap"><font face="monospace">qtest_qmp_assert_success, we actually can pass the whole QMP command, and it just asserts that return key is present in the response, though I am not very much familiar with qtest codebase to verify how swiftly we can convert string into an actual QObject.</font></span></p>
+      <p><span style="white-space: pre-wrap"><font face="monospace">[...]</font></span></p>
+    </blockquote>
+    <p><font face="monospace">I tried with qobject_from_json type of
+        utility functions and the error I got was this :</font></p>
+    <p><font face="monospace">migration-test:
+        /rpmbuild/SOURCES/qemu/include/qapi/qmp/qobject.h:126:
+        qobject_type: Assertion `QTYPE_NONE &lt; obj-&gt;base.type
+        &amp;&amp; obj-&gt;base.type &lt; QTYPE__MAX' failed.</font></p>
+    <p><font face="monospace"><span style="white-space: pre-wrap">And I suppose this was the case because, there are only limited types of QTYPE available</span></font></p>
+    <div style="color: #abb2bf;background-color: #282c34;font-family: Menlo, Monaco, 'Courier New', monospace;font-weight: normal;font-size: 12px;line-height: 18px;white-space: pre;"><div><font face="monospace"><span style="color: #c678dd;">typedef</span><span style="color: #abb2bf;"> </span><span style="color: #c678dd;">enum</span><span style="color: #abb2bf;"> </span><span style="color: #e5c07b;">QType</span><span style="color: #abb2bf;"> {</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_NONE</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_QNULL</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_QNUM</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_QSTRING</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_QDICT</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_QLIST</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE_QBOOL</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">    </span><span style="color: #e06c75;">QTYPE__MAX</span><span style="color: #abb2bf;">,</span></font></div><div><font face="monospace"><span style="color: #abb2bf;">} </span><span style="color: #e5c07b;">QType</span><span style="color: #abb2bf;">;</span></font></div></div>
+    <p><span style="white-space: pre-wrap"><font face="monospace"> And 'channels' is a mixture of QDICT and QLIST and hence it is not able to easily convert from string to json.</font></span></p>
+    <p><span style="white-space: pre-wrap"><font face="monospace">Thoughts on this ?</font></span></p>
+    <blockquote type="cite" cite="mid:32687fa3-78dc-457b-ae50-854d2c72c922@nutanix.com">
+      <p><span style="white-space: pre-wrap"><font face="monospace">
+</font><span style="white-space: normal"></span></span></p>
+      <blockquote type="cite" cite="mid:87bk83bcqj.fsf@suse.de">
+        <blockquote type="cite">
+          <blockquote type="cite">
+            <pre class="moz-quote-pre" wrap="">   static void do_test_validate_uri_channel(MigrateCommon *args)
+   {
+       QTestState *from, *to;
+       g_autofree char *connect_uri = NULL;
+   
+       if (test_migrate_start(&amp;from, &amp;to, args-&gt;listen_uri, &amp;args-&gt;start)) {
+           return;
+       }
+
+
+
+Regards,
+
+Het Gala
+</pre>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+    <p><font face="monospace">Regards,</font></p>
+    <p><font face="monospace">Het Gala<br>
+      </font></p>
+    <br>
+  </body>
+</html>
+
+--------------ZoYSPtfjO1Maiw10PSPFt0Dv--
 
