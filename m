@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551C0C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 03:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9040EC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 04:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reRzY-00054M-5O; Sun, 25 Feb 2024 22:49:24 -0500
+	id 1reSIJ-0007u9-Qr; Sun, 25 Feb 2024 23:08:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRzW-00053x-53
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:49:22 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reSIH-0007ty-PV
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 23:08:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRzU-0000Wl-J6
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:49:21 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reSIF-00005i-3q
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 23:08:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708919359;
+ s=mimecast20190719; t=1708920521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=W9EOUYcphJ/QFT2T0d71f6sYYpmbax/7RmsDV13YL1o=;
- b=dS2AJeJfO6sVr1fWMWZT7BfHz8+t3hcCIqrPMERsuvgRp88wexpYM9NW8tYjxKsuG+ziUP
- ZbByCnoi3aizJQluPP7DqjPSFKmG6Pv49FkSm8fOrMcEGShyG+9u8/N+VKnV445x74ImlD
- FmNBaJEKM8vdN9lHepocRk4DAV9e6qc=
+ bh=W8vZaX2tD0Nz2eJ8R9GorLCp/l8hMgQJp0DDHWbxqeM=;
+ b=eN9B6T//DzDPxGqLXgJ5HCR/ZQ04A/6ZLxbyiRxhhzIvCx0BNanROp/bzB9pD9tLGt/hyP
+ /nLzGEZyC1C2aZzWxFnLAFkBXoLTbp/EzLcBOMUHCIwd9GEEx+FTbwt4IqoKoOGNrMFvCa
+ UJ32jR+cMLHJrdrj1weqRZhinILsGMU=
 Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
  [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-418-8NkDF0UvMSGnEN96VZFY2Q-1; Sun, 25 Feb 2024 22:49:18 -0500
-X-MC-Unique: 8NkDF0UvMSGnEN96VZFY2Q-1
+ us-mta-418-ym7k1277Nk2bmgUhFvz_Fw-1; Sun, 25 Feb 2024 23:08:40 -0500
+X-MC-Unique: ym7k1277Nk2bmgUhFvz_Fw-1
 Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-5c683944ab0so731157a12.0
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 19:49:18 -0800 (PST)
+ 41be03b00d2f7-5c683944ab0so733017a12.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 20:08:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708919357; x=1709524157;
+ d=1e100.net; s=20230601; t=1708920216; x=1709525016;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W9EOUYcphJ/QFT2T0d71f6sYYpmbax/7RmsDV13YL1o=;
- b=Jl8GbOTTLG0PUr2L+qMnTTGwRHd/Uimvhlx4KK4WOICGwVKwLu6g/gDfvRgHXGuNpX
- B5/RnJ5k39u9VplCOJcPm4/sMLYVr1i4zm55OZaBbePATLr1E1jeCtNKnRJsT4EQTQll
- fBFBIdcuHBiolhz9/GO7ysCxzJ8l7g33zJ3SwELzxyySp6vV1xTLNZwZ4/z5bCOVS/UK
- LfIgjtkTZA/etUfwqWd5oK0nSZ5BHvQE6xq0XnRscOuGmHkcymfRQvoB6MQU2/eulbLx
- EYZKixhdzsDP/rtdDs5Sj0CtJzVvq6xvzUU6NPDsPFqT0pLgQy4T/lnm36jAQcB1Zwqv
- rxAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVBMC0IInu5leIkA18RFCWCeZiXpA9LcrOO9RA05zDrybbEWg1NZXNQcHVdXTnVptNoF7CwnGKDy4EWQIxWZAzsP69Nd6g=
-X-Gm-Message-State: AOJu0YyWx7ZeKQEpi2K/M+Ye8yzK19wdcvOZnVzTZ4lpkpr3awbdkNbZ
- gIaDzU6cSaj3+o/LzuM4G/2sHHGpxx97IOOAQvcLr0DWm5wt+4AW7rB40vP9V7esUClfTiAmaTt
- Xx4oUJNGlL1bTgO07yAhUiMjOsgGBAy/WSgQ+Bqnkd0D/Sg0OKfbf
-X-Received: by 2002:aa7:8011:0:b0:6e4:68fa:f1ff with SMTP id
- j17-20020aa78011000000b006e468faf1ffmr7564444pfi.0.1708919356998; 
- Sun, 25 Feb 2024 19:49:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH3sopuJKxbIY2qaaS5DTN1OnUBg7A6pllRRtx65C+xcb04T9cH+zH7Tf86YoKQ1FA9mbf78g==
-X-Received: by 2002:aa7:8011:0:b0:6e4:68fa:f1ff with SMTP id
- j17-20020aa78011000000b006e468faf1ffmr7564434pfi.0.1708919356634; 
- Sun, 25 Feb 2024 19:49:16 -0800 (PST)
+ bh=W8vZaX2tD0Nz2eJ8R9GorLCp/l8hMgQJp0DDHWbxqeM=;
+ b=DVIXRbKvQjzogLPyX2e3zByTI3VPuKOdcJGkWFqv+9RvZ6CxoiHNmrPB7TuPt0dzsU
+ mD5BOeRRwu7vWTsAsmraOt4WTl71eT1Uzueg9ey7SNSfWRFr4MA1yY2mjfYQTZ9obbAa
+ rrEYsWAjUu5GU2jjK8+txygqvDaBRLl0XJIzdHE9Lgi7JIlRrxzzdeXTDZAl3XOntcxV
+ zARrNQAMPl4aHUPprCDytqb2Fgr4ppGPcgOlGsJgPuWFDhR9V71IQHEW63qW3TOR5Tof
+ xGOU/xi85iminc9TNq1VX4rpXMWO1TBJr5kTfoY/qB5uwoDWVHGw+egRn7s2TcY6LIBy
+ 91+Q==
+X-Gm-Message-State: AOJu0YytenRqAZXXDel67kU+dFbRfVTmIONMXgU/scWHEjHohlTNym+c
+ PFm48hV1h1gATEVjzotyhh0aMu1wHQFOo90XXpaZRINA1yKRKi68s3eN7zhivId4NCYZqCWRFSZ
+ B/wmzvKmPn+I+jRFQ+fKuxxG1zpuh4VndsU5lNyiTEyLlpDcjbuknndPXmjkj0I4=
+X-Received: by 2002:a05:6a20:1595:b0:1a1:3e2:dcc5 with SMTP id
+ h21-20020a056a20159500b001a103e2dcc5mr1715pzj.6.1708920216278; 
+ Sun, 25 Feb 2024 20:03:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGDTKP9AfH67B8/3U4VjEIGGj6g6NfRqKIYfjFKarxDGZ7En9kkX9YtksqMP2XdrR5A2+MeYA==
+X-Received: by 2002:a05:6a20:1595:b0:1a1:3e2:dcc5 with SMTP id
+ h21-20020a056a20159500b001a103e2dcc5mr1711pzj.6.1708920215983; 
+ Sun, 25 Feb 2024 20:03:35 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- i16-20020a635410000000b005df41b00ee9sm2945734pgb.68.2024.02.25.19.49.14
+ ld4-20020a056a004f8400b006e535131c52sm274221pfb.146.2024.02.25.20.03.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Feb 2024 19:49:16 -0800 (PST)
-Date: Mon, 26 Feb 2024 11:49:09 +0800
+ Sun, 25 Feb 2024 20:03:35 -0800 (PST)
+Date: Mon, 26 Feb 2024 12:03:27 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Steve Sistare <steven.sistare@oracle.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH] migration: Free argv
-Message-ID: <ZdwKNYI-uhkXJ4B5@x1n>
-References: <20240225-argv-v1-1-a11e772884d9@daynix.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>, Nikolay Borisov <nborisov@suse.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 13/34] migration/ram: Add outgoing 'fixed-ram' migration
+Message-ID: <ZdwNj0e5rs_C8CwR@x1n>
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-14-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240225-argv-v1-1-a11e772884d9@daynix.com>
+In-Reply-To: <20240220224138.24759-14-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -101,39 +101,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 25, 2024 at 02:54:01PM +0900, Akihiko Odaki wrote:
-> exec_start_outgoing_migration() and exec_start_incoming_migration()
-> leak argv because it uses g_steal_pointer() is used to pass argv
-> qio_channel_command_new_spawn() while it does not free argv either.
+On Tue, Feb 20, 2024 at 07:41:17PM -0300, Fabiano Rosas wrote:
+> Implement the outgoing migration side for the 'fixed-ram' capability.
 > 
-> Removing g_steal_pointer() is not sufficient though because argv is
-> typed g_auto(GStrv), which means the array of strings *and strings* will
-> be freed. The strings are only borrowed from the caller of
-> exec_start_outgoing_migration() and exec_start_incoming_migration() so
-> freeing them result in double-free.
+> A bitmap is introduced to track which pages have been written in the
+> migration file. Pages are written at a fixed location for every
+> ramblock. Zero pages are ignored as they'd be zero in the destination
+> migration as well.
 > 
-> Instead, type argv as g_autofree char **. This ensures only the array
-> of strings will be freed and the strings won't be freed. Also, remove
-> unnecessary casts according to the new type.
+> The migration stream is altered to put the dirty pages for a ramblock
+> after its header instead of having a sequential stream of pages that
+> follow the ramblock headers.
 > 
-> Fixes: cbab4face57b ("migration: convert exec backend to accept MigrateAddress.")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Without fixed-ram (current):        With fixed-ram (new):
+> 
+>  ---------------------               --------------------------------
+>  | ramblock 1 header |               | ramblock 1 header            |
+>  ---------------------               --------------------------------
+>  | ramblock 2 header |               | ramblock 1 fixed-ram header  |
+>  ---------------------               --------------------------------
+>  | ...               |               | padding to next 1MB boundary |
+>  ---------------------               | ...                          |
+>  | ramblock n header |               --------------------------------
+>  ---------------------               | ramblock 1 pages             |
+>  | RAM_SAVE_FLAG_EOS |               | ...                          |
+>  ---------------------               --------------------------------
+>  | stream of pages   |               | ramblock 2 header            |
+>  | (iter 1)          |               --------------------------------
+>  | ...               |               | ramblock 2 fixed-ram header  |
+>  ---------------------               --------------------------------
+>  | RAM_SAVE_FLAG_EOS |               | padding to next 1MB boundary |
+>  ---------------------               | ...                          |
+>  | stream of pages   |               --------------------------------
+>  | (iter 2)          |               | ramblock 2 pages             |
+>  | ...               |               | ...                          |
+>  ---------------------               --------------------------------
+>  | ...               |               | ...                          |
+>  ---------------------               --------------------------------
+>                                      | RAM_SAVE_FLAG_EOS            |
+>                                      --------------------------------
+>                                      | ...                          |
+>                                      --------------------------------
+> 
+> where:
+>  - ramblock header: the generic information for a ramblock, such as
+>    idstr, used_len, etc.
+> 
+>  - ramblock fixed-ram header: the new information added by this
+>    feature: bitmap of pages written, bitmap size and offset of pages
+>    in the migration file.
+> 
+> Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Cc: qemu-stable <qemu-stable@nongnu.org>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
-This should conflict with Steve's other series:
+Still one comment below:
 
-https://lore.kernel.org/r/1708638470-114846-1-git-send-email-steven.sistare@oracle.com
+[...]
 
-Considering this can be stable material, should be easier if we have the
-other series rebased on top of this, even if that was sent first..
+> @@ -3187,6 +3288,18 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>          return ret;
+>      }
+>  
+> +    if (migrate_fixed_ram()) {
+> +        ram_save_file_bmap(f);
+> +
+> +        if (qemu_file_get_error(f)) {
+> +            Error *local_err = NULL;
+> +            int err = qemu_file_get_error_obj(f, &local_err);
+> +
+> +            error_reportf_err(local_err, "Failed to write bitmap to file: ");
 
-Steve, do you still plan to repost your series?  Maybe you can review it &
-pick this up into your series?  Then whoever pick up your series will pick
-up both (Markus will?)?
+We always do error report if we set s->error.
 
-Thanks,
+Ideally I think we should have Error** passed to the caller and set
+s->error there, instead of report here.  But the whole error handling is
+still a bit of a mess, so I guess we can do anything on top.
+
+> +            return -err;
+> +        }
+> +    }
 
 -- 
 Peter Xu
