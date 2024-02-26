@@ -4,69 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 136CAC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 12:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 556C1C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 12:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reaN1-0001vZ-DE; Mon, 26 Feb 2024 07:46:12 -0500
+	id 1reaTf-0004LF-4r; Mon, 26 Feb 2024 07:53:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1reaMz-0001sh-RA
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 07:46:09 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reaTd-0004KS-2Z; Mon, 26 Feb 2024 07:53:01 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1reaMx-000294-SP
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 07:46:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1708951568; x=1740487568;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=1n9Gx8mBT4NzaqxK8Nl9wpoyjAT6B0cx8aQmqjCBAfc=;
- b=Hl+UXFbZ30Iys7Yzyu3HyYYMrVNQd3EPt7s9OQBKyQpW9LpfvcpEu8RJ
- 8Z4Lf0v0b1IJTI/4i38EDOAibQv6WdQZd0SH5mxpzpa+1rMNLlv867jYs
- xKQ7aQvYuD7JGxALLL92d67RAQ/+IwCJ3dugl7DRuuYvV1nFOAeJ62Qk0
- ey7hbDjuXTS4EOzlRJVnktBWQ0IwayZInt3JWm8LoAyiOacjmEzSxmhC7
- CcGmfemaOP/xdvgYgQlogsjSYDaHkxxlXSuZbwF0MydVlcKgvp5smBf1l
- TdkE+P0K4fbpl+liP9MAvoXuZkzCF4WzN/k4IQEIOK+1SpRkwXccYHgKt A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="20777361"
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="20777361"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2024 04:46:04 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="44133873"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa001.jf.intel.com with ESMTP; 26 Feb 2024 04:46:03 -0800
-Date: Mon, 26 Feb 2024 20:59:45 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, mcb30@ipxe.org
-Subject: Re: [PATCH v2 4/7] target/i386: use separate MMU indexes for 32-bit
- accesses
-Message-ID: <ZdyLQcDGryczl/7V@intel.com>
-References: <20240223130948.237186-1-pbonzini@redhat.com>
- <20240223130948.237186-5-pbonzini@redhat.com>
- <ZdxNkStjZyB6iJtk@intel.com>
- <CABgObfYz0MitUFmLkm3YncpmLFpQ=YOspr=KrYYWn7cFiuouKw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reaTa-0003ON-SN; Mon, 26 Feb 2024 07:53:00 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BA0C34E601F;
+ Mon, 26 Feb 2024 13:52:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id dv-mcUeUCaej; Mon, 26 Feb 2024 13:52:48 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id BD3D24E601E; Mon, 26 Feb 2024 13:52:48 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BB48A7456FE;
+ Mon, 26 Feb 2024 13:52:48 +0100 (CET)
+Date: Mon, 26 Feb 2024 13:52:48 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, qemu-block@nongnu.org, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, John Snow <jsnow@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 06/15] hw/ide: Rename ich.c -> ich9_ahci.c
+In-Reply-To: <20240226111416.39217-7-philmd@linaro.org>
+Message-ID: <54e1f04b-bef5-7587-f6d3-a87e9e036740@eik.bme.hu>
+References: <20240226111416.39217-1-philmd@linaro.org>
+ <20240226111416.39217-7-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfYz0MitUFmLkm3YncpmLFpQ=YOspr=KrYYWn7cFiuouKw@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-143728475-1708951968=:37179"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,56 +72,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, Feb 26, 2024 at 10:55:14AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 26 Feb 2024 10:55:14 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH v2 4/7] target/i386: use separate MMU indexes for
->  32-bit accesses
-> 
-> On Mon, Feb 26, 2024 at 9:22 AM Zhao Liu <zhao1.liu@intel.com> wrote:
-> > On Fri, Feb 23, 2024 at 02:09:45PM +0100, Paolo Bonzini wrote:
-> > > Accesses from a 32-bit environment (32-bit code segment for instruction
-> > > accesses, EFER.LMA==0 for processor accesses) have to mask away the
-> > > upper 32 bits of the address.  While a bit wasteful, the easiest way
-> > > to do so is to use separate MMU indexes.  These days, QEMU anyway is
-> > > compiled with a fixed value for NB_MMU_MODES.  Split MMU_USER_IDX,
-> > > MMU_KSMAP_IDX and MMU_KNOSMAP_IDX in two.
-> >
-> > Maybe s/in/into/ ?
-> 
-> Both are acceptable grammar.
-> 
-> > >  static inline int cpu_mmu_index_kernel(CPUX86State *env)
-> > >  {
-> > > -    return !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP_IDX :
-> > > -        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK))
-> > > -        ? MMU_KNOSMAP_IDX : MMU_KSMAP_IDX;
-> > > +    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
-> > > +    int mmu_index_base =
-> > > +        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-> > > +        ((env->hflags & HF_CPL_MASK) < 3 && (env->eflags & AC_MASK)) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
-> 
-> > Change the line?
-> 
-> It's reformatted but the logic is the same.
-> 
-> - if !SMAP -> MMU_KNOSMAP_IDX
-> 
-> - if CPL < 3 && EFLAGS.AC - MMU_KNOSMAP_IDX
-> 
-> - else MMU_KSMAP_IDX
-> 
-> The only change is adding the "64" suffix, which is then changed to
-> 32-bit if needed via mmu_index_32.
-> 
+--3866299591-143728475-1708951968=:37179
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Thanks for the explanation, I get your point.
-Similarly, I also understand your change in x86_cpu_mmu_index().
+On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
+> Most ICH9-related files use the 'ich9_' prefix.
+> Mention 'AHCI' in the file name.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> hw/ide/{ich.c => ich9_ahci.c} | 0
 
-LGTM, please allow me to add my review tag:
+That would rather be ahci-ich9.h then analogous to ahci-allwinnet.c 
+maybe?
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Regsards,
+BALATON Zoltan
 
+> hw/ide/meson.build            | 2 +-
+> 2 files changed, 1 insertion(+), 1 deletion(-)
+> rename hw/ide/{ich.c => ich9_ahci.c} (100%)
+>
+> diff --git a/hw/ide/ich.c b/hw/ide/ich9_ahci.c
+> similarity index 100%
+> rename from hw/ide/ich.c
+> rename to hw/ide/ich9_ahci.c
+> diff --git a/hw/ide/meson.build b/hw/ide/meson.build
+> index d09705cac0..2a7cd8405d 100644
+> --- a/hw/ide/meson.build
+> +++ b/hw/ide/meson.build
+> @@ -1,5 +1,5 @@
+> system_ss.add(when: 'CONFIG_AHCI', if_true: files('ahci.c'))
+> -system_ss.add(when: 'CONFIG_AHCI_ICH9', if_true: files('ich.c'))
+> +system_ss.add(when: 'CONFIG_AHCI_ICH9', if_true: files('ich9_ahci.c'))
+> system_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('ahci-allwinner.c'))
+> system_ss.add(when: 'CONFIG_IDE_BUS', if_true: files('ide-bus.c'))
+> system_ss.add(when: 'CONFIG_IDE_CF', if_true: files('cf.c'))
+>
+--3866299591-143728475-1708951968=:37179--
 
