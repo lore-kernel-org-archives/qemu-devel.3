@@ -4,108 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8619C5478C
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC5DC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 17:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reeO7-0004vS-Tk; Mon, 26 Feb 2024 12:03:36 -0500
+	id 1reeHo-0005ZJ-6g; Mon, 26 Feb 2024 11:57:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reeNT-0004Bx-GL
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:02:56 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reeNI-0000mb-VX
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 12:02:55 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d288bac3caso16879551fa.2
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 09:02:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708966963; x=1709571763; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pTAh5Ga1/WCguB9K86wBQIKOB8LucCe9FRfIk+dLcDE=;
- b=gGitUSZQxkr2K3+tKizn57lY8U7rHs0dLEkAsLN94FkrThrAUkNU2zv8sx4Wyfr7ax
- dWyc8e+ihKZcWA+8Z4hjBni4q15+he81Qw0LoQMBGsc+s9Ky4hsrTAWAG7TPDGH1rByM
- pqqs1FpsVQoWXn7ZLpa51GCYv0HK4Tb6Ppt7aHbwIJmuCy7mhpq5TsRtrMJecTx4DxKa
- JoyKMc05/m9m2/a5vw7UG+lMDTZL3z0J4+tq2c7U7xQ2mz8SiejgGkyfdvAVq7LPIC/l
- 45uKOipZIfFk2idwTfH7XcDjfTGI4dHB109hDl4In+LiM1isF7WTjE9ssCXBTV/pwUjn
- 59dQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708966963; x=1709571763;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pTAh5Ga1/WCguB9K86wBQIKOB8LucCe9FRfIk+dLcDE=;
- b=Wf/n5IX2Prwtk4YB3FBMZDWjGUYikljO17C9ryJOVE4o9Wi3bl01zZ1rY9WTrPXo7O
- lk3jgf/NOM0jjspc+JFeQ4ma3hb7Su5EkoI1CZK0bG1CVfShTxnn7nAOyIe+z24Bh87U
- FpymoQbL/hqAdW99ZlUymXmT9j3k7RbTgNsi0P/nwEdQixcVh52zwvjw1yPJ1NGYTuUB
- 8dcxA2XtFMnAwlIHF8aDjLt9N3vvK/hEJXsC8unU0OKC2TQV2lnVhrAKeXMgPPjeaaHx
- 17MNwDB5jTGeXsBnRa609Qhd6wVOVB0SR9p8ABOTP0t1owqLrZRjLVnWofTfwtMAs7RL
- haNw==
-X-Gm-Message-State: AOJu0YxQhQzTNQF44WuwqbLDhM3sGsSdgub37zfAy6nu0eNIplhtjTfo
- 4StMhTsZ4liBrRU9O0TL06ct90tB+b0Kgyr5u5KDW+AhhFYNOHzOC7CtkU8Dnpg=
-X-Google-Smtp-Source: AGHT+IGGEyHw+k9F402HfMEFf3ugy+0SxVk1gweISYDskmnpG4kXnCN9AROmOueBsZBoN1i0hjF7Lg==
-X-Received: by 2002:a2e:b8c3:0:b0:2d2:38b6:661b with SMTP id
- s3-20020a2eb8c3000000b002d238b6661bmr6087404ljp.33.1708966962934; 
- Mon, 26 Feb 2024 09:02:42 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- h19-20020a05600c261300b00412a30cd127sm5212488wma.7.2024.02.26.09.02.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 09:02:41 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9AD295F92C;
- Mon, 26 Feb 2024 16:56:48 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1reeHl-0005XN-7C
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:57:01 -0500
+Received: from relay.virtuozzo.com ([130.117.225.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1reeHX-0007aO-4T
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 11:56:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
+ Content-Type; bh=kV26etjdgrTttBHqNO1xlpqvRXHOfMKajDrhdh/+Zqo=; b=ijy1WUQl4gy5
+ 15u8ifI9ORKKzhR+7noCc41HWvc7WQUipIoFtoNkaDQp+ck3KFKT8Y/UayQkaluF+CEi07yvtnrLG
+ upOA3l81RBtlj7/5vjjvi/s+rGUj53ZOTco4EQI3Dhl1kGup0mnlWev94HtwdK7W4+zTu6QDGNzZD
+ fkbf/vNu+axs+c/csFxD8ZcElFHR8j7iC+XSUfYTqdFJksPixOsIZQT3gUpBq+q3ZQyM3U1yb8oEz
+ JKgTk2VmuwpHPZ0PQiHZecL30T0OoPB5nw2m62mOVCmXVk7QX4Yb4E7DrivpYa9OuNy89RhPZus9M
+ dMZXwiO7YalqOFj+i9DyBg==;
+Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1reeG3-001AD7-02;
+ Mon, 26 Feb 2024 17:56:34 +0100
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-riscv@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
- Song Gao <gaosong@loongson.cn>, Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- John Snow <jsnow@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-s390x@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Thomas Huth <thuth@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Yanan Wang <wangyanan55@huawei.com>, Brian Cain <bcain@quicinc.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Bin Meng <bin.meng@windriver.com>, Laurent Vivier <laurent@vivier.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v3 19/27] gdbstub: expose api to find registers
-Date: Mon, 26 Feb 2024 16:56:38 +0000
-Message-Id: <20240226165646.425600-20-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240226165646.425600-1-alex.bennee@linaro.org>
-References: <20240226165646.425600-1-alex.bennee@linaro.org>
+Cc: michael.roth@amd.com, kkostiuk@redhat.com, marcandre.lureau@redhat.com,
+ andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
+Subject: [PATCH 1/7] qga/commands-posix: return fsinfo values directly as
+ reported by statvfs
+Date: Mon, 26 Feb 2024 18:56:36 +0200
+Message-Id: <20240226165642.807350-2-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240226165642.807350-1-andrey.drobyshev@virtuozzo.com>
+References: <20240226165642.807350-1-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=130.117.225.111;
+ envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,100 +69,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose an internal API to QEMU to return all the registers for a vCPU.
-The list containing the details required to called gdb_read_register().
+Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
+GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo:
+used = (f_blocks - f_bfree), total = (f_blocks - f_bfree + f_bavail).
+These calculations might be obscure for the end user and require one to
+actually get into QGA source to understand how they're obtained. Let's
+just report the values f_blocks, f_bfree, f_bavail (in bytes) from
+statvfs() as they are, letting the user decide how to process them further.
 
-Based-on: <20231025093128.33116-15-akihiko.odaki@daynix.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240103173349.398526-38-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
+Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
-v3
-  - rm unused api functions left over
----
- include/exec/gdbstub.h | 28 ++++++++++++++++++++++++++++
- gdbstub/gdbstub.c      | 27 ++++++++++++++++++++++++++-
- 2 files changed, 54 insertions(+), 1 deletion(-)
+ qga/commands-posix.c | 16 +++++++---------
+ qga/qapi-schema.json | 11 +++++++----
+ 2 files changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index da9ddfe54c5..eb14b91139b 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -111,6 +111,34 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder);
-  */
- const GDBFeature *gdb_find_static_feature(const char *xmlname);
- 
-+/**
-+ * gdb_read_register() - Read a register associated with a CPU.
-+ * @cpu: The CPU associated with the register.
-+ * @buf: The buffer that the read register will be appended to.
-+ * @reg: The register's number returned by gdb_find_feature_register().
-+ *
-+ * Return: The number of read bytes.
-+ */
-+int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
-+
-+/**
-+ * typedef GDBRegDesc - a register description from gdbstub
-+ */
-+typedef struct {
-+    int gdb_reg;
-+    const char *name;
-+    const char *feature_name;
-+} GDBRegDesc;
-+
-+/**
-+ * gdb_get_register_list() - Return list of all registers for CPU
-+ * @cpu: The CPU being searched
-+ *
-+ * Returns a GArray of GDBRegDesc, caller frees array but not the
-+ * const strings.
-+ */
-+GArray *gdb_get_register_list(CPUState *cpu);
-+
- void gdb_set_stop_cpu(CPUState *cpu);
- 
- /* in gdbstub-xml.c, generated by scripts/feature_to_c.py */
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index a55b5e6581a..2909bc8c69f 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -490,7 +490,32 @@ const GDBFeature *gdb_find_static_feature(const char *xmlname)
-     g_assert_not_reached();
- }
- 
--static int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-+GArray *gdb_get_register_list(CPUState *cpu)
-+{
-+    GArray *results = g_array_new(true, true, sizeof(GDBRegDesc));
-+
-+    /* registers are only available once the CPU is initialised */
-+    if (!cpu->gdb_regs) {
-+        return results;
-+    }
-+
-+    for (int f = 0; f < cpu->gdb_regs->len; f++) {
-+        GDBRegisterState *r = &g_array_index(cpu->gdb_regs, GDBRegisterState, f);
-+        for (int i = 0; i < r->feature->num_regs; i++) {
-+            const char *name = r->feature->regs[i];
-+            GDBRegDesc desc = {
-+                r->base_reg + i,
-+                name,
-+                r->feature->name
-+            };
-+            g_array_append_val(results, desc);
-+        }
-+    }
-+
-+    return results;
-+}
-+
-+int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 26008db497..752ef509d0 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -1554,8 +1554,7 @@ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
+                                                Error **errp)
  {
-     CPUClass *cc = CPU_GET_CLASS(cpu);
-     GDBRegisterState *r;
+     GuestFilesystemInfo *fs = g_malloc0(sizeof(*fs));
+-    struct statvfs buf;
+-    unsigned long used, nonroot_total, fr_size;
++    struct statvfs st;
+     char *devpath = g_strdup_printf("/sys/dev/block/%u:%u",
+                                     mount->devmajor, mount->devminor);
+ 
+@@ -1563,15 +1562,14 @@ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
+     fs->type = g_strdup(mount->devtype);
+     build_guest_fsinfo_for_device(devpath, fs, errp);
+ 
+-    if (statvfs(fs->mountpoint, &buf) == 0) {
+-        fr_size = buf.f_frsize;
+-        used = buf.f_blocks - buf.f_bfree;
+-        nonroot_total = used + buf.f_bavail;
+-        fs->used_bytes = used * fr_size;
+-        fs->total_bytes = nonroot_total * fr_size;
++    if (statvfs(fs->mountpoint, &st) == 0) {
++        fs->total_bytes = st.f_blocks * st.f_frsize;
++        fs->free_bytes = st.f_bfree * st.f_frsize;
++        fs->avail_bytes = st.f_bavail * st.f_frsize;
+ 
+         fs->has_total_bytes = true;
+-        fs->has_used_bytes = true;
++        fs->has_free_bytes = true;
++        fs->has_avail_bytes = true;
+     }
+ 
+     g_free(devpath);
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index b8efe31897..1cce3c1df5 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -1030,9 +1030,12 @@
+ #
+ # @type: file system type string
+ #
+-# @used-bytes: file system used bytes (since 3.0)
++# @total-bytes: total file system size in bytes (since 8.3)
+ #
+-# @total-bytes: non-root file system total bytes (since 3.0)
++# @free-bytes: amount of free space in file system in bytes (since 8.3)
++#
++# @avail-bytes: amount of free space in file system for unprivileged
++#     users in bytes (since 8.3)
+ #
+ # @disk: an array of disk hardware information that the volume lies
+ #     on, which may be empty if the disk type is not supported
+@@ -1041,8 +1044,8 @@
+ ##
+ { 'struct': 'GuestFilesystemInfo',
+   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
+-           '*used-bytes': 'uint64', '*total-bytes': 'uint64',
+-           'disk': ['GuestDiskAddress']} }
++           '*total-bytes': 'uint64', '*free-bytes': 'uint64',
++           '*avail-bytes': 'uint64', 'disk': ['GuestDiskAddress']} }
+ 
+ ##
+ # @guest-get-fsinfo:
 -- 
-2.39.2
+2.39.3
 
 
