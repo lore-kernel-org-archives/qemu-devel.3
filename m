@@ -4,64 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7779FC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CAC3C54E4A
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 10:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reYZD-0002kn-Kc; Mon, 26 Feb 2024 05:50:39 -0500
+	id 1reYZE-0002kp-4c; Mon, 26 Feb 2024 05:50:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reYYg-0002bg-Th
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 05:50:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reYZ3-0002hN-Re; Mon, 26 Feb 2024 05:50:30 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reYYa-0003jF-Fj
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 05:50:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708944599;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=wjrEUFhDf6rCyDM7vVCEGZDQ6Q/pZSu4wvm6SodbO1U=;
- b=E6TsdRnNW4Qz/IcMm1BUtB6aTC1c1pSsNk5byZPFj5s7SHwstvJa0c6+UBIS0juiAlugFx
- NsiBP2TLz/tnqd9y1psObCy1sZsZf4oSu/ux1ZSK5dyYIG7Gh2i4v8ZW8Ul9ye6z97D5PC
- bcghYmD9+gLQO2m8UoB77fRH5mmdDr0=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-BV-nghUuO4utVp1fHn4h3w-1; Mon, 26 Feb 2024 05:49:56 -0500
-X-MC-Unique: BV-nghUuO4utVp1fHn4h3w-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C55B188208A;
- Mon, 26 Feb 2024 10:49:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 7FC624024857;
- Mon, 26 Feb 2024 10:49:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 850EB21E66F4; Mon, 26 Feb 2024 11:49:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org
-Subject: [PULL 00/17] QAPI patches patches for 2024-02-26
-Date: Mon, 26 Feb 2024 11:49:37 +0100
-Message-ID: <20240226104954.3781985-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reYZ1-00043K-OE; Mon, 26 Feb 2024 05:50:29 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 179C14E6026;
+ Mon, 26 Feb 2024 11:50:25 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id dA7fQlQtrwC1; Mon, 26 Feb 2024 11:50:23 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 20DCE4E601E; Mon, 26 Feb 2024 11:50:23 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 1F1187456B4;
+ Mon, 26 Feb 2024 11:50:23 +0100 (CET)
+Date: Mon, 26 Feb 2024 11:50:23 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
+ John Snow <jsnow@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 3/3] hw/ide: Include 'ide_internal.h' from current path
+In-Reply-To: <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
+Message-ID: <90219760-aad5-82b2-41aa-be563f52fdf9@eik.bme.hu>
+References: <20240225171637.4709-1-philmd@linaro.org>
+ <20240225171637.4709-4-philmd@linaro.org>
+ <feffd329-59e0-0291-0dd6-76a625da190b@eik.bme.hu>
+ <878r37lll6.fsf@pond.sub.org>
+ <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-1653774431-1708944568=:1986"
+Content-ID: <de8c98d8-24d0-883e-2208-6c280c149494@eik.bme.hu>
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,113 +74,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit dd88d696ccecc0f3018568f8e281d3d526041e6f:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-  Merge tag 'pull-request-2024-02-23' of https://gitlab.com/thuth/qemu into staging (2024-02-24 16:12:51 +0000)
+--3866299591-1653774431-1708944568=:1986
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <a7ba5298-f308-b152-2717-bb9a6be7f849@eik.bme.hu>
 
-are available in the Git repository at:
+On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
+> On 26/2/24 08:40, Markus Armbruster wrote:
+>> BALATON Zoltan <balaton@eik.bme.hu> writes:
+>> 
+>>> On Sun, 25 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>> Rename "internal.h" as "ide_internal.h", and include
+>>> 
+>>> Is there a convention about using underscore or dash in file names? The 
+>>> headers Thomas added are using - as well as ahci-allwinner.c, only 
+>>> ahci_internal.h has _ (but there are others elsewhere such as 
+>>> pci_device.h). Maybe we should be consistent at least within IDE and this 
+>>> series is now a good opportunity for renaming these headers to match. But 
+>>> it's just a small nit, thanks for picking this up.
+>> 
+>> This is one of the many unnecessary inconsistencies we're inflicting on
+>> ourselves.
+>> 
+>> We have more than 3600 file names containing '-', and more almost 2700
+>> containing '_'.  Bizarrely, 68 of them contain both.
+>> 
+>> I strongly prefer '_' myself.
+>> 
+>> Zoltan is making a local consistency argument for '-'.
+>> 
+>> Let's use '-' here.
+>
+> Fine, patch updated.
 
-  https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-02-26
+And then please also rename ahci_internal.h to use '-' to be really 
+consistent.
 
-for you to fetch changes up to adb0193b90bd1fecd7d6dda70fc1c2d2e45ceae0:
-
-  qapi: Divorce QAPIDoc from QAPIParseError (2024-02-26 10:43:56 +0100)
-
-----------------------------------------------------------------
-QAPI patches patches for 2024-02-26
-
-----------------------------------------------------------------
-Het Gala (1):
-      qapi: Misc cleanups to migrate QAPIs
-
-Markus Armbruster (16):
-      tests/qapi-schema: Fix test 'QAPI rST doc'
-      tests/qapi-schema: Cover duplicate 'Features:' line
-      tests/qapi-schema: Cover 'Features:' not followed by descriptions
-      sphinx/qapidoc: Drop code to generate doc for simple union branch
-      qapi: Improve error position for bogus argument descriptions
-      qapi: Improve error position for bogus invalid "Returns" section
-      qapi: Improve error message for empty doc sections
-      qapi: Rename QAPIDoc.Section.name to .tag
-      qapi: Reject section heading in the middle of a doc comment
-      qapi: Require descriptions and tagged sections to be indented
-      qapi: Recognize section tags and 'Features:' only after blank line
-      qapi: Call QAPIDoc.check() always
-      qapi: Merge adjacent untagged sections
-      qapi: Rewrite doc comment parser
-      qapi: Reject multiple and empty feature descriptions
-      qapi: Divorce QAPIDoc from QAPIParseError
-
- docs/devel/qapi-code-gen.rst                    |  30 +-
- docs/sphinx/qapidoc.py                          |  28 +-
- qapi/acpi.json                                  |  20 +-
- qapi/block-core.json                            | 868 ++++++++++++------------
- qapi/block.json                                 | 274 ++++----
- qapi/char.json                                  | 172 ++---
- qapi/control.json                               |  54 +-
- qapi/dump.json                                  |  26 +-
- qapi/machine-target.json                        |   6 +-
- qapi/machine.json                               | 302 ++++-----
- qapi/migration.json                             | 695 +++++++++----------
- qapi/misc-target.json                           | 110 +--
- qapi/misc.json                                  | 172 ++---
- qapi/net.json                                   | 118 ++--
- qapi/pci.json                                   | 252 +++----
- qapi/qdev.json                                  |  38 +-
- qapi/qom.json                                   |  54 +-
- qapi/rdma.json                                  |  14 +-
- qapi/replay.json                                |  16 +-
- qapi/rocker.json                                |  66 +-
- qapi/run-state.json                             |  86 ++-
- qapi/tpm.json                                   |  36 +-
- qapi/trace.json                                 |  12 +-
- qapi/transaction.json                           |  36 +-
- qapi/ui.json                                    | 324 ++++-----
- qapi/virtio.json                                | 778 ++++++++++-----------
- qapi/yank.json                                  |  24 +-
- scripts/qapi/parser.py                          | 517 +++++++-------
- scripts/qapi/schema.py                          |   7 +-
- tests/qapi-schema/doc-bad-alternate-member.err  |   2 +-
- tests/qapi-schema/doc-bad-boxed-command-arg.err |   2 +-
- tests/qapi-schema/doc-bad-command-arg.err       |   2 +-
- tests/qapi-schema/doc-bad-enum-member.err       |   2 +-
- tests/qapi-schema/doc-bad-event-arg.err         |   2 +-
- tests/qapi-schema/doc-bad-feature.err           |   2 +-
- tests/qapi-schema/doc-bad-union-member.err      |   2 +-
- tests/qapi-schema/doc-duplicate-features.err    |   1 +
- tests/qapi-schema/doc-duplicate-features.json   |  11 +
- tests/qapi-schema/doc-duplicate-features.out    |   0
- tests/qapi-schema/doc-duplicated-arg.err        |   2 +-
- tests/qapi-schema/doc-duplicated-return.err     |   2 +-
- tests/qapi-schema/doc-duplicated-return.json    |   1 +
- tests/qapi-schema/doc-duplicated-since.err      |   2 +-
- tests/qapi-schema/doc-duplicated-since.json     |   1 +
- tests/qapi-schema/doc-empty-arg.err             |   2 +-
- tests/qapi-schema/doc-empty-features.err        |   1 +
- tests/qapi-schema/doc-empty-features.json       |  10 +
- tests/qapi-schema/doc-empty-features.out        |   0
- tests/qapi-schema/doc-empty-section.err         |   2 +-
- tests/qapi-schema/doc-good.json                 |  25 +-
- tests/qapi-schema/doc-good.txt                  |  21 +-
- tests/qapi-schema/doc-invalid-return.err        |   2 +-
- tests/qapi-schema/doc-invalid-return.json       |   1 +
- tests/qapi-schema/doc-non-first-section.err     |   1 +
- tests/qapi-schema/doc-non-first-section.json    |   6 +
- tests/qapi-schema/doc-non-first-section.out     |   0
- tests/qapi-schema/meson.build                   |  12 +-
- tests/qapi-schema/test-qapi.py                  |   2 +-
- 58 files changed, 2624 insertions(+), 2630 deletions(-)
- create mode 100644 tests/qapi-schema/doc-duplicate-features.err
- create mode 100644 tests/qapi-schema/doc-duplicate-features.json
- create mode 100644 tests/qapi-schema/doc-duplicate-features.out
- create mode 100644 tests/qapi-schema/doc-empty-features.err
- create mode 100644 tests/qapi-schema/doc-empty-features.json
- create mode 100644 tests/qapi-schema/doc-empty-features.out
- create mode 100644 tests/qapi-schema/doc-non-first-section.err
- create mode 100644 tests/qapi-schema/doc-non-first-section.json
- create mode 100644 tests/qapi-schema/doc-non-first-section.out
-
--- 
-2.43.0
-
+Regards,
+BALATON Zoltan
+--3866299591-1653774431-1708944568=:1986--
 
