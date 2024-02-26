@@ -4,109 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8BFC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9898C54E49
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reacQ-0007Jp-Pz; Mon, 26 Feb 2024 08:02:07 -0500
+	id 1reacX-0007M7-KR; Mon, 26 Feb 2024 08:02:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1reacO-0007Hv-A5
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:02:04 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1reacM-0005So-6v
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:02:04 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 54F3022514;
- Mon, 26 Feb 2024 13:01:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708952519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6m7Fd/UTfb75LGBYIxqas0FTZMYEzeGq9U2F2ucSRxw=;
- b=x2sM+hKUFCtZEt4Klfzx5TXoEMvwVzHZLh8/4lUk/paoysDoT1HC+YqR5Yxby4RANsmRVb
- 7P6apUmoFsa5BCUDwr3Sei10cXNN5df33jdv/83PALqsPWyNGvWrP5miZ59CZ9LwoOd6om
- DP6zwxW1kaJYflYhSv9xtNw6P3GkNr4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708952519;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6m7Fd/UTfb75LGBYIxqas0FTZMYEzeGq9U2F2ucSRxw=;
- b=gt1xaaDRTC4rSgOtoVLw063tLhQd9Ex5r8MnNFxpvcuqI94meTzeMsDqB+BQVkUQGz8YNp
- MZzvlS+vjdn8g8CQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1708952519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6m7Fd/UTfb75LGBYIxqas0FTZMYEzeGq9U2F2ucSRxw=;
- b=x2sM+hKUFCtZEt4Klfzx5TXoEMvwVzHZLh8/4lUk/paoysDoT1HC+YqR5Yxby4RANsmRVb
- 7P6apUmoFsa5BCUDwr3Sei10cXNN5df33jdv/83PALqsPWyNGvWrP5miZ59CZ9LwoOd6om
- DP6zwxW1kaJYflYhSv9xtNw6P3GkNr4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1708952519;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6m7Fd/UTfb75LGBYIxqas0FTZMYEzeGq9U2F2ucSRxw=;
- b=gt1xaaDRTC4rSgOtoVLw063tLhQd9Ex5r8MnNFxpvcuqI94meTzeMsDqB+BQVkUQGz8YNp
- MZzvlS+vjdn8g8CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D3C9D13A58;
- Mon, 26 Feb 2024 13:01:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id nCA5JsaL3GVXVwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 26 Feb 2024 13:01:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com
-Subject: Re: [PATCH v2 1/3] qtest: migration: Enhance qtest migration
- functions to support 'channels' argument
-In-Reply-To: <1988bb0f-6ebe-4335-b761-d11313c772fd@nutanix.com>
-References: <20240223152517.7834-1-het.gala@nutanix.com>
- <20240223152517.7834-2-het.gala@nutanix.com> <87zfvr7xdn.fsf@suse.de>
- <1988bb0f-6ebe-4335-b761-d11313c772fd@nutanix.com>
-Date: Mon, 26 Feb 2024 10:01:56 -0300
-Message-ID: <87bk83bcqj.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reacW-0007LQ-32; Mon, 26 Feb 2024 08:02:12 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reacQ-0005Tz-45; Mon, 26 Feb 2024 08:02:11 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 535EF4E601F;
+ Mon, 26 Feb 2024 14:02:01 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 9t60Q0hnXzp1; Mon, 26 Feb 2024 14:01:59 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 41FD04E601E; Mon, 26 Feb 2024 14:01:59 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3FDBE7456B4;
+ Mon, 26 Feb 2024 14:01:59 +0100 (CET)
+Date: Mon, 26 Feb 2024 14:01:59 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, qemu-block@nongnu.org, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, John Snow <jsnow@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 08/15] hw/pci-bridge: Extract QOM ICH definitions to
+ 'ich9_dmi.h'
+In-Reply-To: <20240226111416.39217-9-philmd@linaro.org>
+Message-ID: <5bab87f9-aeee-3aa5-d695-4fa2128130a1@eik.bme.hu>
+References: <20240226111416.39217-1-philmd@linaro.org>
+ <20240226111416.39217-9-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=x2sM+hKU;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gt1xaaDR
-X-Spamd-Result: default: False [-3.31 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 54F3022514
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1028664770-1708952519=:37179"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,125 +73,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Het Gala <het.gala@nutanix.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On 24/02/24 1:42 am, Fabiano Rosas wrote:
->> Het Gala<het.gala@nutanix.com>  writes:
->>
->>> Introduce support for adding a 'channels' argument to migrate_qmp_fail,
->>> migrate_incoming_qmp and migrate_qmp functions within the migration qtest
->>> framework, enabling enhanced control over migration scenarios.
->> Can't we just pass a channels string like you did in the original series
->> with migrate_postcopy_prepare?
->>
->> We'd change migrate_* functions like this:
->>
->>    void migrate_qmp(QTestState *who, const char *uri, const char *channels,
->>                     const char *fmt, ...)
->>    {
->>    ...
->>        g_assert(!qdict_haskey(args, "uri"));
->>        if (uri) {
->>            qdict_put_str(args, "uri", uri);
->>        }
->>    
->>        g_assert(!qdict_haskey(args, "channels"));
->>        if (channels) {
->>            qdict_put_str(args, "channels", channels);
->>        }
->>    }
->>
->> Write the test like this:
->>
->>    static void test_multifd_tcp_none_channels(void)
->>    {
->>        MigrateCommon args = {
->>            .listen_uri = "defer",
->>            .start_hook = test_migrate_precopy_tcp_multifd_start,
->>            .live = true,
->>            .connect_channels = "'channels': [ { 'channel-type': 'main',"
->>                                "      'addr': { 'transport': 'socket',"
->>                                "                'type': 'inet',"
->>                                "                'host': '127.0.0.1',"
->>                                "                'port': '0' } } ]",
->>            .connect_uri = NULL;
->>                                 
->>        };
->>        test_precopy_common(&args);
->>    }
->
-> this was the same first approach that I attempted. It won't work because
->
-> The final 'migrate' QAPI with channels string would look like
->
-> { "execute": "migrate", "arguments": { "channels": "[ { "channel-type": 
-> "main", "addr": { "transport": "socket", "type": "inet", "host": 
-> "10.117.29.84", "port": "4000" }, "multifd-channels": 2 } ]" } }
->
-> instead of
->
-> { "execute": "migrate", "arguments": { "channels": [ { "channel-type": 
-> "main", "addr": { "transport": "socket", "type": "inet", "host": 
-> "10.117.29.84", "port": "4000" }, "multifd-channels": 2 } ] } }
->
-> It would complain, that channels should be an *array* and not a string.
->
-> So, that's the reason parsing was required in qtest too.
->
-> I would be glad to hear if there are any ideas to convert /string -> 
-> json object -> add it inside qdict along with uri/ ?
->
+--3866299591-1028664770-1708952519=:37179
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Isn't this what the various qobject_from_json do? How does it work with
-the existing tests?
+On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
+> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
+> "hw/pci-bridge/ich9_dmi.h" header.
 
-    qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
-                             "  'arguments': { "
-                             "      'channels': [ { 'channel-type': 'main',"
-                             "      'addr': { 'transport': 'socket',"
-                             "                'type': 'inet',"
-                             "                'host': '127.0.0.1',"
-                             "                'port': '0' } } ] } }");
+Since this is effectively an empty object (that's not even instantiated by 
+default) I still think that instead of adding even more files for it all 
+this could just be moved to hw/isa/lpc_ich9.c and define there as an 
+internal object and drop the OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, 
+ICH_DMI_PCI_BRIDGE) and just use the size of the superclass as it's 
+instance size. That just adds the realize function and a type definition 
+and gets rid of boilerplate scattered around the source tree which just 
+adds complexity for no reason. But I don't care too much about it, just 
+wanted to say again that if something can be kept simple I'd prefer that 
+over making it more complex and for this device it looks already too 
+complex for what it does or used for.
 
-We can pass this^ string successfully to QMP somehow...
+Regards,
+BALATON Zoltan
 
->>    static void do_test_validate_uri_channel(MigrateCommon *args)
->>    {
->>        QTestState *from, *to;
->>        g_autofree char *connect_uri = NULL;
->>    
->>        if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
->>            return;
->>        }
->>    
->>        wait_for_serial("src_serial");
->>    
->>        if (args->result == MIG_TEST_QMP_ERROR) {
->>            migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
->>        } else {
->>            migrate_qmp(from, args->connect_uri, args->connect_channels, "{}");
->>        }
->>    
->>        test_migrate_end(from, to, false);
->>    }
->>
->> It's better to require test writers to pass in their own uri and channel
->> strings. Otherwise any new transport added will require people to modify
->> these conversion helpers.
-> I agree with your point here. I was thinking to have a general but a 
-> hacky version of migrate_uri_parse() but that too seemed like a 
-> overkill. I don't have a better solution to this right now
->> Also, using the same string as the user would use in QMP helps with
->> development in general. One could refer to the tests to see how to
->> invoke the migration or experiment with the string in the tests during
->> development.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> MAINTAINERS                               |  1 +
+> include/hw/pci-bridge/ich9_dmi.h          | 20 ++++++++++++++++++++
+> include/hw/southbridge/ich9.h             |  2 --
+> hw/pci-bridge/{i82801b11.c => ich9_dmi.c} | 11 ++++-------
+> hw/pci-bridge/meson.build                 |  2 +-
+> 5 files changed, 26 insertions(+), 10 deletions(-)
+> create mode 100644 include/hw/pci-bridge/ich9_dmi.h
+> rename hw/pci-bridge/{i82801b11.c => ich9_dmi.c} (95%)
 >
-> For examples, I think - enough examples with 'channel' argument are 
-> provided where 'migrate' QAPI is defined. users can directly copy the 
-> qmp command from there itself.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 0849283287..52282c680e 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2618,6 +2618,7 @@ F: hw/i2c/smbus_ich9.c
+> F: hw/isa/lpc_ich9.c
+> F: include/hw/acpi/ich9*.h
+> F: include/hw/i2c/ich9_smbus.h
+> +F: include/hw/pci-bridge/ich9_dmi.h
+> F: include/hw/southbridge/ich9.h
 >
+> PIIX4 South Bridge (i82371AB)
+> diff --git a/include/hw/pci-bridge/ich9_dmi.h b/include/hw/pci-bridge/ich9_dmi.h
+> new file mode 100644
+> index 0000000000..7cf5d9d9b2
+> --- /dev/null
+> +++ b/include/hw/pci-bridge/ich9_dmi.h
+> @@ -0,0 +1,20 @@
+> +/*
+> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_PCI_BRIDGE_ICH9_DMI_H
+> +#define HW_PCI_BRIDGE_ICH9_DMI_H
+> +
+> +#include "qom/object.h"
+> +#include "hw/pci/pci_bridge.h"
+> +
+> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
+> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
+> +
+> +struct I82801b11Bridge {
+> +    PCIBridge parent_obj;
+> +};
+> +
+> +#endif
+> diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+> index bee522a4cf..b2abf483e0 100644
+> --- a/include/hw/southbridge/ich9.h
+> +++ b/include/hw/southbridge/ich9.h
+> @@ -114,8 +114,6 @@ struct ICH9LPCState {
 >
-> Regards,
+> #define ICH9_D2P_SECONDARY_DEFAULT              (256 - 8)
 >
-> Het Gala
+> -#define ICH9_D2P_A2_REVISION                    0x92
+> -
+> /* D31:F0 LPC Processor Interface */
+> #define ICH9_RST_CNT_IOPORT                     0xCF9
+>
+> diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/ich9_dmi.c
+> similarity index 95%
+> rename from hw/pci-bridge/i82801b11.c
+> rename to hw/pci-bridge/ich9_dmi.c
+> index c140919cbc..927e48bf2e 100644
+> --- a/hw/pci-bridge/i82801b11.c
+> +++ b/hw/pci-bridge/ich9_dmi.c
+> @@ -45,7 +45,7 @@
+> #include "hw/pci/pci_bridge.h"
+> #include "migration/vmstate.h"
+> #include "qemu/module.h"
+> -#include "hw/southbridge/ich9.h"
+> +#include "hw/pci-bridge/ich9_dmi.h"
+>
+> /*****************************************************************************/
+> /* ICH9 DMI-to-PCI bridge */
+> @@ -53,11 +53,8 @@
+> #define I82801ba_SSVID_SVID     0
+> #define I82801ba_SSVID_SSID     0
+>
+> -typedef struct I82801b11Bridge {
+> -    /*< private >*/
+> -    PCIBridge parent_obj;
+> -    /*< public >*/
+> -} I82801b11Bridge;
+> +
+> +#define ICH9_D2P_A2_REVISION                    0x92
+>
+> static void i82801b11_bridge_realize(PCIDevice *d, Error **errp)
+> {
+> @@ -103,7 +100,7 @@ static void i82801b11_bridge_class_init(ObjectClass *klass, void *data)
+> }
+>
+> static const TypeInfo i82801b11_bridge_info = {
+> -    .name          = "i82801b11-bridge",
+> +    .name          = TYPE_ICH_DMI_PCI_BRIDGE,
+>     .parent        = TYPE_PCI_BRIDGE,
+>     .instance_size = sizeof(I82801b11Bridge),
+>     .class_init    = i82801b11_bridge_class_init,
+> diff --git a/hw/pci-bridge/meson.build b/hw/pci-bridge/meson.build
+> index f2a60434dd..d746487193 100644
+> --- a/hw/pci-bridge/meson.build
+> +++ b/hw/pci-bridge/meson.build
+> @@ -1,6 +1,6 @@
+> pci_ss = ss.source_set()
+> pci_ss.add(files('pci_bridge_dev.c'))
+> -pci_ss.add(when: 'CONFIG_I82801B11', if_true: files('i82801b11.c'))
+> +pci_ss.add(when: 'CONFIG_I82801B11', if_true: files('ich9_dmi.c'))
+> pci_ss.add(when: 'CONFIG_IOH3420', if_true: files('ioh3420.c'))
+> pci_ss.add(when: 'CONFIG_PCIE_PORT', if_true: files('pcie_root_port.c', 'gen_pcie_root_port.c'))
+> pci_ss.add(when: 'CONFIG_PCIE_PCI_BRIDGE', if_true: files('pcie_pci_bridge.c'))
+>
+--3866299591-1028664770-1708952519=:37179--
 
