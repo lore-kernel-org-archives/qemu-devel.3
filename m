@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEAFEC54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C753C54E51
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 09:15:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reX5O-0004Xv-V0; Mon, 26 Feb 2024 04:15:47 -0500
+	id 1reX4n-0003NC-0f; Mon, 26 Feb 2024 04:15:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1reX5M-0004X7-NU
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:15:44 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1reX4l-0003MV-F9
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:15:07 -0500
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1reX5E-0005DR-HK
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:15:44 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412a3eba4dcso6888865e9.2
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:15:34 -0800 (PST)
+ id 1reX4j-00058r-Ja
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 04:15:07 -0500
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2d24a727f78so40475351fa.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 01:15:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708938932; x=1709543732; darn=nongnu.org;
+ d=linaro.org; s=google; t=1708938903; x=1709543703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KLrDeSzxAfz0BkmoOA2bd0HrCpMytbURUXRn/P+Vjdc=;
- b=jCTjBQJ6Wg9S1DSraCK8f0/d2+vml46XQpWGRHOQL24uBK3JiOD66mZDV7/RcOPNB3
- NjX68+9k9ri6X3eqzc//Cd09ZQ+7K5Yy3wJp3RuAYl36GNmtopfr4WpeIMC5U43NztF3
- UijLtzvL7wKFSYcBI4+BpVgK+ZidofOynfyJaRFg0Cp0bwwroJd0nyCQas0Q1zRmuETC
- HD2RnJY0KYbwsjQzfyn0q8OG7Ox8Rb/GkJSrt9CDWo6za3/5PyU7W9WvK5HnraanIoLw
- Xh1LdFdTVxRckItbkWD5lrRuRcTepaduo/OBb2BZHEAAERxxR2FyUd7/Rz17ZRN77r1w
- vm2g==
+ bh=J8AWKRaOtLsPflMexUu/NAAwKkc6F+cV+H803nuHaV0=;
+ b=mEoSVDduxsZJrg7cphVxDu3n9gZ6uIcLevJmTR2Op15uxuRPm/RBCqaBOAtdzvsejl
+ woCcNvZRXs2GFjfUMETLelcpTFTs1cTjvF4eyI22R6hA82ivLWaGq5dXD1aU4DlbiTDN
+ ceCzuK3agoZuYjLH4w6jft4aHM4rlYEjplT4K6iGvqRRfFVCmczccGmTKWkoqcOhrB78
+ lAQHS4q7mRrfbVkA7abftHXwmNvT32sWJqtqGZEQFzQBU0/XjLOwEz9193F2tNESz9Nt
+ Qq5W4Py9HHQp3PqmZxG2d928XVBV4k4KcOd9PhjyAq0chc7URNyMm9jRdhXNFKUEV8/T
+ BpZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708938932; x=1709543732;
+ d=1e100.net; s=20230601; t=1708938903; x=1709543703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KLrDeSzxAfz0BkmoOA2bd0HrCpMytbURUXRn/P+Vjdc=;
- b=ahmlYvaSXVrZfy+/gFuYEPPZanOy2iJ7j4GIaYS1SjZWLgZdFVpe5Y++zhJOK5GY4N
- 8yyOZ2YQE/5NaMUAyUXphloa/TADHdIBXJlSoOB6GVDWlmclDJGB5ZBXH+YLbx1YLZns
- bKNbeSN6/MriOnX/5Y9ZMB07cxq9E/0PvGSg/rF4qLVyK90HoPbNkbq4eDCzyW50rDe6
- a4iLkrUvOhoJbKCSItNzk8rIHEi4QxOuM6/ImQdW04BSkhVmICrm/mTVaSJ/7sv+U+g6
- ZSBdV4uoWERned1edm+/Zl4ZfrSHIUZVtN02f1Jrez+h3Hlr2ZmWRWnvgD309MrBL7R3
- Fuzw==
-X-Gm-Message-State: AOJu0Yx8ob/H/bdHmjiK8OiHnAB6aF2A7iH7CUZGyKqko7UohXs0BEaD
- WYoAC0fQEuH7FMWzU9F+ynJjTIR7veHYW4PWq2520yXYH8vwKfDAQbXJADAcxiXD1c043GsXd7W
- ymkqQLA==
-X-Google-Smtp-Source: AGHT+IHvYFWH7iH0EIRkhKDnMoIiST5hsDr49mt5wVwmPCfzen667ic6YuGjAOFWEmKfmhYnhnDnlg==
-X-Received: by 2002:a05:600c:41c2:b0:412:9018:74ca with SMTP id
- t2-20020a05600c41c200b00412901874camr5016399wmh.35.1708938932471; 
- Mon, 26 Feb 2024 01:15:32 -0800 (PST)
+ bh=J8AWKRaOtLsPflMexUu/NAAwKkc6F+cV+H803nuHaV0=;
+ b=S2Uw+7lwpcFOYnPzEYj1dfdkQ2+ske5eTZeRTT03M3zC+21e/q6F+jCuBIkboXlzfq
+ NSZ7pfYk8hOKhWMMJJn2eqllXXAGSVA+1CxKC88zht95hYCG0B3w+sey31BtxmNUtNgl
+ z2lvcM9CMbUT1NWPTVY+B8yMiGJjmMpnhUCGTKupI7Xpljo6tIcIw8jJtyhNDyDjFM27
+ 5AUjfMIFh4uHiYkJQzQUYvFB3oSARUQCouWLmBTklEE5Bf900RwT9lit4Ea002kbufON
+ J16F1c8VkL7JTuTDIpGhqXMjPBLtpqs9Vaagx3Ntstb4E/ZyV8tdXCtJbtwddZlqq4Ii
+ qMYA==
+X-Gm-Message-State: AOJu0YyHsemu2VqP8x4JhZD66DNnga1If7tbL9kZyRR5z1KrKVnBM43w
+ kUgshsH+hV5AG2NFW5aaOo8mPmIevxn1h7Zy81CullLje17Ke9NH8XSUI63cXj/4ZLQCX++GrOU
+ R634G5Q==
+X-Google-Smtp-Source: AGHT+IFKOrNXMB9ppJvF1SPjl3pzZWv4mHtsJmUKtAD2Y1iGeCvf68LwXLwKRJEhh3A5xETs5gMKsA==
+X-Received: by 2002:a2e:9902:0:b0:2d2:3a2b:7ad3 with SMTP id
+ v2-20020a2e9902000000b002d23a2b7ad3mr3581633lji.26.1708938903522; 
+ Mon, 26 Feb 2024 01:15:03 -0800 (PST)
 Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- g7-20020adfe407000000b0033d2ae84fafsm7578814wrm.52.2024.02.26.01.15.29
+ g7-20020adfe407000000b0033d2ae84fafsm7578814wrm.52.2024.02.26.01.15.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 01:15:32 -0800 (PST)
+ Mon, 26 Feb 2024 01:15:03 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -69,24 +69,23 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v5 10/12] contrib/plugins/howvec: migrate to new per_vcpu API
-Date: Mon, 26 Feb 2024 13:14:42 +0400
-Message-ID: <20240226091446.479436-11-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 02/12] plugins: define qemu_plugin_u64
+Date: Mon, 26 Feb 2024 13:14:34 +0400
+Message-ID: <20240226091446.479436-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
 References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,171 +101,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Additionally to the scoreboard, we define a qemu_plugin_u64, which is a
+simple struct holding a pointer to a scoreboard, and a given offset.
+This allows to have a scoreboard containing structs, without having to
+bring offset to operate on a specific field.
+
+Since most of the plugins are simply collecting a sum of per-cpu values,
+qemu_plugin_u64 directly support this operation as well.
+
+All inline operations defined later will use a qemu_plugin_u64 as input.
+
+New functions:
+- qemu_plugin_u64_add
+- qemu_plugin_u64_get
+- qemu_plugin_u64_set
+- qemu_plugin_u64_sum
+New macros:
+- qemu_plugin_scoreboard_u64
+- qemu_plugin_scoreboard_u64_in_struct
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/howvec.c | 53 ++++++++++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 15 deletions(-)
+ include/qemu/qemu-plugin.h   | 52 ++++++++++++++++++++++++++++++++++++
+ plugins/api.c                | 34 +++++++++++++++++++++++
+ plugins/qemu-plugins.symbols |  4 +++
+ 3 files changed, 90 insertions(+)
 
-diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
-index 644a7856bb2..2d10c87e0fb 100644
---- a/contrib/plugins/howvec.c
-+++ b/contrib/plugins/howvec.c
-@@ -43,13 +43,13 @@ typedef struct {
-     uint32_t mask;
-     uint32_t pattern;
-     CountType what;
--    uint64_t count;
-+    qemu_plugin_u64 count;
- } InsnClassExecCount;
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index f0c26827e04..6442ab041be 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -225,6 +225,17 @@ struct qemu_plugin_insn;
+ /** struct qemu_plugin_scoreboard - Opaque handle for a scoreboard */
+ struct qemu_plugin_scoreboard;
  
- typedef struct {
-     char *insn;
-     uint32_t opcode;
--    uint64_t count;
-+    qemu_plugin_u64 count;
-     InsnClassExecCount *class;
- } InsnExecCount;
- 
-@@ -159,7 +159,9 @@ static gint cmp_exec_count(gconstpointer a, gconstpointer b)
- {
-     InsnExecCount *ea = (InsnExecCount *) a;
-     InsnExecCount *eb = (InsnExecCount *) b;
--    return ea->count > eb->count ? -1 : 1;
-+    uint64_t count_a = qemu_plugin_u64_sum(ea->count);
-+    uint64_t count_b = qemu_plugin_u64_sum(eb->count);
-+    return count_a > count_b ? -1 : 1;
- }
- 
- static void free_record(gpointer data)
-@@ -167,12 +169,14 @@ static void free_record(gpointer data)
-     InsnExecCount *rec = (InsnExecCount *) data;
-     g_free(rec->insn);
-     g_free(rec);
-+    qemu_plugin_scoreboard_free(rec->count.score);
- }
- 
- static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) report = g_string_new("Instruction Classes:\n");
-     int i;
-+    uint64_t total_count;
-     GList *counts;
-     InsnClassExecCount *class = NULL;
- 
-@@ -180,11 +184,12 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         class = &class_table[i];
-         switch (class->what) {
-         case COUNT_CLASS:
--            if (class->count || verbose) {
-+            total_count = qemu_plugin_u64_sum(class->count);
-+            if (total_count || verbose) {
-                 g_string_append_printf(report,
-                                        "Class: %-24s\t(%" PRId64 " hits)\n",
-                                        class->class,
--                                       class->count);
-+                                       total_count);
-             }
-             break;
-         case COUNT_INDIVIDUAL:
-@@ -212,7 +217,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-                                    "Instr: %-24s\t(%" PRId64 " hits)"
-                                    "\t(op=0x%08x/%s)\n",
-                                    rec->insn,
--                                   rec->count,
-+                                   qemu_plugin_u64_sum(rec->count),
-                                    rec->opcode,
-                                    rec->class ?
-                                    rec->class->class : "un-categorised");
-@@ -221,6 +226,12 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     }
- 
-     g_hash_table_destroy(insns);
-+    for (i = 0; i < ARRAY_SIZE(class_tables); i++) {
-+        for (int j = 0; j < class_tables[i].table_sz; ++j) {
-+            qemu_plugin_scoreboard_free(class_tables[i].table[j].count.score);
-+        }
-+    }
++/**
++ * typedef qemu_plugin_u64 - uint64_t member of an entry in a scoreboard
++ *
++ * This field allows to access a specific uint64_t member in one given entry,
++ * located at a specified offset. Inline operations expect this as entry.
++ */
++typedef struct {
++    struct qemu_plugin_scoreboard *score;
++    size_t offset;
++} qemu_plugin_u64;
 +
+ /**
+  * enum qemu_plugin_cb_flags - type of callback
+  *
+@@ -782,4 +793,45 @@ QEMU_PLUGIN_API
+ void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
+                                   unsigned int vcpu_index);
  
-     qemu_plugin_outs(report->str);
- }
-@@ -232,11 +243,12 @@ static void plugin_init(void)
- 
- static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
- {
--    uint64_t *count = (uint64_t *) udata;
--    (*count)++;
-+    struct qemu_plugin_scoreboard *score = udata;
-+    qemu_plugin_u64_add(qemu_plugin_scoreboard_u64(score), cpu_index, 1);
- }
- 
--static uint64_t *find_counter(struct qemu_plugin_insn *insn)
-+static struct qemu_plugin_scoreboard *find_counter(
-+    struct qemu_plugin_insn *insn)
- {
-     int i;
-     uint64_t *cnt = NULL;
-@@ -265,7 +277,7 @@ static uint64_t *find_counter(struct qemu_plugin_insn *insn)
-     case COUNT_NONE:
-         return NULL;
-     case COUNT_CLASS:
--        return &class->count;
-+        return class->count.score;
-     case COUNT_INDIVIDUAL:
-     {
-         InsnExecCount *icount;
-@@ -279,13 +291,16 @@ static uint64_t *find_counter(struct qemu_plugin_insn *insn)
-             icount->opcode = opcode;
-             icount->insn = qemu_plugin_insn_disas(insn);
-             icount->class = class;
-+            struct qemu_plugin_scoreboard *score =
-+                qemu_plugin_scoreboard_new(sizeof(uint64_t));
-+            icount->count = qemu_plugin_scoreboard_u64(score);
- 
-             g_hash_table_insert(insns, GUINT_TO_POINTER(opcode),
-                                 (gpointer) icount);
-         }
-         g_mutex_unlock(&lock);
- 
--        return &icount->count;
-+        return icount->count.score;
-     }
-     default:
-         g_assert_not_reached();
-@@ -300,14 +315,14 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     size_t i;
- 
-     for (i = 0; i < n; i++) {
--        uint64_t *cnt;
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
--        cnt = find_counter(insn);
-+        struct qemu_plugin_scoreboard *cnt = find_counter(insn);
- 
-         if (cnt) {
-             if (do_inline) {
--                qemu_plugin_register_vcpu_insn_exec_inline(
--                    insn, QEMU_PLUGIN_INLINE_ADD_U64, cnt, 1);
-+                qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                    insn, QEMU_PLUGIN_INLINE_ADD_U64,
-+                    qemu_plugin_scoreboard_u64(cnt), 1);
-             } else {
-                 qemu_plugin_register_vcpu_insn_exec_cb(
-                     insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS, cnt);
-@@ -322,6 +337,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
- {
-     int i;
- 
-+    for (i = 0; i < ARRAY_SIZE(class_tables); i++) {
-+        for (int j = 0; j < class_tables[i].table_sz; ++j) {
-+            struct qemu_plugin_scoreboard *score =
-+                qemu_plugin_scoreboard_new(sizeof(uint64_t));
-+            class_tables[i].table[j].count = qemu_plugin_scoreboard_u64(score);
-+        }
-+    }
++/* Macros to define a qemu_plugin_u64 */
++#define qemu_plugin_scoreboard_u64(score) \
++    (qemu_plugin_u64) {score, 0}
++#define qemu_plugin_scoreboard_u64_in_struct(score, type, member) \
++    (qemu_plugin_u64) {score, offsetof(type, member)}
 +
-     /* Select a class table appropriate to the guest architecture */
-     for (i = 0; i < ARRAY_SIZE(class_tables); i++) {
-         ClassSelector *entry = &class_tables[i];
++/**
++ * qemu_plugin_u64_add() - add a value to a qemu_plugin_u64 for a given vcpu
++ * @entry: entry to query
++ * @vcpu_index: entry index
++ * @added: value to add
++ */
++QEMU_PLUGIN_API
++void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t added);
++
++/**
++ * qemu_plugin_u64_get() - get value of a qemu_plugin_u64 for a given vcpu
++ * @entry: entry to query
++ * @vcpu_index: entry index
++ */
++QEMU_PLUGIN_API
++uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry, unsigned int vcpu_index);
++
++/**
++ * qemu_plugin_u64_set() - set value of a qemu_plugin_u64 for a given vcpu
++ * @entry: entry to query
++ * @vcpu_index: entry index
++ * @val: new value
++ */
++QEMU_PLUGIN_API
++void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t val);
++
++/**
++ * qemu_plugin_u64_sum() - return sum of all vcpu entries in a scoreboard
++ * @entry: entry to sum
++ */
++QEMU_PLUGIN_API
++uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry);
++
+ #endif /* QEMU_QEMU_PLUGIN_H */
+diff --git a/plugins/api.c b/plugins/api.c
+index 2dfc3ce4eaf..579fe4a6e54 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -517,3 +517,37 @@ void *qemu_plugin_scoreboard_find(struct qemu_plugin_scoreboard *score,
+     char *base_ptr = score->data->data;
+     return base_ptr + vcpu_index * g_array_get_element_size(score->data);
+ }
++
++static uint64_t *plugin_u64_address(qemu_plugin_u64 entry,
++                                    unsigned int vcpu_index)
++{
++    char *ptr = qemu_plugin_scoreboard_find(entry.score, vcpu_index);
++    return (uint64_t *)(ptr + entry.offset);
++}
++
++void qemu_plugin_u64_add(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t added)
++{
++    *plugin_u64_address(entry, vcpu_index) += added;
++}
++
++uint64_t qemu_plugin_u64_get(qemu_plugin_u64 entry,
++                             unsigned int vcpu_index)
++{
++    return *plugin_u64_address(entry, vcpu_index);
++}
++
++void qemu_plugin_u64_set(qemu_plugin_u64 entry, unsigned int vcpu_index,
++                         uint64_t val)
++{
++    *plugin_u64_address(entry, vcpu_index) = val;
++}
++
++uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
++{
++    uint64_t total = 0;
++    for (int i = 0, n = qemu_plugin_num_vcpus(); i < n; ++i) {
++        total += qemu_plugin_u64_get(entry, i);
++    }
++    return total;
++}
+diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+index 3f93e7d6b13..6204453d0fd 100644
+--- a/plugins/qemu-plugins.symbols
++++ b/plugins/qemu-plugins.symbols
+@@ -44,6 +44,10 @@
+   qemu_plugin_tb_get_insn;
+   qemu_plugin_tb_n_insns;
+   qemu_plugin_tb_vaddr;
++  qemu_plugin_u64_add;
++  qemu_plugin_u64_get;
++  qemu_plugin_u64_set;
++  qemu_plugin_u64_sum;
+   qemu_plugin_uninstall;
+   qemu_plugin_vcpu_for_each;
+ };
 -- 
 2.43.0
 
