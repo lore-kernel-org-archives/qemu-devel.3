@@ -4,69 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A238BC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F03F2C54E51
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 10:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reYZH-0002o9-GK; Mon, 26 Feb 2024 05:50:43 -0500
+	id 1reYdF-0004kK-Ok; Mon, 26 Feb 2024 05:54:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reYYi-0002bv-LV
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 05:50:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reYcs-0004Xa-P5; Mon, 26 Feb 2024 05:54:27 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1reYYc-0003jl-1V
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 05:50:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708944600;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NasNtuTWkk84bQqZrMVBAZ4AmcnDthULAoF1YQuHW10=;
- b=A4JknY5KzeuQLX8FbI4nCn241ES6w2AMPiYHSSzSfxXgJpwsyGS/T49WDVam+xI3b9uPcl
- t6yG7ZsAEJq6d+QA+ulP7FPSRcQn6HgrAPfYeYcubFXdQFfdAv87cOd0pneBRaBzQPI0PN
- qAUPtm8ooWR/RWt9gg5CokVcsXqZ/Ec=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-1wFyqJDbMpWmOpUziqdT3Q-1; Mon, 26 Feb 2024 05:49:57 -0500
-X-MC-Unique: 1wFyqJDbMpWmOpUziqdT3Q-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 082B2185A787;
- Mon, 26 Feb 2024 10:49:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id BD6F44024857;
- Mon, 26 Feb 2024 10:49:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9537C21E60F3; Mon, 26 Feb 2024 11:49:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 06/17] qapi: Improve error position for bogus argument
- descriptions
-Date: Mon, 26 Feb 2024 11:49:43 +0100
-Message-ID: <20240226104954.3781985-7-armbru@redhat.com>
-In-Reply-To: <20240226104954.3781985-1-armbru@redhat.com>
-References: <20240226104954.3781985-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1reYch-0004SB-So; Mon, 26 Feb 2024 05:54:26 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DD14F4E601F;
+ Mon, 26 Feb 2024 11:54:12 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 2AEcEsPr3Gj8; Mon, 26 Feb 2024 11:54:10 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 95E784E601E; Mon, 26 Feb 2024 11:54:10 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 938C87456B4;
+ Mon, 26 Feb 2024 11:54:10 +0100 (CET)
+Date: Mon, 26 Feb 2024 11:54:10 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org, 
+ John Snow <jsnow@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 3/3] hw/ide: Include 'ide_internal.h' from current path
+In-Reply-To: <fded510c-88d9-4bbb-8a80-08898c5850b2@linaro.org>
+Message-ID: <c19f56bb-43ec-a7ef-32e6-c290e02f58c2@eik.bme.hu>
+References: <20240225171637.4709-1-philmd@linaro.org>
+ <20240225171637.4709-4-philmd@linaro.org>
+ <feffd329-59e0-0291-0dd6-76a625da190b@eik.bme.hu>
+ <878r37lll6.fsf@pond.sub.org>
+ <fd0fba89-cd93-4113-9f3d-2ee20f2217d9@linaro.org>
+ <fded510c-88d9-4bbb-8a80-08898c5850b2@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1159788311-1708944850=:1986"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,96 +74,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When documented arguments don't exist, the error message points to the
-beginning of the definition comment.  Point to the first bogus
-argument description instead.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240216145841.2099240-6-armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/qapi/parser.py                          | 4 +++-
- tests/qapi-schema/doc-bad-alternate-member.err  | 2 +-
- tests/qapi-schema/doc-bad-boxed-command-arg.err | 2 +-
- tests/qapi-schema/doc-bad-command-arg.err       | 2 +-
- tests/qapi-schema/doc-bad-enum-member.err       | 2 +-
- tests/qapi-schema/doc-bad-event-arg.err         | 2 +-
- tests/qapi-schema/doc-bad-feature.err           | 2 +-
- tests/qapi-schema/doc-bad-union-member.err      | 2 +-
- 8 files changed, 10 insertions(+), 8 deletions(-)
+--3866299591-1159788311-1708944850=:1986
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 88221b3c64..82db595dcf 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -472,6 +472,8 @@ class Section:
-         # pylint: disable=too-few-public-methods
-         def __init__(self, parser: QAPISchemaParser,
-                      name: Optional[str] = None):
-+            # section source info, i.e. where it begins
-+            self.info = parser.info
-             # parser, for error messages about indentation
-             self._parser = parser
-             # optional section name (argument/member or section name)
-@@ -770,7 +772,7 @@ def check_args_section(
-                      if not section.member]
-             if bogus:
-                 raise QAPISemError(
--                    self.info,
-+                    args[bogus[0]].info,
-                     "documented %s%s '%s' %s not exist" % (
-                         what,
-                         "s" if len(bogus) > 1 else "",
-diff --git a/tests/qapi-schema/doc-bad-alternate-member.err b/tests/qapi-schema/doc-bad-alternate-member.err
-index d7286bb57c..1f6b7d2fe4 100644
---- a/tests/qapi-schema/doc-bad-alternate-member.err
-+++ b/tests/qapi-schema/doc-bad-alternate-member.err
-@@ -1 +1 @@
--doc-bad-alternate-member.json:3: documented members 'aa', 'bb' do not exist
-+doc-bad-alternate-member.json:7: documented members 'aa', 'bb' do not exist
-diff --git a/tests/qapi-schema/doc-bad-boxed-command-arg.err b/tests/qapi-schema/doc-bad-boxed-command-arg.err
-index 7137af3ec9..d6793e7fd8 100644
---- a/tests/qapi-schema/doc-bad-boxed-command-arg.err
-+++ b/tests/qapi-schema/doc-bad-boxed-command-arg.err
-@@ -1 +1 @@
--doc-bad-boxed-command-arg.json:9: documented member 'a' does not exist
-+doc-bad-boxed-command-arg.json:11: documented member 'a' does not exist
-diff --git a/tests/qapi-schema/doc-bad-command-arg.err b/tests/qapi-schema/doc-bad-command-arg.err
-index 18ed076cef..b76167ec60 100644
---- a/tests/qapi-schema/doc-bad-command-arg.err
-+++ b/tests/qapi-schema/doc-bad-command-arg.err
-@@ -1 +1 @@
--doc-bad-command-arg.json:3: documented member 'b' does not exist
-+doc-bad-command-arg.json:6: documented member 'b' does not exist
-diff --git a/tests/qapi-schema/doc-bad-enum-member.err b/tests/qapi-schema/doc-bad-enum-member.err
-index 7efeb47363..0aa8d8e8e2 100644
---- a/tests/qapi-schema/doc-bad-enum-member.err
-+++ b/tests/qapi-schema/doc-bad-enum-member.err
-@@ -1 +1 @@
--doc-bad-enum-member.json:3: documented member 'a' does not exist
-+doc-bad-enum-member.json:5: documented member 'a' does not exist
-diff --git a/tests/qapi-schema/doc-bad-event-arg.err b/tests/qapi-schema/doc-bad-event-arg.err
-index d13cacf21f..90527d5f82 100644
---- a/tests/qapi-schema/doc-bad-event-arg.err
-+++ b/tests/qapi-schema/doc-bad-event-arg.err
-@@ -1 +1 @@
--doc-bad-event-arg.json:3: documented member 'a' does not exist
-+doc-bad-event-arg.json:5: documented member 'a' does not exist
-diff --git a/tests/qapi-schema/doc-bad-feature.err b/tests/qapi-schema/doc-bad-feature.err
-index 49d1746c3d..3166c6a305 100644
---- a/tests/qapi-schema/doc-bad-feature.err
-+++ b/tests/qapi-schema/doc-bad-feature.err
-@@ -1 +1 @@
--doc-bad-feature.json:3: documented feature 'a' does not exist
-+doc-bad-feature.json:7: documented feature 'a' does not exist
-diff --git a/tests/qapi-schema/doc-bad-union-member.err b/tests/qapi-schema/doc-bad-union-member.err
-index 6dd2726a65..cdf1225cab 100644
---- a/tests/qapi-schema/doc-bad-union-member.err
-+++ b/tests/qapi-schema/doc-bad-union-member.err
-@@ -1 +1 @@
--doc-bad-union-member.json:3: documented members 'a', 'b' do not exist
-+doc-bad-union-member.json:5: documented members 'a', 'b' do not exist
--- 
-2.43.0
+On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
+> On 26/2/24 09:00, Philippe Mathieu-Daudé wrote:
+>> On 26/2/24 08:40, Markus Armbruster wrote:
+>>> BALATON Zoltan <balaton@eik.bme.hu> writes:
+>>> 
+>>>> On Sun, 25 Feb 2024, Philippe Mathieu-Daudé wrote:
+>>>>> Rename "internal.h" as "ide_internal.h", and include
+>>>> 
+>>>> Is there a convention about using underscore or dash in file names? The 
+>>>> headers Thomas added are using - as well as ahci-allwinner.c, only 
+>>>> ahci_internal.h has _ (but there are others elsewhere such as 
+>>>> pci_device.h). Maybe we should be consistent at least within IDE and this 
+>>>> series is now a good opportunity for renaming these headers to match. But 
+>>>> it's just a small nit, thanks for picking this up.
+>>> 
+>>> This is one of the many unnecessary inconsistencies we're inflicting on
+>>> ourselves.
+>>> 
+>>> We have more than 3600 file names containing '-', and more almost 2700
+>>> containing '_'.  Bizarrely, 68 of them contain both.
+>>> 
+>>> I strongly prefer '_' myself.
+>>> 
+>>> Zoltan is making a local consistency argument for '-'.
+>>> 
+>>> Let's use '-' here.
+>
+> BTW by "here" I understood "in this patch". After v3 only a single
+> file use '_': "ahci_internal.h", but Zoltan said he is uninterested
+> and doesn't care about it so I'm not renaming it.
+> (https://lore.kernel.org/qemu-devel/3e576d33-1973-3f44-afd1-9224609f89a6@eik.bme.hu/)
 
+Yes, I don't care and also prefer _ in file names but since all the other 
+headers use - now it's simpler to make all of them the same just for 
+consistency so I've meant to rename ahci_internal.h too but forgot to 
+mention it explikcitly. Sorry for that.
+
+Regards,
+BALATON Zoltan
+--3866299591-1159788311-1708944850=:1986--
 
