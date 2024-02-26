@@ -4,135 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF567C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A07C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reVvA-00033j-Ef; Mon, 26 Feb 2024 03:01:08 -0500
+	id 1reW0m-0004g6-VA; Mon, 26 Feb 2024 03:06:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reVv4-00030K-SP
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:01:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1reVv2-0000XD-Pg
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:01:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708934460;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/UiYJyxUM9xkP4u0DXwmFcgzWF7AV2LuaiRxAZcLzb8=;
- b=SAiTcG07iTRgk2pzDJzdDQdEXov84ks10pj/OuU03wJknJsn5AaHcaplBcTLWXYk10aonX
- gIAK1/zyXLxQSgcC/N47GRJSQdiwHMy6Fg+N7fREZWo2J+qNrxPsJVMPS46pxQY0H4GZra
- n8LrYoIEGfbNuuKvcRQfUwQUbV+k6pA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-196-k8MR_-XFMm-DiWq7YH4FNA-1; Mon, 26 Feb 2024 03:00:58 -0500
-X-MC-Unique: k8MR_-XFMm-DiWq7YH4FNA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33d256ca4c8so2039433f8f.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:00:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW0l-0004eh-CH
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:06:55 -0500
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reW0j-0001dF-5B
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:06:55 -0500
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2d109e82bd0so32792231fa.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:06:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708934811; x=1709539611; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=scR0cVRlUQ+FFZFfcolEQrGBOQjFaxkZH3KxNR75t0E=;
+ b=eYZzuphjZKw3vm3Rf8/6HUtXUzPpf6O1Y/rIvn3QmnlaSKM8PRADxCIU2psatcc667
+ MuYVgjp3lf38Kn8NaWbzpDaHAIy1vFiS/AdTHOZyOxUIwwVc1ZtbA4yzoat34yKIkPvU
+ g8GDjxGmZNlQu6/9yhiQbm7pG1gMXDeF3WyzcoN1BLN7U17klCnRKM4F/AqIztP7iHd7
+ tvYK1wUDo9koPgyU3ysu2qh0xzHcsO6qPRi8tUfvP2j5/5ZyGGna7B3kndBuKipduFDK
+ UuxKulDKV1jRFiGudE7t0Gq3AlO1exCEu+kIFfgeEOeZBaj3f/ORr7OQAunBllxwK2Kt
+ 1L+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708934457; x=1709539257;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/UiYJyxUM9xkP4u0DXwmFcgzWF7AV2LuaiRxAZcLzb8=;
- b=dXuXXr3ZAOLYlVPylPqutxCy/ySQKqe4dz2twfCXru0jhpWs9+BpycsB7aKCtdNVqv
- nklRGLcaNyit4FS3ekJiVPwmaA1th92kSZeAdpEAIN2QMqnnUjOnwV7JlAKjfZOI05kr
- 5ZxBfmVwfXb4AB2pRXKzyLm01jmuMxRjl8no1aKUDaZK6IcFPJxajnQ6kVwZ73iiZUGu
- +VuKu0jnIWF1tylzsfoRiCFZ3Trmy8eE2K/vFlTbRIF9GUAk1YIrTPXBi6n9brS53BNT
- YlF+p+3IXAznWfZ5b/E4IPKyjyA2NVDXrej8csnbOcsv3Tfq5UfOI2o/DNXcnZix/V9s
- PvLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhurXZy1qA2C8M65BpXECdEomzuMCTV5Kpj4K4tY1M+VJPxCs76sUitKSNr0tZpVteIpeUXJuWdivI/5fANEzGcZu+/lc=
-X-Gm-Message-State: AOJu0YxKkGCNqT7q5O6q3FDq/AAChaXZNnmYxzcjA8ItVcPPLvlQ3Gw6
- 7mouvmWol9UAdSQxehpnQoAYJGez5BemDG69K6xsbOxJNHa8MaJ3G5ldaxvXmP/UV8XbRxrvCqR
- Y4Jrhi1JT8/AyMi8+eevuuePHd3uxbK1vy0YWH9xciNJ4sMNf1A6F
-X-Received: by 2002:a5d:52cb:0:b0:33d:7d88:cae5 with SMTP id
- r11-20020a5d52cb000000b0033d7d88cae5mr3727522wrv.69.1708934456825; 
- Mon, 26 Feb 2024 00:00:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmNFLl3tqkzaPnqmTLQcYdWn6bah9dgXfZx8TzblXVMaLt+QvwiwmKsPuMtHS4ehwHt6uz2w==
-X-Received: by 2002:a5d:52cb:0:b0:33d:7d88:cae5 with SMTP id
- r11-20020a5d52cb000000b0033d7d88cae5mr3727508wrv.69.1708934456544; 
- Mon, 26 Feb 2024 00:00:56 -0800 (PST)
-Received: from [192.168.0.9] (ip-109-43-176-215.web.vodafone.de.
- [109.43.176.215]) by smtp.gmail.com with ESMTPSA id
- t9-20020adfeb89000000b0033dbeb2eb4dsm7236248wrn.110.2024.02.26.00.00.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 00:00:56 -0800 (PST)
-Message-ID: <93bdd39e-c3bf-4854-b724-1500f86a8388@redhat.com>
-Date: Mon, 26 Feb 2024 09:00:54 +0100
+ d=1e100.net; s=20230601; t=1708934811; x=1709539611;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=scR0cVRlUQ+FFZFfcolEQrGBOQjFaxkZH3KxNR75t0E=;
+ b=euTvtk61Rm4lUm73LFhP97VSqtkzJ+1mq7JpTMRtnXr7bTINRDurx6xP1rzsUUkT+G
+ VgsFYnwkXHjc/8atp8R4qH/15p6Uq4IkgiVWjcvl+f0p1RPcmIZlydXHV5vrDHPoDXDM
+ KP+v32v1XKcamMX/46Ib2siEZvlzwLZXgdcM+r2rl7hea40/XcA+nLQbzAo5MmXyVr8H
+ i6YWkYhVERcT+DXzacO6JhoXZYXr/JMpITtDS9Dg50t7dGa6MyT5cs1L21Gxo4SmbBWx
+ UcGkUjgFIx5Cbhdo2hET80pc1YQv9dzUMUnl/MOly7U59RI0pRYdtZi+stbv9foIHAfS
+ kt5Q==
+X-Gm-Message-State: AOJu0Yzy2E9p3X12Yembk1Ez/SOYUmtqooOILlkZli0f6HoDJgLhLOtP
+ rjv9xc7ge3QFjTZ8TssTxOFHefDmh7H2rLtHryVWNIug020DWnodTMrtd6WhcHtrFihzAsMrrz3
+ h
+X-Google-Smtp-Source: AGHT+IHvKCQ/D9Ia7u7jl5WKNzW5hrTeei1SFPL+TV15MHWcDpatxBrkhxEryihDY7WXO9FwQ2F1wA==
+X-Received: by 2002:a05:6512:3290:b0:512:dc3d:6bf8 with SMTP id
+ p16-20020a056512329000b00512dc3d6bf8mr2955095lfe.56.1708934811087; 
+ Mon, 26 Feb 2024 00:06:51 -0800 (PST)
+Received: from m1x-phil.lan ([176.176.164.69])
+ by smtp.gmail.com with ESMTPSA id
+ z1-20020a056512376100b00512d252759bsm756622lft.212.2024.02.26.00.06.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 26 Feb 2024 00:06:50 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ John Snow <jsnow@redhat.com>, Leif Lindholm <quic_llindhol@quicinc.com>,
+ qemu-block@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 2/3] hw/ide: Remove last two uses of ide/internal.h outside
+ of hw/ide/
+Date: Mon, 26 Feb 2024 09:06:30 +0100
+Message-ID: <20240226080632.9596-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240226080632.9596-1-philmd@linaro.org>
+References: <20240226080632.9596-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] tests/qtest: Add ivshmem-flat test
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org
-Cc: lvivier@redhat.com, qemu-arm@nongnu.org, alex.bennee@linaro.org,
- pbonzini@redhat.com, anton.kochkov@proton.me, richard.henderson@linaro.org,
- peter.maydell@linaro.org
-References: <20240222222218.2261956-1-gustavo.romero@linaro.org>
- <20240222222218.2261956-7-gustavo.romero@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240222222218.2261956-7-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,21 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/02/2024 23.22, Gustavo Romero wrote:
-> This commit adds a qtest for the ivshmem-flat device to test memory
-> sharing, IRQ triggering, and the memory mapped registers in the device.
-> 
-> Based-on: https://lists.gnu.org/archive/html/qemu-devel/2023-11/msg03176.html
-> Message-ID: <20231127052024.435743-4-gustavo.romero@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   tests/qtest/ivshmem-flat-test.c | 338 ++++++++++++++++++++++++++++++++
->   tests/qtest/meson.build         |   2 +
->   2 files changed, 340 insertions(+)
->   create mode 100644 tests/qtest/ivshmem-flat-test.c
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
+Remove last two includes of hw/ide/intarnal.h outside of hw/ide and
+replace them with newly added public header to allow moving internal.h
+into hw/ide to really stop exposing it.
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+Fixes: a11f439a0e (hw/ide: Stop exposing internal.h to non-IDE files)
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240223142633.933694E6004@zero.eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ {include/hw => hw}/ide/internal.h | 0
+ include/hw/misc/macio/macio.h     | 2 +-
+ hw/arm/sbsa-ref.c                 | 2 +-
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ rename {include/hw => hw}/ide/internal.h (100%)
+
+diff --git a/include/hw/ide/internal.h b/hw/ide/internal.h
+similarity index 100%
+rename from include/hw/ide/internal.h
+rename to hw/ide/internal.h
+diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
+index 86df2c2b60..2b54da6b31 100644
+--- a/include/hw/misc/macio/macio.h
++++ b/include/hw/misc/macio/macio.h
+@@ -28,7 +28,7 @@
+ 
+ #include "hw/char/escc.h"
+ #include "hw/pci/pci_device.h"
+-#include "hw/ide/internal.h"
++#include "hw/ide/ide-bus.h"
+ #include "hw/intc/heathrow_pic.h"
+ #include "hw/misc/macio/cuda.h"
+ #include "hw/misc/macio/gpio.h"
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index 4a59e2fd37..13dde50cba 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -36,7 +36,7 @@
+ #include "hw/arm/smmuv3.h"
+ #include "hw/block/flash.h"
+ #include "hw/boards.h"
+-#include "hw/ide/internal.h"
++#include "hw/ide/ide-bus.h"
+ #include "hw/ide/ahci-sysbus.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/intc/arm_gicv3_its_common.h"
+-- 
+2.41.0
 
 
