@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963DAC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 19:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3F5C5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 19:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1regvB-0005GR-Vv; Mon, 26 Feb 2024 14:45:54 -0500
+	id 1regzV-0007CV-TY; Mon, 26 Feb 2024 14:50:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1regv4-000565-Uz
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 14:45:49 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1regzS-0007CK-Iw
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 14:50:18 -0500
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hao.xiang@bytedance.com>)
- id 1regv2-0002wl-FY
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 14:45:46 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a3f4464c48dso408231966b.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 11:45:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1regzO-0003bA-O9
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 14:50:17 -0500
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2d24a727f78so49520631fa.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 11:50:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1708976737; x=1709581537; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bOv4OssCP39U8j32iXuCjiknLlSfnR6OeHSgs19p/z8=;
- b=i+37ZIPt4pwlH/JvIw1E8X4NWO/3kgDCDO0iQEOqmoWXMdTBmT0h3WLc5gOnUPQwuW
- idudDtp1UrRqqvxqyeRCRyTc0lfJzAZ2uqSroDu4cxkE3jX8JYZR14903Kw0dmAbwHlH
- yRXWrwkgGeY3/K59RJ7sW3ATfo5K7wFlvXZHJQaWkfyww4YjkOw/vJY2LA2bjC0QW9Ck
- i0L45PsWoc02Jtzj3zzYHGxCAUI6+FESGEE7lhGJUmSQrcdJTLfPb15qvECC4Q67SwnX
- 1E3uxdECYiekPOjh5mNKGes/gy9uVPwSlGjP2O8GEmkZyyDiR/LJa3sSlbsH+Txc/3Jh
- R3Pw==
+ d=linaro.org; s=google; t=1708977011; x=1709581811; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CRiAaEWLbPdwH7MCuFZoee4IvGVtzFJe6l3ojpTWHyo=;
+ b=gYJvQwa6EEL+XsIDWK4wCsrlobmNGsY/XgWy3uGz2H/seDMNOKThzyREuEW+i8/1dh
+ vFKMSVeO2nVRW8kbE6lUh4lzGI13sYmD6R6Ksf9INidoSY2BNvxZEpHvbdZR5lOESkHB
+ 6ujxfXGV2hkiGVsc0Jio4hJ+wy4iwKnJj8DTsuYquDmnpapKZvDD4Eo5Ddp6OLB4HLNd
+ ngwHfsGG1p9kdYaKlm0Nw3Bv9vNXWrRfoC/ielw/TfUG4Ia/htsTyIa76DIKU5qJI7Zb
+ 5G+1WjypZx7ouNF9fbnKhyL7HUaazwUaKxq377lHL3foFRoaGf/rurVthlmqS9Oz9len
+ 07/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708976737; x=1709581537;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bOv4OssCP39U8j32iXuCjiknLlSfnR6OeHSgs19p/z8=;
- b=s4Oe7gDaqjaQcR3jXylgvXdxOav5u0s5bQX08em8kiX0xjUiXK2G1IQHAgjC0sNrXb
- Y76Tyojah/XFxcUWfRrRHGLEiY3NT5zKBLa5V6fFH1WSopcj8zxe8i9ozGzxQ0G7UFos
- YyY70evRHcIdbBV+7JiTb5H0v1FOlW6mFkaTJytwcZ9X4A0dzq7qM7IixDI5hLGAZibC
- dC/fOBLwlYQWtqLEayZchGJi2tx2MSwPesYQmDMvWO0rfOzaxI9NQZL3IRwBfFmMBc5f
- fJzfMn0QXt4xV3mBzh0e6PbuRZ6V0E8vCImjXWLGrgwoNK2o6jv1h1leOJ9OsBeKNAls
- q1VA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4XKo8medm9+tdzG8szKM62PisqMJnY51IeeyLQLUHT6UBTjt2Yvb0TctyuD+s+NW1ifQ8NMQrBUxiPMXE83ykJV2WFSU=
-X-Gm-Message-State: AOJu0Yz4WSeclDwRqXE3lUVtoJv9qB388iFfZgJaKqP7O2iWF97rny2I
- hUFU7o4dT4kCRtsYxhJpt7ZxlPo+xq/wwo3dl4NfZMpjOSqp0Zu65t0v46kdiIf/F+7h35sMPsk
- rJ03EzUTAv4ahciZ6ITMqoia0TVfgB5fTD4p5rg==
-X-Google-Smtp-Source: AGHT+IGCDofZFbqGsxTvNPiQyqGzTH3pg0MaY2luJKD6gChITjghvcHzNnRBn8oizLh3Iw2GXrX4Y/1EmwKWlmLfmAI=
-X-Received: by 2002:a17:906:c02:b0:a3d:78a:bffa with SMTP id
- s2-20020a1709060c0200b00a3d078abffamr5287884ejf.0.1708976737134; Mon, 26 Feb
- 2024 11:45:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708977011; x=1709581811;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CRiAaEWLbPdwH7MCuFZoee4IvGVtzFJe6l3ojpTWHyo=;
+ b=iJG1YFBM3NU3Mz9z7yQ+maWCsbC4hNeMi/81rHY9ZBOS8ISe/YlVNbqwTCB5xGF6m2
+ stcp5+l8+S6BeIMyPK6Yrfrbf1ZkVXjamGrH0Ow3IzKqOyEs5CP0v1ao/shajc78do1b
+ g0rFlMYRCWxoXsBNeFdqte2qUApwTFhMvo/FepxZbMt4aSxf1ERQ1b1CDZmDdxge1AHD
+ WBRBBgZqMWetX37ppjQ+EZt9pjZShVuLqNZjbIXePgmXzxXoQbwnSmu2g7qBHpdcEvpq
+ fbw6u11Y1lyejQuLmI14eRpM4UKsvpgTv6dWov4+o65FaoJpuhZ+ERUhdH+7bEvn+rp7
+ BT2g==
+X-Gm-Message-State: AOJu0Yzl5AnPpU5hTMGrquQGFO335spFwhcJab6cazAYHn9AZfdmqSWu
+ h/fejW2cvVsRgJihvY1bXDGY2QsKe2/UY+DxGQd3kQE+L3CHHpRFrsK+zeQe0bE=
+X-Google-Smtp-Source: AGHT+IEmUBPm8ga71sUFG55VNzOIWH5o6FnggFlYmRcRAIX9PMnLvehV0zmW3CwpGFnTsiVcbhoFNg==
+X-Received: by 2002:a05:651c:97:b0:2d2:438a:11ec with SMTP id
+ 23-20020a05651c009700b002d2438a11ecmr5057144ljq.2.1708977010864; 
+ Mon, 26 Feb 2024 11:50:10 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ d3-20020adffbc3000000b0033dd2c3131fsm5379966wrs.65.2024.02.26.11.50.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Feb 2024 11:50:10 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 157455F880;
+ Mon, 26 Feb 2024 19:50:10 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [RFC PATCH v2] tests/vm: avoid re-building the VM images all the time
+Date: Mon, 26 Feb 2024 19:50:03 +0000
+Message-Id: <20240226195003.467135-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20240216224002.1476890-1-hao.xiang@bytedance.com>
- <20240216224002.1476890-2-hao.xiang@bytedance.com>
- <53205040-fd1b-4ced-abd8-fde5275d472f@intel.com>
-In-Reply-To: <53205040-fd1b-4ced-abd8-fde5275d472f@intel.com>
-From: Hao Xiang <hao.xiang@bytedance.com>
-Date: Mon, 26 Feb 2024 11:45:26 -0800
-Message-ID: <CAAYibXhV9QsbwuWEaNDhmij398HvJ=uDg7mgrF6yb0CJPd70sw@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2 1/7] migration/multifd: Add new
- migration option zero-page-detection.
-To: "Wang, Lei" <lei4.wang@intel.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, armbru@redhat.com, 
- thuth@redhat.com, lvivier@redhat.com, qemu-devel@nongnu.org, 
- jdenemar@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=hao.xiang@bytedance.com; helo=mail-ej1-x634.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,47 +97,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Feb 25, 2024 at 11:19=E2=80=AFPM Wang, Lei <lei4.wang@intel.com> wr=
-ote:
->
-> On 2/17/2024 6:39, Hao Xiang wrote:
-> > This new parameter controls where the zero page checking is running.
-> > 1. If this parameter is set to 'legacy', zero page checking is
-> > done in the migration main thread.
-> > 2. If this parameter is set to 'none', zero page checking is disabled.
-> >
-> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > ---
-> >  hw/core/qdev-properties-system.c    | 10 ++++++++++
-> >  include/hw/qdev-properties-system.h |  4 ++++
-> >  migration/migration-hmp-cmds.c      |  9 +++++++++
-> >  migration/options.c                 | 21 ++++++++++++++++++++
-> >  migration/options.h                 |  1 +
-> >  migration/ram.c                     |  4 ++++
-> >  qapi/migration.json                 | 30 ++++++++++++++++++++++++++---
-> >  7 files changed, 76 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties=
--system.c
-> > index 1a396521d5..63843f18b5 100644
-> > --- a/hw/core/qdev-properties-system.c
-> > +++ b/hw/core/qdev-properties-system.c
-> > @@ -679,6 +679,16 @@ const PropertyInfo qdev_prop_mig_mode =3D {
-> >      .set_default_value =3D qdev_propinfo_set_default_value_enum,
-> >  };
-> >
-> > +const PropertyInfo qdev_prop_zero_page_detection =3D {
-> > +    .name =3D "ZeroPageDetection",
-> > +    .description =3D "zero_page_detection values, "
-> > +                   "multifd,legacy,none",
->
-> Nit: Maybe multifd/legacy/none?
+The main problem is that "check-venv" is a .PHONY target will always
+evaluate and trigger a full re-build of the VM images. While its
+tempting to drop it from the dependencies that does introduce a
+breakage on freshly configured builds.
 
-I changed it to
+Fortunately we do have the otherwise redundant --force flag for the
+script which up until now was always on. If we make the usage of
+--force conditional on dependencies other than check-venv triggering
+the update we can avoid the costly rebuild and still run cleanly on a
+fresh checkout.
 
-.description =3D "zero_page_detection values, "
-"none,legacy,multifd",
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2118
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/vm/Makefile.include | 2 +-
+ tests/vm/basevm.py        | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Since both "," and "/" are used in existing code, I think it would be
-fine either way.
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index bf12e0fa3c5..ac56824a87d 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -102,7 +102,7 @@ $(IMAGES_DIR)/%.img:	$(SRC_PATH)/tests/vm/% \
+ 		$(if $(LOG_CONSOLE),--log-console) \
+ 		--source-path $(SRC_PATH) \
+ 		--image "$@" \
+-		--force \
++		$(if $(filter-out check-venv, $?), --force) \
+ 		--build-image $@, \
+ 		"  VM-IMAGE $*")
+ 
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index c0d62c08031..f8fd751eb14 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -646,9 +646,9 @@ def main(vmcls, config=None):
+         vm = vmcls(args, config=config)
+         if args.build_image:
+             if os.path.exists(args.image) and not args.force:
+-                sys.stderr.writelines(["Image file exists: %s\n" % args.image,
++                sys.stderr.writelines(["Image file exists, skipping build: %s\n" % args.image,
+                                       "Use --force option to overwrite\n"])
+-                return 1
++                return 0
+             return vm.build_image(args.image)
+         if args.build_qemu:
+             vm.add_source_dir(args.build_qemu)
+-- 
+2.39.2
+
 
