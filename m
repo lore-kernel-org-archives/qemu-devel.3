@@ -4,58 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37541C54798
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 03:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11692C47DD9
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 03:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reRGK-00028P-Aj; Sun, 25 Feb 2024 22:02:40 -0500
+	id 1reRLI-0003dB-NS; Sun, 25 Feb 2024 22:07:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1reRGF-000280-Hj; Sun, 25 Feb 2024 22:02:37 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRLH-0003ck-10
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:07:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1reRGC-0007IO-0v; Sun, 25 Feb 2024 22:02:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202312; t=1708916540;
- bh=P01nfGOU3QpYWHqwi45UZJvKYiFgO/x2B24hvgvUGcM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=fCP1q/UFz0FQXWyN8ab5X+OGHz9XzZJQG7q6pvWhF4LWVCzlM6/g1pm5kWPwNlJWd
- /hQElWerXGBUZxDywiLHjafJ+KaK6AIQhlUtK4jl3YzAUn/mV60g28DRKTrwUAIQVq
- vBv525/GvAXE44GxqKPsjLEqmPI+IbyJB1D7FHkL5Prttmheicb517OMakBZBDpzZN
- cp/IMPSWJ2psiUAbgq5VFpXpSaouonvdW2g4zQMmojXii715dXgvZB6E5DgrEInqXT
- biJhba39nLZgR7PHLINwXc1orAsXhS22KHMofwdAdgXC7w6auyKApI4sGYisRaN5KY
- REw4JqQFzEFQQ==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4Tjllc2Rpzz4wcT; Mon, 26 Feb 2024 14:02:20 +1100 (AEDT)
-Date: Mon, 26 Feb 2024 14:01:50 +1100
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: Re: [PATCH] spapr: avoid overhead of finding vhyp class in critical
- operations
-Message-ID: <Zdv_HrGqrB3CSpv6@zatzit>
-References: <20240224073359.1025835-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reRLE-0000NN-GL
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 22:07:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1708916863;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DhsX2zKEj2eWlxqwB91rQ3e4eoMBmO7GBDphuBHvWFI=;
+ b=YAjFMhxEm1VxbMyvNqpyF+OHg5ZmXOmbctG7WWn6FUOg7ybIIXoWseNcX7A0fLPMcLNK3X
+ QnUoRZ5Lg8P9P4NHr3Ekbr5+Gto/O7nydVoW3xaugrIlztXJnZHitzbTnzZMKjfSoYQO/l
+ SflMR3G9v713vutUjq+qZSYSNluNw54=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-393-k8ZpR7SRMYymYHGdcpCYeA-1; Sun, 25 Feb 2024 22:07:41 -0500
+X-MC-Unique: k8ZpR7SRMYymYHGdcpCYeA-1
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-1dc2d4c7310so4798165ad.0
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 19:07:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708916860; x=1709521660;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DhsX2zKEj2eWlxqwB91rQ3e4eoMBmO7GBDphuBHvWFI=;
+ b=AxSwmVVzYNIAu75TjIiV1IxgtrIpmxjt0UYQhHGclhsoXOWCa7UterjC4bqRcljtQK
+ R65C2SDRxVRBzN5clXJ1TU0BxvxgCOdNVMkkaccMwr/YvWrNqSnyy6apn49SL8r68PpK
+ hrJeB74u+nUiCcwI1D3t0G6YwYcSNicGZ2afak9kAB4LlGD1GefgiOzWbG+E6oh8Kc5C
+ +CF3GNYjmM9vAZUXHwnpqiBvpg+KOuySy+gOtRAblyltKt0YbCAMuGO2fwHIOfROABP7
+ nBgVjzAhu+KpOmn1zN16RyO/U6Vgpau34QSlSG7raI2soLNRtbpOV+bJrTi9c07JTDdV
+ zEug==
+X-Gm-Message-State: AOJu0Yzzs0cqJ98rOr9A0PfF483D5jptE9hjHssvnUX80KNNMOSAbZru
+ 9T9uE19a8Ym7OvHelcg1tonhsSrSGz0VhpGN0xsOy+WPufzVwWwlircnMmSkuazv+DNR1dt+vpl
+ X4CbzwvNxd36eQCdL8qhFGIgpgHZM+mVvuoLFR3u3Bfqc0T/l87oM
+X-Received: by 2002:a05:6a20:da89:b0:1a0:be66:e4ad with SMTP id
+ iy9-20020a056a20da8900b001a0be66e4admr8607853pzb.5.1708916860603; 
+ Sun, 25 Feb 2024 19:07:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHCQcf62w570GqgPWUrNMfaQVMNgiv/ne7/yEucnEnvfNzxaGk0bbv4WYKIOlVEf/S+HfM5xQ==
+X-Received: by 2002:a05:6a20:da89:b0:1a0:be66:e4ad with SMTP id
+ iy9-20020a056a20da8900b001a0be66e4admr8607844pzb.5.1708916860175; 
+ Sun, 25 Feb 2024 19:07:40 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ je9-20020a170903264900b001d9bd8fa492sm2839841plb.211.2024.02.25.19.07.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 25 Feb 2024 19:07:38 -0800 (PST)
+Date: Mon, 26 Feb 2024 11:07:25 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v4 11/34] migration/ram: Introduce 'fixed-ram' migration
+ capability
+Message-ID: <ZdwAbW3sHZin-gV0@x1n>
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-12-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="zwKHaT/h1ti62TU9"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240224073359.1025835-1-npiggin@gmail.com>
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <20240220224138.24759-12-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_SORBS_WEB=1.5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,307 +100,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---zwKHaT/h1ti62TU9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Feb 24, 2024 at 05:33:59PM +1000, Nicholas Piggin wrote:
-> PPC_VIRTUAL_HYPERVISOR_GET_CLASS is used in critical operations like
-> interrupts and TLB misses and is quite costly. Running the
-> kvm-unit-tests sieve program with radix MMU enabled thrashes the TCG
-> TLB and spends a lot of time in TLB and page table walking code. The
-> test takes 67 seconds to complete with a lot of time being spent in
-> code related to finding the vhyp class:
->=20
->    12.01%  [.] g_str_hash
->     8.94%  [.] g_hash_table_lookup
->     8.06%  [.] object_class_dynamic_cast
->     6.21%  [.] address_space_ldq
->     4.94%  [.] __strcmp_avx2
->     4.28%  [.] tlb_set_page_full
->     4.08%  [.] address_space_translate_internal
->     3.17%  [.] object_class_dynamic_cast_assert
->     2.84%  [.] ppc_radix64_xlate
->=20
-> Keep a pointer to the class and avoid this lookup. This reduces the
-> execution time to 40 seconds.
->=20
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+On Tue, Feb 20, 2024 at 07:41:15PM -0300, Fabiano Rosas wrote:
+> Add a new migration capability 'fixed-ram'.
+> 
+> The core of the feature is to ensure that each RAM page has a specific
+> offset in the resulting migration stream. The reasons why we'd want
+> such behavior are:
+> 
+>  - The resulting file will have a bounded size, since pages which are
+>    dirtied multiple times will always go to a fixed location in the
+>    file, rather than constantly being added to a sequential
+>    stream. This eliminates cases where a VM with, say, 1G of RAM can
+>    result in a migration file that's 10s of GBs, provided that the
+>    workload constantly redirties memory.
+> 
+>  - It paves the way to implement O_DIRECT-enabled save/restore of the
+>    migration stream as the pages are ensured to be written at aligned
+>    offsets.
+> 
+>  - It allows the usage of multifd so we can write RAM pages to the
+>    migration file in parallel.
+> 
+> For now, enabling the capability has no effect. The next couple of
+> patches implement the core functionality.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
-> This feels a bit ugly, but the performance problem of looking up the
-> class in fast paths can't be ignored. Is there a "nicer" way to get the
-> same result?
+> - update migration.json to 9.0 and improve wording
+> - move docs to a separate file and add use cases information
+> ---
+>  docs/devel/migration/features.rst  |   1 +
+>  docs/devel/migration/fixed-ram.rst | 137 +++++++++++++++++++++++++++++
+>  migration/options.c                |  34 +++++++
+>  migration/options.h                |   1 +
+>  migration/savevm.c                 |   1 +
+>  qapi/migration.json                |   6 +-
+>  6 files changed, 179 insertions(+), 1 deletion(-)
+>  create mode 100644 docs/devel/migration/fixed-ram.rst
+> 
+> diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+> index a9acaf618e..4c708b679a 100644
+> --- a/docs/devel/migration/features.rst
+> +++ b/docs/devel/migration/features.rst
+> @@ -10,3 +10,4 @@ Migration has plenty of features to support different use cases.
+>     dirty-limit
+>     vfio
+>     virtio
+> +   fixed-ram
+> diff --git a/docs/devel/migration/fixed-ram.rst b/docs/devel/migration/fixed-ram.rst
+> new file mode 100644
+> index 0000000000..a6c0e5a360
+> --- /dev/null
+> +++ b/docs/devel/migration/fixed-ram.rst
+> @@ -0,0 +1,137 @@
+> +Fixed-ram
+> +=========
+> +
+> +Fixed-ram is a new stream format for the RAM section designed to
+> +supplement the existing ``file:`` migration and make it compatible
+> +with ``multifd``. This enables parallel migration of a guest's RAM to
+> +a file.
+> +
+> +The core of the feature is to ensure that each RAM page has a specific
+> +offset in the resulting migration file. This enables the ``multifd``
+> +threads to write exclusively to those offsets even if the guest is
+> +constantly dirtying pages (i.e. live migration). Another benefit is
+> +that the resulting file will have a bounded size, since pages which
+> +are dirtied multiple times will always go to a fixed location in the
+> +file, rather than constantly being added to a sequential
+> +stream. Having the pages at fixed offsets also allows the usage of
+> +O_DIRECT for save/restore of the migration stream as the pages are
+> +ensured to be written respecting O_DIRECT alignment restrictions.
+> +
+> +Usage
+> +-----
+> +
+> +On both source and destination, enable the ``multifd`` and
+> +``fixed-ram`` capabilities:
+> +
+> +    ``migrate_set_capability multifd on``
+> +
+> +    ``migrate_set_capability fixed-ram on``
+> +
+> +Use a ``file:`` URL for migration:
+> +
+> +    ``migrate file:/path/to/migration/file``
+> +
+> +Fixed-ram migration is best done non-live, i.e. by stopping the VM on
+> +the source side before migrating.
+> +
+> +For best performance enable the ``direct-io`` capability as well:
+> +
+> +    ``migrate_set_capability direct-io on``
+> +
+> +Use-cases
+> +---------
+> +
+> +The fixed-ram feature was designed for use cases where the migration
+> +stream will be directed to a file in the filesystem and not
+> +immediately restored on the destination VM [#]_. These could be
+> +thought of as snapshots. We can further categorize them into live and
+> +non-live.
+> +
+> +- Non-live snapshot
+> +
+> +If the use case requires a VM to be stopped before taking a snapshot,
+> +that's the ideal scenario for fixed-ram migration. Not having to track
+> +dirty pages, the migration will write the RAM pages to the disk as
+> +fast as it can.
+> +
+> +Note: if a snapshot is taken of a running VM, but the VM will be
+> +stopped after the snapshot by the admin, then consider stopping it
+> +right before the snapshot to take benefit of the performance gains
+> +mentioned above.
+> +
+> +- Live snapshot
+> +
+> +If the use case requires that the VM keeps running during and after
+> +the snapshot operation, then fixed-ram migration can still be used,
+> +but will be less performant. Other strategies such as
+> +background-snapshot should be evaluated as well. One benefit of
+> +fixed-ram in this scenario is portability since background-snapshot
+> +depends on async dirty tracking (KVM_GET_DIRTY_LOG) which is not
 
-Not one I'm aware of, unfortunately.
+Background snapshot uses userfaultfd-wp rather than KVM_GET_DIRTY_LOG.  The
+statement is still correct though, that userfault is only supported on
+Linux in general (wp is one sub-feature, represents "write-protect mode")
+so this should help portability, as it removes the dependency on the OS.
 
->=20
-> Thanks,
-> Nick
->=20
->  target/ppc/cpu.h           |  3 ++-
->  target/ppc/mmu-book3s-v3.h |  4 +---
->  hw/ppc/pegasos2.c          |  1 +
->  target/ppc/cpu_init.c      |  9 +++------
->  target/ppc/excp_helper.c   | 16 ++++------------
->  target/ppc/kvm.c           |  4 +---
->  target/ppc/mmu-hash64.c    | 16 ++++------------
->  target/ppc/mmu-radix64.c   |  4 +---
->  8 files changed, 17 insertions(+), 40 deletions(-)
->=20
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index ec14574d14..eb85d9aa71 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1437,6 +1437,7 @@ struct ArchCPU {
->      int vcpu_id;
->      uint32_t compat_pvr;
->      PPCVirtualHypervisor *vhyp;
-> +    PPCVirtualHypervisorClass *vhyp_class;
->      void *machine_data;
->      int32_t node_id; /* NUMA node this CPU belongs to */
->      PPCHash64Options *hash64_opts;
-> @@ -1535,7 +1536,7 @@ DECLARE_OBJ_CHECKERS(PPCVirtualHypervisor, PPCVirtu=
-alHypervisorClass,
-> =20
->  static inline bool vhyp_cpu_in_nested(PowerPCCPU *cpu)
+> +supported outside of Linux.
+> +
+> +.. [#] While this same effect could be obtained with the usage of
+> +       snapshots or the ``file:`` migration alone, fixed-ram provides
+> +       a performance increase for VMs with larger RAM sizes (10s to
+> +       100s of GiBs), specially if the VM has been stopped beforehand.
+> +
+> +RAM section format
+> +------------------
+> +
+> +Instead of having a sequential stream of pages that follow the
+> +RAMBlock headers, the dirty pages for a RAMBlock follow its header
+> +instead. This ensures that each RAM page has a fixed offset in the
+> +resulting migration file.
+> +
+> +A bitmap is introduced to track which pages have been written in the
+> +migration file. Pages are written at a fixed location for every
+> +ramblock. Zero pages are ignored as they'd be zero in the destination
+> +migration as well.
+> +
+> +::
+> +
+> + Without fixed-ram:                  With fixed-ram:
+> +
+> + ---------------------               --------------------------------
+> + | ramblock 1 header |               | ramblock 1 header            |
+> + ---------------------               --------------------------------
+> + | ramblock 2 header |               | ramblock 1 fixed-ram header  |
+> + ---------------------               --------------------------------
+> + | ...               |               | padding to next 1MB boundary |
+> + ---------------------               | ...                          |
+> + | ramblock n header |               --------------------------------
+> + ---------------------               | ramblock 1 pages             |
+> + | RAM_SAVE_FLAG_EOS |               | ...                          |
+> + ---------------------               --------------------------------
+> + | stream of pages   |               | ramblock 2 header            |
+> + | (iter 1)          |               --------------------------------
+> + | ...               |               | ramblock 2 fixed-ram header  |
+> + ---------------------               --------------------------------
+> + | RAM_SAVE_FLAG_EOS |               | padding to next 1MB boundary |
+> + ---------------------               | ...                          |
+> + | stream of pages   |               --------------------------------
+> + | (iter 2)          |               | ramblock 2 pages             |
+> + | ...               |               | ...                          |
+> + ---------------------               --------------------------------
+> + | ...               |               | ...                          |
+> + ---------------------               --------------------------------
+> +                                     | RAM_SAVE_FLAG_EOS            |
+> +                                     --------------------------------
+> +                                     | ...                          |
+> +                                     --------------------------------
+> +
+> + where:
+> +  - ramblock header: the generic information for a ramblock, such as
+> +    idstr, used_len, etc.
+> +
+> +  - ramblock fixed-ram header: the information added by this feature:
+> +    bitmap of pages written, bitmap size and offset of pages in the
+> +    migration file.
+> +
+> +Restrictions
+> +------------
+> +
+> +Since pages are written to their relative offsets and out of order
+> +(due to the memory dirtying patterns), streaming channels such as
+> +sockets are not supported. A seekable channel such as a file is
+> +required. This can be verified in the QIOChannel by the presence of
+> +the QIO_CHANNEL_FEATURE_SEEKABLE.
+> diff --git a/migration/options.c b/migration/options.c
+> index 3e3e0b93b4..4909e5c72a 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -204,6 +204,7 @@ Property migration_properties[] = {
+>      DEFINE_PROP_MIG_CAP("x-switchover-ack",
+>                          MIGRATION_CAPABILITY_SWITCHOVER_ACK),
+>      DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_LIMIT),
+> +    DEFINE_PROP_MIG_CAP("x-fixed-ram", MIGRATION_CAPABILITY_FIXED_RAM),
+
+Let's directly use "fixed-ram" (or "mapped-ram", or whatever new name we
+decide to use, as long as without "x-")?
+
+migration_properties is not documented anywhere, mostly yet for debugging
+purpose.  We could have dropped all the "x-"s, IMHO.
+
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+>  
+> @@ -263,6 +264,13 @@ bool migrate_events(void)
+>      return s->capabilities[MIGRATION_CAPABILITY_EVENTS];
+>  }
+>  
+> +bool migrate_fixed_ram(void)
+> +{
+> +    MigrationState *s = migrate_get_current();
+> +
+> +    return s->capabilities[MIGRATION_CAPABILITY_FIXED_RAM];
+> +}
+> +
+>  bool migrate_ignore_shared(void)
 >  {
-> -    return PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp)->cpu_in_nested(cp=
-u);
-> +    return cpu->vhyp_class->cpu_in_nested(cpu);
->  }
->  #endif /* CONFIG_USER_ONLY */
-> =20
-> diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
-> index 674377a19e..f3f7993958 100644
-> --- a/target/ppc/mmu-book3s-v3.h
-> +++ b/target/ppc/mmu-book3s-v3.h
-> @@ -108,9 +108,7 @@ static inline hwaddr ppc_hash64_hpt_mask(PowerPCCPU *=
-cpu)
->      uint64_t base;
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        return vhc->hpt_mask(cpu->vhyp);
-> +        return cpu->vhyp_class->hpt_mask(cpu->vhyp);
->      }
->      if (cpu->env.mmu_model =3D=3D POWERPC_MMU_3_00) {
->          ppc_v3_pate_t pate;
-> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> index 04d6decb2b..c22e8b336d 100644
-> --- a/hw/ppc/pegasos2.c
-> +++ b/hw/ppc/pegasos2.c
-> @@ -400,6 +400,7 @@ static void pegasos2_machine_reset(MachineState *mach=
-ine, ShutdownCause reason)
->      machine->fdt =3D fdt;
-> =20
->      pm->cpu->vhyp =3D PPC_VIRTUAL_HYPERVISOR(machine);
-> +    pm->cpu->vhyp_class =3D PPC_VIRTUAL_HYPERVISOR_GET_CLASS(pm->cpu->vh=
-yp);
->  }
-> =20
->  enum pegasos2_rtas_tokens {
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 9bccddb350..63d0094024 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6631,6 +6631,7 @@ void cpu_ppc_set_vhyp(PowerPCCPU *cpu, PPCVirtualHy=
-pervisor *vhyp)
->      CPUPPCState *env =3D &cpu->env;
-> =20
->      cpu->vhyp =3D vhyp;
-> +    cpu->vhyp_class =3D PPC_VIRTUAL_HYPERVISOR_GET_CLASS(vhyp);
-> =20
->      /*
->       * With a virtual hypervisor mode we never allow the CPU to go
-> @@ -7224,9 +7225,7 @@ static void ppc_cpu_exec_enter(CPUState *cs)
->      PowerPCCPU *cpu =3D POWERPC_CPU(cs);
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->cpu_exec_enter(cpu->vhyp, cpu);
-> +        cpu->vhyp_class->cpu_exec_enter(cpu->vhyp, cpu);
->      }
->  }
-> =20
-> @@ -7235,9 +7234,7 @@ static void ppc_cpu_exec_exit(CPUState *cs)
->      PowerPCCPU *cpu =3D POWERPC_CPU(cs);
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->cpu_exec_exit(cpu->vhyp, cpu);
-> +        cpu->vhyp_class->cpu_exec_exit(cpu->vhyp, cpu);
->      }
->  }
->  #endif /* CONFIG_TCG */
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 98952de267..445350488c 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -840,9 +840,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int exc=
-p)
->           * HV mode, we need to keep hypercall support.
->           */
->          if (lev =3D=3D 1 && cpu->vhyp) {
-> -            PPCVirtualHypervisorClass *vhc =3D
-> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -            vhc->hypercall(cpu->vhyp, cpu);
-> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
->              powerpc_reset_excp_state(cpu);
->              return;
+>      MigrationState *s = migrate_get_current();
+> @@ -645,6 +653,32 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
 >          }
-> @@ -1012,9 +1010,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int =
-excp)
->           * HV mode, we need to keep hypercall support.
->           */
->          if (lev =3D=3D 1 && cpu->vhyp) {
-> -            PPCVirtualHypervisorClass *vhc =3D
-> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -            vhc->hypercall(cpu->vhyp, cpu);
-> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
->              powerpc_reset_excp_state(cpu);
->              return;
->          }
-> @@ -1534,9 +1530,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int=
- excp)
-> =20
->          /* "PAPR mode" built-in hypercall emulation */
->          if (lev =3D=3D 1 && books_vhyp_handles_hcall(cpu)) {
-> -            PPCVirtualHypervisorClass *vhc =3D
-> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -            vhc->hypercall(cpu->vhyp, cpu);
-> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
->              powerpc_reset_excp_state(cpu);
->              return;
->          }
-> @@ -1677,10 +1671,8 @@ static void powerpc_excp_books(PowerPCCPU *cpu, in=
-t excp)
 >      }
-> =20
->      if ((new_msr & MSR_HVB) && books_vhyp_handles_hv_excp(cpu)) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
->          /* Deliver interrupt to L1 by returning from the H_ENTER_NESTED =
-call */
-> -        vhc->deliver_hv_excp(cpu, excp);
-> +        cpu->vhyp_class->deliver_hv_excp(cpu, excp);
-> =20
->          powerpc_reset_excp_state(cpu);
-> =20
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 26fa9d0575..5b5b96ab6b 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -862,9 +862,7 @@ int kvmppc_put_books_sregs(PowerPCCPU *cpu)
->      sregs.pvr =3D env->spr[SPR_PVR];
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        sregs.u.s.sdr1 =3D vhc->encode_hpt_for_kvm_pr(cpu->vhyp);
-> +        sregs.u.s.sdr1 =3D cpu->vhyp_class->encode_hpt_for_kvm_pr(cpu->v=
-hyp);
->      } else {
->          sregs.u.s.sdr1 =3D env->spr[SPR_SDR1];
->      }
-> diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-> index d645c0bb94..196b4b2a48 100644
-> --- a/target/ppc/mmu-hash64.c
-> +++ b/target/ppc/mmu-hash64.c
-> @@ -516,9 +516,7 @@ const ppc_hash_pte64_t *ppc_hash64_map_hptes(PowerPCC=
-PU *cpu,
->      const ppc_hash_pte64_t *hptes;
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        return vhc->map_hptes(cpu->vhyp, ptex, n);
-> +        return cpu->vhyp_class->map_hptes(cpu->vhyp, ptex, n);
->      }
->      base =3D ppc_hash64_hpt_base(cpu);
-> =20
-> @@ -538,9 +536,7 @@ void ppc_hash64_unmap_hptes(PowerPCCPU *cpu, const pp=
-c_hash_pte64_t *hptes,
->                              hwaddr ptex, int n)
->  {
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->unmap_hptes(cpu->vhyp, hptes, ptex, n);
-> +        cpu->vhyp_class->unmap_hptes(cpu->vhyp, hptes, ptex, n);
->          return;
->      }
-> =20
-> @@ -820,9 +816,7 @@ static void ppc_hash64_set_r(PowerPCCPU *cpu, hwaddr =
-ptex, uint64_t pte1)
->      hwaddr base, offset =3D ptex * HASH_PTE_SIZE_64 + HPTE64_DW1_R;
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->hpte_set_r(cpu->vhyp, ptex, pte1);
-> +        cpu->vhyp_class->hpte_set_r(cpu->vhyp, ptex, pte1);
->          return;
->      }
->      base =3D ppc_hash64_hpt_base(cpu);
-> @@ -837,9 +831,7 @@ static void ppc_hash64_set_c(PowerPCCPU *cpu, hwaddr =
-ptex, uint64_t pte1)
->      hwaddr base, offset =3D ptex * HASH_PTE_SIZE_64 + HPTE64_DW1_C;
-> =20
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =3D
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->hpte_set_c(cpu->vhyp, ptex, pte1);
-> +        cpu->vhyp_class->hpte_set_c(cpu->vhyp, ptex, pte1);
->          return;
->      }
->      base =3D ppc_hash64_hpt_base(cpu);
-> diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-> index 5823e039e6..496ba87a95 100644
-> --- a/target/ppc/mmu-radix64.c
-> +++ b/target/ppc/mmu-radix64.c
-> @@ -677,9 +677,7 @@ static bool ppc_radix64_xlate_impl(PowerPCCPU *cpu, v=
-addr eaddr,
-> =20
->      /* Get Partition Table */
->      if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc;
-> -        vhc =3D PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        if (!vhc->get_pate(cpu->vhyp, cpu, lpid, &pate)) {
-> +        if (!cpu->vhyp_class->get_pate(cpu->vhyp, cpu, lpid, &pate)) {
->              if (guest_visible) {
->                  ppc_radix64_raise_hsi(cpu, access_type, eaddr, eaddr,
->                                        DSISR_R_BADCONFIG);
+>  
+> +    if (new_caps[MIGRATION_CAPABILITY_FIXED_RAM]) {
+> +        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+> +            error_setg(errp,
+> +                       "Fixed-ram migration is incompatible with multifd");
+> +            return false;
+> +        }
+> +
+> +        if (new_caps[MIGRATION_CAPABILITY_XBZRLE]) {
+> +            error_setg(errp,
+> +                       "Fixed-ram migration is incompatible with xbzrle");
+> +            return false;
+> +        }
+> +
+> +        if (new_caps[MIGRATION_CAPABILITY_COMPRESS]) {
+> +            error_setg(errp,
+> +                       "Fixed-ram migration is incompatible with compression");
+> +            return false;
+> +        }
+> +
+> +        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
+> +            error_setg(errp,
+> +                       "Fixed-ram migration is incompatible with postcopy ram");
+> +            return false;
+> +        }
+> +    }
+> +
+>      return true;
+>  }
+>  
+> diff --git a/migration/options.h b/migration/options.h
+> index 246c160aee..8680a10b79 100644
+> --- a/migration/options.h
+> +++ b/migration/options.h
+> @@ -31,6 +31,7 @@ bool migrate_compress(void);
+>  bool migrate_dirty_bitmaps(void);
+>  bool migrate_dirty_limit(void);
+>  bool migrate_events(void);
+> +bool migrate_fixed_ram(void);
+>  bool migrate_ignore_shared(void);
+>  bool migrate_late_block_activate(void);
+>  bool migrate_multifd(void);
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index d612c8a902..4b928dd6bb 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -245,6 +245,7 @@ static bool should_validate_capability(int capability)
+>      /* Validate only new capabilities to keep compatibility. */
+>      switch (capability) {
+>      case MIGRATION_CAPABILITY_X_IGNORE_SHARED:
+> +    case MIGRATION_CAPABILITY_FIXED_RAM:
+>          return true;
+>      default:
+>          return false;
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 5a565d9b8d..3fce5fe53e 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -531,6 +531,10 @@
+>  #     and can result in more stable read performance.  Requires KVM
+>  #     with accelerator property "dirty-ring-size" set.  (Since 8.1)
+>  #
+> +# @fixed-ram: Migrate using fixed offsets in the migration file for
+> +#     each RAM page.  Requires a migration URI that supports seeking,
+> +#     such as a file.  (since 9.0)
+> +#
+>  # Features:
+>  #
+>  # @deprecated: Member @block is deprecated.  Use blockdev-mirror with
+> @@ -555,7 +559,7 @@
+>             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
+>             'validate-uuid', 'background-snapshot',
+>             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
+> -           'dirty-limit'] }
+> +           'dirty-limit', 'fixed-ram'] }
+>  
+>  ##
+>  # @MigrationCapabilityStatus:
+> -- 
+> 2.35.3
+> 
 
---=20
-David Gibson			| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
-				| _way_ _around_!
-http://www.ozlabs.org/~dgibson
+-- 
+Peter Xu
 
---zwKHaT/h1ti62TU9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmXb/xkACgkQzQJF27ox
-2Gc3oQ/+MNisQm+HVmTWCDSzUSkS11ZnamZuqKcthA5X4QYuwxVaegguCjTUr625
-oBAXdw/GPv4NCZvrxUJbNPn1TQmbILtdsIpgV4bC8Qyl60Flc/1FKANLBnCDzBTO
-ZhW+HlQv09iN8s+3qftbBiLukK/TNeNZT5cEbZNXslobwMV6YcYlsEd3nGF1w8PL
-wMtofovEwU9V3Ce4YDtmaUg9FPT87Tu9LU1t6MKc3ma2LVRW81nKXx/fH5zmJvsB
-/iprUZaqpixj1jx2hwNlwyYAQ4bsXz5S7Nk4hkQNx/aYe5XWiJX8LEdsrXit9ynf
-5TruUVlVliUIHGcj95g3hnCEyM7JQSWce594GUOKEkBKHmTR/HvFPXYKPrwqfXjU
-PsIu8hpV2VyjMQnYoID9MjHYDUQaZ/3yRzgUakeKr4zTKv5qyXLoSkpdMOk09RiX
-UE8TlTbkxoE1byMbdUImrbjHQIT+6VR3/ljbrlDvEHrWeDF/9EMAvkALlhjYu/4Y
-783JrXpOfLpR0avwqlRSCxwSzvCtY+q6pwADYhqafITbFWZNOrLB1aMcIxp7W8CM
-UjD0WwHgl6W9kAIXFWZmdQ51Ny5aACqNja+plv0GvtoIvkPoXBYxvJhrd6ncnEw5
-JzVzHA0CXTmKr4M8CNl2RfEcOo2BuwaNSopv9XEGHz9Ij2D10RA=
-=UX8z
------END PGP SIGNATURE-----
-
---zwKHaT/h1ti62TU9--
 
