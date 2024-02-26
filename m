@@ -4,60 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9898C54E49
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 047C7C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 13:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reacX-0007M7-KR; Mon, 26 Feb 2024 08:02:13 -0500
+	id 1reahP-0003gG-Pi; Mon, 26 Feb 2024 08:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1reacW-0007LQ-32; Mon, 26 Feb 2024 08:02:12 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1reacQ-0005Tz-45; Mon, 26 Feb 2024 08:02:11 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 535EF4E601F;
- Mon, 26 Feb 2024 14:02:01 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 9t60Q0hnXzp1; Mon, 26 Feb 2024 14:01:59 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 41FD04E601E; Mon, 26 Feb 2024 14:01:59 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3FDBE7456B4;
- Mon, 26 Feb 2024 14:01:59 +0100 (CET)
-Date: Mon, 26 Feb 2024 14:01:59 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>, 
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, qemu-block@nongnu.org, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>, John Snow <jsnow@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: Re: [PATCH v2 08/15] hw/pci-bridge: Extract QOM ICH definitions to
- 'ich9_dmi.h'
-In-Reply-To: <20240226111416.39217-9-philmd@linaro.org>
-Message-ID: <5bab87f9-aeee-3aa5-d695-4fa2128130a1@eik.bme.hu>
-References: <20240226111416.39217-1-philmd@linaro.org>
- <20240226111416.39217-9-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reahO-0003fJ-9O
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:07:14 -0500
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reahJ-0006ZD-Hh
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 08:07:14 -0500
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-5129e5b8cecso3705262e87.3
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 05:07:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708952827; x=1709557627; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0KSovtxxq26NMA/JJuvDuQdjPjKl/QOetO0RoqWPi4A=;
+ b=Z/UFV1o7NKYL1CGVZIIKDSliy6oOwa2vbpKi5SBX2Rc45dGBmM7GYr/2BGsNnps1xA
+ 523zaQtuwzXSho+UHEA/uB9FHnaCY/cuVfLk/of5nkuNlEHK5T3xm1TWvvLPXtom9Tt8
+ xP5HLbLScMpwrWfYWA6RHz9KfmcxcvkSjdKr4j3eyB8g4j09KO4Co7cCA7GvZLZqWAXQ
+ gjkwW8DzE1cXLxMK4sqxJuFA6w1C4fnklibkbw7ayqt9J95SZoCPx9Z00xssLZUSLskj
+ tfZI13mM/irvrWbpl8SBv+Vwx7NO20uxmI+lFL8RCNzjk+F0NwxooYrA/VIt1zCutttp
+ n3+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708952827; x=1709557627;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0KSovtxxq26NMA/JJuvDuQdjPjKl/QOetO0RoqWPi4A=;
+ b=YizeD4M8rxoxfyIVZaAkIrRnMz4JOb4kUi1+SkgePg1l9ELIEjervHjl1xa/u0OVaH
+ 3IxCbtVxotet9JP+J5DsKp1YwSUUuxlcm9lsKa2T2MCc5MR/KMWqVsZBV21BPIRDboU2
+ CimwDpvLZcDtanUvS0cLZc+Kv7x3cPXk37X7YtRpRFe3gE1ZtqbzNSL9yl7e0PdKnZcI
+ AYsD8OY4Ki34KchsZCmqoci83mDi6BR74vgUbPAVZgiLEtvADOoo9b5em4+fm3TgTiyx
+ v3Fd/1OHxtLcXVe5W3viYQEz2vemPzy2KG/JOebxrbwzqlueE6sxB1QDerLddCveDpEI
+ GzUQ==
+X-Gm-Message-State: AOJu0YwNgSiwhSfPc0AvXg3QIgfiUhvhZSGDyU+dM8pO2fuW2CpjPqp3
+ Tp4KGmb0pFkLqXFkK8LNiPvl5sjKYXs50UCGLB8M656BJlvLJLZuYoWVcFBOVpb6ETFEuFDRx9t
+ l
+X-Google-Smtp-Source: AGHT+IHXQdIc4a4mlgcuUMg4Vj7QSLIdixN15Tfktp54m8c6yothKLLne5dr/WkXsa6Occmwjxk2yQ==
+X-Received: by 2002:a05:6512:407:b0:512:c508:b8c8 with SMTP id
+ u7-20020a056512040700b00512c508b8c8mr3887455lfk.4.1708952827051; 
+ Mon, 26 Feb 2024 05:07:07 -0800 (PST)
+Received: from [192.168.69.100] ([176.176.164.69])
+ by smtp.gmail.com with ESMTPSA id
+ y25-20020ac24219000000b005114a0c56afsm838526lfh.279.2024.02.26.05.07.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Feb 2024 05:07:06 -0800 (PST)
+Message-ID: <d26a5c6c-146c-433c-a625-052549eb4247@linaro.org>
+Date: Mon, 26 Feb 2024 14:07:03 +0100
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1028664770-1708952519=:37179"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/15] hw/southbridge: Extract ICH9 QOM container model
+Content-Language: en-US
+To: qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Ani Sinha <anisinha@redhat.com>,
+ qemu-block@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20240226111416.39217-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240226111416.39217-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,145 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 26/2/24 12:13, Philippe Mathieu-Daudé wrote:
 
---3866299591-1028664770-1708952519=:37179
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+> Here we introduce the ICH9 'southbridge' as a QOM container.
+> Since the chipset comes as a whole, we shouldn't instantiate
+> its components separately. However in order to maintain old
+> code we expose some properties to configure the container and
+> not introduce any change for the Q35 machine. There is no
+> migration change, only QOM objects moved around.
 
-On Mon, 26 Feb 2024, Philippe Mathieu-Daudé wrote:
-> Expose TYPE_ICH_DMI_PCI_BRIDGE to the new
-> "hw/pci-bridge/ich9_dmi.h" header.
+> Philippe Mathieu-Daudé (15):
+>    MAINTAINERS: Add 'ICH9 South Bridge' section
+>    hw/i386/q35: Add local 'lpc_obj' variable
+>    hw/acpi/ich9: Restrict definitions from 'hw/southbridge/ich9.h'
+>    hw/acpi/ich9_tco: Include 'ich9' in names
+>    hw/acpi/ich9_tco: Restrict ich9_generate_smi() declaration
+>    hw/ide: Rename ich.c -> ich9_ahci.c
+>    hw/i2c/smbus: Extract QOM ICH9 definitions to 'ich9_smbus.h'
+>    hw/pci-bridge: Extract QOM ICH definitions to 'ich9_dmi.h'
+>    hw/southbridge/ich9: Introduce TYPE_ICH9_SOUTHBRIDGE stub
+>    hw/southbridge/ich9: Add the DMI-to-PCI bridge
+>    hw/southbridge/ich9: Add a AHCI function
+>    hw/southbridge/ich9: Add the SMBus function
+>    hw/southbridge/ich9: Add the USB EHCI/UHCI functions
+>    hw/southbridge/ich9: Extract LPC definitions to 'hw/isa/ich9_lpc.h'
+>    hw/southbridge/ich9: Add the LPC / ISA bridge function
 
-Since this is effectively an empty object (that's not even instantiated by 
-default) I still think that instead of adding even more files for it all 
-this could just be moved to hw/isa/lpc_ich9.c and define there as an 
-internal object and drop the OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, 
-ICH_DMI_PCI_BRIDGE) and just use the size of the superclass as it's 
-instance size. That just adds the realize function and a type definition 
-and gets rid of boilerplate scattered around the source tree which just 
-adds complexity for no reason. But I don't care too much about it, just 
-wanted to say again that if something can be kept simple I'd prefer that 
-over making it more complex and for this device it looks already too 
-complex for what it does or used for.
+Branch available here:
+https://gitlab.com/philmd/qemu/-/commits/ich9_qom-v2/
 
-Regards,
-BALATON Zoltan
-
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> MAINTAINERS                               |  1 +
-> include/hw/pci-bridge/ich9_dmi.h          | 20 ++++++++++++++++++++
-> include/hw/southbridge/ich9.h             |  2 --
-> hw/pci-bridge/{i82801b11.c => ich9_dmi.c} | 11 ++++-------
-> hw/pci-bridge/meson.build                 |  2 +-
-> 5 files changed, 26 insertions(+), 10 deletions(-)
-> create mode 100644 include/hw/pci-bridge/ich9_dmi.h
-> rename hw/pci-bridge/{i82801b11.c => ich9_dmi.c} (95%)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 0849283287..52282c680e 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2618,6 +2618,7 @@ F: hw/i2c/smbus_ich9.c
-> F: hw/isa/lpc_ich9.c
-> F: include/hw/acpi/ich9*.h
-> F: include/hw/i2c/ich9_smbus.h
-> +F: include/hw/pci-bridge/ich9_dmi.h
-> F: include/hw/southbridge/ich9.h
->
-> PIIX4 South Bridge (i82371AB)
-> diff --git a/include/hw/pci-bridge/ich9_dmi.h b/include/hw/pci-bridge/ich9_dmi.h
-> new file mode 100644
-> index 0000000000..7cf5d9d9b2
-> --- /dev/null
-> +++ b/include/hw/pci-bridge/ich9_dmi.h
-> @@ -0,0 +1,20 @@
-> +/*
-> + * QEMU ICH4 i82801b11 dmi-to-pci Bridge Emulation
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_PCI_BRIDGE_ICH9_DMI_H
-> +#define HW_PCI_BRIDGE_ICH9_DMI_H
-> +
-> +#include "qom/object.h"
-> +#include "hw/pci/pci_bridge.h"
-> +
-> +#define TYPE_ICH_DMI_PCI_BRIDGE "i82801b11-bridge"
-> +OBJECT_DECLARE_SIMPLE_TYPE(I82801b11Bridge, ICH_DMI_PCI_BRIDGE)
-> +
-> +struct I82801b11Bridge {
-> +    PCIBridge parent_obj;
-> +};
-> +
-> +#endif
-> diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
-> index bee522a4cf..b2abf483e0 100644
-> --- a/include/hw/southbridge/ich9.h
-> +++ b/include/hw/southbridge/ich9.h
-> @@ -114,8 +114,6 @@ struct ICH9LPCState {
->
-> #define ICH9_D2P_SECONDARY_DEFAULT              (256 - 8)
->
-> -#define ICH9_D2P_A2_REVISION                    0x92
-> -
-> /* D31:F0 LPC Processor Interface */
-> #define ICH9_RST_CNT_IOPORT                     0xCF9
->
-> diff --git a/hw/pci-bridge/i82801b11.c b/hw/pci-bridge/ich9_dmi.c
-> similarity index 95%
-> rename from hw/pci-bridge/i82801b11.c
-> rename to hw/pci-bridge/ich9_dmi.c
-> index c140919cbc..927e48bf2e 100644
-> --- a/hw/pci-bridge/i82801b11.c
-> +++ b/hw/pci-bridge/ich9_dmi.c
-> @@ -45,7 +45,7 @@
-> #include "hw/pci/pci_bridge.h"
-> #include "migration/vmstate.h"
-> #include "qemu/module.h"
-> -#include "hw/southbridge/ich9.h"
-> +#include "hw/pci-bridge/ich9_dmi.h"
->
-> /*****************************************************************************/
-> /* ICH9 DMI-to-PCI bridge */
-> @@ -53,11 +53,8 @@
-> #define I82801ba_SSVID_SVID     0
-> #define I82801ba_SSVID_SSID     0
->
-> -typedef struct I82801b11Bridge {
-> -    /*< private >*/
-> -    PCIBridge parent_obj;
-> -    /*< public >*/
-> -} I82801b11Bridge;
-> +
-> +#define ICH9_D2P_A2_REVISION                    0x92
->
-> static void i82801b11_bridge_realize(PCIDevice *d, Error **errp)
-> {
-> @@ -103,7 +100,7 @@ static void i82801b11_bridge_class_init(ObjectClass *klass, void *data)
-> }
->
-> static const TypeInfo i82801b11_bridge_info = {
-> -    .name          = "i82801b11-bridge",
-> +    .name          = TYPE_ICH_DMI_PCI_BRIDGE,
->     .parent        = TYPE_PCI_BRIDGE,
->     .instance_size = sizeof(I82801b11Bridge),
->     .class_init    = i82801b11_bridge_class_init,
-> diff --git a/hw/pci-bridge/meson.build b/hw/pci-bridge/meson.build
-> index f2a60434dd..d746487193 100644
-> --- a/hw/pci-bridge/meson.build
-> +++ b/hw/pci-bridge/meson.build
-> @@ -1,6 +1,6 @@
-> pci_ss = ss.source_set()
-> pci_ss.add(files('pci_bridge_dev.c'))
-> -pci_ss.add(when: 'CONFIG_I82801B11', if_true: files('i82801b11.c'))
-> +pci_ss.add(when: 'CONFIG_I82801B11', if_true: files('ich9_dmi.c'))
-> pci_ss.add(when: 'CONFIG_IOH3420', if_true: files('ioh3420.c'))
-> pci_ss.add(when: 'CONFIG_PCIE_PORT', if_true: files('pcie_root_port.c', 'gen_pcie_root_port.c'))
-> pci_ss.add(when: 'CONFIG_PCIE_PCI_BRIDGE', if_true: files('pcie_pci_bridge.c'))
->
---3866299591-1028664770-1708952519=:37179--
 
