@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5555DC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA5AC54E41
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rebu9-0004os-Hz; Mon, 26 Feb 2024 09:24:29 -0500
+	id 1rebyX-00077E-VO; Mon, 26 Feb 2024 09:29:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rebu6-0004oD-Qj
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:24:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rebu5-0004e0-EU
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:24:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708957464;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EGhtGj7YsaBsFM6XlKGlqy6Ckgulf9+29Z0s3oIpJ0k=;
- b=WDmpeE+7YQY0qpr4v31vAxd8BQ2eIM5bw0x6tgZzrExl9bImklZDX5QYTge4XJs0tlsD6h
- 9Ho8GJaxMeUlSNN3LzTnpc5NCdpud4BIz0y1SoKBVr5FyvQ2D1c8SK83WKRdx35GxQhBiD
- 7OlW5KSOAiqI+Ohd058YmxTCctSFKww=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-dvtYNw7VMpeuwOzxgqYTOg-1; Mon, 26 Feb 2024 09:24:21 -0500
-X-MC-Unique: dvtYNw7VMpeuwOzxgqYTOg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2A09C85A58A;
- Mon, 26 Feb 2024 14:24:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9F018C01644;
- Mon, 26 Feb 2024 14:24:20 +0000 (UTC)
-Date: Mon, 26 Feb 2024 14:24:18 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 05/28] qemu-img: pass current cmd info into command
- handlers
-Message-ID: <ZdyfEuncEZrL0sWa@redhat.com>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
- <20240221211622.2335170-5-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rebyO-000764-G5
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:28:52 -0500
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rebyM-0005RB-SR
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:28:52 -0500
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5654f700705so4191578a12.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 06:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1708957728; x=1709562528; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UaHnE8xFuk5fF0E94JeQzivSpvLKFREUCdWaCX88pEg=;
+ b=TRd06k2Q7iG0RhknUoad8oQzxAyrEHiWuKJhsrFNb82mEK8pq6WbbSGtRujSZyb3gs
+ qIBtZ48UkjfagV8BsFOJlTSyqn91Vd3k7mWS5vd57xxfXAqjqOG/LgReYFnwBt6pIhso
+ ueTxZFhOOXtoEVp3EOIWEInj3eGaobji9nqi4R15A0xy4kYkpuM2lr13hu+ggIWLUzA6
+ j2tvFDt0bGSXV6eaYdfcrOuCfqYLO3s9pyySEzHwiMrLtNLpAh/Pzs8bvBajotu+eq0c
+ iCJzPpbsHuvs7Oj1jIU+xJnxXDtZKxbfrKULyWsEt54VIYOPkVEvRD3t7G9rU2c5+Sla
+ THsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708957728; x=1709562528;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UaHnE8xFuk5fF0E94JeQzivSpvLKFREUCdWaCX88pEg=;
+ b=sBTCPcXZzHptHCXBcZxnxaRb/L3DlS36bX5LWYRDbn6dFzeyp79DWtlO2x2EnGstdQ
+ wF4Tl6Dl+MEMtZRG2BldchtZnaIfC2O6+Lf6RAEVwNN5GULWuI2e8ov9xRETzJQVAbn/
+ 8yDrE0fYx3zCIQPU0YdyMiHo7XzTacIW9TEo/Ix+tZSAvVimXyPA9OW4eGHXOJ9ih3Hf
+ H2Kzxl3lUmV53DxnQSRytQi/5V7/os4OlXRTw3NQSl1nIF992a6a8VcTssUyrMhPNhYC
+ rZGMmc58LvCLNmXnDbeCbCGq1dFmn0DbfphLjR/LYlWCtuAcqEbyLqzZqNQVaXmYagqM
+ jOUg==
+X-Gm-Message-State: AOJu0YyRoDYQ2SlkWtFFnL4Asi0uSAXppgz1DfeJHi1QhtNF5fSBkUvc
+ YGb24Pmli+IMZjO45b62kOm8VGTS9vRm4nK8VS4Ul95heZm52LRQrfAt5C5Ljyw5lXwaAAYBBZc
+ 5JlAFDR92iWEftf1DDMn7uxFDRlxjJY1OsLEndg==
+X-Google-Smtp-Source: AGHT+IEg5c6DFhQTd8s2Np8vblFmoNuz25GpAZWZ9UwimC9IXAzSuy9rIe3UNYccmKriKfgb9tXfWhpeO+l1QG/6Ks4=
+X-Received: by 2002:a05:6402:393:b0:566:ca0:4a91 with SMTP id
+ o19-20020a056402039300b005660ca04a91mr1249593edv.2.1708957728166; Mon, 26 Feb
+ 2024 06:28:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240221211622.2335170-5-mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240220160622.114437-1-peter.maydell@linaro.org>
+ <20240220160622.114437-6-peter.maydell@linaro.org>
+ <Zdyfz8kc9/iumCAA@intel.com>
+In-Reply-To: <Zdyfz8kc9/iumCAA@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 26 Feb 2024 14:28:37 +0000
+Message-ID: <CAFEAcA_ZzSmgSbsgE92PNxnDxTxrprMAMOdWwT2Q6aZ-my8NbQ@mail.gmail.com>
+Subject: Re: [PATCH 05/10] hw/core: Add documentation and license comments to
+ reset.h
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,26 +93,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 12:15:46AM +0300, Michael Tokarev wrote:
-> This info will be used to generate --help output.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  qemu-img.c | 34 +++++++++++++++++-----------------
->  1 file changed, 17 insertions(+), 17 deletions(-)
+On Mon, 26 Feb 2024 at 14:13, Zhao Liu <zhao1.liu@intel.com> wrote:
+>
+> Hi Peter,
+>
+> On Tue, Feb 20, 2024 at 04:06:17PM +0000, Peter Maydell wrote:
+> > Date: Tue, 20 Feb 2024 16:06:17 +0000
+> > From: Peter Maydell <peter.maydell@linaro.org>
+> > Subject: [PATCH 05/10] hw/core: Add documentation and license comments to
+> >  reset.h
+> > X-Mailer: git-send-email 2.34.1
+> >
+> > Add the usual boilerplate license/copyright comment to reset.h (using
+> > the text from reset.c), and document the existing functions.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >  include/sysemu/reset.h | 79 ++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 79 insertions(+)
+> >
+> > diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
+> > index 609e4d50c26..6aa11846a69 100644
+> > --- a/include/sysemu/reset.h
+> > +++ b/include/sysemu/reset.h
+> > @@ -1,3 +1,29 @@
+> > +/*
+> > + *  Reset handlers.
+> > + *
+> > + * Copyright (c) 2003-2008 Fabrice Bellard
+> > + * Copyright (c) 2016 Red Hat, Inc.
+> > + * Copyright (c) 2024 Linaro, Ltd.
+>
+> An additional question, when there is a new (notable) contribution to a
+> file, then it's time to add the company's copyright. Right?
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+It's OK to do that; it's not obligatory. If you're contributing
+on behalf of a company you should generally follow whatever
+that company's policies are for copyright lines etc in open
+source projects.
 
+> > + * We assume that the caller holds the BQL.
+>
+> HMM, what does BQL stand for?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+"Big QEMU Lock", the one you get via BQL_LOCK_GUARD().
+BQL is the standard abbreviation -- we already use it
+extensively both in comments in include/ and in docs/devel/.
 
+-- PMM
 
