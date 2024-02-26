@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0DF9C48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFFAC5478C
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rehQ0-0001gB-5L; Mon, 26 Feb 2024 15:17:44 -0500
+	id 1rehPy-0001fY-Ji; Mon, 26 Feb 2024 15:17:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1rehPx-0001ew-CN
+ id 1rehPx-0001ev-Az
  for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:41 -0500
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1rehPv-000811-BM
+ id 1rehPm-0007z9-BV
  for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:41 -0500
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-3bb9b28acb4so2482133b6e.2
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 12:17:38 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3c1abce4f48so136765b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 12:17:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708978657; x=1709583457; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2kAEgIdBp6Ue1btIM+Uj1VoaSgxC8giYiH5Kmbwpsfk=;
- b=X0jRWafIfmHCQy4wudzjJon6cdZ6nMaQbT1QBUZZgd/HS7aQVqMxAnaZ9zfX2Xg6H7
- MfZcBIDvdzJ5EftWNnjSnZztVddg4pV7IP173ZSITblHUgBatjIQKvgjIUukSfvmI/Bk
- fTleKwOBfn0SfxwKD54nUp+8dld/e5BT7VCOjzx1Sj8lHyk/EOM9CS2AgpRoc0JAAmAV
- gwteBUL9qc03wezJZJIg/o4q93bePKk5kr4FedaMkelDKEfbMO4rpoTUQwN+NONdNT+L
- xImQwap2zxirupCI+RV0SbBDS5QW3vb3T9e5YYK+3oETyDe3NeAmmUdxlcJD+J7B1nj7
- WEzQ==
+ d=gmail.com; s=20230601; t=1708978645; x=1709583445; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BTmBTQ+EHW10p+hpTeijt3KXD0xzovjUdDQWJ7+Iu00=;
+ b=BSBmlafu6v2inqrDlbiz3QWPyG7EXrponnbelWUT1J5nuQg+xeocZSv7OsR8nxqXv9
+ h+W47CLhyIPId8zV4Vkxi/MxBLPBq4sj3u4oEN96+jN9WyhWS+lu+wNaFiT8RhHTb1wK
+ 7CWob9fM85trI5I+p25LJLNL4sN7sH5rI24+WBliuW925Hqenpntwnl8/D4AD8OfVzeE
+ w91zN8hZj+agjo2bx9zHrlfvC+rzagL35voQbflAQUo9PEem9kgdt0fuP6iFkhOxZI45
+ jyq9Tve9HAYeIaWsbZyEzieg6sE/ygGW0gUThMlXTftHlqxtw/VclPWJ5W7/uo5vcJJ6
+ bhvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708978657; x=1709583457;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2kAEgIdBp6Ue1btIM+Uj1VoaSgxC8giYiH5Kmbwpsfk=;
- b=DxZ1sFYZ8u65K/PE/6mz4SrIeZbSR57LQgN19xto6qV3/ivkiJjGFc9azhJgpWgUnd
- tuS4tEBV2MN5nFJUt6owfEQkqTbKIccpWTWaq1BNJHh6TaL2dwagdofYV82+fCMGJV93
- 9KLiF4PXiv/9lOBKujqbWDqhrMhA/VmO3fPyeiz3zY3cKnAhTziRRHwaQx2TjjfP+oq4
- W+xJLyuScc3v6mc/w+jgo+OngQfRTYTUcV0TvN5wzb5PGi+hbQyO+OVl/rTaiTh7qWOn
- YyHT0N92YVMqokjrEQM/Y04vvttpdyaxhpR6iXdfDAGIZa4gmsHf3WCW+Ct26uHK0EwP
- 6gig==
-X-Gm-Message-State: AOJu0YwoPP/m6H741kyuwJNDf2v6E453rYlokMT4MGadG6p1krYgdsrA
- jhrJ87ju+PaoPBHMgVK+rk1L2/fCUhwPrWIrHhYTWcebWGpCTzU/SqXq6vZBNxI=
-X-Google-Smtp-Source: AGHT+IGIC2MNmJJaHD7E3Ew6yvs00WWSjxluTznzDrPZxeqVIlr8drzbSNVdgyUEFxxpJFCgShyqBw==
-X-Received: by 2002:a05:6808:2189:b0:3bf:fdb2:ca5b with SMTP id
- be9-20020a056808218900b003bffdb2ca5bmr223210oib.3.1708978657341; 
- Mon, 26 Feb 2024 12:17:37 -0800 (PST)
+ d=1e100.net; s=20230601; t=1708978645; x=1709583445;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BTmBTQ+EHW10p+hpTeijt3KXD0xzovjUdDQWJ7+Iu00=;
+ b=F0hmfdwaeAVBFLkwFDgvQ+8WlWkwwt1onME6ebyYRVEjRH2nMYdNkIt4u/5cwV5MjV
+ 87P9a90ddDWNjnFIOmzOobd33REERTEbn2ZcKJR8/9XSI/LEine2TTgffgQ9xNkkaJQ8
+ q9yqB7iRHfj9c5+59oO1MOlqDJ0fCRNvy03OyswGxcJ7cibeYgNFZwBWvrcy4DxdnaTe
+ JrHdK0mDNnV6K4i8TwUZt+JwDjJjUa8GUMlLc9v3W72sVKU086450nuZ+8BIupagmCa7
+ +UPhcBTFZ21BEFom32Z7BTbO74GrSZ96nA/jT6Mx9OTuKHN8gDyFsNUq9/2HA1qjnuMW
+ yN/g==
+X-Gm-Message-State: AOJu0YzrmPnANsunTfOxU57gzBoMMHKOutRXA9zaXhiJR5xJI3udND47
+ MoN11UK0pFbkkDW5e8ImcXM+u7iTqyAU6qg9sbssSxb2WGinmIS5G0GNraJ8znE=
+X-Google-Smtp-Source: AGHT+IEUgKfMSS+H2MeFgb4qWBwerrklMvKnomdohggHH1wLk65cAuGQ0yn/A0ijawCi064VT8nRYQ==
+X-Received: by 2002:a05:6808:1a07:b0:3c1:a9cc:10c with SMTP id
+ bk7-20020a0568081a0700b003c1a9cc010cmr295428oib.7.1708978645362; 
+ Mon, 26 Feb 2024 12:17:25 -0800 (PST)
 Received: from taylor-ubuntu.austin.rr.com (068-203-008-061.res.spectrum.com.
  [68.203.8.61]) by smtp.gmail.com with ESMTPSA id
- by11-20020a056808340b00b003c1a4a9ad17sm330594oib.46.2024.02.26.12.17.35
+ by11-20020a056808340b00b003c1a4a9ad17sm330594oib.46.2024.02.26.12.17.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 12:17:36 -0800 (PST)
+ Mon, 26 Feb 2024 12:17:24 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
  quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
  ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH 8/9] Hexagon (target/hexagon) Remove gen_shortcode.py
-Date: Mon, 26 Feb 2024 13:17:21 -0700
-Message-Id: <20240226201722.391879-9-ltaylorsimpson@gmail.com>
+Subject: [PATCH 0/9] Hexagon (target/hexagon) Clean up .new decode and scripts
+Date: Mon, 26 Feb 2024 13:17:13 -0700
+Message-Id: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
-References: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x232.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,142 +93,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This data structure is not used
+During .new decode, there are several places where strchr is used.
+We remove these by generating the values that are needed.
 
-Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
----
- target/hexagon/opcodes.c        |  7 ----
- target/hexagon/README           |  1 -
- target/hexagon/gen_shortcode.py | 63 ---------------------------------
- target/hexagon/meson.build      | 10 ------
- 4 files changed, 81 deletions(-)
+Once we have generated the proper values, we no longer need
+op_regs_generated.h.inc.  We remove the script that generates it as
+well as the code in meson.build
+
+We also remove the script and meson.build code that creates
+shortcode_generated.h.inc.  The data structure that includes it is
+not used.
+
+We remove hex_common.read_attribs_file.  The Python data structures built
+during this step are not used.
+
+
+Taylor Simpson (9):
+  Hexagon (target/hexagon) Add is_old/is_new to Register class
+  Hexagon (target/hexagon) Mark new_read_idx in trans functions
+  Hexagon (target/hexagon) Mark dest_idx in trans functions
+  Hexagon (target/hexagon) Mark has_pred_dest in trans functions
+  Hexagon (tests/tcg/hexagon) Test HVX .new read from high half of pair
+  Hexagon (target/hexagon) Remove uses of op_regs_generated.h.inc
+  Hexagon (target/hexagon) Remove gen_op_regs.py
+  Hexagon (target/hexagon) Remove gen_shortcode.py
+  Hexagon (target/hexagon) Remove hex_common.read_attribs_file
+
+ target/hexagon/insn.h                   |   5 +-
+ target/hexagon/opcodes.h                |   4 -
+ target/hexagon/decode.c                 |  50 ++--------
+ target/hexagon/mmvec/decode_ext_mmvec.c |  30 ++----
+ target/hexagon/opcodes.c                |  35 -------
+ tests/tcg/hexagon/hvx_misc.c            |  16 ++-
+ target/hexagon/README                   |   2 -
+ target/hexagon/gen_analyze_funcs.py     |  21 +---
+ target/hexagon/gen_helper_funcs.py      |  21 +---
+ target/hexagon/gen_helper_protos.py     |  21 +---
+ target/hexagon/gen_idef_parser_funcs.py |   5 +-
+ target/hexagon/gen_op_attribs.py        |   5 +-
+ target/hexagon/gen_op_regs.py           | 125 ------------------------
+ target/hexagon/gen_opcodes_def.py       |   4 +-
+ target/hexagon/gen_printinsn.py         |   5 +-
+ target/hexagon/gen_shortcode.py         |  63 ------------
+ target/hexagon/gen_tcg_func_table.py    |   5 +-
+ target/hexagon/gen_tcg_funcs.py         |  21 +---
+ target/hexagon/gen_trans_funcs.py       |  23 ++++-
+ target/hexagon/hex_common.py            |  49 +++++++---
+ target/hexagon/meson.build              |  55 ++++-------
+ 21 files changed, 119 insertions(+), 446 deletions(-)
+ delete mode 100755 target/hexagon/gen_op_regs.py
  delete mode 100755 target/hexagon/gen_shortcode.py
 
-diff --git a/target/hexagon/opcodes.c b/target/hexagon/opcodes.c
-index 02ae9cf787..c8bde2f9e9 100644
---- a/target/hexagon/opcodes.c
-+++ b/target/hexagon/opcodes.c
-@@ -37,13 +37,6 @@ const char * const opcode_names[] = {
- };
- 
- 
--const char * const opcode_short_semantics[] = {
--#define DEF_SHORTCODE(TAG, SHORTCODE)              [TAG] = #SHORTCODE,
--#include "shortcode_generated.h.inc"
--#undef DEF_SHORTCODE
--    NULL
--};
--
- DECLARE_BITMAP(opcode_attribs[XX_LAST_OPCODE], A_ZZ_LASTATTRIB);
- 
- static void init_attribs(int tag, ...)
-diff --git a/target/hexagon/README b/target/hexagon/README
-index 065c05154d..65b4fcc0fa 100644
---- a/target/hexagon/README
-+++ b/target/hexagon/README
-@@ -46,7 +46,6 @@ header files in <BUILD_DIR>/target/hexagon
-         gen_printinsn.py                -> printinsn_generated.h.inc
-         gen_op_attribs.py               -> op_attribs_generated.h.inc
-         gen_helper_protos.py            -> helper_protos_generated.h.inc
--        gen_shortcode.py                -> shortcode_generated.h.inc
-         gen_tcg_funcs.py                -> tcg_funcs_generated.c.inc
-         gen_tcg_func_table.py           -> tcg_func_table_generated.c.inc
-         gen_helper_funcs.py             -> helper_funcs_generated.c.inc
-diff --git a/target/hexagon/gen_shortcode.py b/target/hexagon/gen_shortcode.py
-deleted file mode 100755
-index deb94446c4..0000000000
---- a/target/hexagon/gen_shortcode.py
-+++ /dev/null
-@@ -1,63 +0,0 @@
--#!/usr/bin/env python3
--
--##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
--##
--##  This program is free software; you can redistribute it and/or modify
--##  it under the terms of the GNU General Public License as published by
--##  the Free Software Foundation; either version 2 of the License, or
--##  (at your option) any later version.
--##
--##  This program is distributed in the hope that it will be useful,
--##  but WITHOUT ANY WARRANTY; without even the implied warranty of
--##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
--##  GNU General Public License for more details.
--##
--##  You should have received a copy of the GNU General Public License
--##  along with this program; if not, see <http://www.gnu.org/licenses/>.
--##
--
--import sys
--import re
--import string
--import hex_common
--
--
--def gen_shortcode(f, tag):
--    f.write(f"DEF_SHORTCODE({tag}, {hex_common.semdict[tag]})\n")
--
--
--def main():
--    hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
--    hex_common.calculate_attribs()
--    tagregs = hex_common.get_tagregs()
--    tagimms = hex_common.get_tagimms()
--
--    with open(sys.argv[3], "w") as f:
--        f.write("#ifndef DEF_SHORTCODE\n")
--        f.write("#define DEF_SHORTCODE(TAG,SHORTCODE)    /* Nothing */\n")
--        f.write("#endif\n")
--
--        for tag in hex_common.tags:
--            ## Skip the priv instructions
--            if "A_PRIV" in hex_common.attribdict[tag]:
--                continue
--            ## Skip the guest instructions
--            if "A_GUEST" in hex_common.attribdict[tag]:
--                continue
--            ## Skip the diag instructions
--            if tag == "Y6_diag":
--                continue
--            if tag == "Y6_diag0":
--                continue
--            if tag == "Y6_diag1":
--                continue
--
--            gen_shortcode(f, tag)
--
--        f.write("#undef DEF_SHORTCODE\n")
--
--
--if __name__ == "__main__":
--    main()
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index b3a0944d3b..988e7489ba 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -42,21 +42,11 @@ hexagon_ss.add(semantics_generated)
- #
- # Step 2
- # We use Python scripts to generate the following files
--#     shortcode_generated.h.inc
- #     tcg_func_table_generated.c.inc
- #     printinsn_generated.h.inc
- #     op_attribs_generated.h.inc
- #     opcodes_def_generated.h.inc
- #
--shortcode_generated = custom_target(
--    'shortcode_generated.h.inc',
--    output: 'shortcode_generated.h.inc',
--    depends: [semantics_generated],
--    depend_files: [hex_common_py, attribs_def],
--    command: [python, files('gen_shortcode.py'), semantics_generated, attribs_def, '@OUTPUT@'],
--)
--hexagon_ss.add(shortcode_generated)
--
- tcg_func_table_generated = custom_target(
-     'tcg_func_table_generated.c.inc',
-     output: 'tcg_func_table_generated.c.inc',
 -- 
 2.34.1
 
