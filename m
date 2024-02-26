@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9112CC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 14:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7C0C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 15:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1recQR-0007TM-Gm; Mon, 26 Feb 2024 09:57:51 -0500
+	id 1recSJ-0008Kb-DX; Mon, 26 Feb 2024 09:59:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1recQN-0007Sc-CX
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:57:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1recSG-0008Jz-NM; Mon, 26 Feb 2024 09:59:44 -0500
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1recQL-0002PQ-RI
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 09:57:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708959465;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cad2Fi7d0VCpu9vku6SNbVAjeFyxl6fhLmvZ7FHrCww=;
- b=Tl9iCR3xG2wrm0hC8UDo05MBMzwzns+jK0vHENR6RsOCN2J4rDd3d7J8gXAZ7T75IauhT6
- 1Zzl4KDGbBkh+Oqk+zfK9n1QPuTy3p1KC/lCbExiFTgS0exWB7kAB2SN1Ljz0B7shQZj+n
- 10dv8GgUj49XITlD7v+lk8zjcXwjOqA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-0nYqL3dHMsWVmRo_apQ4Ag-1; Mon,
- 26 Feb 2024 09:57:41 -0500
-X-MC-Unique: 0nYqL3dHMsWVmRo_apQ4Ag-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 865F71C0BB42;
- Mon, 26 Feb 2024 14:57:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 06AF240C1430;
- Mon, 26 Feb 2024 14:57:40 +0000 (UTC)
-Date: Mon, 26 Feb 2024 14:57:39 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH 28/28] qemu-img: extend cvtnum() and use it in more places
-Message-ID: <Zdym4zkJIkzSUDWt@redhat.com>
-References: <cover.1708544927.git.mjt@tls.msk.ru>
- <20240221211622.2335170-28-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1recSE-0002ZK-4A; Mon, 26 Feb 2024 09:59:44 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C7A0550AC1;
+ Mon, 26 Feb 2024 18:00:10 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id DA80189A3E;
+ Mon, 26 Feb 2024 17:59:38 +0300 (MSK)
+Message-ID: <6c03f092-b308-49ca-a1c5-6febc394c42a@tls.msk.ru>
+Date: Mon, 26 Feb 2024 17:59:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 19/28] qemu-img: resize: do not always eat last argument
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+References: <cover.1708544927.git.mjt@tls.msk.ru>
+ <20240221211622.2335170-19-mjt@tls.msk.ru> <Zdylwbu94EKzB73y@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <Zdylwbu94EKzB73y@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240221211622.2335170-28-mjt@tls.msk.ru>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,50 +82,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 12:16:09AM +0300, Michael Tokarev wrote:
-> cvtnum() expects input string to specify some sort of size
-> (optionally with KMG... suffix).  However, there are a lot
-> of other number conversions in there (using qemu_strtol &Co),
-> also, not all conversions which use cvtnum, actually expects
-> size, - like dd count=nn.
+26.02.2024 17:52, Daniel P. Berrangé wrote:
+> On Thu, Feb 22, 2024 at 12:16:00AM +0300, Michael Tokarev wrote:
+>> 'qemu-img resize --help' does not work, since it wants more
+>> arguments.  Also it -size is only recognized as a very last
+>> argument, but it is common for tools to handle other options
+>> after positional arguments too.
+>>
+>> Tell getopt_long() to return non-options together with options,
+>> and process filename and size in the loop, and check if there's
+>> an argument right after filename which looks like -N (number),
+>> and treat it as size (decrement).  This way we can handle --help,
+>> and we can also have options after filename and size, and `--'
+>> will be handled fine too.
+>>
+>> The only case which is not handled right is when there's an option
+>> between filename and size, and size is given as decrement, - in
+>> this case -size will be treated as option, not as size.
+>>
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   qemu-img.c | 41 +++++++++++++++++++++++++++--------------
+>>   1 file changed, 27 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/qemu-img.c b/qemu-img.c
+>> index 2a4bff2872..c8b0b68d67 100644
+>> --- a/qemu-img.c
+>> +++ b/qemu-img.c
+>> @@ -4296,7 +4296,7 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+>>   {
+>>       Error *err = NULL;
+>>       int c, ret, relative;
+>> -    const char *filename, *fmt, *size;
+>> +    const char *filename = NULL, *fmt = NULL, *size = NULL;
+>>       int64_t n, total_size, current_size;
+>>       bool quiet = false;
+>>       BlockBackend *blk = NULL;
+>> @@ -4319,17 +4319,7 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+>>       bool image_opts = false;
+>>       bool shrink = false;
+>>   
+>> -    /* Remove size from argv manually so that negative numbers are not treated
+>> -     * as options by getopt. */
+>> -    if (argc < 3) {
+>> -        error_exit(argv[0], "Not enough arguments");
+>> -        return 1;
+>> -    }
+>> -
+>> -    size = argv[--argc];
+>> -
+>>       /* Parse getopt arguments */
+>> -    fmt = NULL;
+>>       for(;;) {
+>>           static const struct option long_options[] = {
+>>               {"help", no_argument, 0, 'h'},
+>> @@ -4339,7 +4329,7 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+>>               {"shrink", no_argument, 0, OPTION_SHRINK},
+>>               {0, 0, 0, 0}
+>>           };
+>> -        c = getopt_long(argc, argv, ":f:hq",
+>> +        c = getopt_long(argc, argv, "-:f:hq",
 > 
-> Add bool issize argument to cvtnum() to specify if it should
-> treat the argument as a size or something else, - this changes
-> conversion routine in use and error text.
-> 
-> Use the new cvtnum() in more places (like where strtol were used),
-> since it never return negative number in successful conversion.
-> When it makes sense, also specify upper or lower bounds at the
-> same time.  This simplifies option processing in multiple places,
-> removing the need of local temporary variables and longer error
-> reporting code.
-> 
-> While at it, fix errors, like depth in measure must be >= 1,
-> while the previous code allowed it to be 0.
-> 
-> In a few places, change unsigned variables (like of type size_t)
-> to be signed instead, - to avoid the need of temporary conversion
-> variable.  All these variables are okay to be signed, we never
-> assign <0 value to them except of the cases of conversion error,
-> where we return immediately.
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->  qemu-img.c | 118 ++++++++++++++++++++---------------------------------
->  1 file changed, 44 insertions(+), 74 deletions(-)
+> In other patches you removed the initial ':' from gopt_long arg strings.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Yes, this is done in the next patch, "resize: refresh options/help".
+
+>>                           long_options, NULL);
+>>           if (c == -1) {
+>>               break;
+>> @@ -4377,12 +4367,35 @@ static int img_resize(const img_cmd_t *ccmd, int argc, char **argv)
+>>           case OPTION_SHRINK:
+>>               shrink = true;
+>>               break;
+>> +        case 1: /* a non-optional argument */
+>> +            if (!filename) {
+>> +                filename = optarg;
+>> +                /* see if we have -size (number) next to filename */
+>> +                if (optind < argc) {
+>> +                    size = argv[optind];
+>> +                    if (size[0] == '-' && size[1] >= '0' && size[1] <= '9') {
+>> +                        ++optind;
+>> +                    } else {
+>> +                        size = NULL;
+>> +                    }
+>> +                }
+>> +            } else if (!size) {
+>> +                size = optarg;
+>> +            } else {
+>> +                error_exit(argv[0], "Extra argument(s) in command line");
+>> +            }
+>> +            break;
+> 
+> Can you say what scenario exercises this code 'case 1' ?  I couldn't
+> get it to run in any scenarios i tried, and ineed removing this,
+> and removing the 'getopt_long' change, I could still run  'qemu-img resize --help'
+> OK, and also run 'qemu-img resize foo -43' too.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+I was thinking about
+   qemu-img resize foo -43 -f qcow2 ..
+
+if not only to make it all consistent with everything else
+(options has always been recognized after non-optional args
+in gnu/linux world, all utils does that).
+
+But in all scenarios, after changing first char of optstring to include
+'-', this code will be called for any non-optional argument.  In this
+case, it will be done for argument `foo', and there. -43 will  be
+recognized by this piece of code as a size modification since it
+starts with minus and follows with a number.
+
+The handling of positional args after the getopt loop is also needed
+to handle situations like
+
+   qemu-img resize -- foo 43
+
+-- everything after `--' will be left to that code.
+
+/mjt
 
 
