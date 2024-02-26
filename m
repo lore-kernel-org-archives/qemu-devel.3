@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF41AC54E51
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA75AC48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 20:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rehQD-0001ij-4m; Mon, 26 Feb 2024 15:17:57 -0500
+	id 1rehPr-0001cX-P4; Mon, 26 Feb 2024 15:17:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1rehQB-0001i7-TU
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:55 -0500
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ id 1rehPp-0001bT-Mg
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:33 -0500
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1rehPw-00081B-GW
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:55 -0500
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3c19937913fso1739947b6e.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 12:17:40 -0800 (PST)
+ id 1rehPm-0007zH-IF
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 15:17:33 -0500
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3c1a172e158so250906b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 12:17:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708978659; x=1709583459; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708978647; x=1709583447; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2mZF31pVOsPdanhM75ZSyb+FCM6gHs0R2hRgmZ/lF6E=;
- b=NTccxSmM0MwGh/SsrZhozDglv5BVButVPLmecOAsiP+Argu9I56IZMzHog6dM750rr
- eyMSjQiQXI2M3L7Q4qTiVMALXC/sQklCTrwXXcRNU9VGeabRJwqBVufDVukmvjH5Ks2H
- aEOa2uwLOP+yTY3vqbzHYiT6co+Q86IiUw2QTUSV6BWm4O9mKQ6/P0772xHn/07sXir/
- dZ8TDWjAy4owI/ha8cE2YfgrfaRh9FxA/B+8LUwtctRspu0ry1cMy7ytOw1OALweIGNl
- J9eMf9+jLepK8RgSJlU6lo3ZoVIDffe1+sR8ue/16D0d3d2b5iJnoJnB1U1Rj9BIZnJX
- jPvA==
+ bh=CRjb46WdqEPMqkZSAvVdtRTJCtj+kvcnkZkQaWAfooI=;
+ b=D2OvewPWCe+Rb9nKXFr2V75ffzC0apR0vheuwh0WQhdTktfMMQOiYt5F4A9gR9aTMF
+ dm5a58uwg/Jz6V3G49/AoVfDNHTK9MDYzOh5dDngLmm0LwZq2ctuMIhyrIgs5aPA+jGd
+ bDZRQp/EN5LlzRLhIQIgDAxPqhZYh405lVThRtM5Tfoywm2LN+ftoerPGoJusXHw6YaG
+ wuwlLjgI6p9rP5nDOYpi+yBkaZz4sWeysmnwoIzBXjPsuO9xCEmXOJJfK1YJxYYEC6zl
+ ZnsZ1ilDcONNx6CFcJpDht2RdDG6V2JuDtjWlUD2TuTfDomtxLGaVgtwrXiRh1VMRE+P
+ CBbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708978659; x=1709583459;
+ d=1e100.net; s=20230601; t=1708978647; x=1709583447;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2mZF31pVOsPdanhM75ZSyb+FCM6gHs0R2hRgmZ/lF6E=;
- b=nZUOAbHJXDKd8EGoYwbcgie5VLo9Cjexd19bKmLYpge8TMX9iEg8x4M+GMRaCEgzCU
- nv3X+KNagUnNk4zxQXkpumk0CUNZXH/oLLjOiVzxpbDQjE4ttyYbDSOiMCqIlO6g79PF
- ThfqLgyg/zAU864keroXfFqeMXz6SXCuEj89Vj3CoGzSk+BUVnMqnxMj3rLJtHG/vvsP
- yqDnNorbj44GFCcCSLx51ye7SZWVhNOVKaiVVNdnpDE+hheGqjpUsS7EdXOGRxU3ff14
- fEyNdSXHCPeKt4qBnkYPxMTj+KVmoKlixIHkgz/uqJNHmzxTuKACipctRrPfofUGpEh7
- wA1w==
-X-Gm-Message-State: AOJu0YxKWN1WPlJengF7rxoVV0WoUEAoox3XiluDn8CtC+uJhTAXa4FH
- DeLytYmuOXta5h24o60j+yKfdWpIukD61i7ocwCH6ZCBYSZ3ZnS4EqpPttlHRU4=
-X-Google-Smtp-Source: AGHT+IE38zPgztZiA0dPGoyZs1Bd/krX4Dk/Lsw6CR3SCC/tATASTybDXDt1zGBOkr/nBx0rR/BRtQ==
-X-Received: by 2002:a05:6808:640c:b0:3c1:abb6:b4b3 with SMTP id
- fg12-20020a056808640c00b003c1abb6b4b3mr222146oib.2.1708978658915; 
- Mon, 26 Feb 2024 12:17:38 -0800 (PST)
+ bh=CRjb46WdqEPMqkZSAvVdtRTJCtj+kvcnkZkQaWAfooI=;
+ b=TtiPDvWvHiISQ+VxfO1Kh37/hv3PISzjJwkMyHL9w8niGBGhFlhzyp+ULvF28nndw9
+ KlbxJSAiXUn/Un/gqHCIMONclmVpgTS++LJsUOWbwz2OQ9nsab13zj/OcM93ZiKS3Kh8
+ C4bW/9PWbiu3EbHrWG5/1/9KXacSAJoAB4JNtz/ivnHumiulAISY8KN3YxIN2UIIRs3c
+ 5cNSgrsZ3++Me8pw0PNCDZWvU0ajd64WBMHwrIwnPC46lo88fHOFmXmOyRdQePYPCZgD
+ 9CjymPTuX12IJ+l7R3FqfvWVljlh5ShUERI3ZG5Yy3b2ZWR3jkn/+AE0+gX7kDUW9FWZ
+ /Hww==
+X-Gm-Message-State: AOJu0YyIUVw6JQ4Rd3OjTUMjq2FEyAuPsG4bv1jHDWIz2RXTE2a9IgaV
+ cz4+ACkWbyKEr0hS+e/5w8/uNym1OoW6tTiczUgKA6bctu/uniJKPV7CZXL/70Q=
+X-Google-Smtp-Source: AGHT+IEiY2QoZhU/f1IY5AVw5xH2J8iMPXwY4ylnxBnPExap4nLqI8CQnThVm2npQTws8Sb9L+rlfA==
+X-Received: by 2002:a05:6808:14c7:b0:3c1:7ebb:e24f with SMTP id
+ f7-20020a05680814c700b003c17ebbe24fmr98056oiw.16.1708978646972; 
+ Mon, 26 Feb 2024 12:17:26 -0800 (PST)
 Received: from taylor-ubuntu.austin.rr.com (068-203-008-061.res.spectrum.com.
  [68.203.8.61]) by smtp.gmail.com with ESMTPSA id
- by11-20020a056808340b00b003c1a4a9ad17sm330594oib.46.2024.02.26.12.17.37
+ by11-20020a056808340b00b003c1a4a9ad17sm330594oib.46.2024.02.26.12.17.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 12:17:38 -0800 (PST)
+ Mon, 26 Feb 2024 12:17:26 -0800 (PST)
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: bcain@quicinc.com, quic_mathbern@quicinc.com, sidneym@quicinc.com,
  quic_mliebel@quicinc.com, richard.henderson@linaro.org, philmd@linaro.org,
  ale@rev.ng, anjo@rev.ng, ltaylorsimpson@gmail.com
-Subject: [PATCH 9/9] Hexagon (target/hexagon) Remove
- hex_common.read_attribs_file
-Date: Mon, 26 Feb 2024 13:17:22 -0700
-Message-Id: <20240226201722.391879-10-ltaylorsimpson@gmail.com>
+Subject: [PATCH 1/9] Hexagon (target/hexagon) Add is_old/is_new to Register
+ class
+Date: Mon, 26 Feb 2024 13:17:14 -0700
+Message-Id: <20240226201722.391879-2-ltaylorsimpson@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
 References: <20240226201722.391879-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x236.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-oi1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,485 +97,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The attribinfo data structure is not used
-Adjust the command-line arguments to the python scripts
-Add hex_common.read_common_files for TCG/helper generation scripts
-
 Signed-off-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 ---
- target/hexagon/gen_analyze_funcs.py     | 21 ++-------------
- target/hexagon/gen_helper_funcs.py      | 21 ++-------------
- target/hexagon/gen_helper_protos.py     | 21 ++-------------
- target/hexagon/gen_idef_parser_funcs.py |  5 ++--
- target/hexagon/gen_op_attribs.py        |  5 ++--
- target/hexagon/gen_opcodes_def.py       |  4 +--
- target/hexagon/gen_printinsn.py         |  5 ++--
- target/hexagon/gen_tcg_func_table.py    |  5 ++--
- target/hexagon/gen_tcg_funcs.py         | 21 ++-------------
- target/hexagon/hex_common.py            | 35 +++++++++++++++----------
- target/hexagon/meson.build              | 31 +++++++++++-----------
- 11 files changed, 54 insertions(+), 120 deletions(-)
+ target/hexagon/hex_common.py | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
-index a9af666cef..b73b4e2349 100755
---- a/target/hexagon/gen_analyze_funcs.py
-+++ b/target/hexagon/gen_analyze_funcs.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -67,24 +67,7 @@ def gen_analyze_func(f, tag, regs, imms):
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
--    hex_common.read_overrides_file(sys.argv[3])
--    hex_common.read_overrides_file(sys.argv[4])
--    ## Whether or not idef-parser is enabled is
--    ## determined by the number of arguments to
--    ## this script:
--    ##
--    ##   5 args. -> not enabled,
--    ##   6 args. -> idef-parser enabled.
--    ##
--    ## The 6:th arg. then holds a list of the successfully
--    ## parsed instructions.
--    is_idef_parser_enabled = len(sys.argv) > 6
--    if is_idef_parser_enabled:
--        hex_common.read_idef_parser_enabled_file(sys.argv[5])
--    hex_common.calculate_attribs()
--    hex_common.init_registers()
-+    hex_common.read_common_files()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
-diff --git a/target/hexagon/gen_helper_funcs.py b/target/hexagon/gen_helper_funcs.py
-index 9cc3d69c49..e9685bff2f 100755
---- a/target/hexagon/gen_helper_funcs.py
-+++ b/target/hexagon/gen_helper_funcs.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -102,24 +102,7 @@ def gen_helper_function(f, tag, tagregs, tagimms):
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
--    hex_common.read_overrides_file(sys.argv[3])
--    hex_common.read_overrides_file(sys.argv[4])
--    ## Whether or not idef-parser is enabled is
--    ## determined by the number of arguments to
--    ## this script:
--    ##
--    ##   5 args. -> not enabled,
--    ##   6 args. -> idef-parser enabled.
--    ##
--    ## The 6:th arg. then holds a list of the successfully
--    ## parsed instructions.
--    is_idef_parser_enabled = len(sys.argv) > 6
--    if is_idef_parser_enabled:
--        hex_common.read_idef_parser_enabled_file(sys.argv[5])
--    hex_common.calculate_attribs()
--    hex_common.init_registers()
-+    hex_common.read_common_files()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
-diff --git a/target/hexagon/gen_helper_protos.py b/target/hexagon/gen_helper_protos.py
-index c82b0f54e4..4cc72a1581 100755
---- a/target/hexagon/gen_helper_protos.py
-+++ b/target/hexagon/gen_helper_protos.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -44,24 +44,7 @@ def gen_helper_prototype(f, tag, tagregs, tagimms):
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
--    hex_common.read_overrides_file(sys.argv[3])
--    hex_common.read_overrides_file(sys.argv[4])
--    ## Whether or not idef-parser is enabled is
--    ## determined by the number of arguments to
--    ## this script:
--    ##
--    ##   5 args. -> not enabled,
--    ##   6 args. -> idef-parser enabled.
--    ##
--    ## The 6:th arg. then holds a list of the successfully
--    ## parsed instructions.
--    is_idef_parser_enabled = len(sys.argv) > 6
--    if is_idef_parser_enabled:
--        hex_common.read_idef_parser_enabled_file(sys.argv[5])
--    hex_common.calculate_attribs()
--    hex_common.init_registers()
-+    hex_common.read_common_files()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
-diff --git a/target/hexagon/gen_idef_parser_funcs.py b/target/hexagon/gen_idef_parser_funcs.py
-index 550a48cb7b..eb494abba8 100644
---- a/target/hexagon/gen_idef_parser_funcs.py
-+++ b/target/hexagon/gen_idef_parser_funcs.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 rev.ng Labs Srl. All Rights Reserved.
-+##  Copyright(c) 2019-2024 rev.ng Labs Srl. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -44,13 +44,12 @@
- ##
- def main():
-     hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
-     hex_common.calculate_attribs()
-     hex_common.init_registers()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    with open(sys.argv[3], "w") as f:
-+    with open(sys.argv[-1], "w") as f:
-         f.write('#include "macros.inc"\n\n')
- 
-         for tag in hex_common.tags:
-diff --git a/target/hexagon/gen_op_attribs.py b/target/hexagon/gen_op_attribs.py
-index 41074b8573..99448220da 100755
---- a/target/hexagon/gen_op_attribs.py
-+++ b/target/hexagon/gen_op_attribs.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -25,13 +25,12 @@
- 
- def main():
-     hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
-     hex_common.calculate_attribs()
- 
-     ##
-     ##     Generate all the attributes associated with each instruction
-     ##
--    with open(sys.argv[3], "w") as f:
-+    with open(sys.argv[-1], "w") as f:
-         for tag in hex_common.tags:
-             f.write(
-                 f"OP_ATTRIB({tag},ATTRIBS("
-diff --git a/target/hexagon/gen_opcodes_def.py b/target/hexagon/gen_opcodes_def.py
-index cddd868fe3..536f0eb68a 100755
---- a/target/hexagon/gen_opcodes_def.py
-+++ b/target/hexagon/gen_opcodes_def.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -29,7 +29,7 @@ def main():
-     ##
-     ##     Generate a list of all the opcodes
-     ##
--    with open(sys.argv[3], "w") as f:
-+    with open(sys.argv[-1], "w") as f:
-         for tag in hex_common.tags:
-             f.write(f"OPCODE({tag}),\n")
- 
-diff --git a/target/hexagon/gen_printinsn.py b/target/hexagon/gen_printinsn.py
-index e570bd7c6a..8bf4d0985c 100755
---- a/target/hexagon/gen_printinsn.py
-+++ b/target/hexagon/gen_printinsn.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -97,11 +97,10 @@ def spacify(s):
- 
- def main():
-     hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
- 
-     immext_casere = re.compile(r"IMMEXT\(([A-Za-z])")
- 
--    with open(sys.argv[3], "w") as f:
-+    with open(sys.argv[-1], "w") as f:
-         for tag in hex_common.tags:
-             if not hex_common.behdict[tag]:
-                 continue
-diff --git a/target/hexagon/gen_tcg_func_table.py b/target/hexagon/gen_tcg_func_table.py
-index f998ef0992..978ac1819b 100755
---- a/target/hexagon/gen_tcg_func_table.py
-+++ b/target/hexagon/gen_tcg_func_table.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -25,12 +25,11 @@
- 
- def main():
-     hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
-     hex_common.calculate_attribs()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
--    with open(sys.argv[3], "w") as f:
-+    with open(sys.argv[-1], "w") as f:
-         f.write("#ifndef HEXAGON_FUNC_TABLE_H\n")
-         f.write("#define HEXAGON_FUNC_TABLE_H\n\n")
- 
-diff --git a/target/hexagon/gen_tcg_funcs.py b/target/hexagon/gen_tcg_funcs.py
-index 3d8e3cb6a2..05aa0a7855 100755
---- a/target/hexagon/gen_tcg_funcs.py
-+++ b/target/hexagon/gen_tcg_funcs.py
-@@ -1,7 +1,7 @@
- #!/usr/bin/env python3
- 
- ##
--##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
- ##
- ##  This program is free software; you can redistribute it and/or modify
- ##  it under the terms of the GNU General Public License as published by
-@@ -108,24 +108,7 @@ def gen_def_tcg_func(f, tag, tagregs, tagimms):
- 
- 
- def main():
--    hex_common.read_semantics_file(sys.argv[1])
--    hex_common.read_attribs_file(sys.argv[2])
--    hex_common.read_overrides_file(sys.argv[3])
--    hex_common.read_overrides_file(sys.argv[4])
--    hex_common.calculate_attribs()
--    hex_common.init_registers()
--    ## Whether or not idef-parser is enabled is
--    ## determined by the number of arguments to
--    ## this script:
--    ##
--    ##   5 args. -> not enabled,
--    ##   6 args. -> idef-parser enabled.
--    ##
--    ## The 6:th arg. then holds a list of the successfully
--    ## parsed instructions.
--    is_idef_parser_enabled = len(sys.argv) > 6
--    if is_idef_parser_enabled:
--        hex_common.read_idef_parser_enabled_file(sys.argv[5])
-+    is_idef_parser_enabled = hex_common.read_common_files()
-     tagregs = hex_common.get_tagregs()
-     tagimms = hex_common.get_tagimms()
- 
 diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 4bacef223f..43ca78b489 100755
+index 195620c7ec..4bacef223f 100755
 --- a/target/hexagon/hex_common.py
 +++ b/target/hexagon/hex_common.py
-@@ -26,7 +26,6 @@
- semdict = {}  # tag -> semantics
- attribdict = {}  # tag -> attributes
- macros = {}  # macro -> macro information...
--attribinfo = {}  # Register information and misc
- registers = {}  # register -> register functions
- new_registers = {}
- tags = []  # list of all tags
-@@ -257,19 +256,6 @@ def read_semantics_file(name):
-                 eval_line = ""
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python3
  
+ ##
+-##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++##  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+ ##
+ ##  This program is free software; you can redistribute it and/or modify
+ ##  it under the terms of the GNU General Public License as published by
+@@ -397,10 +397,18 @@ def is_readwrite(self):
+ class OldSource(Source):
+     def reg_tcg(self):
+         return f"{self.regtype}{self.regid}V"
++    def is_old(self):
++        return True
++    def is_new(self):
++        return False
  
--def read_attribs_file(name):
--    attribre = re.compile(
--        r"DEF_ATTRIB\(([A-Za-z0-9_]+), ([^,]*), "
--        + r'"([A-Za-z0-9_\.]*)", "([A-Za-z0-9_\.]*)"\)'
--    )
--    for line in open(name, "rt").readlines():
--        if not attribre.match(line):
--            continue
--        (attrib_base, descr, rreg, wreg) = attribre.findall(line)[0]
--        attrib_base = "A_" + attrib_base
--        attribinfo[attrib_base] = {"rreg": rreg, "wreg": wreg, "descr": descr}
--
--
- def read_overrides_file(name):
-     overridere = re.compile(r"#define fGEN_TCG_([A-Za-z0-9_]+)\(.*")
-     for line in open(name, "rt").readlines():
-@@ -1143,3 +1129,24 @@ def helper_args(tag, regs, imms):
-             "uint32_t part1"
-         ))
-     return args
-+
-+
-+def read_common_files():
-+    read_semantics_file(sys.argv[1])
-+    read_overrides_file(sys.argv[2])
-+    read_overrides_file(sys.argv[3])
-+    ## Whether or not idef-parser is enabled is
-+    ## determined by the number of arguments to
-+    ## this script:
-+    ##
-+    ##   4 args. -> not enabled,
-+    ##   5 args. -> idef-parser enabled.
-+    ##
-+    ## The 5:th arg. then holds a list of the successfully
-+    ## parsed instructions.
-+    is_idef_parser_enabled = len(sys.argv) > 5
-+    if is_idef_parser_enabled:
-+        read_idef_parser_enabled_file(sys.argv[4])
-+    calculate_attribs()
-+    init_registers()
-+    return is_idef_parser_enabled
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index 988e7489ba..b0b253aa6b 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -18,7 +18,6 @@
- hexagon_ss = ss.source_set()
+ class NewSource(Source):
+     def reg_tcg(self):
+         return f"{self.regtype}{self.regid}N"
++    def is_old(self):
++        return False
++    def is_new(self):
++        return True
  
- hex_common_py = 'hex_common.py'
--attribs_def = meson.current_source_dir() / 'attribs_def.h.inc'
- gen_tcg_h = meson.current_source_dir() / 'gen_tcg.h'
- gen_tcg_hvx_h = meson.current_source_dir() / 'gen_tcg_hvx.h'
- idef_parser_dir = meson.current_source_dir() / 'idef-parser'
-@@ -51,8 +50,8 @@ tcg_func_table_generated = custom_target(
-     'tcg_func_table_generated.c.inc',
-     output: 'tcg_func_table_generated.c.inc',
-     depends: [semantics_generated],
--    depend_files: [hex_common_py, attribs_def],
--    command: [python, files('gen_tcg_func_table.py'), semantics_generated, attribs_def, '@OUTPUT@'],
-+    depend_files: [hex_common_py],
-+    command: [python, files('gen_tcg_func_table.py'), semantics_generated, '@OUTPUT@'],
- )
- hexagon_ss.add(tcg_func_table_generated)
+ class ReadWrite:
+     def reg_tcg(self):
+@@ -413,6 +421,10 @@ def is_read(self):
+         return True
+     def is_readwrite(self):
+         return True
++    def is_old(self):
++        return True
++    def is_new(self):
++        return False
  
-@@ -60,8 +59,8 @@ printinsn_generated = custom_target(
-     'printinsn_generated.h.inc',
-     output: 'printinsn_generated.h.inc',
-     depends: [semantics_generated],
--    depend_files: [hex_common_py, attribs_def],
--    command: [python, files('gen_printinsn.py'), semantics_generated, attribs_def, '@OUTPUT@'],
-+    depend_files: [hex_common_py],
-+    command: [python, files('gen_printinsn.py'), semantics_generated, '@OUTPUT@'],
- )
- hexagon_ss.add(printinsn_generated)
- 
-@@ -69,8 +68,8 @@ op_attribs_generated = custom_target(
-     'op_attribs_generated.h.inc',
-     output: 'op_attribs_generated.h.inc',
-     depends: [semantics_generated],
--    depend_files: [hex_common_py, attribs_def],
--    command: [python, files('gen_op_attribs.py'), semantics_generated, attribs_def, '@OUTPUT@'],
-+    depend_files: [hex_common_py],
-+    command: [python, files('gen_op_attribs.py'), semantics_generated, '@OUTPUT@'],
- )
- hexagon_ss.add(op_attribs_generated)
- 
-@@ -78,8 +77,8 @@ opcodes_def_generated = custom_target(
-     'opcodes_def_generated.h.inc',
-     output: 'opcodes_def_generated.h.inc',
-     depends: [semantics_generated],
--    depend_files: [hex_common_py, attribs_def],
--    command: [python, files('gen_opcodes_def.py'), semantics_generated, attribs_def, '@OUTPUT@'],
-+    depend_files: [hex_common_py],
-+    command: [python, files('gen_opcodes_def.py'), semantics_generated, '@OUTPUT@'],
- )
- hexagon_ss.add(opcodes_def_generated)
- 
-@@ -278,7 +277,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-         output: 'idef_parser_input.h.inc',
-         depends: [semantics_generated],
-         depend_files: [hex_common_py],
--        command: [python, files('gen_idef_parser_funcs.py'), semantics_generated, attribs_def, '@OUTPUT@'],
-+        command: [python, files('gen_idef_parser_funcs.py'), semantics_generated, '@OUTPUT@'],
-     )
- 
-     preprocessed_idef_parser_input_generated = custom_target(
-@@ -347,12 +346,12 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-     # Setup input and dependencies for the next step, this depends on whether or
-     # not idef-parser is enabled
-     helper_dep = [semantics_generated, idef_generated_tcg_c, idef_generated_tcg]
--    helper_in = [semantics_generated, attribs_def, gen_tcg_h, gen_tcg_hvx_h, idef_generated_list]
-+    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h, idef_generated_list]
- else
-     # Setup input and dependencies for the next step, this depends on whether or
-     # not idef-parser is enabled
-     helper_dep = [semantics_generated]
--    helper_in = [semantics_generated, attribs_def, gen_tcg_h, gen_tcg_hvx_h]
-+    helper_in = [semantics_generated, gen_tcg_h, gen_tcg_hvx_h]
- endif
- 
- #
-@@ -366,7 +365,7 @@ helper_protos_generated = custom_target(
-     'helper_protos_generated.h.inc',
-     output: 'helper_protos_generated.h.inc',
-     depends: helper_dep,
--    depend_files: [hex_common_py, attribs_def, gen_tcg_h, gen_tcg_hvx_h],
-+    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
-     command: [python, files('gen_helper_protos.py'), helper_in, '@OUTPUT@'],
- )
- hexagon_ss.add(helper_protos_generated)
-@@ -375,7 +374,7 @@ helper_funcs_generated = custom_target(
-     'helper_funcs_generated.c.inc',
-     output: 'helper_funcs_generated.c.inc',
-     depends: helper_dep,
--    depend_files: [hex_common_py, attribs_def, gen_tcg_h, gen_tcg_hvx_h],
-+    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
-     command: [python, files('gen_helper_funcs.py'), helper_in, '@OUTPUT@'],
- )
- hexagon_ss.add(helper_funcs_generated)
-@@ -384,7 +383,7 @@ tcg_funcs_generated = custom_target(
-     'tcg_funcs_generated.c.inc',
-     output: 'tcg_funcs_generated.c.inc',
-     depends: helper_dep,
--    depend_files: [hex_common_py, attribs_def, gen_tcg_h, gen_tcg_hvx_h],
-+    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
-     command: [python, files('gen_tcg_funcs.py'), helper_in, '@OUTPUT@'],
- )
- hexagon_ss.add(tcg_funcs_generated)
-@@ -393,7 +392,7 @@ analyze_funcs_generated = custom_target(
-     'analyze_funcs_generated.c.inc',
-     output: 'analyze_funcs_generated.c.inc',
-     depends: helper_dep,
--    depend_files: [hex_common_py, attribs_def, gen_tcg_h, gen_tcg_hvx_h],
-+    depend_files: [hex_common_py, gen_tcg_h, gen_tcg_hvx_h],
-     command: [python, files('gen_analyze_funcs.py'), helper_in, '@OUTPUT@'],
- )
- hexagon_ss.add(analyze_funcs_generated)
+ class GprDest(Register, Single, Dest):
+     def decl_tcg(self, f, tag, regno):
 -- 
 2.34.1
 
