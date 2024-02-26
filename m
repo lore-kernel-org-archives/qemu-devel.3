@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4D6C54798
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 02:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5A3C47DD9
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 02:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reQS0-0006WU-2R; Sun, 25 Feb 2024 21:10:40 -0500
+	id 1reQVw-0008FB-CK; Sun, 25 Feb 2024 21:14:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reQRy-0006W8-5j
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 21:10:38 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reQVu-0008Cy-B5
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 21:14:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reQRw-0002PZ-Pv
- for qemu-devel@nongnu.org; Sun, 25 Feb 2024 21:10:37 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reQVs-0003qG-U3
+ for qemu-devel@nongnu.org; Sun, 25 Feb 2024 21:14:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1708913434;
+ s=mimecast20190719; t=1708913680;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JE7WBxlh/QwISZKmkfj0c9DTkg4wh+qjFnqEMuDcRUs=;
- b=QPAu+0mD2j/WzdvEkttMxz1hoOgcDrOu+184/dThuviijp9Ueil5Ni6K8skiqzXZY1dZJ6
- /6xngZHMNZ9iOB9ht9Z/O4keBx9wJgmD+7xthbh0z8d+26oAnbY7NfOtz6rE95aS2lZO46
- 0GmSgtlzLtY5TX660pahRaq0tvB4GaE=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ilj71me9wfhyaZmctS1PgoDwsf2Ceb8ndsQMYPQRVPo=;
+ b=Rz+vn2KPCdMeGU8frO1squMW8TRxkvSRBBw+CAdTwshaMrglVubzb8kuONiYKCCPHKJpl/
+ n4IWjlc3sbTKb6zksA7O4MVdopglTXSPSaGRhK3kHbzdOnQ0CMPv8cuObcpLxE2t0hRlhv
+ b2aAthxeqbILbG99yYKS1j9dAp4uFNE=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-ADiOpbDnNNyGOxBdvadLPg-1; Sun, 25 Feb 2024 21:10:33 -0500
-X-MC-Unique: ADiOpbDnNNyGOxBdvadLPg-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-5a07cec6189so171887eaf.0
- for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 18:10:33 -0800 (PST)
+ us-mta-122-39R7oTROPAOt1_laSdKBBA-1; Sun, 25 Feb 2024 21:14:37 -0500
+X-MC-Unique: 39R7oTROPAOt1_laSdKBBA-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5a04aa185e9so150726eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 25 Feb 2024 18:14:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708913432; x=1709518232;
+ d=1e100.net; s=20230601; t=1708913676; x=1709518476;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JE7WBxlh/QwISZKmkfj0c9DTkg4wh+qjFnqEMuDcRUs=;
- b=CWkTQb/W0eIG4Z388a22jaIAWCn0RX5Jf4rWJrEDa6dVU9KmkzXtYsQsqxf5gE3H/g
- 6ZOszzNjI64OtN8YsI4h0PLYTL9FyPgcUXGF6J7NaqJ4gthNSP8rl70II8yDRkhpuShe
- r42iFmifKG8OLMVCnTtmBLylTDgrhFSqzMxHWHsz5o4LELeWF94y0Z6s5+yTKSnmtodw
- ENy7SlPPEEd8C3nI9AdInXrv7VUbrbDkhuWKGTHvGKaiK+SxHQ/Dqusr5gK3yuu3mPXl
- cFORoYFR1N9y8dssf2rGmIlWJY8IjuQ8pRbg+z7L7QcclhmJYWOQ7e8TtPAXajcqo0eJ
- RgPw==
-X-Gm-Message-State: AOJu0Yzw11CoSw/1Sp3bPlLoX/PUF6LgM/5eH4+jIABWncfg6FvRJIdE
- R0GN6uOQb36eWcPLZF1726IVV/JOjdzLMMITwwtnLN/Ajh2AR279lmCbQpxQqMoCM6x2FzlOlge
- Z3rnfv4xposjkD3eqJeFAaognAHi9SJH+vBftsZXWIO8n2CNZ6V8B
-X-Received: by 2002:a05:6359:4588:b0:17b:7949:48d4 with SMTP id
- no8-20020a056359458800b0017b794948d4mr3817921rwb.0.1708913432419; 
- Sun, 25 Feb 2024 18:10:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHIwLtvYG68KqHgT1jUQlewUUEIcMDqBisORx2Imsujo+2HBSelp7a1uMSFy3P4gjgn8wkhng==
-X-Received: by 2002:a05:6359:4588:b0:17b:7949:48d4 with SMTP id
- no8-20020a056359458800b0017b794948d4mr3817899rwb.0.1708913432130; 
- Sun, 25 Feb 2024 18:10:32 -0800 (PST)
+ bh=Ilj71me9wfhyaZmctS1PgoDwsf2Ceb8ndsQMYPQRVPo=;
+ b=OnHvqeAmBoL3pWo1Dt8XZtLXuKip3n0W1zlauDtrPz/kIbx14y0+6bPS8QRIrwrQI7
+ j2ADlUWXS5NTPDsyAVZMQyHG089V+hHXduNqmUU5t+2fvTy+19cqiH3BFEu/kKi8S0qD
+ hJJdxF+iVUktuExKjsJnwHJc7KwXLHgBEBW8OlH/cHwag3wnhMwacMNdLdkxqC5nJ/A5
+ QMEhrpRQ01NTuRe8gTwOr4Le2cYoX4pGHhmSz5UjudD6/L2ZrCzJHg2RPYtTS6Bzdf3H
+ FYya+8E8mjQPV+Q62Gi6OwjIXFacGjZKMrIHFD5mhc8QmVVP1RU4dDqtd1nVs7VR860q
+ MG2A==
+X-Gm-Message-State: AOJu0Yzo5NOddyeWWxFYI3pdqh0sejsFE0rs+EgT/Eh4EKRiLwxcOLkL
+ 5Jc0+vpEu5mALfiPWvLSz4B0UeRa1qqvd2kxDG9BPJdTXHdaKn3q8vPhoirncPWGlLiIN9pWZYb
+ WQn70BNg2AeMsBrTRpg3is8LB20sxeC0xQwJM04K/lb2w4Vzviyqt
+X-Received: by 2002:a05:6870:f144:b0:21e:ad52:3029 with SMTP id
+ l4-20020a056870f14400b0021ead523029mr6224330oac.0.1708913676287; 
+ Sun, 25 Feb 2024 18:14:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEQVC/ndZx8+GeWZJ3bHCaX4A+qv/wCFQgLwFCfOKrnUpw9AeSPcPx2fMc3Ls+dta2yz+X5UQ==
+X-Received: by 2002:a05:6870:f144:b0:21e:ad52:3029 with SMTP id
+ l4-20020a056870f14400b0021ead523029mr6224321oac.0.1708913676077; 
+ Sun, 25 Feb 2024 18:14:36 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- du15-20020a056a002b4f00b006e4bcdcff43sm2900885pfb.78.2024.02.25.18.10.29
+ y17-20020a63ce11000000b005d7994a08dcsm2939461pgf.36.2024.02.25.18.14.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 25 Feb 2024 18:10:31 -0800 (PST)
-Date: Mon, 26 Feb 2024 10:10:24 +0800
+ Sun, 25 Feb 2024 18:14:35 -0800 (PST)
+Date: Mon, 26 Feb 2024 10:14:28 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Marc-Andre Lureau <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH V4 13/14] migration: update cpr-reboot description
-Message-ID: <ZdvzEMmBy3lGgfK8@x1n>
+ Fabiano Rosas <farosas@suse.de>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Cedric Le Goater <clg@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH V4 00/14] allow cpr-reboot for vfio
+Message-ID: <Zdv0BNtJxkd8413g@x1n>
 References: <1708622920-68779-1-git-send-email-steven.sistare@oracle.com>
- <1708622920-68779-14-git-send-email-steven.sistare@oracle.com>
+ <c95b3c15-0154-438c-baa0-98f4c539355a@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1708622920-68779-14-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <c95b3c15-0154-438c-baa0-98f4c539355a@oracle.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -103,12 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 09:28:39AM -0800, Steve Sistare wrote:
-> Clarify qapi for cpr-reboot migration mode, and add vfio support.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+On Thu, Feb 22, 2024 at 12:33:42PM -0500, Steven Sistare wrote:
+> Peter (and David if interested): these patches still need RB:
+>   migration: notifier error checking
+>   migration: stop vm for cpr
+>   migration: update cpr-reboot description
+>   migration: options incompatible with cpr
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+These all look fine to me.
+
+> 
+> Alex, these patches still need RB:
+>   vfio: register container for cpr
+>   vfio: allow cpr-reboot migration if suspended
+
+I'll need to wait for comment from either Alex/Cedric on these.
+
+As I asked in the other thread, afaict crp-reboot keeps changing behavior,
+maybe I can merge migration patches first, then keep vfio patches
+separately merged / discussed?  I always see cpr-reboot mode experimental
+from this regard.  Please consider adding a patch to declare cpr-reboot
+mode experimental if that matches your expectation, until all relevant
+patches are merged, to make sure the ABI becomes stable.
+
+Thanks,
 
 -- 
 Peter Xu
