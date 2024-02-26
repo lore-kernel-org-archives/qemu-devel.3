@@ -4,83 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E62C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D75FC48BF6
 	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 08:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reWBe-0003ye-1K; Mon, 26 Feb 2024 03:18:10 -0500
+	id 1reWB2-0003sg-Uo; Mon, 26 Feb 2024 03:17:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWBb-0003xr-3p
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:18:07 -0500
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1reWBZ-0003pO-53
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:18:06 -0500
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a3e550ef31cso294936466b.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 00:18:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1708935483; x=1709540283; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ehfKb/GXBKJJhlhNDhvn5qEI/0dzYxZOynPkWDOGcpY=;
- b=zp+Q8TeGtMdvrw1vPDCRDXZYNHCwNypfbjy4vPXqf5N5AUSK5Ui6FSi+kL34ftlh2n
- 3l5jy+saVrtWOn8VilYkJwJeF1AxNcQ3jrBm9tssPabzrqWQP7n76gsmw6G1Zst/PEhb
- +z4eGxjFd7MdMT0+yEEGXDz8kbLdi+b2llZV2+hyMsA6GrDDfA/IrsTxo0svpb/KMrl9
- 9YKW6c8yQFZqqKq4jNQoY+PQN6NXVZ4wFi3fMrqP+oMYpwcEAjLNhFVoabC5oLylgwV7
- bMQtCsmHhmDlIN70OI7rjZ5pWxINVGnm5ePxKeH0F22f+QMMMcxVVmabfcyAtYnHMYKt
- H5AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708935483; x=1709540283;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ehfKb/GXBKJJhlhNDhvn5qEI/0dzYxZOynPkWDOGcpY=;
- b=s1NlhOKzrV+B9HdiCdfW+bYcCAGvRRX+U1pLqyt6ek72+AxEJXwmOnd5aOxPxX7yZ8
- tSApn99Ush3mRSeURD9p7dF1/OvGpIHP5oqvurQYV9mCYJLjVUlWcTCRAHpywZs6nID2
- Vak1TzeOQ00uicDum7WBOeOSDO7MWgRwqUUujRDrRMJQvI8JoMhy/ZImjO/vXgHcwBnZ
- BJjZSq8ZFGh5lsOXEjBGTyvZgRIVqeYzcSBDQGCrNSIs56n1otIzexyoH8ED7NPogBo9
- r03v3C9WM3QZv2eaSwdmoTJPz0j3Qo7/GGSK4lqngGNT4IV1VjmBOhEOTMdYlilMHREn
- tXbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULbnDzVi9epQ8PWngDgd3zwVFrXyDMFv+XhuNzYBntMde0He/GuR8o+LK+IL9FzEP5z+qiCOHTfekxf3tU3JogGGq25hI=
-X-Gm-Message-State: AOJu0YwUyJkVAc+TB3YOEz7D4PXJ3G+WgLZFxxDJ1g8Doa8n/44OSd2F
- 4YklrGVX682EZG6FHWhGj4CkGSTCCFUsyAqgTMS0uZKudngcWX4LSCBLavKgvRA=
-X-Google-Smtp-Source: AGHT+IFEGFzMSX6KeM4pf82eoQaZ4syFdXkKRw35Z9XVaibKuMJ4RUszn42YDMUdkyENxXxtGf+Y9w==
-X-Received: by 2002:a17:906:fb0b:b0:a43:5429:499d with SMTP id
- lz11-20020a170906fb0b00b00a435429499dmr1067198ejb.27.1708935483076; 
- Mon, 26 Feb 2024 00:18:03 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.164.69])
- by smtp.gmail.com with ESMTPSA id
- vu2-20020a170907a64200b00a42fa8c207bsm1970682ejc.94.2024.02.26.00.18.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 26 Feb 2024 00:18:02 -0800 (PST)
-Message-ID: <295b6a29-d0a7-40b1-ae37-34faab925d67@linaro.org>
-Date: Mon, 26 Feb 2024 09:18:00 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1reWB1-0003sS-Ek
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:17:31 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1reWAy-0003nV-Pi
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 03:17:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1708935449; x=1740471449;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=0ADXXO2r47p7fuXD5UFpMkpRzd+xcKRiizDP9YjbV0I=;
+ b=Zb5tr7mUxJNFNyLu2m78tc/jxur0/5QKwjQg5NCW6XSt317rUJJBU6Mv
+ yZHwzpuXmcOGKzyeFNfbHspUtBWV8NoYdmR5r78Bbetv8qh/CVJfmwXLz
+ ikMsRD7B4HaabqUdtqSNc/r8++NY2rS827V6qU/8tfSTC7vRI3q6yORqc
+ j/FQdAPyS1Lzgo02vwFlVxAwRtw/Amvp3Ua9UqnK1BdqvKvPeDJmNoHIG
+ SZqNWOwaOQ3qzVzlADIQhrCMNt/UESQi5cGspYx25uVECOqmaACzv2pph
+ 7l85iXI3ScY87rHHSIBdlt80Hcv/jFgZr13vuKWlWpgLZW7j0ii3/Utjz A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10995"; a="13900895"
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="13900895"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 00:17:26 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,185,1705392000"; d="scan'208";a="11303640"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa003.jf.intel.com with ESMTP; 26 Feb 2024 00:17:24 -0800
+Date: Mon, 26 Feb 2024 16:31:05 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, mcb30@ipxe.org
+Subject: Re: [PATCH v2 5/7] target/i386: Fix physical address truncation
+Message-ID: <ZdxMSVTBqQQ4Qpuh@intel.com>
+References: <20240223130948.237186-1-pbonzini@redhat.com>
+ <20240223130948.237186-6-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/nvme: fix invalid endian conversion
-Content-Language: en-US
-To: Klaus Jensen <its@irrelevant.dk>, Keith Busch <kbusch@kernel.org>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Klaus Jensen <k.jensen@samsung.com>, Kevin Wolf <kwolf@redhat.com>
-References: <20240222-fix-sriov-numcntl-v1-1-d60bea5e72d0@samsung.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240222-fix-sriov-numcntl-v1-1-d60bea5e72d0@samsung.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240223130948.237186-6-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.097,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,26 +78,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/2/24 10:29, Klaus Jensen wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
+On Fri, Feb 23, 2024 at 02:09:46PM +0100, Paolo Bonzini wrote:
+> Date: Fri, 23 Feb 2024 14:09:46 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH v2 5/7] target/i386: Fix physical address truncation
+> X-Mailer: git-send-email 2.43.0
 > 
-> numcntl is one byte and so is max_vfs. Using cpu_to_le16 on big endian
-> hosts results in numcntl being set to 0.
+> The address translation logic in get_physical_address() will currently
+> truncate physical addresses to 32 bits unless long mode is enabled.
+> This is incorrect when using physical address extensions (PAE) outside
+> of long mode, with the result that a 32-bit operating system using PAE
+> to access memory above 4G will experience undefined behaviour.
 > 
-> Fix by dropping the endian conversion.
+> The truncation code was originally introduced in commit 33dfdb5 ("x86:
+> only allow real mode to access 32bit without LMA"), where it applied
+> only to translations performed while paging is disabled (and so cannot
+> affect guests using PAE).
 > 
-> Fixes: 746d42b13368 ("hw/nvme: Initialize capability structures for primary/secondary controllers")
-> Reported-by: Kevin Wolf <kwolf@redhat.com>
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+> Commit 9828198 ("target/i386: Add MMU_PHYS_IDX and MMU_NESTED_IDX")
+> rearranged the code such that the truncation also applied to the use
+> of MMU_PHYS_IDX and MMU_NESTED_IDX.  Commit 4a1e9d4 ("target/i386: Use
+> atomic operations for pte updates") brought this truncation into scope
+> for page table entry accesses, and is the first commit for which a
+> Windows 10 32-bit guest will reliably fail to boot if memory above 4G
+> is present.
+> 
+> The truncation code however is not completely redundant.  Even though the
+> maximum address size for any executed instruction is 32 bits, helpers for
+> operations such as BOUND, FSAVE or XSAVE may ask get_physical_address()
+> to translate an address outside of the 32-bit range, if invoked with an
+> argument that is close to the 4G boundary.  Likewise for processor
+> accesses, for example TSS or IDT accesses, when EFER.LMA==0.
+> 
+> So, move the address truncation in get_physical_address() so that it
+> applies to 32-bit MMU indexes, but not to MMU_PHYS_IDX and MMU_NESTED_IDX.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2040
+> Fixes: 4a1e9d4d11c ("target/i386: Use atomic operations for pte updates", 2022-10-18)
+> Co-developed-by: Michael Brown <mcb30@ipxe.org>
+> Signed-off-by: Michael Brown <mcb30@ipxe.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/nvme/ctrl.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>  target/i386/cpu.h                    |  6 ++++++
+>  target/i386/cpu.c                    |  2 +-
+>  target/i386/tcg/sysemu/excp_helper.c | 12 +++++-------
+>  3 files changed, 12 insertions(+), 8 deletions(-)
 
-Hi Klaus, I'm not seeing other NVMe patches on the list,
-so I'll queue this on my hw-misc tree, but feel free to
-object and I'll unqueue :)
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-Thanks,
-
-Phil.
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index ee4ad372021..8a165889de6 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2326,6 +2326,12 @@ static inline bool is_mmu_index_user(int mmu_index)
+>      return (mmu_index & ~1) == MMU_USER64_IDX;
+>  }
+>  
+> +static inline bool is_mmu_index_32(int mmu_index)
+> +{
+> +    assert(mmu_index < MMU_PHYS_IDX);
+> +    return mmu_index & 1;
+> +}
+> +
+>  static inline int cpu_mmu_index_kernel(CPUX86State *env)
+>  {
+>      int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 1 : 0;
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 647371198c7..ba6d7b80a7f 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -7732,7 +7732,7 @@ static bool x86_cpu_has_work(CPUState *cs)
+>      return x86_cpu_pending_interrupt(cs, cs->interrupt_request) != 0;
+>  }
+>  
+> -static int x86_cpu_mmu_index(CPUState *env, bool ifetch)
+> +static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
+>  {
+>      CPUX86State *env = cpu_env(cs);
+>      int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 1 : 0;
+> diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
+> index b2c525e1a92..8bcdd2906d5 100644
+> --- a/target/i386/tcg/sysemu/excp_helper.c
+> +++ b/target/i386/tcg/sysemu/excp_helper.c
+> @@ -558,6 +558,10 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+>          break;
+>  
+>      default:
+> +        if (is_mmu_index_32(mmu_idx)) {
+> +            addr = (uint32_t)addr;
+> +        }
+> +
+>          if (likely(env->cr[0] & CR0_PG_MASK)) {
+>              in.cr3 = env->cr[3];
+>              in.mmu_idx = mmu_idx;
+> @@ -581,14 +585,8 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
+>          break;
+>      }
+>  
+> -    /* Translation disabled. */
+> +    /* No translation needed. */
+>      out->paddr = addr & x86_get_a20_mask(env);
+> -#ifdef TARGET_X86_64
+> -    if (!(env->hflags & HF_LMA_MASK)) {
+> -        /* Without long mode we can only address 32bits in real mode */
+> -        out->paddr = (uint32_t)out->paddr;
+> -    }
+> -#endif
+>      out->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+>      out->page_size = TARGET_PAGE_SIZE;
+>      return true;
+> -- 
+> 2.43.0
+> 
+> 
 
