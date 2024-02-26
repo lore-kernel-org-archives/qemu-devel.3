@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B15DC48BF6
-	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 22:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8B7C48BF6
+	for <qemu-devel@archiver.kernel.org>; Mon, 26 Feb 2024 22:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rejGk-0001qm-3F; Mon, 26 Feb 2024 17:16:18 -0500
+	id 1rejia-0000wq-5O; Mon, 26 Feb 2024 17:45:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rejGi-0001qS-43
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 17:16:16 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rejGf-0002Hz-Tp
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 17:16:15 -0500
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41QGmnBG007002; Mon, 26 Feb 2024 22:16:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id; s=corp-2023-11-20;
- bh=sL8E/PaYkZIxwYPpS0QqWnJcZYla/I/TFtY5WtReal8=;
- b=KVydspAk2Uj3wVjh3xFId2zX+rbIbr9AmWWR4jFJhZT/qMj4a2d5aFDZslXx/YK2rs73
- 1mDpTUSbJoaZY5ZhCdsFgsuV2rkT6BNRhRUiEcCTXHXNXFfkV44byhvcr5LXd0qhh94b
- hGfxhZj98IJWEzUe3ezmzxH1y4yAKFJaZmNQ5oCFuopvHrD/JL9cLDiPydXheL9GSSy+
- 5o2XWQxcGudpmQXP0GasgV1F4qsunbWT18Rb5bDDV4EnDDD3PeaSP4AVk6YQQh1O7WvF
- T7anW6sYSFn1nb0NCx7JXXOwkolU03phJ/B7ws+pMlUEpaOPwwKXstA5CgGZssY0CKWB xg== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wf8gddvja-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Feb 2024 22:16:12 +0000
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41QM43k9025727; Mon, 26 Feb 2024 22:16:11 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wf6wcrtx9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 26 Feb 2024 22:16:11 +0000
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41QMGBZa030196;
- Mon, 26 Feb 2024 22:16:11 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 3wf6wcrtw6-1; Mon, 26 Feb 2024 22:16:11 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Leonardo Bras <leobras@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2] migration: export fewer options
-Date: Mon, 26 Feb 2024 14:16:09 -0800
-Message-Id: <1708985769-280850-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- phishscore=0
- adultscore=0 mlxlogscore=999 malwarescore=0 spamscore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402260172
-X-Proofpoint-ORIG-GUID: swRPScAjKH4wnkeYVfg5tI9hV-Ma9UsQ
-X-Proofpoint-GUID: swRPScAjKH4wnkeYVfg5tI9hV-Ma9UsQ
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rejiW-0000rt-V4; Mon, 26 Feb 2024 17:45:00 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rejiU-00074O-Q5; Mon, 26 Feb 2024 17:45:00 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33d28468666so3280081f8f.0; 
+ Mon, 26 Feb 2024 14:44:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1708987496; x=1709592296; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rH5sAsg1JoBx2gzOe/SGrOs6C3DSp+ohCi71CKlrpgo=;
+ b=QD5X1Vt/ntH4xds+Pjij6PQ73jr5V3GV96jdQ0U7ADM2eAvgplLro2+KiVW2tp7d2f
+ 2/rVG2rk/mTj3U1K7X7dLkwvUT2MEU/Boe0VjY2eKmOzl5mabmbmM+KTGzGQP4uePZrD
+ UuuDoRK3L3n8mwkzwzPawORYAsnypEr+NQrwFyqkbVBVtjpzXbC4dkH7CADJ60BnQCTI
+ 5mXcMqxPQoZ1AR5xFdy2m8ZlLuaaH9LtF1skcmx0e1mIvxtc60z/o3yCGekM9yMaIZrr
+ UxxBsuy+QIRG8xNe4p4Hz/yGyf9xDqOikk+nnkc0AZL7Tn3/r4mOABC4Xu909DrMIKEd
+ rypA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1708987496; x=1709592296;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rH5sAsg1JoBx2gzOe/SGrOs6C3DSp+ohCi71CKlrpgo=;
+ b=cgeXOBhwyltuXLrWPqTVGpxFO+TYMC7Ak7pZryauDVSad82WzZany7uJ6XvU3S8D1z
+ rVKaZntqgdcmet+7T+eNUIa6gCPMobvvFhsk6GuZ6SC+FlLgrdq/qEXVzGzMkZr1rsNx
+ 1ZJ2Sk4R1z/XN2QD0I0qXExvItlT1F2jKt3fLnkT9PpHCTuAECrTegkhU/axT2SIybfK
+ K+IK3Wp0EvL5xBYTMh1FlJb7KyAg+Qwc7h/z5gbtzVXMyPv09e6hHeyc/y88WX/xX+D6
+ 73sQTX4T5nR7NG4ItXkY/6ajawe/XfxdStU+03k7PB/RyRCl7uCoW6OZnHgnuFihI6Zr
+ 090w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPyt/jqcN7PiLkWKcW26nw3o8wuXeGoxHPyIcwksCAJOgptiZK8Yjf4j3L6OrbXEhxaI/MzpPjsEi5ZnkFLK5jveXlZvt+lomaEOjUGZ2XooZ38s08etgA68/onA==
+X-Gm-Message-State: AOJu0Yy/ohC/tJsK5HqznPM8UngNgebqJS3wLWaFywpU9hONoHvqGEzu
+ QAlbTFMG28OzszQW+tTB1P5q7i6dSmuMWLQYmlK31WkVpJkTpOna
+X-Google-Smtp-Source: AGHT+IFONHgKGCfPIpmP06GDRDVEQnxMi6WEkeqh83ss0nSYUhMT/jD8N4C1N/J0FpPHpJuOVDBVPw==
+X-Received: by 2002:a05:6000:2aa:b0:33d:4978:6e37 with SMTP id
+ l10-20020a05600002aa00b0033d49786e37mr7722312wry.71.1708987495721; 
+ Mon, 26 Feb 2024 14:44:55 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-077-188-008-186.77.188.pool.telefonica.de.
+ [77.188.8.186]) by smtp.gmail.com with ESMTPSA id
+ ay14-20020a05600c1e0e00b00412a589d446sm4090230wmb.5.2024.02.26.14.44.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Feb 2024 14:44:55 -0800 (PST)
+Date: Mon, 26 Feb 2024 22:44:54 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+CC: Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Ani Sinha <anisinha@redhat.com>,
+ qemu-block@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 00/15] hw/southbridge: Extract ICH9 QOM container model
+In-Reply-To: <20240226111416.39217-1-philmd@linaro.org>
+References: <20240226111416.39217-1-philmd@linaro.org>
+Message-ID: <091FBE60-DC3C-4B59-A6E1-DD2C7174D3A2@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,153 +102,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A small number of migration options are accessed by migration clients,
-but to see them clients must include all of options.h, which is mostly
-for migration core code.  migrate_mode() in particular will be needed by
-multiple clients.
 
-Refactor the option declarations so clients can see the necessary few via
-misc.h, which already exports a portion of the client API.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
-Changes in V2:
-  * renamed options-pub.h to client-options.h
----
----
- hw/vfio/migration.c                |  1 -
- hw/virtio/virtio-balloon.c         |  1 -
- include/migration/client-options.h | 24 ++++++++++++++++++++++++
- include/migration/misc.h           |  1 +
- migration/options.h                |  6 +-----
- system/dirtylimit.c                |  1 -
- 6 files changed, 26 insertions(+), 8 deletions(-)
- create mode 100644 include/migration/client-options.h
+Am 26=2E Februar 2024 11:13:59 UTC schrieb "Philippe Mathieu-Daud=C3=A9" <=
+philmd@linaro=2Eorg>:
+>Since v1 [1]:
+>- Rebased on top of Bernhard patches
+>- Rename files with 'ich9_' prefix (Bernhard)
+>
+>Hi,
+>
+>I have a long standing southbridge QOM rework branches=2E Since
+>Bernhard is actively working on the PIIX, I'll try to refresh
+>and post=2E This is also motivated by the Dynamic Machine work
+>where we are trying to figure the ideal DSL for QEMU, so having
+>complex models well designed help=2E
+>
+>Here we introduce the ICH9 'southbridge' as a QOM container=2E
+>Since the chipset comes as a whole, we shouldn't instantiate
+>its components separately=2E However in order to maintain old
+>code we expose some properties to configure the container and
+>not introduce any change for the Q35 machine=2E There is no
+>migration change, only QOM objects moved around=2E
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 50140ed..5d4a23c 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -18,7 +18,6 @@
- #include "sysemu/runstate.h"
- #include "hw/vfio/vfio-common.h"
- #include "migration/migration.h"
--#include "migration/options.h"
- #include "migration/savevm.h"
- #include "migration/vmstate.h"
- #include "migration/qemu-file.h"
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 89f853f..a59ff17 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -32,7 +32,6 @@
- #include "qemu/error-report.h"
- #include "migration/misc.h"
- #include "migration/migration.h"
--#include "migration/options.h"
- 
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/virtio-access.h"
-diff --git a/include/migration/client-options.h b/include/migration/client-options.h
-new file mode 100644
-index 0000000..887fea1
---- /dev/null
-+++ b/include/migration/client-options.h
-@@ -0,0 +1,24 @@
-+/*
-+ * QEMU public migration capabilities
-+ *
-+ * Copyright (c) 2012-2023 Red Hat Inc
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef QEMU_MIGRATION_CLIENT_OPTIONS_H
-+#define QEMU_MIGRATION_CLIENT_OPTIONS_H
-+
-+/* capabilities */
-+
-+bool migrate_background_snapshot(void);
-+bool migrate_dirty_limit(void);
-+bool migrate_postcopy_ram(void);
-+bool migrate_switchover_ack(void);
-+
-+/* parameters */
-+
-+MigMode migrate_mode(void);
-+
-+#endif
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 5d1aa59..4c226a4 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -17,6 +17,7 @@
- #include "qemu/notify.h"
- #include "qapi/qapi-types-migration.h"
- #include "qapi/qapi-types-net.h"
-+#include "migration/client-options.h"
- 
- /* migration/ram.c */
- 
-diff --git a/migration/options.h b/migration/options.h
-index 246c160..964ebdd 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -16,6 +16,7 @@
- 
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
-+#include "migration/client-options.h"
- 
- /* migration properties */
- 
-@@ -24,12 +25,10 @@ extern Property migration_properties[];
- /* capabilities */
- 
- bool migrate_auto_converge(void);
--bool migrate_background_snapshot(void);
- bool migrate_block(void);
- bool migrate_colo(void);
- bool migrate_compress(void);
- bool migrate_dirty_bitmaps(void);
--bool migrate_dirty_limit(void);
- bool migrate_events(void);
- bool migrate_ignore_shared(void);
- bool migrate_late_block_activate(void);
-@@ -37,11 +36,9 @@ bool migrate_multifd(void);
- bool migrate_pause_before_switchover(void);
- bool migrate_postcopy_blocktime(void);
- bool migrate_postcopy_preempt(void);
--bool migrate_postcopy_ram(void);
- bool migrate_rdma_pin_all(void);
- bool migrate_release_ram(void);
- bool migrate_return_path(void);
--bool migrate_switchover_ack(void);
- bool migrate_validate_uuid(void);
- bool migrate_xbzrle(void);
- bool migrate_zero_blocks(void);
-@@ -83,7 +80,6 @@ uint8_t migrate_max_cpu_throttle(void);
- uint64_t migrate_max_bandwidth(void);
- uint64_t migrate_avail_switchover_bandwidth(void);
- uint64_t migrate_max_postcopy_bandwidth(void);
--MigMode migrate_mode(void);
- int migrate_multifd_channels(void);
- MultiFDCompression migrate_multifd_compression(void);
- int migrate_multifd_zlib_level(void);
-diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-index b5607eb..774ff44 100644
---- a/system/dirtylimit.c
-+++ b/system/dirtylimit.c
-@@ -26,7 +26,6 @@
- #include "trace.h"
- #include "migration/misc.h"
- #include "migration/migration.h"
--#include "migration/options.h"
- 
- /*
-  * Dirtylimit stop working if dirty page rate error
--- 
-1.8.3.1
+I really like the simplicity of the machine code and that the ICH9 southbr=
+idge becomes a proper device rather than being scattered around in machine =
+code=2E I've made some reviews in form of a branch: https://github=2Ecom/sh=
+entok/qemu/commits/philmd/ich9_qom-v2/
 
+>
+>More work remain in the LPC function (more code to remove from
+>Q35)=2E Maybe worth doing in parallel with the PIIX to clean both
+>PC machines=2E
+
+Would be nice if the pattern could then also be applied to the VIA southbr=
+idges, otherwise this could break my via-apollo-pro-133t branch: https://gi=
+thub=2Ecom/shentok/qemu/tree/via-apollo-pro-133t
+
+Best regards,
+Bernhard
+
+>
+>Also we'd need to decouple the cpu_interrupt() calls between hw/
+>and target/=2E
+>
+>Note that GSI is currently broken [2]=2E Once the LPC/ISA part is
+>done, it might be easier to fix it=2E
+>
+>[1] https://lore=2Ekernel=2Eorg/qemu-devel/20240219163855=2E87326-1-philm=
+d@linaro=2Eorg/
+>[2] https://lore=2Ekernel=2Eorg/qemu-devel/cd0e13c6-c03d-411f-83a5-1d4d28=
+ea4345@linaro=2Eorg/
+>
+>Philippe Mathieu-Daud=C3=A9 (15):
+>  MAINTAINERS: Add 'ICH9 South Bridge' section
+>  hw/i386/q35: Add local 'lpc_obj' variable
+>  hw/acpi/ich9: Restrict definitions from 'hw/southbridge/ich9=2Eh'
+>  hw/acpi/ich9_tco: Include 'ich9' in names
+>  hw/acpi/ich9_tco: Restrict ich9_generate_smi() declaration
+>  hw/ide: Rename ich=2Ec -> ich9_ahci=2Ec
+>  hw/i2c/smbus: Extract QOM ICH9 definitions to 'ich9_smbus=2Eh'
+>  hw/pci-bridge: Extract QOM ICH definitions to 'ich9_dmi=2Eh'
+>  hw/southbridge/ich9: Introduce TYPE_ICH9_SOUTHBRIDGE stub
+>  hw/southbridge/ich9: Add the DMI-to-PCI bridge
+>  hw/southbridge/ich9: Add a AHCI function
+>  hw/southbridge/ich9: Add the SMBus function
+>  hw/southbridge/ich9: Add the USB EHCI/UHCI functions
+>  hw/southbridge/ich9: Extract LPC definitions to 'hw/isa/ich9_lpc=2Eh'
+>  hw/southbridge/ich9: Add the LPC / ISA bridge function
+>
+> MAINTAINERS                               |  21 +-
+> include/hw/acpi/ich9=2Eh                    |  15 ++
+> include/hw/acpi/ich9_tco=2Eh                |   6 +-
+> include/hw/i2c/ich9_smbus=2Eh               |  25 +++
+> include/hw/isa/ich9_lpc=2Eh                 | 166 +++++++++++++++
+> include/hw/pci-bridge/ich9_dmi=2Eh          |  20 ++
+> include/hw/southbridge/ich9=2Eh             | 235 +---------------------
+> hw/acpi/ich9=2Ec                            |   9 +-
+> hw/acpi/ich9_tco=2Ec                        |   5 +-
+> hw/i2c/{smbus_ich9=2Ec =3D> ich9_smbus=2Ec}     |  36 +++-
+> hw/i386/acpi-build=2Ec                      |   1 +
+> hw/i386/pc_q35=2Ec                          | 126 +++---------
+> hw/ide/{ich=2Ec =3D> ich9_ahci=2Ec}             |   0
+> hw/isa/{lpc_ich9=2Ec =3D> ich9_lpc=2Ec}         |  37 +++-
+> hw/pci-bridge/{i82801b11=2Ec =3D> ich9_dmi=2Ec} |  11 +-
+> hw/southbridge/ich9=2Ec                     | 213 ++++++++++++++++++++
+> tests/qtest/tco-test=2Ec                    |   2 +-
+> hw/Kconfig                                |   1 +
+> hw/i2c/meson=2Ebuild                        |   2 +-
+> hw/i386/Kconfig                           |   3 +-
+> hw/ide/meson=2Ebuild                        |   2 +-
+> hw/isa/meson=2Ebuild                        |   2 +-
+> hw/meson=2Ebuild                            |   1 +
+> hw/pci-bridge/meson=2Ebuild                 |   2 +-
+> hw/southbridge/Kconfig                    |  11 +
+> hw/southbridge/meson=2Ebuild                |   3 +
+> 26 files changed, 587 insertions(+), 368 deletions(-)
+> create mode 100644 include/hw/i2c/ich9_smbus=2Eh
+> create mode 100644 include/hw/isa/ich9_lpc=2Eh
+> create mode 100644 include/hw/pci-bridge/ich9_dmi=2Eh
+> rename hw/i2c/{smbus_ich9=2Ec =3D> ich9_smbus=2Ec} (77%)
+> rename hw/ide/{ich=2Ec =3D> ich9_ahci=2Ec} (100%)
+> rename hw/isa/{lpc_ich9=2Ec =3D> ich9_lpc=2Ec} (95%)
+> rename hw/pci-bridge/{i82801b11=2Ec =3D> ich9_dmi=2Ec} (95%)
+> create mode 100644 hw/southbridge/ich9=2Ec
+> create mode 100644 hw/southbridge/Kconfig
+> create mode 100644 hw/southbridge/meson=2Ebuild
+>
 
