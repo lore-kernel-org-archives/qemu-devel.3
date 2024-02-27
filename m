@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85195C54E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A474C54798
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 18:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf2VX-0006Ya-Ug; Tue, 27 Feb 2024 13:48:51 -0500
+	id 1rf2VO-0006Ua-Ih; Tue, 27 Feb 2024 13:48:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rf2VW-0006YC-Bu
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:50 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1rf2VN-0006U2-5h
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:41 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rf2VU-0001US-RQ
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:50 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e508725b64so1174325b3a.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 10:48:48 -0800 (PST)
+ id 1rf2VL-0001ST-JZ
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:48:40 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-6e4957ff05cso1621046a34.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 10:48:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709059727; x=1709664527; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709059718; x=1709664518; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7NxH+YjseDTpq8veEE2IUMndw319v6C2n3pI3OsSxXo=;
- b=HzMcsNAAMqZdnfye7m1h4b6Gsv7P0ePdXCS2W4PLNFdWeuLUHGk99Zwsnb2X+ZUZgE
- XdpsjQY99PlF8YKwM2OXhNcIiahA1me9dnE7ZqyoHni/h3OzGOMkGwyZBSjIa7c9W1ts
- Zwx2WByyI5TU13vmKO+85UIXzffUAURXZayBg9po2TLa/VP3U2EUG+y2/lAnw6MJX0Av
- PhWcjHb+QrYe+OndqDkGJUKs9ueX67z1wy1/EsvhOSH4ILZg0zK92d2YLGdJPNkRIBXE
- AjSGGjbfODo2Z3XbaNJJlxqH5p22M53i9ODPI00PP0YXSJ7UVvjn5fGiFre+OOfbL0hP
- angQ==
+ bh=jYBkGoMMC9wjPymAcLzdiqwt32NykwjmDLE/jmy3uYA=;
+ b=PTWOgijnVwgQfa5nMUkRjVR5K3R0he76rfrErF9KisHjaKTDaJFh0Z42IDGsZab/8M
+ BVuQaio33mtUA9L2XCBiqJePIWohU8mGEmzK+Sm77RCFuexvrJmbfh5tg1MwJWviOU9W
+ k1XlgdZQbJ5/X7Sn1CZLHbc3/x0bXVwzaOkAEEj5UGRtDDQHskp+t57GaMJUMyCRqAhv
+ j4i0r8zHJu9hb6ljI3+LcQPynMMfk7mqmwSpLj8/xItp69QK/ZjVQFfJcvl320KU4q01
+ RBLFAfyQZsTwtGkc+JJJs0bhJFxxZTvshPwlCvJ66qLstYjC022lu8cp5GkAGUoTA0jP
+ d30w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709059727; x=1709664527;
+ d=1e100.net; s=20230601; t=1709059718; x=1709664518;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7NxH+YjseDTpq8veEE2IUMndw319v6C2n3pI3OsSxXo=;
- b=lpag/myTUOFdyYDs1d0KWfi27MgwcE7QFuL9DupccU4oA/u2BJeMYVx0tA/QabbQhH
- 3fIccpcwbas9MgUOMOaLiPGW4tVYSm7F274qUNAAOqupnmrSyyBJ/AlZsXAe9GApS4eU
- HWqvFEwtMi6muUu4Wktdt2YaxOK4zkwz4J0GKCsPHi58JeYUkgPLz0+H6t6P/KBgSOqj
- IuWP2WbscCIXQpnrC7e9Fa6wTl3HLakOzBcTeS8Rz7oDu/Y/d3PZN5nVPerI14T0Gepp
- B/85lZU8xdO3rEeyZDU0b8PuOLukhv18x0q7XoD11Jphfobu2GE2xYoHr5qVmGphBqa3
- QFrQ==
-X-Gm-Message-State: AOJu0YyPgB67ZMnlDqHyVO2cbsLKwnrkfo6LF6muwNXJlLUQV1W6y/bc
- SlqMSxTMV/UiKWivg8Eso/wuexM2qyEDPjRj4Luqe7be0KEgKlWV0xWfcGuT+aBbrfwxm/29hsz
- w
-X-Google-Smtp-Source: AGHT+IFKhgFPVqYOgKrGIROfzwRi4WbdBCaBhFn8IVpngE0/HMnomyFasswSbMm2J4vEgsBk8LQfzQ==
-X-Received: by 2002:a05:6a00:23d2:b0:6e4:f753:1e12 with SMTP id
- g18-20020a056a0023d200b006e4f7531e12mr10599709pfc.28.1709059727595; 
- Tue, 27 Feb 2024 10:48:47 -0800 (PST)
+ bh=jYBkGoMMC9wjPymAcLzdiqwt32NykwjmDLE/jmy3uYA=;
+ b=NMqiNn9gC5p7+XMhCyXqd2KsL8XekO4/d9ya1k+0SJwjSLrxIbY80ft2fi0rEUiSJN
+ fxF8ojgPZw0bgqa6QcD/SkGj1AOfJeB82TW0Fo93jsB07JXj7u9kWvkeQ6KhWplm4Mc6
+ sk245Dmr7biXOlDMuy00HL+yh5JF5RkQLx7UN9njatm/bUQgYNZFj0zldHskV22xIN/7
+ CJv4FSxoYjDrgrD8Cr0mdy49qTnc8zjUQuY/cx+YZDDWg3XRtjvTCJ4ztFsTizO0qOOV
+ //0MnW5xBDgtkiODX2QToMds5RWKkPWXDmAH5PJl6SgiQ6I157tGkPSmrMFzXMv2bweV
+ 35lQ==
+X-Gm-Message-State: AOJu0YyZo3sAnL6lT9hqFhNY5NdA2QJvayKg+rzde6j5m7D7WrvzLEeR
+ irizTmGkV35R9LESl7VkyVXH1SumdCqF9b8Pf4yW12su2KZaFia7osksaQ53Q98VKDFkzAXiN/v
+ j
+X-Google-Smtp-Source: AGHT+IFiH9Zm7aK5ryGMl33mU4PJvdSIBmUzqUo9c0/mSBWARMXyCltNiDwnNSdBUuRLo6k3f4fyog==
+X-Received: by 2002:a05:6830:1390:b0:6e4:7a7b:700b with SMTP id
+ d16-20020a056830139000b006e47a7b700bmr10732280otq.14.1709059718356; 
+ Tue, 27 Feb 2024 10:48:38 -0800 (PST)
 Received: from stoup.. (098-147-055-211.res.spectrum.com. [98.147.55.211])
  by smtp.gmail.com with ESMTPSA id
- h26-20020aa786da000000b006e555d40951sm533465pfo.188.2024.02.27.10.48.46
+ h26-20020aa786da000000b006e555d40951sm533465pfo.188.2024.02.27.10.48.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 10:48:47 -0800 (PST)
+ Tue, 27 Feb 2024 10:48:37 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org
-Subject: [PATCH 08/14] linux-user/elfload: Lock cpu list and mmap during
- elf_core_dump
-Date: Tue, 27 Feb 2024 08:48:27 -1000
-Message-Id: <20240227184833.193836-9-richard.henderson@linaro.org>
+Subject: [PATCH 01/14] linux-user/elfload: Disable core dump if getrlimit fails
+Date: Tue, 27 Feb 2024 08:48:20 -1000
+Message-Id: <20240227184833.193836-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227184833.193836-1-richard.henderson@linaro.org>
 References: <20240227184833.193836-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,55 +94,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not allow changes to the set of cpus and memory regions
-while we are dumping core.
+Do not dump core at all if getrlimit fails; this ensures
+that dumpsize is valid throughout the function, not just
+for the initial test vs rlim_cur.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ linux-user/elfload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 16dd08a828..6f9da721d7 100644
+index b8eef893d0..fb47fe39c9 100644
 --- a/linux-user/elfload.c
 +++ b/linux-user/elfload.c
-@@ -4537,13 +4537,11 @@ static void fill_note_info(struct elf_note_info *info,
-     }
- 
-     /* read and fill status of all threads */
--    WITH_QEMU_LOCK_GUARD(&qemu_cpu_list_lock) {
--        CPU_FOREACH(cpu) {
--            if (cpu == thread_cpu) {
--                continue;
--            }
--            fill_thread_info(info, cpu_env(cpu));
-+    CPU_FOREACH(cpu) {
-+        if (cpu == thread_cpu) {
-+            continue;
-         }
-+        fill_thread_info(info, cpu_env(cpu));
-     }
- }
- 
-@@ -4643,6 +4641,9 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+@@ -4673,7 +4673,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
          return 0;
      }
  
-+    cpu_list_lock();
-+    mmap_lock();
-+
-     /*
-      * Walk through target process memory mappings and
-      * set up structure containing this information.  After
-@@ -4760,6 +4761,8 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+-    if (getrlimit(RLIMIT_CORE, &dumpsize) == 0 && dumpsize.rlim_cur == 0) {
++    if (getrlimit(RLIMIT_CORE, &dumpsize) < 0 || dumpsize.rlim_cur == 0) {
+         return 0;
+     }
  
-  out:
-     ret = -errno;
-+    mmap_unlock();
-+    cpu_list_unlock();
-     free_note_info(&info);
-     vma_delete(&mm);
-     close(fd);
 -- 
 2.34.1
 
