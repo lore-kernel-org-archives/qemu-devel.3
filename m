@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC10C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7057DC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:34:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezSl-0004Pm-Cg; Tue, 27 Feb 2024 10:33:47 -0500
+	id 1rezTL-0005U8-Kf; Tue, 27 Feb 2024 10:34:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSa-0004IR-V5
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSR-0005HO-Qw
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709048007;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4ygEJha1k0iwErA+UUXIpGWsdgck9M5i+PDDxNYeDpU=;
- b=ZQ4p2C7gE00pvFj+gcfrAz9MtkjKSD65dmx/ZXwg2RgMpNsBFEZlgZ9xNSARlOGrCEMTe/
- 7YuK1TvgLUUvqGSOn5rC10ruEpX5kz5LW78bfK8fqrhBOtSdNLFRRvMOebG2n/7TokwoUP
- /KF/y885iAMq+gQtxMDWp0NxX1JffHM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-Y-xZB9KsNhSqfO3bWPKF0Q-1; Tue, 27 Feb 2024 10:33:23 -0500
-X-MC-Unique: Y-xZB9KsNhSqfO3bWPKF0Q-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2E335881B6F;
- Tue, 27 Feb 2024 15:33:23 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0974620229A4;
- Tue, 27 Feb 2024 15:33:23 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0707C21E6691; Tue, 27 Feb 2024 16:33:22 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rezTH-0005QV-K6
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:34:19 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rezTC-0005O3-0m
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:34:18 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-412af2dca59so4389385e9.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 07:34:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709048052; x=1709652852; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gvyj8Te/FcELdnn5Fag+Ftd4/hVG7ZZ/CxKziKlucYc=;
+ b=h6aAm8N6xccFPaSif0lSVebqhdOhLMnW3vkZmKkJ9qiYQ+BvSVoeHmMAos78TpcnjD
+ lD9w1e1UT6KVHmq7JKu68vwLJiDAleu304A5MP7RgTKDTmZWyC7Zr5xTWnUoWnrgVKhF
+ EjspEY0yHa/x6SMl657isqe58Mg41rJUhLu5luUgnxyATtQOY2QV0V1o6SGRCCe66DnX
+ /pQJiwvACu59RQHNds0pWH34WSa3/ZdaE3fRbGKeJYyaVqI/mFII9zE7onanJqpXiPsV
+ X6K0emqK5q4e8/pcpiiAm2Xv+AUCvJ4maHzZelACrLg8wybyC0+rTy+a4es+httjDu4A
+ piFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709048052; x=1709652852;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gvyj8Te/FcELdnn5Fag+Ftd4/hVG7ZZ/CxKziKlucYc=;
+ b=WiltjOcww20bvDT/eNoG9ETukVkxOGR0EoqMEYqkv38ahg78XsUk4HjIWKfWtFWF3C
+ PtFEI5Lh8kjFDwKZ55ZwC94GVxGd5QqrJIGDzgZQJqGyBAlKL6YVqQuczr8kdV4488/k
+ afaxD35yYRdTSoWRkNXQ5vXqZQbNvyYyXh3l6NuTLkqv6X6TnVSManFZL2Y7BSWHB/sO
+ hMc7gp0QoEQ8TxSc/7RGyw2fxAtlkCMnU+2w1MV2bGr5oToBcn+GowTPIKoBXVMAkpw5
+ 7gwn1bGGlWD4bAXpRYJhG6UJ5DlWQCTcoYzQpNaDkh/LWMRzz4J5RChNR9FWA5kO8CZp
+ ua4g==
+X-Gm-Message-State: AOJu0YwSAx4e5c9QZfx+7gSjaAsozGqVY1rOG0Mm+7oL/7LEfhkcIM99
+ jDlYrK3f1xIG6o0+MI6U+znDhVTizkG+uIVtDNMexbBcmwJq0nIp83eKDYIT6K/FpyhMR7nPN4Y
+ r
+X-Google-Smtp-Source: AGHT+IEgb+UFFWwIXvd8DTfCFVW0vvGvmwvFYqNt942jDIx/baG5+AmceGdH5sJOAfvBP8D4ehX2qA==
+X-Received: by 2002:a5d:6d85:0:b0:33d:da6e:b7ed with SMTP id
+ l5-20020a5d6d85000000b0033dda6eb7edmr5777415wrs.18.1709048051956; 
+ Tue, 27 Feb 2024 07:34:11 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ dq2-20020a0560000cc200b0033b483d1abcsm11655824wrb.53.2024.02.27.07.34.11
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Feb 2024 07:34:11 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: steven.sistare@oracle.com, philmd@linaro.org, dave@treblig.org,
- jasowang@redhat.com, michael.roth@amd.com, peterx@redhat.com,
- farosas@suse.de
-Subject: [PATCH v7 3/3] migration: simplify exec migration functions
-Date: Tue, 27 Feb 2024 16:33:21 +0100
-Message-ID: <20240227153321.467343-4-armbru@redhat.com>
-In-Reply-To: <20240227153321.467343-1-armbru@redhat.com>
-References: <20240227153321.467343-1-armbru@redhat.com>
+Subject: [PULL v2 00/36] target-arm queue
+Date: Tue, 27 Feb 2024 15:34:10 +0000
+Message-Id: <20240227153410.1917221-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,115 +91,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+Changes v1->v2: dropped all the patches for the bcm2828-mailbox qtest,
+which turns out to have portability problems on big-endian hosts and macos.
 
-Simplify the exec migration code by using list utility functions.
+thanks
+-- PMM
 
-As a side effect, this also fixes a minor memory leak.  On function return,
-"g_auto(GStrv) argv" frees argv and each element, which is wrong, because
-the function does not own the individual elements.  To compensate, the code
-uses g_steal_pointer which NULLs argv and prevents the destructor from
-running, but argv is leaked.
+The following changes since commit dccbaf0cc0f1744ffd7562a3dc60e4fc99fd9d44:
 
-Fixes: cbab4face57b ("migration: convert exec backend ...")
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
----
- migration/exec.c | 57 +++++++-----------------------------------------
- 1 file changed, 8 insertions(+), 49 deletions(-)
+  Merge tag 'hw-misc-20240227' of https://github.com/philmd/qemu into staging (2024-02-27 10:11:07 +0000)
 
-diff --git a/migration/exec.c b/migration/exec.c
-index 47d2f3b8fb..20e6cccf8c 100644
---- a/migration/exec.c
-+++ b/migration/exec.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qapi/type-helpers.h"
- #include "qemu/error-report.h"
- #include "channel.h"
- #include "exec.h"
-@@ -39,51 +40,16 @@ const char *exec_get_cmd_path(void)
- }
- #endif
- 
--/* provides the length of strList */
--static int
--str_list_length(strList *list)
--{
--    int len = 0;
--    strList *elem;
--
--    for (elem = list; elem != NULL; elem = elem->next) {
--        len++;
--    }
--
--    return len;
--}
--
--static void
--init_exec_array(strList *command, char **argv, Error **errp)
--{
--    int i = 0;
--    strList *lst;
--
--    for (lst = command; lst; lst = lst->next) {
--        argv[i++] = lst->value;
--    }
--
--    argv[i] = NULL;
--    return;
--}
--
- void exec_start_outgoing_migration(MigrationState *s, strList *command,
-                                    Error **errp)
- {
--    QIOChannel *ioc;
--
--    int length = str_list_length(command);
--    g_auto(GStrv) argv = (char **) g_new0(const char *, length + 1);
--
--    init_exec_array(command, argv, errp);
-+    QIOChannel *ioc = NULL;
-+    g_auto(GStrv) argv = strv_from_str_list(command);
-+    const char * const *args = (const char * const *) argv;
-     g_autofree char *new_command = g_strjoinv(" ", (char **)argv);
- 
-     trace_migration_exec_outgoing(new_command);
--    ioc = QIO_CHANNEL(
--        qio_channel_command_new_spawn(
--                            (const char * const *) g_steal_pointer(&argv),
--                            O_RDWR,
--                            errp));
-+    ioc = QIO_CHANNEL(qio_channel_command_new_spawn(args, O_RDWR, errp));
-     if (!ioc) {
-         return;
-     }
-@@ -105,19 +71,12 @@ static gboolean exec_accept_incoming_migration(QIOChannel *ioc,
- void exec_start_incoming_migration(strList *command, Error **errp)
- {
-     QIOChannel *ioc;
--
--    int length = str_list_length(command);
--    g_auto(GStrv) argv = (char **) g_new0(const char *, length + 1);
--
--    init_exec_array(command, argv, errp);
-+    g_auto(GStrv) argv = strv_from_str_list(command);
-+    const char * const *args = (const char * const *) argv;
-     g_autofree char *new_command = g_strjoinv(" ", (char **)argv);
- 
-     trace_migration_exec_incoming(new_command);
--    ioc = QIO_CHANNEL(
--        qio_channel_command_new_spawn(
--                            (const char * const *) g_steal_pointer(&argv),
--                            O_RDWR,
--                            errp));
-+    ioc = QIO_CHANNEL(qio_channel_command_new_spawn(args, O_RDWR, errp));
-     if (!ioc) {
-         return;
-     }
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240227-1
+
+for you to fetch changes up to 9c5c959dd748f2972e46a84b8d5f77794f515014:
+
+  docs/system/arm: Add RPi4B to raspi.rst (2024-02-27 15:24:20 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * Handle atomic updates of page tables entries in MMIO during PTW
+ * Advertise Cortex-A53 erratum #843419 fix via REVIDR
+ * MAINTAINERS: Cover hw/ide/ahci-allwinner.c with AllWinner A10 machine
+ * misc: m48t59: replace qemu_system_reset_request() call with watchdog_perform_action()
+ * misc: pxa2xx_timer: replace qemu_system_reset_request() call with watchdog_perform_action()
+ * xlnx-versal-ospi: disable reentrancy detection for iomem_dac
+ * sbsa-ref: Simplify init since PCIe is always enabled
+ * stm32l4x5: Use TYPE_OR_IRQ when connecting STM32L4x5 EXTI fan-in IRQs
+ * pl031: Update last RTCLR value on write in case it's read back
+ * block: m25p80: Add support of mt35xu02gbba
+ * xlnx-versal-virt: Add machine property ospi-flash
+ * reset: refactor system reset to be three-phase aware
+ * new board model raspi4b
+
+----------------------------------------------------------------
+Abhiram Tilak (2):
+      misc: m48t59: replace qemu_system_reset_request() call with watchdog_perform_action()
+      misc: pxa2xx_timer: replace qemu_system_reset_request() call with watchdog_perform_action()
+
+Ard Biesheuvel (1):
+      target/arm: Advertise Cortex-A53 erratum #843419 fix via REVIDR
+
+Inès Varhol (2):
+      hw/arm: Use TYPE_OR_IRQ when connecting STM32L4x5 EXTI fan-in IRQs
+      tests/qtest: Check that EXTI fan-in irqs are correctly connected
+
+Jessica Clarke (1):
+      pl031: Update last RTCLR value on write in case it's read back
+
+Jonathan Cameron (1):
+      arm/ptw: Handle atomic updates of page tables entries in MMIO during PTW.
+
+Marcin Juszkiewicz (1):
+      hw/arm/sbsa-ref: Simplify init since PCIe is always enabled
+
+Peter Maydell (9):
+      system/bootdevice: Don't unregister reset handler in restore_boot_order()
+      include/qom/object.h: New OBJECT_DEFINE_SIMPLE_TYPE{, _WITH_INTERFACES} macros
+      hw/core: Add documentation and license comments to reset.h
+      hw/core: Add ResetContainer which holds objects implementing Resettable
+      hw/core/reset: Add qemu_{register, unregister}_resettable()
+      hw/core/reset: Implement qemu_register_reset via qemu_register_resettable
+      hw/core/machine: Use qemu_register_resettable for sysbus reset
+      docs/devel/reset: Update to discuss system reset
+      tests/avocado/boot_linux_console.py: Add Rpi4b boot tests
+
+Philippe Mathieu-Daudé (1):
+      MAINTAINERS: Cover hw/ide/ahci-allwinner.c with AllWinner A10 machine
+
+Sai Pavan Boddu (3):
+      xlnx-versal-ospi: disable reentrancy detection for iomem_dac
+      block: m25p80: Add support of mt35xu02gbba
+      arm: xlnx-versal-virt: Add machine property ospi-flash
+
+Sergey Kambalin (15):
+      hw/arm/bcm2836: Split out common part of BCM283X classes
+      hw/arm/bcm2853_peripherals: Split out common part of peripherals
+      hw/arm/raspi: Split out raspi machine common part
+      hw/arm: Introduce BCM2838 SoC
+      hw/arm/bcm2838: Add GIC-400 to BCM2838 SoC
+      hw/gpio: Add BCM2838 GPIO stub
+      hw/gpio: Implement BCM2838 GPIO functionality
+      hw/gpio: Connect SD controller to BCM2838 GPIO
+      hw/arm: Add GPIO and SD to BCM2838 periph
+      hw/arm: Introduce Raspberry PI 4 machine
+      hw/arm/raspi4b: Temporarily disable unimplemented rpi4b devices
+      hw/arm: Add memory region for BCM2837 RPiVid ASB
+      hw/arm/bcm2838_peripherals: Add clock_isp stub
+      hw/misc/bcm2835_property: Add missed BCM2835 properties
+      docs/system/arm: Add RPi4B to raspi.rst
+
+ MAINTAINERS                          |  11 +
+ docs/devel/qom.rst                   |  34 ++-
+ docs/devel/reset.rst                 |  44 +++-
+ docs/system/arm/raspi.rst            |  12 +-
+ hw/block/m25p80_sfdp.h               |   1 +
+ include/hw/arm/bcm2835_peripherals.h |  29 ++-
+ include/hw/arm/bcm2836.h             |  27 ++-
+ include/hw/arm/bcm2838.h             |  31 +++
+ include/hw/arm/bcm2838_peripherals.h |  84 ++++++++
+ include/hw/arm/raspberrypi-fw-defs.h |  11 +
+ include/hw/arm/raspi_platform.h      |  38 +++-
+ include/hw/arm/stm32l4x5_soc.h       |   4 +
+ include/hw/core/resetcontainer.h     |  48 +++++
+ include/hw/display/bcm2835_fb.h      |   2 +
+ include/hw/gpio/bcm2838_gpio.h       |  45 ++++
+ include/qom/object.h                 | 114 +++++++---
+ include/sysemu/reset.h               | 113 ++++++++++
+ hw/arm/bcm2835_peripherals.c         | 215 +++++++++++--------
+ hw/arm/bcm2836.c                     | 117 ++++++-----
+ hw/arm/bcm2838.c                     | 263 +++++++++++++++++++++++
+ hw/arm/bcm2838_peripherals.c         | 224 ++++++++++++++++++++
+ hw/arm/raspi.c                       | 130 +++++++-----
+ hw/arm/raspi4b.c                     | 132 ++++++++++++
+ hw/arm/sbsa-ref.c                    |   5 +-
+ hw/arm/stm32l4x5_soc.c               |  80 ++++++-
+ hw/arm/xlnx-versal-virt.c            |  44 +++-
+ hw/block/m25p80.c                    |   3 +
+ hw/block/m25p80_sfdp.c               |  36 ++++
+ hw/core/machine.c                    |   7 +-
+ hw/core/reset.c                      | 166 ++++++++++++---
+ hw/core/resetcontainer.c             |  77 +++++++
+ hw/gpio/bcm2838_gpio.c               | 390 +++++++++++++++++++++++++++++++++++
+ hw/misc/bcm2835_property.c           |  21 ++
+ hw/rtc/m48t59.c                      |   4 +-
+ hw/rtc/pl031.c                       |   1 +
+ hw/ssi/xlnx-versal-ospi.c            |   6 +
+ hw/timer/pxa2xx_timer.c              |   3 +-
+ system/bootdevice.c                  |  25 ++-
+ target/arm/cpu64.c                   |   2 +-
+ target/arm/ptw.c                     |  64 +++++-
+ tests/qtest/stm32l4x5_exti-test.c    |  37 ++++
+ hw/arm/meson.build                   |   2 +
+ hw/arm/trace-events                  |   3 +
+ hw/core/meson.build                  |   1 +
+ hw/gpio/meson.build                  |   5 +-
+ tests/avocado/boot_linux_console.py  |  97 +++++++++
+ 46 files changed, 2503 insertions(+), 305 deletions(-)
+ create mode 100644 include/hw/arm/bcm2838.h
+ create mode 100644 include/hw/arm/bcm2838_peripherals.h
+ create mode 100644 include/hw/core/resetcontainer.h
+ create mode 100644 include/hw/gpio/bcm2838_gpio.h
+ create mode 100644 hw/arm/bcm2838.c
+ create mode 100644 hw/arm/bcm2838_peripherals.c
+ create mode 100644 hw/arm/raspi4b.c
+ create mode 100644 hw/core/resetcontainer.c
+ create mode 100644 hw/gpio/bcm2838_gpio.c
 
