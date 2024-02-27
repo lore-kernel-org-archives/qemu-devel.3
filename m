@@ -4,77 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 344A8C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1608C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezRu-00044X-GM; Tue, 27 Feb 2024 10:32:54 -0500
+	id 1rezSk-0004Oj-U4; Tue, 27 Feb 2024 10:33:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rezRt-00043s-1T
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:32:53 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rezRq-0005CY-Hd
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:32:52 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56657bcd555so231589a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 07:32:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709047969; x=1709652769; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2N2ryzAbZSNxl9SrwXCGoeVoeV2TQywNprJQRi5gziI=;
- b=G9c6kDG5u+pGkWo0RYSPzXoteHPChwXiB1nI/oi9VPNf+HcawUlKO0JkJIY1zLH04J
- ZJNxgly3wFiF6XKXVOZeezocFUgAtO9TyZdMIppgXbO1WRy8wGXx+pr6a3EPgAsGmk0q
- 7/EHbDjrTSdDLaoVn9hQOCRQ06ccK5KudnRct5MOxERY6INcp5bKvz1gFBvYiusp6E0+
- 6R+cgbmpDAgCsSO/VcA4aXveKSNyBHekwgx0e3ltYA4LPRfC11x6m9wzQLBJZ0IMNf3j
- inqagUc0l9gfG7DSX1RFGgjAzkHz31/wTO1unadW4qCzfceG1ZTKJbtn+3dUmOCibqES
- 1aMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709047969; x=1709652769;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2N2ryzAbZSNxl9SrwXCGoeVoeV2TQywNprJQRi5gziI=;
- b=IiYheR83PhXqUmsPBCS3hg8+cV//UU7nSyezxMqbeFKODB4cWQrYl4u+rLQHf0k4GN
- vL8yh4xqw6RPpb9/+dPrWeKP8I6Kcc78IfHP0vG4X+UBHjmgloN3ejXgQrhHQQLTXVyv
- qeEFyqFv6oBqlkT9LTcAD59Jv0QLQjl1MuZYvCh8icgnIPRl6K5Vx7PNzBb9gzBCFowO
- zZzc4yx7DoPGrALqVIqWuL5iOX4Tzd0bT2/E+zt7/uIvx98hA6DsUQUR3gkqothl8hg1
- 8znryHY2nxAv6Ag0RzQgMYRgLso9Cnzyw/ua99+Gk4q8AodvwcgPORVEZgQ9nuRpU1RF
- Xkig==
-X-Gm-Message-State: AOJu0YxDg6iqXUl76ELK4tWI1nPlaewE6t4kj7Y9l/kNwQK+bhO7ZzQB
- PCs2lJtWNpV60xNoUJW7m0jCqS68Z5LKdXRu2mZT8nO5WfR5AMvaaa/IEvmOkvNfJ31WCz8+Guq
- TTYd9Nq2rJJ/Kse1HnafCuyfse4sNPX0nS/LHCQ==
-X-Google-Smtp-Source: AGHT+IHLPOkQMh2Tx16LNLq/vxtBHB08/r8hjD3DzNCiW831OmDDXrUhXcov+V4bD87s3Hxo0qqY9X/xhHixRLajihU=
-X-Received: by 2002:aa7:d912:0:b0:564:a62e:dad with SMTP id
- a18-20020aa7d912000000b00564a62e0dadmr7192968edr.34.1709047968487; Tue, 27
- Feb 2024 07:32:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSb-0004IU-Ch
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSU-0005HU-Ka
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709048007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w97dCBrvpjqTDvUM76J/eMQk/Qlr2Rs024e5lcrEDOk=;
+ b=f4G+iZzbK+Fhv28ohjec+KqScXSDEwzBQVPatdf0KksLm/8wcQQICulV9QGiPnFnmayrUW
+ c2Bq8akefCmubxjYHTDnFwSOXN4dEzFBHmbUC6+ZTuzXKE0iT5nTopjdepJ1gNnjtLtAhZ
+ bTn14DfsJyjLG9fNidm9WzUMIVc30HU=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-urU1QP7AM8uBba1tM5y-2g-1; Tue,
+ 27 Feb 2024 10:33:23 -0500
+X-MC-Unique: urU1QP7AM8uBba1tM5y-2g-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2DE743C2E0A0;
+ Tue, 27 Feb 2024 15:33:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 09A6A20229A7;
+ Tue, 27 Feb 2024 15:33:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0363F21E6682; Tue, 27 Feb 2024 16:33:22 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: steven.sistare@oracle.com, philmd@linaro.org, dave@treblig.org,
+ jasowang@redhat.com, michael.roth@amd.com, peterx@redhat.com,
+ farosas@suse.de,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v7 2/3] qapi: New strv_from_str_list()
+Date: Tue, 27 Feb 2024 16:33:20 +0100
+Message-ID: <20240227153321.467343-3-armbru@redhat.com>
+In-Reply-To: <20240227153321.467343-1-armbru@redhat.com>
+References: <20240227153321.467343-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <cover.1709045654.git.balaton@eik.bme.hu>
- <a06f6259d7a37aa88145fb13e4bce153ff763f86.1709045654.git.balaton@eik.bme.hu>
-In-Reply-To: <a06f6259d7a37aa88145fb13e4bce153ff763f86.1709045654.git.balaton@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 15:32:37 +0000
-Message-ID: <CAFEAcA_6R2wLaLOoOBQ0-Z_QydAEgxANmNPdKaAF=iiroFEhmA@mail.gmail.com>
-Subject: Re: [PATCH v7 02/10] target/ppc: Readability improvements in
- exception handlers
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,38 +85,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024 at 15:10, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> Improve readability by shortening some long comments, removing
-> comments that state the obvious and dropping some empty lines so they
-> don't distract when reading the code.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Acked-by: Nicholas Piggin <npiggin@gmail.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/qapi/type-helpers.h |  8 ++++++++
+ qapi/qapi-type-helpers.c    | 14 ++++++++++++++
+ 2 files changed, 22 insertions(+)
 
-> -    /*
-> -     * new interrupt handler msr preserves existing ME unless
-> -     * explicitly overridden.
-> -     */
-> +    /* new interrupt handler msr preserves ME unless explicitly overriden */
+diff --git a/include/qapi/type-helpers.h b/include/qapi/type-helpers.h
+index be1f181526..fc8352cdec 100644
+--- a/include/qapi/type-helpers.h
++++ b/include/qapi/type-helpers.h
+@@ -12,3 +12,11 @@
+ #include "qapi/qapi-types-common.h"
+ 
+ HumanReadableText *human_readable_text_from_str(GString *str);
++
++/*
++ * Produce and return a NULL-terminated array of strings from @list.
++ * The result is g_malloc()'d and all strings are g_strdup()'d.  It
++ * can be freed with g_strfreev(), or by g_auto(GStrv) automatic
++ * cleanup.
++ */
++char **strv_from_str_list(const strList *list);
+diff --git a/qapi/qapi-type-helpers.c b/qapi/qapi-type-helpers.c
+index f76b34f647..266da013ad 100644
+--- a/qapi/qapi-type-helpers.c
++++ b/qapi/qapi-type-helpers.c
+@@ -21,3 +21,17 @@ HumanReadableText *human_readable_text_from_str(GString *str)
+ 
+     return ret;
+ }
++
++char **strv_from_str_list(const strList *list)
++{
++    const strList *tail;
++    int i = 0;
++    char **strv = g_new(char *, QAPI_LIST_LENGTH(list) + 1);
++
++    for (tail = list; tail != NULL; tail = tail->next) {
++        strv[i++] = g_strdup(tail->value);
++    }
++    strv[i] = NULL;
++
++    return strv;
++}
+-- 
+2.43.0
 
-Minor typo introduced here: should be "overridden".
-
->      new_msr = env->msr & (((target_ulong)1 << MSR_ME));
-
-> @@ -575,16 +558,10 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
->      /* new srr1 value excluding must-be-zero bits */
->      msr = env->msr & ~0x783f0000ULL;
->
-> -    /*
-> -     * new interrupt handler msr preserves existing ME unless
-> -     * explicitly overridden
-> -     */
-> +    /* new interrupt handler msr preserves ME unless explicitly overriden */
-
-Ditto, and similarly for other instances later in the patch.
-
-thanks
--- PMM
 
