@@ -4,121 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA116C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 09:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12BA2C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 09:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1retwu-0003MZ-9z; Tue, 27 Feb 2024 04:40:33 -0500
+	id 1reu25-0004qp-WA; Tue, 27 Feb 2024 04:45:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1retwk-0003Lx-J4
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 04:40:23 -0500
-Received: from mail-dm6nam11on2055.outbound.protection.outlook.com
- ([40.107.223.55] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1reu1e-0004kU-2s; Tue, 27 Feb 2024 04:45:29 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1retwg-0000Zl-AC
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 04:40:22 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JmIP9znpa+NYEDslcjM95QPw9YQIvwSY4YCEvCS7b3Akimc7T8YFdyGtrPwyMhyeEVQM/01SUeQGFRzgm4iCiSSaxVSmeyuUPVDHwaxDUhKkW6eIYa74toDo9neFJ9SLWRz982I7IYaob76ne1fuFPvaz84Nlwoxn26WjeTObzSvYwb1Bi4FQcWtjgbMUg7F7zq3xUjE5/WkjM3C7Y2A5YN5CE7+Jb6lXp4N2hBtpdbAvc1sVnD+Q9CSWVGdcv3UfSLfaO3/nv3Gb6Jnt9EWr+GAvTQy+W0DJcsgxT1usi+FdghyHcX/KLyoyJGTuPzbSR9v3HlegiojaOJaheWRjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8XG0TvmfUag7tZ4d7RkMcXy/A/GTqyl50PQlpGke98Y=;
- b=DJ9PcCrHB3kiuuFPaAY1ryraqbfamEnvJQpB5UG0fc74PWtj/0Y9C2x8g4fTtXHRyZ4WqQprg2Tr3ATKK0+dw1btM8q1qNiR4NZ7WczMBNHm4VZ3eAzeK48E5/dYdnKq4rf9x5SNamKbZSiIXwZlPski/MHWtH+lS/ivPa4EWi3T8eNyKlnlzqoQMXNlHBNFz3oe9UedaryirAT9Kp1aBT3xRmWHqsgZCixufDr5b8p41XyG6kxEqtu3nIYGrGWtbtYafv/u8ykSEDyWNzALhY/g8fqCmw19Io9yT9AKDlDQhFUyvAvG5vaY+tiPMkH+k+y4LuDFdXopndwSFC71/g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8XG0TvmfUag7tZ4d7RkMcXy/A/GTqyl50PQlpGke98Y=;
- b=MQIbzk1+WfG5Pw1bg20mcL6nZguIxBPm9B4Xdo5bSswWJc0QSRkNfB6jkfRNp8pXk1wST6Z6Q9PfUvnW4pg2qTgBlGYCleuAoNZCvUHsdIF3bQOef/SjndcX+qdyvlMMurl9T0WfwZszBZOk16WZnqvI+qawiF8P5HR+IDqvx3E=
-Received: from SN6PR2101CA0003.namprd21.prod.outlook.com
- (2603:10b6:805:106::13) by PH8PR12MB7160.namprd12.prod.outlook.com
- (2603:10b6:510:228::6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Tue, 27 Feb
- 2024 09:35:07 +0000
-Received: from SN1PEPF0002636A.namprd02.prod.outlook.com
- (2603:10b6:805:106:cafe::c9) by SN6PR2101CA0003.outlook.office365.com
- (2603:10b6:805:106::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.11 via Frontend
- Transport; Tue, 27 Feb 2024 09:35:07 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SN1PEPF0002636A.mail.protection.outlook.com (10.167.241.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 09:35:07 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
- 2024 03:35:07 -0600
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
- 2024 03:35:06 -0600
-Received: from luc-work-vm (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Tue, 27 Feb 2024 03:35:05 -0600
-Date: Tue, 27 Feb 2024 10:35:02 +0100
-From: Luc Michel <luc.michel@amd.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-CC: <qemu-devel@nongnu.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>, Yanan Wang
- <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, Mahmoud
- Mandour <ma.mandourr@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>, Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>
-Subject: Re: [PATCH v5 06/12] tests/plugin/mem: migrate to new per_vcpu API
-Message-ID: <Zd2sxjxegajy7ZbF@luc-work-vm>
-References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
- <20240226091446.479436-7-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1reu1b-0001wX-8z; Tue, 27 Feb 2024 04:45:25 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41R8WPx2029812; Tue, 27 Feb 2024 09:45:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=O75TRh+3aJ70WOHYcPDX1cgbLfzW+4elD/hKyzT+R9g=;
+ b=jK3wRuAlrqhHzG6+uTge87wIQvMpMZrOqE+IkHxwJ26cZ38tm5DFQvreq9gu1YhKNdN/
+ KXilZraOOZAzID/Z6BUD4IxUF4zdnvBp55C2ff/s5nwG+yjdT1o67Z+NImpgVLaRpxe/
+ fESMCgs1j/S5u+2Bwtm4E2WVNvGFvkIMJdGBvU8BV5eUIeK0PyaCS3qsaR0zG41hpKSl
+ LQ95XAA4qYQuStbvtmkKJVjF8/r3rvqzJp7IKPatWPukEopiZADIAxdf4PQNhJr2oZHY
+ L0M7SRLmuu8fgCL8eI+FeMPiSMTvrg4gqJebrr3BfnyZ3/BAcxzHFqP3omxIcQfBeX80 aA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whcaej070-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 27 Feb 2024 09:45:18 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41R9RBeX007085;
+ Tue, 27 Feb 2024 09:45:18 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whcaej06j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 27 Feb 2024 09:45:18 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41R95TE7008782; Tue, 27 Feb 2024 09:45:17 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wftstf4eg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 27 Feb 2024 09:45:17 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41R9jEDw44564758
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 27 Feb 2024 09:45:16 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E2BEC58065;
+ Tue, 27 Feb 2024 09:45:12 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DD51458055;
+ Tue, 27 Feb 2024 09:45:09 +0000 (GMT)
+Received: from [9.109.243.35] (unknown [9.109.243.35])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 27 Feb 2024 09:45:09 +0000 (GMT)
+Message-ID: <992d980a-da74-4c61-843b-888facc5f813@linux.ibm.com>
+Date: Tue, 27 Feb 2024 15:15:08 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240226091446.479436-7-pierrick.bouvier@linaro.org>
-Received-SPF: None (SATLEXMB05.amd.com: luc.michel@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002636A:EE_|PH8PR12MB7160:EE_
-X-MS-Office365-Filtering-Correlation-Id: a991fd8e-5b02-42cc-5805-08dc377762a0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GIuIPvFmySBAdBOtWPLnAzkDUiFYR6ubohn/CsRFPNiTWgN6Pr52p9zgOlDfThYm5iKKLr7pSv8Yjxu/ZZSJUpAralMncTgezyWw+LbhRsBxvdbraZj25fyZ8BpHGPKmr3RCGsvZoGgD74SHnDVZI6DKnPEF79h03e716tKZG0qXRGyBqUUqxmBR/Mzu5QORt7mp2E+pdnP/PYy0AQH0GuxU6WdiMGjeBPKLAL0oMK9bkICojnkqbs8mQ/vV7kKr6wmuOgkKsRXAMpy7ehBaztp4FkcYAcRD6v9Sqg5GghhkdWa0u0c91GBQNep/NPy1vUX9usMuw2X34KcRDvAMaUJSp6Ps5lNARX3ImT3h91ew8f4eB0z7KwE524XCAmisDnsswZCUYSa4d0tmabKGog6X2zqGtxjkqbfXt72S92tQpu4RHRdy7TYqXBTd92RnBql2xKrM7kJWBuBJHWUQ5HcBf+KDNTyya0A4gdgif0WFo4wRYmL6tRyXbKZN2j/Tg99biSU5zYPlCoPSZr+NP2EQTk90JnmeXxcfxtW3qj7KgSQGmgLdWDSSKv09qdr3Jk+4RH/l1obDN7y9lxgD6O6yLHgxQy0VLVm4lCQNueYN9uvg/h3zS9fFT6+aB9d/nYmQd4A03awt+LRSQGywaFNZx4WwFKBXy9AOswbmzIl1chhajHnVYobQ+IEJKQIyEiNaqT37HAv1lwihjhPKLgDB523x2u8O+kFj8PZRT2+OCq2axlYz0NLfXvIFgR2j
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(82310400014)(36860700004); DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 09:35:07.3985 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a991fd8e-5b02-42cc-5805-08dc377762a0
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002636A.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7160
-Received-SPF: softfail client-ip=40.107.223.55;
- envelope-from=Luc.Michel@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 04/15] spapr: nested: keep nested-hv related code
+ restricted to its API.
+Content-Language: en-US
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
+ qemu-devel@nongnu.org
+References: <20240220083609.748325-1-harshpb@linux.ibm.com>
+ <20240220083609.748325-5-harshpb@linux.ibm.com>
+ <CZFQHBO2FUX6.30O1PDW79JW97@wheely>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <CZFQHBO2FUX6.30O1PDW79JW97@wheely>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: huQHEsq6_Ibs1GjX3wlCeGdmYCnxm-2W
+X-Proofpoint-GUID: SHjLNlHFjyohfcM9j66CMPWRAp1V0TM4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ impostorscore=0 mlxlogscore=999 adultscore=0 spamscore=0 suspectscore=0
+ bulkscore=0 mlxscore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402270076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,113 +119,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
 
-On 13:14 Mon 26 Feb     , Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  tests/plugin/mem.c | 40 +++++++++++++++++++++++++---------------
->  1 file changed, 25 insertions(+), 15 deletions(-)
-> 
-> diff --git a/tests/plugin/mem.c b/tests/plugin/mem.c
-> index 44e91065ba7..d4729f5e015 100644
-> --- a/tests/plugin/mem.c
-> +++ b/tests/plugin/mem.c
-> @@ -16,9 +16,14 @@
-> 
->  QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> 
-> -static uint64_t inline_mem_count;
-> -static uint64_t cb_mem_count;
-> -static uint64_t io_count;
-> +typedef struct {
-> +    uint64_t mem_count;
-> +    uint64_t io_count;
-> +} CPUCount;
-> +
-> +static struct qemu_plugin_scoreboard *counts;
-> +static qemu_plugin_u64 mem_count;
-> +static qemu_plugin_u64 io_count;
 
-I see that you merged inline and callback counts into the same variable.
+On 2/27/24 14:24, Nicholas Piggin wrote:
+> On Tue Feb 20, 2024 at 6:35 PM AEST, Harsh Prateek Bora wrote:
+>> spapr_exit_nested and spapr_get_pate_nested_hv contains code which
+>> is specific to nested-hv API. Isolating code flows based on API
+>> helps extending it to be used with different API as well.
+>>
+>> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   include/hw/ppc/spapr_nested.h |  4 ++++
+>>   hw/ppc/spapr.c                |  7 ++++++-
+>>   hw/ppc/spapr_caps.c           |  1 +
+>>   hw/ppc/spapr_nested.c         | 27 ++++++++++++++++++++++++---
+>>   4 files changed, 35 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+>> index 2488ea98da..3f07c81c3d 100644
+>> --- a/include/hw/ppc/spapr_nested.h
+>> +++ b/include/hw/ppc/spapr_nested.h
+>> @@ -5,6 +5,8 @@
+>>   
+>>   typedef struct SpaprMachineStateNested {
+>>       uint64_t ptcr;
+>> +    uint8_t api;
+>> +#define NESTED_API_KVM_HV  1
+>>   } SpaprMachineStateNested;
+>>   
+>>   /*
+>> @@ -103,4 +105,6 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
+>>   typedef struct SpaprMachineState SpaprMachineState;
+>>   bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
+>>                                 target_ulong lpid, ppc_v3_pate_t *entry);
+>> +void spapr_nested_init(SpaprMachineState *spapr);
+>> +uint8_t spapr_nested_api(SpaprMachineState *spapr);
+>>   #endif /* HW_SPAPR_NESTED_H */
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index 97b69c0e42..51a1be027a 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -1376,7 +1376,11 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
+>>           entry->dw1 = spapr->patb_entry;
+>>           return true;
+>>       } else {
+>> -        return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+>> +        assert(spapr_nested_api(spapr));
+>> +        if (spapr_nested_api(spapr) == NESTED_API_KVM_HV) {
+>> +            return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+>> +        }
+>> +        return false;
+>>       }
+>>   }
+>>   
+>> @@ -3443,6 +3447,7 @@ static void spapr_instance_init(Object *obj)
+>>           spapr_get_host_serial, spapr_set_host_serial);
+>>       object_property_set_description(obj, "host-serial",
+>>           "Host serial number to advertise in guest device tree");
+>> +    spapr_nested_init(spapr);
+> 
+> I would maybe make this init a reset instead, and then it could do
+> the hypercall unregistering as well? You could rework that part of
+> it into patch 1 (or reorder the patches).
 
-I wonder... For this test don't you want to keep a plain uint64_t for
-callback counts? I have the feeling that this test was made so one can
-make sure inline and callback counts match.
+If we do unregistering here, we still hit the assert during
+spapr_machine_reset which tries to reapply the caps and thus re-register
+hcalls. Also, We cant register hcalls in this since the caps havent been
+applied when init is called here. So we can do as you have previously
+suggested, reset in spapr_machine_reset based on caps applied.
+Let me know if you think otherwise?
 
-Luc
+regards,
+Harsh
 
->  static bool do_inline, do_callback;
->  static bool do_haddr;
->  static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
-> @@ -27,16 +32,16 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
->  {
->      g_autoptr(GString) out = g_string_new("");
-> 
-> -    if (do_inline) {
-> -        g_string_printf(out, "inline mem accesses: %" PRIu64 "\n", inline_mem_count);
-> -    }
-> -    if (do_callback) {
-> -        g_string_append_printf(out, "callback mem accesses: %" PRIu64 "\n", cb_mem_count);
-> +    if (do_inline || do_callback) {
-> +        g_string_printf(out, "mem accesses: %" PRIu64 "\n",
-> +                        qemu_plugin_u64_sum(mem_count));
->      }
->      if (do_haddr) {
-> -        g_string_append_printf(out, "io accesses: %" PRIu64 "\n", io_count);
-> +        g_string_append_printf(out, "io accesses: %" PRIu64 "\n",
-> +                               qemu_plugin_u64_sum(io_count));
->      }
->      qemu_plugin_outs(out->str);
-> +    qemu_plugin_scoreboard_free(counts);
->  }
-> 
->  static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
-> @@ -46,12 +51,12 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
->          struct qemu_plugin_hwaddr *hwaddr;
->          hwaddr = qemu_plugin_get_hwaddr(meminfo, vaddr);
->          if (qemu_plugin_hwaddr_is_io(hwaddr)) {
-> -            io_count++;
-> +            qemu_plugin_u64_add(io_count, cpu_index, 1);
->          } else {
-> -            cb_mem_count++;
-> +            qemu_plugin_u64_add(mem_count, cpu_index, 1);
->          }
->      } else {
-> -        cb_mem_count++;
-> +        qemu_plugin_u64_add(mem_count, cpu_index, 1);
->      }
->  }
-> 
-> @@ -64,9 +69,10 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
->          struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-> 
->          if (do_inline) {
-> -            qemu_plugin_register_vcpu_mem_inline(insn, rw,
-> -                                                 QEMU_PLUGIN_INLINE_ADD_U64,
-> -                                                 &inline_mem_count, 1);
-> +            qemu_plugin_register_vcpu_mem_inline_per_vcpu(
-> +                insn, rw,
-> +                QEMU_PLUGIN_INLINE_ADD_U64,
-> +                mem_count, 1);
->          }
->          if (do_callback) {
->              qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem,
-> @@ -117,6 +123,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->          }
->      }
-> 
-> +    counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
-> +    mem_count = qemu_plugin_scoreboard_u64_in_struct(
-> +        counts, CPUCount, mem_count);
-> +    io_count = qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount, io_count);
->      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
->      qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->      return 0;
-> --
-> 2.43.0
-> 
-> 
 
--- 
+> 
+> Thanks,
+> Nick
 
