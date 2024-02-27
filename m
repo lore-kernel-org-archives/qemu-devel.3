@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B954C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C080C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:28:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reyQ1-0005oZ-5J; Tue, 27 Feb 2024 09:26:53 -0500
+	id 1reyRG-0006tM-GX; Tue, 27 Feb 2024 09:28:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1reyPy-0005mg-8b
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:26:50 -0500
-Received: from mail-bn8nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2414::600]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ id 1reyRD-0006ps-L5
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:28:07 -0500
+Received: from mail-mw2nam12on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::601]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1reyPt-0006lg-Ql
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:26:50 -0500
+ id 1reyR7-0006us-Ho
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:28:07 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=J3CeFDQ2Dm0CQUQIEDUpoTokM/f99JNWcCt6CI2majIlxmaJTmS8gR2e1ED4vtAc4QOugk9ZBW5kWswzISNFnB13CvTMqofQnd+1wrbIYCllX0HJ7U99/u8aYDP7oesBWLsqnjryoEmXwFUW8V7M0CZ+WppYRew++YI+k9lRRy6xLMMY3jUY4G1oXSc/B8mo3kPF106NG0jEZklkIb6IM3td02fOwcQoKZkdtuHb9Jft53JU+L6ivXjgdku6W/ek6MjR5eaeohXudPLEokvx+edwxuuOi8VEgIOUrD585U/wtnSwa3q8OConpVnBDHnFEjS79oxFSuS+UoAMkaPHGQ==
+ b=kdN+r4MqXZN/qShnqlIB/pAS+4oQ0YX6kP87dft+ZewrTFxtHvAKg/nuAI+7FSLUplzheMzSzWyRGwhkoGa7SL/hZ9iXmimH6krdLICliFI0UuaiFIy5S+oZEBx0gxI6/RxKLJDrQszXxjmxfuQ4Ajjmri3jQtCLPEKTio7PjMeOD6Hth0ASHwPy4YldcBtIGbQ0rzSghZqqsYZuWsGQuvb8KoAwdzHsB+t5AnGa7wTilH++2S0xpWlL9+/vU+GPZ0qBso+klhT6STWKF7qz+cfSAqIC3YdEUE1y6DkPTCgM62sEezr/4m3i2OLdOqFRL8vhaz392clocAXm8dE8Eg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i0v9ZWwgICyvN7Eirxa+xvkc6A0w40oUd5VqL60d2tk=;
- b=d8jbR9ZL1iQ7iGfSbaAlvZWwABO/rG78May/RldpUwO7XcUjuI2YH5IGQm8nie4qRj+lWNhBj+phCKhtT5kHrNuaFki5s7xPn+2oKFD844CjOKTzEzgtPUCcCMlSBGYnPf43qUvFEYpzCQcnkvwSScwB26owxx8DVb5NhtwVR2epMKY0BCHAgMeJgCEtXhMcXyoN7fgK1bWgXHeqrwWCgaFXfRXteEs27A5RDveSe27xjQUI9epRxNGM+W5RKIw+Ol2vnDvoX+c0r0ZLK4/MOiYTUU6cNBM8fzf+ABRuNqXxG3ypRVQmSVtShLl8jZW0fNgP76HDS0+wzE8AdTH/og==
+ bh=34DbvKuJRWTvcP5FWe7R9pXSRs0pZjhRW8ik4cd+mmc=;
+ b=H319bY3Crlp+qk5Jo5vJuSV9wMwVNXQ0WDUR4DhJBMZatapKpc7a+mmdD02ou1IKilSj/46naRtpLrx2c20RmIBoVthEp7W6IjofIYMa8xIpe0ZIHhqKY1GG/AVLLMKvvPUtcF8OaRUBHTOabCKGQkEtkAsrVJ8jd33VUzOhqq4dCAvhZTKFkuUD1f/Rvok/a5L6YR7P3roZ4XtvBEgFs6iObLfqG02HFnvmP1R7hC6c9GqpMRnbKHweD1Ov7R97DcLn+f1fDysCe8dzl4yLKD5yAd/gzc1ZSAVphBKv3KgIB3r4UhbBF/CC1J8Z8/DTW0VU7sFiQeUdcd+TRxRstw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i0v9ZWwgICyvN7Eirxa+xvkc6A0w40oUd5VqL60d2tk=;
- b=1GjCW6SMfYfeiTGIf8Ix6qgs6J9ciCs9fiVNPWVW4QLprXKDk1MrR5etpsr8gD/4BiM9nUiPCGVe/zFW67SLnzoJXG/da0Yv1CzBSX6vDhPNQL1zXT1GxuNUU82CR493j5pte/U1iFJeBdnsHHs5OxNB3vYH9UiJ6w+XnAeHYRM=
-Received: from SN6PR04CA0106.namprd04.prod.outlook.com (2603:10b6:805:f2::47)
- by DM8PR12MB5496.namprd12.prod.outlook.com (2603:10b6:8:38::11) with
+ bh=34DbvKuJRWTvcP5FWe7R9pXSRs0pZjhRW8ik4cd+mmc=;
+ b=JvfWNokQJcpMQVX6BqID15wMMBKbtHTQCFV5x7B1Ti0CH981WQ0n94JKp93bROkq44FbxPvipP+ZqTnsZEqrPiqllgmLc4tfyO9bBzo0bTa7swjQX1wuYbdcbqGNlSqiZmlLh1TGQg3ZHVPK0DSur99FCplcTrdrxhG7a90rCdc=
+Received: from SN7P222CA0005.NAMP222.PROD.OUTLOOK.COM (2603:10b6:806:124::22)
+ by DS0PR12MB9039.namprd12.prod.outlook.com (2603:10b6:8:de::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Tue, 27 Feb
- 2024 14:26:39 +0000
-Received: from SA2PEPF00001507.namprd04.prod.outlook.com
- (2603:10b6:805:f2:cafe::57) by SN6PR04CA0106.outlook.office365.com
- (2603:10b6:805:f2::47) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.49 via Frontend
- Transport; Tue, 27 Feb 2024 14:26:39 +0000
+ 2024 14:27:55 +0000
+Received: from SA2PEPF0000150A.namprd04.prod.outlook.com
+ (2603:10b6:806:124:cafe::3c) by SN7P222CA0005.outlook.office365.com
+ (2603:10b6:806:124::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.50 via Frontend
+ Transport; Tue, 27 Feb 2024 14:27:52 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,18 +54,18 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SA2PEPF00001507.mail.protection.outlook.com (10.167.242.39) with Microsoft
+ SA2PEPF0000150A.mail.protection.outlook.com (10.167.242.42) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 14:26:39 +0000
+ 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 14:27:52 +0000
 Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
- 2024 08:26:38 -0600
+ 2024 08:27:52 -0600
 Received: from luc-work-vm (10.180.168.240) by SATLEXMB03.amd.com
  (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Tue, 27 Feb 2024 08:26:35 -0600
-Date: Tue, 27 Feb 2024 15:26:34 +0100
+ Transport; Tue, 27 Feb 2024 08:27:49 -0600
+Date: Tue, 27 Feb 2024 15:27:43 +0100
 From: Luc Michel <luc.michel@amd.com>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 CC: <qemu-devel@nongnu.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
@@ -74,49 +74,48 @@ CC: <qemu-devel@nongnu.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
  Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
  Alexandre Iooss <erdnaxe@crans.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v5 09/12] contrib/plugins/hotblocks: migrate to new
- per_vcpu API
-Message-ID: <Zd3xGrZetKoAbIn1@luc-work-vm>
+Subject: Re: [PATCH v5 06/12] tests/plugin/mem: migrate to new per_vcpu API
+Message-ID: <Zd3xXyGG39czU7AL@luc-work-vm>
 References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
- <20240226091446.479436-10-pierrick.bouvier@linaro.org>
- <Zd2_VHB6-G7srfSo@luc-work-vm>
- <e0688c8b-fac2-4b4f-8cda-a0c4f5ee2bf6@linaro.org>
+ <20240226091446.479436-7-pierrick.bouvier@linaro.org>
+ <Zd2sxjxegajy7ZbF@luc-work-vm>
+ <354a01af-c2e2-4f24-80a5-158547015805@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <e0688c8b-fac2-4b4f-8cda-a0c4f5ee2bf6@linaro.org>
+In-Reply-To: <354a01af-c2e2-4f24-80a5-158547015805@linaro.org>
 Received-SPF: None (SATLEXMB04.amd.com: luc.michel@amd.com does not designate
  permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00001507:EE_|DM8PR12MB5496:EE_
-X-MS-Office365-Filtering-Correlation-Id: b9a381e1-dc87-473b-458e-08dc37a01c67
+X-MS-TrafficTypeDiagnostic: SA2PEPF0000150A:EE_|DS0PR12MB9039:EE_
+X-MS-Office365-Filtering-Correlation-Id: d226597f-56e7-444f-bbc1-08dc37a04854
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: LVVM7Hfg8Hb5Zr0xawpU7HvQ/0GZqEnNGCKGec56YYfmRjp17sCrOkv7CJaeEEWEhrQWto0jp6HlE33EtELysAvFNccPMHVuoEKgnJ0lhW3LMuISQXEUihh9jqjXERrbxlrKE7TOzLsudyFSczagMpn1fojkCSDd54azJ5Ygg+ijoQMAL44zz22uT35ZrKZ2+QEMO1i5yr0dTIruRXGIoIRDn1SKAEXzQHkRSK0bTMLxqtnc0iBSOL05hGQVJ4yXzTppNGuYaWpH8X7OX0rb85Co6dMQMPOGjRe3Py1PdO9ezVCMsW/geOIE5z2Pprip6pMrl8aUtz/e/lZpiDZhbh57TjT2HrcYQgGDjNBJZx3HbHP13F13RYKEFsAEAlkcQmjaWDac4viLicmnTB2gBuF9ypEU9gXGMSRVSG4vsl8vI8zdBxqyJrJg5MwZ7US2tFSJAwyvVWUvfEw4TiuRXWn3Gr9oFgnH6jW0MrCnJgJDcp5JqY7EfN7p/3B/SXLLCziIxnszG4y0Cqy6jxZjtNQoheeuWXY/FHdJYEke2v1Wp2I7f7QLKoguObFF0DOjXCJ/H20p2iigM55eBkNE6wTHeUi++nJJPGuolk2nGZmfARnXOh3e+qjdgNnpBn3Cqm7PqmMFbyP6djpRDky9xwNDnqEG55YZ5ta+k65r3iSEDSmfw/U3DAc2Z8IWchLTBijugd51TaaIaLWE+LQP7B94VB3giVfX5rTTeRytFY699NCQO66yrjtVkVxpD0xd
+X-Microsoft-Antispam-Message-Info: RsnMyrf1zsuCsF5Nzy9SeXT83BdqKukf5Bn+idtjNbKfh9EWqtIOMySMvLsy2NRQtarQgH4rFckbcm//pxhRzZ0NYWUnmweYxsdhRREkHeeGXWcJqEWdYQLjwPhdUwQj39KScx/uvwaLJGnI1y74usm43H6v1srU0CFL90aJYkD3pAo9uBOUsG40UD6zPbhGRfAW3D3fgMTqipi93O27T259NEBMfuzhriPoeJOREPrTV+0u+hhmPaCIUq+E8GhdLWT51+nN/siIntz8fb3XWbKjW4WM5ID3+vaJVsJrVf7sB56PI3F64u1FIavosZS4izr5uH4GyZi6tR99PFjkecncs8wzFTaKeIcnC+BzN71Ql6XGbPyzsJn+0Viqbafc09hIjw8Sq1MElpHlswJsq3/8FZaTsfIV/NVTkj647waGxXjDHttAmZuG3Yi/lhDlDjRufZnaALt2cnq7LJlYeP4SeytUHVyUaAMEoj3Cc7kpVaeemblYcJDS8VSRt/JzIvQ4BdARjZOFfpVVTDx/a9ei++Rjh0Yj/H1k0S9E86IMsmp6bSi5c38Tj6b1NRyOMg1LRoWobkU1Woqy4o9CgYXDLHg21xytLgTmY9EoYI91X+xEIkadl/53YK520FrDnA2wGac5Ngzo4qs34ULTJy+ogzx9yEsBvq3/nZ2eBb95O95i4X44pEjF1A6b/GmDFXBhnfgM8H2JBbxDdqJg+6z9xUIgn2/CCsaZ2ZWYf3AWbjdV3F2n+4V+JfMsZS2Q
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230031)(82310400014)(36860700004); DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 14:26:39.0124 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: b9a381e1-dc87-473b-458e-08dc37a01c67
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 14:27:52.6950 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d226597f-56e7-444f-bbc1-08dc37a04854
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001507.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF0000150A.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR12MB5496
-Received-SPF: softfail client-ip=2a01:111:f403:2414::600;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9039
+Received-SPF: softfail client-ip=2a01:111:f403:200a::601;
  envelope-from=Luc.Michel@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,166 +132,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15:09 Tue 27 Feb     , Pierrick Bouvier wrote:
-> On 2/27/24 2:54 PM, Luc Michel wrote:
+On 14:56 Tue 27 Feb     , Pierrick Bouvier wrote:
+> Hi Luc,
+> 
+> On 2/27/24 1:35 PM, Luc Michel wrote:
 > > Hi Pierrick,
 > > 
 > > On 13:14 Mon 26 Feb     , Pierrick Bouvier wrote:
 > > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > > > ---
-> > >   contrib/plugins/hotblocks.c | 50 ++++++++++++++++++++++---------------
-> > >   1 file changed, 30 insertions(+), 20 deletions(-)
+> > >   tests/plugin/mem.c | 40 +++++++++++++++++++++++++---------------
+> > >   1 file changed, 25 insertions(+), 15 deletions(-)
 > > > 
-> > > diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-> > > index 4de1b134944..02bc5078bdd 100644
-> > > --- a/contrib/plugins/hotblocks.c
-> > > +++ b/contrib/plugins/hotblocks.c
-> > > @@ -34,8 +34,8 @@ static guint64 limit = 20;
-> > >    */
-> > >   typedef struct {
-> > >       uint64_t start_addr;
-> > > -    uint64_t exec_count;
-> > > -    int      trans_count;
-> > > +    struct qemu_plugin_scoreboard *exec_count;
-> > > +    int trans_count;
-> > >       unsigned long insns;
-> > >   } ExecCount;
+> > > diff --git a/tests/plugin/mem.c b/tests/plugin/mem.c
+> > > index 44e91065ba7..d4729f5e015 100644
+> > > --- a/tests/plugin/mem.c
+> > > +++ b/tests/plugin/mem.c
+> > > @@ -16,9 +16,14 @@
 > > > 
-> > > @@ -43,7 +43,17 @@ static gint cmp_exec_count(gconstpointer a, gconstpointer b)
-> > >   {
-> > >       ExecCount *ea = (ExecCount *) a;
-> > >       ExecCount *eb = (ExecCount *) b;
-> > > -    return ea->exec_count > eb->exec_count ? -1 : 1;
-> > > +    uint64_t count_a =
-> > > +        qemu_plugin_u64_sum(qemu_plugin_scoreboard_u64(ea->exec_count));
-> > > +    uint64_t count_b =
-> > > +        qemu_plugin_u64_sum(qemu_plugin_scoreboard_u64(eb->exec_count));
-> > > +    return count_a > count_b ? -1 : 1;
-> > > +}
+> > >   QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> > > 
+> > > -static uint64_t inline_mem_count;
+> > > -static uint64_t cb_mem_count;
+> > > -static uint64_t io_count;
+> > > +typedef struct {
+> > > +    uint64_t mem_count;
+> > > +    uint64_t io_count;
+> > > +} CPUCount;
 > > > +
-> > > +static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
-> > > +{
-> > > +    ExecCount *cnt = value;
-> > > +    qemu_plugin_scoreboard_free(cnt->exec_count);
+> > > +static struct qemu_plugin_scoreboard *counts;
+> > > +static qemu_plugin_u64 mem_count;
+> > > +static qemu_plugin_u64 io_count;
+> > 
+> > I see that you merged inline and callback counts into the same variable.
+> > 
+> > I wonder... For this test don't you want to keep a plain uint64_t for
+> > callback counts? I have the feeling that this test was made so one can
+> > make sure inline and callback counts match.
+> > 
+> 
+> Indeed, the new API guarantees thread safety (current inline
+> implementation was racy), so this plugin now gives the exact same result
+> whether you use inline ops or callbacks. In more, callback based
+> approach can be implemented without any lock, as we are counting per
+> vcpu. Thus, it's faster and safer.
+> 
+> Regarding the "testing" side, this series introduce a new plugin
+> tests/plugin/inline.c that allows to test all thoses cases in a single
+> plugin. Thus, it's not needed that other plugins offer a way to test this.
+
+I see! Then:
+
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+
+> 
+> Thanks for your review.
+> 
+> > Luc
+> > 
+> > >   static bool do_inline, do_callback;
+> > >   static bool do_haddr;
+> > >   static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
+> > > @@ -27,16 +32,16 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+> > >   {
+> > >       g_autoptr(GString) out = g_string_new("");
+> > > 
+> > > -    if (do_inline) {
+> > > -        g_string_printf(out, "inline mem accesses: %" PRIu64 "\n", inline_mem_count);
+> > > -    }
+> > > -    if (do_callback) {
+> > > -        g_string_append_printf(out, "callback mem accesses: %" PRIu64 "\n", cb_mem_count);
+> > > +    if (do_inline || do_callback) {
+> > > +        g_string_printf(out, "mem accesses: %" PRIu64 "\n",
+> > > +                        qemu_plugin_u64_sum(mem_count));
+> > >       }
+> > >       if (do_haddr) {
+> > > -        g_string_append_printf(out, "io accesses: %" PRIu64 "\n", io_count);
+> > > +        g_string_append_printf(out, "io accesses: %" PRIu64 "\n",
+> > > +                               qemu_plugin_u64_sum(io_count));
+> > >       }
+> > >       qemu_plugin_outs(out->str);
+> > > +    qemu_plugin_scoreboard_free(counts);
 > > >   }
 > > > 
-> > >   static void plugin_exit(qemu_plugin_id_t id, void *p)
-> > > @@ -52,7 +62,6 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-> > >       GList *counts, *it;
-> > >       int i;
-> > > 
-> > > -    g_mutex_lock(&lock);
-> > 
-> > I encountered cases before where the vCPUs continue executing while
-> > plugin_exit is called. This can happen e.g., when QEMU calls exit(3)
-> > from one CPU thread. Others will continue to run at the same time the
-> > atexit callbacks are called.
-> > 
-> > This also means that you can't really free the resources as you do at
-> > the end of plugin_exit.
-> > 
-> 
-> Interesting...
-> 
-> The current documentation [1] mentions it's the right place to free
-> resources, and from what I saw, existing plugins assume this too (see
-> contrib/plugins/cache.c for instance).
-> 
-> There is probably a bug related to the case you mention, and I'll try to
-> reproduce this, and see if we can have a proper fix.
-> 
-> I'm not sure that removing cleanup code from existing plugins is the
-> right thing to do at the moment, even though there is an existing issue
-> with some programs.
-
-Yes absolutely. The problem is on the QEMU side. FWIW I tried to fix one
-of those exit cases (semihosted exit syscall) some time ago:
-https://lore.kernel.org/qemu-devel/20220621125916.25257-1-lmichel@kalray.eu/
-
-IIRC Peter was not fundamentally against it. But then I was off for
-several months due to medical reasons.
-
-I can take some time to rebase it and address Peter's comments if there
-is interest to it.
-
-Luc
-
-> 
-> [1]
-> https://www.qemu.org/docs/master/devel/tcg-plugins.html#c.qemu_plugin_register_atexit_cb
-> 
-> > >       g_string_append_printf(report, "%d entries in the hash table\n",
-> > >                              g_hash_table_size(hotblocks));
-> > >       counts = g_hash_table_get_values(hotblocks);
-> > > @@ -63,16 +72,21 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-> > > 
-> > >           for (i = 0; i < limit && it->next; i++, it = it->next) {
-> > >               ExecCount *rec = (ExecCount *) it->data;
-> > > -            g_string_append_printf(report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-> > > -                                   rec->start_addr, rec->trans_count,
-> > > -                                   rec->insns, rec->exec_count);
-> > > +            g_string_append_printf(
-> > > +                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-> > > +                rec->start_addr, rec->trans_count,
-> > > +                rec->insns,
-> > > +                qemu_plugin_u64_sum(
-> > > +                    qemu_plugin_scoreboard_u64(rec->exec_count)));
+> > >   static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+> > > @@ -46,12 +51,12 @@ static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+> > >           struct qemu_plugin_hwaddr *hwaddr;
+> > >           hwaddr = qemu_plugin_get_hwaddr(meminfo, vaddr);
+> > >           if (qemu_plugin_hwaddr_is_io(hwaddr)) {
+> > > -            io_count++;
+> > > +            qemu_plugin_u64_add(io_count, cpu_index, 1);
+> > >           } else {
+> > > -            cb_mem_count++;
+> > > +            qemu_plugin_u64_add(mem_count, cpu_index, 1);
 > > >           }
-> > > 
-> > >           g_list_free(it);
-> > >       }
-> > > -    g_mutex_unlock(&lock);
-> > > 
-> > >       qemu_plugin_outs(report->str);
-> > > +
-> > > +    g_hash_table_foreach(hotblocks, exec_count_free, NULL);
-> > > +    g_hash_table_destroy(hotblocks);
-> > >   }
-> > > 
-> > >   static void plugin_init(void)
-> > > @@ -82,15 +96,9 @@ static void plugin_init(void)
-> > > 
-> > >   static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
-> > >   {
-> > > -    ExecCount *cnt;
-> > > -    uint64_t hash = (uint64_t) udata;
-> > > -
-> > > -    g_mutex_lock(&lock);
-> > > -    cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
-> > > -    /* should always succeed */
-> > > -    g_assert(cnt);
-> > > -    cnt->exec_count++;
-> > > -    g_mutex_unlock(&lock);
-> > > +    ExecCount *cnt = (ExecCount *)udata;
-> > > +    qemu_plugin_u64_add(qemu_plugin_scoreboard_u64(cnt->exec_count),
-> > > +                        cpu_index, 1);
-> > >   }
-> > > 
-> > >   /*
-> > > @@ -114,18 +122,20 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> > >           cnt->start_addr = pc;
-> > >           cnt->trans_count = 1;
-> > >           cnt->insns = insns;
-> > > +        cnt->exec_count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
-> > >           g_hash_table_insert(hotblocks, (gpointer) hash, (gpointer) cnt);
-> > >       }
-> > > 
-> > >       g_mutex_unlock(&lock);
-> > > 
-> > >       if (do_inline) {
-> > > -        qemu_plugin_register_vcpu_tb_exec_inline(tb, QEMU_PLUGIN_INLINE_ADD_U64,
-> > > -                                                 &cnt->exec_count, 1);
-> > > +        qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-> > > +            tb, QEMU_PLUGIN_INLINE_ADD_U64,
-> > > +            qemu_plugin_scoreboard_u64(cnt->exec_count), 1);
 > > >       } else {
-> > >           qemu_plugin_register_vcpu_tb_exec_cb(tb, vcpu_tb_exec,
-> > >                                                QEMU_PLUGIN_CB_NO_REGS,
-> > > -                                             (void *)hash);
-> > > +                                             (void *)cnt);
+> > > -        cb_mem_count++;
+> > > +        qemu_plugin_u64_add(mem_count, cpu_index, 1);
 > > >       }
 > > >   }
 > > > 
+> > > @@ -64,9 +69,10 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> > >           struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> > > 
+> > >           if (do_inline) {
+> > > -            qemu_plugin_register_vcpu_mem_inline(insn, rw,
+> > > -                                                 QEMU_PLUGIN_INLINE_ADD_U64,
+> > > -                                                 &inline_mem_count, 1);
+> > > +            qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+> > > +                insn, rw,
+> > > +                QEMU_PLUGIN_INLINE_ADD_U64,
+> > > +                mem_count, 1);
+> > >           }
+> > >           if (do_callback) {
+> > >               qemu_plugin_register_vcpu_mem_cb(insn, vcpu_mem,
+> > > @@ -117,6 +123,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> > >           }
+> > >       }
+> > > 
+> > > +    counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
+> > > +    mem_count = qemu_plugin_scoreboard_u64_in_struct(
+> > > +        counts, CPUCount, mem_count);
+> > > +    io_count = qemu_plugin_scoreboard_u64_in_struct(counts, CPUCount, io_count);
+> > >       qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> > >       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> > >       return 0;
 > > > --
 > > > 2.43.0
 > > > 
