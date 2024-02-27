@@ -4,74 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2EAC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:11:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD97AC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reuQb-00082M-UT; Tue, 27 Feb 2024 05:11:14 -0500
+	id 1reuV6-0001wh-CQ; Tue, 27 Feb 2024 05:15:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1reuQM-0007rW-AM
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:10:59 -0500
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1reuUo-0001md-HL
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:15:35 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1reuQB-0000kw-7I
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:10:54 -0500
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5654f700705so5388056a12.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 02:10:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1reuUi-0002Mq-AL
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:15:32 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1d93edfa76dso35040605ad.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 02:15:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709028645; x=1709633445; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mTlkIIB59WxwCFh0CWBReiEBOBdxEY75ZbMexqjTFVI=;
- b=DGDhM05rhsFd3E8VyiGYippTy8zzMLgohD1yjRm4Sdy6egC1r+3fF9M754D2IjylSg
- YxmkOqiLoEuYEfZ7Wy4Ngegd3OT1S3aKlhEL1K3HsfILgOxbE2M2U5YZt8dS9RSjeJax
- B57/JkkVnEHzgia1BRb9W/ysSrCqalWahnQ2X8dfTd5faLwAH72q78UGLwFZnpZdVvQ4
- Fc9b783a59P1PvDcbLVa5aQPATkTxSAzJtvgSK3RB7Kq+8eEmbAHZ8JX9WwNi2aZ1lu1
- DLB88VGFpCNseltG80YLAwuq+OeH6RZj0rjDCBwKZfYJiigHzNp0U+1uF0qOg2mMX7WH
- abKw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709028925; x=1709633725;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Fx9hfe20Iig0ZK24L+ZonhivY18ZcsqsCbKd+RliBUI=;
+ b=jQRo+vGvjda3XtMrxXp+Ovr5+wUBe/Iw3lcJyaDqSHcUmcFKEBDdUOqpu6hKTZwyZN
+ TVHfty1DnIeJfLGyKVoBV4UCM+uWPKa3eDLBRBfPZpAQ2GFikUGXf0Zxerxc4CU6dgE5
+ P11NG7vK+LbbM60RIF292HPOxViVRWI/OuwJiLNkiNo6fSo9WJUei1LXR3Fg5qoB8oy/
+ DA/2Ib5LM3xWFXoDNWuYLrRAhcOt9rDIRpoCeAo26T8ugciFs3h7yC1JpA7W+72lapuM
+ 7Vi2suO0PA51p8bHZUeMoEsvJBUCsUtWCpM8FNrA6ML7z/a6qYH4sVFhVWmPGXpYaw2r
+ J0ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709028645; x=1709633445;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mTlkIIB59WxwCFh0CWBReiEBOBdxEY75ZbMexqjTFVI=;
- b=vQB47H6wbDy567o2MWnvGIEJY/iQNyF8JROJps2PUpJ3tciLoXXn5y48rAlzaxPTQb
- MFRSOVLE1/DvMUPksc81rZG21cmS2MxNtc0ldyjcB2i2cyj8VwTlPlR9tqfJt2yMvhP5
- BEnyUtmfCr2biSMrOxngUuhTKCdeRwDGQBxT2ckrp+TVsaukxqGlvekZtHYf4h3xCuJa
- gNuZVyX031DhPRLBMYMwP97j9YWb1pbvBsC+Vaxag/yvfDzayRDhpY7c4fKHopqdNFUC
- RQUc/ByEvj6yTrruedFRzFyru/5OXNtJSGK/zQIV1fUKd+7/qL6vPhqAjyLjJg+sVFuS
- OSYw==
-X-Gm-Message-State: AOJu0YxCPi8KsPxH8owITDyIEpiWdZ2sINEB/YGDWQ3lMfUVMJCYF6WX
- maBiCMwlh79sHfw1E0F1v0FfwFbHp9wVkUUxFDZCdy2AAX2mL3e1X/bJ1QqivqKPcQMC21ASqh6
- 3vUdPrZKGW2Ip8SxmRuKRAwSv9t+KFYCy903F2Q==
-X-Google-Smtp-Source: AGHT+IHDyDrGYUyu02ukXW8eNm7yJInKoaaslad3Vqt0dAQNpdtqGQfLfo8FxWGjgZNUSbMD42d0O79SeMXcfPh9/+A=
-X-Received: by 2002:aa7:c706:0:b0:566:2f24:b065 with SMTP id
- i6-20020aa7c706000000b005662f24b065mr1250628edq.34.1709028645451; Tue, 27 Feb
- 2024 02:10:45 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709028925; x=1709633725;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fx9hfe20Iig0ZK24L+ZonhivY18ZcsqsCbKd+RliBUI=;
+ b=SEgvMVLDEznjVriOtRBngdUnrNwGy1jL+IB4VVIPPkPXN3LytQH5OYxepNZMQarzP6
+ UVE09zFC9ESFTSXSLcsVGE76aIBKdKEYU6iUSnwsFWjMgI/hVut3JTnd/UffHE0pbj8B
+ n8RGvF4TNA4+tqoipjrF/Bgcem/s8DDnya4InJpdOiAO2+zCcEk8tJO+XeF/mYfn8S7s
+ Zc2Pu+s/G0EvE8qIMkCznHpfr1omipn07J/pjYJS/o12iIC+5OuEtch2UIMIAMwFuIv6
+ iKeNluENUulc8+4yZF35XYpWuLQFRuqwWn6HkUYQ+AQ5JNv+CrcwesSLAFGtwtw9ddzS
+ 64yg==
+X-Gm-Message-State: AOJu0YypNo1qaYZ5NtsBRuW5fGFJ0LT+ecoiGBei94+l2KBLP/NdImBf
+ LcAOA1TgSJyBS4nrUwbbEej2e+6kZYw4wMzEM3Ms/pmfQAJl8n1kP09bxrGjLA0=
+X-Google-Smtp-Source: AGHT+IGGyYlErA9kk8nMdcFcEbGt4QH298QVBJTxJGbBkIKqaaIPTH8dfJ9RDIhR8DJM5hC3k8xACg==
+X-Received: by 2002:a17:902:d587:b0:1dc:ae92:7e9 with SMTP id
+ k7-20020a170902d58700b001dcae9207e9mr4236692plh.62.1709028924773; 
+ Tue, 27 Feb 2024 02:15:24 -0800 (PST)
+Received: from [157.82.203.206] ([157.82.203.206])
+ by smtp.gmail.com with ESMTPSA id
+ kn15-20020a170903078f00b001dbb0348733sm1193150plb.67.2024.02.27.02.15.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 02:15:24 -0800 (PST)
+Message-ID: <485e6093-54e9-4ce4-ae01-c44525b202ef@daynix.com>
+Date: Tue, 27 Feb 2024 19:15:15 +0900
 MIME-Version: 1.0
-References: <20240226160003.903191-1-kraxel@redhat.com>
-In-Reply-To: <20240226160003.903191-1-kraxel@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 10:10:34 +0000
-Message-ID: <CAFEAcA-yzvUDoS_GVAO3JxYr+_GdXXE42LsvfQLikXoS8wOncQ@mail.gmail.com>
-Subject: Re: [PULL 0/2] Edk2 stable202402 20240226 patches
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 21/27] plugins: add an API to read registers
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-riscv@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
+ Song Gao <gaosong@loongson.cn>, Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
+ <jsnow@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-s390x@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Yanan Wang <wangyanan55@huawei.com>, Brian Cain <bcain@quicinc.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>, Laurent Vivier <laurent@vivier.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240226165646.425600-1-alex.bennee@linaro.org>
+ <20240226165646.425600-22-alex.bennee@linaro.org>
+ <b7aac53e-cde5-4596-b0fc-d39f52d4ceb8@daynix.com>
+ <878r36dxsv.fsf@draig.linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <878r36dxsv.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SCC_BODY_URI_ONLY=2.699, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,33 +119,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 at 16:01, Gerd Hoffmann <kraxel@redhat.com> wrote:
->
-> The following changes since commit 4a4efae44f19528589204581e9e2fab69c5d39aa:
->
->   Merge tag 'pull-hex-20240121' of https://github.com/quic/qemu into staging (2024-01-23 13:40:45 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/kraxel/qemu.git tags/edk2-stable202402-20240226-pull-request
->
-> for you to fetch changes up to 658178c3d4e95b3f4106e25ec5a209356e339032:
->
->   update edk2 binaries to edk2-stable202402 (2024-02-26 10:23:25 +0100)
->
-> ----------------------------------------------------------------
-> firmware: update to edk2-stable202402
->
-> Update edk2 to the latest release tagged end of last week.
->
-> Cc stable this time because we should move away from the
-> git snapshot update done in January.
-
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
+On 2024/02/27 19:08, Alex Bennée wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+> 
+>> On 2024/02/27 1:56, Alex Bennée wrote:
+>>> We can only request a list of registers once the vCPU has been
+>>> initialised so the user needs to use either call the get function on
+>>> vCPU initialisation or during the translation phase.
+>>> We don't expose the reg number to the plugin instead hiding it
+>>> behind
+>>> an opaque handle. For now this is just the gdb_regnum encapsulated in
+>>> an anonymous GPOINTER but in future as we add more state for plugins
+>>> to track we can expand it.
+>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
+>>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
+>>> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
+>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Hi,
+>>
+>> Mostly looks good. I have a few trivial comments so please have a look
+>> at them.
+> 
+> Done
+> 
+> <snip>
+>>> +        g_array_append_val(find_data, desc);
+>>> +    }
+>>> +
+>>> +    return find_data;
+>>> +}
+>>> +
+>>> +GArray *qemu_plugin_get_registers(void)
+>>> +{
+>>> +    g_assert(current_cpu);
+>>> +
+>>> +    g_autoptr(GArray) regs = gdb_get_register_list(current_cpu);
+>>> +    return regs->len ? create_register_handles(current_cpu, regs) : NULL;
+>>
+>> Why do you need regs->len check?
+> 
+> Not all guests expose register to gdb so we need to catch that:
+> 
+>    TEST    catch-syscalls-with-libinsn.so on alpha
+> **
+> ERROR:../../plugins/api.c:459:qemu_plugin_get_registers: assertion failed: (regs->len)
+> Aborted
+Certainly regs->len can be 0, but why do you need to return NULL in that 
+case? Can't qemu_plugin_get_registers() return an empty array just as 
+gdb_get_register_list() does?
 
