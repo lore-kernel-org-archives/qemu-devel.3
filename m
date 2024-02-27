@@ -4,45 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDC5C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:22:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB18C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:25:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf3xJ-0004I6-UE; Tue, 27 Feb 2024 15:21:39 -0500
+	id 1rf40O-0005W8-ES; Tue, 27 Feb 2024 15:24:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rf3xG-0004HF-3j; Tue, 27 Feb 2024 15:21:34 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1rf40J-0005VI-S3; Tue, 27 Feb 2024 15:24:44 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rf3xC-0001Iw-In; Tue, 27 Feb 2024 15:21:32 -0500
+ id 1rf40H-0001e8-Iy; Tue, 27 Feb 2024 15:24:43 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 06C034E6005;
- Tue, 27 Feb 2024 21:21:23 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 888A44E6013;
+ Tue, 27 Feb 2024 21:24:36 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 1WK-OEfFdpKw; Tue, 27 Feb 2024 21:21:21 +0100 (CET)
+ with ESMTP id PVnpuaoOHZfl; Tue, 27 Feb 2024 21:24:34 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0F47A4E6012; Tue, 27 Feb 2024 21:21:21 +0100 (CET)
-Message-Id: <e045e3f22df2c441aab7f1f0f555069c083c3f01.1709045654.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1709045654.git.balaton@eik.bme.hu>
-References: <cover.1709045654.git.balaton@eik.bme.hu>
+ id 9035A4E6012; Tue, 27 Feb 2024 21:24:34 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8E3A77456FE;
+ Tue, 27 Feb 2024 21:24:34 +0100 (CET)
+Date: Tue, 27 Feb 2024 21:24:34 +0100 (CET)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 10/10] target/ppc: Remove interrupt handler wrapper
- functions
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
+To: Nicholas Piggin <npiggin@gmail.com>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, 
  Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Date: Tue, 27 Feb 2024 21:21:21 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Subject: Re: [PATCH v7 02/10] target/ppc: Readability improvements in exception
+ handlers
+In-Reply-To: <ab46d0f9-19cc-bb34-2a8e-0c4d3d8592ea@eik.bme.hu>
+Message-ID: <7ad2aec9-1631-6350-869f-f5f97ae97096@eik.bme.hu>
+References: <cover.1709045654.git.balaton@eik.bme.hu>
+ <a06f6259d7a37aa88145fb13e4bce153ff763f86.1709045654.git.balaton@eik.bme.hu>
+ <CAFEAcA_6R2wLaLOoOBQ0-Z_QydAEgxANmNPdKaAF=iiroFEhmA@mail.gmail.com>
+ <ab46d0f9-19cc-bb34-2a8e-0c4d3d8592ea@eik.bme.hu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -63,121 +68,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These wrappers call out to handle POWER7 and newer in separate
-functions but reduce to the generic case when TARGET_PPC64 is not
-defined. It is easy enough to include the switch in the beginning of
-the generic functions to branch out to the specific functions and get
-rid of these wrappers. This avoids one indirection and entirely
-compiles out the switch without TARGET_PPC64.
+On Tue, 27 Feb 2024, BALATON Zoltan wrote:
+> On Tue, 27 Feb 2024, Peter Maydell wrote:
+>> On Tue, 27 Feb 2024 at 15:10, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>> 
+>>> Improve readability by shortening some long comments, removing
+>>> comments that state the obvious and dropping some empty lines so they
+>>> don't distract when reading the code.
+>>> 
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> Acked-by: Nicholas Piggin <npiggin@gmail.com>
+>> 
+>> 
+>>> -    /*
+>>> -     * new interrupt handler msr preserves existing ME unless
+>>> -     * explicitly overridden.
+>>> -     */
+>>> +    /* new interrupt handler msr preserves ME unless explicitly overriden 
+>>> */
+>> 
+>> Minor typo introduced here: should be "overridden".
+>>
+>>>      new_msr = env->msr & (((target_ulong)1 << MSR_ME));
+>> 
+>>> @@ -575,16 +558,10 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int 
+>>> excp)
+>>>      /* new srr1 value excluding must-be-zero bits */
+>>>      msr = env->msr & ~0x783f0000ULL;
+>>> 
+>>> -    /*
+>>> -     * new interrupt handler msr preserves existing ME unless
+>>> -     * explicitly overridden
+>>> -     */
+>>> +    /* new interrupt handler msr preserves ME unless explicitly overriden 
+>>> */
+>> 
+>> Ditto, and similarly for other instances later in the patch.
+>
+> Huh, sorry, don't know how I've lost that letter. It also seems that the last 
+> patch gone missing from the series somehow so if it does not turn up, I can 
+> resend it with these fixed.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- target/ppc/excp_helper.c | 67 +++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 39 deletions(-)
+As the last patch did not turn up I've resent just that to complete this 
+v7 series. Do I need to send v8 or if these typos are the only change 
+needed maybe they could be fixed up during merge.
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index f5e1e641ac..efb8082348 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1928,8 +1928,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env)
- }
- #endif /* TARGET_PPC64 */
- 
--static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
-+static int ppc_next_unmasked_interrupt(CPUPPCState *env)
- {
-+#ifdef TARGET_PPC64
-+    switch (env->excp_model) {
-+    case POWERPC_EXCP_POWER7:
-+        return p7_next_unmasked_interrupt(env);
-+    case POWERPC_EXCP_POWER8:
-+        return p8_next_unmasked_interrupt(env);
-+    case POWERPC_EXCP_POWER9:
-+    case POWERPC_EXCP_POWER10:
-+        return p9_next_unmasked_interrupt(env);
-+    default:
-+        break;
-+    }
-+#endif
-     bool async_deliver;
- 
-     /* External reset */
-@@ -2040,23 +2053,6 @@ static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
-     return 0;
- }
- 
--static int ppc_next_unmasked_interrupt(CPUPPCState *env)
--{
--    switch (env->excp_model) {
--#ifdef TARGET_PPC64
--    case POWERPC_EXCP_POWER7:
--        return p7_next_unmasked_interrupt(env);
--    case POWERPC_EXCP_POWER8:
--        return p8_next_unmasked_interrupt(env);
--    case POWERPC_EXCP_POWER9:
--    case POWERPC_EXCP_POWER10:
--        return p9_next_unmasked_interrupt(env);
--#endif
--    default:
--        return ppc_next_unmasked_interrupt_generic(env);
--    }
--}
--
- /*
-  * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to be
-  * delivered and clears CPU_INTERRUPT_HARD otherwise.
-@@ -2286,8 +2282,21 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
- }
- #endif /* TARGET_PPC64 */
- 
--static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-+static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
- {
-+#ifdef TARGET_PPC64
-+    switch (env->excp_model) {
-+    case POWERPC_EXCP_POWER7:
-+        return p7_deliver_interrupt(env, interrupt);
-+    case POWERPC_EXCP_POWER8:
-+        return p8_deliver_interrupt(env, interrupt);
-+    case POWERPC_EXCP_POWER9:
-+    case POWERPC_EXCP_POWER10:
-+        return p9_deliver_interrupt(env, interrupt);
-+    default:
-+        break;
-+    }
-+#endif
-     PowerPCCPU *cpu = env_archcpu(env);
- 
-     switch (interrupt) {
-@@ -2390,26 +2399,6 @@ static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-     }
- }
- 
--static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
--{
--    switch (env->excp_model) {
--#ifdef TARGET_PPC64
--    case POWERPC_EXCP_POWER7:
--        p7_deliver_interrupt(env, interrupt);
--        break;
--    case POWERPC_EXCP_POWER8:
--        p8_deliver_interrupt(env, interrupt);
--        break;
--    case POWERPC_EXCP_POWER9:
--    case POWERPC_EXCP_POWER10:
--        p9_deliver_interrupt(env, interrupt);
--        break;
--#endif
--    default:
--        ppc_deliver_interrupt_generic(env, interrupt);
--    }
--}
--
- void ppc_cpu_do_system_reset(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
--- 
-2.30.9
-
+Regards,
+BALATON Zoltan
 
