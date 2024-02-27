@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52005C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8295CC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf62n-00052b-Mh; Tue, 27 Feb 2024 17:35:25 -0500
+	id 1rf62u-00054u-H1; Tue, 27 Feb 2024 17:35:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikram.garhwal@amd.com>)
- id 1rf62m-00052B-IC
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:35:24 -0500
-Received: from mail-dm6nam11on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2415::601]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ id 1rf62s-00054V-OS; Tue, 27 Feb 2024 17:35:30 -0500
+Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::600]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikram.garhwal@amd.com>)
- id 1rf62k-0002ef-Rk
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:35:24 -0500
+ id 1rf62n-0002gE-CD; Tue, 27 Feb 2024 17:35:30 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=n+wvoNjvHGV6H4AXYaKQcu5+HXvA/qX04A7HgEiw8Ee1G3W1xTPqU9uGvNJAjgdBwrMwhgC0v1cSHNelFOmlQgVrK2V8J//HnMQkb9ZLHUKnfqVlEA+r39CaCTEIfJdPs0G+1oDpNHlyzLIOzSQcA7QgdI0dNgfQzVe/CIdRPoKiJXZKAPLBYPoTucJ0YwRqjbBeYku4YfTLVs4vxFw85ybrYsOr/GrelOVm70hu05RdBteKot7Ys6QJG2y4KSF7jIFRTwYi/391JRhn8+exQYDf0PGv/ohrHKqqgawWPlWeMtqm+6Yp+h7+g6ggJlhvz7DbrLdkSaTZoYG/FRZ1Fw==
+ b=Mm6ZV9cotxjSIyNFs42BshwspzJWiBFMna/EMEYUKSVfKil1kdn8ODPi9u3HNLn45wPEdISvITgJ0X/T1uk8ROcdi6gQYn9xA1YprD2nJQKghz2wzBPIN5yTGxLgvApFxo6XfaZsEMgcDjX6JjoL1lOCpzgdmziIMfhUyRrvVJyr6qtLnenlxf2GSisz6WHd0QsH1nqHcSgRsYLuAQC485YFwcqyOTOT0nN5TwciAstSM7PHumdO9egZewSKXh7G04pkXhq8J4abHMKTvSKPC1bGRdhOEeRzGc7zMboPoGFnLR9R2PaKzfqaKvodg72tHceMvzknqh9e1WIkogVfTg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5OZlucp+PoJdXp0H7/yZMTJ3c3snBOa8bo8Wnac6SL0=;
- b=aSZg+KfQynp/yG5GSBkWOE3vSOROC10yCZ/0LKp/HhoiZvSe3s7b8wSk7onKSGISECBVXBW+YFhTANBLWFVmKyDW+dqUd2Uxo3ZIPohC9NVUUQHlBq1PNYhJHDL4+ImcgLnv+Y5CbMtmd9L3zC0qmj4Umqw7de8Ee5oLYDrgibEWzSDTbi9sjMFt0uKd+qh52gSuDpogCvMRL/XMEiaP7UzyTGHjuCIg/1OrkKMXgn6Z0hzOtEKBHKAmK2N1D7m+CC4RuiK9aABTTyRIVYBYRMF6imTKM08RCDIozrSzoqKhx1cPWkpV51jlrX7szVLHZpshuNHQywKxvApbR0D3fw==
+ bh=MoLg09T18TlnO8EveohQaV184sMpVMY3kcXDRqWQz1g=;
+ b=mdDc9eAYsCijFi77u4diG71A0IO/hQlCSzmjcIGq8O0dq4TZpcpuXB857GC8wscS3d8Tgx9wHUHr5syQAWuchSwnbXabWW/729tRJNB4Vh47QfZ/jWeS7iTu9fCgZSgMYYLd1m81yPJ1H9jrTDIpWu4DjMzMRaX+S0MrXzXH36xAHQ1eRvL3xOk8x9R+3vtjMEXGMWBbp6S+tqQomwfvK/m2vc6VtiMnJV1ONdf+R+wgpGSHe/GROl2EmkCrgHHpzUa1k704dnAkg4ZnrLx4oeA+3jd9bR/6/6EVY+Ra30NWX0Q/mFU1M7xlO9Wg/j9sFOTUQe0SrnsZiH3TNngPyQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5OZlucp+PoJdXp0H7/yZMTJ3c3snBOa8bo8Wnac6SL0=;
- b=0k4dvU1NkQs9St7CQukJZRnyMZHs+mx8khDu3pNBnV1RVyNznnuwMmS/1J50ds7aa+/xzEDUcRrBbHno7F3DjOmVETfUpj9W5hxHO+8pa14et1iuSq8Q/d9pMvUFPi/Wd1gekkhYyU5+vx9bQt1XRDxKFWqHbNNRAnjztShBpzE=
-Received: from DS7PR05CA0050.namprd05.prod.outlook.com (2603:10b6:8:2f::9) by
- DM4PR12MB5085.namprd12.prod.outlook.com (2603:10b6:5:388::11) with
+ bh=MoLg09T18TlnO8EveohQaV184sMpVMY3kcXDRqWQz1g=;
+ b=OnTSj5559Gb6MMO5/UtKyEmHTmNlCrJ//qoiHZ+ZusfSiEzO2GTiksbnkH/vHGA8YwJDxnfmTPFWgZXdI3KfgISYR4o3KjrYXwh9uAFaWl+aXqDgY+Eq0kzL0k+4IeyId0opqBilVy2A42avm3U3zTNqOkArDtxGvhjo7ZRJND4=
+Received: from DM5PR08CA0035.namprd08.prod.outlook.com (2603:10b6:4:60::24) by
+ MW3PR12MB4460.namprd12.prod.outlook.com (2603:10b6:303:2f::7) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7316.36; Tue, 27 Feb 2024 22:35:19 +0000
-Received: from CY4PEPF0000FCC3.namprd03.prod.outlook.com
- (2603:10b6:8:2f:cafe::7f) by DS7PR05CA0050.outlook.office365.com
- (2603:10b6:8:2f::9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.26 via Frontend
- Transport; Tue, 27 Feb 2024 22:35:19 +0000
+ 15.20.7316.36; Tue, 27 Feb 2024 22:35:20 +0000
+Received: from CY4PEPF0000FCBF.namprd03.prod.outlook.com
+ (2603:10b6:4:60:cafe::d9) by DM5PR08CA0035.outlook.office365.com
+ (2603:10b6:4:60::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.50 via Frontend
+ Transport; Tue, 27 Feb 2024 22:35:20 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,25 +52,24 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000FCC3.mail.protection.outlook.com (10.167.242.105) with Microsoft
+ CY4PEPF0000FCBF.mail.protection.outlook.com (10.167.242.101) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 22:35:19 +0000
+ 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 22:35:20 +0000
 Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
- 2024 16:35:09 -0600
+ 2024 16:35:12 -0600
 Received: from xsjfnuv50.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
- Transport; Tue, 27 Feb 2024 16:35:09 -0600
+ Transport; Tue, 27 Feb 2024 16:35:12 -0600
 From: Vikram Garhwal <vikram.garhwal@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <sstabellini@kernel.org>, <vikram.garhwal@amd.com>, <jgross@suse.com>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: [QEMU][PATCH v3 4/7] xen: let xen_ram_addr_from_mapcache() return -1
- in case of not found entry
-Date: Tue, 27 Feb 2024 14:34:58 -0800
-Message-ID: <20240227223501.28475-5-vikram.garhwal@amd.com>
+ Peter Maydell <peter.maydell@linaro.org>, "open list:ARM TCG CPUs"
+ <qemu-arm@nongnu.org>
+Subject: [QEMU][PATCH v3 7/7] hw: arm: Add grant mapping.
+Date: Tue, 27 Feb 2024 14:35:01 -0800
+Message-ID: <20240227223501.28475-8-vikram.garhwal@amd.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240227223501.28475-1-vikram.garhwal@amd.com>
 References: <20240227223501.28475-1-vikram.garhwal@amd.com>
@@ -82,28 +79,28 @@ Received-SPF: None (SATLEXMB04.amd.com: vikram.garhwal@amd.com does not
  designate permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCC3:EE_|DM4PR12MB5085:EE_
-X-MS-Office365-Filtering-Correlation-Id: f800fa24-9cb5-4900-4018-08dc37e460c2
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCBF:EE_|MW3PR12MB4460:EE_
+X-MS-Office365-Filtering-Correlation-Id: c59e752d-36e0-470a-11f2-08dc37e4612e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ttUogOJd0iTIkqEQCd/nzbRBJYmOmeXxMNF3sPtwOTMiZB2RJ1iFEO5+Y4HxhBup+iPRbYAveHsIyKzCtkzLEuq8CReCndcXSrYV6xXSoNReTT01XTwawYlGO0/HEFwp6YTpMI7qFUuZO87nVn95QlBH5KwYehdA6b4Y4TH7oU0efT0gu1A8YyBj5PhM4MG3+pVjqYDouXJj+vzsOUwIt4R8fWyy++0QyEzDn8WkYDB4MQx4O+Jcz4cPsjuXwF1vbN1n8x0Kp++ULGQEoy+e5upFQxfLiuDJMKTAFyGbwnLbp5BbJh/gujrOFqLDTKRrk4Z9TCCp/SA6mArFcP4w9kzDiRLyW0Q2KXaOAmvyzbiasAkzdvHH64T2P4oNPXAG+D2eICaTUtji5o7b1YuaO35oBkFWL/Jeoiw9a2+jaYywe7houWkbOaf8XTPD+bTsreb35Go/mcAPpOGMc13uK7XeTx7TGNHanDj8JO656LmMFZNoQ4cMrqKqFSh4hw/YKigI2kJjmKqQcj5HMOdTacBbBI/Hw3CId9CVO0tn2/5smT1AXjnzrZQa/e4DxSAiPSI62Xr2bHQJYAsmw3ZeVwr4RZ8T3GW7VNAOPnZe/VMS8Ae9I7roiPU9Z+EWk4PEwpSOEOoe81ZQ0hrd9EIWiEV51e/h8PFG4LuSdE+T7q9p1hGABHhfaoWSv2MBrr7CTDFdjE6OyVPhzC74G3htX8EUIbE2pOD1i+Gzy75p0tNLQTLyMTd7540SqUw8MlaK
+X-Microsoft-Antispam-Message-Info: g8gANANz62pCWrc26Mn2NOOQjXOmBET7yPfr7UP7wQ7Uc/lHpFdT0+wWAM6A82wTDBrx6z8dB0mil4YnqSuNDgSOXTopsaVLcJYvx12jA1zo4NtIzII3VzU4knccRqOlpQvYV5AhDFBbVPxKwNSkd8F8rPrAwaT2agIHvR93WfP5wm1oB4N71QmeGNPETgdrJsGdYwoHgFT2YQl7E46J1X1hUBwvKG0OnwWSab1SzyeyHu6jcSQBGA1ribKdA5rrEiqHkyP8YfEVOgrAdlmUb106TFYgzP+TQU+oGdD0PeKSPjXIctlTYjXzWPL5fM4eQajsgXAWifhSoIVghC8I7dqX/44UnFAptpE6PXg5BS2jar0pVo2xrKD2kUQYZV1BnGMWpUxEvDTnoBF0hLbzSSGv8Pp97ntiOVg8b5o2C8LxJ/fbv3ucXYpagpn2V9Tnqk5gR8FXy4f6B2nDf1IsBPXeEBHtse//GCle84jcGIxyrQm4HRZDoHYgvOHakOfNuTpU8z9g8OzsIs4CTIy+G3u1hnzPp0kcl+EHoO5OOo1+IZmIXptc50iXV3tlzLakZSxLiZF2or/La8c2W5ERnHfRUpMYboKpESACCaGBC6xGsTr40BdZTKYTtEmYyfgmDzQ3w2tEpCZaxmotN6cvy/z2oINglvLx5f3b1z8umJj1To1FAJsn8eJfzbychkhcaOe34ZLmfItsF1NPURAZV15pXo9PVu6AtmwnQclZalNWFLZ+4cd9631Ra9+8MZ4P
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(82310400014)(36860700004); DIR:OUT; SFP:1101; 
+ SFS:(13230031)(36860700004)(82310400014); DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 22:35:19.4088 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f800fa24-9cb5-4900-4018-08dc37e460c2
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 22:35:20.1310 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c59e752d-36e0-470a-11f2-08dc37e4612e
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCC3.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCBF.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5085
-Received-SPF: softfail client-ip=2a01:111:f403:2415::601;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4460
+Received-SPF: softfail client-ip=2a01:111:f403:2418::600;
  envelope-from=vikram.garhwal@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -126,47 +123,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Juergen Gross <jgross@suse.com>
+Enable grant ram mapping support for Xenpvh machine on ARM.
 
-Today xen_ram_addr_from_mapcache() will either abort() or return 0 in
-case it can't find a matching entry for a pointer value. Both cases
-are bad, so change that to return an invalid address instead.
-
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Vikram Garhwal <vikram.garhwal@amd.com>
 Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- hw/xen/xen-mapcache.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ hw/arm/xen_arm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index dfc412d138..179b7e95b2 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -396,13 +396,8 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-         }
+diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+index 32776d94df..b5993ef2a6 100644
+--- a/hw/arm/xen_arm.c
++++ b/hw/arm/xen_arm.c
+@@ -125,6 +125,9 @@ static void xen_init_ram(MachineState *machine)
+                                  GUEST_RAM1_BASE, ram_size[1]);
+         memory_region_add_subregion(sysmem, GUEST_RAM1_BASE, &ram_hi);
      }
-     if (!found) {
--        trace_xen_ram_addr_from_mapcache_not_found(ptr);
--        QTAILQ_FOREACH(reventry, &mapcache->locked_entries, next) {
--            trace_xen_ram_addr_from_mapcache_found(reventry->paddr_index,
--                                                   reventry->vaddr_req);
--        }
--        abort();
--        return 0;
-+        mapcache_unlock();
-+        return RAM_ADDR_INVALID;
-     }
++
++    DPRINTF("init grant ram mapping for XEN\n");
++    ram_grants = *xen_init_grant_ram();
+ }
  
-     entry = &mapcache->entry[paddr_index % mapcache->nr_buckets];
-@@ -411,7 +406,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-     }
-     if (!entry) {
-         trace_xen_ram_addr_from_mapcache_not_in_cache(ptr);
--        raddr = 0;
-+        raddr = RAM_ADDR_INVALID;
-     } else {
-         raddr = (reventry->paddr_index << MCACHE_BUCKET_SHIFT) +
-              ((unsigned long) ptr - (unsigned long) entry->vaddr_base);
+ void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
 -- 
 2.17.1
 
