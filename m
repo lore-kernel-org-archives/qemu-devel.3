@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748EEC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A8BC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1revoC-00008W-Qv; Tue, 27 Feb 2024 06:39:40 -0500
+	id 1revoG-0000Am-J1; Tue, 27 Feb 2024 06:39:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revoA-00006R-0L
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revoA-00006l-La
  for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revo0-0005UC-2l
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:37 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revo0-0005Uq-4I
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709033966;
+ s=mimecast20190719; t=1709033967;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hLW16ULpgIlSW/cqpVfRJAq3Ma72L+DbkYr6s0ZmzHc=;
- b=IDMAr/703ga+0o/dV8vBWXkfZ7/S1sip65EKBaDoOTKdIY38/smrXZRINsZiCJBbb8qWhJ
- Dl0RbiSQ+QZR5UGVAJuAwjnqsDkVo0oxdGcME3Zo/M9utlBJ6Z74de/6Cd9QQE+htGbVn5
- 4Clb0lmLBW7TTBzXZfb0a1hGr7ZrrbM=
+ bh=ld+Fq/GHqBiyK8aoPwEyt/lB3jn9PlXWzKRN180aSV8=;
+ b=RRUek+00jr0oil0FHXdZKyZ9YWyU7ZUg8UUlfeh+cRegQStMGqxT4B52QnrzdU0XbT2abN
+ GqmZHckORmmFDLNj7NC5EdsJ+Qa9Jl/AUZFRWQwQgMeQfjogC+K4ue/wTJBVKP3H5iuTzA
+ sLl8XydO9zvvOPT6HNQYWIzvOeYk454=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-16SPenSXPP24ZLNY3CaJ9g-1; Tue, 27 Feb 2024 06:39:24 -0500
-X-MC-Unique: 16SPenSXPP24ZLNY3CaJ9g-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ us-mta-629-a7zVmkp5PROOGD1NdSVw-Q-1; Tue, 27 Feb 2024 06:39:24 -0500
+X-MC-Unique: a7zVmkp5PROOGD1NdSVw-Q-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8F92F88B768;
- Tue, 27 Feb 2024 11:39:24 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B67A5835155;
+ Tue, 27 Feb 2024 11:39:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6D8932166B5E;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 58798111D3E3;
  Tue, 27 Feb 2024 11:39:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 46F2B21E5A41; Tue, 27 Feb 2024 12:39:21 +0100 (CET)
+ id 36E6F21E660C; Tue, 27 Feb 2024 12:39:21 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, jsnow@redhat.com, eblake@redhat.com,
  kkostiuk@redhat.com
-Subject: [PATCH 10/13] qga/qapi-schema: Clean up "Returns" sections
-Date: Tue, 27 Feb 2024 12:39:18 +0100
-Message-ID: <20240227113921.236097-11-armbru@redhat.com>
+Subject: [PATCH 05/13] qapi: Delete useless "Returns" sections
+Date: Tue, 27 Feb 2024 12:39:13 +0100
+Message-ID: <20240227113921.236097-6-armbru@redhat.com>
 In-Reply-To: <20240227113921.236097-1-armbru@redhat.com>
 References: <20240227113921.236097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -82,89 +82,790 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop "on success" where it is redundant with "Returns:".
-
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qga/qapi-schema.json | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ qapi/block-core.json     | 66 ----------------------------------------
+ qapi/block.json          |  6 ----
+ qapi/char.json           |  6 ----
+ qapi/dump.json           |  2 --
+ qapi/machine-target.json |  2 --
+ qapi/machine.json        | 11 -------
+ qapi/migration.json      | 26 ----------------
+ qapi/misc-target.json    |  3 --
+ qapi/misc.json           | 15 ---------
+ qapi/net.json            |  9 ------
+ qapi/qdev.json           |  3 --
+ qapi/qom.json            |  6 ----
+ qapi/run-state.json      |  5 +--
+ qapi/tpm.json            |  2 --
+ qapi/transaction.json    |  2 --
+ qapi/ui.json             | 17 -----------
+ qapi/yank.json           |  3 --
+ 17 files changed, 1 insertion(+), 183 deletions(-)
 
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 636c2c5697..326d324901 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -228,7 +228,7 @@
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index cea46b4668..94b01deffc 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -1456,9 +1456,6 @@
  #
- # @mode: open mode, as per fopen(), "r" is the default.
+ # @size: new image size in bytes
  #
--# Returns: Guest file handle on success.
-+# Returns: Guest file handle
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, DeviceNotFound
  #
- # Since: 0.15.0
+@@ -1676,9 +1673,6 @@
+ #
+ # For the arguments, see the documentation of BlockdevSnapshotSync.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, DeviceNotFound
+ #
+@@ -1758,9 +1752,6 @@
+ #     is not validated, so care should be taken when specifying the
+ #     string or the image chain may not be able to be reopened again.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If "device" does not exist or cannot be determined,
+ #       DeviceNotFound
+@@ -1860,9 +1851,6 @@
+ # @deprecated: Members @base and @top are deprecated.  Use @base-node
+ #     and @top-node instead.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @device does not exist, DeviceNotFound
+ #     - Any other error returns a GenericError.
+@@ -1902,9 +1890,6 @@
+ # @deprecated: This command is deprecated.  Use @blockdev-backup
+ #     instead.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, GenericError
+ #
+@@ -1931,9 +1916,6 @@
+ # 'backup'. The operation can be stopped before it has completed using
+ # the block-job-cancel command.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, DeviceNotFound
+ #
+@@ -2139,9 +2121,6 @@
+ # specifies the format of the mirror image, default is to probe if
+ # mode='existing', else the format of the source.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, GenericError
+ #
+@@ -2318,9 +2297,6 @@
+ # Create a dirty bitmap with a name on the node, and start tracking
+ # the writes.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @node is not a valid block device or node, DeviceNotFound
+ #     - If @name is already taken, GenericError with an explanation
+@@ -2344,9 +2320,6 @@
+ # with block-dirty-bitmap-add.  If the bitmap is persistent, remove it
+ # from its storage too.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @node is not a valid block device or node, DeviceNotFound
+ #     - If @name is not found, GenericError with an explanation
+@@ -2371,9 +2344,6 @@
+ # backup from this point in time forward will only backup clusters
+ # modified after this clear operation.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+ #     - If @name is not found, GenericError with an explanation
+@@ -2395,9 +2365,6 @@
+ #
+ # Enables a dirty bitmap so that it will begin tracking disk changes.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+ #     - If @name is not found, GenericError with an explanation
+@@ -2419,9 +2386,6 @@
+ #
+ # Disables a dirty bitmap so that it will stop tracking disk changes.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+ #     - If @name is not found, GenericError with an explanation
+@@ -2451,9 +2415,6 @@
+ # dirty in any of the source bitmaps.  This can be used to achieve
+ # backup checkpoints, or in simpler usages, to copy bitmaps.
+ #
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+ #     - If any bitmap in @bitmaps or @target is not found,
+@@ -2570,8 +2531,6 @@
+ #     disappear from the query list without user intervention.
+ #     Defaults to true.  (Since 3.1)
+ #
+-# Returns: nothing on success.
+-#
+ # Since: 2.6
+ #
+ # Example:
+@@ -2894,9 +2853,6 @@
+ #     disappear from the query list without user intervention.
+ #     Defaults to true.  (Since 3.1)
+ #
+-# Returns:
+-#     - Nothing on success.
+-#
+ # Errors:
+ #     - If @device does not exist, DeviceNotFound.
+ #
+@@ -2935,9 +2891,6 @@
+ # @speed: the maximum speed, in bytes per second, or 0 for unlimited.
+ #     Defaults to 0.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -2982,9 +2935,6 @@
+ #     paused) instead of waiting for the destination to complete its
+ #     final synchronization (since 1.3)
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -3011,9 +2961,6 @@
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+ #     values.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -3038,9 +2985,6 @@
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+ #     values.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -3072,9 +3016,6 @@
+ #     the name of the parameter), but since QEMU 2.7 it can have other
+ #     values.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If no background operation is active on this device,
+ #       DeviceNotActive
+@@ -3099,8 +3040,6 @@
+ #
+ # @id: The job identifier.
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 2.12
  ##
-@@ -277,7 +277,7 @@
- # @count: maximum number of bytes to read (default is 4KB, maximum is
- #     48MB)
+ { 'command': 'block-job-dismiss', 'data': { 'id': 'str' },
+@@ -3118,8 +3057,6 @@
  #
--# Returns: @GuestFileRead on success.
-+# Returns: @GuestFileRead
+ # @id: The job identifier.
  #
- # Since: 0.15.0
+-# Returns: Nothing on success
+-#
+ # Since: 2.12
  ##
-@@ -312,7 +312,7 @@
- # @count: bytes to write (actual bytes, after base64-decode), default
- #     is all content in buf-b64 buffer after base64 decoding
+ { 'command': 'block-job-finalize', 'data': { 'id': 'str' },
+@@ -6110,9 +6047,6 @@
+ # For the arguments, see the documentation of
+ # BlockdevSnapshotInternal.
  #
--# Returns: @GuestFileWrite on success.
-+# Returns: @GuestFileWrite
+-# Returns:
+-#     - nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, GenericError
+ #     - If any snapshot matching @name exists, or @name is empty,
+diff --git a/qapi/block.json b/qapi/block.json
+index dab616799a..65d9804bdf 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -110,9 +110,6 @@
  #
- # Since: 0.15.0
+ # @deprecated: Member @device is deprecated.  Use @id instead.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, DeviceNotFound
+ #
+@@ -461,9 +458,6 @@
+ # the device will be removed from its group and the rest of its
+ # members will not be affected.  The 'group' parameter is ignored.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @device is not a valid block device, DeviceNotFound
+ #
+diff --git a/qapi/char.json b/qapi/char.json
+index 4873bc635a..777dde55d9 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -139,8 +139,6 @@
+ #     - data itself is always Unicode regardless of format, like any
+ #       other string.
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 1.4
+ #
+ # Example:
+@@ -772,8 +770,6 @@
+ #
+ # @id: the chardev's ID, must exist and not be in use
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 1.4
+ #
+ # Example:
+@@ -791,8 +787,6 @@
+ #
+ # @id: the chardev's ID, must exist
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 2.10
+ #
+ # Example:
+diff --git a/qapi/dump.json b/qapi/dump.json
+index f82dd6a1af..4c021dd53c 100644
+--- a/qapi/dump.json
++++ b/qapi/dump.json
+@@ -92,8 +92,6 @@
+ #
+ # Note: All boolean arguments default to false
+ #
+-# Returns: nothing on success
+-#
+ # Since: 1.2
+ #
+ # Example:
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index db6c0fae98..519adf3220 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -414,8 +414,6 @@
+ #
+ # @unstable: This command is experimental.
+ #
+-# Returns: Nothing on success.
+-#
+ # Since: 8.2
  ##
-@@ -379,7 +379,7 @@
- #
- # @whence: Symbolic or numeric code for interpreting offset
- #
--# Returns: @GuestFileSeek on success.
-+# Returns: @GuestFileSeek
- #
- # Since: 0.15.0
- ##
-@@ -723,7 +723,7 @@
- #
- # Get list of guest IP addresses, MAC addresses and netmasks.
- #
--# Returns: List of GuestNetworkInterface on success.
-+# Returns: List of GuestNetworkInterface
+ { 'command': 'set-cpu-topology',
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 0985c61740..7d3ca33683 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -326,8 +326,6 @@
  #
  # Since: 1.1
- ##
-@@ -1247,7 +1247,7 @@
  #
- # @pid: pid returned from guest-exec
+-# Returns: nothing.
+-#
+ # Note: prior to 4.0, this command does nothing in case the guest
+ #     isn't suspended.
  #
--# Returns: GuestExecStatus on success.
-+# Returns: GuestExecStatus
+@@ -377,8 +375,6 @@
+ # all CPUs (ppc64). The command fails when the guest doesn't support
+ # injecting.
  #
- # Since: 2.5
- ##
-@@ -1315,7 +1315,7 @@
- # @capture-output: bool flag to enable capture of stdout/stderr of
- #     running process.  defaults to false.
+-# Returns: If successful, nothing
+-#
+ # Since: 0.14
  #
--# Returns: PID on success.
-+# Returns: PID
+ # Note: prior to 2.1, this command was only supported for x86 and s390
+@@ -778,8 +774,6 @@
+ # @cpu-index: the index of the virtual CPU to use for translating the
+ #     virtual address (defaults to CPU 0)
  #
- # Since: 2.5
- ##
-@@ -1344,7 +1344,7 @@
- # or even present in DNS or some other name service at all.  It need
- # not even be unique on your local network or site, but usually it is.
+-# Returns: Nothing on success
+-#
+ # Since: 0.14
  #
--# Returns: the host name of the machine on success
-+# Returns: the host name of the machine
+ # Notes: Errors were not reliably returned until 1.1
+@@ -806,8 +800,6 @@
  #
- # Since: 2.10
- ##
+ # @filename: the file to save the memory to as binary data
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 0.14
+ #
+ # Notes: Errors were not reliably returned until 1.1
+@@ -1060,9 +1052,6 @@
+ #
+ #     From it we have: balloon_size = vm_ram_size - @value
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If the balloon driver is enabled but not functional because
+ #       the KVM kernel module cannot support it, KVMMissingCap
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 7303e57e8e..facdb28bbc 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1555,8 +1555,6 @@
+ #
+ # Cancel the current executing migration process.
+ #
+-# Returns: nothing on success
+-#
+ # Notes: This command succeeds even if there is no migration process
+ #     running.
+ #
+@@ -1576,8 +1574,6 @@
+ #
+ # @state: The state the migration is currently expected to be in
+ #
+-# Returns: nothing on success
+-#
+ # Since: 2.11
+ #
+ # Example:
+@@ -1699,8 +1695,6 @@
+ # @deprecated: Members @inc and @blk are deprecated.  Use
+ #     blockdev-mirror with NBD instead.
+ #
+-# Returns: nothing on success
+-#
+ # Since: 0.14
+ #
+ # Notes:
+@@ -1782,8 +1776,6 @@
+ # @channels: list of migration stream channels with each stream in the
+ #     list connected to a destination interface endpoint.
+ #
+-# Returns: nothing on success
+-#
+ # Since: 2.3
+ #
+ # Notes:
+@@ -1851,8 +1843,6 @@
+ # @live: Optional argument to ask QEMU to treat this command as part
+ #     of a live migration.  Default to true.  (since 2.11)
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 1.1
+ #
+ # Example:
+@@ -1871,8 +1861,6 @@
+ #
+ # @enable: true to enable, false to disable.
+ #
+-# Returns: nothing
+-#
+ # Since: 1.3
+ #
+ # Example:
+@@ -1915,8 +1903,6 @@
+ # @failover: true to do failover, false to stop.  but cannot be
+ #     specified if 'enable' is true.  default value is false.
+ #
+-# Returns: nothing.
+-#
+ # Example:
+ #
+ #     -> { "execute": "xen-set-replication",
+@@ -1968,8 +1954,6 @@
+ #
+ # Xen uses this command to notify replication to trigger a checkpoint.
+ #
+-# Returns: nothing.
+-#
+ # Example:
+ #
+ #     -> { "execute": "xen-colo-do-checkpoint" }
+@@ -2026,8 +2010,6 @@
+ #
+ # @uri: the URI to be used for the recovery of migration stream.
+ #
+-# Returns: nothing.
+-#
+ # Example:
+ #
+ #     -> { "execute": "migrate-recover",
+@@ -2045,8 +2027,6 @@
+ #
+ # Pause a migration.  Currently it only supports postcopy.
+ #
+-# Returns: nothing.
+-#
+ # Example:
+ #
+ #     -> { "execute": "migrate-pause" }
+@@ -2415,8 +2395,6 @@
+ #
+ # If @tag already exists, an error will be reported
+ #
+-# Returns: nothing
+-#
+ # Example:
+ #
+ #     -> { "execute": "snapshot-save",
+@@ -2487,8 +2465,6 @@
+ # device nodes that can have changed since the original @snapshot-save
+ # command execution.
+ #
+-# Returns: nothing
+-#
+ # Example:
+ #
+ #     -> { "execute": "snapshot-load",
+@@ -2550,8 +2526,6 @@
+ # to determine completion and to fetch details of any errors that
+ # arise.
+ #
+-# Returns: nothing
+-#
+ # Example:
+ #
+ #     -> { "execute": "snapshot-delete",
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 542a3e42f2..4e0a6492a9 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -472,9 +472,6 @@
+ #
+ # @port: The port number
+ #
+-# Returns:
+-#     - Nothing on success.
+-#
+ # Since: 8.0
+ #
+ # Example:
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 578f574a68..015388aa3e 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -28,8 +28,6 @@
+ #
+ # @tls: whether to perform TLS. Only applies to the "spice" protocol
+ #
+-# Returns: nothing on success.
+-#
+ # Since: 0.14
+ #
+ # Example:
+@@ -160,8 +158,6 @@
+ #
+ # Since: 0.14
+ #
+-# Returns: If successful, nothing
+-#
+ # Notes: This command will succeed if the guest is currently running.
+ #     It will also succeed if the guest is in the "inmigrate" state;
+ #     in this case, the effect of the command is to make sure the
+@@ -196,8 +192,6 @@
+ #
+ # Since: 3.0
+ #
+-# Returns: nothing
+-#
+ # Example:
+ #
+ #     -> { "execute": "x-exit-preconfig" }
+@@ -256,8 +250,6 @@
+ #
+ # @fdname: file descriptor name
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 0.14
+ #
+ # Notes: If @fdname already exists, the file descriptor assigned to it
+@@ -285,8 +277,6 @@
+ #
+ # @fdname: file descriptor name
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 8.0
+ #
+ # Notes: If @fdname already exists, the file descriptor assigned to it
+@@ -309,8 +299,6 @@
+ #
+ # @fdname: file descriptor name
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 0.14
+ #
+ # Example:
+@@ -376,9 +364,6 @@
+ #
+ # @fd: The file descriptor that is to be removed.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @fdset-id or @fd is not found, GenericError
+ #
+diff --git a/qapi/net.json b/qapi/net.json
+index 09e644a742..417b61a321 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -17,9 +17,6 @@
+ #
+ # @up: true to set the link status to be up
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @name is not a valid network device, DeviceNotFound
+ #
+@@ -46,9 +43,6 @@
+ #
+ # Since: 0.14
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @type is not a valid network backend, DeviceNotFound
+ #
+@@ -69,9 +63,6 @@
+ #
+ # @id: the name of the network backend to remove
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @id is not a valid network backend, DeviceNotFound
+ #
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index cc72c55a99..facaa0bc6a 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -89,9 +89,6 @@
+ #
+ # @id: the device's ID or QOM path
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @id is not a valid device, DeviceNotFound
+ #
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 33aa30bb41..032c6fa037 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1056,9 +1056,6 @@
+ #
+ # Create a QOM object.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - Error if @qom-type is not a valid class name
+ #
+@@ -1081,9 +1078,6 @@
+ #
+ # @id: the name of the QOM object to remove
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - Error if @id is not a valid id for a QOM object
+ #
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index dd0770b379..789fc34559 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -395,10 +395,7 @@
+ #
+ # @panic: @PanicAction action taken on guest panic.
+ #
+-# @watchdog: @WatchdogAction action taken when watchdog timer expires
+-#     .
+-#
+-# Returns: Nothing on success.
++# @watchdog: @WatchdogAction action taken when watchdog timer expires.
+ #
+ # Since: 6.0
+ #
+diff --git a/qapi/tpm.json b/qapi/tpm.json
+index 07a73e5f2b..1577b5c259 100644
+--- a/qapi/tpm.json
++++ b/qapi/tpm.json
+@@ -166,8 +166,6 @@
+ #
+ # Return information about the TPM device
+ #
+-# Returns: @TPMInfo on success
+-#
+ # Since: 1.5
+ #
+ # Example:
+diff --git a/qapi/transaction.json b/qapi/transaction.json
+index 78cc21800d..5749c133d4 100644
+--- a/qapi/transaction.json
++++ b/qapi/transaction.json
+@@ -234,8 +234,6 @@
+ #     execution of the transaction.  See @TransactionProperties for
+ #     additional detail.
+ #
+-# Returns: nothing on success
+-#
+ # Errors:
+ #     Any errors from commands in the transaction
+ #
+diff --git a/qapi/ui.json b/qapi/ui.json
+index 199a412c5a..1726f15429 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -78,9 +78,6 @@
+ #
+ # Set the password of a remote display server.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If Spice is not enabled, DeviceNotFound
+ #
+@@ -142,9 +139,6 @@
+ #
+ # Expire the password of a remote display server.
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If @protocol is 'spice' and Spice is not active,
+ #       DeviceNotFound
+@@ -191,8 +185,6 @@
+ #
+ # @format: image format for screendump.  (default: ppm) (Since 7.1)
+ #
+-# Returns: Nothing on success
+-#
+ # Since: 0.14
+ #
+ # Example:
+@@ -1040,9 +1032,6 @@
+ # @hold-time: time to delay key up events, milliseconds.  Defaults to
+ #     100
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - If key is unknown or redundant, GenericError
+ #
+@@ -1265,8 +1254,6 @@
+ #
+ # @events: List of InputEvent union.
+ #
+-# Returns: Nothing on success.
+-#
+ # Since: 2.6
+ #
+ # Note: The consoles are visible in the qom tree, under
+@@ -1611,8 +1598,6 @@
+ #
+ # Reload display configuration.
+ #
+-# Returns: Nothing on success.
+-#
+ # Since: 6.0
+ #
+ # Example:
+@@ -1670,8 +1655,6 @@
+ #
+ # Update display configuration.
+ #
+-# Returns: Nothing on success.
+-#
+ # Since: 7.1
+ #
+ # Example:
+diff --git a/qapi/yank.json b/qapi/yank.json
+index a457284b45..fffb39a397 100644
+--- a/qapi/yank.json
++++ b/qapi/yank.json
+@@ -78,9 +78,6 @@
+ #
+ # @instances: the instances to be yanked
+ #
+-# Returns:
+-#     - Nothing on success
+-#
+ # Errors:
+ #     - @DeviceNotFound error, if any of the YankInstances doesn't exist
+ #
 -- 
 2.43.0
 
