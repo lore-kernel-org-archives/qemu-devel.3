@@ -4,51 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA92C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E30C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rez4A-0003K5-8h; Tue, 27 Feb 2024 10:08:22 -0500
+	id 1rezIA-00069E-9Z; Tue, 27 Feb 2024 10:22:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rez48-0003J9-KV; Tue, 27 Feb 2024 10:08:20 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rez3v-0007v1-Oa; Tue, 27 Feb 2024 10:08:20 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A34274E601B;
- Tue, 27 Feb 2024 16:08:04 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id eDzTFf1C4poe; Tue, 27 Feb 2024 16:08:02 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A76EF4E60D5; Tue, 27 Feb 2024 16:08:02 +0100 (CET)
-Message-Id: <a06f6259d7a37aa88145fb13e4bce153ff763f86.1709045654.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1709045654.git.balaton@eik.bme.hu>
-References: <cover.1709045654.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 02/10] target/ppc: Readability improvements in exception
- handlers
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rezI8-00068W-SA
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:22:48 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rezI5-0002tx-51
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:22:48 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-512fd840142so2887343e87.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 07:22:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709047361; x=1709652161; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3r8V58Tug1KOPNSReT2NhBd9guHe8F/CbAoauzdmNZc=;
+ b=MCuSmsYJOXiVRca+iAxcVkyKy9zPwh5MjOO+LE7E4930kmAmm3PKmBhApXVFSmw3Jz
+ 0m0RyF8NbpWzDejfwNr1qdZBaCaoGF2yHhigcQhzX3J5wG36JTrfFVdoMw5aq2X6DLkk
+ SF/U1tyOO1k62LytqhEIJ3Q0e2kHbYCoKrDpXQ4/w4FdteIiiUQUl1g1EssTM5GoH9A+
+ ZJ0trH4/vpYxoUjhgtgb4txj9jvGGkn7Dv7/bD+pkOoj0XHQ4E445p5XtmtHLXSi5g/0
+ sViLozcrpQLLCSbUWtsQo971lSp5w5O+nA6jP7H6WOglgmQPihA5wvryTQvS8Ja+el8b
+ wsCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709047361; x=1709652161;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3r8V58Tug1KOPNSReT2NhBd9guHe8F/CbAoauzdmNZc=;
+ b=Bqo1B6PggEK1bSqeLq1ReB1A8XTJ4v5X9pg3dkL10EFyB6j/BjzwiWslG/nSFXnHoi
+ auqE7vkOnro4De6s3SWEJ68HzmlDyvquiIz9TerrH+/6K8Gg8jBKsd0TXVrq+BPUGDmU
+ pYJyvT5sdW1a4EteUZ5jR4fIMt/SFAZlN8bCtlgVXo3/YH5ZLIspmm+R3lDSjF8VwN7g
+ lyduzXw2xH4Rmdhk37X7QIGBpxoJkGdZNZ++RROBuRNmSZCsHU/H933g3eN9rjMEROsB
+ O5QQKUxeS8DA/NEcS8s27pmGDNShemkcuOUHS/xabEHKeXBlQQahmtfJhEHQaertYqUR
+ LTOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCZso44iCWhNObX3Vu3NS7vSm/AwC64edeSGjKw16CHeW+RpvnLAODI4oEyLkDFZFgZl9Ad5cu0kgnkPUP0Ai4goYHGdU=
+X-Gm-Message-State: AOJu0Yxz3EmeJxbjISB2HPBvPtlWLKXnJAz2zLAawCagEwVr8bp5t+lQ
+ sgrdmJZtuQxzfy4buwhDONPQaojBBm+Kuz1L84iXLuBF3f1vf9zg+9aWYyTmawfnzZ65XurIxaF
+ 0BMcVPBCuUe9fP5BQLzLtQQkGizQwpajBNmiJgS4ALXdhMNcy
+X-Google-Smtp-Source: AGHT+IGYRAcV/BJK7x0AXdict+ZcLIKuc7/wcZeGzNyV9jL5U7RoHu6zUogPNkBgg2YHYZUHsVxS/EYQI8ZFSr2gMxA=
+X-Received: by 2002:ac2:488f:0:b0:512:ec79:3be5 with SMTP id
+ x15-20020ac2488f000000b00512ec793be5mr5847996lfc.43.1709047361129; Tue, 27
+ Feb 2024 07:22:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org,
-    qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Date: Tue, 27 Feb 2024 16:08:02 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
+In-Reply-To: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 27 Feb 2024 15:22:29 +0000
+Message-ID: <CAFEAcA_oSeqGAPNpemhbyVkuMYtwbr-TG2QNQ7=DSZv0s0h7XA@mail.gmail.com>
+Subject: Re: [PATCH v6 00/41] Raspberry Pi 4B machine
+To: Sergey Kambalin <serg.oker@gmail.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Sergey Kambalin <sergey.kambalin@auriga.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,516 +90,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Improve readability by shortening some long comments, removing
-comments that state the obvious and dropping some empty lines so they
-don't distract when reading the code.
+On Mon, 26 Feb 2024 at 00:04, Sergey Kambalin <serg.oker@gmail.com> wrote:
+>
+> Introducing Raspberry Pi 4B model.
+> It contains new BCM2838 SoC, PCIE subsystem,
+> RNG200, Thermal sensor and Genet network controller.
+>
+> It can work with recent linux kernels 6.x.x.
+> Two avocado tests was added to check that.
+>
+> Unit tests has been made as read/write operations
+> via mailbox properties.
+>
+> Genet integration test is under development.
+>
+> Every single commit
+> 1) builds without errors
+> 2) passes regression tests
+> 3) passes style check*
+> *the only exception is bcm2838-mbox-property-test.c file
+> containing heavy macros usage which cause a lot of
+> false-positives of checkpatch.pl.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/cpu.h         |   1 +
- target/ppc/excp_helper.c | 179 +++++++--------------------------------
- 2 files changed, 33 insertions(+), 147 deletions(-)
+Hi; I had to drop the qtest patches from what I'm going to
+apply upstream, because it turns out that they don't pass
+if the host system is big-endian. This is because you read
+out memory from the guest directly into a host struct:
+that only works if the host happens to be the same endianness
+(little) as the guest.
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index ec14574d14..03c7a94a2a 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2951,6 +2951,7 @@ static inline bool ppc_has_spr(PowerPCCPU *cpu, int spr)
- }
- 
- #if !defined(CONFIG_USER_ONLY)
-+/* Sort out endianness of interrupt. Depends on the CPU, HV mode, etc. */
- static inline bool ppc_interrupts_little_endian(PowerPCCPU *cpu, bool hv)
- {
-     PowerPCCPUClass *pcc = POWERPC_CPU_GET_CLASS(cpu);
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 56a5fe7f3b..fba6e03d18 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -403,9 +403,8 @@ static void powerpc_set_excp_state(PowerPCCPU *cpu, target_ulong vector,
-      * We don't use hreg_store_msr here as already have treated any
-      * special case that could occur. Just store MSR and update hflags
-      *
--     * Note: We *MUST* not use hreg_store_msr() as-is anyway because it
--     * will prevent setting of the HV bit which some exceptions might need
--     * to do.
-+     * Note: We *MUST* not use hreg_store_msr() as-is anyway because it will
-+     * prevent setting of the HV bit which some exceptions might need to do.
-      */
-     env->nip = vector;
-     env->msr = msr;
-@@ -447,25 +446,15 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
--    int srr0, srr1;
-+    int srr0 = SPR_SRR0, srr1 = SPR_SRR1;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
- 
--    /*
--     * new interrupt handler msr preserves existing ME unless
--     * explicitly overridden.
--     */
-+    /* new interrupt handler msr preserves ME unless explicitly overriden */
-     new_msr = env->msr & (((target_ulong)1 << MSR_ME));
- 
--    /* target registers */
--    srr0 = SPR_SRR0;
--    srr1 = SPR_SRR1;
--
--    /*
--     * Hypervisor emulation assistance interrupt only exists on server
--     * arch 2.05 server or later.
--     */
-+    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-     if (excp == POWERPC_EXCP_HV_EMU) {
-         excp = POWERPC_EXCP_PROGRAM;
-     }
-@@ -475,7 +464,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-         cpu_abort(env_cpu(env),
-                   "Raised an exception without defined vector %d\n", excp);
-     }
--
-     vector |= env->excp_prefix;
- 
-     switch (excp) {
-@@ -487,7 +475,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-         powerpc_mcheck_checkstop(env);
-         /* machine check exceptions don't have ME set */
-         new_msr &= ~((target_ulong)1 << MSR_ME);
--
-         srr0 = SPR_40x_SRR2;
-         srr1 = SPR_40x_SRR3;
-         break;
-@@ -558,12 +545,8 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-         break;
-     }
- 
--    /* Save PC */
-     env->spr[srr0] = env->nip;
--
--    /* Save MSR */
-     env->spr[srr1] = msr;
--
-     powerpc_set_excp_state(cpu, vector, new_msr);
- }
- 
-@@ -575,16 +558,10 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
- 
--    /*
--     * new interrupt handler msr preserves existing ME unless
--     * explicitly overridden
--     */
-+    /* new interrupt handler msr preserves ME unless explicitly overriden */
-     new_msr = env->msr & ((target_ulong)1 << MSR_ME);
- 
--    /*
--     * Hypervisor emulation assistance interrupt only exists on server
--     * arch 2.05 server or later.
--     */
-+    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-     if (excp == POWERPC_EXCP_HV_EMU) {
-         excp = POWERPC_EXCP_PROGRAM;
-     }
-@@ -594,7 +571,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-         cpu_abort(env_cpu(env),
-                   "Raised an exception without defined vector %d\n", excp);
-     }
--
-     vector |= env->excp_prefix;
- 
-     switch (excp) {
-@@ -604,7 +580,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-         powerpc_mcheck_checkstop(env);
-         /* machine check exceptions don't have ME set */
-         new_msr &= ~((target_ulong)1 << MSR_ME);
--
-         break;
-     case POWERPC_EXCP_DSI:       /* Data storage exception                   */
-         trace_ppc_excp_dsi(env->spr[SPR_DSISR], env->spr[SPR_DAR]);
-@@ -632,11 +607,9 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-                 powerpc_reset_excp_state(cpu);
-                 return;
-             }
--
-             /*
--             * FP exceptions always have NIP pointing to the faulting
--             * instruction, so always use store_next and claim we are
--             * precise in the MSR.
-+             * NIP always points to the faulting instruction for FP exceptions,
-+             * so always use store_next and claim we are precise in the MSR.
-              */
-             msr |= 0x00100000;
-             break;
-@@ -712,20 +685,11 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-         break;
-     }
- 
--    /*
--     * Sort out endianness of interrupt, this differs depending on the
--     * CPU, the HV mode, etc...
--     */
-     if (ppc_interrupts_little_endian(cpu, !!(new_msr & MSR_HVB))) {
-         new_msr |= (target_ulong)1 << MSR_LE;
-     }
--
--    /* Save PC */
-     env->spr[SPR_SRR0] = env->nip;
--
--    /* Save MSR */
-     env->spr[SPR_SRR1] = msr;
--
-     powerpc_set_excp_state(cpu, vector, new_msr);
- }
- 
-@@ -737,16 +701,10 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
- 
--    /*
--     * new interrupt handler msr preserves existing ME unless
--     * explicitly overridden
--     */
-+    /* new interrupt handler msr preserves ME unless explicitly overriden */
-     new_msr = env->msr & ((target_ulong)1 << MSR_ME);
- 
--    /*
--     * Hypervisor emulation assistance interrupt only exists on server
--     * arch 2.05 server or later.
--     */
-+    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-     if (excp == POWERPC_EXCP_HV_EMU) {
-         excp = POWERPC_EXCP_PROGRAM;
-     }
-@@ -756,7 +714,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         cpu_abort(env_cpu(env),
-                   "Raised an exception without defined vector %d\n", excp);
-     }
--
-     vector |= env->excp_prefix;
- 
-     switch (excp) {
-@@ -764,7 +721,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         powerpc_mcheck_checkstop(env);
-         /* machine check exceptions don't have ME set */
-         new_msr &= ~((target_ulong)1 << MSR_ME);
--
-         break;
-     case POWERPC_EXCP_DSI:       /* Data storage exception                   */
-         trace_ppc_excp_dsi(env->spr[SPR_DSISR], env->spr[SPR_DAR]);
-@@ -792,11 +748,9 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-                 powerpc_reset_excp_state(cpu);
-                 return;
-             }
--
-             /*
--             * FP exceptions always have NIP pointing to the faulting
--             * instruction, so always use store_next and claim we are
--             * precise in the MSR.
-+             * NIP always points to the faulting instruction for FP exceptions,
-+             * so always use store_next and claim we are precise in the MSR.
-              */
-             msr |= 0x00100000;
-             break;
-@@ -865,12 +819,10 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_DLTLB:     /* Data load TLB miss                       */
-     case POWERPC_EXCP_DSTLB:     /* Data store TLB miss                      */
-         ppc_excp_debug_sw_tlb(env, excp);
--
-         msr |= env->crf[0] << 28;
-         msr |= env->error_code; /* key, D/I, S/L bits */
-         /* Set way using a LRU mechanism */
-         msr |= ((env->last_way + 1) & (env->nb_ways - 1)) << 17;
--
-         break;
-     case POWERPC_EXCP_IABR:      /* Instruction address breakpoint           */
-     case POWERPC_EXCP_SMI:       /* System management interrupt              */
-@@ -885,20 +837,11 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         break;
-     }
- 
--    /*
--     * Sort out endianness of interrupt, this differs depending on the
--     * CPU, the HV mode, etc...
--     */
-     if (ppc_interrupts_little_endian(cpu, !!(new_msr & MSR_HVB))) {
-         new_msr |= (target_ulong)1 << MSR_LE;
-     }
--
--    /* Save PC */
-     env->spr[SPR_SRR0] = env->nip;
--
--    /* Save MSR */
-     env->spr[SPR_SRR1] = msr;
--
-     powerpc_set_excp_state(cpu, vector, new_msr);
- }
- 
-@@ -910,16 +853,10 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
- 
--    /*
--     * new interrupt handler msr preserves existing ME unless
--     * explicitly overridden
--     */
-+    /* new interrupt handler msr preserves ME unless explicitly overriden */
-     new_msr = env->msr & ((target_ulong)1 << MSR_ME);
- 
--    /*
--     * Hypervisor emulation assistance interrupt only exists on server
--     * arch 2.05 server or later.
--     */
-+    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-     if (excp == POWERPC_EXCP_HV_EMU) {
-         excp = POWERPC_EXCP_PROGRAM;
-     }
-@@ -929,7 +866,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         cpu_abort(env_cpu(env),
-                   "Raised an exception without defined vector %d\n", excp);
-     }
--
-     vector |= env->excp_prefix;
- 
-     switch (excp) {
-@@ -937,7 +873,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         powerpc_mcheck_checkstop(env);
-         /* machine check exceptions don't have ME set */
-         new_msr &= ~((target_ulong)1 << MSR_ME);
--
-         break;
-     case POWERPC_EXCP_DSI:       /* Data storage exception                   */
-         trace_ppc_excp_dsi(env->spr[SPR_DSISR], env->spr[SPR_DAR]);
-@@ -965,11 +900,9 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-                 powerpc_reset_excp_state(cpu);
-                 return;
-             }
--
-             /*
--             * FP exceptions always have NIP pointing to the faulting
--             * instruction, so always use store_next and claim we are
--             * precise in the MSR.
-+             * NIP always points to the faulting instruction for FP exceptions,
-+             * so always use store_next and claim we are precise in the MSR.
-              */
-             msr |= 0x00100000;
-             break;
-@@ -1050,20 +983,11 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         break;
-     }
- 
--    /*
--     * Sort out endianness of interrupt, this differs depending on the
--     * CPU, the HV mode, etc...
--     */
-     if (ppc_interrupts_little_endian(cpu, !!(new_msr & MSR_HVB))) {
-         new_msr |= (target_ulong)1 << MSR_LE;
-     }
--
--    /* Save PC */
-     env->spr[SPR_SRR0] = env->nip;
--
--    /* Save MSR */
-     env->spr[SPR_SRR1] = msr;
--
-     powerpc_set_excp_state(cpu, vector, new_msr);
- }
- 
-@@ -1071,24 +995,18 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
--    int srr0, srr1;
--
--    msr = env->msr;
-+    int srr0 = SPR_SRR0, srr1 = SPR_SRR1;
- 
-     /*
--     * new interrupt handler msr preserves existing ME unless
--     * explicitly overridden
-+     * Book E does not play games with certain bits of xSRR1 being MSR save
-+     * bits and others being error status. xSRR1 is the old MSR, period.
-      */
--    new_msr = env->msr & ((target_ulong)1 << MSR_ME);
-+    msr = env->msr;
- 
--    /* target registers */
--    srr0 = SPR_SRR0;
--    srr1 = SPR_SRR1;
-+    /* new interrupt handler msr preserves ME unless explicitly overriden */
-+    new_msr = env->msr & ((target_ulong)1 << MSR_ME);
- 
--    /*
--     * Hypervisor emulation assistance interrupt only exists on server
--     * arch 2.05 server or later.
--     */
-+    /* HV emu assistance interrupt only exists on server arch 2.05 or later */
-     if (excp == POWERPC_EXCP_HV_EMU) {
-         excp = POWERPC_EXCP_PROGRAM;
-     }
-@@ -1108,7 +1026,6 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-         cpu_abort(env_cpu(env),
-                   "Raised an exception without defined vector %d\n", excp);
-     }
--
-     vector |= env->excp_prefix;
- 
-     switch (excp) {
-@@ -1152,11 +1069,9 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-                 powerpc_reset_excp_state(cpu);
-                 return;
-             }
--
-             /*
--             * FP exceptions always have NIP pointing to the faulting
--             * instruction, so always use store_next and claim we are
--             * precise in the MSR.
-+             * NIP always points to the faulting instruction for FP exceptions,
-+             * so always use store_next and claim we are precise in the MSR.
-              */
-             msr |= 0x00100000;
-             env->spr[SPR_BOOKE_ESR] = ESR_FP;
-@@ -1257,12 +1172,8 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-     }
- #endif
- 
--    /* Save PC */
-     env->spr[srr0] = env->nip;
--
--    /* Save MSR */
-     env->spr[srr1] = msr;
--
-     powerpc_set_excp_state(cpu, vector, new_msr);
- }
- 
-@@ -1384,21 +1295,17 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
--    int srr0, srr1, lev = -1;
-+    int srr0 = SPR_SRR0, srr1 = SPR_SRR1, lev = -1;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
- 
-     /*
--     * new interrupt handler msr preserves existing HV and ME unless
--     * explicitly overridden
-+     * new interrupt handler msr preserves HV and ME unless explicitly
-+     * overriden
-      */
-     new_msr = env->msr & (((target_ulong)1 << MSR_ME) | MSR_HVB);
- 
--    /* target registers */
--    srr0 = SPR_SRR0;
--    srr1 = SPR_SRR1;
--
-     /*
-      * check for special resume at 0x100 from doze/nap/sleep/winkle on
-      * P7/P8/P9
-@@ -1423,7 +1330,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         cpu_abort(env_cpu(env),
-                   "Raised an exception without defined vector %d\n", excp);
-     }
--
-     vector |= env->excp_prefix;
- 
-     if (is_prefix_insn_excp(cpu, excp)) {
-@@ -1440,7 +1346,6 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-              */
-             new_msr |= (target_ulong)MSR_HVB;
-         }
--
-         /* machine check exceptions don't have ME set */
-         new_msr &= ~((target_ulong)1 << MSR_ME);
- 
-@@ -1458,23 +1363,17 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-     {
-         bool lpes0;
- 
--        /*
--         * LPES0 is only taken into consideration if we support HV
--         * mode for this CPU.
--         */
-+        /* LPES0 is only taken into consideration if we support HV mode */
-         if (!env->has_hv_mode) {
-             break;
-         }
--
-         lpes0 = !!(env->spr[SPR_LPCR] & LPCR_LPES0);
--
-         if (!lpes0) {
-             new_msr |= (target_ulong)MSR_HVB;
-             new_msr |= env->msr & ((target_ulong)1 << MSR_RI);
-             srr0 = SPR_HSRR0;
-             srr1 = SPR_HSRR1;
-         }
--
-         break;
-     }
-     case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
-@@ -1497,11 +1396,9 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-                 powerpc_reset_excp_state(cpu);
-                 return;
-             }
--
-             /*
--             * FP exceptions always have NIP pointing to the faulting
--             * instruction, so always use store_next and claim we are
--             * precise in the MSR.
-+             * NIP always points to the faulting instruction for FP exceptions,
-+             * so always use store_next and claim we are precise in the MSR.
-              */
-             msr |= 0x00100000;
-             break;
-@@ -1665,21 +1562,13 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         break;
-     }
- 
--    /*
--     * Sort out endianness of interrupt, this differs depending on the
--     * CPU, the HV mode, etc...
--     */
-     if (ppc_interrupts_little_endian(cpu, !!(new_msr & MSR_HVB))) {
-         new_msr |= (target_ulong)1 << MSR_LE;
-     }
--
-     new_msr |= (target_ulong)1 << MSR_SF;
- 
-     if (excp != POWERPC_EXCP_SYSCALL_VECTORED) {
--        /* Save PC */
-         env->spr[srr0] = env->nip;
--
--        /* Save MSR */
-         env->spr[srr1] = msr;
-     }
- 
-@@ -1688,19 +1577,15 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-             PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-         /* Deliver interrupt to L1 by returning from the H_ENTER_NESTED call */
-         vhc->deliver_hv_excp(cpu, excp);
--
-         powerpc_reset_excp_state(cpu);
--
-     } else {
-         /* Sanity check */
-         if (!(env->msr_mask & MSR_HVB) && srr0 == SPR_HSRR0) {
-             cpu_abort(env_cpu(env), "Trying to deliver HV exception (HSRR) %d "
-                       "with no HV support\n", excp);
-         }
--
-         /* This can update new_msr and vector if AIL applies */
-         ppc_excp_apply_ail(cpu, excp, msr, &new_msr, &vector);
--
-         powerpc_set_excp_state(cpu, vector, new_msr);
-     }
- }
--- 
-2.30.9
+One possible way to deal with this would be the following:
 
++/*
++ * Read and write fields that are in little-endian order. Based on
++ * the linux-user/qemu.h __put_user_e and __get_user_e macros.
++ */
++#define put_guest_field(x, hptr)                                            \
++    do {                                                                    \
++        (__builtin_choose_expr(sizeof(*(hptr)) == 1, stb_p,                 \
++        __builtin_choose_expr(sizeof(*(hptr)) == 2, stw_le_p,               \
++        __builtin_choose_expr(sizeof(*(hptr)) == 4, stl_le_p,               \
++        __builtin_choose_expr(sizeof(*(hptr)) == 8, stq_le_p, abort))))     \
++            ((hptr), (x)), (void)0);                                        \
++    } while (0)
++
++#define get_guest_field(x, hptr)                                            \
++    do {                                                                    \
++        ((x) = (typeof(*hptr))(                                             \
++        __builtin_choose_expr(sizeof(*(hptr)) == 1, ldub_p,                 \
++        __builtin_choose_expr(sizeof(*(hptr)) == 2, lduw_le_p,              \
++        __builtin_choose_expr(sizeof(*(hptr)) == 4, ldl_le_p,               \
++        __builtin_choose_expr(sizeof(*(hptr)) == 8, ldq_le_p, abort))))     \
++            (hptr)), (void)0);                                              \
++    } while (0)
++
+ /*----------------------------------------------------------------------------*/
+ #define DECLARE_TEST_CASE(testname, ...)
+         \
+     __attribute__((weak))
+         \
+@@ -59,38 +82,41 @@ FIELD(GET_CLOCK_STATE_CMD, NPRES, 1, 1)
+         } mailbox_buffer = { 0 };
+         \
+
+         \
+         QTestState *qts = qtest_init("-machine raspi4b");
+         \
++        uint32_t req_resp_code, tag_id, size_stat, size, success;
+         \
+
+         \
+-        mailbox_buffer.header.size = sizeof(mailbox_buffer);
+         \
+-        mailbox_buffer.header.req_resp_code = MBOX_PROCESS_REQUEST;
+         \
++        put_guest_field(sizeof(mailbox_buffer),
+&mailbox_buffer.header.size);  \
++        put_guest_field(MBOX_PROCESS_REQUEST,
+         \
++                        &mailbox_buffer.header.req_resp_code);
+         \
+
+         \
+-        mailbox_buffer.tag.id = TEST_TAG(testname);
+         \
+-        mailbox_buffer.tag.value_buffer_size = MAX(
+         \
++        put_guest_field(TEST_TAG(testname), &mailbox_buffer.tag.id);
+         \
++        put_guest_field(MAX(
+         \
+             sizeof(mailbox_buffer.tag.request.value),
+         \
+-            sizeof(mailbox_buffer.tag.response.value));
+         \
+-        mailbox_buffer.tag.request.zero = 0;
+         \
++            sizeof(mailbox_buffer.tag.response.value)),
+         \
++                        &mailbox_buffer.tag.value_buffer_size);
+         \
++        put_guest_field(0, &mailbox_buffer.tag.request.zero);
+         \
+
+         \
+-        mailbox_buffer.end_tag = RPI_FWREQ_PROPERTY_END;
+         \
++        put_guest_field(RPI_FWREQ_PROPERTY_END,
+&mailbox_buffer.end_tag);      \
+
+         \
+         if (SETUP_FN_NAME(testname, __VA_ARGS__)) {
+         \
+             SETUP_FN_NAME(testname,
+__VA_ARGS__)(&mailbox_buffer.tag);         \
+         }
+         \
+
+         \
+         qtest_memwrite(qts, MBOX_TEST_MESSAGE_ADDRESS,
+         \
+-                    &mailbox_buffer, sizeof(mailbox_buffer));
+         \
++                       &mailbox_buffer, sizeof(mailbox_buffer));
+         \
+         qtest_mbox1_write_message(qts, MBOX_CHANNEL_ID_PROPERTY,
+         \
+-                            MBOX_TEST_MESSAGE_ADDRESS);
+         \
++                                  MBOX_TEST_MESSAGE_ADDRESS);
+         \
+
+         \
+         qtest_mbox0_read_message(qts, MBOX_CHANNEL_ID_PROPERTY,
+         \
+-                            &mailbox_buffer, sizeof(mailbox_buffer));
+         \
++                                 &mailbox_buffer,
+sizeof(mailbox_buffer));     \
+
+         \
+-        g_assert_cmphex(mailbox_buffer.header.req_resp_code, ==,
+MBOX_SUCCESS);\
++        get_guest_field(req_resp_code,
+&mailbox_buffer.header.req_resp_code);  \
++        g_assert_cmphex(req_resp_code, ==, MBOX_SUCCESS);
+         \
++        get_guest_field(tag_id, &mailbox_buffer.tag.id);
+         \
++        g_assert_cmphex(tag_id, ==, TEST_TAG(testname));
+         \
+
+         \
+-        g_assert_cmphex(mailbox_buffer.tag.id, ==,
+TEST_TAG(testname));        \
+-
+         \
+-        uint32_t size =
+FIELD_EX32(mailbox_buffer.tag.response.size_stat,      \
+-                                   MBOX_SIZE_STAT, SIZE);
+         \
+-        uint32_t success =
+FIELD_EX32(mailbox_buffer.tag.response.size_stat,   \
+-                                      MBOX_SIZE_STAT, SUCCESS);
+         \
++        get_guest_field(size_stat,
+&mailbox_buffer.tag.response.size_stat);    \
++        size = FIELD_EX32(size_stat, MBOX_SIZE_STAT, SIZE);
+         \
++        success = FIELD_EX32(size_stat, MBOX_SIZE_STAT, SUCCESS);
+         \
+         g_assert_cmpint(size, ==,
+sizeof(mailbox_buffer.tag.response.value));  \
+         g_assert_cmpint(success, ==, 1);
+         \
+
+         \
+@@ -110,7 +136,9 @@ FIELD(GET_CLOCK_STATE_CMD, NPRES, 1, 1)
+
+ /*----------------------------------------------------------------------------*/
+ DECLARE_TEST_CASE(GET_FIRMWARE_REVISION) {
+-    g_assert_cmpint(tag->response.value.revision, ==, FIRMWARE_REVISION);
++    uint32_t rev;
++    get_guest_field(rev, &tag->response.value.revision);
++    g_assert_cmpint(rev, ==, FIRMWARE_REVISION);
+ }
+
+which I have tested works for the one test case that I updated here.
+(The field comparison part could probably be made less clunky.)
+Or you could do something else.
+
+The test also failed to link on Macos:
+https://gitlab.com/qemu-project/qemu/-/jobs/6267744541
+
+Undefined symbols for architecture arm64:
+"_FRAMEBUFFER_GET_ALPHA_MODE__setup", referenced from:
+_FRAMEBUFFER_GET_ALPHA_MODE__test in bcm2838-mbox-property-test.c.o
+"_FRAMEBUFFER_GET_DEPTH__setup", referenced from:
+_FRAMEBUFFER_GET_DEPTH__test in bcm2838-mbox-property-test.c.o
+(etc)
+
+I'm not sure why that is, but I would be suspicious that your
+use of the __attribute__((weak)) for the setup functions is not
+portable.
+
+thanks
+-- PMM
 
