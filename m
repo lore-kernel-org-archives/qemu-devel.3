@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 158BDC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 19:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80550C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 19:37:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf37X-000404-Nu; Tue, 27 Feb 2024 14:28:07 -0500
+	id 1rf3G8-0006e8-1c; Tue, 27 Feb 2024 14:37:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rf37V-0003zq-Px
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:28:05 -0500
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ id 1rf3G6-0006ca-KI
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:36:58 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rf37T-0000Ci-VA
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:28:05 -0500
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d208be133bso72327901fa.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 11:28:02 -0800 (PST)
+ id 1rf3G4-0001vs-SF
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 14:36:58 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33de620be53so994648f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 11:36:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709062081; x=1709666881; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709062614; x=1709667414; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pm+kKQYCjIBYIUu7Qr/Rcwhln8/HSo8G5sOKgvwqWd8=;
- b=mGgEzC+Xq6Doa3SO7HMy2jrp0aSYiQYNPIHzp+4/6B2rDssZqfuX3Z21SWJZFh6h22
- PBYZwslIUC+aAlJZaZdfmOHIYZ0D2xTmBby4CI3qf6AAzDAouIXwHEHbgaqS+TPyUY9O
- mLMFBPNVT2mTuluwI013+Dz6ZqxQ+RWr/NAeJtQnuv9jiPdNZ2Z1ie7+00hP8goumbun
- V2mm7wrP4UDxh6gWVoFNDCh+3MfOxaAigkAO5JV0inZWAg75F/g9jPT0ljqybRunC8sg
- uCT8Q27P24w6Qg1y2Y8/RAiCvUC5rTfmd+58119lWXc6IZovyVsMJ0I3NzsodQpZs6Lu
- n8lg==
+ bh=Ik4wwRMPrCLyHC57PB4KMsNysABJZFgdjJv+Ih7c0/c=;
+ b=zZN2fI7nD5g1T9Pt8xbFzEVNJw1SHn6i9rXAvwkgoXx7lz11Mjhs2wuJu/kV+JCR+L
+ oEuUDxhSH2OxVdfdFikeyKxh8udR92DVZTdUL/j5XJeiWKuFAmo0jtK5NrVxh2Peyy7k
+ YI3aKzHWGhennQHHOE4KL1HC6U+kxMc1EZGpRZA2WhJZm960O7tAmOscD2iEG8FzUa33
+ kvY3qsKq+OTi1g09d4qRTj1qTAyi3u1jxPNJJDfp5rUJXgEBq2fERclT326QS8pE8458
+ p0QjJLw57i1EetixZ/s0tE5QqI5M3VH8kEd9TMI8ue9m34WGf1HTy3+PY6SRtGJFAIKR
+ ReVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709062081; x=1709666881;
+ d=1e100.net; s=20230601; t=1709062614; x=1709667414;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Pm+kKQYCjIBYIUu7Qr/Rcwhln8/HSo8G5sOKgvwqWd8=;
- b=LEW+uT4s0nbIQNrHwZOa2vIqbEEWtscTMhKBdKScuzZLwSW5LngrW9eSDgp8fKWJ5s
- mIee3ftDwtdQcEFXKQs6apDeafZ+EUq8IZk0LXwGPTM3RAhn2ijIghaK4xDnoQEb+DqU
- Mmu1pyFd9yMDwIlC+uBcKPcEsH5S3magj32FH9nxJJBUzQrkh3XYRlR3NdIsxf9CtbfQ
- f06Rczake72WN+esCYX0CWeLyn3LlBgxCqxUttGiXiXzVVUUruZn2Hk/etbMsKV0FZXD
- jRiw/EKuZjxDrejrcF8IzKJ1/P5fpzaKxTFwrk0dWmTnO19G2hyuyQAFH7kGk7jw4C8a
- nZnA==
-X-Gm-Message-State: AOJu0Yz1xy904e5uUqZNI3AVdJIoLuxYGYIzkUDGIEczLykGUKxCBT15
- P4aBvtETnEmARsAv/6l5j9qK5k5ZHO1rs4em+j0uamg1BIx0IUHpHB9cAYiWvPI=
-X-Google-Smtp-Source: AGHT+IGOCI/uJBb76AygDbDZGOA4+gZmE0o59JW9HaX1OmM1h/NQzxHz7VSbMfHWajf/shZkNBjSrA==
-X-Received: by 2002:a05:651c:50e:b0:2d2:2ddb:28c7 with SMTP id
- o14-20020a05651c050e00b002d22ddb28c7mr8043493ljp.26.1709062080797; 
- Tue, 27 Feb 2024 11:28:00 -0800 (PST)
+ bh=Ik4wwRMPrCLyHC57PB4KMsNysABJZFgdjJv+Ih7c0/c=;
+ b=NASp0A0z2uXCf6cpOrKpsYnJpegBOYN0cGe/K9V7I9VcgGC3OlCEp4h0M3PridSIoD
+ E8h6hQOn3CH+7b8nbq6Lu/WyMqwDRaTzCQZgiDp+F/tKrB4/vVi3qox5HCcsrNTahDCS
+ 5wBXE65EBXzb5lKHWm3JDvQM9geqvnwR13f266Rag9VVS89lOldW9ZyIsRd3Zi5XNboz
+ wSUZ9q1/7djd//IS0Lli2HP4SZSFMqYhoOsbQRUnFu03HKc9iDE+ML3n0ALY0EBkOzL5
+ K76Vu1dZ9QIeRR1O2kMuNP3T580OB6O6QusjhbqpDXLdkYKbmSZvUFgqHetWyHgT7KDJ
+ Uxeg==
+X-Gm-Message-State: AOJu0Yz7gnoUahUaHU+Ee2lNXzQ+n/HwofJEoTJhkIJifkAa74U+xNY2
+ gmirl2Yyb4pd5dizs6lsEDgDyZVZsoFUOtNCRVdgUltEI+8dijVjjCvS8thWZCI=
+X-Google-Smtp-Source: AGHT+IE9jGWOITPKeXkvtuJHfebsUpehK+abDT6T//haHq6W4axYpT9xRRVxlNQGuDiif9C4zgpB+g==
+X-Received: by 2002:adf:f9c6:0:b0:33d:1ee9:d71a with SMTP id
+ w6-20020adff9c6000000b0033d1ee9d71amr7355897wrr.64.1709062614103; 
+ Tue, 27 Feb 2024 11:36:54 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- jl20-20020a05600c6a9400b004126101915esm15837944wmb.4.2024.02.27.11.28.00
+ by6-20020a056000098600b0033d568f8310sm12439240wrb.89.2024.02.27.11.36.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 11:28:00 -0800 (PST)
+ Tue, 27 Feb 2024 11:36:53 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2074B5F7AD;
- Tue, 27 Feb 2024 19:28:00 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 72C8E5F7AE;
+ Tue, 27 Feb 2024 19:36:53 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
@@ -69,20 +69,20 @@ Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
  dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
  <bleal@redhat.com>
-Subject: Re: [PATCH v3 4/9] replay: allow runstate shutdown->running when
- replaying trace
-In-Reply-To: <20240226082945.1452499-5-npiggin@gmail.com> (Nicholas Piggin's
- message of "Mon, 26 Feb 2024 18:29:40 +1000")
+Subject: Re: [PATCH v3 9/9] tests/avocado/reverse_debugging.py: mark aarch64
+ and pseries as not flaky
+In-Reply-To: <20240226082945.1452499-10-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Mon, 26 Feb 2024 18:29:45 +1000")
 References: <20240226082945.1452499-1-npiggin@gmail.com>
- <20240226082945.1452499-5-npiggin@gmail.com>
+ <20240226082945.1452499-10-npiggin@gmail.com>
 User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Tue, 27 Feb 2024 19:28:00 +0000
-Message-ID: <87a5nld7wf.fsf@draig.linaro.org>
+Date: Tue, 27 Feb 2024 19:36:53 +0000
+Message-ID: <874jdtd7hm.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,95 +107,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Nicholas Piggin <npiggin@gmail.com> writes:
 
-> When replaying a trace, it is possible to go from shutdown to running
-> with a reverse-debugging step. This can be useful if the problem being
-> debugged triggers a reset or shutdown.
+> These seem to be quite solid, including on several gitlab CI runs.
+> Enabling them should help catch breakage in future.
 >
-> This can be tested by making a recording of a machine that shuts down,
-> then using -action shutdown=3Dpause when replaying it. Continuing to the
-> end of the trace then reverse-stepping in gdb crashes due to invalid
-> runstate transition.
+> And update the powernv comment -- gitlab isn't the problem, there are
+> known gaps in implementation.
 >
-> Just permitting the transition seems to be all that's necessary for
-> reverse-debugging to work well in such a state.
->
-> Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
 > ---
->  include/sysemu/runstate.h |  1 +
->  replay/replay.c           |  2 ++
->  system/runstate.c         | 19 +++++++++++++++++++
->  3 files changed, 22 insertions(+)
+>  tests/avocado/reverse_debugging.py | 9 +--------
+>  1 file changed, 1 insertion(+), 8 deletions(-)
 >
-> diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
-> index 0117d243c4..fe25eed3c0 100644
-> --- a/include/sysemu/runstate.h
-> +++ b/include/sysemu/runstate.h
-> @@ -9,6 +9,7 @@ void runstate_set(RunState new_state);
->  RunState runstate_get(void);
->  bool runstate_is_running(void);
->  bool runstate_needs_reset(void);
-> +void runstate_replay_enable(void);
+> diff --git a/tests/avocado/reverse_debugging.py b/tests/avocado/reverse_d=
+ebugging.py
+> index 92855a02a5..8fe76ff921 100644
+> --- a/tests/avocado/reverse_debugging.py
+> +++ b/tests/avocado/reverse_debugging.py
+> @@ -223,9 +223,6 @@ class ReverseDebugging_AArch64(ReverseDebugging):
 >=20=20
->  typedef void VMChangeStateHandler(void *opaque, bool running, RunState s=
-tate);
+>      REG_PC =3D 32
 >=20=20
-> diff --git a/replay/replay.c b/replay/replay.c
-> index 3fd241a4fc..2951eed3bd 100644
-> --- a/replay/replay.c
-> +++ b/replay/replay.c
-> @@ -383,6 +383,8 @@ static void replay_enable(const char *fname, int mode)
->          /* go to the beginning */
->          fseek(replay_file, HEADER_SIZE, SEEK_SET);
->          replay_fetch_data_kind();
-> +
-> +        runstate_replay_enable();
->      }
+> -    # unidentified gitlab timeout problem
+> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on=
+ GitLab')
+> -
+>      def test_aarch64_virt(self):
+>          """
+>          :avocado: tags=3Darch:aarch64
+> @@ -248,14 +245,10 @@ class ReverseDebugging_ppc64(ReverseDebugging):
 >=20=20
->      replay_init_events();
-> diff --git a/system/runstate.c b/system/runstate.c
-> index d6ab860eca..bd0fed8657 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -182,6 +182,12 @@ static const RunStateTransition runstate_transitions=
-_def[] =3D {
->      { RUN_STATE__MAX, RUN_STATE__MAX },
->  };
+>      REG_PC =3D 0x40
 >=20=20
-> +static const RunStateTransition replay_runstate_transitions_def[] =3D {
-> +    { RUN_STATE_SHUTDOWN, RUN_STATE_RUNNING},
-> +
-> +    { RUN_STATE__MAX, RUN_STATE__MAX },
-> +};
-> +
->  static bool runstate_valid_transitions[RUN_STATE__MAX][RUN_STATE__MAX];
+> -    # unidentified gitlab timeout problem
+> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on=
+ GitLab')
+> -
+>      def test_ppc64_pseries(self):
+>          """
+>          :avocado: tags=3Darch:ppc64
+>          :avocado: tags=3Dmachine:pseries
+> -        :avocado: tags=3Dflaky
+>          """
+>          # SLOF branches back to its entry point, which causes this test
+>          # to take the 'hit a breakpoint again' path. That's not a proble=
+m,
+> @@ -264,7 +257,7 @@ def test_ppc64_pseries(self):
+>          self.reverse_debugging()
 >=20=20
->  bool runstate_check(RunState state)
-> @@ -189,6 +195,19 @@ bool runstate_check(RunState state)
->      return current_run_state =3D=3D state;
->  }
+>      # See https://gitlab.com/qemu-project/qemu/-/issues/1992
+> -    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on=
+ GitLab')
+> +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'powernv migration s=
+upport is incomplete so rr debugging is flaky')
 >=20=20
-> +void runstate_replay_enable(void)
-> +{
-> +    const RunStateTransition *p;
-> +
-> +    assert(replay_mode =3D=3D REPLAY_MODE_PLAY);
-> +
-
-As the bellow is common to runstate_init it could be
-re-factored into a helper taking the runstate_transitions_def pointer.
-
-> +    for (p =3D &replay_runstate_transitions_def[0]; p->from !=3D RUN_STA=
-TE__MAX;
-> +         p++) {
-> +        runstate_valid_transitions[p->from][p->to] =3D true;
-> +    }
-> +
-> +}
-> +
->  static void runstate_init(void)
->  {
->      const RunStateTransition *p;
+>      def test_ppc64_powernv(self):
+>          """
 
 --=20
 Alex Benn=C3=A9e
