@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BDBC54E51
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4633BC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 09:00:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1retF1-0001SA-E6; Tue, 27 Feb 2024 03:55:11 -0500
+	id 1retIk-0003Xn-EU; Tue, 27 Feb 2024 03:59:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1retEy-0001R9-I7; Tue, 27 Feb 2024 03:55:09 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1retIh-0003Vz-Iz
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:59:00 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1retEw-0003vs-RR; Tue, 27 Feb 2024 03:55:08 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6e4e7e25945so1993443b3a.1; 
- Tue, 27 Feb 2024 00:55:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1retIf-0005As-QK
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:58:59 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a3d5e77cfbeso705388966b.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:58:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1709024105; x=1709628905; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vnlDAPgGIsFzcqwBwxAATUk+Ze4BZ1EKLksX7SHo4rE=;
- b=P8i7MaoCJews8C0sgOVrQF0DyBq8IMr7DjG/QFmib0gt2kuXq+6omLZA9bhfEbiZJa
- rXUHU+4LQouU19nuW1vvRmWuhOQdk4QbEjZaa7AYHc9V9aae4xgnhKSduGPZtBPOw15x
- c+PeCSz+WN1ve+PHsLPYkeebBfIXdU3UPBJiqHO+39MN/9vfxbf+DL9UDtRdT6zFOmc5
- hQ3Hs1m2kNV8iVDfmxQfgesO43s2YaW7jLZrHrJc6Re8L3wsf3rC3GqpOEDhRr3yqXWw
- diuJi7xqfElN+wBnXLVklCFriTdvtbyE7rnfzeCW5HYOsyvHW6K9lmfOnghc/H0ep6hQ
- ycIw==
+ d=linaro.org; s=google; t=1709024334; x=1709629134; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DUw2MMJWHD6lnJyIJR8e3zviNgIR3r95MSDekrWFcJc=;
+ b=LUuwrOSSFKv4UPql6yHVvW0oj7bz7mh6s/YPgWkS4u3pu5ngT52BkvK69SH0YdvaVg
+ xwqq65GasdSMKqEjvmkeUura4+xYMXt1kEv80GWIfBf9SjlcLHqHlNPQyCBbZD58vbtO
+ U55ijdz8nZV4T1CIRykD43EDlvnUhTD+f89sWo1Bu91MGjGJC8p9Rj4/n61wMOs4O15X
+ hB1vU/Rd0rrzwWObuuk+Ew0kb0bSxEFewXfe3+fYzRj8W6DaIG4xg7cyerj5UKZT9nrT
+ +/paMMmnT8mEBW/KEWyPYdDi86oTYvbQxda4nL+nkPgTju0KkFUUMmroKqGrYeF7bTPW
+ 8+Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709024105; x=1709628905;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=vnlDAPgGIsFzcqwBwxAATUk+Ze4BZ1EKLksX7SHo4rE=;
- b=QQScm1D7WNDv4UOcy6Bh3B+fRvULLFcKhkBFPxPWO9fhbmvYCtwiw/kUr9cmcJLtSp
- Avt0JVNvqS2mVFFbwTdwde+cjm8QeVw8xYBzdTxrzq+L0HHrUcKf4VpSTyIZ8A1ReT5M
- CeMdWulxMXj90sJszubXirj4/3LtRk89EP/NcAarHYxRDj2fmoPhgobmxbkhVxptLeWn
- Hdf5Y9kDbxUGt+iKdFNLwLjXSN9QBXAnCC8rv5dgikpeVoC9xSr6o5rRytBhomNM9uWs
- 3qDocbU/lY5EEzL20I6I7nUZNPLrag5ZjIm1fNhBoqngjmd/e4+ZIWTo7Sm+UH0qeLf8
- Ku/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmrDjnDjWquI5/OJS8ziDtlr7ewFRADpt0YFC0W9M/6LPAx6oA4gO10viA+Xq8iJtw5YomYLh+Y9Y+zB/X02mzarb/7u0UnypzuvJ1FY9EGogiHaWba+TW5U4=
-X-Gm-Message-State: AOJu0YwVQsL1uD6MjFJkk6k+5Qx8djWHFcsNUBtmdApT6mYblBQ7m3CV
- /cF4nPsaE44tYaaGPHukg4WrbbknfiAuNOhmTnJsMIIJ5UT/FaZQD5oPXCC8
-X-Google-Smtp-Source: AGHT+IEjf59/1Q0Iw6uUTtzBst0OuweAyLtlZ2FedL6HBilcdMaJyU1O0wClaW236gO4v/h7z3cgOw==
-X-Received: by 2002:a05:6a00:4f82:b0:6e5:32e9:9fc6 with SMTP id
- ld2-20020a056a004f8200b006e532e99fc6mr5149219pfb.34.1709024104951; 
- Tue, 27 Feb 2024 00:55:04 -0800 (PST)
-Received: from localhost ([1.146.52.18]) by smtp.gmail.com with ESMTPSA id
- x8-20020a056a00270800b006e500e31f9bsm4520954pfv.63.2024.02.27.00.55.00
+ d=1e100.net; s=20230601; t=1709024334; x=1709629134;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DUw2MMJWHD6lnJyIJR8e3zviNgIR3r95MSDekrWFcJc=;
+ b=fOdEuJEhnEaPkndIlUFQtCFOR3JLxN9sjsGM7ejy4H/mEzMcw5ZJSmY/mCy7LE80Di
+ +wgif1f9mvobSkjGTx8FQ+c9zuhWyMOGFvlwOwhfRdPjs3GTJQd0COWO6zWS/zDpRd0p
+ 2EwglCC8vdIxOLWMS/MH87rQXLazHAcDaZ504UTbvfF1O/qN1cs0lq+t1OwA33YxyzBV
+ rTgcVxfCa4VTWmifh0ZB1Y+Gh1clGHypVd3f1VZOz2U6tkarlffscg+WaI6GlFAI70sA
+ WpXYtltorjOswO//6z8DjKJ7vVBySRZo5mxlbtifZUj7yY9jfJFFkdWATLdW9Ilv4owi
+ QRpw==
+X-Gm-Message-State: AOJu0Yw5HmqZM9wSX3u4rkImJnzzwpO3jXvRmI0VcDBzRzzi/I85Eu3O
+ pxKe0yOQkSsJh5cbtw0l3FF/h1iUqnVNwtU5p8/MHjRuxrvYCuReGrB8TGUysGg=
+X-Google-Smtp-Source: AGHT+IFxi6vum8lat++X0XFaJZrKbv3JXb1JfIYRk6jdfAwSmReVGE8PcjbbKxQtu7KrbhGy/MZVZQ==
+X-Received: by 2002:a17:906:5a8b:b0:a43:6146:a905 with SMTP id
+ l11-20020a1709065a8b00b00a436146a905mr3691269ejq.24.1709024333793; 
+ Tue, 27 Feb 2024 00:58:53 -0800 (PST)
+Received: from [192.168.1.102] ([176.176.160.23])
+ by smtp.gmail.com with ESMTPSA id
+ a5-20020a170906468500b00a3fb4d11809sm546749ejr.204.2024.02.27.00.58.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Feb 2024 00:55:04 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 27 Feb 2024 18:54:57 +1000
-Message-Id: <CZFQHBO2FUX6.30O1PDW79JW97@wheely>
-Cc: <clegoate@redhat.com>, <mikey@neuling.org>,
- <amachhiw@linux.vnet.ibm.com>, <vaibhav@linux.ibm.com>,
- <sbhat@linux.ibm.com>, <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v4 04/15] spapr: nested: keep nested-hv related code
- restricted to its API.
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240220083609.748325-1-harshpb@linux.ibm.com>
- <20240220083609.748325-5-harshpb@linux.ibm.com>
-In-Reply-To: <20240220083609.748325-5-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+ Tue, 27 Feb 2024 00:58:53 -0800 (PST)
+Message-ID: <646ec455-6f54-470c-8c77-5e7997b8ce29@linaro.org>
+Date: Tue, 27 Feb 2024 09:58:51 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 02/41] Split out common part of peripherals
+Content-Language: en-US
+To: Sergey Kambalin <serg.oker@gmail.com>, qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, Sergey Kambalin <sergey.kambalin@auriga.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
+ <20240226000259.2752893-3-sergey.kambalin@auriga.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240226000259.2752893-3-sergey.kambalin@auriga.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,69 +95,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Feb 20, 2024 at 6:35 PM AEST, Harsh Prateek Bora wrote:
-> spapr_exit_nested and spapr_get_pate_nested_hv contains code which
-> is specific to nested-hv API. Isolating code flows based on API
-> helps extending it to be used with different API as well.
->
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+On 26/2/24 01:02, Sergey Kambalin wrote:
+> Pre-setup for BCM2838 introduction
+> 
+> Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  include/hw/ppc/spapr_nested.h |  4 ++++
->  hw/ppc/spapr.c                |  7 ++++++-
->  hw/ppc/spapr_caps.c           |  1 +
->  hw/ppc/spapr_nested.c         | 27 ++++++++++++++++++++++++---
->  4 files changed, 35 insertions(+), 4 deletions(-)
->
-> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.=
-h
-> index 2488ea98da..3f07c81c3d 100644
-> --- a/include/hw/ppc/spapr_nested.h
-> +++ b/include/hw/ppc/spapr_nested.h
-> @@ -5,6 +5,8 @@
-> =20
->  typedef struct SpaprMachineStateNested {
->      uint64_t ptcr;
-> +    uint8_t api;
-> +#define NESTED_API_KVM_HV  1
->  } SpaprMachineStateNested;
-> =20
->  /*
-> @@ -103,4 +105,6 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
->  typedef struct SpaprMachineState SpaprMachineState;
->  bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->                                target_ulong lpid, ppc_v3_pate_t *entry);
-> +void spapr_nested_init(SpaprMachineState *spapr);
-> +uint8_t spapr_nested_api(SpaprMachineState *spapr);
->  #endif /* HW_SPAPR_NESTED_H */
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 97b69c0e42..51a1be027a 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -1376,7 +1376,11 @@ static bool spapr_get_pate(PPCVirtualHypervisor *v=
-hyp, PowerPCCPU *cpu,
->          entry->dw1 =3D spapr->patb_entry;
->          return true;
->      } else {
-> -        return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
-> +        assert(spapr_nested_api(spapr));
-> +        if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
-> +            return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
-> +        }
-> +        return false;
->      }
->  }
-> =20
-> @@ -3443,6 +3447,7 @@ static void spapr_instance_init(Object *obj)
->          spapr_get_host_serial, spapr_set_host_serial);
->      object_property_set_description(obj, "host-serial",
->          "Host serial number to advertise in guest device tree");
-> +    spapr_nested_init(spapr);
+>   hw/arm/bcm2835_peripherals.c         | 198 +++++++++++++++------------
+>   hw/arm/bcm2836.c                     |  24 ++--
+>   include/hw/arm/bcm2835_peripherals.h |  29 +++-
+>   include/hw/arm/bcm2836.h             |   3 +-
+>   4 files changed, 154 insertions(+), 100 deletions(-)
+> 
+> diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
+> index d5573fd954..ed38a08a57 100644
+> --- a/hw/arm/bcm2835_peripherals.c
+> +++ b/hw/arm/bcm2835_peripherals.c
+> @@ -30,9 +30,9 @@
+>   #define SEPARATE_DMA_IRQ_MAX 10
+>   #define ORGATED_DMA_IRQ_COUNT 4
+>   
+> -static void create_unimp(BCM2835PeripheralState *ps,
+> -                         UnimplementedDeviceState *uds,
+> -                         const char *name, hwaddr ofs, hwaddr size)
+> +void create_unimp(BCMSocPeripheralBaseState *ps,
+> +                  UnimplementedDeviceState *uds,
+> +                  const char *name, hwaddr ofs, hwaddr size)
+>   {
+>       object_initialize_child(OBJECT(ps), name, uds, TYPE_UNIMPLEMENTED_DEVICE);
+>       qdev_prop_set_string(DEVICE(uds), "name", name);
 
-I would maybe make this init a reset instead, and then it could do
-the hypercall unregistering as well? You could rework that part of
-it into patch 1 (or reorder the patches).
 
-Thanks,
-Nick
+> diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
+> index 0203bb79d8..1fc96218f8 100644
+> --- a/include/hw/arm/bcm2835_peripherals.h
+> +++ b/include/hw/arm/bcm2835_peripherals.h
+> @@ -35,10 +35,13 @@
+>   #include "hw/misc/unimp.h"
+
+
+> +void create_unimp(BCMSocPeripheralBaseState *ps,
+> +                  UnimplementedDeviceState *uds,
+> +                  const char *name, hwaddr ofs, hwaddr size);
+
+Note for Peter, we should officialize this create_unimp() in "unimp.h",
+all we need is the parent object and MR pointer.
+
+> +void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp);
+> +
+>   #endif /* BCM2835_PERIPHERALS_H */
 
