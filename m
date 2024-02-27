@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3B4C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A13C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexau-00013X-IT; Tue, 27 Feb 2024 08:34:04 -0500
+	id 1rexau-00013G-Ds; Tue, 27 Feb 2024 08:34:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaW-0000nh-5g
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:40 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1rexaF-0000hM-5N
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:23 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaP-0002ub-2O
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:39 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-33d6f26ff33so3022306f8f.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:32 -0800 (PST)
+ id 1rexaD-0002q5-5b
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:22 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4129e8bc6c8so23956395e9.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040812; x=1709645612; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040799; x=1709645599; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QNvLoArRpYe6FOh3Nx+eEEIbesoQAZTPkpdQB+34Ov4=;
- b=l/O7EUV6KWDNA4lcA+MA3X9SOAPINsfk/2ocoaSh5R3TX3aoIbTSsJ/tmGxceqfZU9
- o4sScWlBAAJcWkSveHAqoGQumByDcuC+U8N9kBBqXO91w3JAZKoxOyQszPeU+9Umxcwi
- UUyY0dfnWJ086knXZaE1BIoBQQTn72hn034uOQKn5Bl/LQMkbevZtHnbZt3JEIR9T9KG
- +b+AK5wc0QkwvodIdE/CEtoGEcSbiPlCfX1CAFTdnf+afSkN71VafaIfD0ftb+4fkaI9
- RaYZAf+FgGZcbUVhIVMXeGE3pdJSsfj0JJC5+23tEppx7zaGfSHlJ8sqOYjBsZGi+ENz
- pg1Q==
+ :reply-to; bh=HUk8DGkkhSQV5DGWlGNjwA127IMsouq73vscyBxur68=;
+ b=GfVPf8nZYAU2zYCoYZOCblCweK7y+fVEhCFDXgomSYrt3w5yyxBDpb2hoh0QM9MOlj
+ kw+5uYY+pJ9+hlXMfRLP1ttNZ2G9SDSvYfUYx1AtfpkHP0vL1W1ztpV1Rt1njTtd/RUX
+ rtA4swz0JLgESCE0SWV/1yZQyypTSJaMJy1j+1B6eKJw+iHa5eWLqHIWjdl+QGi99sGh
+ em8nIQ+qMPJ/ygJ8ozp8ySVO/AC4L93o68hpWMm7rPAXLwXF8l8cUkR/rNk6zNQYNT2a
+ Bevuna6LN48+wAIe1gEaFhyFJ3IWZSjgk4hQLRTfXfyacrTHmZ20EYTyi3zrvgHvrLF8
+ Ma4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040812; x=1709645612;
+ d=1e100.net; s=20230601; t=1709040799; x=1709645599;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QNvLoArRpYe6FOh3Nx+eEEIbesoQAZTPkpdQB+34Ov4=;
- b=RuBi1jV7FWFgmLhYms3yuOcBoueLjJDuqETxYltf8wJNOKWJYfPIcyhGu8kf5KNFLa
- h+my6sms0YnxgRGQFLRCwLAcq9qz9r3Vhnqs0i8KzPQR6Fr/SLwXHc8LdIvx25pQCXnj
- SfkNDm4cQSIlfsQlAb/7fgfMxcaYd3tQY1MT3uE06DzqWqQUVJcdLhAETD7ouiTb3m2v
- oNvrC3yMY7bhHOSR12cufC1jdkO5PtCxi87LVsIi5jq6DkUqRqvC+uIX1TfirFpTqVH+
- Kqhjs35asxdYKJans1szms9VJxJkOqp5rXZw/k7f7KSrwdH3tsa8FAWSY6okuAL/Ten0
- Nt+g==
-X-Gm-Message-State: AOJu0YydOep1LpMK7KzSavQLnSqdelABuuhlhHXc0cCSBf/7t8DmxVY3
- 97QMeWr0bAEhtcTg7LPfXFeb/WJ8eXu/aaVrx9bEPgx+CPBkJb9PE5RRhHdW9K0Nd3jtBWL+gtg
- P
-X-Google-Smtp-Source: AGHT+IGk5KBCL1nEfmp7JZrdC4cLfBKk9yl8y/Zql+uUOQ0Dir2DwJYVC7gWbEli2Pcqc4bIRL8pXg==
-X-Received: by 2002:a5d:6502:0:b0:33d:e74b:e41 with SMTP id
- x2-20020a5d6502000000b0033de74b0e41mr1649465wru.66.1709040811800; 
- Tue, 27 Feb 2024 05:33:31 -0800 (PST)
+ bh=HUk8DGkkhSQV5DGWlGNjwA127IMsouq73vscyBxur68=;
+ b=OjTQAucsGoY2uaoZHQZdGxa68ng5kCewMm6TsxBFBtzbzw1ZDZJdWphWhXKIVlONUd
+ gfW8remvgxMhv6eTuDLhtiP5o0uoYs3jYiilelChv2KqUa+FYLFKU7QsGIGDn7sTL8G4
+ a1epjO4MkBLGqWJOB98KheFiJtxrg84goKXpGtNyfM9dWvREzCCk+5l9RKrhrebBVu+J
+ UU2U7/SkvJhnLo3uQ7qsaZt/VBcP5+xe6JCJ3A/EpTUZaclpe+dCsudlZbCm/cxdSntk
+ 9TwW8ctqAGvg0HnoShmRgIO12ISVveefxJS82Re2aisusk0EPT6It1/eUAqmK/p6F6zc
+ pvZw==
+X-Gm-Message-State: AOJu0Ywvz0bkbg4mDAzu4K92SESWtjQc6TJEPMAPjbQUzIhE6MtPlgSg
+ RWxHft/7PCrG6jia1FfGnkfTw7LcEUC293B7vKpLWP/aogmWT+j8AZzbgq4wi6pTvXy0sX4eTAI
+ S
+X-Google-Smtp-Source: AGHT+IEPBPR9eCnHznDz/hZiJyVjWPjsEX7q2OyyAR5bmgrImZmkVYYxgvF73FkwffXyJVMESpRV9A==
+X-Received: by 2002:adf:f486:0:b0:33d:3089:a840 with SMTP id
+ l6-20020adff486000000b0033d3089a840mr7042643wro.49.1709040799527; 
+ Tue, 27 Feb 2024 05:33:19 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.31
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:31 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:19 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/45] hw/arm/raspi4b: Temporarily disable unimplemented rpi4b
- devices
-Date: Tue, 27 Feb 2024 13:33:00 +0000
-Message-Id: <20240227133314.1721857-32-peter.maydell@linaro.org>
+Subject: [PULL 07/45] hw/arm: Use TYPE_OR_IRQ when connecting STM32L4x5 EXTI
+ fan-in IRQs
+Date: Tue, 27 Feb 2024 13:32:36 +0000
+Message-Id: <20240227133314.1721857-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,156 +95,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+From: Inès Varhol <ines.varhol@telecom-paris.fr>
 
-This commit adds RPi4B device tree modifications:
-- disable pcie, rng200, thermal sensor and genet devices
-  (they're going to be re-enabled in the following commits)
-- create additional memory region in device tree
-  if RAM amount exceeds VC base address.
-
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
+Fixes: 52671f69f7a4 ("[PATCH v8 0/3] Add device STM32L4x5 EXTI")
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Message-id: 20240220184145.106107-2-ines.varhol@telecom-paris.fr
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240226000259.2752893-12-sergey.kambalin@auriga.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/raspi_platform.h |  4 +++
- hw/arm/raspi.c                  |  5 +--
- hw/arm/raspi4b.c                | 62 +++++++++++++++++++++++++++++++++
- 3 files changed, 67 insertions(+), 4 deletions(-)
+ include/hw/arm/stm32l4x5_soc.h |  4 ++
+ hw/arm/stm32l4x5_soc.c         | 80 +++++++++++++++++++++++++++++-----
+ 2 files changed, 74 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/arm/raspi_platform.h b/include/hw/arm/raspi_platform.h
-index 45003e24258..0db146e5920 100644
---- a/include/hw/arm/raspi_platform.h
-+++ b/include/hw/arm/raspi_platform.h
-@@ -31,6 +31,9 @@
- #include "hw/boards.h"
- #include "hw/arm/boot.h"
+diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_soc.h
+index baf70410b5f..4f314b7a933 100644
+--- a/include/hw/arm/stm32l4x5_soc.h
++++ b/include/hw/arm/stm32l4x5_soc.h
+@@ -26,6 +26,7 @@
  
-+/* Registered machine type (matches RPi Foundation bootloader and U-Boot) */
-+#define MACH_TYPE_BCM2708   3138
-+
- #define TYPE_RASPI_BASE_MACHINE MACHINE_TYPE_NAME("raspi-base")
- OBJECT_DECLARE_TYPE(RaspiBaseMachineState, RaspiBaseMachineClass,
-                     RASPI_BASE_MACHINE)
-@@ -59,6 +62,7 @@ void raspi_base_machine_init(MachineState *machine,
- 
- void raspi_machine_class_common_init(MachineClass *mc,
-                                      uint32_t board_rev);
-+uint64_t board_ram_size(uint32_t board_rev);
- 
- #define MSYNC_OFFSET            0x0000   /* Multicore Sync Block */
- #define CCPT_OFFSET             0x1000   /* Compact Camera Port 2 TX */
-diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
-index 8b1a046912c..a7a662f40db 100644
---- a/hw/arm/raspi.c
-+++ b/hw/arm/raspi.c
-@@ -37,9 +37,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(RaspiMachineState, RASPI_MACHINE)
- #define FIRMWARE_ADDR_3 0x80000 /* Pi 3 loads kernel.img here by default */
- #define SPINTABLE_ADDR  0xd8 /* Pi 3 bootloader spintable */
- 
--/* Registered machine type (matches RPi Foundation bootloader and U-Boot) */
--#define MACH_TYPE_BCM2708   3138
--
- struct RaspiMachineState {
-     /*< private >*/
-     RaspiBaseMachineState parent_obj;
-@@ -75,7 +72,7 @@ static const struct {
-     [PROCESSOR_ID_BCM2838] = {TYPE_BCM2838, BCM283X_NCPUS},
- };
- 
--static uint64_t board_ram_size(uint32_t board_rev)
-+uint64_t board_ram_size(uint32_t board_rev)
- {
-     assert(FIELD_EX32(board_rev, REV_CODE, STYLE)); /* Only new style */
-     return 256 * MiB << FIELD_EX32(board_rev, REV_CODE, MEMORY_SIZE);
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index f1e91f7c98f..cb1b1f2f147 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -21,6 +21,7 @@
- #include "hw/arm/boot.h"
+ #include "exec/memory.h"
+ #include "hw/arm/armv7m.h"
++#include "hw/or-irq.h"
+ #include "hw/misc/stm32l4x5_syscfg.h"
+ #include "hw/misc/stm32l4x5_exti.h"
  #include "qom/object.h"
- #include "hw/arm/bcm2838.h"
-+#include <libfdt.h>
+@@ -36,12 +37,15 @@
+ #define TYPE_STM32L4X5XG_SOC "stm32l4x5xg-soc"
+ OBJECT_DECLARE_TYPE(Stm32l4x5SocState, Stm32l4x5SocClass, STM32L4X5_SOC)
  
- #define TYPE_RASPI4B_MACHINE MACHINE_TYPE_NAME("raspi4b")
- OBJECT_DECLARE_SIMPLE_TYPE(Raspi4bMachineState, RASPI4B_MACHINE)
-@@ -30,6 +31,66 @@ struct Raspi4bMachineState {
-     BCM2838State soc;
++#define NUM_EXTI_OR_GATES 4
++
+ struct Stm32l4x5SocState {
+     SysBusDevice parent_obj;
+ 
+     ARMv7MState armv7m;
+ 
+     Stm32l4x5ExtiState exti;
++    OrIRQState exti_or_gates[NUM_EXTI_OR_GATES];
+     Stm32l4x5SyscfgState syscfg;
+ 
+     MemoryRegion sram1;
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index f470ff74ec7..d1786e0da1c 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -26,6 +26,7 @@
+ #include "qapi/error.h"
+ #include "exec/address-spaces.h"
+ #include "sysemu/sysemu.h"
++#include "hw/or-irq.h"
+ #include "hw/arm/stm32l4x5_soc.h"
+ #include "hw/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+@@ -42,21 +43,24 @@
+ #define NUM_EXTI_IRQ 40
+ /* Match exti line connections with their CPU IRQ number */
+ /* See Vector Table (Reference Manual p.396) */
++/*
++ * Some IRQs are connected to the same CPU IRQ (denoted by -1)
++ * and require an intermediary OR gate to function correctly.
++ */
+ static const int exti_irq[NUM_EXTI_IRQ] = {
+     6,                      /* GPIO[0]                 */
+     7,                      /* GPIO[1]                 */
+     8,                      /* GPIO[2]                 */
+     9,                      /* GPIO[3]                 */
+     10,                     /* GPIO[4]                 */
+-    23, 23, 23, 23, 23,     /* GPIO[5..9]              */
+-    40, 40, 40, 40, 40, 40, /* GPIO[10..15]            */
+-    1,                      /* PVD                     */
++    -1, -1, -1, -1, -1,     /* GPIO[5..9] OR gate 23   */
++    -1, -1, -1, -1, -1, -1, /* GPIO[10..15] OR gate 40 */
++    -1,                     /* PVD OR gate 1           */
+     67,                     /* OTG_FS_WKUP, Direct     */
+     41,                     /* RTC_ALARM               */
+     2,                      /* RTC_TAMP_STAMP2/CSS_LSE */
+     3,                      /* RTC wakeup timer        */
+-    63,                     /* COMP1                   */
+-    63,                     /* COMP2                   */
++    -1, -1,                 /* COMP[1..2] OR gate 63   */
+     31,                     /* I2C1 wakeup, Direct     */
+     33,                     /* I2C2 wakeup, Direct     */
+     72,                     /* I2C3 wakeup, Direct     */
+@@ -69,18 +73,39 @@ static const int exti_irq[NUM_EXTI_IRQ] = {
+     65,                     /* LPTIM1, Direct          */
+     66,                     /* LPTIM2, Direct          */
+     76,                     /* SWPMI1 wakeup, Direct   */
+-    1,                      /* PVM1 wakeup             */
+-    1,                      /* PVM2 wakeup             */
+-    1,                      /* PVM3 wakeup             */
+-    1,                      /* PVM4 wakeup             */
++    -1, -1, -1, -1,         /* PVM[1..4] OR gate 1     */
+     78                      /* LCD wakeup, Direct      */
  };
  
-+/*
-+ * Add second memory region if board RAM amount exceeds VC base address
-+ * (see https://datasheets.raspberrypi.com/bcm2711/bcm2711-peripherals.pdf
-+ * 1.2 Address Map)
-+ */
-+static int raspi_add_memory_node(void *fdt, hwaddr mem_base, hwaddr mem_len)
-+{
-+    int ret;
-+    uint32_t acells, scells;
-+    char *nodename = g_strdup_printf("/memory@%" PRIx64, mem_base);
++static const int exti_or_gates_out[NUM_EXTI_OR_GATES] = {
++    23, 40, 63, 1,
++};
 +
-+    acells = qemu_fdt_getprop_cell(fdt, "/", "#address-cells",
-+                                   NULL, &error_fatal);
-+    scells = qemu_fdt_getprop_cell(fdt, "/", "#size-cells",
-+                                   NULL, &error_fatal);
-+    if (acells == 0 || scells == 0) {
-+        fprintf(stderr, "dtb file invalid (#address-cells or #size-cells 0)\n");
-+        ret = -1;
-+    } else {
-+        qemu_fdt_add_subnode(fdt, nodename);
-+        qemu_fdt_setprop_string(fdt, nodename, "device_type", "memory");
-+        ret = qemu_fdt_setprop_sized_cells(fdt, nodename, "reg",
-+                                           acells, mem_base,
-+                                           scells, mem_len);
++static const int exti_or_gates_num_lines_in[NUM_EXTI_OR_GATES] = {
++    5, 6, 2, 5,
++};
++
++/* 3 OR gates with consecutive inputs */
++#define NUM_EXTI_SIMPLE_OR_GATES 3
++static const int exti_or_gates_first_line_in[NUM_EXTI_SIMPLE_OR_GATES] = {
++    5, 10, 21,
++};
++
++/* 1 OR gate with non-consecutive inputs */
++#define EXTI_OR_GATE1_NUM_LINES_IN 5
++static const int exti_or_gate1_lines_in[EXTI_OR_GATE1_NUM_LINES_IN] = {
++    16, 35, 36, 37, 38,
++};
++
+ static void stm32l4x5_soc_initfn(Object *obj)
+ {
+     Stm32l4x5SocState *s = STM32L4X5_SOC(obj);
+ 
+     object_initialize_child(obj, "exti", &s->exti, TYPE_STM32L4X5_EXTI);
++    for (unsigned i = 0; i < NUM_EXTI_OR_GATES; i++) {
++        object_initialize_child(obj, "exti_or_gates[*]", &s->exti_or_gates[i],
++                                TYPE_OR_IRQ);
 +    }
+     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32L4X5_SYSCFG);
+ 
+     s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+@@ -175,8 +200,43 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+         return;
+     }
+     sysbus_mmio_map(busdev, 0, EXTI_ADDR);
 +
-+    g_free(nodename);
-+    return ret;
-+}
++    /* IRQs with fan-in that require an OR gate */
++    for (unsigned i = 0; i < NUM_EXTI_OR_GATES; i++) {
++        if (!object_property_set_int(OBJECT(&s->exti_or_gates[i]), "num-lines",
++                                     exti_or_gates_num_lines_in[i], errp)) {
++            return;
++        }
++        if (!qdev_realize(DEVICE(&s->exti_or_gates[i]), NULL, errp)) {
++            return;
++        }
 +
-+static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
-+{
-+    uint64_t ram_size;
++        qdev_connect_gpio_out(DEVICE(&s->exti_or_gates[i]), 0,
++            qdev_get_gpio_in(armv7m, exti_or_gates_out[i]));
 +
-+    /* Temporarily disable following devices until they are implemented */
-+    const char *nodes_to_remove[] = {
-+        "brcm,bcm2711-pcie",
-+        "brcm,bcm2711-rng200",
-+        "brcm,bcm2711-thermal",
-+        "brcm,bcm2711-genet-v5",
-+    };
-+
-+    for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
-+        const char *dev_str = nodes_to_remove[i];
-+
-+        int offset = fdt_node_offset_by_compatible(fdt, -1, dev_str);
-+        if (offset >= 0) {
-+            if (!fdt_nop_node(fdt, offset)) {
-+                warn_report("bcm2711 dtc: %s has been disabled!", dev_str);
++        if (i < NUM_EXTI_SIMPLE_OR_GATES) {
++            /* consecutive inputs for OR gates 23, 40, 63 */
++            for (unsigned j = 0; j < exti_or_gates_num_lines_in[i]; j++) {
++                sysbus_connect_irq(SYS_BUS_DEVICE(&s->exti),
++                    exti_or_gates_first_line_in[i] + j,
++                    qdev_get_gpio_in(DEVICE(&s->exti_or_gates[i]), j));
++            }
++        } else {
++            /* non-consecutive inputs for OR gate 1 */
++            for (unsigned j = 0; j < EXTI_OR_GATE1_NUM_LINES_IN; j++) {
++                sysbus_connect_irq(SYS_BUS_DEVICE(&s->exti),
++                    exti_or_gate1_lines_in[j],
++                    qdev_get_gpio_in(DEVICE(&s->exti_or_gates[i]), j));
 +            }
 +        }
 +    }
 +
-+    ram_size = board_ram_size(info->board_id);
-+
-+    if (info->ram_size > UPPER_RAM_BASE) {
-+        raspi_add_memory_node(fdt, UPPER_RAM_BASE, ram_size - UPPER_RAM_BASE);
-+    }
-+}
-+
- static void raspi4b_machine_init(MachineState *machine)
- {
-     Raspi4bMachineState *s = RASPI4B_MACHINE(machine);
-@@ -37,6 +98,7 @@ static void raspi4b_machine_init(MachineState *machine)
-     RaspiBaseMachineClass *mc = RASPI_BASE_MACHINE_GET_CLASS(machine);
-     BCM2838State *soc = &s->soc;
++    /* IRQs that don't require fan-in */
+     for (unsigned i = 0; i < NUM_EXTI_IRQ; i++) {
+-        sysbus_connect_irq(busdev, i, qdev_get_gpio_in(armv7m, exti_irq[i]));
++        if (exti_irq[i] != -1) {
++            sysbus_connect_irq(busdev, i,
++                               qdev_get_gpio_in(armv7m, exti_irq[i]));
++        }
+     }
  
-+    s_base->binfo.modify_dtb = raspi4_modify_dtb;
-     s_base->binfo.board_id = mc->board_rev;
- 
-     object_initialize_child(OBJECT(machine), "soc", soc,
+     for (unsigned i = 0; i < 16; i++) {
 -- 
 2.34.1
 
