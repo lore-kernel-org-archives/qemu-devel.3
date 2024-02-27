@@ -4,83 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE7D7C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 16:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37E2FC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 16:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf0Uc-0005jA-DF; Tue, 27 Feb 2024 11:39:46 -0500
+	id 1rf0cd-0000XK-EI; Tue, 27 Feb 2024 11:48:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rf0UX-0005hW-E4
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 11:39:42 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rf0UV-0001Sf-Ms
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 11:39:41 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33aeb088324so2888561f8f.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 08:39:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709051978; x=1709656778; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PmzEvvshvLP1GDs9Jpw2VNaIlVcbtq/GQDHmkM1hTWA=;
- b=Z791G7T8XdZZt3P4bHt4SK2y84GTKO3B+jS4UaQ9WXgXwbgAsn9y5snM1X8YpQZTU5
- HIskSjs++aLnzqcm3KX03lvrOHYsg2ibg2pKodW64LIg7ORxDrmD5ORodl5/+bhxAu9A
- yIhfJtQBc+dklFF6J6cv+y4YgPZeKKbTxKIsBQOuj9GkCVoTcJ/Sl3CDU07iIVcwLeZz
- uYxGtr7HJmID+rVIdC+yaf7dTIJqRNcsPfv+EjG5AdZVhyNvtyNjgL1m9n4dAUJ5ll0s
- yk1fEIld8S/sSkFQO+rUUK3pyTZz9MEh8FPqDpoD9ubR+8iqUoafXHYXgIMepKSwsqZ5
- OEvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709051978; x=1709656778;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PmzEvvshvLP1GDs9Jpw2VNaIlVcbtq/GQDHmkM1hTWA=;
- b=h8ozinWvgyP5k5lUZjwbpbN5zyGQOvYhIKsQBW6CxaSsFh2EZkfkMpRui+OcbFMrgl
- hGcvsRwDW2UPMX317e+EVHUviUVQIKCRF/HMv2i2g1YcASMnuFgOguWcgEq8774dBLYc
- b48I4ZH9cBiNVhY5Lu1tJ9gK73AI+uaj9vXEoltfOM69wdhlt2Woqtyx0KzaQMPNxNoX
- QSzZDb0HpZDI87rC+/tWMoiHv55ED30S0YzyZoIsFRUQTPxlJ0Qwnq+ND8R0OB+r0dbI
- ntgCRuuXpDJv6BEj62IQq7Y4EiI6o5u1wXHY1KEOG6j4URMvTE/vBjIxtDbCtL8cOXNN
- aTzQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW20RMolK0LTzHOuLUqoixu+c91GXz6DunPOsRW1fT95ahdjaWs7XcO+y4M8r5Z0P+hFQkXayOl8MEb6LYsl2HIFwKdJiQ=
-X-Gm-Message-State: AOJu0YzFVsLngpEbcoZDiVwBXeLi0TkIZsMxJmp6MfRPBRkkewuZY/Uz
- Al0pKZb13AvDT/BxVXLrhrc79NC3Yx6gWnLgCErJtH8ZU0P366x33hBIeYgp5bo=
-X-Google-Smtp-Source: AGHT+IFgAIDoS02I9wnMtE/LJsG74/7e8jY3O1FTsCcxF31calgLoDT+SASTlnJF0pnto8vMz9H0eQ==
-X-Received: by 2002:a5d:6502:0:b0:33d:e74b:e41 with SMTP id
- x2-20020a5d6502000000b0033de74b0e41mr2049039wru.66.1709051977999; 
- Tue, 27 Feb 2024 08:39:37 -0800 (PST)
-Received: from [192.168.69.100] ([176.176.160.23])
- by smtp.gmail.com with ESMTPSA id
- r15-20020adfce8f000000b0033db2d6bf83sm11734801wrn.34.2024.02.27.08.39.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Feb 2024 08:39:37 -0800 (PST)
-Message-ID: <00a87926-49bf-4945-94fd-99f5c3a73bb0@linaro.org>
-Date: Tue, 27 Feb 2024 17:39:33 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rf0cY-0000WE-Ed; Tue, 27 Feb 2024 11:47:59 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rf0cW-00034c-Ko; Tue, 27 Feb 2024 11:47:58 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BB1004E6013;
+ Tue, 27 Feb 2024 17:47:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 4aFTFiWexcFc; Tue, 27 Feb 2024 17:47:49 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 746824E6005; Tue, 27 Feb 2024 17:47:49 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 70D007456FE;
+ Tue, 27 Feb 2024 17:47:49 +0100 (CET)
+Date: Tue, 27 Feb 2024 17:47:49 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org
+cc: qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: TCG change broke MorphOS boot on sam460ex
+Message-ID: <fe59ceb1-e8cd-f488-d6f0-6372923a8a33@eik.bme.hu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ide/ahci: Rename ahci_internal.h to ahci-internal.h
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20240227131310.C24EB4E6005@zero.eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240227131310.C24EB4E6005@zero.eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,19 +61,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/2/24 14:13, BALATON Zoltan wrote:
-> Other headers now use dash instead of underscore. Rename
-> ahci_internal.h accordingly for consistency.
-> 
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->   hw/ide/{ahci_internal.h => ahci-internal.h} | 0
->   hw/ide/ahci.c                               | 2 +-
->   hw/ide/ich.c                                | 2 +-
->   3 files changed, 2 insertions(+), 2 deletions(-)
->   rename hw/ide/{ahci_internal.h => ahci-internal.h} (100%)
+Hello,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Commit 18a536f1f8 (accel/tcg: Always require can_do_io) broke booting 
+MorphOS on sam460ex (this was before 8.2.0 and I thought I've verified it 
+before that release but apparently missed it back then). It can be 
+reproduced with https://www.morphos-team.net/morphos-3.18.iso and 
+following command:
 
-Thanks!
+qemu-system-ppc -M sam460ex -serial stdio -d unimp,guest_errors \
+   -drive if=none,id=cd,format=raw,file=morphos-3.18.iso \
+   -device ide-cd,drive=cd,bus=ide.1
+
+before:
+Invalid read at addr 0xC08001216, size 1, region '(null)', reason: rejected
+Invalid read at addr 0x216, size 1, region '(null)', reason: rejected
+Invalid read at addr 0x4FDF6BFB0, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xE10000014, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xE10000214, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xE30000014, size 4, region '(null)', reason: rejected
+Invalid write at addr 0xE30000214, size 4, region '(null)', reason: rejected
+8.440| sam460_i2c_write: Error while writing, sts 34
+8.463|
+8.463|
+8.463| ABox 1.30 (2.7.2018)...
+
+after:
+Invalid read at addr 0xC08001216, size 1, region '(null)', reason: rejected
+Invalid read at addr 0x216, size 1, region '(null)', reason: rejected
+Invalid read at addr 0x4F0C01374, size 4, region '(null)', reason: rejected
+invalid/unsupported opcode: 00 - 00 - 00 - 00 (00000000) 00c01374
+Invalid read at addr 0x4F0000700, size 4, region '(null)', reason: rejected
+invalid/unsupported opcode: 00 - 00 - 00 - 00 (00000000) 00000700
+
+Not sure what it's trying to do here, maybe decompressing some code and 
+then trying to execute it? Any idea what could be the problem or what to 
+check further?
+
+Regards,
+BALATON Zoltan
 
