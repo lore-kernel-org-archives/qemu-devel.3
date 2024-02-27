@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D248C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCD3C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezpn-0001M5-32; Tue, 27 Feb 2024 10:57:35 -0500
+	id 1rezqG-0001ff-RL; Tue, 27 Feb 2024 10:58:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rezpi-0001Lf-RW
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:57:32 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1rezqF-0001f8-Ed
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:58:03 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rezpf-0001iH-Dh
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:57:30 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-33d6bd39470so2459586f8f.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 07:57:26 -0800 (PST)
+ id 1rezqE-0001pE-3F
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:58:03 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33d28468666so3900479f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 07:58:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709049445; x=1709654245; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709049480; x=1709654280; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8vgbcee2yAiUAzlLG8r9x7AsJ9NiZOTZ6l/t1ofD124=;
- b=AGa9fUB4wnWgLwDcN1Rz2fgGX0ZgxeUCSBEOpNsIIdElbhAzV+HLEu7mUa93V2Vtt6
- /OWlboinIe5ud7DY3KsPO2KqCQi74X3eKvQM8+hZsjb0ZK7u/CWiDN5L/V2iomrLCbne
- Ub6DwzcFcjNgFgmPDanhDjqE68Q43OQwyc50/7GGpb5XDZyFOjEN2mWuNIbZcRMqn4Rv
- zx+h/7VGkBj2LQzUxZbMQ8k3aiS2Mwzex6yVubcPD2jM0M1BgUxJNdUk1nxJdqq37C88
- dmLE/0uEOZMCsFnKaOQRnFpMb7j+CZInVTDRlROS9By1zcdGJf97JkRsRJUmpry9Uh+Z
- PSJg==
+ bh=iyG4WRApCpMm0PthLANK4Iv3IU7KnLmZ0cnKrqmdA/o=;
+ b=vP5/OFs2lcEBj7fYJHIIO9NHijjjnq8lKS9SA3dfAKHvE23HYfiOZDZmmfW5zsq3S2
+ 5lOoz41LV4fp//r6dypwHO3IIThpZcM9linNBrt1IQzeXb8PSwZQThlxyfel3wwB/z1K
+ 3pM3LZCbkQBE5ySO6TR7ri5ifRwX+sq5+VmOwBuGdQp7urr6t+QvAKYPlrpNe75fBEAo
+ v4G7vcQgFLsvTUR+F/MI3bq8Al+Z3qYjhEr9ocN67yMlQsnjelQsmzyxI5fXzwJmAO83
+ Qo+qEetkBva+5YeK7brgz29V5OIAgEEV+BUGfCnULEx6J4nyVC258KRwn/2O6aaJHVDG
+ K0lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709049445; x=1709654245;
+ d=1e100.net; s=20230601; t=1709049480; x=1709654280;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8vgbcee2yAiUAzlLG8r9x7AsJ9NiZOTZ6l/t1ofD124=;
- b=HtzHJNRrKbFLWHd/LGGlSDailoXl2gpwZJqxEeGs7yWP04OirEOgNGT3cdfRzytprf
- LlkKEbczQ3UGpdRdVq8JRA90ce36ONv+PJ1eBPNSj9NhbX4qLvZLvt7DJyJgdgxaoM2E
- UXM+vfxxdOhLTWDP3qfKjY2jH+ehfMTmNhRL/IS5fG2qeVt7DooLBaubr3S+JCqGgbxK
- maQkx40v5cBXYA89BVqEml693xh8KCTMycd70RQg2SX3cO9hdO2wwGT55yADuKKDM/u6
- lf9ywDRypz8RBehb71D0Mt3PS2VElpYpd540gyiNNf3Ov6SlI0mYxh6R6HGx5xNH9SY9
- ogQw==
-X-Gm-Message-State: AOJu0Yz/yzbGDgdue1ozEFFhNNR/wm+CfDAnmADUj/udP1YzBFHFV+I0
- h+IwDjDCoO45JWjA1ZymSfAd37kONUhDtbbGvvAIHBR1uG1M3nbTCQyX95t5/Hw=
-X-Google-Smtp-Source: AGHT+IF/CjRV81jB/kaqxOD95RcmRw5dZVqRAo2cGFEbguksYNV7uL8IUqvQRQRABHYVu0PXpGObTw==
-X-Received: by 2002:adf:db4b:0:b0:33d:76a9:89ae with SMTP id
- f11-20020adfdb4b000000b0033d76a989aemr7041434wrj.12.1709049445453; 
- Tue, 27 Feb 2024 07:57:25 -0800 (PST)
+ bh=iyG4WRApCpMm0PthLANK4Iv3IU7KnLmZ0cnKrqmdA/o=;
+ b=hru5l04tPWJ08KKmDjlq7tViUI3Sgr1a2U7rax/jTj9t5c0wF8SCxjyQ8RNxuaH03S
+ r5EtKai56NgdwmFmGpoLhnjIOO9giIwTM4kcbjoXHbvaSH79ldJXEDTVI4ZVF5QGtjPk
+ CyUjRn33HSgmIxntb3isDvrdhZjtcniQo4++PV89xiP1exdGk1MP7QzN8CCRrt3vZAuT
+ vPdw6WdmJkgICm7qALSBzNXDtbyVIezvEx+V3K5Bzd2OJ52STe9agsxuS3sSxihNg17r
+ DMJGMScPS+QmxCAy4JRvrJDUqwvTkXffrjzf+33FjHEJ7OY3OH/340xUwZBXgPehjOi8
+ uOAw==
+X-Gm-Message-State: AOJu0Yx/Szt73waKkjevfeEz3RC/Tw4pxP1+UAO8qe2THsTG/lMmAT31
+ ZHUjqY79X38nDIemHvpX/WnRd3Z2b27Q4vkzqf4FiyfNvpkqLT/yYQMHbVni6PQ=
+X-Google-Smtp-Source: AGHT+IEiU+5kJlAhT8AwqJHxwCFxraXE4AY8JbA2ZihKZUEg3jSzP5kNrleS5OpJj0iYA1mJkBkbgg==
+X-Received: by 2002:a05:6000:88b:b0:33d:f1d8:7a1c with SMTP id
+ cs11-20020a056000088b00b0033df1d87a1cmr1345459wrb.67.1709049480360; 
+ Tue, 27 Feb 2024 07:58:00 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- g14-20020a05600c310e00b00412a3420e71sm8075644wmo.0.2024.02.27.07.57.25
+ bx10-20020a5d5b0a000000b0033b2799815csm11990290wrb.86.2024.02.27.07.58.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 07:57:25 -0800 (PST)
+ Tue, 27 Feb 2024 07:58:00 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B7CAD5F78A;
- Tue, 27 Feb 2024 15:57:24 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C3E8C5F781;
+ Tue, 27 Feb 2024 15:57:59 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
@@ -69,20 +69,20 @@ Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
  dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
  <bleal@redhat.com>
-Subject: Re: [PATCH v3 1/9] scripts/replay-dump.py: Update to current rr
- record format
-In-Reply-To: <20240226082945.1452499-2-npiggin@gmail.com> (Nicholas Piggin's
- message of "Mon, 26 Feb 2024 18:29:37 +1000")
+Subject: Re: [PATCH v3 2/9] scripts/replay-dump.py: rejig decoders in event
+ number order
+In-Reply-To: <20240226082945.1452499-3-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Mon, 26 Feb 2024 18:29:38 +1000")
 References: <20240226082945.1452499-1-npiggin@gmail.com>
- <20240226082945.1452499-2-npiggin@gmail.com>
+ <20240226082945.1452499-3-npiggin@gmail.com>
 User-Agent: mu4e 1.12.0; emacs 29.1
-Date: Tue, 27 Feb 2024 15:57:24 +0000
-Message-ID: <87wmqpdhnf.fsf@draig.linaro.org>
+Date: Tue, 27 Feb 2024 15:57:59 +0000
+Message-ID: <87r0gxdhmg.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,12 +107,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Nicholas Piggin <npiggin@gmail.com> writes:
 
-> The v12 format support for replay-dump has a few issues still. This
-> fixes async decoding; adds event, shutdown, and end decoding; fixes
-> audio in / out events, fixes checkpoint checking of following async
-> events.
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Sort decoder functions to be ascending in order of event number,
+> same as the decoder tables.
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
