@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1814DC54E4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7901EC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reygN-0005EX-An; Tue, 27 Feb 2024 09:43:47 -0500
+	id 1reygS-0005La-Qz; Tue, 27 Feb 2024 09:43:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reygK-0005Dh-FG
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:43:44 -0500
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ id 1reygO-0005IB-Mg
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:43:49 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reygF-0001x2-Bj
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:43:43 -0500
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2d22b8801b9so71648761fa.0
+ id 1reygF-0001x6-BM
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:43:48 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-412a9457b2eso9775535e9.1
  for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:43:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1709045016; x=1709649816; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gWUgYgGbBq0Rftb97XkjY8209ZR6PASvKOfa7J1VRq0=;
- b=DsEusL3mp+pNDNgSdfIXipYTEHMwIv1C5wv+x6tYby4+6Z6oTuRIBmYCbEPnhVnQbp
- vl2d8JKa5sXyKEXX60tkipRD30kIV3DYiA3hwZvembxZrB3cF2QE+K5QXGub2Izf8x2/
- wBXWolq+TG5VNirEHyNkwtW2uOhiQ0l4E6bvin842+U8HYBOXm7Qli7OMsnHpagxzSf6
- AG1EbaEZ8o5AAtXCwCeUwowCSlcV4MApJyzH2JLyKkQ2J6B0/3zcpSOLV8xuqwMLM3Ux
- nWHNPiSwih9ILpiMpxhruUA4+4AtjP5RAiaTc7RwqsrPqbcnSpYTjO4GzOLCI9QHAiar
- gEeg==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ij5ZdnIJjaB2d5j9f+EAx/syvnIPQ+iaNJFFiZwFn30=;
+ b=vJchKstrVNiNk53ZAd2oONmiMJyS/I5gLDGVsQwqyRj7Dx7OQ198eqyjtNxc0Q/mNP
+ Oy9boSu84k1WlnBhS1uECN+JT7VlxyH2eepUg/q9AnTwc4buaWAFsYpBzusPWE5wqbKD
+ ASTAJ7aQTxpOnrKcYsi7F0BQc6+A8be/MJjs4om6Vu41Q6drmKqs3O5GEi9xZPI9tKA1
+ XAlk3VMHUrc7Iclt3a1CM/cxpVjfdyDUp2qhYfCpentnFXQuRL2SOknhjfjBI1Qy014O
+ i+pJVoeqFQlIwzXJ1mcmO85gWWYtOoxi0T04WPHCoJHYlnShdhH2a25cKz5t+AJhqzEM
+ bKoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1709045016; x=1709649816;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gWUgYgGbBq0Rftb97XkjY8209ZR6PASvKOfa7J1VRq0=;
- b=twfUvLRHeqxbMijX+njwMN0L0egqFUxd0dfgvNzyoLSVcEstGhOxU72u0Tdpvw6MQQ
- Tz3GnhwxgUsmrTs44xIi1A6EhQdrb0BBESLP5px1HjQ6yK4T9qJ9IrkFmAploQ0Nwky5
- YYVD3hUq9kE4ARjw8xRonOtHzyxtfTHrYyXj/ofp1qjSdyd9dCw0BSn8GOCc/ALP8mmc
- bISKLe7Ifg4hl0DFab9r8ShTcCqMQWkc+f9Obc3bc4f+ETFjIuMiU5kDL5WJWQSNXnVU
- KovxME5247GCasnvma9UnDB06ku32/PQWoeRqyN/6vRLf1f+xilINqizU7qMMC0mLKBf
- D10A==
-X-Gm-Message-State: AOJu0YxCT22BgPO6xRPQBZOdaUKAzTDhYbnfndznlJID63FpI+/Pw7XS
- SMNpcfUDtmZkUUbvBNYFTx2sVivq6K7MEyrqabCcbCvfKfqMW9uz+tkRs5J00ik=
-X-Google-Smtp-Source: AGHT+IHiWkm0zLvHy0VujHECXA+/T4fBxoW067Z6kPSf83rVULgXuztBLmC3PPGLPkr26yR47wOHkw==
-X-Received: by 2002:a2e:a9a6:0:b0:2d2:4348:766 with SMTP id
- x38-20020a2ea9a6000000b002d243480766mr3771768ljq.19.1709045016097; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ij5ZdnIJjaB2d5j9f+EAx/syvnIPQ+iaNJFFiZwFn30=;
+ b=BnmCgpCeNp0T/c61s3po56eg3kVuRvZc0VbkAOgfpzpUge5Ldm9bdmwz+G2RhShUS6
+ OgWo2L38LjeOdB5iKEZVXKjcUYN3hcxNWzSSzfBgMzMb02M5IEq9WY2zVc2lmeHh8o52
+ dL3UdUQlrtrCDH00mB7E7X269HnvEytmF1u5gkOc2ER/G5Vcm7SuWgAyV6WEs9DaLyWd
+ lr3dVJXE2DxqnJLcwrX4lBO1lfg9OdihKzXosHYfKByQ0pEN4tB02E6xRCRHy+QgDhEY
+ 7fxgEFrnHWgsuWrP+d1jjRXq4PEDwKqMJ+twkFU7mN2UGmTKX5zVcjHUXcxYekKAnO6w
+ b7Yw==
+X-Gm-Message-State: AOJu0Yw/4zoJfhQ3xAjsHiscSDt2+HZ/xnu93WC9SCjHjuNDRXaT63cF
+ gVIn7386k/u4Nxv62doHz6IEkwxY28o9gfu2NXVRutkvRakob9zX7cz2M40+rG8=
+X-Google-Smtp-Source: AGHT+IEGS2vftHGUTYkCBG6KHKkHoYCekFxa+LvbTXnZSRBpQQ3AZilviHOmiwHXb7kn03s57jN0vg==
+X-Received: by 2002:a05:600c:4591:b0:412:a332:e1cf with SMTP id
+ r17-20020a05600c459100b00412a332e1cfmr6651963wmo.1.1709045016391; 
  Tue, 27 Feb 2024 06:43:36 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- q14-20020a05600c46ce00b00411a6ce0f99sm11515764wmo.24.2024.02.27.06.43.35
+ l20-20020a7bc454000000b0041249ea88b9sm11378267wmi.16.2024.02.27.06.43.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 06:43:35 -0800 (PST)
+ Tue, 27 Feb 2024 06:43:36 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 641355F753;
+ by draig.lan (Postfix) with ESMTP id C47C05F8FC;
  Tue, 27 Feb 2024 14:43:35 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -88,23 +89,24 @@ Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 00/29] maintainer updates for 9.0 pre-PR (tests,
- plugin register support)
-Date: Tue, 27 Feb 2024 14:43:06 +0000
-Message-Id: <20240227144335.1196131-1-alex.bennee@linaro.org>
+Subject: [PATCH v4 04/29] tests/vm: update openbsd image to 7.4
+Date: Tue, 27 Feb 2024 14:43:10 +0000
+Message-Id: <20240227144335.1196131-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240227144335.1196131-1-alex.bennee@linaro.org>
+References: <20240227144335.1196131-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,146 +122,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test patch is a simple house keeping one to clean up some
-inadvertent GPLv3 tagging to GPLv2-or-later. I've also increased the
-timeout for check-tcg due to TCI timeouts.
+The old links are dead so even if we have the ISO cached we can't
+finish the install. Update to the current stable and tweak the install
+strings.
 
-The main bulk of this series is register reading support for TCG
-plugins. The main change to the API is that the get/read_register
-functions are now implicitly vCPU context only so have dropped the
-vcpu index parameter and use current_cpu instead. This avoids the need
-for locking the gdbstub structures in case there is a cross-vCPU
-access.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2192
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/vm/openbsd | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-I've pulled in some patches from Pierrick's inline enhancement series
-that allow this to happen (making sure the init callback is in the
-vCPU context).
-
-Changes for v4
-
-Addressed final comments from Akihiko
-Added BSD changes
-
-Changes for v3:
-
-Now we just use GINT_TO_POINTER to wrap the gdb_regnum with a comment
-this might become and opaque structure later. Either way the plugin
-shouldn't treat it like anything other than an anonymous handle.
-
-The following still need review:
-
-  tests/tcg: expand insn test case to exercise register API
-  gdbstub: expose api to find registers
-  tests/vm: update openbsd image to 7.4 (0 acks, 1 sobs, 1 tbs)
-  tests/vm: avoid re-building the VM images all the time
-
-But I'd like to get this merged soon so its not a mad rush before soft
-freeze and so we can get the new inline support stabilised and merged.
-
-Alex.
-
-Akihiko Odaki (11):
-  target/arm: Use GDBFeature for dynamic XML
-  target/ppc: Use GDBFeature for dynamic XML
-  target/riscv: Use GDBFeature for dynamic XML
-  gdbstub: Use GDBFeature for gdb_register_coprocessor
-  gdbstub: Use GDBFeature for GDBRegisterState
-  gdbstub: Change gdb_get_reg_cb and gdb_set_reg_cb
-  gdbstub: Simplify XML lookup
-  gdbstub: Infer number of core registers from XML
-  hw/core/cpu: Remove gdb_get_dynamic_xml member
-  gdbstub: Add members to identify registers to GDBFeature
-  plugins: Use different helpers when reading registers
-
-Alex Bennée (13):
-  tests/tcg: update licenses to GPLv2 as intended
-  tests/tcg: bump TCG test timeout to 120s
-  tests/vm: avoid re-building the VM images all the time
-  tests/vm: update openbsd image to 7.4
-  linux-user: ensure nios2 processes queued work
-  gdbstub: expose api to find registers
-  plugins: create CPUPluginState and migrate plugin_mask
-  plugins: add an API to read registers
-  tests/tcg: expand insn test case to exercise register API
-  contrib/plugins: fix imatch
-  contrib/plugins: extend execlog to track register changes
-  docs/devel: lift example and plugin API sections up
-  docs/devel: document some plugin assumptions
-
-Pierrick Bouvier (5):
-  plugins: remove previous n_vcpus functions from API
-  plugins: add qemu_plugin_num_vcpus function
-  plugins: fix order of init/idle/resume callback
-  cpu: call plugin init hook asynchronously
-  docs/devel: plugins can trigger a tb flush
-
- docs/devel/multi-thread-tcg.rst               |   1 +
- docs/devel/tcg-plugins.rst                    |  72 +++-
- accel/tcg/plugin-helpers.h                    |   3 +-
- include/exec/gdbstub.h                        |  43 ++-
- include/hw/core/cpu.h                         |  18 +-
- include/qemu/plugin.h                         |  14 +
- include/qemu/qemu-plugin.h                    |  59 +++-
- include/qemu/typedefs.h                       |   1 +
- plugins/plugin.h                              |   6 +-
- target/arm/cpu.h                              |  27 +-
- target/arm/internals.h                        |  14 +-
- target/hexagon/internal.h                     |   4 +-
- target/microblaze/cpu.h                       |   4 +-
- target/ppc/cpu-qom.h                          |   1 +
- target/ppc/cpu.h                              |   5 +-
- target/riscv/cpu.h                            |   5 +-
- target/s390x/cpu.h                            |   2 -
- tests/tcg/aarch64/semicall.h                  |   4 +-
- tests/tcg/arm/semicall.h                      |   4 +-
- tests/tcg/multiarch/float_helpers.h           |   4 +-
- tests/tcg/riscv64/semicall.h                  |   4 +-
- accel/tcg/plugin-gen.c                        |  46 ++-
- contrib/plugins/cache.c                       |   2 +-
- contrib/plugins/execlog.c                     | 318 +++++++++++++++---
- gdbstub/gdbstub.c                             | 169 ++++++----
- hw/core/cpu-common.c                          |  19 +-
- linux-user/nios2/cpu_loop.c                   |   1 +
- plugins/api.c                                 |  96 ++++--
- plugins/core.c                                |  28 +-
- target/arm/cpu.c                              |   2 -
- target/arm/cpu64.c                            |   1 -
- target/arm/gdbstub.c                          | 230 ++++++-------
- target/arm/gdbstub64.c                        | 122 +++----
- target/avr/cpu.c                              |   1 -
- target/hexagon/cpu.c                          |   4 +-
- target/hexagon/gdbstub.c                      |  10 +-
- target/i386/cpu.c                             |   2 -
- target/loongarch/cpu.c                        |   2 -
- target/loongarch/gdbstub.c                    |  13 +-
- target/m68k/cpu.c                             |   1 -
- target/m68k/helper.c                          |  26 +-
- target/microblaze/cpu.c                       |   6 +-
- target/microblaze/gdbstub.c                   |  14 +-
- target/ppc/cpu_init.c                         |   7 -
- target/ppc/gdbstub.c                          | 114 ++++---
- target/riscv/cpu.c                            |  15 -
- target/riscv/gdbstub.c                        | 145 ++++----
- target/rx/cpu.c                               |   1 -
- target/s390x/cpu.c                            |   1 -
- target/s390x/gdbstub.c                        | 105 +++---
- tests/plugin/insn.c                           |  21 ++
- .../multiarch/arm-compat-semi/semiconsole.c   |   4 +-
- .../multiarch/arm-compat-semi/semihosting.c   |   4 +-
- tests/tcg/multiarch/float_convd.c             |   4 +-
- tests/tcg/multiarch/float_convs.c             |   4 +-
- tests/tcg/multiarch/float_madds.c             |   4 +-
- tests/tcg/multiarch/libs/float_helpers.c      |   4 +-
- plugins/qemu-plugins.symbols                  |   5 +-
- scripts/feature_to_c.py                       |  14 +-
- tests/tcg/Makefile.target                     |   9 +-
- tests/tcg/i386/system/boot.S                  |   6 +-
- tests/tcg/x86_64/system/boot.S                |   6 +-
- tests/vm/Makefile.include                     |   2 +-
- tests/vm/basevm.py                            |   4 +-
- tests/vm/openbsd                              |   9 +-
- 65 files changed, 1235 insertions(+), 661 deletions(-)
-
+diff --git a/tests/vm/openbsd b/tests/vm/openbsd
+index 85c5bb3536c..85c98636332 100755
+--- a/tests/vm/openbsd
++++ b/tests/vm/openbsd
+@@ -22,8 +22,8 @@ class OpenBSDVM(basevm.BaseVM):
+     name = "openbsd"
+     arch = "x86_64"
+ 
+-    link = "https://cdn.openbsd.org/pub/OpenBSD/7.2/amd64/install72.iso"
+-    csum = "0369ef40a3329efcb978c578c7fdc7bda71e502aecec930a74b44160928c91d3"
++    link = "https://cdn.openbsd.org/pub/OpenBSD/7.4/amd64/install74.iso"
++    csum = "a1001736ed9fe2307965b5fcdb426ae11f9b80d26eb21e404a705144a0a224a0"
+     size = "20G"
+     pkgs = [
+         # tools
+@@ -99,10 +99,10 @@ class OpenBSDVM(basevm.BaseVM):
+         self.console_wait_send("(I)nstall",               "i\n")
+         self.console_wait_send("Terminal type",           "xterm\n")
+         self.console_wait_send("System hostname",         "openbsd\n")
+-        self.console_wait_send("Which network interface", "vio0\n")
++        self.console_wait_send("Network interface to configure", "vio0\n")
+         self.console_wait_send("IPv4 address",            "autoconf\n")
+         self.console_wait_send("IPv6 address",            "none\n")
+-        self.console_wait_send("Which network interface", "done\n")
++        self.console_wait_send("Network interface to configure", "done\n")
+         self.console_wait("Password for root account")
+         self.console_send("%s\n" % self._config["root_pass"])
+         self.console_wait("Password for root account")
+@@ -124,6 +124,7 @@ class OpenBSDVM(basevm.BaseVM):
+         self.console_wait_send("Allow root ssh login",    "yes\n")
+         self.console_wait_send("timezone",                "UTC\n")
+         self.console_wait_send("root disk",               "\n")
++        self.console_wait_send("Encrypt the root disk with a passphrase", "no\n")
+         self.console_wait_send("(W)hole disk",            "\n")
+         self.console_wait_send("(A)uto layout",           "c\n")
+ 
 -- 
 2.39.2
 
