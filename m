@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338EDC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A280C54E41
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf4KW-0005Zx-4D; Tue, 27 Feb 2024 15:45:36 -0500
+	id 1rf4Ku-00061H-SV; Tue, 27 Feb 2024 15:46:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=GitP=KE=redhat.com=clg@ozlabs.org>)
- id 1rf1ol-00049O-Nd
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:39 -0500
+ id 1rf1ob-0003Sy-5C
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:29 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=GitP=KE=redhat.com=clg@ozlabs.org>)
- id 1rf1oi-0001XD-Op
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:39 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TklkB5Jcbz4wyx;
- Wed, 28 Feb 2024 05:04:34 +1100 (AEDT)
+ id 1rf1oY-0001Vm-J2
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:28 -0500
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Tklk16cF7z4wyr;
+ Wed, 28 Feb 2024 05:04:25 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tklk812QSz4wyj;
- Wed, 28 Feb 2024 05:04:31 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tkljx11Djz4wyj;
+ Wed, 28 Feb 2024 05:04:20 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 10/21] migration: Modify ram_init_bitmaps() to report dirty
- tracking errors
-Date: Tue, 27 Feb 2024 19:03:34 +0100
-Message-ID: <20240227180345.548960-11-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
+Subject: [PATCH v2 08/21] memory: Add Error** argument to .log_global*()
+ handlers
+Date: Tue, 27 Feb 2024 19:03:32 +0100
+Message-ID: <20240227180345.548960-9-clg@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240227180345.548960-1-clg@redhat.com>
 References: <20240227180345.548960-1-clg@redhat.com>
@@ -73,85 +76,384 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The .save_setup() handler has now an Error** argument that we can use
-to propagate errors reported by the .log_global_start() handler. Do
-that for the RAM. The caller qemu_savevm_state_setup() will store the
-error under the migration stream for later detection in the migration
-sequence.
+Modify all log_global*() handlers to take an Error** parameter and
+return a bool. A new MEMORY_LISTENER_CALL_LOG_GLOBAL macro looping on
+the listeners is introduced to handle a possible error, which will
+would interrupt the loop if necessary.
 
+To be noted a change in memory_global_dirty_log_start() behavior as it
+will return as soon as an error is detected.
+
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Anthony Perard <anthony.perard@citrix.com>
+Cc: Paul Durrant <paul@xen.org>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- migration/ram.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ include/exec/memory.h | 15 ++++++--
+ hw/i386/xen/xen-hvm.c |  6 ++--
+ hw/vfio/common.c      |  8 +++--
+ hw/virtio/vhost.c     |  6 ++--
+ system/memory.c       | 83 +++++++++++++++++++++++++++++++++++++------
+ system/physmem.c      |  5 +--
+ 6 files changed, 101 insertions(+), 22 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 9fb1875aad73b2fa009199bdfa8960339df7287d..23f4df4779309bbbe164c56c1436b60d65749860 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2802,9 +2802,8 @@ static void migration_bitmap_clear_discarded_pages(RAMState *rs)
-     }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 8626a355b310ed7b1a1db7978ba4b394032c2f15..4bc146c5ebdd377cd14a4e462f32cc945db5a0a8 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -998,8 +998,11 @@ struct MemoryListener {
+      * active at that time.
+      *
+      * @listener: The #MemoryListener.
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Return: true on success, else false setting @errp with error.
+      */
+-    void (*log_global_start)(MemoryListener *listener);
++    bool (*log_global_start)(MemoryListener *listener, Error **errp);
+ 
+     /**
+      * @log_global_stop:
+@@ -1009,8 +1012,11 @@ struct MemoryListener {
+      * the address space.
+      *
+      * @listener: The #MemoryListener.
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Return: true on success, else false setting @errp with error.
+      */
+-    void (*log_global_stop)(MemoryListener *listener);
++    bool (*log_global_stop)(MemoryListener *listener, Error **errp);
+ 
+     /**
+      * @log_global_after_sync:
+@@ -1019,8 +1025,11 @@ struct MemoryListener {
+      * for any #MemoryRegionSection.
+      *
+      * @listener: The #MemoryListener.
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Return: true on success, else false setting @errp with error.
+      */
+-    void (*log_global_after_sync)(MemoryListener *listener);
++    bool (*log_global_after_sync)(MemoryListener *listener, Error **errp);
+ 
+     /**
+      * @eventfd_add:
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index f42621e6742552035122ea58092c91c3458338ff..925a207b494b4eed52d5f360b554f18ac8a9806d 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -446,16 +446,18 @@ static void xen_log_sync(MemoryListener *listener, MemoryRegionSection *section)
+                           int128_get64(section->size));
  }
  
--static void ram_init_bitmaps(RAMState *rs)
-+static bool ram_init_bitmaps(RAMState *rs, Error **errp)
+-static void xen_log_global_start(MemoryListener *listener)
++static bool xen_log_global_start(MemoryListener *listener, Error **errp)
  {
--    Error *local_err = NULL;
-     bool ret = true;
- 
-     qemu_mutex_lock_ramlist();
-@@ -2813,10 +2812,8 @@ static void ram_init_bitmaps(RAMState *rs)
-         ram_list_init_bitmaps();
-         /* We don't use dirty log with background snapshots */
-         if (!migrate_background_snapshot()) {
--            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION,
--                                                &local_err);
-+            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, errp);
-             if (!ret) {
--                error_report_err(local_err);
-                 goto out_unlock;
-             }
-             migration_bitmap_sync_precopy(rs, false);
-@@ -2826,7 +2823,7 @@ out_unlock:
-     qemu_mutex_unlock_ramlist();
- 
-     if (!ret) {
--        return;
-+        return false;
+     if (xen_enabled()) {
+         xen_in_migration = true;
      }
- 
-     /*
-@@ -2834,9 +2831,10 @@ out_unlock:
-      * containing all 1s to exclude any discarded pages from migration.
-      */
-     migration_bitmap_clear_discarded_pages(rs);
 +    return true;
  }
  
--static int ram_init_all(RAMState **rsp)
-+static int ram_init_all(RAMState **rsp, Error **errp)
+-static void xen_log_global_stop(MemoryListener *listener)
++static bool xen_log_global_stop(MemoryListener *listener, Error **errp)
  {
-     if (ram_state_init(rsp)) {
-         return -1;
-@@ -2847,7 +2845,9 @@ static int ram_init_all(RAMState **rsp)
-         return -1;
+     xen_in_migration = false;
++    return true;
+ }
+ 
+ static const MemoryListener xen_memory_listener = {
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 059bfdc07a85e2eb908df828c1f42104d683e911..8bba95ba6a2010b78cae54c6905857686bbb6309 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1075,7 +1075,8 @@ out:
+     return ret;
+ }
+ 
+-static void vfio_listener_log_global_start(MemoryListener *listener)
++static bool vfio_listener_log_global_start(MemoryListener *listener,
++                                           Error **errp)
+ {
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
+@@ -1092,9 +1093,11 @@ static void vfio_listener_log_global_start(MemoryListener *listener)
+                      ret, strerror(-ret));
+         vfio_set_migration_error(ret);
+     }
++    return !!ret;
+ }
+ 
+-static void vfio_listener_log_global_stop(MemoryListener *listener)
++static bool vfio_listener_log_global_stop(MemoryListener *listener,
++                                          Error **errp)
+ {
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
+@@ -1111,6 +1114,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
+                      ret, strerror(-ret));
+         vfio_set_migration_error(ret);
+     }
++    return !!ret;
+ }
+ 
+ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 2c9ac794680ea9b65eba6cc22e70cf141e90aa73..7a555f941934991a72a2817e5505fe0ce6d6fc64 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1044,7 +1044,7 @@ check_dev_state:
+     return r;
+ }
+ 
+-static void vhost_log_global_start(MemoryListener *listener)
++static bool vhost_log_global_start(MemoryListener *listener, Error **errp)
+ {
+     int r;
+ 
+@@ -1052,9 +1052,10 @@ static void vhost_log_global_start(MemoryListener *listener)
+     if (r < 0) {
+         abort();
+     }
++    return true;
+ }
+ 
+-static void vhost_log_global_stop(MemoryListener *listener)
++static bool vhost_log_global_stop(MemoryListener *listener, Error **errp)
+ {
+     int r;
+ 
+@@ -1062,6 +1063,7 @@ static void vhost_log_global_stop(MemoryListener *listener)
+     if (r < 0) {
+         abort();
+     }
++    return true;
+ }
+ 
+ static void vhost_log_start(MemoryListener *listener,
+diff --git a/system/memory.c b/system/memory.c
+index a229a79988fce2aa3cb77e3a130db4c694e8cd49..af06157ead5b1272548e87f79ab9fb3036055328 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -127,6 +127,35 @@ enum ListenerDirection { Forward, Reverse };
+         }                                                               \
+     } while (0)
+ 
++#define MEMORY_LISTENER_CALL_LOG_GLOBAL(_callback, _direction, _errp,   \
++                                        _args...)                       \
++    do {                                                                \
++        MemoryListener *_listener;                                      \
++                                                                        \
++        switch (_direction) {                                           \
++        case Forward:                                                   \
++            QTAILQ_FOREACH(_listener, &memory_listeners, link) {        \
++                if (_listener->_callback) {                             \
++                    if (!_listener->_callback(_listener, _errp, ##_args)) { \
++                        break;                                          \
++                    }                                                   \
++                }                                                       \
++            }                                                           \
++            break;                                                      \
++        case Reverse:                                                   \
++            QTAILQ_FOREACH_REVERSE(_listener, &memory_listeners, link) { \
++                if (_listener->_callback) {                             \
++                    if (!_listener->_callback(_listener, _errp, ##_args)) { \
++                        break;                                          \
++                    }                                                   \
++                }                                                       \
++            }                                                           \
++            break;                                                      \
++        default:                                                        \
++            abort();                                                    \
++        };                                                              \
++    } while (0)
++
+ #define MEMORY_LISTENER_CALL(_as, _callback, _direction, _section, _args...) \
+     do {                                                                \
+         MemoryListener *_listener;                                      \
+@@ -2903,7 +2932,13 @@ void memory_global_dirty_log_sync(bool last_stage)
+ 
+ void memory_global_after_dirty_log_sync(void)
+ {
+-    MEMORY_LISTENER_CALL_GLOBAL(log_global_after_sync, Forward);
++    Error *local_err = NULL;
++
++    MEMORY_LISTENER_CALL_LOG_GLOBAL(log_global_after_sync, Forward,
++                                    &local_err);
++    if (local_err) {
++        error_report_err(local_err);
++    }
+ }
+ 
+ /*
+@@ -2912,18 +2947,22 @@ void memory_global_after_dirty_log_sync(void)
+  */
+ static unsigned int postponed_stop_flags;
+ static VMChangeStateEntry *vmstate_change;
+-static void memory_global_dirty_log_stop_postponed_run(void);
++static bool memory_global_dirty_log_stop_postponed_run(Error **errp);
+ 
+ void memory_global_dirty_log_start(unsigned int flags)
+ {
+     unsigned int old_flags;
++    Error *local_err = NULL;
+ 
+     assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
+ 
+     if (vmstate_change) {
+         /* If there is postponed stop(), operate on it first */
+         postponed_stop_flags &= ~flags;
+-        memory_global_dirty_log_stop_postponed_run();
++        if (!memory_global_dirty_log_stop_postponed_run(&local_err)) {
++            error_report_err(local_err);
++            return;
++        }
      }
  
--    ram_init_bitmaps(*rsp);
-+    if (!ram_init_bitmaps(*rsp, errp)) {
-+        return -1;
-+    }
+     flags &= ~global_dirty_tracking;
+@@ -2936,15 +2975,22 @@ void memory_global_dirty_log_start(unsigned int flags)
+     trace_global_dirty_changed(global_dirty_tracking);
  
-     return 0;
+     if (!old_flags) {
+-        MEMORY_LISTENER_CALL_GLOBAL(log_global_start, Forward);
++        MEMORY_LISTENER_CALL_LOG_GLOBAL(log_global_start, Forward,
++                                        &local_err);
++        if (local_err) {
++            error_report_err(local_err);
++            return;
++        }
+         memory_region_transaction_begin();
+         memory_region_update_pending = true;
+         memory_region_transaction_commit();
+     }
  }
-@@ -2961,7 +2961,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
  
-     /* migration has already setup the bitmap, reuse it. */
-     if (!migration_in_colo_state()) {
--        if (ram_init_all(rsp) != 0) {
-+        if (ram_init_all(rsp, errp) != 0) {
-             compress_threads_save_cleanup();
-             return -1;
+-static void memory_global_dirty_log_do_stop(unsigned int flags)
++static bool memory_global_dirty_log_do_stop(unsigned int flags, Error **errp)
+ {
++    ERRP_GUARD();
++
+     assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
+     assert((global_dirty_tracking & flags) == flags);
+     global_dirty_tracking &= ~flags;
+@@ -2955,39 +3001,49 @@ static void memory_global_dirty_log_do_stop(unsigned int flags)
+         memory_region_transaction_begin();
+         memory_region_update_pending = true;
+         memory_region_transaction_commit();
+-        MEMORY_LISTENER_CALL_GLOBAL(log_global_stop, Reverse);
++        MEMORY_LISTENER_CALL_LOG_GLOBAL(log_global_stop, Reverse, errp);
+     }
++    return !*errp;
+ }
+ 
+ /*
+  * Execute the postponed dirty log stop operations if there is, then reset
+  * everything (including the flags and the vmstate change hook).
+  */
+-static void memory_global_dirty_log_stop_postponed_run(void)
++static bool memory_global_dirty_log_stop_postponed_run(Error **errp)
+ {
++    bool ret = true;
++
+     /* This must be called with the vmstate handler registered */
+     assert(vmstate_change);
+ 
+     /* Note: postponed_stop_flags can be cleared in log start routine */
+     if (postponed_stop_flags) {
+-        memory_global_dirty_log_do_stop(postponed_stop_flags);
++        ret = memory_global_dirty_log_do_stop(postponed_stop_flags, errp);
+         postponed_stop_flags = 0;
+     }
+ 
+     qemu_del_vm_change_state_handler(vmstate_change);
+     vmstate_change = NULL;
++    return ret;
+ }
+ 
+ static void memory_vm_change_state_handler(void *opaque, bool running,
+                                            RunState state)
+ {
++    Error *local_err = NULL;
++
+     if (running) {
+-        memory_global_dirty_log_stop_postponed_run();
++        if (!memory_global_dirty_log_stop_postponed_run(&local_err)) {
++            error_report_err(local_err);
++        }
+     }
+ }
+ 
+ void memory_global_dirty_log_stop(unsigned int flags)
+ {
++    Error *local_err = NULL;
++
+     if (!runstate_is_running()) {
+         /* Postpone the dirty log stop, e.g., to when VM starts again */
+         if (vmstate_change) {
+@@ -3001,7 +3057,9 @@ void memory_global_dirty_log_stop(unsigned int flags)
+         return;
+     }
+ 
+-    memory_global_dirty_log_do_stop(flags);
++    if (!memory_global_dirty_log_do_stop(flags, &local_err)) {
++        error_report_err(local_err);
++    }
+ }
+ 
+ static void listener_add_address_space(MemoryListener *listener,
+@@ -3009,13 +3067,16 @@ static void listener_add_address_space(MemoryListener *listener,
+ {
+     FlatView *view;
+     FlatRange *fr;
++    Error *local_err = NULL;
+ 
+     if (listener->begin) {
+         listener->begin(listener);
+     }
+     if (global_dirty_tracking) {
+         if (listener->log_global_start) {
+-            listener->log_global_start(listener);
++            if (!listener->log_global_start(listener, &local_err)) {
++                error_report_err(local_err);
++            }
          }
+     }
+ 
+diff --git a/system/physmem.c b/system/physmem.c
+index e3ebc19eefd8050a1dee16e3d1449f0c144f751f..9adbf9aea847cd80bdac6dca466fb476844ac048 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -148,7 +148,7 @@ typedef struct subpage_t {
+ 
+ static void io_mem_init(void);
+ static void memory_map_init(void);
+-static void tcg_log_global_after_sync(MemoryListener *listener);
++static bool tcg_log_global_after_sync(MemoryListener *listener, Error **errp);
+ static void tcg_commit(MemoryListener *listener);
+ 
+ /**
+@@ -2475,7 +2475,7 @@ static void do_nothing(CPUState *cpu, run_on_cpu_data d)
+ {
+ }
+ 
+-static void tcg_log_global_after_sync(MemoryListener *listener)
++static bool tcg_log_global_after_sync(MemoryListener *listener, Error **errp)
+ {
+     CPUAddressSpace *cpuas;
+ 
+@@ -2507,6 +2507,7 @@ static void tcg_log_global_after_sync(MemoryListener *listener)
+         cpuas = container_of(listener, CPUAddressSpace, tcg_as_listener);
+         run_on_cpu(cpuas->cpu, do_nothing, RUN_ON_CPU_NULL);
+     }
++    return true;
+ }
+ 
+ static void tcg_commit_cpu(CPUState *cpu, run_on_cpu_data data)
 -- 
 2.43.2
 
