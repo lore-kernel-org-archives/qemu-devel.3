@@ -4,105 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12BA2C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 09:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8EA0C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 09:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reu25-0004qp-WA; Tue, 27 Feb 2024 04:45:54 -0500
+	id 1reu6k-0007Q5-Da; Tue, 27 Feb 2024 04:50:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1reu1e-0004kU-2s; Tue, 27 Feb 2024 04:45:29 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1reu6g-0007NN-Vj
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 04:50:40 -0500
+Received: from mail-co1nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::600]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1reu1b-0001wX-8z; Tue, 27 Feb 2024 04:45:25 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41R8WPx2029812; Tue, 27 Feb 2024 09:45:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=O75TRh+3aJ70WOHYcPDX1cgbLfzW+4elD/hKyzT+R9g=;
- b=jK3wRuAlrqhHzG6+uTge87wIQvMpMZrOqE+IkHxwJ26cZ38tm5DFQvreq9gu1YhKNdN/
- KXilZraOOZAzID/Z6BUD4IxUF4zdnvBp55C2ff/s5nwG+yjdT1o67Z+NImpgVLaRpxe/
- fESMCgs1j/S5u+2Bwtm4E2WVNvGFvkIMJdGBvU8BV5eUIeK0PyaCS3qsaR0zG41hpKSl
- LQ95XAA4qYQuStbvtmkKJVjF8/r3rvqzJp7IKPatWPukEopiZADIAxdf4PQNhJr2oZHY
- L0M7SRLmuu8fgCL8eI+FeMPiSMTvrg4gqJebrr3BfnyZ3/BAcxzHFqP3omxIcQfBeX80 aA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whcaej070-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 09:45:18 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41R9RBeX007085;
- Tue, 27 Feb 2024 09:45:18 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whcaej06j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 09:45:18 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41R95TE7008782; Tue, 27 Feb 2024 09:45:17 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wftstf4eg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 09:45:17 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41R9jEDw44564758
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Feb 2024 09:45:16 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E2BEC58065;
- Tue, 27 Feb 2024 09:45:12 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DD51458055;
- Tue, 27 Feb 2024 09:45:09 +0000 (GMT)
-Received: from [9.109.243.35] (unknown [9.109.243.35])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 27 Feb 2024 09:45:09 +0000 (GMT)
-Message-ID: <992d980a-da74-4c61-843b-888facc5f813@linux.ibm.com>
-Date: Tue, 27 Feb 2024 15:15:08 +0530
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1reu6d-0003oZ-O5
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 04:50:38 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=T7CmyExLjqeXyoYfmcHhymvbVe5AGdRMgplPR+84VY+iX0iJpK1rNOlHGHx6cf+ExE3Q5DPuKsmQr9N3pq5ogkxsa8t/Kssc/1BtpFDwvW26VJCEWhTVAOwJV/c6KiPeg/HrUrZHrOd5IbePpy8V+ipE7iGpz/hxucHcWo5U8zFUGPtztPKu1ckIrGmnrMkT9O89ejwqGFjRImYi7EGUuWTRMPXEI+Ld+VniQax6+jUICJ0ze8AdqfJ80YtstqE1q01MoBCsd0+pznB02DEyXO0/Q3568Zztwg0mDRbB8+qW5NLqg50fkJMv0vPF4B0P8ldIFFw6cHlht7j5+aJMaQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cIz/hQ8R1S6DOpj5EY9GZL0i3nOCnKBFZOxlF+JnLk4=;
+ b=ZxklmlXIkg8IQhYI7uh+oJG/Fb3mK/rY99E+5wCuHyM451+eSnNwyX+aWtftAY9UyF+vqthcyI+RuqEQYuogJzU4WCzyZ7abcb8sdPkESQSa2vT1t0EuGju+m4b2ggi1a34CGp6bEn/U70qY/kTB+cq7g91m+EP24ujgsn3aT8Imzjfd9ozAPYsh8VKfF96vvqFIg0YefXclTc63EkrKIduSmwqWMZ0ifHmpqNxapIy1500Ey8bcKHHEZceQ7/6YyWe4KdBgB38+vTGtJ7ig5VU0vNXAOKd4P9lvWSjzjmjHzxZrurUBPzcKXTk/vKLXx2h0lcS/5WPooTh3ajVmWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cIz/hQ8R1S6DOpj5EY9GZL0i3nOCnKBFZOxlF+JnLk4=;
+ b=OfRmyUWA7JDUw8L0lwS4nO1161nCmzLaINQ07MZioGYElSGQRHDOHY3xfY/6au73tANgD160NywtKdyjEopBnphhSLZqF23pp7dTBMyzw82fbNXmn2vPrcrO2kRulkRc++pAUdQmaz5mBdZTLsnboRgUa9jKpVQCJF6mDKcYHO4=
+Received: from BL1P223CA0010.NAMP223.PROD.OUTLOOK.COM (2603:10b6:208:2c4::15)
+ by CH3PR12MB8852.namprd12.prod.outlook.com (2603:10b6:610:17d::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.34; Tue, 27 Feb
+ 2024 09:50:31 +0000
+Received: from MN1PEPF0000F0DE.namprd04.prod.outlook.com
+ (2603:10b6:208:2c4:cafe::78) by BL1P223CA0010.outlook.office365.com
+ (2603:10b6:208:2c4::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7292.50 via Frontend
+ Transport; Tue, 27 Feb 2024 09:50:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ MN1PEPF0000F0DE.mail.protection.outlook.com (10.167.242.36) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7292.25 via Frontend Transport; Tue, 27 Feb 2024 09:50:31 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
+ 2024 03:50:30 -0600
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 27 Feb
+ 2024 03:50:30 -0600
+Received: from luc-work-vm (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
+ Transport; Tue, 27 Feb 2024 03:50:28 -0600
+Date: Tue, 27 Feb 2024 10:50:21 +0100
+From: Luc Michel <luc.michel@amd.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+CC: <qemu-devel@nongnu.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>, Yanan Wang
+ <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, Mahmoud
+ Mandour <ma.mandourr@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>, Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>
+Subject: Re: [PATCH v5 07/12] tests/plugin/insn: migrate to new per_vcpu API
+Message-ID: <Zd2wXT2La-4dKh-0@luc-work-vm>
+References: <20240226091446.479436-1-pierrick.bouvier@linaro.org>
+ <20240226091446.479436-8-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/15] spapr: nested: keep nested-hv related code
- restricted to its API.
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: clegoate@redhat.com, mikey@neuling.org, amachhiw@linux.vnet.ibm.com,
- vaibhav@linux.ibm.com, sbhat@linux.ibm.com, danielhb413@gmail.com,
- qemu-devel@nongnu.org
-References: <20240220083609.748325-1-harshpb@linux.ibm.com>
- <20240220083609.748325-5-harshpb@linux.ibm.com>
- <CZFQHBO2FUX6.30O1PDW79JW97@wheely>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <CZFQHBO2FUX6.30O1PDW79JW97@wheely>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: huQHEsq6_Ibs1GjX3wlCeGdmYCnxm-2W
-X-Proofpoint-GUID: SHjLNlHFjyohfcM9j66CMPWRAp1V0TM4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 mlxlogscore=999 adultscore=0 spamscore=0 suspectscore=0
- bulkscore=0 mlxscore=0 priorityscore=1501 clxscore=1015 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402270076
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240226091446.479436-8-pierrick.bouvier@linaro.org>
+Received-SPF: None (SATLEXMB05.amd.com: luc.michel@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000F0DE:EE_|CH3PR12MB8852:EE_
+X-MS-Office365-Filtering-Correlation-Id: 79680dc5-42b5-4bc3-00c2-08dc37798922
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: IqvPbjQxGan5BZPmUIg+tSvNHVFa8ejTPV6CO2K+sh5P048LnIalkeVL5w76eiW3BRczVdcR8R3kc4muTY+w3KRpqaXnv7ftQ9lqteyv5C4aHzTgk3xVBwebaG9H4xh0qQnxCFm8PpMSmWpV1Hf/YqCtegu25AMPBgOkLHvSrcrtfho6PZs7D7AQRIi4bxrZT5Y9vFjwIGzkebkHkE5xwLHbg3GfkyleES+bIqnMb6kiE0dqQcvy2YBUeS91B7Z+eBZMD9jxS4m5PNSoRr4L1s8ANPtQnbxo3O40gNUyisw/06yK9iG5tvZx0E988AbZRGyeUnvHqVpDPihP8vBkHDNjapIQiRda8qhMiFL/KOYmE6S1NxO6ZpSiolRFPEBYu5XhgNdj+xT7vta9DHoScnCKoNcZ/7r11bkBQVxQQTZEO6hEaX7NAhpU2EQNgb/pnDrpT/XvXbJH3AFdaSHKpTsIVo8W73cRjmqWl04GDXSOGMPvX/KsSe2+C4uwGaH6D1lr/7yEb0Ca24ax9C47JYHLQGR4Phb5vqkRTO2i83SoJxbxIQvKxHizRpclFD4pDAJTAD2QIfS9lBTbSUSh3xfbWX5qK/vZ8bosa6AXy/AE+wtz2wJ16wwynvdDkc1D+jSyf4eoJa0UAKzZAxHyfFQ3Wn7QhoAKd6HbZwpaD1MvVULLlQoer3TJEfZsspAsCP+G0q1ickoyTT/CrbD7tPU2tr7aPcQSCUm82CpmXyDaijqEapyjb+WqVKULhU+R
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(82310400014)(36860700004); DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 09:50:31.0576 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 79680dc5-42b5-4bc3-00c2-08dc37798922
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000F0DE.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8852
+Received-SPF: softfail client-ip=2a01:111:f403:2416::600;
+ envelope-from=Luc.Michel@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,82 +136,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 13:14 Mon 26 Feb     , Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+Reviewed-by: Luc Michel <luc.michel@amd.com>
 
-On 2/27/24 14:24, Nicholas Piggin wrote:
-> On Tue Feb 20, 2024 at 6:35 PM AEST, Harsh Prateek Bora wrote:
->> spapr_exit_nested and spapr_get_pate_nested_hv contains code which
->> is specific to nested-hv API. Isolating code flows based on API
->> helps extending it to be used with different API as well.
->>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>   include/hw/ppc/spapr_nested.h |  4 ++++
->>   hw/ppc/spapr.c                |  7 ++++++-
->>   hw/ppc/spapr_caps.c           |  1 +
->>   hw/ppc/spapr_nested.c         | 27 ++++++++++++++++++++++++---
->>   4 files changed, 35 insertions(+), 4 deletions(-)
->>
->> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
->> index 2488ea98da..3f07c81c3d 100644
->> --- a/include/hw/ppc/spapr_nested.h
->> +++ b/include/hw/ppc/spapr_nested.h
->> @@ -5,6 +5,8 @@
->>   
->>   typedef struct SpaprMachineStateNested {
->>       uint64_t ptcr;
->> +    uint8_t api;
->> +#define NESTED_API_KVM_HV  1
->>   } SpaprMachineStateNested;
->>   
->>   /*
->> @@ -103,4 +105,6 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
->>   typedef struct SpaprMachineState SpaprMachineState;
->>   bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
->>                                 target_ulong lpid, ppc_v3_pate_t *entry);
->> +void spapr_nested_init(SpaprMachineState *spapr);
->> +uint8_t spapr_nested_api(SpaprMachineState *spapr);
->>   #endif /* HW_SPAPR_NESTED_H */
->> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->> index 97b69c0e42..51a1be027a 100644
->> --- a/hw/ppc/spapr.c
->> +++ b/hw/ppc/spapr.c
->> @@ -1376,7 +1376,11 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
->>           entry->dw1 = spapr->patb_entry;
->>           return true;
->>       } else {
->> -        return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
->> +        assert(spapr_nested_api(spapr));
->> +        if (spapr_nested_api(spapr) == NESTED_API_KVM_HV) {
->> +            return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
->> +        }
->> +        return false;
->>       }
->>   }
->>   
->> @@ -3443,6 +3447,7 @@ static void spapr_instance_init(Object *obj)
->>           spapr_get_host_serial, spapr_set_host_serial);
->>       object_property_set_description(obj, "host-serial",
->>           "Host serial number to advertise in guest device tree");
->> +    spapr_nested_init(spapr);
+> ---
+>  tests/plugin/insn.c | 106 +++++++++++++++++++++-----------------------
+>  1 file changed, 50 insertions(+), 56 deletions(-)
 > 
-> I would maybe make this init a reset instead, and then it could do
-> the hypercall unregistering as well? You could rework that part of
-> it into patch 1 (or reorder the patches).
-
-If we do unregistering here, we still hit the assert during
-spapr_machine_reset which tries to reapply the caps and thus re-register
-hcalls. Also, We cant register hcalls in this since the caps havent been
-applied when init is called here. So we can do as you have previously
-suggested, reset in spapr_machine_reset based on caps applied.
-Let me know if you think otherwise?
-
-regards,
-Harsh
-
-
+> diff --git a/tests/plugin/insn.c b/tests/plugin/insn.c
+> index 54da06fcf26..5e0aa03223e 100644
+> --- a/tests/plugin/insn.c
+> +++ b/tests/plugin/insn.c
+> @@ -16,25 +16,21 @@
 > 
-> Thanks,
-> Nick
+>  QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> 
+> -#define MAX_CPUS 8 /* lets not go nuts */
+> -
+> -typedef struct {
+> -    uint64_t insn_count;
+> -} InstructionCount;
+> -
+> -static InstructionCount counts[MAX_CPUS];
+> -static uint64_t inline_insn_count;
+> +static qemu_plugin_u64 insn_count;
+> 
+>  static bool do_inline;
+>  static bool do_size;
+>  static GArray *sizes;
+> 
+> +typedef struct {
+> +    uint64_t hits;
+> +    uint64_t last_hit;
+> +    uint64_t total_delta;
+> +} MatchCount;
+> +
+>  typedef struct {
+>      char *match_string;
+> -    uint64_t hits[MAX_CPUS];
+> -    uint64_t last_hit[MAX_CPUS];
+> -    uint64_t total_delta[MAX_CPUS];
+> -    GPtrArray *history[MAX_CPUS];
+> +    struct qemu_plugin_scoreboard *counts; /* MatchCount */
+>  } Match;
+> 
+>  static GArray *matches;
+> @@ -67,41 +63,40 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+> 
+>  static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
+>  {
+> -    unsigned int i = cpu_index % MAX_CPUS;
+> -    InstructionCount *c = &counts[i];
+> -
+> -    c->insn_count++;
+> +    qemu_plugin_u64_add(insn_count, cpu_index, 1);
+>  }
+> 
+>  static void vcpu_insn_matched_exec_before(unsigned int cpu_index, void *udata)
+>  {
+> -    unsigned int i = cpu_index % MAX_CPUS;
+>      Instruction *insn = (Instruction *) udata;
+> -    Match *match = insn->match;
+> +    Match *insn_match = insn->match;
+> +    MatchCount *match = qemu_plugin_scoreboard_find(insn_match->counts,
+> +                                                    cpu_index);
+> +
+>      g_autoptr(GString) ts = g_string_new("");
+> 
+>      insn->hits++;
+>      g_string_append_printf(ts, "0x%" PRIx64 ", '%s', %"PRId64 " hits",
+>                             insn->vaddr, insn->disas, insn->hits);
+> 
+> -    uint64_t icount = counts[i].insn_count;
+> -    uint64_t delta = icount - match->last_hit[i];
+> +    uint64_t icount = qemu_plugin_u64_get(insn_count, cpu_index);
+> +    uint64_t delta = icount - match->last_hit;
+> 
+> -    match->hits[i]++;
+> -    match->total_delta[i] += delta;
+> +    match->hits++;
+> +    match->total_delta += delta;
+> 
+>      g_string_append_printf(ts,
+> -                           ", %"PRId64" match hits, "
+> -                           "Δ+%"PRId64 " since last match,"
+> +                           " , cpu %u,"
+> +                           " %"PRId64" match hits,"
+> +                           " Δ+%"PRId64 " since last match,"
+>                             " %"PRId64 " avg insns/match\n",
+> -                           match->hits[i], delta,
+> -                           match->total_delta[i] / match->hits[i]);
+> +                           cpu_index,
+> +                           match->hits, delta,
+> +                           match->total_delta / match->hits);
+> 
+> -    match->last_hit[i] = icount;
+> +    match->last_hit = icount;
+> 
+>      qemu_plugin_outs(ts->str);
+> -
+> -    g_ptr_array_add(match->history[i], insn);
+>  }
+> 
+>  static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> @@ -113,8 +108,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>          struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> 
+>          if (do_inline) {
+> -            qemu_plugin_register_vcpu_insn_exec_inline(
+> -                insn, QEMU_PLUGIN_INLINE_ADD_U64, &inline_insn_count, 1);
+> +            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+> +                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
+>          } else {
+>              uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
+>              qemu_plugin_register_vcpu_insn_exec_cb(
+> @@ -136,10 +131,9 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>           * information about the instruction which we also need to
+>           * save if there is a hit.
+>           */
+> -        if (matches) {
+> +        if (matches->len) {
+>              char *insn_disas = qemu_plugin_insn_disas(insn);
+> -            int j;
+> -            for (j = 0; j < matches->len; j++) {
+> +            for (int j = 0; j < matches->len; j++) {
+>                  Match *m = &g_array_index(matches, Match, j);
+>                  if (g_str_has_prefix(insn_disas, m->match_string)) {
+>                      Instruction *rec = g_new0(Instruction, 1);
+> @@ -169,36 +163,33 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>                                         "len %d bytes: %ld insns\n", i, *cnt);
+>              }
+>          }
+> -    } else if (do_inline) {
+> -        g_string_append_printf(out, "insns: %" PRIu64 "\n", inline_insn_count);
+>      } else {
+> -        uint64_t total_insns = 0;
+> -        for (i = 0; i < MAX_CPUS; i++) {
+> -            InstructionCount *c = &counts[i];
+> -            if (c->insn_count) {
+> -                g_string_append_printf(out, "cpu %d insns: %" PRIu64 "\n",
+> -                                       i, c->insn_count);
+> -                total_insns += c->insn_count;
+> -            }
+> +        for (i = 0; i < qemu_plugin_num_vcpus(); i++) {
+> +            g_string_append_printf(out, "cpu %d insns: %" PRIu64 "\n",
+> +                                   i, qemu_plugin_u64_get(insn_count, i));
+>          }
+>          g_string_append_printf(out, "total insns: %" PRIu64 "\n",
+> -                               total_insns);
+> +                               qemu_plugin_u64_sum(insn_count));
+>      }
+>      qemu_plugin_outs(out->str);
+> +
+> +    qemu_plugin_scoreboard_free(insn_count.score);
+> +    for (i = 0; i < matches->len; ++i) {
+> +        Match *m = &g_array_index(matches, Match, i);
+> +        g_free(m->match_string);
+> +        qemu_plugin_scoreboard_free(m->counts);
+> +    }
+> +    g_array_free(matches, TRUE);
+> +    g_array_free(sizes, TRUE);
+>  }
+> 
+> 
+>  /* Add a match to the array of matches */
+>  static void parse_match(char *match)
+>  {
+> -    Match new_match = { .match_string = match };
+> -    int i;
+> -    for (i = 0; i < MAX_CPUS; i++) {
+> -        new_match.history[i] = g_ptr_array_new();
+> -    }
+> -    if (!matches) {
+> -        matches = g_array_new(false, true, sizeof(Match));
+> -    }
+> +    Match new_match = {
+> +        .match_string = g_strdup(match),
+> +        .counts = qemu_plugin_scoreboard_new(sizeof(MatchCount)) };
+>      g_array_append_val(matches, new_match);
+>  }
+> 
+> @@ -206,6 +197,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                                             const qemu_info_t *info,
+>                                             int argc, char **argv)
+>  {
+> +    matches = g_array_new(false, true, sizeof(Match));
+> +    /* null terminated so 0 is not a special case */
+> +    sizes = g_array_new(true, true, sizeof(unsigned long));
+> +
+>      for (int i = 0; i < argc; i++) {
+>          char *opt = argv[i];
+>          g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> @@ -227,9 +222,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>          }
+>      }
+> 
+> -    if (do_size) {
+> -        sizes = g_array_new(true, true, sizeof(unsigned long));
+> -    }
+> +    insn_count = qemu_plugin_scoreboard_u64(
+> +        qemu_plugin_scoreboard_new(sizeof(uint64_t)));
+> 
+>      /* Register init, translation block and exit callbacks */
+>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> --
+> 2.43.0
+> 
+> 
+
+-- 
 
