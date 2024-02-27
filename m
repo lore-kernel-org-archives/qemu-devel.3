@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5534AC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6064C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:44:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexap-0000uC-7u; Tue, 27 Feb 2024 08:34:00 -0500
+	id 1rexaw-00014y-FM; Tue, 27 Feb 2024 08:34:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaX-0000oW-FB
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:41 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1rexaU-0000mr-Jn
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:39 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaQ-0002v2-Sc
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:41 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-33ddebaf810so959429f8f.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:34 -0800 (PST)
+ id 1rexaO-0002to-Dx
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:38 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33ddd1624beso1083911f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040813; x=1709645613; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040809; x=1709645609; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+8/ybQwcfm79xtd0ngd5/n2BlvfQRgOhwhHQ/JtQPWs=;
- b=rYo2+mJa/Tz1qSKIc/UeXa9FgEQR6BLL7bCdu6WhmdKIcB1VqbbBvDz7qKeRvZ+Ujf
- sBgybkz9Otm5+JC5oTTOOyosMKxOaM+hCIDPc1KR4EMLvbth4prlz8Z3LYesYEpb7EnD
- XPWLQD6IG9y3SNbsEBF8K53Ye+ti2bVS1XNG22zJX0DaPcNTbgD8l4dHR8rz/SvNC2aO
- 6xY8KfdcLOf9yKrhE8411H1gq1KnoTVu0YajXiA2/3xPdB2w0JEW6aOdmWlq0zvk+1Ez
- NfXJdj7vZGItlk399t1MbuDnimowFh0N93eJIY1s8JWGfdTJzmkPBnfr9mh20YBwGEq4
- CVQQ==
+ :reply-to; bh=et9wQQONF7VZ2a7S3QKT8lccx9rqc3WZuS0iWjrpOdw=;
+ b=IVqQYTJkwFPY88q4EbjhxckEGWjf9xe2YuX3gKCBZQoB7sTNFGOJ8jJNBXgdre29an
+ qoEu1VRGeqUo9F7SWTjeTRmnBdAUUtYv5QK6nCUWT7xgCeVpMKPjdOcgrjU5OuK4/eSg
+ dY96oAqu2X8+336RD9Z6EUlQ5uiOpVwQuPdJ5vknxPyjIYAtGDVe64f9e+P+0L2wB02D
+ iTtyD+VNiAooeAGaOjv95ydGFm/jK7uf21QXe3jP37m2cFkkYdAqC+M3xkUMK0iSLkut
+ sc3MmQizYTn5WWMDrgyUqxiW/tfO8kcSJo8uU0scQEOYizrY5Bl398gqUalbdO6qOLLw
+ 6crA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040813; x=1709645613;
+ d=1e100.net; s=20230601; t=1709040809; x=1709645609;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+8/ybQwcfm79xtd0ngd5/n2BlvfQRgOhwhHQ/JtQPWs=;
- b=RMI6jcTZjhrqKlrM6ygzJFS+JlxlyITj0sJXtbQiASNhw39y3oSlYLKjKAnH2O8R/+
- ZA3gJIsvVDI9/tM6JQZu3+S7KDRE+fo7ovZtSBbc6QsA/ckpzUCjcE7WoPP6kooEZJtO
- FD/geXUpBsL3EjQIauBDhOiAVvEdzW9VzzWZsbOEytA9aSvjrN6gwyy8gu5T5AG2uneV
- J7n1SJtR7aJT+uHbvxsTg8wdoXum0HTEYxVgapHT5qklUEBQoaJTn+E07zMuCr5Z19Bi
- m+PKw46MA+XzvcC422BSQlvgmAiOOInmXNXByOLMqSrKeEupzOVzJtVAnDnIEftJBKVV
- qdEQ==
-X-Gm-Message-State: AOJu0Yz8GEvH8sYxskxOkS/uonYzblN9bCj7NK2+eIrhCe3wzmWRpNB4
- tXk7YV1DvLcGzEaRM1H4ciKPN+Ii6lPiXiEpO3YK7SQwSIhKkk1ebD1tqKinW21B9voL5M8EKpg
- s
-X-Google-Smtp-Source: AGHT+IFpP4xDPIarwKvph/hIEp6gi4hOQaosnkPjDDFTP43WrZ3ZxF+dAhnwxH4yj9er/OMhirZg8A==
-X-Received: by 2002:a05:6000:136a:b0:33d:2629:c518 with SMTP id
- q10-20020a056000136a00b0033d2629c518mr6517686wrz.64.1709040813628; 
- Tue, 27 Feb 2024 05:33:33 -0800 (PST)
+ bh=et9wQQONF7VZ2a7S3QKT8lccx9rqc3WZuS0iWjrpOdw=;
+ b=eTMfGYn2OxKCY6R8vmyGpJOMfz7R6t5T55IRC25Dpm8RCI25rfRN5Qbu26l54O0zwZ
+ NAgOzeLiSLsk8s5cECl7AN6nr90BmRy13Gat7qnleAbrjoFytzvSFet1Y16rDbtSenUr
+ X4tOGwoZu8GNhhOF6tD2KMB0yqCvK6sPqbHqE2dIPpGIj4vsM8GzaRRBFlf9VkXm5Cba
+ Y/RyI4sL5LuidkLIHDZjCDN0tSMG9h96xvoDi5U3i5pNOfVbJF6WjNjCAiJE4+AOMCIn
+ rLnvgWcFhkZoeK46cUQKTQXM8pbdOxdCpwFoLoWC7chHrlDwelz9v0XigefarIG83OMV
+ hiLQ==
+X-Gm-Message-State: AOJu0YwlJj9zYES4osYyjqgn44dU0N2RVVA0dgeSv5+apkFqp2amKssq
+ Cod9uHTOs33vD9C/eldxhAS8cGO/q1qRjq9rOY59U3b4cqDuVIbNuIYWlOhDrrvULrF5Zc8LEbk
+ r
+X-Google-Smtp-Source: AGHT+IG68jtgQ9+phyNdpn4qZsYENUVJPkveR8Lz2xnnFZM1wiRoPVN273kmYngBhhC/bWDZOkXwEg==
+X-Received: by 2002:a5d:64e4:0:b0:33d:d843:ecd2 with SMTP id
+ g4-20020a5d64e4000000b0033dd843ecd2mr7044120wri.24.1709040809676; 
+ Tue, 27 Feb 2024 05:33:29 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.33
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:33 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:29 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/45] tests/qtest: Add bcm2838 mailbox test stub
-Date: Tue, 27 Feb 2024 13:33:04 +0000
-Message-Id: <20240227133314.1721857-36-peter.maydell@linaro.org>
+Subject: [PULL 26/45] hw/gpio: Add BCM2838 GPIO stub
+Date: Tue, 27 Feb 2024 13:32:55 +0000
+Message-Id: <20240227133314.1721857-27-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,138 +96,237 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Sergey Kambalin <serg.oker@gmail.com>
 
 Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Message-id: 20240226000259.2752893-32-sergey.kambalin@auriga.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20240226000259.2752893-7-sergey.kambalin@auriga.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/qtest/bcm2838-mailbox.h | 37 +++++++++++++++++++++
- tests/qtest/bcm2838-mailbox.c | 60 +++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build       |  1 +
- 3 files changed, 98 insertions(+)
- create mode 100644 tests/qtest/bcm2838-mailbox.h
- create mode 100644 tests/qtest/bcm2838-mailbox.c
+ include/hw/gpio/bcm2838_gpio.h |  40 +++++++++
+ hw/gpio/bcm2838_gpio.c         | 153 +++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build            |   5 +-
+ 3 files changed, 197 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/gpio/bcm2838_gpio.h
+ create mode 100644 hw/gpio/bcm2838_gpio.c
 
-diff --git a/tests/qtest/bcm2838-mailbox.h b/tests/qtest/bcm2838-mailbox.h
+diff --git a/include/hw/gpio/bcm2838_gpio.h b/include/hw/gpio/bcm2838_gpio.h
 new file mode 100644
-index 00000000000..e9e1f53bc98
+index 00000000000..06d48e0c191
 --- /dev/null
-+++ b/tests/qtest/bcm2838-mailbox.h
-@@ -0,0 +1,37 @@
++++ b/include/hw/gpio/bcm2838_gpio.h
+@@ -0,0 +1,40 @@
 +/*
-+ * Declarations for BCM2838 mailbox test.
++ * Raspberry Pi (BCM2838) GPIO Controller
++ * This implementation is based on bcm2835_gpio (hw/gpio/bcm2835_gpio.c)
 + *
-+ * Copyright (c) 2023 Auriga LLC
++ * Copyright (c) 2022 Auriga LLC
++ *
++ * Authors:
++ *  Lotosh, Aleksey <aleksey.lotosh@auriga.com>
 + *
 + * This work is licensed under the terms of the GNU GPL, version 2 or later.
 + * See the COPYING file in the top-level directory.
 + */
 +
-+typedef struct {
-+    uint32_t size;
-+    uint32_t req_resp_code;
-+} MboxBufHeader;
++#ifndef BCM2838_GPIO_H
++#define BCM2838_GPIO_H
 +
-+#define DECLARE_TAG_TYPE(TypeName, RequestValueType, ResponseValueType) \
-+typedef struct {                                                        \
-+    uint32_t id;                                                        \
-+    uint32_t value_buffer_size;                                         \
-+    union {                                                             \
-+        struct {                                                        \
-+            uint32_t zero;                                              \
-+            RequestValueType value;                                     \
-+        } request;                                                      \
-+        struct {                                                        \
-+            uint32_t size_stat;                                         \
-+            ResponseValueType value;                                    \
-+        } response;                                                     \
-+    };                                                                  \
-+} TypeName
++#include "hw/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_BCM2838_GPIO "bcm2838-gpio"
++OBJECT_DECLARE_SIMPLE_TYPE(BCM2838GpioState, BCM2838_GPIO)
++
++#define BCM2838_GPIO_REGS_SIZE 0x1000
++#define BCM2838_GPIO_NUM       58
++#define GPIO_PUP_PDN_CNTRL_NUM 4
++
++struct BCM2838GpioState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion iomem;
 +
 +
-+int mbox0_has_data(void);
-+void mbox0_read_message(uint8_t channel, void *msgbuf, size_t msgbuf_size);
-+void mbox1_write_message(uint8_t channel, uint32_t msg_addr);
-+int qtest_mbox0_has_data(QTestState *s);
-+void qtest_mbox0_read_message(QTestState *s, uint8_t channel, void *msgbuf, size_t msgbuf_size);
-+void qtest_mbox1_write_message(QTestState *s, uint8_t channel, uint32_t msg_addr);
-diff --git a/tests/qtest/bcm2838-mailbox.c b/tests/qtest/bcm2838-mailbox.c
++    uint8_t fsel[BCM2838_GPIO_NUM];
++    uint32_t lev0, lev1;
++    uint8_t sd_fsel;
++    qemu_irq out[BCM2838_GPIO_NUM];
++    uint32_t pup_cntrl_reg[GPIO_PUP_PDN_CNTRL_NUM];
++};
++
++#endif
+diff --git a/hw/gpio/bcm2838_gpio.c b/hw/gpio/bcm2838_gpio.c
 new file mode 100644
-index 00000000000..0928a3dff8e
+index 00000000000..a312490bbd0
 --- /dev/null
-+++ b/tests/qtest/bcm2838-mailbox.c
-@@ -0,0 +1,60 @@
++++ b/hw/gpio/bcm2838_gpio.c
+@@ -0,0 +1,153 @@
 +/*
-+ * Helper functions to work with BCM2838 mailbox via qtest interface.
++ * Raspberry Pi (BCM2838) GPIO Controller
++ * This implementation is based on bcm2835_gpio (hw/gpio/bcm2835_gpio.c)
 + *
-+ * Copyright (c) 2023 Auriga LLC
++ * Copyright (c) 2022 Auriga LLC
 + *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * Authors:
++ *  Lotosh, Aleksey <aleksey.lotosh@auriga.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/registerfields.h"
-+#include "libqtest-single.h"
-+#include "bcm2838-mailbox.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/timer.h"
++#include "qapi/error.h"
++#include "hw/sysbus.h"
++#include "migration/vmstate.h"
++#include "hw/gpio/bcm2838_gpio.h"
 +
-+REG32(MBOX_EXCHNG_REG,          0)
-+FIELD(MBOX_EXCHNG_REG, CHANNEL, 0, 4)
-+FIELD(MBOX_EXCHNG_REG, DATA,    4, 28)
++#define GPFSEL0   0x00
++#define GPFSEL1   0x04
++#define GPFSEL2   0x08
++#define GPFSEL3   0x0C
++#define GPFSEL4   0x10
++#define GPFSEL5   0x14
++#define GPSET0    0x1C
++#define GPSET1    0x20
++#define GPCLR0    0x28
++#define GPCLR1    0x2C
++#define GPLEV0    0x34
++#define GPLEV1    0x38
++#define GPEDS0    0x40
++#define GPEDS1    0x44
++#define GPREN0    0x4C
++#define GPREN1    0x50
++#define GPFEN0    0x58
++#define GPFEN1    0x5C
++#define GPHEN0    0x64
++#define GPHEN1    0x68
++#define GPLEN0    0x70
++#define GPLEN1    0x74
++#define GPAREN0   0x7C
++#define GPAREN1   0x80
++#define GPAFEN0   0x88
++#define GPAFEN1   0x8C
 +
-+static uint32_t qtest_mbox0_read_reg32(QTestState *s, uint32_t offset)
++#define GPIO_PUP_PDN_CNTRL_REG0 0xE4
++#define GPIO_PUP_PDN_CNTRL_REG1 0xE8
++#define GPIO_PUP_PDN_CNTRL_REG2 0xEC
++#define GPIO_PUP_PDN_CNTRL_REG3 0xF0
++
++#define RESET_VAL_CNTRL_REG0 0xAAA95555
++#define RESET_VAL_CNTRL_REG1 0xA0AAAAAA
++#define RESET_VAL_CNTRL_REG2 0x50AAA95A
++#define RESET_VAL_CNTRL_REG3 0x00055555
++
++#define BYTES_IN_WORD        4
++
++static uint64_t bcm2838_gpio_read(void *opaque, hwaddr offset, unsigned size)
 +{
-+    return qtest_readl(s, MBOX0_BASE + offset);
++    uint64_t value = 0;
++
++    qemu_log_mask(LOG_UNIMP, "%s: %s: not implemented for %"HWADDR_PRIx"\n",
++                  TYPE_BCM2838_GPIO, __func__, offset);
++
++    return value;
 +}
 +
-+static void qtest_mbox1_write_reg32(QTestState *s, uint32_t offset, uint32_t value)
++static void bcm2838_gpio_write(void *opaque, hwaddr offset, uint64_t value,
++                               unsigned size)
 +{
-+    return qtest_writel(s, MBOX1_BASE + offset, value);
++    qemu_log_mask(LOG_UNIMP, "%s: %s: not implemented for %"HWADDR_PRIx"\n",
++                  TYPE_BCM2838_GPIO, __func__, offset);
 +}
 +
-+static void qtest_mbox1_write(QTestState *s, uint8_t channel, uint32_t data)
++static void bcm2838_gpio_reset(DeviceState *dev)
 +{
-+    uint32_t mbox_reg = 0;
++    BCM2838GpioState *s = BCM2838_GPIO(dev);
 +
-+    mbox_reg = FIELD_DP32(mbox_reg, MBOX_EXCHNG_REG, CHANNEL, channel);
-+    mbox_reg = FIELD_DP32(mbox_reg, MBOX_EXCHNG_REG, DATA, data);
-+    qtest_mbox1_write_reg32(s, MBOX_REG_WRITE, mbox_reg);
++    s->lev0 = 0;
++    s->lev1 = 0;
++
++    memset(s->fsel, 0, sizeof(s->fsel));
++
++    s->pup_cntrl_reg[0] = RESET_VAL_CNTRL_REG0;
++    s->pup_cntrl_reg[1] = RESET_VAL_CNTRL_REG1;
++    s->pup_cntrl_reg[2] = RESET_VAL_CNTRL_REG2;
++    s->pup_cntrl_reg[3] = RESET_VAL_CNTRL_REG3;
 +}
 +
-+int qtest_mbox0_has_data(QTestState *s) {
-+    return !(qtest_mbox0_read_reg32(s, MBOX_REG_STATUS) & MBOX_READ_EMPTY);
-+}
++static const MemoryRegionOps bcm2838_gpio_ops = {
++    .read = bcm2838_gpio_read,
++    .write = bcm2838_gpio_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++};
 +
-+void qtest_mbox0_read_message(QTestState *s,
-+                              uint8_t channel,
-+                              void *msgbuf,
-+                              size_t msgbuf_size)
++static const VMStateDescription vmstate_bcm2838_gpio = {
++    .name = "bcm2838_gpio",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT8_ARRAY(fsel, BCM2838GpioState, BCM2838_GPIO_NUM),
++        VMSTATE_UINT32(lev0, BCM2838GpioState),
++        VMSTATE_UINT32(lev1, BCM2838GpioState),
++        VMSTATE_UINT8(sd_fsel, BCM2838GpioState),
++        VMSTATE_UINT32_ARRAY(pup_cntrl_reg, BCM2838GpioState,
++                             GPIO_PUP_PDN_CNTRL_NUM),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static void bcm2838_gpio_init(Object *obj)
 +{
-+    uint32_t mbox_reg;
-+    uint32_t msgaddr;
++    BCM2838GpioState *s = BCM2838_GPIO(obj);
++    DeviceState *dev = DEVICE(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
 +
-+    g_assert(qtest_mbox0_has_data(s));
-+    mbox_reg = qtest_mbox0_read_reg32(s, MBOX_REG_READ);
-+    g_assert_cmphex(FIELD_EX32(mbox_reg, MBOX_EXCHNG_REG, CHANNEL), ==, channel);
-+    msgaddr = FIELD_EX32(mbox_reg, MBOX_EXCHNG_REG, DATA) << 4;
-+    qtest_memread(s, msgaddr, msgbuf, msgbuf_size);
++    memory_region_init_io(&s->iomem, obj, &bcm2838_gpio_ops, s,
++                          "bcm2838_gpio", BCM2838_GPIO_REGS_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem);
++    qdev_init_gpio_out(dev, s->out, BCM2838_GPIO_NUM);
 +}
 +
-+void qtest_mbox1_write_message(QTestState *s, uint8_t channel, uint32_t msg_addr)
++static void bcm2838_gpio_realize(DeviceState *dev, Error **errp)
 +{
-+    qtest_mbox1_write(s, channel, msg_addr >> 4);
++    /* Temporary stub. Do nothing */
 +}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 6ea77893f50..e49ce4f0929 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -334,6 +334,7 @@ qtests = {
-   'virtio-net-failover': files('migration-helpers.c'),
-   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
-   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
-+  'bcm2838-mbox-property-test' : files('bcm2838-mailbox.c'),
- }
- 
- if vnc.found()
++
++static void bcm2838_gpio_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->vmsd = &vmstate_bcm2838_gpio;
++    dc->realize = &bcm2838_gpio_realize;
++    dc->reset = &bcm2838_gpio_reset;
++}
++
++static const TypeInfo bcm2838_gpio_info = {
++    .name          = TYPE_BCM2838_GPIO,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(BCM2838GpioState),
++    .instance_init = bcm2838_gpio_init,
++    .class_init    = bcm2838_gpio_class_init,
++};
++
++static void bcm2838_gpio_register_types(void)
++{
++    type_register_static(&bcm2838_gpio_info);
++}
++
++type_init(bcm2838_gpio_register_types)
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 066ea96480f..8a8d03d885b 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -9,6 +9,9 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_gpio.c'))
+ system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_gpio.c'))
+ system_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_gpio.c'))
+ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_gpio.c'))
+-system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_gpio.c'))
++system_ss.add(when: 'CONFIG_RASPI', if_true: files(
++    'bcm2835_gpio.c',
++    'bcm2838_gpio.c'
++))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
 -- 
 2.34.1
 
