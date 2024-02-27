@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CB3C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:34:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5277C54E4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexaH-0000is-JG; Tue, 27 Feb 2024 08:33:25 -0500
+	id 1rexaX-0000oU-UZ; Tue, 27 Feb 2024 08:33:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaF-0000hK-3d
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:23 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1rexaI-0000jU-Ny
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:27 -0500
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaD-0002pn-9h
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:22 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-33d26da3e15so2419407f8f.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:18 -0800 (PST)
+ id 1rexaG-0002rk-U9
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:26 -0500
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2d27fef509eso38015811fa.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040798; x=1709645598; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040803; x=1709645603; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jgYHzr2hRg8T/6O9OXdsZJKVALA3Fedt0qDTwO0O3lA=;
- b=uy6Q5icnOkbqTLJmvql6tWpz7izYpDU/XYINQG3kneaQvSt7CtpLZekUeetr7Y0DpN
- +t0rlj9rKGug71RAdWJIS+SJtJ8/m9A9s+RfOMzmQCFQcpCe6keyN88nuBdioHU1TpqG
- OvVuOwg8sLHFoWlvktOKN1act9ZfAsArzevdaiye1BVF3Vj9oIjZlUQ7WntGtQBiENOp
- X/mNUPLM65a5xd/10qZDlcJztPSq6qW3PCI3FPlak32aWCi0Sy/nSlUdUWB3LtMXgalj
- AEvP/i9ClS/bh/TcBjqw3vVBdPQym+m5M/0f0vDBUa42aehbCC/OZf+qmffRNmVbFvmN
- y4aA==
+ :reply-to; bh=no1yxF9QVzDWCiPK1PcrjBYtl68uz4bzwyJtwJFIo0s=;
+ b=qAkMtt9YeVMkY7NqDuwUEFs1X/walUnQBlsN5wXcN/owHivp1GrrMQlRLjLGxmYb5E
+ Z3kvBbReG336hskZ7QTsnpaHaPbzDlwGjnnLoZZe/LqQqwVHMROAdRPpnbGtmVxMjm6z
+ 8VMN6milsiExrbaW6rYzYb5aZk7fyBUfZ6pEaTcRbLSgDC0Anh4ZNuf7WTxmHwdc4Abw
+ En4m0+IsaUC/1zgjIzQJiaB5RkX7pBBwkhslWtcH5lGCGhqS+JkI4t0pP42/Xt1KWikr
+ fPl0gyfF+VZ34hOWNb+ZGXlar6oHYUbEmeFg9l2enIOppFWBANKIuoYDkEazMfaaIgwF
+ Hb8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040798; x=1709645598;
+ d=1e100.net; s=20230601; t=1709040803; x=1709645603;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jgYHzr2hRg8T/6O9OXdsZJKVALA3Fedt0qDTwO0O3lA=;
- b=TFunh/D4TDDaMkkDJy5bMWUUM1WN8mABgCeIenzHZ7LVdoDnW7IrhBezy3mxJJJYVh
- tEBedbAUTcEnG2102n6tOfjF7tcgDdD3ROz2JGjPizwMNiGG+3LF6mqEWPEZ5zxjAQxr
- SootpYNWb+Lrsy6I8OugjiHtwJznQp+8Oy4kFU2HuzndbmwbGg+M2/No/NU7Oy8dLmFe
- NTtuy47UFdPRWVoUwQkOp0qwbACJ0SAdAFdb1TlDOhLHvK++PyiYavwe9g4v7QCiQ8Gb
- hAk0krRYZmPOZTndBprr6+0+6g25IawOus1sXLfa6DXCMI/BB1Y/4F0L6KU8nbgn+uTE
- iKZw==
-X-Gm-Message-State: AOJu0YwhKL+PahUcVGy/KE86GnB8mBfuUW7GV4oOKoGhsLezhqOjHP/a
- XfBafM/ME/59h6SFhlbm6GJb+shiDoIYvv47tofzd3XR7lRZVR51U9ngJnlfJJC7n7iCcbCfXHs
- w
-X-Google-Smtp-Source: AGHT+IGjcv5rIm2JELlytJkgefyLP3xsj0zp2V60/v+j/FKcFFNSelMYHtNlbXIp7jJPPf2vnQzVOA==
-X-Received: by 2002:a5d:5f51:0:b0:33d:9d51:9942 with SMTP id
- cm17-20020a5d5f51000000b0033d9d519942mr10019763wrb.17.1709040797790; 
- Tue, 27 Feb 2024 05:33:17 -0800 (PST)
+ bh=no1yxF9QVzDWCiPK1PcrjBYtl68uz4bzwyJtwJFIo0s=;
+ b=eyXn9sg/qfBU/hirxre4sgBA//2hCKDM30DlrZUOZw/8cv0zknFi+NP+cQ/Gq4FzOQ
+ rkr327EqcCfT5cmd7yUI6uczk/grlLEDCZfbOlKzEooM4/NcAa38KQD82gHmt0XkUXAb
+ Fguv/qOlY4gKibC4CDcknR/hSJBseLrAqUuodL9rGvPYOFdMRmB7vkBS4kw97UQccaVi
+ +OTIeJapzxNIwtb5/Tk/R3DJfARKPnqD1w5K5pTAc2g5b1erDrlQcHv1FqvKy6wUKRZm
+ Ae0+6ovpclgIAaQJQDJs4CMvjkcRY129RaHRbBb5ERnPO6s2Eb3vaLgsh/kT0+dtkGlI
+ QTjA==
+X-Gm-Message-State: AOJu0Yy0sygK8FvGdIIg0/kA1LvLD85BT0KjsMATR4Jf3r8MJxvonlGy
+ maS9TlMbY1ynylEqzPNcXOR7AfIDAkqsKVZ5y1P7DBEEcqxYAMnEK16at9wdAZ14AYn3CWu1xSo
+ r
+X-Google-Smtp-Source: AGHT+IEMLdZLHX3Gofzv/34gtfKVItRlyrJhiHK6ayiJBz8+l8htyfPyuAcJ0DvCid0fkbpxA4Bu7g==
+X-Received: by 2002:a05:651c:556:b0:2d2:a443:9c64 with SMTP id
+ q22-20020a05651c055600b002d2a4439c64mr851055ljp.45.1709040801748; 
+ Tue, 27 Feb 2024 05:33:21 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.17
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:17 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:21 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/45] MAINTAINERS: Cover hw/ide/ahci-allwinner.c with
- AllWinner A10 machine
-Date: Tue, 27 Feb 2024 13:32:32 +0000
-Message-Id: <20240227133314.1721857-4-peter.maydell@linaro.org>
+Subject: [PULL 12/45] arm/ptw: Handle atomic updates of page tables entries in
+ MMIO during PTW.
+Date: Tue, 27 Feb 2024 13:32:41 +0000
+Message-Id: <20240227133314.1721857-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,32 +94,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-This code -- which was moved many times around -- was added in
-commit 377e214539 ("ahci: Add allwinner AHCI") and belong to the
-AllWinner machines. See also commit dca625768a ("arm: allwinner-a10:
-Add SATA").
+I'm far from confident this handling here is correct. Hence
+RFC.  In particular not sure on what locks I should hold for this
+to be even moderately safe.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240215160713.80409-1-philmd@linaro.org
+The function already appears to be inconsistent in what it returns
+as the CONFIG_ATOMIC64 block returns the endian converted 'eventual'
+value of the cmpxchg whereas the TCG_OVERSIZED_GUEST case returns
+the previous value.
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-id: 20240219161229.11776-1-Jonathan.Cameron@huawei.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/ptw.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 62 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 992799171f4..ca97b627188 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -642,6 +642,7 @@ R: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
- L: qemu-arm@nongnu.org
- S: Odd Fixes
- F: hw/*/allwinner*
-+F: hw/ide/ahci-allwinner.c
- F: include/hw/*/allwinner*
- F: hw/arm/cubieboard.c
- F: docs/system/arm/cubieboard.rst
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 5eb3577bcd5..ba1a27ca2b5 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -711,8 +711,68 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
+     void *host = ptw->out_host;
+ 
+     if (unlikely(!host)) {
+-        fi->type = ARMFault_UnsuppAtomicUpdate;
+-        return 0;
++        /* Page table in MMIO Memory Region */
++        CPUState *cs = env_cpu(env);
++        MemTxAttrs attrs = {
++            .space = ptw->out_space,
++            .secure = arm_space_is_secure(ptw->out_space),
++        };
++        AddressSpace *as = arm_addressspace(cs, attrs);
++        MemTxResult result = MEMTX_OK;
++        bool need_lock = !bql_locked();
++
++        if (need_lock) {
++            bql_lock();
++        }
++        if (ptw->out_be) {
++            cur_val = address_space_ldq_be(as, ptw->out_phys, attrs, &result);
++            if (unlikely(result != MEMTX_OK)) {
++                fi->type = ARMFault_SyncExternalOnWalk;
++                fi->ea = arm_extabort_type(result);
++                if (need_lock) {
++                    bql_unlock();
++                }
++                return old_val;
++            }
++            if (cur_val == old_val) {
++                address_space_stq_be(as, ptw->out_phys, new_val, attrs, &result);
++                if (unlikely(result != MEMTX_OK)) {
++                    fi->type = ARMFault_SyncExternalOnWalk;
++                    fi->ea = arm_extabort_type(result);
++                    if (need_lock) {
++                        bql_unlock();
++                    }
++                    return old_val;
++                }
++                cur_val = new_val;
++            }
++        } else {
++            cur_val = address_space_ldq_le(as, ptw->out_phys, attrs, &result);
++            if (unlikely(result != MEMTX_OK)) {
++                fi->type = ARMFault_SyncExternalOnWalk;
++                fi->ea = arm_extabort_type(result);
++                if (need_lock) {
++                    bql_unlock();
++                }
++                return old_val;
++            }
++            if (cur_val == old_val) {
++                address_space_stq_le(as, ptw->out_phys, new_val, attrs, &result);
++                if (unlikely(result != MEMTX_OK)) {
++                    fi->type = ARMFault_SyncExternalOnWalk;
++                    fi->ea = arm_extabort_type(result);
++                    if (need_lock) {
++                        bql_unlock();
++                    }
++                    return old_val;
++                }
++                cur_val = new_val;
++            }
++        }
++        if (need_lock) {
++            bql_unlock();
++        }
++        return cur_val;
+     }
+ 
+     /*
 -- 
 2.34.1
 
