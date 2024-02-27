@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21703C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1E62C54E55
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1revcK-0004Pv-Nl; Tue, 27 Feb 2024 06:27:24 -0500
+	id 1revo6-0008Vo-CQ; Tue, 27 Feb 2024 06:39:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1revcA-0004LM-6l
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:27:17 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1revc5-0003Hj-Cq
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:27:13 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-55a035669d5so7366000a12.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 03:27:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709033227; x=1709638027; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yH+ysTtQHkZx1mKQLtwZgc/8OT4X9Vo3uEOds0+TbkI=;
- b=szpRvs4uPdtOMxouNbwIO3z4guN9KoBjCtWtIXhhKF+ttfOLtFbi9IIA9VssS0kih0
- vmbtG9mrNiO1eeGPlvWlh4deA4ht5RdWpKNIJf0l/DaVkXTslHoq7+4cNeaX5ky7yLYc
- 0HP1hFzNPzJ/AORH2Dd6Lbhyx6o0j050uOnvOLmumA8LzviF87VuBmiQVD/3l5W37ST4
- HmiympUcLH90ktUvCD8vXZDFQwsno9SAuOR5OvgDNOqi6ywJq8XKKsYXZQqzCrqV1hSk
- NBy+wae/deLwBvhoouc1gvGNMgUGdIrMRRATxSS56xYwk71xBLlhVWiGpiEpy+/c2M9U
- ZDoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709033227; x=1709638027;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yH+ysTtQHkZx1mKQLtwZgc/8OT4X9Vo3uEOds0+TbkI=;
- b=CxyfczTHOumot5XRwCM7upOKQqmjnp3C3O6H76ymhYl/CxZ0r1b3rYb9j6rMAYrPsj
- XR4KnVprg77Ppfozx8s7/z2HRuG178C2N/j6vPpmEy8+0gXQE4+GkPiL3lkGH3PXEMr5
- dKVTOewULvW8u+f4riiwfKH3DK2ARFIS4SUnJErLcaB+wH7RSfVomw2zOI8sze+jg5Cc
- 9O7AN1/XoMG2GRR0iS6UatmLK9WL2mVnn3TpKXB5WXvPO5kkHJnDkBZC/R75Dy+EKa3g
- ay/IIoydhFH9IVihNXSOLeIX79vwLvSrZg0aDXmk/kCnaM8VhE7Zo8mOvegYfandozPh
- 6rPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQS44I9PnSi6JUSOuaQ/0CcYwShYdo9Y/gZYjG18b3rL4DITwrgyV6EkyKjqPW9bOh+VYV2riYMww7kbBgDxa745BI32Y=
-X-Gm-Message-State: AOJu0YxVTtVIWufA+leST0qUH74fP1LIjF3MaB7triCOSEm9UtXjqPWc
- AGjCeLNKriXnqMcPeI1GiNNypQnN1B8iZODiYIf1TX819PUiSs2WnP9vHeKDCSVy36gjbW+Ymor
- AwY6vqmGzDte0doSRTyX/qKqYNRQ6RNkzXACGbQ==
-X-Google-Smtp-Source: AGHT+IEP7R4hj9xiJcOII+COLwhvI+PDX2YJPPBrwbMZ5hV+F5KHdiDWEA3s6HIx6VZwC0ADkWl5I3j3ykgfpYm0UzE=
-X-Received: by 2002:a05:6402:3126:b0:566:4e7a:fa2b with SMTP id
- dd6-20020a056402312600b005664e7afa2bmr125483edb.36.1709033226883; Tue, 27 Feb
- 2024 03:27:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revo4-0008Uv-Ik
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revnz-0005U9-OT
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709033966;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wgq5a0s/a7hkcbApiEJx5CPQu9e/pbtW3qPLD2zwL2s=;
+ b=a9ls5ohD5ZaFIKajQ3fhGTqPBz2vkl2q05wjhTTdUCWGGj6KHX3CrXOWsDPGdc/llTzxzc
+ Jb7bjZtvLxVJRiCPMrnWlKaFwplHRgnH9dkXayEVpm4P2F+If/DRTHXD4zHS9HljZbkkLN
+ quUcnQWRs2PMJe6vr2P2kH9dKjm24Xo=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-1qIQzdEcMduozLv9LVFcnw-1; Tue,
+ 27 Feb 2024 06:39:22 -0500
+X-MC-Unique: 1qIQzdEcMduozLv9LVFcnw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 656993C02757;
+ Tue, 27 Feb 2024 11:39:22 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 41E832166B33;
+ Tue, 27 Feb 2024 11:39:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2DD6B21E6682; Tue, 27 Feb 2024 12:39:21 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: michael.roth@amd.com, jsnow@redhat.com, eblake@redhat.com,
+ kkostiuk@redhat.com
+Subject: [PATCH 02/13] qapi: Slightly clearer error message for invalid
+ "Returns" section
+Date: Tue, 27 Feb 2024 12:39:10 +0100
+Message-ID: <20240227113921.236097-3-armbru@redhat.com>
+In-Reply-To: <20240227113921.236097-1-armbru@redhat.com>
+References: <20240227113921.236097-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20240226000259.2752893-1-sergey.kambalin@auriga.com>
- <CAFEAcA_brkckzDZh_-UJ-KFfBGvjPozPHNmG-bWFO0Xa63R0Gg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_brkckzDZh_-UJ-KFfBGvjPozPHNmG-bWFO0Xa63R0Gg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 11:26:55 +0000
-Message-ID: <CAFEAcA_An-KUbaKHDGmk7Uiovft-8JDbW9J1s36wccS2sh9vJg@mail.gmail.com>
-Subject: Re: [PATCH v6 00/41] Raspberry Pi 4B machine
-To: Sergey Kambalin <serg.oker@gmail.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Sergey Kambalin <sergey.kambalin@auriga.com>,
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,22 +84,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 at 18:09, Peter Maydell <peter.maydell@linaro.org> wrote:
-> I think the one question I have left is the name of the
-> board: currently it's "raspi4b-2g", but should we name
-> it just "raspi4b"? None of the names we use for the other
-> raspi boards we model have a suffix like the "-2g" here.
-> Philippe, do you have an opinion here ?
+Change "'Returns:' is only valid for commands" to "'Returns' section
+is only valid for commands".
 
-I had a look at what the different raspi4 models are, and
-it looks like they're all the same except for the amount
-of RAM. For QEMU, if we wanted to allow users to pick
-the RAM size we'd do it via the -m option, not by using
-different model names. So I think on that basis and to
-match the existing raspi machine names, we should call
-this simply "raspi4b". So I'll make that name change in the
-patches I have in target-arm.next.
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/parser.py                   | 5 +++--
+ tests/qapi-schema/doc-invalid-return.err | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-thanks
--- PMM
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index bfc47cf3cb..e4c2259e39 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -716,8 +716,9 @@ def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
+ 
+     def check_expr(self, expr: QAPIExpression) -> None:
+         if self.returns and 'command' not in expr:
+-            raise QAPISemError(self.returns.info,
+-                               "'Returns:' is only valid for commands")
++            raise QAPISemError(
++                self.returns.info,
++                "'Returns' section is only valid for commands")
+ 
+     def check(self) -> None:
+ 
+diff --git a/tests/qapi-schema/doc-invalid-return.err b/tests/qapi-schema/doc-invalid-return.err
+index 3d9e71c2b3..aafd57b135 100644
+--- a/tests/qapi-schema/doc-invalid-return.err
++++ b/tests/qapi-schema/doc-invalid-return.err
+@@ -1 +1 @@
+-doc-invalid-return.json:6: 'Returns:' is only valid for commands
++doc-invalid-return.json:6: 'Returns' section is only valid for commands
+-- 
+2.43.0
+
 
