@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCB4C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCF4C54E4A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexb0-000189-K0; Tue, 27 Feb 2024 08:34:10 -0500
+	id 1rexad-0000pI-7b; Tue, 27 Feb 2024 08:33:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaZ-0000pQ-PU
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:47 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1rexaM-0000kJ-Gv
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:33 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaT-0002vT-HP
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:42 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-412a38e2adaso16988375e9.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:36 -0800 (PST)
+ id 1rexaI-0002sX-4E
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:28 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33d754746c3so2868729f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040815; x=1709645615; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040805; x=1709645605; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LAJ/EogWW9dhCM2UgCKzftAD6rpSgQuVvkridR+6mrg=;
- b=Bf3iPuIBI9fXEU1eCt8r/ZRczaBsl1Nusmhg500qyPyWZ/Ng354lYhb3ZAW6Tg+an7
- Kp+8AeKeD6AFadOoKGA9K9Nl5Qtf3w6AxVpQYktFkDTtf5WlV+C6/bG6jBpA58wHFN4u
- aDwbOEGvOOAoWJM/LNL04P1hZj3WluYlBH68Ba6DH9FPT+z2QMjmnH74cTg+qg0OeH4P
- A2LU5HKTMYtJ92A5smDRgyxfa8pkB5xEX2vTUk4ZdHLfwSPXOsIv4v2h1Hd9TSuqrGK6
- eFr5G9BkuaElctuGWXw7EuFUFYp/+TjPIe8N4+RmCuq4lQ/+R7BKHVdmGewje/J+N2Pp
- O5uQ==
+ :reply-to; bh=EOihe31CmPAbuzzjsksYd8G0LxILYXs9z7dL8tuuTcw=;
+ b=bj1XwZEMZsuU7ZcZZAx2EEnJKi/6l950+9o0dCOc8fQrtutRC2d8T6wW0oNoogS+cC
+ 57Ey2Dhz+Xi9wqQO194CIBfMx7r25QigCLloX0/RJS1CuLu86+q0IEZp+/k3B8km7bLE
+ a2FyLOU3Vv4V6FA3r38+Yx4+OJsFuGZ8uMaUwTFxoICg5q57hjvZSERlg0tOiM+4WqJX
+ tixrpTsYoOqtCYoFtlkc37HdnfDUssM1pKRoOu38a+uoYDG8hm8Iq5ycAZ2x8Wn3AVtI
+ eJe9aJayrd03hBQ83mIWXy+JcO9p5tuPOnF1jhi4t4yODYSd+VhaPGwYeSxHIN9RUxCJ
+ vuPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040815; x=1709645615;
+ d=1e100.net; s=20230601; t=1709040805; x=1709645605;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LAJ/EogWW9dhCM2UgCKzftAD6rpSgQuVvkridR+6mrg=;
- b=BJ7oc/ulayggfTLgCXAU1fGfNM7CehQRNR2/relq5GEgNS6cbHBreX7A4IARKCW9di
- nAaz8zQ4wswMimVHwoDpazsqrLPRkcFEtUKoQbLOOSJcgB11vYaB/x+XO09HAgC/Me45
- B2h2WlbIkjLjy9+dWs2PryOOfTtu754wB3tQIPb7JnssWPTiDGmbHXjSNn2XYmBmrU9y
- eYoQYiXhVgfMmdjEhJ3QJPjqdYVdp5epc6KFJWVli7Qn00gy9FpSn8ToI4Uh476X8FWo
- OOSysvIrdzs8xgsK/wiN39YsMA69AmQxgFGWOmodNmMGQHEs+2YSPL6Kx2ZfBUB6EO2t
- HO1Q==
-X-Gm-Message-State: AOJu0YzVCQlX4e4SSyDMG/JjGCiF0oTDXkIQGl4QjKkWIhY2jkfx/QTV
- pF4L407CUv2/mYH213kH7RRbx7lSjzFPnTeD2ufZK98eoDNx7Swm2ltYuX4EmchzPB59LmSlLMD
- V
-X-Google-Smtp-Source: AGHT+IFvvsegRGuljJvmRPiroA7iA5Sbi2WTvX/W5fyOHu1jLymWJE3aKog2zwphlg6MH6dmCdGFyw==
-X-Received: by 2002:a05:600c:3508:b0:412:b0ed:f18f with SMTP id
- h8-20020a05600c350800b00412b0edf18fmr111726wmq.21.1709040815706; 
- Tue, 27 Feb 2024 05:33:35 -0800 (PST)
+ bh=EOihe31CmPAbuzzjsksYd8G0LxILYXs9z7dL8tuuTcw=;
+ b=vcLFx7ESgzIYOsF4b0kcITN/cWUcKbMBdQpkIXza/boMv6EDdK0DbgMGsd1Nrbxd+9
+ cIiZRroGGIJ95MAEUT04BertBHccm1EyAJF6ReqjdG9qqj1tWKhrJdnRqIxupu1CWpLH
+ on8dqHdZl0Aq8GT8p8UwLhEU3sE01i22DVvdc2KYJXogn05jMWu2UbAflTnsyvRZD3LI
+ rV6SFsxkcwy8s5fY2nvllS4iWYAfp69dICDKBI/S0a41lK5tU0yO+5ZkZB9UVcLxmXci
+ PnJyYOaEDpZw/qS7blqo+pm/goHRXWpCN//C5idl40XivoGAhqN04YtrYA/WF/gIfTnw
+ jxPg==
+X-Gm-Message-State: AOJu0Yz+C036iXPpTOvB4G8irtSae9B6GbmeEGPsVPm1Jt7xzfEAbS1n
+ 5z1RwQaKhfMs9/LpR3El+Gu7YMpWwceY4t/WcodgeAcRjt33z53Zoj/oGAmxD1iRklirUSeR/3a
+ 3
+X-Google-Smtp-Source: AGHT+IG9CEdwWTqvYj+VU3vaEFctyvjWeOk0CXQ/tMQrqYJMxHkwtEQ2AMpgTSRa6kCR1VP/PsckcA==
+X-Received: by 2002:adf:ef87:0:b0:33d:a011:ae42 with SMTP id
+ d7-20020adfef87000000b0033da011ae42mr6830316wro.38.1709040804860; 
+ Tue, 27 Feb 2024 05:33:24 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.34
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:34 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 38/45] tests/qtest/bcm2828-mailbox: Add mailbox tests tags.
- Part 2
-Date: Tue, 27 Feb 2024 13:33:07 +0000
-Message-Id: <20240227133314.1721857-39-peter.maydell@linaro.org>
+Subject: [PULL 16/45] hw/core: Add ResetContainer which holds objects
+ implementing Resettable
+Date: Tue, 27 Feb 2024 13:32:45 +0000
+Message-Id: <20240227133314.1721857-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,179 +95,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+Implement a ResetContainer.  This is a subclass of Object, and it
+implements the Resettable interface.  The container holds a list of
+arbitrary other objects which implement Resettable, and when the
+container is reset, all the objects it contains are also reset.
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Message-id: 20240226000259.2752893-35-sergey.kambalin@auriga.com
+This will allow us to have a 3-phase-reset equivalent of the old
+qemu_register_reset() API: we will have a single "simulation reset"
+top level ResetContainer, and objects in it are the equivalent of the
+old QEMUResetHandler functions.
+
+The qemu_register_reset() API manages its list of callbacks using a
+QTAILQ, but here we use a GPtrArray for our list of Resettable
+children: we expect the "remove" operation (which will need to do an
+iteration through the list) to be fairly uncommon, and we get simpler
+code with fewer memory allocations.
+
+Since there is currently no listed owner in MAINTAINERS for the
+existing reset-related source files, create a new section for
+them, and add these new files there also.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20240220160622.114437-7-peter.maydell@linaro.org
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- tests/qtest/bcm2838-mailbox.h | 152 ++++++++++++++++++++++++++++++++++
- 1 file changed, 152 insertions(+)
+ MAINTAINERS                      | 10 +++++
+ include/hw/core/resetcontainer.h | 48 ++++++++++++++++++++
+ hw/core/resetcontainer.c         | 77 ++++++++++++++++++++++++++++++++
+ hw/core/meson.build              |  1 +
+ 4 files changed, 136 insertions(+)
+ create mode 100644 include/hw/core/resetcontainer.h
+ create mode 100644 hw/core/resetcontainer.c
 
-diff --git a/tests/qtest/bcm2838-mailbox.h b/tests/qtest/bcm2838-mailbox.h
-index 1360fbb8cf4..b4f7b7b3143 100644
---- a/tests/qtest/bcm2838-mailbox.h
-+++ b/tests/qtest/bcm2838-mailbox.h
-@@ -294,6 +294,158 @@ DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_VIRTUAL_WIDTH_HEIGHT_t,
-         uint32_t height;
-     });
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ca97b627188..65dfdc9677e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3676,6 +3676,16 @@ F: hw/core/clock-vmstate.c
+ F: hw/core/qdev-clock.c
+ F: docs/devel/clocks.rst
  
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_DEPTH_t,
-+    struct {},
-+    struct {
-+        uint32_t bpp;
-+    });
++Reset framework
++M: Peter Maydell <peter.maydell@linaro.org>
++S: Maintained
++F: include/hw/resettable.h
++F: include/hw/core/resetcontainer.h
++F: include/sysemu/reset.h
++F: hw/core/reset.c
++F: hw/core/resettable.c
++F: hw/core/resetcontainer.c
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_DEPTH_t,
-+    struct {
-+        uint32_t bpp;
-+    },
-+    struct {
-+        uint32_t bpp;
-+    });
+ Usermode Emulation
+ ------------------
+ Overall usermode emulation
+diff --git a/include/hw/core/resetcontainer.h b/include/hw/core/resetcontainer.h
+new file mode 100644
+index 00000000000..23db0c7a880
+--- /dev/null
++++ b/include/hw/core/resetcontainer.h
+@@ -0,0 +1,48 @@
++/*
++ * Reset container
++ *
++ * Copyright (c) 2024 Linaro, Ltd
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_DEPTH_t,
-+    struct {
-+        uint32_t bpp;
-+    },
-+    struct {
-+        uint32_t bpp;
-+    });
++#ifndef HW_RESETCONTAINER_H
++#define HW_RESETCONTAINER_H
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_PIXEL_ORDER_t,
-+    struct {},
-+    struct {
-+        uint32_t pixel_order;
-+    });
++/*
++ * The "reset container" is an object which implements the Resettable
++ * interface. It contains a list of arbitrary other objects which also
++ * implement Resettable. Resetting the reset container resets all the
++ * objects in it.
++ */
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_PIXEL_ORDER_t,
-+    struct {
-+        uint32_t pixel_order;
-+    },
-+    struct {
-+        uint32_t pixel_order;
-+    });
++#include "qom/object.h"
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_PIXEL_ORDER_t,
-+    struct {
-+        uint32_t pixel_order;
-+    },
-+    struct {
-+        uint32_t pixel_order;
-+    });
++#define TYPE_RESETTABLE_CONTAINER "resettable-container"
++OBJECT_DECLARE_TYPE(ResettableContainer, ResettableContainerClass, RESETTABLE_CONTAINER)
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_ALPHA_MODE_t,
-+    struct {},
-+    struct {
-+        uint32_t alpha_mode;
-+    });
++/**
++ * resettable_container_add: Add a resettable object to the container
++ * @rc: container
++ * @obj: object to add to the container
++ *
++ * Add @obj to the ResettableContainer @rc. @obj must implement the
++ * Resettable interface.
++ *
++ * When @rc is reset, it will reset every object that has been added
++ * to it, in the order they were added.
++ */
++void resettable_container_add(ResettableContainer *rc, Object *obj);
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_ALPHA_MODE_t,
-+    struct {
-+        uint32_t alpha_mode;
-+    },
-+    struct {
-+        uint32_t alpha_mode;
-+    });
++/**
++ * resettable_container_remove: Remove an object from the container
++ * @rc: container
++ * @obj: object to remove from the container
++ *
++ * Remove @obj from the ResettableContainer @rc. @obj must have been
++ * previously added to this container.
++ */
++void resettable_container_remove(ResettableContainer *rc, Object *obj);
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_ALPHA_MODE_t,
-+    struct {
-+        uint32_t alpha_mode;
-+    },
-+    struct {
-+        uint32_t alpha_mode;
-+    });
++#endif
+diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
+new file mode 100644
+index 00000000000..e4ece68e83a
+--- /dev/null
++++ b/hw/core/resetcontainer.c
+@@ -0,0 +1,77 @@
++/*
++ * Reset container
++ *
++ * Copyright (c) 2024 Linaro, Ltd
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_PITCH_t,
-+    struct {},
-+    struct {
-+        uint32_t pitch;
-+    });
++/*
++ * The "reset container" is an object which implements the Resettable
++ * interface. It contains a list of arbitrary other objects which also
++ * implement Resettable. Resetting the reset container resets all the
++ * objects in it.
++ */
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_PITCH_t,
-+    struct {
-+        uint32_t pitch;
-+    },
-+    struct {});
++#include "qemu/osdep.h"
++#include "hw/resettable.h"
++#include "hw/core/resetcontainer.h"
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_VIRTUAL_OFFSET_t,
-+    struct {},
-+    struct {
-+        uint32_t x;
-+        uint32_t y;
-+    });
++struct ResettableContainer {
++    Object parent;
++    ResettableState reset_state;
++    GPtrArray *children;
++};
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_VIRTUAL_OFFSET_t,
-+    struct {
-+        uint32_t x;
-+        uint32_t y;
-+    },
-+    struct {
-+        uint32_t x;
-+        uint32_t y;
-+    });
++OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(ResettableContainer, resettable_container, RESETTABLE_CONTAINER, OBJECT, { TYPE_RESETTABLE_INTERFACE }, { })
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_VIRTUAL_OFFSET_t,
-+    struct {
-+        uint32_t x;
-+        uint32_t y;
-+    },
-+    struct {
-+        uint32_t x;
-+        uint32_t y;
-+    });
++void resettable_container_add(ResettableContainer *rc, Object *obj)
++{
++    INTERFACE_CHECK(void, obj, TYPE_RESETTABLE_INTERFACE);
++    g_ptr_array_add(rc->children, obj);
++}
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_GET_OVERSCAN_t,
-+    struct {},
-+    struct {
-+        uint32_t top;
-+        uint32_t bottom;
-+        uint32_t left;
-+        uint32_t right;
-+    });
++void resettable_container_remove(ResettableContainer *rc, Object *obj)
++{
++    g_ptr_array_remove(rc->children, obj);
++}
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_TEST_OVERSCAN_t,
-+    struct {
-+        uint32_t top;
-+        uint32_t bottom;
-+        uint32_t left;
-+        uint32_t right;
-+    },
-+    struct {
-+        uint32_t top;
-+        uint32_t bottom;
-+        uint32_t left;
-+        uint32_t right;
-+    });
++static ResettableState *resettable_container_get_state(Object *obj)
++{
++    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
++    return &rc->reset_state;
++}
 +
-+DECLARE_TAG_TYPE(TAG_FRAMEBUFFER_SET_OVERSCAN_t,
-+    struct {
-+        uint32_t top;
-+        uint32_t bottom;
-+        uint32_t left;
-+        uint32_t right;
-+    },
-+    struct {
-+        uint32_t top;
-+        uint32_t bottom;
-+        uint32_t left;
-+        uint32_t right;
-+    });
++static void resettable_container_child_foreach(Object *obj,
++                                               ResettableChildCallback cb,
++                                               void *opaque, ResetType type)
++{
++    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
++    unsigned int len = rc->children->len;
 +
-+DECLARE_TAG_TYPE(TAG_GET_COMMAND_LINE_t,
-+    struct {},
-+    struct {});
++    for (unsigned int i = 0; i < len; i++) {
++        cb(g_ptr_array_index(rc->children, i), opaque, type);
++        /* Detect callbacks trying to unregister themselves */
++        assert(len == rc->children->len);
++    }
++}
 +
-+DECLARE_TAG_TYPE(TAG_GET_DMA_CHANNELS_t,
-+    struct {},
-+    struct {
-+        uint32_t mask;
-+    });
++static void resettable_container_init(Object *obj)
++{
++    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
 +
- int mbox0_has_data(void);
- void mbox0_read_message(uint8_t channel, void *msgbuf, size_t msgbuf_size);
- void mbox1_write_message(uint8_t channel, uint32_t msg_addr);
++    rc->children = g_ptr_array_new();
++}
++
++static void resettable_container_finalize(Object *obj)
++{
++}
++
++static void resettable_container_class_init(ObjectClass *klass, void *data)
++{
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->get_state = resettable_container_get_state;
++    rc->child_foreach = resettable_container_child_foreach;
++}
+diff --git a/hw/core/meson.build b/hw/core/meson.build
+index 67dad04de55..e26f2e088c3 100644
+--- a/hw/core/meson.build
++++ b/hw/core/meson.build
+@@ -4,6 +4,7 @@ hwcore_ss.add(files(
+   'qdev-properties.c',
+   'qdev.c',
+   'reset.c',
++  'resetcontainer.c',
+   'resettable.c',
+   'vmstate-if.c',
+   # irq.c needed for qdev GPIO handling:
 -- 
 2.34.1
 
