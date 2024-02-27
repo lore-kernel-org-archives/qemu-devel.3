@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB99CC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D19C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reypl-0005Fl-18; Tue, 27 Feb 2024 09:53:29 -0500
+	id 1reypi-0004yu-6m; Tue, 27 Feb 2024 09:53:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reypd-0004W3-L4
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:21 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1reypc-0004Ox-CC
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:20 -0500
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reypK-0004rn-0V
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:21 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-412b15c97d4so213625e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:53:01 -0800 (PST)
+ id 1reypJ-0004r6-1n
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:18 -0500
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2d28051376eso40293501fa.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:53:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709045580; x=1709650380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709045578; x=1709650378; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DS/EGY2tGxoW2u4p636lnzJLhbzW+SUrMSj5Qfa0kZY=;
- b=l8FQOhMDo1lm41CiXYfdGTQNHNVSgqtKbLGr9K+9kIRB6RIZ9675k6Y1CePVXD4VXW
- UBRT5jNVhuhI6R7c9OIBE1ssWO8gSG2XCuqxHWTq6wm/t1RwOpGsYFktsa7E7HxFbRGP
- +lAuS+zO8kxpNwHDdgNGb0FC+qj4ubLjQhyMGwi2iz3ZHYHOXIlpPuQWMd4tWgg5cKJN
- RVkvIoIj9lqtVHrFuw9UWB4+bej2/DGZ3IPJAUkzhz5MCPvvwVjHsprrdCxmGsF6dBk4
- xisrt+9QRYFBCVw3YmU2Hu61s4CdXmVqnOucB8btjvQY2ffDK6r47ENRDPubg8I/yx2e
- f7bQ==
+ bh=g/cqNYFg8Kx7eF1FlHZszwMWEl9h8rj4NfbMGhVND2w=;
+ b=srsdVjCL+094a6Nj/QXFDHTi74qWcDhe16Dr7HOoj2kezTpU9gGUsO6ZDRPCUIYsX9
+ zMfMJHhI/wUS2CcGyRTRkWnfffJAxzCdOTIPrYf3bXjORv09BBekUwXYVO0iLhgrIN4z
+ UPXa1t1oKdp4kzeP4CHCkCyIOns2FvTm2WpXGDcXc6ndw7GOdI125B/HPEsD4hwLul2W
+ zg32WXiG72ZmdvfHJRZltkyqHdMvQjZaG1eNk/feEOqUggMs0OTGnneEBFn5Diz7hHXU
+ jgEVnPgCcx6Ie2VV7nR1KLfqx1MALmCTFFT+R23UehuE4Upi0czNOplg+FfYBXeYQ1di
+ 8AmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709045580; x=1709650380;
+ d=1e100.net; s=20230601; t=1709045578; x=1709650378;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DS/EGY2tGxoW2u4p636lnzJLhbzW+SUrMSj5Qfa0kZY=;
- b=DawLsP7Iy+0eyCHE/Ck7CyV92E5u6qyYdWSjKZ0ciOv3BXCUK5J54iPbcj+akrTeGB
- 1p2Ez5lbadG8h3UZj9BoQFUr3maJzSa4R0jTXEcZ0rtQjdgBXipkzMQkyzxwGZfKc6At
- uy3xfz2ufjabEVw2nkKvu/sW44CPAwgRuyPm3b446g44/PPlpeHbz8MEuBXqTjCJQsIk
- MuKAlcfFwRJMgCldVOB6ZkSSR1SCRF5D0XtjpcWEzEeZx9BVN3eosWL0lUxgWXQ3Pu8J
- 2N7y1+QBPl3qOZ7m61EYeZutDPcGjw1/+cRZLWyGel9HP3ngwE3s8sYf8pch1Lmn2nXp
- JEDw==
-X-Gm-Message-State: AOJu0YynQ1PH2WMgeJnJTT3zB4QmTrEXps1GbS4lpe6SDGXhAkkvDBR1
- qLbmE/BRj4pTQ8ZM5fo7W+Nzr9kf8EirZq8dr6vlRSPFhHSv2IUH6263h6S1fhg=
-X-Google-Smtp-Source: AGHT+IFp2qY1yTh7nKe5J3lMjvBCga2j9Q4uCpSn8lGlJYyYv0WrUhHFgAWJOyBSxlFBOVTJrrh/+g==
-X-Received: by 2002:a05:600c:1e1f:b0:412:a9b1:148a with SMTP id
- ay31-20020a05600c1e1f00b00412a9b1148amr1993642wmb.23.1709045580107; 
- Tue, 27 Feb 2024 06:53:00 -0800 (PST)
+ bh=g/cqNYFg8Kx7eF1FlHZszwMWEl9h8rj4NfbMGhVND2w=;
+ b=i7rURIAmwSP28zqrmFvOCLdYK6oqj4k5YfuMn8bKzg5hfybE7lYb1QYAX1txfT6OtV
+ EKYmzkv/O3LbYFHO+qd+oaGGhhwmRYPrcMUPADie1Dm852R9xEnX0wcMXrgiR3lCXRSp
+ p9A3bVMsKcetqN6GmaDoofObfpdN5m9ljtWoZ7VHSs1nxPY9h3y8zTL+13z9Mc8RJeL9
+ f+H4lzra9NKIqHZr6qLMcrxSQ5suUXSGecSpnqNcvCRWi2J639KZ/+R+gg5iValg5Ump
+ 4dDuhWv0fnVWuDc/OUpeyjnQwCMcWyMEP2Nn0GI2WOhNuMD3TC1ODFF/KP/ZwzrzIeTZ
+ Ub5A==
+X-Gm-Message-State: AOJu0YzXAevlXWksYkvkELoTnnaXvm9/LpNBOyrNfNX6jwt6eXRGIZ1N
+ zYGAeqtrDuYyP3k7P+OBWZ6T4SbM3gDRXowdyHojA263yKqWvCe9fdm7cob4p7A=
+X-Google-Smtp-Source: AGHT+IH2RfrK18UbAITmVCEFQzCtbOMa5SDG4DJfw7Qp/dj1OAl+gF3VzC7p5dlj8YttJjU8XCf1DQ==
+X-Received: by 2002:a2e:be8e:0:b0:2d2:899d:babd with SMTP id
+ a14-20020a2ebe8e000000b002d2899dbabdmr4967222ljr.26.1709045578508; 
+ Tue, 27 Feb 2024 06:52:58 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- m9-20020a05600c4f4900b00412a013817esm9639489wmq.7.2024.02.27.06.52.51
+ u16-20020a05600c211000b004126732390asm15228539wml.37.2024.02.27.06.52.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 27 Feb 2024 06:52:53 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 489D95F920;
+ by draig.lan (Postfix) with ESMTP id A208D5F929;
  Tue, 27 Feb 2024 14:43:37 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -89,17 +89,18 @@ Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 18/29] linux-user: ensure nios2 processes queued work
-Date: Tue, 27 Feb 2024 14:43:24 +0000
-Message-Id: <20240227144335.1196131-19-alex.bennee@linaro.org>
+Subject: [PATCH v4 22/29] plugins: create CPUPluginState and migrate
+ plugin_mask
+Date: Tue, 27 Feb 2024 14:43:28 +0000
+Message-Id: <20240227144335.1196131-23-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240227144335.1196131-1-alex.bennee@linaro.org>
 References: <20240227144335.1196131-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,32 +123,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While async processes are rare for linux-user we do use them from time
-to time. The most obvious one is tb_flush when we run out of
-translation space. We will also need this when we move plugin
-vcpu_init to an async task.
+As we expand the per-vCPU data for plugins we don't want to pollute
+CPUState. For now this just moves the plugin_mask (renamed to
+event_mask) as the memory callbacks are accessed directly by TCG
+generated code.
 
-Fix nios2 to follow its older, wiser and more stable siblings.
-
+Message-Id: <20240223162202.1936541-21-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- linux-user/nios2/cpu_loop.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/nios2/cpu_loop.c b/linux-user/nios2/cpu_loop.c
-index da77ede76bd..7fe08c87501 100644
---- a/linux-user/nios2/cpu_loop.c
-+++ b/linux-user/nios2/cpu_loop.c
-@@ -32,6 +32,7 @@ void cpu_loop(CPUNios2State *env)
-         cpu_exec_start(cs);
-         trapnr = cpu_exec(cs);
-         cpu_exec_end(cs);
-+        process_queued_cpu_work(cs);
+---
+v2
+  - checkpatch cleanups
+---
+ include/hw/core/cpu.h   | 11 +++++++----
+ include/qemu/plugin.h   | 13 +++++++++++++
+ include/qemu/typedefs.h |  1 +
+ accel/tcg/plugin-gen.c  |  3 ++-
+ hw/core/cpu-common.c    |  5 +++++
+ plugins/core.c          | 13 ++++++++++---
+ 6 files changed, 38 insertions(+), 8 deletions(-)
+
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 4b659799b00..af1a29526d4 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -31,7 +31,6 @@
+ #include "qemu/rcu_queue.h"
+ #include "qemu/queue.h"
+ #include "qemu/thread.h"
+-#include "qemu/plugin-event.h"
+ #include "qom/object.h"
  
-         switch (trapnr) {
-         case EXCP_INTERRUPT:
+ typedef int (*WriteCoreDumpFunction)(const void *buf, size_t size,
+@@ -434,7 +433,8 @@ struct qemu_work_item;
+  * @kvm_fd: vCPU file descriptor for KVM.
+  * @work_mutex: Lock to prevent multiple access to @work_list.
+  * @work_list: List of pending asynchronous work.
+- * @plugin_mask: Plugin event bitmap. Modified only via async work.
++ * @plugin_mem_cbs: active plugin memory callbacks
++ * @plugin_state: per-CPU plugin state
+  * @ignore_memory_transaction_failures: Cached copy of the MachineState
+  *    flag of the same name: allows the board to suppress calling of the
+  *    CPU do_transaction_failed hook function.
+@@ -526,10 +526,13 @@ struct CPUState {
+     /* Use by accel-block: CPU is executing an ioctl() */
+     QemuLockCnt in_ioctl_lock;
+ 
+-    DECLARE_BITMAP(plugin_mask, QEMU_PLUGIN_EV_MAX);
+-
+ #ifdef CONFIG_PLUGIN
++    /*
++     * The callback pointer stays in the main CPUState as it is
++     * accessed via TCG (see gen_empty_mem_helper).
++     */
+     GArray *plugin_mem_cbs;
++    CPUPluginState *plugin_state;
+ #endif
+ 
+     /* TODO Move common fields from CPUArchState here. */
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index b0c5ac68293..b3c94a34aa4 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -186,6 +186,19 @@ struct qemu_plugin_insn *qemu_plugin_tb_insn_get(struct qemu_plugin_tb *tb,
+     return insn;
+ }
+ 
++/**
++ * struct CPUPluginState - per-CPU state for plugins
++ * @event_mask: plugin event bitmap. Modified only via async work.
++ */
++struct CPUPluginState {
++    DECLARE_BITMAP(event_mask, QEMU_PLUGIN_EV_MAX);
++};
++
++/**
++ * qemu_plugin_create_vcpu_state: allocate plugin state
++ */
++CPUPluginState *qemu_plugin_create_vcpu_state(void);
++
+ void qemu_plugin_vcpu_init_hook(CPUState *cpu);
+ void qemu_plugin_vcpu_exit_hook(CPUState *cpu);
+ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb);
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index d7c703b4ae9..a028dba4d0b 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -42,6 +42,7 @@ typedef struct CompatProperty CompatProperty;
+ typedef struct ConfidentialGuestSupport ConfidentialGuestSupport;
+ typedef struct CPUAddressSpace CPUAddressSpace;
+ typedef struct CPUArchState CPUArchState;
++typedef struct CPUPluginState CPUPluginState;
+ typedef struct CpuInfoFast CpuInfoFast;
+ typedef struct CPUJumpCache CPUJumpCache;
+ typedef struct CPUState CPUState;
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index b37ce7683e6..ac6b52b9ec9 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -43,6 +43,7 @@
+  * CPU's index into a TCG temp, since the first callback did it already.
+  */
+ #include "qemu/osdep.h"
++#include "qemu/plugin.h"
+ #include "cpu.h"
+ #include "tcg/tcg.h"
+ #include "tcg/tcg-temp-internal.h"
+@@ -831,7 +832,7 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
+ {
+     bool ret = false;
+ 
+-    if (test_bit(QEMU_PLUGIN_EV_VCPU_TB_TRANS, cpu->plugin_mask)) {
++    if (test_bit(QEMU_PLUGIN_EV_VCPU_TB_TRANS, cpu->plugin_state->event_mask)) {
+         struct qemu_plugin_tb *ptb = tcg_ctx->plugin_tb;
+         int i;
+ 
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 68786360ea5..0108fb11dbc 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -194,10 +194,12 @@ static void cpu_common_parse_features(const char *typename, char *features,
+     }
+ }
+ 
++#ifdef CONFIG_PLUGIN
+ static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
+ {
+     qemu_plugin_vcpu_init_hook(cpu);
+ }
++#endif
+ 
+ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+ {
+@@ -223,9 +225,12 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+     /* Plugin initialization must wait until the cpu start executing code */
++#ifdef CONFIG_PLUGIN
+     if (tcg_enabled()) {
++        cpu->plugin_state = qemu_plugin_create_vcpu_state();
+         async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
+     }
++#endif
+ 
+     /* NOTE: latest generic point where the cpu is fully realized */
+ }
+diff --git a/plugins/core.c b/plugins/core.c
+index 2392bbb8889..2db4d31354b 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -17,6 +17,7 @@
+ #include "qapi/error.h"
+ #include "qemu/lockable.h"
+ #include "qemu/option.h"
++#include "qemu/plugin.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/xxhash.h"
+ #include "qemu/rcu.h"
+@@ -53,7 +54,8 @@ struct qemu_plugin_ctx *plugin_id_to_ctx_locked(qemu_plugin_id_t id)
+ 
+ static void plugin_cpu_update__async(CPUState *cpu, run_on_cpu_data data)
+ {
+-    bitmap_copy(cpu->plugin_mask, &data.host_ulong, QEMU_PLUGIN_EV_MAX);
++    bitmap_copy(cpu->plugin_state->event_mask,
++                &data.host_ulong, QEMU_PLUGIN_EV_MAX);
+     tcg_flush_jmp_cache(cpu);
+ }
+ 
+@@ -208,6 +210,11 @@ plugin_register_cb_udata(qemu_plugin_id_t id, enum qemu_plugin_event ev,
+     do_plugin_register_cb(id, ev, func, udata);
+ }
+ 
++CPUPluginState *qemu_plugin_create_vcpu_state(void)
++{
++    return g_new0(CPUPluginState, 1);
++}
++
+ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+ {
+     bool success;
+@@ -356,7 +363,7 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+     struct qemu_plugin_cb *cb, *next;
+     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL;
+ 
+-    if (!test_bit(ev, cpu->plugin_mask)) {
++    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
+         return;
+     }
+ 
+@@ -378,7 +385,7 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
+     struct qemu_plugin_cb *cb, *next;
+     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_RET;
+ 
+-    if (!test_bit(ev, cpu->plugin_mask)) {
++    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
+         return;
+     }
+ 
 -- 
 2.39.2
 
