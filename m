@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A13C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F474C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:46:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexau-00013G-Ds; Tue, 27 Feb 2024 08:34:04 -0500
+	id 1rexau-00013x-Sz; Tue, 27 Feb 2024 08:34:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaF-0000hM-5N
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:23 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1rexaJ-0000jo-QU
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:28 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaD-0002q5-5b
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:22 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4129e8bc6c8so23956395e9.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:20 -0800 (PST)
+ id 1rexaH-0002s6-DI
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:27 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33d36736d4eso2665450f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040799; x=1709645599; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040804; x=1709645604; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HUk8DGkkhSQV5DGWlGNjwA127IMsouq73vscyBxur68=;
- b=GfVPf8nZYAU2zYCoYZOCblCweK7y+fVEhCFDXgomSYrt3w5yyxBDpb2hoh0QM9MOlj
- kw+5uYY+pJ9+hlXMfRLP1ttNZ2G9SDSvYfUYx1AtfpkHP0vL1W1ztpV1Rt1njTtd/RUX
- rtA4swz0JLgESCE0SWV/1yZQyypTSJaMJy1j+1B6eKJw+iHa5eWLqHIWjdl+QGi99sGh
- em8nIQ+qMPJ/ygJ8ozp8ySVO/AC4L93o68hpWMm7rPAXLwXF8l8cUkR/rNk6zNQYNT2a
- Bevuna6LN48+wAIe1gEaFhyFJ3IWZSjgk4hQLRTfXfyacrTHmZ20EYTyi3zrvgHvrLF8
- Ma4A==
+ :reply-to; bh=jxc8/xw8HbL3/iKLwnbteK+6UR1x1Co6Kq8B2A/9ru8=;
+ b=j7ePvglteQFwOBPZXaNmDDoG7AqqZl5kZ31zqH0HlsbMe1MD0n9vo0bkk+6kDIU8um
+ loexIIaReHIsfj2vvEPoy0oqkhrX4GikS3NUdIqD6/vbbMNDbKDV1llrxrVQ7GmoNxh7
+ vMd6S11y4Aome2tvdLpGxgOKJxTMGJQwk7Q+ZR0QB8uLIu1sh9sZEQyEy3XQkEMMkS7+
+ wpzWU5ZAAvsETFJ8nnhAPB7C309FrV0+rWXTVO1Fh4ryat7soVbwLFuAe9gG5oouq7CZ
+ mgMZ5IXafYHHxkcVv2TLM7I2lGwL7g65BCQM30Nd+L5oQvimZrAGt1iwW9iT7ykN7JVW
+ xI9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040799; x=1709645599;
+ d=1e100.net; s=20230601; t=1709040804; x=1709645604;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HUk8DGkkhSQV5DGWlGNjwA127IMsouq73vscyBxur68=;
- b=OjTQAucsGoY2uaoZHQZdGxa68ng5kCewMm6TsxBFBtzbzw1ZDZJdWphWhXKIVlONUd
- gfW8remvgxMhv6eTuDLhtiP5o0uoYs3jYiilelChv2KqUa+FYLFKU7QsGIGDn7sTL8G4
- a1epjO4MkBLGqWJOB98KheFiJtxrg84goKXpGtNyfM9dWvREzCCk+5l9RKrhrebBVu+J
- UU2U7/SkvJhnLo3uQ7qsaZt/VBcP5+xe6JCJ3A/EpTUZaclpe+dCsudlZbCm/cxdSntk
- 9TwW8ctqAGvg0HnoShmRgIO12ISVveefxJS82Re2aisusk0EPT6It1/eUAqmK/p6F6zc
- pvZw==
-X-Gm-Message-State: AOJu0Ywvz0bkbg4mDAzu4K92SESWtjQc6TJEPMAPjbQUzIhE6MtPlgSg
- RWxHft/7PCrG6jia1FfGnkfTw7LcEUC293B7vKpLWP/aogmWT+j8AZzbgq4wi6pTvXy0sX4eTAI
- S
-X-Google-Smtp-Source: AGHT+IEPBPR9eCnHznDz/hZiJyVjWPjsEX7q2OyyAR5bmgrImZmkVYYxgvF73FkwffXyJVMESpRV9A==
-X-Received: by 2002:adf:f486:0:b0:33d:3089:a840 with SMTP id
- l6-20020adff486000000b0033d3089a840mr7042643wro.49.1709040799527; 
- Tue, 27 Feb 2024 05:33:19 -0800 (PST)
+ bh=jxc8/xw8HbL3/iKLwnbteK+6UR1x1Co6Kq8B2A/9ru8=;
+ b=fJx1aXAZZDbTjenXenQDx7rzjXd9MdfREwjDIOeyykENJeUkqgVxIH6g9bne+I73Oj
+ ouTdMnRQwZ1hIYdK6MhWD1ilM4bP7o+Tsry9qvdm3IqOiM/0lEEKqeoEwwqjrY3+hD0i
+ CtqjeMyuvIyIpVVz3eOLPRuQi+wi/PmDc5V4kOcNnHKEHq5R5/jcEpcqp7yOp4XfYiFC
+ g5zaeOcCqlvalvf9qpNxXL6x/gcTEP90wKtZpQG7kbNIiuZeM4zi8s/z0jvAEXQKYv+B
+ TxbkPoYtF+2+N08j+/EqniinSDI/owt/lWTi+s6nhwVHry5YSwzdrxyK4IBAD2Q1fKug
+ fKtQ==
+X-Gm-Message-State: AOJu0Yz38Zh2ODo6rZ8hJunwsa/66UJuQjLd8l80AOFQcb4LPh8C4IsF
+ psCMwcNiT8ukAHKt0/jHd6By8TTuoG+cwFoXFsgA/3SMPIfVdL3qCPH7Y8ToHZHh2zy65bahqHE
+ I
+X-Google-Smtp-Source: AGHT+IGSUIuAvzhErovmFhVrCQcPWe3guiwZO+LMVvimdHAPyKc4Nbq/EjDKWgrps961B6blFDZ3hA==
+X-Received: by 2002:adf:ffcd:0:b0:33d:887c:fe04 with SMTP id
+ x13-20020adfffcd000000b0033d887cfe04mr6512152wrs.19.1709040803925; 
+ Tue, 27 Feb 2024 05:33:23 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.19
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:19 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:23 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/45] hw/arm: Use TYPE_OR_IRQ when connecting STM32L4x5 EXTI
- fan-in IRQs
-Date: Tue, 27 Feb 2024 13:32:36 +0000
-Message-Id: <20240227133314.1721857-8-peter.maydell@linaro.org>
+Subject: [PULL 14/45] include/qom/object.h: New OBJECT_DEFINE_SIMPLE_TYPE{,
+ _WITH_INTERFACES} macros
+Date: Tue, 27 Feb 2024 13:32:43 +0000
+Message-Id: <20240227133314.1721857-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,178 +95,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inès Varhol <ines.varhol@telecom-paris.fr>
+We have an OBJECT_DEFINE_TYPE_EXTENDED macro, plus several variations
+on it, which emits the boilerplate for the TypeInfo and ensures it is
+registered with the type system.  However, all the existing macros
+insist that the type being defined has its own FooClass struct, so
+they aren't useful for the common case of a simple leaf class which
+doesn't have any new methods or any other need for its own class
+struct (that is, for the kind of type that OBJECT_DECLARE_SIMPLE_TYPE
+declares).
 
-Fixes: 52671f69f7a4 ("[PATCH v8 0/3] Add device STM32L4x5 EXTI")
-Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Message-id: 20240220184145.106107-2-ines.varhol@telecom-paris.fr
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Pull the actual implementation of OBJECT_DEFINE_TYPE_EXTENDED out
+into a new DO_OBJECT_DEFINE_TYPE_EXTENDED which parameterizes the
+value we use for the class_size field.  This lets us add a new
+OBJECT_DEFINE_SIMPLE_TYPE which does the same job as the various
+existing OBJECT_DEFINE_*_TYPE_* family macros for this kind of simple
+type, and the variant OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES for
+when the type will implement some interfaces.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240220160622.114437-5-peter.maydell@linaro.org
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/arm/stm32l4x5_soc.h |  4 ++
- hw/arm/stm32l4x5_soc.c         | 80 +++++++++++++++++++++++++++++-----
- 2 files changed, 74 insertions(+), 10 deletions(-)
+ docs/devel/qom.rst   |  34 +++++++++++--
+ include/qom/object.h | 114 +++++++++++++++++++++++++++++++++----------
+ 2 files changed, 117 insertions(+), 31 deletions(-)
 
-diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_soc.h
-index baf70410b5f..4f314b7a933 100644
---- a/include/hw/arm/stm32l4x5_soc.h
-+++ b/include/hw/arm/stm32l4x5_soc.h
-@@ -26,6 +26,7 @@
+diff --git a/docs/devel/qom.rst b/docs/devel/qom.rst
+index 9918fac7f21..0889ca949c1 100644
+--- a/docs/devel/qom.rst
++++ b/docs/devel/qom.rst
+@@ -348,12 +348,14 @@ used. This does the same as OBJECT_DECLARE_SIMPLE_TYPE(), but without
+ the 'struct MyDeviceClass' definition.
  
- #include "exec/memory.h"
- #include "hw/arm/armv7m.h"
-+#include "hw/or-irq.h"
- #include "hw/misc/stm32l4x5_syscfg.h"
- #include "hw/misc/stm32l4x5_exti.h"
- #include "qom/object.h"
-@@ -36,12 +37,15 @@
- #define TYPE_STM32L4X5XG_SOC "stm32l4x5xg-soc"
- OBJECT_DECLARE_TYPE(Stm32l4x5SocState, Stm32l4x5SocClass, STM32L4X5_SOC)
+ To implement the type, the OBJECT_DEFINE macro family is available.
+-In the simple case the OBJECT_DEFINE_TYPE macro is suitable:
++For the simplest case of a leaf class which doesn't need any of its
++own virtual functions (i.e. which was declared with OBJECT_DECLARE_SIMPLE_TYPE)
++the OBJECT_DEFINE_SIMPLE_TYPE macro is suitable:
  
-+#define NUM_EXTI_OR_GATES 4
+ .. code-block:: c
+    :caption: Defining a simple type
+ 
+-   OBJECT_DEFINE_TYPE(MyDevice, my_device, MY_DEVICE, DEVICE)
++   OBJECT_DEFINE_SIMPLE_TYPE(MyDevice, my_device, MY_DEVICE, DEVICE)
+ 
+ This is equivalent to the following:
+ 
+@@ -370,7 +372,6 @@ This is equivalent to the following:
+        .instance_size = sizeof(MyDevice),
+        .instance_init = my_device_init,
+        .instance_finalize = my_device_finalize,
+-       .class_size = sizeof(MyDeviceClass),
+        .class_init = my_device_class_init,
+    };
+ 
+@@ -385,13 +386,36 @@ This is sufficient to get the type registered with the type
+ system, and the three standard methods now need to be implemented
+ along with any other logic required for the type.
+ 
++If the class needs its own virtual methods, or has some other
++per-class state it needs to store in its own class struct,
++then you can use the OBJECT_DEFINE_TYPE macro. This does the
++same thing as OBJECT_DEFINE_SIMPLE_TYPE, but it also sets the
++class_size of the type to the size of the class struct.
 +
- struct Stm32l4x5SocState {
-     SysBusDevice parent_obj;
++.. code-block:: c
++   :caption: Defining a type which needs a class struct
++
++   OBJECT_DEFINE_TYPE(MyDevice, my_device, MY_DEVICE, DEVICE)
++
+ If the type needs to implement one or more interfaces, then the
+-OBJECT_DEFINE_TYPE_WITH_INTERFACES() macro can be used instead.
+-This accepts an array of interface type names.
++OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES() and
++OBJECT_DEFINE_TYPE_WITH_INTERFACES() macros can be used instead.
++These accept an array of interface type names. The difference between
++them is that the former is for simple leaf classes that don't need
++a class struct, and the latter is for when you will be defining
++a class struct.
  
-     ARMv7MState armv7m;
+ .. code-block:: c
+    :caption: Defining a simple type implementing interfaces
  
-     Stm32l4x5ExtiState exti;
-+    OrIRQState exti_or_gates[NUM_EXTI_OR_GATES];
-     Stm32l4x5SyscfgState syscfg;
++   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(MyDevice, my_device,
++                                             MY_DEVICE, DEVICE,
++                                             { TYPE_USER_CREATABLE },
++                                             { NULL })
++
++.. code-block:: c
++   :caption: Defining a type implementing interfaces
++
+    OBJECT_DEFINE_TYPE_WITH_INTERFACES(MyDevice, my_device,
+                                       MY_DEVICE, DEVICE,
+                                       { TYPE_USER_CREATABLE },
+diff --git a/include/qom/object.h b/include/qom/object.h
+index e9ed9550f05..13d3a655ddf 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -258,6 +258,51 @@ struct Object
+     DECLARE_INSTANCE_CHECKER(InstanceType, MODULE_OBJ_NAME, TYPE_##MODULE_OBJ_NAME)
  
-     MemoryRegion sram1;
-diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-index f470ff74ec7..d1786e0da1c 100644
---- a/hw/arm/stm32l4x5_soc.c
-+++ b/hw/arm/stm32l4x5_soc.c
-@@ -26,6 +26,7 @@
- #include "qapi/error.h"
- #include "exec/address-spaces.h"
- #include "sysemu/sysemu.h"
-+#include "hw/or-irq.h"
- #include "hw/arm/stm32l4x5_soc.h"
- #include "hw/qdev-clock.h"
- #include "hw/misc/unimp.h"
-@@ -42,21 +43,24 @@
- #define NUM_EXTI_IRQ 40
- /* Match exti line connections with their CPU IRQ number */
- /* See Vector Table (Reference Manual p.396) */
-+/*
-+ * Some IRQs are connected to the same CPU IRQ (denoted by -1)
-+ * and require an intermediary OR gate to function correctly.
+ 
++/**
++ * DO_OBJECT_DEFINE_TYPE_EXTENDED:
++ * @ModuleObjName: the object name with initial caps
++ * @module_obj_name: the object name in lowercase with underscore separators
++ * @MODULE_OBJ_NAME: the object name in uppercase with underscore separators
++ * @PARENT_MODULE_OBJ_NAME: the parent object name in uppercase with underscore
++ *                          separators
++ * @ABSTRACT: boolean flag to indicate whether the object can be instantiated
++ * @CLASS_SIZE: size of the type's class
++ * @...: list of initializers for "InterfaceInfo" to declare implemented interfaces
++ *
++ * This is the base macro used to implement all the OBJECT_DEFINE_*
++ * macros. It should never be used directly in a source file.
 + */
- static const int exti_irq[NUM_EXTI_IRQ] = {
-     6,                      /* GPIO[0]                 */
-     7,                      /* GPIO[1]                 */
-     8,                      /* GPIO[2]                 */
-     9,                      /* GPIO[3]                 */
-     10,                     /* GPIO[4]                 */
--    23, 23, 23, 23, 23,     /* GPIO[5..9]              */
--    40, 40, 40, 40, 40, 40, /* GPIO[10..15]            */
--    1,                      /* PVD                     */
-+    -1, -1, -1, -1, -1,     /* GPIO[5..9] OR gate 23   */
-+    -1, -1, -1, -1, -1, -1, /* GPIO[10..15] OR gate 40 */
-+    -1,                     /* PVD OR gate 1           */
-     67,                     /* OTG_FS_WKUP, Direct     */
-     41,                     /* RTC_ALARM               */
-     2,                      /* RTC_TAMP_STAMP2/CSS_LSE */
-     3,                      /* RTC wakeup timer        */
--    63,                     /* COMP1                   */
--    63,                     /* COMP2                   */
-+    -1, -1,                 /* COMP[1..2] OR gate 63   */
-     31,                     /* I2C1 wakeup, Direct     */
-     33,                     /* I2C2 wakeup, Direct     */
-     72,                     /* I2C3 wakeup, Direct     */
-@@ -69,18 +73,39 @@ static const int exti_irq[NUM_EXTI_IRQ] = {
-     65,                     /* LPTIM1, Direct          */
-     66,                     /* LPTIM2, Direct          */
-     76,                     /* SWPMI1 wakeup, Direct   */
--    1,                      /* PVM1 wakeup             */
--    1,                      /* PVM2 wakeup             */
--    1,                      /* PVM3 wakeup             */
--    1,                      /* PVM4 wakeup             */
-+    -1, -1, -1, -1,         /* PVM[1..4] OR gate 1     */
-     78                      /* LCD wakeup, Direct      */
- };
++#define DO_OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
++                                       MODULE_OBJ_NAME, \
++                                       PARENT_MODULE_OBJ_NAME, \
++                                       ABSTRACT, CLASS_SIZE, ...) \
++    static void \
++    module_obj_name##_finalize(Object *obj); \
++    static void \
++    module_obj_name##_class_init(ObjectClass *oc, void *data); \
++    static void \
++    module_obj_name##_init(Object *obj); \
++    \
++    static const TypeInfo module_obj_name##_info = { \
++        .parent = TYPE_##PARENT_MODULE_OBJ_NAME, \
++        .name = TYPE_##MODULE_OBJ_NAME, \
++        .instance_size = sizeof(ModuleObjName), \
++        .instance_align = __alignof__(ModuleObjName), \
++        .instance_init = module_obj_name##_init, \
++        .instance_finalize = module_obj_name##_finalize, \
++        .class_size = CLASS_SIZE, \
++        .class_init = module_obj_name##_class_init, \
++        .abstract = ABSTRACT, \
++        .interfaces = (InterfaceInfo[]) { __VA_ARGS__ } , \
++    }; \
++    \
++    static void \
++    module_obj_name##_register_types(void) \
++    { \
++        type_register_static(&module_obj_name##_info); \
++    } \
++    type_init(module_obj_name##_register_types);
++
+ /**
+  * OBJECT_DEFINE_TYPE_EXTENDED:
+  * @ModuleObjName: the object name with initial caps
+@@ -284,32 +329,10 @@ struct Object
+ #define OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
+                                     MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
+                                     ABSTRACT, ...) \
+-    static void \
+-    module_obj_name##_finalize(Object *obj); \
+-    static void \
+-    module_obj_name##_class_init(ObjectClass *oc, void *data); \
+-    static void \
+-    module_obj_name##_init(Object *obj); \
+-    \
+-    static const TypeInfo module_obj_name##_info = { \
+-        .parent = TYPE_##PARENT_MODULE_OBJ_NAME, \
+-        .name = TYPE_##MODULE_OBJ_NAME, \
+-        .instance_size = sizeof(ModuleObjName), \
+-        .instance_align = __alignof__(ModuleObjName), \
+-        .instance_init = module_obj_name##_init, \
+-        .instance_finalize = module_obj_name##_finalize, \
+-        .class_size = sizeof(ModuleObjName##Class), \
+-        .class_init = module_obj_name##_class_init, \
+-        .abstract = ABSTRACT, \
+-        .interfaces = (InterfaceInfo[]) { __VA_ARGS__ } , \
+-    }; \
+-    \
+-    static void \
+-    module_obj_name##_register_types(void) \
+-    { \
+-        type_register_static(&module_obj_name##_info); \
+-    } \
+-    type_init(module_obj_name##_register_types);
++    DO_OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
++                                   MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
++                                   ABSTRACT, sizeof(ModuleObjName##Class), \
++                                   __VA_ARGS__)
  
-+static const int exti_or_gates_out[NUM_EXTI_OR_GATES] = {
-+    23, 40, 63, 1,
-+};
-+
-+static const int exti_or_gates_num_lines_in[NUM_EXTI_OR_GATES] = {
-+    5, 6, 2, 5,
-+};
-+
-+/* 3 OR gates with consecutive inputs */
-+#define NUM_EXTI_SIMPLE_OR_GATES 3
-+static const int exti_or_gates_first_line_in[NUM_EXTI_SIMPLE_OR_GATES] = {
-+    5, 10, 21,
-+};
-+
-+/* 1 OR gate with non-consecutive inputs */
-+#define EXTI_OR_GATE1_NUM_LINES_IN 5
-+static const int exti_or_gate1_lines_in[EXTI_OR_GATE1_NUM_LINES_IN] = {
-+    16, 35, 36, 37, 38,
-+};
-+
- static void stm32l4x5_soc_initfn(Object *obj)
- {
-     Stm32l4x5SocState *s = STM32L4X5_SOC(obj);
+ /**
+  * OBJECT_DEFINE_TYPE:
+@@ -368,6 +391,45 @@ struct Object
+                                 MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
+                                 true, { NULL })
  
-     object_initialize_child(obj, "exti", &s->exti, TYPE_STM32L4X5_EXTI);
-+    for (unsigned i = 0; i < NUM_EXTI_OR_GATES; i++) {
-+        object_initialize_child(obj, "exti_or_gates[*]", &s->exti_or_gates[i],
-+                                TYPE_OR_IRQ);
-+    }
-     object_initialize_child(obj, "syscfg", &s->syscfg, TYPE_STM32L4X5_SYSCFG);
- 
-     s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-@@ -175,8 +200,43 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
-         return;
-     }
-     sysbus_mmio_map(busdev, 0, EXTI_ADDR);
++/**
++ * OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES:
++ * @ModuleObjName: the object name with initial caps
++ * @module_obj_name: the object name in lowercase with underscore separators
++ * @MODULE_OBJ_NAME: the object name in uppercase with underscore separators
++ * @PARENT_MODULE_OBJ_NAME: the parent object name in uppercase with underscore
++ *                          separators
++ *
++ * This is a variant of OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for
++ * the case of a non-abstract type, with interfaces, and with no requirement
++ * for a class struct.
++ */
++#define OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(ModuleObjName, \
++                                                  module_obj_name, \
++                                                  MODULE_OBJ_NAME, \
++                                                  PARENT_MODULE_OBJ_NAME, ...) \
++    DO_OBJECT_DEFINE_TYPE_EXTENDED(ModuleObjName, module_obj_name, \
++                                   MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, \
++                                   false, 0, __VA_ARGS__)
 +
-+    /* IRQs with fan-in that require an OR gate */
-+    for (unsigned i = 0; i < NUM_EXTI_OR_GATES; i++) {
-+        if (!object_property_set_int(OBJECT(&s->exti_or_gates[i]), "num-lines",
-+                                     exti_or_gates_num_lines_in[i], errp)) {
-+            return;
-+        }
-+        if (!qdev_realize(DEVICE(&s->exti_or_gates[i]), NULL, errp)) {
-+            return;
-+        }
++/**
++ * OBJECT_DEFINE_SIMPLE_TYPE:
++ * @ModuleObjName: the object name with initial caps
++ * @module_obj_name: the object name in lowercase with underscore separators
++ * @MODULE_OBJ_NAME: the object name in uppercase with underscore separators
++ * @PARENT_MODULE_OBJ_NAME: the parent object name in uppercase with underscore
++ *                          separators
++ *
++ * This is a variant of OBJECT_DEFINE_TYPE_EXTENDED, which is suitable for
++ * the common case of a non-abstract type, without any interfaces, and with
++ * no requirement for a class struct. If you declared your type with
++ * OBJECT_DECLARE_SIMPLE_TYPE then this is probably the right choice for
++ * defining it.
++ */
++#define OBJECT_DEFINE_SIMPLE_TYPE(ModuleObjName, module_obj_name, \
++                                  MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME) \
++    OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(ModuleObjName, module_obj_name, \
++        MODULE_OBJ_NAME, PARENT_MODULE_OBJ_NAME, { NULL })
 +
-+        qdev_connect_gpio_out(DEVICE(&s->exti_or_gates[i]), 0,
-+            qdev_get_gpio_in(armv7m, exti_or_gates_out[i]));
-+
-+        if (i < NUM_EXTI_SIMPLE_OR_GATES) {
-+            /* consecutive inputs for OR gates 23, 40, 63 */
-+            for (unsigned j = 0; j < exti_or_gates_num_lines_in[i]; j++) {
-+                sysbus_connect_irq(SYS_BUS_DEVICE(&s->exti),
-+                    exti_or_gates_first_line_in[i] + j,
-+                    qdev_get_gpio_in(DEVICE(&s->exti_or_gates[i]), j));
-+            }
-+        } else {
-+            /* non-consecutive inputs for OR gate 1 */
-+            for (unsigned j = 0; j < EXTI_OR_GATE1_NUM_LINES_IN; j++) {
-+                sysbus_connect_irq(SYS_BUS_DEVICE(&s->exti),
-+                    exti_or_gate1_lines_in[j],
-+                    qdev_get_gpio_in(DEVICE(&s->exti_or_gates[i]), j));
-+            }
-+        }
-+    }
-+
-+    /* IRQs that don't require fan-in */
-     for (unsigned i = 0; i < NUM_EXTI_IRQ; i++) {
--        sysbus_connect_irq(busdev, i, qdev_get_gpio_in(armv7m, exti_irq[i]));
-+        if (exti_irq[i] != -1) {
-+            sysbus_connect_irq(busdev, i,
-+                               qdev_get_gpio_in(armv7m, exti_irq[i]));
-+        }
-     }
- 
-     for (unsigned i = 0; i < 16; i++) {
+ /**
+  * struct TypeInfo:
+  * @name: The name of the type.
 -- 
 2.34.1
 
