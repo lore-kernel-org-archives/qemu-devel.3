@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE045C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AF1C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezhO-00068o-Ms; Tue, 27 Feb 2024 10:48:54 -0500
+	id 1rezgc-0005Q8-Qa; Tue, 27 Feb 2024 10:48:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rezhE-0005nF-MA
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:48:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rezgZ-0005Ot-GC
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:48:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rezgy-0008Qq-E6
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:48:43 -0500
+ id 1rezgX-0008LF-Km
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:48:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709048906;
+ s=mimecast20190719; t=1709048880;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+GlyPICacHt/c/nY4eGfXllOqnsfcb3uKH3zu5paf7s=;
- b=gClWLk27hc0EaWD5G3JB2DL8tSDqnfU+iD/BJYUexJuCt+QnaJLQJMMluyG+KA/SCNCY2M
- LNCw0EDehoQIXr5Z+uV7qQGo7Dtx9phc6ApcylLxZHgcnPHEGaI5HNxhqhKmhdux3YHbuE
- W81XmRIVXZu0waGl+m7rwo6T5jxjK5M=
+ bh=vr4yvNAhzduGFNs/Hn1cSdPqILagqMcQ2I0fv32aiHU=;
+ b=SCZh+QttF8zepSkvkatVlENPnnuYFqbQLYllHNFuSeYsIHrHsQEY0ScIj5khNuT5sFfZPE
+ haUO22pzWMT1fLfGsC7WaZKncfUCzK1/IjrJyUFDaLYokm5tKDKaRAt8FzuAQSsjJ9KuEb
+ xT2JjjXr7lt3RMaE1PKIrSpyayAKm48=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-3-lR4QrY3KO3Kn0ohyCnrkuA-1; Tue, 27 Feb 2024 10:48:23 -0500
-X-MC-Unique: lR4QrY3KO3Kn0ohyCnrkuA-1
+ us-mta-608-1ewVVXUgM3-Q7_leaNEkvg-1; Tue, 27 Feb 2024 10:47:59 -0500
+X-MC-Unique: 1ewVVXUgM3-Q7_leaNEkvg-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6E8D510B7AA5;
- Tue, 27 Feb 2024 15:48:20 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4727C832C09;
+ Tue, 27 Feb 2024 15:47:58 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id AE9052166AED;
- Tue, 27 Feb 2024 15:48:17 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B8B5B2166B5D;
+ Tue, 27 Feb 2024 15:47:54 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, pbonzini@redhat.com, mst@redhat.com,
@@ -55,25 +55,26 @@ Cc: peter.maydell@linaro.org, pbonzini@redhat.com, mst@redhat.com,
  philmd@linaro.org, wangyanan55@huawei.com, eblake@redhat.com,
  armbru@redhat.com, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  f.ebner@proxmox.com
-Subject: [PATCH 09/19] smbios: build legacy mode code only for 'pc' machine
-Date: Tue, 27 Feb 2024 16:47:39 +0100
-Message-Id: <20240227154749.1818189-10-imammedo@redhat.com>
+Subject: [PATCH 01/19] tests: smbios: make it possible to write SMBIOS only
+ test
+Date: Tue, 27 Feb 2024 16:47:31 +0100
+Message-Id: <20240227154749.1818189-2-imammedo@redhat.com>
 In-Reply-To: <20240227154749.1818189-1-imammedo@redhat.com>
 References: <20240227154749.1818189-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,697 +90,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-basically moving code around without functional change.
-And exposing some symbols so that they could be shared
-between smbbios.c and new smbios_legacy.c
+Cureently it not possible to run SMBIOS test without ACPI one,
+which gets into the way when testing ACPI-less configs.
 
-plus some meson magic to build smbios_legacy.c only
-for 'pc' machine and otherwise replace it with stub
-if not selected.
+Extract SMBIOS testing into separate routines that could also
+be run without ACPI dependency and use that for testing SMBIOS.
+
+As the 1st user add "acpi/piix4/smbios-options" test case.
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 ---
- include/hw/firmware/smbios.h   |  22 +++
- hw/i386/Kconfig                |   1 +
- hw/smbios/Kconfig              |   2 +
- hw/smbios/meson.build          |   4 +
- hw/smbios/smbios.c             | 251 ++++++---------------------------
- hw/smbios/smbios_legacy.c      | 179 +++++++++++++++++++++++
- hw/smbios/smbios_legacy_stub.c |  16 +++
- 7 files changed, 270 insertions(+), 205 deletions(-)
- create mode 100644 hw/smbios/smbios_legacy.c
- create mode 100644 hw/smbios/smbios_legacy_stub.c
+ tests/qtest/bios-tables-test.c | 47 +++++++++++++++++++++++++++-------
+ 1 file changed, 38 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-index 1fbff3c55f..a6d8fd6591 100644
---- a/include/hw/firmware/smbios.h
-+++ b/include/hw/firmware/smbios.h
-@@ -2,6 +2,7 @@
- #define QEMU_SMBIOS_H
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 21811a1ab5..b2992bafa8 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -858,16 +858,8 @@ static void test_vm_prepare(const char *params, test_data *data)
+     g_free(args);
+ }
  
- #include "qapi/qapi-types-machine.h"
-+#include "qemu/bitmap.h"
- 
- /*
-  * SMBIOS Support
-@@ -16,8 +17,27 @@
-  *
-  */
- 
-+extern uint8_t *usr_blobs;
-+extern GArray *usr_blobs_sizes;
-+
-+typedef struct {
-+    const char *vendor, *version, *date;
-+    bool have_major_minor, uefi;
-+    uint8_t major, minor;
-+} smbios_type0_t;
-+extern smbios_type0_t smbios_type0;
-+
-+typedef struct {
-+    const char *manufacturer, *product, *version, *serial, *sku, *family;
-+    /* uuid is in qemu_uuid */
-+} smbios_type1_t;
-+extern smbios_type1_t smbios_type1;
-+
- 
- #define SMBIOS_MAX_TYPE 127
-+extern DECLARE_BITMAP(smbios_have_binfile_bitmap, SMBIOS_MAX_TYPE + 1);
-+extern DECLARE_BITMAP(smbios_have_fields_bitmap, SMBIOS_MAX_TYPE + 1);
-+
- #define offsetofend(TYPE, MEMBER) \
-        (offsetof(TYPE, MEMBER) + sizeof_field(TYPE, MEMBER))
- 
-@@ -290,6 +310,8 @@ struct smbios_type_127 {
-     struct smbios_structure_header header;
- } QEMU_PACKED;
- 
-+void smbios_validate_table(void);
-+void smbios_add_usr_blob_size(size_t size);
- void smbios_entry_add(QemuOpts *opts, Error **errp);
- void smbios_set_cpuid(uint32_t version, uint32_t features);
- void smbios_set_defaults(const char *manufacturer, const char *product,
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index a1846be6f7..a6ee052f9a 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -76,6 +76,7 @@ config I440FX
-     select PIIX
-     select DIMM
-     select SMBIOS
-+    select SMBIOS_LEGACY
-     select FW_CFG_DMA
- 
- config ISAPC
-diff --git a/hw/smbios/Kconfig b/hw/smbios/Kconfig
-index 553adf4bfc..8d989a2f1b 100644
---- a/hw/smbios/Kconfig
-+++ b/hw/smbios/Kconfig
-@@ -1,2 +1,4 @@
- config SMBIOS
-     bool
-+config SMBIOS_LEGACY
-+    bool
-diff --git a/hw/smbios/meson.build b/hw/smbios/meson.build
-index 7046967462..a59039f669 100644
---- a/hw/smbios/meson.build
-+++ b/hw/smbios/meson.build
-@@ -4,5 +4,9 @@ smbios_ss.add(when: 'CONFIG_IPMI',
-               if_true: files('smbios_type_38.c'),
-               if_false: files('smbios_type_38-stub.c'))
- 
-+smbios_ss.add(when: 'CONFIG_SMBIOS_LEGACY',
-+              if_true: files('smbios_legacy.c'),
-+              if_false: files('smbios_legacy_stub.c'))
-+
- system_ss.add_all(when: 'CONFIG_SMBIOS', if_true: smbios_ss)
- system_ss.add(when: 'CONFIG_SMBIOS', if_false: files('smbios-stub.c'))
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index 97cf762228..fb1f05fcde 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -31,38 +31,12 @@
- #include "hw/pci/pci_device.h"
- #include "smbios_build.h"
- 
--/* legacy structures and constants for <= 2.0 machines */
--struct smbios_header {
--    uint16_t length;
--    uint8_t type;
--} QEMU_PACKED;
+-static void process_acpi_tables_noexit(test_data *data)
++static void process_smbios_tables_noexit(test_data *data)
+ {
+-    test_acpi_load_tables(data);
 -
--struct smbios_field {
--    struct smbios_header header;
--    uint8_t type;
--    uint16_t offset;
--    uint8_t data[];
--} QEMU_PACKED;
+-    if (getenv(ACPI_REBUILD_EXPECTED_AML)) {
+-        dump_aml_files(data, true);
+-    } else {
+-        test_acpi_asl(data);
+-    }
 -
--struct smbios_table {
--    struct smbios_header header;
--    uint8_t data[];
--} QEMU_PACKED;
--
--#define SMBIOS_FIELD_ENTRY 0
--#define SMBIOS_TABLE_ENTRY 1
--
--static uint8_t *smbios_entries;
--static size_t smbios_entries_len;
- static bool smbios_uuid_encoded = true;
--/* end: legacy structures & constants for <= 2.0 machines */
--
- /*
-  * SMBIOS tables provided by user with '-smbios file=<foo>' option
-  */
- uint8_t *usr_blobs;
- size_t usr_blobs_len;
--static GArray *usr_blobs_sizes;
- static unsigned usr_table_max;
- static unsigned usr_table_cnt;
- 
-@@ -78,19 +52,11 @@ static int smbios_type4_count = 0;
- static bool smbios_have_defaults;
- static uint32_t smbios_cpuid_version, smbios_cpuid_features;
- 
--static DECLARE_BITMAP(have_binfile_bitmap, SMBIOS_MAX_TYPE+1);
--static DECLARE_BITMAP(have_fields_bitmap, SMBIOS_MAX_TYPE+1);
--
--static struct {
--    const char *vendor, *version, *date;
--    bool have_major_minor, uefi;
--    uint8_t major, minor;
--} type0;
-+DECLARE_BITMAP(smbios_have_binfile_bitmap, SMBIOS_MAX_TYPE + 1);
-+DECLARE_BITMAP(smbios_have_fields_bitmap, SMBIOS_MAX_TYPE + 1);
- 
--static struct {
--    const char *manufacturer, *product, *version, *serial, *sku, *family;
--    /* uuid is in qemu_uuid */
--} type1;
-+smbios_type0_t smbios_type0;
-+smbios_type1_t smbios_type1;
- 
- static struct {
-     const char *manufacturer, *product, *version, *serial, *asset, *location;
-@@ -491,7 +457,7 @@ static void smbios_check_type4_count(uint32_t expected_t4_count)
+     /*
+      * TODO: make SMBIOS tests work with UEFI firmware,
+      * Bug on uefi-test-tools to provide entry point:
+@@ -879,6 +871,27 @@ static void process_acpi_tables_noexit(test_data *data)
      }
  }
  
--static void smbios_validate_table(void)
-+void smbios_validate_table(void)
++static void test_smbios(const char *params, test_data *data)
++{
++    test_vm_prepare(params, data);
++    boot_sector_test(data->qts);
++    process_smbios_tables_noexit(data);
++    qtest_quit(data->qts);
++}
++
++static void process_acpi_tables_noexit(test_data *data)
++{
++    test_acpi_load_tables(data);
++
++    if (getenv(ACPI_REBUILD_EXPECTED_AML)) {
++        dump_aml_files(data, true);
++    } else {
++        test_acpi_asl(data);
++    }
++
++    process_smbios_tables_noexit(data);
++}
++
+ static void process_acpi_tables(test_data *data)
  {
-     if (smbios_ep_type == SMBIOS_ENTRY_POINT_TYPE_32 &&
-         smbios_tables_len > SMBIOS_21_MAX_TABLES_LEN) {
-@@ -501,140 +467,12 @@ static void smbios_validate_table(void)
-     }
+     process_acpi_tables_noexit(data);
+@@ -2064,6 +2077,20 @@ static void test_acpi_q35_pvpanic_isa(void)
+     free_test_data(&data);
  }
  
--
--/* legacy setup functions for <= 2.0 machines */
--static void smbios_add_field(int type, int offset, const void *data, size_t len)
--{
--    struct smbios_field *field;
--
--    if (!smbios_entries) {
--        smbios_entries_len = sizeof(uint16_t);
--        smbios_entries = g_malloc0(smbios_entries_len);
--    }
--    smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
--                                                  sizeof(*field) + len);
--    field = (struct smbios_field *)(smbios_entries + smbios_entries_len);
--    field->header.type = SMBIOS_FIELD_ENTRY;
--    field->header.length = cpu_to_le16(sizeof(*field) + len);
--
--    field->type = type;
--    field->offset = cpu_to_le16(offset);
--    memcpy(field->data, data, len);
--
--    smbios_entries_len += sizeof(*field) + len;
--    (*(uint16_t *)smbios_entries) =
--            cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
--}
--
--static void smbios_maybe_add_str(int type, int offset, const char *data)
--{
--    if (data) {
--        smbios_add_field(type, offset, data, strlen(data) + 1);
--    }
--}
--
--static void smbios_build_type_0_fields(void)
--{
--    smbios_maybe_add_str(0, offsetof(struct smbios_type_0, vendor_str),
--                         type0.vendor);
--    smbios_maybe_add_str(0, offsetof(struct smbios_type_0, bios_version_str),
--                         type0.version);
--    smbios_maybe_add_str(0, offsetof(struct smbios_type_0,
--                                     bios_release_date_str),
--                         type0.date);
--    if (type0.have_major_minor) {
--        smbios_add_field(0, offsetof(struct smbios_type_0,
--                                     system_bios_major_release),
--                         &type0.major, 1);
--        smbios_add_field(0, offsetof(struct smbios_type_0,
--                                     system_bios_minor_release),
--                         &type0.minor, 1);
--    }
--}
--
--static void smbios_build_type_1_fields(void)
--{
--    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, manufacturer_str),
--                         type1.manufacturer);
--    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, product_name_str),
--                         type1.product);
--    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, version_str),
--                         type1.version);
--    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, serial_number_str),
--                         type1.serial);
--    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, sku_number_str),
--                         type1.sku);
--    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, family_str),
--                         type1.family);
--    if (qemu_uuid_set) {
--        /* We don't encode the UUID in the "wire format" here because this
--         * function is for legacy mode and needs to keep the guest ABI, and
--         * because we don't know what's the SMBIOS version advertised by the
--         * BIOS.
--         */
--        smbios_add_field(1, offsetof(struct smbios_type_1, uuid),
--                         &qemu_uuid, 16);
--    }
--}
--
--uint8_t *smbios_get_table_legacy(size_t *length)
--{
--    int i;
--    size_t usr_offset;
--
--    /* also complain if fields were given for types > 1 */
--    if (find_next_bit(have_fields_bitmap,
--                      SMBIOS_MAX_TYPE + 1, 2) < SMBIOS_MAX_TYPE + 1) {
--        error_report("can't process fields for smbios "
--                     "types > 1 on machine versions < 2.1!");
--        exit(1);
--    }
--
--    if (test_bit(4, have_binfile_bitmap)) {
--        error_report("can't process table for smbios "
--                     "type 4 on machine versions < 2.1!");
--        exit(1);
--    }
--
--    g_free(smbios_entries);
--    smbios_entries_len = sizeof(uint16_t);
--    smbios_entries = g_malloc0(smbios_entries_len);
--
--    for (i = 0, usr_offset = 0; usr_blobs_sizes && i < usr_blobs_sizes->len;
--         i++)
--    {
--        struct smbios_table *table;
--        struct smbios_structure_header *header;
--        size_t size = g_array_index(usr_blobs_sizes, size_t, i);
--
--        header = (struct smbios_structure_header *)(usr_blobs + usr_offset);
--        smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
--                                                   size + sizeof(*table));
--        table = (struct smbios_table *)(smbios_entries + smbios_entries_len);
--        table->header.type = SMBIOS_TABLE_ENTRY;
--        table->header.length = cpu_to_le16(sizeof(*table) + size);
--        memcpy(table->data, header, size);
--        smbios_entries_len += sizeof(*table) + size;
--        (*(uint16_t *)smbios_entries) =
--            cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
--        usr_offset += size;
--    }
--
--    smbios_build_type_0_fields();
--    smbios_build_type_1_fields();
--    smbios_validate_table();
--    *length = smbios_entries_len;
--    return smbios_entries;
--}
--/* end: legacy setup functions for <= 2.0 machines */
--
--
- bool smbios_skip_table(uint8_t type, bool required_table)
++static void test_acpi_pc_smbios_options(void)
++{
++    uint8_t req_type11[] = { 11 };
++    test_data data = {
++        .machine = MACHINE_PC,
++        .variant = ".pc_smbios_options",
++        .required_struct_types = req_type11,
++        .required_struct_types_len = ARRAY_SIZE(req_type11),
++    };
++
++    test_smbios("-smbios type=11,value=TEST", &data);
++    free_test_data(&data);
++}
++
+ static void test_oem_fields(test_data *data)
  {
--    if (test_bit(type, have_binfile_bitmap)) {
-+    if (test_bit(type, smbios_have_binfile_bitmap)) {
-         return true; /* user provided their own binary blob(s) */
-     }
--    if (test_bit(type, have_fields_bitmap)) {
-+    if (test_bit(type, smbios_have_fields_bitmap)) {
-         return false; /* user provided fields via command line */
-     }
-     if (smbios_have_defaults && required_table) {
-@@ -661,25 +499,25 @@ static void smbios_build_type_0_table(void)
- {
-     SMBIOS_BUILD_TABLE_PRE(0, T0_BASE, false); /* optional, leave up to BIOS */
- 
--    SMBIOS_TABLE_SET_STR(0, vendor_str, type0.vendor);
--    SMBIOS_TABLE_SET_STR(0, bios_version_str, type0.version);
-+    SMBIOS_TABLE_SET_STR(0, vendor_str, smbios_type0.vendor);
-+    SMBIOS_TABLE_SET_STR(0, bios_version_str, smbios_type0.version);
- 
-     t->bios_starting_address_segment = cpu_to_le16(0xE800); /* from SeaBIOS */
- 
--    SMBIOS_TABLE_SET_STR(0, bios_release_date_str, type0.date);
-+    SMBIOS_TABLE_SET_STR(0, bios_release_date_str, smbios_type0.date);
- 
-     t->bios_rom_size = 0; /* hardcoded in SeaBIOS with FIXME comment */
- 
-     t->bios_characteristics = cpu_to_le64(0x08); /* Not supported */
-     t->bios_characteristics_extension_bytes[0] = 0;
-     t->bios_characteristics_extension_bytes[1] = 0x14; /* TCD/SVVP | VM */
--    if (type0.uefi) {
-+    if (smbios_type0.uefi) {
-         t->bios_characteristics_extension_bytes[1] |= 0x08; /* |= UEFI */
-     }
- 
--    if (type0.have_major_minor) {
--        t->system_bios_major_release = type0.major;
--        t->system_bios_minor_release = type0.minor;
-+    if (smbios_type0.have_major_minor) {
-+        t->system_bios_major_release = smbios_type0.major;
-+        t->system_bios_minor_release = smbios_type0.minor;
-     } else {
-         t->system_bios_major_release = 0;
-         t->system_bios_minor_release = 0;
-@@ -709,18 +547,18 @@ static void smbios_build_type_1_table(void)
- {
-     SMBIOS_BUILD_TABLE_PRE(1, T1_BASE, true); /* required */
- 
--    SMBIOS_TABLE_SET_STR(1, manufacturer_str, type1.manufacturer);
--    SMBIOS_TABLE_SET_STR(1, product_name_str, type1.product);
--    SMBIOS_TABLE_SET_STR(1, version_str, type1.version);
--    SMBIOS_TABLE_SET_STR(1, serial_number_str, type1.serial);
-+    SMBIOS_TABLE_SET_STR(1, manufacturer_str, smbios_type1.manufacturer);
-+    SMBIOS_TABLE_SET_STR(1, product_name_str, smbios_type1.product);
-+    SMBIOS_TABLE_SET_STR(1, version_str, smbios_type1.version);
-+    SMBIOS_TABLE_SET_STR(1, serial_number_str, smbios_type1.serial);
-     if (qemu_uuid_set) {
-         smbios_encode_uuid(&t->uuid, &qemu_uuid);
-     } else {
-         memset(&t->uuid, 0, 16);
-     }
-     t->wake_up_type = 0x06; /* power switch */
--    SMBIOS_TABLE_SET_STR(1, sku_number_str, type1.sku);
--    SMBIOS_TABLE_SET_STR(1, family_str, type1.family);
-+    SMBIOS_TABLE_SET_STR(1, sku_number_str, smbios_type1.sku);
-+    SMBIOS_TABLE_SET_STR(1, family_str, smbios_type1.family);
- 
-     SMBIOS_BUILD_TABLE_POST;
- }
-@@ -1055,9 +893,9 @@ void smbios_set_defaults(const char *manufacturer, const char *product,
-     smbios_uuid_encoded = uuid_encoded;
-     smbios_ep_type = ep_type;
- 
--    SMBIOS_SET_DEFAULT(type1.manufacturer, manufacturer);
--    SMBIOS_SET_DEFAULT(type1.product, product);
--    SMBIOS_SET_DEFAULT(type1.version, version);
-+    SMBIOS_SET_DEFAULT(smbios_type1.manufacturer, manufacturer);
-+    SMBIOS_SET_DEFAULT(smbios_type1.product, product);
-+    SMBIOS_SET_DEFAULT(smbios_type1.version, version);
-     SMBIOS_SET_DEFAULT(type2.manufacturer, manufacturer);
-     SMBIOS_SET_DEFAULT(type2.product, product);
-     SMBIOS_SET_DEFAULT(type2.version, version);
-@@ -1321,23 +1159,25 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+     int i;
+@@ -2215,6 +2242,8 @@ int main(int argc, char *argv[])
+ #ifdef CONFIG_POSIX
+             qtest_add_func("acpi/piix4/acpierst", test_acpi_piix4_acpi_erst);
+ #endif
++            qtest_add_func("acpi/piix4/smbios-options",
++                           test_acpi_pc_smbios_options);
          }
- 
-         if (header->type <= SMBIOS_MAX_TYPE) {
--            if (test_bit(header->type, have_fields_bitmap)) {
-+            if (test_bit(header->type, smbios_have_fields_bitmap)) {
-                 error_setg(errp,
-                            "can't load type %d struct, fields already specified!",
-                            header->type);
-                 return;
-             }
--            set_bit(header->type, have_binfile_bitmap);
-+            set_bit(header->type, smbios_have_binfile_bitmap);
-         }
- 
-         if (header->type == 4) {
-             smbios_type4_count++;
-         }
- 
--        if (!usr_blobs_sizes) {
--            usr_blobs_sizes = g_array_new(false, false, sizeof(size_t));
--        }
--        g_array_append_val(usr_blobs_sizes, size);
-+        /*
-+         * preserve blob size for legacy mode so it could build its
-+         * blobs flavor from 'usr_blobs'
-+         */
-+        smbios_add_usr_blob_size(size);
-+
-         usr_blobs_len += size;
-         if (size > usr_table_max) {
-             usr_table_max = size;
-@@ -1356,41 +1196,42 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
-             return;
-         }
- 
--        if (test_bit(type, have_binfile_bitmap)) {
-+        if (test_bit(type, smbios_have_binfile_bitmap)) {
-             error_setg(errp, "can't add fields, binary file already loaded!");
-             return;
-         }
--        set_bit(type, have_fields_bitmap);
-+        set_bit(type, smbios_have_fields_bitmap);
- 
-         switch (type) {
-         case 0:
-             if (!qemu_opts_validate(opts, qemu_smbios_type0_opts, errp)) {
-                 return;
-             }
--            save_opt(&type0.vendor, opts, "vendor");
--            save_opt(&type0.version, opts, "version");
--            save_opt(&type0.date, opts, "date");
--            type0.uefi = qemu_opt_get_bool(opts, "uefi", false);
-+            save_opt(&smbios_type0.vendor, opts, "vendor");
-+            save_opt(&smbios_type0.version, opts, "version");
-+            save_opt(&smbios_type0.date, opts, "date");
-+            smbios_type0.uefi = qemu_opt_get_bool(opts, "uefi", false);
- 
-             val = qemu_opt_get(opts, "release");
-             if (val) {
--                if (sscanf(val, "%hhu.%hhu", &type0.major, &type0.minor) != 2) {
-+                if (sscanf(val, "%hhu.%hhu", &smbios_type0.major,
-+                           &smbios_type0.minor) != 2) {
-                     error_setg(errp, "Invalid release");
-                     return;
-                 }
--                type0.have_major_minor = true;
-+                smbios_type0.have_major_minor = true;
-             }
-             return;
-         case 1:
-             if (!qemu_opts_validate(opts, qemu_smbios_type1_opts, errp)) {
-                 return;
-             }
--            save_opt(&type1.manufacturer, opts, "manufacturer");
--            save_opt(&type1.product, opts, "product");
--            save_opt(&type1.version, opts, "version");
--            save_opt(&type1.serial, opts, "serial");
--            save_opt(&type1.sku, opts, "sku");
--            save_opt(&type1.family, opts, "family");
-+            save_opt(&smbios_type1.manufacturer, opts, "manufacturer");
-+            save_opt(&smbios_type1.product, opts, "product");
-+            save_opt(&smbios_type1.version, opts, "version");
-+            save_opt(&smbios_type1.serial, opts, "serial");
-+            save_opt(&smbios_type1.sku, opts, "sku");
-+            save_opt(&smbios_type1.family, opts, "family");
- 
-             val = qemu_opt_get(opts, "uuid");
-             if (val) {
-diff --git a/hw/smbios/smbios_legacy.c b/hw/smbios/smbios_legacy.c
-new file mode 100644
-index 0000000000..21f143e738
---- /dev/null
-+++ b/hw/smbios/smbios_legacy.c
-@@ -0,0 +1,179 @@
-+/*
-+ * SMBIOS legacy support
-+ *
-+ * Copyright (C) 2009 Hewlett-Packard Development Company, L.P.
-+ * Copyright (C) 2013 Red Hat, Inc.
-+ *
-+ * Authors:
-+ *  Alex Williamson <alex.williamson@hp.com>
-+ *  Markus Armbruster <armbru@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2.  See
-+ * the COPYING file in the top-level directory.
-+ *
-+ * Contributions after 2012-01-13 are licensed under the terms of the
-+ * GNU GPL, version 2 or (at your option) any later version.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bswap.h"
-+#include "hw/firmware/smbios.h"
-+#include "sysemu/sysemu.h"
-+#include "qemu/error-report.h"
-+
-+struct smbios_header {
-+    uint16_t length;
-+    uint8_t type;
-+} QEMU_PACKED;
-+
-+struct smbios_field {
-+    struct smbios_header header;
-+    uint8_t type;
-+    uint16_t offset;
-+    uint8_t data[];
-+} QEMU_PACKED;
-+
-+struct smbios_table {
-+    struct smbios_header header;
-+    uint8_t data[];
-+} QEMU_PACKED;
-+
-+#define SMBIOS_FIELD_ENTRY 0
-+#define SMBIOS_TABLE_ENTRY 1
-+
-+static uint8_t *smbios_entries;
-+static size_t smbios_entries_len;
-+GArray *usr_blobs_sizes;
-+
-+void smbios_add_usr_blob_size(size_t size)
-+{
-+    if (!usr_blobs_sizes) {
-+        usr_blobs_sizes = g_array_new(false, false, sizeof(size_t));
-+    }
-+    g_array_append_val(usr_blobs_sizes, size);
-+}
-+
-+static void smbios_add_field(int type, int offset, const void *data, size_t len)
-+{
-+    struct smbios_field *field;
-+
-+    if (!smbios_entries) {
-+        smbios_entries_len = sizeof(uint16_t);
-+        smbios_entries = g_malloc0(smbios_entries_len);
-+    }
-+    smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
-+                                                  sizeof(*field) + len);
-+    field = (struct smbios_field *)(smbios_entries + smbios_entries_len);
-+    field->header.type = SMBIOS_FIELD_ENTRY;
-+    field->header.length = cpu_to_le16(sizeof(*field) + len);
-+
-+    field->type = type;
-+    field->offset = cpu_to_le16(offset);
-+    memcpy(field->data, data, len);
-+
-+    smbios_entries_len += sizeof(*field) + len;
-+    (*(uint16_t *)smbios_entries) =
-+            cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
-+}
-+
-+static void smbios_maybe_add_str(int type, int offset, const char *data)
-+{
-+    if (data) {
-+        smbios_add_field(type, offset, data, strlen(data) + 1);
-+    }
-+}
-+
-+static void smbios_build_type_0_fields(void)
-+{
-+    smbios_maybe_add_str(0, offsetof(struct smbios_type_0, vendor_str),
-+                         smbios_type0.vendor);
-+    smbios_maybe_add_str(0, offsetof(struct smbios_type_0, bios_version_str),
-+                         smbios_type0.version);
-+    smbios_maybe_add_str(0, offsetof(struct smbios_type_0,
-+                                     bios_release_date_str),
-+                         smbios_type0.date);
-+    if (smbios_type0.have_major_minor) {
-+        smbios_add_field(0, offsetof(struct smbios_type_0,
-+                                     system_bios_major_release),
-+                         &smbios_type0.major, 1);
-+        smbios_add_field(0, offsetof(struct smbios_type_0,
-+                                     system_bios_minor_release),
-+                         &smbios_type0.minor, 1);
-+    }
-+}
-+
-+static void smbios_build_type_1_fields(void)
-+{
-+    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, manufacturer_str),
-+                         smbios_type1.manufacturer);
-+    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, product_name_str),
-+                         smbios_type1.product);
-+    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, version_str),
-+                         smbios_type1.version);
-+    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, serial_number_str),
-+                         smbios_type1.serial);
-+    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, sku_number_str),
-+                         smbios_type1.sku);
-+    smbios_maybe_add_str(1, offsetof(struct smbios_type_1, family_str),
-+                         smbios_type1.family);
-+    if (qemu_uuid_set) {
-+        /*
-+         * We don't encode the UUID in the "wire format" here because this
-+         * function is for legacy mode and needs to keep the guest ABI, and
-+         * because we don't know what's the SMBIOS version advertised by the
-+         * BIOS.
-+         */
-+        smbios_add_field(1, offsetof(struct smbios_type_1, uuid),
-+                         &qemu_uuid, 16);
-+    }
-+}
-+
-+uint8_t *smbios_get_table_legacy(size_t *length)
-+{
-+    int i;
-+    size_t usr_offset;
-+
-+    /* complain if fields were given for types > 1 */
-+    if (find_next_bit(smbios_have_fields_bitmap,
-+                      SMBIOS_MAX_TYPE + 1, 2) < SMBIOS_MAX_TYPE + 1) {
-+        error_report("can't process fields for smbios "
-+                     "types > 1 on machine versions < 2.1!");
-+        exit(1);
-+    }
-+
-+    if (test_bit(4, smbios_have_binfile_bitmap)) {
-+        error_report("can't process table for smbios "
-+                     "type 4 on machine versions < 2.1!");
-+        exit(1);
-+    }
-+
-+    g_free(smbios_entries);
-+    smbios_entries_len = sizeof(uint16_t);
-+    smbios_entries = g_malloc0(smbios_entries_len);
-+
-+    for (i = 0, usr_offset = 0; usr_blobs_sizes && i < usr_blobs_sizes->len;
-+         i++)
-+    {
-+        struct smbios_table *table;
-+        struct smbios_structure_header *header;
-+        size_t size = g_array_index(usr_blobs_sizes, size_t, i);
-+
-+        header = (struct smbios_structure_header *)(usr_blobs + usr_offset);
-+        smbios_entries = g_realloc(smbios_entries, smbios_entries_len +
-+                                                   size + sizeof(*table));
-+        table = (struct smbios_table *)(smbios_entries + smbios_entries_len);
-+        table->header.type = SMBIOS_TABLE_ENTRY;
-+        table->header.length = cpu_to_le16(sizeof(*table) + size);
-+        memcpy(table->data, header, size);
-+        smbios_entries_len += sizeof(*table) + size;
-+        (*(uint16_t *)smbios_entries) =
-+            cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
-+        usr_offset += size;
-+    }
-+
-+    smbios_build_type_0_fields();
-+    smbios_build_type_1_fields();
-+    smbios_validate_table();
-+    *length = smbios_entries_len;
-+    return smbios_entries;
-+}
-diff --git a/hw/smbios/smbios_legacy_stub.c b/hw/smbios/smbios_legacy_stub.c
-new file mode 100644
-index 0000000000..91e6c75029
---- /dev/null
-+++ b/hw/smbios/smbios_legacy_stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * IPMI SMBIOS firmware handling
-+ *
-+ * Copyright (c) 2024 Igor Mammedov, Red Hat, Inc.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/firmware/smbios.h"
-+
-+void smbios_add_usr_blob_size(size_t size)
-+{
-+}
-+
+         if (qtest_has_machine(MACHINE_Q35)) {
+             qtest_add_func("acpi/q35", test_acpi_q35_tcg);
 -- 
 2.39.3
 
