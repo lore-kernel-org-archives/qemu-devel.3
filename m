@@ -4,54 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED29C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 12:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62993C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 12:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rewwa-0008Vz-CE; Tue, 27 Feb 2024 07:52:24 -0500
+	id 1rewy6-0001Jd-MJ; Tue, 27 Feb 2024 07:53:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=hhKj=KE=kaod.org=clg@ozlabs.org>)
- id 1rewwY-0008V1-Ks; Tue, 27 Feb 2024 07:52:22 -0500
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rewxb-0000mx-SW; Tue, 27 Feb 2024 07:53:29 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=hhKj=KE=kaod.org=clg@ozlabs.org>)
- id 1rewwV-0002in-U2; Tue, 27 Feb 2024 07:52:22 -0500
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Tkcnr1w6Jz4wxX;
- Tue, 27 Feb 2024 23:52:16 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tkcnp1NrTz4wc1;
- Tue, 27 Feb 2024 23:52:13 +1100 (AEDT)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 2/2] aspeed: fix hardcode boot address 0
-Date: Tue, 27 Feb 2024 13:52:01 +0100
-Message-ID: <20240227125201.414060-3-clg@kaod.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240227125201.414060-1-clg@kaod.org>
-References: <20240227125201.414060-1-clg@kaod.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rewxZ-0002sa-9D; Tue, 27 Feb 2024 07:53:27 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Tkck22Wthz6K5hF;
+ Tue, 27 Feb 2024 20:48:58 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 12A731400CD;
+ Tue, 27 Feb 2024 20:53:20 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 27 Feb
+ 2024 12:53:18 +0000
+Date: Tue, 27 Feb 2024 12:53:17 +0000
+To: <ankita@nvidia.com>
+CC: <jgg@nvidia.com>, <alex.williamson@redhat.com>, <clg@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <peter.maydell@linaro.org>, <ani@anisinha.ca>,
+ <berrange@redhat.com>, <eduardo@habkost.net>, <imammedo@redhat.com>,
+ <mst@redhat.com>, <eblake@redhat.com>, <armbru@redhat.com>,
+ <david@redhat.com>, <gshan@redhat.com>, <zhiw@nvidia.com>,
+ <mochs@nvidia.com>, <pbonzini@redhat.com>, <aniketa@nvidia.com>,
+ <cjia@nvidia.com>, <kwankhede@nvidia.com>, <targupta@nvidia.com>,
+ <vsethi@nvidia.com>, <acurrid@nvidia.com>, <dnigam@nvidia.com>,
+ <udhoke@nvidia.com>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 2/2] hw/acpi: Implement the SRAT GI affinity structure
+Message-ID: <20240227125317.00001cf8@Huawei.com>
+In-Reply-To: <20240223124223.800078-3-ankita@nvidia.com>
+References: <20240223124223.800078-1-ankita@nvidia.com>
+ <20240223124223.800078-3-ankita@nvidia.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=hhKj=KE=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,108 +72,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On Fri, 23 Feb 2024 12:42:23 +0000
+<ankita@nvidia.com> wrote:
 
-In the previous design of ASPEED SOCs QEMU model, it set the boot
-address at "0" which was the hardcode setting for ast10x0, ast2600,
-ast2500 and ast2400.
+> From: Ankit Agrawal <ankita@nvidia.com>
+> 
+> ACPI spec provides a scheme to associate "Generic Initiators" [1]
+> (e.g. heterogeneous processors and accelerators, GPUs, and I/O devices with
+> integrated compute or DMA engines GPUs) with Proximity Domains. This is
+> achieved using Generic Initiator Affinity Structure in SRAT. During bootup,
+> Linux kernel parse the ACPI SRAT to determine the PXM ids and create a NUMA
+> node for each unique PXM ID encountered. Qemu currently do not implement
+> these structures while building SRAT.
+> 
+> Add GI structures while building VM ACPI SRAT. The association between
+> device and node are stored using acpi-generic-initiator object. Lookup
+> presence of all such objects and use them to build these structures.
+> 
+> The structure needs a PCI device handle [2] that consists of the device BDF.
+> The vfio-pci device corresponding to the acpi-generic-initiator object is
+> located to determine the BDF.
+> 
+> [1] ACPI Spec 6.3, Section 5.2.16.6
+> [2] ACPI Spec 6.3, Table 5.80
+> 
+> Signed-off-by: Ankit Agrawal <ankita@nvidia.com>
+> ---
+>  hw/acpi/acpi-generic-initiator.c         | 84 ++++++++++++++++++++++++
+>  hw/arm/virt-acpi-build.c                 |  3 +
+>  include/hw/acpi/acpi-generic-initiator.h | 26 ++++++++
+A few more comments.
 
-According to the design of ast2700, it has a bootmcu(riscv-32) which
-is used for executing SPL and initialize DRAM and copy u-boot image
-from SPI/Flash to DRAM at address 0x400000000 at SPL boot stage.
-Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
+Maybe _ rather than - as more common for acpi include naming.
 
-Currently, qemu not support emulate two CPU architectures
-at the same machine. Therefore, qemu will only support
-to emulate CPU(cortex-a35) side for ast2700 and the boot
-address is "0x4 00000000".
-
-Fixed hardcode boot address "0" for future models using
-a different mapping address.
-
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
----
- include/hw/arm/aspeed_soc.h | 2 --
- hw/arm/aspeed.c             | 4 +++-
- hw/arm/aspeed_ast2400.c     | 4 ++--
- hw/arm/aspeed_ast2600.c     | 2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index e1a023be538b..c60fac900acb 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -224,8 +224,6 @@ enum {
-     ASPEED_DEV_FSI2,
- };
- 
--#define ASPEED_SOC_SPI_BOOT_ADDR 0x0
--
- qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
- bool aspeed_soc_uart_realize(AspeedSoCState *s, Error **errp);
- void aspeed_soc_uart_set_chr(AspeedSoCState *s, int dev, Chardev *chr);
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 0af96afa16a6..8854581ca8de 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -289,12 +289,14 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
-                                     uint64_t rom_size)
- {
-     AspeedSoCState *soc = bmc->soc;
-+    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(soc);
- 
-     memory_region_init_rom(&bmc->boot_rom, NULL, "aspeed.boot_rom", rom_size,
-                            &error_abort);
-     memory_region_add_subregion_overlap(&soc->spi_boot_container, 0,
-                                         &bmc->boot_rom, 1);
--    write_boot_rom(blk, ASPEED_SOC_SPI_BOOT_ADDR, rom_size, &error_abort);
-+    write_boot_rom(blk, sc->memmap[ASPEED_DEV_SPI_BOOT],
-+                   rom_size, &error_abort);
- }
- 
- void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
-diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-index 95da85fee029..d12588620751 100644
---- a/hw/arm/aspeed_ast2400.c
-+++ b/hw/arm/aspeed_ast2400.c
-@@ -26,7 +26,7 @@
- #define ASPEED_SOC_IOMEM_SIZE       0x00200000
- 
- static const hwaddr aspeed_soc_ast2400_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  =  ASPEED_SOC_SPI_BOOT_ADDR,
-+    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
-     [ASPEED_DEV_IOMEM]  = 0x1E600000,
-     [ASPEED_DEV_FMC]    = 0x1E620000,
-     [ASPEED_DEV_SPI1]   = 0x1E630000,
-@@ -61,7 +61,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
- };
- 
- static const hwaddr aspeed_soc_ast2500_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
-+    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
-     [ASPEED_DEV_IOMEM]  = 0x1E600000,
-     [ASPEED_DEV_FMC]    = 0x1E620000,
-     [ASPEED_DEV_SPI1]   = 0x1E630000,
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index f74561ecdcd5..174be537709b 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -22,7 +22,7 @@
- #define ASPEED_SOC_DPMCU_SIZE       0x00040000
- 
- static const hwaddr aspeed_soc_ast2600_memmap[] = {
--    [ASPEED_DEV_SPI_BOOT]  = ASPEED_SOC_SPI_BOOT_ADDR,
-+    [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
-     [ASPEED_DEV_SRAM]      = 0x10000000,
-     [ASPEED_DEV_DPMCU]     = 0x18000000,
-     /* 0x16000000     0x17FFFFFF : AHB BUS do LPC Bus bridge */
--- 
-2.43.2
+I also wonder if we need the acpi prefix for file names given context?
 
 
