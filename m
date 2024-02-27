@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB597C54E4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:44:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9782C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexam-0000te-Tm; Tue, 27 Feb 2024 08:33:56 -0500
+	id 1rexas-0000z0-2z; Tue, 27 Feb 2024 08:34:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaX-0000oV-Dx
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:41 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1rexaM-0000kK-HX
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:33 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaQ-0002uS-Ne
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:41 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33de6da5565so805065f8f.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:32 -0800 (PST)
+ id 1rexaI-0002se-L7
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:28 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33d9c3f36c2so2335310f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040811; x=1709645611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040805; x=1709645605; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bnsDuxpc/9b0o5hbfDhwh9os93CNP+sIRCB+KuakBY0=;
- b=btp6LAY+vXYimAmMXIpd4wSnwV0bClwiGWlO1OXj9saGm6MHGS+5GOHEQZgZb/v6ub
- uoctr1IRzMs0JRTH4j0TDKcBxc6FzgZE8Ix84eqM8PUyi42dVZl6sB7CVr0upfP+J9nm
- lpV+XBsr3g4gej51SsU3iJ/w/9jx7qNRKvvmAHx2NuD5AZv0eKzE/wDUdu3gt2xE/+qj
- q1eVVmGMn4hrEYotANX8eQNtRxHbJHSOt3aKcYqqo4FY9OR8zYRA3SG2oQ1l4MzWtFVg
- J1rtd/PKSNrtP+BSKdMfglTZOCu910rgpbqBqWHAH2brd2p6NJ+Rsk+yYW1+6KTsqb5v
- 1+QQ==
+ :reply-to; bh=ilSh+qPOLb6HK3mUSSVYVVmXM5u7PDBEkPrdcgdTkNQ=;
+ b=Ww+SsUrwP7Pjwc0E6rL0ieuKhQPMlKsgoe6+jGglfmoZMEUWPJ3JUrSslvCcapAaIp
+ 0JOWYJ77XOiMmzK6od/CXvVlaiorUdIuWMOMuQBsROS4F8FQAUNTafUDT2U7l79gxBqm
+ naR8F+6ZZaM9rzaytgk8OjzGr/QtbIr8MRwmm+3FioBBlyNEN3TXsFbzxmjcDeqMzfm3
+ KMNjmjdPK3MtWC2hLqUKwQv8TnuIabRdnCSWdd5iXLQZRr/glsS1LfznydJIYt9GmA3i
+ XTLar/l4x0zrIQ6gyT75HIRVXYsfamPTdy1KiTIv4+8xTzh9sr0BhyurnmeHvdUz6lJI
+ RJUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040811; x=1709645611;
+ d=1e100.net; s=20230601; t=1709040805; x=1709645605;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bnsDuxpc/9b0o5hbfDhwh9os93CNP+sIRCB+KuakBY0=;
- b=M8HVYBlT8NnlqmpIPluZy4MrlMXFWoPg6haxH1xCAagSY8QpVeiDl9WmXvUcWxvXRZ
- C88+0cG/lH2g5Cg37MQbl4GJVfuFybQ5rSXbT3VhvMt5nTBqC+ljlb/JTEMXeSmDcUfO
- V85Y+p3GWluB2YfbNROZAJ6OnqrSmhlmDwhYLrn0MtdIYpD1BQfZHoKti0kiot2UAQSq
- Tia/2pu6BP0j45N84BMHOJc+QGlEdw9mofWN344ROz3eMmhiNj/5cjcZRXF23ztf3PVw
- dA8eRJa4HdBoBARKtcWzXH9LxB+XoV1+RZ9TovQxosJ+MZeh14lrGu01VwqtI21u9EMa
- coFw==
-X-Gm-Message-State: AOJu0Yz0VjaJFER7YiNvVnAZfQ/UVWkC2553gnq5mWWmAa1WID+kE3HZ
- HZBD9DwZRbbhnLmQIGog95dLfZUuwVIuzS+o15YHJF1bvtTj3Xor0l9UyMpnFIDzg8G2BrpB6Ob
- w
-X-Google-Smtp-Source: AGHT+IEDVbB8k9gAxaOIW3Ud3pafAiuPanYb4E24dnNO1GoKnWmXLnRlD4+PhPcX8J2bfQCtKTc0Kw==
-X-Received: by 2002:adf:f684:0:b0:33d:6bd3:9e24 with SMTP id
- v4-20020adff684000000b0033d6bd39e24mr7247269wrp.1.1709040810966; 
- Tue, 27 Feb 2024 05:33:30 -0800 (PST)
+ bh=ilSh+qPOLb6HK3mUSSVYVVmXM5u7PDBEkPrdcgdTkNQ=;
+ b=Y49xTqRrt2jznjInu+Et3vnpYsZ1AuSpal2KsRQHZE61qXR9PzUIMaB8cQ9sgKXjSd
+ bhaIWi+kTI0LhCA0YDgnkGJZEUMooMpwB3TB0WSAxsKssaUNl26kciPevAYvth2jdNEt
+ RBg3c+qxKc4mfltB9BUTxCgjRUCLW1WlxhWwEGOUU2/zloHOEecdHAxpM1V/+u3MIEAt
+ dSx8veKBWIGI7QN2PAeUrIByM+PTePHboaT6amVqvbAcNC6p2rmskzl7NNvGVCTe8C/M
+ HiiwHV4+4qbBSVNkSxNiGWHEOhTF9eqEn1xX2xcJnqT9RIx9Wo45EhlRXRwdS0XDbuXd
+ or5g==
+X-Gm-Message-State: AOJu0YwGSoONjtij97ZHp2QaxXGzIoKyLsR/3wjXpIpBPiVwubPW6LEZ
+ +BVJT8cVSnf2lkii+YOFAx2kogkFGHB036O2aa4PbUHv9gDavxtrOTOXrA/4iXhbby/N07Ybfpl
+ I
+X-Google-Smtp-Source: AGHT+IHAh5DAqaVp8a9vmWGvHvwv5wloT0qFUm1D+8vdiXBK9NmXzLjdQvVB5lmv2IcrXBCVilaKmQ==
+X-Received: by 2002:a5d:6e01:0:b0:33d:19fc:c4e9 with SMTP id
+ h1-20020a5d6e01000000b0033d19fcc4e9mr6964005wrz.50.1709040805272; 
+ Tue, 27 Feb 2024 05:33:25 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.30
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:30 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/45] hw/arm: Add GPIO and SD to BCM2838 periph
-Date: Tue, 27 Feb 2024 13:32:58 +0000
-Message-Id: <20240227133314.1721857-30-peter.maydell@linaro.org>
+Subject: [PULL 17/45] hw/core/reset: Add qemu_{register,
+ unregister}_resettable()
+Date: Tue, 27 Feb 2024 13:32:46 +0000
+Message-Id: <20240227133314.1721857-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,227 +95,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+Implement new functions qemu_register_resettable() and
+qemu_unregister_resettable().  These are intended to be
+three-phase-reset aware equivalents of the old qemu_register_reset()
+and qemu_unregister_reset().  Instead of passing in a function
+pointer and opaque, you register any QOM object that implements the
+Resettable interface.
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20240226000259.2752893-10-sergey.kambalin@auriga.com
+The implementation is simple: we have a single global instance of a
+ResettableContainer, which we reset in qemu_devices_reset(), and
+the Resettable objects passed to qemu_register_resettable() are
+added to it.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20240220160622.114437-8-peter.maydell@linaro.org
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/arm/bcm2838_peripherals.h |   8 ++
- hw/arm/bcm2838_peripherals.c         | 143 +++++++++++++++++++++++++++
- 2 files changed, 151 insertions(+)
+ include/sysemu/reset.h | 37 ++++++++++++++++++++++++++++++++++---
+ hw/core/reset.c        | 31 +++++++++++++++++++++++++++++--
+ 2 files changed, 63 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index d07831753ab..86b0d96944e 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -10,6 +10,8 @@
- #define BCM2838_PERIPHERALS_H
+diff --git a/include/sysemu/reset.h b/include/sysemu/reset.h
+index 658a7e091e6..ef2c595e296 100644
+--- a/include/sysemu/reset.h
++++ b/include/sysemu/reset.h
+@@ -31,6 +31,36 @@
  
- #include "hw/arm/bcm2835_peripherals.h"
-+#include "hw/sd/sdhci.h"
-+#include "hw/gpio/bcm2838_gpio.h"
+ typedef void QEMUResetHandler(void *opaque);
  
- /* SPI */
- #define GIC_SPI_INTERRUPT_MBOX         33
-@@ -45,6 +47,9 @@
- #define GPU_INTERRUPT_DMA14     28
- #define GPU_INTERRUPT_DMA15     31
++/**
++ * qemu_register_resettable: Register an object to be reset
++ * @obj: object to be reset: it must implement the Resettable interface
++ *
++ * Register @obj on the list of objects which will be reset when the
++ * simulation is reset. These objects will be reset in the order
++ * they were added, using the three-phase Resettable protocol,
++ * so first all objects go through the enter phase, then all objects
++ * go through the hold phase, and then finally all go through the
++ * exit phase.
++ *
++ * It is not permitted to register or unregister reset functions or
++ * resettable objects from within any of the reset phase methods of @obj.
++ *
++ * We assume that the caller holds the BQL.
++ */
++void qemu_register_resettable(Object *obj);
++
++/**
++ * qemu_unregister_resettable: Unregister an object to be reset
++ * @obj: object to unregister
++ *
++ * Remove @obj from the list of objects which are reset when the
++ * simulation is reset. It must have been previously added to
++ * the list via qemu_register_resettable().
++ *
++ * We assume that the caller holds the BQL.
++ */
++void qemu_unregister_resettable(Object *obj);
++
+ /**
+  * qemu_register_reset: Register a callback for system reset
+  * @func: function to call
+@@ -44,8 +74,8 @@ typedef void QEMUResetHandler(void *opaque);
+  * for instance, device model reset is better accomplished using the
+  * methods on DeviceState.
+  *
+- * It is not permitted to register or unregister reset functions from
+- * within the @func callback.
++ * It is not permitted to register or unregister reset functions or
++ * resettable objects from within the @func callback.
+  *
+  * We assume that the caller holds the BQL.
+  */
+@@ -81,7 +111,8 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque);
+  *
+  * This function performs the low-level work needed to do a complete reset
+  * of the system (calling all the callbacks registered with
+- * qemu_register_reset()). It should only be called by the code in a
++ * qemu_register_reset() and resetting all the Resettable objects registered
++ * with qemu_register_resettable()). It should only be called by the code in a
+  * MachineClass reset method.
+  *
+  * If you want to trigger a system reset from, for instance, a device
+diff --git a/hw/core/reset.c b/hw/core/reset.c
+index d3263b613e6..a9b30e705fe 100644
+--- a/hw/core/reset.c
++++ b/hw/core/reset.c
+@@ -26,8 +26,23 @@
+ #include "qemu/osdep.h"
+ #include "qemu/queue.h"
+ #include "sysemu/reset.h"
++#include "hw/resettable.h"
++#include "hw/core/resetcontainer.h"
  
-+#define BCM2838_MPHI_OFFSET     0xb200
-+#define BCM2838_MPHI_SIZE       0x200
+-/* reset/shutdown handler */
++/*
++ * Return a pointer to the singleton container that holds all the Resettable
++ * items that will be reset when qemu_devices_reset() is called.
++ */
++static ResettableContainer *get_root_reset_container(void)
++{
++    static ResettableContainer *root_reset_container;
 +
- #define TYPE_BCM2838_PERIPHERALS "bcm2838-peripherals"
- OBJECT_DECLARE_TYPE(BCM2838PeripheralState, BCM2838PeripheralClass,
-                     BCM2838_PERIPHERALS)
-@@ -58,6 +63,9 @@ struct BCM2838PeripheralState {
-     MemoryRegion peri_low_mr_alias;
-     MemoryRegion mphi_mr_alias;
++    if (!root_reset_container) {
++        root_reset_container =
++            RESETTABLE_CONTAINER(object_new(TYPE_RESETTABLE_CONTAINER));
++    }
++    return root_reset_container;
++}
  
-+    SDHCIState emmc2;
-+    BCM2838GpioState gpio;
-+
-     OrIRQState mmc_irq_orgate;
-     OrIRQState dma_7_8_irq_orgate;
-     OrIRQState dma_9_10_irq_orgate;
-diff --git a/hw/arm/bcm2838_peripherals.c b/hw/arm/bcm2838_peripherals.c
-index 06110c724f8..55ae56733f4 100644
---- a/hw/arm/bcm2838_peripherals.c
-+++ b/hw/arm/bcm2838_peripherals.c
-@@ -15,22 +15,56 @@
- /* Lower peripheral base address on the VC (GPU) system bus */
- #define BCM2838_VC_PERI_LOW_BASE 0x7c000000
- 
-+/* Capabilities for SD controller: no DMA, high-speed, default clocks etc. */
-+#define BCM2835_SDHC_CAPAREG 0x52134b4
-+
- static void bcm2838_peripherals_init(Object *obj)
- {
-     BCM2838PeripheralState *s = BCM2838_PERIPHERALS(obj);
-     BCM2838PeripheralClass *bc = BCM2838_PERIPHERALS_GET_CLASS(obj);
-+    BCMSocPeripheralBaseState *s_base = BCM_SOC_PERIPHERALS_BASE(obj);
- 
-     /* Lower memory region for peripheral devices (exported to the Soc) */
-     memory_region_init(&s->peri_low_mr, obj, "bcm2838-peripherals",
-                        bc->peri_low_size);
-     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->peri_low_mr);
- 
-+    /* Extended Mass Media Controller 2 */
-+    object_initialize_child(obj, "emmc2", &s->emmc2, TYPE_SYSBUS_SDHCI);
-+
-+    /* GPIO */
-+    object_initialize_child(obj, "gpio", &s->gpio, TYPE_BCM2838_GPIO);
-+
-+    object_property_add_const_link(OBJECT(&s->gpio), "sdbus-sdhci",
-+                                   OBJECT(&s_base->sdhci.sdbus));
-+    object_property_add_const_link(OBJECT(&s->gpio), "sdbus-sdhost",
-+                                   OBJECT(&s_base->sdhost.sdbus));
-+
-+    object_initialize_child(obj, "mmc_irq_orgate", &s->mmc_irq_orgate,
-+                            TYPE_OR_IRQ);
-+    object_property_set_int(OBJECT(&s->mmc_irq_orgate), "num-lines", 2,
-+                            &error_abort);
-+
-+    object_initialize_child(obj, "dma_7_8_irq_orgate", &s->dma_7_8_irq_orgate,
-+                            TYPE_OR_IRQ);
-+    object_property_set_int(OBJECT(&s->dma_7_8_irq_orgate), "num-lines", 2,
-+                            &error_abort);
-+
-+    object_initialize_child(obj, "dma_9_10_irq_orgate", &s->dma_9_10_irq_orgate,
-+                            TYPE_OR_IRQ);
-+    object_property_set_int(OBJECT(&s->dma_9_10_irq_orgate), "num-lines", 2,
-+                            &error_abort);
+ typedef struct QEMUResetEntry {
+     QTAILQ_ENTRY(QEMUResetEntry) entry;
+@@ -71,6 +86,16 @@ void qemu_unregister_reset(QEMUResetHandler *func, void *opaque)
+     }
  }
  
- static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
++void qemu_register_resettable(Object *obj)
++{
++    resettable_container_add(get_root_reset_container(), obj);
++}
++
++void qemu_unregister_resettable(Object *obj)
++{
++    resettable_container_remove(get_root_reset_container(), obj);
++}
++
+ void qemu_devices_reset(ShutdownCause reason)
  {
-+    DeviceState *mmc_irq_orgate;
-+    DeviceState *dma_7_8_irq_orgate;
-+    DeviceState *dma_9_10_irq_orgate;
-+    MemoryRegion *mphi_mr;
-     BCM2838PeripheralState *s = BCM2838_PERIPHERALS(dev);
-     BCMSocPeripheralBaseState *s_base = BCM_SOC_PERIPHERALS_BASE(dev);
-+    int n;
+     QEMUResetEntry *re, *nre;
+@@ -83,5 +108,7 @@ void qemu_devices_reset(ShutdownCause reason)
+         }
+         re->func(re->opaque);
+     }
+-}
  
-     bcm_soc_peripherals_common_realize(dev, errp);
- 
-@@ -42,6 +76,115 @@ static void bcm2838_peripherals_realize(DeviceState *dev, Error **errp)
-                                         BCM2838_VC_PERI_LOW_BASE,
-                                         &s->peri_low_mr_alias, 1);
- 
-+    /* Extended Mass Media Controller 2 */
-+    object_property_set_uint(OBJECT(&s->emmc2), "sd-spec-version", 3,
-+                             &error_abort);
-+    object_property_set_uint(OBJECT(&s->emmc2), "capareg",
-+                             BCM2835_SDHC_CAPAREG, &error_abort);
-+    object_property_set_bool(OBJECT(&s->emmc2), "pending-insert-quirk", true,
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->emmc2), errp)) {
-+        return;
-+    }
-+
-+    memory_region_add_subregion(&s_base->peri_mr, EMMC2_OFFSET,
-+                                sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->emmc2),
-+                                0));
-+
-+    /* According to DTS, EMMC and EMMC2 share one irq */
-+    if (!qdev_realize(DEVICE(&s->mmc_irq_orgate), NULL, errp)) {
-+        return;
-+    }
-+
-+    mmc_irq_orgate = DEVICE(&s->mmc_irq_orgate);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc2), 0,
-+                       qdev_get_gpio_in(mmc_irq_orgate, 0));
-+
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->sdhci), 0,
-+                       qdev_get_gpio_in(mmc_irq_orgate, 1));
-+
-+   /* Connect EMMC and EMMC2 to the interrupt controller */
-+    qdev_connect_gpio_out(mmc_irq_orgate, 0,
-+                          qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                                 BCM2835_IC_GPU_IRQ,
-+                                                 INTERRUPT_ARASANSDIO));
-+
-+    /* Connect DMA 0-6 to the interrupt controller */
-+    for (n = 0; n < 7; n++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), n,
-+                           qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                                  BCM2835_IC_GPU_IRQ,
-+                                                  GPU_INTERRUPT_DMA0 + n));
-+    }
-+
-+   /* According to DTS, DMA 7 and 8 share one irq */
-+    if (!qdev_realize(DEVICE(&s->dma_7_8_irq_orgate), NULL, errp)) {
-+        return;
-+    }
-+    dma_7_8_irq_orgate = DEVICE(&s->dma_7_8_irq_orgate);
-+
-+    /* Connect DMA 7-8 to the interrupt controller */
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), 7,
-+                       qdev_get_gpio_in(dma_7_8_irq_orgate, 0));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), 8,
-+                       qdev_get_gpio_in(dma_7_8_irq_orgate, 1));
-+
-+    qdev_connect_gpio_out(dma_7_8_irq_orgate, 0,
-+                          qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                                 BCM2835_IC_GPU_IRQ,
-+                                                 GPU_INTERRUPT_DMA7_8));
-+
-+     /* According to DTS, DMA 9 and 10 share one irq */
-+    if (!qdev_realize(DEVICE(&s->dma_9_10_irq_orgate), NULL, errp)) {
-+        return;
-+    }
-+    dma_9_10_irq_orgate = DEVICE(&s->dma_9_10_irq_orgate);
-+
-+   /* Connect DMA 9-10 to the interrupt controller */
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), 9,
-+                       qdev_get_gpio_in(dma_9_10_irq_orgate, 0));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), 10,
-+                       qdev_get_gpio_in(dma_9_10_irq_orgate, 1));
-+
-+    qdev_connect_gpio_out(dma_9_10_irq_orgate, 0,
-+                          qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                                 BCM2835_IC_GPU_IRQ,
-+                                                 GPU_INTERRUPT_DMA9_10));
-+
-+    /* Connect DMA 11-14 to the interrupt controller */
-+    for (n = 11; n < 15; n++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), n,
-+                           qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                                  BCM2835_IC_GPU_IRQ,
-+                                                  GPU_INTERRUPT_DMA11 + n
-+                                                  - 11));
-+    }
-+
-+    /*
-+     * Connect DMA 15 to the interrupt controller, it is physically removed
-+     * from other DMA channels and exclusively used by the GPU
-+     */
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s_base->dma), 15,
-+                        qdev_get_gpio_in_named(DEVICE(&s_base->ic),
-+                                               BCM2835_IC_GPU_IRQ,
-+                                               GPU_INTERRUPT_DMA15));
-+
-+    /* Map MPHI to BCM2838 memory map */
-+    mphi_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(&s_base->mphi), 0);
-+    memory_region_init_alias(&s->mphi_mr_alias, OBJECT(s), "mphi", mphi_mr, 0,
-+                             BCM2838_MPHI_SIZE);
-+    memory_region_add_subregion(&s_base->peri_mr, BCM2838_MPHI_OFFSET,
-+                                &s->mphi_mr_alias);
-+
-+    /* GPIO */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        &s_base->peri_mr, GPIO_OFFSET,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gpio), 0));
-+
-+    object_property_add_alias(OBJECT(s), "sd-bus", OBJECT(&s->gpio), "sd-bus");
- }
- 
- static void bcm2838_peripherals_class_init(ObjectClass *oc, void *data)
++    /* Reset the simulation */
++    resettable_reset(OBJECT(get_root_reset_container()), RESET_TYPE_COLD);
++}
 -- 
 2.34.1
 
