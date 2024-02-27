@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D7DDC5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711E1C54E4A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 03:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reoS6-0007GI-Hp; Mon, 26 Feb 2024 22:48:22 -0500
+	id 1reoSa-0007KU-7v; Mon, 26 Feb 2024 22:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1reoS4-0007Fz-Qs; Mon, 26 Feb 2024 22:48:20 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
+ id 1reoSY-0007KF-6d; Mon, 26 Feb 2024 22:48:50 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1reoS0-0000GQ-LW; Mon, 26 Feb 2024 22:48:19 -0500
+ id 1reoSV-0000JS-Bt; Mon, 26 Feb 2024 22:48:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709005696; x=1740541696;
+ t=1709005727; x=1740541727;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=0JnsqRwtjkYKVB9DEfwdlI9Q9r2noQ3MM+N7hC4UzqA=;
- b=nkZiwxhbqrwdeNKymwOJuIOm+FlnIEvakeuYkmVqPpIG9lPVyY9LDtyG
- T6x+eAZwDlUqHUjtCzYXd1uA1Gngr14Q1csVJb3icxsDGMOd5WvgASssl
- +ZcaMuwpS3a5urlmvx/gWYHxdt50p1T69H/iKi23DJqVNMb8aeToEJ1WO
- in5m1YvFx6icPxbOhf6VzkBaW6WQFPLzq999EPK8OxogjR7DTLlXRMjvC
- 8yz84PrZD5pf/bEWb2syj7Jd++m7AXjF/WLKByf6ub1IjldRhHl7hUgtk
- Ms2WtyqoyYWEjef4V7LlHLVZkx4I6SooZ03Wg+oK0ge0SyIOcRuq6G2HP g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="3495032"
+ bh=0E6rYdldv0ll8eCSOMJwJ2f9cpMx98KvgocU9cDTUr8=;
+ b=bAMKCTGAN5WXw0fwwlhk8hnczES1sErxtqsZ4gT/et5RwpvnvxOHhwEC
+ +MwqG8p6GagjcCQWqt6cd8Ii1GnyVsYvaWwVY+6JPOW+HIXGTki7kZy8p
+ UVrkR/dgvGA6lmSI9Exze2xZ/5ZVuyG6kEBh9lrD9TVWkTVeMoMKDI7E8
+ yFLnDSjHfGEdGUdwxHvqgbrkEStWjpUnvOpg7Gngr7ni+hykt/ysE+zvL
+ 261Inuar7SNaIxLqg8XuHpqFmU411XezioDsBDjsCZT/RtKCPUxp1Hpib
+ g2r2jXLMC00rag8xKoBBRhUgjY9btC0k1Ng13qc7WK7somOrZqlUWHZ+h w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="7155753"
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="3495032"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2024 19:48:12 -0800
+   d="scan'208";a="7155753"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Feb 2024 19:48:44 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; d="scan'208";a="30066823"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 26 Feb 2024 19:48:12 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
+   d="scan'208";a="7251373"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+ by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 26 Feb 2024 19:48:44 -0800
+Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 26 Feb 2024 19:48:11 -0800
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ 15.1.2507.35; Mon, 26 Feb 2024 19:48:43 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 26 Feb 2024 19:48:11 -0800
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.101)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ 15.1.2507.35 via Frontend Transport; Mon, 26 Feb 2024 19:48:43 -0800
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.168)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 26 Feb 2024 19:48:11 -0800
+ 15.1.2507.35; Mon, 26 Feb 2024 19:48:43 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EyXBi7ynhG+HkbQwFVshVNJACNanU55b+o61w9uZXKmCbY+EmGrd/hWQjEbycpEcbttAD5tNF7VrsBsk/PNHUhWu4xEcCkklfHPe8Apsc0tsX3Y7OnsmAYvb+w9GFvlLMOa3BEX/yN79EhqBLWg5tzSEydwEwG72VealBCLxQrCDlw5A5kMhB+f0CtTFUp8wf3JXbCby0EwAxa1DJCDPYMlGvDrErpfu4K7iiLK8G2kA8vR8pBSAiHkSCLOLl4TKMBceVdy2GGkI6li74WyXmaCas3mT1RU6UGVIVJJLlAZp8EmYFztNnC+2wdfNwlyzg3s02TcPlHcv0guxMACEcw==
+ b=ivyp+T8uUpHzE1USbCKIELRGn+vVs3K6tOpSbYI9Yvete7gLSezJOnD5MNoJxSx3Ubjlp+S8dPRPhXWWa1fZQfa4KdKstZumzQpcUkp6kABVpRWgHm8HtzhtqT7std/SZKFsasGfuK0MK/DozgHiNztvc39ru+WugSxI49UhZoTv02WL7vjcQBT3plMpb+dKRrPxKhsQQRvjbmuWrTzJM5PINka6SkYPx8UirbpelssI1WT9dHXtDKKT2ck7I51n3nntKYG0tIKeXOLzWYR54R7pVZgb+aKqbnqSXpL0lAF1KYlGrSA+eb3P54vJbdzV2cq7Vciz0eS2X8m7hNpV/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0JnsqRwtjkYKVB9DEfwdlI9Q9r2noQ3MM+N7hC4UzqA=;
- b=I6jnhQ0dfcwLCsWKS0rslFR+roF1USFbbkQ97kcRYVgXBlzcbZiIF3CZf2hbkVUvthdCkQyptIH5nLQFH0NgSKGydHbsW8/z1RJ0teu5ylHboJtCRKPnt/o+qDpHI76eO53gDZjYWlswMYu1hqmq3wAZWZSVn8bfYCavEWP5y5x2m0k7CaJ0zTOr+w2nJ/c5pk6Rze8axZKCFsbEzkM+lbbQyKEwvdvplqPYV/vHFq7SnpNfhPrSwuo5aT2ZidoTh35A7RAASJ8HupmpfGk1DkxwhLGctMfZLAl9nqO18gpjWtdDFmqHKHUlVX8+ABlBcAu0tEc+ZF9nSR0yYKEuYQ==
+ bh=YaIJ5W0MsddMgUSLZ/snFM5B4BnsMf4hbxp+aESHHoU=;
+ b=m9a9QZA+nlxrxwPEEC/O6IUhBJHSMotT4l3cOuAGw9oKljUtxDk0sXVhpNwR/Rv4Jw9i7oabBQLTmWcwnRLttZ9lWCuMnhhBVnUwkytNXgDEuQXirZY45eYI6c9fp5JpP97AGY+4/rYOcKw5dTT12hqJaNyts61x0wafq1JC8UtryrfwdkesGSlPCelrwCdb6yUEaRRH1jHG6EsLH36SrRtvqVkB2azgVoK4emJOTEHSJC1Cx9YhS3oYzgxo42KZenBjLPu9W3kOQencrtTQ04TRdKvDBywXwhZXowbACTDBlPyoE+PIgpF2PRGXd6ORE/rxFaU0dmp6YZD3Pt1BQw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by IA0PR11MB7749.namprd11.prod.outlook.com (2603:10b6:208:442::7)
+ by SJ0PR11MB5087.namprd11.prod.outlook.com (2603:10b6:a03:2ad::22)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.25; Tue, 27 Feb
- 2024 03:48:09 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.24; Tue, 27 Feb
+ 2024 03:48:40 +0000
 Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
  ([fe80::c0f3:15d4:d7f6:a72a]) by SJ0PR11MB6744.namprd11.prod.outlook.com
  ([fe80::c0f3:15d4:d7f6:a72a%4]) with mapi id 15.20.7339.009; Tue, 27 Feb 2024
- 03:48:09 +0000
+ 03:48:40 +0000
 From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
 To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
  <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
@@ -82,14 +83,14 @@ To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
 CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
  "jasowang@redhat.com" <jasowang@redhat.com>, "pbonzini@redhat.com"
  <pbonzini@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>
-Subject: RE: [PATCH v5 1/3] qdev: Add a granule_mode property
-Thread-Topic: [PATCH v5 1/3] qdev: Add a granule_mode property
-Thread-Index: AQHaaN+fnPw0riq400SvQFoF7qgWb7EdjYvg
-Date: Tue, 27 Feb 2024 03:48:09 +0000
-Message-ID: <SJ0PR11MB67449084F5047BDBA81D4AF992592@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v5 2/3] virtio-iommu: Add a granule property
+Thread-Topic: [PATCH v5 2/3] virtio-iommu: Add a granule property
+Thread-Index: AQHaaN+i2XRdxKkYaEWBAabKFLLHpbEdjdLA
+Date: Tue, 27 Feb 2024 03:48:40 +0000
+Message-ID: <SJ0PR11MB6744600A58269DCDA7FFB0E492592@SJ0PR11MB6744.namprd11.prod.outlook.com>
 References: <20240226181337.24148-1-eric.auger@redhat.com>
- <20240226181337.24148-2-eric.auger@redhat.com>
-In-Reply-To: <20240226181337.24148-2-eric.auger@redhat.com>
+ <20240226181337.24148-3-eric.auger@redhat.com>
+In-Reply-To: <20240226181337.24148-3-eric.auger@redhat.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -97,66 +98,57 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|IA0PR11MB7749:EE_
-x-ms-office365-filtering-correlation-id: d83e45cd-87c0-4e90-574b-08dc3746e9df
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SJ0PR11MB5087:EE_
+x-ms-office365-filtering-correlation-id: 51b3107e-f8d2-4d11-5b36-08dc3746fcc7
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ieXCcMhjSM0d4UoXz2klsdy/7aO3h0YXvzohlcE606Ys7UABAzXPtgwJzG4ieGfu3uZ7enHo3DVWTeXDBz5zAWjCxABGDYLq1oIaeOv6E6mAfg8VrZLsejdJ8XSsJ+AUUg6ygWVzhKDqB2OjikJ+v1NO4bfapoy1RCt0W4ZdghClei5XYHWbHFcA4FN0dL23oe9NE3FAz4Trqak3aOIJ1y4xb3CTQiizdmpoLxq4+Rqx+kXrSf5AYd3wwgihhQ0O5OnQgJE75TbhjFuCxb1KqXx4g+3Nyor2h2M7OxAlc1tKnaFw4/OkbbSBtJHq+gN4At/h6TXsDcubfKB6u4gKaj5IlBsWWwIGX5LTXwIKe9kZsdDW/BUpHeyW8+mmHCyB5rzZlNyQQvQcPQ4cDQ9vJ7EU1NAp/LVgjtGdnhOwG9wPpNvR4Hz5SOtu+JhaOOZA9Toxdw6hvE4Aeq9E4wOac91KO31Mc+AqmhmGZCaggpIEQq7NXlvzIYyBnbyc37MdWFzVINiuZvZN1kftuwy8yL6QJJ/P6B5MWzIE5H7IOdNuyKUucVTLkOcv+TaCIN82YEloOoSn5gK5nZc1/MRKoNfwi0KY8rcj7zrMfCnauYqWddmrtBujxN/ubEyUTgOStna54FPjsVqdMP7eeO5dzKid0VV98VtW8Fx8vop1W/3dMwhI1Dr3YMt0uacfoQWA3Vc5UxPe8GAQ/qVRcH8M6hTd0VvGdk/6eC6gYnWg+ww=
+x-microsoft-antispam-message-info: 9nzAZZhIIcUBmhVsOJ/9jEhHTyKW54XzDypYGPrGRDgEtCxMVd+4P0WR7xBLxsoOq0YiRSF/Io9MRqIrZgqH7KvqP24ZJSIM0unPF8QHufdLRiQClXj4GwNmIY8szAwLdb7BUFRUvUftTOs8rU6e3CjGO0ASODFN37IMv2HcNoIxlcvkw4ZpNra86oEkUv9pftB0rbe0OU5ZOARXIC6Mj8oMrrT/Uqy9EBgQcFRuyPZxeW0WMnB6Mtjyb5C+HCZ1y1SZnduy2pq3vNpgmev3oBYoBn3A9jjQvs8kPM3zIHkPb00r9x1ElsaCbiPZaovIw/ktFcEX4sw8jMAu9Fbb6zDqZ0dJd2Ktcd8S7AxvoMTAOjir0CgouU7pwEGw4sBflgKswU1l/SjT+6rR8X70HN6CJ/1hI9BxpdiSrvrQN7PR17oHFTAfvLikDcIowCDodLE/Ccr1ntV0R2BMS+A8yZv5kt88mVsAeqXpO0A4gprQTcmKLhsSTjp4cgyGLw363HsRk5cPXoU1OJGCtaaovCdUmKzbDoJsfFXQ/T4eTl3NZJpPmPtitCBUG/Htrn6sIDDZqVQTVoj6vRTFrPirr71Q1Xc1EnhalbzUlVf9AVP0Hp1xoB6U4i2wgV9Q6TLDgS8ud3dZDcfMBtcXBrjnUfFrhZybid8Iy4uTs2F0JihvLnncHitJaCNlg7RuUHxzXYtaoD0r5v21/TqD8wG0eZ17HczqKGatrXFstytz76Q=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230031)(38070700009); DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SS9LVUFVTklMM2N3YVZvTno4S09SWDQzWUhvRmV1azZqSlE2bEJCQ0ozOEZi?=
- =?utf-8?B?NStVUWdsU1Vzdmo4TnZGak1ONVZYNGVFSXc1UFdRZ2NadnZ1Mk9yanVZNnpv?=
- =?utf-8?B?dGpHU1YwU3FRekE1bk5CTHNBckx6N1QzZjhDL1l1Mi9Vd0doSFdIZmczRDEx?=
- =?utf-8?B?Q3BPWkNFVS8weHVnTkhXZzZZdzJCbzI2VXgvZitjei9JQTlLZnZhU2JIRDlR?=
- =?utf-8?B?OW9ENXNpMkM5ZFVrUXRBUmJDRTRpOXFVNUt6UVFUTnFMc0JOSmZEeWhiN3NQ?=
- =?utf-8?B?b3lpYnRCVDlxdVc3TDM2L1FIVWVKRXJPaHk0dVU4VW1RMVJxMFErN3kwZmJI?=
- =?utf-8?B?b0tQU3dNY014MENQUVhZZjcvVnZabUNIVE9PbHZyZVRiR1dVSzlJUVg1NkJX?=
- =?utf-8?B?TndCMWpJR0p3N3F0OUtOdHlrWUhncW9qL1piUmwwQ2RFU2pBOUxnZU5OWWhG?=
- =?utf-8?B?UkJFeWRWSkxsdTQxSXNZTVVLYmNVckQ2cDl0bHdMRXN2cXBSRnFVZ0gzbTA1?=
- =?utf-8?B?RUJqY1hncGlVekpvWDIxakVnL1VHa3gxVjM5ajg3WEJDd0pHaWl0NnQ3eG55?=
- =?utf-8?B?ZEViUWZON3RXMkJTV3FEQ1Y2dG1Sa0lROFcvWjJRVVhPRWRydmR0NDVEekxx?=
- =?utf-8?B?T1gxQmdkNW5kV01sNXdTYUh1SzVFSWtsMTQ5b1NpSTNyMWt3Rk1XQUxIQUw1?=
- =?utf-8?B?b3FJenAyYlRUOFVFaGNyYkVQVWxCNEdaaWhOSWVlaDJxckRmN1NabndZbzRB?=
- =?utf-8?B?T2c3ZTQ2VEY4YUVuS2VCekR2QWFzTlo5Lyt1N04vd3R5VFAwUmsrS0ZxZDk5?=
- =?utf-8?B?dkJpcWtJNTNJOXh6OHRZL3RaSVFudTZieHIyRzVTWjQ1cDJYL09obk56d3VP?=
- =?utf-8?B?UnduUHBaQjJLbzZwVWVlTzhyVEo3SXRjZEpLOXhaQ0FlcFdyMGVnUXptQkdm?=
- =?utf-8?B?YXpBdUNCcGY3UmkzTndIYlY0SzFHY2tDazdJMXRmdlhYYXJXc1cwTWE3UFVH?=
- =?utf-8?B?OXlmb1IvbThxaHduOE15Zk55RzhqY1FySU5LaCtZeVY1TDR0S1FtK3hGaDd0?=
- =?utf-8?B?M24xZEVnQnI2NkczL0JtcHRoWHpGOHhmSFkvaUlYRUtRZE5TRncrQmh4ZHNn?=
- =?utf-8?B?Y2tXKzBOVzZFcmk2TFRyVzJKOHZwY2NNRUNKaGhLNTZjWVZ5dXZCdFpYblFQ?=
- =?utf-8?B?SFlJSld3RVBzd2NyNDFRVkV2U1k1Ry9KTnpFVnQ2Y3h3Z0pLZkNoa1VSTXF3?=
- =?utf-8?B?citMZTdUVHptNnZuS05BOTJCQzkzWE9xNG9ibXhHQlZZMmsyZmFtbktBNjQv?=
- =?utf-8?B?Ymd5dC9UajBqdkZidTVxSDkvcWRpZ3c3WEZJY2w5OFNYamx4enVnT281TlNI?=
- =?utf-8?B?UmNKcjRlckdRaWEwQldZMzhrekVvY1Z0d1FOVXd4ajRFVEdUYVowRnZDeWE1?=
- =?utf-8?B?RCt6YVBLK0Y2c29hTy94RWcvTTBPUWIrRkhnTGVwOEpQOUgyWkMzdkVCR3o5?=
- =?utf-8?B?U1lnZ2JpVkFncWorYitPUnNnd0FIcUhXVGQ0NTliRmNXcWRUa2IrckhVM2tJ?=
- =?utf-8?B?TnlyKzJpWmRFcWJLTU9MTllmcGZMZjh1Z1ZuMStnMU43bEZ0ZURnQVM0QmRo?=
- =?utf-8?B?N29jNGZUQnMxdUoveFFINDRBTjJDNThRMUFSK3dpa2dzS3lxL3puUm9Pb0tG?=
- =?utf-8?B?MWQwek5ZU2JRSVNJa1JUUzRPbDhIeTArTEh2WGFOQjNoZWpGWGp6QXF1SkpQ?=
- =?utf-8?B?MjBrT0VpMG5yQmRQOXBOOXNQTm9Yb1gwZmtmb2hVOU82OVgxZHVuUDZxQUNO?=
- =?utf-8?B?WWdqcFVjaWdjV1BaMUk0ZEVrbHZHTEhzckRGWXo2WEJISDJKNlBMZUdLeFJr?=
- =?utf-8?B?a1E4ckZtL0NGeUhGR0JPZTFCRGNMOE5kTExXQU0zZ2Y3cUNKSmsxOHZNU1hD?=
- =?utf-8?B?Y2VmQnQzMW9qWXpzL1JIK2s1dVJka3ZudHNqc3locUdXK2h0cjRaakQzWm9Z?=
- =?utf-8?B?aHJ0a3MybklJS2VERzk2OU15M1hCMFZJSjVaWUsyT09BOVVmTmIvRGFSd1No?=
- =?utf-8?B?WmE1UVJBaWFCM3Q0aWNWd25hbnh3b0pMTE9XSGtveEhHLytZTk9QMmFRNmQy?=
- =?utf-8?Q?SdHSZPQPJfad7zXR8IxHNJ5CS?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?3g+vXLgeHTATLO4Zn8oDMW4U6AqXkqptP2Zi6hBkCXjRRzaP/NxMfRwd9jxp?=
+ =?us-ascii?Q?gtO6zaMuS+yDIfjAGMxy3vXhL8vgSWp+MJlyFx7d7YdrJOJd8B3fLuAy+QHe?=
+ =?us-ascii?Q?drD7iPqHz40PFNlU7qFNouW08hCALMJLv94i+MN93VgK1AA/u+IDmgU5wEjL?=
+ =?us-ascii?Q?ZE8KhTruyBGCwPjdQD/qReUcHlblm5cxHjES27y/g7Ha8OWsb7Jc+Di2b0tS?=
+ =?us-ascii?Q?3gX6iyQ798IAvsaeVvVHy8FuvSCG9q+IH3vYxvh4QhLm4AKV2ijLTFeivLQg?=
+ =?us-ascii?Q?D16tBANjnRIw5e4sb2VjwMcLueM1mHUuoqu49ezESsxXLxSf6Zrha8KOOk0r?=
+ =?us-ascii?Q?qV6/YqwzEuBUPtqW07NiEoYMTUWVhwXqZkCp6sCLq9f2Wtl+rMI1szeSou1u?=
+ =?us-ascii?Q?1glHWYDaT4APG6EvDGOFwu/XuDZXn46SEXH2VzDZprb9/9JoBAKOPJvN+Vl2?=
+ =?us-ascii?Q?ADJaGAim/vwaRdYm4KdMBzfKJJNWVgasmXa7pj7rHP3ve9cxcvepup1N4J2W?=
+ =?us-ascii?Q?4w0Ei7nI5eL69zSSs/H4sZQXbE4j3FOdamVAEBTJ52WGuZcJC8hhN2Cv0hRr?=
+ =?us-ascii?Q?sam0WzyhdxqdxSZKBG7UDJjM395DOwIaVTA0rWGzQQohRtnd7BsSYO866CAG?=
+ =?us-ascii?Q?4oKMs0V+vsnoQdoMwOr63UPR9w9M4IjapMwtQV+4KXGlrhxR4uIKGlMRipOm?=
+ =?us-ascii?Q?7VBWI/q8a8SW5qv0DMbS28BC7Jmi6MbOz1rZwayFCO7N2zCI1rhYH/cU+0Z6?=
+ =?us-ascii?Q?J7xwsbTZLkjZSDx6CQAJKWuZQu7emAe9Cy6cnz+L0nU4dIflNjQiU5hrX/G9?=
+ =?us-ascii?Q?RSiOTyZYoTMt0Vp+OvHcWXo/dQScAbT3+/690x4m+4GbWFJnRw+FI1jzYcOg?=
+ =?us-ascii?Q?9PQDYLjS0zKJ5nPsH62Y6fe+xkcEs3afWhjQN7Dzq2CrEk7DtWMYOdw3CspT?=
+ =?us-ascii?Q?EI7OmJhXJ9frDLExKNJRNjlzU+JgZinjzD2x482nUwRuaXpoQKIUphRVu40Q?=
+ =?us-ascii?Q?rIwoOqbvUP2CWwh8x6NSqNcyogGel0+so+8NfemhlLGM0o+fSe2UBgv2XOkV?=
+ =?us-ascii?Q?luHeLsThQwb8IXPIjyPhKFkBafkF4FzP5/eK9sIqrEkKLruu7dQdqctwJOWe?=
+ =?us-ascii?Q?DG5qxZqc4j5FIJh8+p0F90Vc2lcczIA81Z/Y51pjsZkPk5zpHygNmQREH74G?=
+ =?us-ascii?Q?qlnXHWOrhkDcOWUdSxJwfFPsd16FGATQXv4vy5SYF5wTpibD4ks64ksQi4x0?=
+ =?us-ascii?Q?peQGXJ+UFwCmJwO+nRenBVFIDhRVhjWjbmXKSNkQU/fmozff0mMwcp51tCZQ?=
+ =?us-ascii?Q?6jC/UkP3R8V3NordPSHHjG6KnKcZgnA187zfNidlg/o6BHs+BSKGSR5xfVep?=
+ =?us-ascii?Q?iRjCrUv9o5Tk3RttjP8gfF22KQamTukrkW5FRBp42ZGR+6S/jeGwORoGlNMa?=
+ =?us-ascii?Q?tWVrsR4wrs510EI42DwlMTYte9sQJjWxvtZ6basaQUc7U/VBVNZMULSlIlwN?=
+ =?us-ascii?Q?GXC/QAFR3+MgSz8SMfgIY3JXJ3lOW/dFn2M9xXh0073BYpKtqlxCXk4fDV12?=
+ =?us-ascii?Q?9iO+hwJoz6UTdcaIhUcIbHFnweIwxq1wKWNnXRBd?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d83e45cd-87c0-4e90-574b-08dc3746e9df
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Feb 2024 03:48:09.0501 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51b3107e-f8d2-4d11-5b36-08dc3746fcc7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Feb 2024 03:48:40.7432 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 9QUHjWGYo2r5gi5MFYq8M8E0Ou1JX85/bBqHa6NVXm47s9zLe3jCnL//Z5BewL0VpEVx11Nz+sdaQgWsSg3k690hSeuGFBczTAmlExbU/X8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7749
+X-MS-Exchange-CrossTenant-userprincipalname: DbKCHZiixrYYlnAMqcsVPvk/bf+jNOg7VY4ifw8NM3n+BGPWtS4+LGVNZ9koQDKmQXILa5UloF5dW3EvIkLH0nMoTRRrXl46WrnhEoQhBTc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5087
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.15;
+Received-SPF: pass client-ip=198.175.65.15;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -180,75 +172,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEVyaWMgQXVnZXIgPGVyaWMu
-YXVnZXJAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBbUEFUQ0ggdjUgMS8zXSBxZGV2OiBBZGQgYSBn
-cmFudWxlX21vZGUgcHJvcGVydHkNCj4NCj5JbnRyb2R1Y2UgYSBuZXcgZW51bSB0eXBlIHByb3Bl
-cnR5IGFsbG93aW5nIHRvIHNldCBhbg0KPklPTU1VIGdyYW51bGUuIFZhbHVlcyBhcmUgNGssIDhr
-LCAxNmssIDY0ayBhbmQgaG9zdC4NCj5UaGlzIGxhdHRlciBpbmRpY2F0ZXMgdGhlIHZJT01NVSBn
-cmFudWxlIHdpbGwgbWF0Y2gNCj50aGUgaG9zdCBwYWdlIHNpemUuDQo+DQo+QSBzdWJzZXF1ZW50
-IHBhdGNoIHdpbGwgYWRkIHN1Y2ggYSBwcm9wZXJ0eSB0byB0aGUNCj52aXJ0aW8taW9tbXUgZGV2
-aWNlLg0KPg0KPlNpZ25lZC1vZmYtYnk6IEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNv
-bT4NCj5TaWduZWQtb2ZmLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFy
-by5vcmc+DQo+DQo+LS0tDQo+djQgLT4gdjUNCj4tIHJlbW92ZSBjb2RlIHRoYXQgY2FuIGJlIGF1
-dG9tYXRpY2FsbHkgZ2VuZXJhdGVkDQo+ICBhbmQgYWRkIHRoZSBuZXcgZW51bSBpbiBxYXBpL3Zp
-cnRpby5qc29uIChQaGlsaXBwZSkuDQo+ICBBZGRlZCBQaGlsZCdzIFNPQi4gbG93IGNhc2UgbmVl
-ZHMgdG8gYmUgdXNlZCBkdWUgdG8NCj4gIHRoZSBKYXNvbiBnZW5lcmF0aW9uLg0KPg0KPnYzIC0+
-IHY0Og0KPi0gQWRkIDhLDQo+LS0tDQo+IHFhcGkvdmlydGlvLmpzb24gICAgICAgICAgICAgICAg
-ICAgIHwgMTggKysrKysrKysrKysrKysrKysrDQo+IGluY2x1ZGUvaHcvcWRldi1wcm9wZXJ0aWVz
-LXN5c3RlbS5oIHwgIDMgKysrDQo+IGh3L2NvcmUvcWRldi1wcm9wZXJ0aWVzLXN5c3RlbS5jICAg
-IHwgMTUgKysrKysrKysrKysrKysrDQo+IDMgZmlsZXMgY2hhbmdlZCwgMzYgaW5zZXJ0aW9ucygr
-KQ0KPg0KPmRpZmYgLS1naXQgYS9xYXBpL3ZpcnRpby5qc29uIGIvcWFwaS92aXJ0aW8uanNvbg0K
-PmluZGV4IGE3OTAxM2ZlODkuLjk1NzQ1ZmRmZDcgMTAwNjQ0DQo+LS0tIGEvcWFwaS92aXJ0aW8u
-anNvbg0KPisrKyBiL3FhcGkvdmlydGlvLmpzb24NCj5AQCAtOTU3LDMgKzk1NywyMSBAQA0KPg0K
-PiB7ICdzdHJ1Y3QnOiAnRHVtbXlWaXJ0aW9Gb3JjZUFycmF5cycsDQo+ICAgJ2RhdGEnOiB7ICd1
-bnVzZWQtaW90aHJlYWQtdnEtbWFwcGluZyc6IFsnSU9UaHJlYWRWaXJ0UXVldWVNYXBwaW5nJ10g
-fSB9DQo+Kw0KPisjIw0KPisjIEBHcmFudWxlTW9kZToNCj4rIw0KPisjIEA0azogZ3JhbnVsZSBw
-YWdlIHNpemUgb2YgNEtpQg0KPisjDQo+KyMgQDhrOiBncmFudWxlIHBhZ2Ugc2l6ZSBvZiA4S2lC
-DQo+KyMNCj4rIyBAMTZrOiBncmFudWxlIHBhZ2Ugc2l6ZSBvZiAxNktpQg0KPisjDQo+KyMgQDY0
-azogZ3JhbnVsZSBwYWdlIHNpemUgb2YgNjRLaUINCj4rIw0KPisjIEBob3N0OiBncmFudWxlIG1h
-dGNoZXMgdGhlIGhvc3QgcGFnZSBzaXplDQo+KyMNCj4rIyBTaW5jZTogOS4wDQo+KyMjDQo+K3sg
-J2VudW0nOiAnR3JhbnVsZU1vZGUnLA0KPisgICdkYXRhJzogWyAnNGsnLCAnOGsnLCAnMTZrJywg
-JzY0aycsICdob3N0JyBdIH0NCj5kaWZmIC0tZ2l0IGEvaW5jbHVkZS9ody9xZGV2LXByb3BlcnRp
-ZXMtc3lzdGVtLmggYi9pbmNsdWRlL2h3L3FkZXYtDQo+cHJvcGVydGllcy1zeXN0ZW0uaA0KPmlu
-ZGV4IDA2YzM1OWMxOTAuLjYyNmJlODdkZDMgMTAwNjQ0DQo+LS0tIGEvaW5jbHVkZS9ody9xZGV2
-LXByb3BlcnRpZXMtc3lzdGVtLmgNCj4rKysgYi9pbmNsdWRlL2h3L3FkZXYtcHJvcGVydGllcy1z
-eXN0ZW0uaA0KPkBAIC04LDYgKzgsNyBAQCBleHRlcm4gY29uc3QgUHJvcGVydHlJbmZvIHFkZXZf
-cHJvcF9tYWNhZGRyOw0KPiBleHRlcm4gY29uc3QgUHJvcGVydHlJbmZvIHFkZXZfcHJvcF9yZXNl
-cnZlZF9yZWdpb247DQo+IGV4dGVybiBjb25zdCBQcm9wZXJ0eUluZm8gcWRldl9wcm9wX211bHRp
-ZmRfY29tcHJlc3Npb247DQo+IGV4dGVybiBjb25zdCBQcm9wZXJ0eUluZm8gcWRldl9wcm9wX21p
-Z19tb2RlOw0KPitleHRlcm4gY29uc3QgUHJvcGVydHlJbmZvIHFkZXZfcHJvcF9ncmFudWxlX21v
-ZGU7DQo+IGV4dGVybiBjb25zdCBQcm9wZXJ0eUluZm8gcWRldl9wcm9wX2xvc3R0aWNrcG9saWN5
-Ow0KPiBleHRlcm4gY29uc3QgUHJvcGVydHlJbmZvIHFkZXZfcHJvcF9ibG9ja2Rldl9vbl9lcnJv
-cjsNCj4gZXh0ZXJuIGNvbnN0IFByb3BlcnR5SW5mbyBxZGV2X3Byb3BfYmlvc19jaHNfdHJhbnM7
-DQo+QEAgLTQ3LDYgKzQ4LDggQEAgZXh0ZXJuIGNvbnN0IFByb3BlcnR5SW5mbw0KPnFkZXZfcHJv
-cF9pb3RocmVhZF92cV9tYXBwaW5nX2xpc3Q7DQo+ICNkZWZpbmUgREVGSU5FX1BST1BfTUlHX01P
-REUoX24sIF9zLCBfZiwgX2QpIFwNCj4gICAgIERFRklORV9QUk9QX1NJR05FRChfbiwgX3MsIF9m
-LCBfZCwgcWRldl9wcm9wX21pZ19tb2RlLCBcDQo+ICAgICAgICAgICAgICAgICAgICAgICAgTWln
-TW9kZSkNCj4rI2RlZmluZSBERUZJTkVfUFJPUF9HUkFOVUxFX01PREUoX24sIF9zLCBfZiwgX2Qp
-IFwNCj4rICAgIERFRklORV9QUk9QX1NJR05FRChfbiwgX3MsIF9mLCBfZCwgcWRldl9wcm9wX2dy
-YW51bGVfbW9kZSwNCj5HcmFudWxlTW9kZSkNCj4gI2RlZmluZSBERUZJTkVfUFJPUF9MT1NUVElD
-S1BPTElDWShfbiwgX3MsIF9mLCBfZCkgXA0KPiAgICAgREVGSU5FX1BST1BfU0lHTkVEKF9uLCBf
-cywgX2YsIF9kLCBxZGV2X3Byb3BfbG9zdHRpY2twb2xpY3ksIFwNCj4gICAgICAgICAgICAgICAg
-ICAgICAgICAgTG9zdFRpY2tQb2xpY3kpDQo+ZGlmZiAtLWdpdCBhL2h3L2NvcmUvcWRldi1wcm9w
-ZXJ0aWVzLXN5c3RlbS5jIGIvaHcvY29yZS9xZGV2LXByb3BlcnRpZXMtDQo+c3lzdGVtLmMNCj5p
-bmRleCAxYTM5NjUyMWQ1Li42ODVjZmZkMDY0IDEwMDY0NA0KPi0tLSBhL2h3L2NvcmUvcWRldi1w
-cm9wZXJ0aWVzLXN5c3RlbS5jDQo+KysrIGIvaHcvY29yZS9xZGV2LXByb3BlcnRpZXMtc3lzdGVt
-LmMNCj5AQCAtMzQsNiArMzQsNyBAQA0KPiAjaW5jbHVkZSAibmV0L25ldC5oIg0KPiAjaW5jbHVk
-ZSAiaHcvcGNpL3BjaS5oIg0KPiAjaW5jbHVkZSAiaHcvcGNpL3BjaWUuaCINCj4rI2luY2x1ZGUg
-Imh3L3ZpcnRpby92aXJ0aW8taW9tbXUuaCINCg0KVGhpcyBpcyB1bm5lY2Vzc2FyeSwgb3RoZXJ3
-aXNlLA0KDQpSZXZpZXdlZC1ieTogWmhlbnpob25nIER1YW4gPHpoZW56aG9uZy5kdWFuQGludGVs
-LmNvbT4NCg0KVGhhbmtzDQpaaGVuemhvbmcNCg0KPiAjaW5jbHVkZSAiaHcvaTM4Ni94ODYuaCIN
-Cj4gI2luY2x1ZGUgInV0aWwvYmxvY2staGVscGVycy5oIg0KPg0KPkBAIC02NzksNiArNjgwLDIw
-IEBAIGNvbnN0IFByb3BlcnR5SW5mbyBxZGV2X3Byb3BfbWlnX21vZGUgPSB7DQo+ICAgICAuc2V0
-X2RlZmF1bHRfdmFsdWUgPSBxZGV2X3Byb3BpbmZvX3NldF9kZWZhdWx0X3ZhbHVlX2VudW0sDQo+
-IH07DQo+DQo+Ky8qIC0tLSBHcmFudWxlTW9kZSAtLS0gKi8NCj4rDQo+K1FFTVVfQlVJTERfQlVH
-X09OKHNpemVvZihHcmFudWxlTW9kZSkgIT0gc2l6ZW9mKGludCkpOw0KPisNCj4rY29uc3QgUHJv
-cGVydHlJbmZvIHFkZXZfcHJvcF9ncmFudWxlX21vZGUgPSB7DQo+KyAgICAubmFtZSA9ICJHcmFu
-dWxlTW9kZSIsDQo+KyAgICAuZGVzY3JpcHRpb24gPSAiZ3JhbnVsZV9tb2RlIHZhbHVlcywgIg0K
-PisgICAgICAgICAgICAgICAgICAgIjRrLCA4aywgMTZrLCA2NGssIGhvc3QiLA0KPisgICAgLmVu
-dW1fdGFibGUgPSAmR3JhbnVsZU1vZGVfbG9va3VwLA0KPisgICAgLmdldCA9IHFkZXZfcHJvcGlu
-Zm9fZ2V0X2VudW0sDQo+KyAgICAuc2V0ID0gcWRldl9wcm9waW5mb19zZXRfZW51bSwNCj4rICAg
-IC5zZXRfZGVmYXVsdF92YWx1ZSA9IHFkZXZfcHJvcGluZm9fc2V0X2RlZmF1bHRfdmFsdWVfZW51
-bSwNCj4rfTsNCj4rDQo+IC8qIC0tLSBSZXNlcnZlZCBSZWdpb24gLS0tICovDQo+DQo+IC8qDQo+
-LS0NCj4yLjQxLjANCg0K
+
+
+>-----Original Message-----
+>From: Eric Auger <eric.auger@redhat.com>
+>Subject: [PATCH v5 2/3] virtio-iommu: Add a granule property
+>
+>This allows to choose which granule will be used by
+>default by the virtio-iommu. Current page size mask
+>default is qemu_target_page_mask so this translates
+>into a 4K granule.
+>
+>Signed-off-by: Eric Auger <eric.auger@redhat.com>
+
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+
+Thanks
+Zhenzhong
+
+>
+>---
+>v4 -> v5:
+>- use -(n * KiB) (Phild)
+>
+>v3 -> v4:
+>- granule_mode introduction moved to that patch
+>---
+> include/hw/virtio/virtio-iommu.h |  2 ++
+> hw/virtio/virtio-iommu.c         | 28 +++++++++++++++++++++++++---
+> qemu-options.hx                  |  3 +++
+> 3 files changed, 30 insertions(+), 3 deletions(-)
+>
+>diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-
+>iommu.h
+>index 5fbe4677c2..f2785f7997 100644
+>--- a/include/hw/virtio/virtio-iommu.h
+>+++ b/include/hw/virtio/virtio-iommu.h
+>@@ -24,6 +24,7 @@
+> #include "hw/virtio/virtio.h"
+> #include "hw/pci/pci.h"
+> #include "qom/object.h"
+>+#include "qapi/qapi-types-virtio.h"
+>
+> #define TYPE_VIRTIO_IOMMU "virtio-iommu-device"
+> #define TYPE_VIRTIO_IOMMU_PCI "virtio-iommu-pci"
+>@@ -67,6 +68,7 @@ struct VirtIOIOMMU {
+>     Notifier machine_done;
+>     bool granule_frozen;
+>     uint8_t aw_bits;
+>+    GranuleMode granule_mode;
+> };
+>
+> #endif
+>diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+>index 2ec5ef3cd1..33e0520bc8 100644
+>--- a/hw/virtio/virtio-iommu.c
+>+++ b/hw/virtio/virtio-iommu.c
+>@@ -29,6 +29,7 @@
+> #include "sysemu/reset.h"
+> #include "sysemu/sysemu.h"
+> #include "qemu/reserved-region.h"
+>+#include "qemu/units.h"
+> #include "qapi/error.h"
+> #include "qemu/error-report.h"
+> #include "trace.h"
+>@@ -1115,8 +1116,8 @@ static int
+>virtio_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu_mr,
+> }
+>
+> /*
+>- * The default mask (TARGET_PAGE_MASK) is the smallest supported guest
+>granule,
+>- * for example 0xfffffffffffff000. When an assigned device has page size
+>+ * The default mask depends on the "granule" property. For example, with
+>+ * 4K granule, it is -(4 * KiB). When an assigned device has page size
+>  * restrictions due to the hardware IOMMU configuration, apply this
+>restriction
+>  * to the mask.
+>  */
+>@@ -1313,7 +1314,26 @@ static void
+>virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+>      * in vfio realize
+>      */
+>     s->config.bypass =3D s->boot_bypass;
+>-    s->config.page_size_mask =3D qemu_target_page_mask();
+>+
+>+    switch (s->granule_mode) {
+>+    case GRANULE_MODE_4K:
+>+        s->config.page_size_mask =3D -(4 * KiB);
+>+        break;
+>+    case GRANULE_MODE_8K:
+>+        s->config.page_size_mask =3D -(8 * KiB);
+>+        break;
+>+    case GRANULE_MODE_16K:
+>+        s->config.page_size_mask =3D -(16 * KiB);
+>+        break;
+>+    case GRANULE_MODE_64K:
+>+        s->config.page_size_mask =3D -(64 * KiB);
+>+        break;
+>+    case GRANULE_MODE_HOST:
+>+        s->config.page_size_mask =3D qemu_real_host_page_mask();
+>+        break;
+>+    default:
+>+        error_setg(errp, "Unsupported granule mode");
+>+    }
+>     if (s->aw_bits < 32 || s->aw_bits > 64) {
+>         error_setg(errp, "aw-bits must be within [32,64]");
+>     }
+>@@ -1527,6 +1547,8 @@ static Property virtio_iommu_properties[] =3D {
+>                      TYPE_PCI_BUS, PCIBus *),
+>     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+>     DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
+>+    DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
+>+                             GRANULE_MODE_4K),
+>     DEFINE_PROP_END_OF_LIST(),
+> };
+>
+>diff --git a/qemu-options.hx b/qemu-options.hx
+>index 3b670758b0..c7b43b67d5 100644
+>--- a/qemu-options.hx
+>+++ b/qemu-options.hx
+>@@ -1179,6 +1179,9 @@ SRST
+>     ``aw-bits=3Dval`` (val between 32 and 64, default depends on machine)
+>         This decides the address width of IOVA address space. It defaults
+>         to 39 bits on q35 machines and 48 bits on ARM virt machines.
+>+    ``granule=3Dval`` (possible values are 4K, 8K, 16K, 64K and host)
+>+        This decides the default granule to be be exposed by the
+>+        virtio-iommu. If host, the granule matches the host page size.
+>
+> ERST
+>
+>--
+>2.41.0
+
 
