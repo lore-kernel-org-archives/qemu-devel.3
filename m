@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D17C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E39C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf5sD-0006tI-1a; Tue, 27 Feb 2024 17:24:29 -0500
+	id 1rf5sD-0006tZ-ER; Tue, 27 Feb 2024 17:24:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3FGHeZQcKCoUtxvuxmrpxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--komlodi.bounces.google.com>)
- id 1rf5sB-0006sn-Cb
+ <3E2HeZQcKCoQswutwlqowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--komlodi.bounces.google.com>)
+ id 1rf5sB-0006sl-Aj
  for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:27 -0500
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3FGHeZQcKCoUtxvuxmrpxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--komlodi.bounces.google.com>)
- id 1rf5s7-0008Hw-4M
+ <3E2HeZQcKCoQswutwlqowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--komlodi.bounces.google.com>)
+ id 1rf5s8-0008Hq-55
  for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:27 -0500
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-5c66a69ec8eso3696651a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 14:24:22 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2992c1d4e7fso2091870a91.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 14:24:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1709072661; x=1709677461; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=+xSYC9woE8ejU2ZMzJv9wgrGS4seNQMp4/9INbjIsDE=;
- b=34sq/53O+T8R2ea8sr7D5zNezT7xqN5PqIxcLHDNhMwn/1Va71noEvGUOjJc3TtMwV
- 4EUQ0/Kvk34xQ93pOXakuFRFAJIG8+bbtjxIDNLd9gz+T8OKVX/zqE2MyI9O80dxeOuX
- gMQyfNDHPoIGOVE/AhwDMOeHoggQOdIeIK2bsZuOj0dLMDaYWJuK4lPhWkZH5h0TtiNz
- eom0Hafi5y15BAeQEnbKJ5xGHvRcRhjIhgvU+KyB/HnBr9djW4lyPDP6egTF7K5X2S3k
- awW4wnFEe5yAZumgFJBznhom/ss3lEpa/eQvtfe5vByOAG4hR8N+wg+fGy0CUMl4NrhF
- 4IYQ==
+ d=google.com; s=20230601; t=1709072660; x=1709677460; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=JXG4tZrCKCTQ/UKh/RNLGqEovZ4jw5ABcy4v4l/utkc=;
+ b=fzWgHMtBPsbTq7/2/4yDiGIIzk2pHW4F/UUsUNmaIjSqPuS9PaxdmhEbt4y3vQjm+C
+ gjLbHYi3p6GMn6QI0PWhIzxAyyuzgDe/4IGnu+eiVL3XH5nk764UOVu3CYDFBRGm2U0o
+ BAhNFHdjOOp8IiBhp5Nvzv8AhCw+GhMWnd7oac2Mp6o1C+9GgbCWpkeMkCuvZrkZjjLg
+ mNtLtlb493rxz/2Nt+a+Xv+sGcwMqNmrlMDX3Y7vDPOTRregTXPqY6jvuzLuORkzcb9L
+ e4j4ltrHm2d29T1wlWBArqugyhZAzdNDa3+0t0PAbaZbgsGIzBI/nYqGgMJC0oR8w1l0
+ RExA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709072661; x=1709677461;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+xSYC9woE8ejU2ZMzJv9wgrGS4seNQMp4/9INbjIsDE=;
- b=o/zW02DTaQe+JZxamPhiIxjZH5lH3IlxnhV370nyGhq4ojU9MTW/mPyv3OcHHRMOxr
- /+aY4AaYqoh8K80oqUdDeb/xYKcf4VB+BG3v3QRB2q/njQqy5QQNYh8+nclWQPG4qSw6
- bvyMxBu/DaqywkUF0Nvj5TjhyRBGm3LcCGl0N65Mp/XbswJ6UPv6jb0Ob567ems24aCN
- zlaQBc1rAcWs7mY3Y+7ucS71OyiuegZfuRlKX1+A3aU34SrmRjguJ+uT2CCJrkSQKknF
- RjUw7TR8X65gmHbwMJT8BV5/qVMWwR7qAkzp4dx/PXoFEjkaRc5lv9MdXlR8Q98v/nuR
- QXQA==
-X-Gm-Message-State: AOJu0YwOAwpjS32uX6OJgSTAyGkLBQ5EiZqVdPkeVFwVLNUTP6aR7NNm
- sVk1Y7GZekbkq9ePMFRbECuwAbWmrWdA3y7bFXipW2+oEgOAKjuxbu9UomrTrqG/URf/NSwdxrq
- zc+GCtkRCPME8DPMjhYObAMtLld/Kz2JYfd13qu4ovc5IMyztBkr+0rkVD4G4wiwj9yZF+3Me6+
- UDMQLXrNYfixA1oX3JzW1nS/zE7xN8+KQJYbUk
-X-Google-Smtp-Source: AGHT+IHsEXKg30e7rEt6uzwaJM+AGs9+9OuSrjMAijwMmYmczmtWBV0xD9Cmg+Y0rhupt3k7vwf5BVqU9ITM
+ d=1e100.net; s=20230601; t=1709072660; x=1709677460;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JXG4tZrCKCTQ/UKh/RNLGqEovZ4jw5ABcy4v4l/utkc=;
+ b=KivqqKy5UcYWhM4tl4Hi4pouCH3Y5xbAdPbpThokBh2m/1wu9BlZC0FBnCWnm28jyV
+ xx+oHJDggCv2sJqw5YX7eaVu2D1uHFT6549OCqUEe7n39AerNQteBTFSRLg31NCpQ14O
+ M374I1ASZNQY9QFDf6p5FGUbNoG+z+K+60BYxdYsOM9jdliaHSmTxk7lEGTSeu5yinmk
+ AuZyKgyoldlgVgJeQBFzPXXl09GmDf+HpyFurE5dl0rJZFzhUqyT9QppiQW3c81L6Lwt
+ 2lcTo27kKiJTDHK6kdvEWkoDD0P1J5D2Lwv0hBL4ChSmKO7MDddGmI1G/63kYxnq+f2U
+ aReA==
+X-Gm-Message-State: AOJu0YzSg8INRi/6KlhoOIZtTLE8k4y4iL8aN93JdUgb1qZvEl2eskSo
+ 4tr2T8Im7pLXvwdRvxD9rWLKia8UqPsq+H7lCpdn+tfziPHydUBcrK3+mSGRwR7kzTSNErBCfx7
+ 6GEyxG4TlyvXK5e1qNdK9oyJKcZNMs0yFFmxEUsAHJgvkJ4vW2Fp3kOg0vmcElDVHScGeOviRUD
+ rVUGJw63FslrVXDHpgrErxyek7S3OngCXO3jAE
+X-Google-Smtp-Source: AGHT+IFD2E5oSwgl9tk22ApL/JmI69ybqqttlgwkN9zWLmh++Vn8Yc9Ps6qRs3jnZCIDjxTdcevuSf049HFm
 X-Received: from komlodi.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
- (user=komlodi job=sendgmr) by 2002:a65:6753:0:b0:5ce:6c6:6973 with SMTP id
- c19-20020a656753000000b005ce06c66973mr49128pgu.8.1709072660644; Tue, 27 Feb
- 2024 14:24:20 -0800 (PST)
-Date: Tue, 27 Feb 2024 22:24:13 +0000
-In-Reply-To: <20240227222417.929367-1-komlodi@google.com>
+ (user=komlodi job=sendgmr) by 2002:a17:90b:2c8e:b0:29a:bb5e:1d7c with SMTP id
+ sw14-20020a17090b2c8e00b0029abb5e1d7cmr23454pjb.3.1709072659041; Tue, 27 Feb
+ 2024 14:24:19 -0800 (PST)
+Date: Tue, 27 Feb 2024 22:24:12 +0000
 Mime-Version: 1.0
-References: <20240227222417.929367-1-komlodi@google.com>
 X-Mailer: git-send-email 2.44.0.rc1.240.g4c46232300-goog
-Message-ID: <20240227222417.929367-2-komlodi@google.com>
-Subject: [RFC PATCH 1/5] target/arm: Add requester ID to memattrs
+Message-ID: <20240227222417.929367-1-komlodi@google.com>
+Subject: [RFC PATCH 0/5] memattrs: target/arm: add user-defined and requester
+ ID memattrs
 From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, 
@@ -71,9 +70,9 @@ Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
  philmd@linaro.org, roqueh@google.com, slongfield@google.com, 
  komlodi@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3FGHeZQcKCoUtxvuxmrpxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--komlodi.bounces.google.com;
- helo=mail-pg1-x54a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3E2HeZQcKCoQswutwlqowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--komlodi.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,108 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I've seen a few different instances where a CPU or a memory region is
-behind some sort of IOMMU, and the IOMMU translates (or denies) accesses
-based on the requester ID of the CPU.
+Hi all,
 
-This patch only does it on ARM CPUs, because I did not see CPU-agnostic
-code that added CPU attributes when creating TLBs. Similarly, we add the
-requester ID during PTW, while populating the rest of the memory
-attributes.
+This adds requester IDs to ARM CPUs and adds a "user-defined" memory
+attribute.
 
-We add the requester ID during GPC and descriptor grabbing as well as
-PTWs.
+The requester ID on ARM CPUs is there because I've seen some cases where
+there's an IOMMU between a CPU and memory that uses the CPU's requester
+ID to look up how it should translate, such as an SMMU TBU or some other
+IOMMU-like device.
+For a specific downstream example I've seen, Xilinx overrides CPU
+attributes with ones passed in by an object property in order to have
+their IOMMUs work:
+https://github.com/Xilinx/qemu/blob/23b643ba1683a47ef49447a45643fe2172d6f8ca/accel/tcg/cputlb.c#L1127.
+The object property with the memory attributes is declared here, for
+reference: https://github.com/Xilinx/qemu/blob/23b643ba1683a47ef49447a45643fe2172d6f8ca/target/arm/cpu.c#L1310.
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
----
- target/arm/cpu.c | 4 ++++
- target/arm/cpu.h | 6 ++++++
- target/arm/ptw.c | 5 +++++
- 3 files changed, 15 insertions(+)
+The user-defined attribute represents optional user signals that are a
+part of AMBA-AXI. As the name suggests, these are defined
+per-implementation and devices that receive these have their own
+interpretation of what the user-defined attribute means.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 5fa86bc8d5..9cfbba10c2 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2402,6 +2402,9 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         }
-     }
- 
-+    /* For MemTxAttrs. */
-+    env->requester_id = cpu->requester_id;
-+
-     qemu_init_vcpu(cs);
-     cpu_reset(cs);
- 
-@@ -2439,6 +2442,7 @@ static Property arm_cpu_properties[] = {
-                         mp_affinity, ARM64_AFFINITY_INVALID),
-     DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
-     DEFINE_PROP_INT32("core-count", ARMCPU, core_count, -1),
-+    DEFINE_PROP_UINT16("requester-id", ARMCPU, requester_id, 0),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 63f31e0d98..5fc572e077 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -774,6 +774,9 @@ typedef struct CPUArchState {
-     /* Linux syscall tagged address support */
-     bool tagged_addr_enable;
- #endif
-+
-+    /* For MemTxAttrs. */
-+    uint16_t requester_id;
- } CPUARMState;
- 
- static inline void set_feature(CPUARMState *env, int feature)
-@@ -1091,6 +1094,9 @@ struct ArchCPU {
- 
-     /* Generic timer counter frequency, in Hz */
-     uint64_t gt_cntfrq_hz;
-+
-+    /* Requester ID, used in MemTxAttrs. */
-+    uint16_t requester_id;
- };
- 
- typedef struct ARMCPUInfo {
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 5eb3577bcd..148af3a000 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -287,6 +287,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-     MemTxAttrs attrs = {
-         .secure = true,
-         .space = ARMSS_Root,
-+        .requester_id = env->requester_id,
-     };
-     ARMCPU *cpu = env_archcpu(env);
-     uint64_t gpccr = env->cp15.gpccr_el3;
-@@ -638,6 +639,7 @@ static uint32_t arm_ldl_ptw(CPUARMState *env, S1Translate *ptw,
-         MemTxAttrs attrs = {
-             .space = ptw->out_space,
-             .secure = arm_space_is_secure(ptw->out_space),
-+            .requester_id = env->requester_id,
-         };
-         AddressSpace *as = arm_addressspace(cs, attrs);
-         MemTxResult result = MEMTX_OK;
-@@ -684,6 +686,7 @@ static uint64_t arm_ldq_ptw(CPUARMState *env, S1Translate *ptw,
-         MemTxAttrs attrs = {
-             .space = ptw->out_space,
-             .secure = arm_space_is_secure(ptw->out_space),
-+            .requester_id = env->requester_id,
-         };
-         AddressSpace *as = arm_addressspace(cs, attrs);
-         MemTxResult result = MEMTX_OK;
-@@ -3306,6 +3309,8 @@ static bool get_phys_addr_nogpc(CPUARMState *env, S1Translate *ptw,
-     result->f.attrs.space = ptw->in_space;
-     result->f.attrs.secure = arm_space_is_secure(ptw->in_space);
- 
-+    result->f.attrs.requester_id = env->requester_id;
-+
-     switch (mmu_idx) {
-     case ARMMMUIdx_Phys_S:
-     case ARMMMUIdx_Phys_NS:
+We add them in CPUs and PCI transactions, because some of their
+attributes are set in functions in ways that are not user-facing. DMAs
+or other devices that set attributes (using address_space_rw or some
+other means), can add them on a per-device basis.
+
+RFC because it's possible we might want this implementated in some other
+way, and it touches some pretty frequently used code that I'm somewhat
+familiar with, but not 100% familiar with.
+
+Thanks,
+Joe
+
+Joe Komlodi (5):
+  target/arm: Add requester ID to memattrs
+  memattrs: Fix target_tlb_bit whitespace
+  memattrs: Add user-defined attribute
+  target/arm: Add user-defined memattrs
+  hw/pci: Add user-defined memattrs
+
+ hw/pci/pci.c                | 3 +++
+ include/exec/memattrs.h     | 8 +++++---
+ include/hw/pci/pci_device.h | 1 +
+ target/arm/cpu.c            | 6 ++++++
+ target/arm/cpu.h            | 8 ++++++++
+ target/arm/ptw.c            | 9 +++++++++
+ 6 files changed, 32 insertions(+), 3 deletions(-)
+
 -- 
 2.44.0.rc0.258.g7320e95886-goog
 
