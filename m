@@ -4,171 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27DAC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 16:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD227C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 16:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf0Db-0005jq-3P; Tue, 27 Feb 2024 11:22:11 -0500
+	id 1rf0Ka-00029V-Oa; Tue, 27 Feb 2024 11:29:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rf0DU-0005ga-QP
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 11:22:06 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <milesg@linux.vnet.ibm.com>)
+ id 1rf0KX-00027H-0w; Tue, 27 Feb 2024 11:29:21 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1rf0DJ-0006NT-N5
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 11:22:04 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41RFY2wV004834; Tue, 27 Feb 2024 16:21:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=h1klW/iSktbCMZgHqGHFvr19kRRmKrMz5s++Z9EF27M=;
- b=K/Sxdxh67MEB1cGsWL2vWYjudzL6vANgKx/ElDqKTh/5y5QzetcTbP18sEMAFQcE4g0s
- 2mue/uhI8CIeZ8vZcsKxDNU5wA6KcAD+2ooFmuDRaLE2bS7D+HquN2xhJbScf0mbsaXs
- TYp3ZiUKtQIv621YOa7hVvaoPDHQ6HQpQ6CUqg1NsQeUBN1f+Q8gCscYk6LFtHpOwpqK
- YkzF1TJ3glXcH6rfzjwFfQU1Bb1kt3biQMarWwjVGdS0xaIHf5JsE/UDnYAK57vY18Mu
- k8Fu8Bj2Vp33oXFw4FDo4+ha39X9w8LrBpGIbHspcfqcJR8hUo9ZIAul3FnOc4KG48io dg== 
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wf6vdyqws-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Feb 2024 16:21:49 +0000
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 41RFBO59001663; Tue, 27 Feb 2024 16:21:49 GMT
-Received: from nam04-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam04lp2040.outbound.protection.outlook.com [104.47.74.40])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wf6w7fesa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Feb 2024 16:21:49 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=n1F4/q172pc4UrE+KO6W3Uo9LUKMOKqj7wUuaP6qo9k+DeCRsPQvQhMobULSbkI6LP6oI6NA0+BqSwjv2dNGPanntRDCEOtuOF0Z3qYJy1JQE/IESaPK2AHvXwk/0+GpnFpYVb+3P0V6/rWmkUYWNjI8OtAi+FsjYfpxOk+sCoG6IvaRua9b+SWmJxwiYvyhjY3uhBBlwTHHm8TZJqiotOX/LnRP8b/7/1zW9YEBM3lbAGkpcRT5D1OYPW1umkncaCajHQXLZi8rJ5nkHpjWBKM7XEvc+f4RwG/gkusl5b3ZRPZpKeTP1uPf2Oi032wKF2XxZzc5ygRza/3SxYuOYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h1klW/iSktbCMZgHqGHFvr19kRRmKrMz5s++Z9EF27M=;
- b=JIi4FtcUImSl5CP5x5sehtytOcOsbBrQBrVVtYwxtFTJRdfvE86R4QOLW/F00NUwPkp7FFztQk6Z5bQtDwsg7lUcJT1H0D7b9atysPsGmALgAPipisHTMqV0nJ6SuvTDwMtbFcUM/v4SZUnJaYKeTCH/GqIoLkR2R5Xivr1xEi1kJiH140pVeWzL0o14jUBLTG5ybzoXuhGTisqdRkDKnNaHkxqP0xQMpwiIr+IsLi8L2gL+7PL62ZFG3L/P36Ti6nwp9jxY3yhasIw8lQgEGjQCxMsw39fTLQVxsvGLPyUqnAehl+GLb769RedSgcHq3juJGisCC8CFrBxNKAsgyw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h1klW/iSktbCMZgHqGHFvr19kRRmKrMz5s++Z9EF27M=;
- b=teYztXgdGZiOzjF1E5/cewC/OcxBrarHrfUgB+I2qPNDN6fKbHsgORY2dX57x+66lZjndWoZSgNlG6hIXpStR5jqVlnC/4llGwryhY+w6ln7AFjCIbiLZyDRvjO6ecFIKAF+Ul3HuWdZRjspAyl0pweGN5uNvVrGuVryvA7cB1M=
-Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
- by CO6PR10MB5556.namprd10.prod.outlook.com (2603:10b6:303:143::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7316.36; Tue, 27 Feb
- 2024 16:21:46 +0000
-Received: from SA2PR10MB4684.namprd10.prod.outlook.com
- ([fe80::c3ce:7c28:7db1:656b]) by SA2PR10MB4684.namprd10.prod.outlook.com
- ([fe80::c3ce:7c28:7db1:656b%6]) with mapi id 15.20.7316.035; Tue, 27 Feb 2024
- 16:21:46 +0000
-Message-ID: <a5b160bd-adcd-4f50-b61e-85d6092b3f63@oracle.com>
-Date: Tue, 27 Feb 2024 11:21:43 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/3] string list functions
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, dave@treblig.org, jasowang@redhat.com,
- michael.roth@amd.com, peterx@redhat.com, farosas@suse.de
-References: <20240227153321.467343-1-armbru@redhat.com>
-From: Steven Sistare <steven.sistare@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <20240227153321.467343-1-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <milesg@linux.vnet.ibm.com>)
+ id 1rf0KV-0007hr-2J; Tue, 27 Feb 2024 11:29:20 -0500
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41RGSXdO026255; Tue, 27 Feb 2024 16:29:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=WHEvdZKvJ4HugGes3sEMiTtt3PPYLAWy5SPYKUERGaQ=;
+ b=kaMF0vO/+6yi/msB6/vizqFQI8vbYVpdZ6gsxcmc7uokh8gQo/JWYKWpx6g1+V8Xqb88
+ BZHya1PVVe0+xasHvd/Au/Ej7doN3zOKaWju7VPS0NXJOz2hZqwNzmG+OzzmCLHKAMXv
+ iCENKO+rnSyCY6eKZiwVw0jJoxiHsKMGN2SEIs5KBRLcJvNLe6fS53pse2FzVGeNNJYu
+ v8dcfMqfUHkilU6Cm9cliwVfUiuAveZGybh7yhx/olbJd0ZkZ671oc1O+i+IZNVaH3HA
+ 2RWOAKVaaGKFASIKAp4LpnuxGAlNXHH6qrl5RdUZHZJB56yPEeQWjYs9Ez1Gwybsggws wg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whjx2grby-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 27 Feb 2024 16:29:15 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41RGSfXK027278;
+ Tue, 27 Feb 2024 16:29:15 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whjx2grbu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 27 Feb 2024 16:29:15 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41RF53i0008798; Tue, 27 Feb 2024 16:29:14 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wftsth2js-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 27 Feb 2024 16:29:14 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 41RGTB1118809400
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 27 Feb 2024 16:29:14 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A837F58067;
+ Tue, 27 Feb 2024 16:29:11 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 565DF5805C;
+ Tue, 27 Feb 2024 16:29:11 +0000 (GMT)
+Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 27 Feb 2024 16:29:11 +0000 (GMT)
+Message-ID: <af7922a11d56827c097cadd9ba9a40a0f4fb62aa.camel@linux.vnet.ibm.com>
+Subject: Re: [PATCH] target/ppc: BHRB avoid using host pointer in translated
+ code
+From: Miles Glenn <milesg@linux.vnet.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Date: Tue, 27 Feb 2024 10:29:11 -0600
+In-Reply-To: <CZ9HHCWQR3MT.1U5CJ7CBIR1EH@wheely>
+References: <20240215171512.800892-1-npiggin@gmail.com>
+ <CAFEAcA_m=xZEh0gS8ttfPiuRGWJrow7A303GiLG44W4LQZ10xw@mail.gmail.com>
+ <CZ9HHCWQR3MT.1U5CJ7CBIR1EH@wheely>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-18.el8) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BL0PR03CA0013.namprd03.prod.outlook.com
- (2603:10b6:208:2d::26) To SA2PR10MB4684.namprd10.prod.outlook.com
- (2603:10b6:806:119::14)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|CO6PR10MB5556:EE_
-X-MS-Office365-Filtering-Correlation-Id: b5366af0-f22b-45fc-75df-08dc37b03170
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: iEw0AGcmGI6byFz6R3Td5pIxPMUICNXa0iDZjf6vLbKZvFlMFlOQ4YlCzfWT4sv+tXraXc5IiuSMp/UdyuMPLqMn5jdauW8nxqROGCwUe9D0pqQwFRabIkCTJEpnEJgrHQJV/0z6uVAzyq0Mry8fxcOVW2khzLmwqbZrej6bN2jWmQ83zUKL0S3Wq2AR8xaFOK4+XldksbgPnwMKnwNkim0i2fbK2fYLURJM7HPEGQQVnQ8aXIO2OjYbffBod1SjrOXb6GuE3g4M67Zquko2f07HA2VYH5OZDL3k6dQcq2PwroBAY01/5IZxWuuuTRtrh5TPI0uCgx32cA8lE+FSIiGi7gBH14viiPPXERhBetWcBvS5Dp8dJOCzVZJ4zMRzMaXAok5hrXpSvl+lqRDL97xh04DeSfc/o9eneFLZaka3uDQzmhTADqTRpLeoWbTO/sarRwxsWOY2SYOpQqdJr5dMb/X4Mi0wywZ9Mpsz2bjumIHsmylUuPMK6DZg1HzXeuyMeamW9kA72YWF26Px4IQapH1iIq8hy2qekCeXzLPhFZ6E9qqInzgZtRjKdxQCBgkbf1b8Lh5oW2EfKsbvNPIVDIJ1ZbdQiWXxkIfxxiAIW1+lwz1j/mi33mEBI2lt38wYlR9bWbjNBhIgsEVc4A==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RU9Hb2NucElMYjY2SXhWcksxczJ1a1dBVUN2SGpsRUxyQnlBZ0lKMEl6WHZY?=
- =?utf-8?B?ZGtkeWZPK2xXMjlTSlNNb1U2NlNKNjd6NFkwT3lEVjFycnQrMWtBTkErSmJy?=
- =?utf-8?B?cjlOcHYwV09oR2dSbWZHQzJuZmsxbFhYc0lnR2gzTVNzMVM1UDJpMVB2Zlk4?=
- =?utf-8?B?cnRrbVcxRXhPeGlrbVFzdCtDajZoVGppOFAvaE1naTNpYVVqNUFBVWhnRjNS?=
- =?utf-8?B?TldRWFp3aXlQVlNNa3poOThZVm1kWndoOFhTQUpyUktmZE4rVzFGdDBQZFJv?=
- =?utf-8?B?aDNhaDB1NnIvLzhiUFAwSUkwRHBhYW9jcFc0dFQ3NjB4Z3BYclpnNGFZT2Vx?=
- =?utf-8?B?Z1NaQWk0U3loWHVubWZTSWhMZENTem80MzFXUlBydDBJVDFCRTNBSTJQK2Rh?=
- =?utf-8?B?bmprNlRlMG5pTzB3MUFGMWFNc3RoaG1mOGRvL2l0SUc1dUl0Zm5VaVc0NlBD?=
- =?utf-8?B?bFNSVHdSVlZFOVJEMDFGQ2x5aVMxQ3Axd2ZxcndXQWcwRHRmR29nOHQxSS9k?=
- =?utf-8?B?V3Vjdy9YcFoxRVpySGp1MnMyQnlZRUtXTTRPbGMraExLRnZ6bU92dThlQ2Fw?=
- =?utf-8?B?STcxRHFsMHlJMzVlaHRxNkZPenJPc3BYVk8rOStBRFZ4VjMwWGdRQXNQOU9u?=
- =?utf-8?B?ZGxTVWZJWS9BRktMdGY0QUY5RTAzVWV3YUQrb3pnZ2tKbkVBY1JUL1E4Y3Bk?=
- =?utf-8?B?QmI5VnEwU3d1RmFXeXQ1UzdheitvYllRd09EeXc1UnhWSnlKZzg1VUtlRVdn?=
- =?utf-8?B?dDlDUnlXUEQ2V1dtQlI2clZNNEZJZUtNQzR5Zml0MXRKYUZjeUZLU2dLRzJr?=
- =?utf-8?B?MEVCcGRJbmROSDJ0WWFSQWR4a2N5VkZVV09FaGpDbTNxVWxWWk0vTGpyUUVo?=
- =?utf-8?B?V2VoVUlCMldseTFDZVRobkhKQ01FL2lTb2ZuSmdNU0l5Q3NpQklQdnl0ajhM?=
- =?utf-8?B?Szd0enZhekxhMVFHOXVlc0kzVVk5aldXMFMxQjd2SXBDdUs2cVdoYUFWdklw?=
- =?utf-8?B?N2VtbkdZWkEvQlBxVU9BYnNHQmsxMVlCVXNkZWxvUFdsVTAwdVVZRHFpU2Vm?=
- =?utf-8?B?aW1Qdk81RVZLRGFTV0JoMXlsRHZ5NHhibU02VHdEblJYUXp4SUs2aEM2c1Vk?=
- =?utf-8?B?T3JiSFNSSHhCMXE5WnQxNUgvWmQrNkVKSWkzSkNXVnp2RmhGeTBic2dueGxl?=
- =?utf-8?B?cXIzRmwrV2pMUWJJeml2RlhRc3E5MWdCV2JneS9ENkpnM0wzb2FLRHBMU25z?=
- =?utf-8?B?UFdMTDNjd2k4NVNTR0tIOFhwQkJseEZ3YVRJQUUwdUl1UFVITko1QTAwb3lI?=
- =?utf-8?B?V2xDSGJldTNhb2NVb2s3TXZ5Q3pZUkhWS0cvZENLL2xqL2RSMmlWNTdWSTV3?=
- =?utf-8?B?d0pSdWFiS3R2RUkySTFOUExzSXZPbVRrMklybFVuWDh0V1dTOS9EUjh1ZVJt?=
- =?utf-8?B?bFBOeXdaL1ExclkySi8vYmJ0MTh3K1BJSk1tUXprLzBEVEIyOXhIMmx2NGVp?=
- =?utf-8?B?dkdMdWlvNjZDN0F6VkxkTDhvUFA5dkFWVWRoWFM1dW9qUi8welZvTXlxZW1x?=
- =?utf-8?B?UUFjUitpbExyV01RY01kVnMvb2xTcVRvdWI1Yit1ZGErRWlXQm9Zd213MkR2?=
- =?utf-8?B?OWZjQWJBZUhwZnFubzlJSjE3Tk95VXZib0dHbVNmRS9FUDZBT085RHRnclRS?=
- =?utf-8?B?emNiZ1V0UGJzamdBRXJrNytNTlNrQXhTdDZNd3VhakhtSGp6aWo0NWoyYjRR?=
- =?utf-8?B?VlBxNXdDTzdic1lXT3FrRFNSQWRVTDI5OEMzTzhPaGEyd2xWaFc2SSsyTnNG?=
- =?utf-8?B?dkhROC9ScDduL1VSa0tnNlViMCtOY01WdTN6WlNoaURoNVpFVTQ3aFQ2Sml1?=
- =?utf-8?B?OGRzVzlvSzB6aWpPZ0hidjNkbHQ1cnVSbndoQ0VoNlRkbExPTWtKMm82RGFX?=
- =?utf-8?B?am5KbWY5TzZtZHBVUU9rRGljaG85ZW5WajVBbTZGQ0NGcEtRVXUxa3R3R1VW?=
- =?utf-8?B?RHpFMm5sMEtLcWVWWjhrOU8yTlY2bE42SGd3K05HSndVV3N2eHpoUkVJTHlq?=
- =?utf-8?B?VzZVZ1lmUnlMWTBPZHBWMk1GdnJjUXFQSEZnbW42Y2JtSGtaM2h6RXBNZEs2?=
- =?utf-8?B?YjdOMEdvQXJ3NFNsYkpsR3ljWXJ4OWt6MU9RU3RzcWh5Zi92Zy9kTDRBZUVq?=
- =?utf-8?B?cFE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: OqWh8+HKFiipTQ+smHeb6HDf8xCUl2OFrmznNv4x/NlFjs/7fTlxBUV982lI1zTSrtwWgqgXwI6EGAP7vTPZG1+jWLWdd6S1kkduIatC56IvKIAyqaqtyjrHtaso4ITcNnkRbvNLIjvXbYXMc4IidV89fHyLwEYB81ZFb38Z75UEmRsdkxrX7KL5G2NMqaUEtlLGsOvYqHFi35VVKk+iPYz9uBIu7aBvaFiKggqjiBR8OmY8jGyRl8OiE8oVfdEr61WrH2mDHXum9cqh+lzW6ws6Bp64cyaei2wmmKDNMrHmRdXCGmH7sp3fIEThw1jwOUqvQTXYase3ivst6Fub9HSoQntTySUpMWwQK/8FHJz8QO1HmPWvBQnYtDLdGJaq4oOuqysMLdMQr5vRgdI0BHsj0oIVkSdWztJCupmkBRIjPyBmb/PNp2BwIPf4Mw5BMU1fO0A8/N+v6K3kBQXGoyr847DYvRrHc6AYj8CcGG0/EfXrdR907HNVf6yZDDSmbFHPBPHY6KgYmSblkDK4oPSAqYqEdAHB8rJgppJ347/ccjS/vYI6dU1uxEVfwlBauxN5oT8XflIH1N4n/tX8NsdphW8CHCfYt5pKbaexqMw=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b5366af0-f22b-45fc-75df-08dc37b03170
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2024 16:21:46.4357 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: goJ/+E6g/c8rjQKWSZeOPEr5iImdlDpADXuwlz1SyMzpt3JDGlr+Oi7JzBscFHwrwdiDyEm2QEwwe1Rmv3wYTvWLqorRwXIF0GoMiYFHak8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR10MB5556
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -x2vHgxOhaBHBafim48IfVTmJAowNWu0
+X-Proofpoint-GUID: AOxm-HeMc8dZIamWxe0s8f0xLqpv7hbw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-02-27_03,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 adultscore=0
- mlxscore=0 mlxlogscore=999 phishscore=0 suspectscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2402270126
-X-Proofpoint-ORIG-GUID: kjWtMLkhKAhRpiWVteJ9isQJ4qQdlDWD
-X-Proofpoint-GUID: kjWtMLkhKAhRpiWVteJ9isQJ4qQdlDWD
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
+ bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0 clxscore=1011
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402270127
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=milesg@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -185,37 +117,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All the changes look good - steve
+On Tue, 2024-02-20 at 10:35 +1000, Nicholas Piggin wrote:
+> On Fri Feb 16, 2024 at 3:50 AM AEST, Peter Maydell wrote:
+> > On Thu, 15 Feb 2024 at 17:16, Nicholas Piggin <npiggin@gmail.com>
+> > wrote:
+> > > Calculate the BHRB base from arithmetic on the tcg_env target
+> > > ptr.
+> > > 
+> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > > ---
+> > > Hi Glenn,
+> > > 
+> > > I think I have to squash this into the BHRB series. 32-bit host
+> > > compile shows up a size mismatch warning... I think it's not
+> > > quite
+> > > right to be using host pointer directly in target code. The
+> > > change
+> > > of offset and mask to 32-bit is needed due to to seemingly
+> > > missing
+> > > tl->ptr conversion helpers, but 32-bit is okay for those anyway.
+> > 
+> > There's nothing inherently wrong with it (depending on what the
+> > pointer is pointing to!), but you need to use the right type.
+> 
+> Ah okay, thanks for the correction.
+> 
+> > target_ulong and the _tl suffix are for the type which
+> > depends on the size of the target's 'long'. The TCG type which is
+> > "size of a host pointer" is TCG_TYPE_PTR, and you want the _ptr
+> > suffix functions and to pass it around with TCGv_ptr.
+> 
+> In that case, original approach may be better with small fixes
+> for 32-bit host.
+> 
+> Thanks,
+> Nick
 
-On 2/27/2024 10:33 AM, Markus Armbruster wrote:
-> This is Steve's work (v1 to v5), tweaked by Philippe (v6), and now by
-> me.
-> 
-> v7:
-> * Old PATCH 1 dropped
->   The proposed str_split() is a composition of g_strsplit() and a
->   conversion from char ** to strList *.  I'm willing to accept a
->   conversion function str_list_from_strv() next to
->   strv_from_str_list().  I doubt having a function for the composition
->   is worth the trouble.
-> * Old PATCH 4 dropped
->   The tests mostly test g_strsplit().  I'm willing to accept focused
->   tests for strv_from_str_list() and str_list_from_strv().
-> * PATCH 1-3: Commit messages tweaked
-> * PATCH 2: strv_from_strList() renamed strv_from_str_list(), and moved
->   to qapi/qapi-type-helpers.c.  Function comment tweaked.  Local
->   variable @argv renamed to @strv.
-> * PATCH 3: Adjust for the rename.
-> 
-> Steve Sistare (3):
->   qapi: New QAPI_LIST_LENGTH()
->   qapi: New strv_from_str_list()
->   migration: simplify exec migration functions
-> 
->  include/qapi/type-helpers.h |  8 ++++++
->  include/qapi/util.h         | 13 +++++++++
->  migration/exec.c            | 57 ++++++-------------------------------
->  qapi/qapi-type-helpers.c    | 14 +++++++++
->  4 files changed, 43 insertions(+), 49 deletions(-)
-> 
+Peter/Nick, thanks for looking into this.  I'll work on submitting
+a v4 of the original BHRB series adding Peter's suggestions (and
+probably a rebase) as soon as I have a chance.  Unfortunately, I have
+some higher priority items to work on at the moment, so it could take
+a week or two before I can get to it.
+
+Thanks,
+Glenn
+
 
