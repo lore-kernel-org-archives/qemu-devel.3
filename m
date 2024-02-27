@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF66C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFB2C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexb4-0001AY-Nn; Tue, 27 Feb 2024 08:34:14 -0500
+	id 1rexaF-0000hJ-2z; Tue, 27 Feb 2024 08:33:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexam-0000tq-9L
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:56 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1rexaD-0000g9-Dq
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:21 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaV-0002x7-UE
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:55 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33d0a7f2424so2873527f8f.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:39 -0800 (PST)
+ id 1rexaB-0002pl-2y
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:21 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3392b045e0aso3543412f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040818; x=1709645618; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040797; x=1709645597; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BfQK9OJD3aICemNdn3VvNxx2yZ6JTCZD2HCR6qHP728=;
- b=MzIEJVcS/KGUOjGy4VfxiuJhFjFVWk1fG3DJ0bHoko+8SJqMg58oo/ERAq8CJ06mNC
- S/n/bdkWHxPD/JebHNqWE21gjH17ZYbWWR+nAQKaXPsE2aeljdTkSZD5Qzxk4PDtFVkW
- TtGYhB9VAgu5RhA71lFRADWVZHiODCGmgh8MiG8m9GgpMC6V6ZOaQL/hws+T8NSrJoOS
- v5ckjWD/KXHJ6ZZfWMNIcizXhhVIO/aZVvmeYd7hAv2zZ71ItKtWFg59Ut8qxzKQGQKN
- 9OSprnBoWG0B3GanP7xAgIjsk2lQoDrnkMG9aW+5FyuI7SyTD0kPHAg3W7rVJ4t6itR9
- 9Rwg==
+ :reply-to; bh=rLfVBib6moPM6Xgbon/d2611Q9D6RHvJCoxeaZ9C+Eo=;
+ b=AzT5G/VU/PtEfYVqA2PQNx17QTMUI233vkd6AvAODvP5lqoX6bPeGYElPz77blJInN
+ cwf51Xt/3vIeUfJxDKO705r6NfW8G3RipwpSGFoMK/FDBs2eWFBk2kkuuT7x2ze7Aqui
+ yshzEwmmWIJTtfOnYSVzkXE6f+d6yovE/TuVobZrptZWisPANojA6L/NLHaof5Wmz55c
+ ypu9mITIDFLS3qscRBlQk0D7d8+9Do/HzcFoALd8vegQ5NVc7+3zKjwzTToIy+ExQJ+k
+ OyRFcAac/Yq75xM1nmth/cpMEhf+2Km+epbaW+sc8fI/zYlvHudNU5ZiLQusx0wV58mn
+ TwWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040818; x=1709645618;
+ d=1e100.net; s=20230601; t=1709040797; x=1709645597;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BfQK9OJD3aICemNdn3VvNxx2yZ6JTCZD2HCR6qHP728=;
- b=JjR+37FOdJx/9qjjYHXE3gRuu829sFg/Zxsj24bMElwM/vKhmHWMKY8zhDEmtCApvO
- kpDXY3StPvX33f/AiM+fNTYbZhAwhP3pPB0uXiUokRu3EemH3mzrhkaBUe4DHVLLDC9E
- CEH86Lgyi98RBaHOppryEKXDWCfQHnMBU8cfurRj0D4v2Lbjk6JiFAY5L9bJyPA2Jfd+
- F2yvNq1nfC1n8eLWA2auRQESNE66BAVA/H7Qqj3pxf3tljduuFFSHBgAHg1jZF0iokLi
- ReMq4SN/H4thKg6HU2f9Xy2qpo8AQOxJPWk/OTbRsPgOPbIEz4DwLFU8zSSnSTR1S7lK
- JfYw==
-X-Gm-Message-State: AOJu0YwKSrNuf1eLeZ4URtfKyQX93BLpJX/bOIVR4XhK/qQiJsTKuNbY
- ZyQwwFg+25vVbxfAbjXAc+WQp793nZ+0eOx5JlhpxWlKAyHO9Tk0PudwIxjlGsoq7NBFgZN+gLt
- c
-X-Google-Smtp-Source: AGHT+IHTe3ijaazVGaIu42uvrdNjmzWvX3w3ZtsIcpFbWP3L3lkZ+AAl+B94ioCr7LTrLS4oYLdkcQ==
-X-Received: by 2002:adf:e8ce:0:b0:33d:269e:132a with SMTP id
- k14-20020adfe8ce000000b0033d269e132amr7010166wrn.15.1709040818296; 
- Tue, 27 Feb 2024 05:33:38 -0800 (PST)
+ bh=rLfVBib6moPM6Xgbon/d2611Q9D6RHvJCoxeaZ9C+Eo=;
+ b=o3kF+Tz28BibIvHRug358I8jmnxriPc0MKfdmea32909LFYDHuFAd9L0EvCWFa4ug7
+ /ozQEqXy7o+ed46b1GeX/BOtQ3oo3d2J3XZJNKa1J4dbdK+PNfLsZ6RTBaSbBGMPUr0o
+ n9+7uFhRJs33RiEXhrMEGKE/6igJ4v6vlbl1BBqJ9nzTr9/DG9SgLu9g4pq8BhKrN7dv
+ aUJ0J/L0L/dNzi2wsX5lQ9nk9vPN7Pkd5MQlqD2raZY5Qm27dvjX1ZhrmWyx/k7605kl
+ FFnH4ffzYMufLBqQU3rFWxAfH1TwNkDo07ZIyZXD3EmtvMJ/VsU2s8DJjRAPclmuttyo
+ kU/A==
+X-Gm-Message-State: AOJu0YxQKW1n2R8TkoKupAIc9PWDhH61+5E000JvUIdyqE6o1umM7OM6
+ eQoOiatGOGcM3PgP7la6wPJcZo3DVIm4wLnHLUy4xr6rQkiDhF1I+i7GNbeKEmDBoN6X3bVRDNa
+ O
+X-Google-Smtp-Source: AGHT+IFAGLqArF5n5oj1D6pl9twQ791m7fR7bMP4bv73XBtSN5UUbsapVF23zYb7B3IpGNeBEIlVqQ==
+X-Received: by 2002:a5d:6d85:0:b0:33d:da6e:b7db with SMTP id
+ l5-20020a5d6d85000000b0033dda6eb7dbmr4149387wrs.62.1709040797355; 
+ Tue, 27 Feb 2024 05:33:17 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.37
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:38 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:17 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/45] hw/misc/bcm2835_property: Add missed BCM2835 properties
-Date: Tue, 27 Feb 2024 13:33:12 +0000
-Message-Id: <20240227133314.1721857-44-peter.maydell@linaro.org>
+Subject: [PULL 02/45] target/arm: Advertise Cortex-A53 erratum #843419 fix via
+ REVIDR
+Date: Tue, 27 Feb 2024 13:32:31 +0000
+Message-Id: <20240227133314.1721857-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,99 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sergey Kambalin <serg.oker@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-Our model of the bcm2835 mailbox is missing a few properties
-that we need for the raspi4 kernel:
- * RPI_FWREQ_GET_CLOCKS
- * RPI_FWREQ_GET_THROTTLED
- * RPI_FWREQ_VCHIQ_INIT
+The Cortex-A53 r0p4 revision that QEMU emulates is affected by a CatA
+erratum #843419 (i.e., the most severe), which requires workarounds in
+the toolchain as well as the OS.
 
-Add minimal implementations of them.
+Since the emulation is obviously not affected in the same way, we can
+indicate this via REVIDR bit #8, which on r0p4 has the meaning that no
+workarounds for erratum #843419 are needed.
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Message-id: 20240226000259.2752893-40-sergey.kambalin@auriga.com
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240215160202.2803452-1-ardb+git@google.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: improved commit message]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/raspberrypi-fw-defs.h | 11 +++++++++++
- hw/misc/bcm2835_property.c           | 21 +++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ target/arm/cpu64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/raspberrypi-fw-defs.h b/include/hw/arm/raspberrypi-fw-defs.h
-index 579cf0d5546..8b404e05336 100644
---- a/include/hw/arm/raspberrypi-fw-defs.h
-+++ b/include/hw/arm/raspberrypi-fw-defs.h
-@@ -159,4 +159,15 @@ enum rpi_firmware_clk_id {
-     RPI_FIRMWARE_NUM_CLK_ID,
- };
- 
-+struct rpi_firmware_property_tag_header {
-+    uint32_t tag;
-+    uint32_t buf_size;
-+    uint32_t req_resp_size;
-+};
-+
-+typedef struct rpi_firmware_prop_request {
-+    struct rpi_firmware_property_tag_header hdr;
-+    uint8_t payload[0];
-+} rpi_firmware_prop_request_t;
-+
- #endif /* INCLUDE_HW_MISC_RASPBERRYPI_FW_DEFS_H_ */
-diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
-index 5c48f8d7438..bdd9a6bbcec 100644
---- a/hw/misc/bcm2835_property.c
-+++ b/hw/misc/bcm2835_property.c
-@@ -19,6 +19,8 @@
- #include "trace.h"
- #include "hw/arm/raspi_platform.h"
- 
-+#define VCHI_BUSADDR_SIZE       sizeof(uint32_t)
-+
- /* https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface */
- 
- static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-@@ -138,6 +140,13 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-             resplen = 8;
-             break;
- 
-+        case RPI_FWREQ_GET_CLOCKS:
-+            /* TODO: add more clock IDs if needed */
-+            stl_le_phys(&s->dma_as, value + 12, 0);
-+            stl_le_phys(&s->dma_as, value + 16, RPI_FIRMWARE_ARM_CLK_ID);
-+            resplen = 8;
-+            break;
-+
-         case RPI_FWREQ_SET_CLOCK_RATE:
-         case RPI_FWREQ_SET_MAX_CLOCK_RATE:
-         case RPI_FWREQ_SET_MIN_CLOCK_RATE:
-@@ -276,6 +285,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-             stl_le_phys(&s->dma_as, value + 12, 0);
-             resplen = 4;
-             break;
-+
-         case RPI_FWREQ_FRAMEBUFFER_GET_NUM_DISPLAYS:
-             stl_le_phys(&s->dma_as, value + 12, 1);
-             resplen = 4;
-@@ -301,6 +311,17 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-                                     resplen);
-             break;
- 
-+        case RPI_FWREQ_GET_THROTTLED:
-+            stl_le_phys(&s->dma_as, value + 12, 0);
-+            resplen = 4;
-+            break;
-+
-+        case RPI_FWREQ_VCHIQ_INIT:
-+            stl_le_phys(&s->dma_as,
-+                        value + offsetof(rpi_firmware_prop_request_t, payload),
-+                        0);
-+            resplen = VCHI_BUSADDR_SIZE;
-+            break;
-         default:
-             qemu_log_mask(LOG_UNIMP,
-                           "bcm2835_property: unhandled tag 0x%08x\n", tag);
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 8e30a7993ea..0f7a44a28f5 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -663,7 +663,7 @@ static void aarch64_a53_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A53;
+     cpu->midr = 0x410fd034;
+-    cpu->revidr = 0x00000000;
++    cpu->revidr = 0x00000100;
+     cpu->reset_fpsid = 0x41034070;
+     cpu->isar.mvfr0 = 0x10110222;
+     cpu->isar.mvfr1 = 0x12111111;
 -- 
 2.34.1
 
