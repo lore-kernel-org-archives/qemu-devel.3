@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E278C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FDEAC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 12:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rew4R-0005Fl-1S; Tue, 27 Feb 2024 06:56:27 -0500
+	id 1rew9E-000096-4M; Tue, 27 Feb 2024 07:01:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rew4O-0005F7-U0
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:56:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rew4L-0000MT-5M
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:56:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709034980;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=e2N8g16fUZqRt5+xqIV0kcapDtska+RnFLeScqC9qzM=;
- b=GXk95a4BCrFJ4v9/IpJUTN2+PnHcM/OBtQUcxMq1fq44673aj/uNF86boOJPGZKM1u9sN3
- sie+5OljEEZd0WNVyjE0zxvru3Rh+5Mn7FkzEkT/HJ7/hxbQHQ9oMCSmT3Eo3KZZcO8vN4
- LREgV+e7K7JPp0PhD+TsWT+7Sv7vaFc=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-OzLSQ9-mMh-cXVVhndHyqA-1; Tue,
- 27 Feb 2024 06:56:18 -0500
-X-MC-Unique: OzLSQ9-mMh-cXVVhndHyqA-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F6E21C05AAC
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 11:56:18 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 12591492BC8
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 11:56:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1ADB021E66FB; Tue, 27 Feb 2024 12:56:17 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: eblake@redhat.com,
-	berrange@redhat.com
-Subject: [PATCH 1/2] docs/devel/writing-monitor-commands: Repair a decade of
- rot
-Date: Tue, 27 Feb 2024 12:56:16 +0100
-Message-ID: <20240227115617.237875-2-armbru@redhat.com>
-In-Reply-To: <20240227115617.237875-1-armbru@redhat.com>
-References: <20240227115617.237875-1-armbru@redhat.com>
-MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rew9A-00007x-9P; Tue, 27 Feb 2024 07:01:20 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rew96-0001NV-Pd; Tue, 27 Feb 2024 07:01:19 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-29954bb87b4so2862642a91.2; 
+ Tue, 27 Feb 2024 04:01:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1709035275; x=1709640075; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+32pfY+ZxWPOpX+DNCg+oV9JCFLSfgK3vPS7O14Hloo=;
+ b=Etk+WaS2oasU1Dq/VeY2A+z9LdbBJLwncOHJ22xEzLDSt8tSNiOm1KhnRO42Tzi43D
+ tO/wIVFxB4GQIyDxDGjljvCBpwTNb4f+COf8aHQZ3anaKmbe4U+rCZLUNf2TKGIeE1sw
+ S2PaU+zSjKEVslDAcZRTQ3qJY6SrrzqFevzX59ihreYTYafg6b0JhnQwTnce5amI/Evz
+ LoFZ5uanV5hZQKxLFK33D+D3QSl31pUjhyJUn4vQ1v7nZwq8fOc4z9O7SZba8QAo0iRo
+ VZDCbnEDg9Ih61l1edKHXEviAZUNZhtBWQB8vWgathMWivzS1nBBEVu4NO2GamRRiWNz
+ k5DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709035275; x=1709640075;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+32pfY+ZxWPOpX+DNCg+oV9JCFLSfgK3vPS7O14Hloo=;
+ b=Dzustda88yWbmdQUPFx0phlZT0fW3qTwZeugbSMaRh2/mMwFD7AErij8kcWfHjlMxO
+ 6Ad+TBAkFdrvZmiUczv2FZBvghFt/i41LGnhbeagNbhZcfE+Ew1E4mDSHD2meGYCLYn/
+ G2KOT4jPay+DCmhzerXm4tc83pb6vWsugLzNrdu5wt+a69k+jVYLWqjGrXbPj+R98PCp
+ 3tAOtXHR0Lw4ErAI4eHstuVNoCxDlSUvbgZVi0SQJdV/zEX3eGd27/W8H7+uUXsWGQgT
+ O/TD8Vq2UZ1c0VSwXZh20R/nkLMKd2m4TlI8VgyTcnawHt8kVY6HQSmFiiJLduzZR16x
+ le4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzOqqEJPYySg6DYrIxVKsH31Rjn/GqWzhPT+jGPHDKmDgEfpEKs9zjEWjh50O5qP6ddsXUCICrj+CYHeHL2bD4lWFWh6Y5EEY1gGA5NO70uI6cLmkdiKuGdeY=
+X-Gm-Message-State: AOJu0Ywxp97NbntJGTQalrgvH70+9m7Z31QoaVo272KiSuOpDeRYvs40
+ Y7hJ+sbiufkmkuExWvLkhPBaht1As3W5QTc4Adfmno2i0PXWMF7x
+X-Google-Smtp-Source: AGHT+IFXxSmovrSMPAM264GSNZZOlbrDS9ikZK7ZIwbjit+zTgnz6DERnJ+FuRAIjFexJXgnsrcF1Q==
+X-Received: by 2002:a17:90a:6c61:b0:29a:7efc:471b with SMTP id
+ x88-20020a17090a6c6100b0029a7efc471bmr7045048pjj.38.1709035274751; 
+ Tue, 27 Feb 2024 04:01:14 -0800 (PST)
+Received: from localhost (110-175-163-154.tpgi.com.au. [110.175.163.154])
+ by smtp.gmail.com with ESMTPSA id
+ gx20-20020a056a001e1400b006e0949b2548sm5716490pfb.209.2024.02.27.04.01.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 27 Feb 2024 04:01:14 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 27 Feb 2024 22:01:07 +1000
+Message-Id: <CZFUFVA72347.2XPCPLI34U6MX@wheely>
+Cc: <pbonzini@redhat.com>, <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v8 1/2] ppc: Enable 2nd DAWR support on Power10 PowerNV
+ machine
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Shivaprasad G Bhat" <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
+ <qemu-ppc@nongnu.org>, <david@gibson.dropbear.id.au>,
+ <harshpb@linux.ibm.com>, <clg@kaod.org>, <groug@kaod.org>
+X-Mailer: aerc 0.15.2
+References: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
+ <170679877410.188422.2597832350300436754.stgit@ltc-boston1.aus.stglabs.ibm.com>
+In-Reply-To: <170679877410.188422.2597832350300436754.stgit@ltc-boston1.aus.stglabs.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,671 +98,367 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The tutorial doesn't match reality since at least 2013.  Repairing it
-involves fixing the following issues:
+On Fri Feb 2, 2024 at 12:46 AM AEST, Shivaprasad G Bhat wrote:
+> Extend the existing watchpoint facility from TCG DAWR0 emulation
+> to DAWR1 on POWER10.
+>
+> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> ---
+>  target/ppc/cpu.c         |   45 ++++++++++++++++++++++++----------
+>  target/ppc/cpu.h         |    8 +++++-
+>  target/ppc/cpu_init.c    |   15 +++++++++++
+>  target/ppc/excp_helper.c |   61 ++++++++++++++++++++++++++--------------=
+------
+>  target/ppc/helper.h      |    2 ++
+>  target/ppc/machine.c     |    3 ++
+>  target/ppc/misc_helper.c |   10 ++++++++
+>  target/ppc/spr_common.h  |    2 ++
+>  target/ppc/translate.c   |   12 +++++++++
+>  9 files changed, 115 insertions(+), 43 deletions(-)
+>
+> diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+> index e3ad8e0c27..d5ac9bb888 100644
+> --- a/target/ppc/cpu.c
+> +++ b/target/ppc/cpu.c
+> @@ -130,11 +130,13 @@ void ppc_store_ciabr(CPUPPCState *env, target_ulong=
+ val)
+>      ppc_update_ciabr(env);
+>  }
+> =20
+> -void ppc_update_daw0(CPUPPCState *env)
+> +void ppc_update_daw(CPUPPCState *env, int rid)
 
-* Update for commit 6d327171551 (aio / timers: Remove alarm timers):
-  replace the broken examples.  Instead of having one for returning a
-  struct and another for returning a list of structs, do just one for
-  the latter.  This resolves the FIXME added in commit
-  e218052f928 (aio / timers: De-document -clock) back in 2014.
+What's rid? Register ID?
 
-* Update for commit 895a2a80e0e (qapi: Use 'struct' instead of 'type'
-  in schema).
+Looks pretty good I think.
 
-* Update for commit 3313b6124b5 (qapi: add qapi2texi script): add
-  required documentation to the schema snippets, and drop section
-  "Command Documentation".
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-* Update for commit a3c45b3e629 (qapi: New special feature flag
-  "unstable"): supply the required feature, deemphasize the x- prefix.
+Thanks,
+Nick
 
-* Update for commit dd98234c059 (qapi: introduce x-query-roms QMP
-  command): rephrase from "add new command" to "examine existing
-  command".
-
-* Update for commit 9492718b7c0 (qapi misc: Elide redundant has_FOO in
-  generated C): hello-world's message argument no longer comes with a
-  has_message, add a second argument that does.
-
-* Update for moved and renamed files.
-
-While there, update QMP version output to current output.
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/devel/writing-monitor-commands.rst | 460 ++++++++++--------------
- 1 file changed, 181 insertions(+), 279 deletions(-)
-
-diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
-index b6ee4fa063..047c6f42bb 100644
---- a/docs/devel/writing-monitor-commands.rst
-+++ b/docs/devel/writing-monitor-commands.rst
-@@ -66,12 +66,13 @@ Then, in a different terminal::
-          "version": {
-              "qemu": {
-                  "micro": 50,
--                 "minor": 15,
--                 "major": 0
-+                 "minor": 2,
-+                 "major": 8
-              },
--             "package": ""
-+             "package": ...
-          },
-          "capabilities": [
-+             "oob"
-          ]
-      }
-  }
-@@ -107,6 +108,11 @@ The first step is defining the command in the appropriate QAPI schema
- module.  We pick module qapi/misc.json, and add the following line at
- the bottom::
- 
-+ ##
-+ # @hello-world:
-+ #
-+ # Since: 9.0
-+ ##
-  { 'command': 'hello-world' }
- 
- The "command" keyword defines a new QMP command. It's an JSON object. All
-@@ -148,37 +154,50 @@ you don't see it then something went wrong.
- Arguments
- ~~~~~~~~~
- 
--Let's add an argument called "message" to our "hello-world" command. The new
--argument will contain the string to be printed to stdout. It's an optional
--argument, if it's not present we print our default "Hello, World" string.
-+Let's add arguments to our "hello-world" command.
- 
- The first change we have to do is to modify the command specification in the
- schema file to the following::
- 
-- { 'command': 'hello-world', 'data': { '*message': 'str' } }
-+ ##
-+ # @hello-world:
-+ #
-+ # @message: message to be printed (default: "Hello, world!")
-+ #
-+ # @times: how many times to print the message (default: 1)
-+ #
-+ # Since: 9.0
-+ ##
-+ { 'command': 'hello-world',
-+   'data': { '*message': 'str', '*times': 'int' } }
- 
--Notice the new 'data' member in the schema. It's an JSON object whose each
--element is an argument to the command in question. Also notice the asterisk,
--it's used to mark the argument optional (that means that you shouldn't use it
--for mandatory arguments). Finally, 'str' is the argument's type, which
--stands for "string". The QAPI also supports integers, booleans, enumerations
--and user defined types.
-+Notice the new 'data' member in the schema. It specifies an argument
-+'message' of QAPI type 'str', and an argument 'times' of QAPI type
-+'int'.  Also notice the asterisk, it's used to mark the argument
-+optional.
- 
- Now, let's update our C implementation in monitor/qmp-cmds.c::
- 
-- void qmp_hello_world(const char *message, Error **errp)
-+ void qmp_hello_world(const char *message, bool has_times, int64_t times,
-+		      Error **errp)
-  {
--     if (message) {
--         printf("%s\n", message);
--     } else {
--         printf("Hello, world\n");
-+     if (!message) {
-+	 message = "Hello, world";
-+     }
-+     if (!has_times) {
-+	 times = 1;
-+     }
-+
-+     for (int i = 0; i < times; i++) {
-+	 printf("%s\n", message);
-      }
-  }
- 
- There are two important details to be noticed:
- 
--1. All optional arguments are accompanied by a 'has\_' boolean, which is set
--   if the optional argument is present or false otherwise
-+1. Optional arguments other than pointers are accompanied by a 'has\_'
-+   boolean, which is set if the optional argument is present or false
-+   otherwise
- 2. The C implementation signature must follow the schema's argument ordering,
-    which is defined by the "data" member
- 
-@@ -254,35 +273,6 @@ If the failure you want to report falls into one of the two cases above,
- use error_set() with a second argument of an ErrorClass value.
- 
- 
--Command Documentation
--~~~~~~~~~~~~~~~~~~~~~
--
--There's only one step missing to make "hello-world"'s implementation complete,
--and that's its documentation in the schema file.
--
--There are many examples of such documentation in the schema file already, but
--here goes "hello-world"'s new entry for qapi/misc.json::
--
-- ##
-- # @hello-world:
-- #
-- # Print a client provided string to the standard output stream.
-- #
-- # @message: string to be printed
-- #
-- # Returns: Nothing on success.
-- #
-- # Notes: if @message is not provided, the "Hello, world" string will
-- #        be printed instead
-- #
-- # Since: <next qemu stable release, eg. 1.0>
-- ##
-- { 'command': 'hello-world', 'data': { '*message': 'str' } }
--
--Please, note that the "Returns" clause is optional if a command doesn't return
--any data nor any errors.
--
--
- Implementing the HMP command
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
-@@ -306,18 +296,20 @@ Here's the implementation of the "hello-world" HMP command::
-      }
-  }
- 
--Also, you have to add the function's prototype to the hmp.h file.
-+Add it to monitor/hmp-cmds.c.  Also, add its prototype to
-+include/monitor/hmp.h.
- 
--There are three important points to be noticed:
-+There are four important points to be noticed:
- 
- 1. The "mon" and "qdict" arguments are mandatory for all HMP functions. The
-    former is the monitor object. The latter is how the monitor passes
-    arguments entered by the user to the command implementation
--2. hmp_hello_world() performs error checking. In this example we just call
-+2. We chose not to support the "times" argument in HMP
-+3. hmp_hello_world() performs error checking. In this example we just call
-    hmp_handle_error() which prints a message to the user, but we could do
-    more, like taking different actions depending on the error
-    qmp_hello_world() returns
--3. The "err" variable must be initialized to NULL before performing the
-+4. The "err" variable must be initialized to NULL before performing the
-    QMP call
- 
- There's one last step to actually make the command available to monitor users,
-@@ -372,7 +364,7 @@ data, it is not expected that machines will need to parse the result.
- The overhead of defining a fine grained QAPI type for the data may not
- be justified by the potential benefit. In such cases, it is permitted
- to have a command return a simple string that contains formatted data,
--however, it is mandatory for the command to use the 'x-' name prefix.
-+however, it is mandatory for the command to be marked unstable.
- This indicates that the command is not guaranteed to be long term
- stable / liable to change in future and is not following QAPI design
- best practices. An example where this approach is taken is the QMP
-@@ -386,302 +378,207 @@ an illustration.
- User Defined Types
- ~~~~~~~~~~~~~~~~~~
- 
--FIXME This example needs to be redone after commit 6d32717
-+For this example we will write the query-option-roms command, which
-+returns information about ROMs loaded into the option ROM space. For
-+more information about it, please check the "-option-rom" command-line
-+option.
- 
--For this example we will write the query-alarm-clock command, which returns
--information about QEMU's timer alarm. For more information about it, please
--check the "-clock" command-line option.
--
--We want to return two pieces of information. The first one is the alarm clock's
--name. The second one is when the next alarm will fire. The former information is
--returned as a string, the latter is an integer in nanoseconds (which is not
--very useful in practice, as the timer has probably already fired when the
--information reaches the client).
--
--The best way to return that data is to create a new QAPI type, as shown below::
-+For each option ROM, we want to return two pieces of information: the
-+ROM image's file name, and its bootindex, if any.  We need to create a
-+new QAPI type for that, as shown below::
- 
-  ##
-- # @QemuAlarmClock
-+ # @OptionRomInfo:
-  #
-- # QEMU alarm clock information.
-+ # @filename: option ROM image file name
-  #
-- # @clock-name: The alarm clock method's name.
-+ # @bootindex: option ROM's bootindex
-  #
-- # @next-deadline: The time (in nanoseconds) the next alarm will fire.
-- #
-- # Since: 1.0
-+ # Since: 9.0
-  ##
-- { 'type': 'QemuAlarmClock',
--   'data': { 'clock-name': 'str', '*next-deadline': 'int' } }
-+ { 'struct': 'OptionRomInfo',
-+   'data': { 'filename': 'str', '*bootindex': 'int' } }
- 
--The "type" keyword defines a new QAPI type. Its "data" member contains the
--type's members. In this example our members are the "clock-name" and the
--"next-deadline" one, which is optional.
-+The "struct" keyword defines a new QAPI type. Its "data" member
-+contains the type's members. In this example our members are
-+"filename" and "bootindex".  The latter is optional.
- 
--Now let's define the query-alarm-clock command::
-+Now let's define the query-option-roms command::
- 
-  ##
-- # @query-alarm-clock
-+ # @query-option-roms:
-  #
-- # Return information about QEMU's alarm clock.
-+ # Query information on ROMs loaded into the option ROM space.
-  #
-- # Returns a @QemuAlarmClock instance describing the alarm clock method
-- # being currently used by QEMU (this is usually set by the '-clock'
-- # command-line option).
-+ # Returns: OptionRomInfo
-  #
-- # Since: 1.0
-+ # Since: 9.0
-  ##
-- { 'command': 'query-alarm-clock', 'returns': 'QemuAlarmClock' }
-+ { 'command': 'query-option-roms',
-+   'returns': ['OptionRomInfo'] }
- 
- Notice the "returns" keyword. As its name suggests, it's used to define the
- data returned by a command.
- 
--It's time to implement the qmp_query_alarm_clock() function, you can put it
--in the qemu-timer.c file::
-+Notice the syntax ['OptionRomInfo']". This should be read as "returns
-+a list of OptionRomInfo".
- 
-- QemuAlarmClock *qmp_query_alarm_clock(Error **errp)
-+It's time to implement the qmp_query_option_roms() function.  Add to
-+monitor/qmp-cmds.c::
-+
-+ OptionRomInfoList *qmp_query_option_roms(Error **errp)
-  {
--     QemuAlarmClock *clock;
--     int64_t deadline;
-+     OptionRomInfoList *info_list = NULL;
-+     OptionRomInfoList **tailp = &info_list;
-+     OptionRomInfo *info;
- 
--     clock = g_malloc0(sizeof(*clock));
--
--     deadline = qemu_next_alarm_deadline();
--     if (deadline > 0) {
--         clock->has_next_deadline = true;
--         clock->next_deadline = deadline;
-+     for (int i = 0; i < nb_option_roms; i++) {
-+	 info = g_malloc0(sizeof(*info));
-+	 info->filename = g_strdup(option_rom[i].name);
-+	 info->has_bootindex = option_rom[i].bootindex >= 0;
-+	 if (info->has_bootindex) {
-+	     info->bootindex = option_rom[i].bootindex;
-+	 }
-+	 QAPI_LIST_APPEND(tailp, info);
-      }
--     clock->clock_name = g_strdup(alarm_timer->name);
- 
--     return clock;
-+     return info_list;
-  }
- 
- There are a number of things to be noticed:
- 
--1. The QemuAlarmClock type is automatically generated by the QAPI framework,
--   its members correspond to the type's specification in the schema file
--2. As specified in the schema file, the function returns a QemuAlarmClock
--   instance and takes no arguments (besides the "errp" one, which is mandatory
--   for all QMP functions)
--3. The "clock" variable (which will point to our QAPI type instance) is
--   allocated by the regular g_malloc0() function. Note that we chose to
--   initialize the memory to zero. This is recommended for all QAPI types, as
--   it helps avoiding bad surprises (specially with booleans)
--4. Remember that "next_deadline" is optional? Non-pointer optional
--   members have a 'has_TYPE_NAME' member that should be properly set
-+1. Type OptionRomInfo is automatically generated by the QAPI framework,
-+   its members correspond to the type's specification in the schema
-+   file
-+2. Type OptionRomInfoList is also generated.  It's a singly linked
-+   list.
-+3. As specified in the schema file, the function returns a
-+   OptionRomInfoList, and takes no arguments (besides the "errp" one,
-+   which is mandatory for all QMP functions)
-+4. The returned object is dynamically allocated
-+5. All strings are dynamically allocated. This is so because QAPI also
-+   generates a function to free its types and it cannot distinguish
-+   between dynamically or statically allocated strings
-+6. Remember that "bootindex" is optional? As a non-pointer optional
-+   member, it comes with a 'has_bootindex' member that needs to be set
-    by the implementation, as shown above
--5. Even static strings, such as "alarm_timer->name", should be dynamically
--   allocated by the implementation. This is so because the QAPI also generates
--   a function to free its types and it cannot distinguish between dynamically
--   or statically allocated strings
--6. You have to include "qapi/qapi-commands-misc.h" in qemu-timer.c
- 
- Time to test the new command. Build qemu, run it as described in the "Testing"
- section and try this::
- 
-- { "execute": "query-alarm-clock" }
-+ { "execute": "query-option-rom" }
-  {
--     "return": {
--         "next-deadline": 2368219,
--         "clock-name": "dynticks"
--     }
-+     "return": [
-+	 {
-+	     "filename": "kvmvapic.bin"
-+	 }
-+     ]
-  }
- 
- 
- The HMP command
- ~~~~~~~~~~~~~~~
- 
--Here's the HMP counterpart of the query-alarm-clock command::
-+Here's the HMP counterpart of the query-option-roms command::
- 
-- void hmp_info_alarm_clock(Monitor *mon)
-+ void hmp_info_option_roms(Monitor *mon, const QDict *qdict)
-  {
--     QemuAlarmClock *clock;
-      Error *err = NULL;
-+     OptionRomInfoList *info_list, *tail;
-+     OptionRomInfo *info;
- 
--     clock = qmp_query_alarm_clock(&err);
-+     info_list = qmp_query_option_roms(&err);
-      if (hmp_handle_error(mon, err)) {
--         return;
-+	 return;
-      }
- 
--     monitor_printf(mon, "Alarm clock method in use: '%s'\n", clock->clock_name);
--     if (clock->has_next_deadline) {
--         monitor_printf(mon, "Next alarm will fire in %" PRId64 " nanoseconds\n",
--                        clock->next_deadline);
-+     for (tail = info_list; tail; tail = tail->next) {
-+	 info = tail->value;
-+	 monitor_printf(mon, "%s", info->filename);
-+	 if (info->has_bootindex) {
-+	     monitor_printf(mon, " %" PRId64, info->bootindex);
-+	 }
-+	 monitor_printf(mon, "\n");
-      }
- 
--    qapi_free_QemuAlarmClock(clock);
-+     qapi_free_OptionRomInfoList(info_list);
-  }
- 
--It's important to notice that hmp_info_alarm_clock() calls
--qapi_free_QemuAlarmClock() to free the data returned by qmp_query_alarm_clock().
--For user defined types, the QAPI will generate a qapi_free_QAPI_TYPE_NAME()
--function and that's what you have to use to free the types you define and
--qapi_free_QAPI_TYPE_NAMEList() for list types (explained in the next section).
--If the QMP call returns a string, then you should g_free() to free it.
-+It's important to notice that hmp_info_option_roms() calls
-+qapi_free_OptionRomInfoList() to free the data returned by
-+qmp_query_option_roms().  For user defined types, QAPI will generate a
-+qapi_free_QAPI_TYPE_NAME() function, and that's what you have to use to
-+free the types you define and qapi_free_QAPI_TYPE_NAMEList() for list
-+types (explained in the next section). If the QMP function returns a
-+string, then you should g_free() to free it.
- 
--Also note that hmp_info_alarm_clock() performs error handling. That's not
--strictly required if you're sure the QMP function doesn't return errors, but
--it's good practice to always check for errors.
-+Also note that hmp_info_option_roms() performs error handling. That's
-+not strictly required when you're sure the QMP function doesn't return
-+errors; you could instead pass it &error_abort then.
- 
--Another important detail is that HMP's "info" commands don't go into the
--hmp-commands.hx. Instead, they go into the info_cmds[] table, which is defined
--in the monitor/misc.c file. The entry for the "info alarmclock" follows::
-+Another important detail is that HMP's "info" commands go into
-+hmp-commands-info.hx, not hmp-commands.hx. The entry for the "info
-+option-roms" follows::
- 
--    {
--        .name       = "alarmclock",
--        .args_type  = "",
--        .params     = "",
--        .help       = "show information about the alarm clock",
--        .cmd        = hmp_info_alarm_clock,
--    },
-+     {
-+	 .name       = "option-roms",
-+	 .args_type  = "",
-+	 .params     = "",
-+	 .help       = "show roms",
-+	 .cmd        = hmp_info_option_roms,
-+     },
-+ SRST
-+ ``info option-roms``
-+   Show the option ROMs.
-+ ERST
- 
--To test this, run qemu and type "info alarmclock" in the user monitor.
-+To test this, run qemu and type "info option-roms" in the user monitor.
- 
- 
--Returning Lists
--~~~~~~~~~~~~~~~
--
--For this example, we're going to return all available methods for the timer
--alarm, which is pretty much what the command-line option "-clock ?" does,
--except that we're also going to inform which method is in use.
--
--This first step is to define a new type::
--
-- ##
-- # @TimerAlarmMethod
-- #
-- # Timer alarm method information.
-- #
-- # @method-name: The method's name.
-- #
-- # @current: true if this alarm method is currently in use, false otherwise
-- #
-- # Since: 1.0
-- ##
-- { 'type': 'TimerAlarmMethod',
--   'data': { 'method-name': 'str', 'current': 'bool' } }
--
--The command will be called "query-alarm-methods", here is its schema
--specification::
--
-- ##
-- # @query-alarm-methods
-- #
-- # Returns information about available alarm methods.
-- #
-- # Returns: a list of @TimerAlarmMethod for each method
-- #
-- # Since: 1.0
-- ##
-- { 'command': 'query-alarm-methods', 'returns': ['TimerAlarmMethod'] }
--
--Notice the syntax for returning lists "'returns': ['TimerAlarmMethod']", this
--should be read as "returns a list of TimerAlarmMethod instances".
--
--The C implementation follows::
--
-- TimerAlarmMethodList *qmp_query_alarm_methods(Error **errp)
-- {
--     TimerAlarmMethodList *method_list = NULL;
--     const struct qemu_alarm_timer *p;
--     bool current = true;
--
--     for (p = alarm_timers; p->name; p++) {
--         TimerAlarmMethod *value = g_malloc0(*value);
--         value->method_name = g_strdup(p->name);
--         value->current = current;
--         QAPI_LIST_PREPEND(method_list, value);
--         current = false;
--     }
--
--     return method_list;
-- }
--
--The most important difference from the previous examples is the
--TimerAlarmMethodList type, which is automatically generated by the QAPI from
--the TimerAlarmMethod type.
--
--Each list node is represented by a TimerAlarmMethodList instance. We have to
--allocate it, and that's done inside the for loop: the "info" pointer points to
--an allocated node. We also have to allocate the node's contents, which is
--stored in its "value" member. In our example, the "value" member is a pointer
--to an TimerAlarmMethod instance.
--
--Notice that the "current" variable is used as "true" only in the first
--iteration of the loop. That's because the alarm timer method in use is the
--first element of the alarm_timers array. Also notice that QAPI lists are handled
--by hand and we return the head of the list.
--
--Now Build qemu, run it as explained in the "Testing" section and try our new
--command::
--
-- { "execute": "query-alarm-methods" }
-- {
--     "return": [
--         {
--             "current": false,
--             "method-name": "unix"
--         },
--         {
--             "current": true,
--             "method-name": "dynticks"
--         }
--     ]
-- }
--
--The HMP counterpart is a bit more complex than previous examples because it
--has to traverse the list, it's shown below for reference::
--
-- void hmp_info_alarm_methods(Monitor *mon)
-- {
--     TimerAlarmMethodList *method_list, *method;
--     Error *err = NULL;
--
--     method_list = qmp_query_alarm_methods(&err);
--     if (hmp_handle_error(mon, err)) {
--         return;
--     }
--
--     for (method = method_list; method; method = method->next) {
--         monitor_printf(mon, "%c %s\n", method->value->current ? '*' : ' ',
--                                        method->value->method_name);
--     }
--
--     qapi_free_TimerAlarmMethodList(method_list);
-- }
--
- Writing a debugging aid returning unstructured text
- ---------------------------------------------------
- 
- As discussed in section `Modelling data in QAPI`_, it is required that
- commands expecting machine usage be using fine-grained QAPI data types.
- The exception to this rule applies when the command is solely intended
--as a debugging aid and allows for returning unstructured text. This is
--commonly needed for query commands that report aspects of QEMU's
--internal state that are useful to human operators.
-+as a debugging aid and allows for returning unstructured text, such as
-+a query command that report aspects of QEMU's internal state that are
-+useful only to human operators.
- 
--In this example we will consider a simplified variant of the HMP
--command ``info roms``. Following the earlier rules, this command will
--need to live under the ``x-`` name prefix, so its QMP implementation
--will be called ``x-query-roms``. It will have no parameters and will
--return a single text string::
--
-- { 'struct': 'HumanReadableText',
--   'data': { 'human-readable-text': 'str' } }
-+In this example we will consider the existing QMP command
-+``x-query-roms`` in qapi/machine.json.  It has no parameters and
-+returns a ``HumanReadableText``::
- 
-+ ##
-+ # @x-query-roms:
-+ #
-+ # Query information on the registered ROMS
-+ #
-+ # Features:
-+ #
-+ # @unstable: This command is meant for debugging.
-+ #
-+ # Returns: registered ROMs
-+ #
-+ # Since: 6.2
-+ ##
-  { 'command': 'x-query-roms',
--   'returns': 'HumanReadableText' }
-+   'returns': 'HumanReadableText',
-+   'features': [ 'unstable' ] }
- 
--The ``HumanReadableText`` struct is intended to be used for all
--commands, under the ``x-`` name prefix that are returning unstructured
--text targeted at humans. It should never be used for commands outside
--the ``x-`` name prefix, as those should be using structured QAPI types.
-+The ``HumanReadableText`` struct is defined in qapi/common.json as a
-+struct with a string member. It is intended to be used for all
-+commands that are returning unstructured text targeted at
-+humans. These should all have feature 'unstable'.  Note that the
-+feature's documentation states why the command is unstable.  WE
-+commonly use a ``x-`` command name prefix to make lack of stability
-+obvious to human users.
- 
- Implementing the QMP command
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- The QMP implementation will typically involve creating a ``GString``
--object and printing formatted data into it::
-+object and printing formatted data into it, like this::
- 
-  HumanReadableText *qmp_x_query_roms(Error **errp)
-  {
-@@ -698,6 +595,9 @@ object and printing formatted data into it::
-      return human_readable_text_from_str(buf);
-  }
- 
-+The actual implementation emits more information.  You can find it in
-+hw/core/loader.c.
-+
- 
- Implementing the HMP command
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -706,7 +606,7 @@ Now that the QMP command is in place, we can also make it available in
- the human monitor (HMP) as shown in previous examples. The HMP
- implementations will all look fairly similar, as all they need do is
- invoke the QMP command and then print the resulting text or error
--message. Here's the implementation of the "info roms" HMP command::
-+message. Here's an implementation of the "info roms" HMP command::
- 
-  void hmp_info_roms(Monitor *mon, const QDict *qdict)
-  {
-@@ -746,3 +646,5 @@ field NULL::
-         .help         = "show roms",
-         .cmd_info_hrt = qmp_x_query_roms,
-     },
-+
-+This is how the actual HMP command is done.
--- 
-2.43.0
+>  {
+>      CPUState *cs =3D env_cpu(env);
+> -    target_ulong deaw =3D env->spr[SPR_DAWR0] & PPC_BITMASK(0, 60);
+> -    uint32_t dawrx =3D env->spr[SPR_DAWRX0];
+> +    int spr_dawr =3D !rid ? SPR_DAWR0 : SPR_DAWR1;
+> +    int spr_dawrx =3D !rid ? SPR_DAWRX0 : SPR_DAWRX1;
+> +    target_ulong deaw =3D env->spr[spr_dawr] & PPC_BITMASK(0, 60);
+> +    uint32_t dawrx =3D env->spr[spr_dawrx];
+>      int mrd =3D extract32(dawrx, PPC_BIT_NR(48), 54 - 48);
+>      bool dw =3D extract32(dawrx, PPC_BIT_NR(57), 1);
+>      bool dr =3D extract32(dawrx, PPC_BIT_NR(58), 1);
+> @@ -144,9 +146,9 @@ void ppc_update_daw0(CPUPPCState *env)
+>      vaddr len;
+>      int flags;
+> =20
+> -    if (env->dawr0_watchpoint) {
+> -        cpu_watchpoint_remove_by_ref(cs, env->dawr0_watchpoint);
+> -        env->dawr0_watchpoint =3D NULL;
+> +    if (env->dawr_watchpoint[rid]) {
+> +        cpu_watchpoint_remove_by_ref(cs, env->dawr_watchpoint[rid]);
+> +        env->dawr_watchpoint[rid] =3D NULL;
+>      }
+> =20
+>      if (!dr && !dw) {
+> @@ -166,28 +168,45 @@ void ppc_update_daw0(CPUPPCState *env)
+>          flags |=3D BP_MEM_WRITE;
+>      }
+> =20
+> -    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr0_watchpoint);
+> +    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr_watchpoint[ri=
+d]);
+>  }
+> =20
+>  void ppc_store_dawr0(CPUPPCState *env, target_ulong val)
+>  {
+>      env->spr[SPR_DAWR0] =3D val;
+> -    ppc_update_daw0(env);
+> +    ppc_update_daw(env, 0);
+>  }
+> =20
+> -void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
+> +static void ppc_store_dawrx(CPUPPCState *env, uint32_t val, int rid)
+>  {
+>      int hrammc =3D extract32(val, PPC_BIT_NR(56), 1);
+> =20
+>      if (hrammc) {
+>          /* This might be done with a second watchpoint at the xor of DEA=
+W[0] */
+> -        qemu_log_mask(LOG_UNIMP, "%s: DAWRX0[HRAMMC] is unimplemented\n"=
+,
+> -                      __func__);
+> +        qemu_log_mask(LOG_UNIMP, "%s: DAWRX%d[HRAMMC] is unimplemented\n=
+",
+> +                      __func__, rid);
+>      }
+> =20
+> -    env->spr[SPR_DAWRX0] =3D val;
+> -    ppc_update_daw0(env);
+> +    env->spr[!rid ? SPR_DAWRX0 : SPR_DAWRX1] =3D val;
+> +    ppc_update_daw(env, rid);
+> +}
+> +
+> +void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
+> +{
+> +    ppc_store_dawrx(env, val, 0);
+> +}
+> +
+> +void ppc_store_dawr1(CPUPPCState *env, target_ulong val)
+> +{
+> +    env->spr[SPR_DAWR1] =3D val;
+> +    ppc_update_daw(env, 1);
+> +}
+> +
+> +void ppc_store_dawrx1(CPUPPCState *env, uint32_t val)
+> +{
+> +    ppc_store_dawrx(env, val, 1);
+>  }
+> +
+>  #endif
+>  #endif
+> =20
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index f8101ffa29..18dcc438ea 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -1236,7 +1236,7 @@ struct CPUArchState {
+>  #if defined(TARGET_PPC64)
+>      ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
+>      struct CPUBreakpoint *ciabr_breakpoint;
+> -    struct CPUWatchpoint *dawr0_watchpoint;
+> +    struct CPUWatchpoint *dawr_watchpoint[2];
+>  #endif
+>      target_ulong sr[32];   /* segment registers */
+>      uint32_t nb_BATs;      /* number of BATs */
+> @@ -1549,9 +1549,11 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong=
+ value);
+>  void ppc_store_lpcr(PowerPCCPU *cpu, target_ulong val);
+>  void ppc_update_ciabr(CPUPPCState *env);
+>  void ppc_store_ciabr(CPUPPCState *env, target_ulong value);
+> -void ppc_update_daw0(CPUPPCState *env);
+> +void ppc_update_daw(CPUPPCState *env, int rid);
+>  void ppc_store_dawr0(CPUPPCState *env, target_ulong value);
+>  void ppc_store_dawrx0(CPUPPCState *env, uint32_t value);
+> +void ppc_store_dawr1(CPUPPCState *env, target_ulong value);
+> +void ppc_store_dawrx1(CPUPPCState *env, uint32_t value);
+>  #endif /* !defined(CONFIG_USER_ONLY) */
+>  void ppc_store_msr(CPUPPCState *env, target_ulong value);
+> =20
+> @@ -1737,9 +1739,11 @@ void ppc_compat_add_property(Object *obj, const ch=
+ar *name,
+>  #define SPR_PSPB              (0x09F)
+>  #define SPR_DPDES             (0x0B0)
+>  #define SPR_DAWR0             (0x0B4)
+> +#define SPR_DAWR1             (0x0B5)
+>  #define SPR_RPR               (0x0BA)
+>  #define SPR_CIABR             (0x0BB)
+>  #define SPR_DAWRX0            (0x0BC)
+> +#define SPR_DAWRX1            (0x0BD)
+>  #define SPR_HFSCR             (0x0BE)
+>  #define SPR_VRSAVE            (0x100)
+>  #define SPR_USPRG0            (0x100)
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 23eb5522b6..c901559859 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -5131,6 +5131,20 @@ static void register_book3s_207_dbg_sprs(CPUPPCSta=
+te *env)
+>                          KVM_REG_PPC_CIABR, 0x00000000);
+>  }
+> =20
+> +static void register_book3s_310_dbg_sprs(CPUPPCState *env)
+> +{
+> +    spr_register_kvm_hv(env, SPR_DAWR1, "DAWR1",
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        &spr_read_generic, &spr_write_dawr1,
+> +                        KVM_REG_PPC_DAWR1, 0x00000000);
+> +    spr_register_kvm_hv(env, SPR_DAWRX1, "DAWRX1",
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        &spr_read_generic, &spr_write_dawrx1,
+> +                        KVM_REG_PPC_DAWRX1, 0x00000000);
+> +}
+> +
+>  static void register_970_dbg_sprs(CPUPPCState *env)
+>  {
+>      /* Breakpoints */
+> @@ -6473,6 +6487,7 @@ static void init_proc_POWER10(CPUPPCState *env)
+>      /* Common Registers */
+>      init_proc_book3s_common(env);
+>      register_book3s_207_dbg_sprs(env);
+> +    register_book3s_310_dbg_sprs(env);
+> =20
+>      /* Common TCG PMU */
+>      init_tcg_pmu_power8(env);
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 2ec6429e36..32eba7f725 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -3314,39 +3314,46 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs,=
+ CPUWatchpoint *wp)
+>  {
+>  #if defined(TARGET_PPC64)
+>      CPUPPCState *env =3D cpu_env(cs);
+> +    bool wt, wti, hv, sv, pr;
+> +    uint32_t dawrx;
+> +
+> +    if ((env->insns_flags2 & PPC2_ISA207S) &&
+> +        (wp =3D=3D env->dawr_watchpoint[0])) {
+> +        dawrx =3D env->spr[SPR_DAWRX0];
+> +    } else if ((env->insns_flags2 & PPC2_ISA310) &&
+> +               (wp =3D=3D env->dawr_watchpoint[1])) {
+> +        dawrx =3D env->spr[SPR_DAWRX1];
+> +    } else {
+> +        return false;
+> +    }
+> =20
+> -    if (env->insns_flags2 & PPC2_ISA207S) {
+> -        if (wp =3D=3D env->dawr0_watchpoint) {
+> -            uint32_t dawrx =3D env->spr[SPR_DAWRX0];
+> -            bool wt =3D extract32(dawrx, PPC_BIT_NR(59), 1);
+> -            bool wti =3D extract32(dawrx, PPC_BIT_NR(60), 1);
+> -            bool hv =3D extract32(dawrx, PPC_BIT_NR(61), 1);
+> -            bool sv =3D extract32(dawrx, PPC_BIT_NR(62), 1);
+> -            bool pr =3D extract32(dawrx, PPC_BIT_NR(62), 1);
+> -
+> -            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
+> -                return false;
+> -            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) =
+{
+> -                return false;
+> -            } else if (!sv) {
+> +    wt =3D extract32(dawrx, PPC_BIT_NR(59), 1);
+> +    wti =3D extract32(dawrx, PPC_BIT_NR(60), 1);
+> +    hv =3D extract32(dawrx, PPC_BIT_NR(61), 1);
+> +    sv =3D extract32(dawrx, PPC_BIT_NR(62), 1);
+> +    pr =3D extract32(dawrx, PPC_BIT_NR(62), 1);
+> +
+> +    if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
+> +        return false;
+> +    } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
+> +        return false;
+> +    } else if (!sv) {
+> +        return false;
+> +    }
+> +
+> +    if (!wti) {
+> +        if (env->msr & ((target_ulong)1 << MSR_DR)) {
+> +            if (!wt) {
+>                  return false;
+>              }
+> -
+> -            if (!wti) {
+> -                if (env->msr & ((target_ulong)1 << MSR_DR)) {
+> -                    if (!wt) {
+> -                        return false;
+> -                    }
+> -                } else {
+> -                    if (wt) {
+> -                        return false;
+> -                    }
+> -                }
+> +        } else {
+> +            if (wt) {
+> +                return false;
+>              }
+> -
+> -            return true;
+>          }
+>      }
+> +
+> +    return true;
+>  #endif
+> =20
+>      return false;
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index 86f97ee1e7..0c008bb725 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -28,6 +28,8 @@ DEF_HELPER_2(store_pcr, void, env, tl)
+>  DEF_HELPER_2(store_ciabr, void, env, tl)
+>  DEF_HELPER_2(store_dawr0, void, env, tl)
+>  DEF_HELPER_2(store_dawrx0, void, env, tl)
+> +DEF_HELPER_2(store_dawr1, void, env, tl)
+> +DEF_HELPER_2(store_dawrx1, void, env, tl)
+>  DEF_HELPER_2(store_mmcr0, void, env, tl)
+>  DEF_HELPER_2(store_mmcr1, void, env, tl)
+>  DEF_HELPER_3(store_pmc, void, env, i32, i64)
+> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+> index 203fe28e01..082712ff16 100644
+> --- a/target/ppc/machine.c
+> +++ b/target/ppc/machine.c
+> @@ -325,7 +325,8 @@ static int cpu_post_load(void *opaque, int version_id=
+)
+>          /* Re-set breaks based on regs */
+>  #if defined(TARGET_PPC64)
+>          ppc_update_ciabr(env);
+> -        ppc_update_daw0(env);
+> +        ppc_update_daw(env, 0);
+> +        ppc_update_daw(env, 1);
+>  #endif
+>          /*
+>           * TCG needs to re-start the decrementer timer and/or raise the
+> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+> index a9d41d2802..54e402b139 100644
+> --- a/target/ppc/misc_helper.c
+> +++ b/target/ppc/misc_helper.c
+> @@ -214,6 +214,16 @@ void helper_store_dawrx0(CPUPPCState *env, target_ul=
+ong value)
+>      ppc_store_dawrx0(env, value);
+>  }
+> =20
+> +void helper_store_dawr1(CPUPPCState *env, target_ulong value)
+> +{
+> +    ppc_store_dawr1(env, value);
+> +}
+> +
+> +void helper_store_dawrx1(CPUPPCState *env, target_ulong value)
+> +{
+> +    ppc_store_dawrx1(env, value);
+> +}
+> +
+>  /*
+>   * DPDES register is shared. Each bit reflects the state of the
+>   * doorbell interrupt of a thread of the same core.
+> diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
+> index 8a9d6cd994..c987a50809 100644
+> --- a/target/ppc/spr_common.h
+> +++ b/target/ppc/spr_common.h
+> @@ -162,6 +162,8 @@ void spr_write_cfar(DisasContext *ctx, int sprn, int =
+gprn);
+>  void spr_write_ciabr(DisasContext *ctx, int sprn, int gprn);
+>  void spr_write_dawr0(DisasContext *ctx, int sprn, int gprn);
+>  void spr_write_dawrx0(DisasContext *ctx, int sprn, int gprn);
+> +void spr_write_dawr1(DisasContext *ctx, int sprn, int gprn);
+> +void spr_write_dawrx1(DisasContext *ctx, int sprn, int gprn);
+>  void spr_write_ureg(DisasContext *ctx, int sprn, int gprn);
+>  void spr_read_purr(DisasContext *ctx, int gprn, int sprn);
+>  void spr_write_purr(DisasContext *ctx, int sprn, int gprn);
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 049f636927..ac2a53f3b8 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -593,6 +593,18 @@ void spr_write_dawrx0(DisasContext *ctx, int sprn, i=
+nt gprn)
+>      translator_io_start(&ctx->base);
+>      gen_helper_store_dawrx0(tcg_env, cpu_gpr[gprn]);
+>  }
+> +
+> +void spr_write_dawr1(DisasContext *ctx, int sprn, int gprn)
+> +{
+> +    translator_io_start(&ctx->base);
+> +    gen_helper_store_dawr1(tcg_env, cpu_gpr[gprn]);
+> +}
+> +
+> +void spr_write_dawrx1(DisasContext *ctx, int sprn, int gprn)
+> +{
+> +    translator_io_start(&ctx->base);
+> +    gen_helper_store_dawrx1(tcg_env, cpu_gpr[gprn]);
+> +}
+>  #endif /* defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY) */
+> =20
+>  /* CTR */
 
 
