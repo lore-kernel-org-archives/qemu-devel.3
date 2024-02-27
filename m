@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4717C54E49
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B4ACC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ret2Z-00038v-0H; Tue, 27 Feb 2024 03:42:19 -0500
+	id 1ret28-0008QX-8Y; Tue, 27 Feb 2024 03:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret2V-0002aM-2r
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:15 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1k-0007dT-PP
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:32 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret2R-0008KK-SX
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:14 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-564fc495d83so4580865a12.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:42:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1c-000809-30
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:28 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-512a65cd2c7so5549014e87.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:41:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709023330; x=1709628130; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709023278; x=1709628078; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9zD/OKW2eI569vD83pviooB+9Gzp5s2IN5noJR3qtG4=;
- b=AgV0M77zCe75IXST6dLnYlJLJt8+WKT8/UA4JivMuWP0NFz1T+j1Bh27hWmLHZx5M0
- 6ohlK84p7VLz8hLg7DlUCuRGbn8mysBOIM4tPIabeu2Syml1aIcUyKvenQZCtiHt8cOM
- Nt8mDefoQI6tGA5lPGlKReiiJWz3WBKuTyjioySLUu6cF1PWUcIeOp1eFtzpocGyvPkD
- IRWrMXvh5thl3dqAyO/rF3T/a9bP0ZhOvUUQ24pTTpDJm66qDLGiMtf/xmvqbBoh3inJ
- h0WU/ikGpiymU7ELoF+plxIE2WFNq3ZeFRfak9qyl0rUt+pr1yQcn4R24ewA69xU3C8m
- Rtrg==
+ bh=PlYoLDbUbjomSEd23m1u/ajnPye5YRTUfebEkIuJSY0=;
+ b=bXMBlr8Pfz8cayLou3WQFdkwZJ17kFeaYYSjO0S8lDZjMCsRfacf0BFVl8hlj9dfGw
+ ABIbgR1KLM2y0TcQ78rE/yE3DlpH/7Ml79Exh3EygiLWypMbxx6ffz98OfFEbztWiRfl
+ lzECAWN7YS/+WFUeBYKamNmTNSvEoagSZgYi04eSE084SwliIerRuOO11kZWXvbU2huN
+ qPaCbsIMq3GLXXwOXng1VbeBcU6JqMxhgESfXgV8BgMiqqPtP4HBczx05VYSNWGYdo/+
+ WwIgn6A91b0LsQSRgWrI4QSfgfIFp871Rf2cKOe5la5Z6MG2f72DRiciI9P42ApM75q7
+ JzuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709023330; x=1709628130;
+ d=1e100.net; s=20230601; t=1709023278; x=1709628078;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9zD/OKW2eI569vD83pviooB+9Gzp5s2IN5noJR3qtG4=;
- b=PdKPjK7478eFD8qU5cpUCnWYgeKE8njTBVMyTis+e1dHHqaoMMg1XTsfXxQHcWtlHt
- xlZsWY1FA7+FmUjjhsUy31hgDu8fRNdeYA58CAVOcPy/k4LDv2//+P+937OV/viZMWcH
- ud1MpuepP3Ylg+wxkMffQ/M8WSIQe3oFonl3l2WHK3P8Q2x5F6wG/XbngPGTIBGtDLYJ
- M8uF5cP9B33Z9SmrphfCgvBZvwnBqmfDWVTlwVodFpEegpnVcgG2kW9OBZNlU61IFB1a
- czgOWDvOhtOGucZ95WtRTQUEkeMeOhGs6NipSbcqC2xn/AAdX/ja7hAe5e2SM5jqll2Y
- +iIg==
-X-Gm-Message-State: AOJu0Yz9afXVYaSK5p4mtNJEdAx0lJ+zu4EkLMmYqT08Y19ltqhAnhd8
- 6tUgto+OC7cEjY0S2fdncvNg4KUr64HzQoidpF2PtZI3CiVQF8QW0GVJjFf3UL2athNl/O24yNF
- I
-X-Google-Smtp-Source: AGHT+IE02bMtvZpWaB9ce3nfzypPQuqHvxqyi/6ii5I60rSE3K89IJ/uqNDmgkBPVMwaHCPTB+Lgjg==
-X-Received: by 2002:a05:6402:6da:b0:566:aa2:8433 with SMTP id
- n26-20020a05640206da00b005660aa28433mr2734239edy.36.1709023329828; 
- Tue, 27 Feb 2024 00:42:09 -0800 (PST)
+ bh=PlYoLDbUbjomSEd23m1u/ajnPye5YRTUfebEkIuJSY0=;
+ b=A1nIE4Qjb84Wk9rcCo7TeGih1n8Ou5PnhMpM2ATgiSTV/gCQIAL09k5ymFyGT3y2GH
+ T5fPpR2EjO2yfSVVgqEnyfvp7eLdu5QpKrEdZJG+1iVi9vxx71BftavhVDxTQDN6GpKw
+ mJAXQLP7alteB15bLtWTuhJJb7h/A4E2Hn8YD6jJ09HTgWje73XjoGfmY85tGqgoeE5T
+ OXZ+FXtc+igljZLbC9bsjzRFLLbYbLwoGA5rSZJUykJqIxwBY1zG3UxJ40yXOiYzrabT
+ Lwm2u3bba0/NKDJSe8eeQQWxB9sOEUET+qvTAYXVfYnaYm1TLFKtJqqzjUhals70b0KT
+ NDZg==
+X-Gm-Message-State: AOJu0Yx1uClYa1YAWu6umBL123UMzgnipiSwA2dGsPUztRGBDg18s+ht
+ mr5mBzDRuXxbxY9VhZiENroufSsC2YJxetrZk0goB1bgiLXVdDhpHjvk/Q6EVFlZTIr8FGsqfXR
+ C
+X-Google-Smtp-Source: AGHT+IGLLOYV3D+5HRrVOa/za+fkZoPSCpx6sl0EAkvOP6CREgkO1DSGwEFeHXF2vqjzYbeDmin7oA==
+X-Received: by 2002:ac2:58d9:0:b0:512:febe:ab20 with SMTP id
+ u25-20020ac258d9000000b00512febeab20mr2406231lfo.17.1709023277754; 
+ Tue, 27 Feb 2024 00:41:17 -0800 (PST)
 Received: from m1x-phil.lan (mic92-h03-176-184-33-214.dsl.sta.abo.bbox.fr.
  [176.184.33.214]) by smtp.gmail.com with ESMTPSA id
- q7-20020a056402040700b00566220e204csm543399edv.15.2024.02.27.00.42.07
+ j5-20020a19f505000000b00512daaef13bsm1109312lfb.102.2024.02.27.00.41.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Feb 2024 00:42:09 -0800 (PST)
+ Tue, 27 Feb 2024 00:41:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 22/30] hw/i386/sgx: Use QDev API
-Date: Tue, 27 Feb 2024 09:39:38 +0100
-Message-ID: <20240227083948.5427-23-philmd@linaro.org>
+ Helge Deller <deller@gmx.de>
+Subject: [PULL 14/30] hw/hppa: do not require CONFIG_USB
+Date: Tue, 27 Feb 2024 09:39:30 +0100
+Message-ID: <20240227083948.5427-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240227083948.5427-1-philmd@linaro.org>
 References: <20240227083948.5427-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,51 +97,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer the QDev API over the low level QOM one.
-No logical change intended.
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+With --without-default-devices it is possible to build a binary that
+does not include any USB host controller and therefore that does not
+include the code guarded by CONFIG_USB.  While the simpler creation
+functions such as usb_create_simple can be inlined, this is not true
+of usb_bus_find().  Remove it, replacing it with a search of the single
+USB bus on the machine.
+
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240223124406.234509-6-pbonzini@redhat.com>
+[PMD: Fixed style]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240215142035.73331-4-philmd@linaro.org>
 ---
- hw/i386/sgx.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ hw/hppa/machine.c | 10 +++++++---
+ hw/hppa/Kconfig   |  2 +-
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/hw/i386/sgx.c b/hw/i386/sgx.c
-index 70305547d4..de76397bcf 100644
---- a/hw/i386/sgx.c
-+++ b/hw/i386/sgx.c
-@@ -286,7 +286,6 @@ void pc_machine_init_sgx_epc(PCMachineState *pcms)
-     SGXEPCState *sgx_epc = &pcms->sgx_epc;
-     X86MachineState *x86ms = X86_MACHINE(pcms);
-     SgxEPCList *list = NULL;
--    Object *obj;
- 
-     memset(sgx_epc, 0, sizeof(SGXEPCState));
-     if (!x86ms->sgx_epc_list) {
-@@ -300,16 +299,15 @@ void pc_machine_init_sgx_epc(PCMachineState *pcms)
-                                 &sgx_epc->mr);
- 
-     for (list = x86ms->sgx_epc_list; list; list = list->next) {
--        obj = object_new("sgx-epc");
-+        DeviceState *dev = qdev_new(TYPE_SGX_EPC);
- 
-         /* set the memdev link with memory backend */
--        object_property_parse(obj, SGX_EPC_MEMDEV_PROP, list->value->memdev,
--                              &error_fatal);
-+        object_property_parse(OBJECT(dev), SGX_EPC_MEMDEV_PROP,
-+                              list->value->memdev, &error_fatal);
-         /* set the numa node property for sgx epc object */
--        object_property_set_uint(obj, SGX_EPC_NUMA_NODE_PROP, list->value->node,
--                             &error_fatal);
--        object_property_set_bool(obj, "realized", true, &error_fatal);
--        object_unref(obj);
-+        object_property_set_uint(OBJECT(dev), SGX_EPC_NUMA_NODE_PROP,
-+                                 list->value->node, &error_fatal);
-+        qdev_realize_and_unref(dev, NULL, &error_fatal);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index 5fcaf5884b..37ee6387e0 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -396,10 +396,14 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
      }
  
-     if ((sgx_epc->base + sgx_epc->size) < sgx_epc->base) {
+     /* create USB OHCI controller for USB keyboard & mouse on Astro machines */
+-    if (!lasi_dev && machine->enable_graphics) {
++    if (!lasi_dev && machine->enable_graphics && defaults_enabled()) {
++        USBBus *usb_bus;
++
+         pci_create_simple(pci_bus, -1, "pci-ohci");
+-        usb_create_simple(usb_bus_find(-1), "usb-kbd");
+-        usb_create_simple(usb_bus_find(-1), "usb-mouse");
++        usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
++                                                          &error_abort));
++        usb_create_simple(usb_bus, "usb-kbd");
++        usb_create_simple(usb_bus, "usb-mouse");
+     }
+ 
+     /* register power switch emulation */
+diff --git a/hw/hppa/Kconfig b/hw/hppa/Kconfig
+index dff5df7f72..ee7ffd2bfb 100644
+--- a/hw/hppa/Kconfig
++++ b/hw/hppa/Kconfig
+@@ -2,6 +2,7 @@ config HPPA_B160L
+     bool
+     imply PCI_DEVICES
+     imply E1000_PCI
++    imply USB_OHCI_PCI
+     imply VIRTIO_VGA
+     select ASTRO
+     select DINO
+@@ -17,4 +18,3 @@ config HPPA_B160L
+     select LASIPS2
+     select PARALLEL
+     select ARTIST
+-    select USB_OHCI_PCI
 -- 
 2.41.0
 
