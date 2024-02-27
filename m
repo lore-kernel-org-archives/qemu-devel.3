@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B630C48BF6
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 01:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BE62C48BF6
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 01:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1relqs-0007Ok-Vt; Mon, 26 Feb 2024 20:01:47 -0500
+	id 1relvx-0000Gs-TK; Mon, 26 Feb 2024 20:07:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1relqr-0007OY-3C
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 20:01:45 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1relvv-0000GW-9A
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 20:06:59 -0500
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1relqo-00056c-Uh
- for qemu-devel@nongnu.org; Mon, 26 Feb 2024 20:01:44 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6e4f3cbb518so1082985b3a.3
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 17:01:42 -0800 (PST)
+ id 1relvn-0005px-Dr
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 20:06:58 -0500
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-7bed9fb159fso186069639f.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 17:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1708995701; x=1709600501; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1708996009; x=1709600809; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eZDdKR41hFYtGH6CFmjj4eUOG/E7SO7Xv5k4ut6JPaQ=;
- b=V7oRlqwxrTXPv8tH66Kbs8vCePAwjlmtyX0Cv2eEuzjEj9qRkB0FGsOYGlVYsMfRq3
- aFvsPIhq244fPU0g63YZ3covFHGeQjn1Hh3PlPo5zH6YsVqpsTMPawXFduErD5Al89IK
- koHv+dAaifIIivqE8UPPZTJuADQ/yOaPOoxa90pS6+lvu6sdRJxn9iA6N5MF8+iNySDJ
- lz7r5+5e9IwM1KbHgDQ54b6VTCWZZRiGthzjWZwqSzFfgKp5Nwm6xzh1sOKlkNhB1FjK
- fsv+EgPTUtEiVapW2V/1yufN3yQ2lGniVnrQ6AniwDNtMN4w6R2Ag2BHpzi0gfQsfIPr
- WX2w==
+ bh=WVoAGP6yYuSlpDtZA3JBGfA3TEVDc/MSNeQz65Aoz2I=;
+ b=Ati3HbKiNmYELcC8dbOjmHb2AyNi9/WbDASgTyK4kxX+UgfcNZI2kGPOoPqkv5R5n9
+ /fwMF46br0P++lfzlIjH6McTE4hzmThasbT/PKIpz2YvwR0GY8CojS3O4y2hAsVeA+XZ
+ D2tXq6YcUJv9b+nbvXznaWD4j+4XGjwTM5NCKvsKa7lmr/SB1NfPgkfufZEntYolal0n
+ 0fRwavfgPMabsKFLObgauNUfEF8D4H96jq9lLRW9B3oxHrxl1Ruaqry04bA06YL0do28
+ /GEBYGHY3jYkh/43SkU75/Dzz1o5F1t1GNAhFnsiwrNCJOKzMdFhvljE0GalLIBv16W+
+ ouSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1708995701; x=1709600501;
+ d=1e100.net; s=20230601; t=1708996009; x=1709600809;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eZDdKR41hFYtGH6CFmjj4eUOG/E7SO7Xv5k4ut6JPaQ=;
- b=NhGbIuhBsTOV49EEaaP7rps7doDf2jTmPKO2SPERM+vyMzzyjydsc5Wwwcyf2P+zGF
- wkQGYHiSBn5aSWNYfIs3FuKbwG++AVy3m/za0k59pVvyXPNcA4RA47gvlns09b9Equc7
- q3N23Y/A1x+tlEaCQrbWCvcnmIGI7T8pUT/l1pI0FLJG1dylHOl+0ZtYIl3Bfmh3Pnvu
- +/l9a+DuN1t1HBMjzoMauzXF4LRn8L2muWW3HwsJwtDjRGTHtm5tYxJapP8P7aj5/aD7
- 6RmrdlCbFuRW+ab14EXrCdUsQHI17d1KwpE8ZNLzJUu0xVVu/aoH0k9QBBdp/ARJC/J1
- qfxA==
+ bh=WVoAGP6yYuSlpDtZA3JBGfA3TEVDc/MSNeQz65Aoz2I=;
+ b=lgOmFSSZcZDr8ZuVK7fkqFSiobkSXYTCKKK5NIayrgkSyxP+91hcMSy/eNNqistRhN
+ hc0cnFWKixMlw2ElF80sgnUalj1QBvCv3TTJEAevvFclvEKSRDIjKVGT7QpmGtVkW9eP
+ a6wnmlnhVxk2Ae8sU6qO5QA1P/+6/xd4akXjkml+5OK1uas3Ss0Ix4qpS+/TlcHL5NoY
+ DQ8RXSkU3/OT2bV/RRcu9d8b+3cyVfeDS+aQyyB3hAhMC9ZI2aLhDovUoSS8cfexvAEB
+ uhva0qikWnUp9TIH32o1fKbPmyUky52S1/ZDC7tIsGz883Ro9DJZSpfYnWxW8AUPXWTP
+ PNEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnRCnYaB3a5m8OBARDUwaqgoqaJ0+4kHcaV8aT509GRpO/2chwo375HxLzPQYMcPGVfePYrkrQ+bWwkx1HexJTNRxWjME=
-X-Gm-Message-State: AOJu0YxAWLF/cQ8lmVidHNMfqiJo/cEDEro3FAsdg6u+lzm9hH/R4mGY
- 8A/uCvMd0kmmWdkA7IsT3C4nHqeA23FkcJjz9UIg/yxldQjZUwHE
-X-Google-Smtp-Source: AGHT+IFiuLkyfTfP1K58Ed6tmWSnREBD9iKxhj60+zuRKso+K3MibCYCAPTiPG2zPH63kjaJnRJ2rA==
-X-Received: by 2002:a05:6a20:4f03:b0:1a0:c427:9c4b with SMTP id
- gi3-20020a056a204f0300b001a0c4279c4bmr638311pzb.19.1708995701353; 
- Mon, 26 Feb 2024 17:01:41 -0800 (PST)
+ AJvYcCVlvFH8tMGcVP0mGz5U2d/s/bJEhRwOcmE2aBl/Roo8b0XRpSsDk/IkrRIKVTw1QV6mhri/UOmTlf+kDO9lXaf123vH3Vc=
+X-Gm-Message-State: AOJu0YxlcbFu3HA2Eu0lfQKaZbK+yc2qr7l4unlGSwYp9B8I9zVVBrmO
+ O84lxEM/PC+nvk+jLfp8EAKhQCl/2+rKn2Gp7YTBcTk3rLrcq8Nj
+X-Google-Smtp-Source: AGHT+IF/55mrQiCdVIew+CQkJsK20umuoCxmQ6xDzwu2UkEdTp+pgMbspQt5rGTI04LirRAQhBLXkQ==
+X-Received: by 2002:a92:cb90:0:b0:365:32b:602b with SMTP id
+ z16-20020a92cb90000000b00365032b602bmr8897814ilo.11.1708996009253; 
+ Mon, 26 Feb 2024 17:06:49 -0800 (PST)
 Received: from debian ([2601:641:300:14de:cd6d:a14c:bd98:9c36])
  by smtp.gmail.com with ESMTPSA id
- n7-20020a056a000d4700b006e4d545519dsm4697451pfv.62.2024.02.26.17.01.39
+ y5-20020a633205000000b005dc120fa3b2sm4523869pgy.18.2024.02.26.17.06.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 17:01:41 -0800 (PST)
+ Mon, 26 Feb 2024 17:06:48 -0800 (PST)
 From: fan <nifan.cxl@gmail.com>
 X-Google-Original-From: fan <fan@debian>
-Date: Mon, 26 Feb 2024 17:01:22 -0800
+Date: Mon, 26 Feb 2024 17:06:46 -0800
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  gregory.price@memverge.com, ira.weiny@intel.com,
@@ -70,7 +70,7 @@ Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  jim.harris@samsung.com, Fan Ni <fan.ni@samsung.com>
 Subject: Re: [PATCH v4 08/10] hw/cxl/cxl-mailbox-utils: Add mailbox commands
  to support add/release dynamic capacity response
-Message-ID: <Zd00YhCejwN6NuU6@debian>
+Message-ID: <Zd01poqsQHKMu1KQ@debian>
 References: <20240221182020.1086096-1-nifan.cxl@gmail.com>
  <20240221182020.1086096-9-nifan.cxl@gmail.com>
  <20240226180417.00004dc4@Huawei.com>
@@ -78,14 +78,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20240226180417.00004dc4@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -198,11 +198,6 @@ On Mon, Feb 26, 2024 at 06:04:17PM +0000, Jonathan Cameron wrote:
 > to allow for complex extent list tracking implementations.  Succeeding
 > when a naive solution would fail due to running out of extents that it can
 > manage is not (I think) a bug.
-
-Yeah. spec r3.1 mentioned about the overflow issue that adding/releasing
-extent requests can raise. We should fail the operation if running out of
-extents and report resource exhausted.
-
 > 
 > > +                }
 > > +                break;
@@ -213,6 +208,11 @@ extents and report resource exhausted.
 > I think we need to fix this. Linux isn't going to do it any time soon, but
 > I think it's allowed to allocate two extents next to each other then free them
 > in one go.  Isn't this case easy to do or are there awkward corners?
+
+If we use the bitmap (indicating each range is filled by valid extents)
+in PATCH 10, it should not be that difficult to do.
+
+Fan
 > If it's sufficiently nasty (maybe because only part of extent provided exists?)
 > then maybe we can leave it for now.
 > 
@@ -227,50 +227,6 @@ extents and report resource exhausted.
 > Nasty to test if nothing else :(  Would look much like your check
 > on malformed extent lists.
 > 
-
-I cannot find anything specific to this in the specification either.
-Since we have already detected the case where the extent range across
-multiple regions, the only case we need to capture here is one/multiple
-portions of an extents getting released and causing extent overflow.
-I think we can handle it after we introduce the bitmaps (PATCH 10) which
-indicates DPA ranges mapped by valid extents in the device.
-
-With that, The release workflow would be
-
-1) detecting malformed extent lists; if passed
-2) do cxl_detect_extent_overflow {
-    delta = 0;
-    make a copy of the bitmap as bitmap_copy;
-    for each extent in the updated_extent_list; do
-        if (extent range not fully set in the bitmap_copy)
-            return error;
-        else {
-            if gap at the front based on the bitmap_copy:
-                delta += 1;
-            if gap at the end based on the bitmap_copy:
-                delta += 1;
-            delta -= 1;
-            // NOTE: current_extent_count will not be updated in the
-            // loop since delta will track the whole loop
-            if (delta + current_extent_count > max_extent_count)
-                return resource exhausted;
-            update bitmap_copy to clear the range covered by the extent
-            under consideration;
-        }
-    done
-
-}; if pass
-3. do real release: in the pass, we will not need to detect extent
-errors;
-
-Does the above solution sound reasonable? If so, do we want to go this
-way? do we need to introduce the bitmap earlier in the series?
-
-Thanks,
-Fan
-
-
-
 > 
 > > +            } else if ((dpa < ent->start_dpa + ent->len &&
 > > +                        dpa + len > ent->start_dpa + ent->len) ||
