@@ -4,59 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6A1C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 21:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B784C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 21:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf4xE-0006ar-UO; Tue, 27 Feb 2024 16:25:37 -0500
+	id 1rf5PB-0000EU-Q2; Tue, 27 Feb 2024 16:54:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1rf4xA-0006aP-Ow; Tue, 27 Feb 2024 16:25:32 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rf5P9-0000Dm-GP
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 16:54:27 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1rf4x4-0007kS-27; Tue, 27 Feb 2024 16:25:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202312; t=1709069116;
- bh=JHjFaWBRAsJwtsx++RN4MujX8IaD5mSINGLiPX/1hnc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=UDimkuNIiCwChGLEiANjkgd743NGFF/yGx+v7yTQ0dLsa9PG94hxUwHjtGZkjAgHZ
- 9niSpOzA9Oarhk1I85AeqCQXlmc69bKNDw1aAHsiCHawwnbt+sUM6z3vN8GGvz7Iz+
- 7wtzYfvv1yYziRJdTtXBQuajlWVXPbQRIva6sVe4tva4jIMUjW2QMuJCISEhaDvgkO
- yvug7uvy2JQRufqhK/Fp/V0ePAt19AE0L86nioTkXVoJmbzcPZeZbnbQhJH60BVsLt
- 0VUPkZgzy1bISjktiUGAlEZLCdmsxQJfxhcJ49npKuqCsiZZ3ZkRsBLr958FfQ6X90
- FjMyh6jpei3BA==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4Tkr9m2mlyz4wcD; Wed, 28 Feb 2024 08:25:16 +1100 (AEDT)
-Date: Wed, 28 Feb 2024 07:52:52 +1100
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Shivaprasad G Bhat <sbhat@linux.ibm.com>, danielhb413@gmail.com,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com, clg@kaod.org,
- groug@kaod.org, pbonzini@redhat.com, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 2/2] ppc: spapr: Enable 2nd DAWR on Power10 pSeries
- machine
-Message-ID: <Zd5LpH-pPOT-MHiu@zatzit>
-References: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
- <170679878985.188422.6745903342602285494.stgit@ltc-boston1.aus.stglabs.ibm.com>
- <CZFUVDPGK7OU.1CBJ2TIMJ719P@wheely>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rf5P6-00075x-Ut
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 16:54:27 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7EC064E6012;
+ Tue, 27 Feb 2024 22:54:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id ms3SCURVnVbr; Tue, 27 Feb 2024 22:54:19 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 82E2E4E6005; Tue, 27 Feb 2024 22:54:19 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 817397456FE;
+ Tue, 27 Feb 2024 22:54:19 +0100 (CET)
+Date: Tue, 27 Feb 2024 22:54:19 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
+Subject: Re: [PATCH 3/5] hw/isa: Embed TYPE_PORT92 in south bridges used in
+ PC machines
+In-Reply-To: <F3980E89-7FE5-443A-9287-DB0350B159D9@gmail.com>
+Message-ID: <f25bdf58-2fc0-9f04-ef6c-c8d1cff02405@eik.bme.hu>
+References: <20240218131701.91132-1-shentey@gmail.com>
+ <20240218131701.91132-4-shentey@gmail.com>
+ <6a2333d7-9dea-4a0e-9d91-0889e6205128@ilande.co.uk>
+ <F3980E89-7FE5-443A-9287-DB0350B159D9@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="JEGw3Rvi+yG/ufYO"
-Content-Disposition: inline
-In-Reply-To: <CZFUVDPGK7OU.1CBJ2TIMJ719P@wheely>
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,217 +76,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 27 Feb 2024, Bernhard Beschow wrote:
+> Am 21. Februar 2024 11:53:21 UTC schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+>> On 18/02/2024 13:16, Bernhard Beschow wrote:
+>>> Port 92 is an integral part of the PIIX and ICH south bridges, so instantiate it
+>>> there. The isapc machine now needs to instantiate it explicitly, analoguous to
+>>> the RTC.
+>>>
+>>> Note that due to migration compatibility, port92 is optional in the south
+>>> bridges. It is always instantiated the isapc machine for simplicity.
+>>>
+>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>> ---
+>>>   include/hw/i386/pc.h          |  2 +-
+>>>   include/hw/southbridge/ich9.h |  4 ++++
+>>>   include/hw/southbridge/piix.h |  3 +++
+>>>   hw/i386/pc.c                  | 18 ++++++++++++------
+>>>   hw/i386/pc_piix.c             |  9 +++++++--
+>>>   hw/i386/pc_q35.c              |  8 +++++---
+>>>   hw/isa/lpc_ich9.c             |  9 +++++++++
+>>>   hw/isa/piix.c                 |  9 +++++++++
+>>>   hw/isa/Kconfig                |  2 ++
+>>>   9 files changed, 52 insertions(+), 12 deletions(-)
+>>
+>> I had a look at this (and did a bit of revision around 8042 and A20), 
+>> and I am starting to wonder if the PORT92 device isn't something that 
+>> belongs to the southbridge, but more specifically to the superio chip?
+>
+> If there is agreement to model real hardware in QEMU, then I think that
 
---JEGw3Rvi+yG/ufYO
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think there's no such agreement and QEMU is more lax about it both for 
+historical reasons and to simplify machine models. Indeed, QEMU sometimes 
+models non-existing machines (e.g. the mac99 or virt boards) that don't 
+correspond to real hardware but allow guest OSes to boot. Even when 
+modelllng real hardware it's ofren modelled just enough for guests to work 
+and unused details are omitted for simplicity. It is recommended to follow 
+what real hardware does when modelling real hardware but not always 
+required. Although it might help both with verifying a device model and to 
+compose machines with these models to try to follow the real hardware.
 
-On Tue, Feb 27, 2024 at 10:21:23PM +1000, Nicholas Piggin wrote:
-> On Fri Feb 2, 2024 at 12:46 AM AEST, Shivaprasad G Bhat wrote:
-> > As per the PAPR, bit 0 of byte 64 in pa-features property
-> > indicates availability of 2nd DAWR registers. i.e. If this bit is set, =
-2nd
-> > DAWR is present, otherwise not. Use KVM_CAP_PPC_DAWR1 capability to find
-> > whether kvm supports 2nd DAWR or not. If it's supported, allow user to =
-set
-> > the pa-feature bit in guest DT using cap-dawr1 machine capability.
-> >
-> > Signed-off-by: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-> > Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-> > ---
-> >  hw/ppc/spapr.c         |    7 ++++++-
-> >  hw/ppc/spapr_caps.c    |   36 ++++++++++++++++++++++++++++++++++++
-> >  hw/ppc/spapr_hcall.c   |   25 ++++++++++++++++---------
-> >  include/hw/ppc/spapr.h |    6 +++++-
-> >  target/ppc/kvm.c       |   12 ++++++++++++
-> >  target/ppc/kvm_ppc.h   |   12 ++++++++++++
-> >  6 files changed, 87 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> > index e8dabc8614..91a97d72e7 100644
-> > --- a/hw/ppc/spapr.c
-> > +++ b/hw/ppc/spapr.c
-> > @@ -262,7 +262,7 @@ static void spapr_dt_pa_features(SpaprMachineState =
-*spapr,
-> >          0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-> >          /* 54: DecFP, 56: DecI, 58: SHA */
-> >          0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-> > -        /* 60: NM atomic, 62: RNG */
-> > +        /* 60: NM atomic, 62: RNG, 64: DAWR1 (ISA 3.1) */
-> >          0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> >      };
-> >      uint8_t *pa_features =3D NULL;
-> > @@ -303,6 +303,9 @@ static void spapr_dt_pa_features(SpaprMachineState =
-*spapr,
-> >           * in pa-features. So hide it from them. */
-> >          pa_features[40 + 2] &=3D ~0x80; /* Radix MMU */
-> >      }
-> > +    if (spapr_get_cap(spapr, SPAPR_CAP_DAWR1)) {
-> > +        pa_features[66] |=3D 0x80;
-> > +    }
-> > =20
-> >      _FDT((fdt_setprop(fdt, offset, "ibm,pa-features", pa_features, pa_=
-size)));
-> >  }
-> > @@ -2138,6 +2141,7 @@ static const VMStateDescription vmstate_spapr =3D=
- {
-> >          &vmstate_spapr_cap_fwnmi,
-> >          &vmstate_spapr_fwnmi,
-> >          &vmstate_spapr_cap_rpt_invalidate,
-> > +        &vmstate_spapr_cap_dawr1,
-> >          NULL
-> >      }
-> >  };
-> > @@ -4717,6 +4721,7 @@ static void spapr_machine_class_init(ObjectClass =
-*oc, void *data)
-> >      smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] =3D SPAPR_CAP_ON;
-> >      smc->default_caps.caps[SPAPR_CAP_FWNMI] =3D SPAPR_CAP_ON;
-> >      smc->default_caps.caps[SPAPR_CAP_RPT_INVALIDATE] =3D SPAPR_CAP_OFF;
-> > +    smc->default_caps.caps[SPAPR_CAP_DAWR1] =3D SPAPR_CAP_OFF;
-> > =20
-> >      /*
-> >       * This cap specifies whether the AIL 3 mode for
-> > diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-> > index e889244e52..677f17cea6 100644
-> > --- a/hw/ppc/spapr_caps.c
-> > +++ b/hw/ppc/spapr_caps.c
-> > @@ -655,6 +655,32 @@ static void cap_ail_mode_3_apply(SpaprMachineState=
- *spapr,
-> >      }
-> >  }
-> > =20
-> > +static void cap_dawr1_apply(SpaprMachineState *spapr, uint8_t val,
-> > +                               Error **errp)
-> > +{
-> > +    ERRP_GUARD();
-> > +
-> > +    if (!val) {
-> > +        return; /* Disable by default */
-> > +    }
-> > +
-> > +    if (!ppc_type_check_compat(MACHINE(spapr)->cpu_type,
-> > +                               CPU_POWERPC_LOGICAL_3_10, 0,
-> > +                               spapr->max_compat_pvr)) {
-> > +        warn_report("DAWR1 supported only on POWER10 and later CPUs");
-> > +    }
->=20
-> Should this be an error?
+> port 92 belongs into any device model where the hardware has one. All 
+> our PC-like southbridges (PIIX, ICH, VIA) have port 92. Many FDC37xxxx 
+> including the FDC37M81x as used in the Malta board have one, too -- 
+> where it must first be enabled.
 
-Yes, it should.  If you can't supply the cap requested, you *must*
-fail to start.  Near enough is not good enough when it comes to the
-guest visible properties of the virtual machine, or you'll end up with
-no end of migration headaches.
+So port92 is not a real hardware but a QEMU abstraction or model of some 
+functionality found in some machines. Real chips probably implement this 
+in different ways so we could either model this in these chips 
+independently the same way as real hardware does or use the abstracted 
+model anywhere in our machine model. Since this does not exist in real 
+hardware as this abstract model it also does not belong anywhere so we are 
+free to put it where it's most convenient or simple to do.
 
-> Should the dawr1 cap be enabled by default for POWER10 machines?
->=20
-> > +
-> > +    if (kvm_enabled()) {
-> > +        if (!kvmppc_has_cap_dawr1()) {
-> > +            error_setg(errp, "DAWR1 not supported by KVM.");
-> > +            error_append_hint(errp, "Try appending -machine cap-dawr1=
-=3Doff");
-> > +        } else if (kvmppc_set_cap_dawr1(val) < 0) {
-> > +            error_setg(errp, "Error enabling cap-dawr1 with KVM.");
-> > +            error_append_hint(errp, "Try appending -machine cap-dawr1=
-=3Doff");
-> > +        }
-> > +    }
-> > +}
-> > +
-> >  SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] =3D {
-> >      [SPAPR_CAP_HTM] =3D {
-> >          .name =3D "htm",
-> > @@ -781,6 +807,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM=
-] =3D {
-> >          .type =3D "bool",
-> >          .apply =3D cap_ail_mode_3_apply,
-> >      },
-> > +    [SPAPR_CAP_DAWR1] =3D {
-> > +        .name =3D "dawr1",
-> > +        .description =3D "Allow 2nd Data Address Watchpoint Register (=
-DAWR1)",
-> > +        .index =3D SPAPR_CAP_DAWR1,
-> > +        .get =3D spapr_cap_get_bool,
-> > +        .set =3D spapr_cap_set_bool,
-> > +        .type =3D "bool",
-> > +        .apply =3D cap_dawr1_apply,
-> > +    },
-> >  };
-> > =20
-> >  static SpaprCapabilities default_caps_with_cpu(SpaprMachineState *spap=
-r,
-> > @@ -923,6 +958,7 @@ SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DEC=
-REMENTER);
-> >  SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
-> >  SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
-> >  SPAPR_CAP_MIG_STATE(rpt_invalidate, SPAPR_CAP_RPT_INVALIDATE);
-> > +SPAPR_CAP_MIG_STATE(dawr1, SPAPR_CAP_DAWR1);
-> > =20
-> >  void spapr_caps_init(SpaprMachineState *spapr)
-> >  {
-> > diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> > index fcefd1d1c7..34c1c77c95 100644
-> > --- a/hw/ppc/spapr_hcall.c
-> > +++ b/hw/ppc/spapr_hcall.c
-> > @@ -814,11 +814,12 @@ static target_ulong h_set_mode_resource_set_ciabr=
-(PowerPCCPU *cpu,
-> >      return H_SUCCESS;
-> >  }
-> > =20
-> > -static target_ulong h_set_mode_resource_set_dawr0(PowerPCCPU *cpu,
-> > -                                                  SpaprMachineState *s=
-papr,
-> > -                                                  target_ulong mflags,
-> > -                                                  target_ulong value1,
-> > -                                                  target_ulong value2)
-> > +static target_ulong h_set_mode_resource_set_dawr(PowerPCCPU *cpu,
-> > +                                                     SpaprMachineState=
- *spapr,
-> > +                                                     target_ulong mfla=
-gs,
-> > +                                                     target_ulong reso=
-urce,
-> > +                                                     target_ulong valu=
-e1,
-> > +                                                     target_ulong valu=
-e2)
->=20
-> Did the text alignment go wrong here?
->=20
-> Aside from those things,
->=20
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
->=20
-> Thanks,
-> Nick
->=20
+>> A couple of thoughts as to why I came to this conclusion: firstly the 
+>> superio chip is generally considered to be a single integrated 
+>> implementation of legacy IO devices, so this feels like a natural home 
+>> for the PORT92 device.
+>
+>> Secondly the value of the "has-port92" property is controlled by 
+>> pcms->i8042_enabled, and this value is already passed into functions 
+>> such as pc_superio_init() for example.
+>
+> Rhight. There, it also controls the presence of port 92. If we move port 
+> 92 into the southbridges, we have to respect this command line switch 
+> there to preserve backward compatibility.
+>
+> I wonder what `-M i8042` is supposed to do. If it is for modeling a 
+> stripped-down x86 system, why not use the microvm instead? How is it 
+> possible to omit an essential piece of hardware needed to boot x86 
+> systems? Don't we need at least either one (i8042 or port 92)?
 
---=20
-David Gibson			| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
-				| _way_ _around_!
-http://www.ozlabs.org/~dgibson
+Try git log -p 4ccd5fe22fe (found it via git blame and see what added that 
+property).
 
---JEGw3Rvi+yG/ufYO
-Content-Type: application/pgp-signature; name="signature.asc"
+>> I think this would also help reduce the changes required for the 
+>> individual machines, however the devil is always in the details 
+>> particularly when migration is involved.
+>
+> As stated above, this series is more about modeling real hardware, in 
+> the hope that this will lend itself for configuration-driven machine 
+> creation. It is also about identifying obstacles towards this goal. Does 
+> it make sense to deprecate some machine-specific options such as i8042?
 
------BEGIN PGP SIGNATURE-----
+Only if you want to break downsteam users of those options but maybe they 
+won't be happy about that.
 
-iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmXeS4AACgkQzQJF27ox
-2GfVzw//ak6l51KpjSiy/6K910UHxccgJrLCXCdqPYHTnPIOv+47AOUKH37F9Vma
-/JZW1JdEukAp39BTbMaQ1jYFBGp2DmmxJnLUHnK4B6uC3FIyvjrLgBUJo8QX82Gl
-90hLl8fpFhopK0Ui+wJSRwW0z0CyeRTzd+IhuLe+maz33pMQrc3tKBJWEecYq8pe
-5qImdihO3Lv4O75Gy96d26QsjYKinzri9j2cQSutGaX0RGpAMkcQB58DZ5yESH0B
-zwyNvLxk0F1ZKnAdHydbjxO8Dyqx4b33LIsV7flimD9eLFylmI2+igafz5kiM/as
-Dn9R4ckFd0KGRPLZSpod3ApUc/U3Qwhg/wns5FfoQMeQ3qmLbbzCWTwPeW3CjyF4
-UKOKo6yDHeQM7UKlOLqe253+oLExq5bIKtIEsTyrJy8H68qXJzdkjOq+Rkag41Cx
-Nl6XXamyuddmw4n6G5ntzE4496LkfbhoDFQX1cb5XA3pJyzRc+ekFNnaReYc9kAn
-gGRUTx1S/smZVEYfsyR88TGKNw7npRxMwSnYtYLP7sP4tOPGEQHUrzOfJhLHkouH
-jTCR0C+VtJqiYbOIv2VDnO0ZZeiJ+M1bPYwsfG/huyj2hJD2LdsdSzVobdEYSyMo
-xy+CjjyJWCdvOjd2x9i+/WCSuNYw/1SxpzG6ApB21WOT0CRMXIk=
-=Gekm
------END PGP SIGNATURE-----
-
---JEGw3Rvi+yG/ufYO--
+Regards,
+BALATON Zoltan
 
