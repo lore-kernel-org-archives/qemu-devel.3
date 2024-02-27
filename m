@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F98EC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 304CFC54E51
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ret2E-0000KA-7w; Tue, 27 Feb 2024 03:41:59 -0500
+	id 1ret2H-0000j2-Ma; Tue, 27 Feb 2024 03:42:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1u-0007rx-Mz
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:41 -0500
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1x-0007u6-KN
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:43 -0500
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1s-00087y-8O
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:38 -0500
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-512d19e2cb8so5964325e87.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:41:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1w-0008AR-0R
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:41 -0500
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d220e39907so63255661fa.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:41:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709023291; x=1709628091; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709023297; x=1709628097; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q16/BH7ujul6MroAh0WIw+sirhkolVXk4q/90kZo96k=;
- b=KTWu26fHP0wTOJh9MM66SSaXjjfeNYcssJKm9OSWZHqNZAil6Qb0M/dehxehj8c7aw
- 58kKBDpE2WlaB0//H9n+slMzDotrqJz3xJCRlJheSXvhU0TqfLrfsA64/FQBdcZiCC3Z
- VtQIII2+EsKFnQL8Xa9otpAG4xevwNyHbLDwBV7wccmZEARUbC9SHIduRBJeUCtpGKbG
- AoEYMg6DGVnHKD2NtKv6CelvvMCz0eAGXTg6YbcA2FjKfBm3fKfaowQtGiSON3sP9Ukx
- XTEdoajbemzwaBkF8bztuHcBE5P7nZ5bY0E2euu9DOYffvndwOxcx4vAKPmfyLS9ziZ1
- VHzg==
+ bh=RPm16UPsnU4F/4oJXar+5N8ETXoxZOH1kbNjYRQpNV0=;
+ b=rcJligoQblwAJ4JCuYj7ylTS9+N3IYln4qB/Be9hSHJGr8Na6JAqdv8q1MBbLHKePm
+ UXarjKcg70IsR1k25gI19UVIUG2Q9GA3/zcVNTI3K8nS2FT+eSNHfezttGMqos1IoNqi
+ U8J09SlkTtSXxqiHInisBATNsaX7J8yWC9vpSpEKtW19xgswqGiAL+1Zl4vHJooO1/72
+ wJ/zoGrvKZLA5JXeF24aDgE8Vm/M0yPYabPx8kJloQY0krQvhWC9Ix2yOTuL7FBWtjW/
+ qgDa3UBlrj3H56xN3N+NraT9wUyFFWFp9pAZMu4xxkBdGRnrTaHpPrzNMBOFLkE9afNE
+ WHew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709023291; x=1709628091;
+ d=1e100.net; s=20230601; t=1709023297; x=1709628097;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q16/BH7ujul6MroAh0WIw+sirhkolVXk4q/90kZo96k=;
- b=Ik40PbD+sj+OM1RI2RCq/2nWuNQOfPJvm27f2E3fNa1+B7FQYdcmpxYn/1khhhDhcM
- ymwsdoX6AkPMeTSLB+VObEUbBfgy05bKSnz0C1WgRsG2l4IvtzWu6L5s7LWeOfPi5SIm
- ASH6eMGEKHBi1EW3rkFwsB2CdM/3biqwMbXqdgKLRpRZTHSpsfKIDyD0dE1fBlKmE2FK
- wDgPoCZaTWO29jGP+G5WpFC8GsADWY0V8si/Rr65mhZHqS6d/OczQJGTmNDF8oitNtVO
- CoM607yPP3SBb+0fhzXToq5x3lNVP75dlzOyjrHfqNKu4l1YjoxajZr2TPolnXOXhmSQ
- EM5Q==
-X-Gm-Message-State: AOJu0Yx6oD7VXDoAmCKK04kWBwamPLGTs5k+GVe3gF1HPgPGEgtCUApQ
- 58Q/bBVQx6pHG8MOuIOI0D6kyik2D8qw0aCShLfxQ3q0zbnA+XmPc67h8Z2lgoq94+LSUh5CZIs
- P
-X-Google-Smtp-Source: AGHT+IHg9w67z4u/F09JeatGg8K0Tbdq/enXZAp+R6BMkqVsRN1eOvEg9paicoiW2FsUDJTkyUHQyA==
-X-Received: by 2002:ac2:424a:0:b0:512:8ac0:1f76 with SMTP id
- m10-20020ac2424a000000b005128ac01f76mr4813228lfl.66.1709023291132; 
- Tue, 27 Feb 2024 00:41:31 -0800 (PST)
+ bh=RPm16UPsnU4F/4oJXar+5N8ETXoxZOH1kbNjYRQpNV0=;
+ b=X8ORfNwXY4oQtrDy7bJYP0EUN9YMbC4fCmGusm/wcRB4RPmKSgPOqsqepv2yHUBqj0
+ 5CAlHDsbUl5uWFExK5qBByjV93eZ5qhIQIR7Ar2MqH38N+7ZO6dqZqyvfS3ilJ4tL/4Q
+ cptQk3mky+WXWhK/7X5g6rbu51rI5yoc5H/4w6qCArYFUBtl+OqtWfSJev2P/hll7aWV
+ BChFlzCX7wycTyJ7IPuvbWr+pB1KNJYtPCJrwJ/+hbtzXH1lp6s7loUj7O3p7KJHjmJF
+ 1XcxxMM796Rb0G79MvtNyudQ/kYivMjDtb1KQfABz/h1MSTwXsdtyHycTwTBDnusZWPf
+ 4omA==
+X-Gm-Message-State: AOJu0YzxzBHiDPGz6Mec+PnNiAD4JumONGYlOimoMnj8muDWAMzirknw
+ Ni7OGyt2EvcA09qPgtAUcfiXKzpafeXtWB0n5VcfIr/P2dAwppfVB8PVHUnLjw40nJ29b01ldWo
+ J
+X-Google-Smtp-Source: AGHT+IFcaDayJbT4H+1fH7SfXNgHNb226cHPP5331/6xu5QjiH4t6uJV5SqFwlEyBu/IKD0duQzz6w==
+X-Received: by 2002:a2e:8784:0:b0:2d2:3c10:4b6c with SMTP id
+ n4-20020a2e8784000000b002d23c104b6cmr5534555lji.24.1709023297560; 
+ Tue, 27 Feb 2024 00:41:37 -0800 (PST)
 Received: from m1x-phil.lan (mic92-h03-176-184-33-214.dsl.sta.abo.bbox.fr.
  [176.184.33.214]) by smtp.gmail.com with ESMTPSA id
- c18-20020ac24152000000b00512ab050435sm1121123lfi.100.2024.02.27.00.41.29
+ n1-20020a2e82c1000000b002d236114533sm1162859ljh.75.2024.02.27.00.41.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Feb 2024 00:41:30 -0800 (PST)
+ Tue, 27 Feb 2024 00:41:37 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 16/30] hw/ppc/pseries: do not require CONFIG_USB
-Date: Tue, 27 Feb 2024 09:39:32 +0100
-Message-ID: <20240227083948.5427-17-philmd@linaro.org>
+ Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PULL 17/30] hw/usb: remove usb_bus_find
+Date: Tue, 27 Feb 2024 09:39:33 +0100
+Message-ID: <20240227083948.5427-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240227083948.5427-1-philmd@linaro.org>
 References: <20240227083948.5427-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +98,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-With --without-default-devices it is possible to build a binary that
-does not include any USB host controller and therefore that does not
-include the code guarded by CONFIG_USB.  While the simpler creation
-functions such as usb_create_simple can be inlined, this is not true
-of usb_bus_find().  Remove it, replacing it with a search of the single
-USB bus on the machine.
+Inline the sole remaining use, which is for the -usbdevice command line.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240223124406.234509-8-pbonzini@redhat.com>
-[PMD: Fixed style]
+Message-ID: <20240223124406.234509-9-pbonzini@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/spapr.c | 4 +++-
- hw/ppc/Kconfig | 1 +
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ include/hw/usb.h |  1 -
+ hw/usb/bus.c     | 15 +--------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index d1c6d70d8d..55263f0815 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -3024,8 +3024,10 @@ static void spapr_machine_init(MachineState *machine)
-         }
+diff --git a/include/hw/usb.h b/include/hw/usb.h
+index cfeead2840..d46d96779a 100644
+--- a/include/hw/usb.h
++++ b/include/hw/usb.h
+@@ -498,7 +498,6 @@ struct USBBusOps {
+ void usb_bus_new(USBBus *bus, size_t bus_size,
+                  USBBusOps *ops, DeviceState *host);
+ void usb_bus_release(USBBus *bus);
+-USBBus *usb_bus_find(int busnr);
+ void usb_legacy_register(const char *typename, const char *usbdevice_name,
+                          USBDevice *(*usbdevice_init)(void));
+ USBDevice *usbdevice_create(const char *cmdline);
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+index 76fda41b7e..796769fadb 100644
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -100,19 +100,6 @@ void usb_bus_release(USBBus *bus)
+     QTAILQ_REMOVE(&busses, bus, next);
+ }
  
-         if (has_vga) {
--            USBBus *usb_bus = usb_bus_find(-1);
-+            USBBus *usb_bus;
- 
-+            usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
-+                                                              &error_abort));
-             usb_create_simple(usb_bus, "usb-kbd");
-             usb_create_simple(usb_bus, "usb-mouse");
-         }
-diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-index c5aeb6b3f2..b664d0eb37 100644
---- a/hw/ppc/Kconfig
-+++ b/hw/ppc/Kconfig
-@@ -1,5 +1,6 @@
- config PSERIES
-     bool
-+    imply USB_OHCI_PCI
-     imply PCI_DEVICES
-     imply TEST_DEVICES
-     imply VIRTIO_VGA
+-USBBus *usb_bus_find(int busnr)
+-{
+-    USBBus *bus;
+-
+-    if (-1 == busnr)
+-        return QTAILQ_FIRST(&busses);
+-    QTAILQ_FOREACH(bus, &busses, next) {
+-        if (bus->busnr == busnr)
+-            return bus;
+-    }
+-    return NULL;
+-}
+-
+ static void usb_device_realize(USBDevice *dev, Error **errp)
+ {
+     USBDeviceClass *klass = USB_DEVICE_GET_CLASS(dev);
+@@ -643,7 +630,7 @@ HumanReadableText *qmp_x_query_usb(Error **errp)
+ /* handle legacy -usbdevice cmd line option */
+ USBDevice *usbdevice_create(const char *driver)
+ {
+-    USBBus *bus = usb_bus_find(-1 /* any */);
++    USBBus *bus = QTAILQ_FIRST(&busses);
+     LegacyUSBFactory *f = NULL;
+     Error *err = NULL;
+     GSList *i;
 -- 
 2.41.0
 
