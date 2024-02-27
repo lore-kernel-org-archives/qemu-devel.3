@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B483DC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935C5C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reuZ2-00058a-EU; Tue, 27 Feb 2024 05:19:56 -0500
+	id 1reub9-0006fg-Nw; Tue, 27 Feb 2024 05:22:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuYs-0004Tz-U0
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:48 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1reub7-0006Y8-C9; Tue, 27 Feb 2024 05:22:05 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuYp-00036Z-Vi
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:45 -0500
+ id 1reub5-00045c-MN; Tue, 27 Feb 2024 05:22:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709029184; x=1740565184;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=L2wzgt2qE5vwh+7SIFuDn4w4DWn6CWUrpJEu/2HvX0s=;
- b=YlSxEWpDwSun7Rov98UPh5BEvaRhIuUh9GJEgBvq0Syktr6QerpOK/Uq
- 1gN5gi3uEApVkLpH75g8E1AyoutJaSKZtLu+XnPLUIvgAFdEZtKoUYe7m
- XAXVfHiJ2aEJWnkreQabn5xTg9SqOhTnkfOnNi6oVB9Hx4VtSh/ERODxK
- EA/XHIyY8rOFSDDtvPiIPH/V62DGDecTRPdxEVUuqqg/kXKIalg/UcJqj
- 6ykRDDjRAEc21AFkrPR6nur674ZCNWtwJ/xUNCZBn6K/9Sv+rACHHC1pN
- nMbF8/8xm2Z66xA5cGmrY4Np832vlUfJDqgineiqCsBRjPZ67sbBIbxxp g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310317"
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6310317"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 02:19:43 -0800
+ t=1709029324; x=1740565324;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=F6+NTEf+OvKxItgO+SSdOalGV2SCEFkd9K7C26e6mKo=;
+ b=YsO4KLvww1yJO0pshM34ImiOaZPQIofemnG0FrT+iqMwbzxg2HoVnsSn
+ rc73hWPzHrqOtG7nXRUocV5IEAqk37VyWHv8mwDlhgEnJrgzlTnp9yNAR
+ bWX4cuC6jxcc5JXjOgrLrJ4+xibICvk/0zHvGbxRQhf663DdK/xhL3sCO
+ X3o4wbG32ex2vLG/b6QfxxJFDwcTyRgwZG3O1yNK7fE7h8iYoRRY+Nb/5
+ qRYNcDkwVz1Vk+2EKM81hO3/o1//nIuasoFTNeQkYS0/dQQ4BVRYJ+c50
+ RZoVqXB/kLxoRMlot8dGh56pBWuFSSR4tiBPDfnqgH8LHUFDtLolPrE5J Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="14071188"
+X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; d="scan'208";a="14071188"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Feb 2024 02:21:59 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6954848"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:19:38 -0800
+X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; d="scan'208";a="11587755"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 27 Feb 2024 02:21:53 -0800
+Date: Tue, 27 Feb 2024 18:35:36 +0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Eduardo Habkost <eduardo@habkost.net>,
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v9 10/21] i386: Split topology types of CPUID[0x1F] from the
- definitions of CPUID[0xB]
-Date: Tue, 27 Feb 2024 18:32:20 +0800
-Message-Id: <20240227103231.1556302-11-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
-References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+Subject: Re: [RFC 4/8] hw/core: Add cache topology options in -smp
+Message-ID: <Zd26+BpXQID95lqm@intel.com>
+References: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
+ <20240220092504.726064-5-zhao1.liu@linux.intel.com>
+ <20240226153947.00006fd6@Huawei.com> <Zd2pWVH4/eo3HM8j@intel.com>
+ <Zd2ndJghXbmMHzBn@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.13;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zd2ndJghXbmMHzBn@redhat.com>
+Received-SPF: none client-ip=192.198.163.9;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
@@ -92,113 +93,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+> > > > +        if (smp_cache_string_to_topology(ms, config->l1d_cache,
+> > > > +            &ms->smp_cache.l1d, errp)) {
+> > > 
+> > > Indent is to wrong opening bracket.
+> > > Same for other cases.
+> > 
+> > Could you please educate me about the correct style here?
+> > I'm unsure if it should be indented by 4 spaces.
+> 
+> It needs to look like this:
+> 
+>         if (smp_cache_string_to_topology(ms, config->l1d_cache,
+>                                          &ms->smp_cache.l1d, errp)) {
+> 
+> so func parameters are aligned to the function calls' opening bracket,
+> not the 'if' statement's opening bracket.
+>
 
-CPUID[0xB] defines SMT, Core and Invalid types, and this leaf is shared
-by Intel and AMD CPUs.
+Thanks for your explaination!
 
-But for extended topology levels, Intel CPU (in CPUID[0x1F]) and AMD CPU
-(in CPUID[0x80000026]) have the different definitions with different
-enumeration values.
-
-Though CPUID[0x80000026] hasn't been implemented in QEMU, to avoid
-possible misunderstanding, split topology types of CPUID[0x1F] from the
-definitions of CPUID[0xB] and introduce CPUID[0x1F]-specific topology
-types.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Changes since v8:
- * Add Philippe's reviewed-by tag.
-
-Changes since v3:
- * New commit to prepare to refactor CPUID[0x1F] encoding.
----
- target/i386/cpu.c | 14 +++++++-------
- target/i386/cpu.h | 13 +++++++++----
- 2 files changed, 16 insertions(+), 11 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 2070d5a91cfa..88dffd2b52e3 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6258,17 +6258,17 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         case 0:
-             *eax = apicid_core_offset(&topo_info);
-             *ebx = topo_info.threads_per_core;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
-+            *ecx |= CPUID_B_ECX_TOPO_LEVEL_SMT << 8;
-             break;
-         case 1:
-             *eax = apicid_pkg_offset(&topo_info);
-             *ebx = threads_per_pkg;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
-+            *ecx |= CPUID_B_ECX_TOPO_LEVEL_CORE << 8;
-             break;
-         default:
-             *eax = 0;
-             *ebx = 0;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_INVALID;
-+            *ecx |= CPUID_B_ECX_TOPO_LEVEL_INVALID << 8;
-         }
- 
-         assert(!(*eax & ~0x1f));
-@@ -6293,22 +6293,22 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         case 0:
-             *eax = apicid_core_offset(&topo_info);
-             *ebx = topo_info.threads_per_core;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
-+            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_SMT << 8;
-             break;
-         case 1:
-             *eax = apicid_die_offset(&topo_info);
-             *ebx = topo_info.cores_per_die * topo_info.threads_per_core;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
-+            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_CORE << 8;
-             break;
-         case 2:
-             *eax = apicid_pkg_offset(&topo_info);
-             *ebx = threads_per_pkg;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_DIE;
-+            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_DIE << 8;
-             break;
-         default:
-             *eax = 0;
-             *ebx = 0;
--            *ecx |= CPUID_TOPOLOGY_LEVEL_INVALID;
-+            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_INVALID << 8;
-         }
-         assert(!(*eax & ~0x1f));
-         *ebx &= 0xffff; /* The count doesn't need to be reliable. */
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4592353616f9..4a55fef1feea 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1017,10 +1017,15 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- #define CPUID_MWAIT_EMX     (1U << 0) /* enumeration supported */
- 
- /* CPUID[0xB].ECX level types */
--#define CPUID_TOPOLOGY_LEVEL_INVALID  (0U << 8)
--#define CPUID_TOPOLOGY_LEVEL_SMT      (1U << 8)
--#define CPUID_TOPOLOGY_LEVEL_CORE     (2U << 8)
--#define CPUID_TOPOLOGY_LEVEL_DIE      (5U << 8)
-+#define CPUID_B_ECX_TOPO_LEVEL_INVALID  0
-+#define CPUID_B_ECX_TOPO_LEVEL_SMT      1
-+#define CPUID_B_ECX_TOPO_LEVEL_CORE     2
-+
-+/* COUID[0x1F].ECX level types */
-+#define CPUID_1F_ECX_TOPO_LEVEL_INVALID  CPUID_B_ECX_TOPO_LEVEL_INVALID
-+#define CPUID_1F_ECX_TOPO_LEVEL_SMT      CPUID_B_ECX_TOPO_LEVEL_SMT
-+#define CPUID_1F_ECX_TOPO_LEVEL_CORE     CPUID_B_ECX_TOPO_LEVEL_CORE
-+#define CPUID_1F_ECX_TOPO_LEVEL_DIE      5
- 
- /* MSR Feature Bits */
- #define MSR_ARCH_CAP_RDCL_NO            (1U << 0)
--- 
-2.34.1
+Regards,
+Zhao
 
 
