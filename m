@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DEAC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F98EC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ret2P-0001q5-Ia; Tue, 27 Feb 2024 03:42:09 -0500
+	id 1ret2E-0000KA-7w; Tue, 27 Feb 2024 03:41:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret2N-0001X2-3R
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:07 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1u-0007rx-Mz
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:41 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret2L-0008Ip-7H
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:06 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5663273e390so533477a12.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:42:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1s-00087y-8O
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:38 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-512d19e2cb8so5964325e87.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709023323; x=1709628123; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709023291; x=1709628091; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iX8uZlTT6wTjiMtTqjR3dj/PxPssyXNBBI6GxQRZqxI=;
- b=UiJ4RsntLYaqtxmRuL7CPxLIHVqs9MuduWTme3Dqnjxt55rTIUd153GI33+mNA1Z7T
- jzrMFh6WIE2erQYfs94AfzvMCOMHa0+W0my6wqL/ErT93VcIfqRo4PNott8wlhq1m8Sy
- kmvlPs0M7ehyiBFdkqytDQxR40L8S0uriTToEvEYfNZ4jxS8fvvB2JoLGAu7sbwaaIlJ
- b67PRfoCRcrTQcLPi5JTABMAssLXcIZG1L8Fgpjnurvpvr6iQKm+loxfNiOl7LynHxbW
- xhPefnJJdo77w9rsDFR20XgcEbfCSckhqdl4x19OQnmQBL3jdsZw+z+goR2J6+TTJVJA
- 8MCQ==
+ bh=q16/BH7ujul6MroAh0WIw+sirhkolVXk4q/90kZo96k=;
+ b=KTWu26fHP0wTOJh9MM66SSaXjjfeNYcssJKm9OSWZHqNZAil6Qb0M/dehxehj8c7aw
+ 58kKBDpE2WlaB0//H9n+slMzDotrqJz3xJCRlJheSXvhU0TqfLrfsA64/FQBdcZiCC3Z
+ VtQIII2+EsKFnQL8Xa9otpAG4xevwNyHbLDwBV7wccmZEARUbC9SHIduRBJeUCtpGKbG
+ AoEYMg6DGVnHKD2NtKv6CelvvMCz0eAGXTg6YbcA2FjKfBm3fKfaowQtGiSON3sP9Ukx
+ XTEdoajbemzwaBkF8bztuHcBE5P7nZ5bY0E2euu9DOYffvndwOxcx4vAKPmfyLS9ziZ1
+ VHzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709023323; x=1709628123;
+ d=1e100.net; s=20230601; t=1709023291; x=1709628091;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iX8uZlTT6wTjiMtTqjR3dj/PxPssyXNBBI6GxQRZqxI=;
- b=Sf7OdukTKJ3cXNKr67JjjDyVpgx1EOp/Ls7tW/sUAxWVXTLf0GTQdjHNgAHUbBdvVR
- n6JdD8Ot6tACtwvc+q79r+bXas86HtGvJQU528uNkCHqiHOar3Oslo7KcOSDdq8DZl+e
- v2sGq7kHbMkWAAVmQkO9rJiN02nh8SA9OyhFIhkRGALYGS8WuLv4zD5aLLKllJYLX2fw
- 7LG80CwhChlOKd7HEbvhsfGdTj+Nzfq/fyWXvU1DiZtthiqMvVAFkzI6122MhHrn3o7o
- MYpNTu8JM9OTT4X5g4Qh8hb1AsPWi8RQbRLSRrlI/63vEXn/Y96GZApC8eoVgFjSuJ1H
- zsxQ==
-X-Gm-Message-State: AOJu0YyqFNqGLXUQJawmqnJg6g9IOrzwfCYif/oKdISW60HO8ZLoSX0y
- WGuke5T6ZCDUSoZSC2WW4xtWubDwsf3RqVNN0oq3Q4DUpHW/5Blk9alDDuPTNEsTM35wGfIT8KU
- q
-X-Google-Smtp-Source: AGHT+IGisEqRQFzyQeAsM9alRoTB8oJYoLKxVH4SFxHu/nRrwo3YOttRiyP1dOLTQXa+bS/yS0uAoQ==
-X-Received: by 2002:a05:6402:795:b0:566:4459:920b with SMTP id
- d21-20020a056402079500b005664459920bmr311301edy.41.1709023323449; 
- Tue, 27 Feb 2024 00:42:03 -0800 (PST)
+ bh=q16/BH7ujul6MroAh0WIw+sirhkolVXk4q/90kZo96k=;
+ b=Ik40PbD+sj+OM1RI2RCq/2nWuNQOfPJvm27f2E3fNa1+B7FQYdcmpxYn/1khhhDhcM
+ ymwsdoX6AkPMeTSLB+VObEUbBfgy05bKSnz0C1WgRsG2l4IvtzWu6L5s7LWeOfPi5SIm
+ ASH6eMGEKHBi1EW3rkFwsB2CdM/3biqwMbXqdgKLRpRZTHSpsfKIDyD0dE1fBlKmE2FK
+ wDgPoCZaTWO29jGP+G5WpFC8GsADWY0V8si/Rr65mhZHqS6d/OczQJGTmNDF8oitNtVO
+ CoM607yPP3SBb+0fhzXToq5x3lNVP75dlzOyjrHfqNKu4l1YjoxajZr2TPolnXOXhmSQ
+ EM5Q==
+X-Gm-Message-State: AOJu0Yx6oD7VXDoAmCKK04kWBwamPLGTs5k+GVe3gF1HPgPGEgtCUApQ
+ 58Q/bBVQx6pHG8MOuIOI0D6kyik2D8qw0aCShLfxQ3q0zbnA+XmPc67h8Z2lgoq94+LSUh5CZIs
+ P
+X-Google-Smtp-Source: AGHT+IHg9w67z4u/F09JeatGg8K0Tbdq/enXZAp+R6BMkqVsRN1eOvEg9paicoiW2FsUDJTkyUHQyA==
+X-Received: by 2002:ac2:424a:0:b0:512:8ac0:1f76 with SMTP id
+ m10-20020ac2424a000000b005128ac01f76mr4813228lfl.66.1709023291132; 
+ Tue, 27 Feb 2024 00:41:31 -0800 (PST)
 Received: from m1x-phil.lan (mic92-h03-176-184-33-214.dsl.sta.abo.bbox.fr.
  [176.184.33.214]) by smtp.gmail.com with ESMTPSA id
- i2-20020a0564020f0200b005651ae4ac91sm542918eda.41.2024.02.27.00.42.01
+ c18-20020ac24152000000b00512ab050435sm1121123lfi.100.2024.02.27.00.41.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Feb 2024 00:42:03 -0800 (PST)
+ Tue, 27 Feb 2024 00:41:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Sergio Lopez <slp@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 21/30] hw/i386/x86: Let ioapic_init_gsi() take parent as pointer
-Date: Tue, 27 Feb 2024 09:39:37 +0100
-Message-ID: <20240227083948.5427-22-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 16/30] hw/ppc/pseries: do not require CONFIG_USB
+Date: Tue, 27 Feb 2024 09:39:32 +0100
+Message-ID: <20240227083948.5427-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240227083948.5427-1-philmd@linaro.org>
 References: <20240227083948.5427-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,124 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Rather than taking a QOM name which has to be resolved, let's pass the parent
-directly as pointer. This simplifies the code.
+With --without-default-devices it is possible to build a binary that
+does not include any USB host controller and therefore that does not
+include the code guarded by CONFIG_USB.  While the simpler creation
+functions such as usb_create_simple can be inlined, this is not true
+of usb_bus_find().  Remove it, replacing it with a search of the single
+USB bus on the machine.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240224135851.100361-2-shentey@gmail.com>
+Message-ID: <20240223124406.234509-8-pbonzini@redhat.com>
+[PMD: Fixed style]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/x86.h | 2 +-
- hw/i386/microvm.c     | 2 +-
- hw/i386/pc_piix.c     | 7 +++----
- hw/i386/pc_q35.c      | 2 +-
- hw/i386/x86.c         | 7 +++----
- 5 files changed, 9 insertions(+), 11 deletions(-)
+ hw/ppc/spapr.c | 4 +++-
+ hw/ppc/Kconfig | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index 8e306db7bb..4dc30dcb4d 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -139,7 +139,7 @@ typedef struct GSIState {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index d1c6d70d8d..55263f0815 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3024,8 +3024,10 @@ static void spapr_machine_init(MachineState *machine)
+         }
  
- qemu_irq x86_allocate_cpu_irq(void);
- void gsi_handler(void *opaque, int n, int level);
--void ioapic_init_gsi(GSIState *gsi_state, const char *parent_name);
-+void ioapic_init_gsi(GSIState *gsi_state, Object *parent);
- DeviceState *ioapic_init_secondary(GSIState *gsi_state);
+         if (has_vga) {
+-            USBBus *usb_bus = usb_bus_find(-1);
++            USBBus *usb_bus;
  
- /* pc_sysfw.c */
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index ca55aecc3b..61a772dfe6 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -175,7 +175,7 @@ static void microvm_devices_init(MicrovmMachineState *mms)
-                           &error_abort);
-     isa_bus_register_input_irqs(isa_bus, x86ms->gsi);
- 
--    ioapic_init_gsi(gsi_state, "machine");
-+    ioapic_init_gsi(gsi_state, OBJECT(mms));
-     if (ioapics > 1) {
-         x86ms->ioapic2 = ioapic_init_secondary(gsi_state);
-     }
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index ec7c07b362..7724396ead 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -107,6 +107,7 @@ static void pc_init1(MachineState *machine,
-     X86MachineState *x86ms = X86_MACHINE(machine);
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *system_io = get_system_io();
-+    Object *phb = NULL;
-     PCIBus *pci_bus = NULL;
-     ISABus *isa_bus;
-     Object *piix4_pm = NULL;
-@@ -189,8 +190,6 @@ static void pc_init1(MachineState *machine,
-     }
- 
-     if (pcmc->pci_enabled) {
--        Object *phb;
--
-         pci_memory = g_new(MemoryRegion, 1);
-         memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
-         rom_memory = pci_memory;
-@@ -303,8 +302,8 @@ static void pc_init1(MachineState *machine,
-         pc_i8259_create(isa_bus, gsi_state->i8259_irq);
-     }
- 
--    if (pcmc->pci_enabled) {
--        ioapic_init_gsi(gsi_state, "i440fx");
-+    if (phb) {
-+        ioapic_init_gsi(gsi_state, phb);
-     }
- 
-     if (tcg_enabled()) {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 53fb3db26d..c89ff63579 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -263,7 +263,7 @@ static void pc_q35_init(MachineState *machine)
-         pc_i8259_create(isa_bus, gsi_state->i8259_irq);
-     }
- 
--    ioapic_init_gsi(gsi_state, "q35");
-+    ioapic_init_gsi(gsi_state, OBJECT(phb));
- 
-     if (tcg_enabled()) {
-         x86_register_ferr_irq(x86ms->gsi[13]);
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 684dce90e9..807e09bcdb 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -640,20 +640,19 @@ void gsi_handler(void *opaque, int n, int level)
-     }
- }
- 
--void ioapic_init_gsi(GSIState *gsi_state, const char *parent_name)
-+void ioapic_init_gsi(GSIState *gsi_state, Object *parent)
- {
-     DeviceState *dev;
-     SysBusDevice *d;
-     unsigned int i;
- 
--    assert(parent_name);
-+    assert(parent);
-     if (kvm_ioapic_in_kernel()) {
-         dev = qdev_new(TYPE_KVM_IOAPIC);
-     } else {
-         dev = qdev_new(TYPE_IOAPIC);
-     }
--    object_property_add_child(object_resolve_path(parent_name, NULL),
--                              "ioapic", OBJECT(dev));
-+    object_property_add_child(parent, "ioapic", OBJECT(dev));
-     d = SYS_BUS_DEVICE(dev);
-     sysbus_realize_and_unref(d, &error_fatal);
-     sysbus_mmio_map(d, 0, IO_APIC_DEFAULT_ADDRESS);
++            usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
++                                                              &error_abort));
+             usb_create_simple(usb_bus, "usb-kbd");
+             usb_create_simple(usb_bus, "usb-mouse");
+         }
+diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+index c5aeb6b3f2..b664d0eb37 100644
+--- a/hw/ppc/Kconfig
++++ b/hw/ppc/Kconfig
+@@ -1,5 +1,6 @@
+ config PSERIES
+     bool
++    imply USB_OHCI_PCI
+     imply PCI_DEVICES
+     imply TEST_DEVICES
+     imply VIRTIO_VGA
 -- 
 2.41.0
 
