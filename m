@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3E7C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF53C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezb7-0002hc-D2; Tue, 27 Feb 2024 10:42:25 -0500
+	id 1rezbb-0002mR-4y; Tue, 27 Feb 2024 10:42:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rezb4-0002gB-Hf; Tue, 27 Feb 2024 10:42:22 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezbZ-0002m5-SF
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:42:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rezaw-00076i-Ok; Tue, 27 Feb 2024 10:42:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709048535; x=1740584535;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=PpopX1xgqsSGu+ibkHdRkgrvQaMYRWvsytFX1WWOZtI=;
- b=CtDFgnHDJdtfOdlSn9C1p1uoqg4PMLDW0uQrVwnZu9uIKuLijRvvT/iW
- OMH8huDa1opt3Xl/KOgXPGkSA90rz4gznV//WhSBIKRPPTJo0G6PP9w2A
- eJh3jzFdhrU3Q3x2micsFHA8SBWuviNHoqIrlv++MuXDP1gikTqtl8TBS
- 2XYX/Nx8BXoPyGlpL/WbXdokqLNBb+Ktu8m3GSbtVKF99zuyoNAi2/tc4
- pbnega3IVbchXwgHcbHe05eCCAgp7XS0dm1Y2yJuXCJwdoqJM3PWOzhlt
- 5DL1TFZY5z4OzBUCceu2Ovlg7YneT2wS1Qr+3rsvOWEgBxToZi/PeJfa3 A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="3513684"
-X-IronPort-AV: E=Sophos;i="6.06,188,1705392000"; 
-   d="scan'208";a="3513684"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 07:42:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,188,1705392000"; d="scan'208";a="11697786"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 27 Feb 2024 07:42:04 -0800
-Date: Tue, 27 Feb 2024 23:55:46 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Daniel P =?utf-8?B?LiBCZXJyYW5n77+9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?B?TWF0aGlldS1EYXVk77+9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?utf-8?B?QmVubu+/vWU=?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC 4/8] hw/core: Add cache topology options in -smp
-Message-ID: <Zd4GAhwpw/w0QUth@intel.com>
-References: <20240220092504.726064-1-zhao1.liu@linux.intel.com>
- <20240220092504.726064-5-zhao1.liu@linux.intel.com>
- <20240226153947.00006fd6@Huawei.com> <Zd2pWVH4/eo3HM8j@intel.com>
- <20240227105145.0000106d@Huawei.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezbU-00079S-5N
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:42:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709048566;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9F5yUOES5ELNg7LCNTzZy1CeXKfGhzhmrWj1sbHY2YE=;
+ b=Bc8vz+ZuwN4lQK0kbB/ZMgGzqc/bLINw0QPRUAFhKYgIpsaBCqJ91+xo7SOSmKJ88XLNnE
+ zgbgp3cSKXtplCzDgsDbde6C5jd0UJfTimvXoJk9JP4kkj19Yp7qIWYNNvY8tcOZ7HOdrw
+ 7g7H/Ldvw4XdV1dDDG+Hs8Gad1NSiEk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-52-YWvDMh15MFysBMssrCrO0g-1; Tue,
+ 27 Feb 2024 10:42:42 -0500
+X-MC-Unique: YWvDMh15MFysBMssrCrO0g-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C87D03C0275E;
+ Tue, 27 Feb 2024 15:42:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8165E2166B33;
+ Tue, 27 Feb 2024 15:42:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6E16121E6740; Tue, 27 Feb 2024 16:42:40 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  David Hildenbrand
+ <david@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Peter Xu
+ <peterx@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Marcelo Tosatti
+ <mtosatti@redhat.com>,  qemu-devel@nongnu.org,  kvm@vger.kernel.org,
+ Michael Roth <michael.roth@amd.com>,  Sean Christopherson
+ <seanjc@google.com>,  Claudio Fontana <cfontana@suse.de>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Isaku Yamahata <isaku.yamahata@gmail.com>,  Chenyi
+ Qiang <chenyi.qiang@intel.com>
+Subject: Re: [PATCH v4 53/66] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
+ GuestPanic facility
+In-Reply-To: <7ef9d3c0-2bab-4edc-a5dc-156d17a467ed@intel.com> (Xiaoyao Li's
+ message of "Tue, 27 Feb 2024 22:51:59 +0800")
+References: <20240125032328.2522472-1-xiaoyao.li@intel.com>
+ <20240125032328.2522472-54-xiaoyao.li@intel.com>
+ <87v86kehts.fsf@pond.sub.org>
+ <1d7f7c1b-cfaa-4de6-80a0-8d1104440f54@intel.com>
+ <87le76dt1g.fsf@pond.sub.org>
+ <09c5fd9b-be96-45b6-b48e-772d5b5aad16@intel.com>
+ <87wmqqawa2.fsf@pond.sub.org>
+ <7ef9d3c0-2bab-4edc-a5dc-156d17a467ed@intel.com>
+Date: Tue, 27 Feb 2024 16:42:40 +0100
+Message-ID: <87o7c1ap73.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240227105145.0000106d@Huawei.com>
-Received-SPF: none client-ip=198.175.65.18;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,69 +102,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 27, 2024 at 10:51:45AM +0000, Jonathan Cameron wrote:
-> Date: Tue, 27 Feb 2024 10:51:45 +0000
-> From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-> Subject: Re: [RFC 4/8] hw/core: Add cache topology options in -smp
-> X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
-> 
-> On Tue, 27 Feb 2024 17:20:25 +0800
-> Zhao Liu <zhao1.liu@linux.intel.com> wrote:
-> 
-> > Hi Jonathan,
-> > 
-> > > Hi Zhao Liu
-> > > 
-> > > I like the scheme.  Strikes a good balance between complexity of description
-> > > and systems that actually exist. Sure there are systems with more cache
-> > > levels etc but they are rare and support can be easily added later
-> > > if people want to model them.  
-> > 
-> > Thanks for your support!
-> > 
-> > [snip]
-> > 
-> > > > +static int smp_cache_string_to_topology(MachineState *ms,  
-> > > 
-> > > Not a good name for a function that does rather more than that.  
-> > 
-> > What about "smp_cache_get_valid_topology()"?
-> 
-> Looking again, could we return the CPUTopoLevel? I think returning
-> CPU_TOPO_LEVEL_INVALID will replace -1/0 returns and this can just
-> be smp_cache_string_to_topology() as you have it in this version.
-> 
-> The check on the return value becomes a little more more complex
-> and I think you want to squash CPU_TOPO_LEVEL_MAX down so we only
-> have one invalid value to check at callers..  E.g.
-> 
-> static CPUTopoLevel smp_cache_string_to_topolgy(MachineState *ms,
->                                                 char *top_str,
->                                                 Error **errp)
-> {
->     CPUTopoLevel topo = string_to_cpu_topo(topo_str);
-> 
->     if (topo == CPU_TOPO_LEVEL_MAX || topo == CPU_TOP?O_LEVEL_INVALID) {
->         return CPU_TOPO_LEVEL_INVALID;
->     }
-> 
->     if (!machine_check_topo_support(ms, topo) {
->         error_setg(errp,
->                    "Invalid cache topology level: %s. "
->                    "The cache topology should match the CPU topology level",
-> //Break string like this to make it as grep-able as possible!
->                    topo_str);
->         return CPU_TOPO_LEVEL_INVALID;
->     }
-> 
->     return topo;
-> 
-> }                
-> 
-> 
-> The checks then become != CPU_TOPO_LEVEL_INVALID at each callsite.
->
+Xiaoyao Li <xiaoyao.li@intel.com> writes:
 
-Good idea! This makes the code clearer. Let me try this way. Thanks!
+> On 2/27/2024 9:09 PM, Markus Armbruster wrote:
+> [...]
+>>>>>>> @@ -566,6 +569,27 @@
+>>>>>>>               'psw-addr': 'uint64',
+>>>>>>>               'reason': 'S390CrashReason'}}
+>>>>>>>     
+>>>>>>> +##
+>>>>>>> +# @GuestPanicInformationTdx:
+>>>>>>> +#
+>>>>>>> +# TDX Guest panic information specific to TDX GCHI
+>>>>>>> +# TDG.VP.VMCALL<ReportFatalError>.
+>>>>>>> +#
+>>>>>>> +# @error-code: TD-specific error code
+>>>>>>
+>>>>>> Where could a user find information on these error codes?
+>>>>>
+>>>>> TDX GHCI (Guset-host-communication-Interface)spec. It defines all the
+>>>>> TDVMCALL leaves.
+>>>>>
+>>>>> 0: panic;
+>>>>> 0x1 - 0xffffffff: reserved.
+>>>>
+>>>> Would it make sense to add a reference?
+>>>
+>>> https://cdrdv2.intel.com/v1/dl/getContent/726792
+>> 
+>> URLs have this annoying tendency to rot.
+>> 
+>> What about
+>> 
+>> # @error-code: Error code as defined in "Guest-Hypervisor Communication
+>> #     Interface (GHCI) Specification for Intel TDX 1.5"
+>
+> I think it gets mentioned at the beginning of @GuestPanicInformationTdx
+>
+>    TDX Guest panic information specific to TDX GHCI
+>    TDG.VP.VMCALL<ReportFatalError>.
+>
+> Do we still to mention it in every single member?
+
+No, I didn't recognize the alphabet soup there as a reference :)
+
+Let me try again:
+
+##
+# @GuestPanicInformationTdx:
+#
+# TDX Guest panic information specific to TDX, as specified in the
+# "Guest-Hypervisor Communication Interface (GHCI) Specification",
+# section TDG.VP.VMCALL<ReportFatalError>.
+#
+# @error-code: TD-specific error code
+#
+[...]
+#
+# Since: 9.0
+##
+
+>>>>>>> +#
+>>>>>>> +# @gpa: guest-physical address of a page that contains additional
+>>>>>>> +#     error data, in forms of zero-terminated string.
+>>>>>>
+>>>>>> "in the form of a zero-terminated string"
+>>>>>
+>>>>> fixed.
+>>>>>
+>>>>>>> +#
+>>>>>>> +# @message: Human-readable error message provided by the guest. Not
+>>>>>>> +#     to be trusted.
+>>>>>>
+>>>>>> How is this message related to the one pointed to by @gpa?
+>>>>>
+>>>>> In general, @message contains a brief message of the error. While @gpa
+>>>>> (when valid) contains a verbose message.
+>>>>>
+>>>>> The reason why we need both is because sometime when TD guest hits a
+>>>>> fatal error, its memory may get corrupted so we cannot pass information
+>>>>> via @gpa. Information in @message is passed through GPRs.
+>>>>
+>>>> Well, we do pass information via @gpa, always.  I guess it page's
+>>>> contents can be corrupted.
+>>>
+>>> No. It's not always. the bit 63 of the error code is "GPA valid" bit.
+>>> @gpa is valid only when bit 63 of error code is 1.
+>>>
+>>> And current Linux TD guest implementation doesn't use @gpa at all.
+>>> https://github.com/torvalds/linux/blob/45ec2f5f6ed3ec3a79ba1329ad585497cdcbe663/arch/x86/coco/tdx/tdx.c#L131
+>> 
+>> Aha!
+>> 
+>> Why would we want to include @gpa when the "GPA valid" bit is off?
+>> 
+>> If we do want it, then
+>> 
+>> # @gpa: guest-physical address of a page that contains more verbose
+>> #     error information, as zero-terminated string.  Valid when the
+>> #     "GPA valid" bit is set in @error-code.
+>> 
+>> If we don't, then make @gpa optional, present when valid, and document
+>> it like this:
+>> 
+>> # @gpa: guest-physical address of a page that contains more verbose
+>> #     error information, as zero-terminated string.  Present when the
+>> #     "GPA valid" bit is set in @error-code.
+>
+> I will go this direction.
+>
+> thanks!
+
+You're welcome!
+
+[...]
 
 
