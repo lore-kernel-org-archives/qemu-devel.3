@@ -4,169 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 802F9C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 03:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B231EC5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 03:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reoTX-0000B4-J5; Mon, 26 Feb 2024 22:49:51 -0500
+	id 1reoWd-0001E4-Cg; Mon, 26 Feb 2024 22:53:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1reoTW-00005L-56; Mon, 26 Feb 2024 22:49:50 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reoWb-0001Df-MP
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 22:53:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1reoTG-0000Q0-MA; Mon, 26 Feb 2024 22:49:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709005775; x=1740541775;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=WyfyJiF/UiblNzwhrcjuavQYMHJlQEh2PqR8gXIHqzw=;
- b=RAeKT9s56b3joeckjRO0JlKaHq3X59D1k9HzNy3fk+r7oWyWA7uwJaj3
- vBPVglr9vENyHcuGmaLofNjPRoPq+R8CCADzL0QX/YMSbNV5iuZuVi/wW
- Cy/NWWEHijSmzQKIkWApn71ihMyxmmjOq8DEcHaKCT/TL38ixsb0mNANU
- Z4iuUlAF1rkHjWxuTzmsOgvfeZdLt1urgQt1L926rnrR39Ts562HVQhjA
- Im+JBpA9uP+1TRjVtP0Y2A/CAKeRSa+Prq7NZM+yZvZ73MidCfQLu3stj
- SxKTDihzl5kQWHyMS5x/LwXiiWSnPWzLsrIaRfg0ybDZC2z+XcxNXFW1z g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="3253150"
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="3253150"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2024 19:49:33 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; d="scan'208";a="11673558"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by orviesa005.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 26 Feb 2024 19:49:33 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 26 Feb 2024 19:49:32 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Mon, 26 Feb 2024 19:49:32 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.169)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Mon, 26 Feb 2024 19:49:32 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lfyiK85d/uSPB7wgsl2fVZuEX7QRaC1vUvRHk4dxbSkLWIBAWXZz/x2h3UiGJU/1beCWjsJwPHyJZSCUvQEMYLukDeC8AVl+7nAQEj9u/utCWW42kWvwqz1AzuYIbC9ATW/rn8qlPEYuKHNo1rGQP9fAySLsln+106oCG0XwWiayE5pqHdKODpG69+bmExnIvgEjyNyx+/FYO+eFZrRR5niFP3E0WMfoul2C0EPCeL5zQfhGo6yg4I5BRyaap6ZvVZ8enxnvZchG3c250d1y+8rWP7YzQZxVingDI5bKtRlsbU2VwzWIC4j/Q2mbWBkLMFSzl4zFBi8TDI0fiwhvrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WyfyJiF/UiblNzwhrcjuavQYMHJlQEh2PqR8gXIHqzw=;
- b=F/LLjAiwZ6jeEmHVaw4tSZ5Pf1CAq7un2A9SjbB+EzqPtklptmPpR59i6GWUWcqXr5e1ycHoez47n9LisGJpw/FJ+AJoK3i8NvR3avs70cXOaLoVaMAjibIDWXRoYT/g/tQiiVDGttHLoUHBFkzpyQmy5JAXt4bOGoOBWQKFbGr1j0eo3lH3MWjdO5FpCedhlX+EbtQp4xwl/kuS0YIFWT/XPtwNDdiTfyX6mESw6g6ohrODwv9WXJDk1mmpIPS1j4fUgzkm6hmDjnLdzPh5omw7c1nS4g14oh2uYQEZ8z1SEJrizNXvG3AFXoiL0XtKnPZCVMOZv9wS4n9IWq3Mfg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by SJ0PR11MB5087.namprd11.prod.outlook.com (2603:10b6:a03:2ad::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7339.24; Tue, 27 Feb
- 2024 03:49:25 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::c0f3:15d4:d7f6:a72a]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::c0f3:15d4:d7f6:a72a%4]) with mapi id 15.20.7339.009; Tue, 27 Feb 2024
- 03:49:25 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "yanghliu@redhat.com" <yanghliu@redhat.com>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>
-Subject: RE: [PATCH v5 3/3] virtio-iommu: Change the default granule to the
- host page size
-Thread-Topic: [PATCH v5 3/3] virtio-iommu: Change the default granule to the
- host page size
-Thread-Index: AQHaaN+jsOvaK244ekCjBLHZS9RAdLEdjfZg
-Date: Tue, 27 Feb 2024 03:49:25 +0000
-Message-ID: <SJ0PR11MB6744FEC8C98F367699705D9E92592@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240226181337.24148-1-eric.auger@redhat.com>
- <20240226181337.24148-4-eric.auger@redhat.com>
-In-Reply-To: <20240226181337.24148-4-eric.auger@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|SJ0PR11MB5087:EE_
-x-ms-office365-filtering-correlation-id: 30f6b3bd-e9de-484c-34b5-08dc37471776
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: p5JObpJn9I+2VYUfyL4E/mAtGemzOODm9fk+gGzQv3EPxe2+sPR9+JuJEu+qlxNYiLhMJPBOl0CW1Jx8jbETBJAx/08VgKbbg38f/oa4D/TynwXvRfVZxWTqkPmXuUgsRZlQqk7MZ/urX6Fz0ZpZxQQ6zaoFbKoeiYJQp4fML4mgwRUUUx2PwVuFaO+aUprFXZuKznf1l6JW2JFUyZSCzM1mPPuThUBaB1m60tl0srEIvfIurfTdMT0lJR8M2WOBm7ZKMj4UXGOSd1RE/axp2wS2UZBY6FO6tRWFopf2xMYAmP3gYWeff15UR/gwIxF6E77MN3PuU29/j62zQz3Z0vIQdS1SrVv8fe+Hf3Cx8pGTUyYiNKtgHzyrj0csIcA1dKY7xR8x9MrEHPR50ulAuhvRvurh/b4lg3oA1WrYOFFcIru9uG3eprwiBTyWA32uqz08ApWmhDUe5czRWwkFaEsxeZ76lNyiVwZAUcDnrLS1umGGlaNoWWD79I7W/UJP6w/GHdakgj/qsBAVByhkHZHACWbeOhQjZfUbmMpR+eNRyBNEJnDATrNL39tztPCXts90yTkAsel5UM7F6qGSfOEvfGQrHMk75jSLjl7UgnLK3XkwJ2XvqQGHD5PHr82+RMO9UftP/0uBACgxJT9uxzuIYtCtQG6ori3EESF7Ka72LuqgLTX16Z/9FLasttl3Q+nOy3amFwqb/nwu6encjt8bqmQzG5UadsuvkiIgm84=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?dFgxN0lBajdUTDdjNTljOG0xWXlQWXY2aFpRbjFsemxvR0gyYUtiYjRkVmdt?=
- =?utf-8?B?NVVMbXhoZGNrZjdYWG9XWFJXTEltZGtnZTk5cytxV1lJQjhtelVYemxKcUpW?=
- =?utf-8?B?dXl0aEFVQkxuYmRiRGozbnFsSmZrRWJRYkR4UHBWbnZDdFhqZlhzWTR1REM1?=
- =?utf-8?B?cFZ6RlRPYTUrL1BaQThWQ3BrZFJjUGlPUXR5bWxteFBSdXJnSFd6WGpuZHEz?=
- =?utf-8?B?RGRRcnFVc1BkczZscERUQjdGcGxvemJNT1Y4K3JhUytERlkxc2dDTVJKZEdC?=
- =?utf-8?B?TUE5SEttTXlQSEVXQ0g4cVVQczQ4ZXdKSlNiSjRxWGdSRmZIU2tsQVFsUGln?=
- =?utf-8?B?SGNleDBtRjEwRXJmTDgvVTZ6STgweCtid21rS3B4T2kxNzZ5alBiNzR2ejlP?=
- =?utf-8?B?RnQ2S0N3Wi9rSjlLLzRnSjdDdjU2R21wMmZuVmhCRXBvaytWN3AzK1RsT0gw?=
- =?utf-8?B?RWdYVlVuTGN6Zm9QUXMwOUtiZnRpOHZVbE40NFBFazhmeDZtTFd1akw5NnF6?=
- =?utf-8?B?YkJvRkg1MWYwNVJvYnQ3WEMyaGd4ekZWbXA5TklJdEx5OHZSOTdyQUVBeUlh?=
- =?utf-8?B?bkR3UUxkY3ZicGo0dFBYcVBVS0NMT3ZFOWVDZEpqRUtrdFBUT3NVREJXZVQz?=
- =?utf-8?B?eUhmQkFVL2lsTDhoT2VNSlFrdXRTN3J6TEdTUUxDUlN1SlNJaVZpWHdVVVlE?=
- =?utf-8?B?NHRWLzczUWprbTlxT2loM3JYK05INUhRU3VSWktJSVEvWTgzam82RzNkWFI4?=
- =?utf-8?B?RVl1YmMrWDQ1Q1M1OWVIbE9UbXZsSExVM29STzRyQk9qYnFDSEhtMW5ENzly?=
- =?utf-8?B?b0VmM3o0MSt3Q2VERGpodkh0RVF6aGUzOXo3S09QcWQzZ1E0UzJxMkljVUNT?=
- =?utf-8?B?OTVyUEk1THVuNG9JWXFqOVgyczhSZmJiZHdkSkZ5ZW5DMVQ2NmJJdHZ3VnVB?=
- =?utf-8?B?NjdjRmg5T3BWWFBEU0tMZ3YxaGhHNnMraXp5blgyUU5RWXQ5TXgzeHNMZmJm?=
- =?utf-8?B?S3dEWjc0RXl1SHIyYUNTRlNreVJxVmJzNldJd0FsZm1hTFMycFhRNVVDNUNN?=
- =?utf-8?B?Z1V2L2g2RlE0OFRJc1U3T1NNcHNMdjB3ekJqMDlJK0NjM3loM3NJOUlLazdS?=
- =?utf-8?B?eEVpRXZVblIrUFVvNHBIYk5HVitockhiaEZncjN6dEdLalM4RXExcTlmU1dY?=
- =?utf-8?B?SmQ5elIvVzhML3J0bFE0RlhjZVU2SWY4dGxFRS8vVzgxWWMvMlFVa1BFSWla?=
- =?utf-8?B?VmtQUElLNTlibTB2SDRTTWhORk15a2lmNG54czJjRGsxWTFlNkc4MWhJMjBO?=
- =?utf-8?B?NFZMVi8xRzhQL0FRNEpPamVaaTdSL3B4bGVFRmp5Z0ZiU2JoUDlzMGg5YWlE?=
- =?utf-8?B?ZWJlRW5NVVVaQU1hZVRxWGgrZWlvYjlEYmZBbFFiSEFzTjFiZlQwcFk3RFBL?=
- =?utf-8?B?MDVyMVhFU01xaTVCQ0JTSVB6Vm1RL1U1amlpSlVad3hpRmpvZ0k0VjFlRFBN?=
- =?utf-8?B?cWRob1VpRmRHOG4wS3Job1YrMnNEZno4ODBVNXBWTldIRDNCYzFzNE53YkpC?=
- =?utf-8?B?TEFvaHBMVUYzaEtRRDRiWlcwalRUK2d6empOdGdwUGFVRzhvZ3ZGMVNGaHVP?=
- =?utf-8?B?cHRWUVpNRHZncGRXaWhwMFJCYWszQTR1MXdoR3lFakJZRlJpZ21vWDhKa25U?=
- =?utf-8?B?NTJSUUYzUzhEVFJuVVNFZkpNUFJXL2ZHK1BycHM4WTJsc0hDdFczRWVKUGJ2?=
- =?utf-8?B?dUhBa3Fzd1AydnlycUpjMVkyTmtyOEtsN2h3b3Z6akk3MkxtZGRTRXZKb2Js?=
- =?utf-8?B?MWFoVmVhUkRTY2MvR1BiNlNXdnBRVHM0MW05TTBYZEdDQjRyemMzN010d0xK?=
- =?utf-8?B?MFVlRlYwWDJJaWJtYm93cVBESW5ua2Fqc0NBNTBaUVJMUnZ0bm5rL0tuSnc5?=
- =?utf-8?B?WXZPVmZCT3JpZDZEcWNmNi9vcGx0bE9QR0pZZGZyZGxBa2hCRzhieUJWdFBs?=
- =?utf-8?B?bUo5UDRlNXN4bGNPWnRwNVo1c25lb0paSVcvekVHQWVURkJLOVY2aWE2ZFph?=
- =?utf-8?B?bHJ0L3hVQ0RBK3JndnpIVGc3clpwK2RML00wVkhseFc4My9Gd0VZTkZyU3JI?=
- =?utf-8?Q?JOZBTs+aHnD62H045byWnxUHM?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1reoWZ-00013r-N1
+ for qemu-devel@nongnu.org; Mon, 26 Feb 2024 22:53:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709005977;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3+xhJmEmPchUQ3/u0nJClQQar8o9ZNvqwLYEkf6noH8=;
+ b=gg+AY4mPJSFcg4hstF4cAAnZJXi9UxsVlKnZRCY9q13ZknY5LyUxLmnw8DO+34pgtr/pCE
+ X/g6Df0h33GkNTEbYVjGmHW/HRm6SdSTCD1Fn6uWXd2S2/Irv4tjaQr1Bgq1sQUDcAFbo0
+ cqmjPNHz6jIn4yNT0Mw3yrpZpm8kGtc=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-591-yMBE_8htMT6xfTdesriJig-1; Mon, 26 Feb 2024 22:52:56 -0500
+X-MC-Unique: yMBE_8htMT6xfTdesriJig-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-299565dfd2dso557712a91.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 19:52:56 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709005975; x=1709610775;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3+xhJmEmPchUQ3/u0nJClQQar8o9ZNvqwLYEkf6noH8=;
+ b=fmxpFTRfIE4bENVtw53VmEctqmAUvX9NVz2BAM3lL340Z/u8ebnpcgST83UbfgdghR
+ ILC+uTUvmBfzUnvSr2RuWMZq1wdTTLH1aI/KpK4M/6ImiBdaoUsSGDimdGjHbkDJElTS
+ kRDHilavupgJ22+uGpXmYQaaI3wlT3F02CADSDEljppUnypZ1C1ImZ/JO7jQP2gVzmfb
+ xrV1yC9snsHf2JNw+g9fDOSELh5HaLx0u6uTfU3nLg5hzQsPrMZtUZY7Rjx42Uz1dJVM
+ xzk78IY39FWAhs9iMoxphXRPKsbMPHkod+wVcaDukN5FMrW202/KVzT7bGHVbIibnhkg
+ YEsg==
+X-Gm-Message-State: AOJu0Yyg1twHQ5x8PtwL5llGgr2XJE8f19Cc4EeD1Fm7qX25642N1p0g
+ VeJCSkFv8lioS9L/IachnZcRFh4MtPngKGJGY3Y4u1HqP3jQgyQ7Kzx+ZN04MmV60HCN6i9aX4D
+ yyrT00X1krlKQhKMe5O9mEUQKQXXmJE95ah/GXKxajse1onICKBQd
+X-Received: by 2002:a17:903:2448:b0:1dc:a04a:377e with SMTP id
+ l8-20020a170903244800b001dca04a377emr5021192pls.2.1709005975447; 
+ Mon, 26 Feb 2024 19:52:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEEP/McTBamHannExSpnq2sPdoGoOgfPna+EdkEKYoIX8JVnsEFmD4KLtzCM52dCZHIdTyHLQ==
+X-Received: by 2002:a17:903:2448:b0:1dc:a04a:377e with SMTP id
+ l8-20020a170903244800b001dca04a377emr5021180pls.2.1709005975018; 
+ Mon, 26 Feb 2024 19:52:55 -0800 (PST)
+Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
+ mn15-20020a1709030a4f00b001da2924e576sm435474plb.204.2024.02.26.19.52.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 26 Feb 2024 19:52:54 -0800 (PST)
+Date: Tue, 27 Feb 2024 11:52:47 +0800
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>
+Subject: Re: [PATCH v4 22/34] migration/multifd: Prepare multifd sync for
+ fixed-ram migration
+Message-ID: <Zd1cj4jkIpUktu6k@x1n>
+References: <20240220224138.24759-1-farosas@suse.de>
+ <20240220224138.24759-23-farosas@suse.de> <ZdxCLmKFirsXPia-@x1n>
+ <87y1b6alej.fsf@suse.de>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 30f6b3bd-e9de-484c-34b5-08dc37471776
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Feb 2024 03:49:25.5098 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: J28NeVqo5N6rytk3AuYdkElqqjM3xaUBH+dXG+R7Euk2XvRQKuskqCv/WsI081DeV0Dz55kUM9n/m1erKiPNLVGoAVR+ktbYXlzEkgDpLB8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5087
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87y1b6alej.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- T_SCC_BODY_TEXT_LINE=-0.01, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,59 +100,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgRXJpYywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogRXJpYyBBdWdl
-ciA8ZXJpYy5hdWdlckByZWRoYXQuY29tPg0KPlN1YmplY3Q6IFtQQVRDSCB2NSAzLzNdIHZpcnRp
-by1pb21tdTogQ2hhbmdlIHRoZSBkZWZhdWx0IGdyYW51bGUgdG8gdGhlDQo+aG9zdCBwYWdlIHNp
-emUNCj4NCj5XZSB1c2VkIHRvIHNldCB0aGUgZGVmYXVsdCBncmFudWxlIHRvIDRLQiBidXQgd2l0
-aCBWRklPIGFzc2lnbm1lbnQNCj5pdCBtYWtlcyBtb3JlIHNlbnNlIHRvIHVzZSB0aGUgYWN0dWFs
-IGhvc3QgcGFnZSBzaXplLg0KPg0KPkluZGVlZCB3aGVuIGhvdHBsdWdnaW5nIGEgVkZJTyBkZXZp
-Y2UgcHJvdGVjdGVkIGJ5IGEgdmlydGlvLWlvbW11DQo+b24gYSA2NGtCLzY0a0IgaG9zdC9ndWVz
-dCBjb25maWcsIHdlIGN1cnJlbnQgZ2V0IGEgcWVtdSBjcmFzaDoNCj4NCj4idmZpbzogRE1BIG1h
-cHBpbmcgZmFpbGVkLCB1bmFibGUgdG8gY29udGludWUiDQo+DQo+VGhpcyBpcyBkdWUgdG8gdGhl
-IGhvdC1hdHRhY2hlZCBWRklPIGRldmljZSBjYWxsaW5nDQo+bWVtb3J5X3JlZ2lvbl9pb21tdV9z
-ZXRfcGFnZV9zaXplX21hc2soKSB3aXRoIDY0a0IgZ3JhbnVsZQ0KPndoZXJlYXMgdGhlIHZpcnRp
-by1pb21tdSBncmFudWxlIHdhcyBhbHJlYWR5IGZyb3plbiB0byA0S0Igb24NCj5tYWNoaW5lIGlu
-aXQgZG9uZS4NCj4NCj5TZXQgdGhlIGdyYW51bGUgcHJvcGVydHkgdG8gImhvc3QiIGFuZCBpbnRy
-b2R1Y2UgYSBuZXcgY29tcGF0Lg0KPlRoZSBwYWdlIHNpemUgbWFzayB1c2VkIGJlZm9yZSA5LjAg
-d2FzIHFlbXVfdGFyZ2V0X3BhZ2VfbWFzaygpLg0KPlNpbmNlIHRoZSB2aXJ0aW8taW9tbXUgY3Vy
-cmVudGx5IG9ubHkgc3VwcG9ydHMgeDg2XzY0IGFuZCBhYXJjaDY0LA0KPnRoaXMgbWF0Y2hlZCBh
-IDRLQiBncmFudWxlLg0KPg0KPk5vdGUgdGhhdCB0aGUgbmV3IGRlZmF1bHQgd2lsbCBwcmV2ZW50
-IDRrQiBndWVzdCBvbiA2NGtCIGhvc3QNCj5iZWNhdXNlIHRoZSBncmFudWxlIHdpbGwgYmUgc2V0
-IHRvIDY0a0Igd2hpY2ggd291bGQgYmUgbGFyZ2VyDQo+dGhhbiB0aGUgZ3Vlc3QgcGFnZSBzaXpl
-LiBJbiB0aGF0IHNpdHVhdGlvbiwgdGhlIHZpcnRpby1pb21tdQ0KPmRyaXZlciBmYWlscyBvbiB2
-aW9tbXVfZG9tYWluX2ZpbmFsaXNlKCkgd2l0aA0KPiJncmFudWxlIDB4MTAwMDAgbGFyZ2VyIHRo
-YW4gc3lzdGVtIHBhZ2Ugc2l6ZSAweDEwMDAiLg0KPg0KPkluIHRoYXQgY2FzZSB0aGUgd29ya2Fy
-b3VuZCBpcyB0byByZXF1ZXN0IDRLIGdyYW51bGUuDQo+DQo+VGhlIGN1cnJlbnQgbGltaXRhdGlv
-biBvZiBnbG9iYWwgZ3JhbnVsZSBpbiB0aGUgdmlydGlvLWlvbW11DQo+c2hvdWxkIGJlIHJlbW92
-ZWQgYW5kIHR1cm5lZCBpbnRvIHBlciBkb21haW4gZ3JhbnVsZS4gQnV0DQo+dW50aWwgd2UgZ2V0
-IHRoaXMgdXBncmFkZWQsIHRoaXMgbmV3IGRlZmF1bHQgaXMgcHJvYmFibHkNCj5iZXR0ZXIgYmVj
-YXVzZSBJIGRvbid0IHRoaW5rIGFueW9uZSBpcyBjdXJyZW50bHkgaW50ZXJlc3RlZCBpbg0KPnJ1
-bm5pbmcgYSA0S0IgcGFnZSBzaXplIGd1ZXN0IHdpdGggdmlydGlvLWlvbW11IG9uIGEgNjRLQiBo
-b3N0Lg0KPkhvd2V2ZXIgc3VwcG9ydGluZyA2NGtCIGd1ZXN0IG9uIDY0a0IgaG9zdCB3aXRoIHZp
-cnRpby1pb21tdSBhbmQNCj5WRklPIGxvb2tzIGEgbW9yZSBpbXBvcnRhbnQgZmVhdHVyZS4NCj4N
-Cj5TaWduZWQtb2ZmLWJ5OiBFcmljIEF1Z2VyIDxlcmljLmF1Z2VyQHJlZGhhdC5jb20+DQo+UmV2
-aWV3ZWQtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCg0K
-UmV2aWV3ZWQtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQoN
-ClRoYW5rcw0KWmhlbnpob25nDQoNCj4NCj4tLS0NCj4NCj52NCAtPiB2NQ0KPi0gdXNlIGxvdyBj
-YXNlLCBtYW5kYXRlZCBieSB0aGUgamFzb24gcWFwaQ0KPi0tLQ0KPiBody9jb3JlL21hY2hpbmUu
-YyAgICAgICAgfCAxICsNCj4gaHcvdmlydGlvL3ZpcnRpby1pb21tdS5jIHwgMiArLQ0KPiAyIGZp
-bGVzIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0KPg0KPmRpZmYgLS1n
-aXQgYS9ody9jb3JlL21hY2hpbmUuYyBiL2h3L2NvcmUvbWFjaGluZS5jDQo+aW5kZXggNzBhYzk2
-OTU0Yy4uNTZmMzhiNjU3OSAxMDA2NDQNCj4tLS0gYS9ody9jb3JlL21hY2hpbmUuYw0KPisrKyBi
-L2h3L2NvcmUvbWFjaGluZS5jDQo+QEAgLTM1LDYgKzM1LDcgQEANCj4NCj4gR2xvYmFsUHJvcGVy
-dHkgaHdfY29tcGF0XzhfMltdID0gew0KPiAgICAgeyBUWVBFX1ZJUlRJT19JT01NVV9QQ0ksICJh
-dy1iaXRzIiwgIjY0IiB9LA0KPisgICAgeyBUWVBFX1ZJUlRJT19JT01NVV9QQ0ksICJncmFudWxl
-IiwgIjRrIiB9LA0KPiB9Ow0KPiBjb25zdCBzaXplX3QgaHdfY29tcGF0XzhfMl9sZW4gPSBHX05f
-RUxFTUVOVFMoaHdfY29tcGF0XzhfMik7DQo+DQo+ZGlmZiAtLWdpdCBhL2h3L3ZpcnRpby92aXJ0
-aW8taW9tbXUuYyBiL2h3L3ZpcnRpby92aXJ0aW8taW9tbXUuYw0KPmluZGV4IDMzZTA1MjBiYzgu
-LjY4MzE0NDZlMjkgMTAwNjQ0DQo+LS0tIGEvaHcvdmlydGlvL3ZpcnRpby1pb21tdS5jDQo+Kysr
-IGIvaHcvdmlydGlvL3ZpcnRpby1pb21tdS5jDQo+QEAgLTE1NDgsNyArMTU0OCw3IEBAIHN0YXRp
-YyBQcm9wZXJ0eSB2aXJ0aW9faW9tbXVfcHJvcGVydGllc1tdID0gew0KPiAgICAgREVGSU5FX1BS
-T1BfQk9PTCgiYm9vdC1ieXBhc3MiLCBWaXJ0SU9JT01NVSwgYm9vdF9ieXBhc3MsIHRydWUpLA0K
-PiAgICAgREVGSU5FX1BST1BfVUlOVDgoImF3LWJpdHMiLCBWaXJ0SU9JT01NVSwgYXdfYml0cywg
-MCksDQo+ICAgICBERUZJTkVfUFJPUF9HUkFOVUxFX01PREUoImdyYW51bGUiLCBWaXJ0SU9JT01N
-VSwgZ3JhbnVsZV9tb2RlLA0KPi0gICAgICAgICAgICAgICAgICAgICAgICAgICAgIEdSQU5VTEVf
-TU9ERV80SyksDQo+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgR1JBTlVMRV9NT0RFX0hP
-U1QpLA0KPiAgICAgREVGSU5FX1BST1BfRU5EX09GX0xJU1QoKSwNCj4gfTsNCj4NCj4tLQ0KPjIu
-NDEuMA0KDQo=
+On Mon, Feb 26, 2024 at 07:52:20PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Tue, Feb 20, 2024 at 07:41:26PM -0300, Fabiano Rosas wrote:
+> >> The fixed-ram migration can be performed live or non-live, but it is
+> >> always asynchronous, i.e. the source machine and the destination
+> >> machine are not migrating at the same time. We only need some pieces
+> >> of the multifd sync operations.
+> >> 
+> >> multifd_send_sync_main()
+> >> ------------------------
+> >>   Issued by the ram migration code on the migration thread, causes the
+> >>   multifd send channels to synchronize with the migration thread and
+> >>   makes the sending side emit a packet with the MULTIFD_FLUSH flag.
+> >> 
+> >>   With fixed-ram we want to maintain the sync on the sending side
+> >>   because that provides ordering between the rounds of dirty pages when
+> >>   migrating live.
+> >> 
+> >> MULTIFD_FLUSH
+> >> -------------
+> >>   On the receiving side, the presence of the MULTIFD_FLUSH flag on a
+> >>   packet causes the receiving channels to start synchronizing with the
+> >>   main thread.
+> >> 
+> >>   We're not using packets with fixed-ram, so there's no MULTIFD_FLUSH
+> >>   flag and therefore no channel sync on the receiving side.
+> >> 
+> >> multifd_recv_sync_main()
+> >> ------------------------
+> >>   Issued by the migration thread when the ram migration flag
+> >>   RAM_SAVE_FLAG_MULTIFD_FLUSH is received, causes the migration thread
+> >>   on the receiving side to start synchronizing with the recv
+> >>   channels. Due to compatibility, this is also issued when
+> >>   RAM_SAVE_FLAG_EOS is received.
+> >> 
+> >>   For fixed-ram we only need to synchronize the channels at the end of
+> >>   migration to avoid doing cleanup before the channels have finished
+> >>   their IO.
+> >> 
+> >> Make sure the multifd syncs are only issued at the appropriate
+> >> times. Note that due to pre-existing backward compatibility issues, we
+> >> have the multifd_flush_after_each_section property that enables an
+> >> older behavior of synchronizing channels more frequently (and
+> >> inefficiently). Fixed-ram should always run with that property
+> >> disabled (default).
+> >
+> > What if the user enables multifd_flush_after_each_section=true?
+> >
+> > IMHO we don't necessarily need to attach the fixed-ram loading flush to any
+> > flag in the stream.  For fixed-ram IIUC all the loads will happen in one
+> > shot of ram_load() anyway when parsing the ramblock list, so.. how about we
+> > decouple the fixed-ram load flush from the stream by always do a sync in
+> > ram_load() unconditionally?
+> 
+> I would like to. But it's not possible because ram_load() is called once
+> per section. So once for each EOS flag on the stream. We'll have at
+> least two calls to ram_load(), once due to qemu_savevm_state_iterate()
+> and another due to qemu_savevm_state_complete_precopy().
+> 
+> The fact that fixed-ram can use just one load doesn't change the fact
+> that we perform more than one "save". So we'll need to use the FLUSH
+> flag in this case unfortunately.
+
+After I re-read it, I found one more issue.
+
+Now recv side sync is "once and for all" - it doesn't allow a second time
+to sync_main because it syncs only until quits.  That is IMHO making the
+code much harder to maintain, and we'll need rich comment to explain why is
+that happening.
+
+Ideally any "sync main" for recv threads can be called multiple times.  And
+IMHO it's not really hard.  Actually it can make the code much cleaner by
+merging some logic between socket-based and file-based from that regard.
+
+I tried to play with your branch and propose something like this, just to
+show what I meant. This should allow all new fixed-ram test to pass here,
+meanwhile it should allow sync main on recv side to be re-entrant, sharing
+the logic with socket-based as much as possible:
+
+=====
+diff --git a/migration/multifd.c b/migration/multifd.c
+index a0202b5661..28480f6cfe 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -86,10 +86,8 @@ struct {
+     /* number of created threads */
+     int count;
+     /*
+-     * For sockets: this is posted once for each MULTIFD_FLAG_SYNC flag.
+-     *
+-     * For files: this is only posted at the end of the file load to mark
+-     *            completion of the load process.
++     * This is always posted by the recv threads, the main thread uses it
++     * to wait for recv threads to finish assigned tasks.
+      */
+     QemuSemaphore sem_sync;
+     /* global number of generated multifd packets */
+@@ -1316,38 +1314,55 @@ void multifd_recv_cleanup(void)
+     multifd_recv_cleanup_state();
+ }
+ 
+-
+-/*
+- * Wait until all channels have finished receiving data. Once this
+- * function returns, cleanup routines are safe to run.
+- */
+-static void multifd_file_recv_sync(void)
++static void multifd_recv_file_sync_request(void)
+ {
+     int i;
+ 
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
+ 
+-        trace_multifd_recv_sync_main_wait(p->id);
+-
++        /*
++         * We play a trick here: instead of using a separate pending_sync
++         * to send a sync request (like what we do on senders), we simply
++         * kick the recv thread once without setting pending_job.
++         *
++         * If there's already a pending_job, the thread will only see it
++         * after it processed the current.  If there's no pending_job,
++         * it'll see this immediately.
++         */
+         qemu_sem_post(&p->sem);
+-
+         trace_multifd_recv_sync_main_signal(p->id);
+-        qemu_sem_wait(&p->sem_sync);
+     }
+-    return;
+ }
+ 
++/*
++ * Request a sync for all the multifd recv threads.
++ *
++ * For socket-based, sync request is much more complicated, which relies on
++ * collaborations between both explicit RAM_SAVE_FLAG_MULTIFD_FLUSH in the
++ * main stream, and MULTIFD_FLAG_SYNC flag in per-channel protocol.  Here
++ * it should be invoked by the main stream request.
++ *
++ * For file-based, it is much simpler, because there's no need for a strong
++ * sync semantics between the main thread and the recv threads.  What we
++ * need is only to make sure all recv threads finished their tasks.
++ */
+ void multifd_recv_sync_main(void)
+ {
++    bool file_based = !multifd_use_packets();
+     int i;
+ 
+     if (!migrate_multifd()) {
+         return;
+     }
+ 
+-    if (!multifd_use_packets()) {
+-        return multifd_file_recv_sync();
++    if (file_based) {
++        /*
++         * File-based multifd requires an explicit sync request because
++         * tasks are assigned by the main recv thread, rather than parsed
++         * through the multifd channels.
++         */
++        multifd_recv_file_sync_request();
+     }
+ 
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+@@ -1356,6 +1371,11 @@ void multifd_recv_sync_main(void)
+         trace_multifd_recv_sync_main_wait(p->id);
+         qemu_sem_wait(&multifd_recv_state->sem_sync);
+     }
++
++    if (file_based) {
++        return;
++    }
++
+     for (i = 0; i < migrate_multifd_channels(); i++) {
+         MultiFDRecvParams *p = &multifd_recv_state->params[i];
+ 
+@@ -1420,11 +1440,12 @@ static void *multifd_recv_thread(void *opaque)
+             }
+ 
+             /*
+-             * Migration thread did not send work, break and signal
+-             * sem_sync so it knows we're not lagging behind.
++             * Migration thread did not send work, this emulates
++             * pending_sync, post sem_sync to notify the main thread.
+              */
+             if (!qatomic_read(&p->pending_job)) {
+-                break;
++                qemu_sem_post(&multifd_recv_state->sem_sync);
++                continue;
+             }
+ 
+             has_data = !!p->data->size;
+@@ -1449,10 +1470,6 @@ static void *multifd_recv_thread(void *opaque)
+         }
+     }
+ 
+-    if (!use_packets) {
+-        qemu_sem_post(&p->sem_sync);
+-    }
+-
+     if (local_err) {
+         multifd_recv_terminate_threads(local_err);
+         error_free(local_err);
+
+==========
+
+Note that I used multifd_recv_state->sem_sync to send the message rather
+than p->sem, not only because socket-based has similar logic on using that
+sem, but also because main thread shouldn't care about "which" recv thread
+has finished, but "all recv threads are idle".
+
+Do you think this should work out for us in a nicer way?
+
+Then we talk about the other issue, on whether we should rely on migration
+stream to flush recv threads.  My answer is still hopefully a no.
+
+In the ideal case, fixed-ram image format should even be tailed to not use
+a live stream protocol.  For example, currently during ram iterations we
+should flush quite a lot of ram QEMU_VM_SECTION_PART sections contains
+mostly rubbish but then ending that with RAM_SAVE_FLAG_EOS. Then we keep
+doing this in the iteration loop.  Here the real meat is during processing
+of QEMU_VM_SECTION_PART, the src QEMU will update the guest pages with
+fixed offsets in the file.  That however doesn't really contribute to
+anything valuable in the migration stream itself (things sent over
+to_dst_file).
+
+AFAIU we chose to still use that logic only for simplicity, even if we know
+those EOSs and all RAM streams are garbage.  Now we tend to add one
+dependency on part of the garbage, which is RAM_SAVE_FLAG_MULTIFD_FLUSH in
+this case; which is useful in socket-based but shouldn't be necessary for
+file.
+
+I think I have a solution besides ram_load(): ultimately fixed-ram stores
+all guest mem in the QEMU_VM_SECTION_START section of the ram, through all
+of the RAM_SAVE_FLAG_MEM_SIZE (which leads to parse_ramblocks()).  If so,
+perhaps we can do one shot sync for file at the end of parse_ramblocks()?
+Then we decouple sync_main on recv for file-based completely against all
+stream flags.
+
+-- 
+Peter Xu
+
 
