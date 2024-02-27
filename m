@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91733C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E01C54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 10:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reuZ1-00056I-RJ; Tue, 27 Feb 2024 05:19:55 -0500
+	id 1reuZ2-0005AK-ON; Tue, 27 Feb 2024 05:19:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuYn-0004OS-PX
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:44 -0500
+ id 1reuZ1-0004wv-0a
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:55 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1reuYl-00036Z-2q
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:41 -0500
+ id 1reuYz-00036Z-BC
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 05:19:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1709029179; x=1740565179;
+ t=1709029193; x=1740565193;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=wiBtvC9npNwOGQwvG+wKYWaGKFwDNnpYwHcx9hX6vcs=;
- b=jisRbi5qjyu4aaF2EocWn5yhRAZ6mjbWDHbnxKCoil5POetTzm1szOdl
- 5Fwny6Evn4gr9ekQsPChMpHxtiiFgVCM1rBlz2t5eACYn81Z8VdhMireq
- rkofiefsk6EDwu2wC57JgyaekN38Vaf+ahaR0GPs7p3gBb06qwesgKCh2
- u6Iwe/F/miC5LzG7oKaNCJQCVgVMdCuOxFqzfe0bFA3Qy/qjbtmLYxszj
- 214p5yPl3vHEfO1RTKd5RNXxkFd82zDHBZ0sTsEojII4dsAeC2UoOu4Uu
- ZKV49KkfB4YrvNDSPkiJYqXx5WyAdZP1a6f5ka2MvLyp46ehZbOEDpROV g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310282"
+ bh=JmFuea6YEZYtRR9sXzEGMQAAFtD5BRLPf0ozY0WPMXk=;
+ b=Dwroq3SA0eUN+Ume7lZ0t8sT4DISPKzPv8NnViaKEdk1TUcms31FX2CJ
+ vrlbRE8lYN6fG5wXIqHQmh18eX71TJSObHzbmoPLGgiRd49K8+UYI8wuS
+ jKpQoIz0YfrMFBaP737NJBp6XEYBI5X/F8Egf8q1C2qgBy4Z+qUfmN8uk
+ JKDXKK3E5Z4rHT0xMXJSYOaWYrqSUnKw/bGKR42RKIQJhtm+mVNWBzp6t
+ QPz7UPpzM2+GzyrveZu08SdwXaueaySlsIscD5qQ1bGn5HOrk7moW4I4L
+ nuY5lLVvXQKO2pqx1dI2Vbae8jn3MhwRLQvGf2SLTD4LVUJ0dxew6IITE Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10996"; a="6310351"
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6310282"
+   d="scan'208";a="6310351"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Feb 2024 02:19:28 -0800
+ 27 Feb 2024 02:19:52 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.06,187,1705392000"; 
-   d="scan'208";a="6954788"
+   d="scan'208";a="6954903"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:19:24 -0800
+ by fmviesa010.fm.intel.com with ESMTP; 27 Feb 2024 02:19:48 -0800
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -59,10 +59,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v9 07/21] i386/cpu: Use APIC ID info get NumSharingCache for
- CPUID[0x8000001D].EAX[bits 25:14]
-Date: Tue, 27 Feb 2024 18:32:17 +0800
-Message-Id: <20240227103231.1556302-8-zhao1.liu@linux.intel.com>
+Subject: [PATCH v9 12/21] i386: Introduce module level cpu topology to
+ CPUX86State
+Date: Tue, 27 Feb 2024 18:32:22 +0800
+Message-Id: <20240227103231.1556302-13-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
 References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
@@ -93,85 +93,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-The commit 8f4202fb1080 ("i386: Populate AMD Processor Cache Information
-for cpuid 0x8000001D") adds the cache topology for AMD CPU by encoding
-the number of sharing threads directly.
+Intel CPUs implement module level on hybrid client products (e.g.,
+ADL-N, MTL, etc) and E-core server products.
 
-From AMD's APM, NumSharingCache (CPUID[0x8000001D].EAX[bits 25:14])
-means [1]:
+A module contains a set of cores that share certain resources (in
+current products, the resource usually includes L2 cache, as well as
+module scoped features and MSRs).
 
-The number of logical processors sharing this cache is the value of
-this field incremented by 1. To determine which logical processors are
-sharing a cache, determine a Share Id for each processor as follows:
+Module level support is the prerequisite for L2 cache topology on
+module level. With module level, we can implement the Guest's CPU
+topology and future cache topology to be consistent with the Host's on
+Intel hybrid client/E-core server platforms.
 
-ShareId = LocalApicId >> log2(NumSharingCache+1)
-
-Logical processors with the same ShareId then share a cache. If
-NumSharingCache+1 is not a power of two, round it up to the next power
-of two.
-
-From the description above, the calculation of this field should be same
-as CPUID[4].EAX[bits 25:14] for Intel CPUs. So also use the offsets of
-APIC ID to calculate this field.
-
-[1]: APM, vol.3, appendix.E.4.15 Function 8000_001Dh--Cache Topology
-     Information
-
-Cc: Babu Moger <babu.moger@amd.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
+Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v7:
- * Moved this patch after CPUID[4]'s similar change ("i386/cpu: Use APIC
-   ID offset to encode cache topo in CPUID[4]"). (Xiaoyao)
- * Dropped Michael/Babu's Acked/Reviewed/Tested tags since the code
-   change due to the rebase.
- * Re-added Yongwei's Tested tag For his re-testing (compilation on
-   Intel platforms).
-
-Changes since v3:
- * Rewrote the subject. (Babu)
- * Deleted the original "comment/help" expression, as this behavior is
-   confirmed for AMD CPUs. (Babu)
- * Renamed "num_apic_ids" (v3) to "num_sharing_cache" to match spec
-   definition. (Babu)
+ * Mapped x86 module to smp module instead of cluster.
+ * Re-wrote the commit message to explain the reason why we needs module
+   level.
+ * Dropped Michael/Babu's ACKed/Tested tags since the code change.
+ * Re-added Yongwei's Tested tag For his re-testing.
 
 Changes since v1:
- * Renamed "l3_threads" to "num_apic_ids" in
-   encode_cache_cpuid8000001d(). (Yanan)
- * Added the description of the original commit and add Cc.
+ * The background of the introduction of the "cluster" parameter and its
+   exact meaning were revised according to Yanan's explanation. (Yanan)
 ---
- target/i386/cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/i386/x86.c     | 5 +++++
+ target/i386/cpu.c | 1 +
+ target/i386/cpu.h | 3 +++
+ 3 files changed, 9 insertions(+)
 
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 1e4ff7188f6a..4f91538aaf5d 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -313,6 +313,11 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+ 
+     init_topo_info(&topo_info, x86ms);
+ 
++    if (ms->smp.modules > 1) {
++        env->nr_modules = ms->smp.modules;
++        /* TODO: Expose module level in CPUID[0x1F]. */
++    }
++
+     if (ms->smp.dies > 1) {
+         env->nr_dies = ms->smp.dies;
+         set_bit(CPU_TOPO_LEVEL_DIE, env->avail_cpu_topo);
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c77bcbc44d59..df56c7a449c8 100644
+index b0f171c6a465..d2b9298faf14 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -331,7 +331,7 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
-                                        uint32_t *eax, uint32_t *ebx,
-                                        uint32_t *ecx, uint32_t *edx)
+@@ -7712,6 +7712,7 @@ static void x86_cpu_init_default_topo(X86CPU *cpu)
  {
--    uint32_t l3_threads;
-+    uint32_t num_sharing_cache;
-     assert(cache->size == cache->line_size * cache->associativity *
-                           cache->partitions * cache->sets);
+     CPUX86State *env = &cpu->env;
  
-@@ -340,11 +340,11 @@ static void encode_cache_cpuid8000001d(CPUCacheInfo *cache,
++    env->nr_modules = 1;
+     env->nr_dies = 1;
  
-     /* L3 is shared among multiple cores */
-     if (cache->level == 3) {
--        l3_threads = topo_info->cores_per_die * topo_info->threads_per_core;
--        *eax |= (l3_threads - 1) << 14;
-+        num_sharing_cache = 1 << apicid_die_offset(topo_info);
-     } else {
--        *eax |= ((topo_info->threads_per_core - 1) << 14);
-+        num_sharing_cache = 1 << apicid_core_offset(topo_info);
-     }
-+    *eax |= (num_sharing_cache - 1) << 14;
+     /* SMT, core and package levels are set by default. */
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 4a55fef1feea..375d63d05ed2 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1899,6 +1899,9 @@ typedef struct CPUArchState {
+     /* Number of dies within this CPU package. */
+     unsigned nr_dies;
  
-     assert(cache->line_size > 0);
-     assert(cache->partitions > 0);
++    /* Number of modules within one die. */
++    unsigned nr_modules;
++
+     /* Bitmap of available CPU topology levels for this CPU. */
+     DECLARE_BITMAP(avail_cpu_topo, CPU_TOPO_LEVEL_MAX);
+ } CPUX86State;
 -- 
 2.34.1
 
