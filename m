@@ -4,86 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95896C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 07:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0C6C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 07:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1res6G-0002jg-DO; Tue, 27 Feb 2024 02:42:04 -0500
+	id 1resBo-0004cB-GP; Tue, 27 Feb 2024 02:47:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1res6E-0002jT-Vl
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 02:42:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1res6D-0002Rv-6Q
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 02:42:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709019719;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DzXWrfNjP+XNMRSD5nMOyU9aV4MwlRiXkP+4p8OwIgo=;
- b=ayUyQcpCEInlfrPeaRByKdWHnecdhaRIFJ+eWV6/1PPbUF6BcTa0XHA68ITovaRvHupHam
- qnoiaEf/LvHq1BZ+pu1tEmegwXjD0PDpRIkcMASD4vpg0m7PqPKBCRKLAZef0eXMrds4Pi
- 47ZSYpGfFZ6T2Ss7gjQV44j0eeTh1Ms=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-idtZXLd6OjWXOEAT4AaJiw-1; Tue, 27 Feb 2024 02:41:58 -0500
-X-MC-Unique: idtZXLd6OjWXOEAT4AaJiw-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-29999b97b39so1396653a91.1
- for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 23:41:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1resBi-0004ZG-QF
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 02:47:44 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1resBd-0003an-SF
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 02:47:41 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1d93edfa76dso34049945ad.1
+ for <qemu-devel@nongnu.org>; Mon, 26 Feb 2024 23:47:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1709020055; x=1709624855;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5Va+9CpvBWB277k7Vk/5Lq5SeV6/w0TKZhR5/P0tOS8=;
+ b=XE5D407Ti789ZRTKtrPJ5Xq/wW5hvcivpjrWLiqvwYisNjJWr0hfT3xyijAIKxUw7y
+ nOLAtzr/StgFR6Q9Kpsx0+NTC54BtmQjU7kyqyWR3X6K8XzmGhvqmfP9AK8A+/yXkVb5
+ AX9Tw3hpvsLCCYFbkWdwLoC0Iux2uify+SgbqQBYnjEB5NT9tYEqMhxf6kEyLWmnsxN7
+ ooIyqGCZ+IT9ZOc7f8bGb+inb2CpD4vPqxr34NGZyVJz4h5b77lkhA32YUytddfLTnXf
+ /bQYJ9wsv6A0wmH3V18xs6k71o+AZf25LUF2ZcEunagp7So8hIKZgpQCktzd7VtcAqZu
+ 2bLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709019717; x=1709624517;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DzXWrfNjP+XNMRSD5nMOyU9aV4MwlRiXkP+4p8OwIgo=;
- b=LMsPPJDGqxUpUX+XhkW3O0dfYpKhds4TopZDITI0a4M9Ur155yXAOWK6SJmPsPD5R6
- 3IMeLsWSZjvxaf9GOYmwVBhFEP3o87jI1pMtMcGXsFVxtdG4Bie0geh1nfF9fgPnuLLS
- 23rcb4hIOqdYTnXgJCFzblCnG/2EWdTSINykuIHdJDuWv1k1a3oK2h2ofAxTPiLRAhWR
- Ao8VUFWUzA1l6zVHT8Pw8mNBqlyLaJZfac0M/6T5E6AKPRdySRnc2qtcvrcx/tcbXGkD
- H0l+I11rJyJhOo0uW6ghIobBmG2vxcCJuypNzyU9DYL9nnihHQy7Qc16+Phh36OAFYHJ
- HHqQ==
-X-Gm-Message-State: AOJu0Yz1J7XVib36444VV4nCEIwYRIaND3MPgXaNcKpiIsRoAExIFq65
- 19iOdLWQrHiihEwNCN9U5SJhVkAJz+WTjYt7iiPUGWg2ZlGADe4M0i8HnqCGpI04LMgnL5TCZLL
- HbKiSahOdjvKDC1f5Z8DSfGwUz70o61f8zDtv5kHGTAlUJGW7y3aT
-X-Received: by 2002:a17:90a:17e4:b0:29a:4f72:28e with SMTP id
- q91-20020a17090a17e400b0029a4f72028emr7341884pja.2.1709019717266; 
- Mon, 26 Feb 2024 23:41:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbC9NYVRgokB/uGNr7Selpbd3ZLshwC4OqTzpaSe00RH8gK3WRW1YdwJaIdGMb6NWh56PR7g==
-X-Received: by 2002:a17:90a:17e4:b0:29a:4f72:28e with SMTP id
- q91-20020a17090a17e400b0029a4f72028emr7341870pja.2.1709019716852; 
- Mon, 26 Feb 2024 23:41:56 -0800 (PST)
-Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- rs11-20020a17090b2b8b00b002994f848bc9sm7796371pjb.43.2024.02.26.23.41.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 26 Feb 2024 23:41:56 -0800 (PST)
-Date: Tue, 27 Feb 2024 15:41:48 +0800
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Joao Martins <joao.m.martins@oracle.com>,
- Jan Kiszka <jan.kiszka@siemens.com>
-Subject: Re: [PATCH] migration: Don't serialize migration while can't
- switchover
-Message-ID: <Zd2SPGPVhW80b1Hu@x1n>
-References: <20240222155627.14563-1-avihaih@nvidia.com>
+ d=1e100.net; s=20230601; t=1709020055; x=1709624855;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Va+9CpvBWB277k7Vk/5Lq5SeV6/w0TKZhR5/P0tOS8=;
+ b=O/6f5+rrd75WsQsyq3J8GAz9N+WOCkbHThY3JbIpjrPG9WX2p1AQ/F30hsV+rEw/28
+ 3qBioQTviAI0oTts0Z3pzYxgc85tiFGpG3qafMzdyQLlI48BZ6L3Pgj8weNCbgVFp7pI
+ Oi0J17WSOe018OBtS8pM4XZFuTc576XCj5mXSL0h1qfINnFPR7LmMF7VJCdXft9E3Ghc
+ sOvM91+58L+R3UsVlJSP+3QFEGzFGb+QkbN+MSxX3vyy+f/D11le/bh6KcjmNU6i1/3U
+ CKZqwf9U9uiQQssmMa4+bltu87uCpRoiWzoIMjd6oajYA98dOOyX+u+Y1kEpSLp8N+zy
+ Pn1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeQ7bYF4LMpAXou8pajMhUbT7SfmeQAAltIw2KunhY1ycT+9zKt7OOhXfewTdYAvoL+Y2Y3jcarWVVe09D6GU1pbISLX8=
+X-Gm-Message-State: AOJu0YzdFyTgHK8/xTOH4rzihAbNnQqKi7NBhw7ivcrju+mgrY2HobGA
+ FG6yHQ6+7zKe9HF1pvgbS5AHwpNCeZ164isrkCAUaSLneA51T/Guzt18meqqCGQ=
+X-Google-Smtp-Source: AGHT+IHa5GPNZQyrh4lPjtiCaHfY4JaLVAhx3qAa4gyn6vwaRY7nzPSNlOoJIGtj3YT9SHvapxuPpQ==
+X-Received: by 2002:a17:903:244d:b0:1dc:93b:8981 with SMTP id
+ l13-20020a170903244d00b001dc093b8981mr14131905pls.14.1709020055516; 
+ Mon, 26 Feb 2024 23:47:35 -0800 (PST)
+Received: from [157.82.203.206] ([157.82.203.206])
+ by smtp.gmail.com with ESMTPSA id
+ l21-20020a170903005500b001db82fdc89asm880947pla.305.2024.02.26.23.47.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 26 Feb 2024 23:47:35 -0800 (PST)
+Message-ID: <b7aac53e-cde5-4596-b0fc-d39f52d4ceb8@daynix.com>
+Date: Tue, 27 Feb 2024 16:47:26 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240222155627.14563-1-avihaih@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 21/27] plugins: add an API to read registers
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-riscv@nongnu.org, Michael Rolnik <mrolnik@gmail.com>,
+ Song Gao <gaosong@loongson.cn>, Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow
+ <jsnow@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-s390x@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Thomas Huth <thuth@redhat.com>, Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Yanan Wang <wangyanan55@huawei.com>, Brian Cain <bcain@quicinc.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Bin Meng <bin.meng@windriver.com>, Laurent Vivier <laurent@vivier.eu>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240226165646.425600-1-alex.bennee@linaro.org>
+ <20240226165646.425600-22-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240226165646.425600-22-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,149 +120,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 05:56:27PM +0200, Avihai Horon wrote:
-> Currently, migration code serializes device data sending during pre-copy
-> iterative phase. As noted in the code comment, this is done to prevent
-> faster changing device from sending its data over and over.
+On 2024/02/27 1:56, Alex Bennée wrote:
+> We can only request a list of registers once the vCPU has been
+> initialised so the user needs to use either call the get function on
+> vCPU initialisation or during the translation phase.
+> 
+> We don't expose the reg number to the plugin instead hiding it behind
+> an opaque handle. For now this is just the gdb_regnum encapsulated in
+> an anonymous GPOINTER but in future as we add more state for plugins
+> to track we can expand it.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1706
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Message-Id: <20240103173349.398526-39-alex.bennee@linaro.org>
+> Based-on: <20231025093128.33116-18-akihiko.odaki@daynix.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Frankly speaking I don't understand the rational behind 90697be889 ("live
-migration: Serialize vmstate saving in stage 2").  I don't even think I
-noticed this logic before even if I worked on migration for a few years...
+Hi,
 
-I was thinking all devices should always get its chance to run for some
-period during iterations.  Do you know the reasoning behind?  And I must
-confess I also know little on block migration, which seems to be relevant
-to this change.  Anyway, I also copy Jan just in case he'll be able to chim
-in.
-
-If there is a fast changing device, even if we don't proceed with other
-device iterators and we stick with the current one, assuming it can finally
-finish dumping all data, but then we'll proceed with other devices and the
-fast changing device can again accumulate dirty information?
+Mostly looks good. I have a few trivial comments so please have a look 
+at them.
 
 > 
-> However, with switchover-ack capability enabled, this behavior can be
-> problematic and may prevent migration from converging. The problem lies
-> in the fact that an earlier device may never finish sending its data and
-> thus block other devices from sending theirs.
-
-Yes, this is a problem.
-
-> 
-> This bug was observed in several VFIO migration scenarios where some
-> workload on the VM prevented RAM from ever reaching a hard zero, not
-> allowing VFIO initial pre-copy data to be sent, and thus destination
-> could not ack switchover. Note that the same scenario, but without
-> switchover-ack, would converge.
-> 
-> Fix it by not serializing device data sending during pre-copy iterative
-> phase if switchover was not acked yet.
-
-I am still not fully convinced that it's even legal that one device can
-consume all iterator's bandwidth, ignoring the rest..  Though again it's
-not about this patch, but about commit 90697be889.
-
-I'm thinking whether we should allow each device to have its own portion of
-chance to push data for each call to qemu_savevm_state_iterate(),
-irrelevant of vfio's switchover-ack capability.
-
-> 
-> Fixes: 1b4adb10f898 ("migration: Implement switchover ack logic")
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 > ---
->  migration/savevm.h    |  2 +-
->  migration/migration.c |  4 ++--
->  migration/savevm.c    | 22 +++++++++++++++-------
->  3 files changed, 18 insertions(+), 10 deletions(-)
+> v4
+>    - the get/read_registers functions are now implicitly for current
+>    vCPU only to accidental cpu != current_cpu uses.
+> v5
+>    - make reg_handles as per-CPUPluginState variable.
+> v6
+>    - for now just wrap gdb_regnum
+> ---
+>   include/qemu/qemu-plugin.h   | 48 +++++++++++++++++++++++++++++--
+>   plugins/api.c                | 56 ++++++++++++++++++++++++++++++++++++
+>   plugins/qemu-plugins.symbols |  2 ++
+>   3 files changed, 104 insertions(+), 2 deletions(-)
 > 
-> diff --git a/migration/savevm.h b/migration/savevm.h
-> index 74669733dd6..d4a368b522b 100644
-> --- a/migration/savevm.h
-> +++ b/migration/savevm.h
-> @@ -36,7 +36,7 @@ void qemu_savevm_state_setup(QEMUFile *f);
->  bool qemu_savevm_state_guest_unplug_pending(void);
->  int qemu_savevm_state_resume_prepare(MigrationState *s);
->  void qemu_savevm_state_header(QEMUFile *f);
-> -int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy);
-> +int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy, bool can_switchover);
->  void qemu_savevm_state_cleanup(void);
->  void qemu_savevm_state_complete_postcopy(QEMUFile *f);
->  int qemu_savevm_state_complete_precopy(QEMUFile *f, bool iterable_only,
-> diff --git a/migration/migration.c b/migration/migration.c
-> index ab21de2cadb..d8bfe1fb1b9 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -3133,7 +3133,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->      }
->  
->      /* Just another iteration step */
-> -    qemu_savevm_state_iterate(s->to_dst_file, in_postcopy);
-> +    qemu_savevm_state_iterate(s->to_dst_file, in_postcopy, can_switchover);
->      return MIG_ITERATE_RESUME;
->  }
->  
-> @@ -3216,7 +3216,7 @@ static MigIterateState bg_migration_iteration_run(MigrationState *s)
->  {
->      int res;
->  
-> -    res = qemu_savevm_state_iterate(s->to_dst_file, false);
-> +    res = qemu_savevm_state_iterate(s->to_dst_file, false, true);
->      if (res > 0) {
->          bg_migration_completion(s);
->          return MIG_ITERATE_BREAK;
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index d612c8a9020..3a012796375 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1386,7 +1386,7 @@ int qemu_savevm_state_resume_prepare(MigrationState *s)
->   *   0 : We haven't finished, caller have to go again
->   *   1 : We have finished, we can go to complete phase
->   */
-> -int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
-> +int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy, bool can_switchover)
->  {
->      SaveStateEntry *se;
->      int ret = 1;
-> @@ -1430,12 +1430,20 @@ int qemu_savevm_state_iterate(QEMUFile *f, bool postcopy)
->                           "%d(%s): %d",
->                           se->section_id, se->idstr, ret);
->              qemu_file_set_error(f, ret);
-> +            return ret;
->          }
-> -        if (ret <= 0) {
-> -            /* Do not proceed to the next vmstate before this one reported
-> -               completion of the current stage. This serializes the migration
-> -               and reduces the probability that a faster changing state is
-> -               synchronized over and over again. */
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 93981f8f89f..3b6b18058d2 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -11,6 +11,7 @@
+>   #ifndef QEMU_QEMU_PLUGIN_H
+>   #define QEMU_QEMU_PLUGIN_H
+>   
+> +#include <glib.h>
+>   #include <inttypes.h>
+>   #include <stdbool.h>
+>   #include <stddef.h>
+> @@ -229,8 +230,8 @@ struct qemu_plugin_insn;
+>    * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
+>    * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
+>    *
+> - * Note: currently unused, plugins cannot read or change system
+> - * register state.
+> + * Note: currently QEMU_PLUGIN_CB_RW_REGS is unused, plugins cannot change
+> + * system register state.
+>    */
+>   enum qemu_plugin_cb_flags {
+>       QEMU_PLUGIN_CB_NO_REGS,
+> @@ -707,4 +708,47 @@ uint64_t qemu_plugin_end_code(void);
+>   QEMU_PLUGIN_API
+>   uint64_t qemu_plugin_entry_code(void);
+>   
+> +/** struct qemu_plugin_register - Opaque handle for register access */
+> +struct qemu_plugin_register;
 > +
-> +        if (ret == 0 && can_switchover) {
-> +            /*
-> +             * Do not proceed to the next vmstate before this one reported
-> +             * completion of the current stage. This serializes the migration
-> +             * and reduces the probability that a faster changing state is
-> +             * synchronized over and over again.
-> +             * Do it only if migration can switchover. If migration can't
-> +             * switchover yet, do proceed to let other devices send their data
-> +             * too, as this may be required for switchover to be acked and
-> +             * migration to converge.
-> +             */
->              break;
->          }
->      }
-> @@ -1724,7 +1732,7 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
->      qemu_savevm_state_setup(f);
->  
->      while (qemu_file_get_error(f) == 0) {
-> -        if (qemu_savevm_state_iterate(f, false) > 0) {
-> +        if (qemu_savevm_state_iterate(f, false, true) > 0) {
->              break;
->          }
->      }
-> -- 
-> 2.26.3
-> 
+> +/**
+> + * typedef qemu_plugin_reg_descriptor - register descriptions
+> + *
+> + * @handle: opaque handle for retrieving value with qemu_plugin_read_register
+> + * @name: register name
+> + * @feature: optional feature descriptor, can be NULL
+> + */
+> +typedef struct {
+> +    struct qemu_plugin_register *handle;
+> +    const char *name;
+> +    const char *feature;
+> +} qemu_plugin_reg_descriptor;
+> +
+> +/**
+> + * qemu_plugin_get_registers() - return register list for current vCPU
+> + *
+> + * Returns a GArray of qemu_plugin_reg_descriptor or NULL. Caller
+> + * frees the array (but not the const strings).
+> + *
+> + * Should be used from a qemu_plugin_register_vcpu_init_cb() callback
+> + * after the vCPU is initialised, i.e. in the vCPU context.
+> + */
+> +GArray *qemu_plugin_get_registers(void);
+> +
+> +/**
+> + * qemu_plugin_read_register() - read register for current vCPU
+> + *
+> + * @handle: a @qemu_plugin_reg_handle handle
+> + * @buf: A GByteArray for the data owned by the plugin
+> + *
+> + * This function is only available in a context that register read access is
+> + * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
+> + *
+> + * Returns the size of the read register. The content of @buf is in target byte
+> + * order. On failure returns -1
+> + */
+> +int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+> +                              GByteArray *buf);
+> +
+> +
+>   #endif /* QEMU_QEMU_PLUGIN_H */
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 54df72c1c00..03412598047 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -8,6 +8,7 @@
+>    *
+>    *  qemu_plugin_tb
+>    *  qemu_plugin_insn
+> + *  qemu_plugin_register
+>    *
+>    * Which can then be passed back into the API to do additional things.
+>    * As such all the public functions in here are exported in
+> @@ -35,10 +36,12 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/main-loop.h"
+>   #include "qemu/plugin.h"
+>   #include "qemu/log.h"
+>   #include "tcg/tcg.h"
+>   #include "exec/exec-all.h"
+> +#include "exec/gdbstub.h"
+>   #include "exec/ram_addr.h"
+>   #include "disas/disas.h"
+>   #include "plugin.h"
+> @@ -410,3 +413,56 @@ uint64_t qemu_plugin_entry_code(void)
+>   #endif
+>       return entry;
+>   }
+> +
+> +/*
+> + * Create register handles.
+> + *
+> + * We need to create a handle for each register so the plugin
+> + * infrastructure can call gdbstub to read a register. They are
+> + * currently just a pointer encapsulation of the gdb_regnum but in
+> + * future may hold internal plugin state so its important plugin
+> + * authors are not tempted to treat them as numbers.
+> + *
+> + * We also construct a result array with those handles and some
+> + * ancillary data the plugin might find useful.
+> + */
+> +
+> +static GArray *create_register_handles(CPUState *cs, GArray *gdbstub_regs)
+> +{
 
--- 
-Peter Xu
+cs is unused.
 
+> +    GArray *find_data = g_array_new(true, true,
+> +                                    sizeof(qemu_plugin_reg_descriptor));
+> +
+> +    for (int i = 0; i < gdbstub_regs->len; i++) {
+> +        GDBRegDesc *grd = &g_array_index(gdbstub_regs, GDBRegDesc, i);
+> +
+> +        /* skip "un-named" regs */
+> +        if (!grd->name) {
+> +            continue;
+> +        }
+> +
+> +        /* Create a record for the plugin */
+> +        qemu_plugin_reg_descriptor desc = {
+> +            .handle = GINT_TO_POINTER(grd->gdb_reg),
+> +            .name = g_intern_string(grd->name),
+> +            .feature = g_intern_string(grd->feature_name)
+> +        };
+
+Please remove a mixed declaration; see: docs/devel/style.rst
+
+> +        g_array_append_val(find_data, desc);
+> +    }
+> +
+> +    return find_data;
+> +}
+> +
+> +GArray *qemu_plugin_get_registers(void)
+> +{
+> +    g_assert(current_cpu);
+> +
+> +    g_autoptr(GArray) regs = gdb_get_register_list(current_cpu);
+> +    return regs->len ? create_register_handles(current_cpu, regs) : NULL;
+
+Why do you need regs->len check?
+
+> +}
+> +
+> +int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+> +{
+> +    g_assert(current_cpu);
+> +
+> +    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg));
+> +}
+> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+> index adb67608598..27fe97239be 100644
+> --- a/plugins/qemu-plugins.symbols
+> +++ b/plugins/qemu-plugins.symbols
+> @@ -3,6 +3,7 @@
+>     qemu_plugin_end_code;
+>     qemu_plugin_entry_code;
+>     qemu_plugin_get_hwaddr;
+> +  qemu_plugin_get_registers;
+>     qemu_plugin_hwaddr_device_name;
+>     qemu_plugin_hwaddr_is_io;
+>     qemu_plugin_hwaddr_phys_addr;
+> @@ -19,6 +20,7 @@
+>     qemu_plugin_num_vcpus;
+>     qemu_plugin_outs;
+>     qemu_plugin_path_to_binary;
+> +  qemu_plugin_read_register;
+>     qemu_plugin_register_atexit_cb;
+>     qemu_plugin_register_flush_cb;
+>     qemu_plugin_register_vcpu_exit_cb;
 
