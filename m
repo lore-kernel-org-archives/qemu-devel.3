@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4985C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3110DC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reypT-0003km-7z; Tue, 27 Feb 2024 09:53:11 -0500
+	id 1reypQ-0003Qy-N9; Tue, 27 Feb 2024 09:53:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reypK-00030o-WB
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:03 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1reypO-0003DW-6S
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:06 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1reypD-0004mo-4V
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:02 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33aeb088324so2792013f8f.2
+ id 1reypD-0004mv-5b
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:53:05 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-412a9a61545so10667755e9.2
  for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:52:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1709045571; x=1709650371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zMZ+pFdg1P4n/cHnfp4DZXoxUsYEnk+lXnRUtGdShK8=;
- b=xqkX1NvW/laAo0Kate1dR9vbLT6ho6Ye/MgFXKN5LXL1PRw2ndhPtG9r7T5dzJ6xbS
- 2FgurRRiTttgJTNsuinc0jDHYLG0zoux+A+usQPZQhii7IeTnkDdERXWLiUS7cM7QwLO
- 6e8B1ARbZBMNtCS4D/uNt3UUfCgnt5AYhBspraAlhWUX/+GQz6nrEfW8hC9ypJ4v95rj
- SJwKlvQcoodl7Cd06hnCnlVtUT+TE4UnMFlB86VRBYMZ5enTbHR2+m6B2u1r9teCF5Nm
- DKm0dTEtjE4UwkbIrtXzGG8+o+ZApgffYbgN17zC8hXlffQgQphQEIFLsOwe9hR4IG40
- 30sg==
+ bh=LY87PsqI5CseL6bunSV/a+wwJBYv7wofoTM3s0oA7jk=;
+ b=WpE3xPi+wpaqIEdhOzo5JmMHLxtVyQ+fI4mWd0vJVyu4f70mJQeMd06BPOqVss4UT8
+ YSmo82IEC/z/jLWQOrebAdtdwu1l0m9mfzYsX5mN+rKvVOncRZAQzgEKnPX/ACcE1eRt
+ E/x8YZ7B3dbj8FhorCCVHQLH91+n9H0eChPuDuTUEqYIDN/kojz7eaSoAdF+WPX93T6e
+ LCb5IKrnk+EJEk8DpNn2hMvAUGL30oNxsh3pFHe6DzZJ2+dlTQTtA8EPC/n1tefwgiFI
+ nuuGG5SOKlAabK5/TNe4avv3aErFWmaHhkcSYzeH6rc3L2z8KsqCEJV9jWGGG5SF7NA7
+ MgGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1709045571; x=1709650371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zMZ+pFdg1P4n/cHnfp4DZXoxUsYEnk+lXnRUtGdShK8=;
- b=BLRsJ53WhutuIwhjyKFA6ioRVcp7bjp+N4sC0mX6iiAQabHFhdtdQDR6/24KBhXvD2
- 72iIquY3W1rDR3Czv+6vrtTEsRKiY3ixplwDr/7miMJTdUcz2P3IJWu3wGTYKeQj5r6V
- rrvmCZpKk3DfDRTANlsIXIHxNkfrY5L6xvwm7GxUlRU6Wm40XVqg/NqDYetJFYhsEBK6
- rpmdHi+UOUbyZ6o5cmIIQr/+KrNEUUCmkXwUkVhlxGSvKOpsYpM8FW2SqCETucV72w+R
- /uGH/BvtdAF3Fue3M5Zf+1wbdKuH1BbWihZJ3pFw2l4n0TzcYViU1z8ADghTffThjQs1
- X11Q==
-X-Gm-Message-State: AOJu0Yycd/9ox0JmBAzzOL3mVvgUsRpWW9LgyL5MyeTaMYYMqySG9C9Q
- ax7Cn5UPDQ0RuS60lF7W3kwXyvic6m9J9BIWWB1SgRZt0+F6IliF4yEamNtF6to=
-X-Google-Smtp-Source: AGHT+IETg4WzZNvk2wvxIlG8WU4ie4CylKMnEVrxvPc9V0SjG/5PGdsV3osnYR8Nnzi3wt6/wFwmLQ==
-X-Received: by 2002:a5d:400c:0:b0:33b:26de:ea with SMTP id
- n12-20020a5d400c000000b0033b26de00eamr7173413wrp.37.1709045570784; 
- Tue, 27 Feb 2024 06:52:50 -0800 (PST)
+ bh=LY87PsqI5CseL6bunSV/a+wwJBYv7wofoTM3s0oA7jk=;
+ b=sI5CGYcJX37IcdiYFkOHJVJ9uIpepPidg6FO+i3RfqnbJ1xDKw5nEJhqBs19iphfh+
+ lSPaodJs3i2K+VmQIqf+WR4+A8/iEY/dNJ0YPCxol2d6FBJGSo2tBJwCrWaufLAOeFro
+ Zz9OdDtTidYa81F3vV5mMlW34qJ/+hvUXn1Z5G9uUyLZLEmTCZGgkX4EE48LhQ1VF7hx
+ CuLXozvWawdIqnINwvBwlgj8+Og9yrb/kFmCO04dT5Z8KgnZx+qW1Cit3rqDRMYHZAxF
+ rfsOb0N/BZ1gsKjtKkgBcSX+P9KOSCyMHaSzPtTQFHaKGcb3cn2qypb0kJit26A5DvnZ
+ 4X6Q==
+X-Gm-Message-State: AOJu0YwodEIodZ8dfIpHV+iIR0mPNqxmrz4TC5SQeJaO9DbROuKjesL1
+ QTHLU2SRWOQg0CsW/5bUb/zdQDa4sYaYFkDewZUSlu/CL46Ifxj/AWa4vA71RsQ=
+X-Google-Smtp-Source: AGHT+IHbvfRK+W3sbbX597Xd664p4Zgx2ror9Jp92I+pRQYcvikt8w0hNQFgUIQxsFqNpf4Gton/9g==
+X-Received: by 2002:a05:600c:5021:b0:412:a451:d32f with SMTP id
+ n33-20020a05600c502100b00412a451d32fmr4857772wmr.20.1709045571014; 
+ Tue, 27 Feb 2024 06:52:51 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a10-20020a5d4d4a000000b0033d13530134sm11454355wru.106.2024.02.27.06.52.50
+ co2-20020a0560000a0200b0033d70dd0e04sm11964404wrb.8.2024.02.27.06.52.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 27 Feb 2024 06:52:50 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 280B55F92F;
- Tue, 27 Feb 2024 14:43:38 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 5B1915F923;
+ Tue, 27 Feb 2024 14:43:37 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
@@ -89,17 +89,17 @@ Cc: qemu-ppc@nongnu.org, Yoshinori Sato <ysato@users.sourceforge.jp>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 28/29] docs/devel: document some plugin assumptions
-Date: Tue, 27 Feb 2024 14:43:34 +0000
-Message-Id: <20240227144335.1196131-29-alex.bennee@linaro.org>
+Subject: [PATCH v4 19/29] cpu: call plugin init hook asynchronously
+Date: Tue, 27 Feb 2024 14:43:25 +0000
+Message-Id: <20240227144335.1196131-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240227144335.1196131-1-alex.bennee@linaro.org>
 References: <20240227144335.1196131-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,77 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we attempt to hide implementation details from the plugin we
-shouldn't be totally obtuse. Let the user know what they can and can't
-expect with the various instrumentation options.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Message-Id: <20240103173349.398526-44-alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This ensures we run during a cpu_exec, which allows to call start/end
+exclusive from this init hook (needed for new scoreboard API introduced
+later).
+
+async work is run before any tb is translated/executed, so we can
+guarantee plugin init will be called before any other hook.
+
+The previous change made sure that any idle/resume cb call will not be
+done before initializing plugin for a given vcpu.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240213094009.150349-5-pierrick.bouvier@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/tcg-plugins.rst | 49 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ hw/core/cpu-common.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-index 535a74684c5..9cc09d8c3da 100644
---- a/docs/devel/tcg-plugins.rst
-+++ b/docs/devel/tcg-plugins.rst
-@@ -112,6 +112,55 @@ details are opaque to plugins. The plugin is able to query select
- details of instructions and system configuration only through the
- exported *qemu_plugin* functions.
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index fe16d0d9df8..68786360ea5 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -194,6 +194,11 @@ static void cpu_common_parse_features(const char *typename, char *features,
+     }
+ }
  
-+However the following assumptions can be made:
++static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
++{
++    qemu_plugin_vcpu_init_hook(cpu);
++}
 +
-+Translation Blocks
-+++++++++++++++++++
-+
-+All code will go through a translation phase although not all
-+translations will be necessarily be executed. You need to instrument
-+actual executions to track what is happening.
-+
-+It is quite normal to see the same address translated multiple times.
-+If you want to track the code in system emulation you should examine
-+the underlying physical address (``qemu_plugin_insn_haddr``) to take
-+into account the effects of virtual memory although if the system does
-+paging this will change too.
-+
-+Not all instructions in a block will always execute so if its
-+important to track individual instruction execution you need to
-+instrument them directly. However asynchronous interrupts will not
-+change control flow mid-block.
-+
-+Instructions
-+++++++++++++
-+
-+Instruction instrumentation runs before the instruction executes. You
-+can be can be sure the instruction will be dispatched, but you can't
-+be sure it will complete. Generally this will be because of a
-+synchronous exception (e.g. SIGILL) triggered by the instruction
-+attempting to execute. If you want to be sure you will need to
-+instrument the next instruction as well. See the ``execlog.c`` plugin
-+for examples of how to track this and finalise details after execution.
-+
-+Memory Accesses
-++++++++++++++++
-+
-+Memory callbacks are called after a successful load or store.
-+Unsuccessful operations (i.e. faults) will not be visible to memory
-+instrumentation although the execution side effects can be observed
-+(e.g. entering a exception handler).
-+
-+System Idle and Resume States
-++++++++++++++++++++++++++++++
-+
-+The ``qemu_plugin_register_vcpu_idle_cb`` and
-+``qemu_plugin_register_vcpu_resume_cb`` functions can be used to track
-+when CPUs go into and return from sleep states when waiting for
-+external I/O. Be aware though that these may occur less frequently
-+than in real HW due to the inefficiencies of emulation giving less
-+chance for the CPU to idle.
-+
- Internals
- ---------
+ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+ {
+     CPUState *cpu = CPU(dev);
+@@ -217,9 +222,9 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+         cpu_resume(cpu);
+     }
  
+-    /* Plugin initialization must wait until the cpu is fully realized. */
++    /* Plugin initialization must wait until the cpu start executing code */
+     if (tcg_enabled()) {
+-        qemu_plugin_vcpu_init_hook(cpu);
++        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
+     }
+ 
+     /* NOTE: latest generic point where the cpu is fully realized */
 -- 
 2.39.2
 
