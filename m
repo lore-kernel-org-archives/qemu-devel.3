@@ -4,65 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A4AC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 17:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12ABAC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 17:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf17P-0004m0-EI; Tue, 27 Feb 2024 12:19:51 -0500
+	id 1rf19D-0006HV-VD; Tue, 27 Feb 2024 12:21:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rf17N-0004lW-3J
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:19:49 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1rf18u-0006EA-Mq
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:21:25 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rf17L-0000ZF-69
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:19:48 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-55a035669d5so8062261a12.2
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 09:19:46 -0800 (PST)
+ id 1rf18s-0000x4-CG
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:21:23 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-563cb3ba9daso4895570a12.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 09:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709054385; x=1709659185; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oOfATZXUwIjVOsUxACJffWxuM1hsPHNRWZYYoKNrVoM=;
- b=tX2Ro9P8rkPfGLS8NhszC/3lcxmfyOgjP01WjT5fzu1sBDoiiNhgnJgx+MSU+YW5k4
- diAa57wB8gKvsmt8iep7f7v+LWVOOdNXovtcMiwHNFKxTzctE6Q3AoZ/m0HlCLPvhDx2
- I93CNu8fvj0oLnoh8oG6nFqsz6VV0EFdwE+gFgFHtH7LFYgrhkSB4JGfY44QemASHJjc
- mudUg5V2R0s++Uk2CxVTgEZeX21aC9sXDBPPr47A+qWvVwrRpoIaXRf8b2mQ+OGInpFn
- g9JkjyhZOjNqb6kFnJnS7ZQtpPKWAG27wCuZ6LCJsoHSUavOFzDCfRgEmwe4B4+P07fh
- KiAA==
+ d=linaro.org; s=google; t=1709054480; x=1709659280; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2KfBsfSw3AQk6ca8hw7vMplw/8fGwK8SO5GqjuWlrKU=;
+ b=eAIRNCxVJx9I5zYW5ap3lf6Jli8LWB/kU10xdMGH0E0xbIfxPDuq/1n5dCi0J4IDWF
+ DeHQijDw6sXfzSS7EiG6dr3tgi1k2sRaRCp3pjJJs4v45iAQr54Cz7igPFxdAsyhIyjI
+ n30G7ZejGBhbvJl9gMKdlF7wVSMdWjGZhyUrUfxgw0YT3MvVe/m/ZUJ/jGCBjbAowrRS
+ S21El5aL6EvHMufacaqecD3JyglrjdTMEx4r20cNDWJV1AW/PiNeNFzvt1vvCS2PNP08
+ l+39jBLOKSs904xWe5dm4ojYATBGw4anFe1dV5peFnvM2ks5MT45cdtY16qbKZzY9l7u
+ 7KUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709054385; x=1709659185;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oOfATZXUwIjVOsUxACJffWxuM1hsPHNRWZYYoKNrVoM=;
- b=MleBqGGSy5ovhIytOBMlzReTSJ8gi7bIM01bDv3mnQIfZUgUUVRgWULGzacZbgJRJK
- AcaAm8i7qXS21G3JycW07b7NPTeHm+7xfJ+KOQSzwTV39GyhT6/TcZ+lxUZTcGN+jOBk
- zD/Qb66/kaAQO31s80DCREdwVwTmKGfdW3WhtyIzQteNHAivAHfpoA03a7D7qDdKAKJp
- F16mAvBQK+TwevG4hDxKm7cJ7fqJRQfM+sU+KlyHAQnU2Wvn3/qvrRp5EtwSELozIVSj
- 9svWS//KtoBrSWdCVKUG5UKTpOS4bl3OepZDXYKf0TcoNfZwBhVB/WH1pQRmWeG6cJy1
- WM/Q==
-X-Gm-Message-State: AOJu0Yyge22zuPuUGXvD9A4w0nGJez5fDMnVM+NC6Pkleahtn+zwiziE
- C/GZp5Rz6FsvOSOg8OlmpnPqEhOqZCQQkuNGpPH8ObahQfmLb4WbtNIpnHWEkavKDF8Odt/pTxK
- aNfCBr7FWl2hF/KsJn4YnR+KByxMZ5FUdho7i93+PCBp53IZl
-X-Google-Smtp-Source: AGHT+IHLG65VTvcbar7ErGHRJygZwBne36YhC1V1/RAu/czlQwbm/YeI0MTsP5Z8EzkbnGA9EdVSMvzi4Yf4vWWUUOs=
-X-Received: by 2002:a50:fc18:0:b0:565:4ac9:d69c with SMTP id
- i24-20020a50fc18000000b005654ac9d69cmr7119800edr.11.1709054384758; Tue, 27
- Feb 2024 09:19:44 -0800 (PST)
+ d=1e100.net; s=20230601; t=1709054480; x=1709659280;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2KfBsfSw3AQk6ca8hw7vMplw/8fGwK8SO5GqjuWlrKU=;
+ b=HCZGSQdiz9OU5ZyE3npcP7Vk5QB4sp0LY7j4jr5X4Q/I+oURjfy2hGcpsSPE70GPA6
+ s0BTyeNrxUfp256f/RgFdAAq0jowArpoGrAqInau/hWb932qKU3Uo12lhOJRl/TGevCL
+ L3g/gEyX2HQ6Y6bf8Muw3JA1KlWVkgDal7l1XMqkoVYGAV16W7iFQtZM3Iush9VONNNA
+ vOr9Hmm7TIS10xKbvlcP8UslixPwx+FrGrSKeKunZ023oq70DCmspuqKR6llBDzbB9kJ
+ zoefAF/XjjWMU/8/g+GM4uSZBVzpt5qAAOPBlno2KOPX3YrhzwZg023chS6M2mLr7u2T
+ v6GQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxnF+jPCgcVIKvzZpO8PabR4H4XBr107VMcPX1ha/iMUsSC/kvElqWZ9azgOzFWrLtS6UeXZK/tkd9H5HRnY5wvtP9/+8=
+X-Gm-Message-State: AOJu0YxkHyZ6fNUY7DfJgvquoB/nkf2Y2AV1ImWGnc450v0+KuEGyp5m
+ LhhEWgCoNBe83154y7J9mSXOK1pS9M4KPcAv0mJpPyfSH97Xi/Zyw5ekSG+OqsTRBdcOjpLEt9y
+ SWBxjnwvLrvIXAtAPwNhkLOLzypZL1IfNBN/K/A==
+X-Google-Smtp-Source: AGHT+IGgmBeStlL3PViOA/OVvNU3/lf0kCvTd6O6Tq7ZWmCf822D6CBAhh9vdmq9tgykjelTQOoQ0ietRM+cuCfHdVs=
+X-Received: by 2002:aa7:dd12:0:b0:565:7c9e:97e6 with SMTP id
+ i18-20020aa7dd12000000b005657c9e97e6mr6398741edv.11.1709054479974; Tue, 27
+ Feb 2024 09:21:19 -0800 (PST)
 MIME-Version: 1.0
-References: <20240227153410.1917221-1-peter.maydell@linaro.org>
-In-Reply-To: <20240227153410.1917221-1-peter.maydell@linaro.org>
+References: <20240227125201.414060-1-clg@kaod.org>
+In-Reply-To: <20240227125201.414060-1-clg@kaod.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 17:19:33 +0000
-Message-ID: <CAFEAcA-PP-+aVpf10B=ZQ3qkBLVbZfxgpvo4A0m8KbayP-CPzA@mail.gmail.com>
-Subject: Re: [PULL v2 00/36] target-arm queue
-To: qemu-devel@nongnu.org
+Date: Tue, 27 Feb 2024 17:21:09 +0000
+Message-ID: <CAFEAcA9SabyrJ=ydVmvAuAj+dqk5mPOaTLBdNjAE=pd9vzz_zA@mail.gmail.com>
+Subject: Re: [PULL 0/2] aspeed queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -85,43 +91,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024 at 15:34, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Tue, 27 Feb 2024 at 12:53, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
 >
-> Changes v1->v2: dropped all the patches for the bcm2828-mailbox qtest,
-> which turns out to have portability problems on big-endian hosts and macos.
+> The following changes since commit 1b330dafcdc34315f6837ff3af34dbb4b31063=
+73:
 >
-> thanks
-> -- PMM
->
-> The following changes since commit dccbaf0cc0f1744ffd7562a3dc60e4fc99fd9d44:
->
->   Merge tag 'hw-misc-20240227' of https://github.com/philmd/qemu into staging (2024-02-27 10:11:07 +0000)
+>   Merge tag 'edk2-stable202402-20240226-pull-request' of https://gitlab.c=
+om/kraxel/qemu into staging (2024-02-26 21:28:11 +0000)
 >
 > are available in the Git repository at:
 >
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240227-1
+>   https://github.com/legoater/qemu/ tags/pull-aspeed-20240227
 >
-> for you to fetch changes up to 9c5c959dd748f2972e46a84b8d5f77794f515014:
+> for you to fetch changes up to db052d0eafe86c336d512dba99a1ec7c5c553f63:
 >
->   docs/system/arm: Add RPi4B to raspi.rst (2024-02-27 15:24:20 +0000)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * Handle atomic updates of page tables entries in MMIO during PTW
->  * Advertise Cortex-A53 erratum #843419 fix via REVIDR
->  * MAINTAINERS: Cover hw/ide/ahci-allwinner.c with AllWinner A10 machine
->  * misc: m48t59: replace qemu_system_reset_request() call with watchdog_perform_action()
->  * misc: pxa2xx_timer: replace qemu_system_reset_request() call with watchdog_perform_action()
->  * xlnx-versal-ospi: disable reentrancy detection for iomem_dac
->  * sbsa-ref: Simplify init since PCIe is always enabled
->  * stm32l4x5: Use TYPE_OR_IRQ when connecting STM32L4x5 EXTI fan-in IRQs
->  * pl031: Update last RTCLR value on write in case it's read back
->  * block: m25p80: Add support of mt35xu02gbba
->  * xlnx-versal-virt: Add machine property ospi-flash
->  * reset: refactor system reset to be three-phase aware
->  * new board model raspi4b
+>   aspeed: fix hardcode boot address 0 (2024-02-27 13:47:05 +0100)
 >
 > ----------------------------------------------------------------
+> aspeed queue:
+>
+> * Add support for UART0, in preparation of AST2700 models
 
 
 Applied, thanks.
