@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 962ECC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFC10C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:34:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezSl-0004QB-MY; Tue, 27 Feb 2024 10:33:47 -0500
+	id 1rezSl-0004Pm-Cg; Tue, 27 Feb 2024 10:33:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSb-0004IV-Ip
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:40 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSa-0004IR-V5
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSU-0005Hb-LE
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:37 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezSR-0005HO-Qw
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:33:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709048008;
+ s=mimecast20190719; t=1709048007;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FzgwhyokEddU/xOGRdNHlwa1e7L1HMr+WMvWHC+6R8E=;
- b=jDSROBd6CnhwHVndpgm0jIBI9suFQVLb6DCvTwz7Lh42FeO+weYRySo71FbOVFA7tnUbfE
- PCUUMcRegVtAFmlTi7makmk5EsLnjosDNTzmBxkr1UftHyEWqTunWY3cWU4VDR3jH03iby
- R/IfxPcCFKDNKgQFf27wo1UBHQZ02BY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-bSXZ2bBsOzyzdg3XLPX4Qw-1; Tue,
- 27 Feb 2024 10:33:23 -0500
-X-MC-Unique: bSXZ2bBsOzyzdg3XLPX4Qw-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ bh=4ygEJha1k0iwErA+UUXIpGWsdgck9M5i+PDDxNYeDpU=;
+ b=ZQ4p2C7gE00pvFj+gcfrAz9MtkjKSD65dmx/ZXwg2RgMpNsBFEZlgZ9xNSARlOGrCEMTe/
+ 7YuK1TvgLUUvqGSOn5rC10ruEpX5kz5LW78bfK8fqrhBOtSdNLFRRvMOebG2n/7TokwoUP
+ /KF/y885iAMq+gQtxMDWp0NxX1JffHM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-207-Y-xZB9KsNhSqfO3bWPKF0Q-1; Tue, 27 Feb 2024 10:33:23 -0500
+X-MC-Unique: Y-xZB9KsNhSqfO3bWPKF0Q-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2EF5E3810786;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2E335881B6F;
  Tue, 27 Feb 2024 15:33:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0AAC92166B33;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0974620229A4;
  Tue, 27 Feb 2024 15:33:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F3B8E21E66FB; Tue, 27 Feb 2024 16:33:21 +0100 (CET)
+ id 0707C21E6691; Tue, 27 Feb 2024 16:33:22 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: steven.sistare@oracle.com, philmd@linaro.org, dave@treblig.org,
  jasowang@redhat.com, michael.roth@amd.com, peterx@redhat.com,
- farosas@suse.de,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v7 1/3] qapi: New QAPI_LIST_LENGTH()
-Date: Tue, 27 Feb 2024 16:33:19 +0100
-Message-ID: <20240227153321.467343-2-armbru@redhat.com>
+ farosas@suse.de
+Subject: [PATCH v7 3/3] migration: simplify exec migration functions
+Date: Tue, 27 Feb 2024 16:33:21 +0100
+Message-ID: <20240227153321.467343-4-armbru@redhat.com>
 In-Reply-To: <20240227153321.467343-1-armbru@redhat.com>
 References: <20240227153321.467343-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -86,34 +85,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- include/qapi/util.h | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Simplify the exec migration code by using list utility functions.
 
-diff --git a/include/qapi/util.h b/include/qapi/util.h
-index 81a2b13a33..20dfea8a54 100644
---- a/include/qapi/util.h
-+++ b/include/qapi/util.h
-@@ -56,4 +56,17 @@ int parse_qapi_name(const char *name, bool complete);
-     (tail) = &(*(tail))->next; \
- } while (0)
+As a side effect, this also fixes a minor memory leak.  On function return,
+"g_auto(GStrv) argv" frees argv and each element, which is wrong, because
+the function does not own the individual elements.  To compensate, the code
+uses g_steal_pointer which NULLs argv and prevents the destructor from
+running, but argv is leaked.
+
+Fixes: cbab4face57b ("migration: convert exec backend ...")
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/exec.c | 57 +++++++-----------------------------------------
+ 1 file changed, 8 insertions(+), 49 deletions(-)
+
+diff --git a/migration/exec.c b/migration/exec.c
+index 47d2f3b8fb..20e6cccf8c 100644
+--- a/migration/exec.c
++++ b/migration/exec.c
+@@ -18,6 +18,7 @@
+  */
  
-+/*
-+ * For any GenericList @list, return its length.
-+ */
-+#define QAPI_LIST_LENGTH(list)                                      \
-+    ({                                                              \
-+        size_t _len = 0;                                            \
-+        typeof(list) _tail;                                         \
-+        for (_tail = list; _tail != NULL; _tail = _tail->next) {    \
-+            _len++;                                                 \
-+        }                                                           \
-+        _len;                                                       \
-+    })
-+
+ #include "qemu/osdep.h"
++#include "qapi/type-helpers.h"
+ #include "qemu/error-report.h"
+ #include "channel.h"
+ #include "exec.h"
+@@ -39,51 +40,16 @@ const char *exec_get_cmd_path(void)
+ }
  #endif
+ 
+-/* provides the length of strList */
+-static int
+-str_list_length(strList *list)
+-{
+-    int len = 0;
+-    strList *elem;
+-
+-    for (elem = list; elem != NULL; elem = elem->next) {
+-        len++;
+-    }
+-
+-    return len;
+-}
+-
+-static void
+-init_exec_array(strList *command, char **argv, Error **errp)
+-{
+-    int i = 0;
+-    strList *lst;
+-
+-    for (lst = command; lst; lst = lst->next) {
+-        argv[i++] = lst->value;
+-    }
+-
+-    argv[i] = NULL;
+-    return;
+-}
+-
+ void exec_start_outgoing_migration(MigrationState *s, strList *command,
+                                    Error **errp)
+ {
+-    QIOChannel *ioc;
+-
+-    int length = str_list_length(command);
+-    g_auto(GStrv) argv = (char **) g_new0(const char *, length + 1);
+-
+-    init_exec_array(command, argv, errp);
++    QIOChannel *ioc = NULL;
++    g_auto(GStrv) argv = strv_from_str_list(command);
++    const char * const *args = (const char * const *) argv;
+     g_autofree char *new_command = g_strjoinv(" ", (char **)argv);
+ 
+     trace_migration_exec_outgoing(new_command);
+-    ioc = QIO_CHANNEL(
+-        qio_channel_command_new_spawn(
+-                            (const char * const *) g_steal_pointer(&argv),
+-                            O_RDWR,
+-                            errp));
++    ioc = QIO_CHANNEL(qio_channel_command_new_spawn(args, O_RDWR, errp));
+     if (!ioc) {
+         return;
+     }
+@@ -105,19 +71,12 @@ static gboolean exec_accept_incoming_migration(QIOChannel *ioc,
+ void exec_start_incoming_migration(strList *command, Error **errp)
+ {
+     QIOChannel *ioc;
+-
+-    int length = str_list_length(command);
+-    g_auto(GStrv) argv = (char **) g_new0(const char *, length + 1);
+-
+-    init_exec_array(command, argv, errp);
++    g_auto(GStrv) argv = strv_from_str_list(command);
++    const char * const *args = (const char * const *) argv;
+     g_autofree char *new_command = g_strjoinv(" ", (char **)argv);
+ 
+     trace_migration_exec_incoming(new_command);
+-    ioc = QIO_CHANNEL(
+-        qio_channel_command_new_spawn(
+-                            (const char * const *) g_steal_pointer(&argv),
+-                            O_RDWR,
+-                            errp));
++    ioc = QIO_CHANNEL(qio_channel_command_new_spawn(args, O_RDWR, errp));
+     if (!ioc) {
+         return;
+     }
 -- 
 2.43.0
 
