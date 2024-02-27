@@ -4,84 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8648FC54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0871C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reyKv-00021L-GM; Tue, 27 Feb 2024 09:21:37 -0500
+	id 1reyMu-0003Q7-81; Tue, 27 Feb 2024 09:23:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1reyKt-0001xQ-Iu
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:21:35 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
- id 1reyKs-0005bY-1C
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:21:35 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 41R9YAnN002460; Tue, 27 Feb 2024 14:21:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding:content-type; s=
- qcppdkim1; bh=Um9MWb8tj23ulYfcb6IUWDdzjNC7jMHHneRbMKXn8Ug=; b=aD
- 00suka3n6x001JB/v5xBZ2dhNxetKYN0UzhlNDsGObm3a6LYQEYp8ca3IT1Ee4vT
- 7ABeIZhtcUpttMcSUyD969+0mr1iFfkiAIBrv8rccoTl2Duig1wXumkrawaX/i+Q
- N/oYJ4R/xhblquJVBYpEP6P1luz7/Jhns+nyey7mVuLr4l1jBVLWGk5LgwMbsEss
- mF8EJGgOBsHZv2InVbyzZx/scFtI2WBh4oVAd2sd3580NWhTqQXrJNoPNxhpbjBq
- k2u7RHhnNVOxNCJmOmc8SR+pEFk9s07VQ6upuQMoCcpdJ1Gfs6vuzNyWHW/s5dfD
- 0RXhOQqOalP7VFIoeHNQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wh64qhk9f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 14:21:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 41RELP34009665
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 14:21:25 GMT
-Received: from mathbern-mac.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 27 Feb 2024 06:21:23 -0800
-From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-To: Taylor Simpson <ltaylorsimpson@gmail.com>
-CC: <qemu-devel@nongnu.org>, <bcain@quicinc.com>, <quic_mathbern@quicinc.com>, 
- <sidneym@quicinc.com>, <quic_mliebel@quicinc.com>,
- <richard.henderson@linaro.org>, <philmd@linaro.org>, <ale@rev.ng>,
- <anjo@rev.ng>
-Subject: Re: [PATCH 4/9] Hexagon (target/hexagon) Mark has_pred_dest in trans
- functions
-Date: Tue, 27 Feb 2024 11:21:12 -0300
-Message-ID: <20240227142112.56005-1-quic_mathbern@quicinc.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240226201722.391879-5-ltaylorsimpson@gmail.com>
-References: <20240226201722.391879-5-ltaylorsimpson@gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reyMo-0003PC-Do
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:23:34 -0500
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1reyMZ-00064e-TO
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:23:34 -0500
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d22b8801b9so71267181fa.0
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 06:23:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1709043798; x=1709648598; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7lCDJFul+ibKZoZMtWLX/cuzMrJlZE5tPkzq+eVYpt8=;
+ b=fxoVpo7pirm3KjnDZvomfgYmmNhYLa3pFmlL6f369bRpWrLyc75vV+RXIlS/cBBLEV
+ MBXFWfjUm8XP7nraQkunmZEGu2+jQi/GxcanUX3yzIppJzGP/dBeE2hItYlpGCIJfzr0
+ AXZ30+jwIrgdzmjOLYAv0LDRTEoMLXJEqCpFevpD4ZuGv6H3rRH2gVfu6UAotMWTyTm8
+ mKuldflro+ly9sMfVy/kPawoZZpiABxpnlUAMgg69KTV75Q61tvuvJV47GGuU5+3dhAa
+ 0l5BsPqFPV5vrMOZzr63yOtqAMafbjCkfKesk/0q7+BrsEtz61PrA729Ryhj1mU8+Dp/
+ z/RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1709043798; x=1709648598;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7lCDJFul+ibKZoZMtWLX/cuzMrJlZE5tPkzq+eVYpt8=;
+ b=IjpFI0fBWdLrzj1F0yIvn7IxXamFWFDxCVQ36rmStSGZJ6sO9BbF0K+FNFo8xReQvI
+ H01A/Fd5zPvZ3pYAW2xUmXfyrfk/fqjMvYtJppcfHiv6xkSlWQZgOqj4s8OJKbvAMIgj
+ s6IvDoVAB8+L7qZrn9IpR8vCobSgB38koGjzP2afGU/LgtgUXVkfKbprHLuIHwgxQpII
+ ikRFxI7cn8AB7d+/JK7ky+V710NpoCCJjB43/DR9SQC7ty5umrwPIX5IjrKnuGlaPTpo
+ 1VZUoEE1YKMW6RiQ/8neotQUsvV4YUQX5vRZ8drHE3P1JrPXBkc4i9e0+kQcki0bOpwY
+ 9T/g==
+X-Gm-Message-State: AOJu0YxdQpaov2bzOYL0E9DwK7bg0kJussiiqvKDPB6aXtfbXzDAVFXY
+ tclD8sJwK9x8ugNDRkxX5YMCOSjC95meDGa8L5llVQkYUf1mtKq1Hmg892srZXtwCyRF5gRgvoi
+ 9
+X-Google-Smtp-Source: AGHT+IEThw6Uv5NLYbJQrCEMY4rKtLacZNH5pAL8rxvpYmMTM783qwiw1bWZJxXwKCG2PvLu5+hCOg==
+X-Received: by 2002:a05:651c:782:b0:2d2:4314:8c06 with SMTP id
+ g2-20020a05651c078200b002d243148c06mr5006791lje.15.1709043797666; 
+ Tue, 27 Feb 2024 06:23:17 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ q14-20020a05600c46ce00b00411a6ce0f99sm11465829wmo.24.2024.02.27.06.23.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 27 Feb 2024 06:23:17 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests/tcg/multiarch: Give the 'memory' TCG test a larger
+ timeout
+Date: Tue, 27 Feb 2024 14:23:16 +0000
+Message-Id: <20240227142316.1827154-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: URMrOmQJtDjhWqYEcjE_FVk2Ru7ofVkd
-X-Proofpoint-GUID: URMrOmQJtDjhWqYEcjE_FVk2Ru7ofVkd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-26_11,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 mlxlogscore=631 clxscore=1015
- impostorscore=0 lowpriorityscore=0 phishscore=0 malwarescore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2402120000 definitions=main-2402270110
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,27 +92,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 26 Feb 2024 13:17:17 -0700 Taylor Simpson <ltaylorsimpson@gmail.com> wrote:
->
-> diff --git a/target/hexagon/gen_trans_funcs.py b/target/hexagon/gen_trans_funcs.py
-> index 07292e0170..f1972fd2dd 100755
-> --- a/target/hexagon/gen_trans_funcs.py
-> +++ b/target/hexagon/gen_trans_funcs.py
-> @@ -86,6 +86,7 @@ def gen_trans_funcs(f):
->  
->          new_read_idx = -1
->          dest_idx = -1
-> +        has_pred_dest = "false"
->          for regno, regstruct in enumerate(regs):
->              reg_type, reg_id, _, _ = regstruct
->              reg = hex_common.get_register(tag, reg_type, reg_id)
-> @@ -96,6 +97,8 @@ def gen_trans_funcs(f):
->                  new_read_idx = regno
->              if reg.is_written() and dest_idx == -1:
->                  dest_idx = regno
-> +            if reg_type == "P" and not reg.is_read():
-> +                has_pred_dest = "true"
+The 'memory' TCG test times out intermittently on our cross-i686-tci
+CI job. We expect this to be a slow config (it's using TCI), so it's
+possible that when the CI runner is heavily loaded it tips past
+the timeout.
 
-I got a bit confused here. Why do we use "not reg.is_read()"? I though this
-would be "reg.is_written()".
+Double the timeout for tests.  If this doesn't resolve the
+intermittents we can assume we're looking at some kind of
+TCI-specific hang.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2079
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I could not figure out a way to get the timeout to apply to the
+'memory' test specifically (including all its variants like
+running with plugins or the gdbserver or record-replay).
+---
+ tests/tcg/Makefile.target | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 8cf65f68dd8..af1a18cee1b 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -98,7 +98,8 @@ QEMU_OPTS=
+ #   15s    original default
+ #   60s    with --enable-debug
+ #   90s    with --enable-tcg-interpreter
+-TIMEOUT=90
++# The 'memory' test in particular is very slow under TCI.
++TIMEOUT=180
+ 
+ ifeq ($(filter %-softmmu, $(TARGET)),)
+ # The order we include is important. We include multiarch first and
+-- 
+2.34.1
+
 
