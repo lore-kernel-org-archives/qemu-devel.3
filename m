@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67E39C5478C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2813C54E4A
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 22:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf5sD-0006tZ-ER; Tue, 27 Feb 2024 17:24:29 -0500
+	id 1rf5sD-0006tl-QU; Tue, 27 Feb 2024 17:24:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3E2HeZQcKCoQswutwlqowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--komlodi.bounces.google.com>)
- id 1rf5sB-0006sl-Aj
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:27 -0500
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ <3GGHeZQcKCokx1zy1qvt11tyr.p1z3rz7-qr8ry010t07.14t@flex--komlodi.bounces.google.com>)
+ id 1rf5sC-0006t2-3B
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:28 -0500
+Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3E2HeZQcKCoQswutwlqowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--komlodi.bounces.google.com>)
- id 1rf5s8-0008Hq-55
+ <3GGHeZQcKCokx1zy1qvt11tyr.p1z3rz7-qr8ry010t07.14t@flex--komlodi.bounces.google.com>)
+ id 1rf5sA-0008IW-IZ
  for qemu-devel@nongnu.org; Tue, 27 Feb 2024 17:24:27 -0500
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2992c1d4e7fso2091870a91.3
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 14:24:21 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id
+ 3f1490d57ef6-dc743cc50a6so6763164276.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 14:24:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1709072660; x=1709677460; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=JXG4tZrCKCTQ/UKh/RNLGqEovZ4jw5ABcy4v4l/utkc=;
- b=fzWgHMtBPsbTq7/2/4yDiGIIzk2pHW4F/UUsUNmaIjSqPuS9PaxdmhEbt4y3vQjm+C
- gjLbHYi3p6GMn6QI0PWhIzxAyyuzgDe/4IGnu+eiVL3XH5nk764UOVu3CYDFBRGm2U0o
- BAhNFHdjOOp8IiBhp5Nvzv8AhCw+GhMWnd7oac2Mp6o1C+9GgbCWpkeMkCuvZrkZjjLg
- mNtLtlb493rxz/2Nt+a+Xv+sGcwMqNmrlMDX3Y7vDPOTRregTXPqY6jvuzLuORkzcb9L
- e4j4ltrHm2d29T1wlWBArqugyhZAzdNDa3+0t0PAbaZbgsGIzBI/nYqGgMJC0oR8w1l0
- RExA==
+ d=google.com; s=20230601; t=1709072664; x=1709677464; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=RLGdV4kCAjCSXP14B/AK52peEdH2FKlj4vlWN33bwOc=;
+ b=ukz7GQZe8VZZK9yv4+c2s6BQxMT2CekAdeEtjt4U1tWHMCSE33MFAJQAGsvzmfV8k4
+ UtGyRS9AzW8Jqvmu1DakLk/kGcRfZLiTjef5d3sLUNsgNxhYGaqGJitE8bNq14dSZe60
+ GbN3q/dvyHKH8apRKiE5W68ZebfxdZYrY1SqiTeQtBzs0WNzlH5K6dByb+dNTJwXUsQX
+ vm09KGrCO5T3b+twcSdQ1mHMBGWNz9ssEo28UBZtSi9YAFSwonnUMslrFAAEXcfLgr4r
+ vf+tn5EkoSmE7UgfQDf3NH6VTuwHu6HPo04YFv0bZir1HWwjtWzgRMq/YhlRUtPJ1l0z
+ WJ8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709072660; x=1709677460;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JXG4tZrCKCTQ/UKh/RNLGqEovZ4jw5ABcy4v4l/utkc=;
- b=KivqqKy5UcYWhM4tl4Hi4pouCH3Y5xbAdPbpThokBh2m/1wu9BlZC0FBnCWnm28jyV
- xx+oHJDggCv2sJqw5YX7eaVu2D1uHFT6549OCqUEe7n39AerNQteBTFSRLg31NCpQ14O
- M374I1ASZNQY9QFDf6p5FGUbNoG+z+K+60BYxdYsOM9jdliaHSmTxk7lEGTSeu5yinmk
- AuZyKgyoldlgVgJeQBFzPXXl09GmDf+HpyFurE5dl0rJZFzhUqyT9QppiQW3c81L6Lwt
- 2lcTo27kKiJTDHK6kdvEWkoDD0P1J5D2Lwv0hBL4ChSmKO7MDddGmI1G/63kYxnq+f2U
- aReA==
-X-Gm-Message-State: AOJu0YzSg8INRi/6KlhoOIZtTLE8k4y4iL8aN93JdUgb1qZvEl2eskSo
- 4tr2T8Im7pLXvwdRvxD9rWLKia8UqPsq+H7lCpdn+tfziPHydUBcrK3+mSGRwR7kzTSNErBCfx7
- 6GEyxG4TlyvXK5e1qNdK9oyJKcZNMs0yFFmxEUsAHJgvkJ4vW2Fp3kOg0vmcElDVHScGeOviRUD
- rVUGJw63FslrVXDHpgrErxyek7S3OngCXO3jAE
-X-Google-Smtp-Source: AGHT+IFD2E5oSwgl9tk22ApL/JmI69ybqqttlgwkN9zWLmh++Vn8Yc9Ps6qRs3jnZCIDjxTdcevuSf049HFm
+ d=1e100.net; s=20230601; t=1709072664; x=1709677464;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RLGdV4kCAjCSXP14B/AK52peEdH2FKlj4vlWN33bwOc=;
+ b=WbckIXJ78xzICF/bmVX/9e7B98fhb2vPpVsqGjjxxF4emZyANu2wpTbpixxrNJ+29E
+ GFDP2BOE1y0xN3T4eVqW0qlVmqWJgGKrLC38h+yvm8+Oqmrznt7fwBvGujm8yMUQgVM6
+ AWCna2FzZDRXG2jbbYcRJN/IkIBKAjjxpNsZTaE8+ZM/rZC5xwT6B9W2GNlBOUxZc5fP
+ GglknDumY6afpQsCGZhruiWsvQXy8zYn/DNOaIv64EqVaYr7x1NGXy1z6s2ZnhpJoFZi
+ Db2RG0GEjMyzREljUGytITZSv9YCWZD9HIJAnQaVp8zLLXrm4MZO2z7KnRElcGwyGN0D
+ ut1A==
+X-Gm-Message-State: AOJu0YxhfGrX3s+TNMKfpRSEF6/lkZ/JF4p3XPmpotngcJ13l8G8lxvr
+ vPT9+c1Ylssml7xt9M24Q1oeoog2GQ0qME6kgAkgZ/vWvHDqTrASiESaz+Iw+2ux83bRfu6SD5C
+ EXmRGHoJGoy1YPhARmFgt1Rc2HUqnbz2fi/ukyBwfneKDyQXxogX7T7P5QWv+y9qx5PA7uc+13j
+ IgoS3eRe05e0LpBV2RnVVOlJeJQXSjMnKLX7o2
+X-Google-Smtp-Source: AGHT+IGOIeOaCJokdUWxsKdM3W8tMcD8kS986lskqyEK3eyiSELwVShX7PIVcdLubRrrH16sEI0dsMF+NW3l
 X-Received: from komlodi.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:35ee])
- (user=komlodi job=sendgmr) by 2002:a17:90b:2c8e:b0:29a:bb5e:1d7c with SMTP id
- sw14-20020a17090b2c8e00b0029abb5e1d7cmr23454pjb.3.1709072659041; Tue, 27 Feb
- 2024 14:24:19 -0800 (PST)
-Date: Tue, 27 Feb 2024 22:24:12 +0000
+ (user=komlodi job=sendgmr) by 2002:a05:6902:120f:b0:dbe:d0a9:2be8 with SMTP
+ id s15-20020a056902120f00b00dbed0a92be8mr81176ybu.0.1709072664329; Tue, 27
+ Feb 2024 14:24:24 -0800 (PST)
+Date: Tue, 27 Feb 2024 22:24:15 +0000
+In-Reply-To: <20240227222417.929367-1-komlodi@google.com>
 Mime-Version: 1.0
+References: <20240227222417.929367-1-komlodi@google.com>
 X-Mailer: git-send-email 2.44.0.rc1.240.g4c46232300-goog
-Message-ID: <20240227222417.929367-1-komlodi@google.com>
-Subject: [RFC PATCH 0/5] memattrs: target/arm: add user-defined and requester
- ID memattrs
+Message-ID: <20240227222417.929367-4-komlodi@google.com>
+Subject: [RFC PATCH 3/5] memattrs: Add user-defined attribute
 From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, 
@@ -70,9 +71,9 @@ Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
  philmd@linaro.org, roqueh@google.com, slongfield@google.com, 
  komlodi@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=3E2HeZQcKCoQswutwlqowwotm.kwuymu2-lm3mtvwvov2.wzo@flex--komlodi.bounces.google.com;
- helo=mail-pj1-x104a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
+ envelope-from=3GGHeZQcKCokx1zy1qvt11tyr.p1z3rz7-qr8ry010t07.14t@flex--komlodi.bounces.google.com;
+ helo=mail-yb1-xb49.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,54 +97,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+These are used to represent implementation-specific data.
+These are based off of AMBA-AXI user signals, but can be used in any
+implementation.
 
-This adds requester IDs to ARM CPUs and adds a "user-defined" memory
-attribute.
+The length of 4-bits is arbitrary.
 
-The requester ID on ARM CPUs is there because I've seen some cases where
-there's an IOMMU between a CPU and memory that uses the CPU's requester
-ID to look up how it should translate, such as an SMMU TBU or some other
-IOMMU-like device.
-For a specific downstream example I've seen, Xilinx overrides CPU
-attributes with ones passed in by an object property in order to have
-their IOMMUs work:
-https://github.com/Xilinx/qemu/blob/23b643ba1683a47ef49447a45643fe2172d6f8ca/accel/tcg/cputlb.c#L1127.
-The object property with the memory attributes is declared here, for
-reference: https://github.com/Xilinx/qemu/blob/23b643ba1683a47ef49447a45643fe2172d6f8ca/target/arm/cpu.c#L1310.
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+---
+ include/exec/memattrs.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-The user-defined attribute represents optional user signals that are a
-part of AMBA-AXI. As the name suggests, these are defined
-per-implementation and devices that receive these have their own
-interpretation of what the user-defined attribute means.
-
-We add them in CPUs and PCI transactions, because some of their
-attributes are set in functions in ways that are not user-facing. DMAs
-or other devices that set attributes (using address_space_rw or some
-other means), can add them on a per-device basis.
-
-RFC because it's possible we might want this implementated in some other
-way, and it touches some pretty frequently used code that I'm somewhat
-familiar with, but not 100% familiar with.
-
-Thanks,
-Joe
-
-Joe Komlodi (5):
-  target/arm: Add requester ID to memattrs
-  memattrs: Fix target_tlb_bit whitespace
-  memattrs: Add user-defined attribute
-  target/arm: Add user-defined memattrs
-  hw/pci: Add user-defined memattrs
-
- hw/pci/pci.c                | 3 +++
- include/exec/memattrs.h     | 8 +++++---
- include/hw/pci/pci_device.h | 1 +
- target/arm/cpu.c            | 6 ++++++
- target/arm/cpu.h            | 8 ++++++++
- target/arm/ptw.c            | 9 +++++++++
- 6 files changed, 32 insertions(+), 3 deletions(-)
-
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index 942b721be8..a38645f881 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -64,6 +64,8 @@ typedef struct MemTxAttrs {
+     unsigned int target_tlb_bit0:1;
+     unsigned int target_tlb_bit1:1;
+     unsigned int target_tlb_bit2:1;
++    /* User-defined bits represent data that is implementation defined. */
++    unsigned int user_defined:4;
+ } MemTxAttrs;
+ 
+ /* Bus masters which don't specify any attributes will get this,
 -- 
 2.44.0.rc0.258.g7320e95886-goog
 
