@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3CC7C54798
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C31C5478C
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1resW3-0001ek-Lm; Tue, 27 Feb 2024 03:08:43 -0500
+	id 1resXt-0002PN-EK; Tue, 27 Feb 2024 03:10:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1resW1-0001cw-Ma
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:08:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1resXn-0002OS-SX
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:10:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1resW0-00083G-0v
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:08:41 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1resXi-000082-9L
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:10:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709021318;
+ s=mimecast20190719; t=1709021424;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=siBLJGC4+B+bIev+aNIJOMOtFeBDcGiqNHIQTqF+QT0=;
- b=iko1nC1pMYD54ADtPaVG1ddKWN+rhYXc4BoBaksLZCImUCabQ7yhI8j2BzlrkN2uykDhEb
- jo+eTdWEKBcXYYuuG/Q6yMwUNzDzDw6jHFyJiD2oA4bpyuUsdcWsIJ/7dR9FWXaiyl4Z8M
- iEFAJQ71w4/EnB+8rseuuy+A6XnpSh8=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sD9MbxZdVRrNa9Pji69aJcEVK0hIDwQp91XyTP892Tc=;
+ b=hfYvp+6OSjVlYDup9eRL3XyNK5Beunso5ZBA0pniVilZkWBptXDCvWiFpC6CsTXXTUDUZS
+ mOZxeXMOONt8hWigzuK5F7/D6mYzKoOBp4+pY4fM9ca+VUxDr4dx9fNd6RV6fQt3f/5EC+
+ +NoqPtYW8AC5fmCR9ciSWVMum0tjfpA=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-PdMIwgudOXOJY-gEhpPOTg-1; Tue, 27 Feb 2024 03:08:36 -0500
-X-MC-Unique: PdMIwgudOXOJY-gEhpPOTg-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-299180d546bso615936a91.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:08:36 -0800 (PST)
+ us-mta-249-7teePlejMlKvQ1_Phex_AQ-1; Tue, 27 Feb 2024 03:10:21 -0500
+X-MC-Unique: 7teePlejMlKvQ1_Phex_AQ-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-29a0b097af4so402897a91.1
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:10:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709021316; x=1709626116;
+ d=1e100.net; s=20230601; t=1709021420; x=1709626220;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=siBLJGC4+B+bIev+aNIJOMOtFeBDcGiqNHIQTqF+QT0=;
- b=m8ul3p4k9TrLcs2uf3WVvtWMrbkVML6G++mvEBHtedo14ISfuCcxrV7dq0KP/PgAbb
- NJuJJdoARPkJdm+4h01GBUj5OsHR0CfMn+oH3dRRR2qrLeMRg2/8XuCCPNDUj2NSj3tU
- bpubcruSIBRhhea2eafCajJwiA77MoOR/EKbwOe/TjSX+yYSgeunwzjUl7WkFYF8kN3u
- mG3jXJvYpT0bdtHJB9Ya0Hz7mYrWSqE5w8n8caInvLSFVhCshfb1GZaw8OeioYqF7vwn
- FI7NFxwqwzsyYWTzGxcrLUmD6muM8O7ZAMC+zbf1EYyoGPTkI8PkOBQuMNr9NbFtpc3V
- RfEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIQwC4toA5lvJeBDyi0caRFbTIPWuLGR3C3YDaDbLtILqM9Rg3jRhWCcDi8UZbJ+xBGLpu+C+dSuD1EEljAq4Hdg99SeM=
-X-Gm-Message-State: AOJu0YxMj4Zgmit9g9mPSN9NqGd7lLukKfW1LsYDFaPk6AqSAa/TaJVw
- H6P7q9T3EDYwrTq25lJPbjMA8YSNp5fqQjaKcGYfjCYDAzqF14QOjomPBBLhmoL5CcCJ4VDhMJQ
- vLAU5UknYxUzhGooy+6U6pb2y0IpnXVvDityfqGhlJqpS9zLXFJV2
-X-Received: by 2002:a17:90a:15cf:b0:298:bc90:3b69 with SMTP id
- w15-20020a17090a15cf00b00298bc903b69mr7223151pjd.3.1709021315873; 
- Tue, 27 Feb 2024 00:08:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFwryGbqQwgtqTtdDQXBfi/Ur75U43mLx/8OCVBZIvg6SB/IsaeC3R1vHDa01xOmjf5GVPyZg==
-X-Received: by 2002:a17:90a:15cf:b0:298:bc90:3b69 with SMTP id
- w15-20020a17090a15cf00b00298bc903b69mr7223132pjd.3.1709021315537; 
- Tue, 27 Feb 2024 00:08:35 -0800 (PST)
+ bh=sD9MbxZdVRrNa9Pji69aJcEVK0hIDwQp91XyTP892Tc=;
+ b=V4NRgJBdVtSf0fbT/qs6/BhhAgfHsYUoKjj2jZs1dydsRTjcJTX+FK6JrNLGlD04HR
+ 2BlEN8ZROIWEn/hzf4PqNAHOiZEtEQXzQGL6FhLRtkXns+wrYuYsL38/8Eb+AO3yUfcP
+ uyWA+e7l61LyP1FMp2FKIxvsxJ9PF8EDvQ0Vqb+MUn4kfRdpqQdgvODEunMHol9pWxsB
+ inIhDF2XJrwYq1L/pPrm5Hg504kp0tNVL8Eh39jcZtiT5tRgyBGvVUGBfwk2cCPIYABS
+ OqUTYwXebZHsYtLN2At8uJw225PCUnPWumROajljC00uBlf/Txv+uMDM1cjbXK3X2ml5
+ u2JA==
+X-Gm-Message-State: AOJu0YxhObuupQqI47QjNCnyl2ipuFocn7dy8qOSkmOWJEG50oHhEjl3
+ agyxFW94viWJ5n1GyuvKAD9PTctwGo34Jnr5XM/l6s/1zcS4audX3xuSVYSWaT3EZlTXwYlEhNj
+ 6ytQtqHZ0nZSj5EAYZZ/7FzGUnnj3kBTWGLuOvhRh7sOdiKLzb6qBmwojNKEV9VE=
+X-Received: by 2002:a17:90a:6787:b0:298:c3b4:f6ab with SMTP id
+ o7-20020a17090a678700b00298c3b4f6abmr7572267pjj.2.1709021420334; 
+ Tue, 27 Feb 2024 00:10:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrRUFH2Cl5PXEW32dfoMb8Sh9soJS1lG8d2uHYBZG83B3Oj3v/uBupCcZE00rknZqZsbq6iQ==
+X-Received: by 2002:a17:90a:6787:b0:298:c3b4:f6ab with SMTP id
+ o7-20020a17090a678700b00298c3b4f6abmr7572256pjj.2.1709021419959; 
+ Tue, 27 Feb 2024 00:10:19 -0800 (PST)
 Received: from x1n ([43.228.180.230]) by smtp.gmail.com with ESMTPSA id
- p16-20020a17090a429000b0029967638141sm5806363pjg.37.2024.02.27.00.08.32
+ r7-20020a17090b050700b00298dd684b8csm5809493pjz.32.2024.02.27.00.10.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 00:08:35 -0800 (PST)
-Date: Tue, 27 Feb 2024 16:08:25 +0800
+ Tue, 27 Feb 2024 00:10:19 -0800 (PST)
+Date: Tue, 27 Feb 2024 16:10:11 +0800
 From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Leonardo Bras <leobras@redhat.com>
-Subject: Re: [PATCH V1] migration: export fewer options
-Message-ID: <Zd2YeQAXhUCZzYdM@x1n>
-References: <1708708404-197951-1-git-send-email-steven.sistare@oracle.com>
- <87cysjllln.fsf@pond.sub.org>
- <65ec5d47-d27a-4633-ad3c-aec8a7710f8b@oracle.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] migration: Fix qmp_query_migrate mbps value
+Message-ID: <Zd2Y4zwoBaKRSqnZ@x1n>
+References: <20240226143335.14282-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <65ec5d47-d27a-4633-ad3c-aec8a7710f8b@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20240226143335.14282-1-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,81 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Feb 26, 2024 at 09:41:15AM -0500, Steven Sistare wrote:
-> On 2/26/2024 2:40 AM, Markus Armbruster wrote:
-> > Steve Sistare <steven.sistare@oracle.com> writes:
-> > 
-> >> A small number of migration options are accessed by migration clients,
-> >> but to see them clients must include all of options.h, which is mostly
-> >> for migration core code.  migrate_mode() in particular will be needed by
-> >> multiple clients.
-> >>
-> >> Refactor the option declarations so clients can see the necessary few via
-> >> misc.h, which already exports a portion of the client API.
-> >>
-> >> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> >> ---
-> >> I suggest that eventually we should define a single file migration/client.h
-> >> which exports everything needed by the simpler clients: blockers, notifiers,
-> >> options, cpr, and state accessors.
-> >> ---
-> >> ---
-> >>  hw/vfio/migration.c             |  1 -
-> >>  hw/virtio/virtio-balloon.c      |  1 -
-> >>  include/migration/misc.h        |  1 +
-> >>  include/migration/options-pub.h | 24 ++++++++++++++++++++++++
-> >>  migration/options.h             |  6 +-----
-> > 
-> > Unusual naming.  We have zero headers named -pub.h or -public.h, and
-> > dozens named like -int.h or -internal.h.  Please stick to the existing
-> > convention.
+On Mon, Feb 26, 2024 at 11:33:35AM -0300, Fabiano Rosas wrote:
+> The QMP command query_migrate might see incorrect throughput numbers
+> if it runs after we've set the migration completion status but before
+> migration_calculate_complete() has updated s->total_time and s->mbps.
 > 
-> In the spirit of minimizing changes, I went that route to avoid renaming the 
-> existing migration/options.h and its references:
+> The migration status would show COMPLETED, but the throughput value
+> would be the one from the last iteration and not the one from the
+> whole migration. This will usually be a larger value due to the time
+> period being smaller (one iteration).
 > 
-> 0 migration/block-dirty-bit 82 #include "options.h"
-> 1 migration/block.c         32 #include "options.h"
-> 2 migration/colo.c          37 #include "options.h"
-> 3 migration/migration-hmp-c 35 #include "options.h"
-> 4 migration/migration.c     68 #include "options.h"
-> 5 migration/multifd-zlib.c  21 #include "options.h"
-> 6 migration/multifd-zstd.c  21 #include "options.h"
-> 7 migration/multifd.c       29 #include "options.h"
-> 8 migration/options.c       30 #include "options.h"
-> 9 migration/postcopy-ram.c  40 #include "options.h"
-> a migration/qemu-file.c     33 #include "options.h"
-> b migration/ram-compress.c  37 #include "options.h"
-> c migration/ram.c           63 #include "options.h"
-> d migration/rdma.c          40 #include "options.h"
-> e migration/savevm.c        71 #include "options.h"
-> f migration/socket.c        30 #include "options.h"
-> g migration/tls.c           25 #include "options.h"
+> Move migration_calculate_complete() earlier so that the status
+> MIGRATION_STATUS_COMPLETED is only emitted after the final counters
+> update. Keep everything under the BQL so the QMP thread sees the
+> updates as atomic.
 > 
-> But I take your point.
+> Rename migration_calculate_complete to migration_completion_end to
+> reflect its new purpose of also updating s->state.
 > 
-> Peter, which do you prefer?
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-From statistics, "-internal.h" wins "-int.h":
-
-$ git grep "\-internal.h" | wc -l
-135
-$ git grep "\-int.h" | wc -l
-3
-
-> 
->   A. rename: migration/options.h -> migration/options-internal.h 
->      rename: include/migration/options-pub.h -> include/migration/options.h
-> 
->   B. rename: include/migration/options.h -> include/migration/client-options.h
-> 
-> I prefer B. If you prefer B, but want a different file name, please choose the
-> final name.
-
-Personally I don't have a strong opinion on the name.  I'll see whether
-Markus has any comment.
-
-[and of course, I removed this patch from -staging queue to keep the
- discussion going..]
+queued, thanks.
 
 -- 
 Peter Xu
