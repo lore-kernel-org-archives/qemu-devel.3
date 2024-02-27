@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6505DC54E55
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:45:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18CAEC54E49
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 08:46:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ret3F-0006OA-Ex; Tue, 27 Feb 2024 03:43:01 -0500
+	id 1ret1L-0007HX-US; Tue, 27 Feb 2024 03:41:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret3D-0006H0-HA
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:59 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1K-0007FD-KQ
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:02 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret3A-00005m-Np
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:42:59 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-412ae15b06fso1899165e9.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:42:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1ret1I-0007vr-19
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 03:41:02 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a3e7f7b3d95so447511466b.3
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 00:40:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709023374; x=1709628174; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709023258; x=1709628058; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=scR0cVRlUQ+FFZFfcolEQrGBOQjFaxkZH3KxNR75t0E=;
- b=JfKiBKhvAIxJUB1Vl1vpD0KgcYBHw49OT6Q+K5+nfbK04tzUPHdqWYtPYAH9P+OPrA
- WfUAG4QYHaTpMia8IGl1ZGQt4c92+3o3getzEgmOVUJlB05ecvAzX5NwD4RN0JTBoFR6
- EBAmTXkxB/W7qEAXNn6k5EAtu/7e4whQDuvXLtgE+Ld3OEVVhlQX93ZLl7lYgf2hBO92
- 9UeymH7HCQ9l59SnijxA9jQeVJqo9Drm8hZCsmabE5w2BcaWRsOJxpNJoDind5QCLlm7
- L5DIgbfyAI9V82hAnuLvgm3s3qD/T+foTmZsOc1kSvcHhsMDrdN/CLDaKBEFBFA52Zja
- Fwrg==
+ bh=GZ6f3MtsvPODeQCNs+mWuntTgICcd/owb4II9I6fwgI=;
+ b=a8fqtYMqZils9PEkchOrB5mu/ZWfMsy4xsh2wj3HSERIyYi12J+jt2rle2RrNoEhIy
+ eDG0/TxObkCvlaaB9h4VgyTOHvgPGe3Ml+s91PyKNfOh05bfOrWbBp/DExiTIhfbqUYH
+ WKz8OQ63Ie6OXJiCTp58IuRCb6J4hoxQl1YOeUyxPr0vXZRAkt0p0Eo31MyqTMqy79Ej
+ 9wf6IIet7J0T8Bewt3DTHFXDi1/2Txtxr79BueKBY9D+b6o0oBr3M0prBC9UwD9vNQVs
+ ueI/LJWZA4sORB0U4x/XIP44f0180iRDA1JUUHackNDnLj55/ALdr+vUTPa0a909CEzl
+ fQLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709023374; x=1709628174;
+ d=1e100.net; s=20230601; t=1709023258; x=1709628058;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=scR0cVRlUQ+FFZFfcolEQrGBOQjFaxkZH3KxNR75t0E=;
- b=MixCeGccquBRxdXjtjL6igJAIB6YNgLAMrsWyBNjmROmttgAjWE+ukTOXLHvY47UVE
- QOBGRP2NG0wwMD4ZIpL+ScUjmL6Sa5z/UJhhNgMA+Ql6MRrIh16CYilB32xtZwrPfALj
- QfSNb0Tyy8ZtgzidDX7E9YcZKEjLVvlnaVGlnN6TMue8jZ6d1Qs6LjHyaYHojlQC1dbV
- WhKSEANc8g6FNb25hIqE4AOpMY5omaCGp3ZK6wpzMVhClfPDwXpprOne+n2oQ/8u37WV
- EG3lUDn/LJuwZyrnTfNQAE0qDn5atIpTlkTdAa45OxlgHxScU49WQKMVmn7MneuX1GEt
- mRuw==
-X-Gm-Message-State: AOJu0YyHr5MudW6QRIX2KavZx8n/F48b04B2SZo/H27MQEGWDx3bkrSv
- R7oeb12RPHV3WODEh++BLw/U87Fm1t5HkwOSoHthDbxD3YqN8kQ0RGf5Y2raPNLcABE3C8zy+Tn
- I
-X-Google-Smtp-Source: AGHT+IHKiSwpHMDm0QCksk1OSAVc8Wa5O5fe4dYvRzdN9IaQFzE8AXGmkVdhjJYJYqfyigWu81wlrg==
-X-Received: by 2002:a05:600c:3490:b0:412:acf1:29a7 with SMTP id
- a16-20020a05600c349000b00412acf129a7mr726180wmq.20.1709023374029; 
- Tue, 27 Feb 2024 00:42:54 -0800 (PST)
+ bh=GZ6f3MtsvPODeQCNs+mWuntTgICcd/owb4II9I6fwgI=;
+ b=AHFRwpAoVptSaa4rkCvdPYPm4BPnKYSoiJtFFeBfF36A+he/O6nJ5u3jFCtsoFKasb
+ g2yXNCuS651hSLg9u6/QQRKH5oYDAl0gos8diaxBW3x13oUEXEBMcEZuhszweuhQse8r
+ PQ8qbmk+aUkqzHwn83/Inj3imiU5TN/Taakl8MrBhuX0rdajswpP2pLOg+NVXrGObGkH
+ QRo/3aFQg365W33ZhkVXX/rBD5v+a9sMakF2trDrvRNf7+KEIIk+nUAIcEN3ktCjIdOF
+ 3MfgfYKjoFV8W5DLLL14TGs6vvYBv+9cTE6tDmc9bqOATBSoM5EE6TmLfOiQ6ebxiwKk
+ 6XFg==
+X-Gm-Message-State: AOJu0YyAdBabvCzXjNZlGuXeIYQoqgI5xEsHqHtFDOKo8IyzJDffX2eB
+ pH304qkKXkYlp5u7Ux7mz71lr6Sy/6Z2lFRZu36mYe6ZtcAEymTYuSsTa7mWq11H1pjkURUZXDH
+ d
+X-Google-Smtp-Source: AGHT+IFFM8SM3fW0I3GKRBmlwgZ3Qzdxdyjlv9vG3FxOdWLCg9KqaWDo1yE3op+x5xE1oXXCw8yYGw==
+X-Received: by 2002:a17:906:54b:b0:a43:77c6:e3f3 with SMTP id
+ k11-20020a170906054b00b00a4377c6e3f3mr2397043eja.17.1709023258286; 
+ Tue, 27 Feb 2024 00:40:58 -0800 (PST)
 Received: from m1x-phil.lan (mic92-h03-176-184-33-214.dsl.sta.abo.bbox.fr.
  [176.184.33.214]) by smtp.gmail.com with ESMTPSA id
- u16-20020a05600c211000b004126732390asm14316282wml.37.2024.02.27.00.42.52
+ st14-20020a170907c08e00b00a3f5c39bf2asm545546ejc.0.2024.02.27.00.40.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 27 Feb 2024 00:42:53 -0800 (PST)
+ Tue, 27 Feb 2024 00:40:57 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-block@nongnu.org, qemu-arm@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Subject: [PULL 29/30] hw/ide: Remove last two uses of ide/internal.h outside
- of hw/ide/
-Date: Tue, 27 Feb 2024 09:39:45 +0100
-Message-ID: <20240227083948.5427-30-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 11/30] hw/ppc/sam460ex: do not use usb_bus_find()
+Date: Tue, 27 Feb 2024 09:39:27 +0100
+Message-ID: <20240227083948.5427-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240227083948.5427-1-philmd@linaro.org>
 References: <20240227083948.5427-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,55 +96,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Remove last two includes of hw/ide/intarnal.h outside of hw/ide and
-replace them with newly added public header to allow moving internal.h
-into hw/ide to really stop exposing it.
+usb_bus_find() is always used with argument -1; it can be replaced with
+a search of the single USB bus on the machine.
 
-Fixes: a11f439a0e (hw/ide: Stop exposing internal.h to non-IDE files)
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240223142633.933694E6004@zero.eik.bme.hu>
+Message-ID: <20240223124406.234509-3-pbonzini@redhat.com>
+[PMD: Fixed style]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- {include/hw => hw}/ide/internal.h | 0
- include/hw/misc/macio/macio.h     | 2 +-
- hw/arm/sbsa-ref.c                 | 2 +-
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename {include/hw => hw}/ide/internal.h (100%)
+ hw/ppc/sam460ex.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/ide/internal.h b/hw/ide/internal.h
-similarity index 100%
-rename from include/hw/ide/internal.h
-rename to hw/ide/internal.h
-diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
-index 86df2c2b60..2b54da6b31 100644
---- a/include/hw/misc/macio/macio.h
-+++ b/include/hw/misc/macio/macio.h
-@@ -28,7 +28,7 @@
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index a28498f39c..7e34b6c5e0 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -274,6 +274,7 @@ static void sam460ex_init(MachineState *machine)
+     DeviceState *uic[4];
+     int i;
+     PCIBus *pci_bus;
++    USBBus *usb_bus;
+     PowerPCCPU *cpu;
+     CPUPPCState *env;
+     I2CBus *i2c;
+@@ -421,8 +422,10 @@ static void sam460ex_init(MachineState *machine)
+     sysbus_realize_and_unref(sbdev, &error_fatal);
+     sysbus_mmio_map(sbdev, 0, 0x4bffd0000);
+     sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(uic[2], 30));
+-    usb_create_simple(usb_bus_find(-1), "usb-kbd");
+-    usb_create_simple(usb_bus_find(-1), "usb-mouse");
++    usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
++                                                      &error_abort));
++    usb_create_simple(usb_bus, "usb-kbd");
++    usb_create_simple(usb_bus, "usb-mouse");
  
- #include "hw/char/escc.h"
- #include "hw/pci/pci_device.h"
--#include "hw/ide/internal.h"
-+#include "hw/ide/ide-bus.h"
- #include "hw/intc/heathrow_pic.h"
- #include "hw/misc/macio/cuda.h"
- #include "hw/misc/macio/gpio.h"
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index 4a59e2fd37..13dde50cba 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -36,7 +36,7 @@
- #include "hw/arm/smmuv3.h"
- #include "hw/block/flash.h"
- #include "hw/boards.h"
--#include "hw/ide/internal.h"
-+#include "hw/ide/ide-bus.h"
- #include "hw/ide/ahci-sysbus.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/intc/arm_gicv3_its_common.h"
+     /* PCIe buses */
+     dev = qdev_new(TYPE_PPC460EX_PCIE_HOST);
 -- 
 2.41.0
 
