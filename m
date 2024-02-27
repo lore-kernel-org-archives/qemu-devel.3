@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12C8BC54E4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748EEC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 11:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1revoJ-0000Cl-0S; Tue, 27 Feb 2024 06:39:47 -0500
+	id 1revoC-00008W-Qv; Tue, 27 Feb 2024 06:39:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revoB-00007S-Pa
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revoA-00006R-0L
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revo0-0005Ua-IL
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:39 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1revo0-0005UC-2l
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 06:39:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709033967;
+ s=mimecast20190719; t=1709033966;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iOyKYKqRoPaaHWmBT2bZL36cIPhdyLGP1VWh7u2Hxwg=;
- b=CYkmilAsf987FQ8wpqLHanzW38NFqxW1r/GJ0OqE4jOfiH36UR3mlkaQf1bzr5w2oorugy
- g4EX7gZj5YMBpPzoXbvbvuLCwch0USnWJwtcuqXVgwVxcNflcykT6doC/uJVt1wb/L3zwR
- WrCtFscWvNOCh1YnTRn9bIgVX1XiaoM=
+ bh=hLW16ULpgIlSW/cqpVfRJAq3Ma72L+DbkYr6s0ZmzHc=;
+ b=IDMAr/703ga+0o/dV8vBWXkfZ7/S1sip65EKBaDoOTKdIY38/smrXZRINsZiCJBbb8qWhJ
+ Dl0RbiSQ+QZR5UGVAJuAwjnqsDkVo0oxdGcME3Zo/M9utlBJ6Z74de/6Cd9QQE+htGbVn5
+ 4Clb0lmLBW7TTBzXZfb0a1hGr7ZrrbM=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-Tke-jfdWOVug7rXdmi7eOA-1; Tue, 27 Feb 2024 06:39:23 -0500
-X-MC-Unique: Tke-jfdWOVug7rXdmi7eOA-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
+ us-mta-683-16SPenSXPP24ZLNY3CaJ9g-1; Tue, 27 Feb 2024 06:39:24 -0500
+X-MC-Unique: 16SPenSXPP24ZLNY3CaJ9g-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 98F6088B773;
- Tue, 27 Feb 2024 11:39:23 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8F92F88B768;
+ Tue, 27 Feb 2024 11:39:24 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 76AE1C0348E;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 6D8932166B5E;
  Tue, 27 Feb 2024 11:39:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4CD5E21E5A47; Tue, 27 Feb 2024 12:39:21 +0100 (CET)
+ id 46F2B21E5A41; Tue, 27 Feb 2024 12:39:21 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: michael.roth@amd.com, jsnow@redhat.com, eblake@redhat.com,
  kkostiuk@redhat.com
-Subject: [PATCH 12/13] qga/qapi-schema: Fix guest-set-memory-blocks
- documentation
-Date: Tue, 27 Feb 2024 12:39:20 +0100
-Message-ID: <20240227113921.236097-13-armbru@redhat.com>
+Subject: [PATCH 10/13] qga/qapi-schema: Clean up "Returns" sections
+Date: Tue, 27 Feb 2024 12:39:18 +0100
+Message-ID: <20240227113921.236097-11-armbru@redhat.com>
 In-Reply-To: <20240227113921.236097-1-armbru@redhat.com>
 References: <20240227113921.236097-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,31 +82,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Documentation claims the command can "return NULL".  "NULL" doesn't
-exist in JSON.  "null" does, but the command returns lists, and null
-isn't.  Correct documentation to "return an empty list".
+Drop "on success" where it is redundant with "Returns:".
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qga/qapi-schema.json | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ qga/qapi-schema.json | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 2ea1022092..9554b566a7 100644
+index 636c2c5697..326d324901 100644
 --- a/qga/qapi-schema.json
 +++ b/qga/qapi-schema.json
-@@ -1176,9 +1176,9 @@
- #     @GuestMemoryBlockResponse, which is corresponding to the input
- #     list.
+@@ -228,7 +228,7 @@
  #
--#     Note: it will return NULL if the @mem-blks list was empty on
--#     input, or there is an error, and in this case, guest state will
--#     not be changed.
-+#     Note: it will return an empty list if the @mem-blks list was
-+#     empty on input, or there is an error, and in this case, guest
-+#     state will not be changed.
+ # @mode: open mode, as per fopen(), "r" is the default.
  #
- # Since: 2.3
+-# Returns: Guest file handle on success.
++# Returns: Guest file handle
+ #
+ # Since: 0.15.0
+ ##
+@@ -277,7 +277,7 @@
+ # @count: maximum number of bytes to read (default is 4KB, maximum is
+ #     48MB)
+ #
+-# Returns: @GuestFileRead on success.
++# Returns: @GuestFileRead
+ #
+ # Since: 0.15.0
+ ##
+@@ -312,7 +312,7 @@
+ # @count: bytes to write (actual bytes, after base64-decode), default
+ #     is all content in buf-b64 buffer after base64 decoding
+ #
+-# Returns: @GuestFileWrite on success.
++# Returns: @GuestFileWrite
+ #
+ # Since: 0.15.0
+ ##
+@@ -379,7 +379,7 @@
+ #
+ # @whence: Symbolic or numeric code for interpreting offset
+ #
+-# Returns: @GuestFileSeek on success.
++# Returns: @GuestFileSeek
+ #
+ # Since: 0.15.0
+ ##
+@@ -723,7 +723,7 @@
+ #
+ # Get list of guest IP addresses, MAC addresses and netmasks.
+ #
+-# Returns: List of GuestNetworkInterface on success.
++# Returns: List of GuestNetworkInterface
+ #
+ # Since: 1.1
+ ##
+@@ -1247,7 +1247,7 @@
+ #
+ # @pid: pid returned from guest-exec
+ #
+-# Returns: GuestExecStatus on success.
++# Returns: GuestExecStatus
+ #
+ # Since: 2.5
+ ##
+@@ -1315,7 +1315,7 @@
+ # @capture-output: bool flag to enable capture of stdout/stderr of
+ #     running process.  defaults to false.
+ #
+-# Returns: PID on success.
++# Returns: PID
+ #
+ # Since: 2.5
+ ##
+@@ -1344,7 +1344,7 @@
+ # or even present in DNS or some other name service at all.  It need
+ # not even be unique on your local network or site, but usually it is.
+ #
+-# Returns: the host name of the machine on success
++# Returns: the host name of the machine
+ #
+ # Since: 2.10
  ##
 -- 
 2.43.0
