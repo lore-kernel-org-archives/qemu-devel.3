@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD737C54E4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A183C54798
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rez4B-0003La-M9; Tue, 27 Feb 2024 10:08:23 -0500
+	id 1rez44-0003FK-H3; Tue, 27 Feb 2024 10:08:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rez4A-0003Jn-1U; Tue, 27 Feb 2024 10:08:22 -0500
+ id 1rez42-0003En-Mj; Tue, 27 Feb 2024 10:08:14 -0500
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rez45-00081N-0G; Tue, 27 Feb 2024 10:08:21 -0500
+ id 1rez3v-0007v5-He; Tue, 27 Feb 2024 10:08:14 -0500
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id C51314E60D5;
- Tue, 27 Feb 2024 16:08:08 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 99B884E60DB;
+ Tue, 27 Feb 2024 16:08:05 +0100 (CET)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id sAbq94rdEx53; Tue, 27 Feb 2024 16:08:06 +0100 (CET)
+ with ESMTP id HehlKJsIgbOe; Tue, 27 Feb 2024 16:08:03 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id D8DDE4E60E1; Tue, 27 Feb 2024 16:08:06 +0100 (CET)
-Message-Id: <83e34b4cbdf78f142219ce09b75df3c7fe913a85.1709045654.git.balaton@eik.bme.hu>
+ id AEA7B4E6005; Tue, 27 Feb 2024 16:08:03 +0100 (CET)
+Message-Id: <ee0c65b99d2286dcacb7dbd9a833600fbd5573c9.1709045654.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1709045654.git.balaton@eik.bme.hu>
 References: <cover.1709045654.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v7 06/10] target/ppc: Simplify syscall exception handlers
+Subject: [PATCH v7 03/10] target/ppc: Add gen_exception_err_nip() function
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -39,7 +39,7 @@ To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
-Date: Tue, 27 Feb 2024 16:08:06 +0100 (CET)
+Date: Tue, 27 Feb 2024 16:08:03 +0100 (CET)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,81 +62,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After previous changes the hypercall handling in 7xx and 74xx
-exception handlers can be folded into one if statement to simplify
-this code. Also add "unlikely" to mark the less frequently used branch
-for the compiler.
+Add gen_exception_err_nip() that does the same as gen_exception_err()
+but takes the nip as a parameter to allow specifying it instead of
+using the current instruction address then change gen_exception_err()
+to use it.
 
+The gen_exception() and gen_exception_nip() functions are similar so
+remove code duplication from those too while at it.
+
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/excp_helper.c | 22 ++++++----------------
- 1 file changed, 6 insertions(+), 16 deletions(-)
+ target/ppc/translate.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 6cf4542e7e..320835bc74 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -762,26 +762,21 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-     {
-         int lev = env->error_code;
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 28fc7791af..d87aae0cc4 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -296,33 +296,26 @@ static inline void gen_update_nip(DisasContext *ctx, target_ulong nip)
+     tcg_gen_movi_tl(cpu_nip, nip);
+ }
+ 
+-static void gen_exception_err(DisasContext *ctx, uint32_t excp, uint32_t error)
++static void gen_exception_err_nip(DisasContext *ctx, uint32_t excp,
++                                  uint32_t error, target_ulong nip)
+ {
+     TCGv_i32 t0, t1;
+ 
+-    /*
+-     * These are all synchronous exceptions, we set the PC back to the
+-     * faulting instruction
+-     */
+-    gen_update_nip(ctx, ctx->cia);
++    gen_update_nip(ctx, nip);
+     t0 = tcg_constant_i32(excp);
+     t1 = tcg_constant_i32(error);
+     gen_helper_raise_exception_err(tcg_env, t0, t1);
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+ 
+-static void gen_exception(DisasContext *ctx, uint32_t excp)
++static inline void gen_exception_err(DisasContext *ctx, uint32_t excp,
++                                     uint32_t error)
+ {
+-    TCGv_i32 t0;
 -
--        if (lev == 1 && cpu->vhyp) {
--            dump_hcall(env);
--        } else {
--            dump_syscall(env);
--        }
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-          * uses VOF and the 7xx CPUs, so although the 7xx don't have
-          * HV mode, we need to keep hypercall support.
-          */
--        if (lev == 1 && cpu->vhyp) {
-+        if (unlikely(lev == 1 && cpu->vhyp)) {
-             PPCVirtualHypervisorClass *vhc =
-                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-+            dump_hcall(env);
-             vhc->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-             return;
-         }
--
-+        dump_syscall(env);
-         break;
-     }
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
-@@ -907,26 +902,21 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SYSCALL:   /* System call exception                    */
-     {
-         int lev = env->error_code;
--
--        if (lev == 1 && cpu->vhyp) {
--            dump_hcall(env);
--        } else {
--            dump_syscall(env);
--        }
-         /*
-          * The Virtual Open Firmware (VOF) relies on the 'sc 1'
-          * instruction to communicate with QEMU. The pegasos2 machine
-          * uses VOF and the 74xx CPUs, so although the 74xx don't have
-          * HV mode, we need to keep hypercall support.
-          */
--        if (lev == 1 && cpu->vhyp) {
-+        if (unlikely(lev == 1 && cpu->vhyp)) {
-             PPCVirtualHypervisorClass *vhc =
-                 PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-+            dump_hcall(env);
-             vhc->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-             return;
-         }
--
-+        dump_syscall(env);
-         break;
-     }
-     case POWERPC_EXCP_FPU:       /* Floating-point unavailable exception     */
+     /*
+      * These are all synchronous exceptions, we set the PC back to the
+      * faulting instruction
+      */
+-    gen_update_nip(ctx, ctx->cia);
+-    t0 = tcg_constant_i32(excp);
+-    gen_helper_raise_exception(tcg_env, t0);
+-    ctx->base.is_jmp = DISAS_NORETURN;
++    gen_exception_err_nip(ctx, excp, error, ctx->cia);
+ }
+ 
+ static void gen_exception_nip(DisasContext *ctx, uint32_t excp,
+@@ -336,6 +329,15 @@ static void gen_exception_nip(DisasContext *ctx, uint32_t excp,
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+ 
++static inline void gen_exception(DisasContext *ctx, uint32_t excp)
++{
++    /*
++     * These are all synchronous exceptions, we set the PC back to the
++     * faulting instruction
++     */
++    gen_exception_nip(ctx, excp, ctx->cia);
++}
++
+ #if !defined(CONFIG_USER_ONLY)
+ static void gen_ppc_maybe_interrupt(DisasContext *ctx)
+ {
 -- 
 2.30.9
 
