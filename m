@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9DEC54E41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39651C5478C
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 20:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf4KV-0005Vu-81; Tue, 27 Feb 2024 15:45:35 -0500
+	id 1rf4Kv-00062r-TS; Tue, 27 Feb 2024 15:46:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=GitP=KE=redhat.com=clg@ozlabs.org>)
- id 1rf1ou-0004bE-6q
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:48 -0500
+ id 1rf1p0-0004vQ-CA
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:54 -0500
 Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <SRS0=GitP=KE=redhat.com=clg@ozlabs.org>)
- id 1rf1op-0001YM-2E
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:47 -0500
+ id 1rf1ov-0001Yy-DG
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 13:04:54 -0500
 Received: from gandalf.ozlabs.org (mail.ozlabs.org
  [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4TklkK0bC8z4x0n;
- Wed, 28 Feb 2024 05:04:41 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4TklkR2x2sz4x0q;
+ Wed, 28 Feb 2024 05:04:47 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4TklkG3SNTz4wyy;
- Wed, 28 Feb 2024 05:04:38 +1100 (AEDT)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4TklkN5nvFz4wyy;
+ Wed, 28 Feb 2024 05:04:44 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -39,10 +39,10 @@ Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 12/21] vfio: Add Error** argument to
- .set_dirty_page_tracking() handler
-Date: Tue, 27 Feb 2024 19:03:36 +0100
-Message-ID: <20240227180345.548960-13-clg@redhat.com>
+Subject: [PATCH v2 14/21] vfio: Add Error** argument to
+ vfio_devices_dma_logging_stop()
+Date: Tue, 27 Feb 2024 19:03:38 +0100
+Message-ID: <20240227180345.548960-15-clg@redhat.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240227180345.548960-1-clg@redhat.com>
 References: <20240227180345.548960-1-clg@redhat.com>
@@ -55,8 +55,9 @@ X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 27 Feb 2024 15:45:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,123 +74,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We will use the Error object to improve error reporting in the
-.log_global*() handlers of VFIO. Add documentation while at it.
+This improves error reporting in the log_global_stop() VFIO handler.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-container-base.h | 18 ++++++++++++++++--
- hw/vfio/common.c                      |  4 ++--
- hw/vfio/container-base.c              |  4 ++--
- hw/vfio/container.c                   |  6 +++---
- 4 files changed, 23 insertions(+), 9 deletions(-)
+ hw/vfio/common.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index b2813b0c117985425c842d91f011bb895955d738..dec2023eceb6c7d62b0ee35008cc58f8e695e190 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -81,7 +81,7 @@ int vfio_container_add_section_window(VFIOContainerBase *bcontainer,
- void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
-                                        MemoryRegionSection *section);
- int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
--                                           bool start);
-+                                           bool start, Error **errp);
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                                       VFIOBitmap *vbmap,
-                                       hwaddr iova, hwaddr size);
-@@ -120,9 +120,23 @@ struct VFIOIOMMUClass {
-     int (*attach_device)(const char *name, VFIODevice *vbasedev,
-                          AddressSpace *as, Error **errp);
-     void (*detach_device)(VFIODevice *vbasedev);
-+
-     /* migration feature */
-+
-+    /**
-+     * @set_dirty_page_tracking
-+     *
-+     * Start or stop dirty pages tracking on VFIO container
-+     *
-+     * @bcontainer: #VFIOContainerBase on which to de/activate dirty
-+     *              pages tracking
-+     * @start: indicates whether to start or stop dirty pages tracking
-+     * @errp: pointer to Error*, to store an error if it happens.
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-     int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
--                                   bool start);
-+                                   bool start, Error **errp);
-     int (*query_dirty_bitmap)(const VFIOContainerBase *bcontainer,
-                               VFIOBitmap *vbmap,
-                               hwaddr iova, hwaddr size);
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 8bba95ba6a2010b78cae54c6905857686bbb6309..560f4bc38499f7f4a3bc84ef7e4184fd6dc89935 100644
+index a2d26cd08cb132d2b27c388bd75db3d9b8128407..706e915a3ba5f8520deb3753d9bb450a986f207a 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -1085,7 +1085,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-         ret = vfio_devices_dma_logging_start(bcontainer);
-     } else {
--        ret = vfio_container_set_dirty_page_tracking(bcontainer, true);
-+        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, NULL);
-     }
- 
-     if (ret) {
-@@ -1106,7 +1106,7 @@ static bool vfio_listener_log_global_stop(MemoryListener *listener,
-     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
-         vfio_devices_dma_logging_stop(bcontainer);
-     } else {
--        ret = vfio_container_set_dirty_page_tracking(bcontainer, false);
-+        ret = vfio_container_set_dirty_page_tracking(bcontainer, false, NULL);
-     }
- 
-     if (ret) {
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 913ae49077c4f09b7b27517c1231cfbe4befb7fb..7c0764121d24b02b6c4e66e368d7dff78a6d65aa 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -53,14 +53,14 @@ void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
+@@ -938,12 +938,14 @@ static void vfio_dirty_tracking_init(VFIOContainerBase *bcontainer,
+     memory_listener_unregister(&dirty.listener);
  }
  
- int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
--                                           bool start)
-+                                           bool start, Error **errp)
+-static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
++static int vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer,
++                                          Error **errp)
  {
-     if (!bcontainer->dirty_pages_supported) {
-         return 0;
-     }
+     uint64_t buf[DIV_ROUND_UP(sizeof(struct vfio_device_feature),
+                               sizeof(uint64_t))] = {};
+     struct vfio_device_feature *feature = (struct vfio_device_feature *)buf;
+     VFIODevice *vbasedev;
++    int ret = 0;
  
-     g_assert(bcontainer->ops->set_dirty_page_tracking);
--    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start);
-+    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
+     feature->argsz = sizeof(buf);
+     feature->flags = VFIO_DEVICE_FEATURE_SET |
+@@ -955,11 +957,17 @@ static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
+         }
+ 
+         if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+-            warn_report("%s: Failed to stop DMA logging, err %d (%s)",
+-                        vbasedev->name, -errno, strerror(errno));
++            /* Keep first error */
++            if (!ret) {
++                ret = -errno;
++                error_setg(errp, "%s: Failed to stop DMA logging, err %d (%s)",
++                           vbasedev->name, -errno, strerror(errno));
++            }
+         }
+         vbasedev->dirty_tracking = false;
+     }
++
++    return ret;
  }
  
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index bd25b9fbad2e717e63c2ab0e331186e5f63cef49..f772ac79b9c413c86d7e60f6dc4e6699852d5aac 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -210,7 +210,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+ static struct vfio_device_feature *
+@@ -1068,7 +1076,8 @@ static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
  
- static int
- vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
--                                    bool start)
-+                                    bool start, Error **errp)
- {
-     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
-                                                   bcontainer);
-@@ -228,8 +228,8 @@ vfio_legacy_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
-     ret = ioctl(container->fd, VFIO_IOMMU_DIRTY_PAGES, &dirty);
+ out:
      if (ret) {
-         ret = -errno;
--        error_report("Failed to set dirty tracking flag 0x%x errno: %d",
--                     dirty.flags, errno);
-+        error_setg(errp, "Failed to set dirty tracking flag 0x%x errno: %d",
-+                   dirty.flags, errno);
+-        vfio_devices_dma_logging_stop(bcontainer);
++        /* Ignore the potential errors when doing rollback */
++        vfio_devices_dma_logging_stop(bcontainer, NULL);
      }
  
-     return ret;
+     vfio_device_feature_dma_logging_start_destroy(feature);
+@@ -1103,7 +1112,7 @@ static bool vfio_listener_log_global_stop(MemoryListener *listener,
+     int ret = 0;
+ 
+     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+-        vfio_devices_dma_logging_stop(bcontainer);
++        ret = vfio_devices_dma_logging_stop(bcontainer, errp);
+     } else {
+         ret = vfio_container_set_dirty_page_tracking(bcontainer, false, errp);
+     }
 -- 
 2.43.2
 
