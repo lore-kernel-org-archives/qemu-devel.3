@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82AAC54E51
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A155EC54798
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 13:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rexat-00012F-De; Tue, 27 Feb 2024 08:34:03 -0500
+	id 1rexaR-0000ke-Bm; Tue, 27 Feb 2024 08:33:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexab-0000pk-FH
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:47 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1rexaG-0000hy-Ih
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rexaT-0002uy-GT
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:43 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33de64c91abso799195f8f.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:35 -0800 (PST)
+ id 1rexaE-0002qi-5U
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 08:33:24 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-412a3371133so16586115e9.2
+ for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 05:33:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709040813; x=1709645613; darn=nongnu.org;
+ d=linaro.org; s=google; t=1709040801; x=1709645601; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EftjVY6w4DE2ldAEkCyJ7CK71+vFHWwK/iRzj67kYsA=;
- b=cfr27BB01h3QXWD/ltxfDxslW8sl0cRDcapMlmmKYULsBzmHX7U8+G3hsv9nNDzo7v
- O+1l/jmBypXl7PdBhWPl8Ssd/ATCnSthpMhdjLx44RNtGSspIIrlF5yeyFGqysF9n4tM
- V2c6tpEXgZfGuqQAI13kCmw8WuDnTVYHsWemByxtvB9BJB/2zqEQg+tmF7OVoWOw97bC
- +T1aFjKWwEE324bhRppcTjjijDXDfG7h442gkrpUG+LpMsgqUfZgDqr3J0bfDJqj1ocw
- BkyWtsWVLWHg667RWA9J7WoALdK8mk4Lg8f5MaJJeU87hjtW+SLvOdzosbK8bTUJ7TJO
- 33Nw==
+ :reply-to; bh=ghfytIikIlf01WoNBDAZGxwpGh2RY6aESDQERQrWq0o=;
+ b=rogXWil7udjuPMqLArXZ6eV7E3LOT4ReBQkOBRkQPTL8nkyHFMWdz9D258mrnWIize
+ HuShu26yDKwaID/xo94EfJfIIPH+CrjNdtb+w/CPMZJsQE/5cR/QvxVBL439Wzwba3pK
+ d585QmB2tvHssT6c1t+LosWCbshFKVzESyxGf83hPGZznqHWPxFppSWW0pNCkvXyOv/J
+ BMdf15B/ONJfX2vVjR008F/2ppod3AzYr7s8AMIM/u6E81eOiMEfFjRVopegWI9zE2LK
+ 3cZSg/bqItKpMuAIGAE6zkFn6uR6suw+8ze5I6rkSp+Xo1DDl4b/K/pCwwMmaOXY8qDz
+ iHtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709040813; x=1709645613;
+ d=1e100.net; s=20230601; t=1709040801; x=1709645601;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EftjVY6w4DE2ldAEkCyJ7CK71+vFHWwK/iRzj67kYsA=;
- b=bGRcR72UQy7gzGAuo3YOetMRkFmxUE0/3vR8Fy5WbA8PUvEq20FNAvmAc2PtGfoI07
- SpzvOz8kHlSKkjWMemLDn6C14Tnd5KloZB07Z2rICrorDjl7AyCv0NPGyiJI15NCXgsR
- ElVjpnXIaF00FHrL8oMBFaU+83hCW214RE6WZ485cbCLx00wT0RfvtodTqFXgKXGeGXf
- XJO4WdHTluZIOf9QL14Av9VK3qBTpkx9/KWMkJwZa8Mj6uXrxY6Cf3x9Nw0nDVDgcNcK
- Coc2MTEtyD19SVtn3fXNPjq5TqvXTdykiPtWNBJpQoqO0ZMFhbY3NwzmPETBUQS24OJK
- 3UZA==
-X-Gm-Message-State: AOJu0YwTKhGx8yJq3eEybaYhTOpzxqXMpUMcYxibFWskly7wOVCsSE/H
- 47IG+KvNVjIeUYERgQ/3RzpJriuFPNneVyBA+2i9zl3ChqgDPljOjvRsd5qj8DnjFgripdAX5zS
- z
-X-Google-Smtp-Source: AGHT+IHGSflM5IoiN4cpCeCz0nn05LswI+p5ezh9dblnVElK5VI3KSKCkOQHYzpN9HVP4yjuxTvtOw==
-X-Received: by 2002:adf:f7cd:0:b0:33d:c29d:2219 with SMTP id
- a13-20020adff7cd000000b0033dc29d2219mr6825862wrq.8.1709040813046; 
- Tue, 27 Feb 2024 05:33:33 -0800 (PST)
+ bh=ghfytIikIlf01WoNBDAZGxwpGh2RY6aESDQERQrWq0o=;
+ b=E0LtNkF83Bo5hHhflXwCHgdcwcKdhHxhDbzQsl9mIl7gOd4LaUS5hBOR6X7LYc0WZ5
+ 0xnV1M6f4tnA11nVBxDbTlMech/AxuKiEr//1Bmd2VxxgAvlqg3TBOW6yoexPf9tOyoC
+ mtIeh+cWZXFyU4N0gXHU0BwiIsJPZPY+fhF2Nh0YtYl7H8+937kl03DcQupr8+BLzGIE
+ GO36cMzMUD9vjkH1IXCYkgfifmempScG/d84DVOVxL8RTLlLZm8teMA43q5vibOyFZ6W
+ G8SNFIFxM2PXCzlxApA/FNQZ/oTWK2hFCLd1rD6soTBJdo6x7Kr+9HKSMo7PPc10IiZf
+ RH0g==
+X-Gm-Message-State: AOJu0YxxCRoHhMitkenrXkBPo10M84W39/cWCSG3/vXttSSMnRl4neCs
+ pV8Ft7+bHnzU6F/fF8Sj1uwLSk3y+3j4bkTe/xWgHMutOm+c29+WHRoyNtFXtnrOOWNKfGHX4p4
+ x
+X-Google-Smtp-Source: AGHT+IEKtW7xRYLv9EOxT8yF7WlM0x4r9j959WQWK1Ze2mjZ5nSX1vGVcMqUvskUHLzpA0rFS4j00A==
+X-Received: by 2002:a05:600c:548e:b0:412:a109:5005 with SMTP id
+ iv14-20020a05600c548e00b00412a1095005mr5589092wmb.0.1709040800835; 
+ Tue, 27 Feb 2024 05:33:20 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.32
+ i13-20020adfe48d000000b0033ae7d768b2sm11319552wrm.117.2024.02.27.05.33.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 27 Feb 2024 05:33:32 -0800 (PST)
+ Tue, 27 Feb 2024 05:33:20 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/45] tests/avocado/boot_linux_console.py: Add Rpi4b boot tests
-Date: Tue, 27 Feb 2024 13:33:03 +0000
-Message-Id: <20240227133314.1721857-35-peter.maydell@linaro.org>
+Subject: [PULL 10/45] block: m25p80: Add support of mt35xu02gbba
+Date: Tue, 27 Feb 2024 13:32:39 +0000
+Message-Id: <20240227133314.1721857-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240227133314.1721857-1-peter.maydell@linaro.org>
 References: <20240227133314.1721857-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,123 +93,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sergey Kambalin <sergey.kambalin@auriga.com>
-Message-id: 20240226000259.2752893-31-sergey.kambalin@auriga.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: Comment out use of USB, which depends on PCI]
+From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+
+Add Micro 2Gb OSPI flash part with sfdp data.
+
+Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Reviewed-by: Francisco Iglesias <frasse.iglesias@gmail.com>
+Message-id: 20240220091721.82954-2-sai.pavan.boddu@amd.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/avocado/boot_linux_console.py | 97 +++++++++++++++++++++++++++++
- 1 file changed, 97 insertions(+)
+ hw/block/m25p80_sfdp.h |  1 +
+ hw/block/m25p80.c      |  3 +++
+ hw/block/m25p80_sfdp.c | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+)
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index a00202df3cb..989b65111c0 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -501,6 +501,103 @@ def test_arm_raspi2_initrd(self):
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
+diff --git a/hw/block/m25p80_sfdp.h b/hw/block/m25p80_sfdp.h
+index 011a880f66a..1733b569508 100644
+--- a/hw/block/m25p80_sfdp.h
++++ b/hw/block/m25p80_sfdp.h
+@@ -16,6 +16,7 @@
+ #define M25P80_SFDP_MAX_SIZE  (1 << 24)
  
-+    def test_arm_raspi4(self):
-+        """
-+        :avocado: tags=arch:aarch64
-+        :avocado: tags=machine:raspi4b
-+        :avocado: tags=device:pl011
-+        :avocado: tags=accel:tcg
-+        :avocado: tags=rpi4b
+ uint8_t m25p80_sfdp_n25q256a(uint32_t addr);
++uint8_t m25p80_sfdp_mt35xu02g(uint32_t addr);
+ 
+ uint8_t m25p80_sfdp_mx25l25635e(uint32_t addr);
+ uint8_t m25p80_sfdp_mx25l25635f(uint32_t addr);
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 0a12030a3a1..08a00a6d9b8 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -267,6 +267,9 @@ static const FlashPartInfo known_devices[] = {
+     { INFO("mt25ql512ab", 0x20ba20, 0x1044, 64 << 10, 1024, ER_4K | ER_32K) },
+     { INFO_STACKED("mt35xu01g", 0x2c5b1b, 0x104100, 128 << 10, 1024,
+                    ER_4K | ER_32K, 2) },
++    { INFO_STACKED("mt35xu02gbba", 0x2c5b1c, 0x104100, 128 << 10, 2048,
++                   ER_4K | ER_32K, 4),
++                   .sfdp_read = m25p80_sfdp_mt35xu02g },
+     { INFO_STACKED("n25q00",    0x20ba21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
+     { INFO_STACKED("n25q00a",   0x20bb21, 0x1000, 64 << 10, 2048, ER_4K, 4) },
+     { INFO_STACKED("mt25ql01g", 0x20ba21, 0x1040, 64 << 10, 2048, ER_4K, 2) },
+diff --git a/hw/block/m25p80_sfdp.c b/hw/block/m25p80_sfdp.c
+index b33811a4f5e..6ee2cfaf119 100644
+--- a/hw/block/m25p80_sfdp.c
++++ b/hw/block/m25p80_sfdp.c
+@@ -57,6 +57,42 @@ static const uint8_t sfdp_n25q256a[] = {
+ };
+ define_sfdp_read(n25q256a);
+ 
++static const uint8_t sfdp_mt35xu02g[] = {
++    0x53, 0x46, 0x44, 0x50, 0x06, 0x01, 0x01, 0xff,
++    0x00, 0x06, 0x01, 0x10, 0x30, 0x00, 0x00, 0xff,
++    0x84, 0x00, 0x01, 0x02, 0x80, 0x00, 0x00, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xe5, 0x20, 0x8a, 0xff, 0xff, 0xff, 0xff, 0x7f,
++    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++    0xee, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00,
++    0xff, 0xff, 0x00, 0x00, 0x0c, 0x20, 0x11, 0xd8,
++    0x0f, 0x52, 0x00, 0x00, 0x24, 0x5a, 0x99, 0x00,
++    0x8b, 0x8e, 0x03, 0xe1, 0xac, 0x01, 0x27, 0x38,
++    0x7a, 0x75, 0x7a, 0x75, 0xfb, 0xbd, 0xd5, 0x5c,
++    0x00, 0x00, 0x70, 0xff, 0x81, 0xb0, 0x38, 0x36,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0x43, 0x0e, 0xff, 0xff, 0x21, 0xdc, 0x5c, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++};
 +
-+        The kernel can be rebuilt using the kernel source referenced
-+        and following the instructions on the on:
-+        https://www.raspberrypi.org/documentation/linux/kernel/building.md
-+        """
-+
-+        deb_url = ('http://archive.raspberrypi.org/debian/'
-+            'pool/main/r/raspberrypi-firmware/'
-+            'raspberrypi-kernel_1.20230106-1_arm64.deb')
-+        deb_hash = '08dc55696535b18a6d4fe6fa10d4c0d905cbb2ed'
-+        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-+        kernel_path = self.extract_from_deb(deb_path, '/boot/kernel8.img')
-+        dtb_path = self.extract_from_deb(deb_path, '/boot/bcm2711-rpi-4-b.dtb')
-+
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'earlycon=pl011,mmio32,0xfe201000 ' +
-+                               'console=ttyAMA0,115200 ' +
-+                               'root=/dev/mmcblk1p2 rootwait ' +
-+                               'dwc_otg.fiq_fsm_enable=0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-append', kernel_command_line)
-+        # When PCI is supported we can add a USB controller:
-+        #                '-device', 'qemu-xhci,bus=pcie.1,id=xhci',
-+        #                '-device', 'usb-kbd,bus=xhci.0',
-+        self.vm.launch()
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.wait_for_console_pattern(console_pattern)
-+        # When USB is enabled we can look for this
-+        # console_pattern = 'Product: QEMU USB Keyboard'
-+        # self.wait_for_console_pattern(console_pattern)
-+        console_pattern = 'Waiting for root device'
-+        self.wait_for_console_pattern(console_pattern)
-+
-+
-+    def test_arm_raspi4_initrd(self):
-+        """
-+        :avocado: tags=arch:aarch64
-+        :avocado: tags=machine:raspi4b
-+        :avocado: tags=device:pl011
-+        :avocado: tags=accel:tcg
-+        :avocado: tags=rpi4b
-+
-+        The kernel can be rebuilt using the kernel source referenced
-+        and following the instructions on the on:
-+        https://www.raspberrypi.org/documentation/linux/kernel/building.md
-+        """
-+        deb_url = ('http://archive.raspberrypi.org/debian/'
-+            'pool/main/r/raspberrypi-firmware/'
-+            'raspberrypi-kernel_1.20230106-1_arm64.deb')
-+        deb_hash = '08dc55696535b18a6d4fe6fa10d4c0d905cbb2ed'
-+        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash)
-+        kernel_path = self.extract_from_deb(deb_path, '/boot/kernel8.img')
-+        dtb_path = self.extract_from_deb(deb_path, '/boot/bcm2711-rpi-4-b.dtb')
-+
-+        initrd_url = ('https://github.com/groeck/linux-build-test/raw/'
-+                      '86b2be1384d41c8c388e63078a847f1e1c4cb1de/rootfs/'
-+                      'arm64/rootfs.cpio.gz')
-+        initrd_hash = 'f3d4f9fa92a49aa542f1b44d34be77bbf8ca5b9d'
-+        initrd_path_gz = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-+        initrd_path = os.path.join(self.workdir, 'rootfs.cpio')
-+        archive.gzip_uncompress(initrd_path_gz, initrd_path)
-+
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'earlycon=pl011,mmio32,0xfe201000 ' +
-+                               'console=ttyAMA0,115200 ' +
-+                               'panic=-1 noreboot ' +
-+                               'dwc_otg.fiq_fsm_enable=0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-initrd', initrd_path,
-+                         '-append', kernel_command_line,
-+                         '-no-reboot')
-+        # When PCI is supported we can add a USB controller:
-+        #                '-device', 'qemu-xhci,bus=pcie.1,id=xhci',
-+        #                '-device', 'usb-kbd,bus=xhci.0',
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Boot successful.')
-+
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo',
-+                                                'BCM2835')
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/iomem',
-+                                                'cprman@7e101000')
-+        exec_command_and_wait_for_pattern(self, 'halt', 'reboot: System halted')
-+        # TODO: Raspberry Pi4 doesn't shut down properly with recent kernels
-+        # Wait for VM to shut down gracefully
-+        #self.vm.wait()
-+
-     def test_arm_exynos4210_initrd(self):
-         """
-         :avocado: tags=arch:arm
++define_sfdp_read(mt35xu02g);
+ 
+ /*
+  * Matronix
 -- 
 2.34.1
 
