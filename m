@@ -4,100 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 118BFC5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 17:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4485DC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 17:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rf1QO-00082R-Rd; Tue, 27 Feb 2024 12:39:28 -0500
+	id 1rf1TG-0000pg-U1; Tue, 27 Feb 2024 12:42:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rf1QM-00080k-7u
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:39:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rf1TE-0000pP-LG
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:42:24 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rf1QK-0004Za-CL
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:39:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1709055563;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iqB5Q3vNJeH/DB+uAKbvKtqjIFJycTqicyqQkGLDxgQ=;
- b=Bq1tRNyaPoYCGBuOE6cqr+eeVvGxxPidDOUcwmBvlqMU3M7axpCWepncxoKAAOzrcJeb+d
- lly/lz5xBU+577MXBp6cc/scFBtmUm1vgcMZWp4muk6UNnfsWmaLTv17vhGKyVCjTp8fTa
- RFMCLyDUp6H0/PusBbaRLf9zN/DcxB4=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-m7YIPyOmNxuell4GX4eRrg-1; Tue, 27 Feb 2024 12:39:22 -0500
-X-MC-Unique: m7YIPyOmNxuell4GX4eRrg-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-42e2506ac53so75513891cf.0
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 09:39:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709055562; x=1709660362;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iqB5Q3vNJeH/DB+uAKbvKtqjIFJycTqicyqQkGLDxgQ=;
- b=M5sKASQDHoda7sbTr+G8Lutrjz6rlZ28jAKr0SBJgH/BZ84GrsDtVRYYAUpA0MOMbk
- wNHCpcNZQ7mAExYAWv2dvPYjaV/38CbJ/Ed+PcoW9EIwDzSSmtmhZsje7uWn92kRF64F
- pRs5oVlf8cg4z6H+Msu604sKnM38Tl200SqsapXJkKU2UmMn2r9OtcT3F2cHHLmD5Eou
- YamRuGrXgnxVzf6n/w/yR7IMgj94T0u2APyaOrq9RDy1jqtcH3pXKOi7QxRR64NdkjyK
- sNE4K1OzYr+fWL1tzc2yhK4fliasF7jG30aqKLNKNfeXtgXRCT867jxGbGhgZa9MRCSm
- SCSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUeHAjkd89E7kNI0MMv9NXD+h/2qCun2UaI7fUoKusZEVAIJjz2UJTlCqXamh5Oo4tDvcUlIVMrS4auqs8gH0UtSUjvAGs=
-X-Gm-Message-State: AOJu0YyOmyeqpvfjoq0S4ZF8K4zoerkAdpwbtv4OnCS0MhaAfz5XSzgK
- CcxehuqGSDgrG1H3Ijj2+07IOoSqyAIsEmz1r7SSBF4cSUXWQfseKQPPm+hfYyXQ+eseUTY9UTd
- b1br7VOJacpPPPU+P4xLLQ9TNIkeJEC1CMzxzwB/kNBObN/xVVzme
-X-Received: by 2002:a05:622a:393:b0:42e:8f35:cd6e with SMTP id
- j19-20020a05622a039300b0042e8f35cd6emr5320662qtx.9.1709055561796; 
- Tue, 27 Feb 2024 09:39:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFHZ3RjmHgE6yQdIlgMkcjttHIBTYJaRzAjen+dYPvDBEb/jz4jMcqok6o70x8r/t4FSj4foQ==
-X-Received: by 2002:a05:622a:393:b0:42e:8f35:cd6e with SMTP id
- j19-20020a05622a039300b0042e8f35cd6emr5320630qtx.9.1709055561389; 
- Tue, 27 Feb 2024 09:39:21 -0800 (PST)
-Received: from [192.168.2.121] (lfbn-cor-1-12-50.w86-211.abo.wanadoo.fr.
- [86.211.108.50]) by smtp.gmail.com with ESMTPSA id
- q17-20020ac87351000000b0042e851b63e1sm2317290qtp.43.2024.02.27.09.39.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 27 Feb 2024 09:39:20 -0800 (PST)
-Message-ID: <7797a7a8-1754-40e1-a580-895bbb4546ed@redhat.com>
-Date: Tue, 27 Feb 2024 18:39:15 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] hw: Set virtio-iommu aw-bits default value on
- pc_q35 and arm virt
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- jean-philippe@linaro.org, mst@redhat.com, peter.maydell@linaro.org,
- zhenzhong.duan@intel.com, yanghliu@redhat.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com
-References: <20240215084315.863897-1-eric.auger@redhat.com>
- <20240215084315.863897-4-eric.auger@redhat.com>
- <2259fba1-4c57-420b-bcab-ecf202d10819@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <2259fba1-4c57-420b-bcab-ecf202d10819@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rf1TC-000571-QZ
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 12:42:24 -0500
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 41RFYiA6004643; Tue, 27 Feb 2024 17:42:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id; s=corp-2023-11-20;
+ bh=rZ+ZCxdXz8XN6kA/7QeHs0FPcKCfgLqaWCH7ARgDvaw=;
+ b=CnkL834DcsD89+Ii9CKXJqSLEYzYLlz0E8nvkzu6iIuzcVwIxMX6bc5bf0rvDTdLHxnb
+ o87OrgEKxKl8kRGbzuWv1ws6/c2JgyzrxYdY3y2kqxdyBqYrqDxL8ZwSpPyvGyMbg/w1
+ fMvXGJBkGRNLGlb1jXd/3aRCDQC10EAf+sXi9UB+PG9S5qaE9EnyCRztYvjZGzpNzHhI
+ kMoZw5qWXVonNRMC3Nf042B0ATaSito6e3D9CkgMZ/A9KCpi/ICLcDyLDYgZyfe4i7HQ
+ E6v+9bGr7GEYO1pvkBpOhCAIRx7blYhOrSXDVhOFBwKvgLKpf0MX+czatDx3Zww7bSrS yg== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wf8bb7tjs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 27 Feb 2024 17:42:14 +0000
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 41RHHfgd022376; Tue, 27 Feb 2024 17:42:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wf6w7t7d6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 27 Feb 2024 17:42:13 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41RHg2Rc026535;
+ Tue, 27 Feb 2024 17:42:12 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 3wf6w7t7bj-1; Tue, 27 Feb 2024 17:42:12 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>,
+ Zhang Chen <chen.zhang@intel.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Jason Wang <jasowang@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
+ Song Gao <gaosong@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 00/10] privatize migration.h
+Date: Tue, 27 Feb 2024 09:42:11 -0800
+Message-Id: <1709055731-315052-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-27_05,2024-02-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ phishscore=0 spamscore=0
+ mlxlogscore=970 adultscore=0 mlxscore=0 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2402270136
+X-Proofpoint-GUID: FuZZBIXTXRXsuXNTE8zx6h0lmF9hsJXk
+X-Proofpoint-ORIG-GUID: FuZZBIXTXRXsuXNTE8zx6h0lmF9hsJXk
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,178 +100,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+migration/migration.h is the private interface for code in the migration
+sub-directory, but many other clients include it because they need accessors
+that are not exported by the publc interface in include/migration/misc.h.
+Fix that by refactoring accessors and defining new ones as needed.
 
-On 2/27/24 18:17, Cédric Le Goater wrote:
-> Hello Eric,
->
-> On 2/15/24 09:42, Eric Auger wrote:
->> Currently the default input range can extend to 64 bits. On x86,
->> when the virtio-iommu protects vfio devices, the physical iommu
->> may support only 39 bits. Let's set the default to 39, as done
->> for the intel-iommu. On ARM we set 48b as a default (matching
->> SMMUv3 SMMU_IDR5.VAX == 0).
->>
->> We use hw_compat_8_2 to handle the compatibility for machines
->> before 9.0 which used to have a virtio-iommu default input range
->> of 64 bits.
->>
->> Of course if aw-bits is set from the command line, the default
->> is overriden.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->> Tested-by: Yanghang Liu<yanghliu@redhat.com>
->
-> We need a property fixup for pseries also:
->
-> $ build/ppc64-softmmu/qemu-system-ppc64 -M pseries  -device
-> virtio-iommu-pci,addr=04.0
-> qemu-system-ppc64: -device virtio-iommu-pci,addr=04.0: aw-bits must be
-> within [32,64]
+After these fixes, no code outside of migration includes migration.h,
+and no code outside of migration uses MigrationState.
 
-as stated in the doc (now! see [PATCH v5 4/4] qemu-options.hx: Add an
-entry for virtio-iommu-pci and document aw-bits) , the virtio-iommu-pci
-device only is supported in q35 and arm virt.
+This series depends on the following:
+  * migration patches in the series "allow cpr-reboot for vfio"
+  * singleton patch "migration: export fewer options"
 
-If you want to support virtio-iommu on other machines, you need to take
-care of this aw-bits settings and also of the exposed reserved regions.
+Steve Sistare (10):
+  migration: remove migration.h references
+  migration: export migration_is_setup_or_active
+  migration: export migration_is_active
+  migration: export migration_is_running
+  migration: export vcpu_dirty_limit_period
+  migration: migration_thread_is_self
+  migration: migration_is_device
+  migration: migration_file_set_error
+  migration: privatize colo interfaces
+  migration: purge MigrationState from public interface
 
-Thanks
+ hw/vfio/common.c                   | 17 +++-------
+ hw/vfio/container.c                |  1 -
+ hw/vfio/migration.c                | 11 ++-----
+ hw/virtio/vhost-user.c             |  1 -
+ hw/virtio/virtio-balloon.c         |  1 -
+ include/migration/client-options.h |  1 +
+ include/migration/misc.h           | 17 +++++-----
+ migration/colo.c                   | 17 ++++++----
+ migration/migration.c              | 67 ++++++++++++++++++++++++--------------
+ migration/migration.h              |  7 ++--
+ migration/options.c                | 11 +++++--
+ migration/ram.c                    |  5 ++-
+ migration/savevm.c                 |  2 +-
+ net/colo-compare.c                 |  3 +-
+ net/vhost-vdpa.c                   |  3 +-
+ stubs/colo.c                       |  1 -
+ system/dirtylimit.c                | 12 +++----
+ system/qdev-monitor.c              |  1 -
+ target/loongarch/kvm/kvm.c         |  1 -
+ target/riscv/kvm/kvm-cpu.c         |  4 +--
+ tests/unit/test-vmstate.c          |  1 -
+ 21 files changed, 96 insertions(+), 88 deletions(-)
 
-Eric
->
->
-> Thanks,
->
-> C.
->
->
->
->> ---
->>
->> v3 -> v4:
->> - update the qos test to relax the check on the max input IOVA
->>
->> v2 -> v3:
->> - collected Zhenzhong's R-b
->> - use &error_abort instead of NULL error handle
->>    on object_property_get_uint() call (Cédric)
->> - use VTD_HOST_AW_39BIT (Cédric)
->>
->> v1 -> v2:
->> - set aw-bits to 48b on ARM
->> - use hw_compat_8_2 to handle the compat for older machines
->>    which used 64b as a default
->> ---
->>   hw/arm/virt.c                   | 6 ++++++
->>   hw/core/machine.c               | 5 ++++-
->>   hw/i386/pc.c                    | 6 ++++++
->>   hw/virtio/virtio-iommu.c        | 2 +-
->>   tests/qtest/virtio-iommu-test.c | 2 +-
->>   5 files changed, 18 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 368c2a415a..0994f2a560 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -2716,10 +2716,16 @@ static void
->> virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev),
->> MACHINE(hotplug_dev), errp);
->>       } else if (object_dynamic_cast(OBJECT(dev),
->> TYPE_VIRTIO_IOMMU_PCI)) {
->> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
->> +                                                   "aw-bits",
->> &error_abort);
->>           hwaddr db_start = 0, db_end = 0;
->>           QList *reserved_regions;
->>           char *resv_prop_str;
->>   +        if (!aw_bits) {
->> +            qdev_prop_set_uint8(dev, "aw-bits", 48);
->> +        }
->> +
->>           if (vms->iommu != VIRT_IOMMU_NONE) {
->>               error_setg(errp, "virt machine does not support
->> multiple IOMMUs");
->>               return;
->> diff --git a/hw/core/machine.c b/hw/core/machine.c
->> index fb5afdcae4..70ac96954c 100644
->> --- a/hw/core/machine.c
->> +++ b/hw/core/machine.c
->> @@ -30,9 +30,12 @@
->>   #include "exec/confidential-guest-support.h"
->>   #include "hw/virtio/virtio-pci.h"
->>   #include "hw/virtio/virtio-net.h"
->> +#include "hw/virtio/virtio-iommu.h"
->>   #include "audio/audio.h"
->>   -GlobalProperty hw_compat_8_2[] = {};
->> +GlobalProperty hw_compat_8_2[] = {
->> +    { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "64" },
->> +};
->>   const size_t hw_compat_8_2_len = G_N_ELEMENTS(hw_compat_8_2);
->>     GlobalProperty hw_compat_8_1[] = {
->> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->> index 196827531a..ee2d379c90 100644
->> --- a/hw/i386/pc.c
->> +++ b/hw/i386/pc.c
->> @@ -1456,6 +1456,8 @@ static void
->> pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
->>           virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev),
->> MACHINE(hotplug_dev), errp);
->>       } else if (object_dynamic_cast(OBJECT(dev),
->> TYPE_VIRTIO_IOMMU_PCI)) {
->> +        uint8_t aw_bits = object_property_get_uint(OBJECT(dev),
->> +                                                   "aw-bits",
->> &error_abort);
->>           /* Declare the APIC range as the reserved MSI region */
->>           char *resv_prop_str =
->> g_strdup_printf("0xfee00000:0xfeefffff:%d",
->>                                                
->> VIRTIO_IOMMU_RESV_MEM_T_MSI);
->> @@ -1464,6 +1466,10 @@ static void
->> pc_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->>           qlist_append_str(reserved_regions, resv_prop_str);
->>           qdev_prop_set_array(dev, "reserved-regions",
->> reserved_regions);
->>   +        if (!aw_bits) {
->> +            qdev_prop_set_uint8(dev, "aw-bits", VTD_HOST_AW_39BIT);
->> +        }
->> +
->>           g_free(resv_prop_str);
->>       }
->>   diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->> index 8b541de850..2ec5ef3cd1 100644
->> --- a/hw/virtio/virtio-iommu.c
->> +++ b/hw/virtio/virtio-iommu.c
->> @@ -1526,7 +1526,7 @@ static Property virtio_iommu_properties[] = {
->>       DEFINE_PROP_LINK("primary-bus", VirtIOIOMMU, primary_bus,
->>                        TYPE_PCI_BUS, PCIBus *),
->>       DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
->> -    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
->> +    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 0),
->>       DEFINE_PROP_END_OF_LIST(),
->>   };
->>   diff --git a/tests/qtest/virtio-iommu-test.c
->> b/tests/qtest/virtio-iommu-test.c
->> index 068e7a9e6c..0f36381acb 100644
->> --- a/tests/qtest/virtio-iommu-test.c
->> +++ b/tests/qtest/virtio-iommu-test.c
->> @@ -34,7 +34,7 @@ static void pci_config(void *obj, void *data,
->> QGuestAllocator *t_alloc)
->>       uint8_t bypass = qvirtio_config_readb(dev, 36);
->>         g_assert_cmpint(input_range_start, ==, 0);
->> -    g_assert_cmphex(input_range_end, ==, UINT64_MAX);
->> +    g_assert_cmphex(input_range_end, >=, 32);
->>       g_assert_cmpint(domain_range_start, ==, 0);
->>       g_assert_cmpint(domain_range_end, ==, UINT32_MAX);
->>       g_assert_cmpint(bypass, ==, 1);
->
+-- 
+1.8.3.1
 
 
