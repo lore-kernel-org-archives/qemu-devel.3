@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 394BEC54E49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DAFC5478C
 	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 15:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rezNp-0001mm-FY; Tue, 27 Feb 2024 10:28:41 -0500
+	id 1rezO0-0001rK-1X; Tue, 27 Feb 2024 10:28:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rezNn-0001mQ-Hw
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:28:39 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rezNk-0004CC-UP
- for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:28:39 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-512e4f4e463so5199898e87.1
- for <qemu-devel@nongnu.org>; Tue, 27 Feb 2024 07:28:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1709047714; x=1709652514; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XgShDo8iEF7Gb8d0FwTOqL/iZKUQUV1uy50qh6Nmy2o=;
- b=r5GuA8nGx64KB38H+EVePyhNpOzthGxOXstJ3HdzN922JD6nwt/mp+XwlQK+KF5/Jo
- Vu5Aftj32WoXeFL8ttVijGGHUms8OBNSCnqiOkdgL0bR/BPUJE8bRpvDKD5iJAimQgLP
- N3kl9cavQJGqA6FJfARtKjZQ6DbIWoMeK3FFvZvmV2PYN7hoajGdNaImXoByzla8B31t
- 8gCzxdaAZoxIOag7GqhDIOpT9KHtPbJzzJplDn0YO4wV40zqY7sgWa9b49AesOypLpBw
- xCPe//X1EKl+929yMMLLRMcTET3T45YZVNkNeaOyPa8xMd73GachbpoZGCW86yqtJj5X
- 6PoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1709047714; x=1709652514;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XgShDo8iEF7Gb8d0FwTOqL/iZKUQUV1uy50qh6Nmy2o=;
- b=DXwEJ+lXrrAy5S51tZJX7VVNXiRf25cni46TJponjasxT/LLPXRnGUVoqe47gpc/nZ
- viOtYvYEgKNV+o4fxIJTJ1CKZMQRTUbTm90YgQ2OjIl/BIa9lBfQZywYLlGBAGr/2BK+
- tiAFNErpQc9cGdHhuPDqiVhaJFx7QXjQjcAQd0wQgGGRCncBsiIlWRxZ7Om3jlpYwX19
- UbjYPBtdaNOysOJxDIWZA9WajhGNIaRt+Uxvi2lZrHO/XKorZk7CCPuJKDmdJt/P4iCH
- m6UptABFtE5t/v944yOGTaLV/dWLkOI/AztKRZ29myxVjmcEbNuF8vWDYNUp6XOl3npl
- b+Eg==
-X-Gm-Message-State: AOJu0YwRNedufjSXKIcQAaUl/8beOrrhUwhHoTJzMnAn23Hg49I5XUZG
- dfY1/Vbp+xnzTAFWoVy5Hy0xKzsr1NXdFOXsDWZcSE4KSuXlU4nzUbaIedoBZ36bljYOrh6qmr7
- iTSRj3jO4vGS7M/YJi3LGJ7a8+jqY4tCeZLMGSQ==
-X-Google-Smtp-Source: AGHT+IHicBvnf8qa47rMlEKqXoGZ9O3l68IwWudoCbDUVcMQhFX1uXG1gqfqu6esWqvVcffUfVAMHyS2eB58xNv0JNE=
-X-Received: by 2002:ac2:4291:0:b0:512:cc50:c3e0 with SMTP id
- m17-20020ac24291000000b00512cc50c3e0mr5994725lfh.52.1709047714017; Tue, 27
- Feb 2024 07:28:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezNy-0001q2-5N
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:28:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rezNv-0004D8-NH
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 10:28:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1709047726;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bgEF6Y504aRFxBUiwcPZmZhE03xdpWcSlqJaCGDecaE=;
+ b=HkAUrjW4qKH99Rosm7lRlaukm0Z+RunY+TBv5iVVws5xjdalSn1CXVKLd9WyZhsBFveJT3
+ 7IGq43XYHoCgDRG6XzFnDwIBaabPJG0UkYcoZDd8RGcHFqYiLGfS9gbqvXHpqOhoNN3ivh
+ Er37RvGpPgD+ecEr41ZypNb6v0+VWAE=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-509-ox5QAOm9MD2Nue6twHMsUA-1; Tue, 27 Feb 2024 10:28:41 -0500
+X-MC-Unique: ox5QAOm9MD2Nue6twHMsUA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 839B51064C44;
+ Tue, 27 Feb 2024 15:28:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.4])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 3335339DD5;
+ Tue, 27 Feb 2024 15:28:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 343CE21E66F4; Tue, 27 Feb 2024 16:28:39 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Steve Sistare <steven.sistare@oracle.com>,  "Dr.
+ David Alan Gilbert" <dave@treblig.org>,  Jason Wang <jasowang@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v6 0/5] string list functions
+In-Reply-To: <20240226141108.73664-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 26 Feb 2024 15:11:02
+ +0100")
+References: <20240226141108.73664-1-philmd@linaro.org>
+Date: Tue, 27 Feb 2024 16:28:39 +0100
+Message-ID: <874jduapug.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <252c0f8d-08cd-2e7b-63b6-1bbf42ff32f8@huawei.com>
-In-Reply-To: <252c0f8d-08cd-2e7b-63b6-1bbf42ff32f8@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 27 Feb 2024 15:28:23 +0000
-Message-ID: <CAFEAcA81xV6wvBFoaGNpH9=0oAjP=toMBS=MNV_poXm5RPK-iQ@mail.gmail.com>
-Subject: Re: [Question] Can I start qemu-system-aarch64 with a vmlinux(ELF
- format)?
-To: Kunkun Jiang <jiangkunkun@huawei.com>
-Cc: "open list:All patches CC here" <qemu-devel@nongnu.org>, 
- "wanghaibin.wang@huawei.com" <wanghaibin.wang@huawei.com>,
- Zenghui Yu <yuzenghui@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,24 +87,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 27 Feb 2024 at 14:42, Kunkun Jiang via <qemu-devel@nongnu.org> wrote:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+
+> Hi Markus,
 >
-> Hi everybody,
+> Here are the patches I queued until you told me you'd
+> object to the CamelCase filename strList.[ch].
 >
-> I want to start qemu-system-aarch64 with a vmlinux,
-> which is an ELF format file. The arm_load_elf() is
-> implemented in arm_setup_direct_kernel_boot(). So I
-> thought it was supporting the ELF format file.
+> Steve, please take over ;)
 
-No, you can't do this. The hw/arm/boot.c code assumes
-that ELF files are "bare metal" binaries, whereas
-uImage format, AArch64 Image format, and raw binary files
-are Linux kernels. Only the last three kinds of files will
-be started with the boot protocol the Linux kernel expects.
+I'm going to post the part of the series I'm ready to queue as v7, with
+minor modifications:
 
-For AArch64, pass the -kernel option the path to the Image
-file, not the vmlinux file.
+* Rename strv_from_strList() to strv_from_str_list(), and put it into
+  qapi/qapi-type-helpers.c.
 
-thanks
--- PMM
+* Tweak its function comment.
+
+* Rename its local variable @argv to @strv.
+
+* Cosmetic commit message tweaks.
+
+We can then talk about the remainder.
+
 
