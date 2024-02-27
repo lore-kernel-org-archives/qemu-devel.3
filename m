@@ -4,96 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5303C5478C
-	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FBAC54798
+	for <qemu-devel@archiver.kernel.org>; Tue, 27 Feb 2024 14:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1reylh-0007mN-Aq; Tue, 27 Feb 2024 09:49:17 -0500
+	id 1reynO-0006Ka-N1; Tue, 27 Feb 2024 09:51:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.vnet.ibm.com>)
- id 1reyle-0007SX-LU; Tue, 27 Feb 2024 09:49:14 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.vnet.ibm.com>)
- id 1reylc-0003rF-56; Tue, 27 Feb 2024 09:49:14 -0500
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41REhH0M000974; Tue, 27 Feb 2024 14:49:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=2/QSb0OdJNwMPRn7P7cahTL5KAjIljSb5JFVHYcYULM=;
- b=m6UpFZL7RVnkt81njpYVy8C6cz25M2ARYxtJPxSCtKJHs+zhvLGmbetv6ZLwOG7CimJo
- mc+6cb+oA4solMeK0cMNf1Eh2wuWLQjXx8Ui50fSg/8qTcgfm4sai9uFFWEPs8quZTeU
- 97OBgqm2L33yH9Jkw4RLoCQ5mpWGW3GwYuEIOqiMGiod4G+jslkCaaIfONdGhsqm826w
- UXI7ceznmHRbFwc5uU9Y9kgi6Lka4k1Og18+uATc+OcJCsRBXp6L7pVyPBNIpvZfCW8A
- c04IqLqd0vJSv/RyKSbj1WCUI99X5FOzaOi8lKjpLPjmY5Zt77D1TGkDJ42yvS/ivD3j zQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whh7y1a8u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 14:49:01 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 41RElpkF021355;
- Tue, 27 Feb 2024 14:49:01 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3whh7y1a8f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 14:49:01 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 41RDtObq024154; Tue, 27 Feb 2024 14:49:00 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wfw0k7wtn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 27 Feb 2024 14:49:00 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 41REmwiP18809480
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 27 Feb 2024 14:49:00 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 75B8858066;
- Tue, 27 Feb 2024 14:48:58 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2AD2D58052;
- Tue, 27 Feb 2024 14:48:58 +0000 (GMT)
-Received: from gfwr540.rchland.ibm.com (unknown [9.10.239.160])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 27 Feb 2024 14:48:58 +0000 (GMT)
-From: Caleb Schlossin <calebs@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1reynM-0006HJ-La
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:51:00 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1reynK-0004UL-9y
+ for qemu-devel@nongnu.org; Tue, 27 Feb 2024 09:51:00 -0500
+Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C0C831F460;
+ Tue, 27 Feb 2024 14:50:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1709045455; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=v82oTOj/P1Rmn3WLRdHU78q+ddfcnPDjbhT+i40BBnY=;
+ b=kCcmJ2lRAY/ZEvHqhb+4f/1mPbfZZYpjAMT/vMnPGWEQKvnem655b/gBdbQKUP1N1waX6k
+ nfCjB5KK54sicVGe5xr3tLG4+y/EXAE8E2HxEe61AKHLVlSYoJfTrRQa3czzwbut6UiWdi
+ BbQcuJFGP0O72yXmKhRriKcCOk3DBgg=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1709045455; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=v82oTOj/P1Rmn3WLRdHU78q+ddfcnPDjbhT+i40BBnY=;
+ b=kCcmJ2lRAY/ZEvHqhb+4f/1mPbfZZYpjAMT/vMnPGWEQKvnem655b/gBdbQKUP1N1waX6k
+ nfCjB5KK54sicVGe5xr3tLG4+y/EXAE8E2HxEe61AKHLVlSYoJfTrRQa3czzwbut6UiWdi
+ BbQcuJFGP0O72yXmKhRriKcCOk3DBgg=
+Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id E71B513419;
+ Tue, 27 Feb 2024 14:50:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap2.dmz-prg2.suse.org with ESMTPSA id 0ibnNc723WXMAQAAn2gu4w
+ (envelope-from <roy.hopkins@suse.com>); Tue, 27 Feb 2024 14:50:54 +0000
+From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, npiggin@gmail.com,
- fbarrat@linux.ibm.com, calebs@linux.vnet.ibm.com
-Subject: [PATCH 2/2] ppc/pnv: Fix pervasive topology calculation for P10
-Date: Tue, 27 Feb 2024 08:48:44 -0600
-Message-Id: <20240227144844.23606-1-calebs@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.31.8
+Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
+Subject: [PATCH 0/9] Introduce support for IGVM files
+Date: Tue, 27 Feb 2024 14:50:06 +0000
+Message-ID: <cover.1709044754.git.roy.hopkins@suse.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ytxbxp4nw854qVrdJzJBv2AqKZFeb_bS
-X-Proofpoint-ORIG-GUID: pGb7aqNeVmH9Aw5HPe96hB_mLXEz4OKQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-27_01,2024-02-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxscore=0
- clxscore=1011 lowpriorityscore=0 malwarescore=0 mlxlogscore=999
- priorityscore=1501 bulkscore=0 spamscore=0 suspectscore=0 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2402270113
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=calebs@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.com header.s=susede1 header.b=kCcmJ2lR
+X-Spamd-Result: default: False [-0.31 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; R_MISSING_CHARSET(2.50)[];
+ BROKEN_CONTENT_TYPE(1.50)[];
+ R_RATELIMIT(0.00)[to_ip_from(RL1cdfboiju7js16zrknyuzw5d)];
+ RCVD_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.com:+];
+ MX_GOOD(-0.01)[]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; BAYES_HAM(-3.00)[100.00%];
+ ARC_NA(0.00)[]; R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
+ MIME_GOOD(-0.10)[text/plain];
+ DWL_DNSWL_HI(-3.50)[suse.com:dkim];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ RCPT_COUNT_TWELVE(0.00)[16]; MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
+ RCVD_TLS_ALL(0.00)[]; SUSPICIOUS_RECIPS(1.50)[]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: C0C831F460
+X-Spamd-Bar: /
+Received-SPF: pass client-ip=195.135.223.131;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,46 +115,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pervasive topology(PIR) calculation for core, thread ID was
-wrong for big cores (SMT8). Fixing for P10.
+Hi everyone,
 
-Based on: <20240123195005.8965-1-calebs@linux.vnet.ibm.com>
-Signed-off-by: Caleb Schlossin <calebs@linux.vnet.ibm.com>
----
- hw/ppc/pnv.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+This initial patch series submission adds the capability to configure
+confidential guests using files that conform to the Independent Guest Virtual
+Machine (IGVM) file format. The series is based on the master branch commit
+1b330da. Alternatively, the series is available here:
+https://github.com/roy-hopkins/qemu/tree/igvm_master_v1
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 2f53883916..aa5aba60b4 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1068,12 +1068,23 @@ static uint32_t pnv_chip_pir_p9(PnvChip *chip, uint32_t core_id,
-     }
- }
- 
-+/*
-+ *    0:48  Reserved - Read as zeroes
-+ *   49:52  Node ID
-+ *   53:55  Chip ID
-+ *   56     Reserved - Read as zero
-+ *   57:59  Quad ID
-+ *   60     Core Chiplet Pair ID
-+ *   61:63  Thread/Core Chiplet ID t0-t2
-+ *
-+ * We only care about the lower bits. uint32_t is fine for the moment.
-+ */
- static uint32_t pnv_chip_pir_p10(PnvChip *chip, uint32_t core_id,
-                                  uint32_t thread_id)
- {
-     if (chip->nr_threads == 8) {
--        return (chip->chip_id << 8) | ((thread_id & 1) << 2) | (core_id << 3) |
--               (thread_id >> 1);
-+        return (chip->chip_id << 8) | ((core_id / 4) << 4) |
-+               ((core_id % 2) << 3) | thread_id;
-     } else {
-         return (chip->chip_id << 8) | (core_id << 2) | thread_id;
-     }
--- 
-2.31.8
+I look forward to welcoming your comments!
+
+Why do we need Independent Guest Virtual Machine (IGVM) files?
+==============================================================
+
+IGVM files describe, using a set of directives, the memory layout and initial
+configuration of a guest that supports isolation technologies such as AMD
+SEV-SNP and Intel TDX. By encapsulating all of this information in a single
+configuration file and applying the directives in the order they are specified
+when the guest is initialized, it becomes straightforward to pre-calculate the
+cryptographic measurement of the guest initial state, thus aiding in remote
+attestation processes.
+
+IGVM files can also be used to configure non-standard guest memory layouts,
+payloads or startup configurations. A good example of this is to use IGVM to
+deploy and configure an SVSM module in the guest which supports running at
+multiple VMPLs. The SVSM can be configured to start directly into 32-bit or
+64-bit code. This patch series was developed with this purpose in mind to
+support the COCONUT-SVSM project:
+https://github.com/coconut-svsm/svsm
+
+More information and background on the IGVM file format can be found on the
+project page at:
+https://github.com/microsoft/igvm
+
+What this patch series introduces
+=================================
+
+This series adds a build-time configuration option (--enable-igvm) to add
+support for launching a guest using an IGVM file. It extends the current
+ConfidentialGuestSupport object to allow an IGVM filename to be specified.
+
+The directives in the IGVM file are parsed and the confidential guest is
+configured through new virtual methods added to the ConfidentialGuestSupport
+object. These virtual functions have been implemented for AMD SEV and AMD
+SEV-ES.
+
+Many of the IGVM directives require capabilities that are not supported in SEV
+and SEV-ES, so support for IGVM directives will need to be considered when
+support for SEV-SNP, TDX or other technologies is introduced to QEMU. Any
+directive that is not currently supported results in an error report.
+
+Dependencies
+============
+
+In order to enable IGVM support, you will need the IGVM library installed.
+Instructions on building and installing it can be found here:
+https://github.com/microsoft/igvm/tree/main/igvm_c
+
+As mentioned above, this series was developed as part of the effort for
+COCONUT-SVSM. COCONUT-SVSM requires support for AMD SEV-SNP which is not
+available in current QEMU. Therefore this series has also been applied on top of
+the AMD SEV-SNP branch (https://github.com/AMDESE/qemu/tree/snp-v3-wip). You can
+find that version of the series here:
+https://github.com/roy-hopkins/qemu/commits/snp-v3-wip-igvm_v2/
+
+Generating IGVM files
+=====================
+
+To try this out you will need to generate an IGVM file that is compatible with
+the SEV platform you are testing on. I've created a tool that can create a
+simple IGVM file that packages an OVMF binary for AMD SEV or AMD SEV-ES. The
+tool is available here:
+https://github.com/roy-hopkins/buildigvm
+
+I have tested this on an AMD EPYC Genoa system configured to support SEV. Both
+SEV and SEV-ES have been tested using IGVM files generated using the buildigvm
+tool. The SEV-SNP alternative patch set has also been tested using COCONUT-SVSM.
+
+Roy Hopkins (9):
+  meson: Add optional dependency on IGVM library
+  backends/confidential-guest-support: Add IGVM file parameter
+  backends/confidential-guest-support: Add functions to support IGVM
+  backends/igvm: Implement parsing and processing of IGVM files
+  i386/pc: Process IGVM file during PC initialization if present
+  i386/pc: Skip initialization of system FW when using IGVM
+  i386/sev: Refactor setting of reset vector and initial CPU state
+  i386/sev: Implement ConfidentialGuestSupport functions for SEV
+  docs/system: Add documentation on support for IGVM
+
+ backends/confidential-guest-support.c     |  69 +++
+ backends/igvm.c                           | 718 ++++++++++++++++++++++
+ backends/meson.build                      |   4 +
+ docs/system/igvm.rst                      |  58 ++
+ docs/system/index.rst                     |   1 +
+ hw/i386/pc.c                              |  12 +-
+ hw/i386/pc_piix.c                         |   4 +
+ hw/i386/pc_q35.c                          |   4 +
+ include/exec/confidential-guest-support.h | 107 ++++
+ include/exec/igvm.h                       |  35 ++
+ meson.build                               |   8 +
+ meson_options.txt                         |   2 +
+ qapi/qom.json                             |  13 +
+ qemu-options.hx                           |   8 +-
+ scripts/meson-buildoptions.sh             |   3 +
+ target/i386/sev.c                         | 365 ++++++++++-
+ target/i386/sev.h                         | 110 ++++
+ 17 files changed, 1489 insertions(+), 32 deletions(-)
+ create mode 100644 backends/igvm.c
+ create mode 100644 docs/system/igvm.rst
+ create mode 100644 include/exec/igvm.h
+
+--
+2.43.0
 
 
